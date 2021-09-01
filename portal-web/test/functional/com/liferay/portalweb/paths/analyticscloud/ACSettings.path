@@ -140,6 +140,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_BAR_2</td>
+	<td>xpath=(//input[@type='text' and @placeholder='Search' and not(@disabled)])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ITEM_ON_LIST</td>
 	<td>//*[contains(@class,'text-truncate') and contains(text(),'${itemName}')]</td>
 	<td></td>

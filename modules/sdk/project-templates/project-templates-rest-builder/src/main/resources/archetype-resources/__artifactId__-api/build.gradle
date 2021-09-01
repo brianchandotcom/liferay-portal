@@ -1,5 +1,5 @@
 dependencies {
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.12.4"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.function"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.vulcan.api", version: "@com.liferay.portal.vulcan.api.version@"

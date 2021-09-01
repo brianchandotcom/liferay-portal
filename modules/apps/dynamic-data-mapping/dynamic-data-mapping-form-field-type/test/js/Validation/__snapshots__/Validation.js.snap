@@ -34,6 +34,12 @@ exports[`Validation renders checkbox to enable Validation 1`] = `
         </span>
       </label>
       <input
+        class="form-control"
+        name="enableValidation"
+        type="hidden"
+        value="false"
+      />
+      <input
         name="enableValidation_edited"
         type="hidden"
         value="false"

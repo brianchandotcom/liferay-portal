@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ClayCheckbox} from '@clayui/form';
+import {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
@@ -129,6 +129,13 @@ const Main: React.FC<IProps> = ({
 }) => {
 	const Toggle = showAsSwitcher ? Switcher : Checkbox;
 
+	const checked = !!(
+		value ??
+		(Array.isArray(predefinedValue)
+			? predefinedValue[0] === 'true'
+			: predefinedValue)
+	);
+
 	return (
 		<FieldBase
 			name={name}
@@ -137,14 +144,7 @@ const Main: React.FC<IProps> = ({
 			{...otherProps}
 		>
 			<Toggle
-				checked={
-					!!(
-						value ??
-						(Array.isArray(predefinedValue)
-							? predefinedValue[0] === 'true'
-							: predefinedValue)
-					)
-				}
+				checked={checked}
 				disabled={readOnly}
 				label={label}
 				name={name}
@@ -154,6 +154,7 @@ const Main: React.FC<IProps> = ({
 				showMaximumRepetitionsInfo={showMaximumRepetitionsInfo}
 				systemSettingsURL={systemSettingsURL}
 			/>
+			<ClayInput name={name} type="hidden" value={`${checked}`} />
 		</FieldBase>
 	);
 };

@@ -1682,6 +1682,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * authentication, without using the AuthPipeline. Primarily used for
 	 * authenticating users of <code>tunnel-web</code>.
 	 *
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 * @param  companyId the primary key of the user's company
 	 * @param  realm unused
 	 * @param  nonce the number used once
@@ -1691,6 +1692,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @return the user's primary key if authentication is successful;
 	 *         <code>0</code> otherwise
 	 */
+	@Deprecated
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public long authenticateForDigest(

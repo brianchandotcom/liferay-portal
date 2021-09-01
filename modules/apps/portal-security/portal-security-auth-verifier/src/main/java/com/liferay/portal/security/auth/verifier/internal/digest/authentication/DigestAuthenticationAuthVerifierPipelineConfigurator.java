@@ -22,11 +22,13 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 
 /**
  * @author Tomas Polesovsky
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.auth.verifier.internal.digest.authentication.configuration.DigestAuthenticationAuthVerifierConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, service = {}
 )
+@Deprecated
 public class DigestAuthenticationAuthVerifierPipelineConfigurator
 	extends BaseAuthVerifierPipelineConfigurator {
 

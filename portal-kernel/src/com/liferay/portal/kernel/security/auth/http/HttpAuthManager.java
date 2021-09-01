@@ -32,6 +32,10 @@ public interface HttpAuthManager {
 	public long getBasicUserId(HttpServletRequest httpServletRequest)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public long getDigestUserId(HttpServletRequest httpServletRequest)
 		throws PortalException;
 

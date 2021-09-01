@@ -42,6 +42,10 @@ public class HttpAuthManagerUtil {
 		return _getHttpAuthManager().getBasicUserId(httpServletRequest);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static long getDigestUserId(HttpServletRequest httpServletRequest)
 		throws PortalException {
 

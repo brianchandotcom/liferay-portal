@@ -21,7 +21,9 @@ import com.liferay.portal.security.auth.verifier.internal.configuration.BaseAuth
 
 /**
  * @author Tomas Polesovsky
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 @ExtendedObjectClassDefinition(
 	category = "api-authentication",
 	factoryInstanceLabelAttribute = "urlsIncludes"

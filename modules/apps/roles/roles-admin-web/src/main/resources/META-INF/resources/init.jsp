@@ -200,6 +200,10 @@ private String _getActionLabel(HttpServletRequest request, ThemeDisplay themeDis
 		}
 	}
 
+	if (actionId.equals("ADD_STRUCTURE") && resourceName.equals("com.liferay.document.library")) {
+		actionLabel = LanguageUtil.get(request, "add-metadata-set");
+	}
+
 	if (actionLabel == null) {
 		actionLabel = ResourceActionsUtil.getAction(request, actionId);
 	}

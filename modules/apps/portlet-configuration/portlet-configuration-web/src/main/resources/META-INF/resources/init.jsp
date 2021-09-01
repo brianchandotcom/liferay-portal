@@ -96,3 +96,19 @@ Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId
 %>
 
 <%@ include file="/init-ext.jsp" %>
+
+<%!
+private String _getActionLabel(HttpServletRequest request, String resourceName, String actionId) {
+	String actionLabel = null;
+
+	if (actionId.equals("ADD_STRUCTURE") && resourceName.equals("com.liferay.document.library")) {
+		actionLabel = LanguageUtil.get(request, "add-metadata-set");
+	}
+
+	if (actionLabel == null) {
+		actionLabel = ResourceActionsUtil.getAction(request, actionId);
+	}
+
+	return actionLabel;
+}
+%>

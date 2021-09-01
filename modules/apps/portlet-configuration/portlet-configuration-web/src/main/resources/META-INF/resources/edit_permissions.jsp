@@ -135,7 +135,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 								type = ResourceActionsUtil.getModelResource(locale, resource.getName());
 							}
 
-							dataMessage = HtmlUtil.escapeAttribute(LanguageUtil.format(request, preselectedMsg, new Object[] {role.getTitle(locale), ResourceActionsUtil.getAction(request, action), type, HtmlUtil.escape(portletConfigurationPermissionsDisplayContext.getGroupDescriptiveName())}, false));
+							dataMessage = HtmlUtil.escapeAttribute(LanguageUtil.format(request, preselectedMsg, new Object[] {role.getTitle(locale), _getActionLabel(request, resource.getName(), action), type, HtmlUtil.escape(portletConfigurationPermissionsDisplayContext.getGroupDescriptiveName())}, false));
 						}
 
 						String actionSeparator = Validator.isNotNull(preselectedMsg) ? ActionUtil.PRESELECTED : ActionUtil.ACTION;
@@ -143,7 +143,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 
 						<liferay-ui:search-container-column-text
 							cssClass="table-column-text-center"
-							name="<%= ResourceActionsUtil.getAction(request, action) %>"
+							name="<%= _getActionLabel(request, resource.getName(), action) %>"
 						>
 							<c:if test="<%= disabled && checked %>">
 								<input name="<%= liferayPortletResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" type="hidden" value="<%= true %>" />

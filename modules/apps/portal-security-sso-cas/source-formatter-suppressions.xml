@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<checkstyle>
-		<suppress checks="MVCCommandNameCheck" files="portal-security-sso-cas-settings-authentication-web/src/main/java/com/liferay/portal/security/sso/cas/settings/authentication/web/internal/portlet/action/TestCASMVCRenderCommand.java" />
-	</checkstyle>
-</suppressions>

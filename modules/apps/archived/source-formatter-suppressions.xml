@@ -4,6 +4,7 @@
 	<checkstyle>
 		<suppress checks="FactoryCheck" files="sync-service/src/main/java/com/liferay/sync/internal/util/SyncHelperImpl\.java" />
 		<suppress checks="MissingEmptyLineCheck" files="sync-service/src/main/java/com/liferay/sync/internal/util/SyncDLObjectUpdate\.java" />
+		<suppress checks="MVCCommandNameCheck" files="portal-security-sso-cas-settings-authentication-web/src/main/java/com/liferay/portal/security/sso/cas/settings/authentication/web/internal/portlet/action/TestCASMVCRenderCommand.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="BNDDirectoryNameCheck" files=".*" />

@@ -44,6 +44,8 @@ definition {
 
 		Translations.saveInvalidConfiguration(settingValue = "");
 
+		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
+
 		Translations.saveInvalidConfiguration(settingValue = "This is an invalid input");
 	}
 

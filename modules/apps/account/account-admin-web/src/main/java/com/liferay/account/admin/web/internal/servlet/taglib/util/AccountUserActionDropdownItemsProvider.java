@@ -80,13 +80,13 @@ public class AccountUserActionDropdownItemsProvider {
 					PortletURLBuilder.createActionURL(
 						_renderResponse
 					).setActionName(
-						"/account_admin/assign_account_role_users"
+						"/account_admin/set_user_account_roles"
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
 					).setParameter(
 						"accountEntryId", _accountEntryId
 					).setParameter(
-						"accountUserIds", _accountUserId
+						"accountUserId", _accountUserId
 					).buildString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "assign-roles"));

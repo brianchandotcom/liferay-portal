@@ -55,11 +55,6 @@ public class SelectAccountUserAccountRoleRowChecker
 		return false;
 	}
 
-	@Override
-	public boolean isDisabled(Object object) {
-		return isChecked(object);
-	}
-
 	private final long _accountEntryId;
 	private final long _accountUserId;
 

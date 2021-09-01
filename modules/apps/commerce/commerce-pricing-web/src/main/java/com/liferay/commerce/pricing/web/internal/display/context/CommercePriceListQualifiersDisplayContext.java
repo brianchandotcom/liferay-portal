@@ -15,6 +15,7 @@
 package com.liferay.commerce.pricing.web.internal.display.context;
 
 import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListChannelRelService;
@@ -194,11 +195,19 @@ public class CommercePriceListQualifiersDisplayContext
 			getPriceListOrderTypeClayDataSetActionDropdownItems()
 		throws PortalException {
 
-		return ListUtil.fromArray(
-			new ClayDataSetActionDropdownItem(
-				null, "trash", "delete",
-				LanguageUtil.get(httpServletRequest, "delete"), "delete",
-				"delete", "headless"));
+		return getClayDataSetActionDropdownItems(
+			PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					httpServletRequest, CommerceOrderType.class.getName(),
+					PortletProvider.Action.MANAGE)
+			).setMVCRenderCommandName(
+				"/commerce_order_type/edit_commerce_order_type"
+			).setRedirect(
+				commercePricingRequestHelper.getCurrentURL()
+			).setParameter(
+				"commerceOrderTypeId", "{orderType.id}"
+			).buildString(),
+			false);
 	}
 
 	public String getPriceListOrderTypesAPIURL() throws PortalException {

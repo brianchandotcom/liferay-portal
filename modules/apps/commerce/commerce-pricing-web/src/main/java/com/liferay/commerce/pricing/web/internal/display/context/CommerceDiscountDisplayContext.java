@@ -287,7 +287,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 			getDiscountCPDefinitionClayDataSetActionDropdownItems()
 		throws PortalException {
 
-		return getClayHeadlessDataSetActionTemplates(
+		return getClayDataSetActionTemplates(
 			PortletURLBuilder.create(
 				PortletProviderUtil.getPortletURL(
 					httpServletRequest, CPDefinition.class.getName(),
@@ -313,7 +313,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 			getDiscountCPInstanceClayDataSetActionDropdownItems()
 		throws PortalException {
 
-		return getClayHeadlessDataSetActionTemplates(
+		return getClayDataSetActionTemplates(
 			PortletURLBuilder.create(
 				PortletProviderUtil.getPortletURL(
 					httpServletRequest, CPDefinition.class.getName(),
@@ -354,7 +354,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 			getDiscountPricingClassClayDataSetActionDropdownItems()
 		throws PortalException {
 
-		return getClayHeadlessDataSetActionTemplates(
+		return getClayDataSetActionTemplates(
 			PortletURLBuilder.create(
 				PortletProviderUtil.getPortletURL(
 					httpServletRequest, CommercePricingClass.class.getName(),
@@ -426,8 +426,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 			_log.error(windowStateException, windowStateException);
 		}
 
-		return getClayHeadlessDataSetActionTemplates(
-			portletURL.toString(), true);
+		return getClayDataSetActionTemplates(portletURL.toString(), true);
 	}
 
 	public String getEditCommerceDiscountActionURL() throws Exception {
@@ -635,9 +634,8 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 		return commerceCurrency.round(value);
 	}
 
-	protected List<ClayDataSetActionDropdownItem>
-		getClayHeadlessDataSetActionTemplates(
-			String portletURL, boolean sidePanel) {
+	protected List<ClayDataSetActionDropdownItem> getClayDataSetActionTemplates(
+		String portletURL, boolean sidePanel) {
 
 		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
 			new ArrayList<>();

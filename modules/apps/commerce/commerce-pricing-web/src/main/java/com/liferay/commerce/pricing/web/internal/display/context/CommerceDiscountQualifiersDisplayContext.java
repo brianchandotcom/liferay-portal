@@ -24,6 +24,7 @@ import com.liferay.commerce.discount.service.CommerceDiscountOrderTypeRelService
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
+import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
@@ -85,7 +86,7 @@ public class CommerceDiscountQualifiersDisplayContext
 			getAccountClayDataSetActionDropdownItems()
 		throws PortalException {
 
-		return getClayHeadlessDataSetActionTemplates(
+		return getClayDataSetActionTemplates(
 			PortletURLBuilder.create(
 				portal.getControlPanelPortletURL(
 					httpServletRequest,
@@ -175,7 +176,7 @@ public class CommerceDiscountQualifiersDisplayContext
 			getDiscountChannelClayDataSetActionDropdownItems()
 		throws PortalException {
 
-		return getClayHeadlessDataSetActionTemplates(
+		return getClayDataSetActionTemplates(
 			PortletURLBuilder.create(
 				PortletProviderUtil.getPortletURL(
 					httpServletRequest, CommerceChannel.class.getName(),
@@ -199,11 +200,19 @@ public class CommerceDiscountQualifiersDisplayContext
 			getDiscountOrderTypeClayDataSetActionDropdownItems()
 		throws PortalException {
 
-		return ListUtil.fromArray(
-			new ClayDataSetActionDropdownItem(
-				null, "trash", "delete",
-				LanguageUtil.get(httpServletRequest, "delete"), "delete",
-				"delete", "headless"));
+		return getClayDataSetActionTemplates(
+			PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					httpServletRequest, CommerceOrderType.class.getName(),
+					PortletProvider.Action.MANAGE)
+			).setMVCRenderCommandName(
+				"/commerce_order_type/edit_commerce_order_type"
+			).setRedirect(
+				commercePricingRequestHelper.getCurrentURL()
+			).setParameter(
+				"commerceOrderTypeId", "{orderType.id}"
+			).buildString(),
+			false);
 	}
 
 	public String getDiscountOrderTypesAPIURL() throws PortalException {

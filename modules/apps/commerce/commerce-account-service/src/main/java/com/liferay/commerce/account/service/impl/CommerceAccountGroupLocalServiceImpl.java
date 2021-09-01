@@ -134,12 +134,6 @@ public class CommerceAccountGroupLocalServiceImpl
 			throw new SystemCommerceAccountGroupException();
 		}
 
-		// Commerce account rels
-
-		commerceAccountGroupCommerceAccountRelLocalService.
-			deleteCommerceAccountGroupCommerceAccountRelByCAccountGroupId(
-				commerceAccountGroup.getCommerceAccountGroupId());
-
 		// Commerce account group generic rels
 
 		commerceAccountGroupRelLocalService.deleteCommerceAccountGroupRels(

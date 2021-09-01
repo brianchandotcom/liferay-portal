@@ -116,6 +116,12 @@ public class CommerceAccountUpgradeStepRegistrator
 			new com.liferay.commerce.account.internal.upgrade.v8_0_0.
 				CommerceAccountUpgradeProcess());
 
+		registry.register(
+			"8.0.0", "9.0.0",
+			new com.liferay.commerce.account.internal.upgrade.v9_0_0.
+				CommerceAccountGroupCommerceAccountRelUpgradeProcess(
+					_accountGroupRelLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce account upgrade step registrator finished");
 		}

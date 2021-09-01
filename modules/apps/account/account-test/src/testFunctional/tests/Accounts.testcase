@@ -1140,6 +1140,37 @@ definition {
 			customFieldText = "Custom Field for Account");
 	}
 
+	@description = "This test asserts that External Reference Code is editable."
+	@priority = "3"
+	test CanEditExternalReferenceCode {
+		Accounts.openAccountsAdmin();
+
+		Accounts.addBusinessAccount(
+			accountName = "Business Account Name",
+			externalReferenceCode = "AAA-0100");
+
+		Accounts.openAccountsAdmin();
+
+		Accounts.gotoEdit(accountName = "Business Account Name");
+
+		PortletEntry.inputText(
+			fieldLabel = "External Reference Code",
+			text = "AAA-0111");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Business Account Name");
+
+		AssertTextEquals(
+			key_fieldLabel = "External Reference Code",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "AAA-0111");
+	}
+
 	@description = "This is a use case for LPS-101221. It updates an inactive account by clicking on its link and asserts user stays on the Inactive filter when you go back to Accounts list."
 	@priority = "4"
 	test CanEditInactiveAccount {

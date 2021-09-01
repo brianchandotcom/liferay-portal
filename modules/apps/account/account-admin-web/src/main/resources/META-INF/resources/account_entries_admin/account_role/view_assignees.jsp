@@ -59,7 +59,7 @@ SearchContainer<AccountUserDisplay> accountRoleUserDisplaySearchContainer = Acco
 <clay:container-fluid>
 	<aui:form method="post" name="fm">
 		<aui:input name="accountEntryId" type="hidden" value="<%= accountEntryId %>" />
-		<aui:input name="accountRoleIds" type="hidden" value="<%= accountRoleId %>" />
+		<aui:input name="accountRoleId" type="hidden" value="<%= accountRoleId %>" />
 		<aui:input name="accountUserIds" type="hidden" />
 
 		<liferay-ui:search-container

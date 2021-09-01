@@ -1413,28 +1413,16 @@ public abstract class LVEntryLocalServiceBaseImpl
 		@Override
 		public void afterDelete(LVEntry publishedLVEntry)
 			throws PortalException {
-
-			lvEntryLocalizationPersistence.removeByLvEntryId(
-				publishedLVEntry.getPrimaryKey());
-			lvEntryLocalizationVersionPersistence.removeByLvEntryId(
-				publishedLVEntry.getPrimaryKey());
 		}
 
 		@Override
 		public void afterDeleteDraft(LVEntry draftLVEntry)
 			throws PortalException {
-
-			lvEntryLocalizationPersistence.removeByLvEntryId(
-				draftLVEntry.getPrimaryKey());
 		}
 
 		@Override
 		public void afterDeleteVersion(LVEntryVersion lvEntryVersion)
 			throws PortalException {
-
-			lvEntryLocalizationVersionPersistence.removeByLvEntryId_Version(
-				lvEntryVersion.getVersionedModelId(),
-				lvEntryVersion.getVersion());
 		}
 
 		@Override

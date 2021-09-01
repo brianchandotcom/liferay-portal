@@ -41,6 +41,7 @@ import com.liferay.portal.tools.service.builder.test.model.LVEntryVersionTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.LVEntryVersionImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.LVEntryVersionModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.BigDecimalEntryPersistence;
+import com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryLocalizationVersionPersistence;
 import com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryVersionPersistence;
 
 import java.io.Serializable;
@@ -6101,6 +6102,9 @@ public class LVEntryVersionPersistenceImpl
 		lvEntryVersionToBigDecimalEntryTableMapper.
 			deleteLeftPrimaryKeyTableMappings(lvEntryVersion.getPrimaryKey());
 
+		lvEntryLocalizationVersionPersistence.removeByLvEntryId_Version(
+			lvEntryVersion.getVersionedModelId(), lvEntryVersion.getVersion());
+
 		Session session = null;
 
 		try {
@@ -7048,6 +7052,10 @@ public class LVEntryVersionPersistenceImpl
 		<LVEntryVersion,
 		 com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry>
 			lvEntryVersionToBigDecimalEntryTableMapper;
+
+	@BeanReference(type = LVEntryLocalizationVersionPersistence.class)
+	protected LVEntryLocalizationVersionPersistence
+		lvEntryLocalizationVersionPersistence;
 
 	private static final String _SQL_SELECT_LVENTRYVERSION =
 		"SELECT lvEntryVersion FROM LVEntryVersion lvEntryVersion";

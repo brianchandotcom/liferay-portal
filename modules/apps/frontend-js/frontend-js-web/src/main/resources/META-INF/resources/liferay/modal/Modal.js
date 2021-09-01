@@ -340,6 +340,7 @@ const openSelectionModal = ({
 	customSelectEvent = false,
 	height,
 	id,
+	iframeBodyCssClass,
 	multiple = false,
 	onClose,
 	onSelect,
@@ -415,6 +416,7 @@ const openSelectionModal = ({
 		containerProps,
 		height,
 		id: id || selectEventName,
+		iframeBodyCssClass,
 		onClose: () => {
 			eventHandlers.forEach((eventHandler) => {
 				eventHandler.detach();

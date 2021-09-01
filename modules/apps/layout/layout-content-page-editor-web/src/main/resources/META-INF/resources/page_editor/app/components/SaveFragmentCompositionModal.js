@@ -103,6 +103,7 @@ const SaveFragmentCompositionModal = ({onCloseModal}) => {
 	return (
 		<ClayModal
 			className="page-editor__save-fragment-composition-modal page-editor__theme-adapter-buttons page-editor__theme-adapter-forms"
+			containerProps={{className: 'cadmin'}}
 			observer={observer}
 			size="lg"
 		>

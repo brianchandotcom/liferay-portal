@@ -426,6 +426,35 @@ definition {
 			userName = "userfn");
 	}
 
+	@description = "This test asserts that a person account cannot be selected in Edit User when a user is already assigned to a Person Account."
+	@priority = "4"
+	test CannotSelectPersonAccountWithUserAssigned {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Person Account",
+			accountEntryType = "Person");
+
+		AccountUsers.openAccountUsersAdmin();
+
+		AccountUsers.addUser(
+			accountName = "Person Account",
+			userEmailAddress = "personuser@liferay.com",
+			userFirstName = "person",
+			userLastName = "user",
+			userScreenName = "personuser");
+
+		AccountUsers.openAccountUsersAdmin();
+
+		LexiconEntry.gotoAdd();
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(locator1 = "IFrame#SELECT_ACCOUNT");
+
+		AssertElementPresent(
+			key_accountName = "Person Account",
+			locator1 = "AccountUsers#SELECT_AN_ACCOUNT_CHOOSE_BUTTON_DISABLED");
+	}
+
 	@description = "This test clicks on the cancel button and back icon upon account user creation. It then asserts that the account user was not saved."
 	@priority = "3"
 	test ClickingCancelOrBackWillNotSaveAccountUser {

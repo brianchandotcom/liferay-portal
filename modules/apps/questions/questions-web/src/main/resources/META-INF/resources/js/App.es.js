@@ -39,8 +39,11 @@ export default (props) => {
 		path = props.i18nPath + path;
 	}
 
-	if (path && location.pathname.endsWith(path)) {
-		path = location.pathname;
+	if (path && location.pathname.includes(path)) {
+		path = location.pathname.slice(
+			0,
+			location.pathname.indexOf(path) + path.length
+		);
 	}
 
 	return (

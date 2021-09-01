@@ -625,4 +625,10 @@ definition {
 			value1 = "Add a Breakdown by Attribute");
 	}
 
+	macro viewSegmentProfileTopInterestCard {
+		AssertTextPresent(
+			locator1 = "ACSegments#SEGMENT_TOP_INTERESTS_CARD",
+			value1 = "Top Interests");
+	}
+
 }

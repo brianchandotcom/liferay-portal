@@ -36,6 +36,22 @@ definition {
 		}
 	}
 
+	macro clickOrderInterestDetailsByNameLink {
+		Click(locator1 = "ACInterests#INTEREST_DETAIL_ORDER_BY_NAME");
+	}
+
+	macro clickOrderInterestDetailsByPageTitlesLink {
+		Click(locator1 = "ACInterests#INTEREST_DETAIL_ORDER_BY_PAGE_TITLE");
+	}
+
+	macro clickOrderInterestsBySegmentMembersLink {
+		Click(locator1 = "ACInterests#INTEREST_ORDER_BY_SEGMENT_MEMBERS");
+	}
+
+	macro clickOrderInterestsByTopicsLink {
+		Click(locator1 = "ACInterests#INTEREST_ORDER_BY_TOPIC");
+	}
+
 	macro switchTab {
 		var key_tabName = "${tabName}";
 
@@ -86,6 +102,14 @@ definition {
 			value1 = "${interestContributingPage}");
 	}
 
+	macro viewInterestHeader {
+		var key_interestTopic = "${interestTopic}";
+
+		AssertTextEquals(
+			locator1 = "ACInterests#INTEREST_HEADER",
+			value1 = "${interestName}");
+	}
+
 	macro viewInterestPage {
 		var key_pageName = "${pageName}";
 
@@ -132,6 +156,12 @@ definition {
 				locator1 = "ACInterests#USER_ACCOUNT",
 				value1 = "${userAccount}");
 		}
+	}
+
+	macro viewNoInterestResults {
+		AssertTextEquals(
+			locator1 = "ACInterests#NO_INTEREST_TITLE",
+			value1 = "There are no items found.");
 	}
 
 }

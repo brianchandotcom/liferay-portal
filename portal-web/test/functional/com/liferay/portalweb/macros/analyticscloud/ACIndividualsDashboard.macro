@@ -5,7 +5,9 @@ definition {
 
 		ACIndividualsDashboard.nameBreakdown(breakdownName = "${breakdownName}");
 
-		ACIndividualsDashboard.selectAttribute(attribute = "${attribute}");
+		ACIndividualsDashboard.selectAttribute(
+			attribute = "${attribute}",
+			fieldLabel = "Attribute");
 
 		ACIndividualsDashboard.saveBreakdown();
 

@@ -1,5 +1,19 @@
 # Poshi Runner Change Log
 
+## 1.0.311
+
+### Core
+
+* [POSHI-188](https://issues.liferay.com/browse/POSHI-188) - Ignore priority property when grouping tests
+
+### Other
+
+* [LRCI-2468](https://issues.liferay.com/browse/LRCI-2468) - Create poshi property groups to help reduce redundant properties
+
+### WebDriver
+
+* [POSHI-186](https://issues.liferay.com/browse/POSHI-186) - Improve StringUtil.matches() method
+
 ## 1.0.310
 
 ### Other

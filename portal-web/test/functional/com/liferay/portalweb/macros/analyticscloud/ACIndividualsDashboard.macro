@@ -153,8 +153,8 @@ definition {
 
 	macro selectAttribute {
 		Click(
-			key_text = "Attribute",
-			locator1 = "TextInput#ANY");
+			fieldLabel = "${fieldLabel}",
+			locator1 = "ACIndividualsDashboard#BREAKDOWN_SELECT_INPUT_FIELD");
 
 		Click(
 			locator1 = "ACIndividualsDashboard#DROPDOWN_MENU_ITEM",

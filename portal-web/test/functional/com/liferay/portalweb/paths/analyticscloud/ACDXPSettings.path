@@ -129,6 +129,31 @@
 	<td>//fieldset//*[contains(@href, 'synced-contact-data')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SYNC_BY_ORGANIZATIONS_PREVIEW</td>
+	<td>//fieldset//a[2]//div[2]//small[contains(@class,'list-group-subtext')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SYNC_BY_ORGANIZATIONS_BUTTON</td>
+	<td>//fieldset//a[2]//div[2]//p[contains(@class,'list-group-title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTACT_SYNC_OPTIONS</td>
+	<td>//p[contains(@class,'list-group-title') and contains (text(),'${key_option}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_OPTION_CHECKBOX</td>
+	<td>//td[contains(text(),'${key_entry}')]/../../tr//td//input[contains(@type,'checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AC_CHECKBOX_INDEX</td>
+	<td>xpath=(//*[contains(@type, 'checkbox')])[${key_index}]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

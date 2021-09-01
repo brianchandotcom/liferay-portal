@@ -54,6 +54,15 @@ definition {
 
 		Click(locator1 = "ACUtils#CLEAR_SEARCH_BAR_BUTTON");
 	}
+
+	macro clickMemberButton {
+		var key_TableMember = "${memberName}";
+		
+		var key_ButtonName = "${buttonName}";
+
+		Click(locator1 = "ACSegments#MEMBER_GENERIC_BUTTON");
+	}
+
 	macro addStaticMultiMember {
 		Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
 

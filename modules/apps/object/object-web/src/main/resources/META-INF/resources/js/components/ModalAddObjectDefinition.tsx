@@ -18,6 +18,10 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
+import {
+	firstLetterUppercase,
+	removeAllSpecialCharacters,
+} from '../utils/string';
 import RequiredMask from './RequiredMask';
 
 declare global {
@@ -29,25 +33,29 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 	spritemap: string;
 }
 
-type THandleFormStateFn = (
-	key: string,
-	value: boolean | string | TLocalizableLable
-) => void;
-
-type TLocalizableLable = {
-	[key: string]: string;
-};
-
 type TFormState = {
+	generateAutoName: boolean;
 	label: {
 		[key: string]: string;
 	};
+	name: string;
 	pluralLabel: {
 		[key: string]: string;
 	};
-	name: string;
 	required: boolean;
 	type: string;
+};
+
+type TFormatString = (str: string) => string;
+
+const formatString: TFormatString = (str) => {
+	const split = str.split(' ');
+	const capitalizeFirstLetters = split.map((str: string) =>
+		firstLetterUppercase(str)
+	);
+	const join = capitalizeFirstLetters.join('');
+
+	return removeAllSpecialCharacters(join);
 };
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
@@ -55,6 +63,7 @@ const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const ModalAddObjectDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 	const [formState, setFormState] = useState<TFormState>({
+		generateAutoName: true,
 		label: {
 			[defaultLanguageId]: '',
 		},
@@ -71,10 +80,10 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 		onClose: () => setVisibleModal(false),
 	});
 
-	const handleSaveObjectDefinition = () => {
+	const handleSaveObjectDefinition = async () => {
 		const {label, name, pluralLabel} = formState;
 
-		Liferay.Util.fetch(apiURL, {
+		const response = await Liferay.Util.fetch(apiURL, {
 			body: JSON.stringify({
 				label,
 				name,
@@ -87,20 +96,23 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 				'Content-Type': 'application/json',
 			}),
 			method: 'POST',
-		})
-			.then((response: any) => {
-				if (response.ok) {
-					onClose();
+		});
 
-					window.location.reload();
-				}
-				else {
-					return response.json();
-				}
-			})
-			.then(({title}: {title: string}) => {
-				setError(title);
-			});
+		if (response.status === 401) {
+			window.location.reload();
+		}
+		else if (response.ok) {
+			onClose();
+
+			window.location.reload();
+		}
+		else {
+			const {
+				title = Liferay.Language.get('an-error-occurred'),
+			} = await response.json();
+
+			setError(title);
+		}
 	};
 
 	const handleOpenObjectDefinitionModal = () => setVisibleModal(true);
@@ -115,15 +127,6 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 			);
 		};
 	}, []);
-
-	const handleChangeForm: THandleFormStateFn = (key, value) => {
-		setError('');
-
-		setFormState({
-			...formState,
-			[key]: value,
-		});
-	};
 
 	return (
 		<>
@@ -151,11 +154,25 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 
 							<ClayInput
 								id="objectDefinitionLabel"
-								onChange={({target: {value}}) =>
-									handleChangeForm('label', {
-										[defaultLanguageId]: value,
-									})
-								}
+								onChange={({target: {value}}) => {
+									setFormState({
+										...formState,
+										...(formState.generateAutoName && {
+
+											// Format name removing spaces, special characters and
+											// the first letter must be uppercase
+
+											name: firstLetterUppercase(
+												formatString(value)
+											),
+										}),
+										label: {
+											[defaultLanguageId]: value,
+										},
+									});
+
+									error && setError('');
+								}}
 								type="text"
 								value={formState.label[defaultLanguageId]}
 							/>
@@ -170,11 +187,16 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 
 							<ClayInput
 								id="objectDefinitionPluralLabel"
-								onChange={({target: {value}}) =>
-									handleChangeForm('pluralLabel', {
-										[defaultLanguageId]: value,
-									})
-								}
+								onChange={({target: {value}}) => {
+									setFormState({
+										...formState,
+										pluralLabel: {
+											[defaultLanguageId]: value,
+										},
+									});
+
+									error && setError('');
+								}}
 								type="text"
 								value={formState.pluralLabel[defaultLanguageId]}
 							/>
@@ -189,9 +211,15 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 
 							<ClayInput
 								id="objectDefinitionName"
-								onChange={({target: {value}}) =>
-									handleChangeForm('name', value)
-								}
+								onChange={({target: {value}}) => {
+									setFormState({
+										...formState,
+										generateAutoName: !value,
+										name: value,
+									});
+
+									error && setError('');
+								}}
 								type="text"
 								value={formState.name}
 							/>

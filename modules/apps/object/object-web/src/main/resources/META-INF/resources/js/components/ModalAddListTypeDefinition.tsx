@@ -25,15 +25,6 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 	spritemap: string;
 }
 
-type THandleFormStateFn = (
-	key: string,
-	value: boolean | string | TLocalizableName
-) => void;
-
-type TLocalizableName = {
-	[key: string]: string;
-};
-
 type TFormState = {
 	name_i18n: {
 		[key: string]: string;
@@ -55,10 +46,10 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 		onClose: () => setVisibleModal(false),
 	});
 
-	const handleSaveListTypeDefinition = () => {
+	const handleSaveListTypeDefinition = async () => {
 		const {name_i18n} = formState;
 
-		Liferay.Util.fetch(apiURL, {
+		const response = await Liferay.Util.fetch(apiURL, {
 			body: JSON.stringify({
 				name_i18n,
 			}),
@@ -67,20 +58,23 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 				'Content-Type': 'application/json',
 			}),
 			method: 'POST',
-		})
-			.then((response: any) => {
-				if (response.ok) {
-					onClose();
+		});
 
-					window.location.reload();
-				}
-				else {
-					return response.json();
-				}
-			})
-			.then(({title}: {title: string}) => {
-				setError(title);
-			});
+		if (response.status === 401) {
+			window.location.reload();
+		}
+		else if (response.ok) {
+			onClose();
+
+			window.location.reload();
+		}
+		else {
+			const {
+				title = Liferay.Language.get('an-error-occurred'),
+			} = await response.json();
+
+			setError(title);
+		}
 	};
 
 	const handleOpenListTypeDefinitionModal = () => setVisibleModal(true);
@@ -95,15 +89,6 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 			);
 		};
 	}, []);
-
-	const handleChangeForm: THandleFormStateFn = (key, value) => {
-		setError('');
-
-		setFormState({
-			...formState,
-			[key]: value,
-		});
-	};
 
 	return (
 		<>
@@ -131,11 +116,16 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 
 							<ClayInput
 								id="listTypeDefinitionName"
-								onChange={({target: {value}}) =>
-									handleChangeForm('name_i18n', {
-										[defaultLanguageId]: value,
-									})
-								}
+								onChange={({target: {value}}) => {
+									setFormState({
+										...formState,
+										name_i18n: {
+											[defaultLanguageId]: value,
+										},
+									});
+
+									error && setError('');
+								}}
 								type="text"
 								value={formState.name_i18n[defaultLanguageId]}
 							/>

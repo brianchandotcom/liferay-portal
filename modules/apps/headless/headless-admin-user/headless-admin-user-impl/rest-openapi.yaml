@@ -509,6 +509,16 @@ components:
                 Represents a relationship between a user and a company or site. This follows the
                 [`Role`](https://www.schema.org/Role) specification.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    # @review
+                    description:
+                        Block of actions that the user can perform with the roles.
+                    readOnly: true
+                    type: object
                 availableLanguages:
                     description:
                         A list of languages for which the role has a translation.

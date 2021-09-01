@@ -98,6 +98,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.InvalidSelectorException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
@@ -2334,6 +2335,11 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			FileUtil.write(
 				new File(fileName),
 				takesScreenshot.getScreenshotAs(OutputType.BYTES));
+		}
+		catch (NoSuchWindowException noSuchWindowException) {
+			selectWindow("null");
+
+			saveScreenshot(fileName);
 		}
 		catch (UnhandledAlertException unhandledAlertException) {
 			LiferaySeleniumUtil.captureScreen(fileName);

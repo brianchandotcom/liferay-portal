@@ -657,8 +657,13 @@ components:
                     readOnly: true
                     type: integer
                 name:
-                    example: OrderType Name
-                    type: string
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: Hand Saw
+                        hr_HR: Product Name HR
+                        hu_HU: Product Name HU
+                    type: object
             type: object
         PriceEntry:
             properties:

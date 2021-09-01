@@ -27,7 +27,15 @@ definition {
 
 		ACDXPSettings.navToSyncedContactDataMenu();
 
-		ACDXPSettings.syncContactData();
+		if (isSet(userGroup)) {
+			ACDXPSettings.syncContactSingleUserGroupData(userGroup = "${userGroup}");
+		}
+		else if (isSet(orgName)) {
+			ACDXPSettings.syncByOrganizations(orgName = "${orgName}");
+		}
+		else {
+			ACDXPSettings.syncContactData();
+		}
 
 		return "${assignedPropertyName}";
 	}
@@ -132,6 +140,29 @@ definition {
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
 	}
 
+	macro syncByOrganizations {
+		Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
+
+		Click(locator1 = "ACDXPSettings#SYNC_BY_ORGANIZATIONS_BUTTON");
+
+		ACDXPSettings.searchACItem(searchItem = "${orgName}");
+
+		if (isSet(index)) {
+			Click(
+				key_index = "${index}",
+				locator1 = "ACDXPSettings#AC_CHECKBOX_INDEX");
+		}
+		else {
+			Click(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
+		}
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro syncContactData {
 		Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
 
@@ -140,6 +171,26 @@ definition {
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro syncContactSingleUserGroupData {
+		Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
+
+		Click(
+			key_option = "Sync by User Groups",
+			locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
+
+		Click(
+			key_entry = "${userGroup}",
+			locator1 = "ACDXPSettings#USER_GROUP_OPTION_CHECKBOX");
+
+		Click(
+			key_text = "Save and Next",
+			locator1 = "Button#ANY");
+
+		Button.clickSave();
 
 		Alert.viewSuccessMessage();
 	}

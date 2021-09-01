@@ -556,8 +556,6 @@ definition {
 	}
 
 	macro waitForLoading {
-		WaitForVisible(locator1 = "ACUtils#LOADING_ANIMATION");
-
 		WaitForElementNotPresent(locator1 = "ACUtils#LOADING_ANIMATION");
 	}
 

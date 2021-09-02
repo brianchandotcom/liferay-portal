@@ -351,6 +351,11 @@ public class UpstreamFailureUtil {
 
 		Collections.reverse(buildResultJSONURLs);
 
+		GitWorkingDirectory gitWorkingDirectory =
+			GitWorkingDirectoryFactory.newGitWorkingDirectory(
+				topLevelBuild.getBranchName(), (File)null,
+				topLevelBuild.getBaseGitRepositoryName());
+
 		for (String buildResultJSONURL : buildResultJSONURLs) {
 			try {
 				buildResultJSONURL = buildResultJSONURL.replace(
@@ -365,12 +370,14 @@ public class UpstreamFailureUtil {
 
 				String sha = jsonObject.getString("SHA");
 
-				GitWorkingDirectory gitWorkingDirectory =
-					GitWorkingDirectoryFactory.newGitWorkingDirectory(
-						topLevelBuild.getBranchName(), (File)null,
-						topLevelBuild.getBaseGitRepositoryName());
+				if (!gitWorkingDirectory.refContainsSHA("HEAD", sha)) {
+					continue;
+				}
 
-				if (gitWorkingDirectory.refContainsSHA("HEAD", sha)) {
+				JSONArray failureBatchesJSONArray = jsonObject.getJSONArray(
+					"failedBatches");
+
+				if (failureBatchesJSONArray.length() > 0) {
 					System.out.println(
 						"Downloading upstream test results from " +
 							buildResultJSONURL);

@@ -24,6 +24,8 @@ import java.util.ServiceLoader;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 
 /**
@@ -74,6 +76,17 @@ public class SystemBundleUtil {
 		}
 		finally {
 			bundleContext.ungetService(serviceReference);
+		}
+	}
+
+	public static Filter createFilter(String filterString) {
+		BundleContext bundleContext = getBundleContext();
+
+		try {
+			return bundleContext.createFilter(filterString);
+		}
+		catch (InvalidSyntaxException invalidSyntaxException) {
+			throw new RuntimeException(invalidSyntaxException);
 		}
 	}
 

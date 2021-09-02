@@ -923,20 +923,6 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet");
 	}
 
-	macro removeOrganizationAsAssignee {
-		var key_assigneeName = "${assigneeName}";
-
-		Search.searchCP(searchTerm = "${assigneeName}");
-
-		ClickNoError(
-			locator1 = "Icon#REMOVE_ASSIGNEE",
-			value1 = "${assigneeName}");
-
-		AssertConfirm(value1 = "Are you sure you want to remove this organization?");
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro removeDefaultBillingAddress {
 		Click(locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_REMOVE_DEFAULT_BILLING");
 
@@ -969,6 +955,20 @@ definition {
 		AssertElementNotPresent(
 			key_domainName = "${domainName}",
 			locator1 = "Account#VALID_DOMAINS_REMOVE_TOOLTIP");
+	}
+
+	macro removeOrganizationAsAssignee {
+		var key_assigneeName = "${assigneeName}";
+
+		Search.searchCP(searchTerm = "${assigneeName}");
+
+		ClickNoError(
+			locator1 = "Icon#REMOVE_ASSIGNEE",
+			value1 = "${assigneeName}");
+
+		AssertConfirm(value1 = "Are you sure you want to remove this organization?");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro setDefaultBillingAddress {

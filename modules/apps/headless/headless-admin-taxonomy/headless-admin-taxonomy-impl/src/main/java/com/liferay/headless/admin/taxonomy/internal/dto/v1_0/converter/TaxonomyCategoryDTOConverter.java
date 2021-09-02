@@ -14,6 +14,8 @@
 
 package com.liferay.headless.admin.taxonomy.internal.dto.v1_0.converter;
 
+import com.liferay.asset.category.property.model.AssetCategoryProperty;
+import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
@@ -23,6 +25,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.ParentTaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.ParentTaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategoryProperty;
 import com.liferay.headless.admin.taxonomy.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -31,6 +34,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,6 +75,17 @@ public class TaxonomyCategoryDTOConverter
 		throws Exception {
 
 		return _toTaxonomyCategory(dtoConverterContext, assetCategory);
+	}
+
+	private static TaxonomyCategoryProperty _toTaxonomyCategoryProperty(
+		AssetCategoryProperty assetCategoryProperty) {
+
+		return new TaxonomyCategoryProperty() {
+			{
+				key = assetCategoryProperty.getKey();
+				value = assetCategoryProperty.getValue();
+			}
+		};
 	}
 
 	private ParentTaxonomyCategory _toParentTaxonomyCategory(
@@ -157,12 +174,38 @@ public class TaxonomyCategoryDTOConverter
 							assetCategory.getParentCategory(),
 							dtoConverterContext);
 					});
+
+				setTaxonomyCategoryProperties(
+					() -> {
+						List<AssetCategoryProperty> assetCategoryProperties =
+							_assetCategoryPropertyLocalService.
+								getCategoryProperties(
+									assetCategory.getCategoryId());
+
+						if (assetCategoryProperties.isEmpty()) {
+							return null;
+						}
+
+						Stream<AssetCategoryProperty> stream =
+							assetCategoryProperties.stream();
+
+						return stream.map(
+							TaxonomyCategoryDTOConverter::
+								_toTaxonomyCategoryProperty
+						).toArray(
+							TaxonomyCategoryProperty[]::new
+						);
+					});
 			}
 		};
 	}
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetCategoryPropertyLocalService
+		_assetCategoryPropertyLocalService;
 
 	@Reference
 	private AssetCategoryService _assetCategoryService;

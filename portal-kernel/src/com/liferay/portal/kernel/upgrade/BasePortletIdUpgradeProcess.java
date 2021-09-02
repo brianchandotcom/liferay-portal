@@ -729,20 +729,16 @@ public abstract class BasePortletIdUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		String sql1 = StringBundler.concat(
-			"select fragmentEntryLinkId, editableValues from ",
-			"FragmentEntryLink where editableValues like '%", oldRootPortletId,
-			"%'");
-
-		String sql2 =
-			"update FragmentEntryLink set editableValues = ? where " +
-				"fragmentEntryLinkId = ?";
-
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				sql1);
+				StringBundler.concat(
+					"select fragmentEntryLinkId, editableValues from ",
+					"FragmentEntryLink where editableValues like '%",
+					oldRootPortletId, "%'"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection, sql2);
+					connection,
+					"update FragmentEntryLink set editableValues = ? where " +
+						"fragmentEntryLinkId = ?");
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {

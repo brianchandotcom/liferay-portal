@@ -42,6 +42,19 @@ definition {
 		Click(locator1 = "ACInterests#TAB_NAME");
 	}
 
+	macro viewIndividualInterestSpecificOrder {
+		var resultOrder = "0";
+
+		for (var interestTopic : list "${interestTopic}") {
+			var resultOrder = ${resultOrder} + 1;
+
+			AssertVisible(
+				key_interestTopic = "${interestTopic}",
+				locator1 = "ACInterests#INTEREST_VIEW_SPECIFIC_ORDER",
+				resultOrder = "${resultOrder}");
+		}
+	}
+
 	macro viewInterest {
 		var key_interestTopic = "${interestTopic}";
 

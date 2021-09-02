@@ -18,7 +18,7 @@ AUI.add(
 		var Lang = A.Lang;
 
 		var CONTENT_TEMPLATE =
-			'<div class="lfr-fullscreen-source-editor-header row">' +
+			'<div class="cadmin lfr-fullscreen-source-editor-header row">' +
 			'<div class="col-6">' +
 			'<button class="btn btn-secondary btn-sm float-right lfr-portal-tooltip" data-title="{iconMoonTooltip}" id="switchTheme" type="button">' +
 			'<svg class="lexicon-icon lexicon-icon-moon" focusable="false" role="img">' +

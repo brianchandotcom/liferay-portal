@@ -280,6 +280,15 @@ html#{$cadmin-selector} {
 			padding: 12px;
 		}
 
+		// Lfr Source Editor
+
+		&.lfr-fullscreen-source-editor-header {
+			height: 40px;
+			margin-right: 4px;
+			margin-top: 4px;
+			min-height: 40px;
+		}
+
 		// Lfr Upload Container
 
 		.upload-drop-intent .lfr-upload-container .upload-target {

@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategoryProperty;
 import com.liferay.headless.admin.taxonomy.internal.dto.v1_0.converter.TaxonomyCategoryDTOConverter;
 import com.liferay.headless.admin.taxonomy.internal.odata.entity.v1_0.CategoryEntityModel;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
@@ -61,11 +62,13 @@ import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
 import java.sql.Timestamp;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -370,7 +373,9 @@ public class TaxonomyCategoryResourceImpl
 
 		AssetCategory assetCategory = _assetCategoryService.addCategory(
 			groupId, taxonomyCategoryId, titleMap, descriptionMap,
-			taxonomyVocabularyId, null,
+			taxonomyVocabularyId,
+			_toCategoryProperties(
+				taxonomyCategory.getTaxonomyCategoryProperties()),
 			ServiceContextRequestUtil.createServiceContext(
 				groupId, contextHttpServletRequest,
 				taxonomyCategory.getViewableByAsString()));
@@ -492,6 +497,25 @@ public class TaxonomyCategoryResourceImpl
 				setUserId((long)assetCategory[8]);
 			}
 		};
+	}
+
+	private String[] _toCategoryProperties(
+		TaxonomyCategoryProperty[] taxonomyCategoryProperties) {
+
+		if (taxonomyCategoryProperties == null) {
+			return null;
+		}
+
+		Stream<TaxonomyCategoryProperty> stream = Arrays.stream(
+			taxonomyCategoryProperties);
+
+		return stream.map(
+			taxonomyCategoryProperty ->
+				taxonomyCategoryProperty.getKey() + ":" +
+					taxonomyCategoryProperty.getValue()
+		).toArray(
+			String[]::new
+		);
 	}
 
 	private Date _toDate(Timestamp timestamp) {

@@ -242,11 +242,7 @@ definition {
 				key_position = "${position}",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
-			PageEditor.gotoTab(tabName = "Browser");
-
-			PageEditor.gotoTab(tabName = "Fragments and Widgets");
-
-			PageEditor.closeSidebar(tabName = "Fragments and Widgets");
+			Click(locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_CLEAR_BUTTON");
 		}
 	}
 
@@ -344,11 +340,7 @@ definition {
 				key_position = "${position}",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 
-			PageEditor.gotoTab(tabName = "Browser");
-
-			PageEditor.gotoTab(tabName = "Fragments and Widgets");
-
-			PageEditor.closeSidebar(tabName = "Fragments and Widgets");
+			Click(locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_CLEAR_BUTTON");
 		}
 	}
 
@@ -432,11 +424,7 @@ definition {
 				key_inFragmentName = "Dropdown",
 				locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
 
-			PageEditor.gotoTab(tabName = "Browser");
-
-			PageEditor.gotoTab(tabName = "Fragments and Widgets");
-
-			PageEditor.closeSidebar(tabName = "Fragments and Widgets");
+			Click(locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_CLEAR_BUTTON");
 		}
 	}
 
@@ -532,11 +520,7 @@ definition {
 				key_inFragmentName = "Tabs",
 				locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
 
-			PageEditor.gotoTab(tabName = "Browser");
-
-			PageEditor.gotoTab(tabName = "Fragments and Widgets");
-
-			PageEditor.closeSidebar(tabName = "Fragments and Widgets");
+			Click(locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_CLEAR_BUTTON");
 		}
 	}
 
@@ -957,11 +941,7 @@ definition {
 			key_fragmentName = "${portletName}",
 			locator1 = "Fragment#FRAGMENT_HEADER");
 
-		PageEditor.gotoTab(tabName = "Browser");
-
-		PageEditor.gotoTab(tabName = "Fragments and Widgets");
-
-		PageEditor.closeSidebar(tabName = "Fragments and Widgets");
+		Click(locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_CLEAR_BUTTON");
 	}
 
 	macro assertAutoImageResolution {

@@ -193,7 +193,7 @@
 <!--USER_GROUPS-->
 <tr>
 	<td>USER_GROUPS_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td</td>
 	<td></td>
 </tr>
 <tr>

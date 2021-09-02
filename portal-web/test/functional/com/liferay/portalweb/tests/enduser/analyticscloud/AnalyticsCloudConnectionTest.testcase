@@ -619,12 +619,77 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8824 | Test Summary: Preview the number of User Group contacts to sync"
-	@ignore = "true"
 	@priority = "4"
 	test UserGroupContactSyncPreview {
+		var user = "ac";
+		var groupsList = "User Group1,User Group2";
 
-		// TODO LRAC-8824 UserGroupContactSyncPreview
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "${user}@liferay.com",
+				userFirstName = "${user}",
+				userLastName = "${user}",
+				userScreenName = "${user}");
+		}
 
+		task ("Create groups") {
+			for (var groups : list "${groupsList}") {
+				JSONUserGroup.addUserGroup(
+					userGroupDescription = "${groups} Description",
+					userGroupName = "${groups}");
+			}
+		}
+
+		task ("Go to users and organizations") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+		}
+
+		task ("Entry user and add to groups") {
+			UserNavigator.gotoUser(userScreenName = "${user}");
+
+			for (var addUsers : list "${groupsList}") {
+				User.assignUserGroupCP(userGroupName = "${addUsers}");
+			}
+		}
+
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(userGroup = "User Group1");
+		}
+
+		task ("Assert preview the number of users groups contacts to sync") {
+			ACDXPSettings.navToSyncedContactDataMenu();
+
+			Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
+
+			var entrieGrup = selenium.getText(locator1 = "ACDXPSettings#SYNC_BY_USER_GROUPS_PREVIEW");
+
+			var numberGrup = StringUtil.extractDigits("${entrieGrup}");
+
+			AssertTextEquals(
+				locator1 = "ACDXPSettings#SYNC_BY_USER_GROUPS_PREVIEW",
+				value1 = "${entrieGrup}");
+
+			Navigator.gotoBack();
+		}
+
+		task ("Assert preview the number of users groups contacts to sync") {
+			ACDXPSettings.syncContactSingleUserGroupData(userGroup = "User Group2");
+
+			ACDXPSettings.navToSyncedContactDataMenu();
+
+			Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
+
+			var newNumberGrup = ${numberGrup} + 1;
+
+			var newEntrieGrup = StringUtil.add("${newNumberGrup}", " User Groups Selected", "");
+
+			AssertTextEquals(
+				locator1 = "ACDXPSettings#SYNC_BY_USER_GROUPS_PREVIEW",
+				value1 = "${newEntrieGrup}");
+		}
 	}
 
 	@description = "Automation ID: LRAC-8128 | Test Summary: View asset added by DXP data source"

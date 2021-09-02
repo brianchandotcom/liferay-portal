@@ -334,7 +334,15 @@ public class TaxonomyCategoryResourceImpl
 			assetCategory.getCategoryId(), ActionKeys.UPDATE);
 
 		return _toTaxonomyCategory(
-			_assetCategoryLocalService.updateAssetCategory(assetCategory));
+			_assetCategoryLocalService.updateCategory(
+				contextUser.getUserId(), assetCategory.getCategoryId(),
+				assetCategory.getParentCategoryId(), titleMap, descriptionMap,
+				assetCategory.getVocabularyId(),
+				_toCategoryProperties(
+					taxonomyCategory.getTaxonomyCategoryProperties()),
+				ServiceContextRequestUtil.createServiceContext(
+					assetCategory.getGroupId(), contextHttpServletRequest,
+					taxonomyCategory.getViewableByAsString())));
 	}
 
 	@Override

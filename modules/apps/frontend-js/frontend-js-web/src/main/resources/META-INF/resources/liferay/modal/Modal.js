@@ -31,6 +31,8 @@ const Modal = ({
 		className: 'cadmin',
 	},
 	customEvents,
+	footerCssClass,
+	headerCssClass,
 	headerHTML,
 	height,
 	id,
@@ -181,7 +183,7 @@ const Modal = ({
 					status={status}
 					zIndex={zIndex}
 				>
-					<ClayModal.Header>
+					<ClayModal.Header className={headerCssClass}>
 						{headerHTML ? (
 							<div
 								dangerouslySetInnerHTML={{
@@ -224,6 +226,7 @@ const Modal = ({
 					</div>
 					{buttons && (
 						<ClayModal.Footer
+							className={footerCssClass}
 							last={
 								<ClayButton.Group spaced>
 									{buttons.map((button, index) => (
@@ -273,6 +276,8 @@ const openModal = (props) => {
 
 const openPortletModal = ({
 	containerProps,
+	footerCssClass,
+	headerCssClass,
 	iframeBodyCssClass,
 	onClose,
 	portletSelector,
@@ -310,6 +315,8 @@ const openPortletModal = ({
 
 		openModal({
 			containerProps,
+			footerCssClass,
+			headerCssClass,
 			headerHTML,
 			iframeBodyCssClass,
 			onClose,

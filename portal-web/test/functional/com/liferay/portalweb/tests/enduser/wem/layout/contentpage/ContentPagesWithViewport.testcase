@@ -384,78 +384,108 @@ definition {
 					index = "2");
 		}
 
-		task ("Assert that Heading from 1 to 4 are shown for desktop view on preview") {
+		task ("Open the Preview modal") {
 			Click(locator1 = "PageEditor#PREVIEW");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Assert that Heading from 1 to 4 are shown for desktop view on preview") {
+			SelectFrameTop();
+
 			Click(
 					key_deviceType = "Desktop",
-					locator1 = "PageEditor#DEVICE_TYPE");
+					locator1 = "Modal#DEVICE_TYPE");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			for (var n : list "1,2,3,4") {
-				AssertTextEquals.assertPartialText(
+				AssertTextEquals(
+						key_index = "${n}",
 						key_fragmentName = "heading",
-						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
 						value1 = "Heading Example ${n}");
 			}
 
 			AssertTextNotPresent(
+					key_index = "5",
 					key_fragmentName = "heading",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
 					value1 = "Heading Example 5");
 		}
 		task ("Assert that Heading from 1 to 3 are shown for tablet view on preview") {
+
+			SelectFrameTop();
+
 			Click(
 					key_deviceType = "Tablet",
-					locator1 = "PageEditor#DEVICE_TYPE");
+					locator1 = "Modal#DEVICE_TYPE");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			for (var n : list "1,2,3") {
-				AssertTextEquals.assertPartialText(
+				AssertTextEquals(
+						key_index = "${n}",
 						key_fragmentName = "heading",
-						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
 						value1 = "Heading Example ${n}");
 			}
+
 			for (var n : list "4,5") {
 				AssertTextNotPresent(
+						key_index = "${n}",
 						key_fragmentName = "heading",
-						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
 						value1 = "Heading Example ${n}");
 			}
 		}
 		task ("Assert that Heading from 1 to 2 are shown for landscape phone view on preview") {
+			SelectFrameTop();
+
 			Click(
 					key_deviceType = "Landscape Phone",
-					locator1 = "PageEditor#DEVICE_TYPE");
+					locator1 = "Modal#DEVICE_TYPE");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			for (var n : list "1,2") {
-				AssertTextEquals.assertPartialText(
+				AssertTextEquals(
+						key_index = "${n}",
 						key_fragmentName = "heading",
-						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
 						value1 = "Heading Example ${n}");
 			}
 			for (var n : list "3,4,5") {
 				AssertTextNotPresent(
+						key_index = "${n}",
 						key_fragmentName = "heading",
-						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
 						value1 = "Heading Example ${n}");
 			}
 		}
 		task ("Assert that only Heading 1 is shown for portail phone view on preview") {
+			SelectFrameTop();
+
 			Click(
 					key_deviceType = "Portrait Phone",
-					locator1 = "PageEditor#DEVICE_TYPE");
+					locator1 = "Modal#DEVICE_TYPE");
 
-			AssertTextEquals.assertPartialText(
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertTextEquals(
+					key_index = "1",
 					key_fragmentName = "heading",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
 					value1 = "Heading Example 1");
 
 			for (var n : list "2,3,4,5") {
 				AssertTextNotPresent(
+						key_index = "${n}",
 						key_fragmentName = "heading",
-						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
 						value1 = "Heading Example ${n}");
 			}
 		}
-
 	}
 
 	@description = "This is a test for LPS-110723. When change to other viewports, there are only limited common fragment style categories available."

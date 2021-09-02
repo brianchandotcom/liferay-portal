@@ -201,6 +201,38 @@ definition {
 		ACProperties.assertPropertyTitle(propertyName = "Properties");
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9038 | Test Summary: As a Business User, I should not be able to create an invalid property name"
+	@priority = "3"
+	test CannotAddPropertyWhenNameExceedMaximumLength {
+		task ("Navigate to the Properties admin on AC") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+		}
+
+		task ("View the alert shown in creation modal when the name exceeds maximum length") {
+			Click(locator1 = "ACSettings#NEW_PROPERTY_BUTTON");
+
+			Type(
+				locator1 = "ACSettings#PROPERTY_INPUT",
+				value1 = "uZcHpcFx3abyBF4MtqVQFsbt9lrF7lV5A9xC7tujzqicCSHoscXb0sJV6q2alW7cli");
+
+			Click(locator1 = "Modal#HEADER");
+
+			AssertTextPresent(
+				locator1 = "TextInput#ALERT",
+				value1 = "Exceeds maximum length.");
+		}
+
+		task ("View the Save button is disabled") {
+			AssertVisible(
+				key_text = "Save",
+				locator1 = "Button#ANY_DISABLED");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9035 | Test Summary: Assign sites to property is blocked if the site is already assigned to another property"
 	@priority = "3"
 	test CannotAssignSiteToMultipleProperties {

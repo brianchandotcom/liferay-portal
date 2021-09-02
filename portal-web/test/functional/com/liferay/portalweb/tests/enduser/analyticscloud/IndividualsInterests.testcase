@@ -98,4 +98,78 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8980 | Test Summary: Order the Individual's Interest List"
+	@priority = "3"
+	test OrderIndividualsInterests {
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add specific pages and web contents to Site as interest topics") {
+			Navigator.openSiteURL(siteName = "Site Name");
+
+			for (var layoutName : list "Movies,Sports,Technology") {
+				JSONLayout.addPublicLayout(
+					groupName = "Site Name",
+					layoutName = "${layoutName}");
+
+				ACUtils.createWCAndAddToPage(
+					layoutName = "${layoutName}",
+					webContentTitle = "Web Content Title ${layoutName}");
+			}
+		}
+
+		task ("Add a new user and sync the Contact Data") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View new pages in site as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			for (var pageName : list "Movies,Sports,Technology") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Individual Interests") {
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Known Individuals");
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "ac ac");
+
+			ACNavigation.switchTab(tabName = "Interests");
+		}
+
+		task ("Sort the Interests in descending order") {
+			ACUtils.orderArrow(type = "descending");
+
+			ACInterests.viewIndividualInterestSpecificOrder(interestTopic = "technology,sports,site,movies,liferay dxp");
+		}
+
+		task ("Sort the Interests in ascending order") {
+			ACUtils.orderArrow(type = "ascending");
+
+			ACInterests.viewIndividualInterestSpecificOrder(interestTopic = "liferay dxp,movies,site,sports,technology");
+		}
+	}
+
 }

@@ -88,9 +88,7 @@ public class LayoutCrawler {
 		HttpGet httpGet = new HttpGet(
 			_portal.getLayoutFullURL(layout, themeDisplay));
 
-		String companyVirtualHost = company.getVirtualHostname();
-
-		httpGet.setHeader("Host", companyVirtualHost);
+		httpGet.setHeader("Host", company.getVirtualHostname());
 
 		HttpClientContext httpClientContext = new HttpClientContext();
 

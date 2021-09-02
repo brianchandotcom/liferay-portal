@@ -56,6 +56,7 @@ definition {
 		Smoke.viewWelcomeContentPage();
 	}
 
+	@description = "This is a use cae for LRQA-7765."
 	@priority = "4"
 	test RememberMeChecked {
 		property custom.properties = "session.timeout=2";

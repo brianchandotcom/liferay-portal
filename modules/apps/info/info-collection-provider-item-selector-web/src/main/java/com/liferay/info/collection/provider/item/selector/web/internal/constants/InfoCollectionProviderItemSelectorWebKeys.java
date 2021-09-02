@@ -20,6 +20,10 @@ package com.liferay.info.collection.provider.item.selector.web.internal.constant
 public class InfoCollectionProviderItemSelectorWebKeys {
 
 	public static final String
+		INFO_COLLECTION_PROVIDER_ITEM_SELECTOR_DISPLAY_CONTEXT =
+			"INFO_COLLECTION_PROVIDER_ITEM_SELECTOR_DISPLAY_CONTEXT";
+
+	public static final String
 		RELATED_INFO_ITEM_COLLECTION_PROVIDER_ITEM_SELECTOR_DISPLAY_CONTEXT =
 			"RELATED_INFO_ITEM_COLLECTION_PROVIDER_ITEM_SELECTOR_DISPLAY_" +
 				"CONTEXT";

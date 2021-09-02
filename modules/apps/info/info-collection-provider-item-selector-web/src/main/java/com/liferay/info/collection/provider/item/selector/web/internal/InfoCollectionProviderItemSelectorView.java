@@ -15,30 +15,15 @@
 package com.liferay.info.collection.provider.item.selector.web.internal;
 
 import com.liferay.info.collection.provider.InfoCollectionProvider;
-import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
-import com.liferay.info.item.InfoItemFormVariation;
+import com.liferay.info.collection.provider.item.selector.web.internal.constants.InfoCollectionProviderItemSelectorWebKeys;
+import com.liferay.info.collection.provider.item.selector.web.internal.display.context.InfoCollectionProviderItemSelectorDisplayContext;
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.item.selector.ItemSelectorViewDescriptor;
-import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -48,9 +33,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -95,17 +80,45 @@ public class InfoCollectionProviderItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		_itemSelectorViewDescriptorRenderer.renderHTML(
-			servletRequest, servletResponse,
-			infoCollectionProviderItemSelectorCriterion, portletURL,
-			itemSelectedEventName, search,
-			new InfoCollectionProviderItemSelectorViewDescriptor(
-				(HttpServletRequest)servletRequest,
-				infoCollectionProviderItemSelectorCriterion, portletURL));
+		List<InfoCollectionProvider<?>> infoCollectionProviders =
+			_getInfoCollectionProviders(
+				infoCollectionProviderItemSelectorCriterion);
+
+		servletRequest.setAttribute(
+			InfoCollectionProviderItemSelectorWebKeys.
+				INFO_COLLECTION_PROVIDER_ITEM_SELECTOR_DISPLAY_CONTEXT,
+			new InfoCollectionProviderItemSelectorDisplayContext(
+				(HttpServletRequest)servletRequest, itemSelectedEventName,
+				_language, portletURL, infoCollectionProviders,
+				_infoItemServiceTracker));
+
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(
+				"/view_info_collection_providers.jsp");
+
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		InfoCollectionProviderItemSelectorView.class);
+	private List<InfoCollectionProvider<?>> _getInfoCollectionProviders(
+		InfoCollectionProviderItemSelectorCriterion
+			infoCollectionProviderItemSelectorCriterion) {
+
+		List<InfoCollectionProvider<?>> infoCollectionProviders =
+			new ArrayList<>();
+
+		List<String> itemTypes =
+			infoCollectionProviderItemSelectorCriterion.getItemTypes();
+
+		for (String itemType : itemTypes) {
+			infoCollectionProviders.addAll(
+				_infoItemServiceTracker.getAllInfoItemServices(
+					(Class<InfoCollectionProvider<?>>)
+						(Class<?>)InfoCollectionProvider.class,
+					itemType));
+		}
+
+		return Collections.unmodifiableList(infoCollectionProviders);
+	}
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
@@ -115,233 +128,11 @@ public class InfoCollectionProviderItemSelectorView
 	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
-	private ItemSelectorViewDescriptorRenderer
-		<InfoCollectionProviderItemSelectorCriterion>
-			_itemSelectorViewDescriptorRenderer;
-
-	@Reference
 	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.info.collection.provider.item.selector.web)"
 	)
 	private ServletContext _servletContext;
-
-	private class InfoCollectionProviderItemSelectorViewDescriptor
-		implements ItemSelectorViewDescriptor<InfoCollectionProvider<?>> {
-
-		public InfoCollectionProviderItemSelectorViewDescriptor(
-			HttpServletRequest httpServletRequest,
-			InfoCollectionProviderItemSelectorCriterion
-				infoCollectionProviderItemSelectorCriterion,
-			PortletURL portletURL) {
-
-			_httpServletRequest = httpServletRequest;
-			_infoCollectionProviderItemSelectorCriterion =
-				infoCollectionProviderItemSelectorCriterion;
-			_portletURL = portletURL;
-		}
-
-		@Override
-		public ItemDescriptor getItemDescriptor(
-			InfoCollectionProvider<?> infoCollectionProvider) {
-
-			return new ItemDescriptor() {
-
-				@Override
-				public String getIcon() {
-					return "list";
-				}
-
-				@Override
-				public String getImageURL() {
-					return StringPool.BLANK;
-				}
-
-				@Override
-				public String getPayload() {
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)_httpServletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					JSONObject jsonObject = JSONUtil.put(
-						"itemType",
-						infoCollectionProvider.getCollectionItemClassName()
-					).put(
-						"key", infoCollectionProvider.getKey()
-					).put(
-						"title",
-						infoCollectionProvider.getLabel(
-							themeDisplay.getLocale())
-					);
-
-					if (infoCollectionProvider instanceof
-							SingleFormVariationInfoCollectionProvider) {
-
-						SingleFormVariationInfoCollectionProvider<?>
-							singleFormVariationInfoCollectionProvider =
-								(SingleFormVariationInfoCollectionProvider<?>)
-									infoCollectionProvider;
-
-						jsonObject.put(
-							"itemSubtype",
-							singleFormVariationInfoCollectionProvider.
-								getFormVariationKey());
-					}
-
-					return jsonObject.toString();
-				}
-
-				@Override
-				public String getSubtitle(Locale locale) {
-					String className =
-						infoCollectionProvider.getCollectionItemClassName();
-
-					if (Validator.isNull(className)) {
-						return StringPool.BLANK;
-					}
-
-					String modelResource = ResourceActionsUtil.getModelResource(
-						locale, className);
-
-					if (!(infoCollectionProvider instanceof
-							SingleFormVariationInfoCollectionProvider)) {
-
-						return modelResource;
-					}
-
-					InfoItemFormVariationsProvider<?>
-						infoItemFormVariationsProvider =
-							_infoItemServiceTracker.getFirstInfoItemService(
-								InfoItemFormVariationsProvider.class,
-								className);
-
-					if (infoItemFormVariationsProvider == null) {
-						return modelResource;
-					}
-
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)_httpServletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					SingleFormVariationInfoCollectionProvider<?>
-						singleFormVariationInfoCollectionProvider =
-							(SingleFormVariationInfoCollectionProvider<?>)
-								infoCollectionProvider;
-
-					InfoItemFormVariation infoItemFormVariation =
-						infoItemFormVariationsProvider.getInfoItemFormVariation(
-							themeDisplay.getScopeGroupId(),
-							singleFormVariationInfoCollectionProvider.
-								getFormVariationKey());
-
-					if (infoItemFormVariation == null) {
-						return modelResource;
-					}
-
-					return modelResource + " - " +
-						infoItemFormVariation.getLabel(locale);
-				}
-
-				@Override
-				public String getTitle(Locale locale) {
-					return infoCollectionProvider.getLabel(locale);
-				}
-
-			};
-		}
-
-		@Override
-		public ItemSelectorReturnType getItemSelectorReturnType() {
-			return new InfoListProviderItemSelectorReturnType();
-		}
-
-		@Override
-		public SearchContainer<InfoCollectionProvider<?>> getSearchContainer() {
-			PortletRequest portletRequest =
-				(PortletRequest)_httpServletRequest.getAttribute(
-					JavaConstants.JAVAX_PORTLET_REQUEST);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", themeDisplay.getLocale(), getClass());
-
-			SearchContainer<InfoCollectionProvider<?>> searchContainer =
-				new SearchContainer<>(
-					portletRequest, _portletURL, null,
-					_language.get(
-						resourceBundle, "there-are-no-collection-providers"));
-
-			List<InfoCollectionProvider<?>> infoCollectionProviders =
-				new ArrayList<>();
-
-			List<String> itemTypes =
-				_infoCollectionProviderItemSelectorCriterion.getItemTypes();
-
-			if (ListUtil.isNotEmpty(itemTypes)) {
-				for (String itemType : itemTypes) {
-					infoCollectionProviders.addAll(
-						(List<InfoCollectionProvider<?>>)
-							(List<?>)
-								_infoItemServiceTracker.getAllInfoItemServices(
-									InfoCollectionProvider.class, itemType));
-				}
-			}
-			else {
-				infoCollectionProviders =
-					(List<InfoCollectionProvider<?>>)
-						(List<?>)_infoItemServiceTracker.getAllInfoItemServices(
-							InfoCollectionProvider.class);
-			}
-
-			infoCollectionProviders = ListUtil.filter(
-				infoCollectionProviders,
-				infoCollectionProvider -> {
-					try {
-						String label = infoCollectionProvider.getLabel(
-							themeDisplay.getLocale());
-
-						if (Validator.isNotNull(label) &&
-							infoCollectionProvider.isAvailable()) {
-
-							return true;
-						}
-
-						return false;
-					}
-					catch (Exception exception) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to get info list provider label",
-								exception);
-						}
-
-						return false;
-					}
-				});
-
-			searchContainer.setResults(
-				ListUtil.subList(
-					infoCollectionProviders, searchContainer.getStart(),
-					searchContainer.getEnd()));
-			searchContainer.setTotal(infoCollectionProviders.size());
-
-			return searchContainer;
-		}
-
-		@Override
-		public boolean isShowBreadcrumb() {
-			return false;
-		}
-
-		private final HttpServletRequest _httpServletRequest;
-		private final InfoCollectionProviderItemSelectorCriterion
-			_infoCollectionProviderItemSelectorCriterion;
-		private final PortletURL _portletURL;
-
-	}
 
 }

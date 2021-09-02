@@ -1,0 +1,96 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "24";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property slave.label = "slave-1";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9119 | Test Summary: Property list loading a lot of values"
+	@ignore = "true"
+	@priority = "2"
+	test CanPropertyListLoadingALotOfValues {
+
+		// TODO LRAC-9119 CanPropertyListLoadingALotOfValues pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9121 | Test Summary: Settings page properties list is searchable"
+	@ignore = "true"
+	@priority = "3"
+	test CanSearchForPagePropertiesList {
+
+		// TODO LRAC-9121 CanSearchForPagePropertiesList pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9122 | Test Summary: Search for a property"
+	@ignore = "true"
+	@priority = "5"
+	test CanSearchForProperty {
+
+		// TODO LRAC-9122 CanSearchForProperty pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9117 | Test Summary: User selecting a property from the drop down by 1st time"
+	@ignore = "true"
+	@priority = "3"
+	test CanUserSelectPropertyFromTheDropDownByFirstTime {
+
+		// TODO LRAC-9117 CanUserSelectPropertyFromTheDropDownByFirstTime pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9120 | Test Summary: [AC] Property list default view"
+	@ignore = "true"
+	@priority = "3"
+	test ViewPropertyListDefault {
+
+		// TODO LRAC-9120 ViewPropertyListDefault pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9118 | Test Summary: The setting info (from AC configuration menu) are global and don't depend of property"
+	@ignore = "true"
+	@priority = "3"
+	test ViewSettingInfoAreGlobalAndDontDependOfProperty {
+
+		// TODO LRAC-9118 ViewSettingInfoAreGlobalAndDontDependOfProperty pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9116 | Test Summary: Dropdown transiction between no properties or no site and one or more properties available"
+	@ignore = "true"
+	@priority = "3"
+	test ViewTheDropdownTransition {
+
+		// TODO LRAC-9116 ViewTheDropdownTransition pending implementation
+
+	}
+
+}

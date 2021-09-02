@@ -24,6 +24,7 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LRQA-42767."
 	@priority = "5"
 	test ServiceAccessPolicySmoke {
 		property custom.properties = "json.service.auth.token.hosts.allowed=";

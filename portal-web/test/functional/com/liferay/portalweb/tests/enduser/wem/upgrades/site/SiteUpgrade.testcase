@@ -24,7 +24,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.6";
 
-		Upgrade.addDefaultSiteIntoNewSite();
+		Upgrade.exportDefaultSiteIntoNewSite();
 	}
 
 	@description = "This is a test for LPS-131694. The user can import a default site with an Asset Publisher into a new site after Upgrade."
@@ -34,7 +34,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.10.16";
 
-		Upgrade.addDefaultSiteIntoNewSite();
+		Upgrade.exportDefaultSiteIntoNewSite();
 	}
 
 	@description = "This is a test for LPS-102711."

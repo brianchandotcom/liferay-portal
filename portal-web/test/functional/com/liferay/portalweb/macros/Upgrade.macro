@@ -2819,6 +2819,21 @@ definition {
 		}
 	}
 
+	macro viewCardWithThreeColumnsInMobileBreakpoint {
+		task ("Select Mobile Device in simulation menu") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			MobileDevice.previewPG(deviceType = "smartphone");
+		}
+		task ("View the Card fragments shown on content page at mobile mode") {
+			for (var n : list "1,2,3") {
+				AssertVisible(locator1 = "xpath=(//div[contains(@class,'col-md')])[${n}]//div[contains(@class,'component-card')]");
+			}
+		}
+	}
+
 	macro viewCalendar {
 		Navigator.gotoPage(pageName = "Calendar");
 

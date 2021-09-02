@@ -110,6 +110,40 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9037 | Test Summary: As an Business User, a Property with a duplicate name should have an incrementing identifier appended to it's name"
+	@priority = "3"
+	test AutoRenamePropertyWhenDuplicateWithExistingOne {
+		task ("Add a new property on AC") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			ACProperties.addNewProperty(propertyName = "AC Test Property");
+
+			ACProperties.assertNewCreatedProperty(propertyName = "AC Test Property");
+		}
+
+		task ("Add the second property with same name") {
+			ACSettings.goToProperties();
+
+			ACProperties.addNewProperty(propertyName = "AC Test Property");
+		}
+
+		task ("View the property is autorenamed") {
+			ACProperties.assertNewCreatedProperty(propertyName = "AC Test Property (1)");
+		}
+
+		task ("View both properties are available") {
+			ACSettings.goToProperties();
+
+			for (var propertyName : list "AC Test Property,AC Test Property (1)") {
+				ACAssets.viewAssets(assetName = "${propertyName}");
+			}
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9113 | Test Summary: It is possible to create multiple properties in different workspaces"
 	@ignore = "true"
 	@priority = "4"

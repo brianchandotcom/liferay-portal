@@ -95,6 +95,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8613 | Test Summary: Assert no interest found in segment"
 	@priority = "3"
 	test AssertNoInterestFoundInSegment {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
+
 		task ("Add 5 more new users") {
 			for (var n : list "1,2,3,4,5") {
 				JSONUser.addUser(
@@ -270,6 +275,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8614 | Test Summary: Assert top interest shown in segment profile"
 	@priority = "3"
 	test AssertTopInterestShownInSegmentProfile {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
+
 		task ("Add 5 more new users") {
 			for (var n : list "1,2,3,4,5") {
 				JSONUser.addUser(
@@ -436,6 +446,11 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8605 | Test Summary: The top interests list is searchable"
 	test CanSearchTopInterestsListSegments {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
+
 		task ("Add 5 more new users") {
 			for (var n : list "1,2,3,4,5") {
 				JSONUser.addUser(
@@ -639,6 +654,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8606 | Test Summary: Order the Details of a Segment's Interest"
 	@priority = "3"
 	test OrderSegmentInterestDetails {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
+
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Blogs Second Page");
@@ -1086,6 +1106,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8616 | Test Summary: Order the Segment Profile Engagement List"
 	@priority = "4"
 	test OrderSegmentProfileEngagementScoreList {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
+
 		task ("Add 5 more new users") {
 			for (var n : list "1,2,3,4,5") {
 				JSONUser.addUser(
@@ -1349,6 +1374,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8607 | Test Summary: Order a Segment Profile's Interest"
 	@priority = "3"
 	test OrderSegmentProfileInterests {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
+
 		task ("Add 5 more new users") {
 			for (var n : list "1,2,3,4,5") {
 				JSONUser.addUser(
@@ -1612,6 +1642,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8608 | Test Summary: Paginate Segment Profile in an Interest detail"
 	@priority = "3"
 	test PaginateSegmentProfileInterestDetail {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
+
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Blogs Second Page");
@@ -2033,6 +2068,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8609 | Test Summary: Search a Segment Profile's Interest"
 	@priority = "3"
 	test SearchSegmentProfilesInterest {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
+
 		task ("Add 5 more new users") {
 			for (var n : list "1,2,3,4,5") {
 				JSONUser.addUser(
@@ -2234,6 +2274,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8610 | Test Summary: Segment interest details has a tab that shows active pages"
 	@priority = "3"
 	test SegmentInterestDetailsTabShowsActivePages {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
+
 		task ("Add 5 more new users") {
 			for (var n : list "1,2,3,4,5") {
 				JSONUser.addUser(
@@ -2417,6 +2462,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8612 | Test Summary: Segment interest details has a tab that shows inactive pages"
 	@priority = "3"
 	test SegmentInterestDetailsTabShowsInactivePages {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
+
 		task ("Add 5 more new users") {
 			for (var n : list "1,2,3,4,5") {
 				JSONUser.addUser(
@@ -2574,6 +2624,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8611 | Test Summary: Interest details are shown"
 	@priority = "3"
 	test ViewInterestDetails {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
+
 		task ("Add 5 more new users") {
 			for (var n : list "1,2,3,4,5") {
 				JSONUser.addUser(
@@ -2771,6 +2826,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8604 | Test Summary: Top interests for the workspace are shown in a list"
 	@priority = "5"
 	test ViewSegmentsTopInterestsList {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
+
 		task ("Add 5 more new users") {
 			for (var n : list "1,2,3,4,5") {
 				JSONUser.addUser(

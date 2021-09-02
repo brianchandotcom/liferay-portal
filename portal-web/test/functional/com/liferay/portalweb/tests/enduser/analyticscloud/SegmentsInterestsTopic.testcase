@@ -95,6 +95,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8620 | Test Summary: The list of pages for each interest topic is searchable"
 	@priority = "4"
 	test CanSearchListOfPagesForInterestTopic {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
+
 		task ("Add 5 more new users") {
 			for (var n : list "1,2,3,4,5") {
 				JSONUser.addUser(
@@ -282,6 +287,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8621 | Test Summary: Paginate Segment Profile in Interests tab"
 	@priority = "3"
 	test PaginateSegmentProfileInInterestsTab {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
+
 		task ("Add 5 more new users") {
 			for (var n : list "1,2,3,4,5") {
 				JSONUser.addUser(
@@ -529,6 +539,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8619 | Test Summary: Each interest topic shows the pages that contribute to the interest"
 	@priority = "5"
 	test ViewInterestTopicShowsPagesContributeToInterest {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
+
 		task ("Add 5 more new users") {
 			for (var n : list "1,2,3,4,5") {
 				JSONUser.addUser(

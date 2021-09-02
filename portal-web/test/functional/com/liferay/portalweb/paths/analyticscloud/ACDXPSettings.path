@@ -154,6 +154,11 @@
 	<td>xpath=(//*[contains(@type, 'checkbox')])[${key_index}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SYNC_BY_USER_GROUPS_PREVIEW</td>
+	<td>//fieldset//a[1]//div[2]//small[contains(@class,'list-group-subtext')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

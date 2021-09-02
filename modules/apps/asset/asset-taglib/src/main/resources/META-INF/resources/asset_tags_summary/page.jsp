@@ -64,6 +64,7 @@ if (assetTagNames.length == 0) {
 						displayType="secondary"
 						label="<%= assetTagNames[i] %>"
 						large="<%= true %>"
+						translated="<%= false %>"
 					/>
 
 				<%

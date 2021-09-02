@@ -3916,19 +3916,13 @@ definition {
 		}
 
 		task ("View the Web Content Title 3 once") {
-			var count = "0";
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-			while ("${count}" != "1") {
-				Navigator.gotoSitePage(
-					pageName = "Test Page Name",
-					siteName = "Test Site Name");
-
-				AssetPublisherPortlet.viewAssetDetailsPG(
-					assetContent = "Web Content Content 3",
-					assetTitle = "Web Content Title 3");
-
-				var count = ${count} + 1;
-			}
+			AssetPublisherPortlet.viewAssetDetailsPG(
+				assetContent = "Web Content Content 3",
+				assetTitle = "Web Content Title 3");
 		}
 
 		task ("View the new order of displayed assets on Mosted Viewed Assets") {

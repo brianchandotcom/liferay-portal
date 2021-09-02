@@ -155,12 +155,29 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9098 | Test Summary: Member cannot change user permissions"
-	@ignore = "true"
 	@priority = "4"
 	test MemberCannotChangeUserPermissions {
+		task ("Go to AC and Login as user with member role") {
+			ACUtils.launchAC();
 
-		// TODO LRAC-9098 MemberCannotChangeUserPermissions
+			ACWorkspace.signOut();
 
+			ACLogin.loginAs(
+				emailAddress = "corbin.murakami@faro.io",
+				password = "test");
+		}
+
+		task ("Go to Data Sources") {
+			ACWorkspace.openWorkspace();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToUserManagement();
+		}
+
+		task ("Assert that the button 'Edit' is not present") {
+			AssertElementNotPresent(locator1 = "Button#EDIT");
+		}
 	}
 
 	@description = "Automation ID: LRAC-9097 | Test Summary: Member cannot remove data sources"
@@ -196,8 +213,8 @@ definition {
 			ACNavigation.goToSettings();
 
 			ACSettings.goToDataSources();
-			
-			ACNavigation.openItem(itemName = "${dataSource}");	
+
+			ACNavigation.openItem(itemName = "${dataSource}");
 		}
 
 		task ("Assert that the button 'Delete Data Source' is not present") {

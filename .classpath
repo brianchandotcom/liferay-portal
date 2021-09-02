@@ -90,6 +90,9 @@
 	<classpathentry kind="lib" path="lib/development/objenesis.jar"/>
 	<classpathentry kind="lib" path="lib/development/osgi-annotation-versioning.jar"/>
 	<classpathentry kind="lib" path="lib/development/osgi-core.jar"/>
+	<classpathentry kind="lib" path="lib/development/osgi-service-cm.jar"/>
+	<classpathentry kind="lib" path="lib/development/osgi-service-component.jar"/>
+	<classpathentry kind="lib" path="lib/development/osgi-service-log.jar"/>
 	<classpathentry kind="lib" path="lib/development/p6spy.jar"/>
 	<classpathentry kind="lib" path="lib/development/portletmvc4spring-test.jar"/>
 	<classpathentry kind="lib" path="lib/development/postgresql.jar"/>
@@ -100,10 +103,13 @@
 	<classpathentry kind="lib" path="lib/development/powermock-module-junit4.jar"/>
 	<classpathentry kind="lib" path="lib/development/powermock-reflect.jar"/>
 	<classpathentry kind="lib" path="lib/development/qdox.jar"/>
+	<classpathentry kind="lib" path="lib/development/reflections.jar"/>
 	<classpathentry kind="lib" path="lib/development/saxpath.jar"/>
 	<classpathentry kind="lib" path="lib/development/sdk-addon-api-0.2.jar"/>
 	<classpathentry kind="lib" path="lib/development/servlet-api.jar"/>
 	<classpathentry kind="lib" path="lib/development/slf4j-simple.jar"/>
+	<classpathentry kind="lib" path="lib/development/sling-commons-osgi.jar"/>
+	<classpathentry kind="lib" path="lib/development/sling-testing-osgi-mock-core.jar"/>
 	<classpathentry kind="lib" path="lib/development/smtp.jar"/>
 	<classpathentry kind="lib" path="lib/development/spring-instrument.jar"/>
 	<classpathentry kind="lib" path="lib/development/spring-instrument-tomcat.jar"/>

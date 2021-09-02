@@ -73,7 +73,8 @@ public class CurrentAccountEntryManagerImpl
 			return accountEntry;
 		}
 
-		setCurrentAccountEntry(-1, groupId, userId);
+		setCurrentAccountEntry(
+			AccountConstants.ACCOUNT_ENTRY_ID_GUEST, groupId, userId);
 
 		return null;
 	}

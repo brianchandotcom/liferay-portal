@@ -207,9 +207,9 @@ public class ConfigurationPersistenceManager
 
 					if (stateFile.exists()) {
 						stateFile.delete();
-
-						break;
 					}
+
+					break;
 				}
 			}
 		}

@@ -164,6 +164,66 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8982| Test Summary: Individuals interest details are shown"
+	@priority = "3"
+	test AssertIndividualInterestDetails {
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add page and web content to Site as interest topic") {
+			Navigator.openSiteURL(siteName = "Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "AC Page 1");
+
+			ACUtils.createWCAndAddToPage(
+				layoutName = "AC Page 1",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("Add a new user and sync the Contact Data") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View new page in site as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page 1",
+				siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Individual Interests") {
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Interests");
+		}
+
+		task ("View the Individual Interests details") {
+			ACInterests.clickInterest(interestTopic = "ac page 1");
+
+			ACInterests.viewInterestPage(pageName = "AC Page 1 - Site Name - Liferay DXP");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8980 | Test Summary: Order the Individual's Interest List"
 	@priority = "3"
 	test OrderIndividualsInterests {

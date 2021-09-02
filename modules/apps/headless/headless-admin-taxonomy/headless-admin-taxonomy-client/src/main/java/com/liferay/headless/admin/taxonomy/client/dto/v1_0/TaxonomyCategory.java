@@ -340,6 +340,31 @@ public class TaxonomyCategory implements Cloneable, Serializable {
 
 	protected ParentTaxonomyVocabulary parentTaxonomyVocabulary;
 
+	public TaxonomyCategoryProperty[] getTaxonomyCategoryProperties() {
+		return taxonomyCategoryProperties;
+	}
+
+	public void setTaxonomyCategoryProperties(
+		TaxonomyCategoryProperty[] taxonomyCategoryProperties) {
+
+		this.taxonomyCategoryProperties = taxonomyCategoryProperties;
+	}
+
+	public void setTaxonomyCategoryProperties(
+		UnsafeSupplier<TaxonomyCategoryProperty[], Exception>
+			taxonomyCategoryPropertiesUnsafeSupplier) {
+
+		try {
+			taxonomyCategoryProperties =
+				taxonomyCategoryPropertiesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected TaxonomyCategoryProperty[] taxonomyCategoryProperties;
+
 	public Integer getTaxonomyCategoryUsageCount() {
 		return taxonomyCategoryUsageCount;
 	}

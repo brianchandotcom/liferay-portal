@@ -1488,6 +1488,16 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"taxonomyCategoryProperties", additionalAssertFieldName)) {
+
+				if (taxonomyCategory.getTaxonomyCategoryProperties() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"taxonomyCategoryUsageCount", additionalAssertFieldName)) {
 
 				if (taxonomyCategory.getTaxonomyCategoryUsageCount() == null) {
@@ -1763,6 +1773,19 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"taxonomyCategoryProperties", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						taxonomyCategory1.getTaxonomyCategoryProperties(),
+						taxonomyCategory2.getTaxonomyCategoryProperties())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"taxonomyCategoryUsageCount", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
@@ -2019,6 +2042,11 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("parentTaxonomyVocabulary")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("taxonomyCategoryProperties")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

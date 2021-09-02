@@ -2431,7 +2431,7 @@ definition {
 		DDLNavigator.gotoListRecords(ddlListName = "List Name");
 
 		DDLRecord.viewFirstFieldCP(
-			ddlRecordFieldData = "Yes",
+			ddlRecordFieldData = "True",
 			field = "Boolean",
 			fieldFieldLabel = "Boolean Edit");
 	}

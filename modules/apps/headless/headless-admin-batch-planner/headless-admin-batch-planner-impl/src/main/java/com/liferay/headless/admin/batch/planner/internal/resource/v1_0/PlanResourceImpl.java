@@ -70,15 +70,23 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.updateBatchPlannerPlan(id, plan.getName());
 
-		for (Mapping mapping : plan.getMappings()) {
-			_batchPlannerMappingService.updateBatchPlannerMapping(
-				mapping.getId(), mapping.getExternalFieldName(),
-				mapping.getExternalFieldType(), mapping.getScript());
+		Mapping[] mappings = plan.getMappings();
+
+		if (mappings != null) {
+			for (Mapping mapping : plan.getMappings()) {
+				_batchPlannerMappingService.updateBatchPlannerMapping(
+					mapping.getId(), mapping.getExternalFieldName(),
+					mapping.getExternalFieldType(), mapping.getScript());
+			}
 		}
 
-		for (Policy policy : plan.getPolicies()) {
-			_batchPlannerPolicyService.updateBatchPlannerPolicy(
-				id, policy.getName(), policy.getValue());
+		Policy[] policies = plan.getPolicies();
+
+		if (policies != null) {
+			for (Policy policy : plan.getPolicies()) {
+				_batchPlannerPolicyService.updateBatchPlannerPolicy(
+					id, policy.getName(), policy.getValue());
+			}
 		}
 
 		return _toPlan(batchPlannerPlan);
@@ -91,18 +99,27 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 				plan.getExport(), plan.getExternalType(), plan.getExternalURL(),
 				plan.getInternalClassName(), plan.getName(), false);
 
-		for (Mapping mapping : plan.getMappings()) {
-			_batchPlannerMappingService.addBatchPlannerMapping(
-				batchPlannerPlan.getBatchPlannerPlanId(),
-				mapping.getExternalFieldName(), mapping.getExternalFieldType(),
-				mapping.getInternalFieldName(), mapping.getInternalFieldType(),
-				mapping.getScript());
+		Mapping[] mappings = plan.getMappings();
+
+		if (mappings != null) {
+			for (Mapping mapping : mappings) {
+				_batchPlannerMappingService.addBatchPlannerMapping(
+					batchPlannerPlan.getBatchPlannerPlanId(),
+					mapping.getExternalFieldName(),
+					mapping.getExternalFieldType(),
+					mapping.getInternalFieldName(),
+					mapping.getInternalFieldType(), mapping.getScript());
+			}
 		}
 
-		for (Policy policy : plan.getPolicies()) {
-			_batchPlannerPolicyService.addBatchPlannerPolicy(
-				batchPlannerPlan.getBatchPlannerPlanId(), policy.getName(),
-				policy.getValue());
+		Policy[] policies = plan.getPolicies();
+
+		if (policies != null) {
+			for (Policy policy : plan.getPolicies()) {
+				_batchPlannerPolicyService.addBatchPlannerPolicy(
+					batchPlannerPlan.getBatchPlannerPlanId(), policy.getName(),
+					policy.getValue());
+			}
 		}
 
 		return _toPlan(batchPlannerPlan);

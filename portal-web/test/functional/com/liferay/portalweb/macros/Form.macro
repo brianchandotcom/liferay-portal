@@ -985,6 +985,12 @@ definition {
 		AssertElementPresent(locator1 = "Form#FORM_TEMPORARILY_NOT_AVAILABLE");
 	}
 
+	macro viewHiddenField {
+		AssertElementPresent(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "Form#FIELD_HIDDEN_LABEL");
+	}
+
 	macro viewPageEmptyField {
 		AssertElementPresent(
 			key_pageNumber = "${pageIndex}",

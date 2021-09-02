@@ -1089,6 +1089,58 @@ definition {
 			fieldValue = "Help Text Test");
 	}
 
+	@description = "LPS-129411 - Verify that a field can be hidden"
+	@priority = "5"
+	test HiddenFieldCanBeEnabled {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Hide Field");
+
+		Form.viewHiddenField(fieldLabel = "Text");
+
+		for (var switchName : list "Show Label,Repeatable,Require Confirmation,Validation") {
+			AssertElementPresent(
+				key_switchOption = "${switchName}",
+				locator1 = "FormFields#SWITCH_NOT_VISIBLE");
+		}
+
+		AssertElementPresent(
+			key_switchOption = "Autocomplete",
+			locator1 = "Form#SIDEBAR_NOT_VISIBLE_TAB");
+	}
+
+	@description = "LPS-129411 - Verify that hidden field is working in a published Form"
+	@priority = "5"
+	test HiddenFieldIsWorking {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Hide Field");
+
+		Form.viewHiddenField(fieldLabel = "Text");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		AssertNotVisible(
+			key_fieldName = "Text",
+			locator1 = "FormFields#TEXT_FIELD");
+
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
+	}
+
 	@description = "Verify that the Field Label can be edited"
 	@priority = "5"
 	test LabelCanBeEdited {

@@ -383,6 +383,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_HIDDEN_LABEL</td>
+	<td>//div[contains(@class,'ddm-field')]//label[contains(@class,'ddm-label')]/span[contains(@class,'text-secondary') and contains(text(),'${key_fieldLabel}')]//..//span[contains(@class,'label-item') and contains(text(),'Hidden')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_LABEL</td>
 	<td>//div[@data-field-name='${key_fieldName}' and contains(@class,'ddm-field')]//label[contains(@class,'ddm-label')] | //div[contains(@class,'ddm-field-container')]//label[text()='${key_fieldName}'] | //div[@data-field-name='${key_fieldName}' and contains(@class,'ddm-field')]//legend[contains(@class,'lfr-ddm-legend')] | //div[contains(@class,'ddm-field-container')]//legend[text()='${key_fieldName}']</td>
 	<td></td>
@@ -501,6 +506,11 @@
 <tr>
 	<td>SIDEBAR_MENUITEM_DUPLICATE_FIELD</td>
 	<td>//a[@title='Duplicate'] | //button[text()='Duplicate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_NOT_VISIBLE_TAB</td>
+	<td>//li[contains(@class,'nav-item hide')]//span[contains(text(),'${key_switchOption}')]</td>
 	<td></td>
 </tr>
 <tr>

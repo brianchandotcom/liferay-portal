@@ -756,18 +756,20 @@ public class PoshiContext {
 			"test.case.property.group\\[" + propertyGroup +
 				"\\]\\[([^\\]]+)\\]";
 
-		Properties systemProperties = System.getProperties();
+		Properties poshiProperties = new Properties();
 
-		for (String systemPropertyName :
-				systemProperties.stringPropertyNames()) {
+		poshiProperties.putAll(System.getProperties());
 
-			if (!systemPropertyName.matches(propertyGroupRegex)) {
+		poshiProperties.putAll(PropsUtil.getProperties());
+
+		for (String poshiPropertyName : poshiProperties.stringPropertyNames()) {
+			if (!poshiPropertyName.matches(propertyGroupRegex)) {
 				continue;
 			}
 
 			propertyGroupProperties.setProperty(
-				systemPropertyName.replaceAll(propertyGroupRegex, "$1"),
-				systemProperties.getProperty(systemPropertyName));
+				poshiPropertyName.replaceAll(propertyGroupRegex, "$1"),
+				poshiProperties.getProperty(poshiPropertyName));
 		}
 
 		return propertyGroupProperties;

@@ -45,7 +45,21 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9036 | Test Summary: Assign site to property when properties exist"
 	@priority = "3"
 	test AssignSiteToExistingProperty {
+		task ("Add a new property on AC") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			ACProperties.addNewProperty(propertyName = "AC Test Property");
+
+			ACProperties.assertNewCreatedProperty(propertyName = "AC Test Property");
+		}
+
 		task ("Connect the DXP to Analytics Cloud") {
+			ACUtils.launchDXP();
+
 			ACDXPSettings.goToInstanceSettingsAC();
 
 			ACDXPSettings.connectAnalyticsCloud();
@@ -57,7 +71,7 @@ definition {
 			ACDXPSettings.navToSyncedSitesMenu();
 
 			ACDXPSettings.assignSiteToExistingProperty(
-				assignedPropertyName = "Liferay DXP",
+				assignedPropertyName = "AC Test Property",
 				siteName = "Site Name");
 		}
 	}

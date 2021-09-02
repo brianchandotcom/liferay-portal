@@ -4,8 +4,6 @@ definition {
 	macro addNewProperty {
 		Click(locator1 = "ACSettings#NEW_PROPERTY_BUTTON");
 
-		Click(locator1 = "ACSettings#PROPERTY_INPUT");
-
 		Type(
 			locator1 = "ACSettings#PROPERTY_INPUT",
 			value1 = "${propertyName}");

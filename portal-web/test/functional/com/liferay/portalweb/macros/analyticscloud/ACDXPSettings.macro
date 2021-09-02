@@ -83,17 +83,19 @@ definition {
 	}
 
 	macro createMultipleProperties {
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+		LexiconEntry.gotoAdd();
 
 		Click(locator1 = "ACDXPSettings#MULTIPLE_PROPERTY_OPTION");
 
-		for (var propertyName : list "${propertyList}") {
-			key_propertyName = "${propertyName}";
-
-			Click(locator1 = "ACDXPSettings#PROPERTY_NAME_CHECKBOX");
+		for (var siteName : list "${siteNameList}") {
+			Check(
+				key_tableEntry = "${siteName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
 		}
 
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro disconnectDXPFromAnalyticsCloud {

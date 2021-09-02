@@ -131,12 +131,27 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9096 | Test Summary: Member cannot add data sources"
-	@ignore = "true"
 	@priority = "4"
 	test MemberCannotAddDataSources {
+		task ("Login as user with member role") {
+			ACWorkspace.signOut();
 
-		// TODO LRAC-9096 MemberCannotAddDataSources
+			ACLogin.loginAs(
+				emailAddress = "corbin.murakami@faro.io",
+				password = "test");
+		}
 
+		task ("Go to Data Sources") {
+			ACWorkspace.openWorkspace();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDataSources();
+		}
+
+		task ("Assert that the button 'Add Data Source' is not present") {
+			AssertElementNotPresent(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+		}
 	}
 
 	@description = "Automation ID: LRAC-9098 | Test Summary: Member cannot change user permissions"

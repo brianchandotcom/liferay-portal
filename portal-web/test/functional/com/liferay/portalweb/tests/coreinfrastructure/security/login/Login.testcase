@@ -9,6 +9,7 @@ definition {
 		TestCase.setUpPortalInstance();
 	}
 
+	@description = "This is a use case for LRQA-52860."
 	@priority = "5"
 	test CASSSOSmoke {
 		property cas.enabled = "true";
@@ -50,6 +51,7 @@ definition {
 			userScreenName = "test");
 	}
 
+	@description = "This is a use case for LRQA-48218."
 	@priority = "5"
 	test DefaultPortalLandingPage {
 		property test.name.skip.portal.instance = "Login#DefaultPortalLandingPage";
@@ -186,6 +188,7 @@ definition {
 		AssertElementPresent(locator1 = "Icon#OPENID_CONNECT");
 	}
 
+	@description = "This is a use case for LRQA-27624."
 	@priority = "4"
 	test FacebookSSOSmoke {
 		property portal.ssl.enabled = "true";
@@ -450,6 +453,7 @@ definition {
 			userEmailAddress = "test@www.able.com");
 	}
 
+	@description = "This is a use case for LRQA-40911."
 	@priority = "4"
 	test OpenIDConnectSmoke {
 		property dummy.socket.proxy.disabled = "true";
@@ -500,7 +504,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@description = "Ignore test due to OpenAM 12 doesn't support Tomcat 9"
+	@description = "This is a use case for LRQA-43015. Ignore test due to OpenAM 12 doesn't support Tomcat 9."
 	@ignore = "true"
 	@priority = "5"
 	test OpenSSOSmoke {
@@ -563,6 +567,7 @@ definition {
 			userScreenName = "test");
 	}
 
+	@description = "This is a use case for LRQA-27622."
 	@priority = "5"
 	test TokenBasedSSOSmoke {
 		property test.name.skip.portal.instance = "Login#TokenBasedSSOSmoke";
@@ -621,6 +626,7 @@ definition {
 			value1 = "verify-token-based-login -Dportal.url=http://www.able.com:8080/web/guest -Duser.token=test@www.able.com");
 	}
 
+	@description = "This is a use case for LRQA-27619."
 	@priority = "3"
 	test ViewInstanceSettingsAuthentication {
 		property osgi.app.includes = "portal-security-sso-ntlm,portal-security-sso-openid";

@@ -25,7 +25,9 @@ describe('The ConditionNode component should', () => {
 
 		const {container, getByText} = render(
 			<ReactFlowProvider>
-				<ConditionNode data={{label}} />
+				<ConditionNode
+					data={{label, notifyVisibilityChange: () => () => {}}}
+				/>
 			</ReactFlowProvider>
 		);
 
@@ -38,7 +40,13 @@ describe('The ConditionNode component should', () => {
 
 		const {container} = render(
 			<ReactFlowProvider>
-				<ConditionNode data={{done: true, label}} />
+				<ConditionNode
+					data={{
+						done: true,
+						label,
+						notifyVisibilityChange: () => () => {},
+					}}
+				/>
 			</ReactFlowProvider>
 		);
 

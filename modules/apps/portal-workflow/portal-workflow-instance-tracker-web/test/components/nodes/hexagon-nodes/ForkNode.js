@@ -25,7 +25,9 @@ describe('The ForkNode component should', () => {
 
 		const {container, getByText} = render(
 			<ReactFlowProvider>
-				<ForkNode data={{label}} />
+				<ForkNode
+					data={{label, notifyVisibilityChange: () => () => {}}}
+				/>
 			</ReactFlowProvider>
 		);
 
@@ -40,7 +42,13 @@ describe('The ForkNode component should', () => {
 
 		const {container} = render(
 			<ReactFlowProvider>
-				<ForkNode data={{done: true, label}} />
+				<ForkNode
+					data={{
+						done: true,
+						label,
+						notifyVisibilityChange: () => () => {},
+					}}
+				/>
 			</ReactFlowProvider>
 		);
 

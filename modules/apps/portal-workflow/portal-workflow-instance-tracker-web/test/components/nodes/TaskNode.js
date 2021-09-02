@@ -23,7 +23,7 @@ describe('The TaskNode component should', () => {
 	it('Be rendered without any icon and without current-icon or done-icon class as default', () => {
 		const {container} = render(
 			<ReactFlowProvider>
-				<TaskNode data={{}} />
+				<TaskNode data={{notifyVisibilityChange: () => () => {}}} />
 			</ReactFlowProvider>
 		);
 
@@ -36,7 +36,12 @@ describe('The TaskNode component should', () => {
 	it('Be rendered with live icon and current-icon class when it receives the current prop', () => {
 		const {container} = render(
 			<ReactFlowProvider>
-				<TaskNode data={{current: true}} />
+				<TaskNode
+					data={{
+						current: true,
+						notifyVisibilityChange: () => () => {},
+					}}
+				/>
 			</ReactFlowProvider>
 		);
 
@@ -49,7 +54,9 @@ describe('The TaskNode component should', () => {
 	it('Be rendered with check icon and done-icon class when it receives the done prop', () => {
 		const {container} = render(
 			<ReactFlowProvider>
-				<TaskNode data={{done: true}} />
+				<TaskNode
+					data={{done: true, notifyVisibilityChange: () => () => {}}}
+				/>
 			</ReactFlowProvider>
 		);
 

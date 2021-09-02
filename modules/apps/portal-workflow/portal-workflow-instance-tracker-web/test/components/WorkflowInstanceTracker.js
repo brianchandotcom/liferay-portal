@@ -13,10 +13,11 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, render} from '@testing-library/react';
+import {act, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import WorkflowInstanceTracker from '../../src/main/resources/META-INF/resources/js/components/WorkflowInstanceTracker';
+import EventObserver from '../../src/main/resources/META-INF/resources/js/util/EventObserver';
 
 jest.mock('axios', () => {
 	const workflowInstanceData = {
@@ -117,21 +118,61 @@ window.ResizeObserver =
 		unobserve: jest.fn(),
 	}));
 
+Object.defineProperties(window.HTMLElement.prototype, {
+	offsetHeight: {
+		get() {
+			return parseFloat(window.getComputedStyle(this).height) || 1;
+		},
+	},
+	offsetWidth: {
+		get() {
+			return parseFloat(window.getComputedStyle(this).width) || 1;
+		},
+	},
+});
+
 describe('The WorkflowInstanceTracker component should', () => {
-	let container;
+	let container, queryAllByText, queryByText;
 
 	beforeAll(async () => {
+		window.SVGElement.prototype.getBBox = () => ({});
+
 		const renderResult = render(<WorkflowInstanceTracker />);
 
 		container = renderResult.container;
+		queryAllByText = renderResult.queryAllByText;
+		queryByText = renderResult.queryByText;
 
 		await act(async () => {
 			jest.runAllTimers();
 		});
 	});
 
-	it('Be rendered with nodes and transitions', () => {
+	afterAll(() => {
+		delete window.SVGElement.prototype.getBBox;
+	});
+
+	it('Be rendered with nodes and transitions, but with transition labels hidden', () => {
 		expect(container.querySelector('.react-flow__nodes')).toBeTruthy();
 		expect(container.querySelector('.react-flow__edges')).toBeTruthy();
+		expect(queryAllByText('Review')).toHaveLength(1);
+		expect(queryByText('Approve')).toBeFalsy();
+		expect(queryByText('Reject')).toBeFalsy();
+		expect(queryByText('Resubmit')).toBeFalsy();
+	});
+
+	it('Display the labels of transitions originated from a node while hovering it', async () => {
+		jest.spyOn(
+			EventObserver.prototype,
+			'notify'
+		).mockImplementation(() => () => jest.fn());
+
+		const reviewNode = queryByText('Review');
+
+		expect(reviewNode).toBeTruthy();
+
+		fireEvent.mouseEnter(reviewNode);
+
+		expect(EventObserver.prototype.notify).toHaveBeenCalled();
 	});
 });

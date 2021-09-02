@@ -25,7 +25,9 @@ describe('The JoinXorNode component should', () => {
 
 		const {container, getByText} = render(
 			<ReactFlowProvider>
-				<JoinXorNode data={{label}} />
+				<JoinXorNode
+					data={{label, notifyVisibilityChange: () => () => {}}}
+				/>
 			</ReactFlowProvider>
 		);
 
@@ -38,7 +40,13 @@ describe('The JoinXorNode component should', () => {
 
 		const {container} = render(
 			<ReactFlowProvider>
-				<JoinXorNode data={{done: true, label}} />
+				<JoinXorNode
+					data={{
+						done: true,
+						label,
+						notifyVisibilityChange: () => () => {},
+					}}
+				/>
 			</ReactFlowProvider>
 		);
 

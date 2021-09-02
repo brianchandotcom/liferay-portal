@@ -23,7 +23,7 @@ describe('The StateNode component should', () => {
 	it('Be rendered without any icon and without current-icon class as default', () => {
 		const {container} = render(
 			<ReactFlowProvider>
-				<StateNode data={{}} />
+				<StateNode data={{notifyVisibilityChange: () => () => {}}} />
 			</ReactFlowProvider>
 		);
 
@@ -34,7 +34,12 @@ describe('The StateNode component should', () => {
 	it('Be rendered with live icon and current-icon class when it receives the current prop', () => {
 		const {container} = render(
 			<ReactFlowProvider>
-				<StateNode data={{current: true}} />
+				<StateNode
+					data={{
+						current: true,
+						notifyVisibilityChange: () => () => {},
+					}}
+				/>
 			</ReactFlowProvider>
 		);
 

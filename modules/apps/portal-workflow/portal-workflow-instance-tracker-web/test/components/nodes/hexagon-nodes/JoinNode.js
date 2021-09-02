@@ -25,7 +25,9 @@ describe('The JoinNode component should', () => {
 
 		const {container, getByText} = render(
 			<ReactFlowProvider>
-				<JoinNode data={{label}} />
+				<JoinNode
+					data={{label, notifyVisibilityChange: () => () => {}}}
+				/>
 			</ReactFlowProvider>
 		);
 
@@ -40,7 +42,13 @@ describe('The JoinNode component should', () => {
 
 		const {container} = render(
 			<ReactFlowProvider>
-				<JoinNode data={{done: true, label}} />
+				<JoinNode
+					data={{
+						done: true,
+						label,
+						notifyVisibilityChange: () => () => {},
+					}}
+				/>
 			</ReactFlowProvider>
 		);
 

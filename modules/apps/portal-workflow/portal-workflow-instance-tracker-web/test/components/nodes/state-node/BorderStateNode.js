@@ -23,7 +23,11 @@ describe('The BorderStateNode component should', () => {
 	it('Be rendered with start-state class as default', () => {
 		const {container} = render(
 			<ReactFlowProvider>
-				<BorderStateNode data={{}} />
+				<BorderStateNode
+					data={{
+						notifyVisibilityChange: () => () => {},
+					}}
+				/>
 			</ReactFlowProvider>
 		);
 
@@ -33,7 +37,12 @@ describe('The BorderStateNode component should', () => {
 	it('Be rendered with end-state class as default', () => {
 		const {container} = render(
 			<ReactFlowProvider>
-				<BorderStateNode data={{initial: false}} />
+				<BorderStateNode
+					data={{
+						initial: false,
+						notifyVisibilityChange: () => () => {},
+					}}
+				/>
 			</ReactFlowProvider>
 		);
 

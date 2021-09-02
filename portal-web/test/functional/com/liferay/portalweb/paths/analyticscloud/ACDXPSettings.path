@@ -146,7 +146,7 @@
 </tr>
 <tr>
 	<td>USER_GROUP_OPTION_CHECKBOX</td>
-	<td>//td[contains(text(),'${key_entry}')]/../../tr//td//input[contains(@type,'checkbox')]</td>
+	<td>//tr[contains(., '${key_entry}')]//input</td>
 	<td></td>
 </tr>
 <tr>

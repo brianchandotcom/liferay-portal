@@ -10,7 +10,6 @@ definition {
 
 	setUp {
 		ACUtils.launchAC();
-
 	}
 
 	tearDown {
@@ -28,10 +27,7 @@ definition {
 	@description = "Automation ID: LRAC-9065 | Test Summary: Admin can delete users"
 	@priority = "3"
 	test AdminCanDeleteUser {
-
 		task ("Create a new user and check if it is present in the table") {
-
-			
 			ACNavigation.goToSettings();
 
 			ACSettings.goToUserManagement();
@@ -41,27 +37,20 @@ definition {
 			ACUtils.searchBar(searchItem = "user@liferay.com");
 
 			ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
-
-		
 		}
 
 		task ("Login with the admin user and check if he can delete another user") {
-
-			
 			ACWorkspace.signOut();
 
 			ACLogin.loginAs(
 				emailAddress = "corbin.murakami@faro.io",
 				password = "test");
 
-			ACWorkspace.openWorkspace();	
-
+			ACWorkspace.openWorkspace();
 
 			ACNavigation.goToSettings();
 
 			ACSettings.goToUserManagement();
-
-
 
 			ACUtils.searchBar(searchItem = "user@liferay.com");
 
@@ -72,23 +61,12 @@ definition {
 			ACUtils.clearSearchBar();
 
 			ACSettings.assertUserNotPresent(userEmail = "user@liferay.com");
-
-		
 		}
-
-		
-		
-
-		
-
-
 	}
 
 	@description = "Automation ID: LRAC-9064 | Test Summary: Select multiple users to delete at once"
 	@priority = "3"
 	test CanSelectAndDeleteUsers {
-
-
 		task ("Create two new user and select both") {
 			ACNavigation.goToSettings();
 
@@ -98,22 +76,16 @@ definition {
 
 			ACSettings.addUser(userInvite = "user2@liferay.com");
 
-			
-
+			Click(
+				locator1 = "ACSettings#SELECT_USER_EMAIL",
+				userEmail = "user1@liferay.com");
 
 			Click(
-				userEmail = "user1@liferay.com",
-				locator1 = "ACSettings#SELECT_USER_EMAIL");
-
-			Click(
-				userEmail = "user2@liferay.com",
-				locator1 = "ACSettings#SELECT_USER_EMAIL");
-		
+				locator1 = "ACSettings#SELECT_USER_EMAIL",
+				userEmail = "user2@liferay.com");
 		}
 
 		task ("Deletes the two selected users and checks if they were deleted") {
-
-
 			Click(locator1 = "ACSettings#DELETE_USER");
 
 			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
@@ -121,21 +93,12 @@ definition {
 			ACSettings.assertUserNotPresent(userEmail = "user1@liferay.com");
 
 			ACSettings.assertUserNotPresent(userEmail = "user2@liferay.com");
-		
 		}
-	
-
-		
-
-		
 	}
 
 	@description = "Automation ID: LRAC-9063 | Test Summary: Delete button to manage user permissions"
 	@priority = "5"
 	test DeleteButtonToDeleteUserPermissions {
-
-
-
 		task ("Create two new users") {
 			ACNavigation.goToSettings();
 
@@ -146,11 +109,10 @@ definition {
 			ACSettings.addUser(userInvite = "user2@liferay.com");
 		}
 
-
 		task ("Delete the user by the icon beside and check if it was deleted") {
 			Click(
-				userEmail = "user1@liferay.com",
-				locator1 = "ACSettings#SELECT_USER_EMAIL");
+				locator1 = "ACSettings#SELECT_USER_EMAIL",
+				userEmail = "user1@liferay.com");
 
 			Click(locator1 = "ACSettings#DELETE_USER");
 
@@ -164,17 +126,11 @@ definition {
 
 			ACSettings.assertUserNotPresent(userEmail = "user2@liferay.com");
 		}
-
-		
-
-
-
 	}
 
 	@description = "Automation ID: LRAC-9066 | Test Summary: Member cannot delete users"
 	@priority = "3"
 	test MemberCantDeleteUser {
-
 		task ("Login with a member user and go to settings") {
 			ACWorkspace.signOut();
 
@@ -187,21 +143,13 @@ definition {
 			ACNavigation.goToSettings();
 		}
 
-
 		task ("Access user management and assert that the member user cannot delete any user") {
 			ACSettings.goToUserManagement();
 
 			ACUtils.searchBar(searchItem = "michelle.hoshi@faro.io");
 
-			AssertElementNotPresent(locator1 = "ACSettings#DELETE_USER");	
+			AssertElementNotPresent(locator1 = "ACSettings#DELETE_USER");
 		}
-
-		
-
-		
-
-		
-
 	}
 
 }

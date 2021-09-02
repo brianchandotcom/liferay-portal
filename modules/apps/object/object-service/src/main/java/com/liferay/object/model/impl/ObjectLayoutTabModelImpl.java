@@ -22,6 +22,7 @@ import com.liferay.object.model.ObjectLayoutTabModel;
 import com.liferay.object.model.ObjectLayoutTabSoap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -31,9 +32,12 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -49,8 +53,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -80,7 +87,9 @@ public class ObjectLayoutTabModelImpl
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
 		{"objectLayoutTabId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP}
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"objectLayoutId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"order_", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -95,10 +104,13 @@ public class ObjectLayoutTabModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("objectLayoutId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("order_", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectLayoutTab (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectLayoutTabId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+		"create table ObjectLayoutTab (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectLayoutTabId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectLayoutId LONG,name STRING null,order_ INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectLayoutTab";
 
@@ -170,6 +182,9 @@ public class ObjectLayoutTabModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setObjectLayoutId(soapModel.getObjectLayoutId());
+		model.setName(soapModel.getName());
+		model.setOrder(soapModel.getOrder());
 
 		return model;
 	}
@@ -363,6 +378,20 @@ public class ObjectLayoutTabModelImpl
 			"modifiedDate",
 			(BiConsumer<ObjectLayoutTab, Date>)
 				ObjectLayoutTab::setModifiedDate);
+		attributeGetterFunctions.put(
+			"objectLayoutId", ObjectLayoutTab::getObjectLayoutId);
+		attributeSetterBiConsumers.put(
+			"objectLayoutId",
+			(BiConsumer<ObjectLayoutTab, Long>)
+				ObjectLayoutTab::setObjectLayoutId);
+		attributeGetterFunctions.put("name", ObjectLayoutTab::getName);
+		attributeSetterBiConsumers.put(
+			"name",
+			(BiConsumer<ObjectLayoutTab, String>)ObjectLayoutTab::setName);
+		attributeGetterFunctions.put("order", ObjectLayoutTab::getOrder);
+		attributeSetterBiConsumers.put(
+			"order",
+			(BiConsumer<ObjectLayoutTab, Integer>)ObjectLayoutTab::setOrder);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -541,6 +570,143 @@ public class ObjectLayoutTabModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
+	@Override
+	public long getObjectLayoutId() {
+		return _objectLayoutId;
+	}
+
+	@Override
+	public void setObjectLayoutId(long objectLayoutId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_objectLayoutId = objectLayoutId;
+	}
+
+	@JSON
+	@Override
+	public String getName() {
+		if (_name == null) {
+			return "";
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public String getName(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getName(languageId);
+	}
+
+	@Override
+	public String getName(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getName(languageId, useDefault);
+	}
+
+	@Override
+	public String getName(String languageId) {
+		return LocalizationUtil.getLocalization(getName(), languageId);
+	}
+
+	@Override
+	public String getName(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(
+			getName(), languageId, useDefault);
+	}
+
+	@Override
+	public String getNameCurrentLanguageId() {
+		return _nameCurrentLanguageId;
+	}
+
+	@JSON
+	@Override
+	public String getNameCurrentValue() {
+		Locale locale = getLocale(_nameCurrentLanguageId);
+
+		return getName(locale);
+	}
+
+	@Override
+	public Map<Locale, String> getNameMap() {
+		return LocalizationUtil.getLocalizationMap(getName());
+	}
+
+	@Override
+	public void setName(String name) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_name = name;
+	}
+
+	@Override
+	public void setName(String name, Locale locale) {
+		setName(name, locale, LocaleUtil.getDefault());
+	}
+
+	@Override
+	public void setName(String name, Locale locale, Locale defaultLocale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(name)) {
+			setName(
+				LocalizationUtil.updateLocalization(
+					getName(), "Name", name, languageId, defaultLanguageId));
+		}
+		else {
+			setName(
+				LocalizationUtil.removeLocalization(
+					getName(), "Name", languageId));
+		}
+	}
+
+	@Override
+	public void setNameCurrentLanguageId(String languageId) {
+		_nameCurrentLanguageId = languageId;
+	}
+
+	@Override
+	public void setNameMap(Map<Locale, String> nameMap) {
+		setNameMap(nameMap, LocaleUtil.getDefault());
+	}
+
+	@Override
+	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale) {
+		if (nameMap == null) {
+			return;
+		}
+
+		setName(
+			LocalizationUtil.updateLocalization(
+				nameMap, getName(), "Name",
+				LocaleUtil.toLanguageId(defaultLocale)));
+	}
+
+	@JSON
+	@Override
+	public int getOrder() {
+		return _order;
+	}
+
+	@Override
+	public void setOrder(int order) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_order = order;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -585,6 +751,72 @@ public class ObjectLayoutTabModelImpl
 	}
 
 	@Override
+	public String[] getAvailableLanguageIds() {
+		Set<String> availableLanguageIds = new TreeSet<String>();
+
+		Map<Locale, String> nameMap = getNameMap();
+
+		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
+			}
+		}
+
+		return availableLanguageIds.toArray(
+			new String[availableLanguageIds.size()]);
+	}
+
+	@Override
+	public String getDefaultLanguageId() {
+		String xml = getName();
+
+		if (xml == null) {
+			return "";
+		}
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException {
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			getDefaultLanguageId());
+
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
+			getAvailableLanguageIds());
+
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
+			ObjectLayoutTab.class.getName(), getPrimaryKey(), defaultLocale,
+			availableLocales);
+
+		prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	@Override
+	@SuppressWarnings("unused")
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException {
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String modelDefaultLanguageId = getDefaultLanguageId();
+
+		String name = getName(defaultLocale);
+
+		if (Validator.isNull(name)) {
+			setName(getName(modelDefaultLanguageId), defaultLocale);
+		}
+		else {
+			setName(getName(defaultLocale), defaultLocale, defaultLocale);
+		}
+	}
+
+	@Override
 	public ObjectLayoutTab toEscapedModel() {
 		if (_escapedModel == null) {
 			Function<InvocationHandler, ObjectLayoutTab>
@@ -611,6 +843,9 @@ public class ObjectLayoutTabModelImpl
 		objectLayoutTabImpl.setUserName(getUserName());
 		objectLayoutTabImpl.setCreateDate(getCreateDate());
 		objectLayoutTabImpl.setModifiedDate(getModifiedDate());
+		objectLayoutTabImpl.setObjectLayoutId(getObjectLayoutId());
+		objectLayoutTabImpl.setName(getName());
+		objectLayoutTabImpl.setOrder(getOrder());
 
 		objectLayoutTabImpl.resetOriginalValues();
 
@@ -637,6 +872,12 @@ public class ObjectLayoutTabModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		objectLayoutTabImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		objectLayoutTabImpl.setObjectLayoutId(
+			this.<Long>getColumnOriginalValue("objectLayoutId"));
+		objectLayoutTabImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		objectLayoutTabImpl.setOrder(
+			this.<Integer>getColumnOriginalValue("order_"));
 
 		return objectLayoutTabImpl;
 	}
@@ -757,6 +998,18 @@ public class ObjectLayoutTabModelImpl
 			objectLayoutTabCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		objectLayoutTabCacheModel.objectLayoutId = getObjectLayoutId();
+
+		objectLayoutTabCacheModel.name = getName();
+
+		String name = objectLayoutTabCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			objectLayoutTabCacheModel.name = null;
+		}
+
+		objectLayoutTabCacheModel.order = getOrder();
+
 		return objectLayoutTabCacheModel;
 	}
 
@@ -856,6 +1109,10 @@ public class ObjectLayoutTabModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _objectLayoutId;
+	private String _name;
+	private String _nameCurrentLanguageId;
+	private int _order;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -894,6 +1151,9 @@ public class ObjectLayoutTabModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("objectLayoutId", _objectLayoutId);
+		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("order_", _order);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -902,6 +1162,7 @@ public class ObjectLayoutTabModelImpl
 		Map<String, String> attributeNames = new HashMap<>();
 
 		attributeNames.put("uuid_", "uuid");
+		attributeNames.put("order_", "order");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -932,6 +1193,12 @@ public class ObjectLayoutTabModelImpl
 		columnBitmasks.put("createDate", 64L);
 
 		columnBitmasks.put("modifiedDate", 128L);
+
+		columnBitmasks.put("objectLayoutId", 256L);
+
+		columnBitmasks.put("name", 512L);
+
+		columnBitmasks.put("order_", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

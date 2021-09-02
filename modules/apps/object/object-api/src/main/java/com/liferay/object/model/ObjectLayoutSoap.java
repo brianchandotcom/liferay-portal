@@ -41,6 +41,9 @@ public class ObjectLayoutSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setObjectDefinitionId(model.getObjectDefinitionId());
+		soapModel.setDefaultObjectLayout(model.isDefaultObjectLayout());
+		soapModel.setName(model.getName());
 
 		return soapModel;
 	}
@@ -158,6 +161,34 @@ public class ObjectLayoutSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getObjectDefinitionId() {
+		return _objectDefinitionId;
+	}
+
+	public void setObjectDefinitionId(long objectDefinitionId) {
+		_objectDefinitionId = objectDefinitionId;
+	}
+
+	public boolean getDefaultObjectLayout() {
+		return _defaultObjectLayout;
+	}
+
+	public boolean isDefaultObjectLayout() {
+		return _defaultObjectLayout;
+	}
+
+	public void setDefaultObjectLayout(boolean defaultObjectLayout) {
+		_defaultObjectLayout = defaultObjectLayout;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _objectLayoutId;
@@ -166,5 +197,8 @@ public class ObjectLayoutSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _objectDefinitionId;
+	private boolean _defaultObjectLayout;
+	private String _name;
 
 }

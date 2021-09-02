@@ -48,6 +48,16 @@ public class ObjectLayoutTable extends BaseTable<ObjectLayoutTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<ObjectLayoutTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<ObjectLayoutTable, Long> objectDefinitionId =
+		createColumn(
+			"objectDefinitionId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
+	public final Column<ObjectLayoutTable, Boolean> defaultObjectLayout =
+		createColumn(
+			"defaultObjectLayout", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
+	public final Column<ObjectLayoutTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private ObjectLayoutTable() {
 		super("ObjectLayout", ObjectLayoutTable::new);

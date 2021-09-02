@@ -78,7 +78,7 @@ public class ObjectLayoutBoxCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,6 +96,14 @@ public class ObjectLayoutBoxCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", objectLayoutTabId=");
+		sb.append(objectLayoutTabId);
+		sb.append(", collapsable=");
+		sb.append(collapsable);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", order=");
+		sb.append(order);
 		sb.append("}");
 
 		return sb.toString();
@@ -139,6 +147,18 @@ public class ObjectLayoutBoxCacheModel
 			objectLayoutBoxImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		objectLayoutBoxImpl.setObjectLayoutTabId(objectLayoutTabId);
+		objectLayoutBoxImpl.setCollapsable(collapsable);
+
+		if (name == null) {
+			objectLayoutBoxImpl.setName("");
+		}
+		else {
+			objectLayoutBoxImpl.setName(name);
+		}
+
+		objectLayoutBoxImpl.setOrder(order);
+
 		objectLayoutBoxImpl.resetOriginalValues();
 
 		return objectLayoutBoxImpl;
@@ -157,6 +177,13 @@ public class ObjectLayoutBoxCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		objectLayoutTabId = objectInput.readLong();
+
+		collapsable = objectInput.readBoolean();
+		name = objectInput.readUTF();
+
+		order = objectInput.readInt();
 	}
 
 	@Override
@@ -185,6 +212,19 @@ public class ObjectLayoutBoxCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(objectLayoutTabId);
+
+		objectOutput.writeBoolean(collapsable);
+
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		objectOutput.writeInt(order);
 	}
 
 	public long mvccVersion;
@@ -195,5 +235,9 @@ public class ObjectLayoutBoxCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long objectLayoutTabId;
+	public boolean collapsable;
+	public String name;
+	public int order;
 
 }

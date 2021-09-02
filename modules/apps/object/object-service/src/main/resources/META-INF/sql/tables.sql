@@ -71,7 +71,10 @@ create table ObjectLayout (
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
-	modifiedDate DATE null
+	modifiedDate DATE null,
+	objectDefinitionId LONG,
+	defaultObjectLayout BOOLEAN,
+	name STRING null
 );
 
 create table ObjectLayoutBox (
@@ -82,7 +85,38 @@ create table ObjectLayoutBox (
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
-	modifiedDate DATE null
+	modifiedDate DATE null,
+	objectLayoutTabId LONG,
+	collapsable BOOLEAN,
+	name STRING null,
+	order_ INTEGER
+);
+
+create table ObjectLayoutBoxColumn (
+	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	objectLayoutBoxColumnId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	objectFieldId LONG,
+	objectLayoutBoxRowId LONG,
+	order_ INTEGER
+);
+
+create table ObjectLayoutBoxRow (
+	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	objectLayoutBoxRowId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	objectLayoutBoxId LONG,
+	order_ INTEGER
 );
 
 create table ObjectLayoutTab (
@@ -93,7 +127,10 @@ create table ObjectLayoutTab (
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
-	modifiedDate DATE null
+	modifiedDate DATE null,
+	objectLayoutId LONG,
+	name STRING null,
+	order_ INTEGER
 );
 
 create table ObjectRelationship (

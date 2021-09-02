@@ -51,6 +51,9 @@ public class ObjectLayoutTabWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("objectLayoutId", getObjectLayoutId());
+		attributes.put("name", getName());
+		attributes.put("order", getOrder());
 
 		return attributes;
 	}
@@ -104,11 +107,34 @@ public class ObjectLayoutTabWrapper
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
 		}
+
+		Long objectLayoutId = (Long)attributes.get("objectLayoutId");
+
+		if (objectLayoutId != null) {
+			setObjectLayoutId(objectLayoutId);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		Integer order = (Integer)attributes.get("order");
+
+		if (order != null) {
+			setOrder(order);
+		}
 	}
 
 	@Override
 	public ObjectLayoutTab cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	@Override
+	public String[] getAvailableLanguageIds() {
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -129,6 +155,11 @@ public class ObjectLayoutTabWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	@Override
+	public String getDefaultLanguageId() {
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -152,6 +183,92 @@ public class ObjectLayoutTabWrapper
 	}
 
 	/**
+	 * Returns the name of this object layout tab.
+	 *
+	 * @return the name of this object layout tab
+	 */
+	@Override
+	public String getName() {
+		return model.getName();
+	}
+
+	/**
+	 * Returns the localized name of this object layout tab in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized name of this object layout tab
+	 */
+	@Override
+	public String getName(java.util.Locale locale) {
+		return model.getName(locale);
+	}
+
+	/**
+	 * Returns the localized name of this object layout tab in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized name of this object layout tab. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@Override
+	public String getName(java.util.Locale locale, boolean useDefault) {
+		return model.getName(locale, useDefault);
+	}
+
+	/**
+	 * Returns the localized name of this object layout tab in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized name of this object layout tab
+	 */
+	@Override
+	public String getName(String languageId) {
+		return model.getName(languageId);
+	}
+
+	/**
+	 * Returns the localized name of this object layout tab in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized name of this object layout tab
+	 */
+	@Override
+	public String getName(String languageId, boolean useDefault) {
+		return model.getName(languageId, useDefault);
+	}
+
+	@Override
+	public String getNameCurrentLanguageId() {
+		return model.getNameCurrentLanguageId();
+	}
+
+	@Override
+	public String getNameCurrentValue() {
+		return model.getNameCurrentValue();
+	}
+
+	/**
+	 * Returns a map of the locales and localized names of this object layout tab.
+	 *
+	 * @return the locales and localized names of this object layout tab
+	 */
+	@Override
+	public Map<java.util.Locale, String> getNameMap() {
+		return model.getNameMap();
+	}
+
+	/**
+	 * Returns the object layout ID of this object layout tab.
+	 *
+	 * @return the object layout ID of this object layout tab
+	 */
+	@Override
+	public long getObjectLayoutId() {
+		return model.getObjectLayoutId();
+	}
+
+	/**
 	 * Returns the object layout tab ID of this object layout tab.
 	 *
 	 * @return the object layout tab ID of this object layout tab
@@ -159,6 +276,16 @@ public class ObjectLayoutTabWrapper
 	@Override
 	public long getObjectLayoutTabId() {
 		return model.getObjectLayoutTabId();
+	}
+
+	/**
+	 * Returns the order of this object layout tab.
+	 *
+	 * @return the order of this object layout tab
+	 */
+	@Override
+	public int getOrder() {
+		return model.getOrder();
 	}
 
 	/**
@@ -216,6 +343,21 @@ public class ObjectLayoutTabWrapper
 		model.persist();
 	}
 
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.kernel.exception.LocaleException {
+
+		model.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport(
+			java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.kernel.exception.LocaleException {
+
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	/**
 	 * Sets the company ID of this object layout tab.
 	 *
@@ -257,6 +399,79 @@ public class ObjectLayoutTabWrapper
 	}
 
 	/**
+	 * Sets the name of this object layout tab.
+	 *
+	 * @param name the name of this object layout tab
+	 */
+	@Override
+	public void setName(String name) {
+		model.setName(name);
+	}
+
+	/**
+	 * Sets the localized name of this object layout tab in the language.
+	 *
+	 * @param name the localized name of this object layout tab
+	 * @param locale the locale of the language
+	 */
+	@Override
+	public void setName(String name, java.util.Locale locale) {
+		model.setName(name, locale);
+	}
+
+	/**
+	 * Sets the localized name of this object layout tab in the language, and sets the default locale.
+	 *
+	 * @param name the localized name of this object layout tab
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setName(
+		String name, java.util.Locale locale, java.util.Locale defaultLocale) {
+
+		model.setName(name, locale, defaultLocale);
+	}
+
+	@Override
+	public void setNameCurrentLanguageId(String languageId) {
+		model.setNameCurrentLanguageId(languageId);
+	}
+
+	/**
+	 * Sets the localized names of this object layout tab from the map of locales and localized names.
+	 *
+	 * @param nameMap the locales and localized names of this object layout tab
+	 */
+	@Override
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
+		model.setNameMap(nameMap);
+	}
+
+	/**
+	 * Sets the localized names of this object layout tab from the map of locales and localized names, and sets the default locale.
+	 *
+	 * @param nameMap the locales and localized names of this object layout tab
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setNameMap(
+		Map<java.util.Locale, String> nameMap, java.util.Locale defaultLocale) {
+
+		model.setNameMap(nameMap, defaultLocale);
+	}
+
+	/**
+	 * Sets the object layout ID of this object layout tab.
+	 *
+	 * @param objectLayoutId the object layout ID of this object layout tab
+	 */
+	@Override
+	public void setObjectLayoutId(long objectLayoutId) {
+		model.setObjectLayoutId(objectLayoutId);
+	}
+
+	/**
 	 * Sets the object layout tab ID of this object layout tab.
 	 *
 	 * @param objectLayoutTabId the object layout tab ID of this object layout tab
@@ -264,6 +479,16 @@ public class ObjectLayoutTabWrapper
 	@Override
 	public void setObjectLayoutTabId(long objectLayoutTabId) {
 		model.setObjectLayoutTabId(objectLayoutTabId);
+	}
+
+	/**
+	 * Sets the order of this object layout tab.
+	 *
+	 * @param order the order of this object layout tab
+	 */
+	@Override
+	public void setOrder(int order) {
+		model.setOrder(order);
 	}
 
 	/**

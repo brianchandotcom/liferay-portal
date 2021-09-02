@@ -41,6 +41,10 @@ public class ObjectLayoutBoxSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setObjectLayoutTabId(model.getObjectLayoutTabId());
+		soapModel.setCollapsable(model.isCollapsable());
+		soapModel.setName(model.getName());
+		soapModel.setOrder(model.getOrder());
 
 		return soapModel;
 	}
@@ -164,6 +168,42 @@ public class ObjectLayoutBoxSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getObjectLayoutTabId() {
+		return _objectLayoutTabId;
+	}
+
+	public void setObjectLayoutTabId(long objectLayoutTabId) {
+		_objectLayoutTabId = objectLayoutTabId;
+	}
+
+	public boolean getCollapsable() {
+		return _collapsable;
+	}
+
+	public boolean isCollapsable() {
+		return _collapsable;
+	}
+
+	public void setCollapsable(boolean collapsable) {
+		_collapsable = collapsable;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public int getOrder() {
+		return _order;
+	}
+
+	public void setOrder(int order) {
+		_order = order;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _objectLayoutBoxId;
@@ -172,5 +212,9 @@ public class ObjectLayoutBoxSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _objectLayoutTabId;
+	private boolean _collapsable;
+	private String _name;
+	private int _order;
 
 }

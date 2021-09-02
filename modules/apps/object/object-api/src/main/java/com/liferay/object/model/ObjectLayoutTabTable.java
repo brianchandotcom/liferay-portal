@@ -50,6 +50,13 @@ public class ObjectLayoutTabTable extends BaseTable<ObjectLayoutTabTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<ObjectLayoutTabTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<ObjectLayoutTabTable, Long> objectLayoutId =
+		createColumn(
+			"objectLayoutId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ObjectLayoutTabTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectLayoutTabTable, Integer> order = createColumn(
+		"order_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private ObjectLayoutTabTable() {
 		super("ObjectLayoutTab", ObjectLayoutTabTable::new);

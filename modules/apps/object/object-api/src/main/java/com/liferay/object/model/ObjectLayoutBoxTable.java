@@ -50,6 +50,16 @@ public class ObjectLayoutBoxTable extends BaseTable<ObjectLayoutBoxTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<ObjectLayoutBoxTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<ObjectLayoutBoxTable, Long> objectLayoutTabId =
+		createColumn(
+			"objectLayoutTabId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ObjectLayoutBoxTable, Boolean> collapsable =
+		createColumn(
+			"collapsable", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<ObjectLayoutBoxTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectLayoutBoxTable, Integer> order = createColumn(
+		"order_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private ObjectLayoutBoxTable() {
 		super("ObjectLayoutBox", ObjectLayoutBoxTable::new);

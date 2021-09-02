@@ -289,7 +289,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	@Override
 	public TreeMap<String, String> getVirtualHostnames() {
 		if (_virtualHostnames != null) {
-			return _virtualHostnames;
+			return new TreeMap<>(_virtualHostnames);
 		}
 
 		List<VirtualHost> virtualHosts = null;
@@ -316,7 +316,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 			_virtualHostnames = virtualHostnames;
 		}
 
-		return _virtualHostnames;
+		return new TreeMap<>(_virtualHostnames);
 	}
 
 	@Override

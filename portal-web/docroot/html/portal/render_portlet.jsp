@@ -481,7 +481,8 @@ if (urlConfiguration != null) {
 	StringBundler urlConfigurationJSSB = new StringBundler(PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID ? 14 : 12);
 
 	urlConfigurationJSSB.append("Liferay.Portlet.openModal({");
-	urlConfigurationJSSB.append("namespace: '");
+	urlConfigurationJSSB.append("iframeBodyCssClass: '");
+	urlConfigurationJSSB.append("', namespace: '");
 	urlConfigurationJSSB.append(portletDisplay.getNamespace());
 	urlConfigurationJSSB.append("', portletSelector: '#p_p_id_");
 	urlConfigurationJSSB.append(portletDisplay.getId());

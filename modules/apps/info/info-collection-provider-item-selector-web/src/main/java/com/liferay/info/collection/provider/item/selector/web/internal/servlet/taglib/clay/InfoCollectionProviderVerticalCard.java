@@ -54,6 +54,24 @@ public class InfoCollectionProviderVerticalCard extends BaseVerticalCard {
 	}
 
 	@Override
+	public String getStickerIcon() {
+		InfoCollectionProviderItemSelectorDisplayContext
+			infoCollectionProviderItemSelectorDisplayContext =
+				(InfoCollectionProviderItemSelectorDisplayContext)
+					renderRequest.getAttribute(
+						InfoCollectionProviderItemSelectorWebKeys.
+							INFO_COLLECTION_PROVIDER_ITEM_SELECTOR_DISPLAY_CONTEXT);
+
+		if (infoCollectionProviderItemSelectorDisplayContext.supportsFilters(
+				_infoCollectionProvider)) {
+
+			return "filter";
+		}
+
+		return super.getStickerIcon();
+	}
+
+	@Override
 	public String getSubtitle() {
 		InfoCollectionProviderItemSelectorDisplayContext
 			infoCollectionProviderItemSelectorDisplayContext =

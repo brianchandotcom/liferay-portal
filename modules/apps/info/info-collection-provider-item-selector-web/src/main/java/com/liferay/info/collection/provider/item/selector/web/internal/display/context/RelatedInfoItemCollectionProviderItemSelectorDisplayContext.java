@@ -14,6 +14,7 @@
 
 package com.liferay.info.collection.provider.item.selector.web.internal.display.context;
 
+import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
@@ -208,6 +209,19 @@ public class RelatedInfoItemCollectionProviderItemSelectorDisplayContext {
 
 	public boolean isIconDisplayStyle() {
 		if (Objects.equals(getDisplayStyle(), "icon")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean supportsFilters(
+		RelatedInfoItemCollectionProvider<?, ?>
+			relatedInfoItemCollectionProvider) {
+
+		if (relatedInfoItemCollectionProvider instanceof
+				FilteredInfoCollectionProvider) {
+
 			return true;
 		}
 

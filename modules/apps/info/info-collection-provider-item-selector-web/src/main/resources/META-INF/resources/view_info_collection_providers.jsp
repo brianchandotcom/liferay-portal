@@ -85,6 +85,17 @@ SearchContainer<InfoCollectionProvider<?>> searchContainer = infoCollectionProvi
 								- <%= subtitle %>
 							</c:if>
 						</p>
+
+						<p class="h6 text-default">
+							<c:choose>
+								<c:when test="<%= infoCollectionProviderItemSelectorDisplayContext.supportsFilters(infoCollectionProvider) %>">
+									<liferay-ui:message key="supports-filters" />
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:message key="does-not-support-filters" />
+								</c:otherwise>
+							</c:choose>
+						</p>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
@@ -108,6 +119,20 @@ SearchContainer<InfoCollectionProvider<?>> searchContainer = infoCollectionProvi
 						name="subtype"
 						value="<%= infoCollectionProviderItemSelectorDisplayContext.getSubtitle(infoCollectionProvider, locale) %>"
 					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand table-cell-smallest table-column-text-center"
+						name="supports-filters"
+					>
+						<c:choose>
+							<c:when test="<%= infoCollectionProviderItemSelectorDisplayContext.supportsFilters(infoCollectionProvider) %>">
+								<liferay-ui:message key="yes" />
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="no" />
+							</c:otherwise>
+						</c:choose>
+					</liferay-ui:search-container-column-text>
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-row>

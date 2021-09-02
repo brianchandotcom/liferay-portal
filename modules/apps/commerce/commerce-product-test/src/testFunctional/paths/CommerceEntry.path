@@ -604,6 +604,11 @@
 	<td>//div[contains(@id,'item-finder')]//td[contains(.,'${key_entryName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>OPTION_TABLE_CHECK</td>
+	<td>//div[(text() = '${key_table}')]//..//..//..//a[(text() = "${key_entryName}")]</td>
+	<td></td>
+</tr>
 <!--IFRAME-->
 <tr>
 	<td>IFRAME_SIDE_PANEL</td>

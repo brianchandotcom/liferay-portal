@@ -1,114 +1,116 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
-.item-selector-preview {
-	&.fullscreen {
-		background-color: $dark;
-		height: 100%;
-		left: 0;
-		position: fixed;
-		top: 0;
-		width: 100%;
-		z-index: 1;
-	}
-
-	.header > nav {
-		padding: 0.5rem 0;
-
-		strong {
-			font-size: 1rem;
-		}
-	}
-
-	.carousel {
-		height: calc(100% - 6.5rem);
-		padding: 3.5rem;
-		text-align: center;
-
-		@media (max-width: 768px) {
-			padding: 1rem;
-		}
-
-		.sidenav-content {
+html#{$cadmin-selector}:not(._) {
+	.item-selector-preview {
+		&.fullscreen {
+			background-color: $cadmin-dark;
 			height: 100%;
-			position: relative;
+			left: 0;
+			position: fixed;
+			top: 0;
+			width: 100%;
+			z-index: 1;
+		}
 
-			.pull-left,
-			.pull-right {
-				position: absolute;
-				top: calc(50% - 2rem);
-			}
+		.header > nav {
+			padding: 8px 0;
 
-			.pull-left {
-				left: 0;
-			}
-
-			.pull-right {
-				right: 0;
+			strong {
+				font-size: 16px;
 			}
 		}
 
-		img {
-			max-height: 100%;
-			max-width: 100%;
-		}
+		.carousel {
+			height: calc(100% - 104px);
+			padding: 56px;
+			text-align: center;
 
-		.icon-arrow {
-			font-size: 2rem;
-			position: relative;
-			z-index: 20;
+			@include media-breakpoint-down(sm, $cadmin-grid-breakpoints) {
+				padding: 16px;
+			}
 
-			&:active,
-			&:hover,
-			&:focus {
-				color: $white;
+			.sidenav-content {
+				height: 100%;
+				position: relative;
+
+				.pull-left,
+				.pull-right {
+					position: absolute;
+					top: calc(50% - 32px);
+				}
+
+				.pull-left {
+					left: 0;
+				}
+
+				.pull-right {
+					right: 0;
+				}
+			}
+
+			img {
+				max-height: 100%;
+				max-width: 100%;
+			}
+
+			.icon-arrow {
+				font-size: 32px;
+				position: relative;
+				z-index: 20;
+
+				&:active,
+				&:hover,
+				&:focus {
+					color: $cadmin-white;
+				}
+			}
+
+			.info-panel {
+				color: $cadmin-white;
+				height: calc(100% - 112px);
+				text-align: left;
+
+				.sidebar-header,
+				.sidebar-body {
+					min-width: $cadmin-sidenav-width;
+				}
+
+				.nav-link.active {
+					color: $cadmin-white;
+				}
+
+				.sidebar-dd {
+					color: $cadmin-secondary-l1;
+				}
+			}
+
+			&:not(.open) {
+				img,
+				.video-preview {
+					left: 50%;
+					position: absolute;
+					top: 50%;
+					transform: translate(-50%, -50%);
+				}
 			}
 		}
 
-		.info-panel {
-			color: $white;
-			height: calc(100% - 7rem);
-			text-align: left;
+		.footer {
+			background-color: $cadmin-secondary-d2;
+			bottom: 0;
+			color: $cadmin-white;
+			padding: 12px 24px;
+			position: fixed;
+			text-align: center;
+			width: 100%;
 
-			.sidebar-header,
-			.sidebar-body {
-				min-width: $sidenav-width;
-			}
-
-			.nav-link.active {
-				color: $white;
-			}
-
-			.sidebar-dd {
-				color: $secondary-l1;
+			> div {
+				float: right;
 			}
 		}
 
-		&:not(.open) {
-			img,
-			.video-preview {
-				left: 50%;
-				position: absolute;
-				top: 50%;
-				transform: translate(-50%, -50%);
-			}
+		.image-editor {
+			height: calc(100% - 115px);
 		}
-	}
-
-	.footer {
-		background-color: $secondary-d2;
-		bottom: 0;
-		color: $white;
-		padding: 0.75rem 1.5rem;
-		position: fixed;
-		text-align: center;
-		width: 100%;
-
-		> div {
-			float: right;
-		}
-	}
-
-	.image-editor {
-		height: calc(100% - 115px);
 	}
 }

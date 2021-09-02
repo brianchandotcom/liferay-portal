@@ -1,110 +1,201 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
-.image-editor {
-	background-color: #4d4f65;
-	height: calc(100% - 56px);
-	position: relative;
+html#{$cadmin-selector}:not(._) {
+	.image-editor {
+		background-color: #4d4f65;
+		height: calc(100% - 56px);
+		position: relative;
 
-	.cropper-line {
-		background-color: $primary;
-		opacity: 1;
+		.cropper-container {
+			font-size: 0;
+			line-height: 0;
 
-		&.line-e,
-		&.line-w {
-			width: 2px;
+			img {
+				height: 100%;
+				width: 100%;
+			}
 		}
 
-		&.line-n,
-		&.line-s {
-			height: 2px;
+		.cropper-drag-box {
+			background-color: #fff;
+			cursor: grab;
+			opacity: 0;
+
+			&:active {
+				cursor: grabbing;
+			}
 		}
 
-		&.line-e {
-			right: 0;
+		.cropper-modal {
+			background-color: #000;
+			opacity: 0.5;
 		}
 
-		&.line-n {
-			top: 0;
+		.cropper-view-box {
+			height: 100%;
+			outline-color: $cadmin-primary;
+			width: 100%;
 		}
 
-		&.line-s {
-			bottom: 0;
+		.cropper-dashed {
+			&.dashed-h {
+				border-bottom-width: 1px;
+				border-top-width: 1px;
+				height: calc(100% / 3);
+				width: 100%;
+			}
+
+			&.dashed-v {
+				border-left-width: 1px;
+				border-right-width: 1px;
+				height: 100%;
+				width: calc(100% / 3);
+			}
 		}
 
-		&.line-w {
-			left: 0;
-		}
-	}
-
-	.cropper-point {
-		background-color: $white;
-		border: 3px solid $primary;
-		border-radius: 5px;
-		height: 10px !important;
-		width: 10px !important;
-
-		&.point-e {
-			margin-top: -5px;
-			right: -5px;
+		.cropper-center {
+			height: 0;
+			width: 0;
 		}
 
-		&.point-n {
-			margin-left: -5px;
-			top: -5px;
+		.cropper-face,
+		.cropper-line,
+		.cropper-point {
+			height: 100%;
+			width: 100%;
 		}
 
-		&.point-ne {
-			right: -5px;
-			top: -5px;
+		.cropper-face {
+			background-color: #fff;
 		}
 
-		&.point-nw {
-			left: -5px;
-			top: -5px;
+		.cropper-line {
+			background-color: $cadmin-primary;
+			opacity: 1;
+
+			&.line-e,
+			&.line-w {
+				width: 2px;
+			}
+
+			&.line-n,
+			&.line-s {
+				height: 2px;
+			}
+
+			&.line-e {
+				right: 0;
+			}
+
+			&.line-n {
+				top: 0;
+			}
+
+			&.line-s {
+				bottom: 0;
+			}
+
+			&.line-w {
+				left: 0;
+			}
 		}
 
-		&.point-s {
-			bottom: -5px;
-			margin-left: -5px;
+		.cropper-point {
+			background-color: $cadmin-white;
+			border: 3px solid $cadmin-primary;
+			border-radius: 5px;
+			height: 10px !important;
+			width: 10px !important;
+
+			&.point-e {
+				margin-top: -5px;
+				right: -5px;
+			}
+
+			&.point-n {
+				margin-left: -5px;
+				top: -5px;
+			}
+
+			&.point-ne {
+				right: -5px;
+				top: -5px;
+			}
+
+			&.point-nw {
+				left: -5px;
+				top: -5px;
+			}
+
+			&.point-s {
+				bottom: -5px;
+				margin-left: -5px;
+			}
+
+			&.point-se {
+				bottom: -5px;
+				height: 20px;
+				right: -5px;
+				width: 20px;
+
+				@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
+					height: 15px;
+					width: 15px;
+				}
+
+				@include media-breakpoint-up(lg, $cadmin-grid-breakpoints) {
+					height: 10px;
+					width: 10px;
+				}
+
+				@include media-breakpoint-up(xl, $cadmin-grid-breakpoints) {
+					height: 5px;
+					width: 5px;
+				}
+			}
+
+			&.point-sw {
+				bottom: -5px;
+				left: -5px;
+			}
+
+			&.point-w {
+				left: -5px;
+				margin-top: -5px;
+			}
 		}
 
-		&.point-se {
-			bottom: -5px;
-			right: -5px;
+		.cropper-bg {
+			background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC);
 		}
 
-		&.point-sw {
-			bottom: -5px;
-			left: -5px;
+		.cropper-hide {
+			height: 0;
+			width: 0;
 		}
 
-		&.point-w {
-			left: -5px;
-			margin-top: -5px;
-		}
-	}
-
-	.cropper-view-box {
-		outline-color: $primary;
-	}
-
-	.tbar {
-		background-color: $dark-d2;
-		border: none;
-		padding: 8px;
-		text-align: center;
-
-		&.component-tbar,
-		.btn:not(.btn-primary),
-		.form-control,
-		.input-group-text {
-			color: $secondary-l1;
-		}
-
-		.form-control,
-		.input-group-text {
-			background-color: transparent;
+		.tbar {
+			background-color: $cadmin-dark-d2;
 			border: none;
+			padding: 8px;
+			text-align: center;
+
+			&.component-tbar,
+			.btn:not(.btn-primary),
+			.form-control,
+			.input-group-text {
+				color: $cadmin-secondary-l1;
+			}
+
+			.form-control,
+			.input-group-text {
+				background-color: transparent;
+				border: none;
+			}
 		}
+	}
+
+	.image-editor-modal .modal-body {
+		padding: 0;
 	}
 }

@@ -42,7 +42,11 @@ Map<String, Object> data = HashMapBuilder.<String, Object>put(
 				<%
 				AssetPublisherAddItemHolder assetPublisherAddItemHolder = assetPublisherAddItemHolders.get(0);
 
-				PortletURL portletURL = assetPublisherAddItemHolder.getPortletURL();
+				PortletURL portletURL = PortletURLBuilder.create(
+					assetPublisherAddItemHolder.getPortletURL()
+				).setRedirect(
+					currentURL
+				).buildPortletURL();
 				%>
 
 				<liferay-ui:icon
@@ -66,7 +70,11 @@ Map<String, Object> data = HashMapBuilder.<String, Object>put(
 
 					<%
 					for (AssetPublisherAddItemHolder assetPublisherAddItemHolder : assetPublisherAddItemHolders) {
-						PortletURL portletURL = assetPublisherAddItemHolder.getPortletURL();
+						PortletURL portletURL = PortletURLBuilder.create(
+							assetPublisherAddItemHolder.getPortletURL()
+						).setRedirect(
+							currentURL
+						).buildPortletURL();
 					%>
 
 						<liferay-ui:icon

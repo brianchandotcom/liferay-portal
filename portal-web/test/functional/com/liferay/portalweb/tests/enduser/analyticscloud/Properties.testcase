@@ -76,6 +76,42 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9108 | Test Summary: [AC][Portal] Creating a property at the same time (concurrency scenario)"
+	@ignore = "true"
+	@priority = "3"
+	test CanCreatePropertiesAtTheSameTime {
+
+		// TODO LRAC-9108 CanCreatePropertiesAtTheSameTime pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9101 | Test Summary: [AC] It is possible create Properties when no data source is created yet"
+	@ignore = "true"
+	@priority = "3"
+	test CanCreatePropertiesWhenNoDataSourceIsCreatedYet {
+
+		// TODO LRAC-9101 CanCreatePropertiesWhenNoDataSourceIsCreatedYet pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9107 | Test Summary: [AC] Canceling a property creation by clicking in Cancel button, x button or clicking outside the modal area"
+	@ignore = "true"
+	@priority = "3"
+	test CanCreatePropertyAndCancel {
+
+		// TODO LRAC-9107 CanCreatePropertyAndCancel pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9105 | Test Summary: [AC] It is allowed to create property name with special chars"
+	@ignore = "true"
+	@priority = "3"
+	test CanCreatePropertyNameWithSpecialChars {
+
+		// TODO LRAC-9105 CanCreatePropertyNameWithSpecialChars pending implementation
+
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8144 | Test Summary: Properties management menu is present"
 	@priority = "5"
 	test CanNavigateToProperties {
@@ -129,6 +165,24 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9103 | Test Summary: [AC] Properties created when no data source was connected, and then the admin connect data sources to workspace"
+	@ignore = "true"
+	@priority = "3"
+	test CreatePropertiesWhenNoDataSourceIsConnected {
+
+		// TODO LRAC-9103 CreatePropertiesWhenNoDataSourceIsConnected pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9104 | Test Summary: [AC] It is not allowed duplicated property name for a same data source or workspace"
+	@ignore = "true"
+	@priority = "3"
+	test NoDuplicatePropertiesName {
+
+		// TODO LRAC-9104 NoDuplicatePropertiesName pending implementation
+
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8145 | Test Summary: Owner can create a new property"
 	@priority = "5"
 	test OwnerCanCreateNewProperty {
@@ -173,6 +227,15 @@ definition {
 		ACProperties.assertNewCreatedProperty(propertyName = "New property");
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9100 | Test Summary: [AC] Properties management menu can be accessed directly via URL"
+	@ignore = "true"
+	@priority = "3"
+	test PropertiesCanBeAccessedDirectlyViaURL {
+
+		// TODO LRAC-9100 PropertiesCanBeAccessedDirectlyViaURL pending implementation
+
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8159 | Test Summary: The properties list in settings shows a list of all properties in the workspace"
 	@priority = "5"
 	test PropertiesListInSettingsShowsListOfAllPropertiesInTheWorkspace {
@@ -201,6 +264,33 @@ definition {
 		ACSettings.goToProperties();
 
 		ACUtils.assertItemsName(itemList = "${propertyName},New property 1,New property 2,New property 3");
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9102 | Test Summary: Property with name too big"
+	@ignore = "true"
+	@priority = "3"
+	test PropertyCanHaveABigName {
+
+		// TODO LRAC-9102 PropertyCanHaveABigName pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9109 | Test Summary: Property field is displayed in empty state when no property is available"
+	@ignore = "true"
+	@priority = "3"
+	test PropertyFieldDisplayedWhenNoPropertyAvailable {
+
+		// TODO LRAC-9109 PropertyFieldDisplayedWhenNoPropertyAvailable pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9106 | Test Summary: [AC] Property name with the maximum and minimal char quantity validation"
+	@ignore = "true"
+	@priority = "3"
+	test PropertyNameWithCharQuantityValidation {
+
+		// TODO LRAC-9106 PropertyNameWithCharQuantityValidation pending implementation
+
 	}
 
 }

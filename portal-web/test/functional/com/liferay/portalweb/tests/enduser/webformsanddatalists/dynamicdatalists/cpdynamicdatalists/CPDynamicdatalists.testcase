@@ -1489,7 +1489,7 @@ definition {
 		FormFields.viewRequiredAsterisk();
 
 		DDLRecord.populateFieldBoolean(
-			ddlRecordFieldData = "Yes",
+			ddlRecordFieldData = "True",
 			fieldFieldLabel = "Boolean Required",
 			fieldName = "Boolean");
 
@@ -1504,7 +1504,7 @@ definition {
 		DDLNavigator.gotoListRecords();
 
 		DDLRecord.viewFirstFieldCP(
-			ddlRecordFieldData = "Yes",
+			ddlRecordFieldData = "True",
 			field = "Boolean",
 			fieldFieldLabel = "Boolean");
 	}

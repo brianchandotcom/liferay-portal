@@ -17,11 +17,9 @@ package com.liferay.registry.internal;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistrar;
 import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.dependency.ServiceDependencyManager;
 
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
@@ -32,13 +30,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -52,59 +48,6 @@ public class RegistryImpl implements Registry {
 
 	public RegistryImpl(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             com.liferay.portal.kernel.module.util.SystemBundleUtil
-	 *			   #callService(Class, UnsafeFunction)}
-	 */
-	@Deprecated
-	@Override
-	public <S, R> R callService(
-		Class<S> serviceClass, Function<S, R> function) {
-
-		org.osgi.framework.ServiceReference<S> serviceReference =
-			_bundleContext.getServiceReference(serviceClass);
-
-		if (serviceReference == null) {
-			return function.apply(null);
-		}
-
-		S service = _bundleContext.getService(serviceReference);
-
-		try {
-			return function.apply(service);
-		}
-		finally {
-			_bundleContext.ungetService(serviceReference);
-		}
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             com.liferay.portal.kernel.module.util.SystemBundleUtil
-	 *			   #callService(String, UnsafeFunction)}
-	 */
-	@Deprecated
-	@Override
-	public <S, R> R callService(String className, Function<S, R> function) {
-		org.osgi.framework.ServiceReference<S> serviceReference =
-			(org.osgi.framework.ServiceReference<S>)
-				_bundleContext.getServiceReference(className);
-
-		if (serviceReference == null) {
-			return function.apply(null);
-		}
-
-		S service = _bundleContext.getService(serviceReference);
-
-		try {
-			return function.apply(service);
-		}
-		finally {
-			_bundleContext.ungetService(serviceReference);
-		}
 	}
 
 	public void closeServiceTrackers() {
@@ -180,11 +123,6 @@ public class RegistryImpl implements Registry {
 	}
 
 	@Override
-	public Collection<ServiceDependencyManager> getServiceDependencyManagers() {
-		return Collections.unmodifiableCollection(_serviceDependencyManagers);
-	}
-
-	@Override
 	public <T> ServiceReference<T> getServiceReference(Class<T> clazz) {
 		org.osgi.framework.ServiceReference<T> serviceReference =
 			_bundleContext.getServiceReference(clazz);
@@ -255,11 +193,6 @@ public class RegistryImpl implements Registry {
 		}
 
 		return _toServiceReferences(osgiServiceReferences);
-	}
-
-	@Override
-	public <T> ServiceRegistrar<T> getServiceRegistrar(Class<T> clazz) {
-		return new ServiceRegistrar<>(this, clazz);
 	}
 
 	@Override
@@ -400,13 +333,6 @@ public class RegistryImpl implements Registry {
 	}
 
 	@Override
-	public synchronized void registerServiceDependencyManager(
-		ServiceDependencyManager serviceDependencyManager) {
-
-		_serviceDependencyManagers.add(serviceDependencyManager);
-	}
-
-	@Override
 	public Registry setRegistry(Registry registry) throws SecurityException {
 		return registry;
 	}
@@ -517,13 +443,6 @@ public class RegistryImpl implements Registry {
 			serviceReferenceWrapper.getServiceReference());
 	}
 
-	@Override
-	public void unregisterServiceDependencyManager(
-		ServiceDependencyManager serviceDependencyManager) {
-
-		_serviceDependencyManagers.remove(serviceDependencyManager);
-	}
-
 	protected void addServiceTracker(
 		org.osgi.util.tracker.ServiceTracker<?, ?> serviceTracker) {
 
@@ -582,8 +501,6 @@ public class RegistryImpl implements Registry {
 	private final BundleContext _bundleContext;
 	private final ReferenceQueue<org.osgi.util.tracker.ServiceTracker<?, ?>>
 		_referenceQueue = new ReferenceQueue<>();
-	private final Set<ServiceDependencyManager> _serviceDependencyManagers =
-		new HashSet<>();
 	private final Set<Reference<org.osgi.util.tracker.ServiceTracker<?, ?>>>
 		_serviceTrackerReferences = Collections.newSetFromMap(
 			new ConcurrentHashMap

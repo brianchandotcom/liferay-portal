@@ -793,13 +793,13 @@ definition {
 				locator1 = "CalendarEditEvent#START_DATE_TIME",
 				value1 = "${startDateTime}");
 
-			Click(locator1 = "CalendarEditEvent#START_DATE_TIME");
+			Click(locator1 = "TextInput#TITLE");
 
 			Type(
 				locator1 = "CalendarEditEvent#END_DATE_TIME",
 				value1 = "${endDateTime}");
 
-			Click(locator1 = "CalendarEditEvent#END_DATE_TIME");
+			Click(locator1 = "TextInput#TITLE");
 
 			if ("${optionSet}" == "true") {
 				CalendarEvent._options(
@@ -829,13 +829,13 @@ definition {
 				locator1 = "CalendarEditEvent#START_DATE_TIME",
 				value1 = "${startDateTime}");
 
-			Click(locator1 = "CalendarEditEvent#START_DATE_TIME");
+			Click(locator1 = "TextInput#TITLE");
 
 			Type(
 				locator1 = "CalendarEditEvent#END_DATE_TIME",
 				value1 = "${endDateTime}");
 
-			Click(locator1 = "CalendarEditEvent#END_DATE_TIME");
+			Click(locator1 = "TextInput#TITLE");
 
 			AssertChecked(locator1 = "CalendarEditEvent#REPEAT_CHECKBOX");
 
@@ -1031,13 +1031,13 @@ definition {
 	}
 
 	macro selectTimes {
-		Click(locator1 = "CalendarEditEvent#START_DATE_TIME");
+		Click(locator1 = "TextInput#TITLE");
 
 		var key_startDateTime = "${startDateTime}";
 
 		Click(locator1 = "CalendarEditEvent#START_DATE_TIME_OPTION");
 
-		Click(locator1 = "CalendarEditEvent#END_DATE_TIME");
+		Click(locator1 = "TextInput#TITLE");
 
 		var key_endDateTime = "${endDateTime}";
 
@@ -1061,9 +1061,13 @@ definition {
 			locator1 = "CalendarEditEvent#START_DATE",
 			value1 = "${startDate}");
 
+		Click(locator1 = "TextInput#TITLE");
+
 		Type(
 			locator1 = "CalendarEditEvent#END_DATE",
 			value1 = "${endDate}");
+
+		Click(locator1 = "TextInput#TITLE");
 	}
 
 	macro setDatesToday {
@@ -1249,9 +1253,13 @@ definition {
 			locator1 = "CalendarEditEvent#START_DATE_TIME",
 			value1 = "${startDateTime}");
 
+		Click(locator1 = "TextInput#TITLE");
+
 		Type(
 			locator1 = "CalendarEditEvent#END_DATE_TIME",
 			value1 = "${endDateTime}");
+
+		Click(locator1 = "TextInput#TITLE");
 
 		CalendarEvent.viewTimes(
 			endDateTime = "${endDateTime}",

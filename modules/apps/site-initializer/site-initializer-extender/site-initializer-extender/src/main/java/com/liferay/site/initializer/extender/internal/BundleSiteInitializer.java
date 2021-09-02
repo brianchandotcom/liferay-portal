@@ -411,7 +411,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			parentResourcePath = resourcePath.substring(
 				0, resourcePath.length() - 1);
 
-			if (resourcePath.endsWith("/") && resourcePaths.contains(parentResourcePath + "._si.json")) {
+			if (resourcePath.endsWith("/") &&
+				resourcePaths.contains(parentResourcePath + "._si.json")) {
+
 				_addJournalArticles(
 					_addStructuredContentFolders(
 						documentFolderId, parentResourcePath, serviceContext),
@@ -421,8 +423,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			if (resourcePath.endsWith("._si.json") ||
-				resourcePath.endsWith(".xml") ||
-				resourcePath.endsWith("/")) {
+				resourcePath.endsWith(".xml") || resourcePath.endsWith("/")) {
+
 				continue;
 			}
 

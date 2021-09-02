@@ -65,10 +65,10 @@ definition {
 				key_entryName = "${colorName}${count}",
 				locator1 = "CommerceNavigation#ENTRY_NAME");
 
-			if("${count}" == "0"){
+			if ("${count}" == "0") {
 				AssertElementPresent(
-					key_table = "Select from List",
 					key_entryName = "${colorName}${count}",
+					key_table = "Select from List",
 					locator1 = "CommerceEntry#OPTION_TABLE_CHECK");
 
 				echo("IF STATE (The option ${colorName}${count} is present with type Select From List)");
@@ -92,14 +92,13 @@ definition {
 			Refresh();
 
 			AssertElementPresent(
-				key_table = "${fieldType}",
 				key_entryName = "${colorName}${count}",
+				key_table = "${fieldType}",
 				locator1 = "CommerceEntry#OPTION_TABLE_CHECK");
 
 			echo("The option ${colorName}${count} is present with type ${fieldType}");
 
 			var count = ${count} + 1;
-
 		}
 	}
 

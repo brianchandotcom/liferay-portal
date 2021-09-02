@@ -286,6 +286,11 @@
 	<td>//*[contains(@class,'view-selected')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SELECT_USER_EMAIL</td>
+	<td>//td[text()='${userEmail}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

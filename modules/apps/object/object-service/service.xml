@@ -171,6 +171,12 @@
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="objectDefinitionId" type="long" />
+		<column name="defaultObjectLayout" type="boolean" />
+		<column localized="true" name="name" type="String" />
 	</entity>
 	<entity local-service="true" name="ObjectLayoutBox" remote-service="true" uuid="true">
 
@@ -185,6 +191,52 @@
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="objectLayoutTabId" type="long" />
+		<column name="collapsable" type="boolean" />
+		<column localized="true" name="name" type="String" />
+		<column name="order" type="int" />
+	</entity>
+	<entity local-service="true" name="ObjectLayoutBoxColumn" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="objectLayoutBoxColumnId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="objectFieldId" type="long" />
+		<column name="objectLayoutBoxRowId" type="long" />
+		<column name="order" type="int" />
+	</entity>
+	<entity local-service="true" name="ObjectLayoutBoxRow" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="objectLayoutBoxRowId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="objectLayoutBoxId" type="long" />
+		<column name="order" type="int" />
 	</entity>
 	<entity local-service="true" name="ObjectLayoutTab" remote-service="true" uuid="true">
 
@@ -199,6 +251,12 @@
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="objectLayoutId" type="long" />
+		<column localized="true" name="name" type="String" />
+		<column name="order" type="int" />
 	</entity>
 	<entity local-service="true" name="ObjectRelationship" remote-service="true" uuid="true">
 

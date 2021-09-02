@@ -22,6 +22,7 @@ definition {
 			},
 			"name": "${objectName}",
 			"objectFields": [],
+			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {
 				"en_US": "${pluralLabelName}"
 			},

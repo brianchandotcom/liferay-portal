@@ -1584,9 +1584,7 @@ definition {
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
 
-		Accounts.removeAssignee(
-			assigneeName = "Organization for Account",
-			assigneeType = "Organizations");
+		Accounts.removeOrganizationAsAssignee(assigneeName = "Organization for Account");
 
 		Accounts.openAccountsAdmin();
 
@@ -1617,9 +1615,7 @@ definition {
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Users");
 
-		Accounts.removeAssignee(
-			assigneeName = "userfn",
-			assigneeType = "Users");
+		Accounts.removeUserAsAssignee(assigneeName = "userfn");
 
 		Accounts.openAccountsAdmin();
 

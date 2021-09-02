@@ -21,6 +21,26 @@ definition {
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
+	@description = "This is a test for LPS-133390."
+	@priority = "5"
+	test CardsFragmentsAfterUpgrade721 {
+		property data.archive.type = "data-archive-layout-section-with-three-columns";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.1";
+
+		Upgrade.viewCardWithThreeColumnsInMobileBreakpoint();
+	}
+
+	@description = "This is a test for LPS-133390."
+	@priority = "5"
+	test CardsFragmentsAfterUpgrade72104 {
+		property data.archive.type = "data-archive-layout-section-with-three-columns";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.1";
+
+		Upgrade.viewCardWithThreeColumnsInMobileBreakpoint();
+	}
+
 	@description = "This is a use case for LPS-102202."
 	@priority = "5"
 	test PagesFragments704 {
@@ -405,23 +425,4 @@ definition {
 		AssertElementPresent(locator1 = "Button#CANCEL");
 	}
 
-	@description = "This is a test for LPS-133390."
-	@priority = "5"
-	test CardsFragmentsAfterUpgrade721 {
-		property data.archive.type = "data-archive-layout-section-with-three-columns";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "7.2.1";
-
-		Upgrade.viewCardWithThreeColumnsInMobileBreakpoint();
-	}
-
-	@description = "This is a test for LPS-133390."
-	@priority = "5"
-	test CardsFragmentsAfterUpgrade72104 {
-		property data.archive.type = "data-archive-layout-section-with-three-columns";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "7.2.1";
-
-		Upgrade.viewCardWithThreeColumnsInMobileBreakpoint();
-	}
 }

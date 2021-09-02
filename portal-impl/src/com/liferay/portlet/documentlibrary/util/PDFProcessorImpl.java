@@ -390,12 +390,6 @@ public class PDFProcessorImpl
 		throws Exception {
 
 		if (GhostscriptUtil.isEnabled()) {
-			if (!_ghostscriptInitialized) {
-				GhostscriptUtil.reset();
-
-				_ghostscriptInitialized = true;
-			}
-
 			_generateImagesGS(fileVersion, file);
 		}
 		else {
@@ -515,6 +509,12 @@ public class PDFProcessorImpl
 	private void _generateImagesGS(
 			FileVersion fileVersion, File file, boolean thumbnail)
 		throws Exception {
+
+		if (!_ghostscriptInitialized) {
+			GhostscriptUtil.reset();
+
+			_ghostscriptInitialized = true;
+		}
 
 		// Generate images
 

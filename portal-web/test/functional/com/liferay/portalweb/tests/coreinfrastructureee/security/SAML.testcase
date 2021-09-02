@@ -16,6 +16,7 @@ definition {
 		User.firstLoginUI();
 	}
 
+	@description = "This is a use case for LPS-32577."
 	@priority = "5"
 	test AddUserInheritedRolesAsSAMLAttributeStatements {
 		property test.name.skip.portal.instance = "SAML#AddUserInheritedRolesAsSAMLAttributeStatements";
@@ -169,7 +170,7 @@ definition {
 		AssertElementPresent(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ERROR_NO_MAPPING_SELECTED");
 	}
 
-	@description = "This is a use case for LPS-105165"
+	@description = "This is a use case for LPS-105165."
 	@priority = "5"
 	test AssertInstanceAdminCannotConfigureIdPWhenDisableIdPRole {
 		property test.name.skip.portal.instance = "SAML#AssertInstanceAdminCannotConfigureIdPWhenDisableIdPRole";
@@ -217,6 +218,7 @@ definition {
 			value1 = "The identity provider role has been disabled. It can be re-enabled in System Settings.");
 	}
 
+	@description = "This is a use case for LPS-94699."
 	@priority = "4"
 	test AssertKeepAliveToKeepMySAMLSessionAlive {
 		property test.name.skip.portal.instance = "SAML#AssertKeepAliveToKeepMySAMLSessionAlive";
@@ -387,6 +389,7 @@ definition {
 			userScreenName = "test");
 	}
 
+	@description = "This is a use case for LRQA-47412."
 	@priority = "4"
 	test AssertSignedSAMLMetadata {
 		property test.name.skip.portal.instance = "SAML#AssertSignedSAMLMetadata";
@@ -452,6 +455,7 @@ definition {
 		AssertConsoleTextPresent(value1 = "Validation of protocol message signature failed");
 	}
 
+	@description = "This is a use case for LRQA-35866."
 	@priority = "4"
 	test AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout {
 		property custom.properties = "session.timeout=2";
@@ -539,6 +543,7 @@ definition {
 		User.viewLoggedOutPG();
 	}
 
+	@description = "This is a use case for LRQA-35784."
 	@priority = "4"
 	test AssertSSOSessionExistsAfterSPSessionTimeout {
 		property custom.properties = "session.timeout=2";
@@ -580,6 +585,7 @@ definition {
 		User.viewLoggedInPG();
 	}
 
+	@description = "This is a use case for LRQA-35833."
 	@priority = "4"
 	test AssertSSOSessionExpiresAfterMaximumSessionAge {
 		property custom.properties = "session.timeout=2";
@@ -1611,6 +1617,7 @@ definition {
 			value1 = "Authentication failed. Please try again.");
 	}
 
+	@description = "This is a use case for LPS-110344."
 	@priority = "5"
 	test HotDeploySAMLApp {
 		property hot.deploy.osgi.app.includes = "saml";
@@ -1747,6 +1754,7 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LRQA-35866."
 	@priority = "4"
 	test SPInitiatedSSOWithScreenNameIdentifier {
 		property test.name.skip.portal.instance = "SAML#SPInitiatedSSOWithScreenNameIdentifier";
@@ -1845,7 +1853,7 @@ definition {
 		PortletEntry.publish();
 	}
 
-	@description = "Sign into portal by executing a IdP initiated SSO login. After a successful login, the IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions."
+	@description = "This is a use case for LRQA-35866. Sign into portal by executing a IdP initiated SSO login. After a successful login, the IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions."
 	@priority = "4"
 	test ViewIdPInitiatedSSO {
 		property test.name.skip.portal.instance = "SAML#ViewIdPInitiatedSSO";
@@ -1891,7 +1899,7 @@ definition {
 		User.viewLoggedOutPG();
 	}
 
-	@description = "LPS-50220 - IdP initiated SSO login should work regardless if 'Remember Me' is checked or not."
+	@description = "This is a use case for LPS-50220. IdP initiated SSO login should work regardless if 'Remember Me' is checked or not."
 	@priority = "4"
 	test ViewIdPInitiatedSSOWithRememberMeChecked {
 		property test.name.skip.portal.instance = "SAML#ViewIdPInitiatedSSOWithRememberMeChecked";
@@ -2071,6 +2079,7 @@ definition {
 		User.viewLoggedOutPG();
 	}
 
+	@description = "This is a use case for LRQA-31886."
 	@priority = "4"
 	test ViewSingleLogoutAndForceAuthWithMultipleSPs {
 		property test.name.skip.portal.instance = "SAML#ViewSingleLogoutAndForceAuthWithMultipleSPs";
@@ -2235,7 +2244,7 @@ definition {
 		AssertElementPresent(locator1 = "TextInput#EMAIL_ADDRESS");
 	}
 
-	@description = "LPS-49666 - SAML Single Logout should support HTTP-POST binding."
+	@description = "This is a use case for LPS-49666. SAML Single Logout should support HTTP-POST binding."
 	@priority = "4"
 	test ViewSingleLogoutHTTPPostBindingInConsole {
 		property test.name.skip.portal.instance = "SAML#ViewSingleLogoutHTTPPostBindingInConsole";
@@ -2275,7 +2284,7 @@ definition {
 		AssertConsoleTextPresent(value1 = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST");
 	}
 
-	@description = "Sign into portal by executing a SP initiated SSO login. This is done by clicking on the 'Sign In' link in the dockbar on the SP. After the SP is logged in, and if both instances has the same user and email address, the IdP will also be logged in."
+	@description = "This is a use case for LPS-50687. Sign into portal by executing a SP initiated SSO login. This is done by clicking on the 'Sign In' link in the dockbar on the SP. After the SP is logged in, and if both instances has the same user and email address, the IdP will also be logged in."
 	@priority = "4"
 	test ViewSPInitiatedSSO {
 		property portal.upstream = "true";
@@ -2320,6 +2329,7 @@ definition {
 		User.viewLoggedOutPG();
 	}
 
+	@description = "This is a use case for LPS-88089."
 	@priority = "4"
 	test ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched {
 		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched";

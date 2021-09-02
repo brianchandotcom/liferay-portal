@@ -19,12 +19,14 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Status;
@@ -115,6 +117,9 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 				orderStatusInfo = _getOrderStatusInfo(
 					commerceOrder.getOrderStatus(), commerceOrderStatusLabel,
 					commerceOrderStatusLabelI18n);
+				orderTypeExternalReferenceCode =
+					_getOrderTypeExternalReferenceCode(
+						commerceOrder.getCommerceOrderTypeId());
 				orderTypeId = commerceOrder.getCommerceOrderTypeId();
 				orderUUID = commerceOrder.getUuid();
 				paymentMethod = commerceOrder.getCommercePaymentMethodKey();
@@ -184,6 +189,20 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 				label_i18n = commerceOrderStatusLabelI18n;
 			}
 		};
+	}
+
+	private String _getOrderTypeExternalReferenceCode(long commerceOrderTypeId)
+		throws Exception {
+
+		CommerceOrderType commerceOrderType =
+			_commerceOrderTypeService.fetchCommerceOrderType(
+				commerceOrderTypeId);
+
+		if (commerceOrderType == null) {
+			return null;
+		}
+
+		return commerceOrderType.getExternalReferenceCode();
 	}
 
 	private Status _getPaymentStatusInfo(
@@ -481,6 +500,9 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommerceOrderTypeService _commerceOrderTypeService;
 
 	@Reference
 	private CommercePaymentEngine _commercePaymentEngine;

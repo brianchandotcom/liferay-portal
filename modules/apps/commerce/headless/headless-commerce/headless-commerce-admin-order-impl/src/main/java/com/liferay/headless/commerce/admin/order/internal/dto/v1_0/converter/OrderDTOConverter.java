@@ -20,12 +20,14 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Status;
@@ -129,6 +131,9 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 				orderStatusInfo = _getOrderStatusInfo(
 					commerceOrder.getOrderStatus(), commerceOrderStatusLabel,
 					commerceOrderStatusLabelI18n);
+				orderTypeExternalReferenceCode =
+					_getOrderTypeExternalReferenceCode(
+						commerceOrder.getCommerceOrderTypeId());
 				orderTypeId = commerceOrder.getCommerceOrderTypeId();
 				paymentMethod = commerceOrder.getCommercePaymentMethodKey();
 				paymentStatus = commerceOrder.getPaymentStatus();
@@ -232,6 +237,20 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 				label_i18n = commerceOrderStatusLabelI18n;
 			}
 		};
+	}
+
+	private String _getOrderTypeExternalReferenceCode(long commerceOrderTypeId)
+		throws Exception {
+
+		CommerceOrderType commerceOrderType =
+			_commerceOrderTypeService.fetchCommerceOrderType(
+				commerceOrderTypeId);
+
+		if (commerceOrderType == null) {
+			return null;
+		}
+
+		return commerceOrderType.getExternalReferenceCode();
 	}
 
 	private Status _getPaymentStatusInfo(
@@ -534,6 +553,9 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 
 	@Reference
 	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
+
+	@Reference
+	private CommerceOrderTypeService _commerceOrderTypeService;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

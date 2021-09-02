@@ -321,6 +321,10 @@ definition {
 		}
 	}
 
+	macro assertUsersListByEmail {
+		AssertElementPresent(locator1 = "ACSettings#USER_LIST_BY_EMAIL");
+	}
+
 	macro changeMultipleUsersPermissions {
 		for (var userEmail : list "${userEmail}") {
 			Click(
@@ -343,10 +347,6 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
-	}
-	
-	macro assertUsersListByEmail {
-		AssertElementPresent(locator1 = "ACSettings#USER_LIST_BY_EMAIL");
 	}
 
 	macro changeRetentionPeriodTo7Months {

@@ -545,6 +545,11 @@ definition {
 				key_index = "1",
 				key_KeywordName = "test test",
 				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
+
+			AssertElementPresent(
+				key_index = "5",
+				key_KeywordName = "bryan cheung",
+				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
 		}
 
 		task ("Change the order do asc") {
@@ -555,6 +560,11 @@ definition {
 			AssertElementPresent(
 				key_index = "1",
 				key_KeywordName = "bryan cheung",
+				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
+
+			AssertElementPresent(
+				key_index = "5",
+				key_KeywordName = "Test Test",
 				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
 		}
 	}

@@ -229,6 +229,11 @@ components:
                 orderStatusInfo:
                     $ref: "#/components/schemas/Status"
                     readOnly: true
+                orderTypeId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
                 paymentMethod:
                     example: paypal
                     type: string

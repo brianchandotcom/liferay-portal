@@ -21,9 +21,9 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewSAMLConfigurationAfterUpgrade7412 {
+	test ViewSAMLConfigurationAfterUpgrade7310 {
 		property data.archive.type = "data-archive-saml";
-		property portal.version = "7.4.12";
+		property portal.version = "7.3.10";
 
 		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
@@ -31,10 +31,9 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewSAMLConfigurationAfterUpgrade7310 {
+	test ViewSAMLConfigurationAfterUpgrade7412 {
 		property data.archive.type = "data-archive-saml";
-		property database.types = "db2,mariadb,mysql,postgresql,sqlserver,sybase";
-		property portal.version = "7.3.10";
+		property portal.version = "7.4.12";
 
 		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
@@ -83,9 +82,10 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewSAMLWithEncryptionConfigurationAfterUpgrade7412 {
+	test ViewSAMLWithEncryptionConfigurationAfterUpgrade7310 {
 		property data.archive.type = "data-archive-saml-encryption";
-		property portal.version = "7.4.12";
+		property database.types = "db2,mariadb,mysql,postgresql,sqlserver,sybase";
+		property portal.version = "7.3.10";
 
 		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
@@ -93,10 +93,9 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewSAMLWithEncryptionConfigurationAfterUpgrade7310 {
+	test ViewSAMLWithEncryptionConfigurationAfterUpgrade7412 {
 		property data.archive.type = "data-archive-saml-encryption";
-		property database.types = "db2,mariadb,mysql,postgresql,sqlserver,sybase";
-		property portal.version = "7.3.10";
+		property portal.version = "7.4.12";
 
 		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 

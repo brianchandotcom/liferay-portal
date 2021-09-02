@@ -344,6 +344,10 @@ definition {
 
 		Alert.viewSuccessMessage();
 	}
+	
+	macro assertUsersListByEmail {
+		AssertElementPresent(locator1 = "ACSettings#USER_LIST_BY_EMAIL");
+	}
 
 	macro changeRetentionPeriodTo7Months {
 		Click(locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_MENU");

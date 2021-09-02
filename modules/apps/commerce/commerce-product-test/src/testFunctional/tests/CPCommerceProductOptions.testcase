@@ -51,7 +51,7 @@ definition {
 		var colorName = "Color_";
 		var count = "0";
 
-		for (var fieldType : list "Text,Single Selection,Multiple Selection,Date,Numeric,Boolean Question") {
+		for (var fieldType : list "Text,Single Selection,Multiple Selection,Date,Numeric,Boolean") {
 			Type(
 				key_title = "Add Options",
 				locator1 = "CommerceEntry#ADD_RELATION_FIELD",
@@ -64,6 +64,15 @@ definition {
 			AssertElementPresent(
 				key_entryName = "${colorName}${count}",
 				locator1 = "CommerceNavigation#ENTRY_NAME");
+
+			if("${count}" == "0"){
+				AssertElementPresent(
+					key_table = "Select from List",
+					key_entryName = "${colorName}${count}",
+					locator1 = "CommerceEntry#OPTION_TABLE_CHECK");
+
+				echo("IF STATE (The option ${colorName}${count} is present with type Select From List)");
+			}
 
 			Click(
 				key_index = "${colorName}${count}",
@@ -80,9 +89,17 @@ definition {
 
 			Click(locator1 = "Icon#CLOSE");
 
+			Refresh();
+
+			AssertElementPresent(
+				key_table = "${fieldType}",
+				key_entryName = "${colorName}${count}",
+				locator1 = "CommerceEntry#OPTION_TABLE_CHECK");
+
+			echo("The option ${colorName}${count} is present with type ${fieldType}");
+
 			var count = ${count} + 1;
 
-			Refresh();
 		}
 	}
 

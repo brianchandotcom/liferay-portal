@@ -363,6 +363,18 @@ definition {
 			value1 = "\ENTER");
 	}
 
+	macro selectDistributionByAttribute {
+		Click(locator1 = "ACSegments#ATTRIBUTE_TEXT_INPUT");
+
+		Type(
+			locator1 = "ACSegments#ATTRIBUTE_TEXT_INPUT",
+			value1 = "${attribute}");
+
+		Click(
+			locator1 = "ACSegments#ATTRIBUTE_DROPDOWN_MENU_ITEM",
+			menuItem = "${attribute}");
+	}
+
 	macro selectDocument {
 		var key_indexField = "${indexField}";
 
@@ -404,6 +416,12 @@ definition {
 		AssertTextEquals(
 			locator1 = "ACSegments#ACTIVE_PAGE",
 			value1 = "${pageNumber}");
+	}
+
+	macro viewBreakdownChartsEntry {
+		AssertTextEquals.assertPartialText(
+			locator1 = "ACSegments#BREAKDOWN_CHART",
+			value1 = "${key_entry}");
 	}
 
 	macro viewConjunction {

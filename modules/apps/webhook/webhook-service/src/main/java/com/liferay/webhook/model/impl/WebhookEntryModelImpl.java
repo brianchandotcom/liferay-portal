@@ -107,7 +107,7 @@ public class WebhookEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table WebhookEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,webhookEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,destinationName VARCHAR(75) null,destinationWebhookEventKeys VARCHAR(75) null,name VARCHAR(75) null,secret VARCHAR(75) null,url VARCHAR(75) null)";
+		"create table WebhookEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,webhookEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,destinationName VARCHAR(75) null,destinationWebhookEventKeys VARCHAR(150) null,name VARCHAR(75) null,secret VARCHAR(75) null,url VARCHAR(255) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table WebhookEntry";
 
@@ -133,14 +133,20 @@ public class WebhookEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 2L;
+	public static final long NAME_COLUMN_BITMASK = 2L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long WEBHOOKENTRYID_COLUMN_BITMASK = 4L;
+	public static final long WEBHOOKENTRYID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -655,6 +661,15 @@ public class WebhookEntryModelImpl
 		}
 
 		_name = name;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalName() {
+		return getColumnOriginalValue("name");
 	}
 
 	@JSON

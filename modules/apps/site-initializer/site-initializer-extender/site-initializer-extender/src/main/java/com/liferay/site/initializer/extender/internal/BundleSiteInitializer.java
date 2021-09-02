@@ -408,19 +408,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		for (String resourcePath : resourcePaths) {
-			if (resourcePath.endsWith("/")) {
+			parentResourcePath = resourcePath.substring(
+				0, resourcePath.length() - 1);
+
+			if (resourcePath.endsWith("/") && resourcePaths.contains(parentResourcePath + "._si.json")) {
 				_addJournalArticles(
 					_addStructuredContentFolders(
-						documentFolderId, resourcePath, serviceContext),
+						documentFolderId, parentResourcePath, serviceContext),
 					resourcePath, serviceContext);
 
 				continue;
 			}
 
-			if (resourcePaths.contains(
-					StringUtil.replace(resourcePath, ".json", "/")) ||
-				resourcePath.endsWith(".xml")) {
-
+			if (resourcePath.endsWith("._si.json") ||
+				resourcePath.endsWith(".xml") ||
+				resourcePath.endsWith("/")) {
 				continue;
 			}
 
@@ -551,10 +553,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		parentResourcePath = parentResourcePath.substring(
-			0, parentResourcePath.length() - 1);
-
-		String json = _read(parentResourcePath + ".json");
+		String json = _read(parentResourcePath + "._si.json");
 
 		StructuredContentFolder structuredContentFolder =
 			StructuredContentFolder.toDTO(json);

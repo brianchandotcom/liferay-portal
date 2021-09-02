@@ -42,6 +42,40 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9034 | Test Summary: As a Business User, I should be able to create multiple properties with multiple sites"
+	@priority = "3"
+	test AddPropertyBasedOnMultiplePropertiesType {
+		task ("Connect the DXP to Analytics Cloud") {
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.connectAnalyticsCloud();
+
+			ACDXPSettings.assertSuccessfulConnection();
+		}
+
+		task ("Navigate to the Synced Sites Menu tab") {
+			ACDXPSettings.navToSyncedSitesMenu();
+		}
+
+		task ("Add a new property based on Multiple Properties type") {
+			ACDXPSettings.createMultipleProperties(siteNameList = "Liferay DXP,Site Name");
+		}
+
+		task ("Sign in AC") {
+			ACUtils.launchAC();
+		}
+
+		task ("View both properties are available") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			for (var propertyName : list "Liferay DXP (1),Site Name") {
+				ACAssets.viewAssets(assetName = "${propertyName}");
+			}
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9036 | Test Summary: Assign site to property when properties exist"
 	@priority = "3"
 	test AssignSiteToExistingProperty {

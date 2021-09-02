@@ -1,5 +1,39 @@
 definition {
 
+	macro configureWorkspaceSettings {
+		if (isSet(workspaceName)) {
+			Type(
+				key_text = "Workspace Name",
+				locator1 = "TextInput#ANY",
+				value1 = "${workspaceName}");
+		}
+
+		Type(
+			key_text = "Add Incident Report Contacts",
+			locator1 = "TextInput#ANY",
+			value1 = "test@liferay.com");
+
+		Click(
+			label = "Add Incident Report Contacts",
+			locator1 = "ACUtils#LABEL");
+
+		if (isSet(cancel)) {
+			WaitForElementNotPresent(
+				key_text = "Cancel",
+				locator1 = "Button#ANY_DISABLED");
+
+			Button.click(button = "Cancel");
+		}
+
+		else {
+			WaitForElementNotPresent(
+				key_text = "Save",
+				locator1 = "Button#ANY_DISABLED");
+
+			Button.clickSave();
+		}
+	}
+
 	macro openWorkspace {
 		if (isSet(workspaceName)) {
 			var key_WorkspaceName = "${workspaceName}";

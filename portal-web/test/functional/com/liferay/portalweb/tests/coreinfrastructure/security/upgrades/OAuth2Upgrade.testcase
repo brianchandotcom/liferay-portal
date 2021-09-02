@@ -18,6 +18,7 @@ definition {
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
+	@description = "This is a use case for LRQA-61554."
 	@priority = "5"
 	test ViewOAuth2ApplicationInInstanceLevelAfterUpgrade713 {
 		property data.archive.type = "data-archive-oauth2-instance-level";
@@ -49,6 +50,7 @@ definition {
 			websiteURL = "http://www.liferay.com");
 	}
 
+	@description = "This is a use case for LRQA-61554."
 	@priority = "5"
 	test ViewOAuth2ApplicationInInstanceLevelAfterUpgrade720 {
 		property data.archive.type = "data-archive-oauth2-instance-level";
@@ -80,6 +82,7 @@ definition {
 			websiteURL = "http://www.liferay.com");
 	}
 
+	@description = "This is a use case for LRQA-61554."
 	@priority = "5"
 	test ViewOAuth2ApplicationInInstanceLevelAfterUpgrade71103 {
 		property data.archive.type = "data-archive-oauth2-instance-level";
@@ -110,6 +113,7 @@ definition {
 			websiteURL = "http://www.liferay.com");
 	}
 
+	@description = "This is a use case for LRQA-61554."
 	@priority = "5"
 	test ViewOAuth2ApplicationInInstanceLevelAfterUpgrade72101 {
 		property data.archive.type = "data-archive-oauth2-instance-level";
@@ -140,6 +144,7 @@ definition {
 			websiteURL = "http://www.liferay.com");
 	}
 
+	@description = "This is a use case for LRQA-61554."
 	@priority = "5"
 	test ViewOAuth2ApplicationInSystemLevelAfterUpgrade713 {
 		property data.archive.type = "data-archive-oauth2-system-level";
@@ -166,6 +171,7 @@ definition {
 			websiteURL = "http://www.liferay.com");
 	}
 
+	@description = "This is a use case for LRQA-61554."
 	@priority = "5"
 	test ViewOAuth2ApplicationInSystemLevelAfterUpgrade720 {
 		property data.archive.type = "data-archive-oauth2-system-level";
@@ -192,6 +198,7 @@ definition {
 			websiteURL = "http://www.liferay.com");
 	}
 
+	@description = "This is a use case for LRQA-61554."
 	@priority = "5"
 	test ViewOAuth2ApplicationInSystemLevelAfterUpgrade71103 {
 		property data.archive.type = "data-archive-oauth2-system-level";
@@ -217,6 +224,7 @@ definition {
 			websiteURL = "http://www.liferay.com");
 	}
 
+	@description = "This is a use case for LRQA-61554."
 	@priority = "5"
 	test ViewOAuth2ApplicationInSystemLevelAfterUpgrade72101 {
 		property data.archive.type = "data-archive-oauth2-system-level";

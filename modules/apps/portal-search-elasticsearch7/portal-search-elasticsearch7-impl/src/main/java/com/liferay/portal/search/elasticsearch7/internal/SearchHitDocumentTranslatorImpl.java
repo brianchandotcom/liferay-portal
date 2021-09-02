@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collection;
@@ -40,10 +41,19 @@ public class SearchHitDocumentTranslatorImpl
 	public Document translate(SearchHit searchHit) {
 		Document document = new DocumentImpl();
 
-		Map<String, DocumentField> documentFields = searchHit.getFields();
+		Map<String, Object> documentSourceMap = searchHit.getSourceAsMap();
 
-		for (String documentFieldName : documentFields.keySet()) {
-			addField(document, documentFieldName, documentFields);
+		if (MapUtil.isNotEmpty(documentSourceMap)) {
+			for (String fieldName : documentSourceMap.keySet()) {
+				addFieldFromSource(document, fieldName, documentSourceMap);
+			}
+		}
+		else {
+			Map<String, DocumentField> documentFields = searchHit.getFields();
+
+			for (String documentFieldName : documentFields.keySet()) {
+				addField(document, documentFieldName, documentFields);
+			}
 		}
 
 		return document;
@@ -54,6 +64,17 @@ public class SearchHitDocumentTranslatorImpl
 		Map<String, DocumentField> documentFields) {
 
 		Field field = getField(fieldName, documentFields);
+
+		if (field != null) {
+			document.add(field);
+		}
+	}
+
+	protected void addFieldFromSource(
+		Document document, String fieldName,
+		Map<String, Object> documentSourceMap) {
+
+		Field field = getFieldFromSource(fieldName, documentSourceMap);
 
 		if (field != null) {
 			document.add(field);
@@ -80,19 +101,51 @@ public class SearchHitDocumentTranslatorImpl
 		return translate(documentField);
 	}
 
+	protected Field getFieldFromSource(
+		String fieldName, Map<String, Object> documentSourceMap) {
+
+		String geopointIndicatorSuffix = ".geopoint";
+
+		if (fieldName.endsWith(geopointIndicatorSuffix)) {
+			return null;
+		}
+
+		Object value = documentSourceMap.get(fieldName);
+
+		if (documentSourceMap.containsKey(
+				fieldName.concat(geopointIndicatorSuffix))) {
+
+			return translateGeoPoint(fieldName, value);
+		}
+
+		return translate(fieldName, value);
+	}
+
 	protected Field translate(DocumentField documentField) {
-		String name = documentField.getName();
+		return translate(documentField.getName(), documentField.getValues());
+	}
 
-		Collection<Object> values = documentField.getValues();
+	protected Field translate(String fieldName, Object value) {
+		if (value instanceof Collection) {
+			Collection<Object> values = (Collection)value;
 
-		return new Field(
-			name, ArrayUtil.toStringArray(values.toArray(new Object[0])));
+			return new Field(
+				fieldName,
+				ArrayUtil.toStringArray(values.toArray(new Object[0])));
+		}
+
+		return new Field(fieldName, String.valueOf(value));
 	}
 
 	protected Field translateGeoPoint(DocumentField documentField) {
-		Field field = new Field(documentField.getName());
+		return translateGeoPoint(
+			documentField.getName(), documentField.getValue());
+	}
 
-		String[] values = StringUtil.split(documentField.getValue());
+	protected Field translateGeoPoint(String fieldName, Object value) {
+		Field field = new Field(fieldName);
+
+		String[] values = StringUtil.split(String.valueOf(value));
 
 		field.setGeoLocationPoint(
 			new GeoLocationPoint(

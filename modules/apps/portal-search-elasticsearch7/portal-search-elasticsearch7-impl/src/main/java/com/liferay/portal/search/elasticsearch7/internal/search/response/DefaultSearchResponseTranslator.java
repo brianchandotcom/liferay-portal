@@ -109,7 +109,11 @@ public class DefaultSearchResponseTranslator
 		Document document, Map<String, HighlightField> highlightFields,
 		String fieldName, Locale locale) {
 
-		String snippetFieldName = Field.getLocalizedName(locale, fieldName);
+		String snippetFieldName = fieldName;
+
+		if (!fieldName.startsWith("nestedFieldArray.")) {
+			snippetFieldName = Field.getLocalizedName(locale, fieldName);
+		}
 
 		HighlightField highlightField = highlightFields.get(snippetFieldName);
 
@@ -125,10 +129,11 @@ public class DefaultSearchResponseTranslator
 
 		Object[] array = highlightField.fragments();
 
-		document.addText(
-			StringBundler.concat(
-				Field.SNIPPET, StringPool.UNDERLINE, snippetFieldName),
-			StringUtil.merge(array, StringPool.TRIPLE_PERIOD));
+		document.add(
+			new Field(
+				StringBundler.concat(
+					Field.SNIPPET, StringPool.UNDERLINE, snippetFieldName),
+				StringUtil.merge(array, StringPool.TRIPLE_PERIOD)));
 	}
 
 	protected void addSnippets(

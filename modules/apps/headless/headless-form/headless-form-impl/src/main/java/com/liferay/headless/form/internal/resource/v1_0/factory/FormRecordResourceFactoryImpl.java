@@ -17,6 +17,7 @@ package com.liferay.headless.form.internal.resource.v1_0.factory;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
@@ -30,6 +31,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.odata.filter.ExpressionConvert;
+import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.lang.reflect.InvocationTargetException;
@@ -177,6 +180,8 @@ public class FormRecordResourceFactoryImpl
 		formRecordResource.setContextHttpServletRequest(httpServletRequest);
 		formRecordResource.setContextHttpServletResponse(httpServletResponse);
 		formRecordResource.setContextUser(user);
+		formRecordResource.setExpressionConvert(_expressionConvert);
+		formRecordResource.setFilterParserProvider(_filterParserProvider);
 		formRecordResource.setGroupLocalService(_groupLocalService);
 		formRecordResource.setResourceActionLocalService(
 			_resourceActionLocalService);
@@ -208,6 +213,12 @@ public class FormRecordResourceFactoryImpl
 
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;
+
+	@Reference
+	private ExpressionConvert<Filter> _expressionConvert;
+
+	@Reference
+	private FilterParserProvider _filterParserProvider;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

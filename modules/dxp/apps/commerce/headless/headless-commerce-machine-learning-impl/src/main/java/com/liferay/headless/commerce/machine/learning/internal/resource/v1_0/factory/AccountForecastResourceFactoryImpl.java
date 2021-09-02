@@ -17,6 +17,7 @@ package com.liferay.headless.commerce.machine.learning.internal.resource.v1_0.fa
 import com.liferay.headless.commerce.machine.learning.resource.v1_0.AccountForecastResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
@@ -30,6 +31,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.odata.filter.ExpressionConvert;
+import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.lang.reflect.InvocationTargetException;
@@ -182,6 +185,8 @@ public class AccountForecastResourceFactoryImpl
 		accountForecastResource.setContextHttpServletResponse(
 			httpServletResponse);
 		accountForecastResource.setContextUser(user);
+		accountForecastResource.setExpressionConvert(_expressionConvert);
+		accountForecastResource.setFilterParserProvider(_filterParserProvider);
 		accountForecastResource.setGroupLocalService(_groupLocalService);
 		accountForecastResource.setResourceActionLocalService(
 			_resourceActionLocalService);
@@ -213,6 +218,12 @@ public class AccountForecastResourceFactoryImpl
 
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;
+
+	@Reference
+	private ExpressionConvert<Filter> _expressionConvert;
+
+	@Reference
+	private FilterParserProvider _filterParserProvider;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

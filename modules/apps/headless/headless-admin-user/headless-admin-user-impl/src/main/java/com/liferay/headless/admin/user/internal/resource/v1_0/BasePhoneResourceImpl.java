@@ -17,6 +17,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.resource.v1_0.PhoneResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -27,6 +28,9 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.filter.ExpressionConvert;
+import com.liferay.portal.odata.filter.FilterParser;
+import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
@@ -240,6 +244,18 @@ public abstract class BasePhoneResourceImpl
 		this.contextUser = contextUser;
 	}
 
+	public void setExpressionConvert(
+		ExpressionConvert<Filter> expressionConvert) {
+
+		this.expressionConvert = expressionConvert;
+	}
+
+	public void setFilterParserProvider(
+		FilterParserProvider filterParserProvider) {
+
+		this.filterParserProvider = filterParserProvider;
+	}
+
 	public void setGroupLocalService(GroupLocalService groupLocalService) {
 		this.groupLocalService = groupLocalService;
 	}
@@ -258,6 +274,34 @@ public abstract class BasePhoneResourceImpl
 
 	public void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
+	}
+
+	@Override
+	public Filter toFilter(
+		String filterString, Map<String, List<String>> multivaluedMap) {
+
+		try {
+			EntityModel entityModel = getEntityModel(multivaluedMap);
+
+			FilterParser filterParser = filterParserProvider.provide(
+				entityModel);
+
+			com.liferay.portal.odata.filter.Filter oDataFilter =
+				new com.liferay.portal.odata.filter.Filter(
+					filterParser.parse(filterString));
+
+			return expressionConvert.convert(
+				oDataFilter.getExpression(),
+				contextAcceptLanguage.getPreferredLocale(), entityModel);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to create filter from " + filterString, exception);
+			}
+		}
+
+		return null;
 	}
 
 	protected Map<String, String> addAction(
@@ -322,6 +366,9 @@ public abstract class BasePhoneResourceImpl
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
+	private static final com.liferay.portal.kernel.log.Log _log =
+		LogFactoryUtil.getLog(BasePhoneResourceImpl.class);
+
 	protected AcceptLanguage contextAcceptLanguage;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
@@ -329,6 +376,8 @@ public abstract class BasePhoneResourceImpl
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
 	protected com.liferay.portal.kernel.model.User contextUser;
+	protected ExpressionConvert<Filter> expressionConvert;
+	protected FilterParserProvider filterParserProvider;
 	protected GroupLocalService groupLocalService;
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;

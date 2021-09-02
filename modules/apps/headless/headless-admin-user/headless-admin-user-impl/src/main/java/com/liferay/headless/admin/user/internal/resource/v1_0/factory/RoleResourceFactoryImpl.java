@@ -17,6 +17,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0.factory;
 import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
@@ -30,6 +31,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.odata.filter.ExpressionConvert;
+import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.lang.reflect.InvocationTargetException;
@@ -175,6 +178,8 @@ public class RoleResourceFactoryImpl implements RoleResource.Factory {
 		roleResource.setContextHttpServletRequest(httpServletRequest);
 		roleResource.setContextHttpServletResponse(httpServletResponse);
 		roleResource.setContextUser(user);
+		roleResource.setExpressionConvert(_expressionConvert);
+		roleResource.setFilterParserProvider(_filterParserProvider);
 		roleResource.setGroupLocalService(_groupLocalService);
 		roleResource.setResourceActionLocalService(_resourceActionLocalService);
 		roleResource.setResourcePermissionLocalService(
@@ -204,6 +209,12 @@ public class RoleResourceFactoryImpl implements RoleResource.Factory {
 
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;
+
+	@Reference
+	private ExpressionConvert<Filter> _expressionConvert;
+
+	@Reference
+	private FilterParserProvider _filterParserProvider;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

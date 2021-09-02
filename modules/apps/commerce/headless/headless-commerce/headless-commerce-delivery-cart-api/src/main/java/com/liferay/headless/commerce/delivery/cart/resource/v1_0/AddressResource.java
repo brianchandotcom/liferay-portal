@@ -15,13 +15,18 @@
 package com.liferay.headless.commerce.delivery.cart.resource.v1_0;
 
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Address;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.odata.filter.ExpressionConvert;
+import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -73,6 +78,12 @@ public interface AddressResource {
 	public void setContextUser(
 		com.liferay.portal.kernel.model.User contextUser);
 
+	public void setExpressionConvert(
+		ExpressionConvert<Filter> expressionConvert);
+
+	public void setFilterParserProvider(
+		FilterParserProvider filterParserProvider);
+
 	public void setGroupLocalService(GroupLocalService groupLocalService);
 
 	public void setResourceActionLocalService(
@@ -82,6 +93,12 @@ public interface AddressResource {
 		ResourcePermissionLocalService resourcePermissionLocalService);
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
+
+	public default Filter toFilter(
+		String filterString, Map<String, List<String>> multivaluedMap) {
+
+		return null;
+	}
 
 	public static class FactoryHolder {
 

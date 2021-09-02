@@ -1,0 +1,49 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "24";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property slave.label = "slave-1";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Sign in AC") {
+			ACUtils.launchAC();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9134 | Test Summary: Cancel Unsaved Workspace Setting Changes"
+	@priority = "3"
+	test CancelUnsavedChangesOfWorkspaceSettings {
+		task ("Navigate to Workspace Settings") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToWorkspace();
+		}
+
+		task ("Rename the workspace then cancel changes") {
+			ACWorkspace.configureWorkspaceSettings(
+				cancel = "true",
+				workspaceName = "UAT");
+		}
+
+		task ("View the original workspace name shown") {
+			ACWorkspace.viewWorkspaceSettings(workspaceName = "FARO-DEV-liferay");
+		}
+	}
+
+}

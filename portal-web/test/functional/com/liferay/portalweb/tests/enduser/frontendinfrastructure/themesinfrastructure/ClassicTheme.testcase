@@ -26,6 +26,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ConfigureLookAndFeelSettingsSinglePage {
+		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
 		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(

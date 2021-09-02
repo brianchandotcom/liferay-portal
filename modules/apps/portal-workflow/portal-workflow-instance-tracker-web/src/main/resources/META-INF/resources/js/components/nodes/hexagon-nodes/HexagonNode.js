@@ -18,8 +18,6 @@ import {Handle} from 'react-flow-renderer';
 
 import {hexagonNodeHandles} from '../../../util/nodeHandles';
 
-import '../../../../css/main.scss';
-
 export default function HexagonNode({children, notifyVisibilityChange, title}) {
 	return (
 		<>

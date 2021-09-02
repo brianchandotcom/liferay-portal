@@ -17,7 +17,6 @@ import classnames from 'classnames';
 import React from 'react';
 import {Handle} from 'react-flow-renderer';
 
-import '../../../../css/main.scss';
 import {nodeHandles} from '../../../util/nodeHandles';
 
 export default function StateNode({

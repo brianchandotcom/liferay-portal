@@ -16,8 +16,6 @@ import classnames from 'classnames';
 import React from 'react';
 import {Handle} from 'react-flow-renderer';
 
-import '../../../../css/main.scss';
-
 export default function BorderStateNode({
 	data: {initial = true, label, notifyVisibilityChange},
 }) {

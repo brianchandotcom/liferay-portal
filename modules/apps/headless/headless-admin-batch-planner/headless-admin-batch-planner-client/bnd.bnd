@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Headless Admin Batch Planner Client
+Bundle-SymbolicName: com.liferay.headless.admin.batch.planner.client
+Bundle-Version: 1.0.0

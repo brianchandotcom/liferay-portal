@@ -1,8 +1,11 @@
 dependencies {
-	compileOnly project(":apps:batch-planner:batch-planner-api")
-	compileOnly project(":apps:headless:headless-admin-batch-planner:headless-admin-batch-planner-api")
-
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.10.3"
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.10.5.1"
+	testIntegrationCompile project(":apps:batch-planner:batch-planner-api")
+	testIntegrationCompile project(":apps:headless:headless-admin-batch-planner:headless-admin-batch-planner-api")
+	testIntegrationCompile project(":apps:headless:headless-admin-batch-planner:headless-admin-batch-planner-client")
+	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
+	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

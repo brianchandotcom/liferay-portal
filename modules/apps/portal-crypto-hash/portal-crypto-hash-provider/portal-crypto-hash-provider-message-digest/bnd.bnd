@@ -1,8 +1,4 @@
 Bundle-Name: Liferay Portal Crypto Hash Provider Message Digest
 Bundle-SymbolicName: com.liferay.portal.crypto.hash.provider.message.digest
 Bundle-Version: 1.0.0
-Provide-Capability:\
-	liferay.resource.bundle;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.portal.crypto.hash.provider.message.digest),(bundle.symbolic.name=com.liferay.portal.crypto.hash.spi)";\
-		resource.bundle.base.name="content.Language"
 -metatype-inherit: true

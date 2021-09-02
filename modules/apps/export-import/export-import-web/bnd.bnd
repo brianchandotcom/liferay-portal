@@ -2,9 +2,5 @@ Bundle-Name: Liferay Export Import Web
 Bundle-SymbolicName: com.liferay.exportimport.web
 Bundle-Version: 5.0.14
 Liferay-JS-Config: /META-INF/resources/js/config.js
-Provide-Capability:\
-	liferay.resource.bundle;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.staging.lang)";\
-		resource.bundle.base.name="content.Language"
 Web-ContextPath: /exportimport-web
 -dsannotations-options: inherit

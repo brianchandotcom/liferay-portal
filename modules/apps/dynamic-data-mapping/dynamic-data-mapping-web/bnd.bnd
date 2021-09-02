@@ -2,9 +2,5 @@ Bundle-Name: Liferay Dynamic Data Mapping Web
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.web
 Bundle-Version: 5.0.16
 Liferay-JS-Config: /META-INF/resources/js/config.js
-Provide-Capability:\
-	liferay.resource.bundle;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.dynamic.data.mapping.lang)";\
-		resource.bundle.base.name="content.Language"
 Web-ContextPath: /dynamic-data-mapping-web
 -dsannotations-options: inherit

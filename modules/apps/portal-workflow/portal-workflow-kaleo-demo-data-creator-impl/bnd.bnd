@@ -1,24 +1,4 @@
 Bundle-Name: Liferay Portal Workflow Kaleo Demo Data Creator Implementation
 Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.demo.data.creator.impl
 Bundle-Version: 2.0.6
-Provide-Capability:\
-	liferay.resource.bundle;\
-		resource.bundle.base.name="content.Language",\
-	liferay.resource.bundle;\
-		bundle.symbolic.name=com.liferay.portal.workflow.metrics.rest.impl;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.portal.workflow.kaleo.demo.data.creator.impl),(bundle.symbolic.name=com.liferay.portal.workflow.metrics.rest.impl)";\
-		resource.bundle.base.name="content.Language";\
-		service.ranking:Long="1",\
-	liferay.resource.bundle;\
-		bundle.symbolic.name=com.liferay.portal.workflow.task.web;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.portal.workflow.kaleo.demo.data.creator.impl),(bundle.symbolic.name=com.liferay.portal.workflow.task.web)";\
-		resource.bundle.base.name="content.Language";\
-		service.ranking:Long="1";\
-		servlet.context.name=portal-workflow-task-web,\
-	liferay.resource.bundle;\
-		bundle.symbolic.name=com.liferay.portal.workflow.web;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.portal.workflow.kaleo.demo.data.creator.impl),(bundle.symbolic.name=com.liferay.portal.workflow.web)";\
-		resource.bundle.base.name="content.Language";\
-		service.ranking:Long="1";\
-		servlet.context.name=portal-workflow-web
 -dsannotations-options: inherit

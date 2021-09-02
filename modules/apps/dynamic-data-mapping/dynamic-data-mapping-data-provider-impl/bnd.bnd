@@ -14,8 +14,4 @@ Import-Package:\
 	!org.apache.xml.resolver.*,\
 	\
 	*
-Provide-Capability:\
-	liferay.resource.bundle;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.dynamic.data.mapping.lang)";\
-		resource.bundle.base.name="content.Language"
 Web-ContextPath: /dynamic-data-mapping-data-provider-impl

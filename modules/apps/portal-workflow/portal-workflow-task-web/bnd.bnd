@@ -2,9 +2,5 @@ Bundle-Name: Liferay Portal Workflow Task Web
 Bundle-SymbolicName: com.liferay.portal.workflow.task.web
 Bundle-Version: 5.0.9
 Liferay-JS-Config: /META-INF/resources/js/config.js
-Provide-Capability:\
-	liferay.resource.bundle;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.portal.workflow.lang)";\
-		resource.bundle.base.name="content.Language"
 Web-ContextPath: /portal-workflow-task-web
 -dsannotations-options: inherit

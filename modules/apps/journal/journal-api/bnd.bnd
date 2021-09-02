@@ -11,10 +11,3 @@ Export-Package:\
 	com.liferay.journal.service.persistence,\
 	com.liferay.journal.util,\
 	com.liferay.journal.util.comparator
-Provide-Capability:\
-	liferay.resource.bundle;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.journal.lang)";\
-		resource.bundle.base.name="content.Language"
-Require-Capability:\
-	liferay.resource.bundle;\
-		filter:="(bundle.symbolic.name=com.liferay.journal.lang)"

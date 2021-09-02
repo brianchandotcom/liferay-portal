@@ -5,9 +5,6 @@ Export-Package:\
 	com.liferay.data.engine.taglib.servlet.taglib,\
 	com.liferay.data.engine.taglib.servlet.taglib.definition
 Provide-Capability:\
-	liferay.resource.bundle;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.app.builder.lang),(bundle.symbolic.name=com.liferay.data.engine.lang),(bundle.symbolic.name=com.liferay.dynamic.data.mapping.lang)";\
-		resource.bundle.base.name="content.Language",\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\
 		uri="http://liferay.com/tld/data-engine";\

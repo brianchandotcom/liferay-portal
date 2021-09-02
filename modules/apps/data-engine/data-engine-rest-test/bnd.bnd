@@ -1,9 +1,4 @@
 Bundle-Name: Liferay Data Engine REST Test
 Bundle-SymbolicName: com.liferay.data.engine.rest.test
 Bundle-Version: 1.0.0
-Provide-Capability:\
-	liferay.resource.bundle;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.data.engine.lang),(bundle.symbolic.name=com.liferay.data.engine.rest.impl),(bundle.symbolic.name=com.liferay.dynamic.data.mapping.lang)";\
-		resource.bundle.base.name="content.Language";\
-		service.ranking:Long="1"
 -includeresource: com.liferay.data.engine.rest.client.jar=com.liferay.data.engine.rest.client-*.jar;lib:=true

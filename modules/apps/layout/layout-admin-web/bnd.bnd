@@ -2,8 +2,5 @@ Bundle-Name: Liferay Layout Admin Web
 Bundle-SymbolicName: com.liferay.layout.admin.web
 Bundle-Version: 5.0.27
 Liferay-JS-Config: /META-INF/resources/js/config.js
-Require-Capability:\
-	liferay.resource.bundle;\
-		filter:="(bundle.symbolic.name=com.liferay.frontend.editor.lang)"
 Web-ContextPath: /layout-admin-web
 -dsannotations-options: inherit

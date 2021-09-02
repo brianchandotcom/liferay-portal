@@ -19,6 +19,7 @@ import TaskNode from '../components/nodes/TaskNode';
 import ConditionNode from '../components/nodes/hexagon-nodes/ConditionNode';
 import ForkNode from '../components/nodes/hexagon-nodes/ForkNode';
 import JoinNode from '../components/nodes/hexagon-nodes/JoinNode';
+import JoinXorNode from '../components/nodes/hexagon-nodes/JoinXorNode';
 import BorderStateNode from '../components/nodes/state-node/BorderStateNode';
 import StateNode from '../components/nodes/state-node/StateNode';
 
@@ -151,22 +152,26 @@ const getLayoutedElements = (elements) => {
 };
 
 const getNodeType = (type) => {
-	switch (type) {
-		case 'CONDITION':
-			return 'condition';
-		case 'FORK':
-			return 'fork';
-		case 'JOIN':
-			return 'join';
-		case 'INITIAL_STATE':
-		case 'TERMINAL_STATE':
-			return 'borderState';
-		case 'STATE':
-			return 'state';
-		case 'TASK':
-			return 'task';
-		default:
-			return 'task';
+	if (type === 'CONDITION') {
+		return 'condition';
+	}
+	else if (type === 'FORK') {
+		return 'fork';
+	}
+	else if (type === 'JOIN') {
+		return 'join';
+	}
+	else if (type === 'JOIN_XOR') {
+		return 'joinXor';
+	}
+	else if (type === 'INITIAL_STATE' || type === 'TERMINAL_STATE') {
+		return 'borderState';
+	}
+	else if (type === 'STATE') {
+		return 'state';
+	}
+	else {
+		return 'task';
 	}
 };
 
@@ -183,6 +188,7 @@ const nodeTypes = {
 	condition: ConditionNode,
 	fork: ForkNode,
 	join: JoinNode,
+	joinXor: JoinXorNode,
 	state: StateNode,
 	task: TaskNode,
 };

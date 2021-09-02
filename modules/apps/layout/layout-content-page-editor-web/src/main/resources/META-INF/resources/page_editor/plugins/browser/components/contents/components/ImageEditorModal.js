@@ -110,6 +110,7 @@ export default function ImageEditorModal({
 	return (
 		<ClayModal
 			className="image-editor-modal"
+			containerProps={{className: 'cadmin'}}
 			observer={observer}
 			size="full-screen"
 		>

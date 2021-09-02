@@ -217,6 +217,13 @@ components:
                             type: string
                     readOnly: true
                     type: object
+                taxonomyCategoryProperties:
+                    # @review
+                    description:
+                        The category's properties.
+                    items:
+                        $ref: "#/components/schemas/TaxonomyCategoryProperty"
+                    type: array
                 taxonomyCategoryUsageCount:
                     readOnly: true
                     type: integer
@@ -228,6 +235,24 @@ components:
                     writeOnly: true
             required:
                 - name
+            type: object
+        TaxonomyCategoryProperty:
+            # @review
+            description:
+                Key value pair to associate detailed information with a category.
+            properties:
+                key:
+                    # @review
+                    description:
+                        The taxonomy category property's key.
+                    type: string
+                value:
+                    # @review
+                    description:
+                        The taxonomy category property's value.
+                    type: string
+            required:
+                - key
             type: object
         TaxonomyVocabulary:
             description:

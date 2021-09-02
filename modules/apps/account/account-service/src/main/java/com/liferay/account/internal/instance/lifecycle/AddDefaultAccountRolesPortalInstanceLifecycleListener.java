@@ -15,7 +15,6 @@
 package com.liferay.account.internal.instance.lifecycle;
 
 import com.liferay.account.constants.AccountActionKeys;
-import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountRoleLocalService;
@@ -103,9 +102,6 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 
 	private static final Map<String, String[]>
 		_accountAdministratorResourceActionsMap = HashMapBuilder.put(
-			AccountConstants.RESOURCE_NAME,
-			new String[] {AccountActionKeys.ADD_ACCOUNT_ENTRY}
-		).put(
 			AccountEntry.class.getName(),
 			new String[] {
 				ActionKeys.UPDATE, ActionKeys.MANAGE_USERS,

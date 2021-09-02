@@ -78,6 +78,9 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="objectDefinitionId" type="long" />
+		<field name="defaultObjectLayout" type="boolean" />
+		<field localized="true" name="name" type="String" />
 	</model>
 	<model name="com.liferay.object.model.ObjectLayoutBox">
 		<field name="mvccVersion" type="long" />
@@ -88,6 +91,35 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="objectLayoutTabId" type="long" />
+		<field name="collapsable" type="boolean" />
+		<field localized="true" name="name" type="String" />
+		<field name="order" type="int" />
+	</model>
+	<model name="com.liferay.object.model.ObjectLayoutBoxColumn">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="objectLayoutBoxColumnId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="objectFieldId" type="long" />
+		<field name="objectLayoutBoxRowId" type="long" />
+		<field name="order" type="int" />
+	</model>
+	<model name="com.liferay.object.model.ObjectLayoutBoxRow">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="objectLayoutBoxRowId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="objectLayoutBoxId" type="long" />
+		<field name="order" type="int" />
 	</model>
 	<model name="com.liferay.object.model.ObjectLayoutTab">
 		<field name="mvccVersion" type="long" />
@@ -98,6 +130,9 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="objectLayoutId" type="long" />
+		<field localized="true" name="name" type="String" />
+		<field name="order" type="int" />
 	</model>
 	<model name="com.liferay.object.model.ObjectRelationship">
 		<field name="mvccVersion" type="long" />

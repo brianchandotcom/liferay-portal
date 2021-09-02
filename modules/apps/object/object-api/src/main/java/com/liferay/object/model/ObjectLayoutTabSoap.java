@@ -41,6 +41,9 @@ public class ObjectLayoutTabSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setObjectLayoutId(model.getObjectLayoutId());
+		soapModel.setName(model.getName());
+		soapModel.setOrder(model.getOrder());
 
 		return soapModel;
 	}
@@ -164,6 +167,30 @@ public class ObjectLayoutTabSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getObjectLayoutId() {
+		return _objectLayoutId;
+	}
+
+	public void setObjectLayoutId(long objectLayoutId) {
+		_objectLayoutId = objectLayoutId;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public int getOrder() {
+		return _order;
+	}
+
+	public void setOrder(int order) {
+		_order = order;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _objectLayoutTabId;
@@ -172,5 +199,8 @@ public class ObjectLayoutTabSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _objectLayoutId;
+	private String _name;
+	private int _order;
 
 }

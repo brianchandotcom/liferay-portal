@@ -78,7 +78,7 @@ public class ObjectLayoutTabCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,6 +96,12 @@ public class ObjectLayoutTabCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", objectLayoutId=");
+		sb.append(objectLayoutId);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", order=");
+		sb.append(order);
 		sb.append("}");
 
 		return sb.toString();
@@ -139,6 +145,17 @@ public class ObjectLayoutTabCacheModel
 			objectLayoutTabImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		objectLayoutTabImpl.setObjectLayoutId(objectLayoutId);
+
+		if (name == null) {
+			objectLayoutTabImpl.setName("");
+		}
+		else {
+			objectLayoutTabImpl.setName(name);
+		}
+
+		objectLayoutTabImpl.setOrder(order);
+
 		objectLayoutTabImpl.resetOriginalValues();
 
 		return objectLayoutTabImpl;
@@ -157,6 +174,11 @@ public class ObjectLayoutTabCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		objectLayoutId = objectInput.readLong();
+		name = objectInput.readUTF();
+
+		order = objectInput.readInt();
 	}
 
 	@Override
@@ -185,6 +207,17 @@ public class ObjectLayoutTabCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(objectLayoutId);
+
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		objectOutput.writeInt(order);
 	}
 
 	public long mvccVersion;
@@ -195,5 +228,8 @@ public class ObjectLayoutTabCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long objectLayoutId;
+	public String name;
+	public int order;
 
 }

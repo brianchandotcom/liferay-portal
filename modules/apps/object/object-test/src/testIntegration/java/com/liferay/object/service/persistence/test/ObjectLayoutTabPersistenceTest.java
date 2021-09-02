@@ -136,6 +136,12 @@ public class ObjectLayoutTabPersistenceTest {
 
 		newObjectLayoutTab.setModifiedDate(RandomTestUtil.nextDate());
 
+		newObjectLayoutTab.setObjectLayoutId(RandomTestUtil.nextLong());
+
+		newObjectLayoutTab.setName(RandomTestUtil.randomString());
+
+		newObjectLayoutTab.setOrder(RandomTestUtil.nextInt());
+
 		_objectLayoutTabs.add(_persistence.update(newObjectLayoutTab));
 
 		ObjectLayoutTab existingObjectLayoutTab = _persistence.findByPrimaryKey(
@@ -164,6 +170,13 @@ public class ObjectLayoutTabPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingObjectLayoutTab.getModifiedDate()),
 			Time.getShortTimestamp(newObjectLayoutTab.getModifiedDate()));
+		Assert.assertEquals(
+			existingObjectLayoutTab.getObjectLayoutId(),
+			newObjectLayoutTab.getObjectLayoutId());
+		Assert.assertEquals(
+			existingObjectLayoutTab.getName(), newObjectLayoutTab.getName());
+		Assert.assertEquals(
+			existingObjectLayoutTab.getOrder(), newObjectLayoutTab.getOrder());
 	}
 
 	@Test
@@ -211,7 +224,8 @@ public class ObjectLayoutTabPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"ObjectLayoutTab", "mvccVersion", true, "uuid", true,
 			"objectLayoutTabId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true);
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"objectLayoutId", true, "name", true, "order", true);
 	}
 
 	@Test
@@ -447,6 +461,12 @@ public class ObjectLayoutTabPersistenceTest {
 		objectLayoutTab.setCreateDate(RandomTestUtil.nextDate());
 
 		objectLayoutTab.setModifiedDate(RandomTestUtil.nextDate());
+
+		objectLayoutTab.setObjectLayoutId(RandomTestUtil.nextLong());
+
+		objectLayoutTab.setName(RandomTestUtil.randomString());
+
+		objectLayoutTab.setOrder(RandomTestUtil.nextInt());
 
 		_objectLayoutTabs.add(_persistence.update(objectLayoutTab));
 

@@ -77,7 +77,7 @@ public class ObjectLayoutCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -95,6 +95,12 @@ public class ObjectLayoutCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", objectDefinitionId=");
+		sb.append(objectDefinitionId);
+		sb.append(", defaultObjectLayout=");
+		sb.append(defaultObjectLayout);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append("}");
 
 		return sb.toString();
@@ -138,6 +144,16 @@ public class ObjectLayoutCacheModel
 			objectLayoutImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		objectLayoutImpl.setObjectDefinitionId(objectDefinitionId);
+		objectLayoutImpl.setDefaultObjectLayout(defaultObjectLayout);
+
+		if (name == null) {
+			objectLayoutImpl.setName("");
+		}
+		else {
+			objectLayoutImpl.setName(name);
+		}
+
 		objectLayoutImpl.resetOriginalValues();
 
 		return objectLayoutImpl;
@@ -156,6 +172,11 @@ public class ObjectLayoutCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		objectDefinitionId = objectInput.readLong();
+
+		defaultObjectLayout = objectInput.readBoolean();
+		name = objectInput.readUTF();
 	}
 
 	@Override
@@ -184,6 +205,17 @@ public class ObjectLayoutCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(objectDefinitionId);
+
+		objectOutput.writeBoolean(defaultObjectLayout);
+
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
 	}
 
 	public long mvccVersion;
@@ -194,5 +226,8 @@ public class ObjectLayoutCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long objectDefinitionId;
+	public boolean defaultObjectLayout;
+	public String name;
 
 }

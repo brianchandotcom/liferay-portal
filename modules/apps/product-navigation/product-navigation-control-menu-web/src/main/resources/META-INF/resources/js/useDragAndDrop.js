@@ -34,6 +34,8 @@ const DROP_OVER_CLASS = 'yui3-dd-drop-over';
 
 const DROP_ZONE_CLASS = 'portlet-dropzone';
 
+const DROP_ZONE_DISABLED_CLASS = 'portlet-dropzone-disabled';
+
 const initialDragDrop = {
 	dragIndicatorPosition: {},
 	dropTargetColumn: null,
@@ -192,7 +194,9 @@ export const useDropTarget = (targetItem) => {
 	}, []);
 
 	const itemIsDroppable = (item) => item.classList.contains(DROP_CLASS);
-	const itemIsDropzone = (item) => item.classList.contains(DROP_ZONE_CLASS);
+	const itemIsDropzone = (item) =>
+		item.classList.contains(DROP_ZONE_CLASS) &&
+		!item.classList.contains(DROP_ZONE_DISABLED_CLASS);
 
 	const [, setDropTargetRef] = useDrop({
 		accept: Object.values(LAYOUT_DATA_ITEM_TYPES),

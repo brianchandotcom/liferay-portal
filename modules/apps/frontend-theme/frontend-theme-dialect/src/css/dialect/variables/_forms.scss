@@ -1,0 +1,38 @@
+$input-label-color: var(--current-form-input-label-color);
+$input-label-disabled-color: var(--current-form-input-disabled-label-color);
+$input-label-font-weight: var(--current-form-input-label-font-weight);
+$input-label-reference-mark-color: var(--color-state-error);
+$input-label-reference-mark-font-size: 0.3125rem;
+$input-label-reference-mark-vertical-align: super;
+
+$input-bg: var(--current-form-input-background-color);
+$input-border-color: var(--current-form-input-border-color);
+$input-border-radius: var(--form-input-border-radius);
+$input-color: var(--form-input-color);
+$input-disabled-border-color: var(--current-form-input-border-color);
+$input-disabled-bg: var(--current-form-input-background-color);
+$input-disabled-color: var(--form-input-disabled-color);
+$input-font-weight: var(--form-input-font-weight);
+$input-focus-bg: var(--current-form-input-background-color);
+$input-padding-x: var(--form-input-padding-x);
+$input-padding-y: var(--form-input-padding-y);
+$input-placeholder-color: var(
+	--current-form-input-placeholder-color,
+	var(--form-input-placeholder-color)
+);
+$input-placeholder-disabled-color: var(--current-form-input-placeholder-color);
+$input-placeholder-focus-color: var(--form-input-placeholder-focus-color);
+
+$input-danger-bg: var(--current-form-input-background-color);
+$input-danger-border-color: var(--color-state-error);
+$input-warning-bg: var(--current-form-input-background-color);
+$input-warning-border-color: var(--color-state-warning);
+$input-success-bg: var(--current-form-input-background-color);
+$input-success-border-color: var(--color-state-success);
+
+$form-feedback-indicator-margin-x: 0.25rem;
+
+$form-text-font-size: var(--current-form-text-font-size);
+$form-text-color: var(--form-text-color);
+$form-text-line-height: var(--form-text-line-height);
+$form-text-font-weight: var(--current-form-text-font-weight);

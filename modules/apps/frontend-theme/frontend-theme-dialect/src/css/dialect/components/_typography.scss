@@ -28,38 +28,38 @@
 // Paragraphs
 
 .text-paragraph-light {
-	font-weight: var(--text-paragraph-light-font-weight, 300);
+	font-weight: var(--text-paragraph-font-weight-light);
 }
 
 .text-paragraph-regular {
-	font-weight: var(--text-paragraph-light-font-weight, 500);
+	font-weight: var(--text-paragraph-font-weight-regular);
 }
 
 .text-paragraph-heavy {
-	font-weight: var(--text-paragraph-light-font-weight, 800);
+	font-weight: var(--text-paragraph-font-weight-heavy);
 }
 
 .text-paragraph-lg {
-	font-size: 1.25rem; // 20px
-	line-height: 1.75rem; // 28px
+	font-size: var(--text-paragraph-lg-font-size);
+	line-height: var(--text-paragraph-lg-line-height);
 }
 
 .text-paragraph {
-	font-size: 1rem; // 916px
-	line-height: 1.5rem; // 24px
+	font-size: var(--text-paragraph-font-size);
+	line-height: var(--text-paragraph-line-height);
 }
 
 .text-paragraph-sm {
-	font-size: 0.8125rem; // 13px
-	line-height: 1.25rem; // 20px
+	font-size: var(--text-paragraph-sm-font-size);
+	line-height: var(--text-paragraph-sm-line-height);
 }
 
 .text-paragraph-xs {
-	font-size: 0.6875rem; // 11px
-	line-height: 1.25rem; // 20px
+	font-size: var(--text-paragraph-xs-font-size);
+	line-height: var(--text-paragraph-xs-line-height);
 }
 
 .text-paragraph-xxs {
-	font-size: 0.5625rem; // 9px
-	line-height: 0.75rem; // 12px
+	font-size: var(--text-paragraph-xxs-font-size);
+	line-height: var(--text-paragraph-xxs-line-height);
 }

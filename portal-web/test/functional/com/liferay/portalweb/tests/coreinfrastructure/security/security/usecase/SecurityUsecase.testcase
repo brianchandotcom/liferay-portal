@@ -202,6 +202,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		PermissionsInline.gotoConfigurationPG(portletName = "Calendar");
 	}
 
+	@description = "This is a use case for LPS-68070."
 	@priority = "5"
 	test ValidateCannotOverwriteOSGiServiceIdentifier {
 		property portal.acceptance = "true";
@@ -214,6 +215,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		AssertElementPresent(locator1 = "JSONWS#SECURITY_EMPTY_PAGE");
 	}
 
+	@description = "This is a use case for LPS-49848."
 	@priority = "4"
 	test ValidateCannotStealAdminAccount {
 		property test.name.skip.portal.instance = "SecurityUsecase#ValidateCannotStealAdminAccount";
@@ -273,6 +275,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		AssertConsoleTextNotPresent(value1 = "java.lang.OutOfMemoryError");
 	}
 
+	@description = "This is a use case for LRQA-14382."
 	@priority = "5"
 	test ValidateForwardURLPG {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}";

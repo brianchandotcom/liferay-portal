@@ -203,7 +203,7 @@ definition {
 
 		var key_fieldName = "${fieldName}";
 
-		if ("${ddlRecordFieldData}" == "No") {
+		if ("${ddlRecordFieldData}" == "False") {
 			if ("${fieldShowLabel}" == "No") {
 				Uncheck(locator1 = "TextInput#DDM");
 			}
@@ -211,7 +211,7 @@ definition {
 				Uncheck(locator1 = "TextInput#DDM");
 			}
 		}
-		else if ("${ddlRecordFieldData}" == "Yes") {
+		else if ("${ddlRecordFieldData}" == "True") {
 			if ("${fieldShowLabel}" == "No") {
 				Check(locator1 = "TextInput#DDM");
 			}
@@ -220,7 +220,7 @@ definition {
 			}
 		}
 		else {
-			fail("Invalid var recordFieldData. Must be (Yes|No).");
+			fail("Invalid var recordFieldData. Must be (True|False).");
 		}
 	}
 

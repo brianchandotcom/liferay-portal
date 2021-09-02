@@ -530,6 +530,16 @@ definition {
 		}
 	}
 
+	macro assertUserNotPresent {
+
+
+		AssertTextNotEquals(
+			locator1 = "ACSettings#USER_LIST_EMAIL",
+			value1 = "${userEmail}");
+
+
+	}
+
 	@summary = "Disconnect selected data source"
 	macro disconnectDataSource {
 		Click(locator1 = "ACSettings#DISCONNECT_DATA_SOURCE_BUTTON");

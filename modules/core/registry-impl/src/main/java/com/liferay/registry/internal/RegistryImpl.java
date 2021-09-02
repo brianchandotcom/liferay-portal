@@ -29,7 +29,6 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -281,8 +280,6 @@ public class RegistryImpl implements Registry {
 	public <T> ServiceRegistration<T> registerService(
 		Class<T> clazz, T service, Map<String, Object> properties) {
 
-		properties = _addBundleContextProperties(properties);
-
 		org.osgi.framework.ServiceRegistration<T> serviceRegistration =
 			_bundleContext.registerService(
 				clazz, service, new MapWrapper(properties));
@@ -301,8 +298,6 @@ public class RegistryImpl implements Registry {
 	@SuppressWarnings("rawtypes")
 	public <T> ServiceRegistration<T> registerService(
 		String className, T service, Map<String, Object> properties) {
-
-		properties = _addBundleContextProperties(properties);
 
 		org.osgi.framework.ServiceRegistration<?> serviceRegistration =
 			_bundleContext.registerService(
@@ -323,18 +318,11 @@ public class RegistryImpl implements Registry {
 	public <T> ServiceRegistration<T> registerService(
 		String[] classNames, T service, Map<String, Object> properties) {
 
-		properties = _addBundleContextProperties(properties);
-
 		org.osgi.framework.ServiceRegistration<?> serviceRegistration =
 			_bundleContext.registerService(
 				classNames, service, new MapWrapper(properties));
 
 		return new ServiceRegistrationWrapper(serviceRegistration);
-	}
-
-	@Override
-	public Registry setRegistry(Registry registry) throws SecurityException {
-		return registry;
 	}
 
 	@Override
@@ -463,22 +451,6 @@ public class RegistryImpl implements Registry {
 
 			_serviceTrackerReferences.remove(reference);
 		}
-	}
-
-	private Map<String, Object> _addBundleContextProperties(
-		Map<String, Object> properties) {
-
-		Bundle bundle = _bundleContext.getBundle();
-
-		if (properties == null) {
-			properties = new HashMap<>();
-		}
-
-		properties.put("bundle.id", bundle.getBundleId());
-		properties.put("bundle.symbolic.name", bundle.getSymbolicName());
-		properties.put("bundle.version", bundle.getVersion());
-
-		return properties;
 	}
 
 	private <T> ServiceReference<T>[] _toServiceReferences(

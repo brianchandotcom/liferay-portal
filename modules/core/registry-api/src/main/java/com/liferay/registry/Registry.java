@@ -73,8 +73,6 @@ public interface Registry {
 	public <T> ServiceRegistration<T> registerService(
 		String[] classNames, T service, Map<String, Object> properties);
 
-	public Registry setRegistry(Registry registry) throws SecurityException;
-
 	public <S, T> ServiceTracker<S, T> trackServices(Class<S> clazz);
 
 	public <S, T> ServiceTracker<S, T> trackServices(

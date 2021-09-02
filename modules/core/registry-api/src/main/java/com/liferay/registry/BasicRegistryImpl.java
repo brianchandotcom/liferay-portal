@@ -313,11 +313,6 @@ public class BasicRegistryImpl implements Registry {
 	}
 
 	@Override
-	public Registry setRegistry(Registry registry) throws SecurityException {
-		return registry;
-	}
-
-	@Override
 	public <S, T> ServiceTracker<S, T> trackServices(Class<S> clazz) {
 		Filter filter = new BasicFilter(
 			"(objectClass=" + clazz.getName() + ")");

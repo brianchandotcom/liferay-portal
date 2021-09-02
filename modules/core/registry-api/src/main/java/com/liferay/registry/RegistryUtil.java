@@ -14,30 +14,37 @@
 
 package com.liferay.registry;
 
+import java.util.Iterator;
+import java.util.ServiceLoader;
+
 /**
  * @author Raymond Augé
  */
 public class RegistryUtil {
 
 	public static Registry getRegistry() {
-		if (_registry != null) {
-			return _registry.getRegistry();
+		if (_registry == null) {
+			throw new NullPointerException("A registry instance was never set");
 		}
 
-		throw new NullPointerException("A registry instance was never set");
+		return _registry;
 	}
 
 	public static void setRegistry(Registry registry) {
-		if (_registry != null) {
-			registry = _registry.setRegistry(registry);
-		}
-		else if (registry != null) {
-			registry = registry.setRegistry(registry);
-		}
-
 		_registry = registry;
 	}
 
 	private static Registry _registry;
+
+	static {
+		ServiceLoader<Registry> serviceLoader = ServiceLoader.load(
+			Registry.class, RegistryUtil.class.getClassLoader());
+
+		Iterator<Registry> iterator = serviceLoader.iterator();
+
+		if (iterator.hasNext()) {
+			_registry = iterator.next();
+		}
+	}
 
 }

@@ -174,11 +174,6 @@ public class RegistryWrapper implements Registry {
 	}
 
 	@Override
-	public Registry setRegistry(Registry registry) throws SecurityException {
-		return _registry.setRegistry(registry);
-	}
-
-	@Override
 	public <S, T> ServiceTracker<S, T> trackServices(Class<S> clazz) {
 		return _registry.trackServices(clazz);
 	}

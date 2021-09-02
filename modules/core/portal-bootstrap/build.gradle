@@ -118,3 +118,8 @@ dependencies {
 	compileOnly project(":core:registry-api")
 	compileOnly project(":core:registry-impl")
 }
+
+deployDependencies {
+	from configurations.compileOnly
+	include "org.eclipse.osgi-*.jar"
+}

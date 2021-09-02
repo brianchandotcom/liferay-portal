@@ -137,6 +137,10 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Widgets");
 
+			Type.sendKeysApplicationSearch(
+				locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+				value1 = "Blogs");
+
 			DragOver(
 				key_portletName = "Blogs",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
@@ -201,6 +205,10 @@ definition {
 				value1 = "rgb(128, 172, 255) 0px 0px 0px 2px, rgba(39, 40, 51, 0.1) 0px 4px 8px 0px");
 
 			Navigator.gotoNavTab(navTab = "Widgets");
+
+			Type.sendKeysApplicationSearch(
+				locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+				value1 = "Blogs");
 
 			MouseOver(
 				key_portletName = "Blogs",

@@ -48,7 +48,9 @@ import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
@@ -312,8 +314,6 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public List<AssetEntry> getAssetEntries() throws Exception {
-		AssetListEntry assetListEntry = fetchAssetListEntry();
-
 		if (isSelectionStyleManual()) {
 			return _assetPublisherHelper.getAssetEntries(
 				_portletRequest, _portletPreferences,
@@ -321,27 +321,24 @@ public class AssetPublisherDisplayContext {
 				getAllAssetCategoryIds(), getAllAssetTagNames(), false,
 				isEnablePermissions());
 		}
-		else if ((isSelectionStyleAssetList() && (assetListEntry != null)) ||
-				 isSelectionStyleAssetListProvider()) {
-
+		else if (isSelectionStyleAssetList()) {
 			List<AssetEntry> assetEntries = Collections.emptyList();
 
-			if (isSelectionStyleAssetList() && (assetListEntry != null)) {
+			AssetListEntry assetListEntry = fetchAssetListEntry();
+
+			if (assetListEntry != null) {
 				assetEntries = _assetListAssetEntryProvider.getAssetEntries(
 					assetListEntry, _getSegmentsEntryIds(),
 					_getSegmentsAnonymousUserId());
 			}
-			else if (isSelectionStyleAssetListProvider()) {
-				String infoListProviderKey = GetterUtil.getString(
-					_portletPreferences.getValue("infoListProviderKey", null));
-
-				if (Validator.isNull(infoListProviderKey)) {
+			else {
+				if (Validator.isNull(getInfoListProviderKey())) {
 					return Collections.emptyList();
 				}
 
 				InfoCollectionProvider<AssetEntry> infoCollectionProvider =
 					_infoItemServiceTracker.getInfoItemService(
-						InfoCollectionProvider.class, infoListProviderKey);
+						InfoCollectionProvider.class, getInfoListProviderKey());
 
 				if (infoCollectionProvider == null) {
 					return Collections.emptyList();
@@ -383,35 +380,6 @@ public class AssetPublisherDisplayContext {
 
 	public String getAssetEntryId() {
 		return ParamUtil.getString(_httpServletRequest, "assetEntryId");
-	}
-
-	public List<InfoCollectionProvider<?>>
-		getAssetEntryInfoCollectionProviders() {
-
-		List<InfoCollectionProvider<?>> infoCollectionProviders =
-			(List<InfoCollectionProvider<?>>)
-				(List<?>)_infoItemServiceTracker.getAllInfoItemServices(
-					InfoCollectionProvider.class, AssetEntry.class.getName());
-
-		return ListUtil.filter(
-			infoCollectionProviders,
-			infoCollectionProvider -> {
-				try {
-					String label = infoCollectionProvider.getLabel(
-						_themeDisplay.getLocale());
-
-					return Validator.isNotNull(label);
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to get info list provider label",
-							exception);
-					}
-
-					return false;
-				}
-			});
 	}
 
 	public AssetEntryQuery getAssetEntryQuery() throws Exception {
@@ -508,9 +476,20 @@ public class AssetPublisherDisplayContext {
 		infoListItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new InfoListItemSelectorReturnType());
 
+		InfoCollectionProviderItemSelectorCriterion
+			infoCollectionProviderItemSelectorCriterion =
+				new InfoCollectionProviderItemSelectorCriterion();
+
+		infoCollectionProviderItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(
+				new InfoListProviderItemSelectorReturnType());
+		infoCollectionProviderItemSelectorCriterion.setItemType(
+			AssetEntry.class.getName());
+
 		PortletURL portletURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_portletRequest),
-			getSelectAssetListEventName(), infoListItemSelectorCriterion);
+			getSelectAssetListEventName(), infoListItemSelectorCriterion,
+			infoCollectionProviderItemSelectorCriterion);
 
 		return portletURL.toString();
 	}
@@ -928,6 +907,33 @@ public class AssetPublisherDisplayContext {
 			_themeDisplay.getLayout());
 
 		return _groupIds;
+	}
+
+	public String getInfoListProviderKey() {
+		if (_infoListProviderKey != null) {
+			return _infoListProviderKey;
+		}
+
+		_infoListProviderKey = GetterUtil.getString(
+			_portletPreferences.getValue("infoListProviderKey", null));
+
+		return _infoListProviderKey;
+	}
+
+	public String getInfoListProviderLabel() {
+		if (Validator.isNull(getInfoListProviderKey())) {
+			return StringPool.BLANK;
+		}
+
+		InfoCollectionProvider<AssetEntry> infoCollectionProvider =
+			_infoItemServiceTracker.getInfoItemService(
+				InfoCollectionProvider.class, getInfoListProviderKey());
+
+		if (infoCollectionProvider == null) {
+			return StringPool.BLANK;
+		}
+
+		return infoCollectionProvider.getLabel(_themeDisplay.getLocale());
 	}
 
 	public String[] getMetadataFields() {
@@ -1542,16 +1548,8 @@ public class AssetPublisherDisplayContext {
 	public boolean isSelectionStyleAssetList() {
 		if (Objects.equals(
 				getSelectionStyle(),
-				AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isSelectionStyleAssetListProvider() {
-		if (Objects.equals(
+				AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST) ||
+			Objects.equals(
 				getSelectionStyle(),
 				AssetPublisherSelectionStyleConstants.
 					TYPE_ASSET_LIST_PROVIDER)) {
@@ -2164,6 +2162,7 @@ public class AssetPublisherDisplayContext {
 	private long[] _groupIds;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private String _infoListProviderKey;
 	private final ItemSelector _itemSelector;
 	private Boolean _mergeURLTags;
 	private String[] _metadataFields;

@@ -15,8 +15,11 @@
 package com.liferay.asset.publisher.web.internal.frontend.taglib.form.navigator;
 
 import com.liferay.asset.publisher.constants.AssetPublisherConstants;
+import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.portal.kernel.model.User;
+
+import java.util.Objects;
 
 import javax.servlet.ServletContext;
 
@@ -45,7 +48,7 @@ public class AssetListFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, Object object) {
-		if (isAssetListSelection()) {
+		if (isAssetListSelection() || _isAssetListProviderSelection()) {
 			return true;
 		}
 
@@ -64,6 +67,18 @@ public class AssetListFormNavigatorEntry
 	@Override
 	protected String getJspPath() {
 		return "/configuration/asset_list.jsp";
+	}
+
+	private boolean _isAssetListProviderSelection() {
+		if (Objects.equals(
+				getSelectionStyle(),
+				AssetPublisherSelectionStyleConstants.
+					TYPE_ASSET_LIST_PROVIDER)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

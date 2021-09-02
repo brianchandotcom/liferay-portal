@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Webhook Web
+Bundle-SymbolicName: com.liferay.webhook.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /webhook-web

@@ -20,6 +20,7 @@ definition {
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
+	@description = "This is a use case for LRQA-64613."
 	@priority = "5"
 	test ViewSAMLConfigurationAfterUpgrade7310 {
 		property data.archive.type = "data-archive-saml";
@@ -31,6 +32,7 @@ definition {
 		Upgrade.viewSAMLSPConnectionConfiguration();
 	}
 
+	@description = "This is a use case for LRQA-61620."
 	@priority = "5"
 	test ViewSAMLConfigurationAfterUpgrade71103 {
 		property data.archive.type = "data-archive-saml";
@@ -41,6 +43,7 @@ definition {
 		Upgrade.viewSAMLSPConnectionConfiguration();
 	}
 
+	@description = "This is a use case for LRQA-61620."
 	@priority = "5"
 	test ViewSAMLConfigurationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-saml";
@@ -51,6 +54,7 @@ definition {
 		Upgrade.viewSAMLSPConnectionConfiguration();
 	}
 
+	@description = "This is a use case for LPS-136367."
 	@priority = "5"
 	test ViewSAMLConfigurationAfterUpgrade73101 {
 		property data.archive.type = "data-archive-saml";
@@ -62,6 +66,7 @@ definition {
 		Upgrade.viewSAMLSPConnectionConfiguration();
 	}
 
+	@description = "This is a use case for LPS-132679."
 	@priority = "5"
 	test ViewSAMLConfigurationAfterUpgrade701016 {
 		property data.archive.type = "data-archive-saml";
@@ -72,6 +77,7 @@ definition {
 		Upgrade.viewSAMLSPConnectionConfiguration();
 	}
 
+	@description = "This is a use case for LRQA-64613."
 	@priority = "5"
 	test ViewSAMLWithEncryptionConfigurationAfterUpgrade7310 {
 		property data.archive.type = "data-archive-saml-encryption";
@@ -83,6 +89,7 @@ definition {
 		Upgrade.viewSAMLSPConnectionConfiguration(forceEncryption = "true");
 	}
 
+	@description = "This is a use case for LRQA-61620."
 	@priority = "5"
 	test ViewSAMLWithEncryptionConfigurationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-saml-encryption";

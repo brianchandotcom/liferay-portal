@@ -69,6 +69,8 @@ function createEditor(element, changeCallback, destroyCallback) {
 		containerProps: {
 			className: '',
 		},
+		footerCssClass: 'cadmin',
+		headerCssClass: 'cadmin',
 		onClose: () => destroyCallback(),
 		onOpen: () => {
 			Liferay.Util.getTop()

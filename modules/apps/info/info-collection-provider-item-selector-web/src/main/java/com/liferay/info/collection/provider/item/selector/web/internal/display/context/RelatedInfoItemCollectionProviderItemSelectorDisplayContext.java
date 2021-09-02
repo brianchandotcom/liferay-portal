@@ -15,9 +15,11 @@
 package com.liferay.info.collection.provider.item.selector.web.internal.display.context;
 
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
+import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -81,7 +83,7 @@ public class RelatedInfoItemCollectionProviderItemSelectorDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return JSONUtil.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"itemType",
 			relatedInfoItemCollectionProvider.getCollectionItemClassName()
 		).put(
@@ -92,7 +94,23 @@ public class RelatedInfoItemCollectionProviderItemSelectorDisplayContext {
 		).put(
 			"title",
 			relatedInfoItemCollectionProvider.getLabel(themeDisplay.getLocale())
-		).toString();
+		);
+
+		if (relatedInfoItemCollectionProvider instanceof
+				SingleFormVariationInfoCollectionProvider) {
+
+			SingleFormVariationInfoCollectionProvider<?>
+				singleFormVariationInfoCollectionProvider =
+					(SingleFormVariationInfoCollectionProvider<?>)
+						relatedInfoItemCollectionProvider;
+
+			jsonObject.put(
+				"itemSubtype",
+				singleFormVariationInfoCollectionProvider.
+					getFormVariationKey());
+		}
+
+		return jsonObject.toString();
 	}
 
 	public List<RelatedInfoItemCollectionProvider<?, ?>>

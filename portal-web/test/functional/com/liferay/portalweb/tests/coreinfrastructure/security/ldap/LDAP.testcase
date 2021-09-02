@@ -185,6 +185,7 @@ definition {
 		SystemSettings.editSecurityCredential(securityCredential = "123456");
 	}
 
+	@description = "This is a use case for LPS-73381."
 	@priority = "3"
 	test ViewLDAPInstanceSettingsDoNotAffectSystemSettings {
 		property test.name.skip.portal.instance = "LDAP#ViewInstanceSettingsEnableLDAPAuthNotAffectSystemSetting";

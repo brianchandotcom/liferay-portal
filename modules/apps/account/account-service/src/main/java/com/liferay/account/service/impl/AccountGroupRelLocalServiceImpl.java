@@ -62,7 +62,8 @@ public class AccountGroupRelLocalServiceImpl
 		}
 
 		if (Objects.equals(AccountEntry.class.getName(), className) &&
-			(classPK != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT)) {
+			(classPK != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT) &&
+			(classPK != AccountConstants.ACCOUNT_ENTRY_ID_GUEST)) {
 
 			_accountEntryLocalService.getAccountEntry(classPK);
 		}

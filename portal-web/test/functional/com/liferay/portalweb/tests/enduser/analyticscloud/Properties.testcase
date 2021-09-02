@@ -76,6 +76,15 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9113 | Test Summary: It is possible to create multiple properties in different workspaces"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateMultiplePropertiesInDifferentWorkspaces {
+
+		// TODO LRAC-9113 CanCreateMultiplePropertiesInDifferentWorkspaces pending implementation
+
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9108 | Test Summary: [AC][Portal] Creating a property at the same time (concurrency scenario)"
 	@ignore = "true"
 	@priority = "3"
@@ -171,6 +180,15 @@ definition {
 	test CreatePropertiesWhenNoDataSourceIsConnected {
 
 		// TODO LRAC-9103 CreatePropertiesWhenNoDataSourceIsConnected pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9112 | Test Summary: New properties generated IDs are not incremental"
+	@ignore = "true"
+	@priority = "4"
+	test NewPropertiesGeneratedIDsAreNotIncremental {
+
+		// TODO LRAC-9112 NewPropertiesGeneratedIDsAreNotIncremental pending implementation
 
 	}
 

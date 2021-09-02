@@ -21,6 +21,16 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewSAMLConfigurationAfterUpgrade7412 {
+		property data.archive.type = "data-archive-saml";
+		property portal.version = "7.4.12";
+
+		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+
+		Upgrade.viewSAMLSPConnectionConfiguration();
+	}
+
+	@priority = "5"
 	test ViewSAMLConfigurationAfterUpgrade7310 {
 		property data.archive.type = "data-archive-saml";
 		property database.types = "db2,mariadb,mysql,postgresql,sqlserver,sybase";

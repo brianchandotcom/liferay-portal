@@ -217,6 +217,24 @@ components:
                             type: string
                     readOnly: true
                     type: object
+                properties:
+                    # @review
+                    description:
+                        The category's properties.
+                    items:
+                        properties:
+                            key:
+                                # @review
+                                description:
+                                    The taxonomy category property's key.
+                                type: string
+                            value:
+                                # @review
+                                description:
+                                    The taxonomy category property's value.
+                                type: string
+                        type: object
+                    type: array
                 taxonomyCategoryUsageCount:
                     readOnly: true
                     type: integer

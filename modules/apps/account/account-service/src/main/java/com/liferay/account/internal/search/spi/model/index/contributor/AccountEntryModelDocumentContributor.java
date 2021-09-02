@@ -49,10 +49,13 @@ public class AccountEntryModelDocumentContributor
 		document.addText(Field.NAME, accountEntry.getName());
 		document.addKeyword(Field.STATUS, accountEntry.getStatus());
 		document.addKeyword(Field.TYPE, accountEntry.getType());
+		document.addKeyword("accountEntryId", accountEntry.getAccountEntryId());
 		document.addKeyword(
 			"accountGroupIds", _getAccountGroupIds(accountEntry));
 		document.addKeyword("accountUserIds", _getAccountUserIds(accountEntry));
 		document.addKeyword("domains", _getDomains(accountEntry));
+		document.addKeyword(
+			"externalReferenceCode", accountEntry.getExternalReferenceCode());
 		document.addKeyword(
 			"organizationIds", _getOrganizationIds(accountEntry));
 		document.addKeyword(

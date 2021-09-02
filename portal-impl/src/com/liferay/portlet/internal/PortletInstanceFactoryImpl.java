@@ -17,6 +17,8 @@ package com.liferay.portlet.internal;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
+import com.liferay.portal.kernel.module.util.ServiceTrackerFieldUpdaterCustomizer;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.InvokerFilterContainer;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.InvokerPortletFactory;
@@ -28,10 +30,6 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactory;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portlet.UndeployedPortlet;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerFieldUpdaterCustomizer;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -42,6 +40,8 @@ import javax.portlet.PortletException;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.util.tracker.ServiceTracker;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
@@ -50,10 +50,8 @@ import javax.servlet.ServletContext;
 public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 
 	public void afterPropertiesSet() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			InvokerPortletFactory.class,
+		_serviceTracker = new ServiceTracker<>(
+			SystemBundleUtil.getBundleContext(), InvokerPortletFactory.class,
 			new ServiceTrackerFieldUpdaterCustomizer
 				<InvokerPortletFactory, InvokerPortletFactory>(
 					ReflectionUtil.getDeclaredField(

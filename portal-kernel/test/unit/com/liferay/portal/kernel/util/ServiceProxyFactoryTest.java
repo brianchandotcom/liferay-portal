@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.util;
 import com.liferay.petra.memory.FinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.FinalizeManagerUtil;
 import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -28,25 +29,18 @@ import com.liferay.portal.kernel.test.rule.TimeoutTestRule;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTracker;
 
 import java.lang.ref.PhantomReference;
 import java.lang.ref.Reference;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.FutureTask;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -56,6 +50,10 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Tina Tian
@@ -140,33 +138,11 @@ public class ServiceProxyFactoryTest {
 
 		Assert.assertNotNull(finalizeAction);
 
-		final AtomicBoolean atomicBoolean = new AtomicBoolean();
-
-		final ServiceTracker<TestService, TestService> serviceTracker =
+		ServiceTracker<TestService, TestService> serviceTracker =
 			ReflectionTestUtil.getFieldValue(finalizeAction, "_serviceTracker");
 
-		ReflectionTestUtil.setFieldValue(
-			finalizeAction, "_serviceTracker",
-			ProxyUtil.newProxyInstance(
-				FinalizeManager.class.getClassLoader(),
-				new Class<?>[] {ServiceTracker.class},
-				new InvocationHandler() {
-
-					@Override
-					public Object invoke(
-							Object proxy, Method method, Object[] args)
-						throws Throwable {
-
-						if (method.equals(
-								ServiceTracker.class.getMethod("close"))) {
-
-							atomicBoolean.set(true);
-						}
-
-						return method.invoke(serviceTracker, args);
-					}
-
-				}));
+		Assert.assertNotNull(
+			ReflectionTestUtil.getFieldValue(serviceTracker, "tracked"));
 
 		testServiceUtil = null;
 
@@ -174,7 +150,8 @@ public class ServiceProxyFactoryTest {
 
 		FinalizeManagerUtil.drainPendingFinalizeActions();
 
-		Assert.assertTrue(atomicBoolean.get());
+		Assert.assertNull(
+			ReflectionTestUtil.getFieldValue(serviceTracker, "tracked"));
 	}
 
 	@Test
@@ -294,10 +271,9 @@ public class ServiceProxyFactoryTest {
 
 		Assert.assertNull(testService);
 
-		Registry registry = RegistryUtil.getRegistry();
-
 		ServiceRegistration<TestService> serviceRegistration =
-			registry.registerService(TestService.class, new TestServiceImpl());
+			_bundleContext.registerService(
+				TestService.class, new TestServiceImpl(), null);
 
 		TestService newTestService = TestServiceUtil.testService;
 
@@ -410,21 +386,20 @@ public class ServiceProxyFactoryTest {
 
 		_waitForBlocked(testService, thread);
 
-		Registry registry = RegistryUtil.getRegistry();
-
 		ServiceRegistration<TestService> serviceRegistration = null;
 
 		if (proxyService) {
-			serviceRegistration = registry.registerService(
+			serviceRegistration = _bundleContext.registerService(
 				TestService.class,
 				(TestService)ProxyFactory.newInstance(
 					TestService.class.getClassLoader(),
 					new Class<?>[] {TestService.class},
-					TestServiceImpl.class.getName()));
+					TestServiceImpl.class.getName()),
+				null);
 		}
 		else {
-			serviceRegistration = registry.registerService(
-				TestService.class, new TestServiceImpl());
+			serviceRegistration = _bundleContext.registerService(
+				TestService.class, new TestServiceImpl(), null);
 		}
 
 		futureTask.get();
@@ -533,18 +508,16 @@ public class ServiceProxyFactoryTest {
 
 		testService.throwException();
 
-		Registry registry = RegistryUtil.getRegistry();
-
 		ServiceRegistration<TestService> serviceRegistration = null;
 
 		if (filterEnabled) {
-			serviceRegistration = registry.registerService(
+			serviceRegistration = _bundleContext.registerService(
 				TestService.class, new TestServiceImpl(),
-				Collections.singletonMap("test.filter", "true"));
+				MapUtil.singletonDictionary("test.filter", "true"));
 		}
 		else {
-			serviceRegistration = registry.registerService(
-				TestService.class, new TestServiceImpl());
+			serviceRegistration = _bundleContext.registerService(
+				TestService.class, new TestServiceImpl(), null);
 		}
 
 		TestService newTestService = null;
@@ -614,6 +587,9 @@ public class ServiceProxyFactoryTest {
 	private static final long _TEST_SERVICE_ID = 1234L;
 
 	private static final String _TEST_SERVICE_NAME = "TestServiceName";
+
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 
 	private static class TestServiceUtil {
 

@@ -20,27 +20,28 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.module.util.ServiceTrackerFieldUpdaterCustomizer;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapperTracker;
 import com.liferay.portal.kernel.portlet.Route;
 import com.liferay.portal.kernel.portlet.Router;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerFieldUpdaterCustomizer;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Raymond Augé
@@ -49,8 +50,6 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 
 	public FriendlyURLMapperTrackerImpl(Portlet portlet) throws Exception {
 		_portlet = portlet;
-
-		Registry registry = RegistryUtil.getRegistry();
 
 		String filterString = null;
 
@@ -70,8 +69,8 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 				FriendlyURLMapper.class.getName(), "))");
 		}
 
-		_serviceTracker = registry.trackServices(
-			registry.getFilter(filterString),
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, SystemBundleUtil.createFilter(filterString),
 			new FriendlyURLMapperServiceTrackerCustomizer());
 
 		_serviceTracker.open();
@@ -97,13 +96,11 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 
 	@Override
 	public void register(FriendlyURLMapper friendlyURLMapper) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceRegistration<?> serviceRegistration = registry.registerService(
-			FriendlyURLMapper.class, friendlyURLMapper,
-			HashMapBuilder.<String, Object>put(
-				"javax.portlet.name", _portlet.getPortletId()
-			).build());
+		ServiceRegistration<?> serviceRegistration =
+			_bundleContext.registerService(
+				FriendlyURLMapper.class, friendlyURLMapper,
+				MapUtil.singletonDictionary(
+					"javax.portlet.name", _portlet.getPortletId()));
 
 		_serviceRegistrations.put(friendlyURLMapper, serviceRegistration);
 	}
@@ -159,6 +156,8 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLMapperTrackerImpl.class);
 
+	private final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private volatile FriendlyURLMapper _friendlyURLMapper;
 	private final Portlet _portlet;
 	private final Map<FriendlyURLMapper, ServiceRegistration<?>>
@@ -174,9 +173,7 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 		protected FriendlyURLMapper doAddingService(
 			ServiceReference<FriendlyURLMapper> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			FriendlyURLMapper friendlyURLMapper = registry.getService(
+			FriendlyURLMapper friendlyURLMapper = _bundleContext.getService(
 				serviceReference);
 
 			try {

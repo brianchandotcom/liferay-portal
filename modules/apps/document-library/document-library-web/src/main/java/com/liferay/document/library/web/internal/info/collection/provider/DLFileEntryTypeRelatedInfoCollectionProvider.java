@@ -25,6 +25,7 @@ import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionPro
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -132,8 +133,15 @@ public class DLFileEntryTypeRelatedInfoCollectionProvider
 
 	@Override
 	public String getKey() {
-		return RelatedInfoItemCollectionProvider.class.getName() +
-			StringPool.DASH + _dlFileEntryType.getFileEntryTypeId();
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(RelatedInfoItemCollectionProvider.class.getName());
+		sb.append(StringPool.DASH);
+		sb.append(DLFileEntryType.class.getName());
+		sb.append(StringPool.DASH);
+		sb.append(_dlFileEntryType.getFileEntryTypeId());
+
+		return sb.toString();
 	}
 
 	@Override

@@ -26,6 +26,7 @@ import com.liferay.info.sort.Sort;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.web.internal.search.JournalSearcher;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -130,8 +131,15 @@ public class DDMStructureRelatedInfoCollectionProvider
 
 	@Override
 	public String getKey() {
-		return RelatedInfoItemCollectionProvider.class.getName() +
-			StringPool.DASH + _ddmStructure.getStructureKey();
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(RelatedInfoItemCollectionProvider.class.getName());
+		sb.append(StringPool.DASH);
+		sb.append(JournalArticle.class.getName());
+		sb.append(StringPool.DASH);
+		sb.append(_ddmStructure.getStructureId());
+
+		return sb.toString();
 	}
 
 	@Override

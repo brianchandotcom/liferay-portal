@@ -74,16 +74,18 @@ const useCollectionConfig = () => {
 };
 
 const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
-	const context = useContext(CollectionItemContext);
+	const collectionItemContext = useContext(CollectionItemContext);
 	const dispatch = useDispatch();
-
-	const {className, classPK} = context.collectionItem || {};
+	const fieldSets = fragmentEntryLink.configuration?.fieldSets;
 	const toControlsId = useToControlsId();
 
-	const fieldSets = fragmentEntryLink.configuration?.fieldSets;
 	const collectionContentId = toControlsId(
 		fragmentEntryLink.fragmentEntryLinkId
 	);
+
+	const {className: collectionItemClassName, classPK: collectionItemClassPK} =
+		collectionItemContext.collectionItem || {};
+	const {collectionItemIndex} = collectionItemContext;
 
 	useEffect(() => {
 		const hasLocalizable =
@@ -91,10 +93,15 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 				fieldSet.fields.some((field) => field.localizable)
 			) ?? false;
 
-		if (context.collectionItemIndex != null || hasLocalizable) {
+		if (
+			(collectionItemIndex != null &&
+				collectionItemClassName != null &&
+				collectionItemClassPK != null) ||
+			hasLocalizable
+		) {
 			FragmentService.renderFragmentEntryLinkContent({
-				collectionItemClassName: className,
-				collectionItemClassPK: classPK,
+				collectionItemClassName,
+				collectionItemClassPK,
 				fragmentEntryLinkId: fragmentEntryLink.fragmentEntryLinkId,
 				languageId,
 				onNetworkStatus: dispatch,
@@ -111,10 +118,10 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 			});
 		}
 	}, [
-		className,
 		collectionContentId,
-		classPK,
-		context.collectionItemIndex,
+		collectionItemClassName,
+		collectionItemClassPK,
+		collectionItemIndex,
 		dispatch,
 		fieldSets,
 		fragmentEntryLink.editableValues,
@@ -123,7 +130,7 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 		segmentsExperienceId,
 	]);
 
-	if (context.collectionItemIndex != null) {
+	if (collectionItemIndex != null) {
 		const collectionContent = fragmentEntryLink.collectionContent || {};
 
 		return (
@@ -200,26 +207,28 @@ const useGetFieldValue = () => {
 };
 
 const useRenderFragmentContent = () => {
-	const context = useContext(CollectionItemContext);
+	const collectionItemContext = useContext(CollectionItemContext);
 
-	const {className, classPK} = context.collectionItem || {};
+	const {className: collectionItemClassName, classPK: collectionItemClassPK} =
+		collectionItemContext.collectionItem || {};
+	const {collectionItemIndex} = collectionItemContext;
 
 	return useCallback(
 		({fragmentEntryLinkId, onNetworkStatus, segmentsExperienceId}) => {
 			return FragmentService.renderFragmentEntryLinkContent({
-				collectionItemClassName: className,
-				collectionItemClassPK: classPK,
+				collectionItemClassName,
+				collectionItemClassPK,
 				fragmentEntryLinkId,
 				onNetworkStatus,
 				segmentsExperienceId,
 			}).then(({content}) => {
 				return {
-					collectionItemIndex: context.collectionItemIndex,
+					collectionItemIndex,
 					content,
 				};
 			});
 		},
-		[className, classPK, context.collectionItemIndex]
+		[collectionItemClassName, collectionItemClassPK, collectionItemIndex]
 	);
 };
 

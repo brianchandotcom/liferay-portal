@@ -24,6 +24,7 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LRQA-4988."
 	@priority = "4"
 	test AssertNoWikiJavascript {
 		property portal.upstream = "quarantine";
@@ -55,7 +56,7 @@ definition {
 			wikiPageTitle = "FrontPage");
 	}
 
-	@description = "This is a use case for LPS-112581 and LPS-115803"
+	@description = "This is a use case for LPS-112581 and LPS-115803."
 	@priority = "5"
 	test AssertSpecificRulesWorksForModel {
 		property antisamy.enabled = "true";
@@ -126,6 +127,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Message#SUCCESS");
 	}
 
+	@description = "This is a use case for LRQA-42763."
 	@priority = "4"
 	test AssertWebContentJavascript {
 		property portal.upstream = "quarantine";

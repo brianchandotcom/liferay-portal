@@ -133,10 +133,10 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 									/>
 								</c:when>
 								<c:otherwise>
-									<liferay-ui:search-container-column-text
+									<liferay-ui:search-container-column-icon
+										cssClass="table-cell-expand"
+										icon="hr"
 										name="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnName(ddmFormField) %>"
-										truncate="<%= true %>"
-										value=""
 									/>
 								</c:otherwise>
 							</c:choose>

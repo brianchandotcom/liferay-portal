@@ -1029,39 +1029,44 @@ syncPortalLanguageKeys {
 					languageProperties.each {
 						String key, String value ->
 
+						boolean conflictingKey = true
+
 						if (portalImplRootLanguageProperties.containsKey(key)) {
-							if (rootLanguageProperties.containsKey(key) && (portalImplRootLanguageProperties.getProperty(key) != rootLanguageProperties.getProperty(key))) {
-								String relativePath = FileUtil.relativize(languagePropertiesFile.parentFile.parentFile.parentFile.parentFile.parentFile, projectDir)
-
-								moduleMap.put(relativePath, moduleMap.containsKey(relativePath) ? moduleMap.get(relativePath).plus(key) : [key])
-
-								languageKeys.add(key + '=' + value.replace("\n", "\\n"))
+							if (!rootLanguageProperties.containsKey(key) || (portalImplRootLanguageProperties.getProperty(key) == rootLanguageProperties.getProperty(key))) {
+								conflictingKey = false
 							}
 						}
 						else if (!portalLanguageProperties.containsKey(key)) {
-							updatedPortalLanguageProperties = true
+							conflictingKey = false
 
 							portalLanguageProperties.setProperty key, value.replace("\n", "\\n")
 						}
-						else if (portalLanguageProperties.getProperty(key) != value) {
-							if (!rootLanguageProperties.containsKey(key)) {
+						else if (!rootLanguageProperties.containsKey(key)) {
+							conflictingKey = false
+
+							if (portalLanguageProperties.getProperty(key) != value) {
 								String portalLanguageValue = portalLanguageProperties.getProperty(key)
 
 								if (portalLanguageValue.endsWith("(Automatic Copy)") || portalLanguageValue.endsWith("(Automatic Translation)")) {
 									if ((!value.endsWith("(Automatic Copy)") && !value.endsWith("(Automatic Translation)")) || (portalLanguageValue.endsWith("(Automatic Copy)") && value.endsWith("(Automatic Translation)"))) {
-										updatedPortalLanguageProperties = true
-
 										portalLanguageProperties.setProperty key, value.replace("\n", "\\n")
 									}
 								}
 							}
-							else {
-								String relativePath = FileUtil.relativize(languagePropertiesFile.parentFile.parentFile.parentFile.parentFile.parentFile, projectDir)
+						}
+						else if ((languagePropertiesFile.name == "Language.properties") && (portalLanguageProperties.getProperty(key) == value)) {
+							conflictingKey = false
+						}
 
-								moduleMap.put(relativePath, moduleMap.containsKey(relativePath) ? moduleMap.get(relativePath).plus(key) : [key])
+						if (conflictingKey) {
+							String relativePath = FileUtil.relativize(languagePropertiesFile.parentFile.parentFile.parentFile.parentFile.parentFile, projectDir)
 
-								languageKeys.add(key + '=' + value.replace("\n", "\\n"))
-							}
+							moduleMap.put(relativePath, moduleMap.containsKey(relativePath) ? moduleMap.get(relativePath).plus(key) : [key])
+
+							languageKeys.add(key + '=' + value.replace("\n", "\\n"))
+						}
+						else {
+							updatedPortalLanguageProperties = true
 						}
 					}
 

@@ -17,12 +17,17 @@ package com.liferay.object.web.internal.deployer;
 import com.liferay.application.list.PanelApp;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.web.internal.item.selector.ObjectEntryItemSelectorView;
 import com.liferay.object.web.internal.object.entries.application.list.ObjectEntriesPanelApp;
 import com.liferay.object.web.internal.object.entries.frontend.taglib.clay.data.set.view.table.ObjectEntriesTableClayDataSetDisplayView;
 import com.liferay.object.web.internal.object.entries.portlet.ObjectEntriesPortlet;
@@ -64,6 +69,15 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				HashMapDictionaryBuilder.put(
 					"clay.data.set.display.name",
 					objectDefinition.getPortletId()
+				).build()),
+			_bundleContext.registerService(
+				ItemSelectorView.class,
+				new ObjectEntryItemSelectorView(
+					_itemSelectorViewDescriptorRenderer, objectDefinition,
+					_objectDefinitionLocalService, _objectEntryLocalService,
+					_objectScopeProviderRegistry, _portal),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"item.selector.view.order", 500
 				).build()),
 			_bundleContext.registerService(
 				PanelApp.class, new ObjectEntriesPanelApp(objectDefinition),
@@ -120,7 +134,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private ClayTableSchemaBuilderFactory _clayTableSchemaBuilderFactory;
 
 	@Reference
+	private ItemSelectorViewDescriptorRenderer<InfoItemItemSelectorCriterion>
+		_itemSelectorViewDescriptorRenderer;
+
+	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private ObjectEntryService _objectEntryService;

@@ -971,6 +971,20 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro removeUserAsAssignee {
+		var key_assigneeName = "${assigneeName}";
+
+		Search.searchCP(searchTerm = "${assigneeName}");
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Remove",
+			rowEntry = "${assigneeName}");
+
+		AssertConfirm(value1 = "Are you sure you want to remove this user?");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro setDefaultBillingAddress {
 		AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_HEADING");
 

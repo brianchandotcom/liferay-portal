@@ -11,6 +11,11 @@
 
 <tbody>
 	<tr>
+		<td>ADD_PLUS_BUTTON</td>
+		<td>//*[@title='Add']</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>SELECT_BLANK_OBJECT_DISPLAY_PAGE_TEMPLATE</td>
 		<td>//div[@class='card-item-first aspect-ratio']</td>
 		<td></td>

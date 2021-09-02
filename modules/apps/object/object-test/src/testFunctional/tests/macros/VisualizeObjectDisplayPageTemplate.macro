@@ -19,7 +19,11 @@ definition {
 	}
 
 	macro openPageTemplate {
-		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_mvcPath=%2Fselect_display_page_master_layout.jsp&_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_redirect=%2Fgroup%2Fguest%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview%26_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_tabs1%3Ddisplay-page-templates%26p_p_auth%3DA1aHfues");
+		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet");
+
+		NavItem.gotoDisplayPages();
+
+		Click.javaScriptClick(locator1 = "VisualizeObjectDisplayPageTemplate#ADD_PLUS_BUTTON");
 	}
 
 	macro validateObjectContentType {

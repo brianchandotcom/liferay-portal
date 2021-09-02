@@ -48,7 +48,7 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
-		VisualizeObjectCollectionDisplay.addDisplayPage(
+		VisualizeObjectCollectionDisplay.addDisplayPageTemplate(
 			contentType = "Object",
 			displayPageName = "Blank Display Page",
 			subtype = "C_CustomObject");
@@ -84,7 +84,7 @@ definition {
 
 		VisualizeObjectCollectionDisplay.openObjectCollectionProvider();
 
-		VisualizeObjectCollectionDisplay.viewObjectCollectionProvider();
+		VisualizeObjectCollectionDisplay.viewObjectCollectionProvider(objectName = "CustomObject");
 	}
 
 	@description = "LPS-133865 - Verify if the Object entries are rendered inside the Collection Display fragment"

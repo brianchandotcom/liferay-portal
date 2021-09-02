@@ -12,7 +12,7 @@
 <tbody>
 	<tr>
 		<td>VIEW_OBJECT_COLLECTION_DISPLAY</td>
-		<td>//p[(@title='Object')]</td>
+		<td>//div[contains(@class,'list-group-title') and contains(text(),'${key_objectName}')]</td>
 		<td></td>
 	</tr>
 	<tr>

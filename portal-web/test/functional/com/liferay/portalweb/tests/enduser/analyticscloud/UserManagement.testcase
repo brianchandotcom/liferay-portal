@@ -164,12 +164,45 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9097 | Test Summary: Member cannot remove data sources"
-	@ignore = "true"
 	@priority = "4"
 	test MemberCannotRemoveDataSources {
+		task ("Connect DXP to AC") {
+			ACSettings.takeTokenFromAnalyticsCloud();
 
-		// TODO LRAC-9097 MemberCannotRemoveDataSources
+			TestCase.setUpPortalInstance();
 
+			ACUtils.launchDXP();
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
+
+		task ("Get the Data Source name") {
+			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+		}
+
+		task ("Go to AC and Login as user with member role") {
+			ACUtils.launchAC();
+
+			ACWorkspace.signOut();
+
+			ACLogin.loginAs(
+				emailAddress = "corbin.murakami@faro.io",
+				password = "test");
+		}
+
+		task ("Go to Data Sources") {
+			ACWorkspace.openWorkspace();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDataSources();
+			
+			ACNavigation.openItem(itemName = "${dataSource}");	
+		}
+
+		task ("Assert that the button 'Delete Data Source' is not present") {
+			AssertElementNotPresent(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
+		}
 	}
 
 	@description = "Automation ID: LRAC-9083 | Test Summary: [AC] Only admin or owner users are able to add properties on AC"

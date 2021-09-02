@@ -14,6 +14,8 @@
 
 package com.liferay.headless.admin.taxonomy.internal.resource.v1_0;
 
+import com.liferay.asset.category.property.model.AssetCategoryProperty;
+import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -65,9 +67,13 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
@@ -270,7 +276,17 @@ public class TaxonomyCategoryResourceImpl
 			assetCategory.getCategoryId(), ActionKeys.UPDATE);
 
 		return _toTaxonomyCategory(
-			_assetCategoryLocalService.updateAssetCategory(assetCategory));
+			_assetCategoryLocalService.updateCategory(
+				contextUser.getUserId(), assetCategory.getCategoryId(),
+				assetCategory.getParentCategoryId(),
+				assetCategory.getTitleMap(), assetCategory.getDescriptionMap(),
+				assetCategory.getVocabularyId(),
+				_mergeProperties(
+					assetCategory.getCategoryId(),
+					taxonomyCategory.getTaxonomyCategoryProperties()),
+				ServiceContextRequestUtil.createServiceContext(
+					assetCategory.getGroupId(), contextHttpServletRequest,
+					taxonomyCategory.getViewableByAsString())));
 	}
 
 	@Override
@@ -492,6 +508,45 @@ public class TaxonomyCategoryResourceImpl
 		return _assetCategoryLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
+	private String[] _mergeProperties(
+		long categoryId,
+		TaxonomyCategoryProperty[] taxonomyCategoryProperties) {
+
+		List<AssetCategoryProperty> assetCategoryProperties =
+			_assetCategoryPropertyLocalService.getCategoryProperties(
+				categoryId);
+
+		Stream<TaxonomyCategoryProperty> stream = Arrays.stream(
+			Optional.ofNullable(
+				taxonomyCategoryProperties
+			).orElse(
+				new TaxonomyCategoryProperty[0]
+			));
+
+		Map<String, String> propertiesMap = stream.collect(
+			Collectors.toMap(
+				TaxonomyCategoryProperty::getKey,
+				TaxonomyCategoryProperty::getValue));
+
+		for (AssetCategoryProperty assetCategoryProperty :
+				assetCategoryProperties) {
+
+			propertiesMap.putIfAbsent(
+				assetCategoryProperty.getKey(),
+				assetCategoryProperty.getValue());
+		}
+
+		Set<Map.Entry<String, String>> entries = propertiesMap.entrySet();
+
+		Stream<Map.Entry<String, String>> entriesStream = entries.stream();
+
+		return entriesStream.map(
+			entry -> entry.getKey() + ":" + entry.getValue()
+		).toArray(
+			String[]::new
+		);
+	}
+
 	private AssetCategory _toAssetCategory(Object[] assetCategory) {
 		return new AssetCategoryImpl() {
 			{
@@ -570,6 +625,10 @@ public class TaxonomyCategoryResourceImpl
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetCategoryPropertyLocalService
+		_assetCategoryPropertyLocalService;
 
 	@Reference
 	private AssetCategoryService _assetCategoryService;

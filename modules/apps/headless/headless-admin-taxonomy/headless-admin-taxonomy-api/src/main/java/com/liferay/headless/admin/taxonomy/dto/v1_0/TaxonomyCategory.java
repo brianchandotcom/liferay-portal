@@ -488,6 +488,35 @@ public class TaxonomyCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ParentTaxonomyVocabulary parentTaxonomyVocabulary;
 
+	@Schema(description = "The category's properties.")
+	@Valid
+	public Property[] getProperties() {
+		return properties;
+	}
+
+	public void setProperties(Property[] properties) {
+		this.properties = properties;
+	}
+
+	@JsonIgnore
+	public void setProperties(
+		UnsafeSupplier<Property[], Exception> propertiesUnsafeSupplier) {
+
+		try {
+			properties = propertiesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The category's properties.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Property[] properties;
+
 	@Schema
 	public Integer getTaxonomyCategoryUsageCount() {
 		return taxonomyCategoryUsageCount;
@@ -768,6 +797,26 @@ public class TaxonomyCategory implements Serializable {
 			sb.append("\"parentTaxonomyVocabulary\": ");
 
 			sb.append(String.valueOf(parentTaxonomyVocabulary));
+		}
+
+		if (properties != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"properties\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < properties.length; i++) {
+				sb.append(String.valueOf(properties[i]));
+
+				if ((i + 1) < properties.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (taxonomyCategoryUsageCount != null) {

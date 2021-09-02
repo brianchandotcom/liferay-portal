@@ -340,6 +340,27 @@ public class TaxonomyCategory implements Cloneable, Serializable {
 
 	protected ParentTaxonomyVocabulary parentTaxonomyVocabulary;
 
+	public Property[] getProperties() {
+		return properties;
+	}
+
+	public void setProperties(Property[] properties) {
+		this.properties = properties;
+	}
+
+	public void setProperties(
+		UnsafeSupplier<Property[], Exception> propertiesUnsafeSupplier) {
+
+		try {
+			properties = propertiesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Property[] properties;
+
 	public Integer getTaxonomyCategoryUsageCount() {
 		return taxonomyCategoryUsageCount;
 	}

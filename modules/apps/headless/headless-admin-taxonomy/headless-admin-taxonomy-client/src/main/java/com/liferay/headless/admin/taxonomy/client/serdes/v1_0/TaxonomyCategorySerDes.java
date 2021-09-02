@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.taxonomy.client.serdes.v1_0;
 
+import com.liferay.headless.admin.taxonomy.client.dto.v1_0.Property;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.json.BaseJSONParser;
 
@@ -25,6 +26,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -247,6 +249,26 @@ public class TaxonomyCategorySerDes {
 				String.valueOf(taxonomyCategory.getParentTaxonomyVocabulary()));
 		}
 
+		if (taxonomyCategory.getProperties() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"properties\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < taxonomyCategory.getProperties().length; i++) {
+				sb.append(String.valueOf(taxonomyCategory.getProperties()[i]));
+
+				if ((i + 1) < taxonomyCategory.getProperties().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (taxonomyCategory.getTaxonomyCategoryUsageCount() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -413,6 +435,14 @@ public class TaxonomyCategorySerDes {
 				String.valueOf(taxonomyCategory.getParentTaxonomyVocabulary()));
 		}
 
+		if (taxonomyCategory.getProperties() == null) {
+			map.put("properties", null);
+		}
+		else {
+			map.put(
+				"properties", String.valueOf(taxonomyCategory.getProperties()));
+		}
+
 		if (taxonomyCategory.getTaxonomyCategoryUsageCount() == null) {
 			map.put("taxonomyCategoryUsageCount", null);
 		}
@@ -547,6 +577,18 @@ public class TaxonomyCategorySerDes {
 					taxonomyCategory.setParentTaxonomyVocabulary(
 						ParentTaxonomyVocabularySerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "properties")) {
+				if (jsonParserFieldValue != null) {
+					taxonomyCategory.setProperties(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> PropertySerDes.toDTO((String)object)
+						).toArray(
+							size -> new Property[size]
+						));
 				}
 			}
 			else if (Objects.equals(

@@ -64,4 +64,13 @@ definition {
 		ACWorkspace.openWorkspace(workspaceName = "${workspaceName}");
 	}
 
+	macro viewWorkspaceSettings {
+		if (isSet(workspaceName)) {
+			AssertTextEquals(
+				key_text = "Workspace Name",
+				locator1 = "TextInput#ANY",
+				value1 = "${workspaceName}");
+		}
+	}
+
 }

@@ -169,10 +169,16 @@ export default withRouter(
 							data={data && data.messageBoardMessages}
 							emptyState={
 								<ClayEmptyState
+									description={Liferay.Language.get(
+										'sorry-there-are-no-results-found'
+									)}
 									imgSrc={
 										context.includeContextPath +
 										'/assets/empty_questions_list.png'
 									}
+									title={Liferay.Language.get(
+										'there-are-no-results'
+									)}
 								/>
 							}
 							loading={loading}

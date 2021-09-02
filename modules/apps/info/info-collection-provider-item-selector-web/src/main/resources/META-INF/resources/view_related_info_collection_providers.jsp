@@ -41,8 +41,11 @@ SearchContainer<RelatedInfoItemCollectionProvider<?, ?>> searchContainer = relat
 		>
 
 			<%
+			row.setCssClass("selector-button");
 			row.setData(
 				HashMapBuilder.<String, Object>put(
+					"return-type", relatedInfoItemCollectionProviderItemSelectorDisplayContext.getReturnType()
+				).put(
 					"value", relatedInfoItemCollectionProviderItemSelectorDisplayContext.getPayload(relatedInfoItemCollectionProvider)
 				).build());
 			%>
@@ -108,59 +111,3 @@ SearchContainer<RelatedInfoItemCollectionProvider<?, ?>> searchContainer = relat
 		/>
 	</liferay-ui:search-container>
 </clay:container-fluid>
-
-<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
-	var delegate = delegateModule.default;
-
-	var selectItemHandler = delegate(
-		document.querySelector('#<portlet:namespace />entriesContainer'),
-		'click',
-		'.entry',
-		(event) => {
-			var activeCards = document.querySelectorAll('.form-check-card.active');
-
-			if (activeCards.length) {
-				activeCards.forEach((card) => {
-					card.classList.remove('active');
-				});
-			}
-
-			var target = event.delegateTarget;
-
-			var newSelectedCard = target.closest('.form-check-card');
-
-			if (newSelectedCard) {
-				newSelectedCard.classList.add('active');
-			}
-
-			var domElement = target.closest('li');
-
-			if (domElement == null) {
-				domElement = target.closest('tr');
-			}
-
-			var itemValue = '';
-
-			if (domElement != null) {
-				itemValue = domElement.dataset.value;
-			}
-
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= relatedInfoItemCollectionProviderItemSelectorDisplayContext.getItemSelectedEventName() %>',
-				{
-					data: {
-						returnType:
-							'<%= relatedInfoItemCollectionProviderItemSelectorDisplayContext.getReturnType() %>',
-						value: itemValue,
-					},
-				}
-			);
-		}
-	);
-
-	Liferay.on('destroyPortlet', function removeListener() {
-		selectItemHandler.dispose();
-
-		Liferay.detach('destroyPortlet', removeListener);
-	});
-</aui:script>

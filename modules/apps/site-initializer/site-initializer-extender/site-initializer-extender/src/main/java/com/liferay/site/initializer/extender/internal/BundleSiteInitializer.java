@@ -182,11 +182,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addDDMStructures(serviceContext);
 			_addDDMTemplates(serviceContext);
 			_addDocuments(serviceContext);
+
+			_addJournalArticles(serviceContext);
 			_addFragmentEntries(serviceContext);
 			_addObjectDefinitions(serviceContext);
 			_addStyleBookEntries(serviceContext);
 			_addTaxonomyVocabularies(serviceContext);
-			_addJournalArticles(serviceContext);
 		}
 		catch (Exception exception) {
 			throw new InitializationException(exception);
@@ -428,8 +429,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			Map<String, String> fileEntriesMap = _getFileEntriesMap();
-
 			String json = _read(resourcePath);
 
 			JSONObject journalArticleJSONObject =
@@ -438,15 +437,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<Locale, String> titleMap = Collections.singletonMap(
 				LocaleUtil.getSiteDefault(),
 				journalArticleJSONObject.getString("name"));
-
-			Calendar calendar = CalendarFactoryUtil.getCalendar(
-				serviceContext.getTimeZone());
-
-			int displayDateMonth = calendar.get(Calendar.MONTH);
-			int displayDateDay = calendar.get(Calendar.DAY_OF_MONTH);
-			int displayDateYear = calendar.get(Calendar.YEAR);
-			int displayDateHour = calendar.get(Calendar.HOUR_OF_DAY);
-			int displayDateMinute = calendar.get(Calendar.MINUTE);
 
 			List<String> assetTagNames = new ArrayList<>();
 
@@ -468,6 +458,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 				folderId = documentFolderId;
 			}
 
+			Map<String, String> fileEntriesMap = _getFileEntriesMap();
+
+			Calendar calendar = CalendarFactoryUtil.getCalendar(
+				serviceContext.getTimeZone());
+
 			_journalArticleLocalService.addArticle(
 				null, serviceContext.getUserId(),
 				serviceContext.getScopeGroupId(), folderId,
@@ -479,10 +474,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 					"[$", "$]", fileEntriesMap),
 				journalArticleJSONObject.getString("ddmStructureKey"),
 				journalArticleJSONObject.getString("ddmTemplateKey"), null,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0,
-				0, 0, 0, true, true, false, null, null, null, null,
-				serviceContext);
+				calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0, 0, 0,
+				0, true, true, false, null, null, null, null, serviceContext);
 
 			serviceContext.setAssetTagNames(null);
 		}

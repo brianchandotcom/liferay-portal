@@ -536,6 +536,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENTS_AND_WIDGETS_SEARCH_CLEAR_BUTTON</td>
+	<td>//div[contains(@class,'page-editor__sidebar__fragments-widgets-panel')]//button[.//*[name()='svg'][contains(@class,'icon-times')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENTS_AND_WIDGETS_SEARCH_RESULTS</td>
 	<td>//li[contains(@class,'page-editor__fragments-widgets__tab-list-item')][normalize-space()='${key_fragmentName}']</td>
 	<td></td>

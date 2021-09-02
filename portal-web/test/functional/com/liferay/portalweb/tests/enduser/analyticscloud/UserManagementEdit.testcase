@@ -8,18 +8,10 @@ definition {
 
 	setUp {
 		ACUtils.launchAC();
-
-		ACSettings.takeTokenFromAnalyticsCloud();
-
-		TestCase.setUpPortalInstance();
-
-		ACUtils.launchDXP();
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		ACUtils.tearDownDXP();
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
@@ -29,12 +21,46 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9062 | Test Summary: Edit button to manage user permissions"
-	@ignore = "true"
 	@priority = "5"
 	test CanEditButtonToManageUserPermissions {
+        task ("Go to AC"){
+            ACUtils.launchAC();
+        }
+        
+        task ("Go to User Management in Settings"){
+        ACNavigation.goToSettings();
 
-		// TODO LRAC-9062 CanEditButtonToManageUserPermissions
+        ACSettings.goToUserManagement();
+        }
 
+        task("Add User"){
+        ACSettings.addUser(userInvite = "ac@liferay.com");
+
+        ACSettings.goToDataSources();
+
+        ACSettings.goToUserManagement();
+        }
+
+        task("Change permssions") {
+            ACUtils.searchBar(searchItem = "ac@liferay.com");
+
+            ACUtils.clickAnyButton(button = "Edit");
+
+            ACSegments.goToSidebarAttributes(criterion = "Administrator");
+
+            ACUtils.clickAnyButton(button = "Save");
+        }
+
+        task("Assert that user permissions is changed"){
+            AssertElementPresent(
+			    locator1 = "ACSettings#VIEW_USER_PERMISSION",
+                emailAddress = "ac@liferay.com",
+			    permission = "Administrator");
+        }
+
+        task("Delete Pending All Users"){
+            ACSettings.deletePendingAllUsers();
+        }
 	}
 
 }

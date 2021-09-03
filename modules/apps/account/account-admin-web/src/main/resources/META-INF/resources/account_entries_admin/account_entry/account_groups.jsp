@@ -17,7 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
+AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
+
 SearchContainer<AccountGroupDisplay> accountGroupDisplaySearchContainer = AccountEntryAccountGroupSearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL())));
+
+renderResponse.setTitle(accountEntryDisplay.getName());
 %>
 
 <clay:container-fluid>

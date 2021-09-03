@@ -24,6 +24,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.template.web.internal.portlet.template.TemplateDisplayTemplateTransformer;
 
 import java.util.Locale;
@@ -33,6 +34,11 @@ import java.util.Locale;
  */
 public class TemplateInfoItemFieldReader
 	implements LocalizedInfoItemFieldReader {
+
+	public static String getFieldName(String templateKey) {
+		return PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+			templateKey.replaceAll("\\W", "_");
+	}
 
 	public TemplateInfoItemFieldReader(
 		DDMTemplate ddmTemplate, InfoItemFieldValues infoItemFieldValues) {
@@ -57,7 +63,7 @@ public class TemplateInfoItemFieldReader
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
-			"informationTemplate_" + _ddmTemplate.getTemplateId()
+			getFieldName(_ddmTemplate.getTemplateKey())
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.<String>builder(
 			).value(

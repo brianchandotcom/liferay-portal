@@ -32,6 +32,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl;
@@ -195,6 +196,12 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		ddmFormFieldValue.setDDMFormValues(ddmFormValues);
 
 		return ddmFormFieldValue;
+	}
+
+	protected DDMFormFieldValue createDDMFormFieldValue(String name) {
+		return createDDMFormFieldValue(
+			StringUtil.randomString(), name,
+			new UnlocalizedValue(StringUtil.randomString()));
 	}
 
 	protected DDMFormFieldValue createDDMFormFieldValue(

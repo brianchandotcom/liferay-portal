@@ -51,7 +51,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
  * @author Carolina Barbosa
  */
 @RunWith(PowerMockRunner.class)
-public class PollsMigrationToFormsUpgradeProcessTest extends BaseDDMTestCase {
+public class PollsToDDMUpgradeProcessTest extends BaseDDMTestCase {
 
 	@Before
 	@Override
@@ -69,7 +69,7 @@ public class PollsMigrationToFormsUpgradeProcessTest extends BaseDDMTestCase {
 		setUpPortalUtil();
 
 		_setUpLocalizationUtil();
-		_setUpPollsMigrationToFormsUpgradeProcess();
+		_setUpPollsToDDMUpgradeProcess();
 	}
 
 	@Test
@@ -77,11 +77,11 @@ public class PollsMigrationToFormsUpgradeProcessTest extends BaseDDMTestCase {
 		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions(
 			LocaleUtil.US);
 
-		_pollsMigrationToFormsUpgradeProcess.createDDDMFormFieldOptions(
+		_pollsToDDMUpgradeProcess.createDDDMFormFieldOptions(
 			ddmFormFieldOptions,
 			_getPollsChoiceDescription("Option 1", "Option 1 PT"), "a",
 			"Option1");
-		_pollsMigrationToFormsUpgradeProcess.createDDDMFormFieldOptions(
+		_pollsToDDMUpgradeProcess.createDDDMFormFieldOptions(
 			ddmFormFieldOptions,
 			_getPollsChoiceDescription("Option 2", "Option 2 PT"), "b",
 			"Option2");
@@ -110,9 +110,8 @@ public class PollsMigrationToFormsUpgradeProcessTest extends BaseDDMTestCase {
 
 	@Test
 	public void testGetDataJSONObject() throws Exception {
-		DDMFormField ddmFormField =
-			_pollsMigrationToFormsUpgradeProcess.getDDMFormField(
-				new DDMFormFieldOptions(LocaleUtil.US));
+		DDMFormField ddmFormField = _pollsToDDMUpgradeProcess.getDDMFormField(
+			new DDMFormFieldOptions(LocaleUtil.US));
 
 		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions(
 			LocaleUtil.US);
@@ -141,13 +140,12 @@ public class PollsMigrationToFormsUpgradeProcessTest extends BaseDDMTestCase {
 				"totalItems", 0
 			).toString(),
 			String.valueOf(
-				_pollsMigrationToFormsUpgradeProcess.getDataJSONObject(
-					ddmFormField)));
+				_pollsToDDMUpgradeProcess.getDataJSONObject(ddmFormField)));
 	}
 
 	@Test
 	public void testGetDDMForm() throws Exception {
-		DDMForm ddmForm = _pollsMigrationToFormsUpgradeProcess.getDDMForm(
+		DDMForm ddmForm = _pollsToDDMUpgradeProcess.getDDMForm(
 			new DDMFormField("fieldName", "radio"));
 
 		Assert.assertEquals(
@@ -158,9 +156,8 @@ public class PollsMigrationToFormsUpgradeProcessTest extends BaseDDMTestCase {
 
 	@Test
 	public void testGetDDMFormField() throws Exception {
-		DDMFormField ddmFormField =
-			_pollsMigrationToFormsUpgradeProcess.getDDMFormField(
-				new DDMFormFieldOptions(LocaleUtil.US));
+		DDMFormField ddmFormField = _pollsToDDMUpgradeProcess.getDDMFormField(
+			new DDMFormFieldOptions(LocaleUtil.US));
 
 		Assert.assertEquals("string", ddmFormField.getDataType());
 
@@ -185,16 +182,14 @@ public class PollsMigrationToFormsUpgradeProcessTest extends BaseDDMTestCase {
 
 	@Test
 	public void testGetDDMFormLayoutDefinition() throws Exception {
-		DDMFormField ddmFormField =
-			_pollsMigrationToFormsUpgradeProcess.getDDMFormField(
-				new DDMFormFieldOptions(LocaleUtil.US));
+		DDMFormField ddmFormField = _pollsToDDMUpgradeProcess.getDDMFormField(
+			new DDMFormFieldOptions(LocaleUtil.US));
 
 		ddmFormField.setName("SingleSelection");
 
 		JSONAssert.assertEquals(
 			read("ddm-form-layout-definition.json"),
-			_pollsMigrationToFormsUpgradeProcess.getDDMFormLayoutDefinition(
-				ddmFormField),
+			_pollsToDDMUpgradeProcess.getDDMFormLayoutDefinition(ddmFormField),
 			false);
 	}
 
@@ -202,8 +197,7 @@ public class PollsMigrationToFormsUpgradeProcessTest extends BaseDDMTestCase {
 	public void testGetSerializedSettingsDDMFormValues() throws Exception {
 		JSONAssert.assertEquals(
 			read("ddm-form-instance-settings.json"),
-			_pollsMigrationToFormsUpgradeProcess.
-				getSerializedSettingsDDMFormValues(),
+			_pollsToDDMUpgradeProcess.getSerializedSettingsDDMFormValues(),
 			false);
 	}
 
@@ -263,26 +257,25 @@ public class PollsMigrationToFormsUpgradeProcessTest extends BaseDDMTestCase {
 		localizationUtil.setLocalization(_localization);
 	}
 
-	private void _setUpPollsMigrationToFormsUpgradeProcess() throws Exception {
+	private void _setUpPollsToDDMUpgradeProcess() throws Exception {
 		MemberMatcher.field(
-			PollsMigrationToFormsUpgradeProcess.class, "_availableLocales"
+			PollsToDDMUpgradeProcess.class, "_availableLocales"
 		).set(
-			_pollsMigrationToFormsUpgradeProcess,
+			_pollsToDDMUpgradeProcess,
 			SetUtil.fromArray(new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US})
 		);
 
 		MemberMatcher.field(
-			PollsMigrationToFormsUpgradeProcess.class, "_defaultLocale"
+			PollsToDDMUpgradeProcess.class, "_defaultLocale"
 		).set(
-			_pollsMigrationToFormsUpgradeProcess, LocaleUtil.US
+			_pollsToDDMUpgradeProcess, LocaleUtil.US
 		);
 	}
 
-	private static final PollsMigrationToFormsUpgradeProcess
-		_pollsMigrationToFormsUpgradeProcess =
-			new PollsMigrationToFormsUpgradeProcess(
-				ddmFormLayoutJSONSerializer, null, ddmFormValuesJSONSerializer,
-				null, null);
+	private static final PollsToDDMUpgradeProcess _pollsToDDMUpgradeProcess =
+		new PollsToDDMUpgradeProcess(
+			ddmFormLayoutJSONSerializer, null, ddmFormValuesJSONSerializer,
+			null, null);
 
 	@Mock
 	private Localization _localization;

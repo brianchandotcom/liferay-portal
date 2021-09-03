@@ -71,7 +71,7 @@ import org.junit.runner.RunWith;
  * @author Carolina Barbosa
  */
 @RunWith(Arquillian.class)
-public class PollsMigrationToFormsUpgradeProcessTest {
+public class PollsToDDMUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
@@ -86,11 +86,11 @@ public class PollsMigrationToFormsUpgradeProcessTest {
 
 		_userId = TestPropsValues.getUserId();
 
-		_setUpPollsMigrationToFormsUpgrade();
+		_setUpPollsToDDMUpgrade();
 	}
 
 	@Test
-	public void testPollsMigrationToFormsUpgradeProcess() throws Exception {
+	public void testPollsToDDMUpgradeProcess() throws Exception {
 		Map<Locale, String> descriptionsMap = _getLocalizations(
 			HashMapBuilder.put(
 				LocaleUtil.BRAZIL, "Description PT"
@@ -129,7 +129,7 @@ public class PollsMigrationToFormsUpgradeProcessTest {
 					LocaleUtil.US, "Option 2 US"
 				).build()));
 
-		_pollsMigrationToFormsUpgradeProcess.upgrade();
+		_pollsToDDMUpgradeProcess.upgrade();
 
 		EntityCacheUtil.clearCache();
 
@@ -328,7 +328,7 @@ public class PollsMigrationToFormsUpgradeProcessTest {
 			LocaleUtil.toLanguageId(_defaultLocale));
 	}
 
-	private void _setUpPollsMigrationToFormsUpgrade() {
+	private void _setUpPollsToDDMUpgrade() {
 		_upgradeStepRegistrator.register(
 			new UpgradeStepRegistrator.Registry() {
 
@@ -343,7 +343,7 @@ public class PollsMigrationToFormsUpgradeProcessTest {
 						String className = clazz.getName();
 
 						if (className.contains(_CLASS_NAME)) {
-							_pollsMigrationToFormsUpgradeProcess =
+							_pollsToDDMUpgradeProcess =
 								(UpgradeProcess)upgradeStep;
 						}
 					}
@@ -354,7 +354,7 @@ public class PollsMigrationToFormsUpgradeProcessTest {
 
 	private static final String _CLASS_NAME =
 		"com.liferay.dynamic.data.mapping.internal.upgrade.v5_0_0." +
-			"PollsMigrationToFormsUpgradeProcess";
+			"PollsToDDMUpgradeProcess";
 
 	@Inject(
 		filter = "(&(objectClass=com.liferay.dynamic.data.mapping.internal.upgrade.DDMServiceUpgrade))"
@@ -369,7 +369,7 @@ public class PollsMigrationToFormsUpgradeProcessTest {
 	private Group _group;
 
 	private long _groupId;
-	private UpgradeProcess _pollsMigrationToFormsUpgradeProcess;
+	private UpgradeProcess _pollsToDDMUpgradeProcess;
 	private long _userId;
 
 }

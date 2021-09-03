@@ -90,9 +90,9 @@ import java.util.stream.Stream;
 /**
  * @author Carolina Barbosa
  */
-public class PollsMigrationToFormsUpgradeProcess extends UpgradeProcess {
+public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 
-	public PollsMigrationToFormsUpgradeProcess(
+	public PollsToDDMUpgradeProcess(
 		DDMFormLayoutSerializer ddmFormLayoutSerializer,
 		DDMFormSerializer ddmFormSerializer,
 		DDMFormValuesSerializer ddmFormValuesSerializer,

@@ -213,7 +213,11 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Form Site");
 
-		FormsAdmin.addForm();
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
 
 		Form.editName();
 
@@ -223,13 +227,9 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
-		Form.closeSidebar();
-
 		Form.save();
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
+		FormsAdminNavigator.gotoBack();
 
 		FormsAdmin.viewForm();
 

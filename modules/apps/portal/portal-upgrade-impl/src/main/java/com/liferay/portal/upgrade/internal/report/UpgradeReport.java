@@ -105,8 +105,9 @@ public class UpgradeReport {
 				StringUtil.merge(
 					new String[] {
 						_getPortalVersions(), _getDialectInfo(),
-						_getProperties(), _getDLSize(), _getUpgradeTimes(),
-						_getLogEvents("errors"), _getLogEvents("warnings")
+						_getProperties(), _getDLStorageSize(),
+						_getUpgradeTimes(), _getLogEvents("errors"),
+						_getLogEvents("warnings")
 					},
 					StringPool.NEW_LINE + StringPool.NEW_LINE));
 		}
@@ -144,56 +145,45 @@ public class UpgradeReport {
 			StringPool.PERIOD, db.getMinorVersion());
 	}
 
-	private String _getDLSize() {
-		if (_dlStore.equals("com.liferay.portal.store.db.DBStore")) {
-			return "Check your DBStore to know the size of your database";
-		}
-		else if (_dlStore.contains("FileSystemStore")) {
-			if ((_rootDir == null) &&
-				_dlStore.equals(
-					"com.liferay.portal.store.file.system." +
-						"AdvancedFileSystemStore")) {
+	private String _getDLStorageSize() {
+		if (!StringUtil.endsWith(
+				PropsValues.DL_STORE_IMPL, "FileSystemStore")) {
 
-				return "\"rootDir\" was not set, unable to determine the " +
-					"size of the document library\n";
-			}
-
-			String dlPath = PropsValues.LIFERAY_HOME + "/data/document_library";
-
-			if (_rootDir != null) {
-				dlPath = _rootDir;
-			}
-
-			double bytes = 0;
-
-			try {
-				bytes = FileUtils.sizeOfDirectory(new File(dlPath));
-			}
-			catch (Exception exception) {
-				return exception.getMessage();
-			}
-
-			String[] dictionary = {"bytes", "KB", "MB", "GB", "TB", "PB"};
-
-			int index = 0;
-
-			for (index = 0; index < dictionary.length; index++) {
-				if (bytes < 1024) {
-					break;
-				}
-
-				bytes = bytes / 1024;
-			}
-
-			String size = StringBundler.concat(
-				String.format("%." + 2 + "f", bytes), StringPool.SPACE,
-				dictionary[index]);
-
-			return "The Document Library size is " + size;
+			return "Check your external document library repository to know " +
+				"the size of your database";
 		}
 
-		return "Please check the size of the Liferay Document Library in " +
-			"your cloud storage";
+		if (_rootDir == null) {
+			return "\"rootDir\" was not set, unable to determine the size of " +
+				"the document library\n";
+		}
+
+		double bytes = 0;
+
+		try {
+			bytes = FileUtils.sizeOfDirectory(new File(_rootDir));
+		}
+		catch (Exception exception) {
+			return exception.getMessage();
+		}
+
+		String[] dictionary = {"bytes", "KB", "MB", "GB", "TB", "PB"};
+
+		int index = 0;
+
+		for (index = 0; index < dictionary.length; index++) {
+			if (bytes < 1024) {
+				break;
+			}
+
+			bytes = bytes / 1024;
+		}
+
+		String size = StringBundler.concat(
+			String.format("%." + 2 + "f", bytes), StringPool.SPACE,
+			dictionary[index]);
+
+		return "The document library size is " + size;
 	}
 
 	private String _getLogEvents(String type) {
@@ -244,7 +234,7 @@ public class UpgradeReport {
 			sb.append(entry.getKey());
 			sb.append(StringPool.NEW_LINE);
 
-			Map<String, Integer> submapSorted = _sortByValue(entry.getValue());
+			Map<String, Integer> submapSorted = _sort(entry.getValue());
 
 			for (Map.Entry<String, Integer> valueEntry :
 					submapSorted.entrySet()) {
@@ -289,13 +279,14 @@ public class UpgradeReport {
 				Arrays.toString(PropsValues.LOCALES_ENABLED));
 		sb.append(StringPool.NEW_LINE);
 
-		_dlStore = PropsValues.DL_STORE_IMPL;
-
-		sb.append(PropsKeys.DL_STORE_IMPL + StringPool.EQUAL + _dlStore);
+		sb.append(
+			PropsKeys.DL_STORE_IMPL + StringPool.EQUAL +
+				PropsValues.DL_STORE_IMPL);
 
 		sb.append(StringPool.NEW_LINE);
 
-		if (_dlStore.equals(
+		if (StringUtil.equals(
+				PropsValues.DL_STORE_IMPL,
 				"com.liferay.portal.store.file.system." +
 					"AdvancedFileSystemStore")) {
 
@@ -309,14 +300,14 @@ public class UpgradeReport {
 				sb.append(".config");
 			}
 		}
-		else if (_dlStore.equals(
+		else if (StringUtil.equals(
+					PropsValues.DL_STORE_IMPL,
 					"com.liferay.portal.store.file.system.FileSystemStore")) {
 
 			_rootDir = _getRootDir(_CONFIGURATION_PID_FILE_SYSTEM_STORE);
 
 			if (_rootDir == null) {
-				sb.append("Using the default directory because the ");
-				sb.append("configuration \"rootDir\" was not set");
+				_rootDir = PropsValues.LIFERAY_HOME + "/data/document_library";
 			}
 		}
 
@@ -456,7 +447,7 @@ public class UpgradeReport {
 				GetterUtil.getInteger(entry.substring(startIndex, endIndex)));
 		}
 
-		upgradeProcessMap = _sortByValue(upgradeProcessMap);
+		upgradeProcessMap = _sort(upgradeProcessMap);
 
 		int upgradeProcessesPrinted = 0;
 
@@ -477,7 +468,7 @@ public class UpgradeReport {
 		return sb.toString();
 	}
 
-	private Map<String, Integer> _sortByValue(Map<String, Integer> map) {
+	private Map<String, Integer> _sort(Map<String, Integer> map) {
 		Set<Map.Entry<String, Integer>> entrySet = map.entrySet();
 
 		Stream<Map.Entry<String, Integer>> entrySetStream = entrySet.stream();
@@ -512,7 +503,6 @@ public class UpgradeReport {
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeReport.class);
 
-	private String _dlStore;
 	private final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
 	private final Map<String, ArrayList<String>> _eventMessages =

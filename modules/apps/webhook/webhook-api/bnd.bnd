@@ -2,6 +2,7 @@ Bundle-Name: Liferay Webhook API
 Bundle-SymbolicName: com.liferay.webhook.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.webhook.constants,\
 	com.liferay.webhook.exception,\
 	com.liferay.webhook.model,\
 	com.liferay.webhook.service,\

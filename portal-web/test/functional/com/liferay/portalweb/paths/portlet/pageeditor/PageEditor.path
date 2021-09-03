@@ -33,6 +33,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COLLECTION_ITEM</td>
+	<td>xpath=(//div[contains(@id,'main-content')]//div[@class='row'])[${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COLLECTION_ITEM_AVERAGE_STAR</td>
 	<td>//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//div[contains(@class,'ratings-stars')]//*[name()='svg'][contains(@class,'ratings-stars-average-icon')]</td>
 	<td></td>

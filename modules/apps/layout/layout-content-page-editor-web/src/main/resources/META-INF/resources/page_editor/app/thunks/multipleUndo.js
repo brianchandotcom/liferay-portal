@@ -98,7 +98,10 @@ export default function multipleUndo({numberOfActions, store, type}) {
 					return undoAction({
 						action: undo,
 						store: updatedStore,
-					})(multipleUndoDispatch(undo.originalType || undo.type));
+					})(
+						multipleUndoDispatch(undo.originalType || undo.type),
+						() => updatedStore
+					);
 				});
 			}, Promise.resolve())
 			.then(() => {

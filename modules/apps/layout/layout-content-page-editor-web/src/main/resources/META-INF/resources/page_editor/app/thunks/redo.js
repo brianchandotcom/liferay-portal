@@ -36,7 +36,7 @@ export default function redo({store}) {
 		};
 
 		promise = promise.then(() =>
-			undoAction({action: lastRedo, store})(redoDispatch)
+			undoAction({action: lastRedo, store})(redoDispatch, () => store)
 		);
 	};
 }

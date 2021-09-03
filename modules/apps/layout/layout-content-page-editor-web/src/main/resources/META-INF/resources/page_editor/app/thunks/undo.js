@@ -36,7 +36,7 @@ export default function undo({store}) {
 		};
 
 		promise = promise.then(() =>
-			undoAction({action: lastUndo, store})(undoDispatch)
+			undoAction({action: lastUndo, store})(undoDispatch, () => store)
 		);
 	};
 }

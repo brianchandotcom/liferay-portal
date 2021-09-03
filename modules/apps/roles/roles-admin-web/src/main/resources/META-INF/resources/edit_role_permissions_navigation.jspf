@@ -26,6 +26,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 	<portlet:param name="tabs2" value="roles" />
 	<portlet:param name="redirect" value="<%= backURL %>" />
 	<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
+	<portlet:param name="accountRoleGroupScope" value="<%= String.valueOf(roleDisplayContext.isAccountRoleGroupScope()) %>" />
 </liferay-portlet:resourceURL>
 
 <liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="editPermissionsURL">
@@ -35,6 +36,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 	<portlet:param name="redirect" value="<%= backURL %>" />
 	<portlet:param name="backURL" value="<%= backURL %>" />
 	<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
+	<portlet:param name="accountRoleGroupScope" value="<%= String.valueOf(roleDisplayContext.isAccountRoleGroupScope()) %>" />
 </liferay-portlet:renderURL>
 
 <div class="lfr-permission-navigation-container menubar menubar-transparent menubar-vertical-expand-lg" id="<portlet:namespace />permissionNavigationContainer">
@@ -50,6 +52,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 				<portlet:param name="tabs1" value="roles" />
 				<portlet:param name="backURL" value="<%= backURL %>" />
 				<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
+				<portlet:param name="accountRoleGroupScope" value="<%= String.valueOf(roleDisplayContext.isAccountRoleGroupScope()) %>" />
 			</liferay-portlet:resourceURL>
 
 			<%
@@ -64,6 +67,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 				<portlet:param name="tabs1" value="roles" />
 				<portlet:param name="backURL" value="<%= backURL %>" />
 				<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
+				<portlet:param name="accountRoleGroupScope" value="<%= String.valueOf(roleDisplayContext.isAccountRoleGroupScope()) %>" />
 			</liferay-portlet:renderURL>
 
 			<li class="nav-item permission-navigation-item-summary <%= Validator.isNull(portletResource)? "selected" : "" %>">

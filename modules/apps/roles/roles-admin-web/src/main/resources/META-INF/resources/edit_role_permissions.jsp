@@ -46,6 +46,8 @@ if (Validator.isNull(redirect)) {
 	).setTabs2(
 		tabs2
 	).setParameter(
+		"accountRoleGroupScope", roleDisplayContext.isAccountRoleGroupScope()
+	).setParameter(
 		"roleId", role.getRoleId()
 	).setParameter(
 		"tabs3", tabs3

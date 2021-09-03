@@ -36,6 +36,8 @@ PortletURL permissionsAllURL = PortletURLBuilder.createRenderURL(
 ).setTabs2(
 	"roles"
 ).setParameter(
+	"accountRoleGroupScope", roleDisplayContext.isAccountRoleGroupScope()
+).setParameter(
 	"roleId", role.getRoleId()
 ).buildPortletURL();
 
@@ -172,6 +174,7 @@ for (int i = 0; i < results.size(); i++) {
 	editPermissionsResourceURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 	editPermissionsResourceURL.setParameter("redirect", permissionsAllURL.toString());
 	editPermissionsResourceURL.setParameter("portletResource", curPortletName);
+	editPermissionsResourceURL.setParameter("accountRoleGroupScope", String.valueOf(roleDisplayContext.isAccountRoleGroupScope()));
 
 	PortletURL editPermissionsURL = PortletURLBuilder.createRenderURL(
 		liferayPortletResponse
@@ -187,6 +190,8 @@ for (int i = 0; i < results.size(); i++) {
 		"define-permissions"
 	).setTabs2(
 		"roles"
+	).setParameter(
+		"accountRoleGroupScope", roleDisplayContext.isAccountRoleGroupScope()
 	).setParameter(
 		"roleId", role.getRoleId()
 	).buildPortletURL();

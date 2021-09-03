@@ -541,6 +541,12 @@ definition {
 		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 	}
 
+	macro viewAlertInfo {
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ALERT_DISMISSIBLE",
+			value1 = "${infoMessage}");
+	}
+
 	macro viewNoResultsMessage {
 		var key_noResultMessage = "${noResultMessage}";
 

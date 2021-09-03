@@ -274,8 +274,15 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 						continue;
 					}
 
-					_updateItemConfigValues(
-						currentViewportStyleJSONObject, newStylesJSONObject);
+					List<String> availableStyleNames =
+						CommonStylesUtil.getAvailableStyleNames();
+
+					for (String styleName : availableStyleNames) {
+						if (newStylesJSONObject.has(styleName)) {
+							currentViewportStyleJSONObject.put(
+								styleName, newStylesJSONObject.get(styleName));
+						}
+					}
 				}
 
 				viewportStyleJSONObjects.put(

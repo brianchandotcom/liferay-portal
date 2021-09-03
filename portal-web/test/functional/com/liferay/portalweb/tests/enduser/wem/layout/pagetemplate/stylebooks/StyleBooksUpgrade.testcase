@@ -17,7 +17,7 @@ definition {
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
-	@description = "This is a test for LPS-133395."
+	@description = "This is a test for LPS-131851. Can create Style Book entry after upgrading"
 	@priority = "4"
 	test AddStyleBookAfterUpgrade735 {
 		property data.archive.type = "data-archive-style-books";
@@ -27,11 +27,11 @@ definition {
 		Upgrade.addStyleBook();
 	}
 
-	@description = "This is a test for LPS-133395."
+	@description = "This is a test for LPS-131851. Can create Style Book entry after upgrading"
 	@priority = "4"
 	test AddStyleBookAfterUpgrade73101 {
 		property data.archive.type = "data-archive-style-books";
-		property database.types = "mariadb,mysql,postgresql";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10.1";
 
 		Upgrade.addStyleBook();

@@ -48,6 +48,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9132 | Test Summary: Individuals interest details has a tab that shows active pages"
 	@priority = "3"
 	test AssertIndividualsinterestActivePages {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: data doesn't appear on time
+		// AC Refactor ticket: LRAC-9152
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -93,6 +98,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9131 | Test Summary: Individuals interest details has a tab that shows inactive pages"
 	@priority = "3"
 	test AssertIndividualsInterestInactivePages {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: data doesn't appear on time
+		// AC Refactor ticket: LRAC-9151
 
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
@@ -136,6 +145,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8950 | Test Summary: Interests that are associated with the individual appear in the list"
 	@priority = "5"
 	test InterestsAssociatedWithIndividualAppearInList {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: data doesn't appear on time
+		// AC Refactor ticket: LRAC-9151
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}

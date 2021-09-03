@@ -12,9 +12,13 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="active" type="boolean" />
 		<field name="destinationName" type="String" />
-		<field name="destinationWebhookEventKeys" type="String" />
+		<field name="destinationWebhookEventKeys" type="String">
+			<hint name="max-length">150</hint>
+		</field>
 		<field name="name" type="String" />
 		<field name="secret" type="String" />
-		<field name="URL" type="String" />
+		<field name="URL" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 	</model>
 </model-hints>

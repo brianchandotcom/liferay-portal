@@ -5867,6 +5867,7 @@ war.path=${app.server.portal.dir}/</echo>
 				<and>
 					<equals arg1="${build.profile}" arg2="dxp" />
 					<or>
+						<contains string="${env.CI_TEST_SUITE}" substring="license" />
 						<equals arg1="${env.CI_TEST_SUITE}" arg2="portal-fixpack-release" />
 						<equals arg1="${env.CI_TEST_SUITE}" arg2="portal-hotfix-release" />
 						<equals arg1="${env.CI_TEST_SUITE}" arg2="portal-release" />

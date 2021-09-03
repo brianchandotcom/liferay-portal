@@ -108,7 +108,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				%>
 
 				<liferay-ui:search-container-column-text
-					cssClass="thumbnail-section"
+					cssClass="col-1 thumbnail-section"
 				>
 					<liferay-adaptive-media:img
 						class="img-fluid"

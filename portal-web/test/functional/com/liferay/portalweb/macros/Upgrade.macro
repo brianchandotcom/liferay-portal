@@ -452,15 +452,9 @@ definition {
 		}
 
 		task ("Assert the Style Books") {
-			AssertTextEquals(
-				key_styleBookTitle = "Test Style Book Name",
-				locator1 = "StyleBookEditor#CARD_TITLE",
-				value1 = "Test Style Book Name");
+			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Test Style Book Name");
 
-			AssertTextEquals(
-				key_styleBookTitle = "Test Style Book Name 2",
-				locator1 = "StyleBookEditor#CARD_TITLE",
-				value1 = "Test Style Book Name 2");
+			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Test Style Book Name 2");
 		}
 	}
 

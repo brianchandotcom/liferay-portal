@@ -27,7 +27,6 @@ import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.TextInfoFieldType;
-import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -315,11 +314,9 @@ public class JournalArticleInfoItemFieldValuesProvider
 						InfoItemDetailsProvider.class,
 						JournalArticle.class.getName());
 
-				InfoItemDetails infoItemDetails =
-					infoItemDetailsProvider.getInfoItemDetails(journalArticle);
-
 				httpServletRequest.setAttribute(
-					InfoDisplayWebKeys.INFO_ITEM_DETAILS, infoItemDetails);
+					InfoDisplayWebKeys.INFO_ITEM_DETAILS,
+					infoItemDetailsProvider.getInfoItemDetails(journalArticle));
 
 				for (InfoDisplayRequestAttributesContributor
 						infoDisplayRequestAttributesContributor :

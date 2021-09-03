@@ -308,7 +308,8 @@ public class CPContentHelperImpl implements CPContentHelper {
 		throws Exception {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
-			_cpDefinitionService.getDefaultImage(cpDefinitionId);
+			_cpDefinitionService.getDefaultImageCPAttachmentFileEntry(
+				cpDefinitionId);
 
 		if (cpAttachmentFileEntry != null) {
 			FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();

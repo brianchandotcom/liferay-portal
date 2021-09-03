@@ -220,7 +220,8 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	@Override
 	public String getDefaultImageFileURL() throws PortalException {
 		CPAttachmentFileEntry cpAttachmentFileEntry =
-			CPDefinitionLocalServiceUtil.getDefaultImage(getCPDefinitionId());
+			CPDefinitionLocalServiceUtil.getDefaultImageCPAttachmentFileEntry(
+				getCPDefinitionId());
 
 		if (cpAttachmentFileEntry == null) {
 			return CommerceMediaResolverUtil.getDefaultURL(getGroupId());
@@ -234,7 +235,8 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	@Override
 	public String getDefaultImageThumbnailSrc() throws Exception {
 		CPAttachmentFileEntry cpAttachmentFileEntry =
-			CPDefinitionLocalServiceUtil.getDefaultImage(getCPDefinitionId());
+			CPDefinitionLocalServiceUtil.getDefaultImageCPAttachmentFileEntry(
+				getCPDefinitionId());
 
 		if (cpAttachmentFileEntry == null) {
 			return CommerceMediaResolverUtil.getDefaultURL(getGroupId());

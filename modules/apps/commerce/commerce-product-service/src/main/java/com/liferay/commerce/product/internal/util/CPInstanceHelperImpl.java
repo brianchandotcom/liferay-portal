@@ -391,7 +391,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		if (cpAttachmentFileEntries.isEmpty()) {
 			CPAttachmentFileEntry cpAttachmentFileEntry =
-				_cpDefinitionService.getDefaultImage(
+				_cpDefinitionService.getDefaultImageCPAttachmentFileEntry(
 					cpInstance.getCPDefinitionId());
 
 			if (cpAttachmentFileEntry != null) {

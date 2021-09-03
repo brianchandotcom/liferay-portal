@@ -712,7 +712,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		long cpAttachmentFileEntryId = 0;
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
-			_cpDefinitionLocalService.getDefaultImage(
+			_cpDefinitionLocalService.getDefaultImageCPAttachmentFileEntry(
 				cpDefinition.getCPDefinitionId());
 
 		if (cpAttachmentFileEntry != null) {

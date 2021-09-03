@@ -119,8 +119,8 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		AMBackwardsCompatibilityHtmlContentTransformer.class);
 
 	private static final Pattern _pattern = Pattern.compile(
-		"<img\\s+(?:[^>]*\\s)*src=['\"]/documents/(\\d+)/(\\d+)/([^/?]+)" +
-			"(?:/([-0-9a-fA-F]+))?(?:\\?t=\\d+)?['\"][^>]*/>");
+		"<img\\s+(?:[^>]*\\s)*src=['\"](?:/?[^\\s]*)/documents/(\\d+)/(\\d+)" +
+			"/([^/?]+)(?:/([-0-9a-fA-F]+))?(?:\\?t=\\d+)?['\"][^>]*/>");
 
 	@Reference
 	private AMImageHTMLTagFactory _amImageHTMLTagFactory;

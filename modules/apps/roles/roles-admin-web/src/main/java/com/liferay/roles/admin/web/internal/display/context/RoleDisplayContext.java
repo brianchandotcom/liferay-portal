@@ -213,6 +213,10 @@ public class RoleDisplayContext {
 				ActionKeys.DEFINE_PERMISSIONS)) {
 
 			tabsNames.add("define-permissions");
+
+			if (role.getType() == RoleConstants.TYPE_ACCOUNT) {
+				tabsNames.add("define-group-scope-permissions");
+			}
 		}
 
 		if (_currentRoleTypeContributor.isAllowAssignMembers(role) &&
@@ -248,6 +252,25 @@ public class RoleDisplayContext {
 				backURL
 			).setTabs1(
 				"assignees"
+			).setParameter(
+				"roleId", role.getRoleId()
+			).buildString()
+		).put(
+			"define-group-scope-permissions",
+			() -> PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setMVCPath(
+				"/edit_role_permissions.jsp"
+			).setCMD(
+				Constants.VIEW
+			).setRedirect(
+				redirect
+			).setBackURL(
+				backURL
+			).setTabs1(
+				"define-group-scope-permissions"
+			).setParameter(
+				"accountRoleGroupScope", true
 			).setParameter(
 				"roleId", role.getRoleId()
 			).buildString()

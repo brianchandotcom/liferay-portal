@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBu
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -160,6 +161,18 @@ public class RoleDisplayContext {
 		return navigationItemList;
 	}
 
+	public boolean isAccountRoleGroupScope() {
+		if (_accountRoleGroupScope == null) {
+			_accountRoleGroupScope =
+				(_currentRoleTypeContributor.getType() ==
+					RoleConstants.TYPE_ACCOUNT) &&
+				ParamUtil.getBoolean(
+					_httpServletRequest, "accountRoleGroupScope");
+		}
+
+		return _accountRoleGroupScope;
+	}
+
 	public boolean isAutomaticallyAssigned(Role role) {
 		List<RoleTypeContributor> roleTypeContributors =
 			RoleTypeContributorRetrieverUtil.getRoleTypeContributors(
@@ -277,6 +290,7 @@ public class RoleDisplayContext {
 		"users", "sites", "organizations", "user-groups", "segments"
 	};
 
+	private Boolean _accountRoleGroupScope;
 	private final RoleTypeContributor _currentRoleTypeContributor;
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderResponse _renderResponse;

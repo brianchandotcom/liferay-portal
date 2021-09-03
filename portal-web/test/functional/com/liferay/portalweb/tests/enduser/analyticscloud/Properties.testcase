@@ -293,12 +293,35 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9104 | Test Summary: [AC] It is not allowed duplicated property name for a same data source or workspace"
-	@ignore = "true"
 	@priority = "3"
 	test NoDuplicatePropertiesName {
+		task ("View the checkbox of site entry is disabled") {
+			ACUtils.launchAC();
 
-		// TODO LRAC-9104 NoDuplicatePropertiesName pending implementation
+			ACNavigation.goToSettings();
 
+			ACSettings.goToProperties();
+		}
+
+		task ("Creating the first property and verifying it was created") {
+			ACProperties.addNewProperty(propertyName = "Name of property");
+
+			ACProperties.assertNewCreatedProperty(propertyName = "Name of property");
+		}
+
+		task ("Creating the second property and verifying it was created") {
+			ACSettings.goToProperties();
+
+			ACProperties.addNewProperty(propertyName = "Name of property");
+
+			ACProperties.assertNewCreatedProperty(propertyName = "Name of property (1)");
+		}
+
+		task ("Go back to the properties page and check the names in the table") {
+			ACSettings.goToProperties();
+
+			ACUtils.assertItemsName(itemList = "Name of property,Name of property (1)");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8145 | Test Summary: Owner can create a new property"

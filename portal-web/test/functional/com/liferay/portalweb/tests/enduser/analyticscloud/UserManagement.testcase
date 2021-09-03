@@ -223,12 +223,58 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9083 | Test Summary: [AC] Only admin or owner users are able to add properties on AC"
-	@ignore = "true"
 	@priority = "3"
 	test OnlyAdminOrOwnerUsersCanAddPropertiesOnAC {
+		var userList = "michelle.hoshi@faro.io,bryan.cheung@faro.io";
 
-		// TODO LRAC-9083 OnlyAdminOrOwnerUsersCanAddPropertiesOnAC
+		for (var userEmail : list "${userList}") {
+			task ("Logout AC and login as an admin/owner user") {
+				ACWorkspace.signOut();
 
+				ACLogin.loginAs(
+					emailAddress = "${userEmail}",
+					password = "test");
+			}
+
+			task ("Go To Settings then Go To Properties") {
+				ACWorkspace.openWorkspace();
+
+				ACNavigation.goToSettings();
+
+				ACSettings.goToProperties();
+			}
+
+			task ("Add a New Property and Assert The New Property was Created") {
+				ACProperties.addNewProperty(propertyName = "Name of property");
+
+				if ("${userEmail}" == "michelle.hoshi@faro.io") {
+					ACProperties.assertNewCreatedProperty(propertyName = "Name of property");
+				}
+				else {
+					ACProperties.assertNewCreatedProperty(propertyName = "Name of property (1)");
+				}
+			}
+		}
+
+		task ("Logout and Login as Member") {
+			ACWorkspace.signOut();
+
+			ACLogin.loginAs(
+				emailAddress = "corbin.murakami@faro.io",
+				password = "test");
+		}
+
+		task ("Go To Settings then Go To Properties") {
+			ACWorkspace.openWorkspace();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+		}
+
+		task ("Assert New Property Button is Not Present") {
+			AssertElementNotPresent(locator1 = "ACSettings#NEW_PROPERTY_BUTTON");
+		}
 	}
 
 	@description = "Automation ID: LRAC-9090 | Test Summary: Owner can add data sources"

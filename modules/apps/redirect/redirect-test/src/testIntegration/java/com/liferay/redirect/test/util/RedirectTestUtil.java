@@ -15,8 +15,6 @@
 package com.liferay.redirect.test.util;
 
 import com.liferay.petra.function.UnsafeBiConsumer;
-import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -27,35 +25,11 @@ import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-
-import java.util.Dictionary;
 
 /**
  * @author Alejandro Tardín
  */
 public class RedirectTestUtil {
-
-	public static void withMaximumNumberOfRedirectNotFoundEntries(
-			int maximumNumberOfRedirectNotFoundEntries,
-			UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		Dictionary<String, Object> dictionary =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"maximumNumberOfRedirectNotFoundEntries",
-				maximumNumberOfRedirectNotFoundEntries
-			).build();
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.redirect.internal.configuration." +
-						"RedirectConfiguration",
-					dictionary)) {
-
-			unsafeRunnable.run();
-		}
-	}
 
 	public static void withRegularUser(
 			UnsafeBiConsumer<User, Role, Exception> unsafeBiConsumer)

@@ -213,18 +213,17 @@ public class ListUtilCheck extends BaseCheck {
 			return;
 		}
 
-		String methodName = getMethodName(detailAST);
-
 		String variableName = getVariableName(detailAST);
 
 		if (Validator.isNull(variableName)) {
 			return;
 		}
 
+		String methodName = getMethodName(detailAST);
 		String variableTypeName = getVariableTypeName(
 			detailAST, variableName, false);
 
-		if (!variableTypeName.equals("List") || !methodName.equals("isEmpty")) {
+		if (!methodName.equals("isEmpty") || !variableTypeName.equals("List")) {
 			return;
 		}
 

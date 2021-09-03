@@ -1,6 +1,7 @@
 ## ListUtilCheck
 
 ### ListUtil.fromArray
+
 Use `ListUtil.fromArray` to simplify code, when possible:
 
 ```java
@@ -40,6 +41,7 @@ addUsers(
 ```
 
 ### ListUtil.isEmpty
+
 Use `ListUtil.isEmpty` to simplify code, when possible:
 
 ```java

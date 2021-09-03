@@ -21,6 +21,9 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.filter.InfoFilter;
+import com.liferay.info.filter.InfoFilterProvider;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererTracker;
 import com.liferay.info.pagination.Pagination;
@@ -117,7 +120,8 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		}
 
 		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
-			_getDefaultLayoutListRetrieverContext();
+			_getDefaultLayoutListRetrieverContext(
+				layoutListRetriever, listObjectReference);
 
 		int end = _collectionStyledLayoutStructureItem.getNumberOfItems();
 		int start = 0;
@@ -169,7 +173,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		}
 
 		_collectionCount = layoutListRetriever.getListCount(
-			listObjectReference, _getDefaultLayoutListRetrieverContext());
+			listObjectReference,
+			_getDefaultLayoutListRetrieverContext(
+				layoutListRetriever, listObjectReference));
 
 		return _collectionCount;
 	}
@@ -383,7 +389,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	}
 
 	private DefaultLayoutListRetrieverContext
-		_getDefaultLayoutListRetrieverContext() {
+		_getDefaultLayoutListRetrieverContext(
+			LayoutListRetriever<?, ListObjectReference> layoutListRetriever,
+			ListObjectReference listObjectReference) {
 
 		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
 			new DefaultLayoutListRetrieverContext();
@@ -396,7 +404,8 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			).orElse(
 				_httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM)
 			));
-		defaultLayoutListRetrieverContext.setFilterValues(_getFilterValues());
+		defaultLayoutListRetrieverContext.setInfoFilters(
+			_getInfoFilters(layoutListRetriever, listObjectReference));
 		defaultLayoutListRetrieverContext.setHttpServletRequest(
 			_httpServletRequest);
 		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
@@ -463,6 +472,34 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		}
 
 		return filterValues;
+	}
+
+	private Map<String, InfoFilter> _getInfoFilters(
+		LayoutListRetriever<?, ListObjectReference> layoutListRetriever,
+		ListObjectReference listObjectReference) {
+
+		Map<String, InfoFilter> infoFilters = new HashMap<>();
+
+		InfoItemServiceTracker infoItemServiceTracker =
+			ServletContextUtil.getInfoItemServiceTracker();
+
+		Map<String, String[]> filterValues = _getFilterValues();
+
+		for (InfoFilter infoFilter :
+				layoutListRetriever.getSupportedInfoFilters(
+					listObjectReference)) {
+
+			Class<?> clazz = infoFilter.getClass();
+
+			InfoFilterProvider<?> infoFilterProvider =
+				infoItemServiceTracker.getFirstInfoItemService(
+					InfoFilterProvider.class, clazz.getName());
+
+			infoFilters.put(
+				clazz.getName(), infoFilterProvider.create(filterValues));
+		}
+
+		return infoFilters;
 	}
 
 	private LayoutListRetriever<?, ListObjectReference>

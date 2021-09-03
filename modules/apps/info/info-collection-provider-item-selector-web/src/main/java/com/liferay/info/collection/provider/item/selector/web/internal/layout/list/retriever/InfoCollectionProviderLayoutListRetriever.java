@@ -23,7 +23,6 @@ import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.filter.InfoFilter;
-import com.liferay.info.filter.InfoFilterProvider;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemIdentifier;
@@ -42,7 +41,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -123,15 +121,10 @@ public class InfoCollectionProviderLayoutListRetriever
 		collectionQuery.setPagination(paginationOptional.orElse(null));
 
 		if (infoCollectionProvider instanceof FilteredInfoCollectionProvider) {
-			FilteredInfoCollectionProvider<Object>
-				filteredInfoCollectionProvider =
-					(FilteredInfoCollectionProvider<Object>)
-						infoCollectionProvider;
+			Optional<Map<String, InfoFilter>> infoFiltersOptional =
+				layoutListRetrieverContext.getInfoFiltersOptional();
 
-			collectionQuery.setInfoFilters(
-				_getInfoFilters(
-					filteredInfoCollectionProvider,
-					layoutListRetrieverContext));
+			collectionQuery.setInfoFilters(infoFiltersOptional.orElse(null));
 		}
 
 		InfoPage<?> infoPage = infoCollectionProvider.getCollectionInfoPage(
@@ -199,15 +192,10 @@ public class InfoCollectionProviderLayoutListRetriever
 		}
 
 		if (infoCollectionProvider instanceof FilteredInfoCollectionProvider) {
-			FilteredInfoCollectionProvider<Object>
-				filteredInfoCollectionProvider =
-					(FilteredInfoCollectionProvider<Object>)
-						infoCollectionProvider;
+			Optional<Map<String, InfoFilter>> infoFiltersOptional =
+				layoutListRetrieverContext.getInfoFiltersOptional();
 
-			collectionQuery.setInfoFilters(
-				_getInfoFilters(
-					filteredInfoCollectionProvider,
-					layoutListRetrieverContext));
+			collectionQuery.setInfoFilters(infoFiltersOptional.orElse(null));
 		}
 
 		InfoPage<?> infoPage = infoCollectionProvider.getCollectionInfoPage(
@@ -287,37 +275,6 @@ public class InfoCollectionProviderLayoutListRetriever
 
 		return _assetEntryLocalService.fetchEntry(
 			className, classPKInfoItemIdentifier.getClassPK());
-	}
-
-	private Map<String, InfoFilter> _getInfoFilters(
-		FilteredInfoCollectionProvider<Object> filteredInfoCollectionProvider,
-		LayoutListRetrieverContext layoutListRetrieverContext) {
-
-		Optional<Map<String, String[]>> filterValuesOptional =
-			layoutListRetrieverContext.getFilterValues();
-
-		Map<String, String[]> filterValues = filterValuesOptional.orElse(null);
-
-		if (filterValues == null) {
-			return Collections.emptyMap();
-		}
-
-		Map<String, InfoFilter> infoFilters = new HashMap<>();
-
-		for (InfoFilter infoFilter :
-				filteredInfoCollectionProvider.getSupportedInfoFilters()) {
-
-			Class<?> clazz = infoFilter.getClass();
-
-			InfoFilterProvider<?> infoFilterProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoFilterProvider.class, clazz.getName());
-
-			infoFilters.put(
-				clazz.getName(), infoFilterProvider.create(filterValues));
-		}
-
-		return infoFilters;
 	}
 
 	private String _getModelClassName(Object contextObject) {

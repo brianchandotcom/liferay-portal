@@ -1,0 +1,30 @@
+$primary-dark: var(--btn-link-color, #295ccc);
+$primary-default: var(--primary-raylife, #295ccc);
+$primary-default-light: var(--primary-light-raylife, #4c85ff);
+$primary-light: var(--gray-300, #e1ebff);
+
+$secondary-dark: var(--btn-secondary-raylife-color, #f4870b);
+$secondary-default: var(--secondary-raylife, #f69d37);
+
+$neutral-black: var(--black, #09101d);
+$neutral-darker: var(--dark, #2f313d);
+$neutral-dark: var(--gray-600, #606167);
+$neutral-default: var(--gray-500, #7d7e85);
+$neutral-light: var(--gray-400, #98999b);
+
+$background: var(--body-bg, #fff);
+$foreground: var(--light, #f9f9f9);
+
+$error-default: var(--danger, #ea6136);
+$error-light: var(--danger-background, #ffe4dc);
+
+$font-family: var(
+	--font-family-sans-serif,
+	'Segoe UI',
+	Tahoma,
+	Geneva,
+	Verdana,
+	sans-serif
+);
+
+$card-padding: 3rem;

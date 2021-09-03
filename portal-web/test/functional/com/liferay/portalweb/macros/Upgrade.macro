@@ -2862,10 +2862,14 @@ definition {
 
 			MobileDevice.previewPG(deviceType = "smartphone");
 		}
-		task ("View the Card fragments shown on content page at mobile mode") {
-			for (var n : list "1,2,3") {
-				AssertVisible(locator1 = "xpath=(//div[contains(@class,'col-md')])[${n}]//div[contains(@class,'component-card')]");
-			}
+		task ("View Card fragment width is same as column width at mobile mode") {
+			var columnWidth	= selenium.getElementWidth("//div[contains(@class,'flex-row')]");
+
+			var cardFragmentWidth = selenium.getElementWidth("xpath=(//div[contains(@class,'col-md')])[2]");
+
+			TestUtils.assertEquals(
+				actual = "${cardFragmentWidth}",
+				expected = "${columnWidth}");
 		}
 	}
 

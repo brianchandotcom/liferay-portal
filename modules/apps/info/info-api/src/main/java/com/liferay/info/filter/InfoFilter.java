@@ -18,4 +18,7 @@ package com.liferay.info.filter;
  * @author Eudaldo Alonso
  */
 public interface InfoFilter {
+
+	public String getFilterTypeName();
+
 }

@@ -331,6 +331,14 @@ public class CommerceOrderTypeLocalServiceUtil {
 		return getService().getCommerceOrderTypes(start, end);
 	}
 
+	public static List<CommerceOrderType> getCommerceOrderTypes(
+			String className, long classPK, boolean active, int start, int end)
+		throws PortalException {
+
+		return getService().getCommerceOrderTypes(
+			className, classPK, active, start, end);
+	}
+
 	/**
 	 * Returns the number of commerce order types.
 	 *
@@ -338,6 +346,14 @@ public class CommerceOrderTypeLocalServiceUtil {
 	 */
 	public static int getCommerceOrderTypesCount() {
 		return getService().getCommerceOrderTypesCount();
+	}
+
+	public static int getCommerceOrderTypesCount(
+			String className, long classPK, boolean active)
+		throws PortalException {
+
+		return getService().getCommerceOrderTypesCount(
+			className, classPK, active);
 	}
 
 	public static

@@ -368,6 +368,17 @@ public class CommerceOrderTypeLocalServiceWrapper
 		return _commerceOrderTypeLocalService.getCommerceOrderTypes(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrderType>
+			getCommerceOrderTypes(
+				String className, long classPK, boolean active, int start,
+				int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderTypeLocalService.getCommerceOrderTypes(
+			className, classPK, active, start, end);
+	}
+
 	/**
 	 * Returns the number of commerce order types.
 	 *
@@ -376,6 +387,15 @@ public class CommerceOrderTypeLocalServiceWrapper
 	@Override
 	public int getCommerceOrderTypesCount() {
 		return _commerceOrderTypeLocalService.getCommerceOrderTypesCount();
+	}
+
+	@Override
+	public int getCommerceOrderTypesCount(
+			String className, long classPK, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderTypeLocalService.getCommerceOrderTypesCount(
+			className, classPK, active);
 	}
 
 	@Override

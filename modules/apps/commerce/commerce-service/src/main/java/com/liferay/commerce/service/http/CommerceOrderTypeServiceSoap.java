@@ -183,6 +183,46 @@ public class CommerceOrderTypeServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceOrderTypeSoap[]
+			getCommerceOrderTypes(
+				String className, long classPK, boolean active, int start,
+				int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceOrderType>
+				returnValue =
+					CommerceOrderTypeServiceUtil.getCommerceOrderTypes(
+						className, classPK, active, start, end);
+
+			return com.liferay.commerce.model.CommerceOrderTypeSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getCommerceOrderTypesCount(
+			String className, long classPK, boolean active)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CommerceOrderTypeServiceUtil.getCommerceOrderTypesCount(
+					className, classPK, active);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceOrderTypeSoap
 			updateCommerceOrderType(
 				String externalReferenceCode, long commerceOrderTypeId,

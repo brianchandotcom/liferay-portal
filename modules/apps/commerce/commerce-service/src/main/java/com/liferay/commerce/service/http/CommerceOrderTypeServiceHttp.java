@@ -272,6 +272,91 @@ public class CommerceOrderTypeServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceOrderType>
+			getCommerceOrderTypes(
+				HttpPrincipal httpPrincipal, String className, long classPK,
+				boolean active, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceOrderTypeServiceUtil.class, "getCommerceOrderTypes",
+				_getCommerceOrderTypesParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, className, classPK, active, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.model.CommerceOrderType>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getCommerceOrderTypesCount(
+			HttpPrincipal httpPrincipal, String className, long classPK,
+			boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceOrderTypeServiceUtil.class,
+				"getCommerceOrderTypesCount",
+				_getCommerceOrderTypesCountParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, className, classPK, active);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceOrderType
 			updateCommerceOrderType(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
@@ -290,7 +375,7 @@ public class CommerceOrderTypeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceOrderTypeServiceUtil.class, "updateCommerceOrderType",
-				_updateCommerceOrderTypeParameterTypes5);
+				_updateCommerceOrderTypeParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, commerceOrderTypeId, nameMap,
@@ -338,7 +423,7 @@ public class CommerceOrderTypeServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceOrderTypeServiceUtil.class,
 				"updateCommerceOrderTypeExternalReferenceCode",
-				_updateCommerceOrderTypeExternalReferenceCodeParameterTypes6);
+				_updateCommerceOrderTypeExternalReferenceCodeParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, commerceOrderTypeId);
@@ -392,7 +477,13 @@ public class CommerceOrderTypeServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _getCommerceOrderTypeParameterTypes4 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateCommerceOrderTypeParameterTypes5 =
+	private static final Class<?>[] _getCommerceOrderTypesParameterTypes5 =
+		new Class[] {
+			String.class, long.class, boolean.class, int.class, int.class
+		};
+	private static final Class<?>[] _getCommerceOrderTypesCountParameterTypes6 =
+		new Class[] {String.class, long.class, boolean.class};
+	private static final Class<?>[] _updateCommerceOrderTypeParameterTypes7 =
 		new Class[] {
 			String.class, long.class, java.util.Map.class, java.util.Map.class,
 			boolean.class, int.class, int.class, int.class, int.class,
@@ -401,7 +492,7 @@ public class CommerceOrderTypeServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
-		_updateCommerceOrderTypeExternalReferenceCodeParameterTypes6 =
+		_updateCommerceOrderTypeExternalReferenceCodeParameterTypes8 =
 			new Class[] {String.class, long.class};
 
 }

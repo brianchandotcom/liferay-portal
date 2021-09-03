@@ -288,6 +288,11 @@ public interface CommerceOrderTypeLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrderType> getCommerceOrderTypes(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderType> getCommerceOrderTypes(
+			String className, long classPK, boolean active, int start, int end)
+		throws PortalException;
+
 	/**
 	 * Returns the number of commerce order types.
 	 *
@@ -295,6 +300,11 @@ public interface CommerceOrderTypeLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceOrderTypesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrderTypesCount(
+			String className, long classPK, boolean active)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

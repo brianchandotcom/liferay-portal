@@ -91,6 +91,26 @@ public class CommerceOrderTypeServiceWrapper
 			commerceOrderTypeId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrderType>
+			getCommerceOrderTypes(
+				String className, long classPK, boolean active, int start,
+				int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderTypeService.getCommerceOrderTypes(
+			className, classPK, active, start, end);
+	}
+
+	@Override
+	public int getCommerceOrderTypesCount(
+			String className, long classPK, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderTypeService.getCommerceOrderTypesCount(
+			className, classPK, active);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

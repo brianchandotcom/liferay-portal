@@ -17,6 +17,7 @@ package com.liferay.commerce.service;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -84,6 +85,22 @@ public class CommerceOrderTypeServiceUtil {
 		throws PortalException {
 
 		return getService().getCommerceOrderType(commerceOrderTypeId);
+	}
+
+	public static List<CommerceOrderType> getCommerceOrderTypes(
+			String className, long classPK, boolean active, int start, int end)
+		throws PortalException {
+
+		return getService().getCommerceOrderTypes(
+			className, classPK, active, start, end);
+	}
+
+	public static int getCommerceOrderTypesCount(
+			String className, long classPK, boolean active)
+		throws PortalException {
+
+		return getService().getCommerceOrderTypesCount(
+			className, classPK, active);
 	}
 
 	/**

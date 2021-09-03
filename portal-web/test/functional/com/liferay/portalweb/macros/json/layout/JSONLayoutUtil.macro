@@ -31,6 +31,9 @@ definition {
 		if ("${widgetName}" == "Alerts") {
 			var portletId = "com_liferay_announcements_web_portlet_AlertsPortlet";
 		}
+		else if ("${widgetName}" == "Account Management") {
+			var portletId = "com_liferay_account_admin_web_internal_portlet_AccountEntriesManagementPortlet";
+		}
 		else if ("${widgetName}" == "Announcements") {
 			var portletId = "com_liferay_announcements_web_portlet_AnnouncementsPortlet";
 		}

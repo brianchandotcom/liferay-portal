@@ -125,6 +125,30 @@ definition {
 		AssertElementPresent(locator1 = "Search#SEARCH_INFO");
 	}
 
+	macro setUserPassword {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${accountUser}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Portlet#HEADER",
+			value1 = "Edit User");
+
+		UserNavigator.gotoPassword();
+
+		Type(
+			locator1 = "TextInput#NEW_PASSWORD",
+			value1 = "${accountUserPassword}");
+
+		Type(
+			locator1 = "TextInput#ENTER_AGAIN",
+			value1 = "${accountUserPassword}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro viewEntryAccounts {
 		AssertElementPresent(
 			key_columnName = "lfr-accounts-column",

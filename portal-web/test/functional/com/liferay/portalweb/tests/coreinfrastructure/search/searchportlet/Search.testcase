@@ -2340,6 +2340,8 @@ definition {
 
 	@priority = "5"
 	test ViewMultipleFacetURLs {
+		property test.name.skip.portal.instance = "Search#ViewMultipleFacetURLs";
+
 		var searchPage = "Search Page";
 
 		JSONCategory.addVocabulary(

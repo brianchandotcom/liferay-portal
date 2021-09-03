@@ -37,7 +37,9 @@ import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalServiceUtil;
 
@@ -171,14 +173,19 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 					infoFieldSet.getLabel(_themeDisplay.getLocale()));
 
 			for (InfoField<?> infoField : infoFieldSet.getAllInfoFields()) {
-				InfoFieldType infoFieldType = infoField.getInfoFieldType();
+				if (!StringUtil.startsWith(
+						infoField.getName(),
+						PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 
-				templateVariableGroup.addFieldVariable(
-					infoField.getLabel(_themeDisplay.getLocale()),
-					TemplateNode.class, infoField.getName(),
-					infoField.getLabel(_themeDisplay.getLocale()),
-					infoFieldType.getName(), infoField.isMultivalued(),
-					_templateVariableCodeHandler);
+					InfoFieldType infoFieldType = infoField.getInfoFieldType();
+
+					templateVariableGroup.addFieldVariable(
+						infoField.getLabel(_themeDisplay.getLocale()),
+						TemplateNode.class, infoField.getName(),
+						infoField.getLabel(_themeDisplay.getLocale()),
+						infoFieldType.getName(), infoField.isMultivalued(),
+						_templateVariableCodeHandler);
+				}
 			}
 
 			templateVariableGroups.add(templateVariableGroup);

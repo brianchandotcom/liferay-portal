@@ -23,12 +23,57 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9093 | Test Summary: Admin can add data sources"
-	@ignore = "true"
 	@priority = "4"
 	test AdminCanAddDataSources {
+		task ("Logout AC and login as an admin user") {
+			ACWorkspace.signOut();
 
-		// TODO LRAC-9093 AdminCanAddDataSources
+			ACLogin.loginAs(
+				emailAddress = "michelle.hoshi@faro.io",
+				password = "test");
+		}
 
+		task ("Go to settings, data source, take token and launch dxp") {
+			ACWorkspace.openWorkspace();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDataSources();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+
+			ACUtils.launchDXP();
+		}
+
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+
+			ACUtils.launchAC();
+		}
+
+		task ("Login in AC, go to settings then go to data sources") {
+			ACWorkspace.signOut();
+
+			ACLogin.loginAs(
+				emailAddress = "michelle.hoshi@faro.io",
+				password = "test");
+
+			ACWorkspace.openWorkspace();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDataSources();
+		}
+
+		task ("Assert that a data source is searchable and found") {
+			ACUtils.searchBar(searchItem = "${dataSource}");
+
+			ACNavigation.openItem(itemName = "${dataSource}");
+
+			ACSettings.assertDataSourceStatus(status = "Active");
+		}
 	}
 
 	@description = "Automation ID: LRAC-9095 | Test Summary: Admin can change user permissions"

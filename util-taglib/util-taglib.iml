@@ -10,6 +10,7 @@
 		</content>
 		<orderEntry type="inheritedJdk" />
 		<orderEntry type="sourceFolder" forTests="false" />
+		<orderEntry type="module" module-name="osgi-service-tracker-collections" scope="PROVIDED" />
 		<orderEntry type="module" module-name="petra-concurrent" scope="PROVIDED" />
 		<orderEntry type="module" module-name="petra-content" scope="PROVIDED" />
 		<orderEntry type="module" module-name="petra-encryptor" scope="PROVIDED" />
@@ -31,6 +32,7 @@
 		<orderEntry type="module" module-name="petra-xml" scope="PROVIDED" />
 		<orderEntry type="module" module-name="portal-kernel" scope="PROVIDED" />
 		<orderEntry type="module" module-name="registry-api" />
+		<orderEntry type="module" module-name="registry-impl" scope="PROVIDED" />
 		<orderEntry type="module" module-name="util-java" />
 		<orderEntry type="library" scope="PROVIDED" name="development" level="project" />
 		<orderEntry type="library" scope="PROVIDED" name="global" level="project" />

@@ -21,6 +21,12 @@
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
+					<label>modules\core\osgi-service-tracker-collections\src\main\java</label>
+					<type>java</type>
+					<location>modules/core/osgi-service-tracker-collections/src/main/java</location>
+					<encoding>UTF-8</encoding>
+				</source-folder>
+				<source-folder>
 					<label>modules\apps\petra\petra-content\src\main\java</label>
 					<type>java</type>
 					<location>modules/apps/petra/petra-content/src/main/java</location>
@@ -138,6 +144,12 @@
 					<label>modules\core\registry-api\src\main\java</label>
 					<type>java</type>
 					<location>modules/core/registry-api/src/main/java</location>
+					<encoding>UTF-8</encoding>
+				</source-folder>
+				<source-folder>
+					<label>modules\core\registry-impl\src\main\java</label>
+					<type>java</type>
+					<location>modules/core/registry-impl/src/main/java</location>
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>

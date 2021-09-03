@@ -262,4 +262,48 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9150 | Test Summary: Information banners should not be stacked after changing a time zone"
+	@priority = "5"
+	test ViewOnlyOneInformationBannerShownAfterChangeTimezone {
+		task ("Navigate to Workspace Settings") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToWorkspace();
+		}
+
+		task ("Change the timezone to Log Angeles of United States") {
+			ACWorkspace.configureWorkspaceSettings(
+				timezone = "United States",
+				timezoneId = "UTC-07:00 Pacific Time (America/Los Angeles)");
+
+			ACUtils.waitForLoading();
+		}
+
+		task ("Refresh the page") {
+			Refresh();
+		}
+
+		task ("View the information banner") {
+			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC-07:00 Pacific Time");
+		}
+
+		task ("Change the timezone to Shanghai of China") {
+			ACWorkspace.configureWorkspaceSettings(
+				timezone = "China",
+				timezoneId = "UTC+08:00 China Time (Asia/Shanghai)");
+
+			ACUtils.waitForLoading();
+		}
+
+		task ("Refresh the page") {
+			Refresh();
+		}
+
+		task ("View only one information banner shown") {
+			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC+08:00 China Time");
+
+			AssertElementNotPresent(locator1 = "Message#INFO_2");
+		}
+	}
+
 }

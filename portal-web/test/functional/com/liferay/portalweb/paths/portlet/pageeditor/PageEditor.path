@@ -149,6 +149,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COLLECTION_FILTER_SEARCH_FIELD</td>
+	<td>xpath=(//input[contains(@id,'keywordsInput')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COLLECTION_FILTER_SOURCE_LABEL_INVISIBLE</td>
 	<td>//div[.//button[contains(@class,'dropdown-toggle')]]//p[contains(@class,'font-weight-bold')][normalize-space(text())='${sourceLabel}'][contains(@class,'sr-only')]</td>
 	<td></td>

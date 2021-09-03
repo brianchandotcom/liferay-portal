@@ -701,6 +701,35 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status orderStatusInfo;
 
+	@DecimalMin("0")
+	@Schema
+	public Long getOrderTypeId() {
+		return orderTypeId;
+	}
+
+	public void setOrderTypeId(Long orderTypeId) {
+		this.orderTypeId = orderTypeId;
+	}
+
+	@JsonIgnore
+	public void setOrderTypeId(
+		UnsafeSupplier<Long, Exception> orderTypeIdUnsafeSupplier) {
+
+		try {
+			orderTypeId = orderTypeIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long orderTypeId;
+
 	@Schema
 	public String getPaymentMethod() {
 		return paymentMethod;
@@ -3172,6 +3201,16 @@ public class Order implements Serializable {
 			sb.append("\"orderStatusInfo\": ");
 
 			sb.append(String.valueOf(orderStatusInfo));
+		}
+
+		if (orderTypeId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"orderTypeId\": ");
+
+			sb.append(orderTypeId);
 		}
 
 		if (paymentMethod != null) {

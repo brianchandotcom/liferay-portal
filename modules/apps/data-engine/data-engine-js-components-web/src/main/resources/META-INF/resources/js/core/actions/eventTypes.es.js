@@ -65,26 +65,6 @@ const LANGUAGE = {
 	DELETE: 'language_delete',
 };
 
-/**
- * Event mapping for compatibility with events for
- * the LayoutProvider component.
- */
-export const MAPPED_EVENT_TYPES = {
-	[DND.MOVE]: 'fieldMoved',
-	[DND.RESIZE]: 'columnResized',
-	[FIELD_SET.ADD]: 'fieldSetAdded',
-	[FIELD.ADD]: 'fieldAdded',
-	[FIELD.BLUR]: 'fieldBlurred',
-	[FIELD.CHANGE]: 'fieldEdited',
-	[FIELD.CLICK]: 'fieldClicked',
-	[FIELD.DELETE]: 'fieldDeleted',
-	[FIELD.DUPLICATE]: 'fieldDuplicated',
-	[FIELD.EVALUATE]: 'focusedFieldEvaluationEnded',
-	[FIELD.HOVER]: 'fieldHovered',
-	[PAGE.VALIDATION_FAILED]: 'pageValidationFailed',
-	[SECTION.ADD]: 'sectionAdded',
-};
-
 export const EVENT_TYPES = {
 	...LEGACY_EVENTS,
 	DATA_DEFINITION,

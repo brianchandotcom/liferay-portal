@@ -36,7 +36,7 @@ export {PagesVisitor} from './utils/visitors.es';
 
 // Form/Data Engine Core
 
-export {EVENT_TYPES, MAPPED_EVENT_TYPES} from './core/actions/eventTypes.es';
+export {EVENT_TYPES} from './core/actions/eventTypes.es';
 export {Field} from './core/components/Field/Field.es';
 export {FieldStateless} from './core/components/Field/FieldStateless.es';
 export * as DefaultVariant from './core/components/PageRenderer/DefaultVariant.es';
@@ -59,9 +59,5 @@ export {EVENT_TYPES as FORM_EVENT_TYPES} from './custom/form/eventTypes.es';
 
 // Containers
 
-export {
-	FormFieldSettings,
-	FormFieldSettingsAdapter,
-} from './custom/form/FormFieldSettings.es';
+export {FormFieldSettings} from './custom/form/FormFieldSettings.es';
 export {FormView} from './custom/form/FormView.es';
-export {default as LegacyFormBuilder} from './custom/form/LegacyFormBuilder.es';

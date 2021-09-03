@@ -12,8 +12,7 @@
  * details.
  */
 
-import {ClayIconSpriteContext} from '@clayui/icon';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 
 import {EVENT_TYPES as CORE_EVENT_TYPES} from '../../core/actions/eventTypes.es';
 import {INITIAL_CONFIG_STATE} from '../../core/config/initialConfigState.es';
@@ -27,9 +26,7 @@ import {
 	pageValidationReducer,
 	pagesStructureReducer,
 } from '../../core/reducers/index.es';
-import {getConnectedReactComponentAdapter} from '../../utils/ReactComponentAdapter.es';
 import {parseProps} from '../../utils/parseProps.es';
-import {Form} from './FormView.es';
 import {EVENT_TYPES} from './eventTypes.es';
 import {
 	formBuilderReducer,
@@ -153,25 +150,3 @@ export const FormFieldSettings = ({children, onAction, ...otherProps}) => {
 };
 
 FormFieldSettings.displayName = 'FormFieldSettings';
-
-/**
- * This component is temporary and for exclusive use for Sidebar
- * in Metal.js, this creates a form for editing the properties
- * of a field in Form Builder.
- */
-export const FormFieldSettingsAdapter = getConnectedReactComponentAdapter(
-	React.forwardRef(({instance, spritemap, ...otherProps}, ref) => {
-		const defaultRef = useRef(null);
-
-		return (
-			<ClayIconSpriteContext.Provider value={spritemap}>
-				<FormFieldSettings
-					{...otherProps}
-					onAction={({payload, type}) => instance.emit(type, payload)}
-				>
-					<Form ref={ref ?? defaultRef} />
-				</FormFieldSettings>
-			</ClayIconSpriteContext.Provider>
-		);
-	})
-);

@@ -31,33 +31,26 @@ import org.json.JSONObject;
  */
 public class JenkinsStopBuildUtil {
 
-	public static void stopBuild(
-			String buildURL, String username, String password)
-		throws Exception {
+	public static void stopBuild(String buildURL) throws Exception {
+		_stopDownstreamBuilds(buildURL);
 
-		_stopDownstreamBuilds(buildURL, username, password);
-
-		_stopBuild(buildURL, username, password);
+		_stopBuild(buildURL);
 	}
 
-	public static void stopBuild(
-			TopLevelBuild topLevelBuild, String username, String password)
-		throws Exception {
+	public static void stopBuild(TopLevelBuild topLevelBuild) throws Exception {
+		stopDownstreamBuilds(topLevelBuild);
 
-		stopDownstreamBuilds(topLevelBuild, username, password);
-
-		_stopBuild(topLevelBuild, username, password);
+		_stopBuild(topLevelBuild);
 	}
 
-	public static void stopDownstreamBuilds(
-			TopLevelBuild topLevelBuild, String username, String password)
+	public static void stopDownstreamBuilds(TopLevelBuild topLevelBuild)
 		throws Exception {
 
 		List<Build> downstreamBuilds = topLevelBuild.getDownstreamBuilds(
 			"running");
 
 		for (Build downstreamBuild : downstreamBuilds) {
-			_stopBuild(downstreamBuild, username, password);
+			_stopBuild(downstreamBuild);
 		}
 	}
 
@@ -95,17 +88,11 @@ public class JenkinsStopBuildUtil {
 		return downstreamURLs;
 	}
 
-	private static void _stopBuild(
-			Build build, String username, String password)
-		throws Exception {
-
-		_stopBuild(build.getBuildURL(), username, password);
+	private static void _stopBuild(Build build) throws Exception {
+		_stopBuild(build.getBuildURL());
 	}
 
-	private static void _stopBuild(
-			String buildURL, String username, String password)
-		throws Exception {
-
+	private static void _stopBuild(String buildURL) throws Exception {
 		String normalizedBuildURL = JenkinsResultsParserUtil.fixURL(
 			JenkinsResultsParserUtil.getLocalURL(buildURL));
 
@@ -119,6 +106,18 @@ public class JenkinsStopBuildUtil {
 				(HttpURLConnection)urlObject.openConnection();
 
 			httpConnection.setRequestMethod("POST");
+
+			String username = JenkinsResultsParserUtil.getBuildProperty(
+				"jenkins.admin.user.name");
+
+			String password = JenkinsResultsParserUtil.getBuildProperty(
+				"jenkins.admin.user.token");
+
+			if (normalizedBuildURL.contains("test-1-1")) {
+				password = JenkinsResultsParserUtil.getBuildProperty(
+					"jenkins.admin.user.password");
+			}
+
 			httpConnection.setRequestProperty(
 				"Authorization",
 				"Basic " + encodeAuthorizationFields(username, password));
@@ -130,14 +129,13 @@ public class JenkinsStopBuildUtil {
 		}
 	}
 
-	private static void _stopDownstreamBuilds(
-			String buildURL, String username, String password)
+	private static void _stopDownstreamBuilds(String buildURL)
 		throws Exception {
 
 		List<String> downstreamURLs = _getDownstreamURLs(buildURL);
 
 		for (String downstreamURL : downstreamURLs) {
-			_stopBuild(downstreamURL, username, password);
+			_stopBuild(downstreamURL);
 		}
 	}
 

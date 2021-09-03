@@ -86,17 +86,31 @@ public class BatchPlannerPlanManagementToolbarDisplayContext
 	@Override
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addDropdownItem(
-			dropdownItem -> dropdownItem.setLabel(
-				LanguageUtil.get(httpServletRequest, "export-file"))
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCRenderCommandName(
+						"/batch_planner/edit_export_batch_planner_plan"
+					).setBackURL(
+						String.valueOf(liferayPortletResponse.createRenderURL())
+					).setNavigation(
+						"export"
+					).buildPortletURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "export-file"));
+			}
 		).addDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
 					PortletURLBuilder.createRenderURL(
 						liferayPortletResponse
 					).setMVCRenderCommandName(
-						"/batch_planner/edit_batch_planner_plan"
+						"/batch_planner/edit_import_batch_planner_plan"
 					).setBackURL(
 						String.valueOf(liferayPortletResponse.createRenderURL())
+					).setNavigation(
+						"import"
 					).buildPortletURL());
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "import-file"));

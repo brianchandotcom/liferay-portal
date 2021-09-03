@@ -12,10 +12,8 @@
  * details.
  */
 
-import {useEventListener} from '@liferay/frontend-js-react-web';
-import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 
 import {Editor} from './Editor';
 
@@ -34,15 +32,6 @@ const ClassicEditor = React.forwardRef(
 		ref
 	) => {
 		const editorRef = useRef();
-
-		const [toolbarSet, setToolbarSet] = useState(initialToolbarSet);
-
-		const getConfig = () => {
-			return {
-				toolbar: toolbarSet,
-				...editorConfig,
-			};
-		};
 
 		const getHTML = useCallback(() => {
 			let data = contents;
@@ -95,10 +84,6 @@ const ClassicEditor = React.forwardRef(
 		);
 
 		useEffect(() => {
-			setToolbarSet(initialToolbarSet);
-		}, [initialToolbarSet]);
-
-		useEffect(() => {
 			window[name] = {
 				getHTML,
 				getText() {
@@ -106,12 +91,6 @@ const ClassicEditor = React.forwardRef(
 				},
 			};
 		}, [contents, getHTML, name]);
-
-		const onResize = debounce(() => {
-			setToolbarSet(initialToolbarSet);
-		}, 200);
-
-		useEventListener('resize', onResize, true, window);
 
 		return (
 			<div id={`${name}Container`}>
@@ -122,7 +101,10 @@ const ClassicEditor = React.forwardRef(
 				)}
 				<Editor
 					className="lfr-editable"
-					config={getConfig()}
+					config={{
+						toolbar: initialToolbarSet,
+						...editorConfig,
+					}}
 					data={contents}
 					name={name}
 					onBeforeLoad={(CKEDITOR) => {

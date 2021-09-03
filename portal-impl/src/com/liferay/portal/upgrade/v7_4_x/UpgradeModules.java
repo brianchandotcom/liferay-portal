@@ -57,7 +57,7 @@ public class UpgradeModules
 		"com.liferay.document.library.asset.auto.tagger.tensorflow",
 		"com.liferay.portal.bundle.blacklist.impl",
 		"com.liferay.portal.component.blacklist.impl",
-		"com.liferay.portal.search"
+		"com.liferay.portal.search", "com.liferay.template.web"
 	};
 
 	private static final String[][] _CONVERTED_LEGACY_MODULES = {

@@ -90,6 +90,8 @@ public class GroupItemSelectorProviderImpl
 		return _groupService.searchCount(
 			companyId, _classNameIds, keywords,
 			LinkedHashMapBuilder.<String, Object>put(
+				"actionId", ActionKeys.VIEW
+			).put(
 				"site", Boolean.TRUE
 			).build());
 	}

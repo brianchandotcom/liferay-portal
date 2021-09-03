@@ -357,7 +357,7 @@ definition {
 		DDLRecord.addCP();
 
 		DDLRecord.populateFieldBoolean(
-			ddlRecordFieldData = "Yes",
+			ddlRecordFieldData = "True",
 			fieldFieldLabel = "Boolean",
 			fieldName = "Boolean");
 

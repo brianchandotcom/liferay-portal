@@ -20,11 +20,14 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
+import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.filter.InfoFilter;
+import com.liferay.info.filter.KeywordsInfoFilter;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -59,6 +62,7 @@ import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -72,11 +76,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	enabled = false, immediate = true, service = InfoCollectionProvider.class
-)
+@Component(immediate = true, service = InfoCollectionProvider.class)
 public class BasicWebContentSingleFormVariationInfoCollectionProvider
 	implements ConfigurableInfoCollectionProvider<JournalArticle>,
+			   FilteredInfoCollectionProvider<JournalArticle>,
 			   SingleFormVariationInfoCollectionProvider<JournalArticle> {
 
 	@Override
@@ -159,6 +162,11 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		return LanguageUtil.get(resourceBundle, "basic-web-content");
 	}
 
+	@Override
+	public List<InfoFilter> getSupportedInfoFilters() {
+		return Arrays.asList(new KeywordsInfoFilter());
+	}
+
 	private SearchContext _buildSearchContext(CollectionQuery collectionQuery) {
 		SearchContext searchContext = new SearchContext();
 
@@ -201,6 +209,16 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 			ServiceContextThreadLocal.getServiceContext();
 
 		searchContext.setCompanyId(serviceContext.getCompanyId());
+
+		Optional<KeywordsInfoFilter> keywordsInfoFilterOptional =
+			collectionQuery.getInfoFilterOptional(KeywordsInfoFilter.class);
+
+		if (keywordsInfoFilterOptional.isPresent()) {
+			KeywordsInfoFilter keywordsInfoFilter =
+				keywordsInfoFilterOptional.get();
+
+			searchContext.setKeywords(keywordsInfoFilter.getKeywords());
+		}
 
 		Pagination pagination = collectionQuery.getPagination();
 

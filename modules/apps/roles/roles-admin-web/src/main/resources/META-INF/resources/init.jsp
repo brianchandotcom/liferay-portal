@@ -234,13 +234,13 @@ private StringBundler _getResourceHtmlId(String resource) {
 	return sb;
 }
 
-private boolean _isShowScope(HttpServletRequest request, Role role, String curModelResource, String curPortletResource) throws SystemException {
+private boolean _isShowScope(HttpServletRequest request, Role role, String curModelResource, String curPortletResource, RoleDisplayContext roleDisplayContext) throws SystemException {
 	boolean showScope = true;
 
 	if (curPortletResource.equals(PortletKeys.PORTAL)) {
 		showScope = false;
 	}
-	else if (role.getType() != RoleConstants.TYPE_REGULAR) {
+	else if (!roleDisplayContext.isAllowGroupScope()) {
 		showScope = false;
 	}
 	else if (Validator.isNotNull(curPortletResource)) {

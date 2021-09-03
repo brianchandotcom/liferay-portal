@@ -166,7 +166,7 @@ if (Validator.isNotNull(portletResource)) {
 							continue;
 						}
 
-						if (role.getType() == RoleConstants.TYPE_REGULAR) {
+						if (roleDisplayContext.isAllowGroupScope()) {
 							RolePermissions rolePermissions = new RolePermissions(resource, ResourceConstants.SCOPE_GROUP, actionId, role.getRoleId());
 
 							groups = GroupLocalServiceUtil.search(

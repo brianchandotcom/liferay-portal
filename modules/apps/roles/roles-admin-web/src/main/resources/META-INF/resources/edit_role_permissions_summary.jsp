@@ -51,7 +51,7 @@ List<String> headerNames = new ArrayList<String>();
 
 headerNames.add("permissions");
 
-if (role.getType() == RoleConstants.TYPE_REGULAR) {
+if (roleDisplayContext.isAllowGroupScope()) {
 	headerNames.add("sites-and-asset-libraries");
 }
 
@@ -145,7 +145,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	int scope;
 
-	if (role.getType() == RoleConstants.TYPE_REGULAR) {
+	if (roleDisplayContext.isAllowGroupScope()) {
 		RolePermissions rolePermissions = new RolePermissions(curResource, ResourceConstants.SCOPE_GROUP, actionId, role.getRoleId());
 
 		groups = GroupLocalServiceUtil.search(
@@ -235,7 +235,7 @@ for (int i = 0; i < results.size(); i++) {
 	row.addText(sb.toString());
 
 	if (scope == ResourceConstants.SCOPE_COMPANY) {
-		row.addText(LanguageUtil.get(request, _isShowScope(request, role, curResource, curPortletName) ? "all-sites-and-asset-libraries" : StringPool.BLANK));
+		row.addText(LanguageUtil.get(request, _isShowScope(request, role, curResource, curPortletName, roleDisplayContext) ? "all-sites-and-asset-libraries" : StringPool.BLANK));
 	}
 	else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
 	}

@@ -21,7 +21,6 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 Object[] objArray = (Object[])row.getObject();
 
-Role role = (Role)objArray[0];
 String target = (String)objArray[3];
 long[] groupIdsArray = (long[])objArray[7];
 List<String> groupNames = (List<String>)objArray[8];
@@ -63,7 +62,7 @@ String portletId = (String)objArray[9];
 					%>'
 				/>
 			</c:when>
-			<c:when test="<%= role.getType() == RoleConstants.TYPE_REGULAR %>">
+			<c:when test="<%= roleDisplayContext.isAllowGroupScope() %>">
 				<liferay-ui:message key="all-sites-and-asset-libraries" />
 			</c:when>
 		</c:choose>

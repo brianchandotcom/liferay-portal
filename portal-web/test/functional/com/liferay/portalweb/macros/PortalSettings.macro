@@ -991,55 +991,6 @@ definition {
 		AssertElementPresent(locator1 = "PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_GROUPS_BUTTON");
 	}
 
-	macro viewAuthenticationNTLMCP {
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "SSO",
-			configurationName = "NTLM",
-			configurationScope = "Virtual Instance Scope");
-
-		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_ENABLED_CHECKBOX");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_HEADER",
-			value1 = "Domain Controller");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_FIELD",
-			value1 = "127.0.0.1");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_HEADER",
-			value1 = "Domain Controller Name");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_FIELD",
-			value1 = "EXAMPLE");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_HEADER",
-			value1 = "Domain");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_FIELD",
-			value1 = "EXAMPLE");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_ACCOUNT_HEADER",
-			value1 = "Service Account");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_ACCOUNT_FIELD",
-			value1 = "LIFERAY$@EXAMPLE.COM");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_PASSWORD_HEADER",
-			value1 = "Service Password");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_PASSWORD_FIELD",
-			value1 = "TEMP_OBFUSCATION_VALUE");
-	}
-
 	macro viewAuthenticationOpenSSOCP {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",

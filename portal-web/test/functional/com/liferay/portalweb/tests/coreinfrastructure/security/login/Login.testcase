@@ -629,7 +629,7 @@ definition {
 	@description = "This is a use case for LRQA-27619."
 	@priority = "3"
 	test ViewInstanceSettingsAuthentication {
-		property osgi.app.includes = "portal-security-sso-ntlm,portal-security-sso-openid";
+		property osgi.app.includes = "portal-security-sso-openid";
 
 		User.firstLoginPG();
 
@@ -640,8 +640,6 @@ definition {
 		PortalSettings.viewAuthenticationOpenSSOCP();
 
 		PortalSettings.viewAuthenticationCASCP();
-
-		PortalSettings.viewAuthenticationNTLMCP();
 	}
 
 }

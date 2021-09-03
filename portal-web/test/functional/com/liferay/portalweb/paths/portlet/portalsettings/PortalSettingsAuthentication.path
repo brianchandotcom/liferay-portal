@@ -297,67 +297,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--AUTHENTICATION_NTLM-->
-<tr>
-	<td>AUTHENTICATION_NTLM_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@name,'ntlm_enabled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_HEADER</td>
-	<td>//label[contains(@for,'ntlm_domainController')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_FIELD</td>
-	<td>//input[contains(@name,'ntlm_domainController')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_HEADER</td>
-	<td>//label[contains(@for,'ntlm_domainControllerName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_FIELD</td>
-	<td>//input[contains(@name,'ntlm_domainControllerName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_NTLM_DOMAIN_HEADER</td>
-	<td>//label[contains(@for,'ntlm_domain') and .=' Domain ']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_NTLM_DOMAIN_FIELD</td>
-	<td>xpath=(//input[contains(@name,'ntlm_domain')])[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_NTLM_SERVICE_ACCOUNT_HEADER</td>
-	<td>//label[contains(@for,'ntlm_serviceAccount')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_NTLM_SERVICE_ACCOUNT_FIELD</td>
-	<td>//input[contains(@name,'ntlm_serviceAccount')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_NTLM_SERVICE_PASSWORD_HEADER</td>
-	<td>//label[contains(@for,'ntlm_servicePassword')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_NTLM_SERVICE_PASSWORD_FIELD</td>
-	<td>//input[contains(@name,'ntlm_servicePassword')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--AUTHENTICATION_OPEN_ID_CONNECT-->
 <tr>
 	<td>AUTHENTICATION_OPEN_ID_CONNECT_ENABLED_CHECKBOX</td>

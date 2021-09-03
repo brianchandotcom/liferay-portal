@@ -19,6 +19,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Permission;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -193,6 +195,26 @@ public class RoleDisplayContext {
 			if (roleTypeContributor.isAutomaticallyAssigned(role)) {
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	public boolean isValidPermission(Role role, Permission permission) {
+		if (role.getType() != RoleConstants.TYPE_ACCOUNT) {
+			return true;
+		}
+
+		if (isAccountRoleGroupScope() &&
+			((permission.getScope() == ResourceConstants.SCOPE_COMPANY) ||
+			 (permission.getScope() == ResourceConstants.SCOPE_GROUP))) {
+
+			return true;
+		}
+		else if (permission.getScope() ==
+					ResourceConstants.SCOPE_GROUP_TEMPLATE) {
+
+			return true;
 		}
 
 		return false;

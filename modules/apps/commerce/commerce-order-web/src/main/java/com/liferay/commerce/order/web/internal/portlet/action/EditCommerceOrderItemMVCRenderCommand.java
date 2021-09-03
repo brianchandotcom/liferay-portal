@@ -25,6 +25,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -63,7 +64,7 @@ public class EditCommerceOrderItemMVCRenderCommand implements MVCRenderCommand {
 					_commerceNotificationQueueEntryLocalService,
 					_commerceOrderEngine, _commerceOrderItemService,
 					_commerceOrderNoteService, _commerceOrderService,
-					_commerceOrderStatusRegistry,
+					_commerceOrderStatusRegistry, _commerceOrderTypeService,
 					_commercePaymentMethodGroupRelLocalService,
 					_commerceShipmentService, renderRequest);
 
@@ -107,6 +108,9 @@ public class EditCommerceOrderItemMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
+
+	@Reference
+	private CommerceOrderTypeService _commerceOrderTypeService;
 
 	@Reference
 	private CommercePaymentMethodGroupRelLocalService

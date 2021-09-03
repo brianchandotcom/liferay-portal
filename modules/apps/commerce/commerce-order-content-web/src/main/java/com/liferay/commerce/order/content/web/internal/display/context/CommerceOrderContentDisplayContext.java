@@ -318,6 +318,22 @@ public class CommerceOrderContentDisplayContext {
 		return totalCommerceMoney.format(_cpRequestHelper.getLocale());
 	}
 
+	public String getCommerceOrderTypeName(String languageId)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		CommerceOrderType commerceOrderType =
+			_commerceOrderTypeService.fetchCommerceOrderType(
+				commerceOrder.getCommerceOrderTypeId());
+
+		if (commerceOrderType == null) {
+			return StringPool.BLANK;
+		}
+
+		return commerceOrderType.getName(languageId);
+	}
+
 	public List<CommerceOrderType> getCommerceOrderTypes()
 		throws PortalException {
 

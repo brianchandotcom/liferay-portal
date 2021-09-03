@@ -295,17 +295,15 @@ public class JournalArticleInfoItemFieldValuesProvider
 
 		String languageId = LocaleUtil.toLanguageId(locale);
 
-		InfoField infoField = InfoField.builder(
-		).infoFieldType(
-			TextInfoFieldType.INSTANCE
-		).name(
-			fieldName
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(getClass(), fieldName)
-		).build();
-
 		InfoFieldValue<Object> infoFieldValue = new InfoFieldValue<>(
-			infoField,
+			InfoField.builder(
+			).infoFieldType(
+				TextInfoFieldType.INSTANCE
+			).name(
+				fieldName
+			).labelInfoLocalizedValue(
+				InfoLocalizedValue.localize(getClass(), fieldName)
+			).build(),
 			() -> {
 				ThemeDisplay themeDisplay = _getThemeDisplay();
 

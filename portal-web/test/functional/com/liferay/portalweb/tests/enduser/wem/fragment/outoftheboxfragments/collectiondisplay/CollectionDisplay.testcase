@@ -1378,6 +1378,149 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-126009. The user is able to filter Web Content in Collection Display using Title field as parameter."
+	@priority = "4"
+	test FilterWebContentByTitle {
+		property test.name.skip.portal.instance = "CollectionDisplay#FilterWebContentByTitle ";
+
+		task ("Enable Basic Web Content flag in Gogo Shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.journal.web.internal.info.collection.provider.BasicWebContentSingleFormVariationInfoCollectionProvider");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+
+		task ("Add three Web Contents") {
+			for (var n : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content ${n}",
+					groupName = "Test Site Name",
+					title = "Web Content Title ${n}");
+			}
+		}
+
+		task ("Add a Collection Display fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the Basic Web Content in collection providers") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Basic Web Content");
+		}
+
+		task ("View all Web Contents are shown in Collection Display") {
+			var n = "1";
+
+			for (var titleNumber : list "3,2,1") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "Web Content Title ${titleNumber}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Add a parameter in title field") {
+			PageEditor.editCollectionDisplay(
+				assetTitle = '''"Web Content Title 1"''',
+				filterCollection = "true",
+				filterResults = '''There is 1 result for "Web Content Title 1".''',
+				fragmentName = "Collection Display",
+				selectedName = "Basic Web Content");
+		}
+
+		task ("View Web Content Title 1 is shown in Collection Display") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Web Content Title 1",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+
+		task ("Clear the filter and Add a new parameter in title field") {
+			PageEditor.editCollectionDisplay(
+				assetTitle = '''"Title 2"''',
+				clearFilter = "true",
+				filterCollection = "true",
+				filterResults = '''There is 1 result for "Title 2".''',
+				fragmentName = "Collection Display",
+				selectedName = "Basic Web Content");
+		}
+
+		task ("View Web Content Title 2 is shown in Collection Display") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Web Content Title 2",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+
+		task ("Clear the filter and Add a new parameter in title field") {
+			PageEditor.editCollectionDisplay(
+				assetTitle = "3",
+				clearFilter = "true",
+				filterCollection = "true",
+				filterResults = "There is 1 result for 3.",
+				fragmentName = "Collection Display",
+				selectedName = "Basic Web Content");
+		}
+
+		task ("View Web Content Title 3 is shown in Collection Display") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Web Content Title 3",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+
+		task ("Clear the filter and Add a new parameter in title field") {
+			PageEditor.editCollectionDisplay(
+				assetTitle = "Web Content Title",
+				clearFilter = "true",
+				filterCollection = "true",
+				filterResults = "There are 3 results for Web Content Title.",
+				fragmentName = "Collection Display",
+				selectedName = "Basic Web Content");
+		}
+
+		task ("View all Web Contents are shown in Collection Display") {
+			var n = "1";
+
+			for (var titleNumber : list "3,2,1") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "Web Content Title ${titleNumber}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Disable Basic Web Content flag in Gogo Shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:disable com.liferay.journal.web.internal.info.collection.provider.BasicWebContentSingleFormVariationInfoCollectionProvider");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+	}
+
 	@description = "This is a use case for LPS-86141. The mapped content of asset entries in selected collection should be respectively shown in each cell of the Collection Display when map content to editable field of one fragment in one cell."
 	@priority = "4"
 	test MapContentToTextFragment {

@@ -3229,18 +3229,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.security.sso.ntlm.impl.jar!jcifs.jar</file-name>
-				<version>1.3.17</version>
-				<project-name>jCIFS</project-name>
-				<project-url>http://jcifs.samba.org</project-url>
-				<licenses>
-					<license>
-						<license-name>GNU Lesser General Public License, version 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!accessors-smart.jar</file-name>
 				<version>2.4.2</version>
 				<project-name>ASM based accessors helper used by json-smart</project-name>

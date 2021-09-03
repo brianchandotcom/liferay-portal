@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.webhook.constants.WebhookConstants;
+import com.liferay.webhook.exception.DuplicateWebhookEntryException;
 import com.liferay.webhook.exception.WebhookEntryDestinationNameException;
 import com.liferay.webhook.exception.WebhookEntryDestinationWebhookEventKeysException;
 import com.liferay.webhook.exception.WebhookEntryNameException;
@@ -86,8 +87,8 @@ public class WebhookEntryLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		_validate(
-			user.getCompanyId(), destinationName, destinationWebhookEventKeys,
-			name, url);
+			user.getCompanyId(), 0, destinationName,
+			destinationWebhookEventKeys, name, url);
 
 		long webhookEntryId = counterLocalService.increment();
 
@@ -225,7 +226,7 @@ public class WebhookEntryLocalServiceImpl
 			webhookEntryId);
 
 		_validate(
-			webhookEntry.getCompanyId(), destinationName,
+			webhookEntry.getCompanyId(), webhookEntryId, destinationName,
 			destinationWebhookEventKeys, name, url);
 
 		webhookEntry.setActive(active);
@@ -316,7 +317,7 @@ public class WebhookEntryLocalServiceImpl
 	}
 
 	private void _validate(
-			long companyId, String destinationName,
+			long companyId, long webhookEntryId, String destinationName,
 			String destinationWebhookEventKeys, String name, String url)
 		throws PortalException {
 
@@ -375,6 +376,16 @@ public class WebhookEntryLocalServiceImpl
 
 		if (Validator.isNull(name)) {
 			throw new WebhookEntryNameException();
+		}
+
+		WebhookEntry webhookEntry = webhookEntryPersistence.fetchByC_N(
+			companyId, name);
+
+		if ((webhookEntry != null) &&
+			(webhookEntry.getWebhookEntryId() != webhookEntryId)) {
+
+			throw new DuplicateWebhookEntryException(
+				"A webhook entry already exists with name " + name);
 		}
 
 		if (!Validator.isUrl(url)) {

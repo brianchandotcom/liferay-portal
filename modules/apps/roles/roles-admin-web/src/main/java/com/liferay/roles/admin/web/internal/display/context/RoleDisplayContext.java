@@ -173,6 +173,17 @@ public class RoleDisplayContext {
 		return _accountRoleGroupScope;
 	}
 
+	public boolean isAllowGroupScope() {
+		if (_allowGroupScope == null) {
+			_allowGroupScope =
+				(_currentRoleTypeContributor.getType() ==
+					RoleConstants.TYPE_REGULAR) ||
+				isAccountRoleGroupScope();
+		}
+
+		return _allowGroupScope;
+	}
+
 	public boolean isAutomaticallyAssigned(Role role) {
 		List<RoleTypeContributor> roleTypeContributors =
 			RoleTypeContributorRetrieverUtil.getRoleTypeContributors(
@@ -314,6 +325,7 @@ public class RoleDisplayContext {
 	};
 
 	private Boolean _accountRoleGroupScope;
+	private Boolean _allowGroupScope;
 	private final RoleTypeContributor _currentRoleTypeContributor;
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderResponse _renderResponse;

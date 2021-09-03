@@ -334,12 +334,14 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	}
 
 	@Override
-	public CPAttachmentFileEntry getDefaultImage(long cpDefinitionId)
+	public CPAttachmentFileEntry getDefaultImageCPAttachmentFileEntry(
+			long cpDefinitionId)
 		throws PortalException {
 
 		_checkCommerceCatalogByCPDefinitionId(cpDefinitionId, ActionKeys.VIEW);
 
-		return cpDefinitionLocalService.getDefaultImage(cpDefinitionId);
+		return cpDefinitionLocalService.getDefaultImageCPAttachmentFileEntry(
+			cpDefinitionId);
 	}
 
 	/**

@@ -1182,7 +1182,8 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public CPAttachmentFileEntry getDefaultImage(long cpDefinitionId)
+	public CPAttachmentFileEntry getDefaultImageCPAttachmentFileEntry(
+			long cpDefinitionId)
 		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(

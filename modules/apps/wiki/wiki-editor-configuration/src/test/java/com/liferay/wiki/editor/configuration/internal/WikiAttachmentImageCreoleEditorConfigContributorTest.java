@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.RegistryUtil;
 import com.liferay.wiki.configuration.WikiFileUploadConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
@@ -64,8 +62,6 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		LanguageUtil languageUtil = new LanguageUtil();
 

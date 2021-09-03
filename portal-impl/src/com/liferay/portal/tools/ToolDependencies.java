@@ -56,7 +56,6 @@ import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
-import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
@@ -162,8 +161,6 @@ public class ToolDependencies {
 	}
 
 	public static void wireCaches() {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
-
 		Registry registry = RegistryUtil.getRegistry();
 
 		registry.registerService(

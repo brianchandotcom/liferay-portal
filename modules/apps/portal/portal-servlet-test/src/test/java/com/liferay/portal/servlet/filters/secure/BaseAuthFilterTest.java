@@ -27,7 +27,6 @@ import com.liferay.portal.security.access.control.AccessControlImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
@@ -62,9 +61,7 @@ public class BaseAuthFilterTest {
 	public static void setUpClass() {
 		_portalUtil.setPortal(_testPortalImpl);
 
-		Registry registry = new BasicRegistryImpl();
-
-		RegistryUtil.setRegistry(registry);
+		Registry registry = RegistryUtil.getRegistry();
 
 		registry.registerService(
 			AccessControl.class, new TestAccessControlImpl());

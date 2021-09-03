@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
@@ -48,9 +47,7 @@ public class MinifierUtilTest {
 
 		PropsUtil.set(PropsKeys.MINIFIER_ENABLED, "true");
 
-		Registry registry = new BasicRegistryImpl();
-
-		RegistryUtil.setRegistry(registry);
+		Registry registry = RegistryUtil.getRegistry();
 
 		registry.registerService(
 			JavaScriptMinifier.class,

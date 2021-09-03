@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.CustomJspRegistryImpl;
 import com.liferay.portal.util.PortalImpl;
-import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -61,8 +60,6 @@ public class CustomJspBagRegistryUtilTest {
 			new CustomJspRegistryUtil();
 
 		customJspRegistryUtil.setCustomJspRegistry(new CustomJspRegistryImpl());
-
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
 	}
 
 	@Test

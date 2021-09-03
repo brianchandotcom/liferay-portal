@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.Set;
 
@@ -54,8 +52,6 @@ public class PortalImplEscapeRedirectTest {
 			).put(
 				PropsKeys.DNS_SECURITY_THREAD_LIMIT, String.valueOf(10)
 			).build());
-
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
 	}
 
 	@Before

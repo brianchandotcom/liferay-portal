@@ -76,8 +76,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.RegistryUtil;
 
 import java.math.BigDecimal;
 
@@ -123,8 +121,6 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
-
 		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
 		setUpPortalUtil();

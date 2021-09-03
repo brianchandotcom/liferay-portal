@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.test.rule.TimeoutTestRule;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -54,7 +53,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.logging.Level;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -70,11 +68,6 @@ public class ServiceProxyFactoryTest {
 		new AggregateTestRule(
 			CodeCoverageAssertor.INSTANCE, NewEnvTestRule.INSTANCE,
 			TimeoutTestRule.INSTANCE);
-
-	@Before
-	public void setUp() {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
-	}
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test

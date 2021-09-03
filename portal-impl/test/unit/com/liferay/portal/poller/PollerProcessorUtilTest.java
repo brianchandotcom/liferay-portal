@@ -17,7 +17,6 @@ package com.liferay.portal.poller;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -43,8 +42,6 @@ public class PollerProcessorUtilTest {
 	public void testGetPollerProcessor() {
 		PollerProcessor pollerProcessor = ProxyFactory.newDummyInstance(
 			PollerProcessor.class);
-
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		Registry registry = RegistryUtil.getRegistry();
 

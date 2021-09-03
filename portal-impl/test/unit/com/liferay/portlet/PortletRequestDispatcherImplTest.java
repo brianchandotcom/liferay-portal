@@ -29,8 +29,6 @@ import com.liferay.portlet.internal.PortletContextImpl;
 import com.liferay.portlet.internal.PortletRequestDispatcherImpl;
 import com.liferay.portlet.internal.RenderRequestImpl;
 import com.liferay.portlet.internal.RenderResponseImpl;
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.Collections;
 import java.util.Set;
@@ -139,10 +137,6 @@ public class PortletRequestDispatcherImplTest {
 				true, _portletContext, "/testPath|");
 
 		portletRequestDispatcherImpl.include(_portletRequest, _portletResponse);
-	}
-
-	static {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
 	}
 
 	private static final Portlet _portlet = new PortletImpl() {

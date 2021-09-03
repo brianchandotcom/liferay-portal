@@ -40,7 +40,6 @@ import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelper;
-import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
@@ -49,7 +48,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -63,18 +61,11 @@ public abstract class BaseExpandoTestCase extends BaseIndexingTestCase {
 
 	@BeforeClass
 	public static void setUpClassBaseExpandoTestCase() {
-		Registry registry = new BasicRegistryImpl();
+		Registry registry = RegistryUtil.getRegistry();
 
 		registry.registerService(
 			FieldQueryFactory.class,
 			createFieldQueryFactory(createExpandoFieldQueryBuilderFactory()));
-
-		RegistryUtil.setRegistry(registry);
-	}
-
-	@AfterClass
-	public static void tearDownClassBaseExpandoTestCase() {
-		RegistryUtil.setRegistry(null);
 	}
 
 	@Test

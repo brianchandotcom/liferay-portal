@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portlet.internal.FriendlyURLMapperTrackerImpl;
-import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -46,8 +45,6 @@ public class FriendlyURLMapperTrackerImplTest {
 
 	@Test
 	public void testGetFriendlyURLMapper() throws Exception {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
-
 		Registry registry = RegistryUtil.getRegistry();
 
 		Portlet portlet = new PortletImpl();

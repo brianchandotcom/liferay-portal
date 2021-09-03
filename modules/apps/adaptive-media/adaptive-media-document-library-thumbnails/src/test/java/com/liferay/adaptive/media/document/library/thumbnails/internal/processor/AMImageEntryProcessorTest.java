@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.RegistryUtil;
 
 import java.io.InputStream;
 
@@ -55,8 +53,6 @@ public class AMImageEntryProcessorTest {
 
 	@Before
 	public void setUp() {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
-
 		_amImageEntryProcessor = new AMImageEntryProcessor();
 
 		Mockito.doReturn(

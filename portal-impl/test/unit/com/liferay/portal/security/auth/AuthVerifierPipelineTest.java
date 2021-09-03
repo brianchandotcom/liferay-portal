@@ -29,7 +29,6 @@ import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.security.auth.registry.AuthVerifierRegistry;
 import com.liferay.portal.service.impl.UserLocalServiceImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -64,8 +63,6 @@ public class AuthVerifierPipelineTest {
 
 	@Test
 	public void testVerifyRequest() throws PortalException {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
-
 		Registry registry = RegistryUtil.getRegistry();
 
 		ReflectionTestUtil.setFieldValue(

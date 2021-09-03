@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
@@ -53,8 +51,6 @@ public abstract class BaseBackgroundTaskTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
-
 		backgroundTaskThreadLocalManagerImpl =
 			new BackgroundTaskThreadLocalManagerImpl();
 

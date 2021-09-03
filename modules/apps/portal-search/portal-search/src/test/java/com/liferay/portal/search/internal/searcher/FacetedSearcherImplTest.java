@@ -31,14 +31,10 @@ import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderFa
 import com.liferay.portal.search.internal.test.util.DocumentFixture;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.RegistryUtil;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -56,16 +52,6 @@ public class FacetedSearcherImplTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		RegistryUtil.setRegistry(null);
-	}
 
 	@Before
 	public void setUp() throws Exception {

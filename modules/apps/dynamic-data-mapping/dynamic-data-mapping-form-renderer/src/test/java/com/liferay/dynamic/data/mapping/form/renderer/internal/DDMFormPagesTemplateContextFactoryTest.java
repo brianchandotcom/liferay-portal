@@ -66,8 +66,6 @@ import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.util.CalendarFactoryImpl;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.HtmlImpl;
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -111,8 +109,6 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
-
 		setUpCalendarFactoryUtil();
 		setUpDDMFormFieldTypeServicesTracker();
 		setUpFastDateFormatFactoryUtil();

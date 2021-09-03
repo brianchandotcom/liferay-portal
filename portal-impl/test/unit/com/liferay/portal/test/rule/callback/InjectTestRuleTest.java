@@ -14,6 +14,7 @@
 
 package com.liferay.portal.test.rule.callback;
 
+import com.liferay.portal.asm.ASMWrapperUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.ConsoleTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -21,15 +22,17 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.InjectTestBag;
 import com.liferay.portal.test.rule.InjectTestRule;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceRegistration;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,9 +48,11 @@ public class InjectTestRuleTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
+	@After
+	public void tearDown() {
+		_serviceRegistrations.forEach(ServiceRegistration::unregister);
+
+		_serviceRegistrations.clear();
 	}
 
 	@Test
@@ -56,11 +61,13 @@ public class InjectTestRuleTest {
 
 		Service1 service1 = new Service1();
 
-		registry.registerService(Service1.class, service1);
+		_serviceRegistrations.add(
+			registry.registerService(Service1.class, service1));
 
 		Service2 service2 = new Service2();
 
-		registry.registerService(Service2.class, service2);
+		_serviceRegistrations.add(
+			registry.registerService(Service2.class, service2));
 
 		TestCase1 testCase1 = new TestCase1();
 
@@ -125,7 +132,8 @@ public class InjectTestRuleTest {
 
 						Registry registry = RegistryUtil.getRegistry();
 
-						registry.registerService(Service1.class, service1);
+						_serviceRegistrations.add(
+							registry.registerService(Service1.class, service1));
 
 						return;
 					}
@@ -147,18 +155,20 @@ public class InjectTestRuleTest {
 		AtomicBoolean ungetServiceCalled = new AtomicBoolean();
 
 		RegistryUtil.setRegistry(
-			new BasicRegistryImpl() {
+			ASMWrapperUtil.createASMWrapper(
+				InjectTestRuleTest.class.getClassLoader(), Registry.class,
+				new Object() {
 
-				@Override
-				public <T> boolean ungetService(
-					ServiceReference<T> serviceReference) {
+					public <T> boolean ungetService(
+						ServiceReference<T> serviceReference) {
 
-					ungetServiceCalled.set(true);
+						ungetServiceCalled.set(true);
 
-					return false;
-				}
+						return false;
+					}
 
-			});
+				},
+				RegistryUtil.getRegistry()));
 
 		InjectTestRule.INSTANCE.afterClass(description, injectTestBag);
 
@@ -180,13 +190,15 @@ public class InjectTestRuleTest {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		registry.registerService(Service2.class, new Service2());
+		_serviceRegistrations.add(
+			registry.registerService(Service2.class, new Service2()));
 
 		injectTestBag.injectFields();
 
 		Assert.assertNull(testCase2._service2);
 
-		registry.registerService(Service3.class, new Service3());
+		_serviceRegistrations.add(
+			registry.registerService(Service3.class, new Service3()));
 
 		injectTestBag.injectFields();
 
@@ -194,11 +206,12 @@ public class InjectTestRuleTest {
 
 		Service3 service3b = new Service3();
 
-		registry.registerService(
-			Service3.class, service3b,
-			HashMapBuilder.<String, Object>put(
-				"inject.test.rule.test", true
-			).build());
+		_serviceRegistrations.add(
+			registry.registerService(
+				Service3.class, service3b,
+				HashMapBuilder.<String, Object>put(
+					"inject.test.rule.test", true
+				).build()));
 
 		injectTestBag.injectFields();
 
@@ -212,6 +225,9 @@ public class InjectTestRuleTest {
 
 		Assert.assertNull(testCase2._service2);
 	}
+
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
 
 	private static class BaseTestCase {
 

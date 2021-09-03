@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
@@ -51,8 +49,6 @@ public class EntityCacheImplTest {
 
 	@Before
 	public void setUp() {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
-
 		_classLoader = EntityCacheImplTest.class.getClassLoader();
 		_nullModel = ReflectionTestUtil.getFieldValue(
 			BasePersistenceImpl.class, "nullModel");

@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portal.workflow.WorkflowTaskManagerProxyBean;
 import com.liferay.portal.workflow.task.web.internal.permission.WorkflowTaskPermissionChecker;
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
@@ -71,8 +69,6 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
-
 		_setUpHtmlUtil();
 		_setUpJSONFactoryUtil();
 		_setUpUserNotificationEventLocalService();

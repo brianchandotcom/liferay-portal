@@ -15,7 +15,6 @@
 package com.liferay.portal.struts;
 
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -39,8 +38,6 @@ public class AuthPublicPathRegistryTest {
 
 	@Test
 	public void testContains() {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
-
 		Registry registry = RegistryUtil.getRegistry();
 
 		ServiceRegistration<Object> serviceRegistration =

@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.dao.orm;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
-import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
@@ -69,7 +68,7 @@ public class IndexableActionableDynamicQueryTest {
 	}
 
 	protected Registry createRegistry() {
-		Registry registry = new BasicRegistryImpl();
+		Registry registry = RegistryUtil.getRegistry();
 
 		registry.registerService(
 			PortalExecutorManager.class,

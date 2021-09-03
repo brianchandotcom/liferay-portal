@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.RegistryUtil;
 
 import java.io.IOException;
 
@@ -47,8 +45,6 @@ public class LinkbackConsumerTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		_linkbackConsumer = new LinkbackConsumerImpl();
 

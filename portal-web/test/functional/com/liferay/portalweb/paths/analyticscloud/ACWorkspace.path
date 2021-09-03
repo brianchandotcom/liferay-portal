@@ -42,6 +42,11 @@
 	<td>//label[normalize-space()='Timezone']//following-sibling::div//select</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TIMEZONE_COUNTRY_SELECT_OPTION</td>
+	<td>xpath=(//label[normalize-space()='Timezone']//following-sibling::div//select/option)[${index}][normalize-space(text())='${option}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

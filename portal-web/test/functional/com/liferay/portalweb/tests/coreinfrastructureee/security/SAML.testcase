@@ -131,7 +131,7 @@ definition {
 	@priority = "4"
 	test AssertAuthorizationOnOAuth2WithSAMLConnectionWithExistingUser {
 		property app.server.bundles.size = "1";
-		property minimum.slave.ram = "32";
+		property minimum.slave.ram = "24";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SAML#AssertAuthorizationOnOAuth2WithSAMLConnectionWithExistingUser";
 
@@ -232,7 +232,7 @@ definition {
 	@priority = "4"
 	test AssertAuthorizationOnOAuth2WithSAMLConnectionWithoutExistingUser {
 		property app.server.bundles.size = "1";
-		property minimum.slave.ram = "32";
+		property minimum.slave.ram = "24";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SAML#AssertAuthorizationOnOAuth2WithSAMLConnectionWithoutExistingUser";
 

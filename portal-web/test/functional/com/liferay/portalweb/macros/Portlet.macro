@@ -429,12 +429,7 @@ definition {
 	macro startServer {
 		var appServerType = PropsUtil.get("app.server.type");
 
-		if ("${commerceEnabled}" == "false") {
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "start-app-server -Dcommerce.enabled=false -Ddelete.liferay.home=false");
-		}
-		else if ("${deleteLiferayHome}" == "false") {
+		if ("${deleteLiferayHome}" == "false") {
 			AntCommand(
 				locator1 = "build-test.xml",
 				value1 = "start-app-server -Ddelete.liferay.home=false");
@@ -448,6 +443,11 @@ definition {
 			AntCommand(
 				locator1 = "build-test.xml",
 				value1 = "start-app-server -Dkeep.osgi.state=true");
+		}
+		else if ("${noLicense}" == "true") {
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "start-app-server -Dlicense.not.present=true -Ddelete.liferay.home=false");
 		}
 		else {
 			AntCommand(

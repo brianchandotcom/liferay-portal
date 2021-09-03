@@ -88,28 +88,6 @@ definition {
 		CommerceLicense.viewCommerceMissing();
 	}
 
-	@priority = "3"
-	test DeleteLiferayDXPLicense {
-		property commerce.enabled = "false";
-		property test.name.skip.portal.instance = "CommerceLicense#DeleteLiferayDXPLicense";
-
-		ApplicationsMenuHelper.openApplicationsMenu();
-
-		AssertElementPresent(
-			key_panel = "Applications",
-			locator1 = "ApplicationsMenu#PANEL");
-
-		Portlet.shutdownServer();
-
-		License.deleteLicenseFile(licenseFileName = "license.xml");
-
-		Portlet.startServer(deleteLiferayHome = "false");
-
-		Navigator.openURL();
-
-		Alert.viewErrorMessage(errorMessage = "This instance is not registered.");
-	}
-
 	@priority = "5"
 	test EnableCommerceAfterPortalStarts {
 		property commerce.enabled = "false";

@@ -21,6 +21,28 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test DeleteLiferayDXPLicense {
+		property commerce.enabled = "false";
+		property test.name.skip.portal.instance = "CommerceLicense#DeleteLiferayDXPLicense";
+
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		AssertElementPresent(
+			key_panel = "Applications",
+			locator1 = "ApplicationsMenu#PANEL");
+
+		Portlet.shutdownServer();
+
+		License.deleteLicenseFile(licenseFileName = "license.xml");
+
+		Portlet.startServer(noLicense = "true");
+
+		Navigator.openURL();
+
+		Alert.viewErrorMessage(errorMessage = "This instance is not registered.");
+	}
+
 	@priority = "4"
 	test LiferayDXPLicenseExpire {
 		property dxp.license.file = "portal-dxp-license-custom-expiration-48-hours.xml";

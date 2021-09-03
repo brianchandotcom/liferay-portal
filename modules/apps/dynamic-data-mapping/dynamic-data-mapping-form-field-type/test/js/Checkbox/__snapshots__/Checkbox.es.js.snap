@@ -28,6 +28,11 @@ exports[`Field Checkbox has a helptext 1`] = `
       </span>
     </label>
     <input
+      class="form-control"
+      type="hidden"
+      value="true"
+    />
+    <input
       name="undefined_edited"
       type="hidden"
       value="false"
@@ -76,6 +81,11 @@ exports[`Field Checkbox has a key 1`] = `
       </span>
     </label>
     <input
+      class="form-control"
+      type="hidden"
+      value="true"
+    />
+    <input
       name="undefined_edited"
       type="hidden"
       value="false"
@@ -115,6 +125,11 @@ exports[`Field Checkbox has a label 1`] = `
       </span>
     </label>
     <input
+      class="form-control"
+      type="hidden"
+      value="true"
+    />
+    <input
       name="undefined_edited"
       type="hidden"
       value="false"
@@ -152,6 +167,11 @@ exports[`Field Checkbox has a predefined Value 1`] = `
       </span>
     </label>
     <input
+      class="form-control"
+      type="hidden"
+      value="true"
+    />
+    <input
       name="undefined_edited"
       type="hidden"
       value="false"
@@ -188,6 +208,11 @@ exports[`Field Checkbox has a value 1`] = `
         />
       </span>
     </label>
+    <input
+      class="form-control"
+      type="hidden"
+      value="true"
+    />
     <input
       name="undefined_edited"
       type="hidden"
@@ -227,6 +252,11 @@ exports[`Field Checkbox has an id 1`] = `
       </span>
     </label>
     <input
+      class="form-control"
+      type="hidden"
+      value="true"
+    />
+    <input
       name="undefined_edited"
       type="hidden"
       value="false"
@@ -265,6 +295,11 @@ exports[`Field Checkbox is not editable 1`] = `
       </span>
     </label>
     <input
+      class="form-control"
+      type="hidden"
+      value="true"
+    />
+    <input
       name="undefined_edited"
       type="hidden"
       value="false"
@@ -301,6 +336,11 @@ exports[`Field Checkbox is not required 1`] = `
         />
       </span>
     </label>
+    <input
+      class="form-control"
+      type="hidden"
+      value="true"
+    />
     <input
       name="undefined_edited"
       type="hidden"
@@ -339,6 +379,11 @@ exports[`Field Checkbox is shown as a switcher 1`] = `
       </span>
     </label>
     <input
+      class="form-control"
+      type="hidden"
+      value="true"
+    />
+    <input
       name="undefined_edited"
       type="hidden"
       value="false"
@@ -368,6 +413,11 @@ exports[`Field Checkbox is shown as checkbox 1`] = `
         />
       </label>
     </div>
+    <input
+      class="form-control"
+      type="hidden"
+      value="true"
+    />
     <input
       name="undefined_edited"
       type="hidden"
@@ -405,6 +455,11 @@ exports[`Field Checkbox renders Label if showLabel is true 1`] = `
         />
       </span>
     </label>
+    <input
+      class="form-control"
+      type="hidden"
+      value="true"
+    />
     <input
       name="undefined_edited"
       type="hidden"

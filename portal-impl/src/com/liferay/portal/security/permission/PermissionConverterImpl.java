@@ -69,13 +69,18 @@ public class PermissionConverterImpl implements PermissionConverter {
 				ResourceConstants.SCOPE_COMPANY, ResourceConstants.SCOPE_GROUP
 			};
 		}
-		else if ((role.getType() == RoleConstants.TYPE_ACCOUNT) ||
-				 (role.getType() == RoleConstants.TYPE_DEPOT) ||
+		else if ((role.getType() == RoleConstants.TYPE_DEPOT) ||
 				 (role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
 				 (role.getType() == RoleConstants.TYPE_PROVIDER) ||
 				 (role.getType() == RoleConstants.TYPE_SITE)) {
 
 			scopes = new int[] {ResourceConstants.SCOPE_GROUP_TEMPLATE};
+		}
+		else if (role.getType() == RoleConstants.TYPE_ACCOUNT) {
+			scopes = new int[] {
+				ResourceConstants.SCOPE_COMPANY, ResourceConstants.SCOPE_GROUP,
+				ResourceConstants.SCOPE_GROUP_TEMPLATE
+			};
 		}
 
 		List<Permission> permissions = new ArrayList<>();

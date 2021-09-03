@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,8 +70,11 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 	public List<Map<String, String>> getAppliedFilters() {
 		List<Map<String, String>> appliedFilters = new ArrayList<>();
 
+		HttpServletRequest originalHttpServletRequest =
+			PortalUtil.getOriginalServletRequest(_httpServletRequest);
+
 		Map<String, String[]> parameters =
-			_httpServletRequest.getParameterMap();
+			originalHttpServletRequest.getParameterMap();
 
 		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 			String parameterName = entry.getKey();

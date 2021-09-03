@@ -35,7 +35,7 @@ const TranslationAdminSelector = ({
 		default: Liferay.Language.get('default'),
 		manageTranslations: Liferay.Language.get('manage-translations'),
 		translated: Liferay.Language.get('translated'),
-		untranslated: Liferay.Language.get('not-translated'),
+		notTranslated: Liferay.Language.get('not-translated'),
 	},
 	availableLocales = emptyArray,
 	defaultLanguageId,
@@ -179,7 +179,7 @@ const TranslationAdminSelector = ({
 														? ariaLabels.default
 														: localeValue
 														? ariaLabels.translated
-														: ariaLabels.untranslated}
+														: ariaLabels.notTranslated}
 												</ClayLabel>
 											</ClayLayout.ContentSection>
 										</ClayLayout.ContentCol>
@@ -228,7 +228,7 @@ TranslationAdminSelector.propTypes = {
 		manageTranslations: PropTypes.string,
 		managementToolbar: PropTypes.string,
 		tranlated: PropTypes.string,
-		untranslated: PropTypes.string,
+		notTranslated: PropTypes.string,
 	}),
 	availableLocales: PropTypes.arrayOf(PropTypes.object).isRequired,
 	defaultLanguageId: PropTypes.string.isRequired,

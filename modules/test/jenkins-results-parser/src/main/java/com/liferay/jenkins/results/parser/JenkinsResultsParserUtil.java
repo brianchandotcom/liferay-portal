@@ -3264,7 +3264,7 @@ public class JenkinsResultsParserUtil {
 							httpAuthorizationHeader =
 								new BasicHTTPAuthorization(
 									buildProperties.getProperty(
-										"jenkins.admin.user.token"),
+										"jenkins.admin.user.password"),
 									buildProperties.getProperty(
 										"jenkins.admin.user.name"));
 						}

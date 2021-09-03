@@ -17,6 +17,17 @@ definition {
 			label = "Add Incident Report Contacts",
 			locator1 = "ACUtils#LABEL");
 
+		if (isSet(timezone)) {
+			Select(
+				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_FIELD",
+				value1 = "${timezone}");
+
+			Select(
+				selectFieldId = "timeZoneId",
+				locator1 = "Select#SELECT_ID",
+				value1 = "${timezoneId}");
+		}
+
 		if (isSet(cancel)) {
 			WaitForElementNotPresent(
 				key_text = "Cancel",
@@ -78,8 +89,8 @@ definition {
 				value1 = "${timezone}");
 
 			AssertSelectedLabel(
-				selectFieldId = "timeZoneId",
 				locator1 = "Select#SELECT_ID",
+				selectFieldId = "timeZoneId",
 				value1 = "${timezoneId}");
 		}
 	}

@@ -15,9 +15,17 @@
 package com.liferay.batch.planner.web.internal.portlet.action;
 
 import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
+import com.liferay.batch.planner.model.BatchPlannerPlan;
+import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.batch.planner.web.internal.display.context.EditBatchPlannerPlanDisplayContext;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
@@ -41,7 +49,8 @@ import org.osgi.service.jaxrs.runtime.dto.RuntimeDTO;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + BatchPlannerPortletKeys.BATCH_PLANNER,
-		"mvc.command.name=/batch_planner/edit_batch_planner_plan"
+		"mvc.command.name=/batch_planner/edit_export_batch_planner_plan",
+		"mvc.command.name=/batch_planner/edit_import_batch_planner_plan"
 	},
 	service = MVCRenderCommand.class
 )
@@ -51,11 +60,16 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new EditBatchPlannerPlanDisplayContext(_getHeadlessEndpoints()));
+		try {
+			return _render(renderRequest);
+		}
+		catch (PortalException portalException) {
+			SessionErrors.add(renderRequest, PortalException.class);
 
-		return "/import/edit_batch_planner_plan.jsp";
+			_log.error("Unable to process render request", portalException);
+		}
+
+		return "/view.jsp";
 	}
 
 	private Map<String, String> _getHeadlessEndpoints() {
@@ -84,6 +98,56 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 
 		return headlessEndpoints;
 	}
+
+	private boolean _isExport(String value) {
+		if (value.equals("export")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private String _render(RenderRequest renderRequest) throws PortalException {
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			new EditBatchPlannerPlanDisplayContext(_getHeadlessEndpoints()));
+
+		long batchPlannerPlanId = ParamUtil.getLong(
+			renderRequest, "batchPlannerPlanId");
+
+		if (batchPlannerPlanId == 0) {
+			return _renderFromNavigation(renderRequest);
+		}
+
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanService.getBatchPlannerPlan(batchPlannerPlanId);
+
+		if (batchPlannerPlan.isExport()) {
+			return "/export/edit_batch_planner_plan.jsp";
+		}
+
+		return "/import/edit_batch_planner_plan.jsp";
+	}
+
+	private String _renderFromNavigation(RenderRequest renderRequest) {
+		if (Validator.isNull(
+				ParamUtil.getString(renderRequest, "navigation"))) {
+
+			return "/view.jsp";
+		}
+
+		if (_isExport(ParamUtil.getString(renderRequest, "navigation"))) {
+			return "/export/edit_batch_planner_plan.jsp";
+		}
+
+		return "/import/edit_batch_planner_plan.jsp";
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditBatchPlannerPlanMVCRenderCommand.class);
+
+	@Reference
+	private BatchPlannerPlanService _batchPlannerPlanService;
 
 	@Reference
 	private JaxrsServiceRuntime _jaxrsServiceRuntime;

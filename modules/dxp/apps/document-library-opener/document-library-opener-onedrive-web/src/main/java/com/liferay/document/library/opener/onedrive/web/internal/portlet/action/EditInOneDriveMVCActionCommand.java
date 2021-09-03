@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -42,7 +41,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -98,11 +96,6 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	protected PortletURLFactory portletURLFactory;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.document.library.opener.onedrive.web)"
-	)
-	protected ResourceBundleLoader resourceBundleLoader;
 
 	private DLOpenerOneDriveFileReference _checkOutOneDriveFileEntry(
 			long fileEntryId, ServiceContext serviceContext)
@@ -201,10 +194,7 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _translate(Locale locale, String key) {
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			locale);
-
-		return language.get(resourceBundle, key);
+		return language.get(locale, key);
 	}
 
 	private final TransactionConfig _transactionConfig =

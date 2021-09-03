@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.web.internal.portlet;
 
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -30,9 +30,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adam Brandizzi
@@ -76,7 +73,8 @@ public class ControlPanelWorkflowPortlet extends BaseWorkflowPortlet {
 
 		WorkflowNavigationDisplayContext workflowNavigationDisplayContext =
 			new WorkflowNavigationDisplayContext(
-				renderRequest, resourceBundleLoader);
+				renderRequest,
+				ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 
 		renderRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_NAVIGATION_DISPLAY_CONTEXT,
@@ -97,12 +95,5 @@ public class ControlPanelWorkflowPortlet extends BaseWorkflowPortlet {
 				permissionChecker.getUserId());
 		}
 	}
-
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(bundle.symbolic.name=com.liferay.portal.workflow.web)"
-	)
-	protected volatile ResourceBundleLoader resourceBundleLoader;
 
 }

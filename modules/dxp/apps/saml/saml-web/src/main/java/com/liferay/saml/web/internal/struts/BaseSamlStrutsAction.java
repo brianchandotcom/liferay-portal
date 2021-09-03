@@ -16,7 +16,7 @@ package com.liferay.saml.web.internal.struts;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -26,8 +26,6 @@ import com.liferay.saml.util.JspUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
@@ -45,7 +43,8 @@ public abstract class BaseSamlStrutsAction implements StrutsAction {
 		}
 
 		httpServletRequest.setAttribute(
-			WebKeys.RESOURCE_BUNDLE_LOADER, resourceBundleLoader);
+			WebKeys.RESOURCE_BUNDLE_LOADER,
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 
 		Thread currentThread = Thread.currentThread();
 
@@ -103,9 +102,6 @@ public abstract class BaseSamlStrutsAction implements StrutsAction {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception;
-
-	@Reference(target = "(bundle.symbolic.name=com.liferay.saml.web)")
-	protected ResourceBundleLoader resourceBundleLoader;
 
 	protected SamlProviderConfigurationHelper samlProviderConfigurationHelper;
 

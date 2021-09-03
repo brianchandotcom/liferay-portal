@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.ratings.taglib.servlet.taglib.RatingsTag;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -71,10 +70,7 @@ public class ContentRatingsFragmentRenderer
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			locale);
-
-		return LanguageUtil.get(resourceBundle, "content-ratings");
+		return LanguageUtil.get(locale, "content-ratings");
 	}
 
 	@Override

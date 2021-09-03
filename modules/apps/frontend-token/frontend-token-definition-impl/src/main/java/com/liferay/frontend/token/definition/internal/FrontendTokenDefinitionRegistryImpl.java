@@ -16,15 +16,13 @@ package com.liferay.frontend.token.definition.internal;
 
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -70,9 +68,6 @@ public class FrontendTokenDefinitionRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		resourceBundleLoaders = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ResourceBundleLoader.class, "bundle.symbolic.name");
-
 		bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE, _bundleTrackerCustomizer);
 
@@ -87,8 +82,6 @@ public class FrontendTokenDefinitionRegistryImpl
 			bundleFrontendTokenDefinitionImpls.clear();
 			themeIdFrontendTokenDefinitionImpls.clear();
 		}
-
-		resourceBundleLoaders.close();
 	}
 
 	protected FrontendTokenDefinitionImpl getFrontendTokenDefinitionImpl(
@@ -105,7 +98,9 @@ public class FrontendTokenDefinitionRegistryImpl
 		try {
 			return new FrontendTokenDefinitionImpl(
 				jsonFactory.createJSONObject(json), jsonFactory,
-				resourceBundleLoaders.getService(bundle.getSymbolicName()),
+				ResourceBundleLoaderUtil.
+					getResourceBundleLoaderByBundleSymbolicName(
+						bundle.getSymbolicName()),
 				themeId);
 		}
 		catch (JSONException | RuntimeException exception) {
@@ -199,8 +194,6 @@ public class FrontendTokenDefinitionRegistryImpl
 	@Reference
 	protected Portal portal;
 
-	protected ServiceTrackerMap<String, ResourceBundleLoader>
-		resourceBundleLoaders;
 	protected Map<String, FrontendTokenDefinitionImpl>
 		themeIdFrontendTokenDefinitionImpls = new ConcurrentHashMap<>();
 

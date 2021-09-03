@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -269,10 +270,12 @@ public class JournalTransformer {
 				}
 
 				template.put("articleGroupId", articleGroupId);
+				template.put("articleLocale", locale);
 				template.put("company", getCompany(themeDisplay, companyId));
 				template.put("companyId", companyId);
 				template.put("device", getDevice(themeDisplay));
-				template.put("locale", locale);
+				template.put(
+					"locale", PortalUtil.getLocale(httpServletRequest));
 				template.put(
 					"permissionChecker",
 					PermissionThreadLocal.getPermissionChecker());

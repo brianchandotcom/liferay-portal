@@ -20,6 +20,12 @@
 ResultRow resultRow = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 BatchPlannerPlan batchPlannerPlan = (BatchPlannerPlan)resultRow.getObject();
+
+String mvcRenderCommandName = "/batch_planner/edit_import_batch_planner_plan";
+
+if (batchPlannerPlan.isExport()) {
+	mvcRenderCommandName = "/batch_planner/edit_export_batch_planner_plan";
+}
 %>
 
 <liferay-ui:icon-menu
@@ -30,7 +36,7 @@ BatchPlannerPlan batchPlannerPlan = (BatchPlannerPlan)resultRow.getObject();
 	showWhenSingleIcon="<%= true %>"
 >
 	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcRenderCommandName" value="/batch_planner/edit_batch_planner_plan" />
+		<portlet:param name="mvcRenderCommandName" value="<%= mvcRenderCommandName %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="batchPlannerPlanId" value="<%= String.valueOf(batchPlannerPlan.getBatchPlannerPlanId()) %>" />
 	</portlet:renderURL>

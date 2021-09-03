@@ -483,6 +483,22 @@ definition {
 		Alert.closeMessage(messageType = "SUCCESS");
 	}
 
+	macro searchInCollectionFilter {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		Type(
+			index = "${index}",
+			locator1 = "PageEditor#COLLECTION_FILTER_SEARCH_FIELD",
+			value1 = "${searchTerm}");
+
+		KeyPress(
+			index = "${index}",
+			locator1 = "PageEditor#COLLECTION_FILTER_SEARCH_FIELD",
+			value1 = "\RETURN");
+	}
+
 	macro selectFilterInCollectionFilter {
 		if (isSet(columnNumber)) {
 			Click.clickNoWaitForVisible(

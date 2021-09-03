@@ -295,7 +295,7 @@ public class JournalArticleInfoItemFieldValuesProvider
 
 		String languageId = LocaleUtil.toLanguageId(locale);
 
-		InfoFieldValue<Object> infoFieldValue = new InfoFieldValue<>(
+		return new InfoFieldValue<>(
 			InfoField.builder(
 			).infoFieldType(
 				TextInfoFieldType.INSTANCE
@@ -369,8 +369,6 @@ public class JournalArticleInfoItemFieldValuesProvider
 						exception);
 				}
 			});
-
-		return infoFieldValue;
 	}
 
 	private User _getLastVersionUser(JournalArticle journalArticle) {

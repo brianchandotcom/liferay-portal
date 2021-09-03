@@ -1436,6 +1436,47 @@ definition {
 			AssertElementPresent(
 				key_contentName = "${selectedName}",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+
+			if (isSet(filterCollection)) {
+				PageEditor.gotoEllipsisMenuItemInItemSelector(
+					fieldLabel = "Collection",
+					menuItem = "Filter Collection");
+
+				if (isSet(clearFilter)) {
+					Click(
+						key_text = "Clear",
+						locator1 = "Button#ANY");
+				}
+
+				if (isSet(tagNameList)) {
+					Click(
+						key_text = "Select",
+						locator1 = "Button#ANY");
+
+					for (var tagName : list "${tagNameList}") {
+						Check.checkNotVisible(
+							checkboxName = "${tagName}",
+							locator1 = "Checkbox#ANY_CHECKBOX");
+					}
+				}
+
+				if (isSet(assetTitle)) {
+					Type(
+						key_text = "Title",
+						locator1 = "TextInput#ANY",
+						value1 = "${assetTitle}");
+
+					Click(locator1 = "Modal#HEADER");
+				}
+
+				if (isSet(filterResults)) {
+					AssertTextEquals(
+						locator1 = "Modal#SEARCH_INFO",
+						value1 = "${filterResults}");
+				}
+
+				Button.clickApply();
+			}
 		}
 		else {
 			WaitForElementPresent(

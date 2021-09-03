@@ -21,9 +21,19 @@ public class CategoriesInfoFilter implements InfoFilter {
 
 	public static final String FILTER_TYPE_NAME = "category";
 
+	public long[][] getCategoryIds() {
+		return _categoryIds;
+	}
+
 	@Override
 	public String getFilterTypeName() {
 		return FILTER_TYPE_NAME;
 	}
+
+	public void setCategoryIds(long[][] categoryIds) {
+		_categoryIds = categoryIds;
+	}
+
+	private long[][] _categoryIds;
 
 }

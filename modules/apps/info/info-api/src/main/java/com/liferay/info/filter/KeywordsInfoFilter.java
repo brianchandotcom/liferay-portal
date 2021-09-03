@@ -26,4 +26,14 @@ public class KeywordsInfoFilter implements InfoFilter {
 		return FILTER_TYPE_NAME;
 	}
 
+	public String getKeywords() {
+		return _keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		_keywords = keywords;
+	}
+
+	private String _keywords;
+
 }

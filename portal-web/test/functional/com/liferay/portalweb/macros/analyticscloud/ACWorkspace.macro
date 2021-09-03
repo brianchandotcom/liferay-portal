@@ -71,6 +71,17 @@ definition {
 				locator1 = "TextInput#ANY",
 				value1 = "${workspaceName}");
 		}
+
+		if (isSet(timezone)) {
+			AssertSelectedLabel(
+				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_FIELD",
+				value1 = "${timezone}");
+
+			AssertSelectedLabel(
+				selectFieldId = "timeZoneId",
+				locator1 = "Select#SELECT_ID",
+				value1 = "${timezoneId}");
+		}
 	}
 
 }

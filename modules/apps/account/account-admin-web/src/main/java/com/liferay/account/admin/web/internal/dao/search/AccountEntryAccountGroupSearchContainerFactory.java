@@ -50,13 +50,19 @@ public class AccountEntryAccountGroupSearchContainerFactory {
 		List<AccountGroup> accountGroups = TransformUtil.transform(
 			AccountGroupRelLocalServiceUtil.getAccountGroupRels(
 				AccountEntry.class.getName(),
-				ParamUtil.getLong(liferayPortletRequest, "accountEntryId")),
+				ParamUtil.getLong(liferayPortletRequest, "accountEntryId"),
+				accountGroupDisplaySearchContainer.getStart(),
+				accountGroupDisplaySearchContainer.getEnd(), null),
 			accountGroupRel -> AccountGroupLocalServiceUtil.getAccountGroup(
 				accountGroupRel.getAccountGroupId()));
 
 		accountGroupDisplaySearchContainer.setResults(
 			TransformUtil.transform(accountGroups, AccountGroupDisplay::of));
-		accountGroupDisplaySearchContainer.setTotal(accountGroups.size());
+
+		accountGroupDisplaySearchContainer.setTotal(
+			AccountGroupRelLocalServiceUtil.getAccountGroupRelsCount(
+				AccountEntry.class.getName(),
+				ParamUtil.getLong(liferayPortletRequest, "accountEntryId")));
 
 		return accountGroupDisplaySearchContainer;
 	}

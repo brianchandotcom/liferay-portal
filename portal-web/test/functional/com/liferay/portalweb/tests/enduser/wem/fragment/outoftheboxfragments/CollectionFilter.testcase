@@ -2917,4 +2917,139 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-113926. The user should view no results in Collection Dipslay when search non collection item by keywords."
+	@priority = "4"
+	test ViewNoResultsInCollectionDisplayWhenSearchNonCollectionItemByKeywords {
+		property test.name.skip.portal.instance = "CollectionFilter#ViewNoResultsInCollectionDisplayWhenSearchNonCollectionItemByKeywords";
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Levis 501",
+				groupName = "Test Site Name",
+				title = "Levis 501");
+		}
+
+		task ("Add a blog") {
+			JSONBlog.addEntry(
+				entryContent = "LeBron VIII",
+				entryTitle = "LeBron VIII",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document") {
+			JSONDocument.addFile(
+				dmDocumentTitle = "AirPods",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a Collection Display fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Add a Content Display to Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				entryTitle = "Levis 501",
+				fragmentName = "Content Display");
+		}
+
+		task ("Add a Collection Filter above the Collection Display") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				dropTarget = "Header",
+				fragmentName = "Collection Filter",
+				targetFragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection as Target Collection and select the Keywords as Filter") {
+			PageEditor.editCollectionFilter(
+				filter = "Keywords",
+				fragmentName = "Collection Filter",
+				targetCollection = "Dynamic Collection");
+		}
+
+		task ("View no results in Collection Dipslay when search non collection item by keywords at Preview mode") {
+			Click(locator1 = "PageEditor#PREVIEW");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "Levis 501",
+				key_rowPosition = "1",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+
+			Page.searchInCollectionFilter(searchTerm = "LeBron");
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM");
+
+			Page.searchInCollectionFilter(searchTerm = "AirPods");
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View no results in Collection Dipslay when search non collection item by keywords at View mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "Levis 501",
+				key_rowPosition = "1",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+
+			Page.searchInCollectionFilter(searchTerm = "LeBron");
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM");
+
+			Page.searchInCollectionFilter(searchTerm = "AirPods");
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM");
+		}
+	}
+
 }

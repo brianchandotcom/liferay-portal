@@ -35,8 +35,8 @@ definition {
 	@priority = "5"
 	test CardsFragmentsAfterUpgrade72104 {
 		property data.archive.type = "data-archive-layout-section-with-three-columns";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "7.2.1";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.10.4";
 
 		Upgrade.viewCardWithThreeColumnsInMobileBreakpoint();
 	}

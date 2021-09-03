@@ -522,6 +522,201 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-113926. The user can filter collection items in Collection Display by multiple keywords."
+	@priority = "4"
+	test FilterResultsOfCollectionDisplayByMultipleKeywords {
+		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionDisplayByMultipleKeywords";
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Levis 501",
+				groupName = "Test Site Name",
+				title = "Levis 501");
+		}
+
+		task ("Add a blog") {
+			JSONBlog.addEntry(
+				entryContent = "LeBron VIII",
+				entryTitle = "LeBron VIII",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document") {
+			JSONDocument.addFile(
+				dmDocumentTitle = "AirPods",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a dynamic collection with All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a Collection Display fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Add a Content Display to Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				entryTitle = "Levis 501",
+				fragmentName = "Content Display");
+		}
+
+		task ("Add a Grid above the Collection Display") {
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				dropTarget = "Header",
+				fragmentName = "Grid",
+				targetFragmentName = "Collection Display");
+		}
+
+		task ("Change Number of Modules to 2") {
+			PageEditor.editLayoutGrid(
+				columnCount = "2",
+				panel = "General");
+		}
+
+		task ("Add a Collection Filter to each module of Grid") {
+			for (var columnNumber : list "1,2") {
+				PageEditor.addElementToColumn(
+					collectionName = "Content Display",
+					columnNumber = "${columnNumber}",
+					fragmentName = "Collection Filter",
+					navTab = "Fragments");
+			}
+		}
+
+		task ("Select the Keywords type in both Collection Filters") {
+			for (var columnNumber : list "1,2") {
+				PageEditor.editCollectionFilter(
+					columnNumber = "${columnNumber}",
+					filter = "Keywords",
+					fragmentName = "Collection Filter",
+					targetCollection = "Dynamic Collection");
+			}
+		}
+
+		task ("Filter results of Collection Display by multiple keywords at Preview mode") {
+			Click(locator1 = "PageEditor#PREVIEW");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			var n = "1";
+
+			for (var content : list "AirPods,LeBron VIII,Levis 501") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "${content}",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+
+				var n = ${n} + 1;
+			}
+
+			Page.searchInCollectionFilter(searchTerm = "Levis");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "Levis 501",
+				key_rowPosition = "1",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+
+			Page.searchInCollectionFilter(
+				index = "2",
+				searchTerm = "AirPods");
+
+			var n = "1";
+
+			for (var content : list "AirPods,Levis 501") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "${content}",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Filter results of Collection Display by multiple keywords at View mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var content : list "AirPods,LeBron VIII,Levis 501") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "${content}",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+
+				var n = ${n} + 1;
+			}
+
+			Page.searchInCollectionFilter(searchTerm = "VIII");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "LeBron VIII",
+				key_rowPosition = "1",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+
+			Page.searchInCollectionFilter(
+				index = "2",
+				searchTerm = "Levis");
+
+			var n = "1";
+
+			for (var content : list "LeBron VIII,Levis 501") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "${content}",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM");
+		}
+	}
+
 	@description = "This is a test for LPS-124226. Can filter the results of a collection page based on dynamic collection via selecting multiple categories in multiple filters."
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnDynamicCollectionByContainsAllCategories {

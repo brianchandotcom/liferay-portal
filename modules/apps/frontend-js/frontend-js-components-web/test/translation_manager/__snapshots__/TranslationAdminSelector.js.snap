@@ -88,7 +88,7 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
                 <span
                   class="label-item label-item-expand"
                 >
-                  untranslated
+                  not-translated
                 </span>
               </span>
             </div>
@@ -132,7 +132,7 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
                 <span
                   class="label-item label-item-expand"
                 >
-                  untranslated
+                  not-translated
                 </span>
               </span>
             </div>
@@ -277,7 +277,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
                 <span
                   class="label-item label-item-expand"
                 >
-                  untranslated
+                  not-translated
                 </span>
               </span>
             </div>
@@ -377,7 +377,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
                 <span
                   class="label-item label-item-expand"
                 >
-                  untranslated
+                  not-translated
                 </span>
               </span>
             </div>
@@ -510,7 +510,7 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
                 <span
                   class="label-item label-item-expand"
                 >
-                  untranslated
+                  not-translated
                 </span>
               </span>
             </div>
@@ -554,7 +554,7 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
                 <span
                   class="label-item label-item-expand"
                 >
-                  untranslated
+                  not-translated
                 </span>
               </span>
             </div>

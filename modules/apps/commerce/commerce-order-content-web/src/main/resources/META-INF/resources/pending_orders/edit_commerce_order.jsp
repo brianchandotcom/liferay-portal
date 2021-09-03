@@ -140,6 +140,13 @@ List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getB
 
 				<div class="col-md-3">
 					<dl class="commerce-list">
+						<dt><liferay-ui:message key="order-type" /></dt>
+						<dd><%= commerceOrderContentDisplayContext.getCommerceOrderTypeName(languageId) %></dd>
+					</dl>
+				</div>
+
+				<div class="col-md-3">
+					<dl class="commerce-list">
 						<dt><liferay-ui:message key="order-date" /></dt>
 						<dd>
 							<%= commerceOrderContentDisplayContext.getCommerceOrderDate(commerceOrder) %>

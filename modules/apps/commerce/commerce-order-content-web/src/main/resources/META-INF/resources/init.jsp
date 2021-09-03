@@ -88,6 +88,8 @@ page import="java.util.Map" %>
 <portlet:defineObjects />
 
 <%
+String languageId = LanguageUtil.getLanguageId(locale);
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 CommerceOrderContentDisplayContext commerceOrderContentDisplayContext = (CommerceOrderContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);

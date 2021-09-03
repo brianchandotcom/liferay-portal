@@ -184,6 +184,13 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 
 					<commerce-ui:info-box
 						elementClasses="py-3"
+						title='<%= LanguageUtil.get(request, "order-type") %>'
+					>
+						<%= HtmlUtil.escape(commerceOrderEditDisplayContext.getCommerceOrderTypeName(languageId)) %>
+					</commerce-ui:info-box>
+
+					<commerce-ui:info-box
+						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "channel") %>'
 					>
 						<%= HtmlUtil.escape(commerceOrderEditDisplayContext.getCommerceChannelName()) %>

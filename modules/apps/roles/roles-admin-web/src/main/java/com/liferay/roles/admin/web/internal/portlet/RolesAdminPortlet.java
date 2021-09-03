@@ -464,19 +464,18 @@ public class RolesAdminPortlet extends MVCPortlet {
 				groupIds = ArrayUtil.distinct(
 					ArrayUtil.filter(groupIds, Validator::isNotNull));
 
-				int scope = ResourceConstants.SCOPE_COMPANY;
+				int scope = ResourceConstants.SCOPE_GROUP_TEMPLATE;
 
-				if ((role.getType() == RoleConstants.TYPE_ACCOUNT) ||
-					(role.getType() == RoleConstants.TYPE_DEPOT) ||
-					(role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
-					(role.getType() == RoleConstants.TYPE_PROVIDER) ||
-					(role.getType() == RoleConstants.TYPE_SITE)) {
+				if ((role.getType() == RoleConstants.TYPE_REGULAR) ||
+					((role.getType() == RoleConstants.TYPE_ACCOUNT) &&
+					 ParamUtil.getBoolean(
+						 actionRequest, "accountRoleGroupScope"))) {
 
-					scope = ResourceConstants.SCOPE_GROUP_TEMPLATE;
-				}
-				else {
 					if (groupIds.length > 0) {
 						scope = ResourceConstants.SCOPE_GROUP;
+					}
+					else {
+						scope = ResourceConstants.SCOPE_COMPANY;
 					}
 				}
 

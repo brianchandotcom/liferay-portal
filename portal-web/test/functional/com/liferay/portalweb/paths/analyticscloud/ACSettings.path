@@ -267,6 +267,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_LIST_CHECKBOX</td>
+	<td>//tr//input[@type="checkbox"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INVITE_USERS_BUTTON</td>
 	<td>//button[text()='Invite Users']</td>
 	<td></td>

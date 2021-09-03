@@ -3,7 +3,7 @@
 	font-size: 12px;
 	height: 22px;
 	padding: 2px 10px;
-	width: fit-content;
+	width: 100px;
 }
 
 .end-state {
@@ -28,7 +28,7 @@
 	border-radius: 47px;
 	height: 40px;
 	padding: 9.5px 16px;
-	width: fit-content;
+	width: 100px;
 
 	&:hover:not(.current-state) {
 		border: 2px solid #a7a9bc;

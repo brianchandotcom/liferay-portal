@@ -13,6 +13,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import classnames from 'classnames';
 import React from 'react';
 import {Handle} from 'react-flow-renderer';
@@ -34,24 +35,31 @@ export default function StateNode({
 				/>
 			))}
 
-			<div
-				className={classnames(
-					'node state-node',
-					current ? 'current-state text-white' : 'text-secondary'
-				)}
-				onMouseEnter={notifyVisibilityChange(true)}
-				onMouseLeave={notifyVisibilityChange(false)}
-			>
-				<span>{label}</span>
+			<ClayTooltipProvider>
+				<div
+					className={classnames(
+						'node state-node',
+						current ? 'current-state text-white' : 'text-secondary'
+					)}
+					data-tooltip-align="top"
+					onMouseEnter={notifyVisibilityChange(true)}
+					onMouseLeave={notifyVisibilityChange(false)}
+					title={label}
+				>
+					<span className="truncate-container">{label}</span>
 
-				{current ? (
-					<ClayIcon className="current-icon ml-2" symbol="live" />
-				) : (
-					done && (
-						<ClayIcon className="done-icon ml-2" symbol="check" />
-					)
-				)}
-			</div>
+					{current ? (
+						<ClayIcon className="current-icon ml-2" symbol="live" />
+					) : (
+						done && (
+							<ClayIcon
+								className="done-icon ml-2"
+								symbol="check"
+							/>
+						)
+					)}
+				</div>
+			</ClayTooltipProvider>
 		</>
 	);
 }

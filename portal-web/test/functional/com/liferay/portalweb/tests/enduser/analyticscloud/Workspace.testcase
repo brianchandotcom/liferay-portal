@@ -46,6 +46,52 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9149 | Test Summary: Information banner should no longer be shown after being dismissed by a user"
+	@priority = "5"
+	test CannotViewInformationBannerAfterDismissedByUser {
+		task ("Navigate to Workspace Settings") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToWorkspace();
+		}
+
+		task ("Change the timezone to Log Angeles of United States") {
+			ACWorkspace.configureWorkspaceSettings(
+				timezone = "United States",
+				timezoneId = "UTC-07:00 Pacific Time (America/Los Angeles)");
+
+			ACUtils.waitForLoading();
+		}
+
+		task ("Refresh the page") {
+			Refresh();
+		}
+
+		task ("View the information banner") {
+			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC-07:00 Pacific Time");
+		}
+
+		task ("Dismiss the information banner") {
+			Click(locator1 = "Icon#TIMES");
+		}
+
+		task ("View the information banner disappear") {
+			AssertElementNotPresent(locator1 = "Message#ALERT_DISMISSIBLE");
+		}
+
+		task ("Refresh the page") {
+			Refresh();
+		}
+
+		task ("View the information banner still disappear") {
+			WaitForVisible(
+				key_title = "Workspace Settings",
+				locator1 = "Header#H3_TITLE");
+
+			AssertElementNotPresent(locator1 = "Message#ALERT_DISMISSIBLE");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9147 | Test Summary: Set the timezone in workspace settings"
 	@priority = "5"
 	test SetTimeZoneInExistingWorkspace {

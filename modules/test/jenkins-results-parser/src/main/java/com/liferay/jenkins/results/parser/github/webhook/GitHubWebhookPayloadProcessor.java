@@ -1392,12 +1392,8 @@ public class GitHubWebhookPayloadProcessor {
 				}
 			}
 
-			String jenkinsAdminUserToken = _jenkinsBuildProperties.getProperty(
-				"jenkins.admin.user.token");
-
 			try {
-				JenkinsStopBuildUtil.stopBuild(
-					buildURL, "jenkins-admin", jenkinsAdminUserToken);
+				JenkinsStopBuildUtil.stopBuild(buildURL);
 			}
 			catch (Exception exception) {
 				throw new RuntimeException(

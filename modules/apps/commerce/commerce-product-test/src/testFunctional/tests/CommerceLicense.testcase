@@ -25,6 +25,7 @@ definition {
 	@priority = "5"
 	test CommerceRemainsActiveOnRestarts {
 		property commerce.enabled = "true";
+		property test.name.skip.portal.instance = "CommerceLicense#CommerceRemainsActiveOnRestarts";
 
 		CommerceLicense.viewCommerceAvailable();
 
@@ -42,6 +43,7 @@ definition {
 	@priority = "3"
 	test DeactivateCommerce {
 		property commerce.enabled = "true";
+		property test.name.skip.portal.instance = "CommerceLicense#DeactivateCommerce";
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 
@@ -63,6 +65,7 @@ definition {
 	@priority = "4"
 	test DeleteEnterpriseLicenseModule {
 		property commerce.enabled = "true";
+		property test.name.skip.portal.instance = "CommerceLicense#DeleteEnterpriseLicenseModule";
 
 		Portlet.shutdownServer();
 
@@ -88,6 +91,7 @@ definition {
 	@priority = "3"
 	test DeleteLiferayDXPLicense {
 		property commerce.enabled = "false";
+		property test.name.skip.portal.instance = "CommerceLicense#DeleteLiferayDXPLicense";
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 
@@ -109,6 +113,7 @@ definition {
 	@priority = "5"
 	test EnableCommerceAfterPortalStarts {
 		property commerce.enabled = "false";
+		property test.name.skip.portal.instance = "CommerceLicense#EnableCommerceAfterPortalStarts";
 
 		CommerceLicense.viewCommerceMissing();
 

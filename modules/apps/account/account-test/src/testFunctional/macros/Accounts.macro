@@ -178,6 +178,36 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro addAssigneeToRoleViaAccountDetailsPage {
+		Navigator.gotoNavTab(navTab = "Roles");
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Assign Users",
+			rowEntry = "${accountRoleTitle}");
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "${accountRoleTitle}");
+
+		LexiconEntry.gotoAdd();
+
+		SelectFrame(
+			key_title = "Assign Users to ${accountRoleTitle}",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Search.searchCP(searchTerm = "${assigneeName}");
+
+		Check(
+			key_tableEntry = "${assigneeName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		SelectFrameTop();
+
+		Button.click(button = "Assign");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro addBusinessAccount {
 		LexiconEntry.gotoAdd();
 

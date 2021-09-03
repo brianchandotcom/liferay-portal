@@ -46,4 +46,52 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9147 | Test Summary: Set the timezone in workspace settings"
+	@priority = "5"
+	test SetTimeZoneInExistingWorkspace {
+		task ("Navigate to Workspace Settings") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToWorkspace();
+		}
+
+		task ("View the timezone is UTC") {
+			ACWorkspace.viewWorkspaceSettings(
+				timezone = "UTC",
+				timezoneId = "UTC Coordinated Universal Time (UTC)");
+		}
+
+		task ("Change the timezone to Log Angeles of United States") {
+			ACWorkspace.configureWorkspaceSettings(
+				timezone = "United States",
+				timezoneId = "UTC-07:00 Pacific Time (America/Los Angeles)");
+
+			ACUtils.waitForLoading();
+		}
+
+		task ("Refresh the page") {
+			Refresh();
+		}
+
+		task ("View the information banner") {
+			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC-07:00 Pacific Time");
+		}
+
+		task ("View the timezone in workspace settings") {
+			ACWorkspace.viewWorkspaceSettings(
+				timezone = "United States",
+				timezoneId = "UTC-07:00 Pacific Time (America/Los Angeles)");
+		}
+
+		task ("Navigate to the Sites dashboard") {
+			ACNavigation.exitSettings();
+
+			ACNavigation.goToSites();
+		}
+
+		task ("View the information banner") {
+			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC-07:00 Pacific Time");
+		}
+	}
+
 }

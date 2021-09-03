@@ -36,6 +36,12 @@
 	<td>//*[contains(@class, 'workspace-link')]</td>
 	<td></td>
 </tr>
+<!--WORKSPACE_SETTINGS-->
+<tr>
+	<td>TIMEZONE_COUNTRY_SELECT_FIELD</td>
+	<td>//label[normalize-space()='Timezone']//following-sibling::div//select</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

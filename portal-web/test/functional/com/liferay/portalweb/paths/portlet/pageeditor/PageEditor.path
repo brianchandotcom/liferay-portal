@@ -446,7 +446,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL</td>
-	<td>//*[normalize-space()='${key_collectionName}']</td>
+	<td>//*[contains(@class,'collapse-icon')][normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>

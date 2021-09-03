@@ -55,6 +55,22 @@ public class DB2SQLTransformerLogicTest
 			sqlTransformer.transform(getBitwiseCheckOriginalSQL()));
 	}
 
+	@Test
+	public void testReplaceCastText() {
+		Assert.assertEquals(
+			"select CAST(foo AS VARCHAR(2000)) from Foo",
+			sqlTransformer.transform(getCastTextOriginalSQL()));
+	}
+
+	@Test
+	public void testReplaceConcat() {
+		Assert.assertEquals(
+			"select * from Foo where foo LIKE CAST(bar AS VARCHAR(2000)) " +
+				"CONCAT COALESCE(CAST(? AS VARCHAR(2000)),'')",
+			sqlTransformer.transform(
+				"select * from Foo where foo LIKE CONCAT(CAST_TEXT(bar),?)"));
+	}
+
 	@Override
 	@Test
 	public void testReplaceModWithExtraWhitespace() {
@@ -89,7 +105,7 @@ public class DB2SQLTransformerLogicTest
 
 	@Override
 	protected String getCastClobTextTransformedSQL() {
-		return "select CAST(foo AS VARCHAR(32672)) from Foo";
+		return "select CAST(foo AS VARCHAR(2000)) from Foo";
 	}
 
 	@Override
@@ -106,7 +122,7 @@ public class DB2SQLTransformerLogicTest
 		Assert.assertEquals(
 			StringUtil.replace(
 				sql, CharPool.QUESTION,
-				"COALESCE(CAST(? AS VARCHAR(32672)),'')"),
+				"COALESCE(CAST(? AS VARCHAR(2000)),'')"),
 			sqlTransformer.transform(sql));
 	}
 

@@ -8,6 +8,15 @@ definition {
 				value1 = "${workspaceName}");
 		}
 
+		Click(
+			key_text = "Add Incident Report Contacts",
+			locator1 = "TextInput#ANY");
+
+		KeyPress(
+			key_text = "Add Incident Report Contacts",
+			locator1 = "TextInput#ANY",
+			value1 = "\BACK_SPACE");
+
 		Type(
 			key_text = "Add Incident Report Contacts",
 			locator1 = "TextInput#ANY",

@@ -739,13 +739,15 @@ public class CPDefinitionServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntry
-			getDefaultImage(HttpPrincipal httpPrincipal, long cpDefinitionId)
+			getDefaultImageCPAttachmentFileEntry(
+				HttpPrincipal httpPrincipal, long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CPDefinitionServiceUtil.class, "getDefaultImage",
-				_getDefaultImageParameterTypes13);
+				CPDefinitionServiceUtil.class,
+				"getDefaultImageCPAttachmentFileEntry",
+				_getDefaultImageCPAttachmentFileEntryParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId);
@@ -1639,8 +1641,10 @@ public class CPDefinitionServiceHttp {
 		};
 	private static final Class<?>[] _getCPDefinitionsCountParameterTypes12 =
 		new Class[] {long.class, int.class};
-	private static final Class<?>[] _getDefaultImageParameterTypes13 =
-		new Class[] {long.class};
+	private static final Class<?>[]
+		_getDefaultImageCPAttachmentFileEntryParameterTypes13 = new Class[] {
+			long.class
+		};
 	private static final Class<?>[] _getLayoutUuidParameterTypes14 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getUrlTitleMapParameterTypes15 =

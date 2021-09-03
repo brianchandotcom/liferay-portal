@@ -501,7 +501,8 @@ public interface CPDefinitionLocalService
 		long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPAttachmentFileEntry getDefaultImage(long cpDefinitionId)
+	public CPAttachmentFileEntry getDefaultImageCPAttachmentFileEntry(
+			long cpDefinitionId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

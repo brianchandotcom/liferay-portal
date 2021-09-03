@@ -302,10 +302,11 @@ public class CPDefinitionServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPAttachmentFileEntry
-			getDefaultImage(long cpDefinitionId)
+			getDefaultImageCPAttachmentFileEntry(long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpDefinitionService.getDefaultImage(cpDefinitionId);
+		return _cpDefinitionService.getDefaultImageCPAttachmentFileEntry(
+			cpDefinitionId);
 	}
 
 	/**

@@ -231,13 +231,14 @@ public class CPDefinitionServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap
-			getDefaultImage(long cpDefinitionId)
+			getDefaultImageCPAttachmentFileEntry(long cpDefinitionId)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.product.model.CPAttachmentFileEntry
-				returnValue = CPDefinitionServiceUtil.getDefaultImage(
-					cpDefinitionId);
+				returnValue =
+					CPDefinitionServiceUtil.
+						getDefaultImageCPAttachmentFileEntry(cpDefinitionId);
 
 			return com.liferay.commerce.product.model.CPAttachmentFileEntrySoap.
 				toSoapModel(returnValue);

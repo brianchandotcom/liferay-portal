@@ -288,10 +288,11 @@ public class CPDefinitionServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntry
-			getDefaultImage(long cpDefinitionId)
+			getDefaultImageCPAttachmentFileEntry(long cpDefinitionId)
 		throws PortalException {
 
-		return getService().getDefaultImage(cpDefinitionId);
+		return getService().getDefaultImageCPAttachmentFileEntry(
+			cpDefinitionId);
 	}
 
 	/**

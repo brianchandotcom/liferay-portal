@@ -22,6 +22,51 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that a user can view all the Account Groups an account is assigned to via Account details page"
+	@priority = "4"
+	test AccountGroupsAreDisplayedInAccountDetailsPage {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Accounts Name",
+			accountEntryType = "Business");
+
+		AccountGroups.openAccountGroupsAdmin();
+
+		for (var accountGroupNum : list "1,2,3") {
+			AccountGroups.addCP(
+				accountGroupDescription = "Account Group Description ${accountGroupNum}",
+				accountGroupName = "Account Group ${accountGroupNum}");
+
+			Navigator.gotoNavTab(navTab = "Accounts");
+
+			AccountGroups.addAssignee(
+				accountGroupName = "Account Group ${accountGroupNum}",
+				assigneeNames = "Accounts Name",
+				assigneeType = "Accounts");
+
+			Navigator.gotoBack();
+		}
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Accounts Name");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Account Groups");
+
+		for (var accountGroupNum : list "1,2,3") {
+			AssertTextEquals(
+				key_columnName = "lfr-name",
+				key_tableEntry = "Account Group ${accountGroupNum}",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+				value1 = "Account Group ${accountGroupNum}");
+
+			AssertTextEquals(
+				key_columnName = "lfr-description",
+				key_tableEntry = "Account Group ${accountGroupNum}",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+				value1 = "Account Group Description ${accountGroupNum}");
+		}
+	}
+
 	@description = "This is a use case for LPS-101893. It asserts all accounts display properly across pages."
 	@priority = "4"
 	test AccountsDisplayWhenChangingPagination {

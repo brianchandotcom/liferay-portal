@@ -66,8 +66,6 @@ public class PollsToDDMUpgradeProcessTest extends BaseDDMTestCase {
 				"radio-field-type-label", "Single Selection"
 			).build());
 		setUpLocaleUtil();
-		setUpPortalUtil();
-
 		_setUpLocalizationUtil();
 		_setUpPollsToDDMUpgradeProcess();
 	}

@@ -20,8 +20,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -30,15 +28,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.mockito.Matchers;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
@@ -71,7 +66,6 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
 		setUpLocaleUtil();
-		setUpPortalUtil();
 		setUpPropsValues();
 		setUpSAXReaderUtil();
 	}
@@ -370,22 +364,6 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 		DDMStructure structure = createStructure("Test Structure", ddmForm);
 
 		Assert.assertTrue(structure.getFieldRequired("field1"));
-	}
-
-	protected void setUpPortalUtil() {
-		PortalUtil portalUtil = new PortalUtil();
-
-		Portal portal = mock(Portal.class);
-
-		ResourceBundle resourceBundle = mock(ResourceBundle.class);
-
-		when(
-			portal.getResourceBundle(Matchers.any(Locale.class))
-		).thenReturn(
-			resourceBundle
-		);
-
-		portalUtil.setPortal(portal);
 	}
 
 }

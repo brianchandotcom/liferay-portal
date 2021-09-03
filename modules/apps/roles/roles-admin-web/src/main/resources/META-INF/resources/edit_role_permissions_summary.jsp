@@ -66,6 +66,10 @@ List<PermissionDisplay> permissionDisplays = new ArrayList<PermissionDisplay>(pe
 for (int i = 0; i < permissions.size(); i++) {
 	Permission permission = permissions.get(i);
 
+	if (!roleDisplayContext.isValidPermission(role, permission)) {
+		continue;
+	}
+
 	Resource resource = new ResourceImpl();
 
 	resource.setCompanyId(themeDisplay.getCompanyId());

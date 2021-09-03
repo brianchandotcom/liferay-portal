@@ -78,7 +78,9 @@ definition {
 			locator1 = "ACInterests#INTEREST_TOPIC",
 			value1 = "${interestTopic}");
 
-		AssertElementPresent(locator1 = "ACInterests#INTEREST_SEGMENT_MEMBERS_BAR");
+		if (!(isSet(knownIndividuals))) {
+			AssertElementPresent(locator1 = "ACInterests#INTEREST_SEGMENT_MEMBERS_BAR");
+		}
 
 		if (isSet(membersCount)) {
 			AssertTextEquals(

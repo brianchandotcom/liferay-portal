@@ -262,10 +262,12 @@ export default ({
 								displayType={null}
 								onClick={handleReset}
 							>
-								Cancel
+								{Liferay.Language.get('cancel')}
 							</ClayButton>
 
-							<ClayButton onClick={handleSave}>Save</ClayButton>
+							<ClayButton onClick={handleSave}>
+								{Liferay.Language.get('save')}
+							</ClayButton>
 						</ClayToolbar.Section>
 					</ClayToolbar.Item>
 				</ClayToolbar.Nav>

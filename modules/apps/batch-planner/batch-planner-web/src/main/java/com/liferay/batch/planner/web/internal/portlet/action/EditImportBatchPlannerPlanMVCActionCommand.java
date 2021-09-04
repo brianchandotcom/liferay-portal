@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class EditBatchPlannerPlanMVCActionCommand
+public class EditImportBatchPlannerPlanMVCActionCommand
 	extends BaseTransactionalMVCActionCommand {
 
 	@Override

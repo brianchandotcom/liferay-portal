@@ -26,7 +26,7 @@ BatchPlannerPlan batchPlannerPlan = BatchPlannerPlanServiceUtil.fetchBatchPlanne
 renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "add") : LanguageUtil.get(request, "edit"));
 %>
 
-<portlet:actionURL name="/batch_planner/edit_batch_planner_plan" var="editBatchPlannerPlanURL" />
+<portlet:actionURL name="/batch_planner/edit_import_batch_planner_plan" var="editBatchPlannerPlanURL" />
 
 <liferay-frontend:edit-form
 	action="<%= editBatchPlannerPlanURL %>"

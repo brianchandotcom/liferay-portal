@@ -108,41 +108,9 @@ definition {
 		}
 
 		task ("Select Related Assets as Collection Provider for Asset Publisher in Column 2") {
-			MouseOver.mouseOverNotVisible(
-				key_columnNumber = "2",
-				key_portletName = "Asset Publisher",
-				locator1 = "Home#PAGE_COLUMN_PORTLET_HEADER_ELLIPSIS");
-
-			Click.waitForMenuToggleJSClick(
-				key_columnNumber = "2",
-				key_portletName = "Asset Publisher",
-				locator1 = "Home#PAGE_COLUMN_PORTLET_HEADER_ELLIPSIS");
-
-			MenuItem.click(menuItem = "Configuration");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			Navigator.gotoNavTab(navTab = "Asset Selection");
-
-			Panel.expandPanel(panel = "Asset Selection");
-
-			Click(locator1 = "APConfiguration#ASSET_SELECTION_INFO_LIST_PROVIDER");
-
-			Alert.viewSuccessMessage();
-
-			Panel.expandPanel(panel = "Select Collection Provider");
-
-			Select(
-				locator1 = "APConfiguration#SELECT_COLLECTION_PROVIDER_FIELD",
-				value1 = "Related Assets");
-
-			WaitForElementNotPresent(
-				key_text = "Save",
-				locator1 = "Button#ANY_DISABLED");
-
-			PortletEntry.save();
-
-			IFrame.closeFrame();
+			AssetPublisherPortlet.configureCollectionProviderPG(
+				collectionProviderName = "Related Assets",
+				columnNumnber = "2");
 		}
 
 		task ("Assert no results message shown on Asset Publisher in Column 2") {
@@ -303,16 +271,24 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Asset Selection");
 
-			Click(locator1 = "APConfiguration#ASSET_SELECTION_INFO_LIST_PROVIDER");
+			Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
 
 			Alert.viewSuccessMessage();
 
-			Panel.expandPanel(panel = "Select Collection Provider");
+			Panel.expandPanel(panel = "Select Collection");
+
+			Alert.closeMessage(messageType = "SUCCESS");
+
+			Button.clickSelect();
+
+			WaitForElementPresent(locator1 = "IFrame#ASSET_LIST_DIALOG");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			NavItem.click(navItem = "Collection Providers");
 
 			for (var collectionProviderName : list "Highest Rated Assets,Most Viewed Assets,Related Assets,Recent Content") {
-				AssertElementPresent(
-					key_value = "${collectionProviderName}",
-					locator1 = "APConfiguration#SELECT_COLLECTION_PROVIDER_FIELD_VALUE");
+				LexiconCard.viewCardPresent(card = "${collectionProviderName}");
 			}
 		}
 
@@ -338,16 +314,24 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Asset Selection");
 
-			Click(locator1 = "APConfiguration#ASSET_SELECTION_INFO_LIST_PROVIDER");
+			Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
 
 			Alert.viewSuccessMessage();
 
-			Panel.expandPanel(panel = "Select Collection Provider");
+			Panel.expandPanel(panel = "Select Collection");
+
+			Alert.closeMessage(messageType = "SUCCESS");
+
+			Button.clickSelect();
+
+			WaitForElementPresent(locator1 = "IFrame#ASSET_LIST_DIALOG");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			NavItem.click(navItem = "Collection Providers");
 
 			for (var collectionProviderName : list "Highest Rated Assets,Most Viewed Assets,Related Assets,Recent Content") {
-				AssertElementPresent(
-					key_value = "${collectionProviderName}",
-					locator1 = "APConfiguration#SELECT_COLLECTION_PROVIDER_FIELD_VALUE");
+				LexiconCard.viewCardPresent(card = "${collectionProviderName}");
 			}
 		}
 
@@ -383,16 +367,24 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Asset Selection");
 
-			Click(locator1 = "APConfiguration#ASSET_SELECTION_INFO_LIST_PROVIDER");
+			Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
 
 			Alert.viewSuccessMessage();
 
-			Panel.expandPanel(panel = "Select Collection Provider");
+			Panel.expandPanel(panel = "Select Collection");
+
+			Alert.closeMessage(messageType = "SUCCESS");
+
+			Button.clickSelect();
+
+			WaitForElementPresent(locator1 = "IFrame#ASSET_LIST_DIALOG");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			NavItem.click(navItem = "Collection Providers");
 
 			for (var collectionProviderName : list "Highest Rated Assets,Most Viewed Assets,Related Assets,Recent Content") {
-				AssertElementPresent(
-					key_value = "${collectionProviderName}",
-					locator1 = "APConfiguration#SELECT_COLLECTION_PROVIDER_FIELD_VALUE");
+				LexiconCard.viewCardPresent(card = "${collectionProviderName}");
 			}
 		}
 
@@ -424,16 +416,24 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Asset Selection");
 
-			Click(locator1 = "APConfiguration#ASSET_SELECTION_INFO_LIST_PROVIDER");
+			Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
 
 			Alert.viewSuccessMessage();
 
-			Panel.expandPanel(panel = "Select Collection Provider");
+			Panel.expandPanel(panel = "Select Collection");
+
+			Alert.closeMessage(messageType = "SUCCESS");
+
+			Button.clickSelect();
+
+			WaitForElementPresent(locator1 = "IFrame#ASSET_LIST_DIALOG");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			NavItem.click(navItem = "Collection Providers");
 
 			for (var collectionProviderName : list "Highest Rated Assets,Most Viewed Assets,Related Assets,Recent Content") {
-				AssertElementPresent(
-					key_value = "${collectionProviderName}",
-					locator1 = "APConfiguration#SELECT_COLLECTION_PROVIDER_FIELD_VALUE");
+				LexiconCard.viewCardPresent(card = "${collectionProviderName}");
 			}
 		}
 
@@ -460,16 +460,24 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Asset Selection");
 
-			Click(locator1 = "APConfiguration#ASSET_SELECTION_INFO_LIST_PROVIDER");
+			Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
 
 			Alert.viewSuccessMessage();
 
-			Panel.expandPanel(panel = "Select Collection Provider");
+			Panel.expandPanel(panel = "Select Collection");
+
+			Alert.closeMessage(messageType = "SUCCESS");
+
+			Button.clickSelect();
+
+			WaitForElementPresent(locator1 = "IFrame#ASSET_LIST_DIALOG");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			NavItem.click(navItem = "Collection Providers");
 
 			for (var collectionProviderName : list "Highest Rated Assets,Most Viewed Assets,Related Assets,Recent Content") {
-				AssertElementPresent(
-					key_value = "${collectionProviderName}",
-					locator1 = "APConfiguration#SELECT_COLLECTION_PROVIDER_FIELD_VALUE");
+				LexiconCard.viewCardPresent(card = "${collectionProviderName}");
 			}
 		}
 
@@ -497,16 +505,24 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Asset Selection");
 
-			Click(locator1 = "APConfiguration#ASSET_SELECTION_INFO_LIST_PROVIDER");
+			Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
 
 			Alert.viewSuccessMessage();
 
-			Panel.expandPanel(panel = "Select Collection Provider");
+			Panel.expandPanel(panel = "Select Collection");
+
+			Alert.closeMessage(messageType = "SUCCESS");
+
+			Button.clickSelect();
+
+			WaitForElementPresent(locator1 = "IFrame#ASSET_LIST_DIALOG");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			NavItem.click(navItem = "Collection Providers");
 
 			for (var collectionProviderName : list "Highest Rated Assets,Most Viewed Assets,Related Assets,Recent Content") {
-				AssertElementPresent(
-					key_value = "${collectionProviderName}",
-					locator1 = "APConfiguration#SELECT_COLLECTION_PROVIDER_FIELD_VALUE");
+				LexiconCard.viewCardPresent(card = "${collectionProviderName}");
 			}
 		}
 	}

@@ -94,11 +94,16 @@ public class CommerceOrderTypeServiceImpl
 	public CommerceOrderType fetchCommerceOrderType(long commerceOrderTypeId)
 		throws PortalException {
 
-		_commerceOrderTypeModelResourcePermission.check(
-			getPermissionChecker(), commerceOrderTypeId, ActionKeys.VIEW);
+		CommerceOrderType commerceOrderType =
+			commerceOrderTypeLocalService.fetchCommerceOrderType(
+				commerceOrderTypeId);
 
-		return commerceOrderTypeLocalService.fetchCommerceOrderType(
-			commerceOrderTypeId);
+		if (commerceOrderType != null) {
+			_commerceOrderTypeModelResourcePermission.check(
+				getPermissionChecker(), commerceOrderTypeId, ActionKeys.VIEW);
+		}
+
+		return commerceOrderType;
 	}
 
 	@Override

@@ -39,7 +39,7 @@
 <!--SELECT COLLECTION-->
 <tr>
 	<td>ASSET_SELECTION_ASSET_LIST_TITLE</td>
-	<td>//div[contains(@id,'assetListTitle')]</td>
+	<td>//div[contains(@id,'selectCollection')]//div[contains(@id,'title')]</td>
 	<td></td>
 </tr>
 <!--SUBSCRIPTIONS-->

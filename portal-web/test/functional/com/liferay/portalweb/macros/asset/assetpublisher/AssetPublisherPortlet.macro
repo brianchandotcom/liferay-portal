@@ -982,6 +982,8 @@ definition {
 
 		Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
 
+		Alert.viewSuccessMessage();
+
 		Panel.expandPanel(panel = "Select Collection");
 
 		Alert.closeMessage(messageType = "SUCCESS");
@@ -991,6 +993,8 @@ definition {
 		WaitForElementPresent(locator1 = "IFrame#ASSET_LIST_DIALOG");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		NavItem.click(navItem = "Collections");
 
 		if (isSet(depotName)) {
 			AssertClick(
@@ -1017,15 +1021,13 @@ definition {
 
 		SelectFrameTop();
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Pause(locator1 = "3000");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		AssertTextEquals(
 			locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST_TITLE",
 			value1 = "${assetListName}");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		SelectFrameTop();
 	}

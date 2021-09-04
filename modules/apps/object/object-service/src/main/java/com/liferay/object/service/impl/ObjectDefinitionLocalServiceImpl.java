@@ -14,6 +14,7 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
@@ -379,7 +380,8 @@ public class ObjectDefinitionLocalServiceImpl
 		_addingObjectDefinitionDeployer(
 			new ObjectDefinitionDeployerImpl(
 				_bundleContext, _destinationFactory,
-				_dynamicQueryBatchIndexingActionableFactory, _messageBus,
+				_dynamicQueryBatchIndexingActionableFactory,
+				_listTypeEntryLocalService, _messageBus,
 				_modelSearchRegistrarHelper, _objectEntryLocalService,
 				_objectFieldLocalService, _objectScopeProviderRegistry,
 				_persistedModelLocalServiceRegistry, _resourceActions,
@@ -889,6 +891,9 @@ public class ObjectDefinitionLocalServiceImpl
 	@Reference
 	private DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
+
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Reference
 	private MessageBus _messageBus;

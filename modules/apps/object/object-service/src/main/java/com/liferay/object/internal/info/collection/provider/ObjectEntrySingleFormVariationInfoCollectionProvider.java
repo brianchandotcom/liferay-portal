@@ -24,6 +24,7 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -32,6 +33,7 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -64,11 +66,13 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 			   SingleFormVariationInfoCollectionProvider<ObjectEntry> {
 
 	public ObjectEntrySingleFormVariationInfoCollectionProvider(
+		ListTypeEntryLocalService listTypeEntryLocalService,
 		ObjectDefinition objectDefinition,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry) {
 
+		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_objectDefinition = objectDefinition;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
@@ -116,7 +120,11 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 							_objectFieldLocalService.getObjectFields(
 								_objectDefinition.getObjectDefinitionId())) {
 
-						if (!Objects.equals(objectField.getType(), "Boolean") ||
+						if (!(Objects.equals(
+								objectField.getType(), "Boolean") ||
+							  (Objects.equals(
+								  objectField.getType(), "String") &&
+							   (objectField.getListTypeDefinitionId() != 0))) ||
 							!objectField.isIndexed()) {
 
 							continue;
@@ -130,7 +138,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 								objectField.getName()
 							).attribute(
 								SelectInfoFieldType.OPTIONS,
-								_getBooleanOptions()
+								_getOptions(objectField)
 							).labelInfoLocalizedValue(
 								InfoLocalizedValue.<String>builder(
 								).values(
@@ -203,20 +211,6 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		return searchContext;
 	}
 
-	private List<SelectInfoFieldType.Option> _getBooleanOptions() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			serviceContext.getLocale(), getClass());
-
-		return ListUtil.fromArray(
-			new SelectInfoFieldType.Option(
-				LanguageUtil.get(resourceBundle, "true"), "true"),
-			new SelectInfoFieldType.Option(
-				LanguageUtil.get(resourceBundle, "false"), "false"));
-	}
-
 	private long _getGroupId() throws PortalException {
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
@@ -232,6 +226,36 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		return objectScopeProvider.getGroupId(serviceContext.getRequest());
 	}
 
+	private List<SelectInfoFieldType.Option> _getOptions(
+		ObjectField objectField) {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (Objects.equals(objectField.getType(), "Boolean")) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				serviceContext.getLocale(), getClass());
+
+			return ListUtil.fromArray(
+				new SelectInfoFieldType.Option(
+					LanguageUtil.get(resourceBundle, "true"), "true"),
+				new SelectInfoFieldType.Option(
+					LanguageUtil.get(resourceBundle, "false"), "false"));
+		}
+		else if (objectField.getListTypeDefinitionId() != 0) {
+			return TransformUtil.transform(
+				_listTypeEntryLocalService.getListTypeEntries(
+					objectField.getListTypeDefinitionId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS),
+				listTypeEntry -> new SelectInfoFieldType.Option(
+					listTypeEntry.getName(serviceContext.getLocale()),
+					listTypeEntry.getKey()));
+		}
+
+		return null;
+	}
+
+	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;

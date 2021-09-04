@@ -15,6 +15,7 @@
 package com.liferay.object.internal.deployer;
 
 import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.search.spi.model.index.contributor.ObjectEntryModelDocumentContributor;
@@ -67,6 +68,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		BundleContext bundleContext, DestinationFactory destinationFactory,
 		DynamicQueryBatchIndexingActionableFactory
 			dynamicQueryBatchIndexingActionableFactory,
+		ListTypeEntryLocalService listTypeEntryLocalService,
 		MessageBus messageBus,
 		ModelSearchRegistrarHelper modelSearchRegistrarHelper,
 		ObjectEntryLocalService objectEntryLocalService,
@@ -80,6 +82,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_destinationFactory = destinationFactory;
 		_dynamicQueryBatchIndexingActionableFactory =
 			dynamicQueryBatchIndexingActionableFactory;
+		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_messageBus = messageBus;
 		_modelSearchRegistrarHelper = modelSearchRegistrarHelper;
 		_objectEntryLocalService = objectEntryLocalService;
@@ -127,8 +130,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				InfoCollectionProvider.class,
 				new ObjectEntrySingleFormVariationInfoCollectionProvider(
-					objectDefinition, _objectEntryLocalService,
-					_objectFieldLocalService, _objectScopeProviderRegistry),
+					_listTypeEntryLocalService, objectDefinition,
+					_objectEntryLocalService, _objectFieldLocalService,
+					_objectScopeProviderRegistry),
 				null),
 			_bundleContext.registerService(
 				KeywordQueryContributor.class,
@@ -259,6 +263,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final DestinationFactory _destinationFactory;
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
+	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private final MessageBus _messageBus;
 	private final ModelSearchRegistrarHelper _modelSearchRegistrarHelper;
 	private final ObjectEntryLocalService _objectEntryLocalService;

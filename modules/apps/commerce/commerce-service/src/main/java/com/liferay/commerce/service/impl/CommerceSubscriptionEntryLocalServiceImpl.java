@@ -788,10 +788,6 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 				public Void call() throws Exception {
 					Message message = new Message();
 
-					message.put(
-						"commerceSubscriptionEntryId",
-						commerceSubscriptionEntryId);
-					message.put("subscriptionStatus", subscriptionStatus);
 					message.setPayload(
 						JSONUtil.put(
 							"commerceSubscriptionEntryId",

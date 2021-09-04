@@ -73,9 +73,6 @@ public class PortalInstanceLifecycleListenerImpl
 
 				Message message = new Message();
 
-				message.put(
-					"commerceCatalogId",
-					commerceCatalog.getCommerceCatalogId());
 				message.setPayload(
 					JSONUtil.put(
 						"commerceCatalogId",

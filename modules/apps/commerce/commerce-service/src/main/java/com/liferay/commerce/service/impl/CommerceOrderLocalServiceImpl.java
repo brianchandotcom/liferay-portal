@@ -1950,9 +1950,6 @@ public class CommerceOrderLocalServiceImpl
 				public Void call() throws Exception {
 					Message message = new Message();
 
-					message.put("commerceOrderId", commerceOrderId);
-					message.put("paymentStatus", paymentStatus);
-					message.put("previousPaymentStatus", previousPaymentStatus);
 					message.setPayload(
 						JSONUtil.put(
 							"commerceOrderId", commerceOrderId

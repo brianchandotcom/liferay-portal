@@ -30,6 +30,8 @@ import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivity;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivityRegistry;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -51,7 +53,10 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		long commerceOrderId = message.getLong("commerceOrderId");
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			String.valueOf(message.getPayload()));
+
+		long commerceOrderId = jsonObject.getLong("commerceOrderId");
 
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.fetchCommerceOrder(commerceOrderId);
@@ -60,7 +65,7 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 			return;
 		}
 
-		int orderStatus = message.getInteger("orderStatus");
+		int orderStatus = jsonObject.getInt("orderStatus");
 
 		List<CommerceOrderItem> commerceOrderItems =
 			commerceOrder.getCommerceOrderItems();

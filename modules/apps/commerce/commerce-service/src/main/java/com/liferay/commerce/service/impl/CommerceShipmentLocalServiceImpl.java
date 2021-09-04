@@ -704,7 +704,6 @@ public class CommerceShipmentLocalServiceImpl
 				public Void call() throws Exception {
 					Message message = new Message();
 
-					message.put("commerceShipmentId", commerceShipmentId);
 					message.setPayload(
 						JSONUtil.put("commerceShipmentId", commerceShipmentId));
 

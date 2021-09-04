@@ -19,6 +19,8 @@ import com.liferay.commerce.price.list.internal.helper.CommerceBasePriceListHelp
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -40,7 +42,10 @@ public class CommerceBasePriceListMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		long commerceCatalogId = message.getLong("commerceCatalogId");
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			String.valueOf(message.getPayload()));
+
+		long commerceCatalogId = jsonObject.getLong("commerceCatalogId");
 
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.fetchCommerceCatalog(

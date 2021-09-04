@@ -17,6 +17,8 @@ package com.liferay.commerce.product.type.virtual.order.internal.messaging;
 import com.liferay.commerce.constants.CommerceDestinationNames;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.product.type.virtual.order.util.CommerceVirtualOrderItemChecker;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -36,13 +38,16 @@ public class CommercePaymentStatusMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		int paymentStatus = message.getInteger("paymentStatus");
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			String.valueOf(message.getPayload()));
+
+		int paymentStatus = jsonObject.getInt("paymentStatus");
 
 		if (paymentStatus != CommerceOrderConstants.PAYMENT_STATUS_PAID) {
 			return;
 		}
 
-		long commerceOrderId = message.getLong("commerceOrderId");
+		long commerceOrderId = jsonObject.getLong("commerceOrderId");
 
 		_commerceVirtualOrderItemChecker.checkCommerceVirtualOrderItems(
 			commerceOrderId);

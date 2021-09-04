@@ -57,7 +57,7 @@ public class CommerceOpenOrderContentConfigurationAction
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
-		return "/pending_orders/configuration.jsp";
+		return "/commerce_pending_orders/configuration.jsp";
 	}
 
 	@Override

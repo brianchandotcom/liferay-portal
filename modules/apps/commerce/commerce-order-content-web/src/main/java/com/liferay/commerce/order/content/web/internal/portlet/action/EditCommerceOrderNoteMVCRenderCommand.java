@@ -41,7 +41,7 @@ public class EditCommerceOrderNoteMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/pending_orders/edit_commerce_order_note.jsp";
+		return "/commerce_pending_orders/edit_commerce_order_note.jsp";
 	}
 
 }

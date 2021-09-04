@@ -42,7 +42,7 @@ public class EditCommerceOrderNotesMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/pending_orders/edit_commerce_order_notes.jsp";
+		return "/commerce_pending_orders/edit_commerce_order_notes.jsp";
 	}
 
 }

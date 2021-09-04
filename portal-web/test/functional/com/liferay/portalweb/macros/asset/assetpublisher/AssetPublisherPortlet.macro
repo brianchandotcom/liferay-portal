@@ -300,17 +300,31 @@ definition {
 
 		Panel.expandPanel(panel = "Asset Selection");
 
-		Click(locator1 = "APConfiguration#ASSET_SELECTION_INFO_LIST_PROVIDER");
+		Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
 
 		Alert.viewSuccessMessage();
 
-		Panel.expandPanel(panel = "Select Collection Provider");
+		Panel.expandPanel(panel = "Select Collection");
 
-		Select(
-			locator1 = "APConfiguration#SELECT_COLLECTION_PROVIDER_FIELD",
+		Alert.closeMessage(messageType = "SUCCESS");
+
+		Button.clickSelect();
+
+		WaitForElementPresent(locator1 = "IFrame#ASSET_LIST_DIALOG");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		NavItem.click(navItem = "Collection Providers");
+
+		LexiconCard.clickCard(card = "${collectionProviderName}");
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		AssertTextEquals(
+			locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST_TITLE",
 			value1 = "${collectionProviderName}");
-
-		Pause(locator1 = "3000");
 
 		PortletEntry.save();
 

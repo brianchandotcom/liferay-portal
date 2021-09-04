@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + BatchPlannerPortletKeys.BATCH_PLANNER,
-		"mvc.command.name=/batch_planner/edit_batch_planner_plan"
+		"mvc.command.name=/batch_planner/edit_import_batch_planner_plan"
 	},
 	service = MVCActionCommand.class
 )

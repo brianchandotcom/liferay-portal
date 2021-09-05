@@ -301,6 +301,16 @@
 	<td>//td[contains(text(),'${key_userEmail}')]/..//span[contains(text(),'${key_permissionType}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SELECT_SITE_ROLE</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//button[contains(@value,'Site ${key_siteRole}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKBOX_BY_EMAIL</td>
+	<td>//td[contains(text(),'${key_userEmail}')]/..//div[contains(@class,'custom-checkbox')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

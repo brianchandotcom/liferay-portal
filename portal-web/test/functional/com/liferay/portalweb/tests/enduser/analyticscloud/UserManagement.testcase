@@ -205,8 +205,6 @@ definition {
 	@priority = "4"
 	test MemberCannotChangeUserPermissions {
 		task ("Go to AC and Login as user with member role") {
-			ACUtils.launchAC();
-
 			ACWorkspace.signOut();
 
 			ACLogin.loginAs(
@@ -214,7 +212,7 @@ definition {
 				password = "test");
 		}
 
-		task ("Go to Data Sources") {
+		task ("Go to User Management") {
 			ACWorkspace.openWorkspace();
 
 			ACNavigation.goToSettings();

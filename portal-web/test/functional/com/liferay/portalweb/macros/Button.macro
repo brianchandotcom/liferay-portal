@@ -101,7 +101,9 @@ definition {
 	}
 
 	macro clickSelect {
-		Button.click(button = "Select");
+		Click.javaScriptClick(
+			key_text = "Select",
+			locator1 = "Button#ANY");
 	}
 
 	macro clickShare {

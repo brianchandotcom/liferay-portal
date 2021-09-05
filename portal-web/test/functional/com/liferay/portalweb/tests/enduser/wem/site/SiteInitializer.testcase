@@ -214,7 +214,7 @@ definition {
 
 			var screenWidth	= selenium.getElementWidth("//body");
 
-			var containerWidth	= selenium.getElementWidth("//div[contains(@class,'container')][contains(@class,'pr-3 pl-3')]/div[contains(@style,'border-style')]");
+			var containerWidth = selenium.getElementWidth("//div[contains(@class,'container')][contains(@class,'pr-3')][contains(@class,'pl-3')]/div[contains(@style,'border-style')]");
 
 			TestUtils.assertNotEquals(
 				actual = "${containerWidth}",

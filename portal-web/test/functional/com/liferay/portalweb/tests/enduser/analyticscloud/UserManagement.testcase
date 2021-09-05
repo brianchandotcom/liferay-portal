@@ -15,6 +15,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		ACUtils.tearDownDXP();
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -416,12 +418,33 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9091 | Test Summary: Owner can remove data sources"
-	@ignore = "true"
 	@priority = "5"
 	test OwnerCanRemoveDataSources {
+		task ("Connect DXP to AC") {
+			ACSettings.takeTokenFromAnalyticsCloud();
 
-		// TODO LRAC-9091 OwnerCanRemoveDataSources
+			TestCase.setUpPortalInstance();
 
+			ACUtils.launchDXP();
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
+
+		task ("Get the Data Source name") {
+			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+		}
+
+		task ("Go to AC and login with another Owner User") {
+			ACUtils.launchAC(emailAddress = "bryan.cheung@faro.io");
+		}
+
+		task ("Delete the data source and check if it has been deleted") {
+			ACSettings.deleteDataSource(dataSourceName = "${dataSource}");
+
+			AssertElementNotPresent(
+				itemName = "${dataSource}",
+				locator1 = "ACSettings#ITEM_ON_LIST");
+		}
 	}
 
 	@description = "Automation ID: LRAC-9088 | Test Summary: Select and change an admin + member to admins"

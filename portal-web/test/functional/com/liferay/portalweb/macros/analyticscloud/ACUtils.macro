@@ -453,8 +453,12 @@ definition {
 
 		Open(locator1 = "${analyticsCloudURL}");
 
+		if (!(isSet(emailAddress))) {
+			emailAddress = "test@liferay.com";
+		}
+
 		if (IsElementPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) {
-			ACLogin.loginAs();
+			ACLogin.loginAs(emailAddress = "${emailAddress}");
 		}
 
 		ACWorkspace.openWorkspace();

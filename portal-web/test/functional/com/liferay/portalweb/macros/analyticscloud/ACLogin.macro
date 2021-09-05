@@ -3,10 +3,6 @@ definition {
 	macro loginAs {
 		WaitForPageLoad();
 
-		if (!(isSet(emailAddress))) {
-			emailAddress = "test@liferay.com";
-		}
-
 		if (!(isSet(password))) {
 			password = "test";
 		}

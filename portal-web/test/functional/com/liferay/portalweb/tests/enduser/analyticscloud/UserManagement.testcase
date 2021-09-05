@@ -448,12 +448,49 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9088 | Test Summary: Select and change an admin + member to admins"
-	@ignore = "true"
 	@priority = "3"
 	test SelectandChangeAnAdminAndMemberToAdmins {
+		var firstUser = "ac@liferay.com";
+		var secondUser = "ac2@liferay.com";
 
-		// TODO LRAC-9088 SelectandChangeAnAdminAndMemberToAdmins
+		task ("Go to User Management") {
+			ACNavigation.goToSettings();
 
+			ACSettings.goToUserManagement();
+		}
+
+		task ("Invite user") {
+			for (var users : list "${firstUser},${secondUser}") {
+				ACSettings.addUser(userInvite = "${users}");
+			}
+		}
+
+		task ("Change user permission") {
+			ACSettings.changeUserRole(
+				newRole = "Administrator",
+				permissionType = "Member",
+				userEmail = "${firstUser}");
+		}
+
+		task ("Assert user permission") {
+			ACSettings.assertUserPermission(
+				permissionType = "Administrator",
+				userEmail = "${firstUser}");
+		}
+
+		task ("Change user permission") {
+			ACSettings.changeMultipleUsersPermissions(
+				permissionType = "Member",
+				userEmail = "${firstUser},${secondUser}");
+		}
+
+		task ("Assert user permission") {
+			for (var users : list "${firstUser},${secondUser}") {
+				ACSettings.assertUserPermission(
+					permissionType = "Member",
+					userEmail = "${users}");
+			}
+		}
 	}
 
 	@description = "Automation ID: LRAC-9087 | Test Summary: Select and change an admin + member to members"

@@ -13,7 +13,7 @@ definition {
 	macro clickCard {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Click.waitForMenuToggleJSClick(
+		Click.mouseDownMouseUp(
 			key_card = "${card}",
 			locator1 = "Card#CARD");
 	}

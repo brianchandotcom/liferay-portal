@@ -1906,27 +1906,6 @@ public class PropsValues {
 	public static final int NOTIFICATIONS_MAX_EVENTS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.NOTIFICATIONS_MAX_EVENTS));
 
-	public static final boolean NTLM_AUTH_ENABLED = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.NTLM_AUTH_ENABLED));
-
-	public static final String NTLM_AUTH_NEGOTIATE_FLAGS = GetterUtil.getString(
-		PropsUtil.get(PropsKeys.NTLM_AUTH_NEGOTIATE_FLAGS));
-
-	public static final String NTLM_DOMAIN = PropsUtil.get(
-		PropsKeys.NTLM_DOMAIN);
-
-	public static final String NTLM_DOMAIN_CONTROLLER = PropsUtil.get(
-		PropsKeys.NTLM_DOMAIN_CONTROLLER);
-
-	public static final String NTLM_DOMAIN_CONTROLLER_NAME = PropsUtil.get(
-		PropsKeys.NTLM_DOMAIN_CONTROLLER_NAME);
-
-	public static final String NTLM_SERVICE_ACCOUNT = PropsUtil.get(
-		PropsKeys.NTLM_SERVICE_ACCOUNT);
-
-	public static final String NTLM_SERVICE_PASSWORD = PropsUtil.get(
-		PropsKeys.NTLM_SERVICE_PASSWORD);
-
 	public static final long[] OMNIADMIN_USERS = StringUtil.split(
 		PropsUtil.get(PropsKeys.OMNIADMIN_USERS), 0L);
 

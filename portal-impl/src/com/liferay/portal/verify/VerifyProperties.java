@@ -1273,34 +1273,6 @@ public class VerifyProperties extends VerifyProcess {
 			"layout.template.unsupported", "com.liferay.nested.portlets.web"
 		},
 
-		// NTLM
-
-		{
-			"ntlm.auth.enabled", "enabled",
-			"com.liferay.portal.security.sso.ntlm"
-		},
-		{"ntlm.auth.domain", "domain", "com.liferay.portal.security.sso.ntlm"},
-		{
-			"ntlm.auth.domain.controller", "domain.controller",
-			"com.liferay.portal.security.sso.ntlm"
-		},
-		{
-			"ntlm.auth.domain.controller.name", "domain.controller.name",
-			"com.liferay.portal.security.sso.ntlm"
-		},
-		{
-			"ntlm.auth.negotiate.flags", "negotiate.flags",
-			"com.liferay.portal.security.sso.ntlm"
-		},
-		{
-			"ntlm.auth.service.account", "service.account",
-			"com.liferay.portal.security.sso.ntlm"
-		},
-		{
-			"ntlm.auth.service.password", "service.password",
-			"com.liferay.portal.security.sso.ntlm"
-		},
-
 		// OpenID
 
 		{

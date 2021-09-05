@@ -2234,25 +2234,6 @@ public interface PropsKeys {
 	public static final String NOTIFICATIONS_MAX_EVENTS =
 		"notifications.max.events";
 
-	public static final String NTLM_AUTH_ENABLED = "ntlm.auth.enabled";
-
-	public static final String NTLM_AUTH_NEGOTIATE_FLAGS =
-		"ntlm.auth.negotiate.flags";
-
-	public static final String NTLM_DOMAIN = "ntlm.auth.domain";
-
-	public static final String NTLM_DOMAIN_CONTROLLER =
-		"ntlm.auth.domain.controller";
-
-	public static final String NTLM_DOMAIN_CONTROLLER_NAME =
-		"ntlm.auth.domain.controller.name";
-
-	public static final String NTLM_SERVICE_ACCOUNT =
-		"ntlm.auth.service.account";
-
-	public static final String NTLM_SERVICE_PASSWORD =
-		"ntlm.auth.service.password";
-
 	public static final String OMNIADMIN_USERS = "omniadmin.users";
 
 	public static final String OPEN_ID_AUTH_ENABLED = "open.id.auth.enabled";

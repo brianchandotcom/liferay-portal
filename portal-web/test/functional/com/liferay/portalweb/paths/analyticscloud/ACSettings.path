@@ -297,8 +297,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_BUTTON_BY_EMAIL</td>
+	<td>//td[contains(text(),'${key_userEmail}')]/..//button[contains(@class,'btn') and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_ROLE_BY_EMAIL</td>
 	<td>//td[contains(text(),'${key_userEmail}')]/..//span[contains(text(),'${key_permissionType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSION_DROPDOWN</td>
+	<td>//button[contains(@class,'show-caret') and contains(.,'${key_permissionType}')]</td>
 	<td></td>
 </tr>
 <tr>

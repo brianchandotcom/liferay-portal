@@ -1449,6 +1449,7 @@ definition {
 	@description = "LPS-119966 Given a document with and associated Display Page Template
 	When the user with permissions clicks on the info panel button
 	Then the user is lead to the info panel"
+
 	@priority = "4"
 	test DocumentViewInfoPanel {
 		property portal.acceptance = "true";
@@ -2905,7 +2906,6 @@ definition {
 	@description = "LPS-131187 Given the Content Dashboard table
 	When a document is added
 	Then its type will be shown in the Type column"
-
 	@priority = "3"
 	test TypeColumnForDocument {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";

@@ -638,4 +638,12 @@ definition {
 		AssertElementNotPresent(locator1 = "ACSettings#INVITE_USERS_BUTTON");
 	}
 
+	macro assertUserPermission {
+		for (var userEmail : list "${userEmail}") {
+			AssertElementPresent(
+				key_permissionType = "${permissionType}",
+				key_userEmail = "${userEmail}",
+				locator1 = "ACSettings#USER_ROLE_BY_EMAIL");
+		}
+	}
 }

@@ -84,15 +84,12 @@ definition {
 					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
 			}
 
-			AssertSelectedLabel(
-				key_fieldLabel = "Margen superior",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Valor por defecto");
-
-			AssertSelectedLabel(
-				key_fieldLabel = "Relleno superior",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Valor por defecto");
+			for (var fieldLabel : list "Margen,Relleno") {
+				AssertSelectedLabel(
+					key_fieldLabel = "${fieldLabel} superior",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "0");
+			}
 
 			AssertSelectedLabel(
 				key_fieldLabel = "Desbordamiento",

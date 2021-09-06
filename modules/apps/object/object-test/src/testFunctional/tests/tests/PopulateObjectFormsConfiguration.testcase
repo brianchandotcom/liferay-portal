@@ -172,16 +172,6 @@ definition {
 			key_entryNumber = "1 entry");
 	}
 
-	@description = "LPS-133365 - Verify if it's possible to map an Object field of Blob type and view its entries"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanMapBlobTypeAndViewEntries {
-		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CanMapBlobTypeAndViewEntries";
-
-		// TODO LPS-138053 CanMapBlobTypeAndViewEntries pending implementation
-
-	}
-
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Boolean type and view its entries"
 	@ignore = "Test Stub"
 	@priority = "4"

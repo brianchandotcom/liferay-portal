@@ -192,9 +192,20 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 							updatePreparedStatement.addBatch();
 						}
 
-						updatePreparedStatement.executeBatch();
+						try {
+							updatePreparedStatement.executeBatch();
+						}
+						catch (Exception exception) {
+							_log.error(
+								"Unable to update localized fields for " +
+									"article " + id,
+								exception);
+
+							throw exception;
+						}
 					}
-				});
+				},
+				"Unable to update journal article localized fields");
 		}
 	}
 
@@ -300,12 +311,24 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 						LocalizationUtil.getDefaultLanguageId(
 							xml, defaultSiteLocale);
 
-					runSQL(
-						connection,
-						StringBundler.concat(
-							"update JournalArticle set defaultLanguageId = '",
-							defaultLanguageId, "' where id_ = ", id));
-				});
+					try {
+						runSQL(
+							connection,
+							StringBundler.concat(
+								"update JournalArticle set defaultLanguageId ",
+								"= '", defaultLanguageId, "' where id_ = ",
+								id));
+					}
+					catch (Exception exception) {
+						_log.error(
+							"Unable to update default language ID for " +
+								"article " + id,
+							exception);
+
+						throw exception;
+					}
+				},
+				"Unable to update journal article default language IDs");
 		}
 	}
 

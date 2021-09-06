@@ -62,31 +62,37 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 			processConcurrently(
 				() -> {
 					if (resultSet.next()) {
-						return new JournalArticleInfo(
+						return new Object[] {
 							resultSet.getLong("id_"),
 							resultSet.getLong("groupId"),
 							resultSet.getString("content"),
-							resultSet.getString("DDMStructureKey"));
+							resultSet.getString("DDMStructureKey")
+						};
 					}
 
 					return null;
 				},
-				journalArticleInfo -> {
+				values -> {
+					long id = (Long)values[0];
+					long groupId = (Long)values[1];
+
+					String content = (String)values[2];
+
+					String ddmStructureKey = (String)values[3];
+
 					DDMStructure ddmStructure =
 						_ddmStructureLocalService.getStructure(
-							_portal.getSiteGroupId(journalArticleInfo._groupId),
-							classNameId, journalArticleInfo._ddmStructureKey,
-							true);
+							_portal.getSiteGroupId(groupId), classNameId,
+							ddmStructureKey, true);
 
 					DDMFormValues ddmFormValues =
 						_fieldsToDDMFormValuesConverter.convert(
 							ddmStructure,
 							_journalConverter.getDDMFields(
-								ddmStructure, journalArticleInfo._content));
+								ddmStructure, content));
 
 					_ddmFieldLocalService.updateDDMFormValues(
-						ddmStructure.getStructureId(), journalArticleInfo._id,
-						ddmFormValues);
+						ddmStructure.getStructureId(), id, ddmFormValues);
 				});
 		}
 
@@ -100,23 +106,5 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 		_fieldsToDDMFormValuesConverter;
 	private final JournalConverter _journalConverter;
 	private final Portal _portal;
-
-	private static class JournalArticleInfo {
-
-		private JournalArticleInfo(
-			long id, long groupId, String content, String ddmStructureKey) {
-
-			_id = id;
-			_groupId = groupId;
-			_content = content;
-			_ddmStructureKey = ddmStructureKey;
-		}
-
-		private final String _content;
-		private final String _ddmStructureKey;
-		private final long _groupId;
-		private final long _id;
-
-	}
 
 }

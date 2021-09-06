@@ -30,43 +30,44 @@ const transformSearchLocationValues = (fields, data) => {
 	let newFields = [...fields];
 	let searchFields = [];
 
-	Object.keys(fields).forEach((key) => {
-		const {name, type} = fields[key];
-
+	Object.values(fields).forEach(({label, name, type}) => {
 		if (type === 'search_location') {
-			const labels = {
-				...{place: 'Search Location'},
+			const labels = parse(label, {
 				address: 'Address',
 				city: 'City',
 				country: 'Country',
-				['postal-code']: 'Postal Code',
+				place: 'Search Location',
+				'postal-code': 'Postal Code',
 				state: 'State',
-			};
+			});
 
 			const visibleFields = Object.keys(labels);
+
 			const searchLocationFieldValues = {};
 			const dataSearchLocationFields = {};
 			const {values} = data[name];
 
 			const searchLocationFields = visibleFields.map((visibleField) => {
-				toArray(values).forEach((value) => {
-					const existentValues =
-						searchLocationFieldValues[visibleField] || [];
-					const searchLocationValue = parse(value, {});
+				if (Array.isArray(values)) {
+					toArray(values).forEach((value) => {
+						const existentValues =
+							searchLocationFieldValues[visibleField] || [];
+						const searchLocationValue = parse(value, {});
 
-					searchLocationFieldValues[visibleField] = [
-						...existentValues,
-						{value: searchLocationValue[visibleField]},
-					];
-				});
+						searchLocationFieldValues[visibleField] = [
+							...existentValues,
+							{value: searchLocationValue[visibleField]},
+						];
+					});
 
-				dataSearchLocationFields[visibleField] = {
-					totalEntries: Object.keys(
-						searchLocationFieldValues[visibleField]
-					).length,
-					type: visibleField,
-					values: searchLocationFieldValues[visibleField],
-				};
+					dataSearchLocationFields[visibleField] = {
+						totalEntries: Object.keys(
+							searchLocationFieldValues[visibleField]
+						).length,
+						type: visibleField,
+						values: searchLocationFieldValues[visibleField],
+					};
+				}
 
 				return {
 					columns: {},

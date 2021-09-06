@@ -198,7 +198,8 @@ public class DDMFormReportDisplayContext {
 				ddmFormField.getType(),
 				DDMFormFieldTypeConstants.SEARCH_LOCATION)) {
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			JSONObject jsonObject = JSONUtil.put(
+				"place", _getValue(ddmFormField.getLabel()));
 
 			LocalizedValue visibleFields =
 				(LocalizedValue)ddmFormField.getProperty("visibleFields");

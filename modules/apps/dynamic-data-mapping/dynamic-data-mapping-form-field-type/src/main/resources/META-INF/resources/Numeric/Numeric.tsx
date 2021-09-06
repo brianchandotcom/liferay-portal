@@ -94,7 +94,11 @@ const getMaskedValue = ({
 		keepCharPositions: false,
 		placeholderChar: '\u2000',
 	});
-	const regex = new RegExp(`[^${symbols.decimalSymbol}|\\d]`, 'g');
+
+	const regex = new RegExp(
+		dataType === 'double' ? `[^${symbols.decimalSymbol}|\\d]` : '[^\\d]',
+		'g'
+	);
 
 	return {
 		masked,

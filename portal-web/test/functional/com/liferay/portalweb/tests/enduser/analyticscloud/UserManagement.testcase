@@ -95,12 +95,36 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9085 | Test Summary: Change a member to an admin and assert new permissions"
-	@ignore = "true"
 	@priority = "3"
 	test AssertNewAdminPermissions {
+		var userEmail = "user@liferay.com";
 
-		// TODO LRAC-9085 AssertNewAdminPermissions
+		task ("Go to settings and go to user management") {
+			ACNavigation.goToSettings();
 
+			ACSettings.goToUserManagement();
+		}
+
+		task ("Invite user") {
+			ACSettings.addUser(userInvite = "${userEmail}");
+		}
+
+		task ("Change user permission") {
+			ACSettings.changeUserRole(
+				newRole = "Administrator",
+				permissionType = "Member",
+				userEmail = "${userEmail}");
+		}
+
+		task ("Assert user permission") {
+			ACSettings.assertUserPermission(
+				permissionType = "Administrator",
+				userEmail = "${userEmail}");
+		}
+
+		task("Delete Pending All Users"){
+			ACSettings.deletePendingAllUsers();
+		}
 	}
 
 	@description = "Automation ID: LRAC-9086 | Test Summary: Change an admin to a member and assert new permissions"

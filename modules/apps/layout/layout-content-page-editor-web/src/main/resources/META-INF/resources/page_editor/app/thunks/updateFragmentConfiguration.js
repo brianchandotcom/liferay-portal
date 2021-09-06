@@ -29,10 +29,11 @@ export default function updateFragmentConfiguration({
 		[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: configurationValues,
 	};
 
-	return (dispatch) => {
+	return (dispatch, getState) => {
 		return FragmentService.updateConfigurationValues({
-			configurationValues: nextEditableValues,
+			editableValues: nextEditableValues,
 			fragmentEntryLinkId,
+			languageId: getState().languageId,
 			onNetworkStatus: dispatch,
 		})
 			.then(({fragmentEntryLink, layoutData}) => {

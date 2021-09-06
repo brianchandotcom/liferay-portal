@@ -127,12 +127,6 @@ const item = {
 	type: '',
 };
 
-const mockDispatch = jest.fn((a) => {
-	if (typeof a === 'function') {
-		return a(mockDispatch);
-	}
-});
-
 const renderGeneralPanel = ({
 	segmentsExperienceId,
 	fragmentEntryLink = defaultFragmentEntryLink(),
@@ -176,6 +170,12 @@ const renderGeneralPanel = ({
 		selectedViewportSize: VIEWPORT_SIZES.desktop,
 	};
 
+	const mockDispatch = jest.fn((a) => {
+		if (typeof a === 'function') {
+			return a(mockDispatch, () => state);
+		}
+	});
+
 	return render(
 		<StoreAPIContextProvider dispatch={mockDispatch} getState={() => state}>
 			<FragmentGeneralPanel item={item} />
@@ -204,12 +204,13 @@ describe('FragmentGeneralPanel', () => {
 
 		expect(FragmentService.updateConfigurationValues).toBeCalledWith(
 			expect.objectContaining({
-				configurationValues: {
+				editableValues: {
 					[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {},
 					[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
 						headingLevel: 'h2',
 					},
 				},
+				languageId: 'en_US',
 			})
 		);
 	});
@@ -240,12 +241,13 @@ describe('FragmentGeneralPanel', () => {
 
 		expect(FragmentService.updateConfigurationValues).toBeCalledWith(
 			expect.objectContaining({
-				configurationValues: {
+				editableValues: {
 					[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {},
 					[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
 						headingLevel: 'h2',
 					},
 				},
+				languageId: 'en_US',
 			})
 		);
 	});
@@ -263,12 +265,13 @@ describe('FragmentGeneralPanel', () => {
 
 		expect(FragmentService.updateConfigurationValues).toBeCalledWith(
 			expect.objectContaining({
-				configurationValues: {
+				editableValues: {
 					[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {},
 					[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
 						headingLevel: 'h2',
 					},
 				},
+				languageId: 'en_US',
 			})
 		);
 	});
@@ -335,13 +338,14 @@ describe('FragmentGeneralPanel', () => {
 
 		expect(FragmentService.updateConfigurationValues).toBeCalledWith(
 			expect.objectContaining({
-				configurationValues: {
+				editableValues: {
 					[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {},
 					[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
 						anotherThing: 'test',
 						headingLevel: 'h2',
 					},
 				},
+				languageId: 'en_US',
 			})
 		);
 	});

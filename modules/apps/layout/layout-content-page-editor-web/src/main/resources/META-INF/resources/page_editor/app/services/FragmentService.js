@@ -275,13 +275,13 @@ export default {
 	/**
 	 * Update configurationValues of the fragmentEntryLink with the given fragmentEntryLinkId
 	 * @param {object} options
-	 * @param {string} options.configurationValues New configurationValues
+	 * @param {string} options.editableValues
 	 * @param {string} options.fragmentEntryLinkId Id of the fragmentEntryLink
 	 * @param {string} options.languageId Language id
 	 * @param {function} options.onNetworkStatus
 	 */
 	updateConfigurationValues({
-		configurationValues,
+		editableValues,
 		fragmentEntryLinkId,
 		languageId,
 		onNetworkStatus,
@@ -290,7 +290,7 @@ export default {
 			config.updateConfigurationValuesURL,
 			{
 				body: {
-					editableValues: JSON.stringify(configurationValues),
+					editableValues: JSON.stringify(editableValues),
 					fragmentEntryLinkId,
 					languageId,
 				},

@@ -18,10 +18,11 @@ import FragmentService from '../../services/FragmentService';
 function undoAction({action}) {
 	const {editableValues, fragmentEntryLinkId} = action;
 
-	return (dispatch) => {
+	return (dispatch, getState) => {
 		return FragmentService.updateConfigurationValues({
-			configurationValues: editableValues,
+			editableValues,
 			fragmentEntryLinkId,
+			languageId: getState().languageId,
 			onNetworkStatus: dispatch,
 		}).then(({fragmentEntryLink, layoutData}) => {
 			dispatch(

@@ -104,6 +104,7 @@ export const mockedUser = {
 };
 
 export const mockedImageDocumentProps = {
+	className: 'com.liferay.portal.kernel.repository.model.FileEntry',
 	specificFields: {
 		description: 'Mocked description',
 		downloadURL: 'mocked/download/url/demo.jpg&download=true',
@@ -119,6 +120,7 @@ export const mockedImageDocumentProps = {
 };
 
 export const mockedVideoShortcutDocumentProps = {
+	className: 'com.liferay.portal.kernel.repository.model.FileEntry',
 	specificFields: {
 		description: 'Mocked description',
 		downloadURL: 'mocked/download/url/demo.jpg&download=true',
@@ -133,6 +135,7 @@ export const mockedVideoShortcutDocumentProps = {
 };
 
 export const mockedFileDocumentProps = {
+	className: 'com.liferay.portal.kernel.repository.model.FileEntry',
 	specificFields: {
 		description: 'Mocked description',
 		downloadURL: 'mocked/download/url/demo.jpg&download=true',

@@ -666,6 +666,104 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-134844. Groups of fragments can be hidden and shown."
+	@priority = "4"
+	@uitest
+	test GroupsOfFragmentsCanBeHiddenAndShown {
+		task ("Add a container and 4 headings inside") {
+
+			ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Content Page Name",
+					siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+					collectionName = "Layout Elements",
+					fragmentName = "Container");
+
+			PageEditor.addElementToContainer(
+					navTab = "Widgets",
+					portletName = "Blogs");
+
+			PageEditor.addElementToContainer(
+					collectionName = "Basic Components",
+					fragmentName = "HTML",
+					navTab = "Fragments",
+					targetElementName = "Blogs");
+
+			PageEditor.addElementToContainer(
+					collectionName = "Basic Components",
+					fragmentName = "Button",
+					navTab = "Fragments",
+					targetElementName = "HTML");
+
+			PageEditor.addElementToContainer(
+					collectionName = "Basic Components",
+					fragmentName = "Heading",
+					navTab = "Fragments",
+					targetElementName = "Button");
+
+		}
+
+		task ("Hide Blogs and HTML") {
+			PageEditor.clickHideFragmentViaPageStructure(
+					fragmentName = "Blogs");
+			PageEditor.clickHideFragmentViaPageStructure(
+					fragmentName = "HTML");
+		}
+
+		task ("Hide the container") {
+			PageEditor.clickHideFragment(fragmentName = "Container");
+		}
+
+		task ("Assert no fragment or widget is shown") {
+			PageEditor.viewNoFragment(fragmentName = "Container");
+			PageEditor.viewNoFragment(fragmentName = "Blogs");
+			PageEditor.viewNoFragment(fragmentName = "HTML");
+			PageEditor.viewNoFragment(fragmentName = "Button");
+			PageEditor.viewNoFragment(fragmentName = "Heading");
+		}
+
+		task ("From the sidebar fragment tree, show HTML and Button") {
+			PageEditor.clickUnhideFragmentViaPageStructure(
+					fragmentName = "HTML");
+
+			PageEditor.clickHideFragmentViaPageStructure(
+					fragmentName = "Button");
+		}
+
+		task ("Assert no fragment or widget is shown") {
+			PageEditor.viewNoFragment(fragmentName = "Container");
+			PageEditor.viewNoFragment(fragmentName = "Blogs");
+			PageEditor.viewNoFragment(fragmentName = "HTML");
+			PageEditor.viewNoFragment(fragmentName = "Button");
+			PageEditor.viewNoFragment(fragmentName = "Heading");
+		}
+
+		task ("Unhide the container") {
+			PageEditor.clickUnhideFragmentViaPageStructure(fragmentName = "Container");
+		}
+
+		task ("Assert only Heading and HTML fragments are shown") {
+			AssertTextNotPresent(
+					locator1 = "Message#EMPTY_INFO",
+					value1 = "No entries were found.");
+
+			AssertTextNotPresent(
+					key_fragmentName = "button",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+					value1 = "Go Somewhere");
+
+			AssertTextEquals.assertPartialText(
+					key_fragmentName = "heading",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+					value1 = "Heading Example");
+
+			AssertTextEquals.assertPartialText(
+					key_fragmentName = "html",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+					value1 = "HTML Example");
+		}
+	}
 
 	@description = "This is a test for LPS-109169. Topper only visible when the element is selected but not hover."
 	@priority = "5"

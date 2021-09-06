@@ -12,26 +12,31 @@ exports[`Validation renders checkbox to enable Validation 1`] = `
       tabindex="0"
     >
       <label
-        class="ddm-toggle-switch toggle-switch"
+        class="toggle-switch"
       >
-        <input
-          class="toggle-switch-check"
-          name="enableValidation"
-          type="checkbox"
-        />
-        <span
-          aria-hidden="true"
-          class="toggle-switch-bar"
+        <label
+          class="toggle-switch simple-toggle-switch"
         >
           <span
-            class="toggle-switch-handle"
-          />
-          <span
-            class="toggle-switch-text toggle-switch-text-right"
+            class="toggle-switch-check-bar"
           >
-            Validator
+            <input
+              class="toggle-switch-check"
+              name="enableValidation"
+              type="checkbox"
+              value="false"
+            />
+            <span
+              aria-hidden="true"
+              class="toggle-switch-bar"
+            >
+              <span
+                class="toggle-switch-handle"
+              />
+            </span>
           </span>
-        </span>
+        </label>
+        Validator
       </label>
       <input
         class="form-control"

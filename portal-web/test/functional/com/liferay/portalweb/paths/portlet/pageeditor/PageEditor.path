@@ -834,6 +834,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ITEM_CONFIGURATION_ALERT_INFO</td>
+	<td>//div[contains(@class,'item-configuration')]//*[contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ITEM_SELECTOR_CONTENT_INPUT</td>
 	<td>//input[contains(@class,'item-selector__content-input')][contains(@value,'${key_contentName}')]</td>
 	<td></td>

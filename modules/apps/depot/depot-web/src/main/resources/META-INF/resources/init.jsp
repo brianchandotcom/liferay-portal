@@ -33,6 +33,7 @@ page import="com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigur
 page import="com.liferay.depot.application.DepotApplication" %><%@
 page import="com.liferay.depot.exception.DepotEntryGroupRelToGroupException" %><%@
 page import="com.liferay.depot.exception.DepotEntryNameException" %><%@
+page import="com.liferay.depot.exception.DepotEntryStagedException" %><%@
 page import="com.liferay.depot.model.DepotEntry" %><%@
 page import="com.liferay.depot.model.DepotEntryGroupRel" %><%@
 page import="com.liferay.depot.web.internal.constants.DepotAdminWebKeys" %><%@

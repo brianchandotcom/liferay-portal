@@ -14,6 +14,7 @@
 
 package com.liferay.depot.web.internal.portlet.action;
 
+import com.liferay.depot.exception.DepotEntryStagedException;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.document.library.kernel.exception.RequiredFileEntryTypeException;
@@ -49,6 +50,9 @@ public class DeleteDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			_deleteDepotEntry(actionRequest);
+		}
+		catch (DepotEntryStagedException depotEntryStagedException) {
+			SessionErrors.add(actionRequest, DepotEntryStagedException.class);
 		}
 		catch (SystemException systemException) {
 			if (_isRequiredFileEntryTypeException(systemException)) {

@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.PasswordPolicy;
+import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Team;
@@ -129,6 +130,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
@@ -2171,6 +2173,22 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		// Membership requests
 
 		membershipRequestLocalService.deleteMembershipRequestsByUserId(
+			user.getUserId());
+
+		// Portal preferences
+
+		PortalPreferences portalPreferences =
+			portalPreferencesLocalService.fetchPortalPreferences(
+				user.getUserId(), PortletKeys.PREFS_OWNER_TYPE_USER);
+
+		if (portalPreferences != null) {
+			portalPreferencesLocalService.deletePortalPreferences(
+				portalPreferences);
+		}
+
+		// Portlet preferences
+
+		portletPreferencesLocalService.deletePortletPreferencesByOwnerId(
 			user.getUserId());
 
 		// Ratings

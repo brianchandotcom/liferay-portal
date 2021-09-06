@@ -2930,6 +2930,8 @@
 		<reference entity="PasswordPolicy" package-path="com.liferay.portal" />
 		<reference entity="PasswordPolicyRel" package-path="com.liferay.portal" />
 		<reference entity="PasswordTracker" package-path="com.liferay.portal" />
+		<reference entity="PortalPreferences" package-path="com.liferay.portal" />
+		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
 		<reference entity="RecentLayoutBranch" package-path="com.liferay.portal" />
 		<reference entity="RecentLayoutRevision" package-path="com.liferay.portal" />
 		<reference entity="RecentLayoutSetBranch" package-path="com.liferay.portal" />

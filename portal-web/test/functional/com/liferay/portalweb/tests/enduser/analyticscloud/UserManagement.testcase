@@ -466,6 +466,10 @@ definition {
 				permissionType = "Administrator",
 				userEmail = "${userEmail}");
 		}
+
+		task("Delete Pending All Users"){
+			ACSettings.deletePendingAllUsers();
+		}
 	}
 
 	@description = "Automation ID: LRAC-9091 | Test Summary: Owner can remove data sources"

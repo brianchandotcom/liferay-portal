@@ -161,6 +161,10 @@ definition {
 				ACSettings.assertUserListEmail(userEmail = "${user}");
 			}
 		}
+		
+		task("Delete Pending All Users"){
+			ACSettings.deletePendingAllUsers();
+		}
 	}
 
 	@description = "Automation ID: LRAC-9049 | Test Summary: Owner cannot be edited or removed"

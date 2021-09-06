@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.report.web.internal.display.contex
 
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
@@ -65,14 +66,20 @@ public class DDMFormReportDisplayContextTest extends PowerMockito {
 	public void testGetSearchLocationFieldJSONArray() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
-		ddmForm.addDDMFormField(
+		DDMFormField ddmFormField =
 			DDMFormTestUtil.createSearchLocationDDMFormField(
 				DDMFormValuesTestUtil.createLocalizedValue(
 					StringPool.BLANK, LocaleUtil.US),
 				"field1",
 				DDMFormValuesTestUtil.createLocalizedValue(
 					Arrays.toString(new String[] {"city", "country"}),
-					LocaleUtil.US)));
+					LocaleUtil.US));
+
+		ddmFormField.setLabel(
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"Search Location Label", LocaleUtil.US));
+
+		ddmForm.addDDMFormField(ddmFormField);
 
 		DDMFormReportDisplayContext ddmFormReportDisplayContext =
 			new DDMFormReportDisplayContext(
@@ -92,6 +99,8 @@ public class DDMFormReportDisplayContextTest extends PowerMockito {
 								"city", "City"
 							).put(
 								"country", "Country"
+							).put(
+								"place", "Search Location Label"
 							))
 					).put(
 						"name", "field1"

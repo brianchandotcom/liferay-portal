@@ -181,12 +181,6 @@ public class AMImageProcessorImplTest {
 			_fileEntry
 		);
 
-		Mockito.when(
-			_fileEntry.isCheckedOut()
-		).thenReturn(
-			false
-		);
-
 		Date creationDate = new Date();
 
 		Date modifiedDate = new Date(
@@ -203,6 +197,12 @@ public class AMImageProcessorImplTest {
 			_fileVersion.getModifiedDate()
 		).thenReturn(
 			modifiedDate
+		);
+
+		Mockito.when(
+			_fileEntry.isCheckedOut()
+		).thenReturn(
+			false
 		);
 
 		_amImageProcessorImpl.process(
@@ -249,18 +249,6 @@ public class AMImageProcessorImplTest {
 			_fileEntry
 		);
 
-		Mockito.when(
-			_fileEntry.isCheckedOut()
-		).thenReturn(
-			false
-		);
-
-		Mockito.when(
-			_amImageScalerTracker.getAMImageScaler(Mockito.anyString())
-		).thenReturn(
-			_amImageScaler
-		);
-
 		Date creationDate = new Date();
 
 		Date modifiedDate = new Date(
@@ -277,6 +265,18 @@ public class AMImageProcessorImplTest {
 			_fileVersion.getModifiedDate()
 		).thenReturn(
 			modifiedDate
+		);
+
+		Mockito.when(
+			_fileEntry.isCheckedOut()
+		).thenReturn(
+			false
+		);
+
+		Mockito.when(
+			_amImageScalerTracker.getAMImageScaler(Mockito.anyString())
+		).thenReturn(
+			_amImageScaler
 		);
 
 		Mockito.when(

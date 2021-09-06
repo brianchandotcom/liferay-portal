@@ -846,6 +846,110 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-134844. Fragments hidden in pages templates appear as hidden in pages that use it and visibility can be changed."
+	@priority = "4"
+	test HiddenFragmentsInPagesTemplatesAppearHiddenInPages {
+		task ("Add a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+					groupName = "Test Site Name",
+					layoutPageTemplateCollectionName = "Page Template Collection");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+					groupName = "Test Site Name",
+					layoutPageTemplateCollectionName = "Page Template Collection",
+					layoutPageTemplateEntryName = "Page Template Name",
+					layoutPageTemplateStatus = "Draft",
+					layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+		}
+
+		task ("Add two heading fragemtns") {
+			PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+					fragmentName = "Heading",
+					id = "element-text",
+					text = "Heading Example 1");
+
+			PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Heading",
+					targetFragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+					fragmentName = "Heading",
+					id = "element-text",
+					index = "2",
+					text = "Heading Example 2");
+		}
+
+		task ("Hide Heading Example 1") {
+			PageEditor.clickHideFragmentViaPageStructure(
+					fragmentName = "Heading",
+					index = "1");
+		}
+		task ("Publish page template") {
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a page based on content page template") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+					collectionName = "Page Template Collection",
+					pageName = "Test Page Name",
+					pageTemplateName = "Page Template Name");
+		}
+
+
+		task ("Assert Heading Example 1 is not shown") {
+			AssertTextNotPresent(
+					key_index = "1",
+					key_fragmentName = "heading",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+					value1 = "Heading Example 1");
+
+			AssertTextEquals(
+					key_index = "2",
+					key_fragmentName = "heading",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+					value1 = "Heading Example 2");
+		}
+
+		task ("Show Heading Example 1") {
+			PageEditor.clickUnhideFragmentViaPageStructure(
+					fragmentName = "Heading",
+					index = "1");
+		}
+
+		task ("Open the Preview modal") {
+			Click(locator1 = "PageEditor#PREVIEW");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Assert both Heading Example 1 and Heading Example 2 are shown") {
+			for (var n : list "1,2") {
+				AssertTextEquals(
+						key_index = "${n}",
+						key_fragmentName = "heading",
+						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+						value1 = "Heading Example ${n}");
+			}
+		}
+
+	}
+
+
 	@description = "This is a test for LPS-106778. Reorganize fragments in page editor."
 	@priority = "5"
 	@uitest

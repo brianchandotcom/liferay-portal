@@ -23,39 +23,39 @@ definition {
 	@description = "Automation ID: LRAC-9062 | Test Summary: Edit button to manage user permissions"
 	@priority = "5"
 	test CanEditButtonToManageUserPermissions {
-        task ("Go to AC"){
-            ACUtils.launchAC();
-        }
-        
         task ("Go to User Management in Settings"){
-        ACNavigation.goToSettings();
+            ACNavigation.goToSettings();
 
-        ACSettings.goToUserManagement();
+            ACSettings.goToUserManagement();
         }
 
         task("Add User"){
-        ACSettings.addUser(userInvite = "ac@liferay.com");
+            ACSettings.addUser(userInvite = "ac@liferay.com");
 
-        ACSettings.goToDataSources();
+            ACSettings.goToDataSources();
 
-        ACSettings.goToUserManagement();
+            ACSettings.goToUserManagement();
         }
 
-        task("Change permssions") {
-            ACUtils.searchBar(searchItem = "ac@liferay.com");
+		task ("Change and assert user permission") {
+			ACSettings.changeUserRole(
+				newRole = "Administrator",
+				permissionType = "Member",
+				userEmail = "ac@liferay.com");
 
-            ACUtils.clickAnyButton(button = "Edit");
+        	ACSettings.assertUserPermission(
+				permissionType = "Administrator",
+				userEmail = "ac@liferay.com");
+		}
 
-            ACSegments.goToSidebarAttributes(criterion = "Administrator");
+        task ("change and assert user permission ") {
+            ACSettings.changeMultipleUsersPermissions(
+				permissionType = "Member",
+				userEmail = "ac@liferay.com");
 
-            ACUtils.clickAnyButton(button = "Save");
-        }
-
-        task("Assert that user permissions is changed"){
-            AssertElementPresent(
-			    locator1 = "ACSettings#VIEW_USER_PERMISSION",
-                emailAddress = "ac@liferay.com",
-			    permission = "Administrator");
+        	ACSettings.assertUserPermission(
+				permissionType = "Member",
+				userEmail = "ac@liferay.com");  
         }
 
         task("Delete Pending All Users"){

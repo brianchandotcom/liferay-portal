@@ -3,9 +3,10 @@ definition {
 
 	property analytics.cloud.enabled = "true";
 	property custom.properties = "jsonws.web.service.paths.excludes=";
-	property minimum.slave.ram = "32";
+	property minimum.slave.ram = "24";
 	property portal.release = "false";
 	property portal.upstream = "true";
+	property slave.label = "slave-1";
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
@@ -21,16 +22,18 @@ definition {
 			ACUtils.launchDXP();
 		}
 
-		task ("Add a new site and page") {
+		task ("Add a new site with a public widget page") {
 			ACUtils.addSiteAndPage();
 		}
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		task ("Add a document Display to page") {
+			ACUtils.createDMAndAddToPage(
+				dmDocumentFile = "Document_1.jpg",
+				dmDocumentTitle = "New Document");
 		}
 
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 	}
 
@@ -42,203 +45,206 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			JSONUser.tearDownNonAdminUsers();
 		}
 
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8803 | Test Summary: Check posted triggers when commenting on a content in a page and check its properties (see reference document in comments)"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8969 | Test Summary: Check documentDownloaded triggers when a file is downloaded in a DXP site and check its properties (see reference document in comments)"
 	@priority = "5"
-	test CheckaaaProperties {
+	test CheckDocumentDownloadedInSiteAndCheckProperties {
 		property proxy.server.enabled = "true";
 
-		task ("Add DM widget to AC Page") {
-			JSONLayout.addWidgetToPublicLayout(
-				column = "1",
-				groupName = "Site Name",
-				layoutName = "AC Page",
-				widgetName = "Documents and Media");
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
-		task ("Add document on Site Name") {
-			JSONDocument.addFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document Title",
+		task ("Get the Property ID in AC") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${propertyName}");
+		}
+
+		task ("Get the DXP Instance ID in AC") {
+			var dataSourceName = StringUtil.extractFirst("${propertyName}", "Combined");
+			var dataSourceName = StringUtil.trim("${dataSourceName}");
+
+			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
+		}
+
+		task ("Get groupId of new site") {
+			var groupId = JSONGroupSetter.setGroupId(groupName = "Site Name");
+		}
+
+		task ("Get articleId of document") {
+			var fileEntryId = JSONDocument.getFileEntryId(
+				dmDocumentTitle = "New Document",
 				groupName = "Site Name");
 		}
 
-		task ("Navigate to AC Page and change display style to list") {
+		task ("Get groupId of new site") {
+			var groupId = JSONGroupSetter.setGroupId(groupName = "Site Name");
+		}
+
+		task ("Download the document from widget") {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-			LexiconEntry.changeDisplayStyle(displayStyle = "list");
-		}
+			Click(
+				key_card = "New Document",
+				locator1 = "Card#CARD_TITLE");
 
-		task ("Start Har recording") {
-			ProxyUtil.startHarRecording("posted");
-		}
+			DMDocument.expandInfo();
 
-		task ("Add a Comment for DM") {
-			DMDocumentComment.addPG(
-				commentBody = "This is for test",
-				dmDocumentTitle = "DM Document Title");
-		}
+			ProxyUtil.startHarRecording("documentEvents");
 
-		task ("Wait for sending requests") {
+			AssertClick.assertPartialTextClickAt(
+				locator1 = "Button#DOWNLOAD_SIDEBAR",
+				value1 = "Download");
+
 			Pause(locator1 = "5000");
 		}
 
-		task ("View the className of posted event") {
+		task ("View the Document events triggered") {
 			ACUtils.assertEventPropertyValue(
-				applicationId = "Comment",
-				eventId = "posted",
-				property = "className",
-				value = "com.liferay.document.library.kernel.model.DLFileEntry");
-		}
-
-		task ("Get fileEntryId") {
-			var fileEntryId = JSONDocument.getFileEntryId(
-				dmDocumentTitle = "DM Document Title",
-				groupName = "Site Name");
-		}
-
-		task ("View the classPK of posted event") {
-			ACUtils.assertEventPropertyValue(
-				applicationId = "Comment",
-				eventId = "posted",
-				property = "classPK",
+				applicationId = "Document",
+				eventId = "documentDownloaded",
+				property = "fileEntryId",
 				value = "${fileEntryId}");
-		}
-
-		task ("Get commentId") {
-			var commentId = Comments.getCommentId();
-		}
-
-		task ("View the CommentId of posted event") {
-			ACUtils.assertEventPropertyValue(
-				applicationId = "Comment",
-				eventId = "posted",
-				property = "commentId",
-				value = "${commentId}");
-		}
-
-		task ("View the text of posted event") {
-			var value = '''<p>This is for test</p>
-''';
 
 			ACUtils.assertEventPropertyValue(
-				applicationId = "Comment",
-				eventId = "posted",
-				property = "text",
-				value = "${value}");
+				applicationId = "Document",
+				eventId = "documentDownloaded",
+				property = "title",
+				value = "Document_1.jpg");
+
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Document",
+				eventId = "documentDownloaded",
+				property = "preview",
+				value = "true");
+
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Document",
+				eventId = "documentDownloaded",
+				property = "version",
+				value = "1.0");
+
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Document",
+				eventId = "documentDownloaded",
+				property = "groupId",
+				value = "${groupId}");
+		}
+
+		task ("View the request common properties value") {
+			ACUtils.assertRequestCommonPropertiesValue(
+				expectedChannelId = "${expectedChannelId}",
+				expectedDataSourceId = "${expectedDataSourceId}");
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8867 | Test Summary: Check posted triggers for replies to comments"
-	@priority = "4"
-	test CheckComment {
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8944 | Test Summary: Check documentPreviewed is triggered when viewing the document on a page and has the right parameters"
+	@priority = "3"
+	test CheckDocumentPreviewedWhenViewOnPageAndCheckParameters {
 		property proxy.server.enabled = "true";
 
-		task ("Add DM widget to AC Page") {
-			JSONLayout.addWidgetToPublicLayout(
-				column = "1",
-				groupName = "Site Name",
-				layoutName = "AC Page",
-				widgetName = "Documents and Media");
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
-		task ("Add document on Site Name") {
-			JSONDocument.addFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document Title",
+		task ("Get the Property ID in AC") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			Pause(locator1 = "10000");
+
+			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${propertyName}");
+		}
+
+		task ("Get the DXP Instance ID in AC") {
+			var dataSourceName = StringUtil.extractFirst("${propertyName}", "Combined");
+			var dataSourceName = StringUtil.trim("${dataSourceName}");
+
+			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
+		}
+
+		task ("Get articleId of document") {
+			var fileEntryId = JSONDocument.getFileEntryId(
+				dmDocumentTitle = "New Document",
 				groupName = "Site Name");
 		}
 
-		task ("Navigate to AC Page and change display style to list") {
+		task ("Get groupId of new site") {
+			var groupId = JSONGroupSetter.setGroupId(groupName = "Site Name");
+		}
+
+		task ("Get fileEntryUUID of document") {
+			var fileEntryUUID = JSONDocument.getFileEntryUUID(
+				dmDocumentTitle = "New Document",
+				groupName = "Site Name");
+		}
+
+		task ("Download the document from widget") {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-			LexiconEntry.changeDisplayStyle(displayStyle = "list");
-		}
+			ProxyUtil.startHarRecording("documentEvents");
 
-		task ("Add a Comment for DM") {
-			DMDocumentComment.addPG(
-				commentBody = "This is the first comment",
-				dmDocumentTitle = "DM Document Title");
-		}
+			Click(
+				key_card = "New Document",
+				locator1 = "Card#CARD_TITLE");
 
-		task ("View the comment") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-			DMDocumentComment.viewPG(
-				commentBody = "This is the first comment",
-				dmDocumentTitle = "DM Document Title");
-		}
-
-		task ("Start Har recording") {
-			ProxyUtil.startHarRecording("posted");
-		}
-
-		task ("Reply to the comment") {
-			Comments.replyToComment(commentReply = "This is a reply comment");
-		}
-
-		task ("Wait for sending requests") {
 			Pause(locator1 = "10000");
 		}
 
-		task ("View the className of posted event") {
+		task ("View the Document events triggered") {
 			ACUtils.assertEventPropertyValue(
-				applicationId = "Comment",
-				eventId = "posted",
-				property = "className",
-				value = "com.liferay.document.library.kernel.model.DLFileEntry");
-		}
-
-		task ("Get fileEntryId") {
-			var fileEntryId = JSONDocument.getFileEntryId(
-				dmDocumentTitle = "DM Document Title",
-				groupName = "Site Name");
-		}
-
-		task ("View the classPK of posted event") {
-			ACUtils.assertEventPropertyValue(
-				applicationId = "Comment",
-				eventId = "posted",
-				property = "classPK",
+				applicationId = "Document",
+				eventId = "documentPreviewed",
+				property = "fileEntryId",
 				value = "${fileEntryId}");
-		}
-
-		task ("Get commentId") {
-			var commentId = Comments.getCommentId();
-		}
-
-		task ("View the CommentId of posted event") {
-			ACUtils.assertEventPropertyValue(
-				applicationId = "Comment",
-				eventId = "posted",
-				property = "commentId",
-				value = "${commentId}");
-		}
-
-		task ("View the text of posted event") {
-			var value = '''<p>This is a reply comment</p>
-''';
 
 			ACUtils.assertEventPropertyValue(
-				applicationId = "Comment",
-				eventId = "posted",
-				property = "text",
-				value = "${value}");
+				applicationId = "Document",
+				eventId = "documentPreviewed",
+				property = "title",
+				value = "New Document");
+
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Document",
+				eventId = "documentPreviewed",
+				property = "groupId",
+				value = "${groupId}");
+
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Document",
+				eventId = "documentPreviewed",
+				property = "fileEntryUUID",
+				value = "${fileEntryUUID}");
+
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Document",
+				eventId = "documentPreviewed",
+				property = "version",
+				value = "");
+		}
+
+		task ("View the request common properties value") {
+			ACUtils.assertRequestCommonPropertiesValue(
+				expectedChannelId = "${expectedChannelId}",
+				expectedDataSourceId = "${expectedDataSourceId}");
 		}
 	}
 
-} 
+}

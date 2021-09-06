@@ -47,6 +47,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CRITERIA_GROUP_CARD</td>
+	<td>//div[contains(@class,'criteria-group')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CRITERION_TYPE_DROPDOWN</td>
 	<td>//div[@class='dropdown dropdown-root']/button</td>
 	<td></td>

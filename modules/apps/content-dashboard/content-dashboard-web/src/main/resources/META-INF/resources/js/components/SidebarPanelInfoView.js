@@ -39,6 +39,7 @@ const formatDate = (date, languageTag) => {
 
 const SidebarPanelInfoView = ({
 	categories = [],
+	className,
 	classPK,
 	createDate,
 	data = {},
@@ -48,7 +49,6 @@ const SidebarPanelInfoView = ({
 	subType,
 	tags = [],
 	title,
-	type,
 	user,
 	versions = [],
 	viewURLs = [],
@@ -93,7 +93,8 @@ const SidebarPanelInfoView = ({
 		},
 	];
 
-	const isADocument = type.toLowerCase() === 'document';
+	const isADocument =
+		className === 'com.liferay.portal.kernel.repository.model.FileEntry';
 
 	const documentIsAFile =
 		isADocument &&

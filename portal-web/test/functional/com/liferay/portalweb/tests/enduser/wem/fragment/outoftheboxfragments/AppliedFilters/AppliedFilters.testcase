@@ -50,6 +50,227 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-113929. The page creator could use Clear Filters to reset the filters."
+	@priority = "5"
+	test ResetAppliedFilters {
+		property test.name.skip.portal.instance = "AppliedFilters#ResetAppliedFilters";
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Size");
+		}
+
+		task ("Add three categories in Size vocabulary") {
+			var largeId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Large",
+				vocabularyName = "Size");
+
+			var mediumId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Medium",
+				vocabularyName = "Size");
+
+			var smallId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Small",
+				vocabularyName = "Size");
+		}
+
+		task ("Add the first web content with Large") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${largeId}",
+				content = "Levis 511",
+				groupName = "Test Site Name",
+				title = "Levis 511");
+		}
+
+		task ("Add the second web content with Medium") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${mediumId}",
+				content = "Levis 501",
+				groupName = "Test Site Name",
+				title = "Levis 501");
+		}
+
+		task ("Add the third web content with Small") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${smallId}",
+				content = "Levis 510",
+				groupName = "Test Site Name",
+				title = "Levis 510");
+		}
+
+		task ("Add a dynamic collection for All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add the first collection page based on dynamic collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Dynamic Collection",
+				pageName = "Collection Page Name",
+				tabName = "Collections");
+		}
+
+		task ("Select the Bordered List in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listStyle = "Bordered List",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Add an Applied Filters above the Container") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				dropTarget = "Header",
+				fragmentName = "Applied Filters",
+				targetFragmentName = "Container");
+		}
+
+		task ("Select the dynamic collection as Target Collection and Check the Include Clear Filters Option in Applied Filters") {
+			PageEditor.editAppliedFilters(
+				includeClearFiltersOption = "true",
+				targetCollection = "Dynamic Collection");
+		}
+
+		task ("View the Clear Filters is shown in Applied Filters") {
+			AssertVisible(
+				button = "Clear Filters",
+				locator1 = "PageEditor#APPLIED_FILTERS_INNER_BUTTON");
+		}
+
+		task ("Add a Collection Filter above the Applied Filters") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				dropTarget = "Header",
+				fragmentName = "Collection Filter",
+				targetFragmentName = "Applied Filters");
+		}
+
+		task ("Select the dynamic collection as Target Collection and Select the Category as Filter and Size vocabulary as Source") {
+			PageEditor.editCollectionFilter(
+				categoryNameList = "Large,Medium,Small",
+				filter = "Category",
+				fragmentName = "Collection Filter",
+				targetCollection = "Dynamic Collection",
+				vocabularyName = "Size");
+		}
+
+		task ("Reset applied filters at Preview mode") {
+			Click(locator1 = "PageEditor#PREVIEW");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			var n = "1";
+
+			for (var style : list "510,501,511") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='Levis ${style}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Large",
+				multipleSelection = "true",
+				selectedName = "Large",
+				title = "Size");
+
+			AssertVisible(
+				filterName = "Large",
+				locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_FILTER_ITEM");
+
+			AssertVisible(
+				key_entryContent = "[normalize-space(text())='Levis 511']",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			Page.clearFiltersInAppliedFilters();
+
+			AssertElementNotPresent(
+				filterName = "Large",
+				locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_FILTER_ITEM");
+
+			var n = "1";
+
+			for (var style : list "510,501,511") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='Levis ${style}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Reset applied filters at Preview mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Collection Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var style : list "510,501,511") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='Levis ${style}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Large",
+				multipleSelection = "true",
+				selectedName = "Large",
+				title = "Size");
+
+			AssertVisible(
+				filterName = "Large",
+				locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_FILTER_ITEM");
+
+			AssertVisible(
+				key_entryContent = "[normalize-space(text())='Levis 511']",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			Page.clearFiltersInAppliedFilters();
+
+			AssertElementNotPresent(
+				filterName = "Large",
+				locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_FILTER_ITEM");
+
+			var n = "1";
+
+			for (var style : list "510,501,511") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='Levis ${style}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-113929. The page creator could see the alert info in the General panel of Applied Filters fragment. The Applied Filters fragment could show applied category and keywords filters in Preview and View mode."
 	@priority = "5"
 	test ViewAppliedCategoryAndKeywordsFilters {

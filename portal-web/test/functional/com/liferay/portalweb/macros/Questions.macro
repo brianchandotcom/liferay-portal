@@ -794,9 +794,9 @@ definition {
 
 	macro viewMyActivityDefault {
 		AssertTextEquals(
-			key_emptyInfo = "No results found",
+			key_emptyInfo = "There are no results.",
 			locator1 = "Questions#EMPTY_STATE_MESSAGE",
-			value1 = "No results found");
+			value1 = "There are no results.");
 	}
 
 	macro viewNoAnswerField {

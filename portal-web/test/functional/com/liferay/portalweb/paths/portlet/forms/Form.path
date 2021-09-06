@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>FIELDS_GROUP_COLLAPSED_FIELD</td>
-	<td>//button[@aria-expanded='false']//..//label[contains(text(),'${key_fieldLabel}')]/..//input[@type!="hidden"]</td>
+	<td>//button[contains(@class,'collapsed')]//..//label[contains(text(),'${key_fieldLabel}')]</td>
 	<td></td>
 </tr>
 <tr>

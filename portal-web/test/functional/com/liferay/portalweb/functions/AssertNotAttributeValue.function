@@ -8,7 +8,7 @@ definition {
 
 		selenium.waitForVisible();
 
-		selenium.assertNotAttributeValue("${locator1}", "${locator2}", "${value1}");
+		selenium.assertNotAttributeValue("${attribute1}", "${locator1}", "${value1}");
 
 		selenium.assertJavaScriptErrors();
 

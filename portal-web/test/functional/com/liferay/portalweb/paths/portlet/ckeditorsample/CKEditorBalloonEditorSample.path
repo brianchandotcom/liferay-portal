@@ -1,0 +1,78 @@
+<html>
+<head>
+<title>CKEditorBalloonEditorSample</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+	<tr><td rowspan="1" colspan="3">CKEditorBalloonEditorSample</td></tr>
+</thead>
+
+<tbody>
+
+<!--PARAGRAPH-->
+<tr>
+	<td>BODY_TEXT</td>
+	<td>//div[@class='portlet-body']/div/div/p[${paragraph_number}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_TEXT_HYPERLINK</td>
+	<td>//div[@class='portlet-body']/div/div/p[2]/a | //div[@class='portlet-body']/div/div/p/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_BOLD</td>
+	<td>//div[(@class='portlet-body')]//p//strong[contains(text(),'${key_textName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_BULLET_LIST</td>
+	<td>//div[(@class='portlet-body')]//ul/li[contains(text(),'${key_textName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_ITALIC</td>
+	<td>//div[(@class='portlet-body')]//p//em[contains(text(),'${key_textName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_UNDERLINE</td>
+	<td>//div[(@class='portlet-body')]//p//u[contains(text(),'${key_textName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAGRAPH_CONTENT_NUMBERED_LIST</td>
+	<td>//div[(@class='portlet-body')]//ol/li</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMAGE</td>
+	<td>//span[contains(@class,'cke_widget_image')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMAGE_PARAGRAPH</td>
+	<td>//p[contains(@data-widget,'image')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIDEO</td>
+	<td>//div[contains(@class,'cke_widget_videoembed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE</td>
+	<td>//div[contains(@class,'editable')]//table/tbody</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_CELL</td>
+	<td>//div[contains(@class,'editable')]//table/tbody/tr[1]/td[1]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,379 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property osgi.modules.includes = "frontend-editor-ckeditor-sample-web";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "WYSIWYG";
+	property testray.main.component.name = "User Interface";
+
+	var layoutName = "My Widget Page";
+	var groupName = "Guest";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "${groupName}",
+			layoutName = "${layoutName}");
+
+		JSONLayout.addWidgetToPublicLayout(
+				groupName = "${groupName}",
+				layoutName = "${layoutName}",
+				widgetName = "CKEditor Sample");
+
+		Navigator.gotoPage(pageName = "${layoutName}");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+					groupName = "${groupName}",
+					layoutName = "${layoutName}");
+		}
+	}
+
+	@description = "Assert text edition enabled in the table"
+	@ignore = "true"
+	@priority = "4"
+	test CanEditTextInTable {
+		task ("Create a table") {
+			BalloonEditor.clearParagraphWithBackspace(paragraph_number = "2");
+
+			BalloonEditor.addTable();
+		}
+
+		task ("Write in a cell") {
+			Click(locator1 = "CKEditorBalloonEditorSample#TABLE_CELL");
+
+			Type.sendKeys(
+				locator1 = "CKEditorBalloonEditorSample#TABLE_CELL",
+				value1 = "test");
+		}
+
+		task ("Assert text edition toolbar appearance when highlighting a text inside the cell") {
+			TripleClick(locator1 = "CKEditorBalloonEditorSample#TABLE_CELL");
+
+			AssertVisible(locator1 = "CKEditor#TOOLBAR_ANY_ITEM_BUTTON");
+		}
+	}
+
+	@description = "Assert text edit function (bold, italic, underline, numbered/bulleted list, block styles)"
+	@priority = "5"
+	@refactorneeded
+	test CanFormatText {
+		var paragraphText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc id cursus metus aliquam eleifend mi in nulla. Quam adipiscing vitae proin sagittis nisl rhoncus. Suspendisse faucibus interdum posuere lorem. Nullam ac tortor vitae purus faucibus ornare. Ac felis donec et odio pellentesque diam. Nulla at volutpat diam ut. Posuere urna nec tincidunt praesent semper feugiat nibh. Gravida quis blandit turpis cursus. Proin libero nunc consequat interdum varius. Sollicitudin ac orci phasellus egestas tellus rutrum tellus pellentesque. Neque volutpat ac tincidunt vitae semper quis lectus nulla at. Odio euismod lacinia at quis risus sed vulputate odio ut. Augue lacus viverra vitae congue eu consequat ac. Elementum sagittis vitae et leo duis ut diam. Diam quis enim lobortis scelerisque fermentum dui faucibus.";
+
+		task ("Check that text can be bolded") {
+			BalloonEditor.toggleBalloonEditorContentStyle(
+				optionTool = "Bold",
+				paragraph_number = "1");
+
+			AssertElementPresent(
+				key_textName = "${paragraphText}",
+				locator1 = "CKEditorBalloonEditorSample#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_BOLD");
+
+			BalloonEditor.toggleBalloonEditorContentStyle(
+				optionTool = "Bold",
+				paragraph_number = "1");
+
+			AssertElementPresent(
+				key_textName = "${paragraphText}",
+				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
+				paragraph_number = "1");
+		}
+
+		task ("Check that text can be italicized") {
+			BalloonEditor.toggleBalloonEditorContentStyle(
+				optionTool = "Italic",
+				paragraph_number = "1");
+
+			AssertElementPresent(
+				key_textName = "${paragraphText}",
+				locator1 = "CKEditorBalloonEditorSample#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_ITALIC");
+
+			BalloonEditor.toggleBalloonEditorContentStyle(
+				optionTool = "Italic",
+				paragraph_number = "1");
+
+			AssertElementPresent(
+				key_textName = "${paragraphText}",
+				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
+				paragraph_number = "1");
+		}
+
+		task ("Check that text can be underlined") {
+			BalloonEditor.toggleBalloonEditorContentStyle(
+				optionTool = "Underline",
+				paragraph_number = "1");
+
+			AssertElementPresent(
+				key_textName = "${paragraphText}",
+				locator1 = "CKEditorBalloonEditorSample#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_UNDERLINE");
+
+			BalloonEditor.toggleBalloonEditorContentStyle(
+				optionTool = "Underline",
+				paragraph_number = "1");
+
+			AssertElementPresent(
+				key_textName = "${paragraphText}",
+				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
+				paragraph_number = "1");
+		}
+
+		task ("Check that text can be listed with bullets") {
+			BalloonEditor.toggleBalloonEditorContentStyle(
+				optionTool = "Bulleted",
+				paragraph_number = "1");
+
+			AssertElementPresent(
+				key_textName = "${paragraphText}",
+				locator1 = "CKEditorBalloonEditorSample#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_BULLET_LIST");
+
+			BalloonEditor.toggleBalloonEditorContentStyle(
+				optionTool = "Bulleted",
+				paragraph_number = "1");
+
+			AssertElementPresent(
+				key_textName = "${paragraphText}",
+				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
+				paragraph_number = "1");
+		}
+
+		task ("Check that text can be listed with numbers") {
+			BalloonEditor.toggleBalloonEditorContentStyle(
+				optionTool = "Numbered",
+				paragraph_number = "1");
+
+			AssertTextEquals(
+				locator1 =
+				"CKEditorBalloonEditorSample#PARAGRAPH_CONTENT_NUMBERED_LIST",
+				value1 = "${paragraphText}");
+
+			BalloonEditor.toggleBalloonEditorContentStyle(
+				optionTool = "Numbered",
+				paragraph_number = "1");
+
+			AssertElementPresent(
+				key_textName = "${paragraphText}",
+				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
+				paragraph_number = "1");
+		}
+
+		task ("Check that text can be centered") {
+			BalloonEditor.toggleBalloonEditorContentStyle(
+				optionTool = "Center",
+				paragraph_number = "1");
+
+			AssertAttributeValue(
+				attribute1 = "style",
+				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
+				paragraph_number = "1",
+				value1 = "text-align: center;");
+		}
+
+		task ("Check that text can be aligned right") {
+			BalloonEditor.toggleBalloonEditorContentStyle(
+				optionTool = "Align Right",
+				paragraph_number = "1");
+
+			AssertAttributeValue(
+				attribute1 = "style",
+				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
+				paragraph_number = "1",
+				value1 = "text-align: right;");
+		}
+
+		task ("Check that text can be justified") {
+			BalloonEditor.toggleBalloonEditorContentStyle(
+				optionTool = "Justify",
+				paragraph_number = "1");
+
+			AssertAttributeValue(
+				attribute1 = "style",
+				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
+				paragraph_number = "1",
+				value1 = "text-align: justify;");
+		}
+	}
+
+	@description = "Assert toolbar with hyperlink icon is present"
+	@priority = "4"
+	test CanEditHyperlink {
+		task ("Click the hyperlinked text") {
+			Click(locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_HYPERLINK");
+		}
+
+		task ("Assert the presence of the hyperlink toolbar elements") {
+			AssertElementPresent(locator1 = "CKEditor#HYPERLINK_UNLINK");
+
+			AssertElementPresent(locator1 = "CKEditor#HYPERLINK_TARGET");
+
+			AssertElementPresent(locator1 = "CKEditor#HYPERLINK_TEXT_INPUT");
+
+			AssertElementPresent(locator1 = "CKEditor#HYPERLINK_BROWSE_SRVR_BTN");
+
+			AssertElementPresent(locator1 = "CKEditor#CHK_BTN");
+		}
+
+		task ("Unlink") {
+			AssertElementPresent(locator1 = "CKEditor#HYPERLINK_UNLINK");
+
+			Click(locator1 = "CKEditor#HYPERLINK_UNLINK");
+
+			AssertElementNotPresent(
+				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_HYPERLINK",
+				paragraph_number = "1");
+		}
+
+		task ("Link") {
+			TripleClick(
+				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
+				paragraph_number = "1");
+
+			Click(locator1 = "CKEditor#TOOLBAR_LINK_BUTTON_BALLOON");
+
+			Type.sendKeys(
+				locator1 = "CKEditor#HYPERLINK_TEXT_INPUT",
+				value1 = "www.liferay.com");
+
+			Click(locator1 = "CKEditor#CHK_BTN");
+
+			AssertVisible(
+				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_HYPERLINK",
+				paragraph_number = "1");
+		}
+	}
+
+	@description = "Assert table option enabled in the toolbar"
+	@priority = "4"
+	test CanEditTable {
+		task ("Create a table") {
+			BalloonEditor.clearParagraphWithBackspace(paragraph_number = "2");
+
+			BalloonEditor.addTable();
+
+			AssertVisible(locator1 = "CKEditorBalloonEditorSample#TABLE");
+		}
+
+		task ("Check Table Editor options") {
+			TripleClick(locator1 = "CKEditorBalloonEditorSample#TABLE_CELL");
+
+			AssertElementPresent(locator1 = "CKEditor#ROW_BUTTON");
+
+			AssertElementPresent(locator1 = "CKEditor#CELL_BUTTON");
+
+			AssertElementPresent(locator1 = "CKEditor#COLUMN_BUTTON");
+		}
+
+		task ("Write in a cell") {
+			var textSample = "test";
+
+			Click(locator1 = "CKEditorBalloonEditorSample#TABLE_CELL");
+
+			Type.sendKeys(
+				locator1 = "CKEditorBalloonEditorSample#TABLE_CELL",
+				value1 = "${textSample}");
+
+			AssertTextEquals(
+				locator1 = "CKEditorBalloonEditorSample#TABLE_CELL",
+				value1 = "${textSample}");
+		}
+
+		task ("Remove the table") {
+			TripleClick(locator1 = "CKEditorBalloonEditorSample#TABLE_CELL");
+
+			Click(locator1 = "CKEditor#REMOVE_TABLE_BUTTON");
+
+			AssertElementNotPresent(locator1 = "CKEditorBalloonEditorSample#TABLE_CELL");
+		}
+	}
+
+	@description = "Assert alignment options with an image"
+	@priority = "4"
+	test CanAlignImage {
+		task ("Invoke the image toolbar") {
+			Click(locator1 = "CKEditorBalloonEditorSample#IMAGE");
+		}
+
+		task ("Check align right") {
+			Click(locator1 = "CKEditor#ALIGN_IMG_RIGHT_BUTTON");
+
+			AssertElementPresent(locator1="CKEditorBalloonEditorSample#IMAGE");
+
+			AssertAttributeValue(
+					attribute1 = "style",
+					locator1 = "CKEditorBalloonEditorSample#IMAGE",
+					value1 = "float: right;");
+		}
+
+		task ("Check align left") {
+			Click(locator1 = "CKEditor#ALIGN_IMG_LEFT_BUTTON");
+
+			AssertAttributeValue(
+					attribute1 = "style",
+					locator1 = "CKEditorBalloonEditorSample#IMAGE",
+					value1 = "float: left;");
+		}
+
+		task ("Check align center") {
+			Click(locator1 = "CKEditor#ALIGN_IMG_CENTER_BUTTON");
+
+			AssertAttributeValue(
+					attribute1 = "style",
+					locator1 = "CKEditorBalloonEditorSample#IMAGE_PARAGRAPH",
+					value1 = "text-align: center;");
+		}
+	}
+
+	@description = "Assert alignment options with a video"
+	@priority = "4"
+	test CanAlignVideo {
+		task ("Invoke the video toolbar") {
+			BalloonEditor.clearParagraphWithBackspace(paragraph_number = "2");
+
+			BalloonEditor.goToAddVideo();
+
+			ItemSelector.addVideoFromURL(
+					navTab = "URL",
+					videoSourceURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+			Click(locator1 = "CKEditorBalloonEditorSample#VIDEO");
+		}
+
+		task ("Check align right") {
+			Click(locator1 = "CKEditor#ALIGN_IMG_RIGHT_BUTTON");
+
+			AssertAttributeValue(
+					attribute1 = "style",
+					locator1 = "CKEditorBalloonEditorSample#VIDEO",
+					value1 = "width: 100%; float: right;");
+		}
+
+		task ("Check align left") {
+			Click(locator1 = "CKEditor#ALIGN_IMG_LEFT_BUTTON");
+
+			AssertAttributeValue(
+					attribute1 = "style",
+					locator1 = "CKEditorBalloonEditorSample#VIDEO",
+					value1 = "width: 100%; float: left;");
+		}
+
+		task ("Check align center") {
+			Click(locator1 = "CKEditor#ALIGN_IMG_CENTER_BUTTON");
+
+			AssertAttributeValue(
+					attribute1 = "style",
+					locator1 = "CKEditorBalloonEditorSample#VIDEO",
+					value1 = "width: 100%; display: block; margin-left: auto; margin-right: auto;");
+		}
+	}
+}

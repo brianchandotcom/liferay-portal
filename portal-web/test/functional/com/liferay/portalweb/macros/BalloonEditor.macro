@@ -1,0 +1,41 @@
+definition {
+
+	macro addTable {
+		AssertElementPresent(locator1 = "CKEditor#INSERT_BTN");
+
+		Click(locator1 = "CKEditor#INSERT_BTN");
+
+		Click(locator1 = "CKEditor#INSERT_TABLE_BTN");
+
+		Click(locator1 = "CKEditor#CHK_BTN_TABLE");
+	}
+
+	macro goToAddVideo {
+		AssertElementPresent(locator1 = "CKEditor#INSERT_BTN");
+
+		Click(locator1 = "CKEditor#INSERT_BTN");
+
+		Click(locator1 = "CKEditor#INSERT_VIDEO_BTN");
+	}
+
+	macro clearParagraphWithBackspace {
+		TripleClick(locator1 = "CKEditorBalloonEditorSample#BODY_TEXT");
+
+		KeyPress(
+			locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
+			value1 = "\BACK_SPACE");
+	}
+
+	macro toggleBalloonEditorContentStyle {
+		TripleClick(locator1 = "CKEditorBalloonEditorSample#BODY_TEXT");
+
+		WaitForElementPresent(
+			key_titleName = "${optionTool}",
+			locator1 = "CKEditor#TOOLBAR_ANY_ITEM_BUTTON");
+
+		Click(
+			key_titleName = "${optionTool}",
+			locator1 = "CKEditor#TOOLBAR_ANY_ITEM_BUTTON");
+	}
+
+}

@@ -186,11 +186,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_addDocuments(serviceContext);
 
 			_addDDMStructures(serviceContext);
+
+			_addAssetListEntries(serviceContext);
 			_addDDMTemplates(serviceContext);
 			_addFragmentEntries(serviceContext);
 			_addJournalArticles(
 				documentsStringUtilReplaceValues, serviceContext);
-			_addAssetListEntries(serviceContext);
 			_addObjectDefinitions(serviceContext);
 			_addStyleBookEntries(serviceContext);
 			_addTaxonomyVocabularies(serviceContext);
@@ -227,7 +228,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(),
 					assetListJSONObject.getString("title"),
-					_getDynamicCollectionTypeSettings(
+					_getTypeSettings(
 						assetListJSONObject, serviceContext),
 					serviceContext);
 			}
@@ -686,7 +687,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			"/site-initializer/taxonomy-vocabularies/group", serviceContext);
 	}
 
-	private String _getDynamicCollectionTypeSettings(
+	private String _getTypeSettings(
 			JSONObject assetListJSONObject, ServiceContext serviceContext)
 		throws Exception {
 

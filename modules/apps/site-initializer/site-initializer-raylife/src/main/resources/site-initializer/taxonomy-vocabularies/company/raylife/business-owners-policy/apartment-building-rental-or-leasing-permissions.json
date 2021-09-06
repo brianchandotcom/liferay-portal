@@ -3,7 +3,6 @@
         "actionIds": [
             "VIEW"
         ],
-        "roleName": "Guest",
-        "scope": 4
+        "roleName": "Guest"
     }
 ]

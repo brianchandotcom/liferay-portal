@@ -769,6 +769,65 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addTaxonomyCategories(
+			long groupId, String parentCategoryId, String parentResourcePath,
+			ServiceContext serviceContext, long vocabularyId)
+		throws Exception {
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			parentResourcePath);
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		for (String resourcePath : resourcePaths) {
+			if (resourcePath.endsWith("/") ||
+				resourcePath.contains("permissions")) {
+
+				continue;
+			}
+
+			String jsonCategory = _read(resourcePath);
+
+			TaxonomyCategory taxonomyCategory = TaxonomyCategory.toDTO(
+				jsonCategory);
+
+			if (taxonomyCategory == null) {
+				_log.error(
+					"Unable to transform taxonomy category from JSON: " +
+						jsonCategory);
+
+				continue;
+			}
+
+			if (parentCategoryId == null) {
+				taxonomyCategory = _addTaxonomyVocabularyTaxonomyCategory(
+					serviceContext, taxonomyCategory, vocabularyId);
+			}
+			else {
+				taxonomyCategory = _addTaxonomyCategoryTaxonomyCategory(
+					parentCategoryId, serviceContext, taxonomyCategory);
+			}
+
+			String permissionsPath = StringUtil.replace(
+				resourcePath, ".json", "-permissions.json");
+
+			_addTaxonomyCategoryPermissions(
+				groupId, taxonomyCategory.getId(), permissionsPath,
+				serviceContext);
+
+			String resourcePathCategories = StringUtil.replace(
+				resourcePath, ".json", "/");
+
+			if (resourcePaths.contains(resourcePathCategories)) {
+				_addTaxonomyCategories(
+					groupId, taxonomyCategory.getId(), resourcePathCategories,
+					serviceContext, vocabularyId);
+			}
+		}
+	}
+
 	private void _addTaxonomyCategoryPermissions(
 			long groupId, String parentResourcePath,
 			ServiceContext serviceContext)
@@ -802,6 +861,39 @@ public class BundleSiteInitializer implements SiteInitializer {
 			parentResourcePath, permissions);
 	}
 
+	private void _addTaxonomyCategoryPermissions(
+			long groupId, String parentCategoryId, String parentResourcePath,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		TaxonomyCategoryResource.Builder taxonomyCategoryResourceBuilder =
+			_taxonomyCategoryResourceFactory.create();
+
+		TaxonomyCategoryResource taxonomyCategoryResource =
+			taxonomyCategoryResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		String jsonCategoryPermissions = _read(parentResourcePath);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			jsonCategoryPermissions);
+
+		Permission[] permissions = JSONUtil.toArray(
+			jsonArray,
+			jsonObject -> new Permission() {
+				{
+					actionIds = JSONUtil.toStringArray(
+						jsonObject.getJSONArray("actionIds"));
+					roleName = jsonObject.getString("roleName");
+				}
+			},
+			_log, Permission.class);
+
+		taxonomyCategoryResource.putTaxonomyCategoryPermission(
+			parentCategoryId, permissions);
+	}
+
 	private TaxonomyCategory _addTaxonomyCategoryTaxonomyCategory(
 			String parentCategoryId, ServiceContext serviceContext,
 			TaxonomyCategory taxonomyCategory)
@@ -815,17 +907,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		Filter filterFetch = taxonomyCategoryResource.toFilter(
+		Filter filter = taxonomyCategoryResource.toFilter(
 			StringBundler.concat("name eq '", taxonomyCategory.getName(), "'"));
 
 		TaxonomyCategory existingTaxonomyCategory = null;
 
 		existingTaxonomyCategory =
 			taxonomyCategoryResource.getTaxonomyCategoryTaxonomyCategoriesPage(
-				parentCategoryId, "", filterFetch, null, null
+				parentCategoryId, "", filter, null, null
 			).getItems(
-			).iterator(
-			).next();
+			).stream(
+			).findFirst(
+			).orElse(
+				null
+			);
 
 		if (existingTaxonomyCategory == null) {
 			taxonomyCategory =
@@ -878,16 +973,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			Filter filterFetch = taxonomyVocabularyResource.toFilter(
+			Filter filter = taxonomyVocabularyResource.toFilter(
 				StringBundler.concat(
 					"name eq '", taxonomyVocabulary.getName(), "'"));
 
 			TaxonomyVocabulary existingTaxonomyVocabulary =
 				taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-					groupId, "", filterFetch, null, null
+					groupId, "", filter, null, null
 				).getItems(
-				).iterator(
-				).next(); // ou .stream().findFirst();
+				).stream(
+				).findFirst(
+				).orElse(
+					null
+				);
 
 			if (existingTaxonomyVocabulary != null) {
 				taxonomyVocabulary =
@@ -901,10 +999,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			_addTaxonomyCategories(
-				groupId, taxonomyVocabulary.getId(),
-				String.valueOf(
-					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID),
-				StringUtil.replace(resourcePath, ".json", "/"), serviceContext);
+				groupId, null, StringUtil.replace(resourcePath, ".json", "/"),
+				serviceContext, taxonomyVocabulary.getId());
 		}
 	}
 
@@ -936,7 +1032,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		Filter filterFetch = taxonomyCategoryResource.toFilter(
+		Filter filter = taxonomyCategoryResource.toFilter(
 			StringBundler.concat("name eq '", taxonomyCategory.getName(), "'"));
 
 		TaxonomyCategory existingTaxonomyCategory = null;
@@ -944,10 +1040,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 		existingTaxonomyCategory =
 			taxonomyCategoryResource.
 				getTaxonomyVocabularyTaxonomyCategoriesPage(
-					VocabularyId, "", filterFetch, null, null
+					VocabularyId, "", filter, null, null
 				).getItems(
-				).iterator(
-				).next();
+				).stream(
+				).findFirst(
+				).orElse(
+					null
+				);
 
 		if (existingTaxonomyCategory == null) {
 			taxonomyCategory =

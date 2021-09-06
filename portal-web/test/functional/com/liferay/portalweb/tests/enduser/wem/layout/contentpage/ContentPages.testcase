@@ -666,7 +666,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-134844. Groups of fragments can be hidden and shown."
+	@description = "This is a test for LPS-134844. Groups of fragments can be hidden and shown and Fragments added to a fragment with nested hidden fragment should be shown."
 	@priority = "4"
 	@uitest
 	test GroupsOfFragmentsCanBeHiddenAndShown {
@@ -762,6 +762,20 @@ definition {
 					key_fragmentName = "html",
 					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
 					value1 = "HTML Example");
+		}
+
+		task ("Add fragment and check it's shown") {
+			PageEditor.addElementToContainer(
+					collectionName = "Basic Components",
+					dragAndDropToUp = "true",
+					fragmentName = "Paragraph",
+					navTab = "Fragments",
+					targetElementName = "Blogs");
+
+			AssertTextEquals.assertPartialText(
+					key_fragmentName = "paragraph",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+					value1 = "A paragraph is a self-contained unit of a discourse");
 		}
 	}
 

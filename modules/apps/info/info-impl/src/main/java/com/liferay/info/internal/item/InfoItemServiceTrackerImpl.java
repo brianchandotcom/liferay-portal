@@ -196,9 +196,9 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 			if (infoItemCapabilities.contains(infoItemCapability)) {
 				infoItemCapability.verify(
 					curInfoItemClassDetails.getClassName());
-			}
 
-			infoItemClassDetailsList.add(curInfoItemClassDetails);
+				infoItemClassDetailsList.add(curInfoItemClassDetails);
+			}
 		}
 
 		return infoItemClassDetailsList;

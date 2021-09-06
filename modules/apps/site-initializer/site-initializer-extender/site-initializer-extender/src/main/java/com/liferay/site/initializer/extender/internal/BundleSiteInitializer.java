@@ -228,8 +228,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(),
 					assetListJSONObject.getString("title"),
-					_getTypeSettings(
-						assetListJSONObject, serviceContext),
+					_getTypeSettings(assetListJSONObject, serviceContext),
 					serviceContext);
 			}
 		}
@@ -696,30 +695,32 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONObject unicodePropertiesJSONObject =
 			assetListJSONObject.getJSONObject("unicodeProperties");
 
-		Class<?> clazz = Class.forName(
-			unicodePropertiesJSONObject.getString("classNameIds"));
-
-		unicodeProperties.put(
-			"anyAssetType", String.valueOf(_portal.getClassNameId(clazz)));
-
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			serviceContext.getScopeGroupId(),
 			_portal.getClassNameId(
 				unicodePropertiesJSONObject.getString("classNameIds")),
 			assetListJSONObject.getString("ddmStructureKey"));
 
-		unicodeProperties.put(
-			unicodePropertiesJSONObject.getString("anyClassType"),
-			String.valueOf(ddmStructure.getStructureId()));
-
-		unicodeProperties.put(
-			"classNameIds",
-			unicodePropertiesJSONObject.getString("classNameIds"));
-		unicodeProperties.put(
-			unicodePropertiesJSONObject.getString("classTypeIds"),
-			String.valueOf(ddmStructure.getStructureId()));
-		unicodeProperties.put(
-			"groupIds", String.valueOf(serviceContext.getScopeGroupId()));
+		unicodeProperties.putAll(
+			HashMapBuilder.put(
+				"anyAssetType",
+				String.valueOf(
+					_portal.getClassNameId(
+						Class.forName(
+							unicodePropertiesJSONObject.getString(
+								"classNameIds"))))
+			).put(
+				unicodePropertiesJSONObject.getString("anyClassType"),
+				String.valueOf(ddmStructure.getStructureId())
+			).put(
+				"classNameIds",
+				unicodePropertiesJSONObject.getString("classNameIds")
+			).put(
+				unicodePropertiesJSONObject.getString("classTypeIds"),
+				String.valueOf(ddmStructure.getStructureId())
+			).put(
+				"groupIds", String.valueOf(serviceContext.getScopeGroupId())
+			).build());
 
 		JSONArray orderByPropertiesJSONArray =
 			unicodePropertiesJSONObject.getJSONArray("orderBy");

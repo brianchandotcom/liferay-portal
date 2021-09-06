@@ -1365,6 +1365,40 @@ definition {
 			locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
 	}
 
+	macro editAppliedFilters {
+		var key_fragmentName = "Applied Filters";
+
+		if (isSet(columnNumber)) {
+			Click.clickNoWaitForVisible(
+				key_columnNumber = "${columnNumber}",
+				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		}
+		else {
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
+		}
+
+		WaitForVisible(
+			key_sidebarButton = "Browser",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+		Navigator.gotoNavTab(navTab = "General");
+
+		if (isSet(targetCollection)) {
+			Click(
+				key_fieldLabel = "Target Collection",
+				key_text = "Select",
+				locator1 = "Button#ANY_WITH_LABEL");
+
+			Check.checkNotVisible(
+				key_checkboxName = "${targetCollection}",
+				locator1 = "MenuItem#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
+		}
+	}
+
 	macro editCollectionDisplay {
 		if (!(isSet(index))) {
 			var index = "1";

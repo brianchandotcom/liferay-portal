@@ -113,5 +113,6 @@
 		<exception>DepotEntryGroupRelStagedGroup</exception>
 		<exception>DepotEntryGroupRelToGroup</exception>
 		<exception>DepotEntryName</exception>
+		<exception>DepotEntryStaged</exception>
 	</exceptions>
 </service-builder>

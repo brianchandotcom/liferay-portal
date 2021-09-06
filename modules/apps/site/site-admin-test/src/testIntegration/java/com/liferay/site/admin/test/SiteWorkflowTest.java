@@ -81,13 +81,13 @@ public class SiteWorkflowTest {
 		_updateGroupFromSiteTemplate(
 			privateGroup, String.valueOf(Boolean.TRUE));
 
-		Assert.assertTrue(
-			_getWorkflowDefinitionLinkCount(privateGroup.getGroupId()) == 1);
+		Assert.assertEquals(
+			1, _getWorkflowDefinitionLinkCount(privateGroup.getGroupId()));
 
 		GroupTestUtil.deleteGroup(privateGroup);
 
-		Assert.assertTrue(
-			_getWorkflowDefinitionLinkCount(privateGroup.getGroupId()) == 0);
+		Assert.assertEquals(
+			0, _getWorkflowDefinitionLinkCount(privateGroup.getGroupId()));
 	}
 
 	@Test
@@ -109,13 +109,13 @@ public class SiteWorkflowTest {
 		_updateGroupFromSiteTemplate(
 			publicGroup, String.valueOf(Boolean.FALSE));
 
-		Assert.assertTrue(
-			_getWorkflowDefinitionLinkCount(publicGroup.getGroupId()) == 1);
+		Assert.assertEquals(
+			1, _getWorkflowDefinitionLinkCount(publicGroup.getGroupId()));
 
 		GroupTestUtil.deleteGroup(publicGroup);
 
-		Assert.assertTrue(
-			_getWorkflowDefinitionLinkCount(publicGroup.getGroupId()) == 0);
+		Assert.assertEquals(
+			0, _getWorkflowDefinitionLinkCount(publicGroup.getGroupId()));
 	}
 
 	private void _addWorkflowDefinitionLinkToSiteTemplate(long groupId)
@@ -132,8 +132,7 @@ public class SiteWorkflowTest {
 	}
 
 	private void _updateGroupFromSiteTemplate(
-			Group group, String layoutSetVisibilityPrivate)
-		throws Exception {
+		Group group, String layoutSetVisibilityPrivate) {
 
 		MockLiferayPortletActionRequest actionRequest =
 			new MockLiferayPortletActionRequest();

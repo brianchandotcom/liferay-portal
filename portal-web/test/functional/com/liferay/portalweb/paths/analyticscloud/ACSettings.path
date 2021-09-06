@@ -341,6 +341,16 @@
 	<td>//td[contains(text(),'${key_userEmail}')]/..//div[contains(@class,'custom-checkbox')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VIEW_USER_PERMISSION</td>
+	<td>//td[text()='${emailAddress}']/parent::tr//span[text()='${permission}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_STATUS_PENDING</td>
+	<td>//span[text()='Pending']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

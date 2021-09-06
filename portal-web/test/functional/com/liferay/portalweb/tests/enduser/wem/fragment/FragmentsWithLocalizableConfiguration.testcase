@@ -105,11 +105,6 @@ definition {
 				value1 = "Valor por defecto");
 
 			AssertSelectedLabel(
-				key_fieldLabel = "Familia de fuentes",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Valor por defecto");
-
-			AssertSelectedLabel(
 				key_fieldLabel = "Origen de la imagen",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Directo");

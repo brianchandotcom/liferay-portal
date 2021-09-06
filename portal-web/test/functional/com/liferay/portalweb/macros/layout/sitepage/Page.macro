@@ -206,6 +206,14 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro clearFiltersInAppliedFilters {
+		Click(
+			button = "Clear Filters",
+			locator1 = "PageEditor#APPLIED_FILTERS_INNER_BUTTON");
+
+		AssertElementNotPresent(locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_PLACEHOLDER");
+	}
+
 	macro configureCanonicalURL {
 		var checkboxName = "Use Custom Canonical URL";
 

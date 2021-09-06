@@ -21,6 +21,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NODE_DRAGGABLE_ELEMENT</td>
+	<td>//div[contains(@class,'list-item__node')][contains(.,'${key_elementName}')]//div[@role='button'][@draggable='true']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_DRAGGABLE_TARGET_ELEMENT</td>
+	<td>//div[contains(@class,'list-item__node')][contains(.,'${key_targetElementName}')]//div[@role='button'][@draggable='true']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NODE_ITEM</td>
 	<td>//div[contains(@class,'card-horizontal')]//div[contains(@class,'card-body')][contains(.,'${key_nodeName}')]</td>
 	<td></td>

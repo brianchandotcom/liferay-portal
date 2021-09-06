@@ -595,9 +595,9 @@
 	<td></td>
 </tr>
 <tr>
-<td>CONTAINER_CONTAINER_EMPTY</td>
-<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@class,'empty')]</td>
-<td></td>
+	<td>CONTAINER_CONTAINER_EMPTY</td>
+	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@class,'empty')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>CONTAINER_CONTAINER_NESTED_ELEMENT</td>

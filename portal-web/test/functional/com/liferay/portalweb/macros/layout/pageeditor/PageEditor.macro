@@ -3077,6 +3077,56 @@ definition {
 		AssertElementPresent(locator1 = "Fragment#ACTIVE_NAV_ITEM_TAB");
 	}
 
+	macro moveElementInsideAnExistingContainer {
+		Variables.assertDefined(parameterList = "${elementName}");
+
+		PageEditor.gotoTab(tabName = "Browser");
+
+		WaitForElementPresent(
+				key_elementName = "${elementName}",
+				locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT");
+
+		if (!(isSet(targetElementName))) {
+			DragAndDrop.javaScriptDragAndDropToObject(
+					key_elementName = "${elementName}",
+					key_targetElementName =  "Container",
+					locator1 =
+							"Treeview#NODE_DRAGGABLE_ELEMENT",
+					locator2 =
+							"Treeview#NODE_DRAGGABLE_TARGET_ELEMENT");
+		} else {
+			WaitForElementPresent(
+					key_nodeName = "Container",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
+
+			Click(
+					key_nodeName = "Container",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
+
+			if (!(isSet(dragAndDropToUp))) {
+				DragAndDrop.javaScriptDragAndDropToBottom(
+						key_elementName = "${elementName}",
+						key_targetElementName =  "${targetElementName}",
+						locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",
+						locator2 = "Treeview#NODE_DRAGGABLE_TARGET_ELEMENT");
+			}  else {
+				DragAndDrop.javaScriptDragAndDropToUp(
+						key_elementName = "${elementName}",
+						key_targetElementName =  "${targetElementName}",
+						locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",
+						locator2 ="Treeview#NODE_DRAGGABLE_TARGET_ELEMENT");
+			}
+
+		}
+
+		PageEditor.waitForAutoSave();
+
+		AssertElementPresent(
+				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${elementName}')]",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+	}
+
 	macro openExperienceMenu {
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 	}

@@ -22,7 +22,7 @@ CPCompareContentDisplayContext cpCompareContentDisplayContext = (CPCompareConten
 
 <aui:fieldset markupView="lexicon">
 	<div class="display-template">
-		<liferay-ddm:template-selector
+		<liferay-template:template-selector
 			className="<%= CPCompareContentPortlet.class.getName() %>"
 			displayStyle="<%= cpCompareContentDisplayContext.getDisplayStyle() %>"
 			displayStyleGroupId="<%= cpCompareContentDisplayContext.getDisplayStyleGroupId() %>"

@@ -22,7 +22,7 @@ CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDi
 
 <aui:fieldset markupView="lexicon">
 	<div class="display-template">
-		<liferay-ddm:template-selector
+		<liferay-template:template-selector
 			className="<%= CPSearchResultsPortlet.class.getName() %>"
 			displayStyle="<%= cpSearchResultsDisplayContext.getDisplayStyle() %>"
 			displayStyleGroupId="<%= cpSearchResultsDisplayContext.getDisplayStyleGroupId() %>"

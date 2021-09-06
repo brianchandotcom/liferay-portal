@@ -37,7 +37,7 @@
 				label="display-settings"
 			>
 				<div class="display-template">
-					<liferay-ddm:template-selector
+					<liferay-template:template-selector
 						className="<%= LanguageEntry.class.getName() %>"
 						displayStyle="<%= languagePortletInstanceConfiguration.displayStyle() %>"
 						displayStyleGroupId="<%= siteNavigationLanguageDisplayContext.getDisplayStyleGroupId() %>"

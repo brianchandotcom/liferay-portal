@@ -36,7 +36,7 @@ List<LayoutDescription> layoutDescriptions = siteNavigationSiteMapDisplayContext
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
 				<div class="display-template">
-					<liferay-ddm:template-selector
+					<liferay-template:template-selector
 						className="<%= LayoutSet.class.getName() %>"
 						displayStyle="<%= siteNavigationSiteMapPortletInstanceConfiguration.displayStyle() %>"
 						displayStyleGroupId="<%= siteNavigationSiteMapDisplayContext.getDisplayStyleGroupId() %>"

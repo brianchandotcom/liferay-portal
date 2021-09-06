@@ -40,7 +40,7 @@
 					displayStyles.add("cloud");
 					%>
 
-					<liferay-ddm:template-selector
+					<liferay-template:template-selector
 						className="<%= AssetTag.class.getName() %>"
 						displayStyle="<%= displayStyle %>"
 						displayStyleGroupId="<%= displayStyleGroupId %>"

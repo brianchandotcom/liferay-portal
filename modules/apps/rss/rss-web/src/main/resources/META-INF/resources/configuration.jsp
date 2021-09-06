@@ -92,7 +92,7 @@
 
 			<liferay-ui:section>
 				<div class="display-template">
-					<liferay-ddm:template-selector
+					<liferay-template:template-selector
 						className="<%= RSSFeed.class.getName() %>"
 						displayStyle="<%= rssPortletInstanceConfiguration.displayStyle() %>"
 						displayStyleGroupId="<%= rssDisplayContext.getDisplayStyleGroupId() %>"

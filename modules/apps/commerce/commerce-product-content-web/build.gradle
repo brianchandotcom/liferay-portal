@@ -53,6 +53,7 @@ dependencies {
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:template:template-api")
+	compileOnly project(":apps:template:template-taglib")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")

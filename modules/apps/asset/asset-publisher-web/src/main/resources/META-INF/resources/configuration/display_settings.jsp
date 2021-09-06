@@ -21,7 +21,7 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 %>
 
 <div class="display-template">
-	<liferay-ddm:template-selector
+	<liferay-template:template-selector
 		className="<%= AssetEntry.class.getName() %>"
 		defaultDisplayStyle="<%= assetPublisherDisplayContext.getDefaultDisplayStyle() %>"
 		displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>"

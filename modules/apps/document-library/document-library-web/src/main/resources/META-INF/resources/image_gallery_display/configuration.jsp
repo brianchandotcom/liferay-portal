@@ -59,7 +59,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				</aui:field-wrapper>
 
 				<div class="display-template">
-					<liferay-ddm:template-selector
+					<liferay-template:template-selector
 						className="<%= FileEntry.class.getName() %>"
 						displayStyle="<%= displayStyle %>"
 						displayStyleGroupId="<%= displayStyleGroupId %>"

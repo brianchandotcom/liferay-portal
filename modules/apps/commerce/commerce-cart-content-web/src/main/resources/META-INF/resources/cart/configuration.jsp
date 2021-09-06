@@ -33,7 +33,7 @@ CommerceCartContentDisplayContext commerceCartContentDisplayContext = (CommerceC
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
 					<div class="display-template">
-						<liferay-ddm:template-selector
+						<liferay-template:template-selector
 							className="<%= CommerceCartContentPortlet.class.getName() %>"
 							displayStyle="<%= commerceCartContentDisplayContext.getDisplayStyle() %>"
 							displayStyleGroupId="<%= commerceCartContentDisplayContext.getDisplayStyleGroupId() %>"

@@ -29,7 +29,7 @@
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
 					<div class="display-template">
-						<liferay-ddm:template-selector
+						<liferay-template:template-selector
 							className="<%= CommerceOrderContentPortlet.class.getName() %>"
 							displayStyle="<%= commerceOrderContentDisplayContext.getDisplayStyle(CommercePortletKeys.COMMERCE_ORDER_CONTENT) %>"
 							displayStyleGroupId="<%= commerceOrderContentDisplayContext.getDisplayStyleGroupId(CommercePortletKeys.COMMERCE_ORDER_CONTENT) %>"

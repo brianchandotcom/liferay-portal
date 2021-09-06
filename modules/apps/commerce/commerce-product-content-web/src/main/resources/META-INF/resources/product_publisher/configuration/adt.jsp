@@ -22,7 +22,7 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 
 <aui:fieldset markupView="lexicon">
 	<div class="display-template">
-		<liferay-ddm:template-selector
+		<liferay-template:template-selector
 			className="<%= CPPublisherPortlet.class.getName() %>"
 			displayStyle="<%= cpPublisherConfigurationDisplayContext.getDisplayStyle() %>"
 			displayStyleGroupId="<%= cpPublisherConfigurationDisplayContext.getDisplayStyleGroupId() %>"

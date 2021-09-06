@@ -33,7 +33,7 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
 					<div class="display-template">
-						<liferay-ddm:template-selector
+						<liferay-template:template-selector
 							className="<%= CommerceVirtualOrderItemContentPortlet.class.getName() %>"
 							displayStyle="<%= commerceVirtualOrderItemContentDisplayContext.getDisplayStyle() %>"
 							displayStyleGroupId="<%= commerceVirtualOrderItemContentDisplayContext.getDisplayStyleGroupId() %>"

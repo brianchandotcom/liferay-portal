@@ -99,7 +99,7 @@ else {
 						<aui:button disabled="<%= !siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() %>" name="chooseSiteNavigationMenu" value="select" />
 
 						<div class="display-template mt-4">
-							<liferay-ddm:template-selector
+							<liferay-template:template-selector
 								className="<%= NavItem.class.getName() %>"
 								displayStyle="<%= siteNavigationMenuDisplayContext.getDisplayStyle() %>"
 								displayStyleGroupId="<%= siteNavigationMenuDisplayContext.getDisplayStyleGroupId() %>"

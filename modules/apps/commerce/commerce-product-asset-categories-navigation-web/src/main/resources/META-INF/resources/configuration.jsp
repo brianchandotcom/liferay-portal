@@ -37,7 +37,7 @@ if (assetVocabulary != null) {
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
 					<div class="display-template">
-						<liferay-ddm:template-selector
+						<liferay-template:template-selector
 							className="<%= CPAssetCategoriesNavigationPortlet.class.getName() %>"
 							displayStyle="<%= cpAssetCategoriesNavigationDisplayContext.getDisplayStyle() %>"
 							displayStyleGroupId="<%= cpAssetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>"

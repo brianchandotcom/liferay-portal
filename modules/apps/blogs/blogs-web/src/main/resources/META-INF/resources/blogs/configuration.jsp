@@ -91,7 +91,7 @@ BlogsPortletInstanceSettingsHelper blogsPortletInstanceSettingsHelper = new Blog
 					displayStyles.add(BlogsUtil.DISPLAY_STYLE_TITLE);
 					%>
 
-					<liferay-ddm:template-selector
+					<liferay-template:template-selector
 						className="<%= BlogsEntry.class.getName() %>"
 						displayStyle="<%= blogsPortletInstanceConfiguration.displayStyle() %>"
 						displayStyleGroupId="<%= blogsPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>"

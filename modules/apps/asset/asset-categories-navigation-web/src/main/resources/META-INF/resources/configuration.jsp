@@ -33,7 +33,7 @@
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
 				<div class="display-template">
-					<liferay-ddm:template-selector
+					<liferay-template:template-selector
 						className="<%= AssetCategory.class.getName() %>"
 						displayStyle="<%= assetCategoriesNavigationPortletInstanceConfiguration.displayStyle() %>"
 						displayStyleGroupId="<%= assetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>"

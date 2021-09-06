@@ -56,6 +56,7 @@ dependencies {
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":apps:subscription:subscription-api")
 	compileOnly project(":apps:template:template-api")
+	compileOnly project(":apps:template:template-taglib")
 	compileOnly project(":apps:trash:trash-api")
 	compileOnly project(":apps:trash:trash-taglib")
 	compileOnly project(":apps:upload:upload-api")

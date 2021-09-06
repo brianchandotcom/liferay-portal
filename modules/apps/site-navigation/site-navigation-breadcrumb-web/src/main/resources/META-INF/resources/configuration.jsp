@@ -36,7 +36,7 @@
 				<liferay-frontend:fieldset-group>
 					<liferay-frontend:fieldset>
 						<div class="display-template">
-							<liferay-ddm:template-selector
+							<liferay-template:template-selector
 								className="<%= BreadcrumbEntry.class.getName() %>"
 								displayStyle="<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyle() %>"
 								displayStyleGroupId="<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyleGroupId() %>"

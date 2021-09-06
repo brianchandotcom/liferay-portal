@@ -17,9 +17,9 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
+taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %>
 
 <%@ page import="com.liferay.portal.kernel.json.JSONArray" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
@@ -63,7 +63,7 @@ JSONArray fieldsJSONArray = sortPortletPreferences.getFieldsJSONArray();
 				label="display-settings"
 			>
 				<div class="display-template">
-					<liferay-ddm:template-selector
+					<liferay-template:template-selector
 						className="<%= SortDisplayContext.class.getName() %>"
 						displayStyle="<%= sortPortletInstanceConfiguration.displayStyle() %>"
 						displayStyleGroupId="<%= sortDisplayContext.getDisplayStyleGroupId() %>"

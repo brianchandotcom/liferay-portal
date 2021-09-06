@@ -1572,6 +1572,8 @@ definition {
 			Check.checkNotVisible(
 				key_checkboxName = "${targetCollection}",
 				locator1 = "MenuItem#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		if (isSet(filter)) {

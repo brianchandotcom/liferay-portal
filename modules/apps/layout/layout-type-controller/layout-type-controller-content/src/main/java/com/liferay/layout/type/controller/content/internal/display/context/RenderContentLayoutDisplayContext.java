@@ -67,7 +67,7 @@ public class RenderContentLayoutDisplayContext {
 				PortletJSONUtil.populatePortletJSONObject(
 					_httpServletRequest, StringPool.BLANK, portlet, jsonObject);
 
-				PortletJSONUtil.writeHeaderPaths(
+				PortletJSONUtil.writeFooterPaths(
 					pipingServletResponse, jsonObject);
 			}
 			catch (Exception exception) {
@@ -94,7 +94,7 @@ public class RenderContentLayoutDisplayContext {
 				PortletJSONUtil.populatePortletJSONObject(
 					_httpServletRequest, StringPool.BLANK, portlet, jsonObject);
 
-				PortletJSONUtil.writeFooterPaths(
+				PortletJSONUtil.writeHeaderPaths(
 					pipingServletResponse, jsonObject);
 			}
 			catch (Exception exception) {

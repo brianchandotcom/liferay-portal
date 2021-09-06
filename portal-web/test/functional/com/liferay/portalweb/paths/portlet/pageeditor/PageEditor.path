@@ -10,6 +10,12 @@
 </thead>
 
 <tbody>
+<!--APPLIED_FILTERS-->
+<tr>
+	<td>APPLIED_FILTERS_FILTER_LIST</td>
+	<td>//div[contains(@id,'filterList')]</td>
+	<td></td>
+</tr>
 <!--BASED_ON_CUSTOM_MASTERS-->
 <tr>
 	<td>FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS</td>

@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
@@ -28,6 +29,8 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
@@ -255,6 +258,73 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 		}
 		finally {
 			GroupTestUtil.deleteGroup(group);
+		}
+	}
+
+	@Test
+	public void testGetDataWithDDMStructuresFromTheGuestGroup()
+		throws Exception {
+
+		Group group = GroupLocalServiceUtil.getGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
+
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+			"content", "string", "text", true, "textarea",
+			new Locale[] {LocaleUtil.US}, LocaleUtil.US);
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			group.getGroupId(), JournalArticle.class.getName(), 0, ddmForm,
+			LocaleUtil.US,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		try {
+			Map<String, Object> data = _getData();
+
+			JSONArray contentDashboardItemTypesJSONArray = (JSONArray)data.get(
+				"contentDashboardItemTypes");
+
+			JSONObject contentDashboardItemTypeJSONObject =
+				contentDashboardItemTypesJSONArray.getJSONObject(0);
+
+			Assert.assertEquals(
+				"web-content",
+				contentDashboardItemTypeJSONObject.getString("icon"));
+			Assert.assertEquals(
+				"Web Content Article",
+				contentDashboardItemTypeJSONObject.getString("label"));
+
+			JSONArray itemSubtypesJSONArray =
+				contentDashboardItemTypeJSONObject.getJSONArray("itemSubtypes");
+
+			Assert.assertEquals(2, itemSubtypesJSONArray.length());
+
+			JSONObject itemSubtypeJSONObject =
+				itemSubtypesJSONArray.getJSONObject(0);
+
+			Assert.assertEquals(
+				DDMStructure.class.getName(),
+				itemSubtypeJSONObject.getString("className"));
+			Assert.assertNotNull(itemSubtypeJSONObject.getString("classPK"));
+			Assert.assertEquals(
+				"Basic Web Content (Global)",
+				itemSubtypeJSONObject.getString("label"));
+
+			itemSubtypeJSONObject = itemSubtypesJSONArray.getJSONObject(1);
+
+			Assert.assertEquals(
+				DDMStructure.class.getName(),
+				itemSubtypeJSONObject.getString("className"));
+			Assert.assertEquals(
+				ddmStructure.getStructureId(),
+				itemSubtypeJSONObject.getLong("classPK"));
+			Assert.assertEquals(
+				"Test Structure (Liferay DXP)",
+				itemSubtypeJSONObject.getString("label"));
+
+			Assert.assertNotNull(data.get("itemSelectorSaveEvent"));
+		}
+		finally {
+			DDMStructureLocalServiceUtil.deleteDDMStructure(ddmStructure);
 		}
 	}
 

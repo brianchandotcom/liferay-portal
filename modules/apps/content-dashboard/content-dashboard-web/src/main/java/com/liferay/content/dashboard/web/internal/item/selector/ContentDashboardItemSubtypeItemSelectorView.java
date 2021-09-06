@@ -164,6 +164,17 @@ public class ContentDashboardItemSubtypeItemSelectorView
 		).toArray();
 	}
 
+	private String _getGroupLabel(Group group, Locale locale) {
+		try {
+			return group.getDescriptiveName(locale);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+
+			return group.getName(locale);
+		}
+	}
+
 	private String _getIcon(String className) {
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
@@ -199,7 +210,7 @@ public class ContentDashboardItemSubtypeItemSelectorView
 					"x-group-x",
 					new String[] {
 						labelInfoLocalizedValue.getValue(locale),
-						group.getName(locale)
+						_getGroupLabel(group, locale)
 					});
 			}
 		).orElseGet(

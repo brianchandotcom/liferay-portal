@@ -21,6 +21,7 @@ import LayoutService from '../services/LayoutService';
 import isMappedToInfoItem from '../utils/editable-value/isMappedToInfoItem';
 import isMappedToLayout from '../utils/editable-value/isMappedToLayout';
 import isMappedToStructure from '../utils/editable-value/isMappedToStructure';
+import isNullOrUndefined from '../utils/isNullOrUndefined';
 import {useDisplayPagePreviewItem} from './DisplayPagePreviewItemContext';
 import {useDispatch} from './StoreContext';
 
@@ -94,9 +95,9 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 			) ?? false;
 
 		if (
-			(collectionItemIndex != null &&
-				collectionItemClassName != null &&
-				collectionItemClassPK != null) ||
+			(!isNullOrUndefined(collectionItemIndex) &&
+				!isNullOrUndefined(collectionItemClassName) &&
+				!isNullOrUndefined(collectionItemClassPK)) ||
 			hasLocalizable
 		) {
 			FragmentService.renderFragmentEntryLinkContent({
@@ -130,7 +131,7 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 		segmentsExperienceId,
 	]);
 
-	if (collectionItemIndex != null) {
+	if (!isNullOrUndefined(collectionItemIndex)) {
 		const collectionContent = fragmentEntryLink.collectionContent || {};
 
 		return (
@@ -191,8 +192,7 @@ const useGetFieldValue = () => {
 
 	const getFromCollectionItem = useCallback(
 		({collectionFieldId}) =>
-			collectionItem[collectionFieldId] !== null &&
-			collectionItem[collectionFieldId] !== undefined
+			!isNullOrUndefined(collectionItem[collectionFieldId])
 				? Promise.resolve(collectionItem[collectionFieldId])
 				: Promise.reject(),
 		[collectionItem]

@@ -67,6 +67,13 @@ definition {
 		Click(locator1 = "ACSegments#ADD_BUTTON");
 	}
 
+	macro assertCriteriaTable {
+		AssertVisible(
+			key_CriteriaName = "${criteriaName}",
+			locator1 = "ACSegments#CRITERIA_ROW"
+		);
+	}
+
 	macro assertMember {
 		AssertElementPresent(
 			key_TableMember = "${memberName}",

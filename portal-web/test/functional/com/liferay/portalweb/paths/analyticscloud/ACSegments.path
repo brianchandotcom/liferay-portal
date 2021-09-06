@@ -52,6 +52,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CRITERIA_ROW</td>
+	<td>//div[contains(@class,'criteria-row')]//b[contains(text(),'${key_CriteriaName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CRITERION_TYPE_DROPDOWN</td>
 	<td>//div[@class='dropdown dropdown-root']/button</td>
 	<td></td>

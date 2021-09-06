@@ -183,7 +183,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9105 | Test Summary: [AC] It is allowed to create property name with special chars"
 	@priority = "3"
 	test CanCreatePropertyNameWithSpecialChars {
-
 		ACUtils.launchAC();
 
 		ACNavigation.goToSettings();
@@ -195,7 +194,6 @@ definition {
 		ACSettings.goToProperties();
 
 		ACUtils.assertItemsName(itemList = "Name with special chars = @#$%&!");
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8144 | Test Summary: Properties management menu is present"
@@ -417,12 +415,19 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9102 | Test Summary: Property with name too big"
-	@ignore = "true"
 	@priority = "3"
 	test PropertyCanHaveABigName {
+		ACUtils.launchAC();
 
-		// TODO LRAC-9102 PropertyCanHaveABigName pending implementation
+		ACNavigation.goToSettings();
 
+		ACSettings.goToProperties();
+
+		ACProperties.addNewProperty(propertyName = "This is a property with a big name to ckeck the limit of a name!!");
+
+		ACSettings.goToProperties();
+
+		ACUtils.assertItemsName(itemList = "This is a property with a big name to ckeck the limit of a name!!");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9109 | Test Summary: Property field is displayed in empty state when no property is available"

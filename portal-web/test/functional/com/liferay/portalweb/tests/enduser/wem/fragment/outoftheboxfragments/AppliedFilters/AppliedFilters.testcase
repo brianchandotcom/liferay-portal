@@ -372,4 +372,420 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-113929. The Applied Filters will show the second line and Show More button when there are lots of applied filters."
+	@priority = "4"
+	test ViewShowMoreButtonWhenTheNumberOfAppliedFiltersMoreThanLimitation {
+		property test.name.skip.portal.instance = "AppliedFilters#ViewShowMoreButtonWhenTheNumberOfAppliedFiltersMoreThanLimitation";
+
+		task ("Add two vocabularies") {
+			for (var vocabularyName : list "Color,Gender") {
+				JSONCategory.addVocabulary(
+					groupName = "Test Site Name",
+					title = "${vocabularyName}");
+			}
+		}
+
+		task ("Add 2 categories in Gender vocabulary") {
+			var maleId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Male",
+				vocabularyName = "Gender");
+
+			var femaleId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Female",
+				vocabularyName = "Gender");
+		}
+
+		task ("Add 8 categories in Color vocabulary") {
+			var redId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Red",
+				vocabularyName = "Color");
+
+			var brownId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Brown",
+				vocabularyName = "Color");
+
+			var blackId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Black",
+				vocabularyName = "Color");
+
+			var greyId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Grey",
+				vocabularyName = "Color");
+
+			var blueId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Blue",
+				vocabularyName = "Color");
+
+			var greenId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Green",
+				vocabularyName = "Color");
+
+			var yellowId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Yellow",
+				vocabularyName = "Color");
+
+			var whiteId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "White",
+				vocabularyName = "Color");
+		}
+
+		task ("Add the first web content with Black, Grey, Blue, Male, Female") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${blackId},${greyId},${blueId},${maleId},${femaleId}",
+				content = "Levis 511",
+				groupName = "Test Site Name",
+				title = "Levis 511");
+		}
+
+		task ("Add the second web content with White,Yellow,Red,Female") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${whiteId},${yellowId},${redId},${femaleId}",
+				content = "Levis 501",
+				groupName = "Test Site Name",
+				title = "Levis 501");
+		}
+
+		task ("Add the third web content with Brown, Black, Green, Male, Female") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${brownId},${blackId},${greenId},${maleId},${femaleId}",
+				content = "Levis 510",
+				groupName = "Test Site Name",
+				title = "Levis 510");
+		}
+
+		task ("Add the fourth web content with Black, Grey, Blue, Male") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${blackId},${greyId},${blueId},${maleId}",
+				content = "Lee 709",
+				groupName = "Test Site Name",
+				title = "Lee 709");
+		}
+
+		task ("Add a dynamic collection for All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a collection page based on dynamic collection") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Dynamic Collection",
+				pageName = "Collection Page Name",
+				tabName = "Collections");
+		}
+
+		task ("Select the Bordered List in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				listStyle = "Bordered List",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Add a Grid above the Container") {
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				dropTarget = "Header",
+				fragmentName = "Grid",
+				targetFragmentName = "Container");
+		}
+
+		task ("Change Number of Modules to 4") {
+			PageEditor.editLayoutGrid(
+				columnCount = "4",
+				panel = "General");
+		}
+
+		task ("Add a Collection Filter to first three modules of Grid") {
+			for (var columnNumber : list "1,2,3") {
+				PageEditor.addElementToColumn(
+					collectionName = "Content Display",
+					columnNumber = "${columnNumber}",
+					fragmentName = "Collection Filter",
+					navTab = "Fragments");
+			}
+		}
+
+		task ("Add an Applied Filters to the fourth modules of Grid") {
+			PageEditor.addElementToColumn(
+				collectionName = "Content Display",
+				columnNumber = "4",
+				fragmentName = "Applied Filters",
+				navTab = "Fragments");
+		}
+
+		task ("Select the dynamic collection as Target Collection and Select the Keywords as Filter in the first Collection Filter") {
+			PageEditor.editCollectionFilter(
+				columnNumber = "1",
+				filter = "Keywords",
+				fragmentName = "Collection Filter",
+				targetCollection = "Dynamic Collection");
+		}
+
+		task ("Select the dynamic collection as Target Collection and Select the Category as Filter, Gender vocabulary as Source and Single Selection in the second Collection Filter") {
+			PageEditor.editCollectionFilter(
+				categoryNameList = "Male,Female",
+				columnNumber = "2",
+				filter = "Category",
+				fragmentName = "Collection Filter",
+				singleSelection = "true",
+				targetCollection = "Dynamic Collection",
+				vocabularyName = "Gender");
+		}
+
+		task ("Select the dynamic collection as Target Collection and Select the Category as Filter and Color vocabulary as Source in the third Collection Filter") {
+			PageEditor.editCollectionFilter(
+				categoryNameList = "Red,Brown,Black,Grey,Blue,Green,Yellow,White",
+				columnNumber = "3",
+				filter = "Category",
+				fragmentName = "Collection Filter",
+				targetCollection = "Dynamic Collection",
+				vocabularyName = "Color");
+		}
+
+		task ("Select the dynamic collection as Target Collection in the Applied Filters") {
+			PageEditor.editAppliedFilters(
+				columnNumber = "4",
+				targetCollection = "Dynamic Collection");
+		}
+
+		task ("View the Show More button when the number of applied filters more than limitation at Preview mode") {
+			Click(locator1 = "PageEditor#PREVIEW");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			var n = "1";
+
+			for (var title : list "Lee 709,Levis 510,Levis 501,Levis 511") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.searchInCollectionFilter(searchTerm = "Levis");
+
+			Page.selectFilterInCollectionFilter(
+				columnNumber = "2",
+				filterName = "Female",
+				selectedName = "Female",
+				title = "Gender");
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Yellow,White",
+				columnNumber = "3",
+				multipleSelection = "true",
+				selectedName = "2 Selected",
+				title = "Color");
+
+			for (var filterName : list "Levis,Female,Yellow,White") {
+				AssertVisible(
+					filterName = "${filterName}",
+					locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_FILTER_ITEM");
+			}
+
+			AssertVisible(
+				key_entryContent = "[normalize-space(text())='Levis 501']",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Red,Green,Brown",
+				columnNumber = "3",
+				multipleSelection = "true",
+				selectedName = "5 Selected",
+				title = "Color");
+
+			for (var filterName : list "Levis,Female") {
+				AssertVisible(
+					filterName = "${filterName}",
+					locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_FILTER_ITEM");
+			}
+
+			AssertAttributeValue(
+				attribute1 = "style",
+				locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST",
+				value1 = "max-height: 4em;");
+
+			var n = "1";
+
+			for (var title : list "Levis 510,Levis 501") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Click(
+				button = "Show More",
+				locator1 = "PageEditor#APPLIED_FILTERS_INNER_BUTTON");
+
+			AssertAttributeValue(
+				attribute1 = "style",
+				locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST",
+				value1 = "");
+
+			for (var filterName : list "Levis,Female,Yellow,White,Red,Green,Brown") {
+				AssertVisible(
+					filterName = "${filterName}",
+					locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_FILTER_ITEM");
+			}
+
+			Click(
+				button = "Show Less",
+				locator1 = "PageEditor#APPLIED_FILTERS_INNER_BUTTON");
+
+			AssertAttributeValue(
+				attribute1 = "style",
+				locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST",
+				value1 = "max-height: 4em;");
+
+			for (var filterName : list "Levis,Female") {
+				AssertVisible(
+					filterName = "${filterName}",
+					locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_FILTER_ITEM");
+			}
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the Show More button when the number of applied filters more than limitation at View mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Collection Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var title : list "Lee 709,Levis 510,Levis 501,Levis 511") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.searchInCollectionFilter(searchTerm = "Levis");
+
+			Page.selectFilterInCollectionFilter(
+				columnNumber = "2",
+				filterName = "Female",
+				selectedName = "Female",
+				title = "Gender");
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Yellow,White,Red",
+				columnNumber = "3",
+				multipleSelection = "true",
+				selectedName = "3 Selected",
+				title = "Color");
+
+			for (var filterName : list "Levis,Female,Yellow,White,Red") {
+				AssertVisible(
+					filterName = "${filterName}",
+					locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_FILTER_ITEM");
+			}
+
+			AssertVisible(
+				key_entryContent = "[normalize-space(text())='Levis 501']",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Green,Brown",
+				columnNumber = "3",
+				multipleSelection = "true",
+				selectedName = "5 Selected",
+				title = "Color");
+
+			for (var filterName : list "Levis,Female,Yellow,White") {
+				AssertVisible(
+					filterName = "${filterName}",
+					locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_FILTER_ITEM");
+			}
+
+			AssertAttributeValue(
+				attribute1 = "style",
+				locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST",
+				value1 = "max-height: 4em;");
+
+			var n = "1";
+
+			for (var title : list "Levis 510,Levis 501") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Click(
+				button = "Show More",
+				locator1 = "PageEditor#APPLIED_FILTERS_INNER_BUTTON");
+
+			AssertAttributeValue(
+				attribute1 = "style",
+				locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST",
+				value1 = "");
+
+			for (var filterName : list "Levis,Female,Yellow,White,Red,Green,Brown") {
+				AssertVisible(
+					filterName = "${filterName}",
+					locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_FILTER_ITEM");
+			}
+
+			Click(
+				button = "Show Less",
+				locator1 = "PageEditor#APPLIED_FILTERS_INNER_BUTTON");
+
+			AssertAttributeValue(
+				attribute1 = "style",
+				locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST",
+				value1 = "max-height: 4em;");
+
+			for (var filterName : list "Levis,Female,Yellow,White") {
+				AssertVisible(
+					filterName = "${filterName}",
+					locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_FILTER_ITEM");
+			}
+		}
+	}
+
 }

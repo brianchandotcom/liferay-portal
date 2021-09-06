@@ -320,7 +320,8 @@ public class PortletPreferencesFactoryImpl
 
 		String doAsUserId = themeDisplay.getDoAsUserId();
 
-		if (!user.isDefaultUser() && Validator.isNotNull(doAsUserId) &&
+		if ((user != null) && !user.isDefaultUser() &&
+			Validator.isNotNull(doAsUserId) &&
 			!Objects.equals(String.valueOf(userId), doAsUserId)) {
 
 			Company company = themeDisplay.getCompany();

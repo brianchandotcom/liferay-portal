@@ -1,6 +1,7 @@
 {
 	"description": "Sell commercial and residential properties",
 	"externalReferenceCode": "RAYCAT0016",
+	"name": "Real Estate Agents",
 	"taxonomyCategoryProperties": [
 		{
 			"key": "NAICS",
@@ -10,6 +11,5 @@
 			"key": "Segment",
 			"value": "Service"
 		}
-	],
-	"name": "Real Estate Agents"
+	]
 }

@@ -1,6 +1,7 @@
 {
 	"description": "Manufacture and distribute coffee and/or tea",
 	"externalReferenceCode": "RAYCAT0009",
+	"name": "Coffee and Tea - Distribution and Manufacturing",
 	"taxonomyCategoryProperties": [
 		{
 			"key": "NAICS",
@@ -10,6 +11,5 @@
 			"key": "Segment",
 			"value": "Retail"
 		}
-	],
-	"name": "Coffee and Tea - Distribution and Manufacturing"
+	]
 }

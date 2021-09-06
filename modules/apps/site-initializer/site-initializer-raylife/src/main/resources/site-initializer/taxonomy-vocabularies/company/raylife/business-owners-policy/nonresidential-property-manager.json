@@ -1,6 +1,7 @@
 {
 	"description": "Manage nonresidential real estate for others, such as commercial buildings",
 	"externalReferenceCode": "RAYCAT0006",
+	"name": "Nonresidential Property Manager",
 	"taxonomyCategoryProperties": [
 		{
 			"key": "NAICS",
@@ -10,6 +11,5 @@
 			"key": "Segment",
 			"value": "Habitational"
 		}
-	],
-	"name": "Nonresidential Property Manager"
+	]
 }

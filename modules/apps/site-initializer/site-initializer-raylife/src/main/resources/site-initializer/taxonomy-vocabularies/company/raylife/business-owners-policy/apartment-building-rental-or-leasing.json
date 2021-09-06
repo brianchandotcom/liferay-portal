@@ -1,6 +1,7 @@
 {
 	"description": "Lessors of residential buildings and dwellings, such as homes, apartmetns, town homes",
 	"externalReferenceCode": "RAYCAT0008",
+	"name": "Apartment Building Rental or Leasing",
 	"taxonomyCategoryProperties": [
 		{
 			"key": "NAICS",
@@ -10,6 +11,5 @@
 			"key": "Segment",
 			"value": "Habitational"
 		}
-	],
-	"name": "Apartment Building Rental or Leasing"
+	]
 }

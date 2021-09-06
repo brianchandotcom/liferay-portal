@@ -1,6 +1,7 @@
 {
 	"description": "Manage residential buildings, such as apartments and condominiums",
 	"externalReferenceCode": "RAYCAT0004",
+	"name": "Residential Property Manager",
 	"taxonomyCategoryProperties": [
 		{
 			"key": "NAICS",
@@ -10,6 +11,5 @@
 			"key": "Segment",
 			"value": "Habitational"
 		}
-	],
-	"name": "Residential Property Manager"
+	]
 }

@@ -16,7 +16,6 @@ package com.liferay.site.initializer.extender.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
@@ -59,8 +58,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -120,9 +117,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JournalArticleLocalService journalArticleLocalService,
 		JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
-		Portal portal,
-		ResourcePermissionLocalService resourcePermissionLocalService,
-		RoleLocalService roleLocalService, ServletContext servletContext,
+		Portal portal, ServletContext servletContext,
 		StructuredContentFolderResource.Factory
 			structuredContentFolderResourceFactory,
 		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
@@ -146,8 +141,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_jsonFactory = jsonFactory;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_portal = portal;
-		_resourcePermissionLocalService = resourcePermissionLocalService;
-		_roleLocalService = roleLocalService;
 		_servletContext = servletContext;
 		_structuredContentFolderResourceFactory =
 			structuredContentFolderResourceFactory;
@@ -710,66 +703,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addTaxonomyCategories(
-			long groupId, long vocabularyId, String parentCategoryId,
-			String parentResourcePath, ServiceContext serviceContext)
-		throws Exception {
-
-		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			parentResourcePath);
-
-		if (SetUtil.isEmpty(resourcePaths)) {
-			return;
-		}
-
-		for (String resourcePath : resourcePaths) {
-			if (resourcePath.endsWith("/") ||
-				resourcePath.contains("permissions")) {
-
-				continue;
-			}
-
-			String jsonCategory = _read(resourcePath);
-
-			TaxonomyCategory taxonomyCategory = TaxonomyCategory.toDTO(
-				jsonCategory);
-
-			if (taxonomyCategory == null) {
-				_log.error(
-					"Unable to transform taxonomy vocabulary from JSON: " +
-						jsonCategory);
-
-				continue;
-			}
-
-			if (parentCategoryId == String.valueOf(
-					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID)) {
-
-				taxonomyCategory = _addTaxonomyVocabularyTaxonomyCategory(
-					serviceContext, taxonomyCategory, vocabularyId);
-			}
-			else {
-				taxonomyCategory = _addTaxonomyCategoryTaxonomyCategory(
-					parentCategoryId, serviceContext, taxonomyCategory);
-			}
-
-			String jsonCategoryPermissions = _read(
-				StringUtil.replace(resourcePath, ".json", "-permissions.json"));
-
-			_addTaxonomyCategoryPermissions(
-				groupId, jsonCategoryPermissions, serviceContext);
-
-			String resourcePathCategories = StringUtil.replace(
-				resourcePath, ".json", "/");
-
-			if (resourcePaths.contains(resourcePathCategories)) {
-				_addTaxonomyCategories(
-					groupId, vocabularyId, taxonomyCategory.getId(),
-					resourcePathCategories, serviceContext);
-			}
-		}
-	}
-
-	private void _addTaxonomyCategories(
 			long groupId, String parentCategoryId, String parentResourcePath,
 			ServiceContext serviceContext, long vocabularyId)
 		throws Exception {
@@ -814,8 +747,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				resourcePath, ".json", "-permissions.json");
 
 			_addTaxonomyCategoryPermissions(
-				groupId, taxonomyCategory.getId(), permissionsPath,
-				serviceContext);
+				taxonomyCategory.getId(), permissionsPath, serviceContext);
 
 			String resourcePathCategories = StringUtil.replace(
 				resourcePath, ".json", "/");
@@ -829,40 +761,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addTaxonomyCategoryPermissions(
-			long groupId, String parentResourcePath,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		TaxonomyCategoryResource.Builder taxonomyCategoryResourceBuilder =
-			_taxonomyCategoryResourceFactory.create();
-
-		TaxonomyCategoryResource taxonomyCategoryResource =
-			taxonomyCategoryResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
-
-		String jsonCategoryPermissions = _read(parentResourcePath);
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-			jsonCategoryPermissions);
-
-		Permission[] permissions = JSONUtil.toArray( // validar isso aqui
-			jsonArray,
-			jsonObject -> new Permission() {
-				{
-					actionIds = JSONUtil.toStringArray(
-						jsonObject.getJSONArray("actionIds"));
-					roleName = jsonObject.getString("roleName");
-				}
-			},
-			_log, Permission.class);
-
-		taxonomyCategoryResource.putTaxonomyCategoryPermission(
-			parentResourcePath, permissions);
-	}
-
-	private void _addTaxonomyCategoryPermissions(
-			long groupId, String parentCategoryId, String parentResourcePath,
+			String parentCategoryId, String parentResourcePath,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -910,9 +809,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Filter filter = taxonomyCategoryResource.toFilter(
 			StringBundler.concat("name eq '", taxonomyCategory.getName(), "'"));
 
-		TaxonomyCategory existingTaxonomyCategory = null;
-
-		existingTaxonomyCategory =
+		TaxonomyCategory existingTaxonomyCategory =
 			taxonomyCategoryResource.getTaxonomyCategoryTaxonomyCategoriesPage(
 				parentCategoryId, "", filter, null, null
 			).getItems(
@@ -1021,7 +918,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private TaxonomyCategory _addTaxonomyVocabularyTaxonomyCategory(
 			ServiceContext serviceContext, TaxonomyCategory taxonomyCategory,
-			long VocabularyId)
+			long vocabularyId)
 		throws Exception {
 
 		TaxonomyCategoryResource.Builder taxonomyCategoryResourceBuilder =
@@ -1035,12 +932,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Filter filter = taxonomyCategoryResource.toFilter(
 			StringBundler.concat("name eq '", taxonomyCategory.getName(), "'"));
 
-		TaxonomyCategory existingTaxonomyCategory = null;
-
-		existingTaxonomyCategory =
+		TaxonomyCategory existingTaxonomyCategory =
 			taxonomyCategoryResource.
 				getTaxonomyVocabularyTaxonomyCategoriesPage(
-					VocabularyId, "", filter, null, null
+					vocabularyId, "", filter, null, null
 				).getItems(
 				).stream(
 				).findFirst(
@@ -1051,7 +946,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		if (existingTaxonomyCategory == null) {
 			taxonomyCategory =
 				taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
-					VocabularyId, taxonomyCategory);
+					vocabularyId, taxonomyCategory);
 		}
 		else {
 			taxonomyCategory = taxonomyCategoryResource.patchTaxonomyCategory(
@@ -1104,9 +999,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private final Portal _portal;
-	private final ResourcePermissionLocalService
-		_resourcePermissionLocalService;
-	private final RoleLocalService _roleLocalService;
 	private final ServletContext _servletContext;
 	private final StructuredContentFolderResource.Factory
 		_structuredContentFolderResourceFactory;

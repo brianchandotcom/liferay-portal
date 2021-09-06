@@ -1,11 +1,11 @@
 {
 	"description": "Own an apartment that has between 13 to 30 residential units",
 	"externalReferenceCode": "RAYCAT0003",
+	"name": "Apartments - Residential - 13 to 30 Units",
 	"taxonomyCategoryProperties": [
 		{
 			"key": "Segment",
 			"value": "Habitational"
 		}
-	],
-	"name": "Apartments - Residential - 13 to 30 Units"
+	]
 }

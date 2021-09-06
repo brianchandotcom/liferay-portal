@@ -1,8 +1,8 @@
 [
-    {
-        "actionIds": [
-            "VIEW"
-        ],
-        "roleName": "Guest"
-    }
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"roleName": "Guest"
+	}
 ]

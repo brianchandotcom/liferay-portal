@@ -1,6 +1,7 @@
 {
 	"description": "Provide accounting services",
 	"externalReferenceCode": "RAYCAT0002",
+	"name": "Accounting Services",
 	"taxonomyCategoryProperties": [
 		{
 			"key": "NAICS",
@@ -10,6 +11,5 @@
 			"key": "Segment",
 			"value": "Office"
 		}
-	],
-	"name": "Accounting Services"
+	]
 }

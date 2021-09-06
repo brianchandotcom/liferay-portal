@@ -50,7 +50,9 @@ export const ACTIONS = {
 	removeAccountUsers(itemData) {
 		if (
 			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-remove-this-user'
+				)
 			)
 		) {
 			submitForm(document.hrefFm, itemData.removeAccountUsersURL);

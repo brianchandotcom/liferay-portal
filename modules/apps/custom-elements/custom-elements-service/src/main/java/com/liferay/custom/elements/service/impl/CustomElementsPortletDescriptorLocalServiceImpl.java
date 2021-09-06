@@ -148,6 +148,12 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 
 		String cssURLs = customElementsPortletDescriptor.getCSSURLs();
 
+		String[] cssURLsArray = null;
+
+		if (!cssURLs.isEmpty()) {
+			cssURLsArray = cssURLs.split(StringPool.NEW_LINE);
+		}
+
 		_serviceRegistrations.put(
 			customElementsPortletDescriptor.
 				getCustomElementsPortletDescriptorId(),
@@ -160,8 +166,7 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 				).put(
 					"com.liferay.portlet.display-category", "category.sample"
 				).put(
-					"com.liferay.portlet.header-portal-css",
-					cssURLs.split(StringPool.NEW_LINE)
+					"com.liferay.portlet.header-portal-css", cssURLsArray
 				).put(
 					"com.liferay.portlet.header-portal-javascript",
 					_getCustomElementsSourceURLs(

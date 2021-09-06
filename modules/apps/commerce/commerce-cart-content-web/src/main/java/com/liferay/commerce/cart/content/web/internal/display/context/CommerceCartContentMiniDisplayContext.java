@@ -65,11 +65,11 @@ public class CommerceCartContentMiniDisplayContext
 
 		super(
 			commerceChannelLocalService, commerceOrderItemService,
-			commerceOrderPriceCalculation, commerceOrderValidatorRegistry,
+			commerceOrderModelResourcePermission, commerceOrderPriceCalculation,
+			commerceOrderValidatorRegistry,
+			commerceProductPortletResourcePermission,
 			commerceProductPriceCalculation, cpDefinitionHelper,
-			cpInstanceHelper, commerceOrderModelResourcePermission,
-			commerceProductPortletResourcePermission, httpServletRequest,
-			portal);
+			cpInstanceHelper, httpServletRequest, portal);
 
 		PortletDisplay portletDisplay =
 			commerceCartContentRequestHelper.getPortletDisplay();

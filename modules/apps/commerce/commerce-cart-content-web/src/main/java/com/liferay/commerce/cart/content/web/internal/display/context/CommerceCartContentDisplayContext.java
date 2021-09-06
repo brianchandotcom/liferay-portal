@@ -71,29 +71,29 @@ public class CommerceCartContentDisplayContext {
 	public CommerceCartContentDisplayContext(
 			CommerceChannelLocalService commerceChannelLocalService,
 			CommerceOrderItemService commerceOrderItemService,
+			ModelResourcePermission<CommerceOrder>
+				commerceOrderModelResourcePermission,
 			CommerceOrderPriceCalculation commerceOrderPriceCalculation,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
+			PortletResourcePermission commerceProductPortletResourcePermission,
 			CommerceProductPriceCalculation commerceProductPriceCalculation,
 			CPDefinitionHelper cpDefinitionHelper,
 			CPInstanceHelper cpInstanceHelper,
-			ModelResourcePermission<CommerceOrder>
-				commerceOrderModelResourcePermission,
-			PortletResourcePermission commerceProductPortletResourcePermission,
 			HttpServletRequest httpServletRequest, Portal portal)
 		throws PortalException {
 
 		_commerceChannelLocalService = commerceChannelLocalService;
 		_commerceOrderItemService = commerceOrderItemService;
+		this.commerceOrderModelResourcePermission =
+			commerceOrderModelResourcePermission;
 		_commerceOrderPriceCalculation = commerceOrderPriceCalculation;
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
-		_commerceProductPriceCalculation = commerceProductPriceCalculation;
 		_commerceProductPortletResourcePermission =
 			commerceProductPortletResourcePermission;
+		_commerceProductPriceCalculation = commerceProductPriceCalculation;
 
 		this.cpDefinitionHelper = cpDefinitionHelper;
 		this.cpInstanceHelper = cpInstanceHelper;
-		this.commerceOrderModelResourcePermission =
-			commerceOrderModelResourcePermission;
 
 		commerceCartContentRequestHelper = new CommerceCartContentRequestHelper(
 			httpServletRequest);

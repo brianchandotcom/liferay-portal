@@ -59,11 +59,11 @@ public class CommerceCartContentTotalDisplayContext
 
 		super(
 			commerceChannelLocalService, commerceOrderItemService,
-			commerceOrderPriceCalculation, commerceOrderValidatorRegistry,
+			commerceOrderModelResourcePermission, commerceOrderPriceCalculation,
+			commerceOrderValidatorRegistry,
+			commerceProductPortletResourcePermission,
 			commerceProductPriceCalculation, cpDefinitionHelper,
-			cpInstanceHelper, commerceOrderModelResourcePermission,
-			commerceProductPortletResourcePermission, httpServletRequest,
-			portal);
+			cpInstanceHelper, httpServletRequest, portal);
 
 		_commerceOrderHttpHelper = commerceOrderHttpHelper;
 		_portal = portal;

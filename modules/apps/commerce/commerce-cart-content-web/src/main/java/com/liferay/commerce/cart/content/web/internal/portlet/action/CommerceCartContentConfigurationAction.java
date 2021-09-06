@@ -70,13 +70,12 @@ public class CommerceCartContentConfigurationAction
 				commerceCartContentDisplayContext =
 					new CommerceCartContentDisplayContext(
 						_commerceChannelLocalService, _commerceOrderItemService,
+						_commerceOrderModelResourcePermission,
 						_commerceOrderPriceCalculation,
 						_commerceOrderValidatorRegistry,
-						_commerceProductPriceCalculation, _cpDefinitionHelper,
-						_cpInstanceHelper,
-						_commerceOrderModelResourcePermission,
 						_commerceProductPortletResourcePermission,
-						httpServletRequest, _portal);
+						_commerceProductPriceCalculation, _cpDefinitionHelper,
+						_cpInstanceHelper, httpServletRequest, _portal);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,

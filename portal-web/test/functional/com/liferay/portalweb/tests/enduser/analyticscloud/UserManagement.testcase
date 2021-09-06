@@ -7,7 +7,9 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Launch AC") {
+			ACUtils.launchAC();
+		}
 	}
 
 	tearDown {
@@ -122,12 +124,32 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9084 | Test Summary: [AC] Change the user role and check if the Properties creation handles the mofification successfully"
-	@ignore = "true"
 	@priority = "3"
 	test ChangeUserRoleAndAssertSuccessNotification {
+		var userEmail = "user@liferay.com";
 
-		// TODO LRAC-9084 ChangeUserRoleAndAssertSuccessNotification
+		task ("Go to User Management and invite a user") {
+			ACNavigation.goToSettings();
 
+			ACSettings.goToUserManagement();
+
+			ACSettings.addUser(userInvite = "${userEmail}");
+		}
+
+		task ("Change user permission") {
+			ACSettings.changeUserRole(
+				newRole = "Administrator",
+				permissionType = "Member",
+				userEmail = "${userEmail}");
+		}
+
+		task ("Assert that the role was changed") {
+			Alert.viewSuccessMessageText(successMessage = "Success:Permissions have been changed for 1 users.");
+
+			ACSettings.assertUserPermission(
+				permissionType = "Administrator",
+				userEmail = "${userEmail}");
+		}
 	}
 
 	@description = "Automation ID: LRAC-9080 | Test Summary: 1st user access and no property was selected yet"

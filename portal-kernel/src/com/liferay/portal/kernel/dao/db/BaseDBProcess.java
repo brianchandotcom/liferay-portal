@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.dao.db;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
@@ -172,6 +173,15 @@ public abstract class BaseDBProcess implements DBProcess {
 			UnsafeConsumer<T, Exception> unsafeConsumer)
 		throws Exception {
 
+		processConcurrently(unsafeSupplier, unsafeConsumer, null);
+	}
+
+	protected static <T> void processConcurrently(
+			UnsafeSupplier<T, Exception> unsafeSupplier,
+			UnsafeConsumer<T, Exception> unsafeConsumer,
+			String exceptionMessage)
+		throws Exception {
+
 		Objects.requireNonNull(unsafeSupplier);
 		Objects.requireNonNull(unsafeConsumer);
 
@@ -214,7 +224,15 @@ public abstract class BaseDBProcess implements DBProcess {
 			}
 		}
 
-		throwableCollector.rethrow();
+		Throwable throwable = throwableCollector.getThrowable();
+
+		if (throwable != null) {
+			if (exceptionMessage != null) {
+				throw new Exception(exceptionMessage);
+			}
+
+			ReflectionUtil.throwException(throwable);
+		}
 	}
 
 	protected boolean doHasTable(String tableName) throws Exception {

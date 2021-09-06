@@ -181,11 +181,20 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9105 | Test Summary: [AC] It is allowed to create property name with special chars"
-	@ignore = "true"
 	@priority = "3"
 	test CanCreatePropertyNameWithSpecialChars {
 
-		// TODO LRAC-9105 CanCreatePropertyNameWithSpecialChars pending implementation
+		ACUtils.launchAC();
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToProperties();
+
+		ACProperties.addNewProperty(propertyName = "Name with special chars = @#$%&!");
+
+		ACSettings.goToProperties();
+
+		ACUtils.assertItemsName(itemList = "Name with special chars = @#$%&!");
 
 	}
 

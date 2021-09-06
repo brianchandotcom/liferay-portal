@@ -54,6 +54,60 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-137903. View the new GUI in Widget Templates in staging model."
+	@priority = "4"
+	@uitest
+	test ViewTemplateEditorSidebarPanel {
+		task ("Enable Staging Model") {
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "false",
+				branchingPublic = "false",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a widget template for Asset Publisher") {
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name-staging");
+
+			ApplicationDisplayTemplates.addADTWithFieldEntryCP(
+				fieldName = "Asset Entry",
+				portletName = "Asset Publisher");
+
+			Alert.viewSuccessMessage();
+
+			ApplicationDisplayTemplates.viewTemplate(adtType = "Asset Publisher");
+		}
+
+		task ("View sidebar panels in template editor") {
+			ApplicationDisplayTemplates.gotoWidgetTemplatesEllipsisItem(
+				item = "Edit",
+				widgetTemplateName = "Asset Publisher Test ADT");
+		}
+			
+		task ("View Elements panel") {
+			for (var fieldName : list "Asset Entries*,Asset Entry,Current URL,Locale,Portlet Preferences,Template ID,Theme Display,HTTP Request,Render Request,Render Response,Asset Publisher Helper") {
+				AssertElementPresent(
+					key_fieldName = "${fieldName}",
+					locator1 = "DDMEditTemplate#SCRIPT_FIELD");
+			}
+		}
+
+		task ("View Properties panel and assert Language is Freemarker") {
+			Click(
+				key_tabName = "Properties",
+				locator1 = "Sidebar#TAB");
+			
+			for (var fieldName : list "Language,Template Key,URL,WebDAV URL,Description") {
+				AssertElementPresent(
+					key_fieldName = "${fieldName}",
+					locator1 = "DDMEditTemplate#SCRIPT_FIELD_PROPERTIES");
+			}
+			
+			AssertVisible(
+				value1 = "ftl",
+				locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT");
+		}
+	}
+
 	@description = "View the widget template applied to Categories Navigation in staging and live site."
 	@priority = "3"
 	test ViewWidgetTemplateAppliedToCategoriesNavigationInStagingAndLiveSite {

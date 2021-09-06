@@ -529,18 +529,22 @@ definition {
 				userEmail = "${firstUser}");
 		}
 
-		task ("Change user permission") {
+		task ("Change permission for all selected users") {
 			ACSettings.changeMultipleUsersPermissions(
-				permissionType = "Member",
+				permissionType = "Administrator",
 				userEmail = "${firstUser},${secondUser}");
 		}
 
 		task ("Assert user permission") {
 			for (var users : list "${firstUser},${secondUser}") {
 				ACSettings.assertUserPermission(
-					permissionType = "Member",
+					permissionType = "Administrator",
 					userEmail = "${users}");
 			}
+		}
+
+		task("Delete Pending All Users"){
+			ACSettings.deletePendingAllUsers();
 		}
 	}
 

@@ -1,0 +1,244 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property custom.properties = "jsonws.web.service.paths.excludes=";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+		}
+
+		task ("Add a new site and page") {
+			ACUtils.addSiteAndPage();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8803 | Test Summary: Check posted triggers when commenting on a content in a page and check its properties (see reference document in comments)"
+	@priority = "5"
+	test CheckaaaProperties {
+		property proxy.server.enabled = "true";
+
+		task ("Add DM widget to AC Page") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Site Name",
+				layoutName = "AC Page",
+				widgetName = "Documents and Media");
+		}
+
+		task ("Add document on Site Name") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Site Name");
+		}
+
+		task ("Navigate to AC Page and change display style to list") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		}
+
+		task ("Start Har recording") {
+			ProxyUtil.startHarRecording("posted");
+		}
+
+		task ("Add a Comment for DM") {
+			DMDocumentComment.addPG(
+				commentBody = "This is for test",
+				dmDocumentTitle = "DM Document Title");
+		}
+
+		task ("Wait for sending requests") {
+			Pause(locator1 = "5000");
+		}
+
+		task ("View the className of posted event") {
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Comment",
+				eventId = "posted",
+				property = "className",
+				value = "com.liferay.document.library.kernel.model.DLFileEntry");
+		}
+
+		task ("Get fileEntryId") {
+			var fileEntryId = JSONDocument.getFileEntryId(
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Site Name");
+		}
+
+		task ("View the classPK of posted event") {
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Comment",
+				eventId = "posted",
+				property = "classPK",
+				value = "${fileEntryId}");
+		}
+
+		task ("Get commentId") {
+			var commentId = Comments.getCommentId();
+		}
+
+		task ("View the CommentId of posted event") {
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Comment",
+				eventId = "posted",
+				property = "commentId",
+				value = "${commentId}");
+		}
+
+		task ("View the text of posted event") {
+			var value = '''<p>This is for test</p>
+''';
+
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Comment",
+				eventId = "posted",
+				property = "text",
+				value = "${value}");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8867 | Test Summary: Check posted triggers for replies to comments"
+	@priority = "4"
+	test CheckComment {
+		property proxy.server.enabled = "true";
+
+		task ("Add DM widget to AC Page") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Site Name",
+				layoutName = "AC Page",
+				widgetName = "Documents and Media");
+		}
+
+		task ("Add document on Site Name") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Site Name");
+		}
+
+		task ("Navigate to AC Page and change display style to list") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		}
+
+		task ("Add a Comment for DM") {
+			DMDocumentComment.addPG(
+				commentBody = "This is the first comment",
+				dmDocumentTitle = "DM Document Title");
+		}
+
+		task ("View the comment") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			DMDocumentComment.viewPG(
+				commentBody = "This is the first comment",
+				dmDocumentTitle = "DM Document Title");
+		}
+
+		task ("Start Har recording") {
+			ProxyUtil.startHarRecording("posted");
+		}
+
+		task ("Reply to the comment") {
+			Comments.replyToComment(commentReply = "This is a reply comment");
+		}
+
+		task ("Wait for sending requests") {
+			Pause(locator1 = "10000");
+		}
+
+		task ("View the className of posted event") {
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Comment",
+				eventId = "posted",
+				property = "className",
+				value = "com.liferay.document.library.kernel.model.DLFileEntry");
+		}
+
+		task ("Get fileEntryId") {
+			var fileEntryId = JSONDocument.getFileEntryId(
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Site Name");
+		}
+
+		task ("View the classPK of posted event") {
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Comment",
+				eventId = "posted",
+				property = "classPK",
+				value = "${fileEntryId}");
+		}
+
+		task ("Get commentId") {
+			var commentId = Comments.getCommentId();
+		}
+
+		task ("View the CommentId of posted event") {
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Comment",
+				eventId = "posted",
+				property = "commentId",
+				value = "${commentId}");
+		}
+
+		task ("View the text of posted event") {
+			var value = '''<p>This is a reply comment</p>
+''';
+
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Comment",
+				eventId = "posted",
+				property = "text",
+				value = "${value}");
+		}
+	}
+
+} 

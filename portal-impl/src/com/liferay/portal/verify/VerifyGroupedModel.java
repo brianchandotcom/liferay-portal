@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeCallable;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.verify.model.VerifiableGroupedModel;
 
@@ -51,43 +50,38 @@ public class VerifyGroupedModel extends VerifyProcess {
 			unverifiedTableNames.add(verifiableGroupedModel.getTableName());
 		}
 
-		List<VerifiableGroupedModelUpgradeCallable>
-			verifiableGroupedModelUpgradeCallables = new ArrayList<>(
-				unverifiedTableNames.size());
+		processConcurrently(
+			() -> {
+				if (!unverifiedTableNames.isEmpty()) {
+					int count = unverifiedTableNames.size();
 
-		while (!unverifiedTableNames.isEmpty()) {
-			int count = unverifiedTableNames.size();
+					for (VerifiableGroupedModel verifiableGroupedModel :
+							verifiableGroupedModels) {
 
-			for (VerifiableGroupedModel verifiableGroupedModel :
-					verifiableGroupedModels) {
+						if (unverifiedTableNames.contains(
+								verifiableGroupedModel.getRelatedTableName()) ||
+							!unverifiedTableNames.contains(
+								verifiableGroupedModel.getTableName())) {
 
-				if (unverifiedTableNames.contains(
-						verifiableGroupedModel.getRelatedTableName()) ||
-					!unverifiedTableNames.contains(
-						verifiableGroupedModel.getTableName())) {
+							continue;
+						}
 
-					continue;
+						unverifiedTableNames.remove(
+							verifiableGroupedModel.getTableName());
+
+						if (unverifiedTableNames.size() == count) {
+							throw new VerifyException(
+								"Circular dependency detected " +
+									unverifiedTableNames);
+						}
+
+						return verifiableGroupedModel;
+					}
 				}
 
-				VerifiableGroupedModelUpgradeCallable
-					verifiableGroupedModelUpgradeCallable =
-						new VerifiableGroupedModelUpgradeCallable(
-							verifiableGroupedModel);
-
-				verifiableGroupedModelUpgradeCallables.add(
-					verifiableGroupedModelUpgradeCallable);
-
-				unverifiedTableNames.remove(
-					verifiableGroupedModel.getTableName());
-			}
-
-			if (unverifiedTableNames.size() == count) {
-				throw new VerifyException(
-					"Circular dependency detected " + unverifiedTableNames);
-			}
-		}
-
-		doVerify(verifiableGroupedModelUpgradeCallables);
+				return null;
+			},
+			this::verifyGroupedModel);
 	}
 
 	@Override
@@ -201,25 +195,5 @@ public class VerifyGroupedModel extends VerifyProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyGroupedModel.class);
-
-	private class VerifiableGroupedModelUpgradeCallable
-		extends BaseUpgradeCallable<Void> {
-
-		@Override
-		protected Void doCall() throws Exception {
-			verifyGroupedModel(_verifiableGroupedModel);
-
-			return null;
-		}
-
-		private VerifiableGroupedModelUpgradeCallable(
-			VerifiableGroupedModel verifiableGroupedModel) {
-
-			_verifiableGroupedModel = verifiableGroupedModel;
-		}
-
-		private final VerifiableGroupedModel _verifiableGroupedModel;
-
-	}
 
 }

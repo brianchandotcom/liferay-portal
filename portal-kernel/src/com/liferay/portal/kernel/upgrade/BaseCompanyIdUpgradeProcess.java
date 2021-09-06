@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -29,10 +28,7 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Brian Wing Shun Chan
@@ -41,34 +37,51 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		List<Callable<Void>> callables = new ArrayList<>();
+		TableUpdater[] tableUpdaters = getTableUpdaters();
 
-		for (TableUpdater tableUpdater : getTableUpdaters()) {
-			if (!hasColumn(tableUpdater.getTableName(), "companyId")) {
-				tableUpdater.setCreateCompanyIdColumn(true);
-			}
+		AtomicInteger atomicInteger = new AtomicInteger();
 
-			callables.add(tableUpdater);
-		}
+		processConcurrently(
+			() -> {
+				int index = atomicInteger.getAndIncrement();
 
-		ExecutorService executorService = Executors.newFixedThreadPool(
-			callables.size());
+				if (index < tableUpdaters.length) {
+					return tableUpdaters[index];
+				}
 
-		try {
-			List<Future<Void>> futures = executorService.invokeAll(callables);
+				return null;
+			},
+			tableUpdater -> {
+				String tableName = tableUpdater.getTableName();
 
-			for (Future<Void> future : futures) {
-				future.get();
-			}
-		}
-		finally {
-			executorService.shutdown();
-		}
+				try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
+					if (!hasColumn(tableName, "companyId")) {
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"Adding column companyId to table " +
+									tableName);
+						}
+
+						runSQL(
+							connection,
+							"alter table " + tableName + " add companyId LONG");
+					}
+					else {
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"Skipping the creation of companyId column " +
+									"for table " + tableName);
+						}
+					}
+
+					tableUpdater.update(connection);
+				}
+			});
 	}
 
 	protected abstract TableUpdater[] getTableUpdaters();
 
-	protected class TableUpdater extends BaseUpgradeCallable<Void> {
+	protected class TableUpdater {
 
 		public TableUpdater(
 			String tableName, String foreignTableName, String columnName) {
@@ -106,35 +119,6 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 					connection,
 					getUpdateSQL(connection, foreignNames[0], foreignNames[1]));
 			}
-		}
-
-		@Override
-		protected final Void doCall() throws Exception {
-			try (LoggingTimer loggingTimer = new LoggingTimer(_tableName);
-				Connection connection = DataAccess.getConnection()) {
-
-				if (_createCompanyIdColumn) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Adding column companyId to table " + _tableName);
-					}
-
-					runSQL(
-						connection,
-						"alter table " + _tableName + " add companyId LONG");
-				}
-				else {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Skipping the creation of companyId column for " +
-								"table " + _tableName);
-					}
-				}
-
-				update(connection);
-			}
-
-			return null;
 		}
 
 		protected List<Long> getCompanyIds(Connection connection)

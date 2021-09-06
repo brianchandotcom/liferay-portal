@@ -2958,41 +2958,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.security.sso.cas.impl.jar!bcpkix-jdk15on.jar</file-name>
-				<version>1.61</version>
-				<project-name>Bouncy Castle PKIX, CMS, EAC, TSP, PKCS, OCSP, CMP, and CRMF APIs</project-name>
-				<project-url>http://www.bouncycastle.org/java.html</project-url>
-				<licenses>
-					<license>
-						<license-name>Bouncy Castle Licence</license-name>
-						<license-url>http://www.bouncycastle.org/licence.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.security.sso.cas.impl.jar!bcprov-jdk15on.jar</file-name>
-				<version>1.61</version>
-				<project-name>Bouncy Castle Provider</project-name>
-				<project-url>http://www.bouncycastle.org/java.html</project-url>
-				<licenses>
-					<license>
-						<license-name>Bouncy Castle Licence</license-name>
-						<license-url>http://www.bouncycastle.org/licence.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.security.sso.cas.impl.jar!cas-client-core.jar</file-name>
-				<version>3.6.1</version>
-				<project-name>Jasig CAS Client for Java - Core</project-name>
-				<licenses>
-					<license>
-						<license-name>COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0</license-name>
-						<license-url>https://opensource.org/licenses/CDDL-1.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!accessors-smart.jar</file-name>
 				<version>2.4.2</version>
 				<project-name>ASM based accessors helper used by json-smart</project-name>

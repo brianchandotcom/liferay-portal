@@ -456,12 +456,121 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8587 | Test Summary: Paginate list of members to be added to the segment"
-	@ignore = "true"
 	@priority = "3"
 	test PaginateListOfMembersToBeAddedToTheSegment {
+		var users = "ac1,ac2,ac3,ac4,ac5,ac6,ac7";
 
-		// TODO LRAC-8587 PaginateListOfMembersToBeAddedToTheSegment pending implementation
+		task ("Add new users") {
+			for (var name : list "${users}") {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
+			}
 
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Login with new users and go to site page") {
+			for (var name : list "${users}") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${name}@liferay.com",
+					userLoginFullName = "${name} ${name}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+			}
+		}
+
+		task ("Close all sections and wait") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Go to AC and switch property") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to segments") {
+			ACNavigation.goToSegments();
+		}
+
+		task ("Create segments and add 1 member") {
+			ACSegments.createStaticSegment();
+
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+
+			ACSegments.addStaticMember(tableMember = "ac1 ac1");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Edit Segment and go to Add Member") {
+			ACNavigation.goToSegments();
+
+			ACSegments.editSegment(searchTerm = "Static Segment Test");
+
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+		}
+
+		task ("Select the 5 Items in Pagination") {
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("View only 5 users are shown in page 1") {
+			for (var username : list "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6") {
+				ACAssets.viewAssets(assetName = "${username}");
+			}
+
+			AssertElementNotPresent(
+				key_assetName = "ac7 ac7",
+				locator1 = "ACAssets#ASSETS_TABLE");
+		}
+
+		task ("Navigate to the page 2") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("View the ac7 ac7 is shown in page 2") {
+			ACAssets.viewAssets(assetName = "ac7 ac7");
+
+			ACNavigation.clickCancelButton();
+		}
+
+		task ("Add multiple members") {
+			ACSegments.addStaticMultiMember(tableMember = "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6,ac7 ac7");
+		}
+
+		task ("Navigate to view added view added members tab") {
+			ACUtils.clickAnyButton(button = "View Added Members");
+		}
+
+		task ("Select the 5 Items in Pagination") {
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("View only 5 users are shown in page 1") {
+			for (var username : list "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6") {
+				ACAssets.viewAssets(assetName = "${username}");
+			}
+
+			AssertElementNotPresent(
+				key_assetName = "ac7 ac7",
+				locator1 = "ACAssets#ASSETS_TABLE");
+		}
+
+		task ("Navigate to the page 2") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+		}
+
+		task ("View the ac7 ac7 is shown in page 2") {
+			ACAssets.viewAssets(assetName = "ac7 ac7");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8598 | Test Summary: Segment List kebab menu contains Edit and Delete buttons"

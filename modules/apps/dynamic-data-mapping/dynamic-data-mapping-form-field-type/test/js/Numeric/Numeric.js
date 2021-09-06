@@ -268,14 +268,14 @@ describe('Field Numeric', () => {
 			const {container} = render(
 				<Numeric
 					inputMask
-					inputMaskFormat="+99 (99) 9999-9999"
+					inputMaskFormat="E.g +99 (99) 9999-9999"
 					onChange={onChange}
 				/>
 			);
 
 			const input = container.querySelector('input');
 
-			userEvent.type(input, '+55 (81) 2121-6000');
+			userEvent.type(input, 'E.g +55 (81) 2121-6000');
 
 			expect(onChange).toHaveBeenLastCalledWith({
 				target: {value: '558121216000'},

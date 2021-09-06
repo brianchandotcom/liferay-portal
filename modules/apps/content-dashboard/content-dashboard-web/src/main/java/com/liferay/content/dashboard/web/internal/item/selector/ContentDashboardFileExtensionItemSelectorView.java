@@ -26,6 +26,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -246,9 +247,13 @@ public class ContentDashboardFileExtensionItemSelectorView
 	private List<String> _getExistingFileExtensions(
 		HttpServletRequest httpServletRequest) {
 
+		SearchContext searchContext = SearchContextFactory.getInstance(
+			httpServletRequest);
+
+		searchContext.setGroupIds(new long[0]);
+
 		SearchRequestBuilder searchRequestBuilder =
-			_contentDashboardSearchRequestBuilderFactory.builder(
-				SearchContextFactory.getInstance(httpServletRequest));
+			_contentDashboardSearchRequestBuilderFactory.builder(searchContext);
 
 		SearchResponse searchResponse = _searcher.search(
 			searchRequestBuilder.addAggregation(

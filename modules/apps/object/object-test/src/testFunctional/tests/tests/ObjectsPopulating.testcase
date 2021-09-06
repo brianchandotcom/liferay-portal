@@ -72,18 +72,9 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
-
-		FormsAdminNavigator.gotoEntries();
-
-		FormViewBuilder.viewSummaryEntry(
-			key_card = "Date",
-			key_entryName = "01/01/2001",
-			key_entryNumber = "1 entry");
+		ObjectsPopulating.viewEntriesObjectPortlet(entries = "2001-01-01", fieldName = "dueDate");
 	}
 
 }

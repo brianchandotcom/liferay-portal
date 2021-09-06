@@ -92,21 +92,14 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		PopulateObjectFormsConfiguration.openForm();
+		Navigator.openURL();
 
-		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		FormsAdminNavigator.gotoEntries();
+		ObjectsPopulating.viewEntriesObjectPortlet(entries = "1234567", fieldName = "Integer");
 
-		FormViewBuilder.viewSummaryEntry(
-			key_card = "Numeric",
-			key_entryName = "1234567",
-			key_entryNumber = "1 entry");
+		ObjectsPopulating.viewEntriesObjectPortlet(entries = "Test text", fieldName = "Text");
 
-		FormViewBuilder.viewSummaryEntry(
-			key_card = "Text",
-			key_entryName = "Test text",
-			key_entryNumber = "1 entry");
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of BigDecimal type and view its entries"
@@ -160,16 +153,12 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		PopulateObjectFormsConfiguration.openForm();
+		Navigator.openURL();
 
-		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		FormsAdminNavigator.gotoEntries();
+		ObjectsPopulating.viewEntriesObjectPortlet(entries = "123.123456", fieldName = "bigDecimal");
 
-		FormViewBuilder.viewSummaryEntry(
-			key_card = "Numeric",
-			key_entryName = "123.123456",
-			key_entryNumber = "1 entry");
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Blob type and view its entries"
@@ -239,16 +228,11 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		PopulateObjectFormsConfiguration.openForm();
+		Navigator.openURL();
 
-		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		FormsAdminNavigator.gotoEntries();
-
-		FormViewBuilder.viewSummaryEntry(
-			key_card = "Date",
-			key_entryName = "01/01/2001",
-			key_entryNumber = "1 entry");
+		ObjectsPopulating.viewEntriesObjectPortlet(entries = "2001-01-01", fieldName = "Date");
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Double type and view its entries"
@@ -302,16 +286,11 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		PopulateObjectFormsConfiguration.openForm();
+		Navigator.openURL();
 
-		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		FormsAdminNavigator.gotoEntries();
-
-		FormViewBuilder.viewSummaryEntry(
-			key_card = "Numeric",
-			key_entryName = "1.54",
-			key_entryNumber = "1 entry");
+		ObjectsPopulating.viewEntriesObjectPortlet(entries = "1.54", fieldName = "Double");
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Integer type and view its entries"
@@ -361,16 +340,11 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		PopulateObjectFormsConfiguration.openForm();
+		Navigator.openURL();
 
-		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		FormsAdminNavigator.gotoEntries();
-
-		FormViewBuilder.viewSummaryEntry(
-			key_card = "Numeric",
-			key_entryName = "123456789",
-			key_entryNumber = "1 entry");
+		ObjectsPopulating.viewEntriesObjectPortlet(entries = "123456789", fieldName = "Integer");
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Long type and view its entries"
@@ -420,16 +394,12 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		PopulateObjectFormsConfiguration.openForm();
+		Navigator.openURL();
 
-		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		FormsAdminNavigator.gotoEntries();
+		ObjectsPopulating.viewEntriesObjectPortlet(entries = "123456789123456789", fieldName = "Long");
 
-		FormViewBuilder.viewSummaryEntry(
-			key_card = "Numeric",
-			key_entryName = "123456789123456789",
-			key_entryNumber = "1 entry");
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of String type and view its entries"
@@ -480,16 +450,11 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		PopulateObjectFormsConfiguration.openForm();
+		Navigator.openURL();
 
-		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		FormsAdminNavigator.gotoEntries();
-
-		FormViewBuilder.viewSummaryEntry(
-			key_card = "Text",
-			key_entryName = "Test Text Test Text Test Text Test Text Test Text Test Text Test Text  Test",
-			key_entryNumber = "1 entry");
+		ObjectsPopulating.viewEntriesObjectPortlet(entries = "Test Text Test Text Test Text Test Text Test Text Test Text Test Text  Test", fieldName = "Text");
 	}
 
 	@description = "LPS-133365 - Verify if it's not possible to map a Object field with a Form field of a different type"

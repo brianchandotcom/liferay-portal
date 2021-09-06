@@ -19,12 +19,36 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9051 | Test Summary: Admin can be edited or removed"
-	@ignore = "true"
 	@priority = "3"
 	test AdminCanBeEditedOrRemoved {
+		task ("Create a new user and change your permission to Administrator") {
+			ACNavigation.goToSettings();
 
-		// TODO LRAC-9051 AdminCanBeEditedOrRemoved
+			ACSettings.goToUserManagement();
 
+			ACSettings.addUser(userInvite = "user@liferay.com");
+
+			ACSettings.changeUserRole(
+				newRole = "Administrator",
+				permissionType = "Member",
+				userEmail = "user@liferay.com");
+
+			AssertElementPresent(
+				key_permissionType = "Administrator",
+				key_userEmail = "user@liferay.com",
+				locator1 = "ACSettings#USER_ROLE_BY_EMAIL");
+		}
+
+		task ("Assert delete this user") {
+			ACSettings.deleteUser(userDelete = "user@liferay.com");
+
+			Alert.viewSuccessMessage();
+
+			AssertElementNotPresent(
+				key_permissionType = "Administrator",
+				key_userEmail = "user@liferay.com",
+				locator1 = "ACSettings#USER_ROLE_BY_EMAIL");
+		}
 	}
 
 	@description = "Automation ID: LRAC-9052 | Test Summary: Admin can be selected in the user list"
@@ -55,12 +79,46 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9053 | Test Summary: Member can be edited or removed"
-	@ignore = "true"
 	@priority = "3"
 	test MemberCanBeEditedOrRemoved {
+		task ("Create a new user as a member ") {
+			ACNavigation.goToSettings();
 
-		// TODO LRAC-9053 MemberCanBeEditedOrRemoved
+			ACSettings.goToUserManagement();
 
+			ACSettings.addUser(userInvite = "user@liferay.com");
+		}
+
+		task ("Change your permission to adm and delete this user") {
+			ACSettings.changeUserRole(
+				newRole = "Administrator",
+				permissionType = "Member",
+				userEmail = "user@liferay.com");
+
+			AssertElementPresent(
+				key_permissionType = "Administrator",
+				key_userEmail = "user@liferay.com",
+				locator1 = "ACSettings#USER_ROLE_BY_EMAIL");
+
+			ACSettings.changeUserRole(
+				newRole = "Member",
+				permissionType = "Administrator",
+				userEmail = "user@liferay.com");
+
+			AssertElementPresent(
+				key_permissionType = "Member",
+				key_userEmail = "user@liferay.com",
+				locator1 = "ACSettings#USER_ROLE_BY_EMAIL");
+
+			ACSettings.deleteUser(userDelete = "user@liferay.com");
+
+			Alert.viewSuccessMessage();
+
+			AssertElementNotPresent(
+				key_permissionType = "Member",
+				key_userEmail = "user@liferay.com",
+				locator1 = "ACSettings#USER_ROLE_BY_EMAIL");
+		}
 	}
 
 	@description = "Automation ID: LRAC-9054 | Test Summary: Member can be selected in the user list"

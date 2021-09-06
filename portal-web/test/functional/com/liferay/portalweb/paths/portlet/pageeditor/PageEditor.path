@@ -17,6 +17,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>APPLIED_FILTERS_FILTER_LIST_PLACEHOLDER</td>
+	<td>//div[contains(@id,'filterList')]//span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>APPLIED_FILTERS_FILTER_LIST_FILTER_ITEM</td>
 	<td>//div[contains(@id,'filterList')]//span[contains(@class,'label-item')][normalize-space()='${filterName}']</td>
 	<td></td>

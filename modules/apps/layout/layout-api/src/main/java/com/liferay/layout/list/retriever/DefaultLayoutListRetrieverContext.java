@@ -16,6 +16,7 @@ package com.liferay.layout.list.retriever;
 
 import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.pagination.Pagination;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Map;
 import java.util.Optional;
@@ -55,6 +56,10 @@ public class DefaultLayoutListRetrieverContext
 	@Override
 	public <T> Optional<T> getInfoFilterOptional(
 		Class<? extends InfoFilter> clazz) {
+
+		if (MapUtil.isEmpty(_infoFilters)) {
+			return Optional.empty();
+		}
 
 		InfoFilter infoFilter = _infoFilters.getOrDefault(
 			clazz.getName(), null);

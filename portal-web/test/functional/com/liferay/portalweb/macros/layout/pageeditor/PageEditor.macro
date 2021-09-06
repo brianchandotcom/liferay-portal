@@ -1397,6 +1397,14 @@ definition {
 
 			PageEditor.waitForAutoSave();
 		}
+
+		if (isSet(includeClearFiltersOption)) {
+			Check.checkNotVisible(
+				checkboxName = "Include Clear Filters Option",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
+		}
 	}
 
 	macro editCollectionDisplay {

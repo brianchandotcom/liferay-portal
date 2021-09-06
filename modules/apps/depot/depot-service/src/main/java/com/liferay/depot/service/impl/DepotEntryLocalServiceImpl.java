@@ -17,11 +17,13 @@ package com.liferay.depot.service.impl;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.exception.DepotEntryGroupException;
 import com.liferay.depot.exception.DepotEntryNameException;
+import com.liferay.depot.exception.DepotEntryStagedException;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.DepotAppCustomizationLocalService;
 import com.liferay.depot.service.base.DepotEntryLocalServiceBaseImpl;
 import com.liferay.depot.service.persistence.DepotEntryGroupRelPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.GroupKeyException;
@@ -152,6 +154,20 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			false, false);
 
 		return depotEntry;
+	}
+
+	@Override
+	public DepotEntry deleteDepotEntry(long depotEntryId)
+		throws PortalException {
+
+		if (_isStaged(depotEntryPersistence.fetchByPrimaryKey(depotEntryId))) {
+			throw new DepotEntryStagedException(
+				StringBundler.concat(
+					"Depot entry ", depotEntryId, " is staged. Please unstage ",
+					"the depot entry before deleting it."));
+		}
+
+		return super.deleteDepotEntry(depotEntryId);
 	}
 
 	@Override
@@ -308,6 +324,20 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 		return Optional.of(
 			_language.get(resourceBundle, "unnamed-asset-library"));
+	}
+
+	private boolean _isStaged(DepotEntry depotEntry) throws PortalException {
+		if (depotEntry == null) {
+			return false;
+		}
+
+		Group group = depotEntry.getGroup();
+
+		if (group.isStaged()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _validateName(String name) throws PortalException {

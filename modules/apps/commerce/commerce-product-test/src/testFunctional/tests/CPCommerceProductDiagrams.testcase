@@ -94,10 +94,14 @@ definition {
 			locator1 = "Button#ANY");
 
 		AssertElementPresent(
-			key_radius = "15",
+			key_radius = "10",
 			locator1 = "CommerceEntry#VERIFY_PIN_RADIUS");
 
 		CommerceEntry.verifyCostumRadiusWithCostumValue(key_list = "1,2,3,4,5");
+
+		AssertElementPresent(
+			key_radius = "15",
+			locator1 = "CommerceEntry#VERIFY_PIN_RADIUS");
 
 		CommerceEntry.verifyCostumRadiusWithDefaultValue();
 

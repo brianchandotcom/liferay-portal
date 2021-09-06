@@ -26,6 +26,11 @@
 	<td>//div[contains(@id,'filterList')]//span[contains(@class,'label-item')][normalize-space()='${filterName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>APPLIED_FILTERS_INNER_BUTTON</td>
+	<td>//div[contains(@id,'filterList')]//following-sibling::div//button[normalize-space()='${button}']</td>
+	<td></td>
+</tr>
 <!--BASED_ON_CUSTOM_MASTERS-->
 <tr>
 	<td>FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS</td>

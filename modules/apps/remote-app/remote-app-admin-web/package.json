@@ -1,5 +1,5 @@
 {
-	"name": "remote-app-support-web",
+	"name": "@liferay/remote-app-admin-web",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
@@ -7,5 +7,5 @@
 		"format": "liferay-npm-scripts fix",
 		"test": "liferay-npm-scripts test"
 	},
-	"version": "2.0.4"
+	"version": "2.0.6"
 }

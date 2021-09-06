@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Remote App Support Web
-Bundle-SymbolicName: com.liferay.remote.app.support.web
-Bundle-Version: 2.0.4
-Web-ContextPath: /remote-app-support-web

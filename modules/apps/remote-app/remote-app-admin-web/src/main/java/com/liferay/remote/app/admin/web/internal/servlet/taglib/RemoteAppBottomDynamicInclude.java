@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.remote.app.support.web.internal.servlet.taglib;
+package com.liferay.remote.app.admin.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -41,11 +41,10 @@ public class RemoteAppBottomDynamicInclude implements DynamicInclude {
 		ScriptData scriptData = new ScriptData();
 
 		String initModuleName = _npmResolver.resolveModuleName(
-			"remote-app-support-web/index");
+			"@liferay/remote-app-admin-web/remote_protocol/bridge");
 
 		scriptData.append(
-			null, "RemoteAppSupport.default()",
-			initModuleName + " as RemoteAppSupport",
+			null, "RemoteApp.default()", initModuleName + " as RemoteApp",
 			ScriptData.ModulesType.ES6);
 
 		scriptData.writeTo(httpServletResponse.getWriter());

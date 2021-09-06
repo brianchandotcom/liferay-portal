@@ -15,11 +15,11 @@
 import {
 	REMOTE_APP_PROTOCOL,
 	VERSION,
-} from '../src/main/resources/META-INF/resources';
+} from '../../src/main/resources/META-INF/resources/remote_protocol/bridge';
 
 const originalAddEventListener = window.__proto__.addEventListener;
 
-describe('remote-app-support-web', () => {
+describe('remote-app-admin-web', () => {
 	let iframe;
 	let init;
 	let ms;
@@ -29,7 +29,8 @@ describe('remote-app-support-web', () => {
 	beforeEach(() => {
 		jest.resetModules();
 
-		init = require('../src/main/resources/META-INF/resources').default;
+		init = require('../../src/main/resources/META-INF/resources/remote_protocol/bridge')
+			.default;
 
 		iframe = document.createElement('iframe');
 

@@ -128,12 +128,43 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9086 | Test Summary: Change an admin to a member and assert new permissions"
-	@ignore = "true"
 	@priority = "3"
 	test AssertNewMemberPermissions {
+		var userEmail = "user@liferay.com";
 
-		// TODO LRAC-9086 AssertNewMemberPermissions
+		task ("Go to settings and go to user management") {
+			ACNavigation.goToSettings();
 
+			ACSettings.goToUserManagement();
+		}
+
+		task ("Invite user") {
+			ACSettings.addUser(userInvite = "${userEmail}");
+		}
+
+		task ("Change and assert the permission") {
+			ACSettings.changeUserRole(
+				newRole = "Administrator",
+				permissionType = "Member",
+				userEmail = "${userEmail}");
+
+			ACSettings.assertUserPermission(
+				permissionType = "Administrator",
+				userEmail = "${userEmail}");
+
+			ACSettings.changeUserRole(
+				newRole = "Member",
+				permissionType = "Administrator",
+				userEmail = "${userEmail}");
+
+			ACSettings.assertUserPermission(
+				permissionType = "Member",
+				userEmail = "${userEmail}");
+		}
+
+		task("Delete Pending All Users"){
+			ACSettings.deletePendingAllUsers();
+		}
 	}
 
 	@description = "Automation ID: LRAC-9089 | Test Summary: Select multiple users to change permissions at once."

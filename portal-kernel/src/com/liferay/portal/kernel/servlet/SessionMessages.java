@@ -149,7 +149,7 @@ public class SessionMessages {
 
 	public static void add(PortletRequest portletRequest, String key) {
 		_updateMap(
-			portletRequest, true,
+			_getPortalSession(portletRequest), _getKey(portletRequest), true,
 			map -> {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
@@ -166,7 +166,7 @@ public class SessionMessages {
 		PortletRequest portletRequest, String key, Object value) {
 
 		_updateMap(
-			portletRequest, true,
+			_getPortalSession(portletRequest), _getKey(portletRequest), true,
 			map -> {
 				if (_log.isDebugEnabled()) {
 					Exception exception = null;
@@ -196,7 +196,9 @@ public class SessionMessages {
 	}
 
 	public static void clear(PortletRequest portletRequest) {
-		_updateMap(portletRequest, false, Map::clear);
+		_updateMap(
+			_getPortalSession(portletRequest), _getKey(portletRequest), false,
+			Map::clear);
 	}
 
 	public static boolean contains(
@@ -260,7 +262,8 @@ public class SessionMessages {
 	}
 
 	public static boolean contains(PortletRequest portletRequest, String key) {
-		Map<String, Object> map = _getMap(portletRequest);
+		Map<String, Object> map = _getMap(
+			_getPortalSession(portletRequest), _getKey(portletRequest));
 
 		if (map == null) {
 			return false;
@@ -300,7 +303,8 @@ public class SessionMessages {
 	}
 
 	public static Object get(PortletRequest portletRequest, String key) {
-		Map<String, Object> map = _getMap(portletRequest);
+		Map<String, Object> map = _getMap(
+			_getPortalSession(portletRequest), _getKey(portletRequest));
 
 		if (map == null) {
 			return null;
@@ -324,7 +328,8 @@ public class SessionMessages {
 	}
 
 	public static boolean isEmpty(PortletRequest portletRequest) {
-		Map<String, Object> map = _getMap(portletRequest);
+		Map<String, Object> map = _getMap(
+			_getPortalSession(portletRequest), _getKey(portletRequest));
 
 		if (map == null) {
 			return true;
@@ -354,7 +359,8 @@ public class SessionMessages {
 	}
 
 	public static Iterator<String> iterator(PortletRequest portletRequest) {
-		Map<String, Object> map = _getMap(portletRequest);
+		Map<String, Object> map = _getMap(
+			_getPortalSession(portletRequest), _getKey(portletRequest));
 
 		if (map == null) {
 			List<String> list = Collections.<String>emptyList();
@@ -382,7 +388,8 @@ public class SessionMessages {
 	}
 
 	public static Set<String> keySet(PortletRequest portletRequest) {
-		Map<String, Object> map = _getMap(portletRequest);
+		Map<String, Object> map = _getMap(
+			_getPortalSession(portletRequest), _getKey(portletRequest));
 
 		if (map == null) {
 			return Collections.emptySet();
@@ -434,7 +441,8 @@ public class SessionMessages {
 	}
 
 	public static int size(PortletRequest portletRequest) {
-		Map<String, Object> map = _getMap(portletRequest);
+		Map<String, Object> map = _getMap(
+			_getPortalSession(portletRequest), _getKey(portletRequest));
 
 		if (map == null) {
 			return 0;
@@ -480,11 +488,6 @@ public class SessionMessages {
 		}
 	}
 
-	private static Map<String, Object> _getMap(PortletRequest portletRequest) {
-		return _getMap(
-			_getPortalSession(portletRequest), _getKey(portletRequest));
-	}
-
 	private static HttpSession _getPortalSession(
 		HttpServletRequest httpServletRequest) {
 
@@ -518,15 +521,6 @@ public class SessionMessages {
 		consumer.accept(map);
 
 		session.setAttribute(key, map);
-	}
-
-	private static void _updateMap(
-		PortletRequest portletRequest, boolean createIfAbsent,
-		Consumer<Map<String, Object>> consumer) {
-
-		_updateMap(
-			_getPortalSession(portletRequest), _getKey(portletRequest),
-			createIfAbsent, consumer);
 	}
 
 	private static final String _CLASS_NAME = SessionMessages.class.getName();

@@ -31,12 +31,85 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8498 | Test Summary: Link to view all criteria allows the user to scroll down and see more"
-	@ignore = "true"
 	@priority = "4"
 	test LinkToViewAllCriteriaAllowsUserScrollDownAndSeeMore {
+		task ("Create page, a user  and sync") {
+			var blogs = "Blogs AC Title,To See Blog";
 
-		// TODO LRAC-8498
+			ACUtils.addSiteAndPage();
 
+			for (var blog : list "${blogs}") {
+				ACUtils.createBlogsAndAddToPage(entryTitle = "${blog}");
+			}
+
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Log in and view site") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			for (var blog : list "${blogs}") {
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "${blog}");
+			}
+		}
+
+		task ("Close all sessions, go to AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+		}
+
+		task ("Add a dynamic segment") {
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "AC Segment Test");
+		}
+
+		task ("Add View Blog field and add 15 copies") {
+			ACSegments.addSegmentField(segmentField = "Viewed Blog");
+
+			ACSegments.selectDocument(
+				documentTitle = "Blogs AC Title",
+				indexField = "1");
+
+			var criteriasAcount = "1,2,3,4,5,6,7,8,9,10,11,12,13";
+
+			for (var cont : list "${criteriasAcount}") {
+				ACSegments.duplicateSegmentCriteria(criteriaName = "Viewed Blog");
+			}
+
+			ACSegments.addSegmentField(segmentField = "Viewed Blog");
+
+			ACSegments.editWebBehaviorCriterion(
+				indexField = "15",
+				searchTerm = "To See Blog");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Click View All Criteria, ascroll down and see the last criteria.") {
+			ACUtils.clickAnyButton(button = "View All Criteria");
+
+			ScrollWebElementIntoView(locator1 = "ACSegments#CRITERIA_GROUP_CARD");
+
+			ACSegments.assertCriteriaTable(criteriaName = "To See Blog");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8497 | Test Summary: Segment criterias nest correctly in the criteria card"

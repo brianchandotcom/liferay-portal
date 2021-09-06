@@ -70,8 +70,7 @@ definition {
 	macro assertCriteriaTable {
 		AssertVisible(
 			key_CriteriaName = "${criteriaName}",
-			locator1 = "ACSegments#CRITERIA_ROW"
-		);
+			locator1 = "ACSegments#CRITERIA_ROW");
 	}
 
 	macro assertMember {

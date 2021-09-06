@@ -2933,6 +2933,256 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-131947. The user could view a warning info in Collection Filter fragment when no collection in page. Can filter different Collection Displays by different Collection Filters."
+	@priority = "4"
+	test FilterResultsOfMultipleCollectionDisplaysByMultipleCollectionFilters {
+		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfMultipleCollectionDisplaysByMultipleCollectionFilters";
+
+		task ("Add three web contents") {
+			for (var style : list "501,510,512") {
+				JSONWebcontent.addWebContent(
+					content = "${style}",
+					groupName = "Test Site Name",
+					title = "${style}");
+			}
+		}
+
+		task ("Add three blogs entries") {
+			for (var style : list "X,Y,S") {
+				JSONBlog.addEntry(
+					entryContent = "Model ${style}",
+					entryTitle = "Model ${style}",
+					groupName = "Test Site Name");
+			}
+		}
+
+		task ("Add the first dynamic collection for Web Content Article and Basic Web Content") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article",
+				title = "Levis");
+		}
+
+		task ("Add the second dynamic collection for Blogs Entry") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "Blogs Entry",
+				title = "Tesla");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add the first Grid to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Change Number of Modules to 2") {
+			PageEditor.editLayoutGrid(
+				columnCount = "2",
+				panel = "General");
+		}
+
+		task ("Add one Collection Filter to each module of Grid") {
+			for (var n : list "1,2") {
+				PageEditor.addElementToColumn(
+					collectionName = "Content Display",
+					columnNumber = "${n}",
+					fragmentName = "Collection Filter",
+					navTab = "Fragments");
+			}
+		}
+
+		task ("View the alert info shown in General panel of Collection Filter") {
+			PageEditor.editCollectionFilter(
+				columnNumber = "1",
+				fragmentName = "Collection Filter");
+
+			AssertTextEquals(
+				locator1 = "PageEditor#ITEM_CONFIGURATION_ALERT_INFO",
+				value1 = "Display a collection on the page so that you can use the collection filter fragment.");
+		}
+
+		task ("Add the second Grid below the first one") {
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid",
+				targetFragmentName = "Grid");
+		}
+
+		task ("Change Number of Modules to 2") {
+			PageEditor.editLayoutGrid(
+				columnCount = "2",
+				panel = "General",
+				position = "2");
+		}
+
+		task ("Add one Collection Display to each module of the second Grid") {
+			for (var n : list "1,2") {
+				PageEditor.addElementToColumn(
+					collectionName = "Content Display",
+					columnNumber = "${n}",
+					fragmentName = "Collection Display",
+					navTab = "Fragments",
+					position = "2");
+			}
+		}
+
+		task ("Select the Levis in the first Collection Display and Select the Bordered List as List Style") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Levis",
+				fragmentName = "Collection Display",
+				listStyle = "Bordered List");
+		}
+
+		task ("Select the Tesla in the second Collection Display and Select the Bordered List as List Style") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Tesla",
+				fragmentName = "Collection Display",
+				index = "2",
+				listStyle = "Bordered List");
+		}
+
+		task ("Select the Levis as Target Collection and Select the Keywords as Filter in the first Collection Filter") {
+			PageEditor.editCollectionFilter(
+				columnNumber = "1",
+				filter = "Keywords",
+				fragmentName = "Collection Filter",
+				targetCollection = "Levis");
+		}
+
+		task ("Select the Tesla as Target Collection and Select the Keywords as Filter in the second Collection Filter") {
+			PageEditor.editCollectionFilter(
+				columnNumber = "2",
+				filter = "Keywords",
+				fragmentName = "Collection Filter",
+				targetCollection = "Tesla");
+		}
+
+		task ("Filter results of multiple Collection Displays by multiple Collection Filters at Preview mode") {
+			Click(locator1 = "PageEditor#PREVIEW");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			var n = "1";
+
+			for (var style : list "512,510,501") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${style}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			var n = "4";
+
+			for (var style : list "S,Y,X") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='Model ${style}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.searchInCollectionFilter(searchTerm = "501");
+
+			AssertVisible(
+				key_entryContent = "[normalize-space()='501']",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			Page.searchInCollectionFilter(
+				index = "2",
+				searchTerm = "X");
+
+			AssertVisible(
+				key_entryContent = "[normalize-space()='Model X']",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_entryContent = "[normalize-space()='501']",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Filter results of multiple Collection Displays by multiple Collection Filters at View mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var style : list "512,510,501") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='${style}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			var n = "4";
+
+			for (var style : list "S,Y,X") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='Model ${style}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.searchInCollectionFilter(searchTerm = "501");
+
+			AssertVisible(
+				key_entryContent = "[normalize-space()='501']",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			Page.searchInCollectionFilter(
+				index = "2",
+				searchTerm = "X");
+
+			AssertVisible(
+				key_entryContent = "[normalize-space()='Model X']",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_entryContent = "[normalize-space()='501']",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+		}
+	}
+
 	@description = "This is a test for LPS-111807. The user could show the label of selected vocabulary or category in Collection Filter."
 	@priority = "5"
 	test ShowLabelOfSelectedSource {

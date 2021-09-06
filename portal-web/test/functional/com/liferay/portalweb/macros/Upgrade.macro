@@ -2025,10 +2025,11 @@ definition {
 	}
 
 	macro viewAndAddBlogEntry {
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Blogs",
-			siteURLKey = "guest");
+		Navigator.gotoPage(pageName = "Blogs");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",

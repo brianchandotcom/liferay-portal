@@ -14,12 +14,14 @@
 
 package com.liferay.commerce.product.content.web.internal.util;
 
+import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.inventory.CommerceInventoryChecker;
 import com.liferay.commerce.media.CommerceCatalogDefaultImage;
 import com.liferay.commerce.media.CommerceMediaProvider;
+import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPMedia;
 import com.liferay.commerce.product.catalog.CPSku;
@@ -57,6 +59,7 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -429,9 +432,25 @@ public class CPContentHelperImpl implements CPContentHelper {
 		for (CPAttachmentFileEntry cpAttachmentFileEntry :
 				cpAttachmentFileEntries) {
 
+			String url = _commerceMediaResolver.getURL(
+				commerceAccountId,
+				cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+
+			FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();
+
+			String originalImgTag = StringBundler.concat(
+				"<div class=\"aspect-ratio-bg-cover aspect-ratio-item ",
+				"aspect-ratio-item-center-middle aspect-ratio-item-fluid ",
+				"card-type-asset-icon h-100 w-100\" style=\"",
+				"background-image: url('", url, "')\"></div>");
+
+			String adaptiveMediaImageHTMLTag = _amImageHTMLTagFactory.create(
+				originalImgTag, fileEntry);
+
 			cpMedias.add(
-				new CPMediaImpl(
-					commerceAccountId, cpAttachmentFileEntry, themeDisplay));
+				new AdaptiveMediaCPMediaImpl(
+					adaptiveMediaImageHTMLTag, commerceAccountId,
+					cpAttachmentFileEntry, themeDisplay));
 		}
 
 		if (cpMedias.isEmpty()) {
@@ -708,6 +727,9 @@ public class CPContentHelperImpl implements CPContentHelper {
 		CPContentHelperImpl.class);
 
 	@Reference
+	private AMImageHTMLTagFactory _amImageHTMLTagFactory;
+
+	@Reference
 	private CommerceCatalogDefaultImage _catalogCommerceMediaDefaultImage;
 
 	@Reference(
@@ -718,6 +740,9 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Reference
 	private CommerceMediaProvider _commerceMediaProvider;
+
+	@Reference
+	private CommerceMediaResolver _commerceMediaResolver;
 
 	@Reference
 	private CommerceWishListItemService _commerceWishListItemService;

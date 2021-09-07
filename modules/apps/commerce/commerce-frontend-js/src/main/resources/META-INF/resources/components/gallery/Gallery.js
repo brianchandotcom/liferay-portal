@@ -145,6 +145,9 @@ export default class Gallery extends React.Component {
 			<div className="product-gallery">
 				{images && images.length > 0 && (
 					<MainImage
+						adaptiveMediaImageHTMLTag={
+							images[selected].adaptiveMediaImageHTMLTag
+						}
 						background={background}
 						loading={loading}
 						onNext={images.length > 1 ? this.goToNext : null}
@@ -166,6 +169,9 @@ export default class Gallery extends React.Component {
 
 				{fullscreen ? (
 					<Overlay
+						adaptiveMediaImageHTMLTag={
+							images[selected].adaptiveMediaImageHTMLTag
+						}
 						background={background}
 						onClose={this.fullscreenClose}
 						onNext={images.length > 1 ? this.goToNext : null}

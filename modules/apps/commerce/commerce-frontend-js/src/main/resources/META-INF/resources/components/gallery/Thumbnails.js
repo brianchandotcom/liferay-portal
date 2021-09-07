@@ -28,6 +28,7 @@ export default function Thumbnails({
 			{images.map((image, i) => (
 				<Thumbnail
 					active={selected === i}
+					adaptiveMediaImageHTMLTag={image.adaptiveMediaImageHTMLTag}
 					background={background}
 					key={image.thumbnailURL}
 					onClick={onChange ? () => onChange(i) : null}

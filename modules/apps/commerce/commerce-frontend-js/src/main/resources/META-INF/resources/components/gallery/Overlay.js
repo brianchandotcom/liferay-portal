@@ -18,6 +18,7 @@ import React from 'react';
 import Arrows from './Arrows';
 
 export default function Overlay({
+	adaptiveMediaImageHTMLTag,
 	background,
 	onClose,
 	onNext,
@@ -27,13 +28,22 @@ export default function Overlay({
 }) {
 	return (
 		<div className="gallery-overlay" onClick={onClose} style={{background}}>
-			<img alt={title} src={src} />
+			{adaptiveMediaImageHTMLTag ? (
+				<div
+					dangerouslySetInnerHTML={{
+						__html: adaptiveMediaImageHTMLTag,
+					}}
+				/>
+			) : (
+				<img alt={title} src={src} />
+			)}
 			<Arrows onNext={onNext} onPrev={onPrev} />
 		</div>
 	);
 }
 
 Overlay.propTypes = {
+	adaptiveMediaImageHTMLTag: PropTypes.string,
 	onClose: PropTypes.func,
 	onNext: PropTypes.func,
 	onPrev: PropTypes.func,

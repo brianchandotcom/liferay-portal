@@ -588,6 +588,11 @@
 	<td>//label[contains(.,'Custom Color')]//..//input[contains(@aria-label,'Color selection')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DIAGRAM_ADD_BUTTON</td>
+	<td>//div[contains(@class,'diagram-footer')]//button[contains(.,'Add Pin')]</td>
+	<td></td>
+</tr>
 <!--OPTION-->
 <tr>
 	<td>ADD_RELATION_FIELD</td>

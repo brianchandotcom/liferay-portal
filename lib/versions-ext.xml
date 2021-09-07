@@ -125,7 +125,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/com.liferay.poshi.core.jar</file-name>
-				<version>1.0.22</version>
+				<version>1.0.29</version>
 				<project-name>Liferay Poshi Core</project-name>
 				<licenses>
 					<license>

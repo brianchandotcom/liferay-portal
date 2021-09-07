@@ -1354,10 +1354,10 @@ public abstract class BaseAssetSearchTestCase {
 				Thread.sleep(delta);
 			}
 
-			createDate = System.currentTimeMillis();
-
 			baseModels[i] = addBaseModel(
 				parentBaseModel, titles[i], serviceContext);
+
+			createDate = System.currentTimeMillis();
 		}
 
 		assetEntryQuery.setOrderByCol1("createDate");

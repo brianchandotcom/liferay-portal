@@ -46,6 +46,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USAGE_ADDONS_TIME</td>
+	<td>//div[h4[contains(.,'Add-ons')]]//div[contains(@class,'plan-name')][.//b[contains(@class,'label')][normalize-space(text())='${key_addOnItem}']]//following-sibling::div[contains(@class,'label')][normalize-space()='${key_time}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USAGE_CURRENT_PAGE_VIEWS</td>
 	<td>//h3[contains(.,'Page Views')]/..//span[contains(@class,'metric-current')]</td>
 	<td></td>

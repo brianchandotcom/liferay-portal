@@ -153,4 +153,53 @@ definition {
 			locator1 = "CommerceEntry#VERIFY_IMAGE");
 	}
 
+	@description = "This is a test for COMMERCE-7025. AddANewPin"
+	@priority = "3"
+	test AddANewPin {
+		property portal.acceptance = "false";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Diagram T-Shirt",
+			productType = "Diagram");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+		CommerceProductImages.addDiagramImages(
+			imageTitles = "Black",
+			productType = "Diagram");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+
+		DoubleClick(
+			key_image = "Commerce_Black",
+			locator1 = "CommerceEntry#VERIFY_IMAGE");
+
+		AssertElementPresent(
+			key_color = "transparent",
+			locator1 = "CommerceEntry#VERIFY_PIN");
+
+		AssertElementPresent(
+			key_strokeColor = "#ffa500",
+			locator1 = "CommerceEntry#VERIFY_PIN_COLOR_STROKE");
+
+		Refresh();
+
+		Click(locator1 = "CommerceEntry#DIAGRAM_ADD_BUTTON");
+
+		AssertElementPresent(
+			key_color = "transparent",
+			locator1 = "CommerceEntry#VERIFY_PIN");
+
+		AssertElementPresent(
+			key_strokeColor = "#0B5FFF",
+			locator1 = "CommerceEntry#VERIFY_PIN_COLOR_STROKE");
+	}
+
 }

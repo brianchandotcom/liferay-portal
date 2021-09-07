@@ -52,12 +52,12 @@ import org.osgi.service.component.annotations.Reference;
 	property = "javax.portlet.name=" + CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT,
 	service = ConfigurationAction.class
 )
-public class CommerceOpenOrderContentConfigurationAction
+public class OpenCommerceOrderContentConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
-		return "/pending_orders/configuration.jsp";
+		return "/pending_commerce_orders/configuration.jsp";
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class CommerceOpenOrderContentConfigurationAction
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceOpenOrderContentConfigurationAction.class);
+		OpenCommerceOrderContentConfigurationAction.class);
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;

@@ -241,38 +241,49 @@ definition {
 	}
 
 	macro assertPlanDetails {
-		var key_planName = "${planName}";
-		AssertElementPresent(locator1 = "ACUsage#PLAN_NAME");
-
 		AssertElementPresent(
-			key_planItem = "Individuals",
-			key_planLimits = "${individualsLimit}",
-			key_tableName = "limits",
-			locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
+			key_planName = "${planName}",
+			locator1 = "ACUsage#PLAN_NAME");
 
-		AssertElementPresent(
-			key_planItem = "Page Views",
-			key_planLimits = "${pageViews}",
-			key_tableName = "limits",
-			locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
+		if (isSet(individualsLimit)) {
+			AssertElementPresent(
+				key_planItem = "Individuals",
+				key_planLimit = "${individualsLimit}",
+				key_planName = "${planName}",
+				locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
+		}
 
-		AssertElementPresent(
-			key_planItem = "Users",
-			key_planLimits = "${usersLimit}",
-			key_tableName = "limits",
-			locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
+		if (isSet(pageViewsLimit)) {
+			AssertElementPresent(
+				key_planItem = "Page Views",
+				key_planLimit = "${pageViewsLimit}",
+				key_planName = "${planName}",
+				locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
+		}
 
-		AssertElementPresent(
-			key_planItem = "${individualsAddOns}",
-			key_planLimits = "${individualsAddOnsPrice}",
-			key_tableName = "addons",
-			locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
+		if (isSet(usersLimit)) {
+			AssertElementPresent(
+				key_planItem = "Users",
+				key_planLimit = "${usersLimit}",
+				key_planName = "${planName}",
+				locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
+		}
 
-		AssertElementPresent(
-			key_planItem = "${pageViewsAddOns}",
-			key_planLimits = "${pageViewsAddOnsPrice}",
-			key_tableName = "addons",
-			locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
+		if (isSet(individualsAddOnsLimit)) {
+			AssertElementPresent(
+				key_planItem = "Individuals for ${individualsAddOnsPrice}",
+				key_planLimit = "${individualsAddOnsLimit}",
+				key_planName = "${planName}",
+				locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
+		}
+
+		if (isSet(pageViewsAddOnsLimit)) {
+			AssertElementPresent(
+				key_planItem = "Page Views for ${pageViewsAddOnsPrice}",
+				key_planLimit = "${pageViewsAddOnsLimit}",
+				key_planName = "${planName}",
+				locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
+		}
 	}
 
 	macro assertRequestLog {

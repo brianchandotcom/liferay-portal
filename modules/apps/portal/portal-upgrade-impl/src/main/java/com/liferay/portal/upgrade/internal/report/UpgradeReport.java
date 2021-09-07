@@ -128,7 +128,7 @@ public class UpgradeReport {
 						_getProperties(), _getDLStorageSize(),
 						_getDatabaseInfo(), _getUpgradeProcessesContent(),
 						_getLogEvents("errors"), _getLogEvents("warnings"),
-						_getModuleUpgradeStatus()
+						_releaseManagerOSGiCommands.check()
 					},
 					StringPool.NEW_LINE + StringPool.NEW_LINE));
 		}
@@ -355,10 +355,6 @@ public class UpgradeReport {
 		}
 
 		return sb.toString();
-	}
-
-	private String _getModuleUpgradeStatus() {
-		return _releaseManagerOSGiCommands.checkAll(false);
 	}
 
 	private String _getPortalVersions() {

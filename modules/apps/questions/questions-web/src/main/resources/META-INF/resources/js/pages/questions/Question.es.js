@@ -454,9 +454,13 @@ export default withRouter(
 					<Helmet>
 						<title>{question.headline}</title>
 						<link
-							href={`${getFullPath('questions')}${
-								context.historyRouterBasePath ? '' : '#/'
-							}questions/${sectionTitle}/${questionId}`}
+							href={`${getFullPath(
+								context.historyRouterBasePath || 'questions'
+							)}${
+								context.historyRouterBasePath
+									? context.historyRouterBasePath
+									: '#'
+							}/questions/${sectionTitle}/${questionId}`}
 							rel="canonical"
 						/>
 					</Helmet>

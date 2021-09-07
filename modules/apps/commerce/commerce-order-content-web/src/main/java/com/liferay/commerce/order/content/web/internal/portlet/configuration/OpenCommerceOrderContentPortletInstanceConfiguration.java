@@ -26,11 +26,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 @Meta.OCD(
-	id = "com.liferay.commerce.order.content.web.internal.portlet.configuration.CommerceOpenOrderContentPortletInstanceConfiguration",
+	id = "com.liferay.commerce.order.content.web.internal.portlet.configuration.OpenCommerceOrderContentPortletInstanceConfiguration",
 	localization = "content/Language",
-	name = "commerce-open-order-content-web-portlet-instance-configuration-name"
+	name = "open-commerce-order-content-web-portlet-instance-configuration-name"
 )
-public interface CommerceOpenOrderContentPortletInstanceConfiguration {
+public interface OpenCommerceOrderContentPortletInstanceConfiguration {
 
 	@Meta.AD(name = "display-style", required = false)
 	public String displayStyle();

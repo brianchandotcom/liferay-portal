@@ -70,6 +70,50 @@ definition {
 			value1 = "${currentIndividuals}");
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9183 | Test Summary: Current AC plan is collapsible."
+	@priority = "3"
+	test CollapseCurrentPlan {
+		task ("Sign in AC") {
+			ACUtils.launchAC();
+		}
+
+		task ("Navigate to Workspace Settings") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToWorkspace();
+		}
+
+		task ("Navigate to the Usage") {
+			ACSettings.goToUsage();
+		}
+
+		task ("View the current plan card is expanded") {
+			ACSettings.viewCurrentPlan(planName = "Enterprise");
+
+			ACSettings.assertPlanDetails(
+				individualsAddOnsLimit = "5,000",
+				individualsAddOnsPrice = "500 USD",
+				individualsLimit = "100,000",
+				pageViewsAddOnsLimit = "5,000,000",
+				pageViewsAddOnsPrice = "250 USD",
+				pageViewsLimit = "60,000,000",
+				planName = "Enterprise",
+				usersLimit = "Unlimited");
+		}
+
+		task ("Collapse the current plan") {
+			ACSettings.collapsePlan(planName = "Enterprise");
+		}
+
+		task ("View the current plan card is collapsed") {
+			ACSettings.viewCurrentPlan(planName = "Enterprise");
+
+			AssertElementNotPresent(
+				key_planName = "Enterprise",
+				locator1 = "ACUsage#USAGE_PLAN_BODY");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8156 | Test Summary: Current AC plan level is shown in a card"
 	@priority = "5"
 	test CurrentACPlanLevelShownInCard {

@@ -167,7 +167,7 @@ public class UpgradeReport {
 
 		String format = "%-30s %20s %20s\n";
 
-		sb.append("Tables in database sorted by initial number of rows:\n\n");
+		sb.append("Tables in database sorted by initial number of rows:\n");
 		sb.append(
 			String.format(
 				format, "Table name", "Rows (initial)", "Rows (final)"));

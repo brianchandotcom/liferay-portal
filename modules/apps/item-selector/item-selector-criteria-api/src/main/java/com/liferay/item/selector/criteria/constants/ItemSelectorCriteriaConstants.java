@@ -17,14 +17,14 @@ package com.liferay.item.selector.criteria.constants;
 /**
  * @author Jesse Yeh
  */
-public class ScopeGroupTypeConstants {
+public class ItemSelectorCriteriaConstants {
 
-	public static final String ASSET_LIBRARY = "asset-library";
+	public static final String SCOPE_GROUP_TYPE_ASSET_LIBRARY = "asset-library";
 
-	public static final String GLOBAL = "global";
+	public static final String SCOPE_GROUP_TYPE_GLOBAL = "global";
 
-	public static final String PAGE = "page";
+	public static final String SCOPE_GROUP_TYPE_PAGE = "page";
 
-	public static final String SITE = "site";
+	public static final String SCOPE_GROUP_TYPE_SITE = "site";
 
 }

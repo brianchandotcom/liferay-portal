@@ -153,25 +153,25 @@ public class UpgradeReport {
 	}
 
 	private String _getDatabaseTablesInfo() {
-		Map<String, Integer> currentTableCounts = _getTableCounts();
+		Map<String, Integer> finalTableCounts = _getTableCounts();
 
-		if (currentTableCounts == null) {
+		if (finalTableCounts == null) {
 			return "Unable to get database tables information";
 		}
 
 		Set<String> tableNames = new HashSet<>();
 
 		tableNames.addAll(_initialTableCounts.keySet());
-		tableNames.addAll(currentTableCounts.keySet());
+		tableNames.addAll(finalTableCounts.keySet());
 
-		StringBundler sb = new StringBundler(currentTableCounts.size() + 3);
+		StringBundler sb = new StringBundler(finalTableCounts.size() + 3);
 
 		String format = "%-30s %20s %20s\n";
 
 		sb.append("Tables in database sorted by initial number of rows:\n\n");
 		sb.append(
 			String.format(
-				format, "Table name", "Rows (initial)", "Rows (current)"));
+				format, "Table name", "Rows (initial)", "Rows (final)"));
 		sb.append(
 			String.format(
 				format, "--------------", "--------------", "--------------"));
@@ -182,10 +182,9 @@ public class UpgradeReport {
 			tableName -> {
 				int initialCount = _initialTableCounts.getOrDefault(
 					tableName, 0);
-				int currentCount = currentTableCounts.getOrDefault(
-					tableName, 0);
+				int finalCount = finalTableCounts.getOrDefault(tableName, 0);
 
-				return (initialCount > 0) || (currentCount > 0);
+				return (initialCount > 0) || (finalCount > 0);
 			}
 		).sorted(
 			(a, b) -> {
@@ -202,16 +201,14 @@ public class UpgradeReport {
 			tableName -> {
 				int initialCount = _initialTableCounts.getOrDefault(
 					tableName, -1);
-				int currentCount = currentTableCounts.getOrDefault(
-					tableName, -1);
+				int finalCount = finalTableCounts.getOrDefault(tableName, -1);
 
 				String initialRows =
 					(initialCount >= 0) ? "" + initialCount : "-";
-				String currentRows =
-					(currentCount >= 0) ? "" + currentCount : "-";
+				String finalRows = (finalCount >= 0) ? "" + finalCount : "-";
 
 				sb.append(
-					String.format(format, tableName, initialRows, currentRows));
+					String.format(format, tableName, initialRows, finalRows));
 			}
 		);
 

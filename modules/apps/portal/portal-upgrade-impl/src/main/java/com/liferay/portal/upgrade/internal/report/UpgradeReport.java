@@ -155,7 +155,7 @@ public class UpgradeReport {
 	private String _getDatabaseTablesInfo() {
 		Map<String, Integer> finalTableCounts = _getTableCounts();
 
-		if (finalTableCounts == null) {
+		if ((_initialTableCounts == null) || (finalTableCounts == null)) {
 			return "Unable to get database tables information";
 		}
 

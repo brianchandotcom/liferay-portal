@@ -785,12 +785,26 @@ public class AccountEntryLocalServiceImpl
 				}
 
 				if (Validator.isNotNull(keywords)) {
+					Predicate keywordsPredicate =
+						_customSQL.getKeywordsPredicate(
+							DSLFunctionFactoryUtil.lower(
+								AccountEntryTable.INSTANCE.name),
+							_customSQL.keywords(keywords, true));
+
+					if (Validator.isDigit(keywords)) {
+						keywordsPredicate = Predicate.or(
+							AccountEntryTable.INSTANCE.accountEntryId.eq(
+								Long.valueOf(keywords)),
+							keywordsPredicate);
+					}
+
+					keywordsPredicate = Predicate.or(
+						AccountEntryTable.INSTANCE.externalReferenceCode.eq(
+							keywords),
+						keywordsPredicate);
+
 					predicate = predicate.and(
-						Predicate.withParentheses(
-							_customSQL.getKeywordsPredicate(
-								DSLFunctionFactoryUtil.lower(
-									AccountEntryTable.INSTANCE.name),
-								_customSQL.keywords(keywords, true))));
+						Predicate.withParentheses(keywordsPredicate));
 				}
 
 				if (types != null) {

@@ -151,7 +151,7 @@ export const CollectionFilterGeneralPanelContent = ({
 	return (
 		<>
 			<TargetCollectionsField
-				enableCommonSupportedFiltersCollections={true}
+				enableCompatibleCollections
 				filterableCollections={filterableCollections}
 				onValueSelect={(name, value) => {
 					if (!isEmptyArray(value)) {

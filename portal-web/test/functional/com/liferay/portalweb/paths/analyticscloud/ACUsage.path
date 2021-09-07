@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>CURRENT_PLAN</td>
+	<td>//div[contains(@class,'panel-title')][.//div[contains(@class,'plan-name')][normalize-space(text())='${key_planName}']]//div[contains(@class,'label')][normalize-space()='Current Plan']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USAGE_CURRENT_INDIVIDUALS</td>
 	<td>//h3[contains(.,'Individuals')]/..//span[contains(@class,'metric-current')]</td>
 	<td></td>

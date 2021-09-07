@@ -33,13 +33,16 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
 import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -60,6 +63,7 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -179,6 +183,28 @@ public class AddPortletMVCActionCommand
 		JSONObject jsonObject = addFragmentEntryLinkToLayoutData(
 			actionRequest, fragmentEntryLink.getFragmentEntryLinkId());
 
+		long portletItemId = ParamUtil.getLong(actionRequest, "portletItemId");
+
+		PortletItem portletItem = null;
+
+		if (portletItemId != 0) {
+			portletItem = _portletItemLocalService.fetchPortletItem(
+				portletItemId);
+		}
+
+		if (portletItem != null) {
+			PortletPreferences portletPreferences =
+				_portletPreferencesLocalService.getPreferences(
+					themeDisplay.getCompanyId(), portletItemId,
+					PortletKeys.PREFS_OWNER_TYPE_ARCHIVED, 0, portletId);
+
+			_portletPreferencesLocalService.addPortletPreferences(
+				themeDisplay.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
+				PortletIdCodec.encode(portletId, instanceId), null,
+				PortletPreferencesFactoryUtil.toXML(portletPreferences));
+		}
+
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
 
@@ -264,6 +290,9 @@ public class AddPortletMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletItemLocalService _portletItemLocalService;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

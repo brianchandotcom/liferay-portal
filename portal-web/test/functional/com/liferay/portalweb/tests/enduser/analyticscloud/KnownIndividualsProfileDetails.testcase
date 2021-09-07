@@ -217,19 +217,19 @@ definition {
 				desc = "true",
 				rowName = "Attribute");
 
-			ACIndividualsDashboard.viewKnownIndividualSpecificOrder(itemName = "modifiedDate,givenName,familyName,email,createDate,contactId,classPK,birthDate");
+			ACIndividualsDashboard.viewKnownIndividualDetailsSpecificOrder(itemName = "modifiedDate,givenName,familyName,email,createDate,contactId,classPK,birthDate");
 		}
 
 		task ("Sort the table by the Attribute column header in ascending order") {
 			ACIndividualsDashboard.filterKnownIndividualList(rowName = "Attribute");
 
-			ACIndividualsDashboard.viewKnownIndividualSpecificOrder(itemName = "birthDate,classPK,contactId,createDate,email,familyName,givenName,modifiedDate");
+			ACIndividualsDashboard.viewKnownIndividualDetailsSpecificOrder(itemName = "birthDate,classPK,contactId,createDate,email,familyName,givenName,modifiedDate");
 		}
 
 		task ("Sort the table by the Source Name column header in ascending order") {
 			ACIndividualsDashboard.filterKnownIndividualList(rowName = "Source Name");
 
-			ACIndividualsDashboard.viewKnownIndividualSpecificOrder(itemName = "birthDate,classPK,contactId,createDate,email,givenName,familyName,modifiedDate");
+			ACIndividualsDashboard.viewKnownIndividualDetailsSpecificOrder(itemName = "birthDate,classPK,contactId,createDate,email,givenName,familyName,modifiedDate");
 		}
 
 		task ("Sort the table by the Source Name column header in descending order") {
@@ -237,7 +237,7 @@ definition {
 				desc = "true",
 				rowName = "Source Name");
 
-			ACIndividualsDashboard.viewKnownIndividualSpecificOrder(itemName = "modifiedDate,familyName,givenName,email,createDate,contactId,classPK,birthDate");
+			ACIndividualsDashboard.viewKnownIndividualDetailsSpecificOrder(itemName = "modifiedDate,familyName,givenName,email,createDate,contactId,classPK,birthDate");
 		}
 	}
 

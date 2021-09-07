@@ -214,7 +214,7 @@ definition {
 			userEmailAddress = "${userEmailAddress}");
 	}
 
-	macro viewKnownIndividualSpecificOrder {
+	macro viewKnownIndividualDetailsSpecificOrder {
 		var resultOrder = "0";
 
 		for (var itemName : list "${itemName}") {
@@ -222,7 +222,7 @@ definition {
 
 			AssertVisible(
 				key_itemName = "${itemName}",
-				locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_VIEW_SPECIFIC_ORDER",
+				locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_DETAILS_VIEW_SPECIFIC_ORDER",
 				resultOrder = "${resultOrder}");
 		}
 	}

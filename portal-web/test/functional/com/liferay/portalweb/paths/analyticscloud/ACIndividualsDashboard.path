@@ -27,7 +27,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>KNOWN_INDIVIDUAL_VIEW_SPECIFIC_ORDER</td>
+	<td>KNOWN_INDIVIDUAL_DETAILS_VIEW_SPECIFIC_ORDER</td>
 	<td>//tbody//tr[${resultOrder}]//div[contains(@class,'name')and text()='${key_itemName}']</td>
 	<td></td>
 </tr>

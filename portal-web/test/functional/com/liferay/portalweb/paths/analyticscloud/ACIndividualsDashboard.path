@@ -156,7 +156,7 @@
 <!--INDIVIDUALS_ACTIVITIES_CHART-->
 <tr>
 	<td>BASE_RESULTS_TIMELINE_ITEM</td>
-	<td>xpath=(//div[contains(@class,'base-results')]//li[contains(@class,'timeline-item')]//span[contains(@class,'title')][normalize-space(text())='Visited ${itemName}'])[${index}]</td>
+	<td>xpath=(//div[contains(@class,'base-results')]//li[contains(@class,'timeline-item')]//span[contains(@class,'title')][normalize-space(text())='${itemName}'])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

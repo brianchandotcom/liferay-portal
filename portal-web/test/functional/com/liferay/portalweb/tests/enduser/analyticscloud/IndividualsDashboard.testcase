@@ -258,7 +258,7 @@ definition {
 			var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
 
 			ACIndividualsDashboard.goToVisitedPageOverviewViaIndividualActivity(
-				itemName = "${portalURL}",
+				itemName = "Visited ${portalURL}",
 				pageName = "AC Page - Site Name - Liferay DXP");
 		}
 
@@ -336,7 +336,7 @@ definition {
 			var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
 
 			ACIndividualsDashboard.viewTimelineItem(
-				itemName = "${portalURL}",
+				itemName = "Visited ${portalURL}",
 				visits = "1 Visit");
 		}
 	}
@@ -413,7 +413,7 @@ definition {
 			while ("${n}" != "5") {
 				ACIndividualsDashboard.viewTimelineItem(
 					index = "${n}",
-					itemName = "${portalURL}",
+					itemName = "Visited ${portalURL}",
 					visits = "1 Visit");
 			}
 		}
@@ -424,7 +424,7 @@ definition {
 
 		task ("View the activity shown in page 2") {
 			ACIndividualsDashboard.viewTimelineItem(
-				itemName = "${portalURL}",
+				itemName = "Visited ${portalURL}",
 				visits = "1 Visit");
 		}
 	}

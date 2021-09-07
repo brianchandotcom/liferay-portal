@@ -201,8 +201,11 @@ public class UpgradeReport {
 				int finalCount = finalTableCounts.getOrDefault(tableName, -1);
 
 				String initialRows =
-					(initialCount >= 0) ? "" + initialCount : "-";
-				String finalRows = (finalCount >= 0) ? "" + finalCount : "-";
+					(initialCount >= 0) ? String.valueOf(initialCount) :
+						StringPool.DASH;
+				String finalRows =
+					(finalCount >= 0) ? String.valueOf(finalCount) :
+						StringPool.DASH;
 
 				sb.append(
 					String.format(format, tableName, initialRows, finalRows));

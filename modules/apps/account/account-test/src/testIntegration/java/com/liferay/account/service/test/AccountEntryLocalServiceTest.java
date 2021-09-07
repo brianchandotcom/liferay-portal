@@ -540,6 +540,14 @@ public class AccountEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testSearchByAccountEntryId() throws Exception {
+		AccountEntry accountEntry = _addAccountEntry();
+
+		_assertKeywordSearch(
+			accountEntry, String.valueOf(accountEntry.getAccountEntryId()));
+	}
+
+	@Test
 	public void testSearchByAccountGroupIds() throws Exception {
 		_addAccountEntries();
 
@@ -590,6 +598,14 @@ public class AccountEntryLocalServiceTest {
 				_addAccountEntryWithEmailDomain(emailDomain2)),
 			_getLinkedHashMap(
 				"domains", new String[] {emailDomain1, emailDomain2}));
+	}
+
+	@Test
+	public void testSearchByExternalReferenceCode() throws Exception {
+		AccountEntry accountEntry = _addAccountEntry();
+
+		_assertKeywordSearch(
+			accountEntry, accountEntry.getExternalReferenceCode());
 	}
 
 	@Test
@@ -945,6 +961,21 @@ public class AccountEntryLocalServiceTest {
 				String.valueOf(accountEntryId));
 
 		Assert.assertEquals(0, resourcePermissionsCount);
+	}
+
+	private void _assertKeywordSearch(
+			AccountEntry expectedAccountEntry, String keywords)
+		throws Exception {
+
+		BaseModelSearchResult<AccountEntry> baseModelSearchResult =
+			_keywordSearch(keywords);
+
+		Assert.assertEquals(1, baseModelSearchResult.getLength());
+
+		List<AccountEntry> accountEntries =
+			baseModelSearchResult.getBaseModels();
+
+		Assert.assertEquals(expectedAccountEntry, accountEntries.get(0));
 	}
 
 	private void _assertPaginationSort(

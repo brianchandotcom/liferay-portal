@@ -861,6 +861,48 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro editPG {
+		Search.searchPG(
+			portletName = "Account Management",
+			searchTerm = "${accountName}");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${accountName}");
+
+		AssertTextEquals(
+			key_portletName = "Account",
+			locator1 = "Portlet#TITLE",
+			value1 = "Edit ${accountName}");
+
+		PortletEntry.inputName(name = "${accountNameEdit}");
+
+		if (isSet(accountDescriptionEdit)) {
+			PortletEntry.inputDescription(description = "${accountDescriptionEdit}");
+		}
+
+		if (isSet(accountLogoEdit)) {
+			User.changeProfileImage(imageName = "${accountLogoEdit}");
+		}
+
+		if ("${accountStatusEdit}" == "Inactive") {
+			Uncheck.uncheckToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
+		}
+		else if ("${accountStatusEdit}" == "Active") {
+			Check.checkToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
+		}
+
+		if (isSet(customFieldText)) {
+			Type(
+				locator1 = "TextInput#CUSTOM_FIELD",
+				value1 = "${customFieldText}");
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro gotoAssigneeTab {
 		Navigator.gotoNavTab(navTab = "${assigneeTab}");
 	}

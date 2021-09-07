@@ -603,11 +603,6 @@
 	<td>//select[contains(@aria-label,'Select Label')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>DIAGRAM_MOVE_CONTROLLER</td>
-	<td>//div[contains(@class,'move-controller')]/a[contains(@class,'${key_direction}')]</td>
-	<td></td>
-</tr>
 <!--OPTION-->
 <tr>
 	<td>ADD_RELATION_FIELD</td>

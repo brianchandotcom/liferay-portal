@@ -28,6 +28,9 @@ import {useDispatch} from './StoreContext';
 const defaultFromControlsId = (itemId) => itemId;
 const defaultToControlsId = (controlId) => controlId;
 
+const DISPLAY_PAGE_CONTENT_FRAGMENT_ENTRY_KEY =
+	'com.liferay.fragment.internal.renderer.LayoutDisplayObjectFragmentRenderer';
+
 export const INITIAL_STATE = {
 	collectionConfig: null,
 	collectionId: null,
@@ -88,6 +91,11 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 		collectionItemContext.collectionItem || {};
 	const {collectionItemIndex} = collectionItemContext;
 
+	const {
+		className: displayPagePreviewItemClassName,
+		classPK: displayPagePreviewItemClassPK,
+	} = useDisplayPagePreviewItem()?.data || {};
+
 	useEffect(() => {
 		const hasLocalizable =
 			fieldSets?.some((fieldSet) =>
@@ -95,6 +103,10 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 			) ?? false;
 
 		if (
+			(!isNullOrUndefined(displayPagePreviewItemClassName) &&
+				!isNullOrUndefined(displayPagePreviewItemClassPK) &&
+				fragmentEntryLink.fragmentEntryKey ===
+					DISPLAY_PAGE_CONTENT_FRAGMENT_ENTRY_KEY) ||
 			(!isNullOrUndefined(collectionItemIndex) &&
 				!isNullOrUndefined(collectionItemClassName) &&
 				!isNullOrUndefined(collectionItemClassPK)) ||
@@ -103,6 +115,8 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 			FragmentService.renderFragmentEntryLinkContent({
 				collectionItemClassName,
 				collectionItemClassPK,
+				displayPagePreviewItemClassName,
+				displayPagePreviewItemClassPK,
 				fragmentEntryLinkId: fragmentEntryLink.fragmentEntryLinkId,
 				languageId,
 				onNetworkStatus: dispatch,
@@ -124,8 +138,11 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 		collectionItemClassPK,
 		collectionItemIndex,
 		dispatch,
+		displayPagePreviewItemClassName,
+		displayPagePreviewItemClassPK,
 		fieldSets,
 		fragmentEntryLink.editableValues,
+		fragmentEntryLink.fragmentEntryKey,
 		fragmentEntryLink.fragmentEntryLinkId,
 		languageId,
 		segmentsExperienceId,

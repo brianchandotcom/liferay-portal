@@ -29,6 +29,9 @@ public class AccountScreenNavigationEntryConstants {
 
 	public static final String CATEGORY_KEY_CONTACT = "contact";
 
+	public static final String CATEGORY_KEY_DEFINE_GROUP_SCOPE_PERMISSIONS =
+		"define-group-scope-permissions";
+
 	public static final String CATEGORY_KEY_DEFINE_PERMISSIONS =
 		"define-permissions";
 
@@ -57,6 +60,9 @@ public class AccountScreenNavigationEntryConstants {
 
 	public static final String ENTRY_KEY_CONTACT_INFORMATION =
 		"contact-information";
+
+	public static final String ENTRY_KEY_DEFINE_GROUP_SCOPE_PERMISSIONS =
+		"define-group-scope-permissions";
 
 	public static final String ENTRY_KEY_DEFINE_PERMISSIONS =
 		"define-permissions";

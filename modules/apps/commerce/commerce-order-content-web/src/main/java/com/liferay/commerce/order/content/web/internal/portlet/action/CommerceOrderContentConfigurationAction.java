@@ -57,7 +57,7 @@ public class CommerceOrderContentConfigurationAction
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
-		return "/placed_orders/configuration.jsp";
+		return "/placed_commerce_orders/configuration.jsp";
 	}
 
 	@Override

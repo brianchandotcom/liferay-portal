@@ -43,7 +43,7 @@ public class ViewCommerceOrderOrderTypeModalMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/pending_orders/commerce_order_order_type_modal.jsp";
+		return "/pending_commerce_orders/commerce_order_order_type_modal.jsp";
 	}
 
 }

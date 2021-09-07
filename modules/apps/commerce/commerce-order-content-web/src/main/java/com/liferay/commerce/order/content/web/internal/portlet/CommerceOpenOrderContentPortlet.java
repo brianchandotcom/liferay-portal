@@ -69,7 +69,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.scopeable=true",
 		"javax.portlet.display-name=Open Carts",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.view-template=/pending_orders/view.jsp",
+		"javax.portlet.init-param.view-template=/pending_commerce_orders/view.jsp",
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"

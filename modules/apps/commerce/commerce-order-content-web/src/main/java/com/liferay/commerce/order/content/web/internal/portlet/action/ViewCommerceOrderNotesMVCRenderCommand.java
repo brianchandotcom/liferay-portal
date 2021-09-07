@@ -42,7 +42,7 @@ public class ViewCommerceOrderNotesMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/placed_orders/view_commerce_order_notes.jsp";
+		return "/placed_commerce_orders/view_commerce_order_notes.jsp";
 	}
 
 }

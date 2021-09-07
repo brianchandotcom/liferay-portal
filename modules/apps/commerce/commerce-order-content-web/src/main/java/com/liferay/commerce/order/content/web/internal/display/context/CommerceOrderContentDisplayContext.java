@@ -32,7 +32,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceShipmentItem;
-import com.liferay.commerce.order.content.web.internal.portlet.configuration.CommerceOpenOrderContentPortletInstanceConfiguration;
+import com.liferay.commerce.order.content.web.internal.portlet.configuration.OpenCommerceOrderContentPortletInstanceConfiguration;
 import com.liferay.commerce.order.content.web.internal.portlet.configuration.CommerceOrderContentPortletInstanceConfiguration;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
@@ -390,13 +390,13 @@ public class CommerceOrderContentDisplayContext {
 		else if (portletId.equals(
 					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)) {
 
-			CommerceOpenOrderContentPortletInstanceConfiguration
-				commerceOpenOrderContentPortletInstanceConfiguration =
+			OpenCommerceOrderContentPortletInstanceConfiguration
+				openCommerceOrderContentPortletInstanceConfiguration =
 					_portletDisplay.getPortletInstanceConfiguration(
-						CommerceOpenOrderContentPortletInstanceConfiguration.
+						OpenCommerceOrderContentPortletInstanceConfiguration.
 							class);
 
-			return commerceOpenOrderContentPortletInstanceConfiguration.
+			return openCommerceOrderContentPortletInstanceConfiguration.
 				displayStyle();
 		}
 		else if (portletId.equals(CommercePortletKeys.COMMERCE_ORDER_CONTENT)) {
@@ -421,13 +421,13 @@ public class CommerceOrderContentDisplayContext {
 		else if (portletId.equals(
 					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)) {
 
-			CommerceOpenOrderContentPortletInstanceConfiguration
-				commerceOpenOrderContentPortletInstanceConfiguration =
+			OpenCommerceOrderContentPortletInstanceConfiguration
+				openCommerceOrderContentPortletInstanceConfiguration =
 					_portletDisplay.getPortletInstanceConfiguration(
-						CommerceOpenOrderContentPortletInstanceConfiguration.
+						OpenCommerceOrderContentPortletInstanceConfiguration.
 							class);
 
-			return commerceOpenOrderContentPortletInstanceConfiguration.
+			return openCommerceOrderContentPortletInstanceConfiguration.
 				displayStyleGroupId();
 		}
 		else if (portletId.equals(CommercePortletKeys.COMMERCE_ORDER_CONTENT)) {

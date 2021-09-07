@@ -204,8 +204,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-7035. UseZoomAndDragBackground"
 	@priority = "3"
-	test UseZoomAndDragBackground { 
-
+	test UseZoomAndDragBackground {
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");

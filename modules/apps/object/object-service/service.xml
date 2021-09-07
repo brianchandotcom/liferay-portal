@@ -134,6 +134,7 @@
 		<column name="indexedLanguageId" type="String" />
 		<column localized="true" name="label" type="String" />
 		<column name="name" type="String" />
+		<column name="relationship" type="boolean" />
 		<column name="required" type="boolean" />
 		<column name="type" type="String" />
 

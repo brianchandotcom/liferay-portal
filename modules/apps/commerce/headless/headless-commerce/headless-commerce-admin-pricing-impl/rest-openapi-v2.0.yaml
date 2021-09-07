@@ -1117,7 +1117,6 @@ components:
                 modifierAmount:
                     example: 25
                     format: bigdecimal
-                    minimum: 0
                     type: number
                 modifierType:
                     example: "percentage"

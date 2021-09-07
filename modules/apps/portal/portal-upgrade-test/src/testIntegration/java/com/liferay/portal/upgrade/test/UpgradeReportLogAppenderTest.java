@@ -133,7 +133,7 @@ public class UpgradeReportLogAppenderTest {
 
 		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
 
-		String initialSchemaVersion = release.getSchemaVersion();
+		String currentSchemaVersion = release.getSchemaVersion();
 
 		release.setSchemaVersion("0.0.1");
 
@@ -145,13 +145,14 @@ public class UpgradeReportLogAppenderTest {
 
 		release = _releaseLocalService.fetchRelease(bundleSymbolicName);
 
-		release.setSchemaVersion(initialSchemaVersion);
+		release.setSchemaVersion(currentSchemaVersion);
 
 		_releaseLocalService.updateRelease(release);
 
 		_assertReport(
-			"There are upgrade processes available for " +
-				"com.liferay.asset.service from 0.0.1 to 2.1.0");
+			StringBundler.concat(
+				"There are upgrade processes available for ",
+				bundleSymbolicName, " from 0.0.1 to ", currentSchemaVersion));
 	}
 
 	@Test
@@ -173,20 +174,13 @@ public class UpgradeReportLogAppenderTest {
 
 		_assertReport(
 			StringBundler.concat(
-				PropsKeys.LIFERAY_HOME,
-				StringPool.EQUAL,
-				PropsValues.LIFERAY_HOME,
-				StringPool.NEW_LINE,
-				PropsKeys.LOCALES,
-				StringPool.EQUAL,
-				Arrays.toString(PropsValues.LOCALES),
-				StringPool.NEW_LINE,
-				PropsKeys.LOCALES_ENABLED,
-				StringPool.EQUAL,
+				PropsKeys.LIFERAY_HOME, StringPool.EQUAL,
+				PropsValues.LIFERAY_HOME, StringPool.NEW_LINE,
+				PropsKeys.LOCALES, StringPool.EQUAL,
+				Arrays.toString(PropsValues.LOCALES), StringPool.NEW_LINE,
+				PropsKeys.LOCALES_ENABLED, StringPool.EQUAL,
 				Arrays.toString(PropsValues.LOCALES_ENABLED),
-				StringPool.NEW_LINE,
-				PropsKeys.DL_STORE_IMPL,
-				StringPool.EQUAL,
+				StringPool.NEW_LINE, PropsKeys.DL_STORE_IMPL, StringPool.EQUAL,
 				PropsValues.DL_STORE_IMPL));
 	}
 

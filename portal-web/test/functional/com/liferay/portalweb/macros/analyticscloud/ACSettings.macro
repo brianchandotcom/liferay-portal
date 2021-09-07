@@ -157,9 +157,26 @@ definition {
 	}
 
 	macro assertAddonsDetails {
-		AssertElementPresent(locator1 = "ACUsage#USAGE_ADDONS_LIMITS");
+		if (isSet(limit)) {
+			AssertVisible(
+				key_addOnItem = "${addOnItem}",
+				key_planLimit = "${limit}",
+				locator1 = "ACUsage#USAGE_ADDONS_LIMIT");
+		}
 
-		AssertElementPresent(locator1 = "ACUsage#USAGE_ADDONS_PRICE");
+		if (isSet(time)) {
+			AssertVisible(
+				key_addOnItem = "${addOnItem}",
+				key_time = "${time}",
+				locator1 = "ACUsage#USAGE_ADDONS_TIME");
+		}
+
+		if (isSet(annualPrice)) {
+			AssertVisible(
+				key_addOnItem = "${addOnItem}",
+				key_annualPrice = "${annualPrice}",
+				locator1 = "ACUsage#USAGE_ADDONS_PRICE");
+		}
 	}
 
 	macro assertCanChooseDataSourceOptions {

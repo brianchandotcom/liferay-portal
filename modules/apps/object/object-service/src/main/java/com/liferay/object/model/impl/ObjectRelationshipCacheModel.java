@@ -78,7 +78,7 @@ public class ObjectRelationshipCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,6 +96,20 @@ public class ObjectRelationshipCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", label=");
+		sb.append(label);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", objectDefinitionId1=");
+		sb.append(objectDefinitionId1);
+		sb.append(", objectDefinitionId1FieldId=");
+		sb.append(objectDefinitionId1FieldId);
+		sb.append(", objectDefinitionId2=");
+		sb.append(objectDefinitionId2);
+		sb.append(", objectDefinitionId2FieldId=");
+		sb.append(objectDefinitionId2FieldId);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append("}");
 
 		return sb.toString();
@@ -140,6 +154,34 @@ public class ObjectRelationshipCacheModel
 			objectRelationshipImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (label == null) {
+			objectRelationshipImpl.setLabel("");
+		}
+		else {
+			objectRelationshipImpl.setLabel(label);
+		}
+
+		if (name == null) {
+			objectRelationshipImpl.setName("");
+		}
+		else {
+			objectRelationshipImpl.setName(name);
+		}
+
+		objectRelationshipImpl.setObjectDefinitionId1(objectDefinitionId1);
+		objectRelationshipImpl.setObjectDefinitionId1FieldId(
+			objectDefinitionId1FieldId);
+		objectRelationshipImpl.setObjectDefinitionId2(objectDefinitionId2);
+		objectRelationshipImpl.setObjectDefinitionId2FieldId(
+			objectDefinitionId2FieldId);
+
+		if (type == null) {
+			objectRelationshipImpl.setType("");
+		}
+		else {
+			objectRelationshipImpl.setType(type);
+		}
+
 		objectRelationshipImpl.resetOriginalValues();
 
 		return objectRelationshipImpl;
@@ -158,6 +200,17 @@ public class ObjectRelationshipCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		label = objectInput.readUTF();
+		name = objectInput.readUTF();
+
+		objectDefinitionId1 = objectInput.readLong();
+
+		objectDefinitionId1FieldId = objectInput.readLong();
+
+		objectDefinitionId2 = objectInput.readLong();
+
+		objectDefinitionId2FieldId = objectInput.readLong();
+		type = objectInput.readUTF();
 	}
 
 	@Override
@@ -186,6 +239,35 @@ public class ObjectRelationshipCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		if (label == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(label);
+		}
+
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		objectOutput.writeLong(objectDefinitionId1);
+
+		objectOutput.writeLong(objectDefinitionId1FieldId);
+
+		objectOutput.writeLong(objectDefinitionId2);
+
+		objectOutput.writeLong(objectDefinitionId2FieldId);
+
+		if (type == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
 	}
 
 	public long mvccVersion;
@@ -196,5 +278,12 @@ public class ObjectRelationshipCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String label;
+	public String name;
+	public long objectDefinitionId1;
+	public long objectDefinitionId1FieldId;
+	public long objectDefinitionId2;
+	public long objectDefinitionId2FieldId;
+	public String type;
 
 }

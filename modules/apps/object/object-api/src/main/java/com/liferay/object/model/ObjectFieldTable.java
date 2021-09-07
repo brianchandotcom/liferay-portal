@@ -74,8 +74,8 @@ public class ObjectFieldTable extends BaseTable<ObjectFieldTable> {
 		"label", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectFieldTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ObjectFieldTable, String> pluralLabel = createColumn(
-		"pluralLabel", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectFieldTable, Boolean> relationship = createColumn(
+		"relationship", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<ObjectFieldTable, Boolean> required = createColumn(
 		"required", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<ObjectFieldTable, String> type = createColumn(

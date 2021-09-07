@@ -60,7 +60,7 @@ public class ObjectFieldWrapper
 		attributes.put("indexedLanguageId", getIndexedLanguageId());
 		attributes.put("label", getLabel());
 		attributes.put("name", getName());
-		attributes.put("pluralLabel", getPluralLabel());
+		attributes.put("relationship", isRelationship());
 		attributes.put("required", isRequired());
 		attributes.put("type", getType());
 
@@ -172,10 +172,10 @@ public class ObjectFieldWrapper
 			setName(name);
 		}
 
-		String pluralLabel = (String)attributes.get("pluralLabel");
+		Boolean relationship = (Boolean)attributes.get("relationship");
 
-		if (pluralLabel != null) {
-			setPluralLabel(pluralLabel);
+		if (relationship != null) {
+			setRelationship(relationship);
 		}
 
 		Boolean required = (Boolean)attributes.get("required");
@@ -413,82 +413,6 @@ public class ObjectFieldWrapper
 	}
 
 	/**
-	 * Returns the plural label of this object field.
-	 *
-	 * @return the plural label of this object field
-	 */
-	@Override
-	public String getPluralLabel() {
-		return model.getPluralLabel();
-	}
-
-	/**
-	 * Returns the localized plural label of this object field in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized plural label of this object field
-	 */
-	@Override
-	public String getPluralLabel(java.util.Locale locale) {
-		return model.getPluralLabel(locale);
-	}
-
-	/**
-	 * Returns the localized plural label of this object field in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized plural label of this object field. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	 */
-	@Override
-	public String getPluralLabel(java.util.Locale locale, boolean useDefault) {
-		return model.getPluralLabel(locale, useDefault);
-	}
-
-	/**
-	 * Returns the localized plural label of this object field in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @return the localized plural label of this object field
-	 */
-	@Override
-	public String getPluralLabel(String languageId) {
-		return model.getPluralLabel(languageId);
-	}
-
-	/**
-	 * Returns the localized plural label of this object field in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized plural label of this object field
-	 */
-	@Override
-	public String getPluralLabel(String languageId, boolean useDefault) {
-		return model.getPluralLabel(languageId, useDefault);
-	}
-
-	@Override
-	public String getPluralLabelCurrentLanguageId() {
-		return model.getPluralLabelCurrentLanguageId();
-	}
-
-	@Override
-	public String getPluralLabelCurrentValue() {
-		return model.getPluralLabelCurrentValue();
-	}
-
-	/**
-	 * Returns a map of the locales and localized plural labels of this object field.
-	 *
-	 * @return the locales and localized plural labels of this object field
-	 */
-	@Override
-	public Map<java.util.Locale, String> getPluralLabelMap() {
-		return model.getPluralLabelMap();
-	}
-
-	/**
 	 * Returns the primary key of this object field.
 	 *
 	 * @return the primary key of this object field
@@ -496,6 +420,16 @@ public class ObjectFieldWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the relationship of this object field.
+	 *
+	 * @return the relationship of this object field
+	 */
+	@Override
+	public boolean getRelationship() {
+		return model.getRelationship();
 	}
 
 	/**
@@ -576,6 +510,16 @@ public class ObjectFieldWrapper
 	@Override
 	public boolean isIndexedAsKeyword() {
 		return model.isIndexedAsKeyword();
+	}
+
+	/**
+	 * Returns <code>true</code> if this object field is relationship.
+	 *
+	 * @return <code>true</code> if this object field is relationship; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isRelationship() {
+		return model.isRelationship();
 	}
 
 	/**
@@ -803,73 +747,6 @@ public class ObjectFieldWrapper
 	}
 
 	/**
-	 * Sets the plural label of this object field.
-	 *
-	 * @param pluralLabel the plural label of this object field
-	 */
-	@Override
-	public void setPluralLabel(String pluralLabel) {
-		model.setPluralLabel(pluralLabel);
-	}
-
-	/**
-	 * Sets the localized plural label of this object field in the language.
-	 *
-	 * @param pluralLabel the localized plural label of this object field
-	 * @param locale the locale of the language
-	 */
-	@Override
-	public void setPluralLabel(String pluralLabel, java.util.Locale locale) {
-		model.setPluralLabel(pluralLabel, locale);
-	}
-
-	/**
-	 * Sets the localized plural label of this object field in the language, and sets the default locale.
-	 *
-	 * @param pluralLabel the localized plural label of this object field
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
-	@Override
-	public void setPluralLabel(
-		String pluralLabel, java.util.Locale locale,
-		java.util.Locale defaultLocale) {
-
-		model.setPluralLabel(pluralLabel, locale, defaultLocale);
-	}
-
-	@Override
-	public void setPluralLabelCurrentLanguageId(String languageId) {
-		model.setPluralLabelCurrentLanguageId(languageId);
-	}
-
-	/**
-	 * Sets the localized plural labels of this object field from the map of locales and localized plural labels.
-	 *
-	 * @param pluralLabelMap the locales and localized plural labels of this object field
-	 */
-	@Override
-	public void setPluralLabelMap(
-		Map<java.util.Locale, String> pluralLabelMap) {
-
-		model.setPluralLabelMap(pluralLabelMap);
-	}
-
-	/**
-	 * Sets the localized plural labels of this object field from the map of locales and localized plural labels, and sets the default locale.
-	 *
-	 * @param pluralLabelMap the locales and localized plural labels of this object field
-	 * @param defaultLocale the default locale
-	 */
-	@Override
-	public void setPluralLabelMap(
-		Map<java.util.Locale, String> pluralLabelMap,
-		java.util.Locale defaultLocale) {
-
-		model.setPluralLabelMap(pluralLabelMap, defaultLocale);
-	}
-
-	/**
 	 * Sets the primary key of this object field.
 	 *
 	 * @param primaryKey the primary key of this object field
@@ -877,6 +754,16 @@ public class ObjectFieldWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets whether this object field is relationship.
+	 *
+	 * @param relationship the relationship of this object field
+	 */
+	@Override
+	public void setRelationship(boolean relationship) {
+		model.setRelationship(relationship);
 	}
 
 	/**

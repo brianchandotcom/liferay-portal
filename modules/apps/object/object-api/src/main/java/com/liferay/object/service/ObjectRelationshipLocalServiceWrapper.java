@@ -33,6 +33,18 @@ public class ObjectRelationshipLocalServiceWrapper
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectRelationship addObjectRelationship(
+			long userId, java.util.Map<java.util.Locale, String> labelMap,
+			String name, long objectDefinitionId1, long objectDefinitionId2,
+			String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectRelationshipLocalService.addObjectRelationship(
+			userId, labelMap, name, objectDefinitionId1, objectDefinitionId2,
+			type);
+	}
+
 	/**
 	 * Adds the object relationship to the database. Also notifies the appropriate model listeners.
 	 *
@@ -328,6 +340,14 @@ public class ObjectRelationshipLocalServiceWrapper
 
 		return _objectRelationshipLocalService.getObjectRelationships(
 			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectRelationship>
+		getObjectRelationships(long objectDefinitionId1, int start, int end) {
+
+		return _objectRelationshipLocalService.getObjectRelationships(
+			objectDefinitionId1, start, end);
 	}
 
 	/**

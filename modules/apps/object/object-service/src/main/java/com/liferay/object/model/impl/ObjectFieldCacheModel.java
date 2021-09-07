@@ -113,8 +113,8 @@ public class ObjectFieldCacheModel
 		sb.append(label);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", pluralLabel=");
-		sb.append(pluralLabel);
+		sb.append(", relationship=");
+		sb.append(relationship);
 		sb.append(", required=");
 		sb.append(required);
 		sb.append(", type=");
@@ -203,13 +203,7 @@ public class ObjectFieldCacheModel
 			objectFieldImpl.setName(name);
 		}
 
-		if (pluralLabel == null) {
-			objectFieldImpl.setPluralLabel("");
-		}
-		else {
-			objectFieldImpl.setPluralLabel(pluralLabel);
-		}
-
+		objectFieldImpl.setRelationship(relationship);
 		objectFieldImpl.setRequired(required);
 
 		if (type == null) {
@@ -250,7 +244,8 @@ public class ObjectFieldCacheModel
 		indexedLanguageId = objectInput.readUTF();
 		label = objectInput.readUTF();
 		name = objectInput.readUTF();
-		pluralLabel = objectInput.readUTF();
+
+		relationship = objectInput.readBoolean();
 
 		required = objectInput.readBoolean();
 		type = objectInput.readUTF();
@@ -326,12 +321,7 @@ public class ObjectFieldCacheModel
 			objectOutput.writeUTF(name);
 		}
 
-		if (pluralLabel == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(pluralLabel);
-		}
+		objectOutput.writeBoolean(relationship);
 
 		objectOutput.writeBoolean(required);
 
@@ -360,7 +350,7 @@ public class ObjectFieldCacheModel
 	public String indexedLanguageId;
 	public String label;
 	public String name;
-	public String pluralLabel;
+	public boolean relationship;
 	public boolean required;
 	public String type;
 

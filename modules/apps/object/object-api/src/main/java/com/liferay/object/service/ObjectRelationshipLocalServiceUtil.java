@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for ObjectRelationship. This utility wraps
@@ -44,6 +45,15 @@ public class ObjectRelationshipLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectRelationshipLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectRelationship addObjectRelationship(
+			long userId, Map<java.util.Locale, String> labelMap, String name,
+			long objectDefinitionId1, long objectDefinitionId2, String type)
+		throws PortalException {
+
+		return getService().addObjectRelationship(
+			userId, labelMap, name, objectDefinitionId1, objectDefinitionId2,
+			type);
+	}
 
 	/**
 	 * Adds the object relationship to the database. Also notifies the appropriate model listeners.
@@ -298,6 +308,13 @@ public class ObjectRelationshipLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getObjectRelationships(start, end);
+	}
+
+	public static List<ObjectRelationship> getObjectRelationships(
+		long objectDefinitionId1, int start, int end) {
+
+		return getService().getObjectRelationships(
+			objectDefinitionId1, start, end);
 	}
 
 	/**

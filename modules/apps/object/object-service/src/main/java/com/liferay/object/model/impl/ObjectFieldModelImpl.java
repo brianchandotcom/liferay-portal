@@ -93,7 +93,7 @@ public class ObjectFieldModelImpl
 		{"dbTableName", Types.VARCHAR}, {"indexed", Types.BOOLEAN},
 		{"indexedAsKeyword", Types.BOOLEAN},
 		{"indexedLanguageId", Types.VARCHAR}, {"label", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"pluralLabel", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"relationship", Types.BOOLEAN},
 		{"required", Types.BOOLEAN}, {"type_", Types.VARCHAR}
 	};
 
@@ -118,13 +118,13 @@ public class ObjectFieldModelImpl
 		TABLE_COLUMNS_MAP.put("indexedLanguageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("label", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("pluralLabel", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("relationship", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("required", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,listTypeDefinitionId LONG,objectDefinitionId LONG,dbColumnName VARCHAR(75) null,dbTableName VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,label STRING null,name VARCHAR(75) null,pluralLabel STRING null,required BOOLEAN,type_ VARCHAR(75) null)";
+		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,listTypeDefinitionId LONG,objectDefinitionId LONG,dbColumnName VARCHAR(75) null,dbTableName VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,label STRING null,name VARCHAR(75) null,relationship BOOLEAN,required BOOLEAN,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectField";
 
@@ -214,7 +214,7 @@ public class ObjectFieldModelImpl
 		model.setIndexedLanguageId(soapModel.getIndexedLanguageId());
 		model.setLabel(soapModel.getLabel());
 		model.setName(soapModel.getName());
-		model.setPluralLabel(soapModel.getPluralLabel());
+		model.setRelationship(soapModel.isRelationship());
 		model.setRequired(soapModel.isRequired());
 		model.setType(soapModel.getType());
 
@@ -443,10 +443,10 @@ public class ObjectFieldModelImpl
 		attributeSetterBiConsumers.put(
 			"name", (BiConsumer<ObjectField, String>)ObjectField::setName);
 		attributeGetterFunctions.put(
-			"pluralLabel", ObjectField::getPluralLabel);
+			"relationship", ObjectField::getRelationship);
 		attributeSetterBiConsumers.put(
-			"pluralLabel",
-			(BiConsumer<ObjectField, String>)ObjectField::setPluralLabel);
+			"relationship",
+			(BiConsumer<ObjectField, Boolean>)ObjectField::setRelationship);
 		attributeGetterFunctions.put("required", ObjectField::getRequired);
 		attributeSetterBiConsumers.put(
 			"required",
@@ -923,114 +923,23 @@ public class ObjectFieldModelImpl
 
 	@JSON
 	@Override
-	public String getPluralLabel() {
-		if (_pluralLabel == null) {
-			return "";
-		}
-		else {
-			return _pluralLabel;
-		}
-	}
-
-	@Override
-	public String getPluralLabel(Locale locale) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return getPluralLabel(languageId);
-	}
-
-	@Override
-	public String getPluralLabel(Locale locale, boolean useDefault) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return getPluralLabel(languageId, useDefault);
-	}
-
-	@Override
-	public String getPluralLabel(String languageId) {
-		return LocalizationUtil.getLocalization(getPluralLabel(), languageId);
-	}
-
-	@Override
-	public String getPluralLabel(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getPluralLabel(), languageId, useDefault);
-	}
-
-	@Override
-	public String getPluralLabelCurrentLanguageId() {
-		return _pluralLabelCurrentLanguageId;
+	public boolean getRelationship() {
+		return _relationship;
 	}
 
 	@JSON
 	@Override
-	public String getPluralLabelCurrentValue() {
-		Locale locale = getLocale(_pluralLabelCurrentLanguageId);
-
-		return getPluralLabel(locale);
+	public boolean isRelationship() {
+		return _relationship;
 	}
 
 	@Override
-	public Map<Locale, String> getPluralLabelMap() {
-		return LocalizationUtil.getLocalizationMap(getPluralLabel());
-	}
-
-	@Override
-	public void setPluralLabel(String pluralLabel) {
+	public void setRelationship(boolean relationship) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_pluralLabel = pluralLabel;
-	}
-
-	@Override
-	public void setPluralLabel(String pluralLabel, Locale locale) {
-		setPluralLabel(pluralLabel, locale, LocaleUtil.getDefault());
-	}
-
-	@Override
-	public void setPluralLabel(
-		String pluralLabel, Locale locale, Locale defaultLocale) {
-
-		String languageId = LocaleUtil.toLanguageId(locale);
-		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
-
-		if (Validator.isNotNull(pluralLabel)) {
-			setPluralLabel(
-				LocalizationUtil.updateLocalization(
-					getPluralLabel(), "PluralLabel", pluralLabel, languageId,
-					defaultLanguageId));
-		}
-		else {
-			setPluralLabel(
-				LocalizationUtil.removeLocalization(
-					getPluralLabel(), "PluralLabel", languageId));
-		}
-	}
-
-	@Override
-	public void setPluralLabelCurrentLanguageId(String languageId) {
-		_pluralLabelCurrentLanguageId = languageId;
-	}
-
-	@Override
-	public void setPluralLabelMap(Map<Locale, String> pluralLabelMap) {
-		setPluralLabelMap(pluralLabelMap, LocaleUtil.getDefault());
-	}
-
-	@Override
-	public void setPluralLabelMap(
-		Map<Locale, String> pluralLabelMap, Locale defaultLocale) {
-
-		if (pluralLabelMap == null) {
-			return;
-		}
-
-		setPluralLabel(
-			LocalizationUtil.updateLocalization(
-				pluralLabelMap, getPluralLabel(), "PluralLabel",
-				LocaleUtil.toLanguageId(defaultLocale)));
+		_relationship = relationship;
 	}
 
 	@JSON
@@ -1132,17 +1041,6 @@ public class ObjectFieldModelImpl
 			}
 		}
 
-		Map<Locale, String> pluralLabelMap = getPluralLabelMap();
-
-		for (Map.Entry<Locale, String> entry : pluralLabelMap.entrySet()) {
-			Locale locale = entry.getKey();
-			String value = entry.getValue();
-
-			if (Validator.isNotNull(value)) {
-				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
-			}
-		}
-
 		return availableLanguageIds.toArray(
 			new String[availableLanguageIds.size()]);
 	}
@@ -1192,17 +1090,6 @@ public class ObjectFieldModelImpl
 		else {
 			setLabel(getLabel(defaultLocale), defaultLocale, defaultLocale);
 		}
-
-		String pluralLabel = getPluralLabel(defaultLocale);
-
-		if (Validator.isNull(pluralLabel)) {
-			setPluralLabel(
-				getPluralLabel(modelDefaultLanguageId), defaultLocale);
-		}
-		else {
-			setPluralLabel(
-				getPluralLabel(defaultLocale), defaultLocale, defaultLocale);
-		}
 	}
 
 	@Override
@@ -1241,7 +1128,7 @@ public class ObjectFieldModelImpl
 		objectFieldImpl.setIndexedLanguageId(getIndexedLanguageId());
 		objectFieldImpl.setLabel(getLabel());
 		objectFieldImpl.setName(getName());
-		objectFieldImpl.setPluralLabel(getPluralLabel());
+		objectFieldImpl.setRelationship(isRelationship());
 		objectFieldImpl.setRequired(isRequired());
 		objectFieldImpl.setType(getType());
 
@@ -1284,8 +1171,8 @@ public class ObjectFieldModelImpl
 			this.<String>getColumnOriginalValue("indexedLanguageId"));
 		objectFieldImpl.setLabel(this.<String>getColumnOriginalValue("label"));
 		objectFieldImpl.setName(this.<String>getColumnOriginalValue("name"));
-		objectFieldImpl.setPluralLabel(
-			this.<String>getColumnOriginalValue("pluralLabel"));
+		objectFieldImpl.setRelationship(
+			this.<Boolean>getColumnOriginalValue("relationship"));
 		objectFieldImpl.setRequired(
 			this.<Boolean>getColumnOriginalValue("required"));
 		objectFieldImpl.setType(this.<String>getColumnOriginalValue("type_"));
@@ -1455,13 +1342,7 @@ public class ObjectFieldModelImpl
 			objectFieldCacheModel.name = null;
 		}
 
-		objectFieldCacheModel.pluralLabel = getPluralLabel();
-
-		String pluralLabel = objectFieldCacheModel.pluralLabel;
-
-		if ((pluralLabel != null) && (pluralLabel.length() == 0)) {
-			objectFieldCacheModel.pluralLabel = null;
-		}
+		objectFieldCacheModel.relationship = isRelationship();
 
 		objectFieldCacheModel.required = isRequired();
 
@@ -1582,8 +1463,7 @@ public class ObjectFieldModelImpl
 	private String _label;
 	private String _labelCurrentLanguageId;
 	private String _name;
-	private String _pluralLabel;
-	private String _pluralLabelCurrentLanguageId;
+	private boolean _relationship;
 	private boolean _required;
 	private String _type;
 
@@ -1634,7 +1514,7 @@ public class ObjectFieldModelImpl
 		_columnOriginalValues.put("indexedLanguageId", _indexedLanguageId);
 		_columnOriginalValues.put("label", _label);
 		_columnOriginalValues.put("name", _name);
-		_columnOriginalValues.put("pluralLabel", _pluralLabel);
+		_columnOriginalValues.put("relationship", _relationship);
 		_columnOriginalValues.put("required", _required);
 		_columnOriginalValues.put("type_", _type);
 	}
@@ -1695,7 +1575,7 @@ public class ObjectFieldModelImpl
 
 		columnBitmasks.put("name", 65536L);
 
-		columnBitmasks.put("pluralLabel", 131072L);
+		columnBitmasks.put("relationship", 131072L);
 
 		columnBitmasks.put("required", 262144L);
 

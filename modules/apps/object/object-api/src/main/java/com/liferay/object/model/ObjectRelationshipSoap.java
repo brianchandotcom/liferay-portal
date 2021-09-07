@@ -41,6 +41,15 @@ public class ObjectRelationshipSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setLabel(model.getLabel());
+		soapModel.setName(model.getName());
+		soapModel.setObjectDefinitionId1(model.getObjectDefinitionId1());
+		soapModel.setObjectDefinitionId1FieldId(
+			model.getObjectDefinitionId1FieldId());
+		soapModel.setObjectDefinitionId2(model.getObjectDefinitionId2());
+		soapModel.setObjectDefinitionId2FieldId(
+			model.getObjectDefinitionId2FieldId());
+		soapModel.setType(model.getType());
 
 		return soapModel;
 	}
@@ -167,6 +176,62 @@ public class ObjectRelationshipSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getLabel() {
+		return _label;
+	}
+
+	public void setLabel(String label) {
+		_label = label;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public long getObjectDefinitionId1() {
+		return _objectDefinitionId1;
+	}
+
+	public void setObjectDefinitionId1(long objectDefinitionId1) {
+		_objectDefinitionId1 = objectDefinitionId1;
+	}
+
+	public long getObjectDefinitionId1FieldId() {
+		return _objectDefinitionId1FieldId;
+	}
+
+	public void setObjectDefinitionId1FieldId(long objectDefinitionId1FieldId) {
+		_objectDefinitionId1FieldId = objectDefinitionId1FieldId;
+	}
+
+	public long getObjectDefinitionId2() {
+		return _objectDefinitionId2;
+	}
+
+	public void setObjectDefinitionId2(long objectDefinitionId2) {
+		_objectDefinitionId2 = objectDefinitionId2;
+	}
+
+	public long getObjectDefinitionId2FieldId() {
+		return _objectDefinitionId2FieldId;
+	}
+
+	public void setObjectDefinitionId2FieldId(long objectDefinitionId2FieldId) {
+		_objectDefinitionId2FieldId = objectDefinitionId2FieldId;
+	}
+
+	public String getType() {
+		return _type;
+	}
+
+	public void setType(String type) {
+		_type = type;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _objectRelationshipId;
@@ -175,5 +240,12 @@ public class ObjectRelationshipSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _label;
+	private String _name;
+	private long _objectDefinitionId1;
+	private long _objectDefinitionId1FieldId;
+	private long _objectDefinitionId2;
+	private long _objectDefinitionId2FieldId;
+	private String _type;
 
 }

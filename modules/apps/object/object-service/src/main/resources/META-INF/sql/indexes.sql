@@ -24,4 +24,6 @@ create index IX_7B989D12 on ObjectLayoutBoxRow (uuid_[$COLUMN_LENGTH:75$], compa
 
 create index IX_94D361A6 on ObjectLayoutTab (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create index IX_DE3EBB37 on ObjectRelationship (objectDefinitionId1);
+create index IX_DE3EBEF8 on ObjectRelationship (objectDefinitionId2);
 create index IX_11DAE1F1 on ObjectRelationship (uuid_[$COLUMN_LENGTH:75$], companyId);

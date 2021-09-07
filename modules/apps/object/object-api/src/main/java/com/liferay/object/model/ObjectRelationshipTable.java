@@ -56,6 +56,28 @@ public class ObjectRelationshipTable
 	public final Column<ObjectRelationshipTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<ObjectRelationshipTable, String> label = createColumn(
+		"label", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectRelationshipTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectRelationshipTable, Long> objectDefinitionId1 =
+		createColumn(
+			"objectDefinitionId1", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
+	public final Column<ObjectRelationshipTable, Long>
+		objectDefinitionId1FieldId = createColumn(
+			"objectDefinitionId1FieldId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
+	public final Column<ObjectRelationshipTable, Long> objectDefinitionId2 =
+		createColumn(
+			"objectDefinitionId2", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
+	public final Column<ObjectRelationshipTable, Long>
+		objectDefinitionId2FieldId = createColumn(
+			"objectDefinitionId2FieldId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
+	public final Column<ObjectRelationshipTable, String> type = createColumn(
+		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private ObjectRelationshipTable() {
 		super("ObjectRelationship", ObjectRelationshipTable::new);

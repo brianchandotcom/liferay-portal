@@ -51,6 +51,15 @@ public class ObjectRelationshipWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("label", getLabel());
+		attributes.put("name", getName());
+		attributes.put("objectDefinitionId1", getObjectDefinitionId1());
+		attributes.put(
+			"objectDefinitionId1FieldId", getObjectDefinitionId1FieldId());
+		attributes.put("objectDefinitionId2", getObjectDefinitionId2());
+		attributes.put(
+			"objectDefinitionId2FieldId", getObjectDefinitionId2FieldId());
+		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -105,11 +114,60 @@ public class ObjectRelationshipWrapper
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
 		}
+
+		String label = (String)attributes.get("label");
+
+		if (label != null) {
+			setLabel(label);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		Long objectDefinitionId1 = (Long)attributes.get("objectDefinitionId1");
+
+		if (objectDefinitionId1 != null) {
+			setObjectDefinitionId1(objectDefinitionId1);
+		}
+
+		Long objectDefinitionId1FieldId = (Long)attributes.get(
+			"objectDefinitionId1FieldId");
+
+		if (objectDefinitionId1FieldId != null) {
+			setObjectDefinitionId1FieldId(objectDefinitionId1FieldId);
+		}
+
+		Long objectDefinitionId2 = (Long)attributes.get("objectDefinitionId2");
+
+		if (objectDefinitionId2 != null) {
+			setObjectDefinitionId2(objectDefinitionId2);
+		}
+
+		Long objectDefinitionId2FieldId = (Long)attributes.get(
+			"objectDefinitionId2FieldId");
+
+		if (objectDefinitionId2FieldId != null) {
+			setObjectDefinitionId2FieldId(objectDefinitionId2FieldId);
+		}
+
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
+		}
 	}
 
 	@Override
 	public ObjectRelationship cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	@Override
+	public String[] getAvailableLanguageIds() {
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -130,6 +188,87 @@ public class ObjectRelationshipWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	@Override
+	public String getDefaultLanguageId() {
+		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the label of this object relationship.
+	 *
+	 * @return the label of this object relationship
+	 */
+	@Override
+	public String getLabel() {
+		return model.getLabel();
+	}
+
+	/**
+	 * Returns the localized label of this object relationship in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized label of this object relationship
+	 */
+	@Override
+	public String getLabel(java.util.Locale locale) {
+		return model.getLabel(locale);
+	}
+
+	/**
+	 * Returns the localized label of this object relationship in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized label of this object relationship. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@Override
+	public String getLabel(java.util.Locale locale, boolean useDefault) {
+		return model.getLabel(locale, useDefault);
+	}
+
+	/**
+	 * Returns the localized label of this object relationship in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized label of this object relationship
+	 */
+	@Override
+	public String getLabel(String languageId) {
+		return model.getLabel(languageId);
+	}
+
+	/**
+	 * Returns the localized label of this object relationship in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized label of this object relationship
+	 */
+	@Override
+	public String getLabel(String languageId, boolean useDefault) {
+		return model.getLabel(languageId, useDefault);
+	}
+
+	@Override
+	public String getLabelCurrentLanguageId() {
+		return model.getLabelCurrentLanguageId();
+	}
+
+	@Override
+	public String getLabelCurrentValue() {
+		return model.getLabelCurrentValue();
+	}
+
+	/**
+	 * Returns a map of the locales and localized labels of this object relationship.
+	 *
+	 * @return the locales and localized labels of this object relationship
+	 */
+	@Override
+	public Map<java.util.Locale, String> getLabelMap() {
+		return model.getLabelMap();
 	}
 
 	/**
@@ -153,6 +292,56 @@ public class ObjectRelationshipWrapper
 	}
 
 	/**
+	 * Returns the name of this object relationship.
+	 *
+	 * @return the name of this object relationship
+	 */
+	@Override
+	public String getName() {
+		return model.getName();
+	}
+
+	/**
+	 * Returns the object definition id1 of this object relationship.
+	 *
+	 * @return the object definition id1 of this object relationship
+	 */
+	@Override
+	public long getObjectDefinitionId1() {
+		return model.getObjectDefinitionId1();
+	}
+
+	/**
+	 * Returns the object definition id1 field ID of this object relationship.
+	 *
+	 * @return the object definition id1 field ID of this object relationship
+	 */
+	@Override
+	public long getObjectDefinitionId1FieldId() {
+		return model.getObjectDefinitionId1FieldId();
+	}
+
+	/**
+	 * Returns the object definition id2 of this object relationship.
+	 *
+	 * @return the object definition id2 of this object relationship
+	 */
+	@Override
+	public long getObjectDefinitionId2() {
+		return model.getObjectDefinitionId2();
+	}
+
+	/**
+	 * Returns the object definition id2 field ID of this object relationship.
+	 *
+	 * @return the object definition id2 field ID of this object relationship
+	 */
+	@Override
+	public long getObjectDefinitionId2FieldId() {
+		return model.getObjectDefinitionId2FieldId();
+	}
+
+	/**
 	 * Returns the object relationship ID of this object relationship.
 	 *
 	 * @return the object relationship ID of this object relationship
@@ -170,6 +359,16 @@ public class ObjectRelationshipWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the type of this object relationship.
+	 *
+	 * @return the type of this object relationship
+	 */
+	@Override
+	public String getType() {
+		return model.getType();
 	}
 
 	/**
@@ -217,6 +416,21 @@ public class ObjectRelationshipWrapper
 		model.persist();
 	}
 
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.kernel.exception.LocaleException {
+
+		model.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport(
+			java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.kernel.exception.LocaleException {
+
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	/**
 	 * Sets the company ID of this object relationship.
 	 *
@@ -235,6 +449,70 @@ public class ObjectRelationshipWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the label of this object relationship.
+	 *
+	 * @param label the label of this object relationship
+	 */
+	@Override
+	public void setLabel(String label) {
+		model.setLabel(label);
+	}
+
+	/**
+	 * Sets the localized label of this object relationship in the language.
+	 *
+	 * @param label the localized label of this object relationship
+	 * @param locale the locale of the language
+	 */
+	@Override
+	public void setLabel(String label, java.util.Locale locale) {
+		model.setLabel(label, locale);
+	}
+
+	/**
+	 * Sets the localized label of this object relationship in the language, and sets the default locale.
+	 *
+	 * @param label the localized label of this object relationship
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setLabel(
+		String label, java.util.Locale locale, java.util.Locale defaultLocale) {
+
+		model.setLabel(label, locale, defaultLocale);
+	}
+
+	@Override
+	public void setLabelCurrentLanguageId(String languageId) {
+		model.setLabelCurrentLanguageId(languageId);
+	}
+
+	/**
+	 * Sets the localized labels of this object relationship from the map of locales and localized labels.
+	 *
+	 * @param labelMap the locales and localized labels of this object relationship
+	 */
+	@Override
+	public void setLabelMap(Map<java.util.Locale, String> labelMap) {
+		model.setLabelMap(labelMap);
+	}
+
+	/**
+	 * Sets the localized labels of this object relationship from the map of locales and localized labels, and sets the default locale.
+	 *
+	 * @param labelMap the locales and localized labels of this object relationship
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setLabelMap(
+		Map<java.util.Locale, String> labelMap,
+		java.util.Locale defaultLocale) {
+
+		model.setLabelMap(labelMap, defaultLocale);
 	}
 
 	/**
@@ -258,6 +536,56 @@ public class ObjectRelationshipWrapper
 	}
 
 	/**
+	 * Sets the name of this object relationship.
+	 *
+	 * @param name the name of this object relationship
+	 */
+	@Override
+	public void setName(String name) {
+		model.setName(name);
+	}
+
+	/**
+	 * Sets the object definition id1 of this object relationship.
+	 *
+	 * @param objectDefinitionId1 the object definition id1 of this object relationship
+	 */
+	@Override
+	public void setObjectDefinitionId1(long objectDefinitionId1) {
+		model.setObjectDefinitionId1(objectDefinitionId1);
+	}
+
+	/**
+	 * Sets the object definition id1 field ID of this object relationship.
+	 *
+	 * @param objectDefinitionId1FieldId the object definition id1 field ID of this object relationship
+	 */
+	@Override
+	public void setObjectDefinitionId1FieldId(long objectDefinitionId1FieldId) {
+		model.setObjectDefinitionId1FieldId(objectDefinitionId1FieldId);
+	}
+
+	/**
+	 * Sets the object definition id2 of this object relationship.
+	 *
+	 * @param objectDefinitionId2 the object definition id2 of this object relationship
+	 */
+	@Override
+	public void setObjectDefinitionId2(long objectDefinitionId2) {
+		model.setObjectDefinitionId2(objectDefinitionId2);
+	}
+
+	/**
+	 * Sets the object definition id2 field ID of this object relationship.
+	 *
+	 * @param objectDefinitionId2FieldId the object definition id2 field ID of this object relationship
+	 */
+	@Override
+	public void setObjectDefinitionId2FieldId(long objectDefinitionId2FieldId) {
+		model.setObjectDefinitionId2FieldId(objectDefinitionId2FieldId);
+	}
+
+	/**
 	 * Sets the object relationship ID of this object relationship.
 	 *
 	 * @param objectRelationshipId the object relationship ID of this object relationship
@@ -275,6 +603,16 @@ public class ObjectRelationshipWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the type of this object relationship.
+	 *
+	 * @param type the type of this object relationship
+	 */
+	@Override
+	public void setType(String type) {
+		model.setType(type);
 	}
 
 	/**

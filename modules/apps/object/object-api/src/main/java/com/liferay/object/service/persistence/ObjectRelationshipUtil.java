@@ -478,6 +478,358 @@ public class ObjectRelationshipUtil {
 	}
 
 	/**
+	 * Returns all the object relationships where objectDefinitionId1 = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @return the matching object relationships
+	 */
+	public static List<ObjectRelationship> findByObjectDefinitionId1(
+		long objectDefinitionId1) {
+
+		return getPersistence().findByObjectDefinitionId1(objectDefinitionId1);
+	}
+
+	/**
+	 * Returns a range of all the object relationships where objectDefinitionId1 = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param start the lower bound of the range of object relationships
+	 * @param end the upper bound of the range of object relationships (not inclusive)
+	 * @return the range of matching object relationships
+	 */
+	public static List<ObjectRelationship> findByObjectDefinitionId1(
+		long objectDefinitionId1, int start, int end) {
+
+		return getPersistence().findByObjectDefinitionId1(
+			objectDefinitionId1, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param start the lower bound of the range of object relationships
+	 * @param end the upper bound of the range of object relationships (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object relationships
+	 */
+	public static List<ObjectRelationship> findByObjectDefinitionId1(
+		long objectDefinitionId1, int start, int end,
+		OrderByComparator<ObjectRelationship> orderByComparator) {
+
+		return getPersistence().findByObjectDefinitionId1(
+			objectDefinitionId1, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param start the lower bound of the range of object relationships
+	 * @param end the upper bound of the range of object relationships (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object relationships
+	 */
+	public static List<ObjectRelationship> findByObjectDefinitionId1(
+		long objectDefinitionId1, int start, int end,
+		OrderByComparator<ObjectRelationship> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByObjectDefinitionId1(
+			objectDefinitionId1, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first object relationship in the ordered set where objectDefinitionId1 = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship findByObjectDefinitionId1_First(
+			long objectDefinitionId1,
+			OrderByComparator<ObjectRelationship> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
+
+		return getPersistence().findByObjectDefinitionId1_First(
+			objectDefinitionId1, orderByComparator);
+	}
+
+	/**
+	 * Returns the first object relationship in the ordered set where objectDefinitionId1 = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship fetchByObjectDefinitionId1_First(
+		long objectDefinitionId1,
+		OrderByComparator<ObjectRelationship> orderByComparator) {
+
+		return getPersistence().fetchByObjectDefinitionId1_First(
+			objectDefinitionId1, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship findByObjectDefinitionId1_Last(
+			long objectDefinitionId1,
+			OrderByComparator<ObjectRelationship> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
+
+		return getPersistence().findByObjectDefinitionId1_Last(
+			objectDefinitionId1, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship fetchByObjectDefinitionId1_Last(
+		long objectDefinitionId1,
+		OrderByComparator<ObjectRelationship> orderByComparator) {
+
+		return getPersistence().fetchByObjectDefinitionId1_Last(
+			objectDefinitionId1, orderByComparator);
+	}
+
+	/**
+	 * Returns the object relationships before and after the current object relationship in the ordered set where objectDefinitionId1 = &#63;.
+	 *
+	 * @param objectRelationshipId the primary key of the current object relationship
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object relationship
+	 * @throws NoSuchObjectRelationshipException if a object relationship with the primary key could not be found
+	 */
+	public static ObjectRelationship[] findByObjectDefinitionId1_PrevAndNext(
+			long objectRelationshipId, long objectDefinitionId1,
+			OrderByComparator<ObjectRelationship> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
+
+		return getPersistence().findByObjectDefinitionId1_PrevAndNext(
+			objectRelationshipId, objectDefinitionId1, orderByComparator);
+	}
+
+	/**
+	 * Removes all the object relationships where objectDefinitionId1 = &#63; from the database.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 */
+	public static void removeByObjectDefinitionId1(long objectDefinitionId1) {
+		getPersistence().removeByObjectDefinitionId1(objectDefinitionId1);
+	}
+
+	/**
+	 * Returns the number of object relationships where objectDefinitionId1 = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @return the number of matching object relationships
+	 */
+	public static int countByObjectDefinitionId1(long objectDefinitionId1) {
+		return getPersistence().countByObjectDefinitionId1(objectDefinitionId1);
+	}
+
+	/**
+	 * Returns all the object relationships where objectDefinitionId2 = &#63;.
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @return the matching object relationships
+	 */
+	public static List<ObjectRelationship> findByObjectDefinitionId2(
+		long objectDefinitionId2) {
+
+		return getPersistence().findByObjectDefinitionId2(objectDefinitionId2);
+	}
+
+	/**
+	 * Returns a range of all the object relationships where objectDefinitionId2 = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param start the lower bound of the range of object relationships
+	 * @param end the upper bound of the range of object relationships (not inclusive)
+	 * @return the range of matching object relationships
+	 */
+	public static List<ObjectRelationship> findByObjectDefinitionId2(
+		long objectDefinitionId2, int start, int end) {
+
+		return getPersistence().findByObjectDefinitionId2(
+			objectDefinitionId2, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object relationships where objectDefinitionId2 = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param start the lower bound of the range of object relationships
+	 * @param end the upper bound of the range of object relationships (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object relationships
+	 */
+	public static List<ObjectRelationship> findByObjectDefinitionId2(
+		long objectDefinitionId2, int start, int end,
+		OrderByComparator<ObjectRelationship> orderByComparator) {
+
+		return getPersistence().findByObjectDefinitionId2(
+			objectDefinitionId2, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the object relationships where objectDefinitionId2 = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param start the lower bound of the range of object relationships
+	 * @param end the upper bound of the range of object relationships (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object relationships
+	 */
+	public static List<ObjectRelationship> findByObjectDefinitionId2(
+		long objectDefinitionId2, int start, int end,
+		OrderByComparator<ObjectRelationship> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByObjectDefinitionId2(
+			objectDefinitionId2, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first object relationship in the ordered set where objectDefinitionId2 = &#63;.
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship findByObjectDefinitionId2_First(
+			long objectDefinitionId2,
+			OrderByComparator<ObjectRelationship> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
+
+		return getPersistence().findByObjectDefinitionId2_First(
+			objectDefinitionId2, orderByComparator);
+	}
+
+	/**
+	 * Returns the first object relationship in the ordered set where objectDefinitionId2 = &#63;.
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship fetchByObjectDefinitionId2_First(
+		long objectDefinitionId2,
+		OrderByComparator<ObjectRelationship> orderByComparator) {
+
+		return getPersistence().fetchByObjectDefinitionId2_First(
+			objectDefinitionId2, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object relationship in the ordered set where objectDefinitionId2 = &#63;.
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship findByObjectDefinitionId2_Last(
+			long objectDefinitionId2,
+			OrderByComparator<ObjectRelationship> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
+
+		return getPersistence().findByObjectDefinitionId2_Last(
+			objectDefinitionId2, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object relationship in the ordered set where objectDefinitionId2 = &#63;.
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship fetchByObjectDefinitionId2_Last(
+		long objectDefinitionId2,
+		OrderByComparator<ObjectRelationship> orderByComparator) {
+
+		return getPersistence().fetchByObjectDefinitionId2_Last(
+			objectDefinitionId2, orderByComparator);
+	}
+
+	/**
+	 * Returns the object relationships before and after the current object relationship in the ordered set where objectDefinitionId2 = &#63;.
+	 *
+	 * @param objectRelationshipId the primary key of the current object relationship
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object relationship
+	 * @throws NoSuchObjectRelationshipException if a object relationship with the primary key could not be found
+	 */
+	public static ObjectRelationship[] findByObjectDefinitionId2_PrevAndNext(
+			long objectRelationshipId, long objectDefinitionId2,
+			OrderByComparator<ObjectRelationship> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
+
+		return getPersistence().findByObjectDefinitionId2_PrevAndNext(
+			objectRelationshipId, objectDefinitionId2, orderByComparator);
+	}
+
+	/**
+	 * Removes all the object relationships where objectDefinitionId2 = &#63; from the database.
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 */
+	public static void removeByObjectDefinitionId2(long objectDefinitionId2) {
+		getPersistence().removeByObjectDefinitionId2(objectDefinitionId2);
+	}
+
+	/**
+	 * Returns the number of object relationships where objectDefinitionId2 = &#63;.
+	 *
+	 * @param objectDefinitionId2 the object definition id2
+	 * @return the number of matching object relationships
+	 */
+	public static int countByObjectDefinitionId2(long objectDefinitionId2) {
+		return getPersistence().countByObjectDefinitionId2(objectDefinitionId2);
+	}
+
+	/**
 	 * Caches the object relationship in the entity cache if it is enabled.
 	 *
 	 * @param objectRelationship the object relationship

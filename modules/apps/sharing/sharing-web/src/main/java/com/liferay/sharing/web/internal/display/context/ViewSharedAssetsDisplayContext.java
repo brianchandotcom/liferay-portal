@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -274,7 +275,7 @@ public class ViewSharedAssetsDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		return sharingEntryInterpreter.getTitle(sharingEntry);
+		return HtmlUtil.escape(sharingEntryInterpreter.getTitle(sharingEntry));
 	}
 
 	public boolean isVisible(SharingEntry sharingEntry) throws PortalException {

@@ -68,4 +68,18 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that an Account Admin can edit an account he is assigned to."
+	@priority = "4"
+	test AccountAdminCanEditAccount {
+		Accounts.editPG(
+			accountName = "Account Name",
+			accountNameEdit = "This is a new update");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		LexiconEntry.viewEntryName(rowEntry = "This is a new update");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Account Name");
+	}
+
 }

@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
+import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
@@ -84,6 +85,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -91,6 +93,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.servlet.ServletContext;
 
@@ -809,12 +812,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Filter filter = taxonomyCategoryResource.toFilter(
 			StringBundler.concat("name eq '", taxonomyCategory.getName(), "'"));
 
-		TaxonomyCategory existingTaxonomyCategory =
+		Page<TaxonomyCategory> taxonomyCategoryPage =
 			taxonomyCategoryResource.getTaxonomyCategoryTaxonomyCategoriesPage(
-				parentCategoryId, "", filter, null, null
-			).getItems(
-			).stream(
-			).findFirst(
+				parentCategoryId, "", filter, null, null);
+
+		Collection<TaxonomyCategory> taxonomyCategoryCollection =
+			taxonomyCategoryPage.getItems();
+
+		Stream<TaxonomyCategory> taxonomyCategoryStream =
+			taxonomyCategoryCollection.stream();
+
+		TaxonomyCategory existingTaxonomyCategory =
+			taxonomyCategoryStream.findFirst(
 			).orElse(
 				null
 			);
@@ -874,12 +883,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 				StringBundler.concat(
 					"name eq '", taxonomyVocabulary.getName(), "'"));
 
-			TaxonomyVocabulary existingTaxonomyVocabulary =
+			Page<TaxonomyVocabulary> taxonomyVocabularyPage =
 				taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-					groupId, "", filter, null, null
-				).getItems(
-				).stream(
-				).findFirst(
+					groupId, "", filter, null, null);
+
+			Collection<TaxonomyVocabulary> taxonomyVocabularyCollection =
+				taxonomyVocabularyPage.getItems();
+
+			Stream<TaxonomyVocabulary> taxonomyVocabularyStream =
+				taxonomyVocabularyCollection.stream();
+
+			TaxonomyVocabulary existingTaxonomyVocabulary =
+				taxonomyVocabularyStream.findFirst(
 				).orElse(
 					null
 				);
@@ -932,16 +947,22 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Filter filter = taxonomyCategoryResource.toFilter(
 			StringBundler.concat("name eq '", taxonomyCategory.getName(), "'"));
 
-		TaxonomyCategory existingTaxonomyCategory =
+		Page<TaxonomyCategory> taxonomyCategoryPage =
 			taxonomyCategoryResource.
 				getTaxonomyVocabularyTaxonomyCategoriesPage(
-					vocabularyId, "", filter, null, null
-				).getItems(
-				).stream(
-				).findFirst(
-				).orElse(
-					null
-				);
+					vocabularyId, "", filter, null, null);
+
+		Collection<TaxonomyCategory> taxonomyCategoryCollection =
+			taxonomyCategoryPage.getItems();
+
+		Stream<TaxonomyCategory> taxonomyCategoryStream =
+			taxonomyCategoryCollection.stream();
+
+		TaxonomyCategory existingTaxonomyCategory =
+			taxonomyCategoryStream.findFirst(
+			).orElse(
+				null
+			);
 
 		if (existingTaxonomyCategory == null) {
 			taxonomyCategory =

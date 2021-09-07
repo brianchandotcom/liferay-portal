@@ -120,12 +120,9 @@ public class ObjectRelationshipLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		return _objectFieldLocalService.addCustomObjectField(
-			userId, 0, objectDefinitionId, false, false, null,
-			objectDefinition.getLabelMap(),
-			StringBundler.concat(
-				"rel_", name, "_", objectDefinition.getPKObjectFieldName()),
-			false, "Long");
+		return _objectFieldLocalService.addRelationshipObjectField(
+			userId, null, objectDefinitionId,
+			objectDefinition.getLabelMap(), name);
 	}
 
 	private void _validate(String name, String type) throws PortalException {

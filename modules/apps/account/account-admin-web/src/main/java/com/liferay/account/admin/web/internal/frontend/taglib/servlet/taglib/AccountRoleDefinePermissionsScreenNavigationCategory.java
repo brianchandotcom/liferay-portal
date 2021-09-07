@@ -34,20 +34,15 @@ public class AccountRoleDefinePermissionsScreenNavigationCategory
 	extends BaseAccountRoleDefinePermissionsScreenNavigationCategory {
 
 	@Override
-	protected String doGetCategoryKey() {
+	public String getCategoryKey() {
 		return AccountScreenNavigationEntryConstants.
 			CATEGORY_KEY_DEFINE_PERMISSIONS;
 	}
 
 	@Override
-	protected String doGetEntryKey() {
+	public String getEntryKey() {
 		return AccountScreenNavigationEntryConstants.
 			ENTRY_KEY_DEFINE_PERMISSIONS;
-	}
-
-	@Override
-	protected String doGetLabelLanguageKey() {
-		return "define-permissions";
 	}
 
 	@Override

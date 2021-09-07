@@ -34,20 +34,15 @@ public class AccountRoleDefineGroupScopePermissionsScreenNavigationCategory
 	extends BaseAccountRoleDefinePermissionsScreenNavigationCategory {
 
 	@Override
-	protected String doGetCategoryKey() {
+	public String getCategoryKey() {
 		return AccountScreenNavigationEntryConstants.
 			CATEGORY_KEY_DEFINE_GROUP_SCOPE_PERMISSIONS;
 	}
 
 	@Override
-	protected String doGetEntryKey() {
+	public String getEntryKey() {
 		return AccountScreenNavigationEntryConstants.
 			ENTRY_KEY_DEFINE_GROUP_SCOPE_PERMISSIONS;
-	}
-
-	@Override
-	protected String doGetLabelLanguageKey() {
-		return "define-group-scope-permissions";
 	}
 
 	@Override

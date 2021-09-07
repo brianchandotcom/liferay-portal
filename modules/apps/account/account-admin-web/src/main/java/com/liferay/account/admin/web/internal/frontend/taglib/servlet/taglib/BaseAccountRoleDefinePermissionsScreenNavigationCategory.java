@@ -55,19 +55,8 @@ public abstract class BaseAccountRoleDefinePermissionsScreenNavigationCategory
 	implements ScreenNavigationCategory, ScreenNavigationEntry<AccountRole> {
 
 	@Override
-	public String getCategoryKey() {
-		return doGetCategoryKey();
-	}
-
-	@Override
-	public String getEntryKey() {
-		return doGetEntryKey();
-	}
-
-	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
-			getResourceBundle(locale), doGetLabelLanguageKey());
+		return LanguageUtil.get(getResourceBundle(locale), getCategoryKey());
 	}
 
 	@Override
@@ -122,12 +111,6 @@ public abstract class BaseAccountRoleDefinePermissionsScreenNavigationCategory
 			servletContext, dynamicServletRequest, httpServletResponse,
 			"/edit_role_permissions.jsp");
 	}
-
-	protected abstract String doGetCategoryKey();
-
-	protected abstract String doGetEntryKey();
-
-	protected abstract String doGetLabelLanguageKey();
 
 	protected abstract String doGetTabs1();
 
@@ -189,7 +172,7 @@ public abstract class BaseAccountRoleDefinePermissionsScreenNavigationCategory
 			"accountRoleId",
 			ParamUtil.getString(httpServletRequest, "accountRoleId")
 		).setParameter(
-			"screenNavigationCategoryKey", doGetCategoryKey()
+			"screenNavigationCategoryKey", getCategoryKey()
 		).buildString();
 	}
 

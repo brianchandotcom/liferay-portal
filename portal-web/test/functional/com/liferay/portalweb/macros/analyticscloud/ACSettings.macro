@@ -716,6 +716,12 @@ definition {
 		AssertElementNotPresent(locator1 = "ACSettings#INVITE_USERS_BUTTON");
 	}
 
+	macro viewCurrentPlan {
+		AssertVisible(
+			key_planName = "${planName}",
+			locator1 = "ACUsage#CURRENT_PLAN");
+	}
+
 	macro viewDeleteNotAvailable {
 		AssertElementNotPresent(locator1 = "ACSettings#DELETE_USER");
 	}

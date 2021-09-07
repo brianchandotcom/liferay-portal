@@ -2149,6 +2149,8 @@ definition {
 				userScreenName = "usersn${accountUser}");
 		}
 
+		Accounts.openAccountsAdmin();
+
 		Accounts.gotoEdit(accountName = "Person Account");
 
 		for (var navTab : list "Details,Organizations,Roles") {

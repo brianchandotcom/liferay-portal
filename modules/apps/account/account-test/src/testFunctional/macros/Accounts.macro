@@ -908,11 +908,6 @@ definition {
 	}
 
 	macro gotoEdit {
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Applications",
-			portlet = "Accounts");
-
 		Search.searchCP(searchTerm = "${accountName}");
 
 		LexiconEntry.gotoEntryMenuItem(

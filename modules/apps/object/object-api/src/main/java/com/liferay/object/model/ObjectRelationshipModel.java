@@ -209,6 +209,21 @@ public interface ObjectRelationshipModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the db table name of this object relationship.
+	 *
+	 * @return the db table name of this object relationship
+	 */
+	@AutoEscape
+	public String getDBTableName();
+
+	/**
+	 * Sets the db table name of this object relationship.
+	 *
+	 * @param DBTableName the db table name of this object relationship
+	 */
+	public void setDBTableName(String DBTableName);
+
+	/**
 	 * Returns the label of this object relationship.
 	 *
 	 * @return the label of this object relationship

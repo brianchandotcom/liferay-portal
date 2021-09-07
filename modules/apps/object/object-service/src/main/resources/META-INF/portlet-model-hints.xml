@@ -143,6 +143,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="DBTableName" type="String" />
 		<field localized="true" name="label" type="String" />
 		<field name="name" type="String" />
 		<field name="objectDefinitionId1" type="long" />

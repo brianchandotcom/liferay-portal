@@ -142,6 +142,7 @@ create table ObjectRelationship (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	DBTableName VARCHAR(75) null,
 	label STRING null,
 	name VARCHAR(75) null,
 	objectDefinitionId1 LONG,

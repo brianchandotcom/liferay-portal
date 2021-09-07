@@ -89,8 +89,8 @@ public class ObjectRelationshipModelImpl
 		{"objectRelationshipId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"label", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"objectDefinitionId1", Types.BIGINT},
+		{"DBTableName", Types.VARCHAR}, {"label", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"objectDefinitionId1", Types.BIGINT},
 		{"objectDefinitionId2", Types.BIGINT}, {"objectFieldId1", Types.BIGINT},
 		{"objectFieldId2", Types.BIGINT}, {"type_", Types.VARCHAR}
 	};
@@ -107,6 +107,7 @@ public class ObjectRelationshipModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("DBTableName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("label", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("objectDefinitionId1", Types.BIGINT);
@@ -117,7 +118,7 @@ public class ObjectRelationshipModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectRelationship (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectRelationshipId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,label STRING null,name VARCHAR(75) null,objectDefinitionId1 LONG,objectDefinitionId2 LONG,objectFieldId1 LONG,objectFieldId2 LONG,type_ VARCHAR(75) null)";
+		"create table ObjectRelationship (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectRelationshipId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,DBTableName VARCHAR(75) null,label STRING null,name VARCHAR(75) null,objectDefinitionId1 LONG,objectDefinitionId2 LONG,objectFieldId1 LONG,objectFieldId2 LONG,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectRelationship";
 
@@ -201,6 +202,7 @@ public class ObjectRelationshipModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setDBTableName(soapModel.getDBTableName());
 		model.setLabel(soapModel.getLabel());
 		model.setName(soapModel.getName());
 		model.setObjectDefinitionId1(soapModel.getObjectDefinitionId1());
@@ -411,6 +413,12 @@ public class ObjectRelationshipModelImpl
 			"modifiedDate",
 			(BiConsumer<ObjectRelationship, Date>)
 				ObjectRelationship::setModifiedDate);
+		attributeGetterFunctions.put(
+			"DBTableName", ObjectRelationship::getDBTableName);
+		attributeSetterBiConsumers.put(
+			"DBTableName",
+			(BiConsumer<ObjectRelationship, String>)
+				ObjectRelationship::setDBTableName);
 		attributeGetterFunctions.put("label", ObjectRelationship::getLabel);
 		attributeSetterBiConsumers.put(
 			"label",
@@ -626,6 +634,26 @@ public class ObjectRelationshipModelImpl
 		}
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public String getDBTableName() {
+		if (_DBTableName == null) {
+			return "";
+		}
+		else {
+			return _DBTableName;
+		}
+	}
+
+	@Override
+	public void setDBTableName(String DBTableName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_DBTableName = DBTableName;
 	}
 
 	@JSON
@@ -996,6 +1024,7 @@ public class ObjectRelationshipModelImpl
 		objectRelationshipImpl.setUserName(getUserName());
 		objectRelationshipImpl.setCreateDate(getCreateDate());
 		objectRelationshipImpl.setModifiedDate(getModifiedDate());
+		objectRelationshipImpl.setDBTableName(getDBTableName());
 		objectRelationshipImpl.setLabel(getLabel());
 		objectRelationshipImpl.setName(getName());
 		objectRelationshipImpl.setObjectDefinitionId1(getObjectDefinitionId1());
@@ -1030,6 +1059,8 @@ public class ObjectRelationshipModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		objectRelationshipImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		objectRelationshipImpl.setDBTableName(
+			this.<String>getColumnOriginalValue("DBTableName"));
 		objectRelationshipImpl.setLabel(
 			this.<String>getColumnOriginalValue("label"));
 		objectRelationshipImpl.setName(
@@ -1163,6 +1194,14 @@ public class ObjectRelationshipModelImpl
 		}
 		else {
 			objectRelationshipCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		objectRelationshipCacheModel.DBTableName = getDBTableName();
+
+		String DBTableName = objectRelationshipCacheModel.DBTableName;
+
+		if ((DBTableName != null) && (DBTableName.length() == 0)) {
+			objectRelationshipCacheModel.DBTableName = null;
 		}
 
 		objectRelationshipCacheModel.label = getLabel();
@@ -1299,6 +1338,7 @@ public class ObjectRelationshipModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _DBTableName;
 	private String _label;
 	private String _labelCurrentLanguageId;
 	private String _name;
@@ -1346,6 +1386,7 @@ public class ObjectRelationshipModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("DBTableName", _DBTableName);
 		_columnOriginalValues.put("label", _label);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("objectDefinitionId1", _objectDefinitionId1);
@@ -1393,19 +1434,21 @@ public class ObjectRelationshipModelImpl
 
 		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("label", 256L);
+		columnBitmasks.put("DBTableName", 256L);
 
-		columnBitmasks.put("name", 512L);
+		columnBitmasks.put("label", 512L);
 
-		columnBitmasks.put("objectDefinitionId1", 1024L);
+		columnBitmasks.put("name", 1024L);
 
-		columnBitmasks.put("objectDefinitionId2", 2048L);
+		columnBitmasks.put("objectDefinitionId1", 2048L);
 
-		columnBitmasks.put("objectFieldId1", 4096L);
+		columnBitmasks.put("objectDefinitionId2", 4096L);
 
-		columnBitmasks.put("objectFieldId2", 8192L);
+		columnBitmasks.put("objectFieldId1", 8192L);
 
-		columnBitmasks.put("type_", 16384L);
+		columnBitmasks.put("objectFieldId2", 16384L);
+
+		columnBitmasks.put("type_", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

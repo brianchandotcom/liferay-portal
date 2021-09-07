@@ -56,6 +56,9 @@ public class ObjectRelationshipTable
 	public final Column<ObjectRelationshipTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<ObjectRelationshipTable, String> DBTableName =
+		createColumn(
+			"DBTableName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectRelationshipTable, String> label = createColumn(
 		"label", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectRelationshipTable, String> name = createColumn(

@@ -65,6 +65,16 @@ public class ObjectFieldLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectField addRelationshipObjectField(
+			long userId, String dbTableName, long objectDefinitionId,
+			java.util.Map<java.util.Locale, String> labelMap, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFieldLocalService.addRelationshipObjectField(
+			userId, dbTableName, objectDefinitionId, labelMap, name);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectField addSystemObjectField(
 			long userId, long objectDefinitionId, String dbColumnName,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,

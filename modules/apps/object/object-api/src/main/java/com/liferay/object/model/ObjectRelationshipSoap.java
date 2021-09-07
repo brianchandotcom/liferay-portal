@@ -41,6 +41,7 @@ public class ObjectRelationshipSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setDBTableName(model.getDBTableName());
 		soapModel.setLabel(model.getLabel());
 		soapModel.setName(model.getName());
 		soapModel.setObjectDefinitionId1(model.getObjectDefinitionId1());
@@ -174,6 +175,14 @@ public class ObjectRelationshipSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getDBTableName() {
+		return _DBTableName;
+	}
+
+	public void setDBTableName(String DBTableName) {
+		_DBTableName = DBTableName;
+	}
+
 	public String getLabel() {
 		return _label;
 	}
@@ -238,6 +247,7 @@ public class ObjectRelationshipSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _DBTableName;
 	private String _label;
 	private String _name;
 	private long _objectDefinitionId1;

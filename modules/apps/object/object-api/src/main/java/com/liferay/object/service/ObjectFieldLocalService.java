@@ -85,6 +85,11 @@ public interface ObjectFieldLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectField addObjectField(ObjectField objectField);
 
+	public ObjectField addRelationshipObjectField(
+			long userId, String dbTableName, long objectDefinitionId,
+			Map<Locale, String> labelMap, String name)
+		throws PortalException;
+
 	public ObjectField addSystemObjectField(
 			long userId, long objectDefinitionId, String dbColumnName,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,

@@ -260,11 +260,13 @@ definition {
 			itemName = "${itemName}",
 			locator1 = "ACIndividualsDashboard#BASE_RESULTS_TIMELINE_ITEM");
 
-		AssertVisible(
-			index = "${index}",
-			itemName = "${itemName}",
-			locator1 = "ACIndividualsDashboard#BASE_RESULTS_TIMELINE_ITEM_SUBTITLE",
-			subtitle = "${visits}");
+		if (isSet(visits)) {
+			AssertVisible(
+				index = "${index}",
+				itemName = "${itemName}",
+				locator1 = "ACIndividualsDashboard#BASE_RESULTS_TIMELINE_ITEM_SUBTITLE",
+				subtitle = "${visits}");
+		}
 	}
 
 	macro viewTotalActivities {

@@ -2960,6 +2960,10 @@ definition {
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 	}
 
+	macro openPreviewMode {
+		Click(locator1 = "PageEditor#PREVIEW");
+	}
+
 	macro prioritizeExperience {
 		var key_experienceName = "${experienceName}";
 

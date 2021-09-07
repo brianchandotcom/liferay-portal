@@ -96,15 +96,23 @@ definition {
 		task ("View Properties panel and assert Language is Freemarker") {
 			Navigator.gotoSidebarTab(tabName = "Properties");
 			
-			for (var fieldName : list "Language,Template Key,URL,WebDAV URL,Description") {
-				AssertElementPresent(
-					key_fieldName = "${fieldName}",
-					locator1 = "DDMEditTemplate#SCRIPT_FIELD_PROPERTIES");
+			AssertSelectedLabel(
+				key_fieldLabel = "Language",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "FreeMarker (.ftl)");
+
+			for (var fieldName : list "Template Key,URL,WebDAV URL") {
+				AssertVisible(
+					key_text = "${fieldName}",
+					locator1 = "TextInput#ANY");
 			}
-			
-			AssertVisible(
-				value1 = "ftl",
-				locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT");
+
+			AssertVisible(locator1 = "TextArea#DESCRIPTION");
+
+			AssertSelectedLabel(
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "smallImageSource",
+				value1 = "No Image");
 		}
 	}
 

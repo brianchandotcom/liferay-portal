@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Cloud AWS Lambda Commerce Order Demo
+Bundle-SymbolicName: com.liferay.cloud.aws.lambda.commerce.order.demo
+Bundle-Version: 1.0.0

@@ -51,7 +51,7 @@ definition {
 		VisualizeObjectCollectionDisplay.addDisplayPageTemplate(
 			contentType = "Object",
 			displayPageName = "Blank Display Page",
-			subtype = "C_CustomObject");
+			subtype = "Custom Object");
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
@@ -84,7 +84,7 @@ definition {
 
 		VisualizeObjectCollectionDisplay.openObjectCollectionProvider();
 
-		VisualizeObjectCollectionDisplay.viewObjectCollectionProvider(objectName = "CustomObject");
+		VisualizeObjectCollectionDisplay.viewObjectCollectionProvider(labelName = "Custom Object");
 	}
 
 	@description = "LPS-133865 - Verify if the Object entries are rendered inside the Collection Display fragment"

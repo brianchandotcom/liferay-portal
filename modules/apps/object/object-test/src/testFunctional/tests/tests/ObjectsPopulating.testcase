@@ -52,11 +52,11 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "C_CustomObject");
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
 
 		Form.gotoAddField(fieldType = "Date");
 
-		PopulateObjectFormsConfiguration.mapFormField(fieldName = "dueDate");
+		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Not Required Field");
 
 		Form.save();
 

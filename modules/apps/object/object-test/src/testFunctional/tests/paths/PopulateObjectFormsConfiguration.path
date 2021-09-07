@@ -82,7 +82,7 @@
 	</tr>
 	<tr>
 		<td>UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_PANEL_BODY</td>
-		<td>//strong[@class='text-capitalize' and contains(text(),'${key_fieldType}')]/following-sibling::ol//li[contains(text(),'${key_fieldName}')]</td>
+		<td>//strong[@class='text-capitalize' and contains(text(),'${key_fieldType}')]/following-sibling::ol//li[contains(text(),'${key_fieldLabelName}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -107,7 +107,7 @@
 	</tr>
 	<tr>
 		<td>MAP_OBJECT_FIELD</td>
-		<td>//button[@label='${key_fieldName}']</td>
+		<td>//button[@label='${key_fieldLabelName}']</td>
 		<td></td>
 	</tr>
 	<tr>

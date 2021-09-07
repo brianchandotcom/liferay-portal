@@ -49,7 +49,7 @@ definition {
 
 	macro viewObjectCollectionProvider {
 		AssertElementPresent(
-			key_objectName = "${objectName}",
+			key_labelName = "${labelName}",
 			locator1 = "VisualizeObjectCollectionDisplay#VIEW_OBJECT_COLLECTION_DISPLAY");
 	}
 

@@ -37,11 +37,11 @@ definition {
 		VisualizeObjectDisplayPageTemplate.createObjectPageTemplate(
 			contentType = "Object",
 			pageTemplateName = "Object Display Page Template",
-			subtype = "C_CustomObject");
+			subtype = "Custom Object");
 
 		VisualizeObjectDisplayPageTemplate.validateObjectContentType(contentType = "Object");
 
-		VisualizeObjectDisplayPageTemplate.validateObjectSubtype(subtype = "C_CustomObject");
+		VisualizeObjectDisplayPageTemplate.validateObjectSubtype(subtype = "Custom Object");
 	}
 
 	@description = "LPS-137105 - Verify if the Object entries are rendered when previewing it"

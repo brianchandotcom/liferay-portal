@@ -34,7 +34,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1030,13 +1032,28 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 		protected final long ctCollectionId;
 
 		private void _visit(BinaryExpression binaryExpression) {
-			Expression leftExpression = binaryExpression.getLeftExpression();
+			Deque<Expression> stack = new LinkedList<Expression>() {
+				{
+					offer(null);
+				}
+			};
 
-			leftExpression.accept(this);
+			Expression expression = binaryExpression;
 
-			Expression rightExpression = binaryExpression.getRightExpression();
+			while (expression != null) {
+				if (expression instanceof BinaryExpression) {
+					binaryExpression = (BinaryExpression)expression;
 
-			rightExpression.accept(this);
+					stack.push(binaryExpression.getRightExpression());
+
+					expression = binaryExpression.getLeftExpression();
+				}
+				else {
+					expression.accept(this);
+
+					expression = stack.pop();
+				}
+			}
 		}
 
 		private Expression _visit(Expression whereExpression) {

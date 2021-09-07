@@ -106,14 +106,16 @@ definition {
 		ACSettings.goToUsage();
 
 		ACSettings.assertAddonsDetails(
-			key_planLimit = "5,000",
-			key_planName = "Individuals",
-			key_planValue = "500 USD");
+			addOnItem = "Individuals",
+			annualPrice = "500 USD",
+			limit = "5,000",
+			time = "2X");
 
 		ACSettings.assertAddonsDetails(
-			key_planLimit = "5,000,000",
-			key_planName = "Page Views",
-			key_planValue = "250 USD");
+			addOnItem = "Page Views",
+			annualPrice = "250 USD",
+			limit = "5,000,000",
+			time = "3X");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8148 | Test Summary: Individuals usage update in real time"

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v7_1_x;
 
+import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
@@ -65,6 +66,8 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeProcesses.put(
 			new Version(2, 0, 8),
 			new UpgradeCalendarClassNameIdsPortletPreferences());
+
+		upgradeProcesses.put(new Version(2, 0, 9), new DummyUpgradeProcess());
 	}
 
 }

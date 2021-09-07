@@ -24,9 +24,12 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 import com.liferay.template.web.internal.info.item.field.reader.TemplateInfoItemFieldReader;
 
@@ -100,10 +103,21 @@ public class TemplateInfoItemFieldSetProviderImpl
 		}
 
 		try {
+			long groupId = serviceContext.getScopeGroupId();
+
+			if (!_stagingGroupHelper.isStagedPortlet(
+					groupId, TemplatePortletKeys.TEMPLATE)) {
+
+				Group liveGroup = _stagingGroupHelper.fetchLiveGroup(groupId);
+
+				if (liveGroup != null) {
+					groupId = liveGroup.getGroupId();
+				}
+			}
+
 			return _ddmTemplateLocalService.getTemplates(
 				serviceContext.getCompanyId(),
-				_portal.getCurrentAndAncestorSiteGroupIds(
-					serviceContext.getScopeGroupId()),
+				_portal.getCurrentAndAncestorSiteGroupIds(groupId),
 				new long[] {_portal.getClassNameId(className)},
 				new long[] {classPK},
 				_portal.getClassNameId(InfoItemFormProvider.class.getName()),
@@ -126,5 +140,8 @@ public class TemplateInfoItemFieldSetProviderImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private StagingGroupHelper _stagingGroupHelper;
 
 }

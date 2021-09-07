@@ -28,6 +28,8 @@ public class ObjectDefinitionsScreenNavigationEntryConstants {
 
 	public static final String CATEGORY_KEY_PICKLISTS = "picklists";
 
+	public static final String CATEGORY_KEY_RELATIONSHIPS = "relationships";
+
 	public static final String ENTRY_KEY_DETAILS = "details";
 
 	public static final String ENTRY_KEY_FIELDS = "fields";
@@ -35,6 +37,8 @@ public class ObjectDefinitionsScreenNavigationEntryConstants {
 	public static final String ENTRY_KEY_OBJECTS = "objects";
 
 	public static final String ENTRY_KEY_PICKLISTS = "picklists";
+
+	public static final String ENTRY_KEY_RELATIONSHIPS = "relationships";
 
 	public static final String SCREEN_NAVIGATION_KEY_OBJECT_DEFINITION =
 		"edit.object.definition.form";

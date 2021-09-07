@@ -28,4 +28,6 @@ public class ObjectDefinitionsClayDataSetDisplayNames {
 
 	public static final String OBJECT_FIELDS = "objectFields";
 
+	public static final String OBJECT_RELATIONSHIPS = "objectRelationships";
+
 }

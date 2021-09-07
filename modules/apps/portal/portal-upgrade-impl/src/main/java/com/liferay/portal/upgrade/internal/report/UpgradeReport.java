@@ -172,9 +172,7 @@ public class UpgradeReport {
 		sb.append(
 			String.format(
 				format, "Table name", "Rows (initial)", "Rows (final)"));
-		sb.append(
-			String.format(
-				format, "--------------", "--------------", "--------------"));
+		sb.append(String.format(format, _UNDERLINE, _UNDERLINE, _UNDERLINE));
 
 		Stream<String> stream = tableNames.stream();
 
@@ -630,6 +628,8 @@ public class UpgradeReport {
 	private static final String _CONFIGURATION_PID_FILE_SYSTEM_STORE =
 		"com.liferay.portal.store.file.system.configuration." +
 			"FileSystemStoreConfiguration";
+
+	private static final String _UNDERLINE = "--------------";
 
 	private static final int _UPGRADE_PROCESSES_COUNT = 20;
 

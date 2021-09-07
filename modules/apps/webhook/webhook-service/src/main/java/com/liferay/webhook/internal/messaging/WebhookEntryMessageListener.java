@@ -59,6 +59,7 @@ public class WebhookEntryMessageListener extends BaseMessageListener {
 
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+		options.addHeader("X-Api-Key", _webhookEntry.getSecret());
 		options.setBody(
 			String.valueOf(message.getPayload()), ContentTypes.APPLICATION_JSON,
 			StringPool.UTF8);

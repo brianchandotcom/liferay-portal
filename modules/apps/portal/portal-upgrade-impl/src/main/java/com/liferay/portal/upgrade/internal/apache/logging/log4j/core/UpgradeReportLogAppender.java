@@ -34,6 +34,7 @@ import org.apache.logging.log4j.message.Message;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Sam Ziemer
@@ -116,8 +117,7 @@ public class UpgradeReportLogAppender implements Appender {
 	public void start() {
 		_started = true;
 
-		_upgradeReport = new UpgradeReport(
-			_persistenceManager, _releaseManagerOSGiCommands);
+		_upgradeReport = new UpgradeReport();
 
 		_rootLogger.addAppender(this);
 	}
@@ -125,7 +125,8 @@ public class UpgradeReportLogAppender implements Appender {
 	@Override
 	public void stop() {
 		if (_started) {
-			_upgradeReport.generateReport();
+			_upgradeReport.generateReport(
+				_persistenceManager, _releaseManagerOSGiCommands);
 
 			_upgradeReport = null;
 		}
@@ -139,8 +140,8 @@ public class UpgradeReportLogAppender implements Appender {
 	@Reference
 	private PersistenceManager _persistenceManager;
 
-	@Reference
-	private ReleaseManagerOSGiCommands _releaseManagerOSGiCommands;
+	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
+	private volatile ReleaseManagerOSGiCommands _releaseManagerOSGiCommands;
 
 	private volatile boolean _started;
 	private volatile UpgradeReport _upgradeReport;

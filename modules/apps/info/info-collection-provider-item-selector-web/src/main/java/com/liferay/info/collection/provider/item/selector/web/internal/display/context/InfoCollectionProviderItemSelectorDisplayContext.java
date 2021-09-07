@@ -54,17 +54,18 @@ import javax.servlet.http.HttpServletRequest;
 public class InfoCollectionProviderItemSelectorDisplayContext {
 
 	public InfoCollectionProviderItemSelectorDisplayContext(
-		HttpServletRequest httpServletRequest, String itemSelectedEventName,
-		Language language, PortletURL portletURL,
+		HttpServletRequest httpServletRequest,
 		List<InfoCollectionProvider<?>> infoCollectionProviders,
-		InfoItemServiceTracker infoItemServiceTracker) {
+		InfoItemServiceTracker infoItemServiceTracker,
+		String itemSelectedEventName, Language language,
+		PortletURL portletURL) {
 
 		_httpServletRequest = httpServletRequest;
+		_infoCollectionProviders = infoCollectionProviders;
+		_infoItemServiceTracker = infoItemServiceTracker;
 		_itemSelectedEventName = itemSelectedEventName;
 		_language = language;
 		_portletURL = portletURL;
-		_infoCollectionProviders = infoCollectionProviders;
-		_infoItemServiceTracker = infoItemServiceTracker;
 	}
 
 	public String getDisplayStyle() {

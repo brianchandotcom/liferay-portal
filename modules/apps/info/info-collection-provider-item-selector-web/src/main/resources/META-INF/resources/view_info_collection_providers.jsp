@@ -23,7 +23,7 @@ SearchContainer<InfoCollectionProvider<?>> searchContainer = infoCollectionProvi
 %>
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= new InfoCollectionProviderItemSelectorManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, infoCollectionProviderItemSelectorDisplayContext, searchContainer) %>"
+	managementToolbarDisplayContext="<%= new InfoCollectionProviderItemSelectorManagementToolbarDisplayContext(request, infoCollectionProviderItemSelectorDisplayContext, liferayPortletRequest, liferayPortletResponse, searchContainer) %>"
 />
 
 <clay:container-fluid
@@ -56,7 +56,7 @@ SearchContainer<InfoCollectionProvider<?>> searchContainer = infoCollectionProvi
 
 					<liferay-ui:search-container-column-text>
 						<clay:vertical-card
-							verticalCard="<%= new InfoCollectionProviderVerticalCard(renderRequest, infoCollectionProvider, searchContainer.getRowChecker()) %>"
+							verticalCard="<%= new InfoCollectionProviderVerticalCard(infoCollectionProvider, renderRequest, searchContainer.getRowChecker()) %>"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>

@@ -53,10 +53,10 @@ public class InfoCollectionProviderItemSelectorManagementToolbarDisplayContext
 
 	public InfoCollectionProviderItemSelectorManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
 		InfoCollectionProviderItemSelectorDisplayContext
 			infoCollectionProviderItemSelectorDisplayContext,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
 		SearchContainer<?> searchContainer) {
 
 		super(

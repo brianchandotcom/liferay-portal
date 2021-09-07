@@ -29,9 +29,8 @@ import javax.portlet.RenderRequest;
 public class InfoCollectionProviderVerticalCard extends BaseVerticalCard {
 
 	public InfoCollectionProviderVerticalCard(
-		RenderRequest renderRequest,
 		InfoCollectionProvider<?> infoCollectionProvider,
-		RowChecker rowChecker) {
+		RenderRequest renderRequest, RowChecker rowChecker) {
 
 		super(null, renderRequest, rowChecker);
 

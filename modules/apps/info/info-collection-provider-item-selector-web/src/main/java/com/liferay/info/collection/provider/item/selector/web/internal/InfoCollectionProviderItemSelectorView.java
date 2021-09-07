@@ -88,9 +88,9 @@ public class InfoCollectionProviderItemSelectorView
 			InfoCollectionProviderItemSelectorWebKeys.
 				INFO_COLLECTION_PROVIDER_ITEM_SELECTOR_DISPLAY_CONTEXT,
 			new InfoCollectionProviderItemSelectorDisplayContext(
-				(HttpServletRequest)servletRequest, itemSelectedEventName,
-				_language, portletURL, infoCollectionProviders,
-				_infoItemServiceTracker));
+				(HttpServletRequest)servletRequest, infoCollectionProviders,
+				_infoItemServiceTracker, itemSelectedEventName, _language,
+				portletURL));
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(

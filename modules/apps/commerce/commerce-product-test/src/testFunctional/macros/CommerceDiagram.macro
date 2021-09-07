@@ -1,74 +1,74 @@
 definition {
 
-    macro usePreDefinedZoom {
-        //Use Pre-defined zoom values
+	macro useDragOnBackground {
 
-        CommerceDiagram.useResetZoom();
+		// Verify the postion after mouse drag
 
-        CommerceDiagram.usePreDefinedZoomValues(key_list = "${key_list}");
-    }
+		CommerceDiagram.useResetZoom();
 
-    macro useResetZoom {
+		first_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
 
-        var i = "0";
+		DragAndDrop.dragAndDropReorganizeObjects(
+			key_image = "${image_name}",
+			locator1 = "CommerceEntry#VERIFY_IMAGE",
+			locator2 = "CommerceEntry#VERIFY_IMAGE",
+			position = "${position}");
 
-        Click(
-            key_text = "Reset Zoom",
-            locator1 = "Button#ANY");
+		second_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
 
-        Pause(locator1 = "2000");
-    
-        var actual_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
+		if ("${first_position}" != "${second_position}") {
+			echo("The position after the drag is correct");
+		}
+		else {
+			fail("The position after the drag is not correct: ${second_position}, the expected position it must be different from ${first_position}");
+		}
+	}
 
-        if("${actual_position}" == "translate(0,0) scale(1)" || "${actual_position}" == "translate(0, 0) scale(1,1)"){
-            echo("The reset zoom position is correct");
-        }
-        else {
-            fail("The reset zoom position is not correct: ${actual_position} expected position: translate(0,0) scale(1) OR translate(0, 0) scale(1,1))");
-        }
-    }
+	macro usePreDefinedZoom {
 
-    macro usePreDefinedZoomValues {
+		// Use Pre-defined zoom values
+
+		CommerceDiagram.useResetZoom();
+
+		CommerceDiagram.usePreDefinedZoomValues(key_list = "${key_list}");
+	}
+
+	macro usePreDefinedZoomValues {
 		for (var zoom : list "${key_list}") {
-
-            first_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
+			first_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
 
 			Select(
 				locator1 = "CommerceEntry#DIAGRAM_ZOOM_SELECT",
 				value1 = "${zoom}");
 
 			second_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
-			
-			if("${first_position}" != "${second_position}") {
+
+			if ("${first_position}" != "${second_position}") {
 				echo("The position is correct for ${zoom}");
 			}
 			else {
 				fail("The position for the zoom: ${zoom} is not correct: ${second_position}, the expected position it must be different from ${first_position}");
 			}
 		}
-    }
+	}
 
-    macro useDragOnBackground {
-        //Verify the postion after mouse drag
+	macro useResetZoom {
+		var i = "0";
 
-        CommerceDiagram.useResetZoom();
+		Click(
+			key_text = "Reset Zoom",
+			locator1 = "Button#ANY");
 
-        first_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
+		Pause(locator1 = "2000");
 
-        DragAndDrop.dragAndDropReorganizeObjects(
-			key_image = "${image_name}",
-			position = "${position}",
-			locator1 = "CommerceEntry#VERIFY_IMAGE",
-			locator2 = "CommerceEntry#VERIFY_IMAGE");
+		var actual_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
 
-		second_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
-
-		if("${first_position}" != "${second_position}") {
-			echo("The position after the drag is correct");
+		if ("${actual_position}" == "translate(0,0) scale(1)" || "${actual_position}" == "translate(0, 0) scale(1,1)") {
+			echo("The reset zoom position is correct");
 		}
 		else {
-			fail("The position after the drag is not correct: ${second_position}, the expected position it must be different from ${first_position}");
+			fail("The reset zoom position is not correct: ${actual_position} expected position: translate(0,0) scale(1) OR translate(0, 0) scale(1,1))");
 		}
-    }
+	}
 
 }

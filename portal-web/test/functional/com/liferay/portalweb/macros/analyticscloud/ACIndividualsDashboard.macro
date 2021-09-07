@@ -269,6 +269,12 @@ definition {
 		}
 	}
 
+	macro viewTimelineItemNotPresent {
+		AssertElementNotPresent(
+			itemName = "${itemName}",
+			locator1 = "ACIndividualsDashboard#BASE_RESULTS_TIMELINE_ITEM_GENERAL");
+	}
+
 	macro viewTotalActivities {
 		var key_userName = "${userName}";
 		var key_activitiesNumber = "${activitiesNumber}";

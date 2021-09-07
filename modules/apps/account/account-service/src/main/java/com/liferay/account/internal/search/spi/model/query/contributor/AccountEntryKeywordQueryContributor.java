@@ -47,6 +47,10 @@ public class AccountEntryKeywordQueryContributor
 			booleanQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, Field.NAME, false);
+		queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "accountEntryId", false);
+		queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "externalReferenceCode", false);
 	}
 
 	@Reference

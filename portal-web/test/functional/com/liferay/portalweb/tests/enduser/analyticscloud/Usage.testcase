@@ -82,12 +82,12 @@ definition {
 		ACSettings.goToUsage();
 
 		ACSettings.assertPlanDetails(
-			individualsAddOns = "5,000",
+			individualsAddOnsLimit = "5,000",
 			individualsAddOnsPrice = "500 USD",
 			individualsLimit = "100,000",
-			pageViews = "60,000,000",
-			pageViewsAddOns = "5,000,000",
+			pageViewsAddOnsLimit = "5,000,000",
 			pageViewsAddOnsPrice = "250 USD",
+			pageViewsLimit = "60,000,000",
 			planName = "Enterprise",
 			usersLimit = "Unlimited");
 	}

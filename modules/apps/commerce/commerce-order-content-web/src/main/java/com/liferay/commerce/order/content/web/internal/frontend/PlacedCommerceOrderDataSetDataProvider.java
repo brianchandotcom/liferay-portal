@@ -42,10 +42,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS,
+	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS,
 	service = ClayDataSetDataProvider.class
 )
-public class CommercePendingOrderDataSetDataProvider
+public class PlacedCommerceOrderDataSetDataProvider
 	implements ClayDataSetDataProvider<Order> {
 
 	@Override
@@ -67,7 +67,7 @@ public class CommercePendingOrderDataSetDataProvider
 		}
 
 		List<CommerceOrder> commerceOrders =
-			_commerceOrderService.getUserPendingCommerceOrders(
+			_commerceOrderService.getUserPlacedCommerceOrders(
 				commerceChannel.getCompanyId(), commerceChannel.getGroupId(),
 				filter.getKeywords(), pagination.getStartPosition(),
 				pagination.getEndPosition());
@@ -94,7 +94,7 @@ public class CommercePendingOrderDataSetDataProvider
 			return 0;
 		}
 
-		return (int)_commerceOrderService.getUserPendingCommerceOrdersCount(
+		return (int)_commerceOrderService.getUserPlacedCommerceOrdersCount(
 			commerceChannel.getCompanyId(), commerceChannel.getGroupId(),
 			filter.getKeywords());
 	}

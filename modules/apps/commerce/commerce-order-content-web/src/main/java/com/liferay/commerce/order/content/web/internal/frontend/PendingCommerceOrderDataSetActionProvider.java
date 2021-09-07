@@ -17,20 +17,17 @@ package com.liferay.commerce.order.content.web.internal.frontend;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.frontend.constants.CommerceOrderDataSetConstants;
 import com.liferay.commerce.order.content.web.internal.frontend.util.CommerceOrderClayTableUtil;
-import com.liferay.commerce.order.content.web.internal.model.OrderItem;
-import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.order.content.web.internal.model.Order;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,14 +36,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Luca Pellizzon
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDER_ITEMS,
+	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS,
 	service = ClayDataSetActionProvider.class
 )
-public class CommercePlacedOrderItemDataSetActionProvider
+public class PendingCommerceOrderDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
@@ -54,37 +51,30 @@ public class CommercePlacedOrderItemDataSetActionProvider
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
 
-		OrderItem orderItem = (OrderItem)model;
+		List<DropdownItem> dropdownItems = new ArrayList<>();
 
-		if (orderItem.getParentOrderItemId() > 0) {
-			return Collections.emptyList();
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Order order = (Order)model;
+
+		if (_modelResourcePermission.contains(
+				themeDisplay.getPermissionChecker(), order.getOrderId(),
+				ActionKeys.VIEW)) {
+
+			DropdownItem dropdownItem = new DropdownItem();
+
+			dropdownItem.setHref(
+				CommerceOrderClayTableUtil.getEditOrderURL(
+					order.getOrderId(), httpServletRequest));
+			dropdownItem.setLabel(LanguageUtil.get(httpServletRequest, "view"));
+
+			dropdownItems.add(dropdownItem);
 		}
 
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			orderItem.getOrderId());
-
-		return DropdownItemListBuilder.add(
-			() -> _modelResourcePermission.contains(
-				PermissionThreadLocal.getPermissionChecker(), commerceOrder,
-				ActionKeys.VIEW),
-			dropdownItem -> {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				dropdownItem.setHref(
-					CommerceOrderClayTableUtil.getViewShipmentURL(
-						orderItem.getOrderItemId(), themeDisplay));
-
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "shipments"));
-				dropdownItem.setTarget("modal");
-			}
-		).build();
+		return dropdownItems;
 	}
-
-	@Reference
-	private CommerceOrderService _commerceOrderService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"

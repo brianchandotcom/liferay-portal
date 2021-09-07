@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDER_ITEMS,
 	service = ClayDataSetActionProvider.class
 )
-public class CommercePendingOrderItemDataSetActionProvider
+public class PendingCommerceOrderItemDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override

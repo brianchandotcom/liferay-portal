@@ -209,6 +209,45 @@ definition {
 			value1 = "${newIdividuals}");
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9182 | Test Summary: Page views limit corresponds correctly with the plan and add-ons purchased."
+	@priority = "3"
+	test PageViewsCardShowCurrentPlanLimitAndAddOnInfo {
+		task ("Sign in AC") {
+			ACUtils.launchAC();
+		}
+
+		task ("Navigate to Workspace Settings") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToWorkspace();
+		}
+
+		task ("Navigate to the Usage") {
+			ACSettings.goToUsage();
+		}
+
+		task ("View the page views limit of current plan") {
+			ACSettings.viewCurrentPlan(planName = "Enterprise");
+
+			ACSettings.assertPlanDetails(
+				pageViewsLimit = "60,000,000",
+				planName = "Enterprise");
+		}
+
+		task ("View the page views of purchased add-ons") {
+			ACSettings.assertAddonsDetails(
+				addOnItem = "Page Views",
+				limit = "5,000,000",
+				time = "3X");
+		}
+
+		task ("View the page views limit of current plan and purchased add-ons on Page Views card") {
+			ACSettings.assertCurrentPlanLimitAndAddOn(
+				currentPlanLimitAndAddOn = "Enterprise Plan 60,000,000 + 5,000,000 Add-On (3x)",
+				metricName = "Page Views");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8150 | Test Summary: Page views update in real time"
 	@priority = "5"
 	test PageViewsUpdateInRealTime {

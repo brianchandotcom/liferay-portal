@@ -82,7 +82,7 @@ definition {
 				item = "Edit",
 				widgetTemplateName = "Asset Publisher Test ADT");
 		}
-			
+
 		task ("View Elements panel") {
 			Navigator.gotoSidebarTab(tabName = "Elements");
 
@@ -95,7 +95,7 @@ definition {
 
 		task ("View Properties panel and assert Language is Freemarker") {
 			Navigator.gotoSidebarTab(tabName = "Properties");
-			
+
 			AssertSelectedLabel(
 				key_fieldLabel = "Language",
 				locator1 = "Select#GENERIC_SELECT_FIELD",

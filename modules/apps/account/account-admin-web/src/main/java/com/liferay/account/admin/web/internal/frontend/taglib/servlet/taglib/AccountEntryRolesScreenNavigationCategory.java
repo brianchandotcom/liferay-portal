@@ -16,6 +16,7 @@ package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
 import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
+import com.liferay.account.admin.web.internal.util.AllowEditAccountRoleThreadLocal;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
@@ -65,7 +66,8 @@ public class AccountEntryRolesScreenNavigationCategory
 	public boolean isVisible(
 		User user, AccountEntryDisplay accountEntryDisplay) {
 
-		if (Objects.equals(
+		if (!AllowEditAccountRoleThreadLocal.isAllowEditAccountRole() ||
+			Objects.equals(
 				accountEntryDisplay.getType(),
 				AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST)) {
 

@@ -14,10 +14,17 @@
 
 package com.liferay.account.admin.web.internal.portlet;
 
+import com.liferay.account.admin.web.internal.util.AllowEditAccountRoleThreadLocal;
 import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
+import java.io.IOException;
+
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -44,4 +51,17 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class AccountEntriesAdminPortlet extends MVCPortlet {
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		try (SafeCloseable safeCloseable =
+				AllowEditAccountRoleThreadLocal.setWithSafeCloseable(true)) {
+
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+
 }

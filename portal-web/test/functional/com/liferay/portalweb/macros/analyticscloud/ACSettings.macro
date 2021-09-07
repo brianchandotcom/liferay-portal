@@ -432,6 +432,13 @@ definition {
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 	}
 
+	macro collapsePlan {
+		Click(
+			key_planName = "${planName}",
+			key_type = "angle-up",
+			locator1 = "ACUsage#USAGE_PLAN_ICON");
+	}
+
 	macro createRequestLogByEmail {
 		var key_fieldType = "${fieldType}";
 

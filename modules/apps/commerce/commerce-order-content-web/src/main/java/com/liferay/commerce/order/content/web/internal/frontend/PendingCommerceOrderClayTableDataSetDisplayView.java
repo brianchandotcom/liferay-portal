@@ -29,10 +29,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDER_ITEMS,
+	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS,
 	service = ClayDataSetDisplayView.class
 )
-public class CommercePendingOrderItemClayTableDataSetDisplayView
+public class PendingCommerceOrderClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -40,22 +40,18 @@ public class CommercePendingOrderItemClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
+		clayTableSchemaBuilder.addClayTableSchemaField("date", "create-date");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("options", "options");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("sku", "sku");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("price", "list-price");
+		clayTableSchemaBuilder.addClayTableSchemaField("orderId", "order-id");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"promoPrice", "sale-price");
+			"accountName", "account");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("discount", "discount");
+		clayTableSchemaBuilder.addClayTableSchemaField("author", "created-by");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("quantity", "quantity");
+		clayTableSchemaBuilder.addClayTableSchemaField("status", "status");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("total", "total");
+		clayTableSchemaBuilder.addClayTableSchemaField("amount", "amount");
 
 		return clayTableSchemaBuilder.build();
 	}

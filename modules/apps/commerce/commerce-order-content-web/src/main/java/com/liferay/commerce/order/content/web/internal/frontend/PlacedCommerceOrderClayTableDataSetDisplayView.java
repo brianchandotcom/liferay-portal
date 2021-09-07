@@ -29,10 +29,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDER_ITEMS,
+	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS,
 	service = ClayDataSetDisplayView.class
 )
-public class CommercePlacedOrderItemClayTableDataSetDisplayView
+public class PlacedCommerceOrderClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -40,25 +40,19 @@ public class CommercePlacedOrderItemClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
+		clayTableSchemaBuilder.addClayTableSchemaField("title", "order-id");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("options", "options");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("sku", "sku");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("price", "list-price");
+		clayTableSchemaBuilder.addClayTableSchemaField("date", "order-date");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"promoPrice", "sale-price");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("discount", "discount");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("quantity", "quantity");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("total", "total");
+			"accountName", "account");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"shippedQuantity", "shipped-quantity");
+			"author", "submitted-by");
+
+		clayTableSchemaBuilder.addClayTableSchemaField("orderStatus", "status");
+
+		clayTableSchemaBuilder.addClayTableSchemaField("amount", "amount");
 
 		return clayTableSchemaBuilder.build();
 	}

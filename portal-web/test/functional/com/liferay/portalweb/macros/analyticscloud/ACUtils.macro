@@ -545,6 +545,12 @@ definition {
 		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 	}
 
+	macro viewActivePage {
+		AssertTextEquals(
+			locator1 = "ACUtils#ACTIVE_PAGE",
+			value1 = "${pageNumber}");
+	}
+
 	macro viewAlertInfo {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ALERT_DISMISSIBLE",

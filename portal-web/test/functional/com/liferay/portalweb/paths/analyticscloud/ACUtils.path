@@ -49,6 +49,11 @@
 </tr>
 <!-- PAGE_PAGINATION-->
 <tr>
+	<td>ACTIVE_PAGE</td>
+	<td>//li[@class='page-item active']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_PAGE</td>
 	<td>//ul[contains(@class,'pagination')]//li[contains(@class,'page-item')]//*[contains(@class,'page-link')][normalize-space(text())='${key_pageNumber}']</td>
 	<td></td>

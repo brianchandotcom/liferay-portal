@@ -71,13 +71,7 @@ import org.apache.felix.cm.PersistenceManager;
  */
 public class UpgradeReport {
 
-	public UpgradeReport(
-		PersistenceManager persistenceManager,
-		ReleaseManagerOSGiCommands releaseManagerOSGiCommands) {
-
-		_persistenceManager = persistenceManager;
-		_releaseManagerOSGiCommands = releaseManagerOSGiCommands;
-
+	public UpgradeReport() {
 		_initialBuildNumber = _getBuildNumber();
 		_initialSchemaVersion = _getSchemaVersion();
 		_initialTableCounts = _getTableCounts();
@@ -112,7 +106,12 @@ public class UpgradeReport {
 		warningMessages.put(message, count);
 	}
 
-	public void generateReport() {
+	public void generateReport(
+		PersistenceManager persistenceManager,
+		ReleaseManagerOSGiCommands releaseManagerOSGiCommands) {
+
+		_persistenceManager = persistenceManager;
+
 		try {
 			FileUtil.write(
 				_getReportFile(),
@@ -122,7 +121,7 @@ public class UpgradeReport {
 						_getProperties(), _getDLStorageSize(),
 						_getDatabaseTablesSize(), _getUpgradeProcessesContent(),
 						_getLogEvents("errors"), _getLogEvents("warnings"),
-						_releaseManagerOSGiCommands.check()
+						releaseManagerOSGiCommands.check()
 					},
 					StringPool.NEW_LINE + StringPool.NEW_LINE));
 		}
@@ -642,8 +641,7 @@ public class UpgradeReport {
 	private final int _initialBuildNumber;
 	private final String _initialSchemaVersion;
 	private final Map<String, Integer> _initialTableCounts;
-	private final PersistenceManager _persistenceManager;
-	private final ReleaseManagerOSGiCommands _releaseManagerOSGiCommands;
+	private PersistenceManager _persistenceManager;
 	private String _rootDir;
 	private final Map<String, Map<String, Integer>> _warningMessages =
 		new ConcurrentHashMap<>();

@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>ObjectPortlet</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ObjectPortlet</td></tr>
+</thead>
+
+<tbody>
+	<tr>
+		<td>ENTRY_VALUE</td>
+		<td>//div[contains(@class,'dnd-tbody')]//div[contains(text(),'${key_entry}')]</td>
+		<td></td>
+	</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,9 @@
+definition {
+
+	macro viewEntry {
+		AssertElementPresent(
+			key_entry = "${entry}",
+			locator1 = "ObjectPortlet#ENTRY_VALUE");
+	}
+
+}

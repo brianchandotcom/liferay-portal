@@ -96,13 +96,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectsPopulating.viewEntriesObjectPortlet(
-			entries = "1234567",
-			fieldName = "Integer");
+		ObjectPortlet.viewEntry(entry = "1234567");
 
-		ObjectsPopulating.viewEntriesObjectPortlet(
-			entries = "Test text",
-			fieldName = "Text");
+		ObjectPortlet.viewEntry(entry = "Test text");
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of BigDecimal type and view its entries"
@@ -160,9 +156,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectsPopulating.viewEntriesObjectPortlet(
-			entries = "123.123456",
-			fieldName = "bigDecimal");
+		ObjectPortlet.viewEntry(entry = "123.123456");
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Blob type and view its entries"
@@ -236,9 +230,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectsPopulating.viewEntriesObjectPortlet(
-			entries = "2001-01-01",
-			fieldName = "Date");
+		ObjectPortlet.viewEntry(entry = "2001-01-01");
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Double type and view its entries"
@@ -296,9 +288,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectsPopulating.viewEntriesObjectPortlet(
-			entries = "1.54",
-			fieldName = "Double");
+		ObjectPortlet.viewEntry(entry = "1.54");
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Integer type and view its entries"
@@ -352,9 +342,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectsPopulating.viewEntriesObjectPortlet(
-			entries = "123456789",
-			fieldName = "Integer");
+		ObjectPortlet.viewEntry(entry = "123456789");
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Long type and view its entries"
@@ -408,9 +396,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectsPopulating.viewEntriesObjectPortlet(
-			entries = "123456789123456789",
-			fieldName = "Long");
+		ObjectPortlet.viewEntry(entry = "123456789123456789");
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of String type and view its entries"
@@ -465,9 +451,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectsPopulating.viewEntriesObjectPortlet(
-			entries = "Test Text Test Text Test Text Test Text Test Text Test Text Test Text  Test",
-			fieldName = "Text");
+		ObjectPortlet.viewEntry(entry = "Test Text Test Text Test Text Test Text Test Text Test Text Test Text  Test");
 	}
 
 	@description = "LPS-133365 - Verify if it's not possible to map a Object field with a Form field of a different type"

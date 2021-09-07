@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pablo Molina
  */
-@Component(enabled = false, service = FragmentRenderer.class)
+@Component(service = FragmentRenderer.class)
 public class CollectionAppliedFiltersFragmentRenderer
 	implements FragmentRenderer {
 

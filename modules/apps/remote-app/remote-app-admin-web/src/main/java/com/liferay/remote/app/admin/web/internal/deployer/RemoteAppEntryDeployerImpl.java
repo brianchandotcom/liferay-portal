@@ -17,6 +17,7 @@ package com.liferay.remote.app.admin.web.internal.deployer;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.remote.app.admin.web.internal.portlet.RemoteAppEntryPortlet;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
 import com.liferay.remote.app.model.RemoteAppEntry;
@@ -55,7 +56,8 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 			).put(
 				"com.liferay.portlet.instanceable", true
 			).put(
-				"javax.portlet.display-name", remoteAppEntry.getName()
+				"javax.portlet.display-name",
+				remoteAppEntry.getName(LocaleUtil.US)
 			).put(
 				"javax.portlet.name",
 				StringBundler.concat(

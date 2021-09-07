@@ -42,6 +42,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const selectAssetCategory = (itemData) => {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('select'),
+			iframeBodyCssClass: '',
 			multiple: true,
 			onSelect: (selectedItem) => {
 				if (selectedItem) {

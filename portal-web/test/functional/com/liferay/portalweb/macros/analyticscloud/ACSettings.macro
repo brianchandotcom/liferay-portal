@@ -209,6 +209,13 @@ definition {
 			locator1 = "Header#H3_TITLE");
 	}
 
+	macro assertCurrentPlanLimitAndAddOn {
+		AssertTextEquals(
+			key_metricName = "${metricName}",
+			locator1 = "ACUsage#USAGE_CURRENT_PLAN_LIMIT_AND_ADD_ON",
+			value1 = "${currentPlanLimitAndAddOn}");
+	}
+
 	@summary = "Assert data source status"
 	macro assertDataSourceStatus {
 		AssertTextEquals(

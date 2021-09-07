@@ -234,7 +234,6 @@ public class PriceModifier implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@DecimalMin("0")
 	@Schema
 	@Valid
 	public BigDecimal getModifierAmount() {

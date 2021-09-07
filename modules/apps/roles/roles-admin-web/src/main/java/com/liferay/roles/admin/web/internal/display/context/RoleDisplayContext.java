@@ -173,11 +173,15 @@ public class RoleDisplayContext {
 
 	public boolean isAccountRoleGroupScope() {
 		if (_accountRoleGroupScope == null) {
-			_accountRoleGroupScope =
-				(_currentRoleTypeContributor.getType() ==
+			_accountRoleGroupScope = false;
+
+			if ((_currentRoleTypeContributor.getType() ==
 					RoleConstants.TYPE_ACCOUNT) &&
 				ParamUtil.getBoolean(
-					_httpServletRequest, "accountRoleGroupScope");
+					_httpServletRequest, "accountRoleGroupScope")) {
+
+				_accountRoleGroupScope = true;
+			}
 		}
 
 		return _accountRoleGroupScope;
@@ -185,10 +189,14 @@ public class RoleDisplayContext {
 
 	public boolean isAllowGroupScope() {
 		if (_allowGroupScope == null) {
-			_allowGroupScope =
-				(_currentRoleTypeContributor.getType() ==
+			_allowGroupScope = false;
+
+			if ((_currentRoleTypeContributor.getType() ==
 					RoleConstants.TYPE_REGULAR) ||
-				isAccountRoleGroupScope();
+				isAccountRoleGroupScope()) {
+
+				_allowGroupScope = true;
+			}
 		}
 
 		return _allowGroupScope;

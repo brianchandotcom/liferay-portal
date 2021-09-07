@@ -106,10 +106,10 @@ public class GetFragmentEntryLinkMVCResourceCommand
 			defaultFragmentRendererContext.setSegmentsExperienceIds(
 				new long[] {segmentsExperienceId});
 
-			String collectionItemClassName = ParamUtil.getString(
-				resourceRequest, "collectionItemClassName");
-			long collectionItemClassPK = ParamUtil.getLong(
-				resourceRequest, "collectionItemClassPK");
+			String itemClassName = ParamUtil.getString(
+				resourceRequest, "itemClassName");
+			long itemClassPK = ParamUtil.getLong(
+				resourceRequest, "itemClassPK");
 
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(resourceRequest);
@@ -118,15 +118,13 @@ public class GetFragmentEntryLinkMVCResourceCommand
 				(LayoutDisplayPageProvider<?>)httpServletRequest.getAttribute(
 					LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER);
 
-			if (Validator.isNotNull(collectionItemClassName) &&
-				(collectionItemClassPK > 0)) {
-
+			if (Validator.isNotNull(itemClassName) && (itemClassPK > 0)) {
 				InfoItemIdentifier infoItemIdentifier =
-					new ClassPKInfoItemIdentifier(collectionItemClassPK);
+					new ClassPKInfoItemIdentifier(itemClassPK);
 
 				InfoItemObjectProvider<Object> infoItemObjectProvider =
 					_infoItemServiceTracker.getFirstInfoItemService(
-						InfoItemObjectProvider.class, collectionItemClassName,
+						InfoItemObjectProvider.class, itemClassName,
 						infoItemIdentifier.getInfoItemServiceFilter());
 
 				if (infoItemObjectProvider != null) {
@@ -141,8 +139,7 @@ public class GetFragmentEntryLinkMVCResourceCommand
 
 					InfoItemDetailsProvider infoItemDetailsProvider =
 						_infoItemServiceTracker.getFirstInfoItemService(
-							InfoItemDetailsProvider.class,
-							collectionItemClassName);
+							InfoItemDetailsProvider.class, itemClassName);
 
 					if (infoItemDetailsProvider != null) {
 						InfoItemDetails infoItemDetails =
@@ -161,8 +158,7 @@ public class GetFragmentEntryLinkMVCResourceCommand
 
 				LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 					_layoutDisplayPageProviderTracker.
-						getLayoutDisplayPageProviderByClassName(
-							collectionItemClassName);
+						getLayoutDisplayPageProviderByClassName(itemClassName);
 
 				if (layoutDisplayPageProvider != null) {
 					httpServletRequest.setAttribute(

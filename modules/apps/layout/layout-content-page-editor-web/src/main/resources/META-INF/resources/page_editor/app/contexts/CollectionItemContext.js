@@ -12,6 +12,7 @@
  * details.
  */
 
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import React, {useCallback, useContext, useEffect} from 'react';
 
 import {updateFragmentEntryLinkContent} from '../actions/index';
@@ -78,14 +79,20 @@ const useCollectionConfig = () => {
 };
 
 const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
+	const {
+		collectionContent = {},
+		content,
+		editableValues,
+		fragmentEntryKey,
+		fragmentEntryLinkId,
+	} = fragmentEntryLink;
+
 	const collectionItemContext = useContext(CollectionItemContext);
 	const dispatch = useDispatch();
 	const fieldSets = fragmentEntryLink.configuration?.fieldSets;
 	const toControlsId = useToControlsId();
 
-	const collectionContentId = toControlsId(
-		fragmentEntryLink.fragmentEntryLinkId
-	);
+	const collectionContentId = toControlsId(fragmentEntryLinkId);
 
 	const {className: collectionItemClassName, classPK: collectionItemClassPK} =
 		collectionItemContext.collectionItem || {};
@@ -96,6 +103,18 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 		classPK: displayPagePreviewItemClassPK,
 	} = useDisplayPagePreviewItem()?.data || {};
 
+	const [itemClassName, itemClassPK] =
+		fragmentEntryKey === DISPLAY_PAGE_CONTENT_FRAGMENT_ENTRY_KEY &&
+		displayPagePreviewItemClassName &&
+		displayPagePreviewItemClassPK
+			? [displayPagePreviewItemClassName, displayPagePreviewItemClassPK]
+			: [collectionItemClassName, collectionItemClassPK];
+
+	const previousEditableValues = usePrevious(editableValues);
+	const previousLanguageId = usePrevious(languageId);
+	const previousItemClassName = usePrevious(itemClassName);
+	const previousItemClassPK = usePrevious(itemClassPK);
+
 	useEffect(() => {
 		const hasLocalizable =
 			fieldSets?.some((fieldSet) =>
@@ -103,21 +122,15 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 			) ?? false;
 
 		if (
-			(!isNullOrUndefined(displayPagePreviewItemClassName) &&
-				!isNullOrUndefined(displayPagePreviewItemClassPK) &&
-				fragmentEntryLink.fragmentEntryKey ===
-					DISPLAY_PAGE_CONTENT_FRAGMENT_ENTRY_KEY) ||
-			(!isNullOrUndefined(collectionItemIndex) &&
-				!isNullOrUndefined(collectionItemClassName) &&
-				!isNullOrUndefined(collectionItemClassPK)) ||
-			hasLocalizable
+			editableValues !== previousEditableValues ||
+			itemClassName !== previousItemClassName ||
+			itemClassPK !== previousItemClassPK ||
+			(hasLocalizable && languageId !== previousLanguageId)
 		) {
 			FragmentService.renderFragmentEntryLinkContent({
-				collectionItemClassName,
-				collectionItemClassPK,
-				displayPagePreviewItemClassName,
-				displayPagePreviewItemClassPK,
-				fragmentEntryLinkId: fragmentEntryLink.fragmentEntryLinkId,
+				fragmentEntryLinkId,
+				itemClassName,
+				itemClassPK,
 				languageId,
 				onNetworkStatus: dispatch,
 				segmentsExperienceId,
@@ -126,37 +139,32 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 					updateFragmentEntryLinkContent({
 						collectionContentId,
 						content,
-						fragmentEntryLinkId:
-							fragmentEntryLink.fragmentEntryLinkId,
+						fragmentEntryLinkId,
 					})
 				);
 			});
 		}
 	}, [
 		collectionContentId,
-		collectionItemClassName,
-		collectionItemClassPK,
-		collectionItemIndex,
 		dispatch,
-		displayPagePreviewItemClassName,
-		displayPagePreviewItemClassPK,
+		editableValues,
 		fieldSets,
-		fragmentEntryLink.editableValues,
-		fragmentEntryLink.fragmentEntryKey,
-		fragmentEntryLink.fragmentEntryLinkId,
+		fragmentEntryLinkId,
+		itemClassName,
+		itemClassPK,
 		languageId,
+		previousEditableValues,
+		previousItemClassName,
+		previousItemClassPK,
+		previousLanguageId,
 		segmentsExperienceId,
 	]);
 
-	if (!isNullOrUndefined(collectionItemIndex)) {
-		const collectionContent = fragmentEntryLink.collectionContent || {};
-
-		return (
-			collectionContent[collectionContentId] || fragmentEntryLink.content
-		);
-	}
-
-	return fragmentEntryLink.content;
+	return (
+		(!isNullOrUndefined(collectionItemIndex)
+			? collectionContent[collectionContentId]
+			: null) || content
+	);
 };
 
 const useGetFieldValue = () => {

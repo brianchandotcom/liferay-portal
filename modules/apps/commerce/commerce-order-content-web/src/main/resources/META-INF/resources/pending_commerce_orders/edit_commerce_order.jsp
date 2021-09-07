@@ -115,7 +115,7 @@ List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getB
 							request.setAttribute("order_notes.jsp-taglibLinkCssClass", "link-outline link-outline-borderless link-outline-secondary lfr-icon-item-reverse");
 							%>
 
-							<liferay-util:include page="/pending_orders/order_notes.jsp" servletContext="<%= application %>" />
+							<liferay-util:include page="/pending_commerce_orders/order_notes.jsp" servletContext="<%= application %>" />
 						</dd>
 					</dl>
 				</div>
@@ -422,7 +422,7 @@ List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getB
 
 <portlet:actionURL name="/commerce_open_order_content/edit_commerce_order" var="editCommerceOrderURL" />
 
-<%@ include file="/pending_orders/transition.jspf" %>
+<%@ include file="/pending_commerce_orders/transition.jspf" %>
 
 <aui:script use="aui-base">
 	var orderTransition = A.one('#<portlet:namespace />orderTransition');

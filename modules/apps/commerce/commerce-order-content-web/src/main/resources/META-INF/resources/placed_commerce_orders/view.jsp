@@ -27,9 +27,9 @@ CommerceChannel commerceChannel = commerceOrderContentDisplayContext.fetchCommer
 		</div>
 	</c:when>
 	<c:when test="<%= commerceOrderContentDisplayContext.isCommerceSiteTypeB2C() %>">
-		<liferay-util:include page="/pending_orders/b2c/view.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/placed_commerce_orders/b2c/view.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
-		<liferay-util:include page="/pending_orders/b2b/view.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/placed_commerce_orders/b2b/view.jsp" servletContext="<%= application %>" />
 	</c:otherwise>
 </c:choose>

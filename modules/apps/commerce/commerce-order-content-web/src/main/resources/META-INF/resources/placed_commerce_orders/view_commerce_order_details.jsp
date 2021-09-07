@@ -97,7 +97,7 @@ if (commerceOrder != null) {
 						request.setAttribute("order_notes.jsp-taglibLinkCssClass", "link-outline link-outline-borderless link-outline-secondary lfr-icon-item-reverse");
 						%>
 
-						<liferay-util:include page="/placed_orders/order_notes.jsp" servletContext="<%= application %>" />
+						<liferay-util:include page="/placed_commerce_orders/order_notes.jsp" servletContext="<%= application %>" />
 					</dd>
 				</dl>
 			</div>

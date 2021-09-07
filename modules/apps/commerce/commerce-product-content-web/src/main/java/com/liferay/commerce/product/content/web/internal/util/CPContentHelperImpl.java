@@ -44,7 +44,6 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
-import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
@@ -308,7 +307,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 		throws Exception {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
-			_cpDefinitionService.getDefaultImageCPAttachmentFileEntry(
+			_cpDefinitionLocalService.getDefaultImageCPAttachmentFileEntry(
 				cpDefinitionId);
 
 		if (cpAttachmentFileEntry != null) {
@@ -319,7 +318,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 			}
 		}
 
-		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionId);
 
 		FileEntry fileEntry = _commerceMediaProvider.getDefaultImageFileEntry(
@@ -753,9 +752,6 @@ public class CPContentHelperImpl implements CPContentHelper {
 	@Reference
 	private CPDefinitionOptionValueRelLocalService
 		_cpDefinitionOptionValueRelLocalService;
-
-	@Reference
-	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

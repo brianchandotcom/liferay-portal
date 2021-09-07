@@ -639,7 +639,7 @@ create table Layout (
 	classNameId LONG,
 	classPK LONG,
 	name STRING null,
-	title STRING null,
+	title TEXT null,
 	description TEXT null,
 	keywords STRING null,
 	robots STRING null,

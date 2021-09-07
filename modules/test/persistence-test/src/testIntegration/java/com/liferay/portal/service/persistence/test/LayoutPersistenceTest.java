@@ -562,12 +562,12 @@ public class LayoutPersistenceTest {
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"parentPlid", true, "privateLayout", true, "layoutId", true,
 			"parentLayoutId", true, "classNameId", true, "classPK", true,
-			"name", true, "title", true, "keywords", true, "robots", true,
-			"type", true, "hidden", true, "system", true, "friendlyURL", true,
-			"iconImageId", true, "themeId", true, "colorSchemeId", true,
-			"styleBookEntryId", true, "priority", true, "masterLayoutPlid",
-			true, "layoutPrototypeUuid", true, "layoutPrototypeLinkEnabled",
-			true, "sourcePrototypeLayoutUuid", true, "publishDate", true,
+			"name", true, "keywords", true, "robots", true, "type", true,
+			"hidden", true, "system", true, "friendlyURL", true, "iconImageId",
+			true, "themeId", true, "colorSchemeId", true, "styleBookEntryId",
+			true, "priority", true, "masterLayoutPlid", true,
+			"layoutPrototypeUuid", true, "layoutPrototypeLinkEnabled", true,
+			"sourcePrototypeLayoutUuid", true, "publishDate", true,
 			"lastPublishDate", true, "status", true, "statusByUserId", true,
 			"statusByUserName", true, "statusDate", true);
 	}

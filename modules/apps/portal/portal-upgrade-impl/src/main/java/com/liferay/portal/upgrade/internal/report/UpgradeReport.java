@@ -120,7 +120,7 @@ public class UpgradeReport {
 					new String[] {
 						_getDate(), _getPortalVersions(), _getDialectInfo(),
 						_getProperties(), _getDLStorageSize(),
-						_getDatabaseTablesInfo(), _getUpgradeProcessesContent(),
+						_getDatabaseTablesSize(), _getUpgradeProcessesContent(),
 						_getLogEvents("errors"), _getLogEvents("warnings"),
 						_releaseManagerOSGiCommands.check()
 					},
@@ -152,11 +152,11 @@ public class UpgradeReport {
 		return 0;
 	}
 
-	private String _getDatabaseTablesInfo() {
+	private String _getDatabaseTablesSize() {
 		Map<String, Integer> finalTableCounts = _getTableCounts();
 
 		if ((_initialTableCounts == null) || (finalTableCounts == null)) {
-			return "Unable to get database tables information";
+			return "Unable to get database tables size";
 		}
 
 		Set<String> tableNames = new HashSet<>();

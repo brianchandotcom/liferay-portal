@@ -503,12 +503,12 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			Click(locator1 = "PageEditor#PREVIEW");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
 			AssertVisible(
 				key_imageName = "high_resolution_photo.jpg",
 				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
@@ -693,12 +693,12 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			Click(locator1 = "PageEditor#PREVIEW");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
 			AssertVisible(
 				key_imageName = "high_resolution_photo.jpg",
 				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");

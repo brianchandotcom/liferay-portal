@@ -736,12 +736,12 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("View category name shown in modal") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
 			AssertTextEquals(
 				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
 				value1 = "Category Name");

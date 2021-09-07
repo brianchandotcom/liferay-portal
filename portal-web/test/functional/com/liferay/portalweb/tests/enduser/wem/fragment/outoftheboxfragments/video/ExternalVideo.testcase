@@ -80,9 +80,7 @@ definition {
 		}
 
 		task ("View the video displayed in Preview modal") {
-			Click(locator1 = "PageEditor#PREVIEW");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.openPreviewMode();
 
 			WaitForElementPresent(locator1 = "YoutubePortlet#VIDEO_IFRAME");
 
@@ -147,9 +145,7 @@ definition {
 		}
 
 		task ("View the video displayed in Preview modal") {
-			Click(locator1 = "PageEditor#PREVIEW");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.openPreviewMode();
 
 			WaitForElementPresent(locator1 = "YoutubePortlet#VIDEO_IFRAME");
 

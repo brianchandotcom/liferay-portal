@@ -2074,12 +2074,12 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			Click(locator1 = "PageEditor#PREVIEW");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("View only the 5 documents shown in current page of Collection Display") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
@@ -2466,12 +2466,12 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			Click(locator1 = "PageEditor#PREVIEW");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("View only the 5 documents shown in current page of Collection Display") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {

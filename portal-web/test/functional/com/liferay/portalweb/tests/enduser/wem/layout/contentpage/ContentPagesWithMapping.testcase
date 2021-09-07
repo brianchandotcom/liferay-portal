@@ -1461,12 +1461,12 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			Click(locator1 = "PageEditor#PREVIEW");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("Assert the web content in Preview Modal") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
 			AssertTextEquals(
 				key_fragmentName = "heading",
 				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",

@@ -163,9 +163,9 @@ definition {
 		}
 
 		task ("Reset applied filters at Preview mode") {
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			var n = "1";
 
@@ -390,9 +390,9 @@ definition {
 		}
 
 		task ("View the Applied Filters doesn't present when no applied filter at Preview mode") {
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			AssertElementNotPresent(locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_PLACEHOLDER");
 		}
@@ -521,9 +521,9 @@ definition {
 		}
 
 		task ("View applied category filter at Preview mode") {
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			var n = "1";
 
@@ -783,9 +783,9 @@ definition {
 		}
 
 		task ("View the Show More button when the number of applied filters more than limitation at Preview mode") {
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			var n = "1";
 

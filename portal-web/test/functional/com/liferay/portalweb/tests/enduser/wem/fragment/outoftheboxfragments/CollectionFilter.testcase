@@ -220,12 +220,12 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			Click(locator1 = "PageEditor#PREVIEW");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("View all web contents shown in Collection Display") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
 			var n = "1";
 
 			for (var title : list "Air Max 1,Air Jordan 1,Air Force 1,LeBron VIII") {
@@ -654,9 +654,9 @@ definition {
 		}
 
 		task ("Filter results of Collection Display by keywords at Preview mode") {
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			var n = "1";
 
@@ -807,9 +807,9 @@ definition {
 		}
 
 		task ("Filter results of Collection Display by multiple keywords at Preview mode") {
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			var n = "1";
 
@@ -1068,12 +1068,12 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			Click(locator1 = "PageEditor#PREVIEW");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("View the order of elements inside of Container") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
 			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container-fluid-max-xl')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Dynamic Collection']");
 
 			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container-fluid-max-xl')]/div)[2]//ul[contains(@class,'list-inline')]");
@@ -1360,12 +1360,12 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			Click(locator1 = "PageEditor#PREVIEW");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("View the order of elements inside of Container") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
 			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Dynamic Collection']");
 
 			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[2]//div[contains(@class,'row')]");
@@ -1673,12 +1673,12 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			Click(locator1 = "PageEditor#PREVIEW");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("View the order of elements inside of Container") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
 			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Dynamic Collection']");
 
 			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[2]//ul[contains(@class,'list-group')]");
@@ -1961,12 +1961,12 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			Click(locator1 = "PageEditor#PREVIEW");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("Assert the order of elements inside of Container") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
 			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container-fluid-max-xl')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Manual Collection']");
 
 			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container-fluid-max-xl')]/div)[2]//ul[contains(@class,'list-inline')]");
@@ -2253,12 +2253,12 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			Click(locator1 = "PageEditor#PREVIEW");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("Assert the order of elements inside of Container") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
 			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Manual Collection']");
 
 			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[2]//ul[not(contains(@class,'list-group'))]");
@@ -2582,12 +2582,12 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			Click(locator1 = "PageEditor#PREVIEW");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("Assert the order of elements inside of Container") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
 			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Manual Collection']");
 
 			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[2]//ul[contains(@class,'list-group')]");
@@ -2831,12 +2831,12 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			Click(locator1 = "PageEditor#PREVIEW");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("Assert the order of elements inside of Container") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
 			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Manual Collection']");
 
 			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[2]//ol");
@@ -3071,9 +3071,9 @@ definition {
 		}
 
 		task ("Filter results of multiple Collection Displays by multiple Collection Filters at Preview mode") {
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			var n = "1";
 
@@ -3428,12 +3428,12 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			Click(locator1 = "PageEditor#PREVIEW");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("View the source label of the first Collection Filter is Size") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
 			AssertElementPresent(
 				locator1 = "PageEditor#COLLECTION_FILTER_SOURCE_LABEL_VISIBLE",
 				sourceLabel = "Size");
@@ -3629,9 +3629,9 @@ definition {
 		}
 
 		task ("View no results in Collection Dipslay when search non collection item by keywords at Preview mode") {
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			AssertVisible(
 				key_colPosition = "1",

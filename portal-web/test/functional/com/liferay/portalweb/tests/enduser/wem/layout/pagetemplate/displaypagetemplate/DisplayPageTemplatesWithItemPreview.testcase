@@ -398,9 +398,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("Select the category via preview item selector") {
@@ -500,9 +498,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("Select the subcategory via preview item selector") {
@@ -664,9 +660,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("Select the category via preview item selector") {
@@ -790,9 +784,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("Select the web content via preview item selector") {
@@ -880,9 +872,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("Select the blogs entry via preview item selector") {
@@ -977,9 +967,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("Select the document via preview item selector") {
@@ -1088,9 +1076,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("Open the preview item selector in preview modal") {
@@ -1265,9 +1251,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("Select the web content via preview item selector") {
@@ -1392,9 +1376,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("Select the blogs entry via preview item selector") {
@@ -1520,9 +1502,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 		}
 
 		task ("Select the document via preview item selector") {

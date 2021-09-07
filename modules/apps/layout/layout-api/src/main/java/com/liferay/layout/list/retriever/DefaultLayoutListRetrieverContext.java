@@ -73,7 +73,7 @@ public class DefaultLayoutListRetrieverContext
 
 	@Override
 	public Optional<Map<String, InfoFilter>> getInfoFiltersOptional() {
-		return Optional.of(_infoFilters);
+		return Optional.ofNullable(_infoFilters);
 	}
 
 	@Override

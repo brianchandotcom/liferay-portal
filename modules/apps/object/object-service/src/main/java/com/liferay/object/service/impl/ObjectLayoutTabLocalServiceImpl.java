@@ -14,10 +14,21 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.model.ObjectLayout;
+import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.object.service.base.ObjectLayoutTabLocalServiceBaseImpl;
+import com.liferay.object.service.persistence.ObjectLayoutPersistence;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -29,4 +40,41 @@ import org.osgi.service.component.annotations.Component;
 )
 public class ObjectLayoutTabLocalServiceImpl
 	extends ObjectLayoutTabLocalServiceBaseImpl {
+
+	@Override
+	public ObjectLayoutTab addObjectLayoutTab(
+			long userId, long objectLayoutId, Map<Locale, String> nameMap,
+			int priority)
+		throws PortalException {
+
+		ObjectLayout objectLayout = _objectLayoutPersistence.findByPrimaryKey(
+			objectLayoutId);
+
+		ObjectLayoutTab objectLayoutTab = objectLayoutTabPersistence.create(
+			counterLocalService.increment());
+
+		User user = _userLocalService.getUser(userId);
+
+		objectLayoutTab.setCompanyId(user.getCompanyId());
+		objectLayoutTab.setUserId(user.getUserId());
+		objectLayoutTab.setUserName(user.getFullName());
+
+		objectLayoutTab.setObjectLayoutId(objectLayout.getObjectLayoutId());
+		objectLayoutTab.setNameMap(nameMap);
+		objectLayoutTab.setPriority(priority);
+
+		return objectLayoutTabPersistence.update(objectLayoutTab);
+	}
+
+	@Override
+	public List<ObjectLayoutTab> getObjectLayoutTabs(long objectLayoutId) {
+		return objectLayoutTabPersistence.findByObjectLayoutId(objectLayoutId);
+	}
+
+	@Reference
+	private ObjectLayoutPersistence _objectLayoutPersistence;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
 }

@@ -14,10 +14,21 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.model.ObjectLayoutBox;
+import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.object.service.base.ObjectLayoutBoxLocalServiceBaseImpl;
+import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -29,4 +40,44 @@ import org.osgi.service.component.annotations.Component;
 )
 public class ObjectLayoutBoxLocalServiceImpl
 	extends ObjectLayoutBoxLocalServiceBaseImpl {
+
+	@Override
+	public ObjectLayoutBox addObjectLayoutBox(
+			long userId, long objectLayoutTabId, boolean collapsable,
+			Map<Locale, String> nameMap, int priority)
+		throws PortalException {
+
+		ObjectLayoutTab objectLayoutTab =
+			_objectLayoutTabPersistence.findByPrimaryKey(objectLayoutTabId);
+
+		ObjectLayoutBox objectLayoutBox = objectLayoutBoxPersistence.create(
+			counterLocalService.increment());
+
+		User user = _userLocalService.getUser(userId);
+
+		objectLayoutBox.setCompanyId(user.getCompanyId());
+		objectLayoutBox.setUserId(user.getUserId());
+		objectLayoutBox.setUserName(user.getFullName());
+
+		objectLayoutBox.setObjectLayoutTabId(
+			objectLayoutTab.getObjectLayoutTabId());
+		objectLayoutBox.setCollapsable(collapsable);
+		objectLayoutBox.setNameMap(nameMap);
+		objectLayoutBox.setPriority(priority);
+
+		return objectLayoutBoxPersistence.update(objectLayoutBox);
+	}
+
+	@Override
+	public List<ObjectLayoutBox> getObjectLayoutBoxes(long objectLayoutTabId) {
+		return objectLayoutBoxPersistence.findByObjectLayoutTabId(
+			objectLayoutTabId);
+	}
+
+	@Reference
+	private ObjectLayoutTabPersistence _objectLayoutTabPersistence;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
 }

@@ -14,10 +14,22 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectLayout;
+import com.liferay.object.service.ObjectLayoutTabLocalService;
 import com.liferay.object.service.base.ObjectLayoutLocalServiceBaseImpl;
+import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -29,4 +41,46 @@ import org.osgi.service.component.annotations.Component;
 )
 public class ObjectLayoutLocalServiceImpl
 	extends ObjectLayoutLocalServiceBaseImpl {
+
+	@Override
+	public ObjectLayout addObjectLayout(
+			long userId, long objectDefinitionId, boolean defaultObjectLayout,
+			Map<Locale, String> nameMap)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		ObjectLayout objectLayout = objectLayoutPersistence.create(
+			counterLocalService.increment());
+
+		User user = _userLocalService.getUser(userId);
+
+		objectLayout.setCompanyId(user.getCompanyId());
+		objectLayout.setUserId(user.getUserId());
+		objectLayout.setUserName(user.getFullName());
+
+		objectLayout.setObjectDefinitionId(
+			objectDefinition.getObjectDefinitionId());
+		objectLayout.setDefaultObjectLayout(defaultObjectLayout);
+		objectLayout.setNameMap(nameMap);
+
+		return objectLayoutPersistence.update(objectLayout);
+	}
+
+	@Override
+	public List<ObjectLayout> getObjectLayouts(long objectDefinitionId) {
+		return objectLayoutPersistence.findByObjectDefinitionId(
+			objectDefinitionId);
+	}
+
+	@Reference
+	private ObjectDefinitionPersistence _objectDefinitionPersistence;
+
+	@Reference
+	private ObjectLayoutTabLocalService _objectLayoutTabLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
 }

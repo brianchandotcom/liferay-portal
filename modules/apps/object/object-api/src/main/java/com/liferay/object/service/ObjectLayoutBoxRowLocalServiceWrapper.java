@@ -33,6 +33,15 @@ public class ObjectLayoutBoxRowLocalServiceWrapper
 		_objectLayoutBoxRowLocalService = objectLayoutBoxRowLocalService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectLayoutBoxRow addObjectLayoutBoxRow(
+			long userId, long objectLayoutBoxId, int priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectLayoutBoxRowLocalService.addObjectLayoutBoxRow(
+			userId, objectLayoutBoxId, priority);
+	}
+
 	/**
 	 * Adds the object layout box row to the database. Also notifies the appropriate model listeners.
 	 *
@@ -328,6 +337,14 @@ public class ObjectLayoutBoxRowLocalServiceWrapper
 
 		return _objectLayoutBoxRowLocalService.getObjectLayoutBoxRows(
 			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectLayoutBoxRow>
+		getObjectLayoutBoxRows(long objectLayoutBoxId) {
+
+		return _objectLayoutBoxRowLocalService.getObjectLayoutBoxRows(
+			objectLayoutBoxId);
 	}
 
 	/**

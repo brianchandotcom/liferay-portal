@@ -33,6 +33,16 @@ public class ObjectLayoutLocalServiceWrapper
 		_objectLayoutLocalService = objectLayoutLocalService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectLayout addObjectLayout(
+			long userId, long objectDefinitionId, boolean defaultObjectLayout,
+			java.util.Map<java.util.Locale, String> nameMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectLayoutLocalService.addObjectLayout(
+			userId, objectDefinitionId, defaultObjectLayout, nameMap);
+	}
+
 	/**
 	 * Adds the object layout to the database. Also notifies the appropriate model listeners.
 	 *
@@ -317,6 +327,13 @@ public class ObjectLayoutLocalServiceWrapper
 		getObjectLayouts(int start, int end) {
 
 		return _objectLayoutLocalService.getObjectLayouts(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectLayout>
+		getObjectLayouts(long objectDefinitionId) {
+
+		return _objectLayoutLocalService.getObjectLayouts(objectDefinitionId);
 	}
 
 	/**

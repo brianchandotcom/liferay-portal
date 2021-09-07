@@ -44,6 +44,14 @@ public class ObjectLayoutBoxColumnLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectLayoutBoxColumnLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectLayoutBoxColumn addObjectLayoutBoxColumn(
+			long userId, long objectFieldId, long objectLayoutBoxRowId,
+			int priority)
+		throws PortalException {
+
+		return getService().addObjectLayoutBoxColumn(
+			userId, objectFieldId, objectLayoutBoxRowId, priority);
+	}
 
 	/**
 	 * Adds the object layout box column to the database. Also notifies the appropriate model listeners.
@@ -302,6 +310,12 @@ public class ObjectLayoutBoxColumnLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getObjectLayoutBoxColumns(start, end);
+	}
+
+	public static List<ObjectLayoutBoxColumn> getObjectLayoutBoxColumns(
+		long objectLayoutBoxRowId) {
+
+		return getService().getObjectLayoutBoxColumns(objectLayoutBoxRowId);
 	}
 
 	/**

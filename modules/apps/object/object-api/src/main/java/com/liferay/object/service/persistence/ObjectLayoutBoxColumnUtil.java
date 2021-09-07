@@ -487,6 +487,189 @@ public class ObjectLayoutBoxColumnUtil {
 	}
 
 	/**
+	 * Returns all the object layout box columns where objectLayoutBoxRowId = &#63;.
+	 *
+	 * @param objectLayoutBoxRowId the object layout box row ID
+	 * @return the matching object layout box columns
+	 */
+	public static List<ObjectLayoutBoxColumn> findByObjectLayoutBoxRowId(
+		long objectLayoutBoxRowId) {
+
+		return getPersistence().findByObjectLayoutBoxRowId(
+			objectLayoutBoxRowId);
+	}
+
+	/**
+	 * Returns a range of all the object layout box columns where objectLayoutBoxRowId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutBoxColumnModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectLayoutBoxRowId the object layout box row ID
+	 * @param start the lower bound of the range of object layout box columns
+	 * @param end the upper bound of the range of object layout box columns (not inclusive)
+	 * @return the range of matching object layout box columns
+	 */
+	public static List<ObjectLayoutBoxColumn> findByObjectLayoutBoxRowId(
+		long objectLayoutBoxRowId, int start, int end) {
+
+		return getPersistence().findByObjectLayoutBoxRowId(
+			objectLayoutBoxRowId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object layout box columns where objectLayoutBoxRowId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutBoxColumnModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectLayoutBoxRowId the object layout box row ID
+	 * @param start the lower bound of the range of object layout box columns
+	 * @param end the upper bound of the range of object layout box columns (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object layout box columns
+	 */
+	public static List<ObjectLayoutBoxColumn> findByObjectLayoutBoxRowId(
+		long objectLayoutBoxRowId, int start, int end,
+		OrderByComparator<ObjectLayoutBoxColumn> orderByComparator) {
+
+		return getPersistence().findByObjectLayoutBoxRowId(
+			objectLayoutBoxRowId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the object layout box columns where objectLayoutBoxRowId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutBoxColumnModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectLayoutBoxRowId the object layout box row ID
+	 * @param start the lower bound of the range of object layout box columns
+	 * @param end the upper bound of the range of object layout box columns (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object layout box columns
+	 */
+	public static List<ObjectLayoutBoxColumn> findByObjectLayoutBoxRowId(
+		long objectLayoutBoxRowId, int start, int end,
+		OrderByComparator<ObjectLayoutBoxColumn> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByObjectLayoutBoxRowId(
+			objectLayoutBoxRowId, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first object layout box column in the ordered set where objectLayoutBoxRowId = &#63;.
+	 *
+	 * @param objectLayoutBoxRowId the object layout box row ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object layout box column
+	 * @throws NoSuchObjectLayoutBoxColumnException if a matching object layout box column could not be found
+	 */
+	public static ObjectLayoutBoxColumn findByObjectLayoutBoxRowId_First(
+			long objectLayoutBoxRowId,
+			OrderByComparator<ObjectLayoutBoxColumn> orderByComparator)
+		throws com.liferay.object.exception.
+			NoSuchObjectLayoutBoxColumnException {
+
+		return getPersistence().findByObjectLayoutBoxRowId_First(
+			objectLayoutBoxRowId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first object layout box column in the ordered set where objectLayoutBoxRowId = &#63;.
+	 *
+	 * @param objectLayoutBoxRowId the object layout box row ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object layout box column, or <code>null</code> if a matching object layout box column could not be found
+	 */
+	public static ObjectLayoutBoxColumn fetchByObjectLayoutBoxRowId_First(
+		long objectLayoutBoxRowId,
+		OrderByComparator<ObjectLayoutBoxColumn> orderByComparator) {
+
+		return getPersistence().fetchByObjectLayoutBoxRowId_First(
+			objectLayoutBoxRowId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object layout box column in the ordered set where objectLayoutBoxRowId = &#63;.
+	 *
+	 * @param objectLayoutBoxRowId the object layout box row ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object layout box column
+	 * @throws NoSuchObjectLayoutBoxColumnException if a matching object layout box column could not be found
+	 */
+	public static ObjectLayoutBoxColumn findByObjectLayoutBoxRowId_Last(
+			long objectLayoutBoxRowId,
+			OrderByComparator<ObjectLayoutBoxColumn> orderByComparator)
+		throws com.liferay.object.exception.
+			NoSuchObjectLayoutBoxColumnException {
+
+		return getPersistence().findByObjectLayoutBoxRowId_Last(
+			objectLayoutBoxRowId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object layout box column in the ordered set where objectLayoutBoxRowId = &#63;.
+	 *
+	 * @param objectLayoutBoxRowId the object layout box row ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object layout box column, or <code>null</code> if a matching object layout box column could not be found
+	 */
+	public static ObjectLayoutBoxColumn fetchByObjectLayoutBoxRowId_Last(
+		long objectLayoutBoxRowId,
+		OrderByComparator<ObjectLayoutBoxColumn> orderByComparator) {
+
+		return getPersistence().fetchByObjectLayoutBoxRowId_Last(
+			objectLayoutBoxRowId, orderByComparator);
+	}
+
+	/**
+	 * Returns the object layout box columns before and after the current object layout box column in the ordered set where objectLayoutBoxRowId = &#63;.
+	 *
+	 * @param objectLayoutBoxColumnId the primary key of the current object layout box column
+	 * @param objectLayoutBoxRowId the object layout box row ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object layout box column
+	 * @throws NoSuchObjectLayoutBoxColumnException if a object layout box column with the primary key could not be found
+	 */
+	public static ObjectLayoutBoxColumn[]
+			findByObjectLayoutBoxRowId_PrevAndNext(
+				long objectLayoutBoxColumnId, long objectLayoutBoxRowId,
+				OrderByComparator<ObjectLayoutBoxColumn> orderByComparator)
+		throws com.liferay.object.exception.
+			NoSuchObjectLayoutBoxColumnException {
+
+		return getPersistence().findByObjectLayoutBoxRowId_PrevAndNext(
+			objectLayoutBoxColumnId, objectLayoutBoxRowId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the object layout box columns where objectLayoutBoxRowId = &#63; from the database.
+	 *
+	 * @param objectLayoutBoxRowId the object layout box row ID
+	 */
+	public static void removeByObjectLayoutBoxRowId(long objectLayoutBoxRowId) {
+		getPersistence().removeByObjectLayoutBoxRowId(objectLayoutBoxRowId);
+	}
+
+	/**
+	 * Returns the number of object layout box columns where objectLayoutBoxRowId = &#63;.
+	 *
+	 * @param objectLayoutBoxRowId the object layout box row ID
+	 * @return the number of matching object layout box columns
+	 */
+	public static int countByObjectLayoutBoxRowId(long objectLayoutBoxRowId) {
+		return getPersistence().countByObjectLayoutBoxRowId(
+			objectLayoutBoxRowId);
+	}
+
+	/**
 	 * Caches the object layout box column in the entity cache if it is enabled.
 	 *
 	 * @param objectLayoutBoxColumn the object layout box column

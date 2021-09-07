@@ -14,14 +14,19 @@ create index IX_5DDCF209 on ObjectField (objectDefinitionId, dbTableName[$COLUMN
 create index IX_A59C5981 on ObjectField (objectDefinitionId, name[$COLUMN_LENGTH:75$]);
 create index IX_594B4995 on ObjectField (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create index IX_81F3D350 on ObjectLayout (objectDefinitionId);
 create index IX_E27AC523 on ObjectLayout (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create index IX_5F97F7CF on ObjectLayoutBox (objectLayoutTabId);
 create index IX_CDCBE8DC on ObjectLayoutBox (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create index IX_736F9E05 on ObjectLayoutBoxColumn (objectLayoutBoxRowId);
 create index IX_72C6CFD2 on ObjectLayoutBoxColumn (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create index IX_CC4B7D8F on ObjectLayoutBoxRow (objectLayoutBoxId);
 create index IX_7B989D12 on ObjectLayoutBoxRow (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create index IX_F01F1EEA on ObjectLayoutTab (objectLayoutId);
 create index IX_94D361A6 on ObjectLayoutTab (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_11DAE1F1 on ObjectRelationship (uuid_[$COLUMN_LENGTH:75$], companyId);

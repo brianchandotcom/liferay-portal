@@ -63,6 +63,9 @@ public interface ObjectLayoutBoxRowLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectLayoutBoxRowLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object layout box row local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectLayoutBoxRowLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public ObjectLayoutBoxRow addObjectLayoutBoxRow(
+			long userId, long objectLayoutBoxId, int priority)
+		throws PortalException;
 
 	/**
 	 * Adds the object layout box row to the database. Also notifies the appropriate model listeners.
@@ -265,6 +268,10 @@ public interface ObjectLayoutBoxRowLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectLayoutBoxRow> getObjectLayoutBoxRows(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectLayoutBoxRow> getObjectLayoutBoxRows(
+		long objectLayoutBoxId);
 
 	/**
 	 * Returns the number of object layout box rows.

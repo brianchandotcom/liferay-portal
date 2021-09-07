@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for ObjectLayoutTab. This utility wraps
@@ -44,6 +45,14 @@ public class ObjectLayoutTabLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectLayoutTabLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectLayoutTab addObjectLayoutTab(
+			long userId, long objectLayoutId,
+			Map<java.util.Locale, String> nameMap, int priority)
+		throws PortalException {
+
+		return getService().addObjectLayoutTab(
+			userId, objectLayoutId, nameMap, priority);
+	}
 
 	/**
 	 * Adds the object layout tab to the database. Also notifies the appropriate model listeners.
@@ -294,6 +303,12 @@ public class ObjectLayoutTabLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getObjectLayoutTabs(start, end);
+	}
+
+	public static List<ObjectLayoutTab> getObjectLayoutTabs(
+		long objectLayoutId) {
+
+		return getService().getObjectLayoutTabs(objectLayoutId);
 	}
 
 	/**

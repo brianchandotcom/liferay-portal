@@ -33,6 +33,16 @@ public class ObjectLayoutTabLocalServiceWrapper
 		_objectLayoutTabLocalService = objectLayoutTabLocalService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectLayoutTab addObjectLayoutTab(
+			long userId, long objectLayoutId,
+			java.util.Map<java.util.Locale, String> nameMap, int priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectLayoutTabLocalService.addObjectLayoutTab(
+			userId, objectLayoutId, nameMap, priority);
+	}
+
 	/**
 	 * Adds the object layout tab to the database. Also notifies the appropriate model listeners.
 	 *
@@ -325,6 +335,13 @@ public class ObjectLayoutTabLocalServiceWrapper
 		getObjectLayoutTabs(int start, int end) {
 
 		return _objectLayoutTabLocalService.getObjectLayoutTabs(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectLayoutTab>
+		getObjectLayoutTabs(long objectLayoutId) {
+
+		return _objectLayoutTabLocalService.getObjectLayoutTabs(objectLayoutId);
 	}
 
 	/**

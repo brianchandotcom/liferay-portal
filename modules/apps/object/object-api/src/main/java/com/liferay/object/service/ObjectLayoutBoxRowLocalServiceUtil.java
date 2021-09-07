@@ -44,6 +44,13 @@ public class ObjectLayoutBoxRowLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectLayoutBoxRowLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectLayoutBoxRow addObjectLayoutBoxRow(
+			long userId, long objectLayoutBoxId, int priority)
+		throws PortalException {
+
+		return getService().addObjectLayoutBoxRow(
+			userId, objectLayoutBoxId, priority);
+	}
 
 	/**
 	 * Adds the object layout box row to the database. Also notifies the appropriate model listeners.
@@ -298,6 +305,12 @@ public class ObjectLayoutBoxRowLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getObjectLayoutBoxRows(start, end);
+	}
+
+	public static List<ObjectLayoutBoxRow> getObjectLayoutBoxRows(
+		long objectLayoutBoxId) {
+
+		return getService().getObjectLayoutBoxRows(objectLayoutBoxId);
 	}
 
 	/**

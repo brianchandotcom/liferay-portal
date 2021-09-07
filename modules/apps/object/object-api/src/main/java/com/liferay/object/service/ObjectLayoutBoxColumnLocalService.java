@@ -63,6 +63,10 @@ public interface ObjectLayoutBoxColumnLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectLayoutBoxColumnLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object layout box column local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectLayoutBoxColumnLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public ObjectLayoutBoxColumn addObjectLayoutBoxColumn(
+			long userId, long objectFieldId, long objectLayoutBoxRowId,
+			int priority)
+		throws PortalException;
 
 	/**
 	 * Adds the object layout box column to the database. Also notifies the appropriate model listeners.
@@ -267,6 +271,10 @@ public interface ObjectLayoutBoxColumnLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectLayoutBoxColumn> getObjectLayoutBoxColumns(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectLayoutBoxColumn> getObjectLayoutBoxColumns(
+		long objectLayoutBoxRowId);
 
 	/**
 	 * Returns the number of object layout box columns.

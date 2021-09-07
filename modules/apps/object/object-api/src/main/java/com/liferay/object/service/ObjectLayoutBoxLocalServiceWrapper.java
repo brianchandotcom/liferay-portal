@@ -33,6 +33,16 @@ public class ObjectLayoutBoxLocalServiceWrapper
 		_objectLayoutBoxLocalService = objectLayoutBoxLocalService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectLayoutBox addObjectLayoutBox(
+			long userId, long objectLayoutTabId, boolean collapsable,
+			java.util.Map<java.util.Locale, String> nameMap, int priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectLayoutBoxLocalService.addObjectLayoutBox(
+			userId, objectLayoutTabId, collapsable, nameMap, priority);
+	}
+
 	/**
 	 * Adds the object layout box to the database. Also notifies the appropriate model listeners.
 	 *
@@ -325,6 +335,14 @@ public class ObjectLayoutBoxLocalServiceWrapper
 		getObjectLayoutBoxes(int start, int end) {
 
 		return _objectLayoutBoxLocalService.getObjectLayoutBoxes(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectLayoutBox>
+		getObjectLayoutBoxes(long objectLayoutTabId) {
+
+		return _objectLayoutBoxLocalService.getObjectLayoutBoxes(
+			objectLayoutTabId);
 	}
 
 	/**

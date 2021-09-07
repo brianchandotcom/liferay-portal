@@ -199,6 +199,13 @@ public class ObjectLayoutTabPersistenceTest {
 	}
 
 	@Test
+	public void testCountByObjectLayoutId() throws Exception {
+		_persistence.countByObjectLayoutId(RandomTestUtil.nextLong());
+
+		_persistence.countByObjectLayoutId(0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ObjectLayoutTab newObjectLayoutTab = addObjectLayoutTab();
 

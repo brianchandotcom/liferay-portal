@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for ObjectLayoutBox. This utility wraps
@@ -44,6 +45,14 @@ public class ObjectLayoutBoxLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectLayoutBoxLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectLayoutBox addObjectLayoutBox(
+			long userId, long objectLayoutTabId, boolean collapsable,
+			Map<java.util.Locale, String> nameMap, int priority)
+		throws PortalException {
+
+		return getService().addObjectLayoutBox(
+			userId, objectLayoutTabId, collapsable, nameMap, priority);
+	}
 
 	/**
 	 * Adds the object layout box to the database. Also notifies the appropriate model listeners.
@@ -294,6 +303,12 @@ public class ObjectLayoutBoxLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getObjectLayoutBoxes(start, end);
+	}
+
+	public static List<ObjectLayoutBox> getObjectLayoutBoxes(
+		long objectLayoutTabId) {
+
+		return getService().getObjectLayoutBoxes(objectLayoutTabId);
 	}
 
 	/**

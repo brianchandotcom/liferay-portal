@@ -197,6 +197,13 @@ public class ObjectLayoutPersistenceTest {
 	}
 
 	@Test
+	public void testCountByObjectDefinitionId() throws Exception {
+		_persistence.countByObjectDefinitionId(RandomTestUtil.nextLong());
+
+		_persistence.countByObjectDefinitionId(0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ObjectLayout newObjectLayout = addObjectLayout();
 

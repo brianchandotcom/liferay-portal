@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -63,6 +65,10 @@ public interface ObjectLayoutBoxLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectLayoutBoxLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object layout box local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectLayoutBoxLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public ObjectLayoutBox addObjectLayoutBox(
+			long userId, long objectLayoutTabId, boolean collapsable,
+			Map<Locale, String> nameMap, int priority)
+		throws PortalException;
 
 	/**
 	 * Adds the object layout box to the database. Also notifies the appropriate model listeners.
@@ -261,6 +267,9 @@ public interface ObjectLayoutBoxLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectLayoutBox> getObjectLayoutBoxes(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectLayoutBox> getObjectLayoutBoxes(long objectLayoutTabId);
 
 	/**
 	 * Returns the number of object layout boxes.

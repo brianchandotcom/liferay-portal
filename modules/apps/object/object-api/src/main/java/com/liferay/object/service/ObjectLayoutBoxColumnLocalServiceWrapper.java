@@ -33,6 +33,17 @@ public class ObjectLayoutBoxColumnLocalServiceWrapper
 		_objectLayoutBoxColumnLocalService = objectLayoutBoxColumnLocalService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectLayoutBoxColumn
+			addObjectLayoutBoxColumn(
+				long userId, long objectFieldId, long objectLayoutBoxRowId,
+				int priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectLayoutBoxColumnLocalService.addObjectLayoutBoxColumn(
+			userId, objectFieldId, objectLayoutBoxRowId, priority);
+	}
+
 	/**
 	 * Adds the object layout box column to the database. Also notifies the appropriate model listeners.
 	 *
@@ -335,6 +346,14 @@ public class ObjectLayoutBoxColumnLocalServiceWrapper
 
 		return _objectLayoutBoxColumnLocalService.getObjectLayoutBoxColumns(
 			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectLayoutBoxColumn>
+		getObjectLayoutBoxColumns(long objectLayoutBoxRowId) {
+
+		return _objectLayoutBoxColumnLocalService.getObjectLayoutBoxColumns(
+			objectLayoutBoxRowId);
 	}
 
 	/**

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for ObjectLayout. This utility wraps
@@ -44,6 +45,14 @@ public class ObjectLayoutLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectLayoutLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectLayout addObjectLayout(
+			long userId, long objectDefinitionId, boolean defaultObjectLayout,
+			Map<java.util.Locale, String> nameMap)
+		throws PortalException {
+
+		return getService().addObjectLayout(
+			userId, objectDefinitionId, defaultObjectLayout, nameMap);
+	}
 
 	/**
 	 * Adds the object layout to the database. Also notifies the appropriate model listeners.
@@ -285,6 +294,10 @@ public class ObjectLayoutLocalServiceUtil {
 	 */
 	public static List<ObjectLayout> getObjectLayouts(int start, int end) {
 		return getService().getObjectLayouts(start, end);
+	}
+
+	public static List<ObjectLayout> getObjectLayouts(long objectDefinitionId) {
+		return getService().getObjectLayouts(objectDefinitionId);
 	}
 
 	/**

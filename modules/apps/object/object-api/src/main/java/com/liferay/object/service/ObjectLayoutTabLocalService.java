@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -63,6 +65,10 @@ public interface ObjectLayoutTabLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectLayoutTabLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object layout tab local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectLayoutTabLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public ObjectLayoutTab addObjectLayoutTab(
+			long userId, long objectLayoutId, Map<Locale, String> nameMap,
+			int priority)
+		throws PortalException;
 
 	/**
 	 * Adds the object layout tab to the database. Also notifies the appropriate model listeners.
@@ -261,6 +267,9 @@ public interface ObjectLayoutTabLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectLayoutTab> getObjectLayoutTabs(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectLayoutTab> getObjectLayoutTabs(long objectLayoutId);
 
 	/**
 	 * Returns the number of object layout tabs.

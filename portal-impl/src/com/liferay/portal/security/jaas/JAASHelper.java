@@ -25,7 +25,9 @@ import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Raymond Augé
+ * @deprecated As of Cavanaugh (7.4.x), with no replacement
  */
+@Deprecated
 public class JAASHelper {
 
 	public static JAASHelper getInstance() {

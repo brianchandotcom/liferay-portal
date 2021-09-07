@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.servlet.ProtectedPrincipal;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), with no replacement
  */
+@Deprecated
 public class PortalPrincipal extends ProtectedPrincipal {
 
 	public PortalPrincipal() {

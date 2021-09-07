@@ -42,7 +42,9 @@ import javax.security.auth.spi.LoginModule;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), with no replacement
  */
+@Deprecated
 public class BasicLoginModule implements LoginModule {
 
 	@Override

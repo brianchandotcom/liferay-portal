@@ -27,7 +27,9 @@ import javax.security.auth.login.LoginException;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), with no replacement
  */
+@Deprecated
 public class PortalLoginModule extends BasicLoginModule {
 
 	@Override

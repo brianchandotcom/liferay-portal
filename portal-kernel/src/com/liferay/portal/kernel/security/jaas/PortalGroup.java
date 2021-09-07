@@ -26,7 +26,9 @@ import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), with no replacement
  */
+@Deprecated
 public class PortalGroup
 	extends PortalPrincipal implements Group, Serializable {
 

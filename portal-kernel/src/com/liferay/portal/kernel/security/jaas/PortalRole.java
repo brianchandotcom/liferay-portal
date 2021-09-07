@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.security.jaas;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), with no replacement
  */
+@Deprecated
 public class PortalRole extends PortalPrincipal {
 
 	public PortalRole() {

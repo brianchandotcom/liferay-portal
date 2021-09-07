@@ -32,20 +32,20 @@ const initialFeedbackState = {
 	type: null,
 };
 
-const DownloadCSVButton = () => {
+const DownloadSpreadsheetButton = ({fileURL, total}) => {
 	const [loading, setLoading] = useState(false);
 	const [toastMessage, setToastMessage] = useState(initialToastState);
 	const [feedbackStatus, setFeedbackStatus] = useState(initialFeedbackState);
 
 	const handleSuccess = () => {
 		setToastMessage({
-			content: Liferay.Language.get('csv-was-successfully-generated'),
+			content: Liferay.Language.get('xls-was-successfully-generated'),
 			show: true,
 			type: 'success',
 		});
 
 		setFeedbackStatus({
-			content: Liferay.Language.get('csv-generated'),
+			content: Liferay.Language.get('xls-generated'),
 			show: false,
 			type: 'success',
 		});
@@ -54,44 +54,50 @@ const DownloadCSVButton = () => {
 	const handleError = () => {
 		setToastMessage({
 			content: Liferay.Language.get(
-				'csv-generation-has-failed-try-again'
+				'xls-generation-has-failed-try-again'
 			),
-			show: true,
+			show: false,
 			type: 'danger',
 		});
 
 		setFeedbackStatus({
 			content: Liferay.Language.get('an-error-occurred'),
 			show: false,
-			type: 'error',
+			type: 'danger',
 		});
 	};
 
 	const handleUIState = () => {
 		setLoading(false);
-		setFeedbackStatus({
-			...feedbackStatus,
+
+		setFeedbackStatus((current) => ({
+			...current,
 			show: true,
-		});
+		}));
 
 		setTimeout(() => setFeedbackStatus(initialFeedbackState), 2000);
 	};
 
 	const buttonTextKey = loading
-		? Liferay.Language.get('generating-csv')
+		? Liferay.Language.get('generating-xls')
 		: feedbackStatus.show
 		? feedbackStatus.content
-		: Liferay.Language.get('csv');
+		: Liferay.Language.get('export-xls');
 
-	const disabledGenerateButton = loading || feedbackStatus.show;
+	const clayIconSymbol =
+		feedbackStatus.type === 'success'
+			? 'check-circle'
+			: feedbackStatus.type === 'danger'
+			? 'exclamation-circle'
+			: 'download';
+
+	const disabledGenerateButton =
+		loading || feedbackStatus.show || !parseInt(total, 10);
 
 	const handleClick = () => {
 		setLoading(true);
 
 		try {
-
-			// todo implementation AJAX
-
 			handleSuccess();
 		}
 		catch {
@@ -115,8 +121,8 @@ const DownloadCSVButton = () => {
 			<ClayTooltipProvider>
 				<ClayButton
 					borderless
-					className={classnames('download-csv-button', {
-						'download-csv-button--loading': loading,
+					className={classnames('download-xls-button', {
+						'download-xls-button--loading': loading,
 						'text-error':
 							feedbackStatus.show &&
 							feedbackStatus.type === 'error',
@@ -129,14 +135,14 @@ const DownloadCSVButton = () => {
 					displayType="secondary"
 					onClick={handleClick}
 					title={Liferay.Language.get(
-						'download-your-data-in-a-csv-file'
+						'download-your-data-in-a-xls-file'
 					)}
 				>
 					<span className="inline-item inline-item-before">
 						{loading ? (
 							<ClayLoadingIndicator small />
 						) : (
-							<ClayIcon symbol="download" />
+							<ClayIcon symbol={clayIconSymbol} />
 						)}
 					</span>
 					{buttonTextKey}
@@ -152,7 +158,7 @@ const DownloadCSVButton = () => {
 						displayType="secondary"
 						onClick={handleCancelRequest}
 						symbol="times-circle"
-						title={Liferay.Language.get('cancel-csv')}
+						title={Liferay.Language.get('cancel-xls')}
 					/>
 				</ClayTooltipProvider>
 			)}
@@ -161,7 +167,7 @@ const DownloadCSVButton = () => {
 				<ClayAlert.ToastContainer>
 					<ClayAlert
 						autoClose={5000}
-						className="download-csv-button__alert"
+						className="download-xls-button__alert"
 						displayType={toastMessage.type}
 						onClose={handleToastClose}
 					>
@@ -173,4 +179,4 @@ const DownloadCSVButton = () => {
 	);
 };
 
-export default DownloadCSVButton;
+export default DownloadSpreadsheetButton;

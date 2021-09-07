@@ -177,6 +177,12 @@
 		<column name="objectDefinitionId" type="long" />
 		<column name="defaultObjectLayout" type="boolean" />
 		<column localized="true" name="name" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="ObjectDefinitionId" return-type="Collection">
+			<finder-column name="objectDefinitionId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectLayoutBox" remote-service="true" uuid="true">
 
@@ -198,6 +204,12 @@
 		<column name="collapsable" type="boolean" />
 		<column localized="true" name="name" type="String" />
 		<column name="priority" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="ObjectLayoutTabId" return-type="Collection">
+			<finder-column name="objectLayoutTabId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectLayoutBoxColumn" remote-service="true" uuid="true">
 
@@ -218,6 +230,12 @@
 		<column name="objectFieldId" type="long" />
 		<column name="objectLayoutBoxRowId" type="long" />
 		<column name="priority" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="ObjectLayoutBoxRowId" return-type="Collection">
+			<finder-column name="objectLayoutBoxRowId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectLayoutBoxRow" remote-service="true" uuid="true">
 
@@ -237,6 +255,12 @@
 
 		<column name="objectLayoutBoxId" type="long" />
 		<column name="priority" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="ObjectLayoutBoxId" return-type="Collection">
+			<finder-column name="objectLayoutBoxId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectLayoutTab" remote-service="true" uuid="true">
 
@@ -257,6 +281,12 @@
 		<column name="objectLayoutId" type="long" />
 		<column localized="true" name="name" type="String" />
 		<column name="priority" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="ObjectLayoutId" return-type="Collection">
+			<finder-column name="objectLayoutId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectRelationship" remote-service="true" uuid="true">
 

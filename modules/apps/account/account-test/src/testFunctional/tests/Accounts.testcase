@@ -1276,8 +1276,6 @@ definition {
 
 		Accounts.openAccountsAdmin();
 
-		Search.searchCP(searchTerm = "Accounts Name for Test");
-
 		Accounts.editCP(
 			accountDescriptionEdit = "Update Accounts Name Description for Test",
 			accountName = "Accounts Name for Test",

@@ -28,44 +28,6 @@ definition {
         }
     }
 
-    macro usePlusButton {
-        first_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
-
-        for (var value : list "${key_list}") {
-            Click(
-                key_text = "+",
-                locator1 = "Button#ANY");
-        }
-
-        second_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
-
-        if("${first_position}" != "${second_position}") {
-            echo("The position after click '+' button is correct");
-        }
-        else {
-            fail("The position after click '+' button is not correct: ${second_position}, the expected position it must be different from ${first_position}");
-        }
-    }
-
-    macro useMinusButton {
-        first_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
-
-		for (var value : list "${key_list}") {
-			Click(
-				key_text = "-",
-				locator1 = "Button#ANY");		
-		}
-
-		second_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
-
-		if("${first_position}" != "${second_position}") {
-			echo("The position after click '-' button is correct");
-		}
-		else {
-			fail("The position after click '-' button is not correct: ${second_position}, the expected position it must be different from ${first_position}");
-		}
-    }
-
     macro usePreDefinedZoomValues {
 		for (var zoom : list "${key_list}") {
 

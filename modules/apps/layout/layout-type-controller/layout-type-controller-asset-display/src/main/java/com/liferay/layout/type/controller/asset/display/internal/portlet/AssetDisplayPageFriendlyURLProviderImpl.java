@@ -71,21 +71,22 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 			return null;
 		}
 
-		String friendlyURL = _getFriendlyURL(
-			themeDisplay.getScopeGroupId(), layoutDisplayPageProvider,
-			layoutDisplayPageObjectProvider, locale, themeDisplay);
+		long groupId = themeDisplay.getScopeGroupId();
 
-		if ((friendlyURL != null) ||
-			(themeDisplay.getScopeGroupId() ==
-				layoutDisplayPageObjectProvider.getGroupId())) {
+		if (themeDisplay.getScopeGroupId() !=
+				layoutDisplayPageObjectProvider.getGroupId()) {
 
-			return friendlyURL;
+			Group layoutDisplayPageObjectGroup = _groupLocalService.getGroup(
+				layoutDisplayPageObjectProvider.getGroupId());
+
+			if (!layoutDisplayPageObjectGroup.isCompany()) {
+				groupId = layoutDisplayPageObjectGroup.getGroupId();
+			}
 		}
 
 		return _getFriendlyURL(
-			layoutDisplayPageObjectProvider.getGroupId(),
-			layoutDisplayPageProvider, layoutDisplayPageObjectProvider, locale,
-			themeDisplay);
+			groupId, layoutDisplayPageProvider, layoutDisplayPageObjectProvider,
+			locale, themeDisplay);
 	}
 
 	@Override

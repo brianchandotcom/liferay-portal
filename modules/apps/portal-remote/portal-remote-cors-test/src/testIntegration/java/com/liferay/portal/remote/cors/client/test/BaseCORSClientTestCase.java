@@ -300,7 +300,6 @@ public abstract class BaseCORSClientTestCase {
 			arguments.add("-Djvm.debug=true");
 		}
 
-		arguments.add("-Dliferay.mode=test");
 		arguments.add("-Dsun.net.http.allowRestrictedHeaders=true");
 		arguments.add("-Dsun.zip.disableMemoryMapping=true");
 

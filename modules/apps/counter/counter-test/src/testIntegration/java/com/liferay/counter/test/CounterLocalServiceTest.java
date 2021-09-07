@@ -124,7 +124,6 @@ public class CounterLocalServiceTest {
 	public void testConcurrentIncrement() throws Exception {
 		List<String> arguments = new ArrayList<>();
 
-		arguments.add("-Dliferay.mode=test");
 		arguments.add("-Dsun.zip.disableMemoryMapping=true");
 
 		for (String property :

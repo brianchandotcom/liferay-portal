@@ -7,13 +7,17 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
+		}
 	}
 
 	tearDown {
@@ -114,6 +118,45 @@ definition {
 			annualPrice = "250 USD",
 			limit = "5,000,000",
 			time = "3X");
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9180 | Test Summary: Individuals limit corresponds correctly with the plan and add-ons purchased."
+	@priority = "3"
+	test IndividualsCardShowCurrentPlanLimitAndAddOnInfo {
+		task ("Sign in AC") {
+			ACUtils.launchAC();
+		}
+
+		task ("Navigate to Workspace Settings") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToWorkspace();
+		}
+
+		task ("Navigate to the Usage") {
+			ACSettings.goToUsage();
+		}
+
+		task ("View the individuals limit of current plan") {
+			ACSettings.viewCurrentPlan(planName = "Enterprise");
+
+			ACSettings.assertPlanDetails(
+				individualsLimit = "100,000",
+				planName = "Enterprise");
+		}
+
+		task ("View the individuals of purchased add-ons") {
+			ACSettings.assertAddonsDetails(
+				addOnItem = "Individuals",
+				limit = "5,000",
+				time = "2X");
+		}
+
+		task ("View the individuals limit of current plan and purchased add-ons on Individuals card") {
+			ACSettings.assertCurrentPlanLimitAndAddOn(
+				currentPlanLimitAndAddOn = "Enterprise Plan 100,000 + 5,000 Add-On (2x)",
+				metricName = "Individuals");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8148 | Test Summary: Individuals usage update in real time"

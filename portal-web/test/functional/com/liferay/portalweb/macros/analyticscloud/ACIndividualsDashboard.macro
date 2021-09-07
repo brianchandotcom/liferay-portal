@@ -227,6 +227,19 @@ definition {
 		}
 	}
 
+	macro viewKnownIndividualSpecificOrder {
+		var resultOrder = "0";
+
+		for (var itemName : list "${itemName}") {
+			var resultOrder = ${resultOrder} + 1;
+
+			AssertVisible(
+				key_itemName = "${itemName}",
+				locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_VIEW_SPECIFIC_ORDER",
+				resultOrder = "${resultOrder}");
+		}
+	}
+
 	macro viewRechartsBarOnIndividualsActivitiesChart {
 		if (!(isSet(index))) {
 			var index = "1";

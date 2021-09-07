@@ -14,11 +14,16 @@
 
 package com.liferay.remote.app.admin.web.internal.portlet;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
+import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.remote.app.model.RemoteAppEntry;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -28,7 +33,11 @@ import javax.portlet.RenderResponse;
  */
 public class RemoteAppEntryPortlet extends MVCPortlet {
 
-	public RemoteAppEntryPortlet(RemoteAppEntry remoteAppEntry) {
+	public RemoteAppEntryPortlet(
+		RemoteAppEntry remoteAppEntry, String remoteProtocolBridgeModuleName) {
+
+		_remoteProtocolBridgeModuleName = remoteProtocolBridgeModuleName;
+
 		_url = remoteAppEntry.getUrl();
 	}
 
@@ -36,6 +45,25 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
+
+		ScriptData scriptData = new ScriptData();
+
+		scriptData.append(
+			null, "RemoteProtocolBridge.default()",
+			_remoteProtocolBridgeModuleName + " as RemoteProtocolBridge",
+			ScriptData.ModulesType.ES6);
+
+		StringWriter stringWriter = new StringWriter();
+
+		scriptData.writeTo(stringWriter);
+
+		StringBuffer stringBuffer = stringWriter.getBuffer();
+
+		OutputData outputData = _getOutputData(renderRequest);
+
+		outputData.setDataSB(
+			RemoteAppEntryPortlet.class.toString(), WebKeys.PAGE_TOP,
+			new StringBundler(stringBuffer.toString()));
 
 		PrintWriter printWriter = renderResponse.getWriter();
 
@@ -46,6 +74,20 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		printWriter.flush();
 	}
 
+	private OutputData _getOutputData(RenderRequest renderRequest) {
+		OutputData outputData = (OutputData)renderRequest.getAttribute(
+			WebKeys.OUTPUT_DATA);
+
+		if (outputData == null) {
+			outputData = new OutputData();
+
+			renderRequest.setAttribute(WebKeys.OUTPUT_DATA, outputData);
+		}
+
+		return outputData;
+	}
+
+	private final String _remoteProtocolBridgeModuleName;
 	private final String _url;
 
 }

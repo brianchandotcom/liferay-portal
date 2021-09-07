@@ -14,6 +14,7 @@
 
 package com.liferay.remote.app.admin.web.internal.deployer;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.remote.app.admin.web.internal.portlet.RemoteAppEntryPortlet;
@@ -26,6 +27,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,7 +38,11 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 	@Override
 	public ServiceRegistration<Portlet> deploy(RemoteAppEntry remoteAppEntry) {
 		return _bundleContext.registerService(
-			Portlet.class, new RemoteAppEntryPortlet(remoteAppEntry),
+			Portlet.class,
+			new RemoteAppEntryPortlet(
+				remoteAppEntry,
+				_npmResolver.resolveModuleName(
+					"@liferay/remote-app-admin-web/remote_protocol/bridge")),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"com.liferay.portlet.company", remoteAppEntry.getCompanyId()
 			).put(
@@ -67,5 +73,8 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 	}
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private NPMResolver _npmResolver;
 
 }

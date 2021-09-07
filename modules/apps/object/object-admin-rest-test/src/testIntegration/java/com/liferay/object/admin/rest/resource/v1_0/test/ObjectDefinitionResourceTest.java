@@ -17,21 +17,15 @@ package com.liferay.object.admin.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
-import com.liferay.object.admin.rest.client.pagination.Page;
-import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Collections;
-import java.util.List;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,82 +53,10 @@ public class ObjectDefinitionResourceTest
 		}
 	}
 
-	@Override
-	@Test
-	public void testGetObjectDefinitionsPage() throws Exception {
-		Page<ObjectDefinition> objectDefinitionsPage =
-			objectDefinitionResource.getObjectDefinitionsPage(
-				null, Pagination.of(1, 10));
-
-		long totalCount = objectDefinitionsPage.getTotalCount();
-
-		_addObjectDefinition(randomObjectDefinition());
-
-		objectDefinitionsPage =
-			objectDefinitionResource.getObjectDefinitionsPage(
-				null, Pagination.of(1, 10));
-
-		Assert.assertEquals(
-			totalCount + 1, objectDefinitionsPage.getTotalCount());
-	}
-
-	@Override
-	@Test
-	public void testGetObjectDefinitionsPageWithPagination() throws Exception {
-		Page<ObjectDefinition> objectDefinitionsPage =
-			objectDefinitionResource.getObjectDefinitionsPage(
-				null, Pagination.of(1, 2));
-
-		long totalCount = objectDefinitionsPage.getTotalCount();
-
-		_addObjectDefinition(randomObjectDefinition());
-		_addObjectDefinition(randomObjectDefinition());
-
-		objectDefinitionsPage =
-			objectDefinitionResource.getObjectDefinitionsPage(
-				null, Pagination.of(1, 2));
-
-		List<ObjectDefinition> objectDefinitions =
-			(List<ObjectDefinition>)objectDefinitionsPage.getItems();
-
-		Assert.assertEquals(
-			objectDefinitions.toString(), 2, objectDefinitions.size());
-
-		objectDefinitionsPage =
-			objectDefinitionResource.getObjectDefinitionsPage(
-				null, Pagination.of(2, 2));
-
-		Assert.assertEquals(
-			totalCount + 2, objectDefinitionsPage.getTotalCount());
-	}
-
 	@Ignore
 	@Override
 	@Test
 	public void testGraphQLGetObjectDefinitionNotFound() {
-	}
-
-	@Override
-	@Test
-	public void testGraphQLGetObjectDefinitionsPage() throws Exception {
-		GraphQLField graphQLField = new GraphQLField(
-			"objectDefinitions", new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		JSONObject objectDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/objectDefinitions");
-
-		int totalCount = (int)objectDefinitionsJSONObject.get("totalCount");
-
-		testGraphQLObjectDefinition_addObjectDefinition();
-
-		objectDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/objectDefinitions");
-
-		Assert.assertEquals(
-			totalCount + 1, objectDefinitionsJSONObject.get("totalCount"));
 	}
 
 	@Override

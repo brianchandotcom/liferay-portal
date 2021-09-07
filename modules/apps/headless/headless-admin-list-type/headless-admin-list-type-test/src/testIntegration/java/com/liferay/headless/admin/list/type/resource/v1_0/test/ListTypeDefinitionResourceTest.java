@@ -17,13 +17,10 @@ package com.liferay.headless.admin.list.type.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeEntry;
-import com.liferay.headless.admin.list.type.client.pagination.Page;
-import com.liferay.headless.admin.list.type.client.pagination.Pagination;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.Collections;
 
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,25 +31,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class ListTypeDefinitionResourceTest
 	extends BaseListTypeDefinitionResourceTestCase {
-
-	@Override
-	@Test
-	public void testGetListTypeDefinitionsPage() throws Exception {
-		Page<ListTypeDefinition> listTypeDefinitionsPage =
-			listTypeDefinitionResource.getListTypeDefinitionsPage(
-				Pagination.of(1, 10));
-
-		long totalCount = listTypeDefinitionsPage.getTotalCount();
-
-		_addListTypeDefinition(randomListTypeDefinition());
-
-		listTypeDefinitionsPage =
-			listTypeDefinitionResource.getListTypeDefinitionsPage(
-				Pagination.of(1, 10));
-
-		Assert.assertEquals(
-			totalCount + 1, listTypeDefinitionsPage.getTotalCount());
-	}
 
 	@Ignore
 	@Override
@@ -106,6 +84,15 @@ public class ListTypeDefinitionResourceTest
 		throws Exception {
 
 		return _addListTypeDefinition(randomListTypeDefinition());
+	}
+
+	@Override
+	protected ListTypeDefinition
+			testGetListTypeDefinitionsPage_addListTypeDefinition(
+				ListTypeDefinition listTypeDefinition)
+		throws Exception {
+
+		return _addListTypeDefinition(listTypeDefinition);
 	}
 
 	@Override

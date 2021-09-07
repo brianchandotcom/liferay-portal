@@ -825,45 +825,57 @@ definition {
 	test ViewSelectedWebContentInContentPageTemplate {
 		property testray.main.component.name = "Layout Page Templates";
 
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Site Name",
-			title = "WebContent Title");
+		task ("Add a Web Content via JSON") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WebContent Title");
+		}
 
-		JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-			groupName = "Test Site Name",
-			layoutPageTemplateCollectionName = "Page Template Collection");
+		task ("Add a page template collection and a draft page template to it") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
 
-		JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-			groupName = "Test Site Name",
-			layoutPageTemplateCollectionName = "Page Template Collection",
-			layoutPageTemplateEntryName = "Page Template Name",
-			layoutPageTemplateStatus = "Draft",
-			layoutPageTemplateType = "Content Page Template");
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+		}
 
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+		task ("Add a Content Display to page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
-		Navigator.gotoNavNested(navNested = "Page Template Collection");
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
-		PageEditor.assertFragmentSidebarLoaded();
+			PageEditor.assertFragmentSidebarLoaded();
 
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Content Display");
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
 
-		PageEditor.editContentDisplay(
-			fragmentName = "Content Display",
-			webcontent = "true",
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WebContent Title");
+		task ("Select WC to display in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WebContent Title");
+		}
 
-		PageEditor.clickPublish();
+		task ("Publish page template") {
+			PageEditor.clickPublish();
+		}
 
-		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+		task ("Go to view page template") {
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
-		PageEditor.assertFragmentSidebarLoaded();
+			PageEditor.assertFragmentSidebarLoaded();
+		}
 
 		task ("Assert correct content is visible") {
 			AssertTextEquals.assertPartialTextAceEditor(

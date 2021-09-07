@@ -109,37 +109,45 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98031."
+	@description = "This is a test for LPS-98031. Map manual URL to link fragment."
 	@priority = "5"
 	test MapManualURLToLinkFragment {
 		property portal.acceptance = "true";
 
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+		task ("Add a Banner Center fragment to content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
-		Navigator.gotoNavNested(navNested = "Page Template Collection");
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
-		PageEditor.assertFragmentSidebarLoaded();
+			PageEditor.assertFragmentSidebarLoaded();
 
-		PageEditor.addFragment(
-			collectionName = "Featured Content",
-			composition = "true",
-			fragmentName = "Banner Center");
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				composition = "true",
+				fragmentName = "Banner Center");
+		}
 
-		PageEditorEditableLink.gotoEditableFieldLink(
-			fragmentName = "Button",
-			id = "link");
+		task ("Map manual URL to editable field of Banner Center") {
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Button",
+				id = "link");
 
-		PageEditorEditableLink.updateURL(url = "https://liferay.com");
+			PageEditorEditableLink.updateURL(url = "https://liferay.com");
+		}
 
-		PageEditor.clickPublish();
+		task ("Publish page template") {
+			PageEditor.clickPublish();
+		}
 
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+		task ("Go to view page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
-		Navigator.gotoNavNested(navNested = "Page Template Collection");
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+		}
 
 		task ("Assert editable has the specified URL mapped correctly") {
 			AssertVisible(locator1 = "//a[contains(@class,'btn')][contains(@href,'https://liferay.com')]");

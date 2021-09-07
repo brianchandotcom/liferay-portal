@@ -1,6 +1,7 @@
 @import 'cadmin-variables';
 @import 'variables';
-@import './download-csv-button';
+
+@import './download-spreadsheet-button';
 
 html#{$cadmin-selector} {
 	.cadmin {

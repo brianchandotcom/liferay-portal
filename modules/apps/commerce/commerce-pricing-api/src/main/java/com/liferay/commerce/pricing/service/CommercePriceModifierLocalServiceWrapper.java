@@ -147,6 +147,13 @@ public class CommercePriceModifierLocalServiceWrapper
 				neverExpire, serviceContext);
 	}
 
+	@Override
+	public void checkCommercePriceModifiers()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_commercePriceModifierLocalService.checkCommercePriceModifiers();
+	}
+
 	/**
 	 * Creates a new commerce price modifier with the primary key. Does not add the commerce price modifier to the database.
 	 *

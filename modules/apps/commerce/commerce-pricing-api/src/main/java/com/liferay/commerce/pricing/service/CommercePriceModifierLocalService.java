@@ -129,6 +129,8 @@ public interface CommercePriceModifierLocalService
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void checkCommercePriceModifiers() throws PortalException;
+
 	/**
 	 * Creates a new commerce price modifier with the primary key. Does not add the commerce price modifier to the database.
 	 *

@@ -11011,7 +11011,6 @@ tokenLocation="REQUEST"</echo>
 
 	<target name="prepare-system-ext-properties">
 		<echo file="${app.server.classes.portal.dir}/system-ext.properties">com.liferay.portal.kernel.util.ServiceProxyFactory.timeout=300000
-liferay.mode=test
 log.sanitizer.enabled=false</echo>
 
 		<get-testcase-property property.name="custom.system.properties" />

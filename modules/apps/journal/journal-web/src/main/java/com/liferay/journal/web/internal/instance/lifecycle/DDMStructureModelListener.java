@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	service = {ModelListener.class, PortalInstanceLifecycleListener.class}
 )
 public class DDMStructureModelListener

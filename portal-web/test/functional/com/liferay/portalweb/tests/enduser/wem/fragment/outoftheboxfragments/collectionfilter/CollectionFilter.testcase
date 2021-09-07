@@ -12,14 +12,6 @@ definition {
 			User.firstLoginPG();
 		}
 
-		task ("Enable the Collection Filter feature via gogo shell") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer");
-
-			GogoShell.viewOutput(outputContent = "true");
-		}
-
 		task ("Add a site via JSON") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
@@ -33,12 +25,6 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:disable com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer");
-
-			GogoShell.viewOutput(outputContent = "true");
 		}
 	}
 
@@ -46,7 +32,6 @@ definition {
 	@priority = "5"
 	test EnableSearchFieldInDropdownList {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CollectionFilter#EnableSearchFieldInDropdownList";
 
 		task ("Add two vocabularies") {
 			for (var vocabularyName : list "Size,Warehouse") {
@@ -361,7 +346,6 @@ definition {
 	@description = "This is a test for LPS-131947. Collection Filters with category works in display page template."
 	@priority = "4"
 	test FilterResultsOfCollectionDisplayByCategoryInDisplayPageTemplate {
-		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionDisplayByCategoryInDisplayPageTemplate";
 		property testray.main.component.name = "Display Pages";
 
 		task ("Add a vocabulary") {
@@ -549,8 +533,6 @@ definition {
 	@description = "This is a test for LPS-113926. The user can filter collection items in Collection Display by keywords."
 	@priority = "5"
 	test FilterResultsOfCollectionDisplayByKeywords {
-		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionDisplayByKeywords";
-
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Levis 501",
@@ -713,8 +695,6 @@ definition {
 	@description = "This is a test for LPS-113926. The user can filter collection items in Collection Display by multiple keywords."
 	@priority = "4"
 	test FilterResultsOfCollectionDisplayByMultipleKeywords {
-		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionDisplayByMultipleKeywords";
-
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Levis 501",
@@ -909,7 +889,6 @@ definition {
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnDynamicCollectionByContainsAllCategories {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionPageBasedOnDynamicCollectionByContainsAllCategories";
 
 		task ("Add two vocabularies") {
 			for (var title : list "Vocabulary A,Vocabulary B") {
@@ -1214,7 +1193,6 @@ definition {
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnDynamicCollectionByContainsAnySubcategories {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionPageBasedOnDynamicCollectionByContainsAnySubcategories";
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -1560,7 +1538,6 @@ definition {
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnDynamicCollectionBySingleCategory {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionPageBasedOnDynamicCollectionBySingleCategory";
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -1778,8 +1755,6 @@ definition {
 	@description = "This is a test for LPS-111807. Can filter the results of a collection page based on manual collection via selecting multiple categories in multiple filters."
 	@priority = "4"
 	test FilterResultsOfCollectionPageBasedOnManualCollectionByContainsAllCategories {
-		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionPageBasedOnManualCollectionByContainsAllCategories";
-
 		task ("Add two vocabularies") {
 			for (var title : list "Vocabulary A,Vocabulary B") {
 				JSONCategory.addVocabulary(
@@ -2107,7 +2082,6 @@ definition {
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnManualCollectionByContainsAnyCategories {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionPageBasedOnManualCollectionByContainsAnyCategories";
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -2445,7 +2419,6 @@ definition {
 	@priority = "5"
 	test FilterResultsOfCollectionPageBasedOnManualCollectionBySingleCategory {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionPageBasedOnManualCollectionBySingleCategory";
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -2687,8 +2660,6 @@ definition {
 	@description = "This is a test for LPS-111807. Can filter the results of a collection page based on manual collection with via selecting subcategories from Global site."
 	@priority = "4"
 	test FilterResultsOfCollectionPageBasedOnManualCollectionBySubcategoryFromGlobalSite {
-		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfCollectionPageBasedOnManualCollectionBySubcategoryFromGlobalSite";
-
 		task ("Add a category in Topic from Global site") {
 			var categoryId = JSONCategory.addCategory(
 				groupName = "Global",
@@ -2936,8 +2907,6 @@ definition {
 	@description = "This is a test for LPS-131947. The user could view a warning info in Collection Filter fragment when no collection in page. Can filter different Collection Displays by different Collection Filters."
 	@priority = "4"
 	test FilterResultsOfMultipleCollectionDisplaysByMultipleCollectionFilters {
-		property test.name.skip.portal.instance = "CollectionFilter#FilterResultsOfMultipleCollectionDisplaysByMultipleCollectionFilters";
-
 		task ("Add three web contents") {
 			for (var style : list "501,510,512") {
 				JSONWebcontent.addWebContent(
@@ -3187,7 +3156,6 @@ definition {
 	@priority = "5"
 	test ShowLabelOfSelectedSource {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CollectionFilter#ShowLabelOfSelectedSource";
 
 		task ("Add two vocabularies") {
 			for (var vocabularyName : list "Size,Color") {
@@ -3553,8 +3521,6 @@ definition {
 	@description = "This is a test for LPS-113926. The user should view no results in Collection Dipslay when search non collection item by keywords."
 	@priority = "4"
 	test ViewNoResultsInCollectionDisplayWhenSearchNonCollectionItemByKeywords {
-		property test.name.skip.portal.instance = "CollectionFilter#ViewNoResultsInCollectionDisplayWhenSearchNonCollectionItemByKeywords";
-
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Levis 501",

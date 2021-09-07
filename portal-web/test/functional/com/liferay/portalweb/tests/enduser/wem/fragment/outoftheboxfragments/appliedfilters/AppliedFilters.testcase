@@ -12,18 +12,6 @@ definition {
 			User.firstLoginPG();
 		}
 
-		task ("Enable the Collection Filter feature via gogo shell") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer");
-
-			GogoShell.viewOutput(outputContent = "true");
-
-			GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.renderer.collection.filter.internal.CollectionAppliedFiltersFragmentRenderer");
-
-			GogoShell.viewOutput(outputContent = "true");
-		}
-
 		task ("Add a site via JSON") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
@@ -37,24 +25,12 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:disable com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer");
-
-			GogoShell.viewOutput(outputContent = "true");
-
-			GogoShell.executeCommand(commandName = "scr:disable com.liferay.fragment.renderer.collection.filter.internal.CollectionAppliedFiltersFragmentRenderer");
-
-			GogoShell.viewOutput(outputContent = "true");
 		}
 	}
 
 	@description = "This is a test for LPS-113929. The page creator could use Clear Filters to reset the filters."
 	@priority = "5"
 	test ResetAppliedFilters {
-		property test.name.skip.portal.instance = "AppliedFilters#ResetAppliedFilters";
-
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -274,8 +250,6 @@ definition {
 	@description = "This is a test for LPS-113929. The page creator could see the alert info in the General panel of Applied Filters fragment. The Applied Filters fragment could show applied category and keywords filters in Preview and View mode."
 	@priority = "5"
 	test ViewAppliedCategoryAndKeywordsFilters {
-		property test.name.skip.portal.instance = "AppliedFilters#ViewAppliedCategoryAndKeywordsFilters";
-
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -596,8 +570,6 @@ definition {
 	@description = "This is a test for LPS-113929. The Applied Filters will show the second line and Show More button when there are lots of applied filters."
 	@priority = "4"
 	test ViewShowMoreButtonWhenTheNumberOfAppliedFiltersMoreThanLimitation {
-		property test.name.skip.portal.instance = "AppliedFilters#ViewShowMoreButtonWhenTheNumberOfAppliedFiltersMoreThanLimitation";
-
 		task ("Add two vocabularies") {
 			for (var vocabularyName : list "Color,Gender") {
 				JSONCategory.addVocabulary(

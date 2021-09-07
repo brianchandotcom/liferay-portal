@@ -112,6 +112,12 @@ definition {
 			value1 = "${interestName}");
 	}
 
+	macro viewInterestNotPresent {
+		AssertElementNotPresent(
+			key_interestTopic = "${interestTopic}",
+			locator1 = "ACInterests#INTEREST_TOPIC");
+	}
+
 	macro viewInterestPage {
 		var key_pageName = "${pageName}";
 

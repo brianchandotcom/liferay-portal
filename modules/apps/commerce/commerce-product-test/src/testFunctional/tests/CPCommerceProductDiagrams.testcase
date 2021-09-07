@@ -225,19 +225,11 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		CommerceDiagram.usePlusZoom(key_list = "1,2,3");
-
-		CommerceDiagram.useMinusZoom(key_list = "1,2,3,4");
-
 		CommerceDiagram.usePreDefinedZoom(key_list = "50%,75%,100%,125%,150%,175%,200%");
 
 		CommerceDiagram.useDragOnBackground(
 			image_name = "Commerce_Black",
 			position = "300,0");
-
-		CommerceDiagram.useDragOnBackgroundByDirectionController(
-            key_list = "1,2,3,4,5",
-            direction = "left");
 	}
 
 }

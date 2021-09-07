@@ -152,6 +152,9 @@ public class AccountAddressResourceImpl
 		CommerceAddress commerceAddress =
 			_commerceAddressService.getCommerceAddress(id);
 
+		Country country = _countryService.getCountryByA2(
+			commerceAddress.getCompanyId(), accountAddress.getCountryISOCode());
+
 		commerceAddress = _commerceAddressService.updateCommerceAddress(
 			commerceAddress.getCommerceAddressId(),
 			GetterUtil.getString(
@@ -169,7 +172,11 @@ public class AccountAddressResourceImpl
 				accountAddress.getCity(), commerceAddress.getCity()),
 			GetterUtil.getString(
 				accountAddress.getZip(), commerceAddress.getZip()),
-			commerceAddress.getRegionId(), commerceAddress.getCountryId(),
+			GetterUtil.getLong(
+				_getRegionId(country, accountAddress),
+				commerceAddress.getRegionId()),
+			GetterUtil.getLong(
+				_getCountryId(country), commerceAddress.getCountryId()),
 			GetterUtil.getString(
 				accountAddress.getPhoneNumber(),
 				commerceAddress.getPhoneNumber()),
@@ -195,6 +202,9 @@ public class AccountAddressResourceImpl
 					externalReferenceCode);
 		}
 
+		Country country = _countryService.getCountryByA2(
+			commerceAddress.getCompanyId(), accountAddress.getCountryISOCode());
+
 		_commerceAddressService.updateCommerceAddress(
 			commerceAddress.getCommerceAddressId(),
 			GetterUtil.getString(
@@ -212,7 +222,11 @@ public class AccountAddressResourceImpl
 				accountAddress.getCity(), commerceAddress.getCity()),
 			GetterUtil.getString(
 				accountAddress.getZip(), commerceAddress.getZip()),
-			commerceAddress.getRegionId(), commerceAddress.getCountryId(),
+			GetterUtil.getLong(
+				_getRegionId(country, accountAddress),
+				commerceAddress.getRegionId()),
+			GetterUtil.getLong(
+				_getCountryId(country), commerceAddress.getCountryId()),
 			GetterUtil.getString(
 				accountAddress.getPhoneNumber(),
 				commerceAddress.getPhoneNumber()),
@@ -254,6 +268,10 @@ public class AccountAddressResourceImpl
 		}
 
 		if (commerceAddress != null) {
+			Country country = _countryService.getCountryByA2(
+				commerceAddress.getCompanyId(),
+				accountAddress.getCountryISOCode());
+
 			return _toAccountAddress(
 				_commerceAddressService.updateCommerceAddress(
 					commerceAddress.getCommerceAddressId(),
@@ -264,8 +282,11 @@ public class AccountAddressResourceImpl
 					GetterUtil.getString(accountAddress.getStreet3(), null),
 					GetterUtil.getString(accountAddress.getCity(), null),
 					GetterUtil.getString(accountAddress.getZip(), null),
-					commerceAddress.getRegionId(),
-					commerceAddress.getCountryId(),
+					GetterUtil.getLong(
+						_getRegionId(country, accountAddress),
+						commerceAddress.getRegionId()),
+					GetterUtil.getLong(
+						_getCountryId(country), commerceAddress.getCountryId()),
 					GetterUtil.getString(accountAddress.getPhoneNumber(), null),
 					GetterUtil.getInteger(
 						accountAddress.getType(), commerceAddress.getType()),
@@ -292,6 +313,9 @@ public class AccountAddressResourceImpl
 		CommerceAddress commerceAddress =
 			_commerceAddressService.getCommerceAddress(id);
 
+		Country country = _countryService.getCountryByA2(
+			commerceAddress.getCompanyId(), accountAddress.getCountryISOCode());
+
 		commerceAddress = _commerceAddressService.updateCommerceAddress(
 			commerceAddress.getCommerceAddressId(),
 			GetterUtil.getString(accountAddress.getName()),
@@ -301,7 +325,11 @@ public class AccountAddressResourceImpl
 			GetterUtil.getString(accountAddress.getStreet3()),
 			GetterUtil.getString(accountAddress.getCity()),
 			GetterUtil.getString(accountAddress.getZip()),
-			commerceAddress.getRegionId(), commerceAddress.getCountryId(),
+			GetterUtil.getLong(
+				_getRegionId(country, accountAddress),
+				commerceAddress.getRegionId()),
+			GetterUtil.getLong(
+				_getCountryId(country), commerceAddress.getCountryId()),
 			GetterUtil.getString(accountAddress.getPhoneNumber()),
 			GetterUtil.getInteger(accountAddress.getType()),
 			_serviceContextHelper.getServiceContext());
@@ -355,6 +383,14 @@ public class AccountAddressResourceImpl
 
 		return Page.of(
 			_toAccountAddresses(commerceAddresses), pagination, totalItems);
+	}
+
+	private long _getCountryId(Country country) {
+		if (country == null) {
+			return 0;
+		}
+
+		return country.getCountryId();
 	}
 
 	private long _getRegionId(Country country, AccountAddress accountAddress)

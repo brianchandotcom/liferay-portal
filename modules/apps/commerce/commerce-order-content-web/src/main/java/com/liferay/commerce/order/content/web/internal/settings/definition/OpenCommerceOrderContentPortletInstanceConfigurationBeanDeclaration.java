@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.order.content.web.internal.settings.definition;
 
-import com.liferay.commerce.order.content.web.internal.portlet.configuration.CommerceOpenOrderContentPortletInstanceConfiguration;
+import com.liferay.commerce.order.content.web.internal.portlet.configuration.OpenCommerceOrderContentPortletInstanceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,12 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component(enabled = false, service = ConfigurationBeanDeclaration.class)
-public class CommerceOpenOrderContentPortletInstanceConfigurationBeanDeclaration
+public class OpenCommerceOrderContentPortletInstanceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return CommerceOpenOrderContentPortletInstanceConfiguration.class;
+		return OpenCommerceOrderContentPortletInstanceConfiguration.class;
 	}
 
 }

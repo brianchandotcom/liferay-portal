@@ -36,13 +36,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USAGE_ADDONS_LIMITS</td>
-	<td>//h4[contains(.,'Add-ons')]/..//b[contains(@class,'details-label')and contains(.,'${key_planName}')]/../..//span[contains(@class,'limit-amount') and contains(.,'${key_planLimit}')]</td>
+	<td>USAGE_ADDONS_LIMIT</td>
+	<td>//div[h4[contains(.,'Add-ons')]]//div[contains(@class,'plan-name')][.//span[contains(@class,'limit')][normalize-space()='+${key_planLimit}'] and .//span[contains(@class,'text')][normalize-space()='${key_addOnItem}']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USAGE_ADDONS_PRICE</td>
-	<td>//b[contains(@class,'details-label')and contains(.,'${key_planName}')]/../../../..//div[contains(@class,'annual-price') and contains(.,'${key_planValue}')]</td>
+	<td>//div[h4[contains(.,'Add-ons')]]//div[contains(@class,'plan-name')][.//b[contains(@class,'label')][normalize-space(text())='${key_addOnItem}']]//following-sibling::div[contains(@class,'annual-price')][normalize-space()='${key_annualPrice} / year']</td>
 	<td></td>
 </tr>
 <tr>

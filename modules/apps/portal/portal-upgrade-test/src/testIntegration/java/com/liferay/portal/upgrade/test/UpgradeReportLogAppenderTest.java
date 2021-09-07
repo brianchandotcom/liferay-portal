@@ -146,20 +146,13 @@ public class UpgradeReportLogAppenderTest {
 
 		_assertReport(
 			StringBundler.concat(
-				PropsKeys.LIFERAY_HOME,
-				StringPool.EQUAL,
-				PropsValues.LIFERAY_HOME,
-				StringPool.NEW_LINE,
-				PropsKeys.LOCALES,
-				StringPool.EQUAL,
-				Arrays.toString(PropsValues.LOCALES),
-				StringPool.NEW_LINE,
-				PropsKeys.LOCALES_ENABLED,
-				StringPool.EQUAL,
+				PropsKeys.LIFERAY_HOME, StringPool.EQUAL,
+				PropsValues.LIFERAY_HOME, StringPool.NEW_LINE,
+				PropsKeys.LOCALES, StringPool.EQUAL,
+				Arrays.toString(PropsValues.LOCALES), StringPool.NEW_LINE,
+				PropsKeys.LOCALES_ENABLED, StringPool.EQUAL,
 				Arrays.toString(PropsValues.LOCALES_ENABLED),
-				StringPool.NEW_LINE,
-				PropsKeys.DL_STORE_IMPL,
-				StringPool.EQUAL,
+				StringPool.NEW_LINE, PropsKeys.DL_STORE_IMPL, StringPool.EQUAL,
 				PropsValues.DL_STORE_IMPL));
 	}
 

@@ -58,7 +58,6 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
@@ -126,7 +125,7 @@ public class UpgradeReport {
 					new String[] {
 						_getDate(), _getPortalVersions(), _getDialectInfo(),
 						_getProperties(), _getDLStorageSize(),
-						_getDatabaseInfo(), _getUpgradeProcessesContent(),
+						_getDatabaseTablesInfo(), _getUpgradeProcessesContent(),
 						_getLogEvents("errors"), _getLogEvents("warnings"),
 						_releaseManagerOSGiCommands.check()
 					},
@@ -158,15 +157,11 @@ public class UpgradeReport {
 		return 0;
 	}
 
-	private String _getDatabaseInfo() {
+	private String _getDatabaseTablesInfo() {
 		Map<String, Integer> currentTableCounts = _getTableCounts();
 
 		if (currentTableCounts == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get database information");
-			}
-
-			return null;
+			return "Unable to get database tables information";
 		}
 
 		Set<String> tableNames = new HashSet<>();
@@ -530,7 +525,7 @@ public class UpgradeReport {
 				while (resultSet1.next()) {
 					String tableType = resultSet1.getString("TABLE_TYPE");
 
-					if (Objects.equals(_dbType, DBType.MARIADB)) {
+					if (_dbType == DBType.MARIADB) {
 						if (!tableType.equals("BASE TABLE")) {
 							continue;
 						}

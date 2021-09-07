@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USAGE_PLAN_ICON</td>
+	<td>//div[contains(@class,'panel-header')][.//div[contains(@class,'plan-name')][normalize-space(text())='${key_planName}']]//*[name()='svg'][contains(@class,'icon-${key_type}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USAGE_PLAN_LIMITS_TABLE</td>
 	<td>//div[h4[contains(.,'Plans')]]//div[contains(@class,'panel-header')][.//div[contains(@class,'plan-name')][normalize-space(text())='${key_planName}']]//following-sibling::div[contains(@class,'panel-body')]//li[.//span[contains(@class,'limit')][normalize-space()='${key_planLimit}'] and .//span[contains(@class,'text')][normalize-space()='${key_planItem}']]</td>
 	<td></td>

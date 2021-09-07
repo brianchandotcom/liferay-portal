@@ -19,6 +19,14 @@ package com.liferay.object.constants;
  */
 public class ObjectDefinitionConstants {
 
+	public static final String RELATIONSHIP_MANY_TO_MANY = "many_to_many";
+
+	public static final String RELATIONSHIP_MANY_TO_ONE = "many_to_one";
+
+	public static final String RELATIONSHIP_ONE_TO_MANY = "one_to_many";
+
+	public static final String RELATIONSHIP_ONE_TO_ONE = "one_to_one";
+
 	public static final String SCOPE_COMPANY = "company";
 
 	public static final String SCOPE_DEPOT = "depot";

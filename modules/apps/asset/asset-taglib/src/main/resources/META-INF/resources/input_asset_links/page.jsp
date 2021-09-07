@@ -156,7 +156,7 @@
 										Liferay.Util.escapeHTML(
 											assetEntry.assettype
 										) +
-										'</p><p class="list-group-subtitle">' +
+										'</p><p class="list-group-subtitle"><liferay-ui:message key="scope" />: ' +
 										Liferay.Util.escapeHTML(
 											assetEntry.groupdescriptivename
 										) +

@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USAGE_CURRENT_PLAN_LIMIT_AND_ADD_ON</td>
+	<td>//div[contains(@class,'overview-usage')][.//h3[contains(@class,'metric-name')][normalize-space(text())='${key_metricName}']]//div[contains(@class,'breakdown-content')]//div[contains(@class,'text-muted')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USAGE_TOTAL_NUMBER_METRICS</td>
 	<td>//h3[contains(.,'${key_metricName}')]/..//span[contains(@class,'metric-limit') and contains(.,'${key_totalNumber}')]</td>
 	<td></td>

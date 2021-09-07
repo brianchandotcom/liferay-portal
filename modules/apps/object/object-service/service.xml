@@ -271,6 +271,25 @@
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="label" type="String" />
+		<column name="name" type="String" />
+		<column name="objectDefinitionId1" type="long" />
+		<column name="objectDefinitionId1FieldId" type="long" />
+		<column name="objectDefinitionId2" type="long" />
+		<column name="objectDefinitionId2FieldId" type="long" />
+		<column name="type" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="ObjectDefinitionId1" return-type="Collection">
+			<finder-column name="objectDefinitionId1" />
+		</finder>
+		<finder name="ObjectDefinitionId2" return-type="Collection">
+			<finder-column name="objectDefinitionId2" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>DuplicateObjectDefinition</exception>

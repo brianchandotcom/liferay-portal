@@ -29,4 +29,6 @@ public class ObjectWebKeys {
 
 	public static final String OBJECT_FIELD = "OBJECT_FIELD";
 
+	public static final String OBJECT_LAYOUT = "OBJECT_LAYOUT";
+
 }

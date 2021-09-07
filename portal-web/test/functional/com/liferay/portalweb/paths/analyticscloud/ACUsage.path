@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USAGE_PLAN_BODY</td>
+	<td>//div[contains(@class,'panel-header')][.//div[contains(@class,'plan-name')][normalize-space(text())='${key_planName}']]//following-sibling::div[contains(@class,'panel-body')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USAGE_PLAN_ICON</td>
 	<td>//div[contains(@class,'panel-header')][.//div[contains(@class,'plan-name')][normalize-space(text())='${key_planName}']]//*[name()='svg'][contains(@class,'icon-${key_type}')]</td>
 	<td></td>

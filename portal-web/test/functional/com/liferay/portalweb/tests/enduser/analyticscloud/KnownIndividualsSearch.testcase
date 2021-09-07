@@ -928,24 +928,30 @@ definition {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
-		task ("Add a new user in DXP and sync the Contact Data") {
-			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
+		task ("Add 6 new users and sync the Contact Data") {
+			for (var n : list "1,2,3,4,5,6") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
 
-			ACDXPSettings.syncNewContactData();
+				ACDXPSettings.syncNewContactData();
+			}
 		}
 
-		task ("Sign in with the new user to visit the site pages") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
+		task ("View the page as different users") {
+			for (var username : list "user1,user2,user3,user4,user5,user6") {
+				var fullName = "${username} ${username}";
 
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
 		}
 
 		task ("Switch to new property in AC") {
@@ -956,7 +962,7 @@ definition {
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 		}
 
-		task ("Go to the Individual > KnownIndividual > Details") {
+		task ("Go to the Individual > KnownIndividual") {
 			ACNavigation.goToIndividuals();
 
 			ACIndividualsDashboard.goToKnownIndividualsTab();
@@ -965,11 +971,11 @@ definition {
 		task ("Change the pagination to "5" and "75"") {
 			ACUtils.changePagination(itemsPerPage = "5");
 
-			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "ac ac");
+			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "user6 user6");
 
 			ACUtils.changePagination(itemsPerPage = "75");
 
-			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "ac ac");
+			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "user6 user6");
 		}
 	}
 

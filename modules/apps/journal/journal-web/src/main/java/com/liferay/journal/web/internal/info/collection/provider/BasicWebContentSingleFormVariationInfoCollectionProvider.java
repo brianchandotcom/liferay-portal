@@ -108,7 +108,9 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 						_journalArticleLocalService.fetchLatestArticle(
 							classPK, WorkflowConstants.STATUS_ANY, false);
 
-					articles.add(article);
+					if (article != null) {
+						articles.add(article);
+					}
 				}
 			}
 

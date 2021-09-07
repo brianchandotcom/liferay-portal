@@ -60,6 +60,10 @@ definition {
 				userScreenName = "ac");
 		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
 		task ("Sign in with the new user to visit the site pages") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "ac@liferay.com",
@@ -304,6 +308,668 @@ definition {
 
 		task ("Assert there are no segments found") {
 			ACUtils.viewNoResultsMessage(noResultMessage = "There are no Segments found.");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9033 | Test Summary: Case Insensitive Search"
+	@priority = "5"
+	test CanCaseInsensitiveSearch {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add new users in DXP and sync the Contact Data") {
+			JSONUser.addUser(
+				userEmailAddress = "randy.smith@liferay.com",
+				userFirstName = "Randy",
+				userLastName = "Smith",
+				userScreenName = "Randysn");
+			JSONUser.addUser(
+				userEmailAddress = "maria.rau@liferay.com",
+				userFirstName = "Maria",
+				userLastName = "Rau",
+				userScreenName = "Mariasn");
+
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Sign in with the new user to visit the site pages") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "randy.smith@liferay.com",
+				userLoginFullName = "Randy Smith");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "maria.rau@liferay.com",
+				userLoginFullName = "Maria Rau");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to the Individual > KnownIndividual > Details") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+		}
+
+		task ("Search for upper case") {
+			ACUtils.searchBar(searchItem = "SMITH");
+
+			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Randy Smith");
+			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "Maria Rau");
+		}
+
+		task ("Search for lower case") {
+			ACUtils.searchBar(searchItem = "maria");
+
+			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Maria Rau");
+			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "Randy Smith");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9032 | Test Summary: Search and Clear Field"
+	@priority = "1"
+	test SearchAndClearField {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add 2 new users and sync the Contact Data") {
+			for (var n : list "1,2") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
+			}
+
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View the page as different users") {
+			for (var username : list "user1,user2") {
+				var fullName = "${username} ${username}";
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to the Individual > KnownIndividual") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+		}
+
+		task ("Search for an Individual with "user2"") {
+			ACUtils.searchBar(searchItem = "user2");
+
+			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "user2 user2");
+			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "user1 user1");
+		}
+
+		task ("Clear the search result") {
+			ACUtils.clearSearchBar();
+
+			for (var individualAttribute : list "user1 user1,user2 user2") {
+				ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "${individualAttribute}");
+			}
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9024 | Test Summary: Search an Individual's Details in the individual List"
+	@priority = "4"
+	test SearchIndividualDetails {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add new users in DXP and sync the Contact Data") {
+			JSONUser.addUser(
+				jobTitle = "lawyer",
+				userEmailAddress = "randy.smith@liferay.com",
+				userFirstName = "Randy",
+				userLastName = "Smith",
+				userScreenName = "Randysn");
+
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Sign in with the new user to visit the site pages") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "randy.smith@liferay.com",
+				userLoginFullName = "Randy Smith");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to the Individual > KnownIndividual > Details") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "Randy Smith");
+
+			ACNavigation.switchTab(tabName = "Details");
+		}
+
+		task ("Search and return no results") {
+			ACUtils.searchBar(searchItem = "some invalid query");
+
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
+		}
+
+		task ("Search for upper case") {
+			ACUtils.searchBar(searchItem = "SMITH");
+
+			for (var individualAttribute : list "email,familyName") {
+				ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "${individualAttribute}");
+			}
+
+			for (var individualAttribute : list "birthDate,classPK,contactId,createDate,givenName,jobTitle,modifiedDate") {
+				ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "${individualAttribute}");
+			}
+		}
+
+		task ("Search for lower case") {
+			ACUtils.searchBar(searchItem = "randy");
+
+			for (var individualAttribute : list "email,givenName") {
+				ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "${individualAttribute}");
+			}
+
+			for (var individualAttribute : list "birthDate,classPK,contactId,createDate,familyName,jobTitle,modifiedDate") {
+				ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "${individualAttribute}");
+			}
+		}
+
+		task ("Search for property name") {
+			ACUtils.searchBar(searchItem = "classPK");
+
+			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "classPK");
+
+			for (var individualAttribute : list "birthDate,contactId,createDate,email,familyName,givenName,jobTitle,modifiedDate") {
+				ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "${individualAttribute}");
+			}
+		}
+
+		task ("Search for data source") {
+			ACUtils.searchBar(searchItem = "Liferay DXP");
+
+			for (var individualAttribute : list "birthDate,classPK,contactId,createDate,email,familyName,givenName,jobTitle,modifiedDate") {
+				ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "${individualAttribute}");
+			}
+		}
+
+		task ("Search for source name") {
+			ACUtils.searchBar(searchItem = "lastName");
+
+			for (var individualAttribute : list "familyName") {
+				ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "familyName");
+			}
+
+			for (var individualAttribute : list "birthDate,classPK,contactId,createDate,email,givenName,jobTitle,modifiedDate") {
+				ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "${individualAttribute}");
+			}
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9026 | Test Summary: Search for an Individual in the individual List"
+	@priority = "4"
+	test SearchIndividualList {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add new users in DXP and sync the Contact Data") {
+			JSONUser.addUser(
+				jobTitle = "lawyer",
+				userEmailAddress = "randy.smith@liferay.com",
+				userFirstName = "Randy",
+				userLastName = "Smith",
+				userScreenName = "Randysn");
+
+			JSONUser.addUser(
+				jobTitle = "Teacher",
+				userEmailAddress = "maria.rau@liferay.com",
+				userFirstName = "Maria",
+				userLastName = "Rau",
+				userScreenName = "Mariasn");
+		}
+
+		task ("Sign in with the new user to visit the site pages") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "randy.smith@liferay.com",
+				userLoginFullName = "Randy Smith");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "maria.rau@liferay.com",
+				userLoginFullName = "Maria Rau");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to the Individual > KnownIndividual") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+		}
+
+		task ("Search for an Individual using a First Name") {
+			ACUtils.searchBar(searchItem = "Randy");
+
+			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Randy Smith");
+			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "Maria Rau");
+		}
+
+		task ("Search for an Individual using a Last Name") {
+			ACUtils.searchBar(searchItem = "Rau");
+
+			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Maria Rau");
+			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "Randy Smith");
+		}
+
+		task ("Search for an Individual using a Full Name") {
+			ACUtils.searchBar(searchItem = "Randy Smith");
+
+			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Maria Rau");
+			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "Randy Smith");
+		}
+
+		task ("Search for an Individual using an Email") {
+			ACUtils.searchBar(searchItem = "maria.rau@liferay.com");
+
+			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Maria Rau");
+			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "Randy Smith");
+		}
+
+		task ("Search for an Individual using a Job Title") {
+			ACUtils.searchBar(searchItem = "Teacher");
+
+			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Maria Rau");
+			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "Randy Smith");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9022 | Test Summary: Search an Individual's Activities List"
+	@priority = "4"
+	test SearchIndividualsActivitiesList {
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Create a Document And Media") {
+			ACUtils.createDMAndAddToPage();
+		}
+
+		task ("Add a new user and sync the Contact Data") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View new pages in site as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Individual > Known Individuals > Overview") {
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Known Individuals");
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "ac ac");
+		}
+
+		task ("Search an Individual's Activities "pageViewed"") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACUtils.searchBar(searchItem = "pageViewed");
+
+			ACIndividualsDashboard.viewTimelineItem(itemName = "pageViewed");
+
+			ACIndividualsDashboard.viewTimelineItemNotPresent(itemName = "documentPreviewed");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9028 | Test Summary: Search an Individual's Interest List"
+	@priority = "4"
+	test SearchIndividualsInterests {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: data doesn't appear on time
+		// AC Refactor ticket: LRAC-9184
+
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add specific pages and web contents to Site as interest topics") {
+			Navigator.openSiteURL(siteName = "Site Name");
+
+			for (var layoutName : list "Movies,Sports") {
+				JSONLayout.addPublicLayout(
+					groupName = "Site Name",
+					layoutName = "${layoutName}");
+
+				ACUtils.createWCAndAddToPage(
+					layoutName = "${layoutName}",
+					webContentTitle = "Web Content Title ${layoutName}");
+			}
+		}
+
+		task ("Add a new user and sync the Contact Data") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View new pages in site as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			for (var pageName : list "Movies,Sports") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to the Individual Interests") {
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Known Individuals");
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "ac ac");
+
+			ACNavigation.switchTab(tabName = "Interests");
+		}
+
+		task ("Search an Individual's Interest List") {
+			ACUtils.searchBar(searchItem = "Sports");
+
+			ACInterests.viewInterest(
+				interestTopic = "sports",
+				knownIndividuals = "true");
+			ACInterests.viewInterestNotPresent(interestTopic = "movies");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9029 | Test Summary: Sort Individuals List"
+	@priority = "3"
+	test SortIndividualList {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add 3 new users and sync the Contact Data") {
+			for (var n : list "1,2,3") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
+			}
+
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View the page as different users") {
+			for (var username : list "user1,user2,user3") {
+				var fullName = "${username} ${username}";
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to the Individual > KnownIndividual") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+		}
+
+		task ("Sort the table by the 'Name | Email' column header in descending order") {
+			ACIndividualsDashboard.filterKnownIndividualList(
+				desc = "true",
+				rowName = "Name | Email");
+
+			ACIndividualsDashboard.viewKnownIndividualSpecificOrder(itemName = "user3 user3,user2 user2,user1 user1");
+		}
+
+		task ("Sort the table by the 'Name | Email' column header in ascending order") {
+			ACIndividualsDashboard.filterKnownIndividualList(rowName = "Name | Email");
+
+			ACIndividualsDashboard.viewKnownIndividualSpecificOrder(itemName = "user1 user1,user2 user2,user3 user3");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9030 | Test Summary: Sorting a List Returns a User to the First Page"
+	@priority = "3"
+	test SortingReturnsUserToFirstPage {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add 7 new users and sync the Contact Data") {
+			for (var n : list "1,2,3,4,5,6,7") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
+
+				ACDXPSettings.syncNewContactData();
+			}
+		}
+
+		task ("View the page as different users") {
+			for (var username : list "user1,user2,user3,user4,user5,user6,user7") {
+				var fullName = "${username} ${username}";
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to the Individual > KnownIndividual") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+		}
+
+		task ("Change the pagination to "5" and view individuals in the first page") {
+			ACUtils.changePagination(itemsPerPage = "5");
+
+			ACIndividualsDashboard.viewKnownIndividualSpecificOrder(itemName = "user1 user1,user2 user2,user3 user3,user4 user4,user5 user5");
+
+			ACUtils.viewActivePage(pageNumber = "1");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 7 entries.");
+		}
+
+		task ("Go to the second page and view individuals") {
+			ACUtils.checkPreviousNextButton(nextButton = "true");
+
+			ACIndividualsDashboard.viewKnownIndividualSpecificOrder(itemName = "user6 user6,user7 user7");
+
+			ACUtils.viewActivePage(pageNumber = "2");
+
+			ACUtils.viewResultsMessage(results = "Showing 6 to 7 of 7 entries.");
+		}
+
+		task ("Sort the table by the 'Name | Email' column header in descending order and return to the first Page") {
+			ACIndividualsDashboard.filterKnownIndividualList(
+				desc = "true",
+				rowName = "Name | Email");
+
+			ACIndividualsDashboard.viewKnownIndividualSpecificOrder(itemName = "user7 user7,user6 user6,user5 user5,user4 user4,user3 user3");
+
+			ACUtils.viewActivePage(pageNumber = "1");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 7 entries.");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9031 | Test Summary: Table Pagination"
+	@priority = "4"
+	test TablePagination {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add a new user in DXP and sync the Contact Data") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Sign in with the new user to visit the site pages") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to the Individual > KnownIndividual > Details") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+		}
+
+		task ("Change the pagination to "5" and "75"") {
+			ACUtils.changePagination(itemsPerPage = "5");
+
+			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "ac ac");
+
+			ACUtils.changePagination(itemsPerPage = "75");
+
+			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "ac ac");
 		}
 	}
 

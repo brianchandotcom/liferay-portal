@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>USAGE_PLAN_LIMITS_TABLE</td>
-	<td>//div[@class='${key_tableName}']//ul//li[contains(.,'${key_planLimits}') and contains(.,'${key_planItem}')]</td>
+	<td>//div[h4[contains(.,'Plans')]]//div[contains(@class,'panel-header')][.//div[contains(@class,'plan-name')][normalize-space(text())='${key_planName}']]//following-sibling::div[contains(@class,'panel-body')]//li[.//span[contains(@class,'limit')][normalize-space()='${key_planLimit}'] and .//span[contains(@class,'text')][normalize-space()='${key_planItem}']]</td>
 	<td></td>
 </tr>
 <tr>

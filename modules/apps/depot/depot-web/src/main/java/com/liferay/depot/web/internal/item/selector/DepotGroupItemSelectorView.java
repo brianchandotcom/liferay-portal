@@ -260,6 +260,11 @@ public class DepotGroupItemSelectorView
 			return false;
 		}
 
+		@Override
+		public boolean isShowSearch() {
+			return true;
+		}
+
 		private final DepotGroupItemSelectorCriterion
 			_depotGroupItemSelectorCriterion;
 		private HttpServletRequest _httpServletRequest;

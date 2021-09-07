@@ -102,37 +102,29 @@ public class ObjectRelationshipLocalServiceImpl
 				objectField.getObjectFieldId());
 		}
 
-		if (Objects.equals(type, ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+		if (Objects.equals(
+				type, ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
 			ObjectDefinition objectDefinition1 =
-				_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId1);
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectDefinitionId1);
 			ObjectDefinition objectDefinition2 =
-				_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId2);
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectDefinitionId2);
 
 			//TODO find better name convention
-			String tableName =  "rel_" + StringUtil.trim(name) + "map";
+			String tableName = "rel_" + StringUtil.trim(name) + "map";
 
 			objectRelationship.setDBTableName(tableName);
 
-			//TODO Delete teh rel table when Objetcrelationship get deleted
-			runSQL(getCreateMappingTableSQL(tableName, objectDefinition1.getPKObjectFieldDBColumnName(), objectDefinition2.getPKObjectFieldDBColumnName()));
+			//TODO Delete the rel table when Objetcrelationship get deleted
+			runSQL(
+				_getCreateMappingTableSQL(
+					tableName, objectDefinition1.getPKObjectFieldDBColumnName(),
+					objectDefinition2.getPKObjectFieldDBColumnName()));
 		}
 
 		return objectRelationshipPersistence.update(objectRelationship);
-	}
-
-	private String getCreateMappingTableSQL(String tableName, String column1, String column2) {
-		StringBundler sb = new StringBundler();
-
-		sb.append("create table ");
-		sb.append(tableName);
-		sb.append(" (");
-		sb.append(column1);
-		sb.append(" LONG not null primary key ,");
-		sb.append(column2);
-		sb.append(" LONG not null primary key)");
-
-		return sb.toString();
 	}
 
 	@Override
@@ -151,8 +143,24 @@ public class ObjectRelationshipLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
 		return _objectFieldLocalService.addRelationshipObjectField(
-			userId, null, objectDefinitionId,
-			objectDefinition.getLabelMap(), name);
+			userId, null, objectDefinitionId, objectDefinition.getLabelMap(),
+			name);
+	}
+
+	private String _getCreateMappingTableSQL(
+		String tableName, String column1, String column2) {
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("create table ");
+		sb.append(tableName);
+		sb.append(" (");
+		sb.append(column1);
+		sb.append(" LONG not null primary key ,");
+		sb.append(column2);
+		sb.append(" LONG not null primary key)");
+
+		return sb.toString();
 	}
 
 	private void _validate(String name, String type) throws PortalException {

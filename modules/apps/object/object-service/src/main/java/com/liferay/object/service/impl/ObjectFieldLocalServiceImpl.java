@@ -59,43 +59,6 @@ public class ObjectFieldLocalServiceImpl
 	extends ObjectFieldLocalServiceBaseImpl {
 
 	@Override
-	public ObjectField addRelationshipObjectField(
-			long userId, String dbTableName, long objectDefinitionId,
-			Map<Locale, String> labelMap, String name)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
-		name = StringUtil.trim(StringBundler.concat(
-			"rel_", name, "_", objectDefinition.getPKObjectFieldName()));
-
-
-		if(Validator.isNull(dbTableName)) {
-			dbTableName = objectDefinition.getDBTableName();
-
-			if (objectDefinition.isApproved()) {
-				dbTableName = objectDefinition.getExtensionDBTableName();
-			}
-		}
-
-		ObjectField objectField = _addObjectField(
-			userId, 0, objectDefinitionId,
-			name + StringPool.UNDERLINE, dbTableName, false, false,
-			null, labelMap, name, true, false, "Long");
-
-
-
-		if (objectDefinition.isApproved()) {
-			runSQL(
-				_getAlterTableAddColumnSQL(
-					dbTableName, objectField.getDBColumnName(), "Long"));
-		}
-
-		return objectField;
-	}
-
-	@Override
 	public ObjectField addCustomObjectField(
 			long userId, long listTypeDefinitionId, long objectDefinitionId,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
@@ -123,6 +86,41 @@ public class ObjectFieldLocalServiceImpl
 			runSQL(
 				_getAlterTableAddColumnSQL(
 					dbTableName, objectField.getDBColumnName(), type));
+		}
+
+		return objectField;
+	}
+
+	@Override
+	public ObjectField addRelationshipObjectField(
+			long userId, String dbTableName, long objectDefinitionId,
+			Map<Locale, String> labelMap, String name)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		name = StringUtil.trim(
+			StringBundler.concat(
+				"rel_", name, "_", objectDefinition.getPKObjectFieldName()));
+
+		if (Validator.isNull(dbTableName)) {
+			dbTableName = objectDefinition.getDBTableName();
+
+			if (objectDefinition.isApproved()) {
+				dbTableName = objectDefinition.getExtensionDBTableName();
+			}
+		}
+
+		ObjectField objectField = _addObjectField(
+			userId, 0, objectDefinitionId, name + StringPool.UNDERLINE,
+			dbTableName, false, false, null, labelMap, name, true, false,
+			"Long");
+
+		if (objectDefinition.isApproved()) {
+			runSQL(
+				_getAlterTableAddColumnSQL(
+					dbTableName, objectField.getDBColumnName(), "Long"));
 		}
 
 		return objectField;

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -130,6 +131,9 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		}
 		else if (!branchingPublic && (layoutSetBranch != null)) {
 			deleteLayoutSetBranches(targetGroupId, false);
+
+			removeLayoutSetBranchIdFromExportImportConfigurations(
+				targetGroupId, remote, false);
 		}
 		else if (layoutSetBranch != null) {
 			ExportImportDateUtil.clearLastPublishDate(targetGroupId, false);
@@ -145,6 +149,9 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		}
 		else if (!branchingPrivate && (layoutSetBranch != null)) {
 			deleteLayoutSetBranches(targetGroupId, true);
+
+			removeLayoutSetBranchIdFromExportImportConfigurations(
+				targetGroupId, remote, true);
 		}
 		else if (layoutSetBranch != null) {
 			ExportImportDateUtil.clearLastPublishDate(targetGroupId, true);
@@ -1024,6 +1031,50 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			IndexStatusManagerThreadLocal.setIndexReadOnly(indexReadOnly);
 
 			FileUtil.delete(tempFile);
+		}
+	}
+
+	protected void removeLayoutSetBranchIdFromExportImportConfigurations(
+			long groupId, boolean remote, boolean privateLayout)
+		throws PortalException {
+
+		int configurationType;
+
+		if (remote) {
+			configurationType =
+				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE;
+		}
+		else {
+			configurationType =
+				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL;
+		}
+
+		List<ExportImportConfiguration> exportImportConfigurations =
+			exportImportConfigurationLocalService.getExportImportConfigurations(
+				groupId, configurationType);
+
+		for (ExportImportConfiguration exportImportConfiguration :
+				exportImportConfigurations) {
+
+			Map<String, Serializable> settingsMap =
+				exportImportConfiguration.getSettingsMap();
+
+			Map<String, String[]> parameterMap =
+				(Map<String, String[]>)settingsMap.get("parameterMap");
+
+			if (MapUtil.getBoolean(parameterMap, "privateLayout") !=
+					privateLayout) {
+
+				continue;
+			}
+
+			parameterMap.remove("layoutSetBranchId");
+
+			exportImportConfiguration.setSettings(
+				JSONFactoryUtil.serialize(settingsMap));
+
+			exportImportConfigurationLocalService.
+				updateExportImportConfiguration(exportImportConfiguration);
 		}
 	}
 

@@ -15,39 +15,10 @@
 package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
-import com.liferay.account.admin.web.internal.helper.AccountRoleRequestHelper;
-import com.liferay.account.constants.AccountPortletKeys;
-import com.liferay.account.constants.AccountRoleConstants;
-import com.liferay.account.model.AccountRole;
-import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.servlet.DynamicServletRequest;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-
-import java.io.IOException;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
-
-import javax.portlet.PortletRequest;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -60,136 +31,33 @@ import org.osgi.service.component.annotations.Reference;
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
 public class AccountRoleDefinePermissionsScreenNavigationCategory
-	implements ScreenNavigationCategory, ScreenNavigationEntry<AccountRole> {
+	extends BaseAccountRoleDefinePermissionsScreenNavigationCategory {
 
 	@Override
-	public String getCategoryKey() {
+	protected String doGetCategoryKey() {
 		return AccountScreenNavigationEntryConstants.
 			CATEGORY_KEY_DEFINE_PERMISSIONS;
 	}
 
 	@Override
-	public String getEntryKey() {
+	protected String doGetEntryKey() {
 		return AccountScreenNavigationEntryConstants.
 			ENTRY_KEY_DEFINE_PERMISSIONS;
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
-			getResourceBundle(locale), "define-permissions");
+	protected String doGetLabelLanguageKey() {
+		return "define-permissions";
 	}
 
 	@Override
-	public String getScreenNavigationKey() {
-		return AccountScreenNavigationEntryConstants.
-			SCREEN_NAVIGATION_KEY_ACCOUNT_ROLE;
+	protected String doGetTabs1() {
+		return "define-permissions";
 	}
 
 	@Override
-	public boolean isVisible(User user, AccountRole accountRole) {
-		if (accountRole == null) {
-			return false;
-		}
-
-		Role role = _roleLocalService.fetchRole(accountRole.getRoleId());
-
-		if ((role != null) && AccountRoleConstants.isSharedRole(role)) {
-			return false;
-		}
-
-		return true;
+	protected boolean doIsAccountRoleGroupScope() {
+		return false;
 	}
-
-	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		_accountRoleRequestHelper.setRequestAttributes(httpServletRequest);
-
-		DynamicServletRequest dynamicServletRequest = new DynamicServletRequest(
-			httpServletRequest);
-
-		dynamicServletRequest.appendParameter(Constants.CMD, Constants.VIEW);
-		dynamicServletRequest.appendParameter("tabs1", "define-permissions");
-		dynamicServletRequest.appendParameter(
-			"redirect", _getRedirect(httpServletRequest));
-		dynamicServletRequest.appendParameter(
-			"backURL", _getBackURL(httpServletRequest));
-
-		AccountRole accountRole = _accountRoleLocalService.fetchAccountRole(
-			ParamUtil.getLong(httpServletRequest, "accountRoleId"));
-
-		dynamicServletRequest.appendParameter(
-			"roleId", String.valueOf(accountRole.getRoleId()));
-
-		_jspRenderer.renderJSP(
-			_servletContext, dynamicServletRequest, httpServletResponse,
-			"/edit_role_permissions.jsp");
-	}
-
-	protected ResourceBundle getResourceBundle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return new AggregateResourceBundle(
-			resourceBundle, _portal.getResourceBundle(locale));
-	}
-
-	private String _getBackURL(HttpServletRequest httpServletRequest) {
-		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
-				httpServletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/account_admin/edit_account_entry"
-		).setParameter(
-			"accountEntryId",
-			ParamUtil.getString(httpServletRequest, "accountEntryId")
-		).setParameter(
-			"screenNavigationCategoryKey",
-			AccountScreenNavigationEntryConstants.CATEGORY_KEY_ROLES
-		).buildString();
-	}
-
-	private String _getRedirect(HttpServletRequest httpServletRequest) {
-		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
-				httpServletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/account_admin/edit_account_role"
-		).setParameter(
-			"accountEntryId",
-			ParamUtil.getString(httpServletRequest, "accountEntryId")
-		).setParameter(
-			"accountRoleId",
-			ParamUtil.getString(httpServletRequest, "accountRoleId")
-		).setParameter(
-			"screenNavigationCategoryKey",
-			AccountScreenNavigationEntryConstants.
-				CATEGORY_KEY_DEFINE_PERMISSIONS
-		).buildString();
-	}
-
-	@Reference
-	private AccountRoleLocalService _accountRoleLocalService;
-
-	@Reference
-	private AccountRoleRequestHelper _accountRoleRequestHelper;
-
-	@Reference
-	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
-
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.roles.admin.web)")
-	private ServletContext _servletContext;
 
 }

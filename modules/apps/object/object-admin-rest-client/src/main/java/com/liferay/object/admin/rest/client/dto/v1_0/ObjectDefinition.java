@@ -180,6 +180,30 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected ObjectField[] objectFields;
 
+	public ObjectRelationship[] getObjectRelationships() {
+		return objectRelationships;
+	}
+
+	public void setObjectRelationships(
+		ObjectRelationship[] objectRelationships) {
+
+		this.objectRelationships = objectRelationships;
+	}
+
+	public void setObjectRelationships(
+		UnsafeSupplier<ObjectRelationship[], Exception>
+			objectRelationshipsUnsafeSupplier) {
+
+		try {
+			objectRelationships = objectRelationshipsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ObjectRelationship[] objectRelationships;
+
 	public String getPanelAppOrder() {
 		return panelAppOrder;
 	}

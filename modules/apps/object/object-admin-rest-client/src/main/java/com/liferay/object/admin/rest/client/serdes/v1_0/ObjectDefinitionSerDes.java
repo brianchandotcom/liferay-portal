@@ -16,6 +16,7 @@ package com.liferay.object.admin.rest.client.serdes.v1_0;
 
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -155,6 +156,32 @@ public class ObjectDefinitionSerDes {
 					String.valueOf(objectDefinition.getObjectFields()[i]));
 
 				if ((i + 1) < objectDefinition.getObjectFields().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (objectDefinition.getObjectRelationships() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectRelationships\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < objectDefinition.getObjectRelationships().length; i++) {
+
+				sb.append(
+					String.valueOf(
+						objectDefinition.getObjectRelationships()[i]));
+
+				if ((i + 1) <
+						objectDefinition.getObjectRelationships().length) {
+
 					sb.append(", ");
 				}
 			}
@@ -313,6 +340,15 @@ public class ObjectDefinitionSerDes {
 				String.valueOf(objectDefinition.getObjectFields()));
 		}
 
+		if (objectDefinition.getObjectRelationships() == null) {
+			map.put("objectRelationships", null);
+		}
+		else {
+			map.put(
+				"objectRelationships",
+				String.valueOf(objectDefinition.getObjectRelationships()));
+		}
+
 		if (objectDefinition.getPanelAppOrder() == null) {
 			map.put("panelAppOrder", null);
 		}
@@ -428,6 +464,21 @@ public class ObjectDefinitionSerDes {
 							object -> ObjectFieldSerDes.toDTO((String)object)
 						).toArray(
 							size -> new ObjectField[size]
+						));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "objectRelationships")) {
+
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setObjectRelationships(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ObjectRelationshipSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new ObjectRelationship[size]
 						));
 				}
 			}

@@ -16,8 +16,10 @@ package com.liferay.object.admin.rest.internal.graphql.mutation.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -60,6 +62,14 @@ public class Mutation {
 
 		_objectFieldResourceComponentServiceObjects =
 			objectFieldResourceComponentServiceObjects;
+	}
+
+	public static void setObjectRelationshipResourceComponentServiceObjects(
+		ComponentServiceObjects<ObjectRelationshipResource>
+			objectRelationshipResourceComponentServiceObjects) {
+
+		_objectRelationshipResourceComponentServiceObjects =
+			objectRelationshipResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -243,6 +253,38 @@ public class Mutation {
 				callbackURL, object));
 	}
 
+	@GraphQLField
+	public ObjectRelationship createObjectDefinitionObjectRelationship(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("objectRelationship") ObjectRelationship
+				objectRelationship)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectRelationshipResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectRelationshipResource ->
+				objectRelationshipResource.
+					postObjectDefinitionObjectRelationship(
+						objectDefinitionId, objectRelationship));
+	}
+
+	@GraphQLField
+	public Response createObjectDefinitionObjectRelationshipBatch(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectRelationshipResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectRelationshipResource ->
+				objectRelationshipResource.
+					postObjectDefinitionObjectRelationshipBatch(
+						objectDefinitionId, callbackURL, object));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -311,10 +353,28 @@ public class Mutation {
 		objectFieldResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			ObjectRelationshipResource objectRelationshipResource)
+		throws Exception {
+
+		objectRelationshipResource.setContextAcceptLanguage(_acceptLanguage);
+		objectRelationshipResource.setContextCompany(_company);
+		objectRelationshipResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		objectRelationshipResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		objectRelationshipResource.setContextUriInfo(_uriInfo);
+		objectRelationshipResource.setContextUser(_user);
+		objectRelationshipResource.setGroupLocalService(_groupLocalService);
+		objectRelationshipResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<ObjectDefinitionResource>
 		_objectDefinitionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectFieldResource>
 		_objectFieldResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ObjectRelationshipResource>
+		_objectRelationshipResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

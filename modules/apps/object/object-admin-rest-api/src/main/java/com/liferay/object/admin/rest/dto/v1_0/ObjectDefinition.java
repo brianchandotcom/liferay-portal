@@ -254,6 +254,38 @@ public class ObjectDefinition implements Serializable {
 	protected ObjectField[] objectFields;
 
 	@Schema
+	@Valid
+	public ObjectRelationship[] getObjectRelationships() {
+		return objectRelationships;
+	}
+
+	public void setObjectRelationships(
+		ObjectRelationship[] objectRelationships) {
+
+		this.objectRelationships = objectRelationships;
+	}
+
+	@JsonIgnore
+	public void setObjectRelationships(
+		UnsafeSupplier<ObjectRelationship[], Exception>
+			objectRelationshipsUnsafeSupplier) {
+
+		try {
+			objectRelationships = objectRelationshipsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ObjectRelationship[] objectRelationships;
+
+	@Schema
 	public String getPanelAppOrder() {
 		return panelAppOrder;
 	}
@@ -539,6 +571,26 @@ public class ObjectDefinition implements Serializable {
 				sb.append(String.valueOf(objectFields[i]));
 
 				if ((i + 1) < objectFields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (objectRelationships != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectRelationships\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < objectRelationships.length; i++) {
+				sb.append(String.valueOf(objectRelationships[i]));
+
+				if ((i + 1) < objectRelationships.length) {
 					sb.append(", ");
 				}
 			}

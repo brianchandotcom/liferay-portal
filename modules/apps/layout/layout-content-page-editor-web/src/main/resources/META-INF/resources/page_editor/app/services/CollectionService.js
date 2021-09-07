@@ -103,13 +103,15 @@ export default {
 		);
 	},
 
+	/**
+	 * @param {Array<{collectionId: string}>} collections
+	 * @returns {Promise<string[]>}
+	 */
 	getCollectionSupportedFilters(collections) {
-		const next = {};
-
-		collections.forEach((collection) => {
-			next[collection.collectionId] = ['category', 'keywords'];
-		});
-
-		return Promise.resolve(next);
+		return serviceFetch(
+			config.getCollectionSupportedFiltersURL,
+			{body: {collections: JSON.stringify(collections)}},
+			() => {}
+		);
 	},
 };

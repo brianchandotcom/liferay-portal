@@ -1,0 +1,49 @@
+@component-name = "portal-security"
+definition {
+
+	property app.server.bundles.size = "0";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Security";
+
+	setUp {
+		User.firstLoginUI();
+	}
+
+	@description = "LPS-126598 TC-2: Validate there is no NTLM option under SSO category in Instance Settings"
+	@priority = "4"
+	test AssertNTLMNotAvailableUnderInstanceSettings {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		Click(
+			key_itemName = "SSO",
+			locator1 = "ListGroupItem#ITEM_TEXT");
+
+		AssertElementNotPresent(
+			key_configurationName = "NTLM",
+			key_configurationScope = "Virtual Instance Scope",
+			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+	}
+
+	@description = "LPS-126598 TC-1: Validate there is no NTLM option under SSO category in System Settings"
+	@priority = "4"
+	test AssertNTLMNotAvailableUnderSystemSettings {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		Click(
+			key_itemName = "SSO",
+			locator1 = "ListGroupItem#ITEM_TEXT");
+
+		AssertElementNotPresent(
+			key_configurationName = "NTLM",
+			key_configurationScope = "System Scope",
+			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+	}
+
+}

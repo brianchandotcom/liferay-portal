@@ -19,6 +19,8 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.Status;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -32,8 +34,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
-
-import java.util.Collections;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,7 +70,19 @@ public class ObjectDefinitionResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			Collections.emptyMap(),
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					ObjectActionKeys.ADD_OBJECT_DEFINITION,
+					"postObjectDefinition", ObjectConstants.RESOURCE_NAME,
+					contextCompany.getCompanyId())
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getObjectDefinitionsPage",
+					ObjectConstants.RESOURCE_NAME,
+					contextCompany.getCompanyId())
+			).build(),
 			booleanQuery -> {
 			},
 			null, com.liferay.object.model.ObjectDefinition.class.getName(),
@@ -159,11 +171,29 @@ public class ObjectDefinitionResourceImpl
 						ActionKeys.VIEW, "getObjectDefinition", permissionName,
 						objectDefinition.getObjectDefinitionId())
 				).put(
+					"publish",
+					() -> {
+						if (objectDefinition.isApproved()) {
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.UPDATE, "postObjectDefinitionPublish",
+							permissionName,
+							objectDefinition.getObjectDefinitionId());
+					}
+				).put(
 					"update",
-					addAction(
-						ActionKeys.UPDATE, "postObjectDefinition",
-						permissionName,
-						objectDefinition.getObjectDefinitionId())
+					() -> {
+						if (objectDefinition.isSystem()) {
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.UPDATE, "putObjectDefinition",
+							permissionName,
+							objectDefinition.getObjectDefinitionId());
+					}
 				).build();
 				dateCreated = objectDefinition.getCreateDate();
 				dateModified = objectDefinition.getModifiedDate();

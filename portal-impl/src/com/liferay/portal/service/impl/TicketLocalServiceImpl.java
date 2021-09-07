@@ -64,6 +64,13 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteTickets(long companyId, String className, long classPK) {
+		ticketPersistence.removeByC_C_C(
+			companyId, classNameLocalService.getClassNameId(className),
+			classPK);
+	}
+
+	@Override
 	public Ticket fetchTicket(String key) {
 		return ticketPersistence.fetchByKey(key);
 	}
@@ -71,6 +78,15 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 	@Override
 	public Ticket getTicket(String key) throws PortalException {
 		return ticketPersistence.findByKey(key);
+	}
+
+	@Override
+	public List<Ticket> getTickets(
+		long companyId, String className, long classPK) {
+
+		return ticketPersistence.findByC_C_C(
+			companyId, classNameLocalService.getClassNameId(className),
+			classPK);
 	}
 
 	@Override

@@ -1,11 +1,9 @@
 @component-name = "portal-ab-test"
 definition {
 
-	property analytics.cloud.enabled = "true";
-	property minimum.slave.ram = "24";
 	property portal.release = "false";
 	property portal.upstream = "true";
-	property slave.label = "slave-1";
+	property property.group = "analytics.cloud.profile";
 	property testray.main.component.name = "A/B Test";
 
 	setUp {
@@ -65,8 +63,6 @@ definition {
 	@priority = "5"
 	@uitest
 	test CreateABTestByBounceRate {
-		property minimum.slave.ram = "24";
-
 		task ("Create AB test, create variant and run the test") {
 			ABTest.createABTest(
 				goal = "Bounce Rate",
@@ -96,8 +92,6 @@ definition {
 	@priority = "5"
 	@uitest
 	test CreateABTestByClick {
-		property minimum.slave.ram = "24";
-
 		task ("Edit the Content page to add a button fragment") {
 			ContentPages.clickPencil();
 
@@ -141,8 +135,6 @@ definition {
 	@priority = "3"
 	@uitest
 	test CreateABTestByClickInvalidId {
-		property minimum.slave.ram = "24";
-
 		task ("Create AB test, write an invalid ID for the element and run the test") {
 			ABTest.createABTest(
 				goal = "Click",
@@ -162,8 +154,6 @@ definition {
 	@priority = "4"
 	@uitest
 	test CreateABTestRunWithDeletedVariants {
-		property minimum.slave.ram = "24";
-
 		task ("Create AB test, create variant, delete variant and run the test") {
 			ABTest.createABTest(
 				goal = "Bounce Rate",
@@ -187,8 +177,6 @@ definition {
 	@priority = "5"
 	@uitest
 	test CreateABTestRunWithNoVariants {
-		property minimum.slave.ram = "24";
-
 		task ("Create AB test and run the test") {
 			ABTest.createABTest(
 				goal = "Bounce Rate",

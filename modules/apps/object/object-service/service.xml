@@ -274,6 +274,7 @@
 
 		<!-- Other fields -->
 
+		<column name="DBTableName" type="String" />
 		<column localized="true" name="label" type="String" />
 		<column name="name" type="String" />
 		<column name="objectDefinitionId1" type="long" />

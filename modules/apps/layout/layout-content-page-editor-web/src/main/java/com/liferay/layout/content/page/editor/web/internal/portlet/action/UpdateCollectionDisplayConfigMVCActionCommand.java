@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -84,11 +85,19 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 		JSONArray fragmentEntryLinksJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
-		List<FragmentEntryLink> fragmentEntryLinks =
+		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>(
 			_fragmentEntryLinkLocalService.
 				getFragmentEntryLinksBySegmentsExperienceId(
 					themeDisplay.getScopeGroupId(), segmentsExperienceId,
-					themeDisplay.getPlid(), _KEY_FILTER_FRAGMENT_RENDERER);
+					themeDisplay.getPlid(),
+					_KEY_COLLECTION_FILTER_FRAGMENT_RENDERER));
+
+		fragmentEntryLinks.addAll(
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					themeDisplay.getScopeGroupId(), segmentsExperienceId,
+					themeDisplay.getPlid(),
+					_KEY_COLLECTION_APPLIED_FILTERS_FRAGMENT_RENDERER));
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			JSONObject editableValuesJSONObject =
@@ -196,7 +205,12 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 			actionRequest, actionResponse, jsonObject);
 	}
 
-	private static final String _KEY_FILTER_FRAGMENT_RENDERER =
+	private static final String
+		_KEY_COLLECTION_APPLIED_FILTERS_FRAGMENT_RENDERER =
+			"com.liferay.fragment.renderer.collection.filter.internal." +
+				"CollectionAppliedFiltersFragmentRenderer";
+
+	private static final String _KEY_COLLECTION_FILTER_FRAGMENT_RENDERER =
 		"com.liferay.fragment.renderer.collection.filter.internal." +
 			"CollectionFilterFragmentRenderer";
 

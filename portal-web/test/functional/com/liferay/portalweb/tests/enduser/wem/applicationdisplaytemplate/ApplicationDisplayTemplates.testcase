@@ -120,6 +120,8 @@ definition {
 		}
 			
 		task ("View Elements panel") {
+			Navigator.gotoSidebarTab(tabName = "Elements");
+
 			for (var fieldName : list "Asset Entries*,Asset Entry,Current URL,Locale,Portlet Preferences,Template ID,Theme Display,HTTP Request,Render Request,Render Response,Asset Publisher Helper") {
 				AssertElementPresent(
 					key_fieldName = "${fieldName}",
@@ -128,9 +130,7 @@ definition {
 		}
 
 		task ("View Properties panel and assert Language is Freemarker") {
-			Click(
-				key_tabName = "Properties",
-				locator1 = "Sidebar#TAB");
+			Navigator.gotoSidebarTab(tabName = "Properties");
 			
 			for (var fieldName : list "Language,Template Key,URL,WebDAV URL,Description") {
 				AssertElementPresent(

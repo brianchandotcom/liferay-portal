@@ -16,7 +16,6 @@
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults>
-				<action-key>VIEW</action-key>
 			</site-member-defaults>
 			<guest-defaults>
 			</guest-defaults>

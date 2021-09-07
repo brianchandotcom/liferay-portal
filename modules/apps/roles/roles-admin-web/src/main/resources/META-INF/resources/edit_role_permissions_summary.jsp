@@ -32,13 +32,7 @@ PortletURL permissionsAllURL = PortletURLBuilder.createRenderURL(
 ).setBackURL(
 	backURL
 ).setTabs1(
-	() -> {
-		if (roleDisplayContext.isAccountRoleGroupScope()) {
-			return "define-group-scope-permissions";
-		}
-
-		return "define-permissions";
-	}
+	roleDisplayContext.getEditRolePermissionsTabs1()
 ).setTabs2(
 	"roles"
 ).setParameter(
@@ -197,13 +191,7 @@ for (int i = 0; i < results.size(); i++) {
 	).setPortletResource(
 		curPortletName
 	).setTabs1(
-		() -> {
-			if (roleDisplayContext.isAccountRoleGroupScope()) {
-				return "define-group-scope-permissions";
-			}
-
-			return "define-permissions";
-		}
+		roleDisplayContext.getEditRolePermissionsTabs1()
 	).setTabs2(
 		"roles"
 	).setParameter(

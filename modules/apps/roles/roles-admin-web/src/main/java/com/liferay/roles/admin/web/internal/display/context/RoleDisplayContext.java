@@ -84,6 +84,14 @@ public class RoleDisplayContext {
 		};
 	}
 
+	public String getEditRolePermissionsTabs1() {
+		if (isAccountRoleGroupScope()) {
+			return "define-group-scope-permissions";
+		}
+
+		return "define-permissions";
+	}
+
 	public List<NavigationItem> getRoleAssignmentsNavigationItems(
 			PortletURL portletURL)
 		throws Exception {

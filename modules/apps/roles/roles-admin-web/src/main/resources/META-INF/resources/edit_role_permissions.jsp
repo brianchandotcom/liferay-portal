@@ -42,13 +42,7 @@ if (Validator.isNull(redirect)) {
 	).setBackURL(
 		backURL
 	).setTabs1(
-		() -> {
-			if (roleDisplayContext.isAccountRoleGroupScope()) {
-				return "define-group-scope-permissions";
-			}
-
-			return "define-permissions";
-		}
+		roleDisplayContext.getEditRolePermissionsTabs1()
 	).setTabs2(
 		tabs2
 	).setParameter(

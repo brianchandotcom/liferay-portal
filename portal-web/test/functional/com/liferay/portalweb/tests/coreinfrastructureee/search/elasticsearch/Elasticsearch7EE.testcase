@@ -75,6 +75,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "The portal instance needs to be restarted");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test LearningToRankSmoke {
 		property elastic.override.version = "7.9.0";

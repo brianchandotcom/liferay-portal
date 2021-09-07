@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.web.internal.type.facet.portlet.action;
 
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
@@ -54,6 +55,10 @@ public class TypeFacetConfigurationAction extends DefaultConfigurationAction {
 		throws Exception {
 
 		httpServletRequest.setAttribute(
+			ObjectDefinitionLocalService.class.getName(),
+			objectDefinitionLocalService);
+
+		httpServletRequest.setAttribute(
 			SearchableAssetClassNamesProvider.class.getName(),
 			searchableAssetClassNamesProvider);
 
@@ -83,6 +88,9 @@ public class TypeFacetConfigurationAction extends DefaultConfigurationAction {
 			throw new RuntimeException(configurationException);
 		}
 	}
+
+	@Reference
+	protected ObjectDefinitionLocalService objectDefinitionLocalService;
 
 	@Reference
 	protected SearchableAssetClassNamesProvider

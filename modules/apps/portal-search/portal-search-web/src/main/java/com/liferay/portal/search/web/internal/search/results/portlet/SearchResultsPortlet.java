@@ -16,6 +16,7 @@ package com.liferay.portal.search.web.internal.search.results.portlet;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetRendererFactoryLookup;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -355,6 +356,8 @@ public class SearchResultsPortlet extends MVCPortlet {
 			language
 		).setLocale(
 			themeDisplay.getLocale()
+		).setObjectDefinitionLocalService(
+			objectDefinitionLocalService
 		).setPortletURLFactory(
 			portletURLFactory
 		).setRenderRequest(
@@ -478,6 +481,9 @@ public class SearchResultsPortlet extends MVCPortlet {
 
 	@Reference
 	protected Language language;
+
+	@Reference
+	protected ObjectDefinitionLocalService objectDefinitionLocalService;
 
 	@Reference
 	protected PortletSharedRequestHelper portletSharedRequestHelper;

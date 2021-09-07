@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.web.internal.type.facet.portlet;
 
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -36,9 +38,11 @@ public class TypeFacetPortletPreferencesImpl
 	implements TypeFacetPortletPreferences {
 
 	public TypeFacetPortletPreferencesImpl(
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		Optional<PortletPreferences> portletPreferencesOptional,
 		SearchableAssetClassNamesProvider searchableAssetClassNamesProvider) {
 
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_searchableAssetClassNamesProvider = searchableAssetClassNamesProvider;
 
 		_portletPreferencesHelper = new PortletPreferencesHelper(
@@ -127,10 +131,23 @@ public class TypeFacetPortletPreferencesImpl
 	}
 
 	protected KeyValuePair getKeyValuePair(Locale locale, String className) {
-		return new KeyValuePair(
-			className, ResourceActionsUtil.getModelResource(locale, className));
+		String modelResource = ResourceActionsUtil.getModelResource(
+			locale, className);
+
+		if (className.startsWith(ObjectDefinition.class.getName() + "#")) {
+			String[] parts = StringUtil.split(className, "#");
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					Long.valueOf(parts[1]));
+
+			modelResource = objectDefinition.getLabel(locale);
+		}
+
+		return new KeyValuePair(className, modelResource);
 	}
 
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final PortletPreferencesHelper _portletPreferencesHelper;
 	private final SearchableAssetClassNamesProvider
 		_searchableAssetClassNamesProvider;

@@ -15,6 +15,7 @@
 package com.liferay.portal.search.web.internal.type.facet.portlet;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.internal.asset.AssetRendererFactoryRegistry;
@@ -50,7 +51,7 @@ public class TypeFacetPortletPreferencesImplTest {
 		MockitoAnnotations.initMocks(this);
 
 		typeFacetPortletPreferencesImpl = new TypeFacetPortletPreferencesImpl(
-			Optional.empty(),
+			_objectDefinitionLocalService, Optional.empty(),
 			new SearchableAssetClassNamesProviderImpl() {
 				{
 					assetRendererFactoryRegistry =
@@ -186,6 +187,9 @@ public class TypeFacetPortletPreferencesImplTest {
 
 	@Mock
 	private AssetRendererFactoryRegistry _assetRendererFactoryRegistry;
+
+	@Mock
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Mock
 	private SearchEngineHelper _searchEngineHelper;

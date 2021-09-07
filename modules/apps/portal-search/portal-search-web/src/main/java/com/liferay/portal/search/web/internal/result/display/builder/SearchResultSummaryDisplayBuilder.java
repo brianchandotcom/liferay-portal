@@ -20,6 +20,8 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetRendererFactoryLookup;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -42,6 +44,7 @@ import com.liferay.portal.kernel.util.FastDateFormatConstants;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.legacy.document.DocumentBuilderFactory;
@@ -205,6 +208,14 @@ public class SearchResultSummaryDisplayBuilder {
 
 	public SearchResultSummaryDisplayBuilder setLocale(Locale locale) {
 		_locale = locale;
+
+		return this;
+	}
+
+	public SearchResultSummaryDisplayBuilder setObjectDefinitionLocalService(
+		ObjectDefinitionLocalService objectDefinitionLocalService) {
+
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 
 		return this;
 	}
@@ -593,7 +604,7 @@ public class SearchResultSummaryDisplayBuilder {
 		AssetRendererFactory<?> assetRendererFactory,
 		AssetRenderer<?> assetRenderer) {
 
-		if (!_imageRequested) {
+		if (!_imageRequested || (assetRendererFactory == null)) {
 			return;
 		}
 
@@ -681,6 +692,17 @@ public class SearchResultSummaryDisplayBuilder {
 
 		String modelResource = _resourceActions.getModelResource(
 			_themeDisplay.getLocale(), className);
+
+		if (className.startsWith(ObjectDefinition.class.getName() + "#")) {
+			String[] parts = StringUtil.split(className, "#");
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					Long.valueOf(parts[1]));
+
+			modelResource = objectDefinition.getLabel(
+				_themeDisplay.getLocale());
+		}
 
 		if (!Validator.isBlank(modelResource)) {
 			searchResultSummaryDisplayContext.setModelResource(modelResource);
@@ -1013,6 +1035,7 @@ public class SearchResultSummaryDisplayBuilder {
 	private Language _language;
 	private com.liferay.portal.kernel.search.Document _legacyDocument;
 	private Locale _locale;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private PortletURLFactory _portletURLFactory;
 	private RenderRequest _renderRequest;
 	private RenderResponse _renderResponse;

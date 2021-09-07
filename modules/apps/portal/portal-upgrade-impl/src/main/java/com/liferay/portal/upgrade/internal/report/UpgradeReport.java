@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -82,10 +81,6 @@ public class UpgradeReport {
 		_initialBuildNumber = _getBuildNumber();
 		_initialSchemaVersion = _getSchemaVersion();
 		_initialTableCounts = _getTableCounts();
-
-		DB db = DBManagerUtil.getDB();
-
-		_dbType = db.getDBType();
 	}
 
 	public void addErrorMessage(String loggerName, String message) {
@@ -239,7 +234,7 @@ public class UpgradeReport {
 		DB db = DBManagerUtil.getDB();
 
 		return StringBundler.concat(
-			"Using ", _dbType, " version ", db.getMajorVersion(),
+			"Using ", db.getDBType(), " version ", db.getMajorVersion(),
 			StringPool.PERIOD, db.getMinorVersion(), StringPool.NEW_LINE);
 	}
 
@@ -517,23 +512,12 @@ public class UpgradeReport {
 			DBInspector dbInspector = new DBInspector(connection);
 
 			try (ResultSet resultSet1 = databaseMetaData.getTables(
-					dbInspector.getCatalog(), dbInspector.getSchema(), "%",
-					null)) {
+					dbInspector.getCatalog(), dbInspector.getSchema(), null,
+					new String[] {"TABLE"})) {
 
 				Map<String, Integer> tableCounts = new HashMap<>();
 
 				while (resultSet1.next()) {
-					String tableType = resultSet1.getString("TABLE_TYPE");
-
-					if (_dbType == DBType.MARIADB) {
-						if (!tableType.equals("BASE TABLE")) {
-							continue;
-						}
-					}
-					else if (!tableType.equals("TABLE")) {
-						continue;
-					}
-
 					String tableName = resultSet1.getString("TABLE_NAME");
 
 					try (PreparedStatement preparedStatement =
@@ -654,7 +638,6 @@ public class UpgradeReport {
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeReport.class);
 
-	private final DBType _dbType;
 	private final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
 	private final Map<String, ArrayList<String>> _eventMessages =

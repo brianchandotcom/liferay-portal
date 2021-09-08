@@ -127,12 +127,33 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9054 | Test Summary: Member can be selected in the user list"
-	@ignore = "true"
 	@priority = "3"
 	test MemberCanBeSelected {
+		var emailAdress = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
-		// TODO LRAC-9054 MemberCanBeSelected
+		task ("Go to settings and go to user management") {
+			ACNavigation.goToSettings();
 
+			ACSettings.goToUserManagement();
+		}
+
+		task ("Add multiples users, go to data sources and go back to user management") {
+			ACSettings.addMultiplesOptions(optionsList = "${emailAdress}");
+
+			ACSettings.goToDataSources();
+
+			ACSettings.goToUserManagement();
+		}
+
+		task ("Click on user") {
+			ACSettings.clickUsersByEmail(userEmail = "${emailAdress}");
+
+			for (var email : list "${emailAdress}") {
+				ACUtils.searchBar(searchItem = "${email}");
+
+				AssertChecked.assertCheckedNotVisible(locator1 = "ACSettings#USER_LIST_CHECKBOX");
+			}
+		}
 	}
 
 	@description = "Automation ID: LRAC-9055 | Test Summary: View list of all users"

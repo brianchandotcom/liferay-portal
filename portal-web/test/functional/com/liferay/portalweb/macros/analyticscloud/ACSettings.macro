@@ -372,16 +372,7 @@ definition {
 		AssertElementPresent(locator1 = "ACSettings#USER_LIST_BY_EMAIL");
 	}
 
-	macro clickUsersByEmail {
-		for (var userEmail : list "${userEmail}") {
-			Click(
-				key_userEmail = "${userEmail}",
-				locator1 = "ACSettings#CHECKBOX_BY_EMAIL");
-		}
-	}
-
 	macro changeMultipleUsersPermissions {
-
 		ACSettings.clickUsersByEmail(userEmail = "${userEmail}");
 
 		Click(
@@ -435,6 +426,14 @@ definition {
 
 	macro clickGenericAddOrConfirmationButton {
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+	}
+
+	macro clickUsersByEmail {
+		for (var userEmail : list "${userEmail}") {
+			Click(
+				key_userEmail = "${userEmail}",
+				locator1 = "ACSettings#CHECKBOX_BY_EMAIL");
+		}
 	}
 
 	macro collapsePlan {

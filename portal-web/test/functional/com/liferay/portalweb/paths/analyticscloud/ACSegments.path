@@ -127,6 +127,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORGANIZATION_NAME_INPUT</td>
+	<td>//input[contains(@data-testid,'string-input')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MEMBER_GENERIC_BUTTON</td>
 	<td>//tr[.//*[text()='${key_TableMember}']]//button[contains(@class,'button-root')and text()='${key_ButtonName}']</td>
 	<td></td>

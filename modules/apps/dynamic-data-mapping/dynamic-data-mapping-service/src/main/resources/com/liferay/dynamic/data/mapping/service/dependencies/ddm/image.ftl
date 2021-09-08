@@ -87,7 +87,7 @@
 		<@liferay_aui.input
 			label="image-description"
 			name="${namespacedFieldName}Alt"
-			required=required
+			required=fieldStructure.requiredDescription
 			type="text"
 			value="${alt}"
 		/>

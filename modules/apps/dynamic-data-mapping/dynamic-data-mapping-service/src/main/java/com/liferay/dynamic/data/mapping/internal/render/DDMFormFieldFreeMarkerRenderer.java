@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.internal.util.DDMImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
@@ -175,6 +176,19 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			"repeatable", Boolean.toString(ddmFormField.isRepeatable()));
 		fieldContext.put(
 			"required", Boolean.toString(ddmFormField.isRequired()));
+
+		if (Objects.equals(ddmFormField.getType(), DDMFormFieldType.IMAGE)) {
+			if (ddmFormField.isRequired()) {
+				fieldContext.put(
+					"requiredDescription",
+					GetterUtil.getBoolean(
+						ddmFormField.getProperty("requiredDescription"), true));
+			}
+			else {
+				fieldContext.put("requiredDescription", false);
+			}
+		}
+
 		fieldContext.put(
 			"showLabel", Boolean.toString(ddmFormField.isShowLabel()));
 		fieldContext.put("type", ddmFormField.getType());

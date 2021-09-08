@@ -838,6 +838,14 @@ public class DDMImpl implements DDM {
 				"localizationMap", localizationMapJSONObject
 			);
 
+			if (Objects.equals(
+					ddmFormField.getType(), DDMFormFieldType.IMAGE)) {
+
+				jsonObject.put(
+					"requiredDescription",
+					ddmFormField.getProperty("requiredDescription"));
+			}
+
 			ddmFormFieldsJSONArray.put(jsonObject);
 		}
 

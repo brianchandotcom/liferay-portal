@@ -2456,7 +2456,9 @@ public class CPDefinitionLocalServiceImpl
 		for (Map.Entry<Locale, String> titleEntry : urlTitleMap.entrySet()) {
 			String urlTitle = urlTitleMap.get(titleEntry.getKey());
 
-			if (Validator.isNotNull(urlTitle)) {
+			if (Validator.isNotNull(urlTitle) ||
+				((urlTitle != null) && urlTitle.equals(StringPool.BLANK))) {
+
 				urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
 					companyGroup.getGroupId(), classNameId,
 					cpDefinition.getCProductId(), titleEntry.getValue());

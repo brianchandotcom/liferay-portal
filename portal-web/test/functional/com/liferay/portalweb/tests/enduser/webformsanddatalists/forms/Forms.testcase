@@ -46,7 +46,7 @@ definition {
 
 		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
 
-		FormsAdmin.addForm();
+		FormsAdmin.addForm(groupName = "Global");
 
 		Form.editName();
 

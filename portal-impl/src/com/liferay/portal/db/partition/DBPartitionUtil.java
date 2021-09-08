@@ -20,11 +20,13 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.jdbc.util.ConnectionWrapper;
 import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
+import com.liferay.portal.dao.jdbc.util.StatementWrapper;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.hibernate.DialectDetector;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
@@ -409,6 +412,56 @@ public class DBPartitionUtil {
 		}
 
 		return _DATABASE_PARTITION_SCHEMA_NAME_PREFIX + companyId;
+	}
+
+	private static Statement _getStatementWrapper(Statement statement) {
+		return new StatementWrapper(statement) {
+
+			@Override
+			public int executeUpdate(String sql) throws SQLException {
+				sql = StringUtil.toLowerCase(sql);
+
+				if (StringUtil.startsWith(sql, "alter table")) {
+					DBInspector dbInspector = new DBInspector(
+						DataAccess.getConnection());
+
+					String[] query = sql.split(StringPool.SPACE);
+
+					try {
+						if (_isControlTable(dbInspector, query[2]) &&
+							!(CompanyThreadLocal.getCompanyId() ==
+							  _defaultCompanyId)) {
+
+							return 0;
+						}
+					}
+					catch (Exception exception) {
+					}
+				}
+				else if (StringUtil.startsWith(sql, "create index") ||
+						 StringUtil.startsWith(sql, "drop index")) {
+
+					DBInspector dbInspector = new DBInspector(
+						DataAccess.getConnection());
+
+					String[] query = sql.split(StringPool.SPACE);
+
+					try {
+						if (_isControlTable(dbInspector, query[4]) &&
+							!(CompanyThreadLocal.getCompanyId() ==
+							  _defaultCompanyId)) {
+
+							return 0;
+						}
+					}
+					catch (Exception exception) {
+					}
+				}
+
+				return super.executeUpdate(sql);
+			}
+
+		};
 	}
 
 	private static boolean _isControlTable(

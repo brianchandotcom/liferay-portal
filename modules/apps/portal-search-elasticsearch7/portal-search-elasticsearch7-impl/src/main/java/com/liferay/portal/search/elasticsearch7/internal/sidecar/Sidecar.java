@@ -133,6 +133,8 @@ public class Sidecar {
 		}
 
 		if (_processChannel == null) {
+			PathUtil.deleteDir(_sidecarTempDirPath);
+
 			return;
 		}
 

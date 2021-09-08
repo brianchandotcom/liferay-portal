@@ -12,30 +12,10 @@
  * details.
  */
 
-import {SET_FRAGMENT_EDITABLES, UPDATE_LAYOUT_DATA} from '../actions/types';
+import {UPDATE_LAYOUT_DATA} from '../actions/types';
 
 export default function editablesReducer(editables = {}, action) {
 	switch (action.type) {
-		case SET_FRAGMENT_EDITABLES: {
-			const editablesMap = {};
-
-			action.editables.forEach((editable) => {
-				const editableUniqueId = `${action.fragmentEntryLinkId}-${editable.editableId}`;
-
-				editablesMap[editableUniqueId] = {
-					...editable,
-					fragmentEntryLinkId: action.fragmentEntryLinkId,
-					itemId: editableUniqueId,
-					parentId: action.itemId,
-				};
-			});
-
-			return {
-				...editables,
-				[action.itemId]: editablesMap,
-			};
-		}
-
 		case UPDATE_LAYOUT_DATA: {
 			let nextEditables = editables;
 

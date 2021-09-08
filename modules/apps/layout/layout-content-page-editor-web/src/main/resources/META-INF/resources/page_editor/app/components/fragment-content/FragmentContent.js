@@ -17,7 +17,6 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import setFragmentEditables from '../../actions/setFragmentEditables';
 import {
 	useGetContent,
 	useGetFieldValue,
@@ -41,6 +40,8 @@ import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
 import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
 import {useId} from '../../utils/useId';
 import UnsafeHTML from '../UnsafeHTML';
+import FragmentContentInteractionsFilter from './FragmentContentInteractionsFilter';
+import FragmentContentProcessor from './FragmentContentProcessor';
 import getAllEditables from './getAllEditables';
 
 const FragmentContent = ({
@@ -60,6 +61,8 @@ const FragmentContent = ({
 
 	const canConfigureWidgets = useSelector(selectCanConfigureWidgets);
 
+	const [editables, setEditables] = useState([]);
+
 	/**
 	 * Updates editables array for the rendered fragment.
 	 * @param {HTMLElement} [nextFragmentElement] Fragment element
@@ -68,23 +71,24 @@ const FragmentContent = ({
 	 */
 	const onRender = useCallback(
 		(fragmentElement) => {
-			let updatedEditableValues = [];
+			let nextEditables = [];
 
 			if (isMounted()) {
-				updatedEditableValues = getAllEditables(fragmentElement);
+				nextEditables = getAllEditables(fragmentElement).map(
+					(editable) => ({
+						...editable,
+						fragmentEntryLinkId,
+						itemId: `${fragmentEntryLinkId}-${editable.editableId}`,
+						parentId: item.itemId,
+					})
+				);
 			}
 
-			dispatch(
-				setFragmentEditables(
-					fragmentEntryLinkId,
-					toControlsId(item.itemId),
-					updatedEditableValues
-				)
-			);
+			setEditables(nextEditables);
 
-			return updatedEditableValues;
+			return nextEditables;
 		},
-		[dispatch, fragmentEntryLinkId, isMounted, item, toControlsId]
+		[isMounted, fragmentEntryLinkId, item]
 	);
 
 	const fragmentEntryLink = useSelectorCallback(
@@ -117,12 +121,6 @@ const FragmentContent = ({
 			throw new Error(fragmentEntryLinkError);
 		}
 	}, [fragmentEntryLinkError]);
-
-	const editables = useSelectorCallback(
-		(state) =>
-			Object.values(state.editables?.[toControlsId(item.itemId)] || {}),
-		[item, toControlsId]
-	);
 
 	/**
 	 * fragmentElement keeps a copy of the fragment real HTML,

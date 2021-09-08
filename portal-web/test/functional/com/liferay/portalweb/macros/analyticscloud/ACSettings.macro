@@ -372,12 +372,17 @@ definition {
 		AssertElementPresent(locator1 = "ACSettings#USER_LIST_BY_EMAIL");
 	}
 
-	macro changeMultipleUsersPermissions {
+	macro clickUsersByEmail {
 		for (var userEmail : list "${userEmail}") {
 			Click(
 				key_userEmail = "${userEmail}",
 				locator1 = "ACSettings#CHECKBOX_BY_EMAIL");
 		}
+	}
+
+	macro changeMultipleUsersPermissions {
+
+		ACSettings.clickUsersByEmail(userEmail = "${userEmail}");
 
 		Click(
 			key_text = "Change Permissions",

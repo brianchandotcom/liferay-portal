@@ -80,20 +80,21 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 			CommerceTaxCalculateRequest commerceTaxCalculateRequest)
 		throws CommerceTaxEngineException {
 
-		try (CloseableHttpResponse closeableHttpResponse =
-				_closeableHttpClient.execute(
-					_getHttpGet(commerceTaxCalculateRequest))) {
 
-			if (_log.isTraceEnabled()) {
-				StatusLine statusLine = closeableHttpResponse.getStatusLine();
+		try {
+			Http.Options options = _getHttpOptions(
+				commerceTaxCalculateRequest);
 
-				_log.trace(
-					"Server returned status " + statusLine.getStatusCode());
+			String json = _http.URLtoString(options);
+
+			if (_log.isDebugEnabled()) {
+				Http.Response response = options.getResponse();
+
+				_log.debug(
+					"Reponse code " + response.getResponseCode());
 			}
 
-			return _getCommerceTaxValue(
-				EntityUtils.toString(
-					closeableHttpResponse.getEntity(), StandardCharsets.UTF_8));
+			return _getCommerceTaxValue(json);
 		}
 		catch (Exception exception) {
 			throw new CommerceTaxEngineException(exception);
@@ -109,55 +110,6 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 	@Override
 	public String getName(Locale locale) {
 		return LanguageUtil.get(_getResourceBundle(locale), KEY);
-	}
-
-	@Activate
-	protected void activate() {
-		_poolingHttpClientConnectionManager =
-			new PoolingHttpClientConnectionManager();
-
-		_poolingHttpClientConnectionManager.setMaxTotal(20);
-		_poolingHttpClientConnectionManager.setValidateAfterInactivity(30000);
-
-		HttpClientBuilder httpClientBuilder = HttpClients.custom();
-
-		httpClientBuilder.setConnectionManager(
-			_poolingHttpClientConnectionManager);
-
-		httpClientBuilder.useSystemProperties();
-
-		_closeableHttpClient = httpClientBuilder.build();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_closeableHttpClient != null) {
-			try {
-				_closeableHttpClient.close();
-			}
-			catch (IOException ioException) {
-				_log.error("Unable to close client", ioException);
-			}
-
-			_closeableHttpClient = null;
-		}
-
-		if (_poolingHttpClientConnectionManager != null) {
-			_poolingHttpClientConnectionManager.close();
-
-			_poolingHttpClientConnectionManager = null;
-		}
-	}
-
-	protected RemoteCommerceTaxConfiguration getRemoteCommerceTaxConfiguration(
-			long commerceChannelGroupId)
-		throws CommerceTaxEngineException {
-
-		return _configurationProvider.getConfiguration(
-			RemoteCommerceTaxConfiguration.class,
-			new GroupServiceSettingsLocator(
-				commerceChannelGroupId,
-				RemoteCommerceTaxConfiguration.class.getName()));
 	}
 
 	private Map<String, String> _getCommerceAddressParameters(
@@ -219,7 +171,7 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 			BigDecimal.valueOf(jsonObject.getDouble("amount")));
 	}
 
-	private HttpGet _getHttpGet(
+	private Http.Options _getHttpOptions(
 			CommerceTaxCalculateRequest commerceTaxCalculateRequest)
 		throws Exception {
 

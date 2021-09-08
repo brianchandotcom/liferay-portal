@@ -20,7 +20,7 @@ export const ACTIONS = {
 			buttonAddLabel: Liferay.Language.get('done'),
 			multiple: true,
 			onSelect: (selectedItems) => {
-				if (selectedItems.length) {
+				if (Array.isArray(selectedItems)) {
 					const assignRoleAccountUsersFm = document.getElementById(
 						`${portletNamespace}fm`
 					);

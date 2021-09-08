@@ -1391,13 +1391,13 @@ definition {
 			GogoShell.viewOutput(outputContent = "true");
 		}
 
-		task ("Add a tag") {
+		task ("Add a tag named tag3") {
 			JSONAssettag.addTag(
 				groupName = "Test Site Name",
 				tagName = "tag3");
 		}
 
-		task ("Add a Web Content with tag1") {
+		task ("Add the first web content with tag1") {
 			JSONWebcontent.addWebContent(
 				assetTagNames = "tag1",
 				content = "Web Content Content 1",
@@ -1405,7 +1405,7 @@ definition {
 				title = "Web Content Title 1");
 		}
 
-		task ("Add a Web Content with 2 tags") {
+		task ("Add the second web Content with tag1 and tag2") {
 			JSONWebcontent.addWebContent(
 				assetTagNames = "tag1,tag2",
 				content = "Web Content Content 2",
@@ -1413,7 +1413,7 @@ definition {
 				title = "Web Content Title 2");
 		}
 
-		task ("Add a Web Content without tag") {
+		task ("Add the third web content without tag") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content 3",
 				groupName = "Test Site Name",
@@ -1430,19 +1430,19 @@ definition {
 				fragmentName = "Collection Display");
 		}
 
-		task ("Select the Basic Web Content in collection providers") {
+		task ("Select the Basic Web Content collection provider in Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				infoListProviderName = "Basic Web Content");
 		}
 
-		task ("View all Web Contents are shown in Collection Display") {
+		task ("View all web contents are shown in Collection Display") {
 			var n = "1";
 
-			for (var titleNumber : list "3,2,1") {
+			for (var namespace : list "3,2,1") {
 				AssertVisible(
 					key_colPosition = "1",
-					key_entryTitle = "Web Content Title ${titleNumber}",
+					key_entryTitle = "Web Content Title ${namespace}",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${n}",
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
@@ -1451,7 +1451,7 @@ definition {
 			}
 		}
 
-		task ("Select the tag1 in Filter Collection") {
+		task ("Filter web contents by tag1") {
 			PageEditor.editCollectionDisplay(
 				filterCollection = "true",
 				filterResults = "There are 2 results for tag1.",
@@ -1460,13 +1460,13 @@ definition {
 				tagNameList = "tag1");
 		}
 
-		task ("View Web Content Title 2 and 1 are shown in Collection Display") {
+		task ("View only web contents with tag1 are shown in Collection Display") {
 			var n = "1";
 
-			for (var titleNumber : list "2,1") {
+			for (var namespace : list "2,1") {
 				AssertVisible(
 					key_colPosition = "1",
-					key_entryTitle = "Web Content Title ${titleNumber}",
+					key_entryTitle = "Web Content Title ${namespace}",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${n}",
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
@@ -1475,7 +1475,7 @@ definition {
 			}
 		}
 
-		task ("Add a new parameter in title field") {
+		task ("Filter web contents by tag1 and title") {
 			PageEditor.editCollectionDisplay(
 				assetTitle = '''"Web Content Title 1"''',
 				filterCollection = "true",
@@ -1484,7 +1484,7 @@ definition {
 				selectedName = "Basic Web Content");
 		}
 
-		task ("View Web Content Title 1 is shown in Collection Display") {
+		task ("View only the Web Content Title 1 is shown in Collection Display") {
 			AssertVisible(
 				key_colPosition = "1",
 				key_entryTitle = "Web Content Title 1",
@@ -1493,7 +1493,7 @@ definition {
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 		}
 
-		task ("Clear the filter and select the tag1 and tag2 in Filter Collection") {
+		task ("Clear the filter then filter by tag1 and tag2") {
 			PageEditor.editCollectionDisplay(
 				clearFilter = "true",
 				filterCollection = "true",
@@ -1503,13 +1503,13 @@ definition {
 				tagNameList = "tag1,tag2");
 		}
 
-		task ("View Web Content Title 2 and 1 are shown in Collection Display") {
+		task ("View only web contents with tag1 or tag2 are shown in Collection Display") {
 			var n = "1";
 
-			for (var titleNumber : list "2,1") {
+			for (var namespace : list "2,1") {
 				AssertVisible(
 					key_colPosition = "1",
-					key_entryTitle = "Web Content Title ${titleNumber}",
+					key_entryTitle = "Web Content Title ${namespace}",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${n}",
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
@@ -1518,7 +1518,7 @@ definition {
 			}
 		}
 
-		task ("Add a new parameter in title field") {
+		task ("Filter web contents by tag1,tag2 and title") {
 			PageEditor.editCollectionDisplay(
 				assetTitle = '''"Web Content Title 1"''',
 				filterCollection = "true",
@@ -1527,7 +1527,7 @@ definition {
 				selectedName = "Basic Web Content");
 		}
 
-		task ("View Web Content Title 1 is shown in Collection Display") {
+		task ("View only the Web Content Title 1 is shown in Collection Display") {
 			AssertVisible(
 				key_colPosition = "1",
 				key_entryTitle = "Web Content Title 1",
@@ -1536,7 +1536,7 @@ definition {
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 		}
 
-		task ("Re-type the title field") {
+		task ("Filter web contents by tag1,tag2 and another title") {
 			PageEditor.editCollectionDisplay(
 				assetTitle = '''"Web Content Title 2"''',
 				filterCollection = "true",
@@ -1545,7 +1545,7 @@ definition {
 				selectedName = "Basic Web Content");
 		}
 
-		task ("View Web Content Title 2 is shown in Collection Display") {
+		task ("View only the Web Content Title 2 is shown in Collection Display") {
 			AssertVisible(
 				key_colPosition = "1",
 				key_entryTitle = "Web Content Title 2",
@@ -1554,7 +1554,7 @@ definition {
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 		}
 
-		task ("Clear the filter and add a new parameter in title field") {
+		task ("Clear the filter then filter by title") {
 			PageEditor.editCollectionDisplay(
 				assetTitle = '''"Web Content Title 3"''',
 				clearFilter = "true",
@@ -1564,7 +1564,7 @@ definition {
 				selectedName = "Basic Web Content");
 		}
 
-		task ("View Web Content Title 3 is shown in Collection Display") {
+		task ("View only the Web Content Title 3 is shown in Collection Display") {
 			AssertVisible(
 				key_colPosition = "1",
 				key_entryTitle = "Web Content Title 3",
@@ -1573,7 +1573,7 @@ definition {
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 		}
 
-		task ("Add a new filter selecting the tag3") {
+		task ("Filter web contents by title and tag3") {
 			PageEditor.editCollectionDisplay(
 				filterCollection = "true",
 				filterResults = '''There are 0 results for "Web Content Title 3", tag3.''',
@@ -1582,7 +1582,7 @@ definition {
 				tagNameList = "tag3");
 		}
 
-		task ("View the Collection Display is empty") {
+		task ("View the empty message shown in Collection Display") {
 			AssertVisible(
 				key_infoMessage = "The collection is empty. To display your items, add them to the collection or choose a different collection.",
 				locator1 = "Message#INFO_SPECIFIC");
@@ -1610,7 +1610,7 @@ definition {
 			GogoShell.viewOutput(outputContent = "true");
 		}
 
-		task ("Add three Web Contents with one tag each") {
+		task ("Add three web contents with different tags") {
 			for (var n : list "1,2,3") {
 				JSONWebcontent.addWebContent(
 					assetTagNames = "tag${n}",
@@ -1620,7 +1620,7 @@ definition {
 			}
 		}
 
-		task ("Add a Web Content with all tags") {
+		task ("Add the fourth web content with three tags") {
 			JSONWebcontent.addWebContent(
 				assetTagNames = "tag1,tag2,tag3",
 				content = "Web Content Content 4",
@@ -1628,7 +1628,7 @@ definition {
 				title = "Web Content Title 4");
 		}
 
-		task ("Add a Web Content without tag") {
+		task ("Add the fifth web content without tag") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content 5",
 				groupName = "Test Site Name",
@@ -1645,19 +1645,19 @@ definition {
 				fragmentName = "Collection Display");
 		}
 
-		task ("Select the Basic Web Content in collection providers") {
+		task ("Select the Basic Web Content collection provider in Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				infoListProviderName = "Basic Web Content");
 		}
 
-		task ("View all Web Contents are shown in Collection Display") {
+		task ("View all web contents are shown in Collection Display") {
 			var n = "1";
 
-			for (var titleNumber : list "5,4,3,2,1") {
+			for (var namespace : list "5,4,3,2,1") {
 				AssertVisible(
 					key_colPosition = "1",
-					key_entryTitle = "Web Content Title ${titleNumber}",
+					key_entryTitle = "Web Content Title ${namespace}",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${n}",
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
@@ -1666,7 +1666,7 @@ definition {
 			}
 		}
 
-		task ("Select the tag1 in Filter Collection") {
+		task ("Filter web contents by the tag1") {
 			PageEditor.editCollectionDisplay(
 				filterCollection = "true",
 				filterResults = "There are 2 results for tag1.",
@@ -1675,13 +1675,13 @@ definition {
 				tagNameList = "tag1");
 		}
 
-		task ("View Web Content Title 4 and 1 are shown in Collection Display") {
+		task ("View only web contents with tag1 are shown in Collection Display") {
 			var n = "1";
 
-			for (var titleNumber : list "4,1") {
+			for (var namespace : list "4,1") {
 				AssertVisible(
 					key_colPosition = "1",
-					key_entryTitle = "Web Content Title ${titleNumber}",
+					key_entryTitle = "Web Content Title ${namespace}",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${n}",
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
@@ -1690,7 +1690,7 @@ definition {
 			}
 		}
 
-		task ("Clear the filter and select the tag2 in Filter Collection") {
+		task ("Clear the filter then filter by the tag2") {
 			PageEditor.editCollectionDisplay(
 				clearFilter = "true",
 				filterCollection = "true",
@@ -1700,13 +1700,13 @@ definition {
 				tagNameList = "tag2");
 		}
 
-		task ("View Web Content Title 4 and 2 are shown in Collection Display") {
+		task ("View only web contents with tag2 are shown in Collection Display") {
 			var n = "1";
 
-			for (var titleNumber : list "4,2") {
+			for (var namespace : list "4,2") {
 				AssertVisible(
 					key_colPosition = "1",
-					key_entryTitle = "Web Content Title ${titleNumber}",
+					key_entryTitle = "Web Content Title ${namespace}",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${n}",
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
@@ -1715,7 +1715,7 @@ definition {
 			}
 		}
 
-		task ("Clear the filter and select the tag3 in Filter Collection") {
+		task ("Clear the filter then filter by the tag3") {
 			PageEditor.editCollectionDisplay(
 				clearFilter = "true",
 				filterCollection = "true",
@@ -1725,13 +1725,13 @@ definition {
 				tagNameList = "tag3");
 		}
 
-		task ("View Web Content Title 4 and 3 are shown in Collection Display") {
+		task ("View only web contents with tag3 are shown in Collection Display") {
 			var n = "1";
 
-			for (var titleNumber : list "4,3") {
+			for (var namespace : list "4,3") {
 				AssertVisible(
 					key_colPosition = "1",
-					key_entryTitle = "Web Content Title ${titleNumber}",
+					key_entryTitle = "Web Content Title ${namespace}",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${n}",
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
@@ -1740,7 +1740,7 @@ definition {
 			}
 		}
 
-		task ("Clear the filter and select all tags in Filter Collection") {
+		task ("Clear the filter then filter by all tags") {
 			PageEditor.editCollectionDisplay(
 				clearFilter = "true",
 				filterCollection = "true",
@@ -1750,13 +1750,13 @@ definition {
 				tagNameList = "tag1,tag2,tag3");
 		}
 
-		task ("View Web Content Title 4, 3, 2 and 1 are shown in Collection Display") {
+		task ("View only web contents with tag are shown in Collection Display") {
 			var n = "1";
 
-			for (var titleNumber : list "4,3,2,1") {
+			for (var namespace : list "4,3,2,1") {
 				AssertVisible(
 					key_colPosition = "1",
-					key_entryTitle = "Web Content Title ${titleNumber}",
+					key_entryTitle = "Web Content Title ${namespace}",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${n}",
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
@@ -1787,7 +1787,7 @@ definition {
 			GogoShell.viewOutput(outputContent = "true");
 		}
 
-		task ("Add three Web Contents") {
+		task ("Add three web contents") {
 			for (var n : list "1,2,3") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content ${n}",
@@ -1806,19 +1806,19 @@ definition {
 				fragmentName = "Collection Display");
 		}
 
-		task ("Select the Basic Web Content in collection providers") {
+		task ("Select the Basic Web Content collection provider in Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				infoListProviderName = "Basic Web Content");
 		}
 
-		task ("View all Web Contents are shown in Collection Display") {
+		task ("View all web contents are shown in Collection Display") {
 			var n = "1";
 
-			for (var titleNumber : list "3,2,1") {
+			for (var namespace : list "3,2,1") {
 				AssertVisible(
 					key_colPosition = "1",
-					key_entryTitle = "Web Content Title ${titleNumber}",
+					key_entryTitle = "Web Content Title ${namespace}",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${n}",
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
@@ -1827,7 +1827,7 @@ definition {
 			}
 		}
 
-		task ("Add a parameter in title field") {
+		task ("Filter web contents by title") {
 			PageEditor.editCollectionDisplay(
 				assetTitle = '''"Web Content Title 1"''',
 				filterCollection = "true",
@@ -1836,7 +1836,7 @@ definition {
 				selectedName = "Basic Web Content");
 		}
 
-		task ("View Web Content Title 1 is shown in Collection Display") {
+		task ("View only the Web Content Title 1 is shown in Collection Display") {
 			AssertVisible(
 				key_colPosition = "1",
 				key_entryTitle = "Web Content Title 1",
@@ -1845,7 +1845,7 @@ definition {
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 		}
 
-		task ("Clear the filter and Add a new parameter in title field") {
+		task ("Clear the filter then filter by another title") {
 			PageEditor.editCollectionDisplay(
 				assetTitle = '''"Title 2"''',
 				clearFilter = "true",
@@ -1855,7 +1855,7 @@ definition {
 				selectedName = "Basic Web Content");
 		}
 
-		task ("View Web Content Title 2 is shown in Collection Display") {
+		task ("View only the Web Content Title 2 is shown in Collection Display") {
 			AssertVisible(
 				key_colPosition = "1",
 				key_entryTitle = "Web Content Title 2",
@@ -1864,7 +1864,7 @@ definition {
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 		}
 
-		task ("Clear the filter and Add a new parameter in title field") {
+		task ("Clear the filter then filter by another title") {
 			PageEditor.editCollectionDisplay(
 				assetTitle = "3",
 				clearFilter = "true",
@@ -1874,7 +1874,7 @@ definition {
 				selectedName = "Basic Web Content");
 		}
 
-		task ("View Web Content Title 3 is shown in Collection Display") {
+		task ("View only the Web Content Title 3 is shown in Collection Display") {
 			AssertVisible(
 				key_colPosition = "1",
 				key_entryTitle = "Web Content Title 3",
@@ -1883,7 +1883,7 @@ definition {
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 		}
 
-		task ("Clear the filter and Add a new parameter in title field") {
+		task ("Clear the filter then filter by another title") {
 			PageEditor.editCollectionDisplay(
 				assetTitle = "Web Content Title",
 				clearFilter = "true",
@@ -1893,13 +1893,13 @@ definition {
 				selectedName = "Basic Web Content");
 		}
 
-		task ("View all Web Contents are shown in Collection Display") {
+		task ("View all web contents are shown in Collection Display") {
 			var n = "1";
 
-			for (var titleNumber : list "3,2,1") {
+			for (var namespace : list "3,2,1") {
 				AssertVisible(
 					key_colPosition = "1",
-					key_entryTitle = "Web Content Title ${titleNumber}",
+					key_entryTitle = "Web Content Title ${namespace}",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${n}",
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");

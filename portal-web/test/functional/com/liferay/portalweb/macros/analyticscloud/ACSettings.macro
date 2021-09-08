@@ -256,6 +256,29 @@ definition {
 		}
 	}
 
+	macro assertOverviewUsage {
+		if (isSet(current)) {
+			AssertTextEquals(
+				key_metricName = "${metricName}",
+				locator1 = "ACUsage#USAGE_CURRENT_NUMBER",
+				value1 = "${current}");
+		}
+
+		if (isSet(limit)) {
+			AssertTextEquals(
+				key_metricName = "${metricName}",
+				locator1 = "ACUsage#USAGE_LIMIT_NUMBER",
+				value1 = "${limit}");
+		}
+
+		if (isSet(usageSince)) {
+			AssertTextEquals.assertPartialText(
+				key_metricName = "${metricName}",
+				locator1 = "ACUsage#USAGE_SINCE",
+				value1 = "usageSince");
+		}
+	}
+
 	@summary = "Asserts the page views usage value \
 	@param pageViewsUsageValue"
 	macro assertPageViewsUsage() {

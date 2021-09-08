@@ -19,6 +19,7 @@ import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.service.base.CommerceOrderTypeServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -122,16 +123,11 @@ public class CommerceOrderTypeServiceImpl
 			String className, long classPK, boolean active, int start, int end)
 		throws PortalException {
 
-		PortletResourcePermission portletResourcePermission =
-			_commerceOrderTypeModelResourcePermission.
-				getPortletResourcePermission();
-
-		portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CommerceOrderActionKeys.VIEW_COMMERCE_ORDER_TYPES);
+		PermissionChecker permissionChecker = getPermissionChecker();
 
 		return commerceOrderTypeLocalService.getCommerceOrderTypes(
-			className, classPK, active, start, end);
+			permissionChecker.getCompanyId(), className, classPK, active, start,
+			end);
 	}
 
 	@Override
@@ -139,16 +135,10 @@ public class CommerceOrderTypeServiceImpl
 			String className, long classPK, boolean active)
 		throws PortalException {
 
-		PortletResourcePermission portletResourcePermission =
-			_commerceOrderTypeModelResourcePermission.
-				getPortletResourcePermission();
-
-		portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CommerceOrderActionKeys.VIEW_COMMERCE_ORDER_TYPES);
+		PermissionChecker permissionChecker = getPermissionChecker();
 
 		return commerceOrderTypeLocalService.getCommerceOrderTypesCount(
-			className, classPK, active);
+			permissionChecker.getCompanyId(), className, classPK, active);
 	}
 
 	@Override

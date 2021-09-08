@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
 import javax.servlet.ServletContext;
@@ -65,6 +66,7 @@ public class SiteInitializerRegistrar {
 		JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		Portal portal,
+		SiteNavigationMenuLocalService siteNavigationMenuLocalService,
 		StructuredContentFolderResource.Factory
 			structuredContentFolderResourceFactory,
 		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
@@ -89,6 +91,7 @@ public class SiteInitializerRegistrar {
 		_jsonFactory = jsonFactory;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_portal = portal;
+		_siteNavigationMenuLocalService = siteNavigationMenuLocalService;
 		_structuredContentFolderResourceFactory =
 			structuredContentFolderResourceFactory;
 		_styleBookEntryZipProcessor = styleBookEntryZipProcessor;
@@ -112,6 +115,7 @@ public class SiteInitializerRegistrar {
 				_documentResourceFactory, _fragmentsImporter,
 				_groupLocalService, _journalArticleLocalService, _jsonFactory,
 				_objectDefinitionResourceFactory, _portal, _servletContext,
+				_siteNavigationMenuLocalService,
 				_structuredContentFolderResourceFactory,
 				_styleBookEntryZipProcessor, _taxonomyCategoryResourceFactory,
 				_taxonomyVocabularyResourceFactory, _userLocalService),
@@ -143,6 +147,8 @@ public class SiteInitializerRegistrar {
 	private final Portal _portal;
 	private ServiceRegistration<?> _serviceRegistration;
 	private ServletContext _servletContext;
+	private final SiteNavigationMenuLocalService
+		_siteNavigationMenuLocalService;
 	private final StructuredContentFolderResource.Factory
 		_structuredContentFolderResourceFactory;
 	private final StyleBookEntryZipProcessor _styleBookEntryZipProcessor;

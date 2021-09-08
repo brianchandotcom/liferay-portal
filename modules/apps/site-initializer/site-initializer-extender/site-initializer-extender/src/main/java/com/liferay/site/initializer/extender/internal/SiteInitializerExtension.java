@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
 import javax.servlet.ServletContext;
@@ -66,6 +67,7 @@ public class SiteInitializerExtension {
 		JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		Portal portal,
+		SiteNavigationMenuLocalService siteNavigationMenuLocalService,
 		StructuredContentFolderResource.Factory
 			structuredContentFolderResourceFactory,
 		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
@@ -87,6 +89,7 @@ public class SiteInitializerExtension {
 				fragmentsImporter, groupLocalService,
 				journalArticleLocalService, jsonFactory,
 				objectDefinitionResourceFactory, portal,
+				siteNavigationMenuLocalService,
 				structuredContentFolderResourceFactory,
 				styleBookEntryZipProcessor, taxonomyCategoryResourceFactory,
 				taxonomyVocabularyResourceFactory, userLocalService));

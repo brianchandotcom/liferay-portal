@@ -31,6 +31,8 @@ import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResourc
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
 import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
@@ -104,6 +106,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	public BundleSiteInitializer(
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		CatalogResource.Factory catalogResourceFactory,
+		ChannelResource.Factory channelResourceFactory,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -126,6 +129,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_bundle = bundle;
 		_catalogResourceFactory = catalogResourceFactory;
+		_channelResourceFactory = channelResourceFactory;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
@@ -198,6 +202,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_addAssetListEntries(serviceContext);
 			_addCatalog(serviceContext);
+			_addChannel(serviceContext);
 			_addDDMStructures(serviceContext);
 			_addDDMTemplates(serviceContext);
 			_addFragmentEntries(serviceContext);
@@ -337,6 +342,44 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			catalogResource.postCatalog(catalog);
+		}
+	}
+
+	private void _addChannel(ServiceContext serviceContext) throws Exception {
+		_addChannel("/site-initializer/channels", serviceContext);
+	}
+
+	private void _addChannel(
+			String parentResourcePath, ServiceContext serviceContext)
+		throws Exception {
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			parentResourcePath);
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		ChannelResource.Builder channelResourceBuilder =
+			_channelResourceFactory.create();
+
+		ChannelResource channelResource = channelResourceBuilder.user(
+			serviceContext.fetchUser()
+		).build();
+
+		for (String resourcePath : resourcePaths) {
+			String jsonChannel = _read(resourcePath);
+
+			Channel channel = Channel.toDTO(jsonChannel);
+
+			if (channel == null) {
+				_log.error(
+					"Unable to transform channel from JSON: " + jsonChannel);
+
+				continue;
+			}
+
+			channelResource.postChannel(channel);
 		}
 	}
 
@@ -966,6 +1009,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;
 	private final CatalogResource.Factory _catalogResourceFactory;
+	private final ChannelResource.Factory _channelResourceFactory;
 	private final ClassLoader _classLoader;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;

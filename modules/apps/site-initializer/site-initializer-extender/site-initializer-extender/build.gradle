@@ -8,6 +8,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:asset:asset-list-api")
 	compileOnly project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-catalog-api")
+	compileOnly project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-channel-api")
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:fragment:fragment-api")

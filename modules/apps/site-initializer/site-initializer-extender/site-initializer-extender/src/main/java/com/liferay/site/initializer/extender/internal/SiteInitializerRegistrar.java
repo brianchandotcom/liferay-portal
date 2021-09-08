@@ -23,6 +23,7 @@ import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
@@ -51,6 +52,7 @@ public class SiteInitializerRegistrar {
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		BundleContext bundleContext,
 		CatalogResource.Factory catalogResourceFactory,
+		ChannelResource.Factory channelResourceFactory,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -74,6 +76,7 @@ public class SiteInitializerRegistrar {
 		_bundle = bundle;
 		_bundleContext = bundleContext;
 		_catalogResourceFactory = catalogResourceFactory;
+		_channelResourceFactory = channelResourceFactory;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
@@ -103,11 +106,11 @@ public class SiteInitializerRegistrar {
 			SiteInitializer.class,
 			new BundleSiteInitializer(
 				_assetListEntryLocalService, _bundle, _catalogResourceFactory,
-				_ddmStructureLocalService, _ddmTemplateLocalService,
-				_defaultDDMStructureHelper, _dlURLHelper,
-				_documentFolderResourceFactory, _documentResourceFactory,
-				_fragmentsImporter, _groupLocalService,
-				_journalArticleLocalService, _jsonFactory,
+				_channelResourceFactory, _ddmStructureLocalService,
+				_ddmTemplateLocalService, _defaultDDMStructureHelper,
+				_dlURLHelper, _documentFolderResourceFactory,
+				_documentResourceFactory, _fragmentsImporter,
+				_groupLocalService, _journalArticleLocalService, _jsonFactory,
 				_objectDefinitionResourceFactory, _portal, _servletContext,
 				_structuredContentFolderResourceFactory,
 				_styleBookEntryZipProcessor, _taxonomyCategoryResourceFactory,
@@ -124,6 +127,7 @@ public class SiteInitializerRegistrar {
 	private final Bundle _bundle;
 	private final BundleContext _bundleContext;
 	private final CatalogResource.Factory _catalogResourceFactory;
+	private final ChannelResource.Factory _channelResourceFactory;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;

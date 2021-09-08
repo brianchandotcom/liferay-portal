@@ -1378,6 +1378,203 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-126009. The user is able to filter web contents in Collection Display using Tag."
+	@priority = "4"
+	test FilterWebContentByTag {
+		property test.name.skip.portal.instance = "CollectionDisplay#FilterWebContentByTag";
+
+		task ("Enable Basic Web Content flag in Gogo Shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.journal.web.internal.info.collection.provider.BasicWebContentSingleFormVariationInfoCollectionProvider");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+
+		task ("Add three web contents with different tags") {
+			for (var n : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					assetTagNames = "tag${n}",
+					content = "Web Content Content ${n}",
+					groupName = "Test Site Name",
+					title = "Web Content Title ${n}");
+			}
+		}
+
+		task ("Add the fourth web content with three tags") {
+			JSONWebcontent.addWebContent(
+				assetTagNames = "tag1,tag2,tag3",
+				content = "Web Content Content 4",
+				groupName = "Test Site Name",
+				title = "Web Content Title 4");
+		}
+
+		task ("Add the fifth web content without tag") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content 5",
+				groupName = "Test Site Name",
+				title = "Web Content Title 5");
+		}
+
+		task ("Add a Collection Display fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the Basic Web Content collection provider in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Basic Web Content");
+		}
+
+		task ("View all web contents are shown in Collection Display") {
+			var n = "1";
+
+			for (var namespace : list "5,4,3,2,1") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "Web Content Title ${namespace}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Filter web contents by the tag1") {
+			PageEditor.editCollectionDisplay(
+				filterCollection = "true",
+				filterResults = "There are 2 results for tag1.",
+				fragmentName = "Collection Display",
+				selectedName = "Basic Web Content",
+				tagNameList = "tag1");
+		}
+
+		task ("View only web contents with tag1 are shown in Collection Display") {
+			var n = "1";
+
+			for (var namespace : list "4,1") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "Web Content Title ${namespace}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM");
+		}
+
+		task ("Clear the filter then filter by the tag2") {
+			PageEditor.editCollectionDisplay(
+				clearFilter = "true",
+				filterCollection = "true",
+				filterResults = "There are 2 results for tag2.",
+				fragmentName = "Collection Display",
+				selectedName = "Basic Web Content",
+				tagNameList = "tag2");
+		}
+
+		task ("View only web contents with tag2 are shown in Collection Display") {
+			var n = "1";
+
+			for (var namespace : list "4,2") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "Web Content Title ${namespace}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM");
+		}
+
+		task ("Clear the filter then filter by the tag3") {
+			PageEditor.editCollectionDisplay(
+				clearFilter = "true",
+				filterCollection = "true",
+				filterResults = "There are 2 results for tag3.",
+				fragmentName = "Collection Display",
+				selectedName = "Basic Web Content",
+				tagNameList = "tag3");
+		}
+
+		task ("View only web contents with tag3 are shown in Collection Display") {
+			var n = "1";
+
+			for (var namespace : list "4,3") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "Web Content Title ${namespace}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM");
+		}
+
+		task ("Clear the filter then filter by all tags") {
+			PageEditor.editCollectionDisplay(
+				clearFilter = "true",
+				filterCollection = "true",
+				filterResults = "There are 4 results for tag1, tag2, tag3.",
+				fragmentName = "Collection Display",
+				selectedName = "Basic Web Content",
+				tagNameList = "tag1,tag2,tag3");
+		}
+
+		task ("View only web contents with tag are shown in Collection Display") {
+			var n = "1";
+
+			for (var namespace : list "4,3,2,1") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "Web Content Title ${namespace}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "5",
+				locator1 = "PageEditor#COLLECTION_ITEM");
+		}
+
+		task ("Disable Basic Web Content flag in Gogo Shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:disable com.liferay.journal.web.internal.info.collection.provider.BasicWebContentSingleFormVariationInfoCollectionProvider");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+	}
+
 	@description = "This is a test for LPS-126009. The user is able to filter web contents in Collection Display using Tag and Title."
 	@priority = "4"
 	test FilterWebContentByTagAndTitle {
@@ -1616,203 +1813,6 @@ definition {
 			AssertVisible(
 				key_infoMessage = "The collection is empty. To display your items, add them to the collection or choose a different collection.",
 				locator1 = "Message#INFO_SPECIFIC");
-		}
-
-		task ("Disable Basic Web Content flag in Gogo Shell") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:disable com.liferay.journal.web.internal.info.collection.provider.BasicWebContentSingleFormVariationInfoCollectionProvider");
-
-			GogoShell.viewOutput(outputContent = "true");
-		}
-	}
-
-	@description = "This is a test for LPS-126009. The user is able to filter web contents in Collection Display using Tag."
-	@priority = "4"
-	test FilterWebContentByTag {
-		property test.name.skip.portal.instance = "CollectionDisplay#FilterWebContentByTag";
-
-		task ("Enable Basic Web Content flag in Gogo Shell") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:enable com.liferay.journal.web.internal.info.collection.provider.BasicWebContentSingleFormVariationInfoCollectionProvider");
-
-			GogoShell.viewOutput(outputContent = "true");
-		}
-
-		task ("Add three web contents with different tags") {
-			for (var n : list "1,2,3") {
-				JSONWebcontent.addWebContent(
-					assetTagNames = "tag${n}",
-					content = "Web Content Content ${n}",
-					groupName = "Test Site Name",
-					title = "Web Content Title ${n}");
-			}
-		}
-
-		task ("Add the fourth web content with three tags") {
-			JSONWebcontent.addWebContent(
-				assetTagNames = "tag1,tag2,tag3",
-				content = "Web Content Content 4",
-				groupName = "Test Site Name",
-				title = "Web Content Title 4");
-		}
-
-		task ("Add the fifth web content without tag") {
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content 5",
-				groupName = "Test Site Name",
-				title = "Web Content Title 5");
-		}
-
-		task ("Add a Collection Display fragment to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Content Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Collection Display");
-		}
-
-		task ("Select the Basic Web Content collection provider in Collection Display") {
-			PageEditor.editCollectionDisplay(
-				fragmentName = "Collection Display",
-				infoListProviderName = "Basic Web Content");
-		}
-
-		task ("View all web contents are shown in Collection Display") {
-			var n = "1";
-
-			for (var namespace : list "5,4,3,2,1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "Web Content Title ${namespace}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-
-				var n = ${n} + 1;
-			}
-		}
-
-		task ("Filter web contents by the tag1") {
-			PageEditor.editCollectionDisplay(
-				filterCollection = "true",
-				filterResults = "There are 2 results for tag1.",
-				fragmentName = "Collection Display",
-				selectedName = "Basic Web Content",
-				tagNameList = "tag1");
-		}
-
-		task ("View only web contents with tag1 are shown in Collection Display") {
-			var n = "1";
-
-			for (var namespace : list "4,1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "Web Content Title ${namespace}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-
-				var n = ${n} + 1;
-			}
-
-			AssertElementNotPresent(
-				key_colPosition = "1",
-				key_rowPosition = "3",
-				locator1 = "PageEditor#COLLECTION_ITEM");
-		}
-
-		task ("Clear the filter then filter by the tag2") {
-			PageEditor.editCollectionDisplay(
-				clearFilter = "true",
-				filterCollection = "true",
-				filterResults = "There are 2 results for tag2.",
-				fragmentName = "Collection Display",
-				selectedName = "Basic Web Content",
-				tagNameList = "tag2");
-		}
-
-		task ("View only web contents with tag2 are shown in Collection Display") {
-			var n = "1";
-
-			for (var namespace : list "4,2") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "Web Content Title ${namespace}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-
-				var n = ${n} + 1;
-			}
-
-			AssertElementNotPresent(
-				key_colPosition = "1",
-				key_rowPosition = "3",
-				locator1 = "PageEditor#COLLECTION_ITEM");
-		}
-
-		task ("Clear the filter then filter by the tag3") {
-			PageEditor.editCollectionDisplay(
-				clearFilter = "true",
-				filterCollection = "true",
-				filterResults = "There are 2 results for tag3.",
-				fragmentName = "Collection Display",
-				selectedName = "Basic Web Content",
-				tagNameList = "tag3");
-		}
-
-		task ("View only web contents with tag3 are shown in Collection Display") {
-			var n = "1";
-
-			for (var namespace : list "4,3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "Web Content Title ${namespace}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-
-				var n = ${n} + 1;
-			}
-
-			AssertElementNotPresent(
-				key_colPosition = "1",
-				key_rowPosition = "3",
-				locator1 = "PageEditor#COLLECTION_ITEM");
-		}
-
-		task ("Clear the filter then filter by all tags") {
-			PageEditor.editCollectionDisplay(
-				clearFilter = "true",
-				filterCollection = "true",
-				filterResults = "There are 4 results for tag1, tag2, tag3.",
-				fragmentName = "Collection Display",
-				selectedName = "Basic Web Content",
-				tagNameList = "tag1,tag2,tag3");
-		}
-
-		task ("View only web contents with tag are shown in Collection Display") {
-			var n = "1";
-
-			for (var namespace : list "4,3,2,1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "Web Content Title ${namespace}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-
-				var n = ${n} + 1;
-			}
-
-			AssertElementNotPresent(
-				key_colPosition = "1",
-				key_rowPosition = "5",
-				locator1 = "PageEditor#COLLECTION_ITEM");
 		}
 
 		task ("Disable Basic Web Content flag in Gogo Shell") {

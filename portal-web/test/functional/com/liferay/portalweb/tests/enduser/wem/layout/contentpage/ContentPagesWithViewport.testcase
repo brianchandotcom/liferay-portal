@@ -385,7 +385,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			Click(locator1 = "PageEditor#PREVIEW");
+			PageEditor.openPreviewMode();
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 		}

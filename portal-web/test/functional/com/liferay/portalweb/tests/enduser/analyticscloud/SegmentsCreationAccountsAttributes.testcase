@@ -1,0 +1,46 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "24";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property slave.label = "slave-1";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9201 | Test Summary: Create a Dynamic Accounts Segment"
+	@ignore = "true"
+	@priority = "5"
+	test CanCreateDynamicSegmentAccountsAttributes {
+
+		// TODO LRAC-9201 CanCreateDynamicSegmentAccountsAttributes pending implementation
+
+	}
+
+}

@@ -77,12 +77,47 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9095 | Test Summary: Admin can change user permissions"
-	@ignore = "true"
 	@priority = "3"
 	test AdminCanChangeUserPermissions {
+		test AdminCanChangeUserPermissions {
+			task ("SingOut and Login as administrator") {
+				ACWorkspace.signOut();
 
-		// TODO LRAC-9095 AddDataAdminCanChangeUserPermissionsSourceForOneSite
+				ACLogin.loginAs(
+					emailAddress = "michelle.hoshi@faro.io",
+					password = "test");
+			}
 
+			task ("Go to Data Sources") {
+				ACWorkspace.openWorkspace();
+
+				ACNavigation.goToSettings();
+
+				ACSettings.goToUserManagement();
+			}
+
+			task ("Invite user") {
+				ACSettings.addUser(userInvite = "ac@liferay.com");
+			}
+
+			task ("Assert user permission") {
+				ACSettings.assertUserPermission(
+					permissionType = "Member",
+					userEmail = "ac@liferay.com");
+			}
+
+			task ("Change user permission") {
+				ACSettings.changeMultipleUsersPermissions(
+					permissionType = "Administrator",
+					userEmail = "ac@liferay.com");
+			}
+
+			task ("Assert user permission") {
+				ACSettings.assertUserPermission(
+					permissionType = "Administrator",
+					userEmail = "ac@liferay.com");
+			}
+		}
 	}
 
 	@description = "Automation ID: LRAC-9094 | Test Summary: Admin can remove data sources"

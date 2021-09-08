@@ -458,7 +458,11 @@ definition {
 		}
 
 		if (IsElementPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) {
-			ACLogin.loginAs(emailAddress = "${emailAddress}");
+			if(!((isSet(password))){
+				ACLogin.loginAs(emailAddress = "${emailAddress}");
+			} else {
+				ACLogin.loginAs(emailAddress = "${emailAddress}", password = "${password}");
+			}
 		}
 
 		ACWorkspace.openWorkspace();

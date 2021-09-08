@@ -79,44 +79,42 @@ definition {
 	@description = "Automation ID: LRAC-9095 | Test Summary: Admin can change user permissions"
 	@priority = "3"
 	test AdminCanChangeUserPermissions {
-		test AdminCanChangeUserPermissions {
-			task ("SingOut and Login as administrator") {
-				ACWorkspace.signOut();
+		task ("SingOut and Login as administrator") {
+			ACWorkspace.signOut();
 
-				ACLogin.loginAs(
-					emailAddress = "michelle.hoshi@faro.io",
-					password = "test");
-			}
+			ACLogin.loginAs(
+				emailAddress = "michelle.hoshi@faro.io",
+				password = "test");
+		}
 
-			task ("Go to Data Sources") {
-				ACWorkspace.openWorkspace();
+		task ("Go to Data Sources") {
+			ACWorkspace.openWorkspace();
 
-				ACNavigation.goToSettings();
+			ACNavigation.goToSettings();
 
-				ACSettings.goToUserManagement();
-			}
+			ACSettings.goToUserManagement();
+		}
 
-			task ("Invite user") {
-				ACSettings.addUser(userInvite = "ac@liferay.com");
-			}
+		task ("Invite user") {
+			ACSettings.addUser(userInvite = "ac@liferay.com");
+		}
 
-			task ("Assert user permission") {
-				ACSettings.assertUserPermission(
-					permissionType = "Member",
-					userEmail = "ac@liferay.com");
-			}
+		task ("Assert user permission") {
+			ACSettings.assertUserPermission(
+				permissionType = "Member",
+				userEmail = "ac@liferay.com");
+		}
 
-			task ("Change user permission") {
-				ACSettings.changeMultipleUsersPermissions(
-					permissionType = "Administrator",
-					userEmail = "ac@liferay.com");
-			}
+		task ("Change user permission") {
+			ACSettings.changeMultipleUsersPermissions(
+				permissionType = "Administrator",
+				userEmail = "ac@liferay.com");
+		}
 
-			task ("Assert user permission") {
-				ACSettings.assertUserPermission(
-					permissionType = "Administrator",
-					userEmail = "ac@liferay.com");
-			}
+		task ("Assert user permission") {
+			ACSettings.assertUserPermission(
+				permissionType = "Administrator",
+				userEmail = "ac@liferay.com");
 		}
 	}
 

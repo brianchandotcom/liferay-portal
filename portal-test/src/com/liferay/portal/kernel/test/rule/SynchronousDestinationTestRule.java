@@ -146,8 +146,6 @@ public class SynchronousDestinationTestRule
 				DestinationNames.COMMERCE_PAYMENT_STATUS);
 			Filter commerceShipmentFilter = _registerDestinationFilter(
 				DestinationNames.COMMERCE_SHIPMENT_STATUS);
-			Filter commerceStockFilter = _registerDestinationFilter(
-				DestinationNames.COMMERCE_STOCK_QUANTITY);
 			Filter commerceSubscriptionFilter = _registerDestinationFilter(
 				DestinationNames.COMMERCE_SUBSCRIPTION_STATUS);
 			Filter ddmStructureReindexFilter = _registerDestinationFilter(
@@ -172,11 +170,10 @@ public class SynchronousDestinationTestRule
 				backgroundTaskFilter, backgroundTaskStatusFilter,
 				commerceBasePriceListFilter, commerceOrderFilter,
 				commercePaymentFilter, commerceShipmentFilter,
-				commerceStockFilter, commerceSubscriptionFilter,
-				ddmStructureReindexFilter, mailFilter, pdfProcessorFilter,
-				rawMetaDataProcessorFilter, segmentsEntryReindexFilter,
-				subscrpitionSenderFilter, tensorflowModelDownloadFilter,
-				videoProcessorFilter);
+				commerceSubscriptionFilter, ddmStructureReindexFilter,
+				mailFilter, pdfProcessorFilter, rawMetaDataProcessorFilter,
+				segmentsEntryReindexFilter, subscrpitionSenderFilter,
+				tensorflowModelDownloadFilter, videoProcessorFilter);
 
 			_destinations = ReflectionTestUtil.getFieldValue(
 				MessageBusUtil.getMessageBus(), "_destinations");
@@ -194,7 +191,6 @@ public class SynchronousDestinationTestRule
 			replaceDestination(DestinationNames.COMMERCE_ORDER_STATUS);
 			replaceDestination(DestinationNames.COMMERCE_PAYMENT_STATUS);
 			replaceDestination(DestinationNames.COMMERCE_SHIPMENT_STATUS);
-			replaceDestination(DestinationNames.COMMERCE_STOCK_QUANTITY);
 			replaceDestination(DestinationNames.COMMERCE_SUBSCRIPTION_STATUS);
 			replaceDestination(
 				DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR);

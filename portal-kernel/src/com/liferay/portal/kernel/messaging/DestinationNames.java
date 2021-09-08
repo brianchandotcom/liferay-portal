@@ -40,9 +40,6 @@ public interface DestinationNames {
 	public static final String COMMERCE_SHIPMENT_STATUS =
 		"liferay/commerce_shipment_status";
 
-	public static final String COMMERCE_STOCK_QUANTITY =
-		"liferay/commerce_stock_quantity";
-
 	public static final String COMMERCE_SUBSCRIPTION_STATUS =
 		"liferay/commerce_subscription_status";
 

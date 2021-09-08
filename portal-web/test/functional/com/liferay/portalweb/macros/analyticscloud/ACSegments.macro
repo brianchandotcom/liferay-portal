@@ -33,6 +33,12 @@ definition {
 			locator2 = "ACSegments#CRITERIA_STATEMENT_BODY");
 	}
 
+	macro addOrganizationName {
+		Type(
+			locator1 = "ACSegments#ORGANIZATION_NAME_INPUT",
+			value1 = "${organizationName}");
+	}
+
 	macro addSegmentField {
 		Type(
 			locator1 = "ACSegments#SEARCH_SEGMENT",

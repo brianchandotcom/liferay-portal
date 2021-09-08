@@ -19,19 +19,18 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		// ACUtils.tearDownDXP();
+		ACUtils.tearDownDXP();
 
-		// if ("${testPortalInstance}" == "true") {
-		// 	PortalInstances.tearDownCP();
-		// }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 
-		// ACUtils.tearDownAC();
+		ACUtils.tearDownAC();
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8548 | Test Summary: Add segment using an organization property 'date modified'"
 	@priority = "4"
 	test CanCreateSegmentUsingOrganizationPropertyDateModified {
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -80,13 +79,11 @@ definition {
 		task ("Assert Date Modified is present in Segment Criteria") {
 			ACSegments.assertCriteriaTable(criteriaName = "Date Modified");
 		}
-		
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8550 | Test Summary: Add segment using an organization property 'hierarchy path'"
 	@priority = "4"
 	test CanCreateSegmentUsingOrganizationPropertyHierarchyPath {
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -141,13 +138,11 @@ definition {
 		task ("Assert Test Hierarchy Path is also present in segment criteria") {
 			ACSegments.assertCriteriaTable(criteriaName = "Test Hierarchy Path");
 		}
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8549 | Test Summary: Add segment using an organization property 'name'"
 	@priority = "4"
 	test CanCreateSegmentUsingOrganizationPropertyName {
-
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -202,7 +197,6 @@ definition {
 		task ("Assert Test Name is also present in segment criteria") {
 			ACSegments.assertCriteriaTable(criteriaName = "Test Name");
 		}
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8551 | Test Summary: Add segment using an organization property 'organization'"
@@ -224,12 +218,62 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8553 | Test Summary: Add segment using an organization property 'type'"
-	@ignore = "true"
 	@priority = "4"
 	test CanCreateSegmentUsingOrganizationPropertyType {
+		task ("Add user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		// TODO LRAC-8553 CanCreateSegmentUsingOrganizationPropertyType pending implementation
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
+		task ("Add organization and add the user to the organization") {
+			JSONOrganization.addOrganization(organizationName = "Organization Name");
+
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Organization Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Connect to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Launch AC and enter in the new property") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new segment using the organization property Type") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+
+			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
+
+			ACSegments.addSegmentField(segmentField = "Type");
+
+			ACSegments.addOrganizationName(organizationName = "Test Type");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Assert Name is present in Segment Criteria") {
+			ACSegments.assertCriteriaTable(criteriaName = "Type");
+		}
+
+		task ("Assert Test Name is also present in segment criteria") {
+			ACSegments.assertCriteriaTable(criteriaName = "Test Type");
+		}
 	}
 
 }

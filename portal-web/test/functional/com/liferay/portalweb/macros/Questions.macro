@@ -535,9 +535,16 @@ definition {
 	}
 
 	macro gotoDetails {
-		Click(
-			key_questionTitle = "${questionTitle}",
-			locator1 = "Questions#QUESTIONS_TITLE");
+		if (isSet(duplicatedQuestions)) {
+			Click(
+				key_lastQuestionTitle = "${questionTitle}",
+				locator1 = "Questions#QUESTIONS_TITLE_LAST");
+		}
+		else {
+			Click(
+				key_questionTitle = "${questionTitle}",
+				locator1 = "Questions#QUESTIONS_TITLE");
+		}
 
 		AssertTextEquals(
 			key_questionTitle = "${questionTitle}",

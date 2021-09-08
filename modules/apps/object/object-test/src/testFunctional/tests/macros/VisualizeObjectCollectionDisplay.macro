@@ -1,7 +1,7 @@
 definition {
 
 	macro addDisplayPageTemplate {
-		VisualizeObjectDisplayPageTemplate.openPageTemplate();
+		VisualizeObjectDisplayPage.openPageTemplate();
 
 		Click(locator1 = "VisualizeObjectCollectionDisplay#ADD_BLANK_PAGE");
 

@@ -1,12 +1,12 @@
 <html>
 <head>
-<title>VisualizeObjectDisplayPageTemplate</title>
+<title>VisualizeObjectDisplayPage</title>
 </head>
 
 <body>
 <table border="1" cellpadding="1" cellspacing="1">
 <thead>
-<tr><td rowspan="1" colspan="3">VisualizeObjectDisplayPageTemplate</td></tr>
+<tr><td rowspan="1" colspan="3">VisualizeObjectDisplayPage</td></tr>
 </thead>
 
 <tbody>

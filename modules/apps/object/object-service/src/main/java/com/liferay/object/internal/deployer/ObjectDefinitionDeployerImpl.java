@@ -16,7 +16,9 @@ package com.liferay.object.internal.deployer;
 
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.data.provider.RelationshipDataProvider;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
+import com.liferay.object.internal.data.provider.ObjectEntryOneToManyRelationshipDataProvider;
 import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.search.spi.model.index.contributor.ObjectEntryModelDocumentContributor;
 import com.liferay.object.internal.search.spi.model.index.contributor.ObjectEntryModelIndexerWriterContributor;
@@ -172,6 +174,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).put(
 					"model.class.name", objectDefinition.getClassName()
 				).build()),
+			_bundleContext.registerService(
+				RelationshipDataProvider.class,
+				new ObjectEntryOneToManyRelationshipDataProvider(
+					objectDefinition, _objectEntryLocalService),
+				null),
 			_bundleContext.registerService(
 				PortletResourcePermission.class, portletResourcePermission,
 				HashMapDictionaryBuilder.<String, Object>put(

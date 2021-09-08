@@ -46,8 +46,7 @@ public class CommerceOrderTypeClayTableDataSetDisplayView
 
 		nameClayTableSchemaField.setContentRenderer("actionLink");
 
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"displayOrder", "display-order");
+		clayTableSchemaBuilder.addClayTableSchemaField("displayOrder", "order");
 
 		ClayTableSchemaField activeClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("active", "active");

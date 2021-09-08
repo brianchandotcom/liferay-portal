@@ -304,22 +304,85 @@ definition {
 		// Timing issue will cause this test to fail
 		// The graph shows yesterdays date and would require a full day before you can actually see when member was added
 
-		//task ("View membership card when hovering") {
-		//	ACSegments.viewSegmentMembershipChartNumbers(
-		//		addedMember = "1",
-		//		netChange = "0",
-		//		removedMember = "0");
-		//}
-
+		task ("View membership card when hovering") {
+			ACSegments.viewSegmentMembershipChartNumbers(
+				addedMember = "1",
+				netChange = "0",
+				removedMember = "0");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8488 | Test Summary: Membership card shows anonymous users"
-	@ignore = "true"
 	@priority = "5"
 	test ViewMembershipCardShowsAnonymousUsers {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8488 PENDING IMPLEMENTATION
+		// AC Refactor: timing issue for membership card
+		// AC Refactor ticket: LRAC-9192
 
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new dynamic segment that includes anonymous users") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+
+			ACSegments.includeAnonymous();
+
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "givenName");
+
+			ACSegments.selectOperator(operator = "is unknown");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Sign in DXP") {
+			ACUtils.launchDXP();
+
+			User.logoutPG();
+
+			for (var n : list "1,2") {
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Open AC and view the segment") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSegments();
+
+			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+		}
+
+		task ("Assert Membership card exists") {
+			ACCards.viewCards(cardTitle = "Segment Membership");
+		}
+
+		// Timing issue will cause this test to fail
+		// It is not possible to verify the number of anonymous visitors due to the timing issue
+
+		task ("Show anonymous users") {
+			ACSegments.viewSegmentMembershipLegendNumbers(
+				anonymousNumber = "1",
+				knownNumber = "0",
+				totalNumber = "1");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8487 | Test Summary: Membership card shows members removed"

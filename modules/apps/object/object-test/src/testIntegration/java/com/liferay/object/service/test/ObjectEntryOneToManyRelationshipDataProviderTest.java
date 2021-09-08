@@ -129,7 +129,7 @@ public class ObjectEntryOneToManyRelationshipDataProviderTest {
 
 		ObjectEntryLocalServiceUtil.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition1.getObjectDefinitionId(),
+			_objectDefinition2.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"random", RandomTestUtil.randomString()
 			).put(
@@ -148,7 +148,7 @@ public class ObjectEntryOneToManyRelationshipDataProviderTest {
 
 		ObjectEntryLocalServiceUtil.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition1.getObjectDefinitionId(),
+			_objectDefinition2.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"random", RandomTestUtil.randomString()
 			).put(
@@ -156,18 +156,28 @@ public class ObjectEntryOneToManyRelationshipDataProviderTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
+		relatedEntities = relationshipDataProvider.getRelatedEntities(
+			0, leftObjectEntry.getObjectEntryId(),
+			_objectRelationship.getObjectRelationshipId(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
 		Assert.assertEquals(
 			relatedEntities.toString(), 2, relatedEntities.size());
 
 		ObjectEntryLocalServiceUtil.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition1.getObjectDefinitionId(),
+			_objectDefinition2.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"random", RandomTestUtil.randomString()
 			).put(
 				objectField.getName(), 0
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
+
+		relatedEntities = relationshipDataProvider.getRelatedEntities(
+			0, leftObjectEntry.getObjectEntryId(),
+			_objectRelationship.getObjectRelationshipId(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
 			relatedEntities.toString(), 2, relatedEntities.size());

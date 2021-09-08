@@ -23,8 +23,10 @@ public class UpgradeLayoutBranch extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnName(
-			"LayoutBranch", "LayoutBranchId", "layoutBranchId LONG");
+		if (!hasColumn("LayoutBranch", "layoutBranchId")) {
+			alterColumnName(
+				"LayoutBranch", "LayoutBranchId", "layoutBranchId LONG");
+		}
 	}
 
 }

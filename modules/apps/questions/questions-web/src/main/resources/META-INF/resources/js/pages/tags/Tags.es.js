@@ -259,8 +259,8 @@ export default withRouter(({history, location}) => {
 								className="col-lg-3 question-tags"
 								key={tag.id}
 							>
-								<div className="card card-interactive card-interactive-primary card-type-template d-flex justify-content-between template-card-horizontal">
-									<div className="col-9 col-lg-8 col-xl-9">
+								<div className="align-items-center card card-interactive card-interactive-primary card-type-template d-flex justify-content-between template-card-horizontal">
+									<div>
 										<Link
 											title={tag.name}
 											to={`/questions/tag/${tag.name}`}
@@ -316,7 +316,7 @@ export default withRouter(({history, location}) => {
 											</div>
 										</Link>
 									</div>
-									<div className="align-items-center col-3 col-lg-4 col-xl-3 d-flex">
+									<div className="c-pr-3">
 										{tag.actions.subscribe && (
 											<div className="autofit-col">
 												<div className="autofit-section">

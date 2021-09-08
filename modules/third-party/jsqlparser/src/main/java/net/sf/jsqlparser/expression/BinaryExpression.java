@@ -9,6 +9,13 @@
  */
 package net.sf.jsqlparser.expression;
 
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Stack;
+
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+
 import net.sf.jsqlparser.parser.ASTNodeAccessImpl;
 
 /**
@@ -53,10 +60,46 @@ public abstract class BinaryExpression extends ASTNodeAccessImpl implements Expr
 //    }
     @Override
     public String toString() {
-        return //(not ? "NOT " : "") + 
-                getLeftExpression() + " " + getStringExpression() + " " + getRightExpression();
+        Deque<BinaryExpression> stack = new LinkedList<>();
+        Deque<String> queue = new LinkedList<>();
+
+		Expression expression = this;
+
+		BinaryExpression binaryExpression = null;
+
+		do {
+			if (expression instanceof BinaryExpression) {
+				stack.push((BinaryExpression)expression);
+
+				binaryExpression = (BinaryExpression)expression;
+
+				expression = binaryExpression.getLeftExpression();
+			}
+			else {
+				queue.offer(expression.toString());
+
+				binaryExpression = stack.pop();
+
+				queue.offer(
+					StringBundler.concat(
+						StringPool.SPACE,
+						binaryExpression.getStringExpression(),
+						StringPool.SPACE));
+
+				expression = binaryExpression.getRightExpression();
+			}
+		}
+		while(!stack.isEmpty());
+
+		queue.offer(expression.toString());
+
+		StringBundler sb = new StringBundler(queue.size());
+		queue.forEach(sb::append);
+
+        return sb.toString();
     }
 
     public abstract String getStringExpression();
 
 }
+/* @generated */

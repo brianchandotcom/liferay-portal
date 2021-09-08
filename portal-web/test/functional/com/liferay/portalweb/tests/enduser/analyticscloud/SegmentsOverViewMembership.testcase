@@ -397,6 +397,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8487 | Test Summary: Membership card shows members removed"
 	@priority = "5"
 	test ViewMembershipCardShowsMembersRemoved {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: timing issue for membership card
+		// AC Refactor ticket: LRAC-8887
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Add new users in DXP") {
@@ -426,11 +431,11 @@ definition {
 					userLoginEmailAddress = "${username}@liferay.com",
 					userLoginFullName = "${fullName}");
 
-				for (var n : list "1,2") {
-					Navigator.gotoSitePage(
-						pageName = "AC Page",
-						siteName = "Site Name");
-				}
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "10000");
 			}
 		}
 
@@ -454,6 +459,8 @@ definition {
 			ACSegments.saveSegment();
 		}
 
+		// Data takes to long to appear
+		
 		task ("Show members added") {
 			ACSegments.viewSegmentMembershipLegendNumbers(
 				anonymousNumber = "0",
@@ -471,11 +478,20 @@ definition {
 			ACSegments.saveSegment();
 		}
 
-		task ("View member was removed") {
+		task ("Show updated numbers") {
 			ACSegments.viewSegmentMembershipLegendNumbers(
 				anonymousNumber = "0",
 				knownNumber = "1",
 				totalNumber = "1");
+		}
+
+		// Data takes to long to appear
+
+		task ("View membership card when hovering") {
+			ACSegments.viewSegmentMembershipChartNumbers(
+				addedMember = "0",
+				netChange = "0",
+				removedMember = "1");
 		}
 	}
 

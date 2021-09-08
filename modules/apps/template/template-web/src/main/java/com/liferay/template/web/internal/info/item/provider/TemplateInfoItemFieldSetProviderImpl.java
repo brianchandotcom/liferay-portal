@@ -31,8 +31,6 @@ import com.liferay.template.web.internal.info.item.field.reader.TemplateInfoItem
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,11 +47,14 @@ public class TemplateInfoItemFieldSetProviderImpl
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
 			consumer -> {
-				for (TemplateInfoItemFieldReader templateInfoItemFieldReader :
-						_getTemplateInfoItemFieldReaders(
-							className, classPK,
+				for (DDMTemplate ddmTemplate :
+						_getDDMTemplates(className, classPK)) {
+
+					TemplateInfoItemFieldReader templateInfoItemFieldReader =
+						new TemplateInfoItemFieldReader(
+							ddmTemplate,
 							InfoItemFieldValues.builder(
-							).build())) {
+							).build());
 
 					consumer.accept(templateInfoItemFieldReader.getInfoField());
 				}
@@ -87,10 +88,7 @@ public class TemplateInfoItemFieldSetProviderImpl
 			templateInfoItemFieldReader.getValue(itemObject));
 	}
 
-	private List<TemplateInfoItemFieldReader> _getTemplateInfoItemFieldReaders(
-		String className, long classPK,
-		InfoItemFieldValues infoItemFieldValues) {
-
+	private List<DDMTemplate> _getDDMTemplates(String className, long classPK) {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -98,7 +96,7 @@ public class TemplateInfoItemFieldSetProviderImpl
 			return Collections.emptyList();
 		}
 
-		List<DDMTemplate> templates = _ddmTemplateLocalService.getTemplates(
+		return _ddmTemplateLocalService.getTemplates(
 			serviceContext.getCompanyId(),
 			ArrayUtil.append(
 				_portal.getAncestorSiteGroupIds(
@@ -108,15 +106,6 @@ public class TemplateInfoItemFieldSetProviderImpl
 			new long[] {classPK},
 			_portal.getClassNameId(InfoItemFormProvider.class.getName()),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Stream<DDMTemplate> templatesStream = templates.stream();
-
-		return templatesStream.map(
-			ddmTemplate -> new TemplateInfoItemFieldReader(
-				ddmTemplate, infoItemFieldValues)
-		).collect(
-			Collectors.toList()
-		);
 	}
 
 	@Reference

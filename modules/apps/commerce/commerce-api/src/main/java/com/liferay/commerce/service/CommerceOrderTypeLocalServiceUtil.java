@@ -332,11 +332,12 @@ public class CommerceOrderTypeLocalServiceUtil {
 	}
 
 	public static List<CommerceOrderType> getCommerceOrderTypes(
-			String className, long classPK, boolean active, int start, int end)
+			long companyId, String className, long classPK, boolean active,
+			int start, int end)
 		throws PortalException {
 
 		return getService().getCommerceOrderTypes(
-			className, classPK, active, start, end);
+			companyId, className, classPK, active, start, end);
 	}
 
 	/**
@@ -349,11 +350,11 @@ public class CommerceOrderTypeLocalServiceUtil {
 	}
 
 	public static int getCommerceOrderTypesCount(
-			String className, long classPK, boolean active)
+			long companyId, String className, long classPK, boolean active)
 		throws PortalException {
 
 		return getService().getCommerceOrderTypesCount(
-			className, classPK, active);
+			companyId, className, classPK, active);
 	}
 
 	public static

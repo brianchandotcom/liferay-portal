@@ -290,7 +290,8 @@ public interface CommerceOrderTypeLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrderType> getCommerceOrderTypes(
-			String className, long classPK, boolean active, int start, int end)
+			long companyId, String className, long classPK, boolean active,
+			int start, int end)
 		throws PortalException;
 
 	/**
@@ -303,7 +304,7 @@ public interface CommerceOrderTypeLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceOrderTypesCount(
-			String className, long classPK, boolean active)
+			long companyId, String className, long classPK, boolean active)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

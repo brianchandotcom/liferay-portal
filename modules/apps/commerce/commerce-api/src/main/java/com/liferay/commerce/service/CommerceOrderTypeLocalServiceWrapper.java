@@ -371,12 +371,12 @@ public class CommerceOrderTypeLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceOrderType>
 			getCommerceOrderTypes(
-				String className, long classPK, boolean active, int start,
-				int end)
+				long companyId, String className, long classPK, boolean active,
+				int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderTypeLocalService.getCommerceOrderTypes(
-			className, classPK, active, start, end);
+			companyId, className, classPK, active, start, end);
 	}
 
 	/**
@@ -391,11 +391,11 @@ public class CommerceOrderTypeLocalServiceWrapper
 
 	@Override
 	public int getCommerceOrderTypesCount(
-			String className, long classPK, boolean active)
+			long companyId, String className, long classPK, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderTypeLocalService.getCommerceOrderTypesCount(
-			className, classPK, active);
+			companyId, className, classPK, active);
 	}
 
 	@Override

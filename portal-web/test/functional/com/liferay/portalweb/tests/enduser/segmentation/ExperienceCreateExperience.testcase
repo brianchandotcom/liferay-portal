@@ -2877,7 +2877,7 @@ definition {
 			value1 = "This is a new experience for you");
 	}
 
-	@description = "LPS-125710 When a user, that belongs to two or more different segments with experiences for them and these experiences are below of any other Anyone-targeted experience, lands on the page, the Anyone-targeted experience labeled as active will be shown"
+	@description = "LPS-125710 When a user, that Belongs To two or more different segments with experiences for them and these experiences are below of any other Anyone-targeted experience, lands on the page, the Anyone-targeted experience labeled as active will be shown"
 	@priority = "3"
 	@uitest
 	test AddTwoExperiencesBelowDefault {
@@ -2972,7 +2972,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-125710 When a user, that belongs to two or more different segments with experiences for them and these experiences are above the all other Anyone-targeted experiences, lands on the page, the experience with the higher position will be shown"
+	@description = "LPS-125710 When a user, that Belongs To two or more different segments with experiences for them and these experiences are above the all other Anyone-targeted experiences, lands on the page, the experience with the higher position will be shown"
 	@priority = "3"
 	@uitest
 	test AddTwoExperiencesOverDefault {

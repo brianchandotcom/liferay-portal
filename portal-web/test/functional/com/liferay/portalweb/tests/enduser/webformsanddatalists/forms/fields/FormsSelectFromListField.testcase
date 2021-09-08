@@ -452,7 +452,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Single Selection",
-			conditionOperator = "Is equal to",
+			conditionOperator = "Is Equal To",
 			conditionRowNumber = "1",
 			conditionValueField = "United",
 			conditionValueType = "Value");

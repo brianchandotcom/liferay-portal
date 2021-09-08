@@ -95,7 +95,7 @@ definition {
 			conditionRowNumber = "1");
 
 		FormRules.selectConditionOperator(
-			conditionOperator = "Is not empty",
+			conditionOperator = "Is Not Empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(
@@ -786,7 +786,7 @@ definition {
 		FormFields.viewFieldHidden(fieldName = "Numeric");
 	}
 
-	@description = "Verify that a rule with an (Is equal to) condition can be previewed"
+	@description = "Verify that a rule with an (Is Equal To) condition can be previewed"
 	@priority = "5"
 	test IsEqualToRuleCanBePreviewed {
 		property forms.functional = "true";
@@ -812,7 +812,7 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
 			conditionFieldValue = "Test",
-			conditionOperator = "Is equal to",
+			conditionOperator = "Is Equal To",
 			conditionRowNumber = "1",
 			conditionValueType = "Value");
 
@@ -840,7 +840,7 @@ definition {
 		FormFields.viewTextLabel(fieldLabel = "Numeric");
 	}
 
-	@description = "Verify that a rule with an (Is not empty) condition can be previewed"
+	@description = "Verify that a rule with an (Is Not Empty) condition can be previewed"
 	@priority = "5"
 	test IsNotEmptyRuleCanBePreviewed {
 		property forms.functional = "true";
@@ -863,7 +863,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
-			conditionOperator = "Is not empty",
+			conditionOperator = "Is Not Empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(

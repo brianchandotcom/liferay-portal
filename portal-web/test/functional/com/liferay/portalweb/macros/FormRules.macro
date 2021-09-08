@@ -354,7 +354,7 @@ definition {
 			key_fieldColumnNumber = "2",
 			locator1 = "FormRules#RULE_BUILDER_CONDITION_FIELD");
 
-		for (var conditionOperator : list "Is equal to,Is not equal to,Contains,Does Not Contain") {
+		for (var conditionOperator : list "Is Equal To,Is not equal to,Contains,Does Not Contain") {
 			AssertElementPresent(
 				key_selectValue = "${conditionOperator}",
 				locator1 = "FormRules#RULE_BUILDER_FIELD_SELECT_VALUE");
@@ -367,7 +367,7 @@ definition {
 			key_fieldColumnNumber = "2",
 			locator1 = "FormRules#RULE_BUILDER_CONDITION_FIELD");
 
-		for (var conditionOperator : list "Is equal to,Is not equal to,Contains,Does Not Contain") {
+		for (var conditionOperator : list "Is Equal To,Is not equal to,Contains,Does Not Contain") {
 			AssertElementNotPresent(
 				key_selectValue = "${conditionOperator}",
 				locator1 = "FormRules#RULE_BUILDER_FIELD_SELECT_VALUE");

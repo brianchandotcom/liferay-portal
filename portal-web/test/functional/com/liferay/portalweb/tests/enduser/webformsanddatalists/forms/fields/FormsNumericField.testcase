@@ -347,7 +347,7 @@ definition {
 		FormViewBuilder.checkSwitch(propertyName = "Validation");
 
 		FormFields.editValidationTargetArgument(
-			validationArgument = "Is equal to",
+			validationArgument = "Is Equal To",
 			validationErrorMessage = "Test Error",
 			validationInput = "123");
 
@@ -755,7 +755,7 @@ definition {
 			conditionRowNumber = "1");
 
 		FormRules.selectConditionOperator(
-			conditionOperator = "Is not empty",
+			conditionOperator = "Is Not Empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(

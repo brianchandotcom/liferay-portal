@@ -70,7 +70,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Numeric 1",
-			conditionOperator = "Is not empty",
+			conditionOperator = "Is Not Empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(
@@ -146,7 +146,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
-			conditionOperator = "Is not empty",
+			conditionOperator = "Is Not Empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(
@@ -160,7 +160,7 @@ definition {
 			action = "Show",
 			actionTarget = "Numeric",
 			conditionField = "Text",
-			conditionOperator = "Is not empty",
+			conditionOperator = "Is Not Empty",
 			ruleNumber = "1");
 
 		FormRules.gotoEdit(ruleNumber = "1");
@@ -190,7 +190,7 @@ definition {
 			action = "Require",
 			actionTarget = "Text",
 			conditionField = "Text",
-			conditionOperator = "Is not empty",
+			conditionOperator = "Is Not Empty",
 			ruleNumber = "1");
 	}
 
@@ -221,7 +221,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
-			conditionOperator = "Is not empty",
+			conditionOperator = "Is Not Empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(
@@ -235,14 +235,14 @@ definition {
 			action = "Require",
 			actionTarget = "Numeric",
 			conditionField = "Text",
-			conditionOperator = "Is not empty",
+			conditionOperator = "Is Not Empty",
 			ruleNumber = "1");
 
 		FormRules.gotoEdit(ruleNumber = "1");
 
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
-			conditionOperator = "Is not empty",
+			conditionOperator = "Is Not Empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(
@@ -333,7 +333,7 @@ definition {
 			conditionRowNumber = "1");
 
 		FormRules.selectConditionOperator(
-			conditionOperator = "Is not empty",
+			conditionOperator = "Is Not Empty",
 			conditionRowNumber = "1");
 
 		FormRules.selectAction(
@@ -523,7 +523,7 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Text Field",
 			conditionFieldValue = "test",
-			conditionOperator = "Is equal to",
+			conditionOperator = "Is Equal To",
 			conditionRowNumber = "1",
 			conditionValueType = "Value");
 
@@ -586,7 +586,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
-			conditionOperator = "Is not empty",
+			conditionOperator = "Is Not Empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(
@@ -802,7 +802,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Numeric 1",
-			conditionOperator = "Is not empty",
+			conditionOperator = "Is Not Empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(
@@ -1168,7 +1168,7 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Text Field 1",
 			conditionFieldValue = "test",
-			conditionOperator = "Is equal to",
+			conditionOperator = "Is Equal To",
 			conditionRowNumber = "1",
 			conditionValueType = "Value");
 

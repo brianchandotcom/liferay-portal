@@ -563,7 +563,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Text Field",
-			conditionOperator = "Is not empty",
+			conditionOperator = "Is Not Empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(
@@ -627,7 +627,7 @@ definition {
 			action = "Show",
 			actionTarget = "Date Field",
 			conditionField = "Text Field",
-			conditionOperator = "Is not empty",
+			conditionOperator = "Is Not Empty",
 			ruleNumber = "1");
 	}
 

@@ -395,7 +395,7 @@ definition {
 		FormFields.viewFieldLabelNotPresent(fieldLabel = "Indicates Required Fields");
 	}
 
-	@description = "Verify that a Rule with 'Is Equal to' condition can be created"
+	@description = "Verify that a Rule with 'Is Equal To' condition can be created"
 	@priority = "4"
 	test CanCreateAnIsEqualToRule {
 		property forms.functional = "true";
@@ -421,7 +421,7 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
 			conditionFieldValue = "Test",
-			conditionOperator = "Is equal to",
+			conditionOperator = "Is Equal To",
 			conditionRowNumber = "1",
 			conditionValueType = "Value");
 
@@ -436,7 +436,7 @@ definition {
 			action = "Show",
 			actionTarget = "Numeric",
 			conditionField = "Text",
-			conditionOperator = "Is equal to",
+			conditionOperator = "Is Equal To",
 			ruleNumber = "1");
 
 		FormsAdminNavigator.gotoFormBuilder();
@@ -770,7 +770,7 @@ definition {
 		Form.validateNoFieldLabel(fieldLabel = "Paragraph");
 	}
 
-	@description = "LPS-71399 - Verify that a Rule with 'Is not empty' condition can be created"
+	@description = "LPS-71399 - Verify that a Rule with 'Is Not Empty' condition can be created"
 	@priority = "4"
 	test CanCreateAnIsNotEmptyRule {
 		property portal.acceptance = "true";
@@ -805,7 +805,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Text Field",
-			conditionOperator = "Is not empty",
+			conditionOperator = "Is Not Empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(
@@ -919,7 +919,7 @@ definition {
 		FormFields.viewRequiredAsteriskDataFieldNotPresent(fieldFieldLabel = "Text");
 	}
 
-	@description = "Verify that a Rule of User with condition 'Belongs to' can be created"
+	@description = "Verify that a Rule of User with condition 'Belongs To' can be created"
 	@priority = "4"
 	test CanCreateAnUserBelongsToRule {
 		property portal.acceptance = "true";
@@ -961,7 +961,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "User",
-			conditionOperator = "Belongs to",
+			conditionOperator = "Belongs To",
 			conditionRowNumber = "1",
 			conditionValueType = "Site Administrator");
 
@@ -984,7 +984,7 @@ definition {
 			actionTarget = "Manager",
 			conditionField = "User",
 			conditionFieldConstant = "Site Administrator",
-			conditionOperator = "Belongs to",
+			conditionOperator = "Belongs To",
 			ruleNumber = "1");
 
 		FormRules.viewSummary(
@@ -992,7 +992,7 @@ definition {
 			actionTarget = "Manager",
 			conditionField = "User",
 			conditionFieldConstant = "Site Administrator",
-			conditionOperator = "Belongs to",
+			conditionOperator = "Belongs To",
 			ruleNumber = "1");
 
 		FormsAdminNavigator.gotoFormBuilder();
@@ -1143,14 +1143,14 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Text Field 1",
 			conditionFieldValue = "test",
-			conditionOperator = "Is equal to",
+			conditionOperator = "Is Equal To",
 			conditionRowNumber = "1",
 			conditionValueType = "Value");
 
 		FormRules.configureConditionOptions(
 			conditionField = "Text Field 2",
 			conditionFieldValue = "test",
-			conditionOperator = "Is equal to",
+			conditionOperator = "Is Equal To",
 			conditionRowNumber = "2",
 			conditionValueType = "Value");
 
@@ -1223,7 +1223,7 @@ definition {
 
 			FormRules.configureConditionOptions(
 				conditionField = "${field}",
-				conditionOperator = "Is not empty",
+				conditionOperator = "Is Not Empty",
 				conditionRowNumber = "${rowNumber}");
 
 			if ("${field}" == "Text") {
@@ -1244,7 +1244,7 @@ definition {
 				ruleNumber = "1");
 
 			FormRules.viewConditionOperatorSummary(
-				conditionOperator = "Is not empty",
+				conditionOperator = "Is Not Empty",
 				ruleNumber = "1");
 		}
 

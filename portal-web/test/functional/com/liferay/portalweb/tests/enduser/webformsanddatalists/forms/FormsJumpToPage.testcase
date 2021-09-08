@@ -104,7 +104,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Choose Your Destiny",
-			conditionOperator = "Is equal to",
+			conditionOperator = "Is Equal To",
 			conditionRowNumber = "1",
 			conditionValueField = "Destiny 2",
 			conditionValueType = "Value");
@@ -120,7 +120,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Choose Your Destiny",
-			conditionOperator = "Is equal to",
+			conditionOperator = "Is Equal To",
 			conditionRowNumber = "1",
 			conditionValueField = "Destiny 3",
 			conditionValueType = "Value");
@@ -242,7 +242,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Choose Your Destiny",
-			conditionOperator = "Is equal to",
+			conditionOperator = "Is Equal To",
 			conditionRowNumber = "1",
 			conditionValueField = "Destiny 2",
 			conditionValueType = "Value");
@@ -258,7 +258,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Choose Your Destiny",
-			conditionOperator = "Is equal to",
+			conditionOperator = "Is Equal To",
 			conditionRowNumber = "1",
 			conditionValueField = "Destiny 3",
 			conditionValueType = "Value");
@@ -411,7 +411,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Choose Your Destiny",
-			conditionOperator = "Is equal to",
+			conditionOperator = "Is Equal To",
 			conditionRowNumber = "1",
 			conditionValueField = "Destiny 2",
 			conditionValueType = "Value");
@@ -427,7 +427,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Choose Your Destiny",
-			conditionOperator = "Is equal to",
+			conditionOperator = "Is Equal To",
 			conditionRowNumber = "1",
 			conditionValueField = "Destiny 3",
 			conditionValueType = "Value");
@@ -551,7 +551,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Choose Your Destiny",
-			conditionOperator = "Is equal to",
+			conditionOperator = "Is Equal To",
 			conditionRowNumber = "1",
 			conditionValueField = "Destiny 2",
 			conditionValueType = "Value");
@@ -567,7 +567,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Choose Your Destiny",
-			conditionOperator = "Is equal to",
+			conditionOperator = "Is Equal To",
 			conditionRowNumber = "1",
 			conditionValueField = "Destiny 3",
 			conditionValueType = "Value");
@@ -691,7 +691,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Choose Your Destiny",
-			conditionOperator = "Is equal to",
+			conditionOperator = "Is Equal To",
 			conditionRowNumber = "1",
 			conditionValueField = "Destiny 2",
 			conditionValueType = "Value");
@@ -707,7 +707,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Choose Your Destiny",
-			conditionOperator = "Is equal to",
+			conditionOperator = "Is Equal To",
 			conditionRowNumber = "1",
 			conditionValueField = "Destiny 3",
 			conditionValueType = "Value");

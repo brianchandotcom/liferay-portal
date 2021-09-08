@@ -447,7 +447,7 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8948 | Test Summary: Segments the individual belongs to appear in the list"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8948 | Test Summary: Segments the individual Belongs To appear in the list"
 	@priority = "5"
 	test SegmentsIndividualBelongsToAppearInList {
 		task ("Get site assigned property name") {
@@ -506,7 +506,7 @@ definition {
 			ACNavigation.switchTab(tabName = "Segments");
 		}
 
-		task ("Assert segments the individual belongs to appear in the list") {
+		task ("Assert segments the individual Belongs To appear in the list") {
 			for (var individualAttribute : list "Static Segment Test1,Static Segment Test2") {
 				ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "${individualAttribute}");
 			}
@@ -522,7 +522,7 @@ definition {
 			ACNavigation.switchTab(tabName = "Segments");
 		}
 
-		task ("Assert segments the individual belongs to appear in the list") {
+		task ("Assert segments the individual Belongs To appear in the list") {
 			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Static Segment Test1");
 			ACIndividualsDashboard.assertNoIndividualAttribute(key_individualAttribute = "Static Segment Test2");
 		}

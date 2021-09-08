@@ -83,7 +83,7 @@ definition {
 			PortletEntry.save();
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
 
 			LexiconEntry.gotoAdd();
@@ -139,7 +139,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.gotoSidebar(fieldType = "Organization");
@@ -191,7 +191,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.gotoSidebar(fieldType = "Organization");
@@ -243,7 +243,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.gotoSidebar(fieldType = "Organization");
@@ -294,7 +294,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.gotoSidebar(fieldType = "Organization");
@@ -353,7 +353,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.gotoSidebar(fieldType = "Organization");
@@ -426,7 +426,7 @@ definition {
 			PortletEntry.save();
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
 
 			LexiconEntry.gotoAdd();
@@ -495,7 +495,7 @@ definition {
 			PortletEntry.save();
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
 
 			LexiconEntry.gotoAdd();
@@ -551,7 +551,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.gotoSidebar(fieldType = "Organization");
@@ -1221,7 +1221,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "Date Modified");
@@ -1263,7 +1263,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "Date of Birth");
@@ -1307,7 +1307,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "Email Address");
@@ -1420,7 +1420,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "First Name");
@@ -1463,7 +1463,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "Job Title");
@@ -1505,7 +1505,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "Last Name");
@@ -1547,7 +1547,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "Name");
@@ -1594,7 +1594,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "Regular Role");
@@ -1638,7 +1638,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "Screen Name");
@@ -1683,7 +1683,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "Site");
@@ -1749,7 +1749,7 @@ definition {
 			SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
 
 			LexiconEntry.gotoAdd();
@@ -1791,7 +1791,7 @@ definition {
 				userScreenName = "usersn");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "Tag");
@@ -1850,7 +1850,7 @@ definition {
 				userScreenName = "usersn");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.gotoAdd();
@@ -1891,7 +1891,7 @@ definition {
 				userScreenName = "usersn");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "User");
@@ -1948,7 +1948,7 @@ definition {
 			SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
 
 			LexiconEntry.gotoAdd();
@@ -2144,7 +2144,7 @@ definition {
 				userScreenName = "u1");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "Email Address");
@@ -2160,7 +2160,7 @@ definition {
 				value1 = "1 Member");
 		}
 
-		task ("Modify the criteria and check the user belongs to the segment") {
+		task ("Modify the criteria and check the user Belongs To the segment") {
 			Segmentation.viewMembers(memberName = "Test");
 
 			Segmentation.fillProperty(propertyField = "liferay");
@@ -2193,7 +2193,7 @@ definition {
 				userScreenName = "u1");
 		}
 
-		task ("Add segment and check the user belongs to the segment") {
+		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.fillTitle(titleField = "Segment With Special Characters");

@@ -1378,7 +1378,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-126009. The user is able to filter Web Content in Collection Display using Tag and Title field as parameter."
+	@description = "This is a test for LPS-126009. The user is able to filter web contents in Collection Display using Tag and Title."
 	@priority = "4"
 	test FilterWebContentByTagAndTitle {
 		property test.name.skip.portal.instance = "CollectionDisplay#FilterWebContentByTagAndTitle";
@@ -1597,7 +1597,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-126009. The user is able to filter Web Content in Collection Display using Tag field as parameter."
+	@description = "This is a test for LPS-126009. The user is able to filter web contents in Collection Display using Tag."
 	@priority = "4"
 	test FilterWebContentByTag {
 		property test.name.skip.portal.instance = "CollectionDisplay#FilterWebContentByTag";
@@ -1774,7 +1774,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-126009. The user is able to filter Web Content in Collection Display using Title field as parameter."
+	@description = "This is a test for LPS-126009. The user is able to filter web contents in Collection Display using Title."
 	@priority = "4"
 	test FilterWebContentByTitle {
 		property test.name.skip.portal.instance = "CollectionDisplay#FilterWebContentByTitle ";

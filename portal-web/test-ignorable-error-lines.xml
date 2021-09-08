@@ -248,16 +248,16 @@
 			<contains>StyleBookEntryVersion</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-136151 - temporarily ignore until fixed">
+			<contains>Store is not available</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LRQA-24859">
 			<contains>No binary licenses found</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="WCM-202">
 			<contains>No score point assigners available</contains>
-			<matches></matches>
-		</ignore-error>
-		<ignore-error description="LPS-136151">
-			<contains>Store is not available</contains>
 			<matches></matches>
 		</ignore-error>
 	</log>

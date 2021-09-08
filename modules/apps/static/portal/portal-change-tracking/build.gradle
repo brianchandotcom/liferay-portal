@@ -1,5 +1,5 @@
 dependencies {
-	compileInclude group: "com.github.jsqlparser", name: "jsqlparser", version: "2.1"
+	compileInclude group: "com.liferay", name: "jsqlparser", version: "2.1.LIFERAY-PATCHED-1"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

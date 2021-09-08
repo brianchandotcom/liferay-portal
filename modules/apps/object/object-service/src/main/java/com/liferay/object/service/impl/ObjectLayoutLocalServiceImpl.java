@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -82,6 +83,20 @@ public class ObjectLayoutLocalServiceImpl
 			objectLayoutTabsJSONArray);
 
 		return objectLayout;
+	}
+
+	@Override
+	public List<ObjectLayout> getObjectLayouts(
+		long objectDefinitionId, int start, int end) {
+
+		return objectLayoutPersistence.findByObjectDefinitionId(
+			objectDefinitionId, start, end);
+	}
+
+	@Override
+	public int getObjectLayoutsCount(long objectDefinitionId) {
+		return objectLayoutPersistence.countByObjectDefinitionId(
+			objectDefinitionId);
 	}
 
 	private void _addObjectLayoutBox(

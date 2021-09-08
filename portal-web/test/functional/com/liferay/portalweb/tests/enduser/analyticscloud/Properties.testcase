@@ -224,17 +224,21 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9105 | Test Summary: [AC] It is allowed to create property name with special chars"
 	@priority = "3"
 	test CanCreatePropertyNameWithSpecialChars {
-		ACUtils.launchAC();
+		task ("Add a New Property on AC") {
+			ACUtils.launchAC();
 
-		ACNavigation.goToSettings();
+			ACNavigation.goToSettings();
 
-		ACSettings.goToProperties();
+			ACSettings.goToProperties();
 
-		ACProperties.addNewProperty(propertyName = "Name with special chars = @#$%&!");
+			ACProperties.addNewProperty(propertyName = "Name with special chars = @#$%&!");
+		}
 
-		ACSettings.goToProperties();
+		task ("Assert Property is Created With Special Chars") {
+			ACSettings.goToProperties();
 
-		ACUtils.assertItemsName(itemList = "Name with special chars = @#$%&!");
+			ACUtils.assertItemsName(itemList = "Name with special chars = @#$%&!");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8144 | Test Summary: Properties management menu is present"
@@ -326,50 +330,44 @@ definition {
 	@priority = "3"
 	test CreatePropertiesWhenNoDataSourceIsConnected {
 		task ("Add a new property on AC") {
-		ACUtils.launchAC();
+			ACUtils.launchAC();
 
-		ACNavigation.goToSettings();
+			ACNavigation.goToSettings();
 
-		ACSettings.goToProperties();
+			ACSettings.goToProperties();
 
-		ACProperties.addNewProperty(propertyName = "Name of Property");
-
+			ACProperties.addNewProperty(propertyName = "Name of Property");
 		}
 
 		task ("Go to Properties and Assert Property is Created") {
-		ACSettings.goToProperties();
+			ACSettings.goToProperties();
 
-		ACUtils.assertItemsName(itemList = "Name of Property");
-
+			ACUtils.assertItemsName(itemList = "Name of Property");
 		}
 
 		task ("Go to Data Sources and Assert No Data Sources is Active") {
-		ACSettings.goToDataSources();
+			ACSettings.goToDataSources();
 
-		AssertElementNotPresent(
-			dsStatus = "Active",
-			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_STATUS",
-			value1 = "Active");
-
+			AssertElementNotPresent(
+				dsStatus = "Active",
+				locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_STATUS",
+				value1 = "Active");
 		}
 		task ("Connect AC to DXP") {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 		}
 
 		task ("Assert Data Source is Active") {
+			ACUtils.launchAC();
 
-		ACUtils.launchAC();
+			ACNavigation.goToSettings();
 
-		ACNavigation.goToSettings();
+			ACSettings.goToDataSources();
 
-		ACSettings.goToDataSources();
-
-		AssertElementPresent(
-			dsStatus = "Active",
-			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_STATUS");
+			AssertElementPresent(
+				dsStatus = "Active",
+				locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_STATUS");
 		}
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9112 | Test Summary: New properties generated IDs are not incremental"
@@ -553,17 +551,21 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9102 | Test Summary: Property with name too big"
 	@priority = "3"
 	test PropertyCanHaveABigName {
-		ACUtils.launchAC();
+		task ("Add a New Property on AC") {
+			ACUtils.launchAC();
 
-		ACNavigation.goToSettings();
+			ACNavigation.goToSettings();
 
-		ACSettings.goToProperties();
+			ACSettings.goToProperties();
 
-		ACProperties.addNewProperty(propertyName = "This is a property with a big name to ckeck the limit of a name!!");
+			ACProperties.addNewProperty(propertyName = "This is a property with a big name to ckeck the limit of a name!!");
+		}
 
-		ACSettings.goToProperties();
+		task ("Assert Property is Created With a Big Name") {
+			ACSettings.goToProperties();
 
-		ACUtils.assertItemsName(itemList = "This is a property with a big name to ckeck the limit of a name!!");
+			ACUtils.assertItemsName(itemList = "This is a property with a big name to ckeck the limit of a name!!");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9109 | Test Summary: Property field is displayed in empty state when no property is available"

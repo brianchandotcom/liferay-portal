@@ -16,8 +16,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USAGE_CURRENT_INDIVIDUALS</td>
-	<td>//h3[contains(.,'Individuals')]/..//span[contains(@class,'metric-current')]</td>
+	<td>USAGE_CURRENT_NUMBER</td>
+	<td>//div[contains(@class,'overview-usage')][.//h3[contains(@class,'metric-name')][normalize-space(text())='${key_metricName}']]//span[contains(@class,'metric-current')]</td>
 	<td></td>
 </tr>
 <tr>

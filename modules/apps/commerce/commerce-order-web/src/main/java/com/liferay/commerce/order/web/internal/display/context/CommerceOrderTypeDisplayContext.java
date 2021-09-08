@@ -189,15 +189,6 @@ public class CommerceOrderTypeDisplayContext {
 		LiferayPortletResponse liferayPortletResponse =
 			commerceOrderRequestHelper.getLiferayPortletResponse();
 
-		HeaderActionModel cancelHeaderActionModel = new HeaderActionModel(
-			null,
-			PortletURLBuilder.createRenderURL(
-				liferayPortletResponse
-			).buildString(),
-			null, "cancel");
-
-		headerActionModels.add(cancelHeaderActionModel);
-
 		String saveButtonLabel = "save";
 
 		CommerceOrderType commerceOrderType = getCommerceOrderType();

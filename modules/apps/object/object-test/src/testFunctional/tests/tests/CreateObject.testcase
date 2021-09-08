@@ -22,102 +22,13 @@ definition {
 		}
 	}
 
-	@description = "LPS-135548 - Verify that user can view custom objects"
-	@priority = "5"
-	test ViewCustomObjects {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectAdmin.viewCustomObject(name = "CustomObject");
-	}
-
-	@description = "LPS-135548 - Verify that user can view system objects"
-	@priority = "5"
-	test ViewSystemObjects {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectAdmin.viewSystemObject(name = "CommerceOrder");
-		ObjectAdmin.viewSystemObject(name = "User");
-	}
-
-	@description = "LPS-135549 - Verify if it is possible to create a Custom Object"
+	@description = "LPS-135635 - Verify it is possible to add a field after the Object is published and submit entries to it"
 	@ignore = "Test Stub"
 	@priority = "5"
-	test CanCreateCustomObject {
+	test CanAddFieldAndViewEntriesAfterPublished {
 		property portal.acceptance = "true";
 
-		// TODO LPS-138803 CanCreateCustomObject pending implementation
-
-	}
-
-	@description = "LPS-135549 - Verify that the columns Name, System and Status are displayed for the Objects table"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test ColumnsAreDisplayedObjectsTable {
-
-		// TODO LPS-138804 ColumnsAreDisplayedObjectsTable pending implementation
-
-	}
-
-	@description = "LPS-135549 - Verify that the columns Name, System and Status displays the correct value on the Objects table when a Custom Object is created"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test TableDisplayCorrectValueWhenObjectCreated {
-
-		// TODO LPS-138805 TableDisplayCorrectValueWhenObjectCreated pending implementation
-
-	}
-
-	@description = "LPS-135549 - Verify that the Object Name is autofilled when Label is filled"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test ObjectNameIsAutofilled {
-
-		// TODO LPS-138806 ObjectNameIsAutofilled pending implementation
-
-	}
-
-	@description = "LPS-135549 - Verify it is not possible to save with the first character of the Object Name in lower case"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CannotSaveLowerCaseObjectName {
-
-		// TODO LPS-138807 CannotSaveLowerCaseObjectName pending implementation
-
-	}
-
-	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Object Name"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CannotSaveWithSpecialCharacterForObjectName {
-
-		// TODO LPS-138808 CannotSaveWithSpecialCharacterForObjectName pending implementation
-
-	}
-
-	@description = "LPS-135549 - Verify it is not possible to leave the Label field blank"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CannotLeaveLabelFieldBlank {
-
-		// TODO LPS-138809 CannotLeaveLabelFieldBlank pending implementation
-
-	}
-
-	@description = "LPS-135549 - Verify it is not possible to leave the Object Name field blank"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CannotLeaveObjectNameFieldBlank {
-
-		// TODO LPS-138810 CannotLeaveObjectNameFieldBlank pending implementation
+		// TODO LPS-138853 CanAddFieldAndViewEntriesAfterPublished pending implementation
 
 	}
 
@@ -130,40 +41,12 @@ definition {
 
 	}
 
-	@description = "LPS-135549 - Verify it is possible to view the Details of an Object by clicking on its name"
+	@description = "LPS-135549 - Verify it is possible to cancel the creation of a Field"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CanViewObjectsDetailsByClickingName {
+	test CanCancelCreationField {
 
-		// TODO LPS-138812 CanViewObjectsDetailsByClickingName pending implementation
-
-	}
-
-	@description = "LPS-135549 - Verify it is possible to view the Details of an Object by clicking on the eye icon"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanViewObjectsDetailsByClickingEyeIcon {
-
-		// TODO LPS-138813 CanViewObjectsDetailsByClickingEyeIcon pending implementation
-
-	}
-
-	@description = "LPS-135549 - Verify it is possible to Publish a Custom Object"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanPublishCustomObject {
-		property portal.acceptance = "true";
-
-		// TODO LPS-138814 CanPublishCustomObject pending implementation
-
-	}
-
-	@description = "LPS-135549 - Verify that the columns Name and Type are displayed for the Fields table"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test ColumnsAreDisplayedFieldsTable {
-
-		// TODO LPS-138816 ColumnsAreDisplayedFieldsTable pending implementation
+		// TODO LPS-138831 CanCancelCreationField pending implementation
 
 	}
 
@@ -182,6 +65,16 @@ definition {
 	test CanCreateBooleanField {
 
 		// TODO LPS-138818 CanCreateBooleanField pending implementation
+
+	}
+
+	@description = "LPS-135549 - Verify if it is possible to create a Custom Object"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanCreateCustomObject {
+		property portal.acceptance = "true";
+
+		// TODO LPS-138803 CanCreateCustomObject pending implementation
 
 	}
 
@@ -231,30 +124,12 @@ definition {
 
 	}
 
-	@description = "LPS-135549 - Verify that the Field Name is autofilled when Label is filled"
+	@description = "LPS-135549 - Verify it is not possible to leave the Field Name field blank"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test FieldNameIsAutofilled {
+	test CannotLeaveFieldNameBlank {
 
-		// TODO LPS-138824 FieldNameIsAutofilled pending implementation
-
-	}
-
-	@description = "LPS-135549 - Verify it is not possible to save with the first character of the Field Name in upper case"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CannotSaveUpperCaseFieldName {
-
-		// TODO LPS-138825 CannotSaveUpperCaseFieldName pending implementation
-
-	}
-
-	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Field Name"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CannotSaveSpecialCharacterFieldName {
-
-		// TODO LPS-138826 CannotSaveSpecialCharacterFieldName pending implementation
+		// TODO LPS-138828 CannotLeaveFieldNameBlank pending implementation
 
 	}
 
@@ -267,12 +142,21 @@ definition {
 
 	}
 
-	@description = "LPS-135549 - Verify it is not possible to leave the Field Name field blank"
+	@description = "LPS-135549 - Verify it is not possible to leave the Object Label field blank"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CannotLeaveFieldNameBlank {
+	test CannotLeaveObjectLabelFieldBlank {
 
-		// TODO LPS-138828 CannotLeaveFieldNameBlank pending implementation
+		// TODO LPS-138809 CannotLeaveObjectLabelFieldBlank pending implementation
+
+	}
+
+	@description = "LPS-135549 - Verify it is not possible to leave the Object Name field blank"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotLeaveObjectNameFieldBlank {
+
+		// TODO LPS-138810 CannotLeaveObjectNameFieldBlank pending implementation
 
 	}
 
@@ -285,233 +169,48 @@ definition {
 
 	}
 
-	@description = "LPS-135549 - Verify it is possible to set a field as Mandatory"
+	@description = "LPS-135549 - Verify it is not possible to save with the first character of the Object Name in lower case"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CanSetFieldMandatory {
+	test CannotSaveLowerCaseObjectName {
 
-		// TODO LPS-138830 CanSetFieldMandatory pending implementation
+		// TODO LPS-138807 CannotSaveLowerCaseObjectName pending implementation
 
 	}
 
-	@description = "LPS-135549 - Verify it is possible to cancel the creation of a Field"
+	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Field Name"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CanCancelCreationField {
+	test CannotSaveSpecialCharacterFieldName {
 
-		// TODO LPS-138831 CanCancelCreationField pending implementation
+		// TODO LPS-138826 CannotSaveSpecialCharacterFieldName pending implementation
 
 	}
 
-	@description = "LPS-135549 - Verify it is possible to view the Details of a Field by clicking on its name"
+	@description = "LPS-135549 - Verify it is not possible to save with the first character of the Field Name in upper case"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CanViewFieldsDetailsByClickingName {
+	test CannotSaveUpperCaseFieldName {
 
-		// TODO LPS-138832 CanViewFieldsDetailsByClickingName pending implementation
+		// TODO LPS-138825 CannotSaveUpperCaseFieldName pending implementation
 
 	}
 
-	@description = "LPS-135549 - Verify it is possible to view the Details of a Field by clicking on the eye icon"
+	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Object Name"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CanViewFieldsDetailsByClickingEyeIcon {
+	test CannotSaveWithSpecialCharacterForObjectName {
 
-		// TODO LPS-138833 CanViewFieldsDetailsByClickingEyeIcon pending implementation
+		// TODO LPS-138808 CannotSaveWithSpecialCharacterForObjectName pending implementation
 
 	}
 
-	@description = "LPS-135549 - Verify that the field with String type has the options Keyword and Text under the Searchable section"
+	@description = "LPS-135635 - Verify it is not possible to update the Mandatory of a Field after the Object is published"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test KeywordAndTextDisplayedForStringTypeField {
+	test CannotUpdateFieldMandatoryAfterPublished {
 
-		// TODO LPS-138834 KeywordAndTextDisplayedForStringTypeField pending implementation
-
-	}
-
-	@description = "LPS-135549 - Verify that the field with String type has the option Language when the Text option is selected under the Searchable section"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test LanguageDisplayedForTextOption {
-
-		// TODO LPS-138835 LanguageDisplayedForTextOption pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Object name before it is published"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanUpdateObjectNameBeforePublished {
-
-		// TODO LPS-138836 CanUpdateObjectNameBeforePublished pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Object label before it is published"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanUpdateObjectLabelBeforePublished {
-		property portal.acceptance = "true";
-
-		// TODO LPS-138837 CanUpdateObjectLabelBeforePublished pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Object plural label before it is published"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanUpdateObjectPluralLabelBeforePublished {
-
-		// TODO LPS-138838 CanUpdateObjectPluralLabelBeforePublished pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Object scope before it is published"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanUpdateObjectScopeBeforePublished {
-
-		// TODO LPS-138839 CanUpdateObjectScopeBeforePublished pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Object panel category key before it is published"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanUpdateObjectPanelCategoryBeforePublished {
-
-		// TODO LPS-138840 CanUpdateObjectPanelCategoryBeforePublished pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify it is not possible to update the Object name after it is published"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CannotUpdateObjectNameAfterPublished {
-		property portal.acceptance = "true";
-
-		// TODO LPS-138841 CannotUpdateObjectNameAfterPublished pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Object label after it is published"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanUpdateObjectLabelAfter Published {
-
-		// TODO LPS-138842 CanUpdateObjectLabelAfter Published pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Object plural label after it is published"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanUpdateObjectPluralLabelAfterPublished {
-
-		// TODO LPS-138843 CanUpdateObjectPluralLabelAfterPublished pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify it is not possible to update the Object scope after it is published"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CannotUpdateObjectScopeAfterPublished {
-
-		// TODO LPS-138844 CannotUpdateObjectScopeAfterPublished pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Object panel category key after it is published"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanUpdateObjectPanelCategoryKeyAfterPublished {
-
-		// TODO LPS-138845 CanUpdateObjectPanelCategoryKeyAfterPublished pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Label of a Field before the Object is published"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanUpdateFieldLabelBeforePublished {
-		property portal.acceptance = "true";
-
-		// TODO LPS-138846 CanUpdateFieldLabelBeforePublished pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Name of a Field before the Object is published"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanUpdateFieldNameBeforePublished {
-
-		// TODO LPS-138847 CanUpdateFieldNameBeforePublished pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Type of a Field before the Object is published"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanUpdateFieldTypeBeforePublished {
-
-		// TODO LPS-138848 CanUpdateFieldTypeBeforePublished pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Mandatory of a Field before the Object is published"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanUpdateFieldMandatoryBeforePublished {
-
-		// TODO LPS-138849 CanUpdateFieldMandatoryBeforePublished pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Searchable section before the Object is published"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanUpdateFieldSearchableSectionBeforePublished {
-
-		// TODO LPS-138850 CanUpdateFieldSearchableSectionBeforePublished pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify that the options Keyword and Text appears under the Searchable section when updating the field type to String"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test KeywordAndTextAppearsWhenUpdateFieldType {
-
-		// TODO LPS-138851 KeywordAndTextAppearsWhenUpdateFieldType pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify that the options Keyword and Text disappears under the Searchable section when updating the field type from String to another type"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test KeywordAndTextDisappearsWhenUpdateFieldType {
-
-		// TODO LPS-138852 KeywordAndTextDisappearsWhenUpdateFieldType pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify it is possible to add a field after the Object is published and submit entries to it"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanAddFieldAndViewEntriesAfterPublished {
-		property portal.acceptance = "true";
-
-		// TODO LPS-138853 CanAddFieldAndViewEntriesAfterPublished pending implementation
-
-	}
-
-	@description = "LPS-135635 - Verify it is possible to update the Label of a Field after the Object is published"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanUpdateFieldLabelAfterPublished {
-		property portal.acceptance = "true";
-
-		// TODO LPS-138854 CanUpdateFieldLabelAfterPublished pending implementation
+		// TODO LPS-138857 CannotUpdateFieldMandatoryAfterPublished pending implementation
 
 	}
 
@@ -534,12 +233,22 @@ definition {
 
 	}
 
-	@description = "LPS-135635 - Verify it is not possible to update the Mandatory of a Field after the Object is published"
+	@description = "LPS-135635 - Verify it is not possible to update the Object name after it is published"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CannotUpdateObjectNameAfterPublished {
+		property portal.acceptance = "true";
+
+		// TODO LPS-138841 CannotUpdateObjectNameAfterPublished pending implementation
+
+	}
+
+	@description = "LPS-135635 - Verify it is not possible to update the Object scope after it is published"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CannotUpdateFieldMandatoryAfterPublished {
+	test CannotUpdateObjectScopeAfterPublished {
 
-		// TODO LPS-138857 CannotUpdateFieldMandatoryAfterPublished pending implementation
+		// TODO LPS-138844 CannotUpdateObjectScopeAfterPublished pending implementation
 
 	}
 
@@ -549,6 +258,25 @@ definition {
 	test CannotUpdateSearchableSectionAfterPublished {
 
 		// TODO LPS-138858 CannotUpdateSearchableSectionAfterPublished pending implementation
+
+	}
+
+	@description = "LPS-135549 - Verify it is possible to Publish a Custom Object"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishCustomObject {
+		property portal.acceptance = "true";
+
+		// TODO LPS-138814 CanPublishCustomObject pending implementation
+
+	}
+
+	@description = "LPS-135389 - Verify it is possible to set a different language value for a Field Label"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSetDifferentLanguageForFieldLabel {
+
+		// TODO LPS-138862 CanSetDifferentLanguageForFieldLabel pending implementation
 
 	}
 
@@ -571,13 +299,285 @@ definition {
 
 	}
 
-	@description = "LPS-135389 - Verify it is possible to set a different language value for a Field Label"
+	@description = "LPS-135549 - Verify it is possible to set a field as Mandatory"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CanSetDifferentLanguageForFieldLabel {
+	test CanSetFieldMandatory {
 
-		// TODO LPS-138862 CanSetDifferentLanguageForFieldLabel pending implementation
+		// TODO LPS-138830 CanSetFieldMandatory pending implementation
 
+	}
+
+	@description = "LPS-135635 - Verify it is possible to update the Label of a Field after the Object is published"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanUpdateFieldLabelAfterPublished {
+		property portal.acceptance = "true";
+
+		// TODO LPS-138854 CanUpdateFieldLabelAfterPublished pending implementation
+
+	}
+
+	@description = "LPS-135635 - Verify it is possible to update the Label of a Field before the Object is published"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanUpdateFieldLabelBeforePublished {
+		property portal.acceptance = "true";
+
+		// TODO LPS-138846 CanUpdateFieldLabelBeforePublished pending implementation
+
+	}
+
+	@description = "LPS-135635 - Verify it is possible to update the Mandatory of a Field before the Object is published"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUpdateFieldMandatoryBeforePublished {
+
+		// TODO LPS-138849 CanUpdateFieldMandatoryBeforePublished pending implementation
+
+	}
+
+	@description = "LPS-135635 - Verify it is possible to update the Name of a Field before the Object is published"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUpdateFieldNameBeforePublished {
+
+		// TODO LPS-138847 CanUpdateFieldNameBeforePublished pending implementation
+
+	}
+
+	@description = "LPS-135635 - Verify it is possible to update the Searchable section before the Object is published"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUpdateFieldSearchableSectionBeforePublished {
+
+		// TODO LPS-138850 CanUpdateFieldSearchableSectionBeforePublished pending implementation
+
+	}
+
+	@description = "LPS-135635 - Verify it is possible to update the Type of a Field before the Object is published"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUpdateFieldTypeBeforePublished {
+
+		// TODO LPS-138848 CanUpdateFieldTypeBeforePublished pending implementation
+
+	}
+
+	@description = "LPS-135635 - Verify it is possible to update the Object label after it is published"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUpdateObjectLabelAfter Published {
+
+		// TODO LPS-138842 CanUpdateObjectLabelAfter Published pending implementation
+
+	}
+
+	@description = "LPS-135635 - Verify it is possible to update the Object label before it is published"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanUpdateObjectLabelBeforePublished {
+		property portal.acceptance = "true";
+
+		// TODO LPS-138837 CanUpdateObjectLabelBeforePublished pending implementation
+
+	}
+
+	@description = "LPS-135635 - Verify it is possible to update the Object name before it is published"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUpdateObjectNameBeforePublished {
+
+		// TODO LPS-138836 CanUpdateObjectNameBeforePublished pending implementation
+
+	}
+
+	@description = "LPS-135635 - Verify it is possible to update the Object panel category key before it is published"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUpdateObjectPanelCategoryBeforePublished {
+
+		// TODO LPS-138840 CanUpdateObjectPanelCategoryBeforePublished pending implementation
+
+	}
+
+	@description = "LPS-135635 - Verify it is possible to update the Object panel category key after it is published"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUpdateObjectPanelCategoryKeyAfterPublished {
+
+		// TODO LPS-138845 CanUpdateObjectPanelCategoryKeyAfterPublished pending implementation
+
+	}
+
+	@description = "LPS-135635 - Verify it is possible to update the Object plural label after it is published"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUpdateObjectPluralLabelAfterPublished {
+
+		// TODO LPS-138843 CanUpdateObjectPluralLabelAfterPublished pending implementation
+
+	}
+
+	@description = "LPS-135635 - Verify it is possible to update the Object plural label before it is published"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUpdateObjectPluralLabelBeforePublished {
+
+		// TODO LPS-138838 CanUpdateObjectPluralLabelBeforePublished pending implementation
+
+	}
+
+	@description = "LPS-135635 - Verify it is possible to update the Object scope before it is published"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUpdateObjectScopeBeforePublished {
+
+		// TODO LPS-138839 CanUpdateObjectScopeBeforePublished pending implementation
+
+	}
+
+	@description = "LPS-135549 - Verify it is possible to view the Details of a Field by clicking on the eye icon"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewFieldsDetailsByClickingEyeIcon {
+
+		// TODO LPS-138833 CanViewFieldsDetailsByClickingEyeIcon pending implementation
+
+	}
+
+	@description = "LPS-135549 - Verify it is possible to view the Details of a Field by clicking on its name"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewFieldsDetailsByClickingName {
+
+		// TODO LPS-138832 CanViewFieldsDetailsByClickingName pending implementation
+
+	}
+
+	@description = "LPS-135549 - Verify it is possible to view the Details of an Object by clicking on the eye icon"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewObjectsDetailsByClickingEyeIcon {
+
+		// TODO LPS-138813 CanViewObjectsDetailsByClickingEyeIcon pending implementation
+
+	}
+
+	@description = "LPS-135549 - Verify it is possible to view the Details of an Object by clicking on its name"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewObjectsDetailsByClickingName {
+
+		// TODO LPS-138812 CanViewObjectsDetailsByClickingName pending implementation
+
+	}
+
+	@description = "LPS-135549 - Verify that the columns Name and Type are displayed for the Fields table"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ColumnsAreDisplayedFieldsTable {
+
+		// TODO LPS-138816 ColumnsAreDisplayedFieldsTable pending implementation
+
+	}
+
+	@description = "LPS-135549 - Verify that the columns Name, System and Status are displayed for the Objects table"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ColumnsAreDisplayedObjectsTable {
+
+		// TODO LPS-138804 ColumnsAreDisplayedObjectsTable pending implementation
+
+	}
+
+	@description = "LPS-135549 - Verify that the Field Name is autofilled when Label is filled"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test FieldNameIsAutofilled {
+
+		// TODO LPS-138824 FieldNameIsAutofilled pending implementation
+
+	}
+
+	@description = "LPS-135635 - Verify that the options Keyword and Text appears under the Searchable section when updating the field type to String"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test KeywordAndTextAppearsWhenUpdateFieldType {
+
+		// TODO LPS-138851 KeywordAndTextAppearsWhenUpdateFieldType pending implementation
+
+	}
+
+	@description = "LPS-135635 - Verify that the options Keyword and Text disappears under the Searchable section when updating the field type from String to another type"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test KeywordAndTextDisappearsWhenUpdateFieldType {
+
+		// TODO LPS-138852 KeywordAndTextDisappearsWhenUpdateFieldType pending implementation
+
+	}
+
+	@description = "LPS-135549 - Verify that the field with String type has the options Keyword and Text under the Searchable section"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test KeywordAndTextDisplayedForStringTypeField {
+
+		// TODO LPS-138834 KeywordAndTextDisplayedForStringTypeField pending implementation
+
+	}
+
+	@description = "LPS-135549 - Verify that the field with String type has the option Language when the Text option is selected under the Searchable section"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test LanguageDisplayedForTextOption {
+
+		// TODO LPS-138835 LanguageDisplayedForTextOption pending implementation
+
+	}
+
+	@description = "LPS-135549 - Verify that the Object Name is autofilled when Label is filled"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ObjectNameIsAutofilled {
+
+		// TODO LPS-138806 ObjectNameIsAutofilled pending implementation
+
+	}
+
+	@description = "LPS-135549 - Verify that the columns Name, System and Status displays the correct value on the Objects table when a Custom Object is created"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test TableDisplayCorrectValueWhenObjectCreated {
+
+		// TODO LPS-138805 TableDisplayCorrectValueWhenObjectCreated pending implementation
+
+	}
+
+	@description = "LPS-135548 - Verify that user can view custom objects"
+	@priority = "5"
+	test ViewCustomObjects {
+		property portal.acceptance = "true";
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.viewCustomObject(name = "CustomObject");
+	}
+
+	@description = "LPS-135548 - Verify that user can view system objects"
+	@priority = "5"
+	test ViewSystemObjects {
+		property portal.acceptance = "true";
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.viewSystemObject(name = "CommerceOrder");
+		ObjectAdmin.viewSystemObject(name = "User");
 	}
 
 }

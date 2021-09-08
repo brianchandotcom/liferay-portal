@@ -21,6 +21,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -32,9 +33,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -68,7 +66,19 @@ public class ObjectFieldResourceImpl
 				objectDefinitionId);
 
 		return SearchUtil.search(
-			Collections.emptyMap(),
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.UPDATE, "postObjectDefinitionObjectField",
+					com.liferay.object.model.ObjectDefinition.class.getName(),
+					objectDefinitionId)
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getObjectDefinitionObjectFieldsPage",
+					com.liferay.object.model.ObjectDefinition.class.getName(),
+					objectDefinitionId)
+			).build(),
 			booleanQuery -> {
 			},
 			null, com.liferay.object.model.ObjectField.class.getName(), search,
@@ -82,20 +92,16 @@ public class ObjectFieldResourceImpl
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 			},
 			null,
-			document -> {
-				com.liferay.object.model.ObjectField objectField =
-					_objectFieldLocalService.getObjectField(
-						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
-
-				return ObjectFieldUtil.toObjectField(
-					_getActions(objectDefinition, objectField), objectField);
-			});
+			document -> _toObjectField(
+				objectDefinition,
+				_objectFieldLocalService.getObjectField(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override
 	public ObjectField getObjectField(Long objectFieldId) throws Exception {
-		return ObjectFieldUtil.toObjectField(
-			null, _objectFieldLocalService.getObjectField(objectFieldId));
+		return _toObjectField(
+			_objectFieldLocalService.getObjectField(objectFieldId));
 	}
 
 	@Override
@@ -103,8 +109,7 @@ public class ObjectFieldResourceImpl
 			Long objectDefinitionId, ObjectField objectField)
 		throws Exception {
 
-		return ObjectFieldUtil.toObjectField(
-			null,
+		return _toObjectField(
 			_objectFieldLocalService.addCustomObjectField(
 				contextUser.getUserId(), objectField.getListTypeDefinitionId(),
 				objectDefinitionId, objectField.getIndexed(),
@@ -120,8 +125,7 @@ public class ObjectFieldResourceImpl
 			Long objectFieldId, ObjectField objectField)
 		throws Exception {
 
-		return ObjectFieldUtil.toObjectField(
-			null,
+		return _toObjectField(
 			_objectFieldLocalService.updateCustomObjectField(
 				objectFieldId, objectField.getListTypeDefinitionId(),
 				objectField.getIndexed(), objectField.getIndexedAsKeyword(),
@@ -131,25 +135,59 @@ public class ObjectFieldResourceImpl
 				objectField.getTypeAsString()));
 	}
 
-	private Map<String, Map<String, String>> _getActions(
+	private ObjectField _toObjectField(
 		com.liferay.object.model.ObjectDefinition objectDefinition,
 		com.liferay.object.model.ObjectField objectField) {
 
-		if ((objectDefinition.isApproved() || objectDefinition.isSystem()) &&
-			!Objects.equals(
+		boolean updatable =
+			(!objectDefinition.isApproved() && !objectDefinition.isSystem()) ||
+			Objects.equals(
 				objectDefinition.getExtensionDBTableName(),
-				objectField.getDBTableName())) {
+				objectField.getDBTableName());
 
-			return new HashMap<>();
-		}
+		return ObjectFieldUtil.toObjectField(
+			HashMapBuilder.put(
+				"delete",
+				() -> {
+					if (!updatable) {
+						return null;
+					}
 
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"delete",
-			addAction(
-				ActionKeys.DELETE, "deleteObjectField",
-				com.liferay.object.model.ObjectDefinition.class.getName(),
-				objectDefinition.getObjectDefinitionId())
-		).build();
+					return addAction(
+						ActionKeys.DELETE, "deleteObjectField",
+						com.liferay.object.model.ObjectField.class.getName(),
+						objectField.getObjectFieldId());
+				}
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getObjectField",
+					com.liferay.object.model.ObjectField.class.getName(),
+					objectField.getObjectFieldId())
+			).put(
+				"update",
+				() -> {
+					if (!updatable) {
+						return null;
+					}
+
+					return addAction(
+						ActionKeys.UPDATE, "putObjectField",
+						com.liferay.object.model.ObjectField.class.getName(),
+						objectField.getObjectFieldId());
+				}
+			).build(),
+			objectField);
+	}
+
+	private ObjectField _toObjectField(
+			com.liferay.object.model.ObjectField objectField)
+		throws PortalException {
+
+		return _toObjectField(
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectField.getObjectDefinitionId()),
+			objectField);
 	}
 
 	@Reference

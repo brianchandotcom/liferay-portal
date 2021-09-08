@@ -17,17 +17,11 @@ package com.liferay.template.taglib.servlet.taglib;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.util.DDMNavigationHelper;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
@@ -187,9 +181,6 @@ public class TemplateSelectorTag extends IncludeTag {
 		setNamespacedAttribute(
 			httpServletRequest, "displayStyles", getDisplayStyles());
 		setNamespacedAttribute(
-			httpServletRequest, "manageDDMTemplatesURL",
-			_getManageDDMTemplatesURL(httpServletRequest));
-		setNamespacedAttribute(
 			httpServletRequest, "refreshURL", getRefreshURL());
 		setNamespacedAttribute(
 			httpServletRequest, "portletDisplayDDMTemplate",
@@ -235,41 +226,6 @@ public class TemplateSelectorTag extends IncludeTag {
 		}
 		catch (Exception exception) {
 			return Collections.emptyList();
-		}
-	}
-
-	private String _getManageDDMTemplatesURL(
-		HttpServletRequest httpServletRequest) {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		try {
-			return PortletURLBuilder.create(
-				PortletProviderUtil.getPortletURL(
-					httpServletRequest, DDMTemplate.class.getName(),
-					PortletProvider.Action.VIEW)
-			).setMVCPath(
-				"/view_template.jsp"
-			).setParameter(
-				"classNameId", PortalUtil.getClassNameId(getClassName())
-			).setParameter(
-				"groupId",
-				PortletDisplayTemplateUtil.getDDMTemplateGroupId(
-					themeDisplay.getScopeGroupId())
-			).setParameter(
-				"navigationStartsOn", DDMNavigationHelper.VIEW_TEMPLATES
-			).setParameter(
-				"refererPortletName", PortletKeys.PORTLET_DISPLAY_TEMPLATE
-			).setParameter(
-				"showHeader", false
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString();
-		}
-		catch (Exception exception) {
-			return StringPool.BLANK;
 		}
 	}
 

@@ -75,51 +75,9 @@ DDMTemplate portletDisplayDDMTemplate = (DDMTemplate)request.getAttribute("lifer
 
 		</aui:select>
 	</clay:content-col>
-
-	<%
-	Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(PortletDisplayTemplateUtil.getDDMTemplateGroupId(themeDisplay.getScopeGroupId()));
-	%>
-
-	<c:if test="<%= !ddmTemplateGroup.isLayoutPrototype() %>">
-		<clay:content-col>
-			<liferay-ui:icon
-				id="selectDDMTemplate"
-				label="<%= true %>"
-				markupView="lexicon"
-				message='<%= LanguageUtil.get(request, "manage-templates") %>'
-				url="javascript:;"
-			/>
-		</clay:content-col>
-	</c:if>
 </clay:content-row>
 
 <aui:script sandbox="<%= true %>">
-	const manageDDMTemplatesLink = document.getElementById(
-		'<portlet:namespace />selectDDMTemplate'
-	);
-
-	if (manageDDMTemplatesLink) {
-		manageDDMTemplatesLink.addEventListener('click', (event) => {
-			const openerWindow = Liferay.Util.getOpener();
-
-			openerWindow.Liferay.Util.openModal({
-				onClose: () => {
-					const form = document.getElementById('<portlet:namespace />fm');
-
-					if (form) {
-						submitForm(
-							form,
-							'<%= HtmlUtil.escapeJS((String)request.getAttribute("liferay-template:template-selector:refreshURL")) %>'
-						);
-					}
-				},
-				title: '<liferay-ui:message key="widget-templates" />',
-				url:
-					'<%= (String)request.getAttribute("liferay-template:template-selector:manageDDMTemplatesURL") %>',
-			});
-		});
-	}
-
 	var displayStyle = document.getElementById('<portlet:namespace />displayStyle');
 	var displayStyleGroupIdInput = document.getElementById(
 		'<portlet:namespace />displayStyleGroupId'

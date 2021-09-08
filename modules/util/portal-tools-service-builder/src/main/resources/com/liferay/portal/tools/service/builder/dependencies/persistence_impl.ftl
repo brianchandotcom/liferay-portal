@@ -364,6 +364,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		</#if>
 	}
 
+	private int _valueObjectFinderCacheListThreshold;
+
 	/**
 	 * Caches the ${entity.pluralHumanName} in the entity cache if it is enabled.
 	 *
@@ -371,6 +373,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 */
 	@Override
 	public void cacheResult(List<${entity.name}> ${entity.pluralVariableName}) {
+		<#if serviceBuilder.isVersionGTE_7_0_0()>
+			if ((_valueObjectFinderCacheListThreshold >= 0) &&
+				(${entity.pluralVariableName}.size() > _valueObjectFinderCacheListThreshold)) {
+
+				return;
+			}
+		</#if>
+
 		for (${entity.name} ${entity.variableName} : ${entity.pluralVariableName}) {
 			<#if entity.isChangeTrackingEnabled()>
 				if (${entity.variableName}.getCtCollectionId() != 0) {
@@ -2427,6 +2437,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							"model.class.name", ${entity.name}.class.getName()
 						).build());
 			</#if>
+		</#if>
+
+		<#if serviceBuilder.isVersionGTE_7_0_0()>
+			_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
+				PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 		</#if>
 
 		<#list entity.entityColumns as entityColumn>

@@ -89,7 +89,6 @@ export interface Config {
 	defaultSegmentsEntryId: string;
 	defaultSegmentsExperienceId: string;
 	deleteFragmentEntryLinkCommentURL: string;
-	deleteItemURL: string;
 	deleteSegmentsExperienceURL: string;
 	discardDraftURL: string;
 	draft: boolean;

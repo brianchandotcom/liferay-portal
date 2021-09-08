@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.List;
 
@@ -165,93 +164,6 @@ public class FragmentDropZoneMVCActionCommandTest {
 
 		Assert.assertTrue(
 			layoutStructureItem instanceof FragmentDropZoneLayoutStructureItem);
-	}
-
-	@Test
-	public void testDeleteFragmentEntryLinkItemWithDropZone() throws Exception {
-		MockLiferayPortletActionRequest actionRequest =
-			_getMockLiferayPortletActionRequest(_group.getGroupId());
-
-		actionRequest.addParameter(
-			"fragmentEntryKey", _fragmentEntry.getFragmentEntryKey());
-		actionRequest.addParameter(
-			"itemType", LayoutDataItemTypeConstants.TYPE_FRAGMENT);
-		actionRequest.addParameter(
-			"parentItemId", _layoutStructure.getMainItemId());
-		actionRequest.addParameter("position", "0");
-
-		JSONObject jsonObject = ReflectionTestUtil.invoke(
-			_addFragmentEntryLinkMVCActionCommand,
-			"_processAddFragmentEntryLink",
-			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			actionRequest, new MockLiferayPortletActionResponse());
-
-		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
-			"layoutData");
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutDataJSONObject.toString());
-
-		JSONObject fragmentEntryLinkJSONObject = jsonObject.getJSONObject(
-			"fragmentEntryLink");
-
-		long fragmentEntryLinkId = fragmentEntryLinkJSONObject.getLong(
-			"fragmentEntryLinkId");
-
-		LayoutStructureItem fragmentLayoutStructureItem =
-			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
-				fragmentEntryLinkId);
-
-		List<String> childrenItemIds =
-			fragmentLayoutStructureItem.getChildrenItemIds();
-
-		actionRequest = _getMockLiferayPortletActionRequest(
-			_group.getGroupId());
-
-		actionRequest.addParameter(
-			"itemType", LayoutDataItemTypeConstants.TYPE_CONTAINER);
-		actionRequest.addParameter("parentItemId", childrenItemIds.get(0));
-		actionRequest.addParameter("position", "0");
-
-		ReflectionTestUtil.invoke(
-			_addItemMVCActionCommand, "addItemToLayoutData",
-			new Class<?>[] {ActionRequest.class}, actionRequest);
-
-		jsonObject = ReflectionTestUtil.invoke(
-			_deleteItemMVCActionCommand, "deleteItemJSONObject",
-			new Class<?>[] {
-				long.class, long.class, String.class, long.class, long.class
-			},
-			_group.getCompanyId(), _group.getGroupId(),
-			fragmentLayoutStructureItem.getItemId(), _layout.getPlid(),
-			SegmentsExperienceConstants.ID_DEFAULT);
-
-		layoutDataJSONObject = jsonObject.getJSONObject("layoutData");
-
-		layoutStructure = LayoutStructure.of(layoutDataJSONObject.toString());
-
-		List<LayoutStructureItem> layoutStructureItems =
-			layoutStructure.getLayoutStructureItems();
-
-		Assert.assertEquals(
-			layoutStructureItems.toString(), 1, layoutStructureItems.size());
-
-		Assert.assertNotNull(layoutStructure.getMainLayoutStructureItem());
-
-		LayoutStructureItem rootLayoutStructureItem =
-			layoutStructure.getMainLayoutStructureItem();
-
-		childrenItemIds = rootLayoutStructureItem.getChildrenItemIds();
-
-		Assert.assertEquals(
-			childrenItemIds.toString(), 0, childrenItemIds.size());
-
-		Assert.assertNull(
-			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-				fragmentEntryLinkId));
-		Assert.assertNull(
-			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
-				fragmentEntryLinkId));
 	}
 
 	@Test
@@ -568,9 +480,6 @@ public class FragmentDropZoneMVCActionCommandTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject(filter = "mvc.command.name=/layout_content_page_editor/delete_item")
-	private MVCActionCommand _deleteItemMVCActionCommand;
 
 	@Inject(
 		filter = "mvc.command.name=/layout_content_page_editor/duplicate_item"

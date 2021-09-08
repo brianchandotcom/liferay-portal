@@ -314,10 +314,6 @@ public class ContentPageEditorDisplayContext {
 					"/layout_content_page_editor" +
 						"/delete_fragment_entry_link_comment")
 			).put(
-				"deleteItemURL",
-				getFragmentEntryActionURL(
-					"/layout_content_page_editor/delete_item")
-			).put(
 				"discardDraftURL", _getDiscardDraftURL()
 			).put(
 				"draft",

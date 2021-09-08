@@ -93,27 +93,6 @@ export default {
 	},
 
 	/**
-	 * Remove an item inside layoutData
-	 * @param {object} options
-	 * @param {object} options.itemId id of the item to be removed
-	 * @param {function} options.onNetworkStatus
-	 * @param {object} options.segmentsExperienceId
-	 * @return {Promise<object>}
-	 */
-	deleteItem({itemId, onNetworkStatus, segmentsExperienceId}) {
-		return layoutServiceFetch(
-			config.deleteItemURL,
-			{
-				body: {
-					itemId,
-					segmentsExperienceId,
-				},
-			},
-			onNetworkStatus
-		);
-	},
-
-	/**
 	 * @param {object} layout
 	 * @returns {Promise<{error: Error, friendlyURL: string}>}
 	 */

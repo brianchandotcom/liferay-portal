@@ -421,9 +421,9 @@ public class DBPartitionUtil {
 
 			@Override
 			public int executeUpdate(String sql) throws SQLException {
-				sql = StringUtil.toLowerCase(sql);
+				String lowerCaseSql = StringUtil.toLowerCase(sql);
 
-				if (StringUtil.startsWith(sql, "alter table")) {
+				if (StringUtil.startsWith(lowerCaseSql, "alter table")) {
 					DBInspector dbInspector = new DBInspector(
 						DataAccess.getConnection());
 
@@ -440,8 +440,8 @@ public class DBPartitionUtil {
 					catch (Exception exception) {
 					}
 				}
-				else if (StringUtil.startsWith(sql, "create index") ||
-						 StringUtil.startsWith(sql, "drop index")) {
+				else if (StringUtil.startsWith(lowerCaseSql, "create index") ||
+						 StringUtil.startsWith(lowerCaseSql, "drop index")) {
 
 					DBInspector dbInspector = new DBInspector(
 						DataAccess.getConnection());
@@ -450,6 +450,25 @@ public class DBPartitionUtil {
 
 					try {
 						if (_isControlTable(dbInspector, query[4]) &&
+							!(CompanyThreadLocal.getCompanyId() ==
+								_defaultCompanyId)) {
+
+							return 0;
+						}
+					}
+					catch (Exception exception) {
+					}
+				}
+				else if (StringUtil.startsWith(
+							lowerCaseSql, "create unique index")) {
+
+					DBInspector dbInspector = new DBInspector(
+						DataAccess.getConnection());
+
+					String[] query = sql.split(StringPool.SPACE);
+
+					try {
+						if (_isControlTable(dbInspector, query[5]) &&
 							!(CompanyThreadLocal.getCompanyId() ==
 								_defaultCompanyId)) {
 

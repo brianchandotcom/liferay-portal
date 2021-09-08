@@ -15,6 +15,7 @@
 package com.liferay.portal.db.partition.test.util;
 
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.init.DBInitUtil;
 import com.liferay.portal.db.partition.DBPartitionUtil;
@@ -193,7 +194,10 @@ public abstract class BaseDBPartitionTestCase {
 		try (Statement statement = connection.createStatement()) {
 			statement.execute(getCreateTableSQL(tableName));
 
-			statement.execute("insert into " + tableName + " values (1)");
+			statement.execute(
+				StringBundler.concat(
+					"insert into ", tableName, " values (1, ",
+					CompanyThreadLocal.getCompanyId(), ")"));
 		}
 	}
 
@@ -206,7 +210,8 @@ public abstract class BaseDBPartitionTestCase {
 	}
 
 	protected String getCreateTableSQL(String tableName) {
-		return "create table " + tableName + " (testColumn bigint primary key)";
+		return "create table " + tableName +
+			" (testColumn bigint primary key, companyId bigint)";
 	}
 
 	protected static final long COMPANY_ID = 123456789L;

@@ -101,14 +101,15 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	public void testDropIndexControlTable() throws Exception {
 		try {
 			DBPartitionUtil.forEachCompanyId(
-				companyId -> db.runSQL(
-					"drop index IX_test on ClassName_"));
+				companyId -> db.runSQL("drop index IX_B27A301F on ClassName_"));
 		}
 		finally {
 			DBPartitionUtil.forEachCompanyId(
 				companyId -> {
 					if (dbInspector.hasIndex("ClassName_", "IX_test")) {
-						db.runSQL("drop index IX_test on ClassName_");
+						db.runSQL(
+							"create unique index IX_B27A301F on ClassName_ " +
+								"(value);");
 					}
 				});
 		}

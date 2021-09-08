@@ -1473,6 +1473,11 @@ definition {
 
 				var n = ${n} + 1;
 			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM");
 		}
 
 		task ("Filter web contents by tag1 and title") {
@@ -1491,6 +1496,11 @@ definition {
 				key_fragmentName = "Collection Display",
 				key_rowPosition = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM");
 		}
 
 		task ("Clear the filter then filter by tag1 and tag2") {
@@ -1516,6 +1526,11 @@ definition {
 
 				var n = ${n} + 1;
 			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM");
 		}
 
 		task ("Filter web contents by tag1,tag2 and title") {
@@ -1534,6 +1549,11 @@ definition {
 				key_fragmentName = "Collection Display",
 				key_rowPosition = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM");
 		}
 
 		task ("Filter web contents by tag1,tag2 and another title") {
@@ -1552,6 +1572,11 @@ definition {
 				key_fragmentName = "Collection Display",
 				key_rowPosition = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM");
 		}
 
 		task ("Clear the filter then filter by title") {
@@ -1571,6 +1596,11 @@ definition {
 				key_fragmentName = "Collection Display",
 				key_rowPosition = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM");
 		}
 
 		task ("Filter web contents by title and tag3") {
@@ -1688,6 +1718,11 @@ definition {
 
 				var n = ${n} + 1;
 			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM");
 		}
 
 		task ("Clear the filter then filter by the tag2") {
@@ -1713,6 +1748,11 @@ definition {
 
 				var n = ${n} + 1;
 			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM");
 		}
 
 		task ("Clear the filter then filter by the tag3") {
@@ -1738,6 +1778,11 @@ definition {
 
 				var n = ${n} + 1;
 			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM");
 		}
 
 		task ("Clear the filter then filter by all tags") {
@@ -1763,6 +1808,11 @@ definition {
 
 				var n = ${n} + 1;
 			}
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "5",
+				locator1 = "PageEditor#COLLECTION_ITEM");
 		}
 
 		task ("Disable Basic Web Content flag in Gogo Shell") {
@@ -1843,6 +1893,11 @@ definition {
 				key_fragmentName = "Collection Display",
 				key_rowPosition = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM");
 		}
 
 		task ("Clear the filter then filter by another title") {
@@ -1862,6 +1917,11 @@ definition {
 				key_fragmentName = "Collection Display",
 				key_rowPosition = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM");
 		}
 
 		task ("Clear the filter then filter by another title") {
@@ -1881,6 +1941,11 @@ definition {
 				key_fragmentName = "Collection Display",
 				key_rowPosition = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM");
 		}
 
 		task ("Clear the filter then filter by another title") {

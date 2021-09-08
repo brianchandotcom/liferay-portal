@@ -26,8 +26,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USAGE_TOTAL_NUMBER_METRICS</td>
-	<td>//h3[contains(.,'${key_metricName}')]/..//span[contains(@class,'metric-limit') and contains(.,'${key_totalNumber}')]</td>
+	<td>USAGE_LIMIT_NUMBER</td>
+	<td>//div[contains(@class,'overview-usage')][.//h3[contains(@class,'metric-name')][normalize-space(text())='${key_metricName}']]//span[contains(@class,'metric-limit')]</td>
 	<td></td>
 </tr>
 <tr>

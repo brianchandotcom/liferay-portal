@@ -1,0 +1,123 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "24";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property slave.label = "slave-1";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9204 | Test Summary: Add segment using a session property 'Device Brand'"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateSessionAttributeUsingDeviceBrand {
+
+		// TODO LRAC-9204 CanCreateSessionAttributeUsingDeviceBrand pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9205 | Test Summary: Add segment using a session property 'Device Model'"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateSessionAttributeUsingDeviceModel {
+
+		// TODO LRAC-9205 CanCreateSessionAttributeUsingDeviceModel pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9206 | Test Summary: Add segment using a session property 'Language'"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateSessionAttributeUsingLanguage {
+
+		// TODO LRAC-9206 CanCreateSessionAttributeUsingLanguage pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9207 | Test Summary: Add segment using a session property 'Last Sign In Date'"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateSessionAttributeUsingLastSignInDate {
+
+		// TODO LRAC-9207 CanCreateSessionAttributeUsingLastSignInDate pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9208 | Test Summary: Add segment using a session property 'Referrer URL'"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateSessionAttributeUsingReferrerURL {
+
+		// TODO LRAC-9208 CanCreateSessionAttributeUsingReferrerURL pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9209 | Test Summary: Add segment using a session property 'Request Parameters'"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateSessionAttributeUsingRequestParameters {
+
+		// TODO LRAC-9209 CanCreateSessionAttributeUsingRequestParameters pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9210 | Test Summary: Add segment using a session property 'Signed In'"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateSessionAttributeUsingSignedIn {
+
+		// TODO LRAC-9210 CanCreateSessionAttributeUsingSignedIn pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9211 | Test Summary: Add segment using a session property 'URL'"
+	@ignore = "true"
+	@priority = "4"
+	test CanCreateSessionAttributeUsingURL {
+
+		// TODO LRAC-9211 CanCreateSessionAttributeUsingURL pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9212 | Test Summary: Create a Segment of Session in a Topic"
+	@ignore = "true"
+	@priority = "4"
+	test CreateSegmentSessionInATopic {
+
+		// TODO LRAC-9212 CreateSegmentSessionInATopic pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9213 | Test Summary: Show 'duplicate' and 'delete' options in a list for every segment criteria"
+	@ignore = "true"
+	@priority = "4"
+	test SegmentCriteriaOptionsContainsDuplicateAndDelete {
+
+		// TODO LRAC-9213 SegmentCriteriaOptionsContainsDuplicateAndDelete pending implementation
+
+	}
+
+}

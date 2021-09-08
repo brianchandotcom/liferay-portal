@@ -215,7 +215,7 @@ renderResponse.setTitle(categoryDisplayName);
 										url="<%= deleteConfigActionURL %>"
 									/>
 
-									<portlet:resourceURL id="export" var="exportURL">
+									<portlet:resourceURL id="/configuration_admin/export_configuration" var="exportURL">
 										<portlet:param name="factoryPid" value="<%= curConfigurationModel.getFactoryPid() %>" />
 										<portlet:param name="pid" value="<%= curConfigurationModel.getID() %>" />
 									</portlet:resourceURL>

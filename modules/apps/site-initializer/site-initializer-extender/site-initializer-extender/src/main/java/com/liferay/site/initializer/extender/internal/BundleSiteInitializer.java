@@ -230,8 +230,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		JSONArray assetListJSONArray = JSONFactoryUtil.createJSONArray(
-			_read(json));
+		JSONArray assetListJSONArray = JSONFactoryUtil.createJSONArray(json);
 
 		for (int i = 0; i < assetListJSONArray.length(); i++) {
 			JSONObject assetListJSONObject = assetListJSONArray.getJSONObject(

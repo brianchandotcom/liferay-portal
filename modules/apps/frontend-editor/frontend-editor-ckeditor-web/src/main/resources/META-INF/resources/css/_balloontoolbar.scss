@@ -1,0 +1,53 @@
+.lfr-balloon-editor {
+	&.cke_balloon.cke_balloontoolbar {
+		background: white;
+		border-color: #e7e7ed;
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+		.cke_balloon_triangle_outer.cke_balloon_triangle_bottom {
+			border-color: #e7e7ed transparent;
+		}
+		.cke_balloon_triangle_outer.cke_balloon_triangle_top {
+			border-color: #e7e7ed transparent;
+		}
+		.cke_balloon_triangle_inner.cke_balloon_triangle_bottom {
+			border-color: white transparent;
+		}
+		.cke_balloon_triangle_inner.cke_balloon_triangle_top {
+			border-color: white transparent;
+		}
+		span {
+			&:last-child {
+				a {
+					&:last-child {
+						&::after {
+							border-right: 0;
+						}
+						&:hover {
+							&::after {
+								border-right: 0;
+							}
+						}
+					}
+				}
+				&::after {
+					border-right: 0;
+				}
+			}
+		}
+		.cke_combo {
+			margin-bottom: 0;
+			margin-right: 2px;
+			&:first-child {
+				a.cke_combo_button {
+					margin-left: 0;
+				}
+			}
+			&:last-child {
+				margin-right: 0;
+			}
+			a.cke_combo_button {
+				margin: 0 1px 0 -2px;
+			}
+		}
+	}
+}

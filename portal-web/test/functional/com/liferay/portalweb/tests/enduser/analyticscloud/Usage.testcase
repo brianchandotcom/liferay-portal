@@ -47,7 +47,7 @@ definition {
 
 		ACSettings.goToUsage();
 
-		var currentIndividuals = selenium.getText("ACUsage#USAGE_CURRENT_INDIVIDUALS");
+		var currentIndividuals = ACSettings.getCurrentNumber(metricName = "Individuals");
 
 		ACUtils.launchDXP();
 
@@ -65,9 +65,9 @@ definition {
 
 		ACSettings.goToUsage();
 
-		AssertTextEquals(
-			locator1 = "ACUsage#USAGE_CURRENT_INDIVIDUALS",
-			value1 = "${currentIndividuals}");
+		ACSettings.assertOverviewUsage(
+			current = "${currentIndividuals}",
+			metricName = "Individuals");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9183 | Test Summary: Current AC plan is collapsible."
@@ -218,7 +218,7 @@ definition {
 
 		ACSettings.goToUsage();
 
-		var currentIndividuals = selenium.getText("ACUsage#USAGE_CURRENT_INDIVIDUALS");
+		var currentIndividuals = ACSettings.getCurrentNumber(metricName = "Individuals");
 
 		ACUtils.launchDXP();
 
@@ -248,9 +248,9 @@ definition {
 
 		var newIdividuals = ${currentIndividuals} + 1;
 
-		AssertTextEquals(
-			locator1 = "ACUsage#USAGE_CURRENT_INDIVIDUALS",
-			value1 = "${newIdividuals}");
+		ACSettings.assertOverviewUsage(
+			current = "${newIdividuals}",
+			metricName = "Individuals");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9182 | Test Summary: Page views limit corresponds correctly with the plan and add-ons purchased."
@@ -306,9 +306,9 @@ definition {
 
 			ACSettings.goToUsage();
 
-			var actualPageViews = selenium.getText("ACUsage#USAGE_CURRENT_PAGE_VIEWS");
-			var replacePageViews = StringUtil.replace("${actualPageViews}",",","");
-			var sumPageViews = ${replacePageViews} + 3;
+			var currentPageViews = ACSettings.getCurrentNumber(metricName = "Page Views");
+
+			var sumPageViews = ${currentPageViews} + 3;
 
 			ACUtils.launchDXP();
 
@@ -322,12 +322,12 @@ definition {
 
 			ACSettings.goToUsage();
 
-			var expectedPageViews = selenium.getText("ACUsage#USAGE_CURRENT_PAGE_VIEWS");
+			var currentPageViews = ACSettings.getCurrentNumber(metricName = "Page Views");
+
+			var replacePageViews2 = StringUtil.extractDigits("${currentPageViews}");
 		}
 
-		task ("Remove the comma and compare the values") {
-			var replacePageViews2 = StringUtil.replace("${expectedPageViews}",",","");
-
+		task ("Compare the values") {
 			TestUtils.assertEquals(
 				actual = "${sumPageViews}",
 				expected = "${replacePageViews2}");
@@ -348,10 +348,9 @@ definition {
 
 			ACSettings.goToUsage();
 
-			AssertElementPresent(
-				key_metricName = "Individuals",
-				key_totalNumber = "110,000",
-				locator1 = "ACUsage#USAGE_TOTAL_NUMBER_METRICS");
+			ACSettings.assertOverviewUsage(
+				limit = "110,000",
+				metricName = "Individuals");
 		}
 	}
 
@@ -368,10 +367,9 @@ definition {
 
 		ACSettings.goToUsage();
 
-		AssertElementPresent(
-			key_metricName = "Page Views",
-			key_totalNumber = "75,000,000",
-			locator1 = "ACUsage#USAGE_TOTAL_NUMBER_METRICS");
+		ACSettings.assertOverviewUsage(
+			limit = "75,000,000",
+			metricName = "Page Views");
 	}
 
 }

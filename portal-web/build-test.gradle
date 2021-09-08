@@ -75,19 +75,19 @@ dependencies {
 					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-ee-6.2.x", version: "20201104-facd52e"
 				}
 				else if (portalVersion.startsWith("7.0")) {
-					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.0.x", version: "20210310-e6b5a35"
+					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.0.x", version: "20210907-8771854"
 				}
 				else if (portalVersion.startsWith("7.1")) {
-					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.1.x", version: "20210310-bf3799d2a"
+					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.1.x", version: "20210907-9d96032"
 				}
 				else if (portalVersion.startsWith("7.2")) {
-					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.2.x", version: "20210310-6c08827"
+					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.2.x", version: "20210907-af2bcf3"
 				}
 				else if (portalVersion.startsWith("7.3")) {
-					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.3.x", version: "20210310-51b702b"
+					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.3.x", version: "20210907-e171e76"
 				}
 				else if (portalVersion.startsWith("7.4")) {
-					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-master", version: "20210823-f1d1ea1"
+					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-master", version: "20210907-b704d3e"
 				}
 			}
 		}

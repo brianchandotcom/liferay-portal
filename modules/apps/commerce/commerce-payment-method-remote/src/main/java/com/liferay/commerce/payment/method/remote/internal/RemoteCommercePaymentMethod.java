@@ -14,12 +14,6 @@
 
 package com.liferay.commerce.payment.method.remote.internal;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommercePaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -38,7 +32,12 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
+import com.liferay.petra.apache.http.components.URIBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,40 +46,23 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.IOException;
-
 import java.math.BigDecimal;
 
-import java.nio.charset.StandardCharsets;
+import java.net.URI;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.StatusLine;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.util.EntityUtils;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -107,7 +89,7 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 
 		return GetterUtil.getBoolean(
 			_execute(
-				_getHttpPost(
+				_getPostHttpOptions(
 					remoteCommercePaymentMethodConfiguration.
 						endpointAuthorizationToken(),
 					commercePaymentRequest,
@@ -128,7 +110,7 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 		return _toCommercePaymentResult(
 			commercePaymentRequest.getCommerceOrderId(),
 			_execute(
-				_getHttpPost(
+				_getPostHttpOptions(
 					remoteCommercePaymentMethodConfiguration.
 						endpointAuthorizationToken(),
 					commercePaymentRequest,
@@ -149,7 +131,7 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 		return _toCommercePaymentResult(
 			commercePaymentRequest.getCommerceOrderId(),
 			_execute(
-				_getHttpPost(
+				_getPostHttpOptions(
 					remoteCommercePaymentMethodConfiguration.
 						endpointAuthorizationToken(),
 					commercePaymentRequest,
@@ -169,7 +151,7 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 
 		return GetterUtil.getBoolean(
 			_execute(
-				_getHttpPost(
+				_getPostHttpOptions(
 					remoteCommercePaymentMethodConfiguration.
 						endpointAuthorizationToken(),
 					commercePaymentRequest,
@@ -190,7 +172,7 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 		return _toCommercePaymentResult(
 			commercePaymentRequest.getCommerceOrderId(),
 			_execute(
-				_getHttpPost(
+				_getPostHttpOptions(
 					remoteCommercePaymentMethodConfiguration.
 						endpointAuthorizationToken(),
 					commercePaymentRequest,
@@ -211,7 +193,7 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 		return _toCommercePaymentResult(
 			commercePaymentRequest.getCommerceOrderId(),
 			_execute(
-				_getHttpPost(
+				_getPostHttpOptions(
 					remoteCommercePaymentMethodConfiguration.
 						endpointAuthorizationToken(),
 					commercePaymentRequest,
@@ -232,7 +214,7 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 		return _toCommercePaymentResult(
 			commercePaymentRequest.getCommerceOrderId(),
 			_execute(
-				_getHttpPost(
+				_getPostHttpOptions(
 					remoteCommercePaymentMethodConfiguration.
 						endpointAuthorizationToken(),
 					commercePaymentRequest,
@@ -278,7 +260,7 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 
 		return GetterUtil.getBoolean(
 			_execute(
-				_getHttpGet(
+				_getGetHttpOptions(
 					remoteCommercePaymentMethodConfiguration.
 						endpointAuthorizationToken(),
 					remoteCommercePaymentMethodConfiguration.
@@ -350,7 +332,7 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 		return _toCommercePaymentResult(
 			commercePaymentRequest.getCommerceOrderId(),
 			_execute(
-				_getHttpPost(
+				_getPostHttpOptions(
 					remoteCommercePaymentMethodConfiguration.
 						endpointAuthorizationToken(),
 					commercePaymentRequest,
@@ -371,7 +353,7 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 		return _toCommercePaymentResult(
 			commercePaymentRequest.getCommerceOrderId(),
 			_execute(
-				_getHttpPost(
+				_getPostHttpOptions(
 					remoteCommercePaymentMethodConfiguration.
 						endpointAuthorizationToken(),
 					commercePaymentRequest,
@@ -392,7 +374,7 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 		return _toCommercePaymentResult(
 			commercePaymentRequest.getCommerceOrderId(),
 			_execute(
-				_getHttpPost(
+				_getPostHttpOptions(
 					remoteCommercePaymentMethodConfiguration.
 						endpointAuthorizationToken(),
 					commercePaymentRequest,
@@ -413,7 +395,7 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 		return _toCommercePaymentResult(
 			commercePaymentRequest.getCommerceOrderId(),
 			_execute(
-				_getHttpPost(
+				_getPostHttpOptions(
 					remoteCommercePaymentMethodConfiguration.
 						endpointAuthorizationToken(),
 					commercePaymentRequest,
@@ -433,7 +415,7 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 
 		return GetterUtil.getBoolean(
 			_execute(
-				_getHttpPost(
+				_getPostHttpOptions(
 					remoteCommercePaymentMethodConfiguration.
 						endpointAuthorizationToken(),
 					commercePaymentRequest,
@@ -454,58 +436,12 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 		return _toCommercePaymentResult(
 			commercePaymentRequest.getCommerceOrderId(),
 			_execute(
-				_getHttpPost(
+				_getPostHttpOptions(
 					remoteCommercePaymentMethodConfiguration.
 						endpointAuthorizationToken(),
 					commercePaymentRequest,
 					remoteCommercePaymentMethodConfiguration.
 						voidTransactionEndpointURL())));
-	}
-
-	@Activate
-	protected void activate() {
-		HttpClientBuilder httpClientBuilder = HttpClients.custom();
-
-		_poolingHttpClientConnectionManager =
-			new PoolingHttpClientConnectionManager();
-
-		httpClientBuilder.setConnectionManager(
-			_poolingHttpClientConnectionManager);
-
-		_poolingHttpClientConnectionManager.setMaxTotal(20);
-		_poolingHttpClientConnectionManager.setValidateAfterInactivity(30000);
-
-		httpClientBuilder.useSystemProperties();
-
-		_closeableHttpClient = httpClientBuilder.build();
-
-		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
-
-		simpleFilterProvider.setFailOnUnknownId(false);
-
-		_objectMapper = new ObjectMapper();
-
-		_objectMapper.setFilterProvider(simpleFilterProvider);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_closeableHttpClient != null) {
-			try {
-				_closeableHttpClient.close();
-			}
-			catch (IOException ioException) {
-				_log.error("Unable to close client", ioException);
-			}
-
-			_closeableHttpClient = null;
-		}
-
-		if (_poolingHttpClientConnectionManager != null) {
-			_poolingHttpClientConnectionManager.close();
-
-			_poolingHttpClientConnectionManager = null;
-		}
 	}
 
 	protected CommerceOrder getCommerceOrder(long commerceOrderId)
@@ -537,85 +473,87 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 	}
 
 	protected String toContent(CommercePaymentRequest commercePaymentRequest)
-		throws JsonProcessingException, PortalException {
+		throws PortalException {
 
-		ObjectNode paymentRequestObjectNode = _objectMapper.createObjectNode();
-
-		paymentRequestObjectNode.put(
-			"amount", commercePaymentRequest.getAmount());
-		paymentRequestObjectNode.put(
-			"cancelUrl", commercePaymentRequest.getCancelUrl());
-
-		CommerceOrder commerceOrder = getCommerceOrder(
-			commercePaymentRequest.getCommerceOrderId());
-
-		paymentRequestObjectNode.putPOJO("order", _toOrder(commerceOrder));
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		Locale locale = commercePaymentRequest.getLocale();
 
-		paymentRequestObjectNode.put("locale", locale.toString());
+		jsonObject.put(
+			"amount", commercePaymentRequest.getAmount()
+		).put(
+			"cancelUrl", commercePaymentRequest.getCancelUrl()
+		).put(
+			"locale", locale.toString()
+		).put(
+			"order",
+			_toOrder(
+				getCommerceOrder(commercePaymentRequest.getCommerceOrderId()))
+		).put(
+			"returnUrl", commercePaymentRequest.getReturnUrl()
+		).put(
+			"transactionId", commercePaymentRequest.getTransactionId()
+		);
 
-		paymentRequestObjectNode.put(
-			"returnUrl", commercePaymentRequest.getReturnUrl());
-		paymentRequestObjectNode.put(
-			"transactionId", commercePaymentRequest.getTransactionId());
-
-		return _objectMapper.writeValueAsString(paymentRequestObjectNode);
+		return jsonObject.toJSONString();
 	}
 
-	private String _execute(HttpRequestBase httpRequestBase) throws Exception {
-		try (CloseableHttpResponse closeableHttpResponse =
-				_closeableHttpClient.execute(httpRequestBase)) {
+	private String _execute(Http.Options options) throws Exception {
+		String json = _http.URLtoString(options);
 
-			if (_log.isTraceEnabled()) {
-				StatusLine statusLine = closeableHttpResponse.getStatusLine();
+		if (_log.isDebugEnabled()) {
+			Http.Response response = options.getResponse();
 
-				int statusCode = statusLine.getStatusCode();
-
-				_log.trace("Server returned status " + statusCode);
-			}
-
-			return EntityUtils.toString(
-				closeableHttpResponse.getEntity(), StandardCharsets.UTF_8);
+			_log.debug("Response code " + response.getResponseCode());
 		}
+
+		return json;
 	}
 
-	private HttpGet _getHttpGet(
-			String authorizationToken, String uri, String... parameters)
+	private Http.Options _getGetHttpOptions(
+			String authorizationToken, String uriString, String... parameters)
 		throws Exception {
 
-		URIBuilder uriBuilder = new URIBuilder(uri);
-
-		for (int i = 0; i < parameters.length; i = i + 2) {
-			uriBuilder.addParameter(parameters[i], parameters[i + 1]);
-		}
-
-		HttpGet httpGet = new HttpGet(uriBuilder.build());
+		Http.Options options = new Http.Options();
 
 		if (Validator.isNotNull(authorizationToken)) {
-			httpGet.setHeader("Authorization", "token " + authorizationToken);
+			options.addHeader("Authorization", "token " + authorizationToken);
 		}
 
-		return httpGet;
+		URIBuilder.URIBuilderWrapper uriBuilderWrapper = URIBuilder.create(
+			uriString);
+
+		for (int i = 0; i < parameters.length; i = i + 2) {
+			uriBuilderWrapper.addParameter(parameters[i], parameters[i + 1]);
+		}
+
+		URI uri = uriBuilderWrapper.build();
+
+		options.setLocation(uri.toString());
+
+		return options;
 	}
 
-	private HttpPost _getHttpPost(
+	private Http.Options _getPostHttpOptions(
 			String authorizationToken,
 			CommercePaymentRequest commercePaymentRequest, String uri)
 		throws Exception {
 
-		HttpPost httpPost = new HttpPost(uri);
+		Http.Options options = new Http.Options();
 
-		HttpEntity stringEntity = new StringEntity(
-			toContent(commercePaymentRequest), ContentType.APPLICATION_JSON);
-
-		httpPost.setEntity(stringEntity);
+		options.setBody(
+			toContent(commercePaymentRequest), ContentTypes.APPLICATION_JSON,
+			StringPool.UTF8);
 
 		if (Validator.isNotNull(authorizationToken)) {
-			httpPost.setHeader("Authorization", "token " + authorizationToken);
+			options.addHeader("Authorization", "token " + authorizationToken);
 		}
 
-		return httpPost;
+		options.setLocation(uri);
+
+		options.setPost(true);
+
+		return options;
 	}
 
 	private String _getResource(Locale locale, String key) {
@@ -666,28 +604,24 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 			long commerceOrderId, String result)
 		throws Exception {
 
-		JsonNode jsonNode = _objectMapper.readTree(result);
+		JSONObject jsonObject = _jsonFactory.createJSONObject(result);
 
-		JsonNode authTransactionIdJsonNode = jsonNode.get("authTransactionId");
-		JsonNode newPaymentStatusJsonNode = jsonNode.get("newPaymentStatus");
-		JsonNode onlineRedirectJsonNode = jsonNode.get("onlineRedirect");
-		JsonNode redirectUrlJsonNode = jsonNode.get("redirectUrl");
-		JsonNode refundIdJsonNode = jsonNode.get("refundId");
-		JsonNode resultMessagesJsonNode = jsonNode.get("resultMessages");
-		JsonNode successJsonNode = jsonNode.get("success");
+		JSONArray resultMessagesJSONArray = jsonObject.getJSONArray(
+			"resultMessages");
 
 		List<String> resultMessages = new ArrayList<>();
 
-		resultMessagesJsonNode.forEach(
-			resultMessageJsonNode -> resultMessages.add(
-				resultMessageJsonNode.asText()));
+		for (int i = 0; i < resultMessagesJSONArray.length(); i++) {
+			resultMessages.add(resultMessagesJSONArray.getString(i));
+		}
 
 		return new CommercePaymentResult(
-			authTransactionIdJsonNode.textValue(), commerceOrderId,
-			newPaymentStatusJsonNode.asInt(),
-			onlineRedirectJsonNode.asBoolean(), redirectUrlJsonNode.asText(),
-			refundIdJsonNode.asText(), resultMessages,
-			successJsonNode.asBoolean());
+			jsonObject.getString("authTransactionId"), commerceOrderId,
+			jsonObject.getInt("newPaymentStatus"),
+			jsonObject.getBoolean("onlineRedirect"),
+			jsonObject.getString("redirectUrl"),
+			jsonObject.getString("refundId"), resultMessages,
+			jsonObject.getBoolean("success"));
 	}
 
 	private double _toDouble(BigDecimal value) {
@@ -760,7 +694,7 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 			_toDouble(commerceOrder.getSubtotalDiscountPercentageLevel3()));
 		order.setSubtotalDiscountPercentageLevel4(
 			_toDouble(commerceOrder.getSubtotalDiscountPercentageLevel4()));
-		order.setTaxAmount(_toDouble(commerceOrder.getTaxAmount()));
+		order.setTaxAmountValue(_toDouble(commerceOrder.getTaxAmount()));
 		order.setTotal(commerceOrder.getTotal());
 		order.setTotalDiscountAmount(
 			_toDouble(commerceOrder.getTotalDiscountAmount()));
@@ -812,8 +746,6 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RemoteCommercePaymentMethod.class);
 
-	private CloseableHttpClient _closeableHttpClient;
-
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
@@ -823,8 +755,10 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	private ObjectMapper _objectMapper;
-	private PoolingHttpClientConnectionManager
-		_poolingHttpClientConnectionManager;
+	@Reference
+	private Http _http;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

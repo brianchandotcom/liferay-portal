@@ -42,7 +42,7 @@ public class EditCommerceOrderTypeExternalReferenceCodeMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/order_type" +
+		return "/commerce_order_type" +
 			"/edit_commerce_order_type_external_reference_code.jsp";
 	}
 

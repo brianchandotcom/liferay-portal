@@ -1,7 +1,5 @@
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.10.3"
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.10.5.1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
@@ -19,8 +17,5 @@ dependencies {
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
-
-	testCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"
-	testCompile group: "org.mockito", name: "mockito-core", version: "1.10.8"
-	testCompile project(":core:petra:petra-string")
+	compileOnly project(":core:petra:petra-string")
 }

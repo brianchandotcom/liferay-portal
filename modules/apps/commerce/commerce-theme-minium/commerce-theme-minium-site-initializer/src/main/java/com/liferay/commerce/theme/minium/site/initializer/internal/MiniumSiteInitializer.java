@@ -175,6 +175,10 @@ public class MiniumSiteInitializer implements SiteInitializer {
 				_siteInitializerDependencyResolver =
 					siteInitializerDependencyResolver;
 			}
+			else {
+				_siteInitializerDependencyResolver =
+					_defaultSiteInitializerDependencyResolver;
+			}
 
 			ServiceContext serviceContext = getServiceContext(groupId);
 
@@ -1074,6 +1078,12 @@ public class MiniumSiteInitializer implements SiteInitializer {
 	@Reference
 	private DDMFormImporter _ddmFormImporter;
 
+	@Reference(
+		target = "(site.initializer.key=" + MiniumSiteInitializer.KEY + ")"
+	)
+	private SiteInitializerDependencyResolver
+		_defaultSiteInitializerDependencyResolver;
+
 	@Reference
 	private DLImporter _dlImporter;
 
@@ -1109,9 +1119,6 @@ public class MiniumSiteInitializer implements SiteInitializer {
 	@Reference
 	private SettingsFactory _settingsFactory;
 
-	@Reference(
-		target = "(site.initializer.key=" + MiniumSiteInitializer.KEY + ")"
-	)
 	private SiteInitializerDependencyResolver
 		_siteInitializerDependencyResolver;
 

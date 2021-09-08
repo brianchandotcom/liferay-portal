@@ -39,6 +39,10 @@ public class MiniumLayoutsInitializer {
 			_siteInitializerDependencyResolver =
 				siteInitializerDependencyResolver;
 		}
+		else {
+			_siteInitializerDependencyResolver =
+				_defaultSiteInitializerDependencyResolver;
+		}
 
 		_cpFileImporter.cleanLayouts(serviceContext);
 
@@ -62,12 +66,15 @@ public class MiniumLayoutsInitializer {
 	@Reference
 	private CPFileImporter _cpFileImporter;
 
-	@Reference
-	private JSONFactory _jsonFactory;
-
 	@Reference(
 		target = "(site.initializer.key=" + MiniumSiteInitializer.KEY + ")"
 	)
+	private SiteInitializerDependencyResolver
+		_defaultSiteInitializerDependencyResolver;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
 	private SiteInitializerDependencyResolver
 		_siteInitializerDependencyResolver;
 

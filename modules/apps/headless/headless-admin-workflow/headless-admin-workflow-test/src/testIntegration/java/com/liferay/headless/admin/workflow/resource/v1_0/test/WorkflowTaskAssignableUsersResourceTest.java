@@ -15,15 +15,114 @@
 package com.liferay.headless.admin.workflow.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.Assignee;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowDefinition;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowInstance;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTask;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTaskAssignableUser;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTaskAssignableUsers;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTaskIds;
+import com.liferay.headless.admin.workflow.resource.v1_0.test.util.AssigneeTestUtil;
+import com.liferay.headless.admin.workflow.resource.v1_0.test.util.ObjectReviewedTestUtil;
+import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowDefinitionTestUtil;
+import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowInstanceTestUtil;
+import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowTaskTestUtil;
+import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
-import org.junit.Ignore;
+import java.util.Arrays;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class WorkflowTaskAssignableUsersResourceTest
 	extends BaseWorkflowTaskAssignableUsersResourceTestCase {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseWorkflowTaskAssignableUsersResourceTestCase.setUpClass();
+
+		_workflowDefinition =
+			WorkflowDefinitionTestUtil.addWorkflowDefinition();
+	}
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_workflowInstance = WorkflowInstanceTestUtil.addWorkflowInstance(
+			testGroup.getGroupId(), ObjectReviewedTestUtil.addObjectReviewed(),
+			_workflowDefinition);
+	}
+
+	@Override
+	@Test
+	public void testPostWorkflowTaskAssignableUser() throws Exception {
+		WorkflowTask workflowTask = WorkflowTaskTestUtil.getWorkflowTask(
+			_workflowInstance.getId());
+
+		WorkflowTaskAssignableUsers workflowTaskAssignableUsers =
+			workflowTaskAssignableUsersResource.postWorkflowTaskAssignableUser(
+				new WorkflowTaskIds() {
+					{
+						workflowTaskIds = new Long[] {workflowTask.getId()};
+					}
+				});
+
+		Assert.assertNotNull(
+			workflowTaskAssignableUsers.getWorkflowTaskAssignableUsers());
+
+		WorkflowTaskAssignableUser workflowTaskAssignableUser =
+			(WorkflowTaskAssignableUser)ArrayUtil.getValue(
+				workflowTaskAssignableUsers.getWorkflowTaskAssignableUsers(),
+				0);
+
+		Assert.assertEquals(
+			workflowTask.getId(),
+			workflowTaskAssignableUser.getWorkflowTaskId());
+		Assert.assertEquals(
+			0,
+			ArrayUtil.getLength(
+				workflowTaskAssignableUser.getAssignableUsers()));
+
+		Assignee assignee = AssigneeTestUtil.addAssignee(testGroup);
+
+		workflowTaskAssignableUsers =
+			workflowTaskAssignableUsersResource.postWorkflowTaskAssignableUser(
+				new WorkflowTaskIds() {
+					{
+						workflowTaskIds = new Long[] {workflowTask.getId()};
+					}
+				});
+
+		workflowTaskAssignableUser =
+			(WorkflowTaskAssignableUser)ArrayUtil.getValue(
+				workflowTaskAssignableUsers.getWorkflowTaskAssignableUsers(),
+				0);
+
+		Assert.assertEquals(
+			workflowTask.getId(),
+			workflowTaskAssignableUser.getWorkflowTaskId());
+
+		Assignee[] assignableUsers =
+			workflowTaskAssignableUser.getAssignableUsers();
+
+		Assert.assertEquals(
+			Arrays.toString(assignableUsers), 1, assignableUsers.length);
+		Assert.assertEquals(assignee, assignableUsers[0]);
+	}
+
+	private static WorkflowDefinition _workflowDefinition;
+
+	private WorkflowInstance _workflowInstance;
+
 }

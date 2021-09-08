@@ -18,12 +18,14 @@ import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.taglib.util.IncludeTag;
 import com.liferay.template.taglib.internal.security.permission.resource.DDMTemplatePermission;
 import com.liferay.template.taglib.internal.servlet.ServletContextUtil;
@@ -199,10 +201,15 @@ public class TemplateSelectorTag extends IncludeTag {
 		try {
 			List<DDMTemplate> ddmTemplates =
 				DDMTemplateLocalServiceUtil.getTemplates(
+					themeDisplay.getCompanyId(),
 					PortalUtil.getCurrentAndAncestorSiteGroupIds(
 						PortletDisplayTemplateUtil.getDDMTemplateGroupId(
 							themeDisplay.getScopeGroupId())),
-					PortalUtil.getClassNameId(getClassName()), 0L);
+					new long[] {PortalUtil.getClassNameId(getClassName())},
+					new long[] {0L},
+					PortalUtil.getClassNameId(
+						PortletDisplayTemplate.class.getName()),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 			return ListUtil.filter(
 				ddmTemplates,

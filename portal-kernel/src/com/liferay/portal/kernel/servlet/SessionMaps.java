@@ -100,7 +100,7 @@ public class SessionMaps {
 	}
 
 	public void remove(HttpSession httpSession, String mapKey, String key) {
-		_updateMap(httpSession, mapKey, true, map -> map.remove(key));
+		_updateMap(httpSession, mapKey, false, map -> map.remove(key));
 	}
 
 	public int size(HttpSession httpSession, String mapKey) {

@@ -212,9 +212,11 @@ public class SessionMapsTest extends BaseSessionMapsTestCase {
 	public void testRemove() {
 		_sessionMaps.remove(httpSession, _MAP_KEY, KEY1);
 
-		assertSetCount(1);
+		assertSetCount(0);
 
 		_sessionMaps.add(httpSession, _MAP_KEY, KEY1, VALUE1);
+
+		assertSetCount(1);
 
 		Assert.assertEquals(
 			VALUE1, _sessionMaps.get(httpSession, _MAP_KEY, KEY1));
@@ -223,7 +225,7 @@ public class SessionMapsTest extends BaseSessionMapsTestCase {
 
 		Assert.assertNull(_sessionMaps.get(httpSession, _MAP_KEY, KEY1));
 
-		assertSetCount(3);
+		assertSetCount(2);
 	}
 
 	@Test

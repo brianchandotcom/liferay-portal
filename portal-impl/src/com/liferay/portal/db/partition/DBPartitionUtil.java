@@ -432,7 +432,7 @@ public class DBPartitionUtil {
 					try {
 						if (_isControlTable(dbInspector, query[2]) &&
 							!(CompanyThreadLocal.getCompanyId() ==
-							  _defaultCompanyId)) {
+								_defaultCompanyId)) {
 
 							return 0;
 						}
@@ -451,7 +451,7 @@ public class DBPartitionUtil {
 					try {
 						if (_isControlTable(dbInspector, query[4]) &&
 							!(CompanyThreadLocal.getCompanyId() ==
-							  _defaultCompanyId)) {
+								_defaultCompanyId)) {
 
 							return 0;
 						}

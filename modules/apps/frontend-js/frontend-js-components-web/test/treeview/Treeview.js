@@ -382,4 +382,58 @@ describe('Treeview', () => {
 			).toBe(0);
 		});
 	});
+
+	describe('Treeview controls icon css class in TreeviewCard', () => {
+		it('rendering the icon with the corresponding class if the class property is present', () => {
+			const nodes = [
+				{
+					icon: 'emoji',
+					iconCssClass: 'emoji-specific-class',
+					id: '1',
+					name: 'Belt',
+				},
+				{
+					icon: 'react',
+					iconCssClass: 'react-specific-class',
+					id: '2',
+					name: 'Clara',
+				},
+			];
+
+			const {container} = render(
+				<Treeview NodeComponent={Treeview.Card} nodes={nodes} />
+			);
+
+			expect(
+				container.getElementsByClassName('emoji-specific-class').length
+			).toBe(1);
+			expect(
+				container.getElementsByClassName('react-specific-class').length
+			).toBe(1);
+		});
+
+		it('rendering the icon if the class is not present or falsy', () => {
+			const nodes = [
+				{
+					icon: 'emoji',
+					iconCssClass: '',
+					id: '1',
+					name: 'Belt',
+				},
+				{
+					icon: 'react',
+					id: '2',
+					name: 'Clara',
+				},
+			];
+
+			const {container} = render(
+				<Treeview NodeComponent={Treeview.Card} nodes={nodes} />
+			);
+
+			expect(
+				container.getElementsByClassName('lexicon-icon').length
+			).toBe(2);
+		});
+	});
 });

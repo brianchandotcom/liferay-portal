@@ -323,11 +323,52 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9103 | Test Summary: [AC] Properties created when no data source was connected, and then the admin connect data sources to workspace"
-	@ignore = "true"
 	@priority = "3"
 	test CreatePropertiesWhenNoDataSourceIsConnected {
+		task ("Add a new property on AC") {
+		ACUtils.launchAC();
 
-		// TODO LRAC-9103 CreatePropertiesWhenNoDataSourceIsConnected pending implementation
+		ACNavigation.goToSettings();
+
+		ACSettings.goToProperties();
+
+		ACProperties.addNewProperty(propertyName = "Name of Property");
+
+		}
+
+		task ("Go to Properties and Assert Property is Created") {
+		ACSettings.goToProperties();
+
+		ACUtils.assertItemsName(itemList = "Name of Property");
+
+		}
+
+		task ("Go to Data Sources and Assert No Data Sources is Active") {
+		ACSettings.goToDataSources();
+
+		AssertElementNotPresent(
+			dsStatus = "Active",
+			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_STATUS",
+			value1 = "Active");
+
+		}
+		task ("Connect AC to DXP") {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+		}
+
+		task ("Assert Data Source is Active") {
+
+		ACUtils.launchAC();
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToDataSources();
+
+		AssertElementPresent(
+			dsStatus = "Active",
+			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_STATUS");
+		}
 
 	}
 

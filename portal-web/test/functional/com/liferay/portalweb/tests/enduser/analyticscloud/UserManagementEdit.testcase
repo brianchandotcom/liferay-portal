@@ -23,19 +23,19 @@ definition {
 	@description = "Automation ID: LRAC-9062 | Test Summary: Edit button to manage user permissions"
 	@priority = "5"
 	test CanEditButtonToManageUserPermissions {
-        task ("Go to User Management in Settings"){
-            ACNavigation.goToSettings();
+		task ("Go to User Management in Settings") {
+			ACNavigation.goToSettings();
 
-            ACSettings.goToUserManagement();
-        }
+			ACSettings.goToUserManagement();
+		}
 
-        task("Add User"){
-            ACSettings.addUser(userInvite = "ac@liferay.com");
+		task ("Add User") {
+			ACSettings.addUser(userInvite = "ac@liferay.com");
 
-            ACSettings.goToDataSources();
+			ACSettings.goToDataSources();
 
-            ACSettings.goToUserManagement();
-        }
+			ACSettings.goToUserManagement();
+		}
 
 		task ("Change and assert user permission") {
 			ACSettings.changeUserRole(
@@ -43,24 +43,24 @@ definition {
 				permissionType = "Member",
 				userEmail = "ac@liferay.com");
 
-        	ACSettings.assertUserPermission(
+			ACSettings.assertUserPermission(
 				permissionType = "Administrator",
 				userEmail = "ac@liferay.com");
 		}
 
-        task ("change and assert user permission ") {
-            ACSettings.changeMultipleUsersPermissions(
+		task ("change and assert user permission ") {
+			ACSettings.changeMultipleUsersPermissions(
 				permissionType = "Member",
 				userEmail = "ac@liferay.com");
 
-        	ACSettings.assertUserPermission(
+			ACSettings.assertUserPermission(
 				permissionType = "Member",
-				userEmail = "ac@liferay.com");  
-        }
+				userEmail = "ac@liferay.com");
+		}
 
-        task("Delete Pending All Users"){
-            ACSettings.deletePendingAllUsers();
-        }
+		task ("Delete Pending All Users") {
+			ACSettings.deletePendingAllUsers();
+		}
 	}
 
 }

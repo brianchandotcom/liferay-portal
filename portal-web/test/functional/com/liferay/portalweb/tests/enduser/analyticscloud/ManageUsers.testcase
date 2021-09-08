@@ -161,8 +161,8 @@ definition {
 				ACSettings.assertUserListEmail(userEmail = "${user}");
 			}
 		}
-		
-		task("Delete Pending All Users"){
+
+		task ("Delete Pending All Users") {
 			ACSettings.deletePendingAllUsers();
 		}
 	}

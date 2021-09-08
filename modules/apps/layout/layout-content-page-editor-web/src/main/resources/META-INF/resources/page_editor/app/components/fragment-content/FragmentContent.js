@@ -280,48 +280,65 @@ const FragmentContent = ({
 
 	return (
 		<>
-			<UnsafeHTML
-				className={classNames(
-					className,
-					'page-editor__fragment-content',
-					{
-						'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
-						[`mb-${marginBottom}`]:
-							isValidSpacingOption(marginBottom) && !withinTopper,
-						[`ml-${marginLeft}`]:
-							isValidSpacingOption(marginLeft) && !withinTopper,
-						[`mr-${marginRight}`]:
-							isValidSpacingOption(marginRight) && !withinTopper,
-						[`mt-${marginTop}`]:
-							isValidSpacingOption(marginTop) && !withinTopper,
-						[`pb-${paddingBottom}`]: isValidSpacingOption(
-							paddingBottom
-						),
-						[`pl-${paddingLeft}`]: isValidSpacingOption(
-							paddingLeft
-						),
-						[`pr-${paddingRight}`]: isValidSpacingOption(
-							paddingRight
-						),
-						[`pt-${paddingTop}`]: isValidSpacingOption(paddingTop),
-						[textAlign
-							? textAlign.startsWith('text-')
-								? textAlign
-								: `text-${textAlign}`
-							: '']: textAlign,
-					}
-				)}
-				contentRef={elementRef}
-				getPortals={getPortals}
-				globalContext={globalContext}
-				id={elementId}
-				markup={content}
-				onRender={withinTopper ? onRender : () => {}}
-				style={style}
+			<FragmentContentInteractionsFilter
+				editables={editables}
+				fragmentEntryLinkId={fragmentEntryLinkId}
+				itemId={item.itemId}
+			>
+				<UnsafeHTML
+					className={classNames(
+						className,
+						'page-editor__fragment-content',
+						{
+							'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
+							[`mb-${marginBottom}`]:
+								isValidSpacingOption(marginBottom) &&
+								!withinTopper,
+							[`ml-${marginLeft}`]:
+								isValidSpacingOption(marginLeft) &&
+								!withinTopper,
+							[`mr-${marginRight}`]:
+								isValidSpacingOption(marginRight) &&
+								!withinTopper,
+							[`mt-${marginTop}`]:
+								isValidSpacingOption(marginTop) &&
+								!withinTopper,
+							[`pb-${paddingBottom}`]: isValidSpacingOption(
+								paddingBottom
+							),
+							[`pl-${paddingLeft}`]: isValidSpacingOption(
+								paddingLeft
+							),
+							[`pr-${paddingRight}`]: isValidSpacingOption(
+								paddingRight
+							),
+							[`pt-${paddingTop}`]: isValidSpacingOption(
+								paddingTop
+							),
+							[textAlign
+								? textAlign.startsWith('text-')
+									? textAlign
+									: `text-${textAlign}`
+								: '']: textAlign,
+						}
+					)}
+					contentRef={elementRef}
+					getPortals={getPortals}
+					globalContext={globalContext}
+					id={elementId}
+					markup={content}
+					onRender={withinTopper ? onRender : () => {}}
+					style={style}
+				/>
+				{backgroundImageValue.mediaQueries ? (
+					<style>{backgroundImageValue.mediaQueries}</style>
+				) : null}
+			</FragmentContentInteractionsFilter>
+
+			<FragmentContentProcessor
+				editables={editables}
+				fragmentEntryLinkId={fragmentEntryLinkId}
 			/>
-			{backgroundImageValue.mediaQueries ? (
-				<style>{backgroundImageValue.mediaQueries}</style>
-			) : null}
 		</>
 	);
 };

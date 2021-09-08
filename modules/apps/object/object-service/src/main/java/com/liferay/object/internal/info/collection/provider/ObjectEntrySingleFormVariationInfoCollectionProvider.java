@@ -45,11 +45,11 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -232,27 +232,35 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		if (Objects.equals(objectField.getType(), "Boolean")) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				serviceContext.getLocale(), getClass());
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			serviceContext.getLocale(), getClass());
 
-			return ListUtil.fromArray(
+		List<SelectInfoFieldType.Option> options = new ArrayList<>();
+
+		options.add(
+			new SelectInfoFieldType.Option(
+				LanguageUtil.get(resourceBundle, "choose-an-option"), ""));
+
+		if (Objects.equals(objectField.getType(), "Boolean")) {
+			options.add(
 				new SelectInfoFieldType.Option(
-					LanguageUtil.get(resourceBundle, "true"), "true"),
+					LanguageUtil.get(resourceBundle, "true"), "true"));
+			options.add(
 				new SelectInfoFieldType.Option(
 					LanguageUtil.get(resourceBundle, "false"), "false"));
 		}
 		else if (objectField.getListTypeDefinitionId() != 0) {
-			return TransformUtil.transform(
-				_listTypeEntryLocalService.getListTypeEntries(
-					objectField.getListTypeDefinitionId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS),
-				listTypeEntry -> new SelectInfoFieldType.Option(
-					listTypeEntry.getName(serviceContext.getLocale()),
-					listTypeEntry.getKey()));
+			options.addAll(
+				TransformUtil.transform(
+					_listTypeEntryLocalService.getListTypeEntries(
+						objectField.getListTypeDefinitionId(),
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					listTypeEntry -> new SelectInfoFieldType.Option(
+						listTypeEntry.getName(serviceContext.getLocale()),
+						listTypeEntry.getKey())));
 		}
 
-		return null;
+		return options;
 	}
 
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;

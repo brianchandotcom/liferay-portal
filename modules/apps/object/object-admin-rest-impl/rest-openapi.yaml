@@ -147,6 +147,10 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
                 - in: header
                   name: Accept-Language
                   schema:

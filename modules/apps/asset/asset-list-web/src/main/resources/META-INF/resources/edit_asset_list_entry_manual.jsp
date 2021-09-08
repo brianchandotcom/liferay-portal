@@ -17,10 +17,19 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
 String backURL = ParamUtil.getString(request, "backURL");
 
 if (Validator.isNotNull(backURL)) {
 	portletDisplay.setURLBack(backURL);
+}
+else if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	backURL = portletURL.toString();
+}
+else {
+	backURL = redirect;
 }
 %>
 

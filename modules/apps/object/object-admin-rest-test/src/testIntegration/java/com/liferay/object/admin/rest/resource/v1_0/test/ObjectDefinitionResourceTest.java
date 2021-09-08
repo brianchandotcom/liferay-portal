@@ -128,7 +128,7 @@ public class ObjectDefinitionResourceTest
 					{
 						setLabel(Collections.singletonMap("en_US", "Column"));
 						setName("column");
-						setType(ObjectField.Type.valueOf("String"));
+						setType(ObjectField.Type.create("String"));
 					}
 				}
 			});

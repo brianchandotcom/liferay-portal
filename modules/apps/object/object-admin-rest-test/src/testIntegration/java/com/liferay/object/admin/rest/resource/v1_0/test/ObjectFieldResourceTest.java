@@ -81,7 +81,7 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 		objectField.setLabel(
 			Collections.singletonMap("en-US", "a" + objectField.getName()));
 		objectField.setName("a" + objectField.getName());
-		objectField.setType(ObjectField.Type.valueOf("String"));
+		objectField.setType(ObjectField.Type.create("String"));
 
 		return objectField;
 	}

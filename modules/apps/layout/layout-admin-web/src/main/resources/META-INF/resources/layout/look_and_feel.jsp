@@ -87,7 +87,7 @@ if ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry
 			%>
 
 			<clay:content-col
-				cssClass="mr-4"
+				cssClass='<%= (masterLayoutPageTemplateEntry == null) ? "hide" : "mr-4" %>'
 			>
 				<clay:button
 					additionalProps='<%=
@@ -97,7 +97,6 @@ if ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry
 							"editMasterLayoutURL", editMasterLayoutURL
 						).build()
 					%>'
-					cssClass='<%= (masterLayoutPageTemplateEntry == null) ? "hide" : StringPool.BLANK %>'
 					displayType="secondary"
 					id='<%= liferayPortletResponse.getNamespace() + "editMasterLayoutButton" %>'
 					label="edit-master"

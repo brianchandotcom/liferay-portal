@@ -65,18 +65,16 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 					preparedStatement3.setLong(2, structureVersionId);
 					preparedStatement3.setString(3, "property");
 
-					try (ResultSet resultSet2 =
-							preparedStatement3.executeQuery()) {
+					ResultSet resultSet2 = preparedStatement3.executeQuery();
 
-						while (resultSet2.next()) {
-							preparedStatement2.setLong(
-								1, resultSet2.getLong("fieldId"));
-							preparedStatement2.setLong(2, storageId);
-							preparedStatement2.setLong(3, structureVersionId);
-							preparedStatement2.setString(4, "content");
+					while (resultSet2.next()) {
+						preparedStatement2.setLong(
+							1, resultSet2.getLong("fieldId"));
+						preparedStatement2.setLong(2, storageId);
+						preparedStatement2.setLong(3, structureVersionId);
+						preparedStatement2.setString(4, "content");
 
-							preparedStatement2.addBatch();
-						}
+						preparedStatement2.addBatch();
 					}
 				}
 			}

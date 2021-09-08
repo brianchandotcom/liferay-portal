@@ -87,6 +87,97 @@ components:
                 type:
                     enum: [BigDecimal, Boolean, Date, Double, Integer, Long, String]
                     type: string
+        ObjectLayout:
+            properties:
+                dateCreated:
+                    format: date
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date
+                    readOnly: true
+                    type: string
+                defaultObjectLayout:
+                    type: boolean
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    additionalProperties:
+                        type: string
+                    type: object
+                objectDefinitionId:
+                    format: int64
+                    type: integer
+                objectLayoutTabs:
+                    items:
+                        $ref: "#/components/schemas/ObjectLayoutTab"
+                    type: array
+        ObjectLayoutBox:
+            properties:
+                collapsable:
+                    type: boolean
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    additionalProperties:
+                        type: string
+                    type: object
+                objectLayoutRows:
+                    items:
+                        $ref: "#/components/schemas/ObjectLayoutBoxRow"
+                    type: array
+                priority:
+                    format: int32
+                    type: integer
+        ObjectLayoutColumn:
+            properties:
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                objectFieldId:
+                    format: int64
+                    type: integer
+                priority:
+                    format: int32
+                    type: integer
+        ObjectLayoutRow:
+            properties:
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                objectLayoutColumns:
+                    items:
+                        $ref: "#/components/schemas/ObjectLayoutBoxColumn"
+                    type: array
+                priority:
+                    format: int32
+                    type: integer
+        ObjectLayoutTab:
+            properties:
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    additionalProperties:
+                        type: string
+                    type: object
+                objectLayoutBoxes:
+                    items:
+                        $ref: "#/components/schemas/ObjectLayoutBox"
+                    type: array
+                objectRelationshipId:
+                    format: int64
+                    type: integer
+                priority:
+                    format: int32
+                    type: integer
         ObjectRelationship:
             properties:
                 actions:
@@ -343,6 +434,69 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectField"
             tags: ["ObjectField"]
+    "/object-definitions/{objectDefinitionId}/object-layouts":
+        get:
+            operationId: getObjectDefinitionObjectLayoutsPage
+            parameters:
+                - in: path
+                  name: objectDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ObjectLayout"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ObjectLayout"
+                                type: array
+            tags: ["ObjectLayout"]
+        post:
+            operationId: postObjectDefinitionObjectLayout
+            parameters:
+                - in: path
+                  name: objectDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectLayout"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectLayout"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectLayout"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectLayout"
+            tags: ["ObjectLayout"]
     "/object-definitions/{objectDefinitionId}/object-relationships":
         get:
             operationId: getObjectDefinitionObjectRelationshipsPage
@@ -507,3 +661,50 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectField"
             tags: ["ObjectField"]
+    "/object-layouts/{objectLayoutId}":
+        get:
+            operationId: getObjectLayout
+            parameters:
+                - in: path
+                  name: objectLayoutId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectLayout"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectLayout"
+            tags: ["ObjectLayout"]
+        put:
+            operationId: putObjectLayout
+            parameters:
+                - in: path
+                  name: objectLayoutId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectLayout"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectLayout"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectLayout"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectLayout"
+            tags: ["ObjectLayout"]

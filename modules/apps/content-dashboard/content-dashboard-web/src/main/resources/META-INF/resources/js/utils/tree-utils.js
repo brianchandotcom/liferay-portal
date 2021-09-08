@@ -174,11 +174,7 @@ export const selectedDataOutputTransfomer = ({
 	data,
 	mandatoryFieldsForFiltering,
 }) => {
-	if (!data.length) {
-		return;
-	}
-
-	if (mandatoryFieldsForFiltering.length > 1) {
+	if (!data.length || mandatoryFieldsForFiltering.length > 1) {
 		return data;
 	}
 

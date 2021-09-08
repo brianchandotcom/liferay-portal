@@ -231,7 +231,7 @@
 							</clay:content-col>
 
 							<clay:content-col
-								cssClass="component-action inline-item-after justify-content-end"
+								cssClass="inline-item-after justify-content-end"
 							>
 
 								<%
@@ -239,6 +239,7 @@
 								%>
 
 								<clay:dropdown-actions
+									cssClass="component-action"
 									dropdownItems="<%= assetVocabularyActionDropdownItemsProvider.getActionDropdownItems(vocabulary) %>"
 									propsTransformer="js/VocabularyActionDropdownPropsTransformer"
 								/>

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.template">
+	<namespace>Template</namespace>
+	<entity local-service="true" name="TemplateEntry" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="templateEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="infoItemClassName" type="String" />
+		<column name="infoItemFormVariationKey" type="String" />
+		<column name="DDMTemplateId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="DDMTemplateId" return-type="TemplateEntry">
+			<finder-column name="DDMTemplateId" />
+		</finder>
+		<finder name="G_I" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="infoItemClassName" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
+</service-builder>

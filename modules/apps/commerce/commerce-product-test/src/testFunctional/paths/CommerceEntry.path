@@ -593,7 +593,7 @@
 	<td>//label[contains(.,'Custom Color')]//..//input[contains(@aria-label,'Color selection')]</td>
 	<td></td>
 </tr>
-<tr>	
+<tr>
 	<td>DIAGRAM_ZOOM_SELECT</td>
 	<td>//select[contains(@aria-label,'Select Label')]</td>
 	<td></td>

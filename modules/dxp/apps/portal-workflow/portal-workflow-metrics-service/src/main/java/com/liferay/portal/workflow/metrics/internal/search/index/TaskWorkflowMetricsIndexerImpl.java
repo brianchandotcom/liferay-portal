@@ -346,15 +346,18 @@ public class TaskWorkflowMetricsIndexerImpl
 				).language(
 					"painless"
 				).putParameter(
-					"assigneeGroupIds", assignmentGroupIds
-				).putParameter(
-					"assigneeIds", assignmentIds
-				).putParameter(
-					"assigneeName", _getAssigneeName(assignments)
-				).putParameter(
-					"assigneeType", assignmentType
-				).putParameter(
-					"taskId", taskId
+					"task",
+					HashMapBuilder.<String, Object>put(
+						"assigneeGroupIds", assignmentGroupIds
+					).put(
+						"assigneeIds", assignmentIds
+					).put(
+						"assigneeName", _getAssigneeName(assignments)
+					).put(
+						"assigneeType", assignmentType
+					).put(
+						"taskId", taskId
+					).build()
 				).scriptType(
 					ScriptType.INLINE
 				);

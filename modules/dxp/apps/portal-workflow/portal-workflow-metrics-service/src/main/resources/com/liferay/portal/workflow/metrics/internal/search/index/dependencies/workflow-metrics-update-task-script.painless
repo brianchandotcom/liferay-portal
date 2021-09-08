@@ -1,10 +1,10 @@
 if (ctx._source.containsKey("tasks")) {
-	def task = ctx._source.tasks.find(task -> task.taskId == params.taskId);
+	def task = ctx._source.tasks.find(task -> task.taskId == params.task.taskId);
 
 	if (task != null) {
-		task.assigneeGroupIds = params.assigneeGroupIds;
-		task.assigneeIds = params.assigneeIds;
-		task.assigneeName = params.assigneeName;
-		task.assigneeType = params.assigneeType;
+		task.assigneeGroupIds = params.task.assigneeGroupIds;
+		task.assigneeIds = params.task.assigneeIds;
+		task.assigneeName = params.task.assigneeName;
+		task.assigneeType = params.task.assigneeType;
 	}
 }

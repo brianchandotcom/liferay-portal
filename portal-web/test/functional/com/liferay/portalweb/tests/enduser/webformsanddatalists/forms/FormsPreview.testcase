@@ -888,7 +888,7 @@ definition {
 			fieldValue = "123");
 	}
 
-	@description = "Verify that a rule with an (Is not equal to) condition can be previewed"
+	@description = "Verify that a rule with an (Is Not Equal To) condition can be previewed"
 	@priority = "5"
 	test IsNotEqualToRuleCanBePreviewed {
 		property forms.functional = "true";
@@ -914,7 +914,7 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
 			conditionFieldValue = "Test",
-			conditionOperator = "Is not equal to",
+			conditionOperator = "Is Not Equal To",
 			conditionRowNumber = "1",
 			conditionValueType = "Value");
 

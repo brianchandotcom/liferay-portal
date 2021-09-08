@@ -462,7 +462,7 @@ definition {
 			fieldValue = "");
 	}
 
-	@description = "Verify that a Rule with 'Is greater than or equal to' condition is working fine on the numeric field"
+	@description = "Verify that a Rule with 'Is greater than or Equal To' condition is working fine on the numeric field"
 	@priority = "4"
 	test CanCreateAnIsGreaterThanOrEqualToRule {
 		property forms.functional = "true";
@@ -492,7 +492,7 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Numeric",
 			conditionFieldValue = "5",
-			conditionOperator = "Is greater than or equal to",
+			conditionOperator = "Is greater than or Equal To",
 			conditionRowNumber = "1",
 			conditionValueType = "Value");
 
@@ -508,7 +508,7 @@ definition {
 			actionTarget = "Paragraph",
 			conditionField = "Numeric",
 			conditionFieldConstant = "5",
-			conditionOperator = "Is greater than or equal to",
+			conditionOperator = "Is greater than or Equal To",
 			ruleNumber = "1");
 
 		FormsAdminNavigator.gotoFormBuilder();
@@ -606,7 +606,7 @@ definition {
 			fieldValue = "Test");
 	}
 
-	@description = "Verify that a Rule with 'Is less than or equal to' condition is working fine on the numeric field"
+	@description = "Verify that a Rule with 'Is less than or Equal To' condition is working fine on the numeric field"
 	@priority = "4"
 	test CanCreateAnIsLessThanOrEqualToRule {
 		property forms.functional = "true";
@@ -636,7 +636,7 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Numeric",
 			conditionFieldValue = "5",
-			conditionOperator = "Is less than or equal to",
+			conditionOperator = "Is less than or Equal To",
 			conditionRowNumber = "1",
 			conditionValueType = "Value");
 
@@ -651,7 +651,7 @@ definition {
 			action = "Show",
 			actionTarget = "Text",
 			conditionField = "Numeric",
-			conditionOperator = "Is less than or equal to",
+			conditionOperator = "Is less than or Equal To",
 			ruleNumber = "1");
 
 		FormsAdminNavigator.gotoFormBuilder();
@@ -866,7 +866,7 @@ definition {
 			fieldName = "${fieldNameDateField}");
 	}
 
-	@description = "Verify that a Rule with 'Is not Equal to' condition can be created"
+	@description = "Verify that a Rule with 'Is Not Equal To' condition can be created"
 	@priority = "4"
 	test CanCreateAnIsNotEqualToRule {
 		property forms.functional = "true";
@@ -886,7 +886,7 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
 			conditionFieldValue = "Test",
-			conditionOperator = "Is not equal to",
+			conditionOperator = "Is Not Equal To",
 			conditionRowNumber = "1",
 			conditionValueType = "Value");
 
@@ -901,7 +901,7 @@ definition {
 			action = "Require",
 			actionTarget = "Text",
 			conditionField = "Text",
-			conditionOperator = "Is not equal to",
+			conditionOperator = "Is Not Equal To",
 			ruleNumber = "1");
 
 		FormsAdminNavigator.gotoFormBuilder();

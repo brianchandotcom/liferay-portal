@@ -149,7 +149,7 @@ definition {
 			actionTarget = "3 Page 3",
 			conditionField = "Choose Your Destiny",
 			conditionFieldConstant = "Destiny 2",
-			conditionOperator = "equal to",
+			conditionOperator = "Equal To",
 			ruleNumber = "1");
 
 		FormRules.viewSummary(
@@ -157,7 +157,7 @@ definition {
 			actionTarget = "4 Page 4",
 			conditionField = "Choose Your Destiny",
 			conditionFieldConstant = "Destiny 3",
-			conditionOperator = "equal to",
+			conditionOperator = "Equal To",
 			ruleNumber = "2");
 	}
 

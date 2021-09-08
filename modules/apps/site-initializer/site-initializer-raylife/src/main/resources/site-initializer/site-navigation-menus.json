@@ -1,0 +1,19 @@
+[
+	{
+		"name": "Customer Portal Menu",
+		"pages": [
+			"dashboard",
+			"documents",
+			"policies",
+			"claims"
+		]
+	},
+	{
+		"name": "Public Menu",
+		"pages": [
+			"product",
+			"news",
+			"contact"
+		]
+	}
+]

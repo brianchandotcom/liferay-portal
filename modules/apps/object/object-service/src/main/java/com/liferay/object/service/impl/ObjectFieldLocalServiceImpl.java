@@ -29,9 +29,11 @@ import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -155,6 +157,10 @@ public class ObjectFieldLocalServiceImpl
 					objectField.getDBTableName(),
 					objectField.getDBColumnName()));
 		}
+
+		_resourceLocalService.deleteResource(
+			objectField.getCompanyId(), ObjectField.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, objectField.getObjectFieldId());
 
 		return objectField;
 	}
@@ -287,6 +293,11 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setRequired(required);
 		objectField.setType(type);
 
+		_resourceLocalService.addResources(
+			objectField.getCompanyId(), 0, objectField.getUserId(),
+			ObjectField.class.getName(), objectField.getObjectFieldId(), false,
+			true, true);
+
 		return objectFieldPersistence.update(objectField);
 	}
 
@@ -373,6 +384,10 @@ public class ObjectFieldLocalServiceImpl
 			"modifieddate", "status", "statusbyuserid", "statusbyusername",
 			"statusdate", "userid", "username"
 		});
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
+
 	private final Set<String> _types = SetUtil.fromArray(
 		new String[] {
 			"BigDecimal", "Blob", "Boolean", "Date", "Double", "Integer",

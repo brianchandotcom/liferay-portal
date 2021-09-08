@@ -126,7 +126,7 @@ components:
                     type: object
                 objectLayoutRows:
                     items:
-                        $ref: "#/components/schemas/ObjectLayoutBoxRow"
+                        $ref: "#/components/schemas/ObjectLayoutRow"
                     type: array
                 priority:
                     format: int32
@@ -151,7 +151,7 @@ components:
                     type: integer
                 objectLayoutColumns:
                     items:
-                        $ref: "#/components/schemas/ObjectLayoutBoxColumn"
+                        $ref: "#/components/schemas/ObjectLayoutColumn"
                     type: array
                 priority:
                     format: int32

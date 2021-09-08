@@ -93,11 +93,63 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8549 | Test Summary: Add segment using an organization property 'name'"
-	@ignore = "true"
 	@priority = "4"
 	test CanCreateSegmentUsingOrganizationPropertyName {
 
-		// TODO LRAC-8549 CanCreateSegmentUsingOrganizationPropertyName pending implementation
+		task ("Add user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add organization and add the user to the organization") {
+			JSONOrganization.addOrganization(organizationName = "Organization Name");
+
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Organization Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Connect to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Launch AC and enter in the new property") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new segment using the organization property Name") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+
+			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
+
+			ACSegments.addSegmentField(segmentField = "Name");
+
+			ACSegments.addOrganizationName(organizationName = "Test Name");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Assert Name is present in Segment Criteria") {
+			ACSegments.assertCriteriaTable(criteriaName = "Name");
+		}
+
+		task ("Assert Test Name is also present in segment criteria") {
+			ACSegments.assertCriteriaTable(criteriaName = "Test Name");
+		}
 
 	}
 

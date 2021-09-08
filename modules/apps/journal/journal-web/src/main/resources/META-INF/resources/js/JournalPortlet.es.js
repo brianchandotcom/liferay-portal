@@ -279,7 +279,27 @@ class JournalPortlet extends PortletBase {
 		this._cleanInputIfNeeded('titleMapAsXML');
 		this._cleanInputIfNeeded('descriptionMapAsXML');
 
+		const submitButtons = Array.from(
+			form.querySelectorAll(`${BUTTON_ROW_CLASS} button[type=submit]`)
+		);
+
+		submitButtons.forEach((button) => {
+			button.disabled = true;
+		});
+
 		submitForm(form);
+
+		// Enable buttons after the submit has been done.
+		// This is using a setTimeout to make sure that this code is executed
+		// after effectively submitting the form
+
+		Liferay.on('submitForm', () =>
+			setTimeout(() => {
+				submitButtons.forEach((button) => {
+					button.disabled = false;
+				});
+			})
+		);
 	}
 
 	/**

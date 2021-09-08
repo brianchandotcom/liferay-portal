@@ -59,7 +59,7 @@ public class BlogsCoverImageCaptionEditorConfigContributor
 			removePlugins = removePlugins + ",magicline,stylescombo,videoembed";
 		}
 		else {
-			removePlugins = "magicline";
+			removePlugins = "magicline,stylescombo,videoembed";
 		}
 
 		jsonObject.put(

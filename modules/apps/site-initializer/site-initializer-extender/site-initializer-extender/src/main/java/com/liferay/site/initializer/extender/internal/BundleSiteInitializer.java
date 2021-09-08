@@ -723,15 +723,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			String jsonCategory = _read(resourcePath);
+			String taxonomyCategoryString = _read(resourcePath);
 
 			TaxonomyCategory taxonomyCategory = TaxonomyCategory.toDTO(
-				jsonCategory);
+				taxonomyCategoryString);
 
 			if (taxonomyCategory == null) {
 				_log.error(
 					"Unable to transform taxonomy category from JSON: " +
-						jsonCategory);
+						taxonomyCategoryString);
 
 				continue;
 			}
@@ -745,18 +745,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 					parentCategoryId, serviceContext, taxonomyCategory);
 			}
 
-			String permissionsPath = StringUtil.replace(
+			String permissionsResourcePath = StringUtil.replace(
 				resourcePath, ".json", "-permissions.json");
 
 			_addTaxonomyCategoryPermissions(
-				taxonomyCategory.getId(), permissionsPath, serviceContext);
+				taxonomyCategory.getId(), permissionsResourcePath,
+				serviceContext);
 
-			String resourcePathCategories = StringUtil.replace(
+			String categoriesResourcePath = StringUtil.replace(
 				resourcePath, ".json", "/");
 
-			if (resourcePaths.contains(resourcePathCategories)) {
+			if (resourcePaths.contains(categoriesResourcePath)) {
 				_addTaxonomyCategories(
-					groupId, taxonomyCategory.getId(), resourcePathCategories,
+					groupId, taxonomyCategory.getId(), categoriesResourcePath,
 					serviceContext, vocabularyId);
 			}
 		}
@@ -775,10 +776,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		String jsonCategoryPermissions = _read(parentResourcePath);
+		String taxonomyCategoryPermissionsString = _read(parentResourcePath);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-			jsonCategoryPermissions);
+			taxonomyCategoryPermissionsString);
 
 		Permission[] permissions = JSONUtil.toArray(
 			jsonArray,
@@ -865,15 +866,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			String jsonVocabulary = _read(resourcePath);
+			String taxonomyVocabularyString = _read(resourcePath);
 
 			TaxonomyVocabulary taxonomyVocabulary = TaxonomyVocabulary.toDTO(
-				jsonVocabulary);
+				taxonomyVocabularyString);
 
 			if (taxonomyVocabulary == null) {
 				_log.error(
 					"Unable to transform taxonomy vocabulary from JSON: " +
-						jsonVocabulary);
+						taxonomyVocabularyString);
 
 				continue;
 			}

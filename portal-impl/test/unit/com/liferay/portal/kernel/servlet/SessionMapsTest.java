@@ -49,32 +49,34 @@ public class SessionMapsTest extends BaseSessionMapsTestCase {
 	@Test
 	public void testAdd() {
 		_sessionMaps.add(httpSession, _MAP_KEY, KEY1, VALUE1);
-
-		assertSetCount(1);
-
 		_sessionMaps.add(httpSession, _MAP_KEY, KEY2, VALUE2);
-
-		assertSetCount(2);
 
 		Assert.assertEquals(
 			VALUE1, _sessionMaps.get(httpSession, _MAP_KEY, KEY1));
 		Assert.assertEquals(
 			VALUE2, _sessionMaps.get(httpSession, _MAP_KEY, KEY2));
+
+		_sessionMaps.add(httpSession, _MAP_KEY, KEY1, VALUE3);
+		_sessionMaps.add(httpSession, _MAP_KEY, KEY2, VALUE3);
+
+		Assert.assertEquals(
+			VALUE3, _sessionMaps.get(httpSession, _MAP_KEY, KEY1));
+		Assert.assertEquals(
+			VALUE3, _sessionMaps.get(httpSession, _MAP_KEY, KEY2));
 	}
 
 	@Test
 	public void testClear() {
 		_sessionMaps.clear(httpSession, _MAP_KEY);
 
-		assertSetCount(0);
+		Assert.assertNull(_sessionMaps.get(httpSession, _MAP_KEY, KEY1));
 
 		_sessionMaps.add(httpSession, _MAP_KEY, KEY1, VALUE1);
 
-		assertSetCount(1);
+		Assert.assertNotNull(_sessionMaps.get(httpSession, _MAP_KEY, KEY1));
 
 		_sessionMaps.clear(httpSession, _MAP_KEY);
 
-		assertSetCount(2);
 		Assert.assertNull(_sessionMaps.get(httpSession, _MAP_KEY, KEY1));
 	}
 
@@ -84,8 +86,6 @@ public class SessionMapsTest extends BaseSessionMapsTestCase {
 			"SessionMaps should not contain " + KEY1,
 			_sessionMaps.contains(httpSession, _MAP_KEY, KEY1));
 
-		assertSetCount(0);
-
 		_sessionMaps.add(httpSession, _MAP_KEY, KEY1, VALUE1);
 
 		Assert.assertTrue(
@@ -94,23 +94,17 @@ public class SessionMapsTest extends BaseSessionMapsTestCase {
 		Assert.assertFalse(
 			"SessionMaps should not contain " + KEY2,
 			_sessionMaps.contains(httpSession, _MAP_KEY, KEY2));
-
-		assertSetCount(1);
 	}
 
 	@Test
 	public void testGet() {
 		Assert.assertNull(_sessionMaps.get(httpSession, _MAP_KEY, KEY1));
 
-		assertSetCount(0);
-
 		_sessionMaps.add(httpSession, _MAP_KEY, KEY1, VALUE1);
 
 		Assert.assertEquals(
 			VALUE1, _sessionMaps.get(httpSession, _MAP_KEY, KEY1));
 		Assert.assertNull(_sessionMaps.get(httpSession, _MAP_KEY, KEY2));
-
-		assertSetCount(1);
 	}
 
 	@Test
@@ -150,15 +144,11 @@ public class SessionMapsTest extends BaseSessionMapsTestCase {
 			"The map should be empty when it does not exist in session",
 			_sessionMaps.isEmpty(httpSession, _MAP_KEY));
 
-		assertSetCount(0);
-
 		_sessionMaps.add(httpSession, _MAP_KEY, KEY1, VALUE1);
 
 		Assert.assertFalse(
 			"The map should not be empty",
 			_sessionMaps.isEmpty(httpSession, _MAP_KEY));
-
-		assertSetCount(1);
 	}
 
 	@Test
@@ -168,8 +158,6 @@ public class SessionMapsTest extends BaseSessionMapsTestCase {
 		Assert.assertEquals(
 			Collections.emptyIterator(),
 			_sessionMaps.iterator(httpSession, _MAP_KEY));
-
-		assertSetCount(0);
 
 		Set<String> expectedKeys = new HashSet<>(
 			Arrays.asList(KEY1, KEY2, KEY3));
@@ -195,15 +183,11 @@ public class SessionMapsTest extends BaseSessionMapsTestCase {
 		}
 
 		Assert.assertEquals(expectedKeys, iteratorKeys);
-
-		assertSetCount(3);
 	}
 
 	@Test
 	public void testNullSession() {
 		_sessionMaps.add(null, _MAP_KEY, KEY1, VALUE1);
-
-		assertSetCount(0);
 
 		Assert.assertNull(null, _sessionMaps.get(null, _MAP_KEY, KEY1));
 	}
@@ -212,11 +196,9 @@ public class SessionMapsTest extends BaseSessionMapsTestCase {
 	public void testRemove() {
 		_sessionMaps.remove(httpSession, _MAP_KEY, KEY1);
 
-		assertSetCount(0);
+		Assert.assertNull(_sessionMaps.get(httpSession, _MAP_KEY, KEY1));
 
 		_sessionMaps.add(httpSession, _MAP_KEY, KEY1, VALUE1);
-
-		assertSetCount(1);
 
 		Assert.assertEquals(
 			VALUE1, _sessionMaps.get(httpSession, _MAP_KEY, KEY1));
@@ -224,15 +206,11 @@ public class SessionMapsTest extends BaseSessionMapsTestCase {
 		_sessionMaps.remove(httpSession, _MAP_KEY, KEY1);
 
 		Assert.assertNull(_sessionMaps.get(httpSession, _MAP_KEY, KEY1));
-
-		assertSetCount(2);
 	}
 
 	@Test
 	public void testSize() {
 		Assert.assertEquals(0, _sessionMaps.size(httpSession, _MAP_KEY));
-
-		assertSetCount(0);
 
 		_sessionMaps.add(httpSession, _MAP_KEY, KEY1, VALUE1);
 
@@ -241,8 +219,6 @@ public class SessionMapsTest extends BaseSessionMapsTestCase {
 		_sessionMaps.clear(httpSession, _MAP_KEY);
 
 		Assert.assertEquals(0, _sessionMaps.size(httpSession, _MAP_KEY));
-
-		assertSetCount(2);
 	}
 
 	private static final String _MAP_KEY = SessionMapsTest.class.getName();

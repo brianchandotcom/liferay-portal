@@ -57,11 +57,7 @@ public class SessionErrorsTest extends BaseSessionMapsTestCase {
 
 		SessionErrors.print(httpSession);
 
-		assertSetCount(0);
-
 		SessionErrors.clear(httpSession);
-
-		assertSetCount(0);
 
 		// Add
 
@@ -71,27 +67,27 @@ public class SessionErrorsTest extends BaseSessionMapsTestCase {
 		SessionErrors.add(
 			httpSession, HttpSessionInvocationHandler.class, VALUE3);
 
-		assertSetCount(4);
-
 		// Get
 
-		Assert.assertSame(KEY1, SessionErrors.get(httpSession, KEY1));
-		Assert.assertSame(VALUE2, SessionErrors.get(httpSession, KEY2));
+		Assert.assertEquals(KEY1, SessionErrors.get(httpSession, KEY1));
+		Assert.assertEquals(VALUE2, SessionErrors.get(httpSession, KEY2));
 		Assert.assertEquals(
 			SessionErrorsTest.class.getName(),
 			SessionErrors.get(httpSession, SessionErrorsTest.class));
-		Assert.assertSame(
+		Assert.assertEquals(
 			VALUE3,
 			SessionErrors.get(httpSession, HttpSessionInvocationHandler.class));
 		Assert.assertNull(SessionErrors.get(httpSession, KEY3));
 
-		assertSetCount(4);
-
 		SessionErrors.add(httpSession, KEY1, VALUE1);
 
-		Assert.assertSame(VALUE1, SessionErrors.get(httpSession, KEY1));
+		Assert.assertEquals(VALUE1, SessionErrors.get(httpSession, KEY1));
 
-		assertSetCount(5);
+		// Update
+
+		SessionErrors.add(httpSession, KEY2, VALUE3);
+
+		Assert.assertEquals(VALUE3, SessionErrors.get(httpSession, KEY2));
 
 		// Contains
 
@@ -107,13 +103,9 @@ public class SessionErrorsTest extends BaseSessionMapsTestCase {
 				}));
 		Assert.assertFalse(SessionErrors.contains(httpSession, KEY3));
 
-		assertSetCount(5);
-
 		// isEmpty
 
 		Assert.assertFalse(SessionErrors.isEmpty(httpSession));
-
-		assertSetCount(5);
 
 		// KeySet and iterator
 
@@ -134,19 +126,13 @@ public class SessionErrorsTest extends BaseSessionMapsTestCase {
 
 		Assert.assertTrue(addedKeys.isEmpty());
 
-		assertSetCount(5);
-
 		// Print
 
 		SessionErrors.print(httpSession);
 
-		assertSetCount(5);
-
 		// Size
 
 		Assert.assertEquals(4, SessionErrors.size(httpSession));
-
-		assertSetCount(5);
 
 		// Remove
 
@@ -162,13 +148,9 @@ public class SessionErrorsTest extends BaseSessionMapsTestCase {
 			SessionErrors.contains(
 				mockHttpServletRequest, SessionErrorsTest.class));
 
-		assertSetCount(6);
-
 		// Clear
 
 		SessionErrors.clear(httpSession);
-
-		assertSetCount(7);
 
 		Assert.assertTrue(SessionErrors.isEmpty(httpSession));
 	}

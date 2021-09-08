@@ -57,11 +57,7 @@ public class SessionMessagesTest extends BaseSessionMapsTestCase {
 
 		SessionMessages.print(httpSession);
 
-		assertSetCount(0);
-
 		SessionMessages.clear(httpSession);
-
-		assertSetCount(0);
 
 		// Add
 
@@ -71,28 +67,28 @@ public class SessionMessagesTest extends BaseSessionMapsTestCase {
 		SessionMessages.add(
 			httpSession, HttpSessionInvocationHandler.class, VALUE3);
 
-		assertSetCount(4);
-
 		// Get
 
-		Assert.assertSame(KEY1, SessionMessages.get(httpSession, KEY1));
-		Assert.assertSame(VALUE2, SessionMessages.get(httpSession, KEY2));
+		Assert.assertEquals(KEY1, SessionMessages.get(httpSession, KEY1));
+		Assert.assertEquals(VALUE2, SessionMessages.get(httpSession, KEY2));
 		Assert.assertEquals(
 			SessionMessagesTest.class.getName(),
 			SessionMessages.get(httpSession, SessionMessagesTest.class));
-		Assert.assertSame(
+		Assert.assertEquals(
 			VALUE3,
 			SessionMessages.get(
 				httpSession, HttpSessionInvocationHandler.class));
 		Assert.assertNull(SessionMessages.get(httpSession, KEY3));
 
-		assertSetCount(4);
-
 		SessionMessages.add(httpSession, KEY1, VALUE1);
 
-		Assert.assertSame(VALUE1, SessionMessages.get(httpSession, KEY1));
+		Assert.assertEquals(VALUE1, SessionMessages.get(httpSession, KEY1));
 
-		assertSetCount(5);
+		// Update
+
+		SessionErrors.add(httpSession, KEY2, VALUE3);
+
+		Assert.assertEquals(VALUE3, SessionErrors.get(httpSession, KEY2));
 
 		// Contains
 
@@ -109,13 +105,9 @@ public class SessionMessagesTest extends BaseSessionMapsTestCase {
 				}));
 		Assert.assertFalse(SessionMessages.contains(httpSession, KEY3));
 
-		assertSetCount(5);
-
 		// isEmpty
 
 		Assert.assertFalse(SessionMessages.isEmpty(httpSession));
-
-		assertSetCount(5);
 
 		// KeySet and iterator
 
@@ -136,19 +128,13 @@ public class SessionMessagesTest extends BaseSessionMapsTestCase {
 
 		Assert.assertTrue(addedKeys.isEmpty());
 
-		assertSetCount(5);
-
 		// Print
 
 		SessionMessages.print(httpSession);
 
-		assertSetCount(5);
-
 		// Size
 
 		Assert.assertEquals(4, SessionMessages.size(httpSession));
-
-		assertSetCount(5);
 
 		// Remove
 
@@ -165,13 +151,9 @@ public class SessionMessagesTest extends BaseSessionMapsTestCase {
 			SessionMessages.contains(
 				mockHttpServletRequest, SessionMessagesTest.class));
 
-		assertSetCount(6);
-
 		// Clear
 
 		SessionMessages.clear(httpSession);
-
-		assertSetCount(7);
 
 		Assert.assertTrue(SessionMessages.isEmpty(httpSession));
 	}

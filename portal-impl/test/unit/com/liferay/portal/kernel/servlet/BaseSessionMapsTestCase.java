@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.servlet;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.util.PortalImpl;
+import com.liferay.util.SerializableUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -26,7 +27,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
@@ -52,14 +52,6 @@ public abstract class BaseSessionMapsTestCase {
 	public void setUp() {
 		httpSessionInvocationHandler._attributes.clear();
 		httpSessionInvocationHandler._invalidated = false;
-		httpSessionInvocationHandler._setCount = 0;
-	}
-
-	protected void assertSetCount(int expectedSetCount) {
-		Assert.assertEquals(
-			"The session attribute should be set for " + expectedSetCount +
-				" times",
-			expectedSetCount, httpSessionInvocationHandler._setCount);
 	}
 
 	protected static final String KEY1 = "key1";
@@ -91,12 +83,15 @@ public abstract class BaseSessionMapsTestCase {
 			String methodName = method.getName();
 
 			if (methodName.equals("setAttribute")) {
-				_attributes.put((String)args[0], args[1]);
-
-				_setCount++;
+				_attributes.put(
+					(String)args[0], SerializableUtil.serialize(args[1]));
 			}
 			else if (methodName.equals("getAttribute")) {
-				return _attributes.get(args[0]);
+				Object result = _attributes.get(args[0]);
+
+				if (result != null) {
+					return SerializableUtil.deserialize((byte[])result);
+				}
 			}
 
 			return null;
@@ -108,7 +103,6 @@ public abstract class BaseSessionMapsTestCase {
 
 		private final Map<String, Object> _attributes = new HashMap<>();
 		private boolean _invalidated;
-		private int _setCount;
 
 	}
 

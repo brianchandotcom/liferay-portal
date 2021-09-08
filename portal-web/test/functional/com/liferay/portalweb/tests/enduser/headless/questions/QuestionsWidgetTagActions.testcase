@@ -40,6 +40,133 @@ definition {
 		}
 	}
 
+	@description = "Validate if the user can subscribe from the tag."
+	@priority = "4"
+	test CanSubscribeFromTag {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		JSONQuestions.addQuestionWithTag(
+			bodyField = "Content AddQuestion",
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			tagField = "tag",
+			titleField = "Title AddQuestion");
+
+		Questions.openToTagsTab(
+			layoutName = "questions-page",
+			siteURLKey = "guest");
+
+		Questions.subscribeFromTag();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		JSONQuestions.addQuestionWithTag(
+			bodyField = "Content AddQuestion New",
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			tagField = "tag",
+			titleField = "Title AddQuestion New",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewContent(
+			assetType = "message boards message",
+			contentBody = "Title AddQuestion New",
+			user = "userfn userln");
+
+		Notifications.navigateToContent(contentBody = "Title AddQuestion New");
+
+		Questions.viewDetailsTitle(questionTitle = "Title AddQuestion New");
+	}
+
+	@description = "Validate if the user can unsubscribe from the tag."
+	@priority = "4"
+	test CanUnsubscribeFromTag {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		JSONQuestions.addQuestionWithTag(
+			bodyField = "Content AddQuestion",
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			tagField = "tag",
+			titleField = "Title AddQuestion");
+
+		Questions.openToTagsTab(
+			layoutName = "questions-page",
+			siteURLKey = "guest");
+
+		Questions.subscribeFromTag();
+
+		Questions.unsubscribeFromTag();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		JSONQuestions.addQuestionWithTag(
+			bodyField = "Content AddQuestion New",
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			tagField = "tag",
+			titleField = "Title AddQuestion New",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Notifications.viewBadgeCount(notificationCount = "0");
+	}
+
 	@description = "Validate if when the user click in the tag of the Tags tab, the user is redirected to the questions that use this tag"
 	@priority = "3"
 	@refactordone

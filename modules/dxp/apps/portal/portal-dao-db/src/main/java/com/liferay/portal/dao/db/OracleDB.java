@@ -124,7 +124,7 @@ public class OracleDB extends BaseDB {
 			alterTableDropColumn(connection, tableName, tempColumnName + "2");
 
 			if (_log.isWarnEnabled()) {
-				_log.warn("Successfully and upgraded table " + tableName);
+				_log.warn("Successfully upgraded table " + tableName);
 			}
 		}
 	}

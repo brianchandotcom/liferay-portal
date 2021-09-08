@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USAGE_SINCE</td>
+	<td>//div[contains(@class,'overview-usage')][.//h3[contains(@class,'metric-name')][normalize-space(text())='${key_metricName}']]//span[contains(@class,'usage-since')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PLAN_NAME</td>
 	<td>//h4[contains(.,'Plans')]/..//div[contains(@class,'plan-name') and contains(.,'${key_planName}')]</td>
 	<td></td>

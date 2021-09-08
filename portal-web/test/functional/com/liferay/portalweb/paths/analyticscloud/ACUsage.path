@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USAGE_BAR</td>
+	<td>//div[contains(@class,'overview-usage')][.//h3[contains(@class,'metric-name')][normalize-space(text())='${key_metricName}']]//div[contains(@class,'bar')][@style]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USAGE_CURRENT_NUMBER</td>
 	<td>//div[contains(@class,'overview-usage')][.//h3[contains(@class,'metric-name')][normalize-space(text())='${key_metricName}']]//span[contains(@class,'metric-current')]</td>
 	<td></td>

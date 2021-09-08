@@ -203,6 +203,54 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9179 | Test Summary: Bar graph and percentage of individuals displays percentage of plan used."
+	@priority = "3"
+	test IndividualsCardShowOverviewUsageOfPlan {
+		task ("Sign in AC") {
+			ACUtils.launchAC();
+		}
+
+		task ("Navigate to Workspace Settings") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToWorkspace();
+		}
+
+		task ("Navigate to the Usage") {
+			ACSettings.goToUsage();
+		}
+
+		task ("View the current number on Individuals card not equals 0") {
+			var current = ACSettings.getCurrentNumber(metricName = "Individuals");
+
+			TestUtils.assertNotEquals(
+				actual = "${current}",
+				expected = "0");
+		}
+
+		task ("View the usage percentage on Individuals card not equals 0") {
+			var percentage = ACSettings.getUsagePercentage(metricName = "Individuals");
+
+			TestUtils.assertNotEquals(
+				actual = "${percentage}",
+				expected = "0%");
+		}
+
+		task ("View the oveview usage on Individuals card") {
+			ACSettings.assertOverviewUsage(
+				current = "${current}",
+				limit = "110,000",
+				metricName = "Individuals",
+				usageSince = "${percentage} since");
+
+			AssertAttributeValue(
+				attribute1 = "style",
+				key_metricName = "Individuals",
+				locator1 = "ACUsage#USAGE_BAR",
+				value1 = "width: ${percentage};");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8148 | Test Summary: Individuals usage update in real time"
 	@priority = "5"
 	test IndividualsUpdatesInRealTime {

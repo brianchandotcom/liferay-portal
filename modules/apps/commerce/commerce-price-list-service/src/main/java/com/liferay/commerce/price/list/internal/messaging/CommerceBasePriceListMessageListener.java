@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.price.list.internal.messaging;
 
-import com.liferay.commerce.constants.CommerceDestinationNames;
 import com.liferay.commerce.price.list.internal.helper.CommerceBasePriceListHelper;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
@@ -24,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "destination.name=" + CommerceDestinationNames.BASE_PRICE_LIST,
+	property = "destination.name=" + DestinationNames.COMMERCE_BASE_PRICE_LIST,
 	service = MessageListener.class
 )
 public class CommerceBasePriceListMessageListener extends BaseMessageListener {

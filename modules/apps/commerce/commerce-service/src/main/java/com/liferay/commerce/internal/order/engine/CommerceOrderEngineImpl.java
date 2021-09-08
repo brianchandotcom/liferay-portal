@@ -17,7 +17,6 @@ package com.liferay.commerce.internal.order.engine;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
-import com.liferay.commerce.constants.CommerceDestinationNames;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePaymentConstants;
@@ -59,6 +58,7 @@ import com.liferay.commerce.subscription.CommerceSubscriptionEntryHelperUtil;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.User;
@@ -461,7 +461,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 						));
 
 					MessageBusUtil.sendMessage(
-						CommerceDestinationNames.ORDER_STATUS, message);
+						DestinationNames.COMMERCE_ORDER_STATUS, message);
 
 					return null;
 				}

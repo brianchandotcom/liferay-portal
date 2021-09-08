@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.service.impl;
 
-import com.liferay.commerce.constants.CommerceDestinationNames;
 import com.liferay.commerce.constants.CommerceSubscriptionEntryConstants;
 import com.liferay.commerce.constants.CommerceSubscriptionNotificationConstants;
 import com.liferay.commerce.exception.CommerceSubscriptionEntryNextIterationDateException;
@@ -34,6 +33,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.User;
@@ -797,7 +797,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 						));
 
 					MessageBusUtil.sendMessage(
-						CommerceDestinationNames.SUBSCRIPTION_STATUS, message);
+						DestinationNames.COMMERCE_SUBSCRIPTION_STATUS, message);
 
 					return null;
 				}

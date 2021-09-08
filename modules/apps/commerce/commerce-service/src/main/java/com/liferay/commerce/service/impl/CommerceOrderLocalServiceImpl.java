@@ -18,7 +18,6 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.configuration.CommerceOrderConfiguration;
 import com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
-import com.liferay.commerce.constants.CommerceDestinationNames;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -63,6 +62,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -1960,7 +1960,7 @@ public class CommerceOrderLocalServiceImpl
 						));
 
 					MessageBusUtil.sendMessage(
-						CommerceDestinationNames.PAYMENT_STATUS, message);
+						DestinationNames.COMMERCE_PAYMENT_STATUS, message);
 
 					return null;
 				}

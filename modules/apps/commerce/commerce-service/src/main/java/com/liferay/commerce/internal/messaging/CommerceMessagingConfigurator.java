@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.internal.messaging;
 
-import com.liferay.commerce.constants.CommerceDestinationNames;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.Dictionary;
@@ -42,17 +42,17 @@ public class CommerceMessagingConfigurator {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_basePriceListServiceRegistration = _registerDestination(
-			bundleContext, CommerceDestinationNames.BASE_PRICE_LIST);
+			bundleContext, DestinationNames.COMMERCE_BASE_PRICE_LIST);
 		_orderStatusServiceRegistration = _registerDestination(
-			bundleContext, CommerceDestinationNames.ORDER_STATUS);
+			bundleContext, DestinationNames.COMMERCE_ORDER_STATUS);
 		_paymentStatusServiceRegistration = _registerDestination(
-			bundleContext, CommerceDestinationNames.PAYMENT_STATUS);
+			bundleContext, DestinationNames.COMMERCE_PAYMENT_STATUS);
 		_shipmentStatusServiceRegistration = _registerDestination(
-			bundleContext, CommerceDestinationNames.SHIPMENT_STATUS);
+			bundleContext, DestinationNames.COMMERCE_SHIPMENT_STATUS);
 		_stockQuantityServiceRegistration = _registerDestination(
-			bundleContext, CommerceDestinationNames.STOCK_QUANTITY);
+			bundleContext, DestinationNames.COMMERCE_STOCK_QUANTITY);
 		_subscriptionStatusServiceRegistration = _registerDestination(
-			bundleContext, CommerceDestinationNames.SUBSCRIPTION_STATUS);
+			bundleContext, DestinationNames.COMMERCE_SUBSCRIPTION_STATUS);
 	}
 
 	@Deactivate

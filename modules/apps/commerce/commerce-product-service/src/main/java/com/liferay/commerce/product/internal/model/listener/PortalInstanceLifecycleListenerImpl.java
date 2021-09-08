@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.internal.model.listener;
 
-import com.liferay.commerce.constants.CommerceDestinationNames;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -79,7 +79,7 @@ public class PortalInstanceLifecycleListenerImpl
 						commerceCatalog.getCommerceCatalogId()));
 
 				MessageBusUtil.sendMessage(
-					CommerceDestinationNames.BASE_PRICE_LIST, message);
+					DestinationNames.COMMERCE_BASE_PRICE_LIST, message);
 			}
 
 			FileEntry fileEntry =

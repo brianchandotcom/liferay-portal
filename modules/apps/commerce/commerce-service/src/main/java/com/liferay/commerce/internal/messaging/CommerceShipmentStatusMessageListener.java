@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.internal.messaging;
 
-import com.liferay.commerce.constants.CommerceDestinationNames;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -22,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "destination.name=" + CommerceDestinationNames.SHIPMENT_STATUS,
+	property = "destination.name=" + DestinationNames.COMMERCE_SHIPMENT_STATUS,
 	service = MessageListener.class
 )
 public class CommerceShipmentStatusMessageListener extends BaseMessageListener {

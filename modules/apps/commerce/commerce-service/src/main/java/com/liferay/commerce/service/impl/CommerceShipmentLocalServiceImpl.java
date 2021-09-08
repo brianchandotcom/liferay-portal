@@ -15,7 +15,6 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceAddressConstants;
-import com.liferay.commerce.constants.CommerceDestinationNames;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.exception.CommerceShipmentExpectedDateException;
 import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
@@ -30,6 +29,7 @@ import com.liferay.commerce.service.base.CommerceShipmentLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -708,7 +708,7 @@ public class CommerceShipmentLocalServiceImpl
 						JSONUtil.put("commerceShipmentId", commerceShipmentId));
 
 					MessageBusUtil.sendMessage(
-						CommerceDestinationNames.SHIPMENT_STATUS, message);
+						DestinationNames.COMMERCE_SHIPMENT_STATUS, message);
 
 					return null;
 				}

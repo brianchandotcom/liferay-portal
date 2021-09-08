@@ -124,6 +124,10 @@ public class ReadingTimeEntryPersistenceTest {
 
 		ReadingTimeEntry newReadingTimeEntry = _persistence.create(pk);
 
+		newReadingTimeEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		newReadingTimeEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newReadingTimeEntry.setUuid(RandomTestUtil.randomString());
 
 		newReadingTimeEntry.setGroupId(RandomTestUtil.nextLong());
@@ -145,6 +149,12 @@ public class ReadingTimeEntryPersistenceTest {
 		ReadingTimeEntry existingReadingTimeEntry =
 			_persistence.findByPrimaryKey(newReadingTimeEntry.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingReadingTimeEntry.getMvccVersion(),
+			newReadingTimeEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingReadingTimeEntry.getCtCollectionId(),
+			newReadingTimeEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingReadingTimeEntry.getUuid(), newReadingTimeEntry.getUuid());
 		Assert.assertEquals(
@@ -234,10 +244,10 @@ public class ReadingTimeEntryPersistenceTest {
 
 	protected OrderByComparator<ReadingTimeEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"ReadingTimeEntry", "uuid", true, "readingTimeEntryId", true,
-			"groupId", true, "companyId", true, "createDate", true,
-			"modifiedDate", true, "classNameId", true, "classPK", true,
-			"readingTime", true);
+			"ReadingTimeEntry", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "readingTimeEntryId", true, "groupId", true,
+			"companyId", true, "createDate", true, "modifiedDate", true,
+			"classNameId", true, "classPK", true, "readingTime", true);
 	}
 
 	@Test
@@ -541,6 +551,10 @@ public class ReadingTimeEntryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		ReadingTimeEntry readingTimeEntry = _persistence.create(pk);
+
+		readingTimeEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		readingTimeEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		readingTimeEntry.setUuid(RandomTestUtil.randomString());
 

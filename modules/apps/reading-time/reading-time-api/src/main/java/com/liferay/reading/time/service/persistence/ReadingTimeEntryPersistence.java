@@ -15,6 +15,7 @@
 package com.liferay.reading.time.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.reading.time.exception.NoSuchEntryException;
 import com.liferay.reading.time.model.ReadingTimeEntry;
 
@@ -33,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ReadingTimeEntryPersistence
-	extends BasePersistence<ReadingTimeEntry> {
+	extends BasePersistence<ReadingTimeEntry>, CTPersistence<ReadingTimeEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

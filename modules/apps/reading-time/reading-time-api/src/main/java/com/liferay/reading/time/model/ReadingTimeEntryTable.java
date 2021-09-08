@@ -33,6 +33,11 @@ public class ReadingTimeEntryTable extends BaseTable<ReadingTimeEntryTable> {
 	public static final ReadingTimeEntryTable INSTANCE =
 		new ReadingTimeEntryTable();
 
+	public final Column<ReadingTimeEntryTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<ReadingTimeEntryTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<ReadingTimeEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ReadingTimeEntryTable, Long> readingTimeEntryId =

@@ -2,6 +2,8 @@
 
 <model-hints>
 	<model name="com.liferay.reading.time.model.ReadingTimeEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="readingTimeEntryId" type="long" />
 		<field name="groupId" type="long" />

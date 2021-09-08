@@ -81,6 +81,7 @@ public class ReadingTimeEntryModelImpl
 	public static final String TABLE_NAME = "ReadingTimeEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
 		{"uuid_", Types.VARCHAR}, {"readingTimeEntryId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -92,6 +93,8 @@ public class ReadingTimeEntryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("readingTimeEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -104,7 +107,7 @@ public class ReadingTimeEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ReadingTimeEntry (uuid_ VARCHAR(75) null,readingTimeEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,readingTime LONG)";
+		"create table ReadingTimeEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,readingTimeEntryId LONG not null,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,readingTime LONG,primary key (readingTimeEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table ReadingTimeEntry";
 
@@ -186,6 +189,8 @@ public class ReadingTimeEntryModelImpl
 
 		ReadingTimeEntry model = new ReadingTimeEntryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setReadingTimeEntryId(soapModel.getReadingTimeEntryId());
 		model.setGroupId(soapModel.getGroupId());
@@ -350,6 +355,18 @@ public class ReadingTimeEntryModelImpl
 			attributeSetterBiConsumers =
 				new LinkedHashMap<String, BiConsumer<ReadingTimeEntry, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", ReadingTimeEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<ReadingTimeEntry, Long>)
+				ReadingTimeEntry::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", ReadingTimeEntry::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<ReadingTimeEntry, Long>)
+				ReadingTimeEntry::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", ReadingTimeEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -402,6 +419,36 @@ public class ReadingTimeEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -830,6 +877,8 @@ public class ReadingTimeEntryModelImpl
 	public Object clone() {
 		ReadingTimeEntryImpl readingTimeEntryImpl = new ReadingTimeEntryImpl();
 
+		readingTimeEntryImpl.setMvccVersion(getMvccVersion());
+		readingTimeEntryImpl.setCtCollectionId(getCtCollectionId());
 		readingTimeEntryImpl.setUuid(getUuid());
 		readingTimeEntryImpl.setReadingTimeEntryId(getReadingTimeEntryId());
 		readingTimeEntryImpl.setGroupId(getGroupId());
@@ -849,6 +898,10 @@ public class ReadingTimeEntryModelImpl
 	public ReadingTimeEntry cloneWithOriginalValues() {
 		ReadingTimeEntryImpl readingTimeEntryImpl = new ReadingTimeEntryImpl();
 
+		readingTimeEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		readingTimeEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		readingTimeEntryImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		readingTimeEntryImpl.setReadingTimeEntryId(
@@ -945,6 +998,10 @@ public class ReadingTimeEntryModelImpl
 	public CacheModel<ReadingTimeEntry> toCacheModel() {
 		ReadingTimeEntryCacheModel readingTimeEntryCacheModel =
 			new ReadingTimeEntryCacheModel();
+
+		readingTimeEntryCacheModel.mvccVersion = getMvccVersion();
+
+		readingTimeEntryCacheModel.ctCollectionId = getCtCollectionId();
 
 		readingTimeEntryCacheModel.uuid = getUuid();
 
@@ -1075,6 +1132,8 @@ public class ReadingTimeEntryModelImpl
 
 	}
 
+	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private long _readingTimeEntryId;
 	private long _groupId;
@@ -1115,6 +1174,8 @@ public class ReadingTimeEntryModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("readingTimeEntryId", _readingTimeEntryId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -1147,23 +1208,27 @@ public class ReadingTimeEntryModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("uuid_", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("readingTimeEntryId", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("groupId", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("readingTimeEntryId", 8L);
 
-		columnBitmasks.put("createDate", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("modifiedDate", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("classNameId", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("classPK", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("readingTime", 256L);
+		columnBitmasks.put("classNameId", 256L);
+
+		columnBitmasks.put("classPK", 512L);
+
+		columnBitmasks.put("readingTime", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

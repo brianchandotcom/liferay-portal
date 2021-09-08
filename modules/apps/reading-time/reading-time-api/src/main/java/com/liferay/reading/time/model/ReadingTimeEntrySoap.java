@@ -33,6 +33,8 @@ public class ReadingTimeEntrySoap implements Serializable {
 	public static ReadingTimeEntrySoap toSoapModel(ReadingTimeEntry model) {
 		ReadingTimeEntrySoap soapModel = new ReadingTimeEntrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setReadingTimeEntryId(model.getReadingTimeEntryId());
 		soapModel.setGroupId(model.getGroupId());
@@ -101,6 +103,22 @@ public class ReadingTimeEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setReadingTimeEntryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	public String getUuid() {
@@ -175,6 +193,8 @@ public class ReadingTimeEntrySoap implements Serializable {
 		_readingTime = readingTime;
 	}
 
+	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private long _readingTimeEntryId;
 	private long _groupId;

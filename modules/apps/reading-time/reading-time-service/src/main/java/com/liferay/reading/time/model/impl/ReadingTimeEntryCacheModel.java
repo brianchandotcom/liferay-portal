@@ -17,6 +17,7 @@ package com.liferay.reading.time.model.impl;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.reading.time.model.ReadingTimeEntry;
 
 import java.io.Externalizable;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class ReadingTimeEntryCacheModel
-	implements CacheModel<ReadingTimeEntry>, Externalizable {
+	implements CacheModel<ReadingTimeEntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,8 +49,9 @@ public class ReadingTimeEntryCacheModel
 		ReadingTimeEntryCacheModel readingTimeEntryCacheModel =
 			(ReadingTimeEntryCacheModel)object;
 
-		if (readingTimeEntryId ==
-				readingTimeEntryCacheModel.readingTimeEntryId) {
+		if ((readingTimeEntryId ==
+				readingTimeEntryCacheModel.readingTimeEntryId) &&
+			(mvccVersion == readingTimeEntryCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -59,14 +61,30 @@ public class ReadingTimeEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, readingTimeEntryId);
+		int hashCode = HashUtil.hash(0, readingTimeEntryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", readingTimeEntryId=");
 		sb.append(readingTimeEntryId);
@@ -92,6 +110,9 @@ public class ReadingTimeEntryCacheModel
 	@Override
 	public ReadingTimeEntry toEntityModel() {
 		ReadingTimeEntryImpl readingTimeEntryImpl = new ReadingTimeEntryImpl();
+
+		readingTimeEntryImpl.setMvccVersion(mvccVersion);
+		readingTimeEntryImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			readingTimeEntryImpl.setUuid("");
@@ -129,6 +150,9 @@ public class ReadingTimeEntryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		readingTimeEntryId = objectInput.readLong();
@@ -148,6 +172,10 @@ public class ReadingTimeEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -170,6 +198,8 @@ public class ReadingTimeEntryCacheModel
 		objectOutput.writeLong(readingTime);
 	}
 
+	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long readingTimeEntryId;
 	public long groupId;

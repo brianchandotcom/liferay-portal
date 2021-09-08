@@ -18,9 +18,11 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -39,8 +41,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ReadingTimeEntryModel
-	extends AttachedModel, BaseModel<ReadingTimeEntry>, ShardedModel,
-			StagedModel, TrashedModel {
+	extends AttachedModel, BaseModel<ReadingTimeEntry>,
+			CTModel<ReadingTimeEntry>, MVCCModel, ShardedModel, StagedModel,
+			TrashedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -53,6 +56,7 @@ public interface ReadingTimeEntryModel
 	 *
 	 * @return the primary key of this reading time entry
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -60,7 +64,40 @@ public interface ReadingTimeEntryModel
 	 *
 	 * @param primaryKey the primary key of this reading time entry
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this reading time entry.
+	 *
+	 * @return the mvcc version of this reading time entry
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this reading time entry.
+	 *
+	 * @param mvccVersion the mvcc version of this reading time entry
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this reading time entry.
+	 *
+	 * @return the ct collection ID of this reading time entry
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this reading time entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this reading time entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this reading time entry.

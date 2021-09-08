@@ -135,6 +135,8 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeProcesses.put(new Version(8, 18, 1), new UpgradeModules());
 
 		upgradeProcesses.put(new Version(8, 18, 2), new UpgradeLayout());
+
+		upgradeProcesses.put(new Version(8, 18, 3), new DummyUpgradeProcess());
 	}
 
 }

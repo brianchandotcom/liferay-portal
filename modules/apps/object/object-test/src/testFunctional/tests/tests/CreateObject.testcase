@@ -124,6 +124,15 @@ definition {
 
 	}
 
+	@description = "LPS-135549 - Verify that it is not possible to create a Object with a duplicated Object Name"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotCreateDuplicatedObjectName {
+
+		// TODO LPS-138943 CannotCreateDuplicatedObjectName pending implementation
+
+	}
+
 	@description = "LPS-135549 - Verify it is not possible to leave the Field Name field blank"
 	@ignore = "Test Stub"
 	@priority = "4"

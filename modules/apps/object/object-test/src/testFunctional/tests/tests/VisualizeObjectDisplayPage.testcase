@@ -34,14 +34,14 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
-		VisualizeObjectDisplayPageTemplate.createObjectPageTemplate(
+		VisualizeObjectDisplayPage.createObjectPageTemplate(
 			contentType = "Object",
 			pageTemplateName = "Object Display Page Template",
 			subtype = "Custom Object");
 
-		VisualizeObjectDisplayPageTemplate.validateObjectContentType(contentType = "Object");
+		VisualizeObjectDisplayPage.validateObjectContentType(contentType = "Object");
 
-		VisualizeObjectDisplayPageTemplate.validateObjectSubtype(subtype = "Custom Object");
+		VisualizeObjectDisplayPage.validateObjectSubtype(subtype = "Custom Object");
 	}
 
 	@description = "LPS-137105 - Verify if the Object entries are rendered when previewing it"
@@ -49,7 +49,7 @@ definition {
 	@priority = "5"
 	test ObjectEntriesAreRendered {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "VisualizeObjectDisplayPageTemplate#ObjectEntriesAreRendered";
+		property test.name.skip.portal.instance = "VisualizeObjectDisplayPage#ObjectEntriesAreRendered";
 
 		// TODO LPS-137101 ObjectEntriesAreRendered pending implementation
 
@@ -60,7 +60,7 @@ definition {
 	@priority = "5"
 	test ObjectMappedURL {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "VisualizeObjectDisplayPageTemplate#ObjectMappedURL";
+		property test.name.skip.portal.instance = "VisualizeObjectDisplayPage#ObjectMappedURL";
 
 		// TODO LPS-137103 ObjectMappedURL pending implementation
 

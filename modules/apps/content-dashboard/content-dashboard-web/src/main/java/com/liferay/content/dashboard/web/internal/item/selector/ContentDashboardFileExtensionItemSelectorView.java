@@ -18,6 +18,7 @@ import com.liferay.content.dashboard.web.internal.display.context.ContentDashboa
 import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.file.extension.criterion.ContentDashboardFileExtensionItemSelectorCriterion;
 import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
 import com.liferay.document.library.configuration.DLConfiguration;
+import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -232,6 +233,8 @@ public class ContentDashboardFileExtensionItemSelectorView
 					).put(
 						"icon", fileExtensionGroup.getIcon()
 					).put(
+						"iconCssClass", _getIconCssClass(fileExtensionGroup)
+					).put(
 						"label",
 						LanguageUtil.get(
 							ResourceBundleUtil.getBundle(
@@ -277,6 +280,17 @@ public class ContentDashboardFileExtensionItemSelectorView
 		);
 	}
 
+	private String _getIconCssClass(FileExtensionGroup fileExtensionGroup) {
+		List<String> mimeTypes = fileExtensionGroup.getMimeTypes();
+
+		if (ListUtil.isEmpty(mimeTypes)) {
+			return null;
+		}
+
+		return _dlMimeTypeDisplayContext.getCssClassFileMimeType(
+			mimeTypes.get(0));
+	}
+
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new UUIDItemSelectorReturnType());
@@ -289,6 +303,10 @@ public class ContentDashboardFileExtensionItemSelectorView
 		_contentDashboardSearchRequestBuilderFactory;
 
 	private volatile DLConfiguration _dlConfiguration;
+
+	@Reference
+	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
+
 	private volatile Map<String, String> _fileExtensionFileExtensionGroupKeys =
 		new HashMap<>();
 	private volatile List<FileExtensionGroup> _fileExtensionGroups =

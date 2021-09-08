@@ -63,6 +63,58 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
+	public void testAddIndexControlTable() throws Exception {
+		try {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> db.runSQL(
+					"create index IX_test on ClassName_ (value)"));
+		}
+		finally {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> {
+					if (dbInspector.hasIndex("ClassName_", "IX_test")) {
+						db.runSQL("drop index IX_test on ClassName_");
+					}
+				});
+		}
+	}
+
+	@Test
+	public void testAlterControlTable() throws Exception {
+		try {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> db.runSQL(
+					"alter table ClassName_ add column testColumn bigint"));
+		}
+		finally {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> {
+					if (dbInspector.hasColumn("ClassName_", "testColumn")) {
+						db.runSQL(
+							"alter table ClassName_ drop column testColumn");
+					}
+				});
+		}
+	}
+
+	@Test
+	public void testDropIndexControlTable() throws Exception {
+		try {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> db.runSQL(
+					"drop index IX_test on ClassName_"));
+		}
+		finally {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> {
+					if (dbInspector.hasIndex("ClassName_", "IX_test")) {
+						db.runSQL("drop index IX_test on ClassName_");
+					}
+				});
+		}
+	}
+
+	@Test
 	public void testUpdateIndexes() throws Exception {
 		try {
 			DBPartitionUtil.forEachCompanyId(

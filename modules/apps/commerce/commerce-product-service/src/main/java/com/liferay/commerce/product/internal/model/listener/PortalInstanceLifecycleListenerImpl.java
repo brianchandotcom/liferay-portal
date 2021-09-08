@@ -107,14 +107,19 @@ public class PortalInstanceLifecycleListenerImpl
 
 				File file = FileUtil.createTempFile(image.getTextObj());
 
-				String mimeType = MimeTypesUtil.getContentType(file);
+				try {
+					String mimeType = MimeTypesUtil.getContentType(file);
 
-				_dlAppLocalService.addFileEntry(
-					PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO, user.getUserId(),
-					repository.getRepositoryId(),
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-					"company_logo.png", mimeType, image.getTextObj(), null,
-					null, serviceContext);
+					_dlAppLocalService.addFileEntry(
+						PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO, user.getUserId(),
+						repository.getRepositoryId(),
+						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+						"company_logo.png", mimeType, image.getTextObj(), null,
+						null, serviceContext);
+				}
+				finally {
+					FileUtil.delete(file);
+				}
 			}
 		}
 		catch (PortalException portalException) {

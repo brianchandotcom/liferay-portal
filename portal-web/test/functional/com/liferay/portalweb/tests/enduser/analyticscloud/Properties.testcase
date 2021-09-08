@@ -170,12 +170,55 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9107 | Test Summary: [AC] Canceling a property creation by clicking in Cancel button, x button or clicking outside the modal area"
-	@ignore = "true"
 	@priority = "3"
 	test CanCreatePropertyAndCancel {
+		var propertyName = "New Property";
 
-		// TODO LRAC-9107 CanCreatePropertyAndCancel pending implementation
+		task ("Launch AC") {
+			ACUtils.launchAC();
+		}
 
+		task ("Go to properties") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+		}
+
+		task ("Cancel propertie creation by clicking in Cancel button") {
+			Click(locator1 = "ACSettings#NEW_PROPERTY_BUTTON");
+
+			Type(
+				locator1 = "ACSettings#PROPERTY_INPUT",
+				value1 = "${propertyName}");
+
+			Button.clickCancel();
+
+			AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+		}
+
+		task ("Assert property not created") {
+			AssertElementNotPresent(
+				locator1 = "ACSettings#PROPERTY_NAME",
+				value1 = "${propertyName}");
+		}
+
+		task ("Cancel propertie creation by clicking in 'X' button") {
+			Click(locator1 = "ACSettings#NEW_PROPERTY_BUTTON");
+
+			Type(
+				locator1 = "ACSettings#PROPERTY_INPUT",
+				value1 = "${propertyName}");
+
+			IFrame.closeFrame();
+
+			AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+		}
+
+		task ("Assert property not created") {
+			AssertElementNotPresent(
+				locator1 = "ACSettings#PROPERTY_NAME",
+				value1 = "${propertyName}");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9105 | Test Summary: [AC] It is allowed to create property name with special chars"

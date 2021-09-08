@@ -10,6 +10,9 @@
 		"metal-jest-serializer": "2.0.0"
 	},
 	"private": true,
+	"resolutions": {
+		"@liferay/eslint-config": "25.0.1"
+	},
 	"scripts": {
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"

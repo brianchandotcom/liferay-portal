@@ -279,6 +279,7 @@
 		<!-- Other fields -->
 
 		<column name="objectLayoutId" type="long" />
+		<column name="objectRelationshipId" type="long" />
 		<column localized="true" name="name" type="String" />
 		<column name="priority" type="int" />
 

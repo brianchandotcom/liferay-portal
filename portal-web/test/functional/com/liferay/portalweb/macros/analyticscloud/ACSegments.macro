@@ -559,6 +559,10 @@ definition {
 			var index = "1";
 		}
 
+		if (!(isSet(key_indexNested))) {
+			var key_indexNested = "1";
+		}
+
 		AssertVisible(
 			index = "${index}",
 			locator1 = "ACSegments#SEGMENT_CRITERIA_TYPE",

@@ -168,22 +168,22 @@
 </tr>
 <tr>
 	<td>SEGMENT_CRITERIA_ATTRIBUTE_NAME</td>
-	<td>xpath=(//div[@class='criteria-row']//b[1])[${index}]</td>
+	<td>xpath=((//div[@class='criteria-group'])[${key_indexNested}]//div[@class='criteria-row']//b[1])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEGMENT_CRITERIA_ATTRIBUTE_VALUE</td>
-	<td>xpath=(//div[@class='criteria-row']//b[2])[${index}]</td>
+	<td>xpath=((//div[@class='criteria-group'])[${key_indexNested}]//div[@class='criteria-row']//b[2])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEGMENT_CRITERIA_CONDITION</td>
-	<td>xpath=(//div[@class='criteria-row']//span[1])[${index}]</td>
+	<td>xpath=((//div[@class='criteria-group'])[${key_indexNested}]//div[@class='criteria-row']//span[1])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEGMENT_CRITERIA_CONJUNCTION</td>
-	<td>xpath=(//div[contains(@class,'conjunction')])[${index}]</td>
+	<td>xpath=((//div[@class='criteria-group'])[${key_indexNested}]//div[contains(@class,'conjunction')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -116,6 +116,12 @@ export default class UnsafeHTML extends React.PureComponent {
 			ref.removeAttribute('class');
 		}
 
+		if (this.props.data) {
+			Object.entries(this.props.data).forEach(([key, value]) => {
+				ref.dataset[key] = value;
+			});
+		}
+
 		if (this.props.id) {
 			ref.id = this.props.id;
 		}

@@ -323,6 +323,7 @@ const FragmentContent = ({
 						}
 					)}
 					contentRef={elementRef}
+					data={{fragmentEntryLinkId}}
 					getPortals={getPortals}
 					globalContext={globalContext}
 					id={elementId}

@@ -273,7 +273,7 @@ public class DBPartitionUtil {
 				connection.setCatalog(
 					_getSchemaName(CompanyThreadLocal.getCompanyId()));
 
-				return super.createStatement();
+				return _getStatementWrapper(super.createStatement());
 			}
 
 			@Override
@@ -284,8 +284,8 @@ public class DBPartitionUtil {
 				connection.setCatalog(
 					_getSchemaName(CompanyThreadLocal.getCompanyId()));
 
-				return super.createStatement(
-					resultSetType, resultSetConcurrency);
+				return _getStatementWrapper(
+					super.createStatement(resultSetType, resultSetConcurrency));
 			}
 
 			@Override
@@ -297,8 +297,10 @@ public class DBPartitionUtil {
 				connection.setCatalog(
 					_getSchemaName(CompanyThreadLocal.getCompanyId()));
 
-				return super.createStatement(
-					resultSetType, resultSetConcurrency, resultSetHoldability);
+				return _getStatementWrapper(
+					super.createStatement(
+						resultSetType, resultSetConcurrency,
+						resultSetHoldability));
 			}
 
 			@Override

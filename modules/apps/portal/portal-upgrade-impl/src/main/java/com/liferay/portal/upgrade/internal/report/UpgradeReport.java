@@ -117,10 +117,11 @@ public class UpgradeReport {
 				_getReportFile(),
 				StringUtil.merge(
 					new String[] {
-						_getDate(), _getPortalVersions(), _getDialectInfo(),
-						_getProperties(), _getDLStorageSize(),
-						_getDatabaseTablesSize(), _getUpgradeProcessesContent(),
-						_getLogEvents("errors"), _getLogEvents("warnings"),
+						_getDateInfo(), _getPortalVersionsInfo(),
+						_getDialectInfo(), _getPropertiesInfo(),
+						_getDLStorageInfo(), _getDatabaseTablesInfo(),
+						_getUpgradeProcessesInfo(), _getLogEventsInfo("errors"),
+						_getLogEventsInfo("warnings"),
 						releaseManagerOSGiCommands.check()
 					},
 					StringPool.NEW_LINE + StringPool.NEW_LINE));
@@ -151,7 +152,7 @@ public class UpgradeReport {
 		return 0;
 	}
 
-	private String _getDatabaseTablesSize() {
+	private String _getDatabaseTablesInfo() {
 		Map<String, Integer> finalTableCounts = _getTableCounts();
 
 		if ((_initialTableCounts == null) || (finalTableCounts == null)) {
@@ -215,7 +216,7 @@ public class UpgradeReport {
 		return sb.toString();
 	}
 
-	private String _getDate() {
+	private String _getDateInfo() {
 		Calendar calendar = Calendar.getInstance();
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
@@ -235,7 +236,7 @@ public class UpgradeReport {
 			StringPool.PERIOD, db.getMinorVersion(), StringPool.NEW_LINE);
 	}
 
-	private String _getDLStorageSize() {
+	private String _getDLStorageInfo() {
 		if (!StringUtil.endsWith(
 				PropsValues.DL_STORE_IMPL, "FileSystemStore")) {
 
@@ -276,7 +277,7 @@ public class UpgradeReport {
 		return "The document library storage size is " + size;
 	}
 
-	private String _getLogEvents(String type) {
+	private String _getLogEventsInfo(String type) {
 		Set<Map.Entry<String, Map<String, Integer>>> entrySet;
 
 		if (type.equals("errors")) {
@@ -344,7 +345,7 @@ public class UpgradeReport {
 		return sb.toString();
 	}
 
-	private String _getPortalVersions() {
+	private String _getPortalVersionsInfo() {
 		Version latestSchemaVersion =
 			PortalUpgradeProcess.getLatestSchemaVersion();
 
@@ -359,7 +360,7 @@ public class UpgradeReport {
 				"expected"));
 	}
 
-	private String _getProperties() {
+	private String _getPropertiesInfo() {
 		StringBuffer sb = new StringBuffer(12);
 
 		sb.append("liferay.home=" + PropsValues.LIFERAY_HOME);
@@ -543,7 +544,7 @@ public class UpgradeReport {
 		}
 	}
 
-	private String _getUpgradeProcessesContent() {
+	private String _getUpgradeProcessesInfo() {
 		List<String> messages = _eventMessages.get(
 			UpgradeProcess.class.getName());
 

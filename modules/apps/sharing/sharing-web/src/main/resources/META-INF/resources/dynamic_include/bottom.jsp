@@ -37,7 +37,7 @@ PortletURL sharingURL = PortletURLBuilder.create(
 			iframeBodyCssClass: 'sharing-dialog',
 			height: 475,
 			size: 'md',
-			title: Liferay.Util.escapeHTML(title),
+			title: title,
 			url: uri,
 		});
 	}

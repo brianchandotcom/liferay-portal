@@ -14,6 +14,7 @@
 
 import {COLLECTION_APPLIED_FILTERS_FRAGMENT_ENTRY_KEY} from '../../../../../app/config/constants/collectionAppliedFiltersFragmentKey';
 import {COLLECTION_FILTER_FRAGMENT_ENTRY_KEY} from '../../../../../app/config/constants/collectionFilterFragmentEntryKey';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
 import {FRAGMENT_CONFIGURATION_ROLES} from '../../../../../app/config/constants/fragmentConfigurationRoles';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
@@ -119,12 +120,7 @@ export const PANELS = {
 	},
 };
 
-export const selectPanels = (
-	activeItemId,
-	activeItemType,
-	state,
-	toControlsId
-) => {
+export const selectPanels = (activeItemId, activeItemType, state) => {
 	let activeItem = null;
 	let panelsIds = {};
 
@@ -134,13 +130,21 @@ export const selectPanels = (
 	else if (activeItemType === ITEM_TYPES.editable) {
 		const [fragmentEntryLinkId] = activeItemId.split('-');
 
-		const {itemId} =
-			Object.values(state.layoutData.items).find(
-				(item) =>
-					item.config.fragmentEntryLinkId === fragmentEntryLinkId
-			) || {};
+		const editableId = activeItemId.substr(
+			activeItemId.indexOf('-') + 1,
+			activeItemId.length
+		);
 
-		activeItem = state.editables[toControlsId(itemId)]?.[activeItemId];
+		activeItem = {
+			editableId,
+			editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+			fragmentEntryLinkId,
+			itemId: activeItemId,
+			type:
+				state.fragmentEntryLinks[fragmentEntryLinkId].editableTypes[
+					editableId
+				],
+		};
 	}
 
 	if (!activeItem) {

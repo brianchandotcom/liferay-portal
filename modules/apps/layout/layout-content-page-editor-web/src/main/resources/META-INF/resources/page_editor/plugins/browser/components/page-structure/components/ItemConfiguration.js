@@ -18,10 +18,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {useCollectionActiveItemContext} from '../../../../../app/contexts/CollectionActiveItemContext';
-import {
-	CollectionItemContext,
-	useToControlsId,
-} from '../../../../../app/contexts/CollectionItemContext';
+import {CollectionItemContext} from '../../../../../app/contexts/CollectionItemContext';
 import {
 	useActiveItemId,
 	useActiveItemType,
@@ -54,14 +51,12 @@ function ItemConfigurationContent() {
 	const activeItemId = useActiveItemId();
 	const activeItemType = useActiveItemType();
 	const [activePanelId, setActivePanelId] = useState(null);
-	const toControlsIds = useToControlsId();
 	const tabIdPrefix = useId();
 	const panelIdPrefix = useId();
 
 	const {activeItem, panelsIds} = useSelectorCallback(
-		(state) =>
-			selectPanels(activeItemId, activeItemType, state, toControlsIds),
-		[activeItemId, activeItemType, toControlsIds],
+		(state) => selectPanels(activeItemId, activeItemType, state),
+		[activeItemId, activeItemType],
 		deepEqual
 	);
 

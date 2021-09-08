@@ -44,6 +44,9 @@ import com.liferay.portal.kernel.service.persistence.PasswordPolicyFinder;
 import com.liferay.portal.kernel.service.persistence.PasswordPolicyPersistence;
 import com.liferay.portal.kernel.service.persistence.PasswordPolicyRelPersistence;
 import com.liferay.portal.kernel.service.persistence.PasswordTrackerPersistence;
+import com.liferay.portal.kernel.service.persistence.PortalPreferencesPersistence;
+import com.liferay.portal.kernel.service.persistence.PortletPreferencesFinder;
+import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.kernel.service.persistence.RecentLayoutBranchPersistence;
 import com.liferay.portal.kernel.service.persistence.RecentLayoutRevisionPersistence;
 import com.liferay.portal.kernel.service.persistence.RecentLayoutSetBranchPersistence;
@@ -896,6 +899,135 @@ public abstract class UserServiceBaseImpl
 		PasswordTrackerPersistence passwordTrackerPersistence) {
 
 		this.passwordTrackerPersistence = passwordTrackerPersistence;
+	}
+
+	/**
+	 * Returns the portal preferences local service.
+	 *
+	 * @return the portal preferences local service
+	 */
+	public com.liferay.portal.kernel.service.PortalPreferencesLocalService
+		getPortalPreferencesLocalService() {
+
+		return portalPreferencesLocalService;
+	}
+
+	/**
+	 * Sets the portal preferences local service.
+	 *
+	 * @param portalPreferencesLocalService the portal preferences local service
+	 */
+	public void setPortalPreferencesLocalService(
+		com.liferay.portal.kernel.service.PortalPreferencesLocalService
+			portalPreferencesLocalService) {
+
+		this.portalPreferencesLocalService = portalPreferencesLocalService;
+	}
+
+	/**
+	 * Returns the portal preferences persistence.
+	 *
+	 * @return the portal preferences persistence
+	 */
+	public PortalPreferencesPersistence getPortalPreferencesPersistence() {
+		return portalPreferencesPersistence;
+	}
+
+	/**
+	 * Sets the portal preferences persistence.
+	 *
+	 * @param portalPreferencesPersistence the portal preferences persistence
+	 */
+	public void setPortalPreferencesPersistence(
+		PortalPreferencesPersistence portalPreferencesPersistence) {
+
+		this.portalPreferencesPersistence = portalPreferencesPersistence;
+	}
+
+	/**
+	 * Returns the portlet preferences local service.
+	 *
+	 * @return the portlet preferences local service
+	 */
+	public com.liferay.portal.kernel.service.PortletPreferencesLocalService
+		getPortletPreferencesLocalService() {
+
+		return portletPreferencesLocalService;
+	}
+
+	/**
+	 * Sets the portlet preferences local service.
+	 *
+	 * @param portletPreferencesLocalService the portlet preferences local service
+	 */
+	public void setPortletPreferencesLocalService(
+		com.liferay.portal.kernel.service.PortletPreferencesLocalService
+			portletPreferencesLocalService) {
+
+		this.portletPreferencesLocalService = portletPreferencesLocalService;
+	}
+
+	/**
+	 * Returns the portlet preferences remote service.
+	 *
+	 * @return the portlet preferences remote service
+	 */
+	public com.liferay.portal.kernel.service.PortletPreferencesService
+		getPortletPreferencesService() {
+
+		return portletPreferencesService;
+	}
+
+	/**
+	 * Sets the portlet preferences remote service.
+	 *
+	 * @param portletPreferencesService the portlet preferences remote service
+	 */
+	public void setPortletPreferencesService(
+		com.liferay.portal.kernel.service.PortletPreferencesService
+			portletPreferencesService) {
+
+		this.portletPreferencesService = portletPreferencesService;
+	}
+
+	/**
+	 * Returns the portlet preferences persistence.
+	 *
+	 * @return the portlet preferences persistence
+	 */
+	public PortletPreferencesPersistence getPortletPreferencesPersistence() {
+		return portletPreferencesPersistence;
+	}
+
+	/**
+	 * Sets the portlet preferences persistence.
+	 *
+	 * @param portletPreferencesPersistence the portlet preferences persistence
+	 */
+	public void setPortletPreferencesPersistence(
+		PortletPreferencesPersistence portletPreferencesPersistence) {
+
+		this.portletPreferencesPersistence = portletPreferencesPersistence;
+	}
+
+	/**
+	 * Returns the portlet preferences finder.
+	 *
+	 * @return the portlet preferences finder
+	 */
+	public PortletPreferencesFinder getPortletPreferencesFinder() {
+		return portletPreferencesFinder;
+	}
+
+	/**
+	 * Sets the portlet preferences finder.
+	 *
+	 * @param portletPreferencesFinder the portlet preferences finder
+	 */
+	public void setPortletPreferencesFinder(
+		PortletPreferencesFinder portletPreferencesFinder) {
+
+		this.portletPreferencesFinder = portletPreferencesFinder;
 	}
 
 	/**
@@ -2180,6 +2312,33 @@ public abstract class UserServiceBaseImpl
 
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.PortalPreferencesLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.PortalPreferencesLocalService
+		portalPreferencesLocalService;
+
+	@BeanReference(type = PortalPreferencesPersistence.class)
+	protected PortalPreferencesPersistence portalPreferencesPersistence;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.PortletPreferencesLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.PortletPreferencesLocalService
+		portletPreferencesLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.PortletPreferencesService.class
+	)
+	protected com.liferay.portal.kernel.service.PortletPreferencesService
+		portletPreferencesService;
+
+	@BeanReference(type = PortletPreferencesPersistence.class)
+	protected PortletPreferencesPersistence portletPreferencesPersistence;
+
+	@BeanReference(type = PortletPreferencesFinder.class)
+	protected PortletPreferencesFinder portletPreferencesFinder;
 
 	@BeanReference(
 		type = com.liferay.portal.kernel.service.RecentLayoutBranchLocalService.class

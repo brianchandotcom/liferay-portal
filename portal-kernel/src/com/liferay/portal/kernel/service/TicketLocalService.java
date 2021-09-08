@@ -130,6 +130,8 @@ public interface TicketLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public Ticket deleteTicket(Ticket ticket);
 
+	public void deleteTickets(long companyId, String className, long classPK);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
@@ -255,6 +257,10 @@ public interface TicketLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Ticket> getTickets(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Ticket> getTickets(
+		long companyId, String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Ticket> getTickets(

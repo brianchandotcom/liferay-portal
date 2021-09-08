@@ -178,6 +178,15 @@ public class TicketPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C_C() throws Exception {
+		_persistence.countByC_C_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByC_C_C(0L, 0L, 0L);
+	}
+
+	@Test
 	public void testCountByC_C_T() throws Exception {
 		_persistence.countByC_C_T(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),

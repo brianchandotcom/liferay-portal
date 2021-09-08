@@ -383,6 +383,16 @@
 	<td>//tr[contains(@class,'disabled')]//div[text()='${key_memberName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ADD_MEMBERS_SORT_BUTTON</td>
+	<td>//button[contains(@class,'button-root btn btn-unstyled nav-link')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MEMBERS_INDEX_TABLE</td>
+	<td>//tr[${index}]//td[2]//div[text()='${key_userName}']</td>
+	<td></td>
+</tr>
 <!-- Segments List -->
 <tr>
 	<td>FILTER_AND_ORDER_BUTTON</td>

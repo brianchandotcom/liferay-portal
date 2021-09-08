@@ -375,6 +375,8 @@ public interface LiferaySelenium {
 
 	public void replyToEmail(String to, String body) throws Exception;
 
+	public void rightClick(String locator);
+
 	public void robotType(String script);
 
 	public void robotTypeShortcut(String script);

@@ -628,12 +628,35 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8586 | Test Summary: Sort the Segment 'Add Members' Modal"
-	@ignore = "true"
 	@priority = "3"
 	test SortSegmentAddMembersModal {
+		task ("Go to AC and segments") {
+			ACUtils.launchAC();
 
-		// TODO LRAC-8586 SortSegmentAddMembersModal pending implementation
+			ACNavigation.goToSegments();
+		}
 
+		task ("Create a new static segment and click to add members") {
+			ACSegments.createStaticSegment();
+
+			ACSegments.nameSegment(segmentName = "New Segment Test");
+
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+		}
+
+		task ("Assert the first user in the list, click the sort button and assert that the user has changed") {
+			AssertElementPresent(
+				index = "1",
+				key_userName = "Abram Bauch",
+				locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE");
+
+			Click(locator1 = "ACSegments#ADD_MEMBERS_SORT_BUTTON");
+
+			AssertElementPresent(
+				index = "1",
+				key_userName = "Winston Olson",
+				locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8590 | Test Summary: Undo Adding a Segment Member in the Edit Modal"

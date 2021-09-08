@@ -61,7 +61,9 @@ definition {
 			bodyField = "${bodyField}",
 			categoryId = "${categoryId}",
 			tagField = "${tagField}",
-			titleField = "${titleField}");
+			titleField = "${titleField}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
 	}
 
 	@summary = "Get the answer title"

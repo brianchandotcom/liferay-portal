@@ -3948,6 +3948,9 @@ public class JenkinsResultsParserUtil {
 		buildDescription = buildDescription.replaceAll("\"", "\\\\\"");
 		buildDescription = buildDescription.replaceAll("\'", "\\\\\'");
 
+		jobName = jobName.replace("%28", "(");
+		jobName = jobName.replace("%29", ")");
+
 		String jenkinsScript = combine(
 			"def job = Jenkins.instance.getItemByFullName(\"", jobName,
 			"\"); def build = job.getBuildByNumber(",

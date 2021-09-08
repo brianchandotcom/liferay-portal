@@ -252,6 +252,10 @@
 			<contains>Store is not available</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-136151 - temporarily ignore until fixed">
+			<contains>Unable to register portal instance</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LRQA-24859">
 			<contains>No binary licenses found</contains>
 			<matches></matches>

@@ -28,6 +28,24 @@ public interface DestinationNames {
 	public static final String BACKGROUND_TASK_STATUS =
 		"liferay/background_task_status";
 
+	public static final String COMMERCE_BASE_PRICE_LIST =
+		"liferay/commerce_base_price_list";
+
+	public static final String COMMERCE_ORDER_STATUS =
+		"liferay/commerce_order_status";
+
+	public static final String COMMERCE_PAYMENT_STATUS =
+		"liferay/commerce_payment_status";
+
+	public static final String COMMERCE_SHIPMENT_STATUS =
+		"liferay/commerce_shipment_status";
+
+	public static final String COMMERCE_STOCK_QUANTITY =
+		"liferay/commerce_stock_quantity";
+
+	public static final String COMMERCE_SUBSCRIPTION_STATUS =
+		"liferay/commerce_subscription_status";
+
 	public static final String CONVERT_PROCESS = "liferay/convert_process";
 
 	public static final String DEVICE_RECOGNITION_PROVIDER =

@@ -49,7 +49,11 @@ export default function TreeviewCard({node}) {
 					<ClayCard.Row className="autofit-row-center">
 						{node.icon && (
 							<div className="autofit-col">
-								<ClaySticker displayType="secondary" inline>
+								<ClaySticker
+									className={node.iconCssClass}
+									displayType="secondary"
+									inline
+								>
 									<ClayIcon symbol={node.icon} />
 								</ClaySticker>
 							</div>
@@ -72,6 +76,7 @@ export default function TreeviewCard({node}) {
 TreeviewCard.propTypes = {
 	node: PropTypes.shape({
 		icon: PropTypes.string,
+		iconCssClass: PropTypes.string,
 		name: PropTypes.string.isRequired,
 		nodePath: PropTypes.string,
 	}).isRequired,

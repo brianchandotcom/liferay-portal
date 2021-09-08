@@ -380,6 +380,15 @@ public class ObjectEntryLocalServiceUtil {
 		return getService().getObjectEntryByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static List<ObjectEntry> getOneToManyRelatedObjectEntries(
+			long groupId, long primaryKey, long objectRelationshipId, int start,
+			int end)
+		throws PortalException {
+
+		return getService().getOneToManyRelatedObjectEntries(
+			groupId, primaryKey, objectRelationshipId, start, end);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

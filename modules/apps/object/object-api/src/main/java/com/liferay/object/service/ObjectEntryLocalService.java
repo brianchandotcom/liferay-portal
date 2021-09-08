@@ -329,6 +329,12 @@ public interface ObjectEntryLocalService
 	public ObjectEntry getObjectEntryByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectEntry> getOneToManyRelatedObjectEntries(
+			long groupId, long primaryKey, long objectRelationshipId, int start,
+			int end)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

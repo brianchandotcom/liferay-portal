@@ -133,10 +133,15 @@ public class DLFileEntryTypeRelatedInfoCollectionProvider
 
 	@Override
 	public String getKey() {
-		return StringBundler.concat(
-			RelatedInfoItemCollectionProvider.class.getName(), StringPool.DASH,
-			DLFileEntryType.class.getName(), StringPool.DASH,
-			_dlFileEntryType.getFileEntryTypeId());
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(RelatedInfoItemCollectionProvider.class.getName());
+		sb.append(StringPool.DASH);
+		sb.append(DLFileEntryType.class.getName());
+		sb.append(StringPool.DASH);
+		sb.append(_dlFileEntryType.getFileEntryTypeId());
+
+		return sb.toString();
 	}
 
 	@Override

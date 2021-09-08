@@ -468,6 +468,12 @@ definition {
 			locator1 = "ACSegments#SEARCH_MEMBER",
 			value1 = "\ENTER");
 	}
+	
+	macro addOrganizationName { 
+		Type(
+			locator1 = "ACSegments#ORGANIZATION_NAME_INPUT",
+			value1 = "${organizationName}");
+	}
 
 	macro selectDistributionByAttribute {
 		Click(locator1 = "ACSegments#ATTRIBUTE_TEXT_INPUT");

@@ -208,180 +208,175 @@ definition {
 	@description = "This is a test for LPS-134844. Fragment view options can be reset to parent one."
 	@priority = "4"
 	@uitest
-	test FragmentViewOptionsCanBeResetToParentOne
-	{
+	test FragmentViewOptionsCanBeResetToParentOne {
 		task ("Add thee headings to page") {
 			ContentPagesNavigator.openEditContentPage(
-					pageName = "Test Content Page Name",
-					siteName = "Test Site Name");
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
-					collectionName = "Basic Components",
-					fragmentName = "Heading");
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 
 			PageEditor.editFragmentText(
-					fragmentName = "Heading",
-					id = "element-text",
-					text = "Heading Example 1");
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Heading Example 1");
 
 			for (var n : list "3,2") {
 				PageEditor.addFragment(
-						collectionName = "Basic Components",
-						fragmentName = "Heading",
-						targetFragmentName = "Heading");
+					collectionName = "Basic Components",
+					fragmentName = "Heading",
+					targetFragmentName = "Heading");
 
 				PageEditor.editFragmentText(
-						fragmentName = "Heading",
-						id = "element-text",
-						index = "2",
-						text = "Heading Example ${n}");
+					fragmentName = "Heading",
+					id = "element-text",
+					index = "2",
+					text = "Heading Example ${n}");
 			}
 		}
 
 		task ("Hide Heading Example 3 for desktop view") {
 			PageEditor.clickHideFragmentViaPageStructure(
-					fragmentName = "Heading",
-					index = "3");
+				fragmentName = "Heading",
+				index = "3");
 		}
 
 		task ("Change to landscape phone viewport, hide 1 and 2, unhide 3") {
 			Click(
-					key_deviceType = "Landscape Phone",
-					locator1 = "PageEditor#DEVICE_TYPE");
+				key_deviceType = "Landscape Phone",
+				locator1 = "PageEditor#DEVICE_TYPE");
 			PageEditor.clickHideFragmentViaPageStructure(
-					fragmentName = "Heading",
-					index = "1");
+				fragmentName = "Heading",
+				index = "1");
 			PageEditor.clickHideFragmentViaPageStructure(
-					fragmentName = "Heading",
-					index = "2");
+				fragmentName = "Heading",
+				index = "2");
 			PageEditor.clickUnhideFragmentViaPageStructure(
-					fragmentName = "Heading",
-					index = "3");
+				fragmentName = "Heading",
+				index = "3");
 		}
 
 		task ("Change to Portrait phone viewport, hide 3, unhide 2") {
 			Click(
-					key_deviceType = "Portrait Phone",
-					locator1 = "PageEditor#DEVICE_TYPE");
+				key_deviceType = "Portrait Phone",
+				locator1 = "PageEditor#DEVICE_TYPE");
 			PageEditor.clickHideFragmentViaPageStructure(
-					fragmentName = "Heading",
-					index = "3");
+				fragmentName = "Heading",
+				index = "3");
 			PageEditor.clickUnhideFragmentViaPageStructure(
-					fragmentName = "Heading",
-					index = "2");
+				fragmentName = "Heading",
+				index = "2");
 		}
 
 		task ("Click restore default for Heading Example 1 and assert is NOT shown") {
 			PageEditor.clickRestoreDefaultHidePropertyForFragment(
-					fragmentName = "Heading",
-					index = "1");
+				fragmentName = "Heading",
+				index = "1");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			AssertNotVisible(
-					id = "element-text",
-					index = "1",
-					key_fragmentName = "Heading",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_ANY");
+				id = "element-text",
+				index = "1",
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_ANY");
 
 			SelectFrame(value1 = "relative=top");
 		}
 
 		task ("Click restore default for Heading Example 2 and assert  is NOT shown") {
 			PageEditor.clickRestoreDefaultHidePropertyForFragment(
-					fragmentName = "Heading",
-					index = "2");
+				fragmentName = "Heading",
+				index = "2");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			PageEditor.viewNoFragment(fragmentName = "Heading");
 
 			SelectFrame(value1 = "relative=top");
-
 		}
 
 		task ("Click restore default for Heading Example 3 and assert  is shown") {
 			PageEditor.clickRestoreDefaultHidePropertyForFragment(
-					fragmentName = "Heading",
-					index = "3");
+				fragmentName = "Heading",
+				index = "3");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			AssertTextEquals(
-					id = "element-text",
-					index = "3",
-					key_fragmentName = "Heading",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_ANY",
-					value1 = "Heading Example 3");
+				id = "element-text",
+				index = "3",
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_ANY",
+				value1 = "Heading Example 3");
 		}
 	}
-
 
 	@description = "This is a test for LPS-134844. Hidden property is propagated to smaller viewpoints."
 	@priority = "5"
 	@uitest
-	test HiddenPropertyIsPropagatedToSmallerViewpoints
-	{
+	test HiddenPropertyIsPropagatedToSmallerViewpoints {
 		property portal.acceptance = "true";
 
 		task ("Add five headings to page") {
 			ContentPagesNavigator.openEditContentPage(
-					pageName = "Test Content Page Name",
-					siteName = "Test Site Name");
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
-					collectionName = "Basic Components",
-					fragmentName = "Heading");
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 
 			PageEditor.editFragmentText(
-					fragmentName = "Heading",
-					id = "element-text",
-					text = "Heading Example 1");
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Heading Example 1");
 
 			for (var n : list "5,4,3,2") {
 				PageEditor.addFragment(
-						collectionName = "Basic Components",
-						fragmentName = "Heading",
-						targetFragmentName = "Heading");
+					collectionName = "Basic Components",
+					fragmentName = "Heading",
+					targetFragmentName = "Heading");
 
 				PageEditor.editFragmentText(
-						fragmentName = "Heading",
-						id = "element-text",
-						index = "2",
-						text = "Heading Example ${n}");
+					fragmentName = "Heading",
+					id = "element-text",
+					index = "2",
+					text = "Heading Example ${n}");
 			}
-
 		}
 
 		task ("Hide Heading Example 5 for desktop view") {
 			PageEditor.clickHideFragmentViaPageStructure(
-					fragmentName = "Heading",
-					index = "5");
+				fragmentName = "Heading",
+				index = "5");
 		}
 
 		task ("Hide Heading Example 4 for tablet viewport") {
 			Click(
-					key_deviceType = "Tablet",
-					locator1 = "PageEditor#DEVICE_TYPE");
+				key_deviceType = "Tablet",
+				locator1 = "PageEditor#DEVICE_TYPE");
 			PageEditor.clickHideFragmentViaPageStructure(
-					fragmentName = "Heading",
-					index = "4");
+				fragmentName = "Heading",
+				index = "4");
 		}
 		task ("Hide Heading Example 3 for landscape phone viewport") {
 			Click(
-					key_deviceType = "Landscape Phone",
-					locator1 = "PageEditor#DEVICE_TYPE");
+				key_deviceType = "Landscape Phone",
+				locator1 = "PageEditor#DEVICE_TYPE");
 			PageEditor.clickHideFragmentViaPageStructure(
-					fragmentName = "Heading",
-					index = "3");
+				fragmentName = "Heading",
+				index = "3");
 		}
 		task ("Hide Heading Example 2 for portrait phone viewport") {
 			Click(
-					key_deviceType = "Portrait Phone",
-					locator1 = "PageEditor#DEVICE_TYPE");
+				key_deviceType = "Portrait Phone",
+				locator1 = "PageEditor#DEVICE_TYPE");
 			PageEditor.clickHideFragmentViaPageStructure(
-					fragmentName = "Heading",
-					index = "2");
+				fragmentName = "Heading",
+				index = "2");
 		}
 
 		task ("Open the Preview modal") {
@@ -394,96 +389,96 @@ definition {
 			SelectFrameTop();
 
 			Click(
-					key_deviceType = "Desktop",
-					locator1 = "Modal#DEVICE_TYPE");
+				key_deviceType = "Desktop",
+				locator1 = "Modal#DEVICE_TYPE");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			for (var n : list "1,2,3,4") {
 				AssertTextEquals(
-						key_index = "${n}",
-						key_fragmentName = "heading",
-						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
-						value1 = "Heading Example ${n}");
+					key_fragmentName = "heading",
+					key_index = "${n}",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+					value1 = "Heading Example ${n}");
 			}
 
 			AssertTextNotPresent(
-					key_index = "5",
-					key_fragmentName = "heading",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
-					value1 = "Heading Example 5");
+				key_fragmentName = "heading",
+				key_index = "5",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+				value1 = "Heading Example 5");
 		}
 		task ("Assert that Heading from 1 to 3 are shown for tablet view on preview") {
-
 			SelectFrameTop();
 
 			Click(
-					key_deviceType = "Tablet",
-					locator1 = "Modal#DEVICE_TYPE");
+				key_deviceType = "Tablet",
+				locator1 = "Modal#DEVICE_TYPE");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			for (var n : list "1,2,3") {
 				AssertTextEquals(
-						key_index = "${n}",
-						key_fragmentName = "heading",
-						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
-						value1 = "Heading Example ${n}");
+					key_fragmentName = "heading",
+					key_index = "${n}",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+					value1 = "Heading Example ${n}");
 			}
 
 			for (var n : list "4,5") {
 				AssertTextNotPresent(
-						key_index = "${n}",
-						key_fragmentName = "heading",
-						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
-						value1 = "Heading Example ${n}");
+					key_fragmentName = "heading",
+					key_index = "${n}",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+					value1 = "Heading Example ${n}");
 			}
 		}
 		task ("Assert that Heading from 1 to 2 are shown for landscape phone view on preview") {
 			SelectFrameTop();
 
 			Click(
-					key_deviceType = "Landscape Phone",
-					locator1 = "Modal#DEVICE_TYPE");
+				key_deviceType = "Landscape Phone",
+				locator1 = "Modal#DEVICE_TYPE");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			for (var n : list "1,2") {
 				AssertTextEquals(
-						key_index = "${n}",
-						key_fragmentName = "heading",
-						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
-						value1 = "Heading Example ${n}");
+					key_fragmentName = "heading",
+					key_index = "${n}",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+					value1 = "Heading Example ${n}");
 			}
+
 			for (var n : list "3,4,5") {
 				AssertTextNotPresent(
-						key_index = "${n}",
-						key_fragmentName = "heading",
-						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
-						value1 = "Heading Example ${n}");
+					key_fragmentName = "heading",
+					key_index = "${n}",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+					value1 = "Heading Example ${n}");
 			}
 		}
 		task ("Assert that only Heading 1 is shown for portail phone view on preview") {
 			SelectFrameTop();
 
 			Click(
-					key_deviceType = "Portrait Phone",
-					locator1 = "Modal#DEVICE_TYPE");
+				key_deviceType = "Portrait Phone",
+				locator1 = "Modal#DEVICE_TYPE");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			AssertTextEquals(
-					key_index = "1",
-					key_fragmentName = "heading",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
-					value1 = "Heading Example 1");
+				key_fragmentName = "heading",
+				key_index = "1",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+				value1 = "Heading Example 1");
 
 			for (var n : list "2,3,4,5") {
 				AssertTextNotPresent(
-						key_index = "${n}",
-						key_fragmentName = "heading",
-						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
-						value1 = "Heading Example ${n}");
+					key_fragmentName = "heading",
+					key_index = "${n}",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+					value1 = "Heading Example ${n}");
 			}
 		}
 	}
@@ -547,7 +542,6 @@ definition {
 					paddingLeft = "2",
 					paddingRight = "2",
 					paddingTop = "2");
-
 			}
 		}
 	}

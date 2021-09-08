@@ -522,28 +522,26 @@ definition {
 
 		task ("Add a widgets to the page") {
 			ContentPagesNavigator.openEditContentPage(
-					pageName = "Test Content Page Name",
-					siteName = "Test Site Name");
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.addWidget(portletName = "Blogs");
-
 		}
 		task ("Add fragments to page") {
 			PageEditor.addFragment(
-					collectionName = "Basic Components",
-					fragmentName = "Button",
-					targetFragmentName = "Blogs");
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				targetFragmentName = "Blogs");
 
 			PageEditor.addFragment(
-					collectionName = "Basic Components",
-					fragmentName = "Heading",
-					targetFragmentName = "Button");
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Button");
 
 			PageEditor.addFragment(
-					collectionName = "Basic Components",
-					fragmentName = "HTML",
-					targetFragmentName = "Heading");
-
+				collectionName = "Basic Components",
+				fragmentName = "HTML",
+				targetFragmentName = "Heading");
 		}
 
 		task ("Hide Blogs from topper options") {
@@ -564,63 +562,62 @@ definition {
 
 		task ("Assert only html fragment is shown") {
 			AssertTextNotPresent(
-					locator1 = "Message#EMPTY_INFO",
-					value1 = "No entries were found.");
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No entries were found.");
 
 			AssertTextNotPresent(
-					key_fragmentName = "heading",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "Heading Example");
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Heading Example");
 
 			AssertTextNotPresent(
-					key_fragmentName = "button",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "Go Somewhere");
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Go Somewhere");
 
 			AssertTextEquals.assertPartialText(
-					key_fragmentName = "html",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "HTML Example");
+				key_fragmentName = "html",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "HTML Example");
 		}
 
 		task ("Publish and enter view mode") {
 			ContentPagesNavigator.openEditContentPage(
-					pageName = "Test Content Page Name",
-					siteName = "Test Site Name");
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.clickPublish();
 
 			ContentPagesNavigator.openViewContentPage(
-					pageName = "Test Content Page Name",
-					siteName = "Test Site Name");
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert only html fragment is shown") {
 			AssertTextNotPresent(
-					locator1 = "Message#EMPTY_INFO",
-					value1 = "No entries were found.");
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No entries were found.");
 
 			AssertTextNotPresent(
-					key_fragmentName = "heading",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "Heading Example");
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Heading Example");
 
 			AssertTextNotPresent(
-					key_fragmentName = "button",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "Go Somewhere");
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Go Somewhere");
 
 			AssertTextEquals.assertPartialText(
-					key_fragmentName = "html",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "HTML Example");
+				key_fragmentName = "html",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "HTML Example");
 		}
 
 		task ("Edit the page") {
 			ContentPagesNavigator.openEditContentPage(
-					pageName = "Test Content Page Name",
-					siteName = "Test Site Name");
-
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 		task ("Unhide Blogs from the sidebar fragment tree") {
 			PageEditor.clickUnhideFragmentViaPageStructure(fragmentName = "Blogs");
@@ -634,35 +631,35 @@ definition {
 
 		task ("Publish and enter view mode") {
 			ContentPagesNavigator.openEditContentPage(
-					pageName = "Test Content Page Name",
-					siteName = "Test Site Name");
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.clickPublish();
 
 			ContentPagesNavigator.openViewContentPage(
-					pageName = "Test Content Page Name",
-					siteName = "Test Site Name");
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert the four fragments are shown") {
 			AssertTextEquals(
-					locator1 = "Message#EMPTY_INFO",
-					value1 = "No entries were found.");
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No entries were found.");
 
 			AssertTextEquals.assertPartialText(
-					key_fragmentName = "heading",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "Heading Example");
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Heading Example");
 
 			AssertTextEquals.assertPartialText(
-					key_fragmentName = "button",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "Go Somewhere");
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Go Somewhere");
 
 			AssertTextEquals.assertPartialText(
-					key_fragmentName = "html",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "HTML Example");
+				key_fragmentName = "html",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "HTML Example");
 		}
 	}
 
@@ -671,44 +668,40 @@ definition {
 	@uitest
 	test GroupsOfFragmentsCanBeHiddenAndShown {
 		task ("Add a container and 4 headings inside") {
-
 			ContentPagesNavigator.openEditContentPage(
-					pageName = "Test Content Page Name",
-					siteName = "Test Site Name");
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
-					collectionName = "Layout Elements",
-					fragmentName = "Container");
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
 
 			PageEditor.addElementToContainer(
-					navTab = "Widgets",
-					portletName = "Blogs");
+				navTab = "Widgets",
+				portletName = "Blogs");
 
 			PageEditor.addElementToContainer(
-					collectionName = "Basic Components",
-					fragmentName = "HTML",
-					navTab = "Fragments",
-					targetElementName = "Blogs");
+				collectionName = "Basic Components",
+				fragmentName = "HTML",
+				navTab = "Fragments",
+				targetElementName = "Blogs");
 
 			PageEditor.addElementToContainer(
-					collectionName = "Basic Components",
-					fragmentName = "Button",
-					navTab = "Fragments",
-					targetElementName = "HTML");
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				navTab = "Fragments",
+				targetElementName = "HTML");
 
 			PageEditor.addElementToContainer(
-					collectionName = "Basic Components",
-					fragmentName = "Heading",
-					navTab = "Fragments",
-					targetElementName = "Button");
-
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				navTab = "Fragments",
+				targetElementName = "Button");
 		}
 
 		task ("Hide Blogs and HTML") {
-			PageEditor.clickHideFragmentViaPageStructure(
-					fragmentName = "Blogs");
-			PageEditor.clickHideFragmentViaPageStructure(
-					fragmentName = "HTML");
+			PageEditor.clickHideFragmentViaPageStructure(fragmentName = "Blogs");
+			PageEditor.clickHideFragmentViaPageStructure(fragmentName = "HTML");
 		}
 
 		task ("Hide the container") {
@@ -724,11 +717,9 @@ definition {
 		}
 
 		task ("From the sidebar fragment tree, show HTML and Button") {
-			PageEditor.clickUnhideFragmentViaPageStructure(
-					fragmentName = "HTML");
+			PageEditor.clickUnhideFragmentViaPageStructure(fragmentName = "HTML");
 
-			PageEditor.clickHideFragmentViaPageStructure(
-					fragmentName = "Button");
+			PageEditor.clickHideFragmentViaPageStructure(fragmentName = "Button");
 		}
 
 		task ("Assert no fragment or widget is shown") {
@@ -745,37 +736,37 @@ definition {
 
 		task ("Assert only Heading and HTML fragments are shown") {
 			AssertTextNotPresent(
-					locator1 = "Message#EMPTY_INFO",
-					value1 = "No entries were found.");
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No entries were found.");
 
 			AssertTextNotPresent(
-					key_fragmentName = "button",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "Go Somewhere");
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Go Somewhere");
 
 			AssertTextEquals.assertPartialText(
-					key_fragmentName = "heading",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "Heading Example");
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Heading Example");
 
 			AssertTextEquals.assertPartialText(
-					key_fragmentName = "html",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "HTML Example");
+				key_fragmentName = "html",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "HTML Example");
 		}
 
 		task ("Add fragment and check it's shown") {
 			PageEditor.addElementToContainer(
-					collectionName = "Basic Components",
-					dragAndDropToUp = "true",
-					fragmentName = "Paragraph",
-					navTab = "Fragments",
-					targetElementName = "Blogs");
+				collectionName = "Basic Components",
+				dragAndDropToUp = "true",
+				fragmentName = "Paragraph",
+				navTab = "Fragments",
+				targetElementName = "Blogs");
 
 			AssertTextEquals.assertPartialText(
-					key_fragmentName = "paragraph",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-					value1 = "A paragraph is a self-contained unit of a discourse");
+				key_fragmentName = "paragraph",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "A paragraph is a self-contained unit of a discourse");
 		}
 	}
 
@@ -851,15 +842,15 @@ definition {
 	test HiddenFragmentsInPagesTemplatesAppearHiddenInPages {
 		task ("Add a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-					groupName = "Test Site Name",
-					layoutPageTemplateCollectionName = "Page Template Collection");
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
 
 			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-					groupName = "Test Site Name",
-					layoutPageTemplateCollectionName = "Page Template Collection",
-					layoutPageTemplateEntryName = "Page Template Name",
-					layoutPageTemplateStatus = "Draft",
-					layoutPageTemplateType = "Content Page Template");
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
 
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
@@ -872,30 +863,30 @@ definition {
 
 		task ("Add two heading fragemtns") {
 			PageEditor.addFragment(
-					collectionName = "Basic Components",
-					fragmentName = "Heading");
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 
 			PageEditor.editFragmentText(
-					fragmentName = "Heading",
-					id = "element-text",
-					text = "Heading Example 1");
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Heading Example 1");
 
 			PageEditor.addFragment(
-					collectionName = "Basic Components",
-					fragmentName = "Heading",
-					targetFragmentName = "Heading");
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Heading");
 
 			PageEditor.editFragmentText(
-					fragmentName = "Heading",
-					id = "element-text",
-					index = "2",
-					text = "Heading Example 2");
+				fragmentName = "Heading",
+				id = "element-text",
+				index = "2",
+				text = "Heading Example 2");
 		}
 
 		task ("Hide Heading Example 1") {
 			PageEditor.clickHideFragmentViaPageStructure(
-					fragmentName = "Heading",
-					index = "1");
+				fragmentName = "Heading",
+				index = "1");
 		}
 		task ("Publish page template") {
 			PageEditor.clickPublish();
@@ -905,30 +896,29 @@ definition {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
-					collectionName = "Page Template Collection",
-					pageName = "Test Page Name",
-					pageTemplateName = "Page Template Name");
+				collectionName = "Page Template Collection",
+				pageName = "Test Page Name",
+				pageTemplateName = "Page Template Name");
 		}
-
 
 		task ("Assert Heading Example 1 is not shown") {
 			AssertTextNotPresent(
-					key_index = "1",
-					key_fragmentName = "heading",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
-					value1 = "Heading Example 1");
+				key_fragmentName = "heading",
+				key_index = "1",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+				value1 = "Heading Example 1");
 
 			AssertTextEquals(
-					key_index = "2",
-					key_fragmentName = "heading",
-					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
-					value1 = "Heading Example 2");
+				key_fragmentName = "heading",
+				key_index = "2",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+				value1 = "Heading Example 2");
 		}
 
 		task ("Show Heading Example 1") {
 			PageEditor.clickUnhideFragmentViaPageStructure(
-					fragmentName = "Heading",
-					index = "1");
+				fragmentName = "Heading",
+				index = "1");
 		}
 
 		task ("Open the Preview modal") {
@@ -940,15 +930,13 @@ definition {
 		task ("Assert both Heading Example 1 and Heading Example 2 are shown") {
 			for (var n : list "1,2") {
 				AssertTextEquals(
-						key_index = "${n}",
-						key_fragmentName = "heading",
-						locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
-						value1 = "Heading Example ${n}");
+					key_fragmentName = "heading",
+					key_index = "${n}",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+					value1 = "Heading Example ${n}");
 			}
 		}
-
 	}
-
 
 	@description = "This is a test for LPS-106778. Reorganize fragments in page editor."
 	@priority = "5"

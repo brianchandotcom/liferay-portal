@@ -340,6 +340,54 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9181 | Test Summary: Bar graph and percentage of page views displays percentage of plan used."
+	@priority = "3"
+	test PageViewsCardShowOverviewUsageOfPlan {
+		task ("Sign in AC") {
+			ACUtils.launchAC();
+		}
+
+		task ("Navigate to Workspace Settings") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToWorkspace();
+		}
+
+		task ("Navigate to the Usage") {
+			ACSettings.goToUsage();
+		}
+
+		task ("View the current number on Page Views card not equals 0") {
+			var current = ACSettings.getCurrentNumber(metricName = "Page Views");
+
+			TestUtils.assertNotEquals(
+				actual = "${current}",
+				expected = "0");
+		}
+
+		task ("View the usage percentage on Page Views not equals 0") {
+			var percentage = ACSettings.getUsagePercentage(metricName = "Page Views");
+
+			TestUtils.assertNotEquals(
+				actual = "${percentage}",
+				expected = "0%");
+		}
+
+		task ("View the oveview usage on Page Views card") {
+			ACSettings.assertOverviewUsage(
+				current = "${current}",
+				limit = "75,000,000",
+				metricName = "Page Views",
+				usageSince = "${percentage} since");
+
+			AssertAttributeValue(
+				attribute1 = "style",
+				key_metricName = "Page Views",
+				locator1 = "ACUsage#USAGE_BAR",
+				value1 = "width: ${percentage};");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8150 | Test Summary: Page views update in real time"
 	@priority = "5"
 	test PageViewsUpdateInRealTime {

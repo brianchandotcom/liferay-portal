@@ -256,5 +256,9 @@
 			<contains>No score point assigners available</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-136151">
+			<contains>Store is not available</contains>
+			<matches></matches>
+		</ignore-error>
 	</log>
 </ignore-errors>

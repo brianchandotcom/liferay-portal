@@ -132,44 +132,40 @@ public class Sidecar {
 			_log.info("Stopping sidecar Elasticsearch");
 		}
 
-		if (_processChannel == null) {
-			PathUtil.deleteDir(_sidecarTempDirPath);
+		if (_processChannel != null) {
+			NoticeableFuture<Serializable> noticeableFuture =
+				_processChannel.getProcessNoticeableFuture();
 
-			return;
-		}
+			noticeableFuture.removeFutureListener(_restartFutureListener);
 
-		NoticeableFuture<Serializable> noticeableFuture =
-			_processChannel.getProcessNoticeableFuture();
+			_processChannel.write(new StopSidecarProcessCallable());
 
-		noticeableFuture.removeFutureListener(_restartFutureListener);
-
-		_processChannel.write(new StopSidecarProcessCallable());
-
-		try {
-			noticeableFuture.get(
-				_elasticsearchConfigurationWrapper.sidecarShutdownTimeout(),
-				TimeUnit.MILLISECONDS);
-		}
-		catch (Exception exception) {
-			if (!noticeableFuture.isDone()) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Forcibly shutdown sidecar Elasticsearch process ",
-							"because it did not shut down in ",
-							_elasticsearchConfigurationWrapper.
-								sidecarShutdownTimeout(),
-							" ms"),
-						exception);
-				}
-
-				noticeableFuture.cancel(true);
+			try {
+				noticeableFuture.get(
+					_elasticsearchConfigurationWrapper.sidecarShutdownTimeout(),
+					TimeUnit.MILLISECONDS);
 			}
+			catch (Exception exception) {
+				if (!noticeableFuture.isDone()) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Forcibly shutdown sidecar Elasticsearch ",
+								"process because it did not shut down in ",
+								_elasticsearchConfigurationWrapper.
+									sidecarShutdownTimeout(),
+								" ms"),
+							exception);
+					}
+
+					noticeableFuture.cancel(true);
+				}
+			}
+
+			_processChannel = null;
 		}
 
 		PathUtil.deleteDir(_sidecarTempDirPath);
-
-		_processChannel = null;
 	}
 
 	protected static void addFutureListener(

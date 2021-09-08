@@ -90,7 +90,7 @@ public class GetCollectionSupportedFiltersMVCResourceCommand
 			List<InfoFilter> supportedInfoFilters =
 				layoutListRetriever.getSupportedInfoFilters(
 					listObjectReferenceFactory.getListObjectReference(
-						jsonObject));
+						layoutObjectReferenceJSONObject));
 
 			jsonObject.put(
 				collectionJSONObject.getString("collectionId"),

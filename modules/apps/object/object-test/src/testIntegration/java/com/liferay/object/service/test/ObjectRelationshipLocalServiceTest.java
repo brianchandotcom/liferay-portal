@@ -90,11 +90,11 @@ public class ObjectRelationshipLocalServiceTest {
 		Assert.assertNotNull(
 			_objectFieldLocalService.fetchObjectField(
 				_objectDefinition1.getObjectDefinitionId(),
-				"r_marriage_" + _objectDefinition1.getPKObjectFieldName()));
+				"r_marriage_" + _objectDefinition2.getPKObjectFieldName()));
 		Assert.assertNotNull(
 			_objectFieldLocalService.fetchObjectField(
 				_objectDefinition2.getObjectDefinitionId(),
-				"r_marriage_" + _objectDefinition2.getPKObjectFieldName()));
+				"r_marriage_" + _objectDefinition1.getPKObjectFieldName()));
 	}
 
 	@DeleteAfterTestRun

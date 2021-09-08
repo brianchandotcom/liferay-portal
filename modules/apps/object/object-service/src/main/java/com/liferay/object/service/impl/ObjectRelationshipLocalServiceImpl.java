@@ -85,7 +85,7 @@ public class ObjectRelationshipLocalServiceImpl
 				type, ObjectRelationshipConstants.TYPE_MANY_TO_ONE)) {
 
 			ObjectField objectField = _addObjectField(
-				user, name, objectDefinitionId1);
+				user, name, objectDefinitionId1, objectDefinitionId2);
 
 			objectRelationship.setObjectFieldId1(
 				objectField.getObjectFieldId());
@@ -96,7 +96,7 @@ public class ObjectRelationshipLocalServiceImpl
 				type, ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 			ObjectField objectField = _addObjectField(
-				user, name, objectDefinitionId2);
+				user, name, objectDefinitionId2, objectDefinitionId1);
 
 			objectRelationship.setObjectFieldId2(
 				objectField.getObjectFieldId());
@@ -157,7 +157,8 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	private ObjectField _addObjectField(
-			User user, String name, long objectDefinitionId)
+			User user, String name, long objectDefinitionId1,
+			long objectDefinitionId2)
 		throws PortalException {
 
 		ObjectField objectField = _objectFieldPersistence.create(
@@ -167,20 +168,23 @@ public class ObjectRelationshipLocalServiceImpl
 		objectField.setUserId(user.getUserId());
 		objectField.setUserName(user.getFullName());
 		objectField.setListTypeDefinitionId(0);
-		objectField.setObjectDefinitionId(objectDefinitionId);
+		objectField.setObjectDefinitionId(objectDefinitionId1);
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId1);
+
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId2);
 
 		String dbColumnName = StringBundler.concat(
-			"r_", name, "_", objectDefinition.getPKObjectFieldName());
+			"r_", name, "_", objectDefinition2.getPKObjectFieldName());
 
 		objectField.setDBColumnName(dbColumnName);
 
-		String dbTableName = objectDefinition.getDBTableName();
+		String dbTableName = objectDefinition1.getDBTableName();
 
-		if (objectDefinition.isApproved()) {
-			dbTableName = objectDefinition.getExtensionDBTableName();
+		if (objectDefinition1.isApproved()) {
+			dbTableName = objectDefinition1.getExtensionDBTableName();
 		}
 
 		objectField.setDBTableName(dbTableName);
@@ -189,7 +193,7 @@ public class ObjectRelationshipLocalServiceImpl
 		objectField.setIndexedAsKeyword(false);
 		objectField.setIndexedLanguageId(null);
 		objectField.setLabelMap(
-			objectDefinition.getLabelMap(), LocaleUtil.getSiteDefault());
+			objectDefinition2.getLabelMap(), LocaleUtil.getSiteDefault());
 		objectField.setName(dbColumnName);
 		objectField.setRelationship(true);
 		objectField.setRequired(false);
@@ -197,7 +201,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 		objectField = _objectFieldPersistence.update(objectField);
 
-		if (objectDefinition.isApproved()) {
+		if (objectDefinition1.isApproved()) {
 			runSQL(
 				DynamicObjectDefinitionTable.getAlterTableAddColumnSQL(
 					dbTableName, objectField.getDBColumnName(), "Long"));

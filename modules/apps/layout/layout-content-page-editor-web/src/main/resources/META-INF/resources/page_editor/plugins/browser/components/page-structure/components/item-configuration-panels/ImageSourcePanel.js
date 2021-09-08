@@ -310,7 +310,6 @@ function ImagePanelSizeSelector({item}) {
 	const {editableId, fragmentEntryLinkId, type} = item;
 
 	const dispatch = useDispatch();
-	const editables = useSelector((state) => state.editables);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const languageId = useSelector(selectLanguageId);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
@@ -328,7 +327,16 @@ function ImagePanelSizeSelector({item}) {
 
 	const editableValue = editableValues[processorKey][editableId];
 	const editableConfig = editableValue.config || {};
-	const editableElement = editables?.[item.parentId]?.[item.itemId]?.element;
+
+	const fragmentElement = document.querySelector(
+		`[data-fragment-entry-link-id="${fragmentEntryLinkId}"]`
+	);
+
+	const editableElement =
+		fragmentElement.querySelector(`lfr-editable[id="${item.itemId}"]`) ||
+		fragmentElement.querySelector(
+			`[data-lfr-editable-id="${item.itemId}"]`
+		);
 
 	const editableContent = selectEditableValueContent(
 		{fragmentEntryLinks, languageId},

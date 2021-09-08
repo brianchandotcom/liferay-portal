@@ -6081,34 +6081,6 @@ war.path=${app.server.portal.dir}/</echo>
 			<get-dxp-license-product-name />
 
 			<wait-for-app-server-log-message log.message="${dxp.license.product.name} license validation passed" />
-
-			<get-testcase-property property.name="data.archive.type" />
-			<get-testcase-property property.name="portal.version" />
-
-			<if>
-				<isset property="data.archive.type" />
-				<then>
-					<loadfile
-						failonerror="false"
-						property="dxp.license.binary"
-					>
-						<zipentry name="data/license/Liferaycom_PortalDevelopment_developercluster.li" zipfile="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip" />
-					</loadfile>
-				</then>
-			</if>
-
-			<if>
-				<and>
-					<isset property="data.archive.type" />
-					<isset property="dxp.license.binary" />
-				</and>
-				<then>
-					<echo>Using license binary, not waiting for license registration</echo>
-				</then>
-				<else>
-					<wait-for-app-server-log-message log.message="License registered for ${dxp.license.product.name}" />
-				</else>
-			</if>
 		</sequential>
 	</macrodef>
 

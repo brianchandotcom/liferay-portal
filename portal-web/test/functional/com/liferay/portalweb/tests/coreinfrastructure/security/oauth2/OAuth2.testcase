@@ -472,6 +472,7 @@ definition {
 	@description = "This is a use case for LRQA-47381."
 	test AuthorizeExternalApplication {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
+		property test.name.skip.portal.instance = "OAuth2#AuthorizeExternalApplication";
 
 		OAuth2.addAndEditExternalApplication(
 			applicationName = "Third-party Application",
@@ -521,6 +522,7 @@ definition {
 	@priority = "4"
 	test AuthorizeExternalTrustedApplication {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
+		property test.name.skip.portal.instance = "OAuth2#AuthorizeExternalTrustedApplication";
 
 		OAuth2.addAndEditExternalApplication(
 			applicationName = "Third-party Application",

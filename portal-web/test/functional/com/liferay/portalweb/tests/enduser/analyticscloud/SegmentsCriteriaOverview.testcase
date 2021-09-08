@@ -111,12 +111,100 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8497 | Test Summary: Segment criterias nest correctly in the criteria card"
-	@ignore = "true"
 	@priority = "4"
 	test SegmentCriteriasNestCorrectlyInTheCriteriaCard {
+		task ("Connect the DXP to Analytics Cloud") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
 
-		// TODO LRAC-8497
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
 
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+		}
+
+		task ("Add an email criteria from Individual Attributes") {
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "email");
+
+			ACSegments.selectOperator(operator = "contains");
+
+			ACSegments.editTextCriterion(textInput = "@liferay.com");
+		}
+
+		task ("Add a birthDate criteria from Individual Attributes") {
+			ACSegments.addSegmentField(segmentField = "birthDate");
+
+			ACSegments.selectOperator(
+				index = "2",
+				operator = "is after");
+
+			ACSegments.editDateCriterion(
+				day = "10",
+				month = "September",
+				year = "2020");
+		}
+
+		task ("Add a userName criteria from Individual Attributes nested in email") {
+			ACSegments.addNestedSegmentField(
+				index = "2",
+				segmentField = "additionalName");
+
+			ACSegments.selectOperator(
+				index = "3",
+				operator = "does not contain");
+
+			ACSegments.editTextCriterion(
+				index = "3",
+				textInput = "@liferay.com");
+		}
+
+		task ("View the first conjunction") {
+			ACSegments.viewConjunction(conjunction = "And");
+		}
+
+		task ("Change the second conjunction to OR") {
+			ACSegments.editConjunction(index = "2");
+
+			ACSegments.viewConjunction(
+				conjunction = "Or",
+				index = "2");
+		}
+
+		task ("Save the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("View both criterias in Segment Criteria card") {
+			ACSegments.viewSegmentCriteriaIndividualAttributes(
+				attributeName = "email",
+				attributeValue = '''"@liferay.com"''',
+				condition = "contains",
+				conjunction = "AND");
+
+			ACSegments.viewSegmentCriteriaIndividualAttributes(
+				attributeName = "birthDate",
+				attributeValue = "2020-09-10",
+				condition = "is after",
+				conjunction = "OR",
+				index = "2");
+
+			ACSegments.viewSegmentCriteriaIndividualAttributes(
+				attributeName = "additionalName",
+				attributeValue = '''"@liferay.com"''',
+				condition = "does not contain",
+				index = "2",
+				key_indexNested = "2");
+		}
 	}
 
 }

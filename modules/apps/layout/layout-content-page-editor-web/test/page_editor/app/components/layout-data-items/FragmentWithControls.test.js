@@ -37,6 +37,11 @@ jest.mock(
 	})
 );
 
+jest.mock(
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
+	() => jest.fn(() => Promise.resolve({}))
+);
+
 const renderFragment = ({
 	activeItemId = 'fragment',
 	fragmentConfig = {styles: {}},

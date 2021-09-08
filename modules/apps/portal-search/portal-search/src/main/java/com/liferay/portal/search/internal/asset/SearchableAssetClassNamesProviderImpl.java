@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -37,13 +38,13 @@ public class SearchableAssetClassNamesProviderImpl
 		List<AssetRendererFactory<?>> assetRendererFactories =
 			assetRendererFactoryRegistry.getAssetRendererFactories(companyId);
 
-		Stream<AssetRendererFactory<?>> stream =
+		Stream<AssetRendererFactory<?>> stream1 =
 			assetRendererFactories.stream();
 
 		String[] searchEngineHelperEntryClassNames =
 			searchEngineHelper.getEntryClassNames();
 
-		return stream.filter(
+		String[] array1 = stream1.filter(
 			AssetRendererFactory::isSearchable
 		).map(
 			AssetRendererFactory::getClassName
@@ -53,6 +54,22 @@ public class SearchableAssetClassNamesProviderImpl
 		).toArray(
 			String[]::new
 		);
+
+		Stream<String> stream2 = Arrays.stream(
+			searchEngineHelperEntryClassNames);
+
+		String[] array2 = stream2.filter(
+			className -> className.startsWith(
+				"com.liferay.object.model.ObjectDefinition#")
+		).toArray(
+			String[]::new
+		);
+
+		String[] classNames = new String[array1.length + array2.length];
+
+		ArrayUtil.combine(array1, array2, classNames);
+
+		return classNames;
 	}
 
 	@Reference

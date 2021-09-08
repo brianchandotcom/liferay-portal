@@ -992,6 +992,12 @@ definition {
 			locator1 = "Form#SIDEBAR_ADVANCED_PREDEFINED_VALUE");
 	}
 
+	macro setInputMaskFormat {
+		Type(
+			locator1 = "FormFields#INPUT_MASK_FORMAT_VALUE",
+			value1 = "${inputMaskFormat}");
+	}
+
 	macro toggleCKEditorContentStyle {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
@@ -1448,6 +1454,18 @@ definition {
 			key_fieldValue = "${value}",
 			key_rowNumber = "${rowNumber}",
 			locator1 = "FormFields#NUMBER_FIELD_VALUE_ROW");
+	}
+
+	macro viewNumericInputMask {
+		AssertElementPresent(
+			key_inputMaskValue = "${inputMaskValue}",
+			locator1 = "FormFields#INPUT_MASK_VALUE");
+	}
+
+	macro viewNumericType {
+		AssertElementPresent(
+			key_numericType = "${numericType}",
+			locator1 = "FormFields#NUMERIC_TYPE");
 	}
 
 	macro viewOptionColumnsName {

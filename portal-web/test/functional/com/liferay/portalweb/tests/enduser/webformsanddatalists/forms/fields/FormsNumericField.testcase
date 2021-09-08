@@ -800,6 +800,88 @@ definition {
 			fieldValue = "1");
 	}
 
+	@description = "LPS-125861 - Verify that the Input Mask can be enabled on intergers"
+	@priority = "5"
+	test InputMaskCanBeEnabledOnIntergers {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric",
+			formPageNumber = "0");
+
+		FormFields.viewNumericType(numericType = "integer");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		AssertElementPresent(locator1 = "FormFields#CHARACTER_OPTIONS_SHOW_MORE_BUTTON");
+		Click(locator1 = "FormFields#CHARACTER_OPTIONS_SHOW_MORE_BUTTON");
+
+		AssertElementPresent(locator1 = "FormFields#CHARACTER_OPTIONS_SHOW_LESS_BUTTON");
+
+		FormFields.setInputMaskFormat(inputMaskFormat = "E.g +99 (99) 9999-9999");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "E.g +__ (__) ____-____");
+	}
+
+	@description = "LPS-130848 - Verify that the Input Mask can be applied on intergers"
+	@priority = "5"
+	test InputMaskIsWorkingOnIntergers {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric",
+			formPageNumber = "0");
+
+		FormFields.viewNumericType(numericType = "integer");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		FormFields.setInputMaskFormat(inputMaskFormat = "E.g +99 (99) 9999-9999");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewNumericInputMask(inputMaskValue = "E.g +__ (__) ____-____");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "123");
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "Input format is not satisfied.");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "123412341234");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "E.g +12 (34) 1234-1234");
+	}
+
 	@description = "Verify that the Field Label can be edited"
 	@priority = "5"
 	test LabelCanBeEdited {

@@ -27,7 +27,6 @@ import com.liferay.commerce.tax.engine.remote.internal.configuration.RemoteComme
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
 import com.liferay.petra.apache.http.components.URIBuilder;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -170,7 +169,7 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 
 	private Map<String, String> _getCommerceAddressParameters(
 			long commerceAddressId, String prefix)
-		throws PortalException {
+		throws Exception {
 
 		CommerceAddress commerceAddress =
 			_commerceAddressService.getCommerceAddress(commerceAddressId);
@@ -218,7 +217,7 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 	}
 
 	private CommerceTaxValue _getCommerceTaxValue(String result)
-		throws IOException {
+		throws Exception {
 
 		JsonNode jsonNode = _objectMapper.readTree(result);
 
@@ -233,7 +232,7 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 
 	private HttpGet _getHttpGet(
 			CommerceTaxCalculateRequest commerceTaxCalculateRequest)
-		throws PortalException, URISyntaxException {
+		throws Exception {
 
 		RemoteCommerceTaxConfiguration remoteCommerceTaxConfiguration =
 			getRemoteCommerceTaxConfiguration(

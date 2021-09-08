@@ -1626,6 +1626,125 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-134844. Fragments hidden in master pages are hidden in pages that use it and visibility can not be changed."
+	@priority = "4"
+	test FragmentsHiddenInMasterPagesAreHiddenInPagesThatUseIt {
+		task ("Add two header fragments") {
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+					collectionName = "Basic Components",
+					dropTarget = "Header",
+					fragmentName = "Heading",
+					scope = "Master");
+
+			PageEditor.editFragmentText(
+					fragmentName = "Heading",
+					id = "element-text",
+					text = "Heading Example 1");
+
+			PageEditor.addFragment(
+					collectionName = "Basic Components",
+					dropTarget = "Header",
+					fragmentName = "Heading",
+					scope = "Master");
+
+			PageEditor.editFragmentText(
+					fragmentName = "Heading",
+					id = "element-text",
+					index = "2",
+					text = "Heading Example 2");
+		}
+
+		task ("Hide Heading Example 1 and save master page") {
+
+			PageEditor.clickHideFragmentViaPageStructure(
+					fragmentName = "Heading",
+					index = "1");
+
+			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Add a new content page and use created master page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+					masterLayoutName = "Custom Masters Page Template",
+					pageName = "Test Page Name");
+
+		}
+
+		task ("Assert Heading Example 1 is not shown even if we click on button and it appears with a gray background") {
+			AssertTextNotPresent(
+					key_index = "1",
+					key_fragmentName = "heading",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+					value1 = "Heading Example 1");
+
+			PageEditor.gotoTab(tabName = "Browser");
+
+			Navigator.gotoNavTab(navTab = "Page Elements");
+
+			Click.clickNoWaitForVisible(
+					key_index = "1",
+					key_nodeName = "Heading",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
+
+			AssertElementPresent(
+					key_index = "1",
+					key_nodeName = "Heading",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_MASTER_INDEX");
+
+			AssertTextNotPresent(
+					key_index = "1",
+					key_fragmentName = "heading",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+					value1 = "Heading Example 1");
+
+		}
+		
+		task ("Assert Heading Example 1 not hidden and there is no button to hide it") {
+			AssertTextEquals(
+					key_index = "2",
+					key_fragmentName = "heading",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+					value1 = "Heading Example 2");
+
+			AssertElementNotPresent(
+					key_index = "2",
+					key_nodeName = "Heading",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
+
+			AssertElementPresent(
+					key_index = "2",
+					key_nodeName = "Heading",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_MASTER_INDEX");
+		}
+
+		task ("Open the Preview modal") {
+			PageEditor.openPreviewMode();
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Assert only Heading Example 2 is not shown") {
+			AssertTextNotPresent(
+					key_index = "1",
+					key_fragmentName = "heading",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+					value1 = "Heading Example 1");
+
+			AssertTextEquals(
+					key_index = "2",
+					key_fragmentName = "heading",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT_INDEX",
+					value1 = "Heading Example 2");
+		}
+	}
+
+
 	@description = "This is a test for LPS-102566. The new elements can only be added into Drop Zone in a page based on custom master and the elements inherited from the custom master are changless."
 	@priority = "3"
 	test OnlyAddElementsInDropZoneOfPageAndElementsInheritedAreChangeless {

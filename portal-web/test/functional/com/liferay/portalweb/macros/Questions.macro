@@ -669,6 +669,12 @@ definition {
 		}
 	}
 
+	macro subscribeFromTag {
+		Click(locator1 = "Questions#QUESTIONS_BELL_BUTTON");
+
+		AssertElementPresent(locator1 = "Questions#QUESTIONS_UNSUBSCRIBE");
+	}
+
 	macro subscribeQuestion {
 		Click(locator1 = "Questions#QUESTIONS_BELL_BUTTON");
 	}
@@ -698,6 +704,12 @@ definition {
 	}
 
 	macro unsubscribeFromQuestionViaDetails {
+		Click(locator1 = "Questions#QUESTIONS_UNSUBSCRIBE");
+
+		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_UNSUBSCRIBE");
+	}
+
+	macro unsubscribeFromTag {
 		Click(locator1 = "Questions#QUESTIONS_UNSUBSCRIBE");
 
 		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_UNSUBSCRIBE");

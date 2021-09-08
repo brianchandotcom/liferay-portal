@@ -230,8 +230,11 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 		throws Exception {
 
 		RemoteCommerceTaxConfiguration remoteCommerceTaxConfiguration =
-			getRemoteCommerceTaxConfiguration(
-				commerceTaxCalculateRequest.getCommerceChannelGroupId());
+			_configurationProvider.getConfiguration(
+				RemoteCommerceTaxConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceTaxCalculateRequest.getChannelGroupId(),
+					RemoteCommerceTaxConfiguration.class.getName()));
 
 		HttpGet httpGet = new HttpGet(
 			URIBuilder.create(

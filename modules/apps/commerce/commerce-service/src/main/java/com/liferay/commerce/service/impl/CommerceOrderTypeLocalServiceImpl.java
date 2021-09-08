@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -192,14 +195,17 @@ public class CommerceOrderTypeLocalServiceImpl
 
 	@Override
 	public List<CommerceOrderType> getCommerceOrderTypes(
-			String className, long classPK, boolean active, int start, int end)
+			long companyId, String className, long classPK, boolean active,
+			int start, int end)
 		throws PortalException {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommerceOrderTypeTable.INSTANCE),
-				className, classPK, active
+				companyId, className, classPK, active
+			).orderBy(
+				CommerceOrderTypeTable.INSTANCE.displayOrder.ascending()
 			).limit(
 				start, end
 			));
@@ -207,14 +213,14 @@ public class CommerceOrderTypeLocalServiceImpl
 
 	@Override
 	public int getCommerceOrderTypesCount(
-			String className, long classPK, boolean active)
+			long companyId, String className, long classPK, boolean active)
 		throws PortalException {
 
 		return dslQueryCount(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.countDistinct(
 					CommerceOrderTypeTable.INSTANCE.commerceOrderTypeId),
-				className, classPK, active));
+				companyId, className, classPK, active));
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -403,7 +409,8 @@ public class CommerceOrderTypeLocalServiceImpl
 	}
 
 	private GroupByStep _getGroupByStep(
-			FromStep fromStep, String className, long classPK, boolean active)
+			FromStep fromStep, long companyId, String className, long classPK,
+			boolean active)
 		throws PortalException {
 
 		JoinStep joinStep = fromStep.from(
@@ -416,8 +423,20 @@ public class CommerceOrderTypeLocalServiceImpl
 
 		return joinStep.where(
 			() -> {
-				Predicate predicate = CommerceOrderTypeTable.INSTANCE.active.eq(
-					active);
+				Predicate predicate =
+					CommerceOrderTypeTable.INSTANCE.companyId.eq(
+						companyId
+					).and(
+						CommerceOrderTypeTable.INSTANCE.active.eq(active)
+					);
+
+				if (PermissionThreadLocal.getPermissionChecker() != null) {
+					predicate = predicate.and(
+						_inlineSQLHelper.getPermissionWherePredicate(
+							CommerceOrderTypeTable.INSTANCE.getTableName(),
+							CommerceOrderTypeTable.INSTANCE.
+								commerceOrderTypeId));
+				}
 
 				Predicate commerceOrderTypeRelPredicate =
 					Predicate.withParentheses(
@@ -460,5 +479,8 @@ public class CommerceOrderTypeLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderTypeLocalServiceImpl.class);
+
+	@ServiceReference(type = InlineSQLHelper.class)
+	private InlineSQLHelper _inlineSQLHelper;
 
 }

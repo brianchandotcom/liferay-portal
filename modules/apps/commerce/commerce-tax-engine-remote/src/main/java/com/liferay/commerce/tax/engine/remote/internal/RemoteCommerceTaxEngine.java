@@ -34,33 +34,19 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.IOException;
-
 import java.math.BigDecimal;
 
-import java.net.URISyntaxException;
-
-import java.nio.charset.StandardCharsets;
+import java.net.URI;
 
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.apache.http.StatusLine;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.util.EntityUtils;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -80,18 +66,15 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 			CommerceTaxCalculateRequest commerceTaxCalculateRequest)
 		throws CommerceTaxEngineException {
 
-
 		try {
-			Http.Options options = _getHttpOptions(
-				commerceTaxCalculateRequest);
+			Http.Options options = _getHttpOptions(commerceTaxCalculateRequest);
 
 			String json = _http.URLtoString(options);
 
 			if (_log.isDebugEnabled()) {
 				Http.Response response = options.getResponse();
 
-				_log.debug(
-					"Reponse code " + response.getResponseCode());
+				_log.debug("Response code " + response.getResponseCode());
 			}
 
 			return _getCommerceTaxValue(json);
@@ -146,6 +129,10 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 			() -> {
 				Region region = commerceAddress.getRegion();
 
+				if (region == null) {
+					return null;
+				}
+
 				return region.getRegionCode();
 			}
 		).put(
@@ -175,53 +162,14 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 			CommerceTaxCalculateRequest commerceTaxCalculateRequest)
 		throws Exception {
 
+		Http.Options options = new Http.Options();
+
 		RemoteCommerceTaxConfiguration remoteCommerceTaxConfiguration =
 			_configurationProvider.getConfiguration(
 				RemoteCommerceTaxConfiguration.class,
 				new GroupServiceSettingsLocator(
-					commerceTaxCalculateRequest.getChannelGroupId(),
+					commerceTaxCalculateRequest.getCommerceChannelGroupId(),
 					RemoteCommerceTaxConfiguration.class.getName()));
-
-		HttpGet httpGet = new HttpGet(
-			URIBuilder.create(
-				remoteCommerceTaxConfiguration.taxValueEndpointURL()
-			).addParameters(
-				_getCommerceAddressParameters(
-					commerceTaxCalculateRequest.getCommerceBillingAddressId(),
-					"billing")
-			).addParameter(
-				"percentage",
-				String.valueOf(commerceTaxCalculateRequest.isPercentage())
-			).addParameter(
-				"price", String.valueOf(commerceTaxCalculateRequest.getPrice())
-			).addParameters(
-				_getCommerceAddressParameters(
-					commerceTaxCalculateRequest.getCommerceShippingAddressId(),
-					"shipping")
-			).addParameter(
-				"taxCategoryId",
-				String.valueOf(commerceTaxCalculateRequest.getTaxCategoryId())
-			).addParameter(
-				"taxMethod",
-				() -> {
-					CommerceTaxMethod commerceTaxMethod =
-						_commerceTaxMethodService.getCommerceTaxMethod(
-							commerceTaxCalculateRequest.
-								getCommerceTaxMethodId());
-
-					return commerceTaxMethod.getEngineKey();
-				}
-			).addParameter(
-				"taxMethodPercentage",
-				() -> {
-					CommerceTaxMethod commerceTaxMethod =
-						_commerceTaxMethodService.getCommerceTaxMethod(
-							commerceTaxCalculateRequest.
-								getCommerceTaxMethodId());
-
-					return String.valueOf(commerceTaxMethod.isPercentage());
-				}
-			).build());
 
 		if (Validator.isNotNull(
 				remoteCommerceTaxConfiguration.
@@ -231,11 +179,51 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 				remoteCommerceTaxConfiguration.
 					taxValueEndpointAuthorizationToken();
 
-			httpGet.addHeader(
+			options.addHeader(
 				"Authorization", "token " + taxValueEndpointAuthorizationToken);
 		}
 
-		return httpGet;
+		URI uri = URIBuilder.create(
+			remoteCommerceTaxConfiguration.taxValueEndpointURL()
+		).addParameters(
+			_getCommerceAddressParameters(
+				commerceTaxCalculateRequest.getCommerceBillingAddressId(),
+				"billing")
+		).addParameter(
+			"percentage",
+			String.valueOf(commerceTaxCalculateRequest.isPercentage())
+		).addParameter(
+			"price", String.valueOf(commerceTaxCalculateRequest.getPrice())
+		).addParameters(
+			_getCommerceAddressParameters(
+				commerceTaxCalculateRequest.getCommerceShippingAddressId(),
+				"shipping")
+		).addParameter(
+			"taxCategoryId",
+			String.valueOf(commerceTaxCalculateRequest.getTaxCategoryId())
+		).addParameter(
+			"taxMethod",
+			() -> {
+				CommerceTaxMethod commerceTaxMethod =
+					_commerceTaxMethodService.getCommerceTaxMethod(
+						commerceTaxCalculateRequest.getCommerceTaxMethodId());
+
+				return commerceTaxMethod.getEngineKey();
+			}
+		).addParameter(
+			"taxMethodPercentage",
+			() -> {
+				CommerceTaxMethod commerceTaxMethod =
+					_commerceTaxMethodService.getCommerceTaxMethod(
+						commerceTaxCalculateRequest.getCommerceTaxMethodId());
+
+				return String.valueOf(commerceTaxMethod.isPercentage());
+			}
+		).build();
+
+		options.setLocation(uri.toString());
+
+		return options;
 	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {
@@ -245,8 +233,6 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RemoteCommerceTaxEngine.class);
-
-	private CloseableHttpClient _closeableHttpClient;
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;
@@ -258,9 +244,9 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private JSONFactory _jsonFactory;
+	private Http _http;
 
-	private PoolingHttpClientConnectionManager
-		_poolingHttpClientConnectionManager;
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

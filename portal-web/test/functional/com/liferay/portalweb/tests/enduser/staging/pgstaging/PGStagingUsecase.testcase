@@ -26,6 +26,8 @@ definition {
 
 	@priority = "3"
 	test BlogsOrganizationWorkflowStaging {
+		property test.name.skip.portal.instance = "PGStagingUsecase#BlogsOrganizationWorkflowStaging";
+
 		Role.openRolesAdmin();
 
 		Role.definePermissionCP(

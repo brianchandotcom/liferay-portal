@@ -41,6 +41,9 @@ import org.osgi.service.component.annotations.Component;
 public class BlogsCoverImageCaptionEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
+	public static final String DEFAULT_REMOVE_PLUGINS =
+		"magicline,stylescombo,videoembed";
+
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
@@ -56,10 +59,10 @@ public class BlogsCoverImageCaptionEditorConfigContributor
 		String removePlugins = jsonObject.getString("removePlugins");
 
 		if (Validator.isNotNull(removePlugins)) {
-			removePlugins = removePlugins + ",magicline,stylescombo,videoembed";
+			removePlugins = removePlugins + "," + DEFAULT_REMOVE_PLUGINS;
 		}
 		else {
-			removePlugins = "magicline,stylescombo,videoembed";
+			removePlugins = DEFAULT_REMOVE_PLUGINS;
 		}
 
 		jsonObject.put(

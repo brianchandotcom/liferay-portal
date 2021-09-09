@@ -64,14 +64,18 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 	@Override
 	public ObjectEntry addObjectEntry(
-			DTOConverterContext dtoConverterContext, long userId, long groupId,
-			long objectDefinitionId, ObjectEntry objectEntry)
+			DTOConverterContext dtoConverterContext, long userId,
+			String scopeId, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry)
 		throws Exception {
+
+		long objectDefinitionId = objectDefinition.getObjectDefinitionId();
 
 		return _objectEntryDTOConverter.toDTO(
 			dtoConverterContext,
 			_objectEntryLocalService.addObjectEntry(
-				userId, groupId, objectDefinitionId,
+				userId, _getGroupId(objectDefinition, scopeId),
+				objectDefinitionId,
 				_toObjectValues(
 					objectDefinitionId, objectEntry.getProperties(),
 					dtoConverterContext.getLocale()),
@@ -81,14 +85,17 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	@Override
 	public ObjectEntry addOrUpdateObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, long userId, long groupId,
-			long objectDefinitionId, ObjectEntry objectEntry)
+			String externalReferenceCode, long userId, String scopeId,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws Exception {
+
+		long objectDefinitionId = objectDefinition.getObjectDefinitionId();
 
 		return _objectEntryDTOConverter.toDTO(
 			dtoConverterContext,
 			_objectEntryLocalService.addOrUpdateObjectEntry(
-				externalReferenceCode, userId, groupId, objectDefinitionId,
+				externalReferenceCode, userId,
+				_getGroupId(objectDefinition, scopeId), objectDefinitionId,
 				_toObjectValues(
 					objectDefinitionId, objectEntry.getProperties(),
 					dtoConverterContext.getLocale()),
@@ -102,27 +109,23 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 	@Override
 	public void deleteObjectEntry(
-			String externalReferenceCode, long companyId, long groupId)
+			String externalReferenceCode, long companyId, String scopeId,
+			ObjectDefinition objectDefinition)
 		throws Exception {
 
 		_objectEntryLocalService.deleteObjectEntry(
-			externalReferenceCode, companyId, groupId);
+			externalReferenceCode, companyId,
+			_getGroupId(objectDefinition, scopeId));
 	}
 
 	@Override
 	public Page<ObjectEntry> getObjectEntries(
-			long companyId, long groupId, long objectDefinitionId,
+			long companyId, String scopeId, ObjectDefinition objectDefinition,
 			Aggregation aggregation, DTOConverterContext dtoConverterContext,
 			Filter filter, Pagination pagination, String search, Sort[] sorts)
 		throws Exception {
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId);
-
-		ObjectScopeProvider objectScopeProvider =
-			_objectScopeProviderRegistry.getObjectScopeProvider(
-				objectDefinition.getScope());
+		long objectDefinitionId = objectDefinition.getObjectDefinitionId();
 
 		return SearchUtil.search(
 			new HashMap<>(),
@@ -144,13 +147,8 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 				searchContext.setAttribute(
 					"objectDefinitionId", objectDefinitionId);
 				searchContext.setCompanyId(companyId);
-
-				if (objectScopeProvider.isGroupAware()) {
-					searchContext.setGroupIds(new long[] {groupId});
-				}
-				else {
-					searchContext.setGroupIds(new long[] {0});
-				}
+				searchContext.setGroupIds(
+					new long[] {_getGroupId(objectDefinition, scopeId)});
 			},
 			sorts,
 			document -> getObjectEntry(
@@ -171,13 +169,15 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	@Override
 	public ObjectEntry getObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, long companyId, long groupId)
+			String externalReferenceCode, long companyId, String scope,
+			ObjectDefinition objectDefinition)
 		throws Exception {
 
 		return _objectEntryDTOConverter.toDTO(
 			dtoConverterContext,
 			_objectEntryLocalService.getObjectEntry(
-				externalReferenceCode, companyId, groupId));
+				externalReferenceCode, companyId,
+				_getGroupId(objectDefinition, scope)));
 	}
 
 	@Override
@@ -198,6 +198,20 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 					objectEntry.getProperties(),
 					dtoConverterContext.getLocale()),
 				new ServiceContext()));
+	}
+
+	private long _getGroupId(
+		ObjectDefinition objectDefinition, String scopeId) {
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				objectDefinition.getScope());
+
+		if (objectScopeProvider.isGroupAware()) {
+			return GetterUtil.getLong(scopeId);
+		}
+
+		return 0;
 	}
 
 	private Date _toDate(Locale locale, String valueString) {

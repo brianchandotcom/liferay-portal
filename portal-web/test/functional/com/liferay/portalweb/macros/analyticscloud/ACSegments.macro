@@ -212,11 +212,9 @@ definition {
 	macro editFormControlCriterion {
 		var key_Criterion = "${criterionName}";
 
-		var key_option = "${option}";
-
-		Click(locator1 = "ACSegments#FORM_CONTROL_CRITERION");
-
-		Click(locator1 = "ACSegments#FORM_CONTROL_CRITERION_OPTION");
+		Select(
+			locator1 = "ACSegments#FORM_CONTROL_CRITERION",
+			value1 = "${option}");
 	}
 
 	macro editNumberCriterion {
@@ -355,6 +353,10 @@ definition {
 		Click(locator1 = "ACSegments#KNOWN_SEGMENT_MEMBERS_FILTER");
 
 		AssertElementPresent(locator1 = "ACSegments#KNOWN_SEGMENT_MEMBERS_FILTER_ARROW_DESC");
+	}
+
+	macro filterKnownSegmentMembersListByName {
+		Click(locator1 = "ACSegments#KNOWN_SEGMENT_MEMBERS_FILTER_BY_NAME");
 	}
 
 	macro goToSidebarAttributes {
@@ -528,6 +530,19 @@ definition {
 		AssertElementPresent(locator1 = "ACSegments#ANONYMOUS_LABEL");
 	}
 
+	macro viewKnownSegmentMemberNameLinksSpecificOrder {
+		var resultOrder = "0";
+
+		for (var username : list "${username}") {
+			var resultOrder = ${resultOrder} + 1;
+
+			AssertVisible(
+				key_userName = "${username}",
+				locator1 = "ACSegments#KNOWN_SEGMENT_MEMBERS_VIEW_SPECIFIC_ORDER",
+				resultOrder = "${resultOrder}");
+		}
+	}
+
 	macro viewKnownSegmentMembersSpecificOrder {
 		var resultOrder = "0";
 
@@ -655,6 +670,13 @@ definition {
 			key_memberType = "Net Change",
 			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_HOVER_MEMBER_CHANGE",
 			value1 = "${netChange}");
+	}
+
+	macro viewSegmentMembershipChartRowNumbers {
+		AssertTextEquals.assertPartialText(
+			key_row = "${row}",
+			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_HOVER_DATA_ROW",
+			value1 = "${value}");
 	}
 
 	macro viewSegmentMembershipLegendNumbers {

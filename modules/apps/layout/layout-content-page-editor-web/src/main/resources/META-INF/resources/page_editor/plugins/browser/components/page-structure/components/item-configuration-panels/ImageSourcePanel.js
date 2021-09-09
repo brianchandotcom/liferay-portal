@@ -20,6 +20,7 @@ import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/co
 import {EDITABLE_TYPES} from '../../../../../../app/config/constants/editableTypes';
 import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../../../app/config/index';
+import {useGlobalContext} from '../../../../../../app/contexts/GlobalContext';
 import {
 	useDispatch,
 	useSelector,
@@ -311,6 +312,7 @@ function ImagePanelSizeSelector({item}) {
 
 	const dispatch = useDispatch();
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const globalContext = useGlobalContext();
 	const languageId = useSelector(selectLanguageId);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
@@ -329,7 +331,7 @@ function ImagePanelSizeSelector({item}) {
 	const editableConfig = editableValue.config || {};
 
 	const getEditableElement = useCallback(() => {
-		const fragmentElement = document.querySelector(
+		const fragmentElement = globalContext.document.querySelector(
 			`[data-fragment-entry-link-id="${fragmentEntryLinkId}"]`
 		);
 
@@ -345,7 +347,7 @@ function ImagePanelSizeSelector({item}) {
 				`[data-lfr-editable-id="${item.itemId}"]`
 			)
 		);
-	}, [fragmentEntryLinkId, item.itemId]);
+	}, [fragmentEntryLinkId, item.itemId, globalContext.document]);
 
 	const editableContent = selectEditableValueContent(
 		{fragmentEntryLinks, languageId},

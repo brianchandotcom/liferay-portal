@@ -247,6 +247,7 @@ public class DDMFormTemplateContextProcessor {
 	protected void initModels() {
 		setDDMFormDefaultLocale();
 		setDDMFormInstanceId();
+		setDDMFormObjectFields();
 		setDDMFormRules();
 		setDDMFormValuesAvailableLocales();
 		setDDMFormValuesDefaultLocale();
@@ -618,6 +619,11 @@ public class DDMFormTemplateContextProcessor {
 
 	protected void setDDMFormInstanceId() {
 		_ddmFormInstanceId = _jsonObject.getLong("formId", 0);
+	}
+
+	protected void setDDMFormObjectFields() {
+		_ddmForm.setDDMFormObjectFields(
+			_jsonObject.getJSONArray("objectFields"));
 	}
 
 	protected void setDDMFormRules() {

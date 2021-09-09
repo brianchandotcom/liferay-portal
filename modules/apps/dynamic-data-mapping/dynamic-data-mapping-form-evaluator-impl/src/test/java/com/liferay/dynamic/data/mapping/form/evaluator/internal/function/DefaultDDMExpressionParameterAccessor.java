@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessor;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 
 import java.util.Locale;
 import java.util.function.Supplier;
@@ -47,7 +48,7 @@ public class DefaultDDMExpressionParameterAccessor
 	}
 
 	@Override
-	public String getObjectFields() {
+	public JSONArray getObjectFields() {
 		return _getObjectFieldsSupplier.get();
 	}
 

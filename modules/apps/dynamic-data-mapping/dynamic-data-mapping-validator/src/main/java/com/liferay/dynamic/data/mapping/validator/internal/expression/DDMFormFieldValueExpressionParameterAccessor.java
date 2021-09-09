@@ -16,6 +16,8 @@ package com.liferay.dynamic.data.mapping.validator.internal.expression;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessor;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 
 import java.util.Locale;
 
@@ -51,6 +53,11 @@ public class DDMFormFieldValueExpressionParameterAccessor
 	@Override
 	public Locale getLocale() {
 		return _locale;
+	}
+
+	@Override
+	public JSONArray getObjectFields() {
+		return JSONFactoryUtil.createJSONArray();
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.expression;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessor;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateRequest;
+import com.liferay.portal.kernel.json.JSONArray;
 
 import java.util.Locale;
 
@@ -52,7 +53,7 @@ public class DDMFormEvaluatorExpressionParameterAccessor
 	}
 
 	@Override
-	public String getObjectFields() {
+	public JSONArray getObjectFields() {
 		return _ddmFormEvaluatorEvaluateRequest.getObjectFields();
 	}
 

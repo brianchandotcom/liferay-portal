@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.expression;
 
+import com.liferay.portal.kernel.json.JSONArray;
+
 import java.util.Locale;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -32,7 +34,7 @@ public interface DDMExpressionParameterAccessor {
 
 	public Locale getLocale();
 
-	public String getObjectFields();
+	public JSONArray getObjectFields();
 
 	public String getTimeZoneId();
 

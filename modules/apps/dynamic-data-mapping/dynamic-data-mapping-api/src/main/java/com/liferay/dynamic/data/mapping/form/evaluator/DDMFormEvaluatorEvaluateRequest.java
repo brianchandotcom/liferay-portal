@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.evaluator;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.kernel.json.JSONArray;
 
 import java.util.Locale;
 
@@ -57,8 +58,8 @@ public final class DDMFormEvaluatorEvaluateRequest {
 		return _locale;
 	}
 
-	public String getObjectFields() {
-		return _objectFields;
+	public JSONArray getObjectFields() {
+		return _objectFieldsJSONArray;
 	}
 
 	public String getTimeZoneId() {
@@ -128,8 +129,9 @@ public final class DDMFormEvaluatorEvaluateRequest {
 			return this;
 		}
 
-		public Builder withObjectFields(String objectFields) {
-			_ddmFormEvaluatorEvaluateRequest._objectFields = objectFields;
+		public Builder withObjectFields(JSONArray objectFieldsJSONArray) {
+			_ddmFormEvaluatorEvaluateRequest._objectFieldsJSONArray =
+				objectFieldsJSONArray;
 
 			return this;
 		}
@@ -178,7 +180,7 @@ public final class DDMFormEvaluatorEvaluateRequest {
 	private String _googlePlacesAPIKey;
 	private long _groupId;
 	private Locale _locale;
-	private String _objectFields;
+	private JSONArray _objectFieldsJSONArray;
 	private String _timeZoneId;
 	private long _userId;
 	private boolean _viewMode;

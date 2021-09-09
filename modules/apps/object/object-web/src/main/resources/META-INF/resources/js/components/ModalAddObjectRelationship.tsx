@@ -23,6 +23,7 @@ import RequiredMask from './RequiredMask';
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
 	spritemap: string;
+	objectDefinitions: TObjectDefinition[];
 }
 
 type TObjectDefinition = {
@@ -33,7 +34,6 @@ type TObjectDefinition = {
 type TFormState = {
 	name: string;
 	objectDefinitionId2: number;
-	objectDefinitions: TObjectDefinition[];
 	type: string;
 };
 
@@ -44,12 +44,15 @@ const headers = new Headers({
 	'Content-Type': 'application/json',
 });
 
-const ModalAddObjectRelationship: React.FC<IProps> = ({apiURL, spritemap}) => {
+const ModalAddObjectRelationship: React.FC<IProps> = ({
+	apiURL,
+	objectDefinitions,
+	spritemap,
+}) => {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 	const [formState, setFormState] = useState<TFormState>({
 		name: '',
 		objectDefinitionId2: 0,
-		objectDefinitions: [],
 		type: '',
 	});
 	const [error, setError] = useState<string>('');
@@ -100,33 +103,6 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({apiURL, spritemap}) => {
 			);
 		};
 	}, []);
-
-	useEffect(() => {
-		const makeRequest = async () => {
-			const result = await Liferay.Util.fetch(
-				'/o/object-admin/v1.0/object-definitions',
-				{
-					headers,
-					method: 'GET',
-				}
-			);
-
-			const {items = []} = await result.json();
-
-			setFormState({
-				...formState,
-				objectDefinitions: items.map(
-					({id, name}: TObjectDefinition) => ({
-						id,
-						name,
-					})
-				),
-				type: 'String',
-			});
-		};
-
-		makeRequest();
-	});
 
 	return (
 		<>
@@ -233,15 +209,13 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({apiURL, spritemap}) => {
 									)}
 								/>
 
-								{formState.objectDefinitions.map(
-									({id, name}) => (
-										<ClaySelect.Option
-											key={id}
-											label={name}
-											value={id}
-										/>
-									)
-								)}
+								{objectDefinitions.map(({id, name}) => (
+									<ClaySelect.Option
+										key={id}
+										label={name}
+										value={id}
+									/>
+								))}
 							</ClaySelect>
 						</ClayForm.Group>
 					</ClayModal.Body>
@@ -274,9 +248,42 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({apiURL, spritemap}) => {
 };
 
 const ModalWithProvider: React.FC<IProps> = ({apiURL, spritemap}) => {
+	const [objectDefinitions, setObjectDefinitions] = useState<
+		TObjectDefinition[]
+	>([]);
+
+	useEffect(() => {
+		const makeRequest = async () => {
+			const result = await Liferay.Util.fetch(
+				'/o/object-admin/v1.0/object-definitions',
+				{
+					headers,
+					method: 'GET',
+				}
+			);
+
+			const {items = []} = await result.json();
+
+			const objectDefinitions = items.map(
+				({id, name}: TObjectDefinition) => ({
+					id,
+					name,
+				})
+			);
+
+			setObjectDefinitions(objectDefinitions);
+		};
+
+		makeRequest();
+	}, []);
+
 	return (
 		<ClayModalProvider>
-			<ModalAddObjectRelationship apiURL={apiURL} spritemap={spritemap} />
+			<ModalAddObjectRelationship
+				apiURL={apiURL}
+				objectDefinitions={objectDefinitions}
+				spritemap={spritemap}
+			/>
 		</ClayModalProvider>
 	);
 };

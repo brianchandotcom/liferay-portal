@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
+import com.liferay.object.internal.petra.sql.dsl.DynamicObjectRelationshipMapTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryTable;
@@ -262,6 +263,90 @@ public class ObjectEntryLocalServiceImpl
 			groupId, companyId, externalReferenceCode);
 
 		return objectEntryLocalService.deleteObjectEntry(objectEntry);
+	}
+
+	@Override
+	public List<ObjectEntry> getManyToManyRelatedObjectEntries(
+			long groupId, long primaryKey, long objectRelationshipId, int start,
+			int end)
+		throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipPersistence.findByPrimaryKey(
+				objectRelationshipId);
+
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionPersistence.fetchByPrimaryKey(
+				objectRelationship.getObjectDefinitionId1());
+
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionPersistence.fetchByPrimaryKey(
+				objectRelationship.getObjectDefinitionId2());
+
+		DynamicObjectRelationshipMapTable dynamicObjectRelationshipMapTable =
+			new DynamicObjectRelationshipMapTable(
+				objectDefinition1.getPKObjectFieldDBColumnName(),
+				objectDefinition2.getPKObjectFieldDBColumnName(),
+				objectRelationship.getDBTableName());
+
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable2 =
+			_getDynamicObjectDefinitionTable(
+				objectRelationship.getObjectDefinitionId2());
+
+		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
+			_getExtensionDynamicObjectDefinitionTable(
+				objectRelationship.getObjectDefinitionId2());
+
+		Predicate predicate = ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
+			objectRelationship.getObjectDefinitionId2());
+
+		Column<DynamicObjectRelationshipMapTable, Long> primaryKeyColumn1 =
+			dynamicObjectRelationshipMapTable.getPrimaryKeyColumn1();
+
+		Column<DynamicObjectRelationshipMapTable, Long> primaryKeyColumn2 =
+			dynamicObjectRelationshipMapTable.getPrimaryKeyColumn2();
+
+		predicate = predicate.and(primaryKeyColumn1.eq(primaryKey));
+
+		predicate = predicate.and(
+			ObjectEntryTable.INSTANCE.groupId.eq(groupId));
+
+		if (PermissionThreadLocal.getPermissionChecker() != null) {
+			predicate = predicate.and(
+				_inlineSQLHelper.getPermissionWherePredicate(
+					dynamicObjectDefinitionTable2.getName(),
+					dynamicObjectDefinitionTable2.getPrimaryKeyColumn()));
+		}
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.selectDistinct(
+			ObjectEntryTable.INSTANCE
+		).from(
+			dynamicObjectDefinitionTable2
+		).innerJoinON(
+			ObjectEntryTable.INSTANCE,
+			ObjectEntryTable.INSTANCE.objectEntryId.eq(
+				dynamicObjectDefinitionTable2.getPrimaryKeyColumn())
+		).innerJoinON(
+			extensionDynamicObjectDefinitionTable,
+			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
+			).eq(
+				dynamicObjectDefinitionTable2.getPrimaryKeyColumn()
+			)
+		).innerJoinON(
+			dynamicObjectRelationshipMapTable,
+			primaryKeyColumn2.eq(
+				dynamicObjectDefinitionTable2.getPrimaryKeyColumn())
+		).where(
+			predicate
+		).limit(
+			start, end
+		);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(dslQuery);
+		}
+
+		return objectEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -38,6 +38,20 @@ export default ({currentSection, items, question, showSectionLabel}) => {
 			: question.messageBoardSection &&
 			  question.messageBoardSection.title;
 
+	const creatorInformation = question.creator
+		? {
+				link: `/questions/${sectionTitle}/creator/${question.creator.id}`,
+				name: question.creator.name,
+				portraitURL: question.creator.image,
+				userId: String(question.creator.id),
+		  }
+		: {
+				link: `/questions/${sectionTitle}`,
+				name: '',
+				portraitURL: '',
+				userId: '0',
+		  };
+
 	return (
 		<div className="c-mt-4 c-p-3 position-relative question-row text-secondary">
 			<div className="align-items-center d-flex flex-wrap justify-content-between">
@@ -150,22 +164,21 @@ export default ({currentSection, items, question, showSectionLabel}) => {
 
 			<div className="align-items-sm-center align-items-start d-flex flex-column-reverse flex-sm-row justify-content-between">
 				<div className="c-mt-3 c-mt-sm-0 stretched-link-layer">
-					{question.creator && (
-						<Link
-							to={`/questions/${sectionTitle}/creator/${question.creator.id}`}
-						>
-							<UserIcon
-								fullName={question.creator.name}
-								portraitURL={question.creator.image}
-								size="sm"
-								userId={String(question.creator.id)}
-							/>
+					<Link to={creatorInformation.link}>
+						<UserIcon
+							fullName={creatorInformation.name}
+							portraitURL={creatorInformation.portraitURL}
+							size="sm"
+							userId={creatorInformation.userId}
+						/>
 
-							<strong className="c-ml-2 text-dark">
-								{question.creator.name}
-							</strong>
-						</Link>
-					)}
+						<strong className="c-ml-2 text-dark">
+							{creatorInformation.name ||
+								Liferay.Language.get(
+									'anonymous-user-configuration-name'
+								)}
+						</strong>
+					</Link>
 
 					<span className="c-ml-2 small">
 						{'- ' + dateToInternationalHuman(question.dateModified)}

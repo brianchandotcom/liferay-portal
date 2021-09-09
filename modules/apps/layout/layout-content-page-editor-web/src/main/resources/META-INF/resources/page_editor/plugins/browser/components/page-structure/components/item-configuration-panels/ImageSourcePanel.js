@@ -13,7 +13,7 @@
  */
 
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/editableFragmentEntryProcessor';
@@ -328,15 +328,24 @@ function ImagePanelSizeSelector({item}) {
 	const editableValue = editableValues[processorKey][editableId];
 	const editableConfig = editableValue.config || {};
 
-	const fragmentElement = document.querySelector(
-		`[data-fragment-entry-link-id="${fragmentEntryLinkId}"]`
-	);
-
-	const editableElement =
-		fragmentElement.querySelector(`lfr-editable[id="${item.itemId}"]`) ||
-		fragmentElement.querySelector(
-			`[data-lfr-editable-id="${item.itemId}"]`
+	const getEditableElement = useCallback(() => {
+		const fragmentElement = document.querySelector(
+			`[data-fragment-entry-link-id="${fragmentEntryLinkId}"]`
 		);
+
+		if (!fragmentElement) {
+			return null;
+		}
+
+		return (
+			fragmentElement.querySelector(
+				`lfr-editable[id="${item.itemId}"]`
+			) ||
+			fragmentElement.querySelector(
+				`[data-lfr-editable-id="${item.itemId}"]`
+			)
+		);
+	}, [fragmentEntryLinkId, item.itemId]);
 
 	const editableContent = selectEditableValueContent(
 		{fragmentEntryLinks, languageId},
@@ -372,8 +381,8 @@ function ImagePanelSizeSelector({item}) {
 		isMappedToInfoItem(editableContent) ||
 		isMappedToCollection(editableContent) ? (
 		<ImageSelectorSize
-			editableElement={editableElement}
 			fieldValue={editableContent}
+			getEditableElement={getEditableElement}
 			imageSizeId={imageSizeId}
 			onImageSizeIdChanged={
 				item.type === EDITABLE_TYPES.image

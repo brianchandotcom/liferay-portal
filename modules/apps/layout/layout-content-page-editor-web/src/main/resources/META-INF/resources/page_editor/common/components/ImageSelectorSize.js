@@ -28,6 +28,8 @@ import {useId} from '../../app/utils/useId';
 
 export const DEFAULT_IMAGE_SIZE_ID = 'auto';
 
+const DEFAULT_GET_EDITABLE_ELEMENT = () => null;
+
 const DEFAULT_IMAGE_SIZE = {
 	size: null,
 	value: DEFAULT_IMAGE_SIZE_ID,
@@ -35,8 +37,8 @@ const DEFAULT_IMAGE_SIZE = {
 };
 
 export const ImageSelectorSize = ({
-	editableElement = null,
 	fieldValue,
+	getEditableElement = DEFAULT_GET_EDITABLE_ELEMENT,
 	imageSizeId,
 	onImageSizeIdChanged = null,
 }) => {
@@ -79,6 +81,8 @@ export const ImageSelectorSize = ({
 		// HTMLElement.
 
 		if (computedImageSize.value === DEFAULT_IMAGE_SIZE_ID) {
+			const editableElement = getEditableElement();
+
 			const setAutoSize = () => {
 				editableElement?.removeEventListener('load', setAutoSize);
 
@@ -127,7 +131,7 @@ export const ImageSelectorSize = ({
 			setImageSize(computedImageSize);
 		}
 	}, [
-		editableElement,
+		getEditableElement,
 		globalContext,
 		imageSizeId,
 		imageSizes,
@@ -197,7 +201,6 @@ export const ImageSelectorSize = ({
 };
 
 ImageSelectorSize.propTypes = {
-	editableElement: PropTypes.object,
 	fieldValue: PropTypes.oneOfType([
 		PropTypes.shape({
 			fileEntryId: PropTypes.string.isRequired,
@@ -211,6 +214,7 @@ ImageSelectorSize.propTypes = {
 			collectionFieldId: PropTypes.string.isRequired,
 		}),
 	]).isRequired,
+	getEditableElement: PropTypes.func,
 	imageSizeId: PropTypes.string,
 	onImageSizeIdChanged: PropTypes.func,
 };

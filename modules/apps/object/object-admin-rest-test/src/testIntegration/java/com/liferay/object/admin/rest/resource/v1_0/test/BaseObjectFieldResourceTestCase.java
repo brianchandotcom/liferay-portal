@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.client.http.HttpInvoker;
 import com.liferay.object.admin.rest.client.pagination.Page;
+import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.admin.rest.client.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectFieldSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -195,7 +196,8 @@ public abstract class BaseObjectFieldResourceTestCase {
 	public void testGetObjectDefinitionObjectFieldsPage() throws Exception {
 		Page<ObjectField> page =
 			objectFieldResource.getObjectDefinitionObjectFieldsPage(
-				testGetObjectDefinitionObjectFieldsPage_getObjectDefinitionId());
+				testGetObjectDefinitionObjectFieldsPage_getObjectDefinitionId(),
+				RandomTestUtil.randomString(), Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -211,7 +213,7 @@ public abstract class BaseObjectFieldResourceTestCase {
 					randomIrrelevantObjectField());
 
 			page = objectFieldResource.getObjectDefinitionObjectFieldsPage(
-				irrelevantObjectDefinitionId);
+				irrelevantObjectDefinitionId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -230,7 +232,7 @@ public abstract class BaseObjectFieldResourceTestCase {
 				objectDefinitionId, randomObjectField());
 
 		page = objectFieldResource.getObjectDefinitionObjectFieldsPage(
-			objectDefinitionId);
+			objectDefinitionId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -238,6 +240,52 @@ public abstract class BaseObjectFieldResourceTestCase {
 			Arrays.asList(objectField1, objectField2),
 			(List<ObjectField>)page.getItems());
 		assertValid(page);
+	}
+
+	@Test
+	public void testGetObjectDefinitionObjectFieldsPageWithPagination()
+		throws Exception {
+
+		Long objectDefinitionId =
+			testGetObjectDefinitionObjectFieldsPage_getObjectDefinitionId();
+
+		ObjectField objectField1 =
+			testGetObjectDefinitionObjectFieldsPage_addObjectField(
+				objectDefinitionId, randomObjectField());
+
+		ObjectField objectField2 =
+			testGetObjectDefinitionObjectFieldsPage_addObjectField(
+				objectDefinitionId, randomObjectField());
+
+		ObjectField objectField3 =
+			testGetObjectDefinitionObjectFieldsPage_addObjectField(
+				objectDefinitionId, randomObjectField());
+
+		Page<ObjectField> page1 =
+			objectFieldResource.getObjectDefinitionObjectFieldsPage(
+				objectDefinitionId, null, Pagination.of(1, 2));
+
+		List<ObjectField> objectFields1 = (List<ObjectField>)page1.getItems();
+
+		Assert.assertEquals(objectFields1.toString(), 2, objectFields1.size());
+
+		Page<ObjectField> page2 =
+			objectFieldResource.getObjectDefinitionObjectFieldsPage(
+				objectDefinitionId, null, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ObjectField> objectFields2 = (List<ObjectField>)page2.getItems();
+
+		Assert.assertEquals(objectFields2.toString(), 1, objectFields2.size());
+
+		Page<ObjectField> page3 =
+			objectFieldResource.getObjectDefinitionObjectFieldsPage(
+				objectDefinitionId, null, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(objectField1, objectField2, objectField3),
+			(List<ObjectField>)page3.getItems());
 	}
 
 	protected ObjectField

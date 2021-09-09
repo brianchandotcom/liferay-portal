@@ -24,6 +24,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Collections;
 import java.util.List;
@@ -57,7 +58,7 @@ public interface ObjectFieldResource {
 	}
 
 	public Page<ObjectField> getObjectDefinitionObjectFieldsPage(
-			Long objectDefinitionId)
+			Long objectDefinitionId, String search, Pagination pagination)
 		throws Exception;
 
 	public ObjectField postObjectDefinitionObjectField(

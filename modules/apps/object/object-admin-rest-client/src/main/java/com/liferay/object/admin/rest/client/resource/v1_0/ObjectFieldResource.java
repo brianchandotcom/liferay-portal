@@ -17,6 +17,7 @@ package com.liferay.object.admin.rest.client.resource.v1_0;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.client.http.HttpInvoker;
 import com.liferay.object.admin.rest.client.pagination.Page;
+import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.admin.rest.client.problem.Problem;
 import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectFieldSerDes;
 
@@ -40,12 +41,12 @@ public interface ObjectFieldResource {
 	}
 
 	public Page<ObjectField> getObjectDefinitionObjectFieldsPage(
-			Long objectDefinitionId)
+			Long objectDefinitionId, String search, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getObjectDefinitionObjectFieldsPageHttpResponse(
-				Long objectDefinitionId)
+				Long objectDefinitionId, String search, Pagination pagination)
 		throws Exception;
 
 	public ObjectField postObjectDefinitionObjectField(
@@ -166,12 +167,12 @@ public interface ObjectFieldResource {
 	public static class ObjectFieldResourceImpl implements ObjectFieldResource {
 
 		public Page<ObjectField> getObjectDefinitionObjectFieldsPage(
-				Long objectDefinitionId)
+				Long objectDefinitionId, String search, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getObjectDefinitionObjectFieldsPageHttpResponse(
-					objectDefinitionId);
+					objectDefinitionId, search, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -212,7 +213,8 @@ public interface ObjectFieldResource {
 
 		public HttpInvoker.HttpResponse
 				getObjectDefinitionObjectFieldsPageHttpResponse(
-					Long objectDefinitionId)
+					Long objectDefinitionId, String search,
+					Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -235,6 +237,17 @@ public interface ObjectFieldResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

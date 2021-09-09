@@ -689,11 +689,13 @@ definition {
 			locator1 = "ACSegments#SEGMENT_CRITERIA_PREPOSITION_AND_TIME",
 			value1 = "${preposition}");
 
-		AssertTextEquals(
-			index = "${index}",
-			index_2 = "3",
-			locator1 = "ACSegments#SEGMENT_CRITERIA_PREPOSITION_AND_TIME",
-			value1 = "${time}");
+		if (isSet(time)) {
+			AssertTextEquals(
+				index = "${index}",
+				index_2 = "3",
+				locator1 = "ACSegments#SEGMENT_CRITERIA_PREPOSITION_AND_TIME",
+				value1 = "${time}");
+		}
 
 		if (isSet(conjunction)) {
 			AssertTextEquals(

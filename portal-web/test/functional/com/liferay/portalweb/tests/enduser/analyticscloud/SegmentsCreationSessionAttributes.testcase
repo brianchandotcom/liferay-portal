@@ -134,12 +134,117 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9208 | Test Summary: Add segment using a session property 'Referrer URL'"
-	@ignore = "true"
 	@priority = "4"
 	test CanCreateSessionAttributeUsingReferrerURL {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-9208 CanCreateSessionAttributeUsingReferrerURL pending implementation
+		// AC Refactor: timing issue for Referrer URL with page sync
+		// AC Refactor ticket: LRAC-9272
 
+		task ("Connect the DXP to Analytics Cloud") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
+
+		task ("Add a new user in DXP") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+		}
+
+		task ("Sync new user") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Add pages") {
+			for (var n : list "1,2") {
+				ACUtils.addSiteAndPage(layoutName = "AC Page ${n}");
+			}
+		}
+
+		task ("Go to AC Page and get URL") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page 1",
+				siteName = "Site Name");
+
+			var myURL = Navigator.getCurrentURL();
+
+			Pause(locator1 = "3000");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page 2",
+				siteName = "Site Name");
+		}
+
+		task ("Sign in with the new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			for (var n : list "1,2") {
+				Navigator.gotoSitePage(
+					pageName = "AC Page ${n}",
+					siteName = "Site Name");
+
+				Pause(locator1 = "3000");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+		}
+
+		task ("Add an URL criteria from Session Attributes") {
+			ACSegments.goToSidebarAttributes(criterion = "Session Attributes");
+
+			ACSegments.addSegmentField(segmentField = "Referrer");
+
+			ACSegments.selectOperator(operator = "is");
+
+			ACSegments.editTextCriterion(textInput = "${myURL}");
+
+			ACSegments.editWebBehaviorCriterion(
+				indexField = "1",
+				timeOption = "ever");
+		}
+
+		task ("Save the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("View criteria in Segment Criteria card") {
+			ACSegments.viewSegmentCriteriaSessionAttributes(
+				attributeName = "Referrer",
+				attributeValue = '''"${myURL}"''',
+				condition = "is",
+				preposition = "ever");
+		}
+
+		task ("Refresh the page to receive data") {
+			Refresh();
+		}
+
+		task ("Assert that new user is on segment") {
+
+			// Takes too much time to sync and get data from the page on AC
+
+			ACNavigation.openItem(itemName = "Membership");
+
+			ACSegments.assertMember(memberName = "ac ac");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9209 | Test Summary: Add segment using a session property 'Request Parameters'"
@@ -163,13 +268,39 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9211 | Test Summary: Add segment using a session property 'URL'"
 	@priority = "4"
 	test CanCreateSessionAttributeUsingURL {
-		var url = "liferay.com";
-
 		task ("Connect the DXP to Analytics Cloud") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 		}
 
+		task ("Add a new user in DXP") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+		}
+
+		task ("Sync new user") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Sign in with the new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+		}
+
+		task ("Go to Home Page DXP") {
+			Navigator.openURL();
+		}
+
+		task ("Get URL") {
+			var myURL = Navigator.getCurrentURL();
+		}
+
 		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = "${propertyName}");
@@ -190,7 +321,11 @@ definition {
 
 			ACSegments.selectOperator(operator = "is");
 
-			ACSegments.editTextCriterion(textInput = "${url}");
+			ACSegments.editTextCriterion(textInput = "${myURL}");
+
+			ACSegments.editWebBehaviorCriterion(
+				indexField = "1",
+				timeOption = "ever");
 		}
 
 		task ("Save the segment") {
@@ -200,10 +335,19 @@ definition {
 		task ("View criteria in Segment Criteria card") {
 			ACSegments.viewSegmentCriteriaSessionAttributes(
 				attributeName = "URL",
-				attributeValue = '''"${url}"''',
+				attributeValue = '''"${myURL}"''',
 				condition = "is",
-				preposition = "since",
-				time = "last 24 hours");
+				preposition = "ever");
+		}
+
+		task ("Refresh the page to receive data") {
+			Refresh();
+		}
+
+		task ("Assert that new user is on segment") {
+			ACNavigation.openItem(itemName = "Membership");
+
+			ACSegments.assertMember(memberName = "ac ac");
 		}
 	}
 

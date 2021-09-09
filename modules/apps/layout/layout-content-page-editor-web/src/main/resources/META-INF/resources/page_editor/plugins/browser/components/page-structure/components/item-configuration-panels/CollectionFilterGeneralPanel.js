@@ -122,7 +122,10 @@ export const CollectionFilterGeneralPanelContent = ({
 
 	const selectedFilter = collectionFilters?.[configurationValues.filterKey];
 
-	const targetCollections = configurationValues.targetCollections || [];
+	const targetCollections =
+		configurationValues.targetCollections?.filter(
+			(targetCollection) => filterableCollections[targetCollection]
+		) ?? [];
 
 	useEffect(() => {
 		if (!collectionFilters) {
@@ -205,7 +208,8 @@ export const CollectionFilterGeneralPanelContent = ({
 					/>
 				)}
 
-			{selectedFilter?.configuration &&
+			{!isEmptyArray(targetCollections) &&
+				selectedFilter?.configuration &&
 				selectedFilter.configuration.fieldSets
 					?.filter((fieldSet) => fieldSet.fields.length)
 					.map((fieldSet, index) => (
@@ -241,10 +245,12 @@ function filterSupportedFilters({
 		return {};
 	}
 
-	const targetCollectionsSupportedFilters = targetCollections.map(
-		(targetCollection) =>
-			filterableCollections[targetCollection]?.supportedFilters || []
-	);
+	const targetCollectionsSupportedFilters = targetCollections
+		.map(
+			(targetCollection) =>
+				filterableCollections[targetCollection]?.supportedFilters
+		)
+		.filter(Boolean);
 
 	return collectionFilters.filter(({key}) =>
 		targetCollectionsSupportedFilters.every(

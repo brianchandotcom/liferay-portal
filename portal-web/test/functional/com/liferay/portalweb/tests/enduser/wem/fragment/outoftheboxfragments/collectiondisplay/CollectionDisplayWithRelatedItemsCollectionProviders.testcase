@@ -1239,6 +1239,150 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-127025. The DPT author can use custom web content structure related item collection provider in DPT for Category."
+	@priority = "4"
+	test ViewCollectionItemsBasedOnCustomWebContentStructureOnDisplayPageTemplateForCategory {
+		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#ViewCollectionItemsBasedOnCustomWebContentStructureOnDisplayPageTemplateForCategory";
+
+		task ("Enable the DDMStructure feature via gogo shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.journal.web.internal.instance.lifecycle.DDMStructureModelListener");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a web content with category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a blogs entry with category") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${categoryId}",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document with category") {
+			JSONDocument.addFile(
+				assetCategoryIds = "${categoryId}",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a web content structure with a Text field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a web content based on new structure with category") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentText = "WC Text Content",
+				webContentTitle = "WC Text Title");
+
+			WebContent.selectCategory(
+				categoryName = "Category Name",
+				vocabularyName = "Vocabulary Name");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a display page template for Category") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Category",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a Collection display fragment to display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the WC Structure Name related items collection provider and Select the Bordered List") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoItemRelatedListProviderName = "WC Structure Name",
+				listStyle = "Bordered List");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Associate the display page template to category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.editCP(
+				categoryName = "Category Name",
+				displayPageName = "Display Page Name",
+				displayPageTemplateType = "Specific",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View only the title of web content based on custom structure shown in display page template") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "View Display Page",
+				rowEntry = "Category Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+
+			AssertVisible(
+				key_entryContent = "[normalize-space()='WC Text Title']",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+		}
+
+		task ("Disable the DDMStructure feature via gogo shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:disable com.liferay.journal.web.internal.instance.lifecycle.DDMStructureModelListener");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+	}
+
 	@description = "This is a use case for LPS-127023. The related assets should be in Collection Display when select Related Assets from Related Items Collection Provider."
 	@priority = "5"
 	test ViewRelatedAssetsInCollectionDisplay {

@@ -80,7 +80,7 @@ definition {
 			fieldName = "Upload");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69446. This test verifies that is possible to clear the uploaded file"
 	@priority = "5"
 	test CanClearInput {
 		NavItem.gotoStructures();
@@ -156,7 +156,7 @@ definition {
 			fieldName = "Upload");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69446. This test verifies that is possible to upload a file"
 	@priority = "5"
 	test CanInputData {
 		NavItem.gotoStructures();
@@ -189,16 +189,57 @@ definition {
 			webContentUpload = "Document_1.jpg");
 	}
 
-	@description = "This is a stubbed description"
-	@ignore = "true"
+	@description = "This is a test for LRQA-69446. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists"
 	@priority = "5"
 	test CanInputDataOnDuplicatedField {
+		NavItem.gotoStructures();
 
-		// TODO LRQA-69446	Refactor of Renderer Upload Field
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DEBuilder.addField(
+			fieldLabel = "Upload",
+			fieldName = "Upload");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Upload");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Upload");
+
+		DERenderer.inputDataInUploadField(
+			dmNavTab = "User Personal Folder",
+			fieldLabel = "Upload",
+			index = "1",
+			webContentUpload = "Document_1.jpg");
+
+		DERenderer.inputDataInUploadField(
+			dmNavTab = "User Personal Folder",
+			fieldLabel = "Upload",
+			index = "2",
+			webContentUpload = "Document_2.jpg");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInUploadField(
+			fieldLabel = "Upload",
+			index = "1",
+			webContentUpload = "Document_1.jpg");
+
+		DERenderer.assertDataInUploadField(
+			fieldLabel = "Upload",
+			index = "2",
+			webContentUpload = "Document_2.jpg");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69446. This test verifies that is not possible to publish the Web Content with a required field blank"
 	@priority = "4"
 	test CanNotPublishBlankRequiredField {
 		NavItem.gotoStructures();
@@ -224,13 +265,42 @@ definition {
 		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
 	}
 
-	@description = "This is a stubbed description"
-	@ignore = "true"
+	@description = "This is a test for LRQA-69446. This test verifies that is possible to remove a duplicated field (repeatable)"
 	@priority = "4"
 	test CanRemoveDuplicatedField {
+		NavItem.gotoStructures();
 
-		// TODO LRQA-69446	Refactor of Renderer Upload Field
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DEBuilder.addField(
+			fieldLabel = "Upload",
+			fieldName = "Upload");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Upload");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Upload");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.removeRepeatableField(fieldLabel = "Upload");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DEBuilder.assertFieldNotPresent(
+			fieldLabel = "Upload",
+			index = "2");
 	}
 
 	@description = "This is a test for LRQA-68656. This test verifies that Default Searchable property is Disable when System Setting is left unchecked"

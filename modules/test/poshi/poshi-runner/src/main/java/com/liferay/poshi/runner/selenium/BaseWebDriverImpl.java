@@ -2281,6 +2281,22 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		pause("3000");
 	}
 
+	public void rightClick(String locator) {
+		WebElement webElement = getWebElement(locator);
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+		Actions actions = new Actions(webDriver);
+
+		actions.contextClick(webElement);
+
+		Action action = actions.build();
+
+		action.perform();
+	}
+
 	@Override
 	public void robotType(String value) {
 		Keyboard keyboard = new DesktopKeyboard();

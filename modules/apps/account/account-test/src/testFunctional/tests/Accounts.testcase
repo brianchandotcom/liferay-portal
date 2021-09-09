@@ -546,6 +546,53 @@ definition {
 		Accounts.viewAssignee(assigneeName = "Organization for Account");
 	}
 
+	@description = "This test assigns a role to an Account User in the Account Details page via Users tab"
+	@priority = "4"
+	test CanAssignRolesViaUsersTab {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account Name",
+			accountEntryType = "Business");
+
+		AccountUsers.openAccountUsersAdmin();
+
+		AccountUsers.addUser(
+			accountName = "Account Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "userfn userln");
+
+		AssertTextEquals(
+			key_columnName = "lfr-account-roles-column",
+			key_rowEntry = "userfn userln",
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
+			value1 = "Account Administrator");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Buyer",
+			accountUserName = "userfn userln");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Navigator.gotoNavTab(navTab = "Users");
+
+		AssertTextEquals(
+			key_columnName = "lfr-account-roles-column",
+			key_rowEntry = "userfn userln",
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
+			value1 = "Account Administrator, Buyer");
+	}
+
 	@description = "This test updates an account's status from Active to Inactive asserts change saves successfully."
 	@priority = "4"
 	test CanChangeAccountStatusToInactiveThenActiveViaEdit {

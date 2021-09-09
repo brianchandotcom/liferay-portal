@@ -102,6 +102,7 @@ export default function DragPreview() {
 					'page-editor__drag-preview__content__treeview':
 						item?.origin === ITEM_ACTIVATION_ORIGINS.sidebar,
 				})}
+				dir={Liferay.Language.direction[themeDisplay?.getLanguageId()]}
 				ref={ref}
 				style={getItemStyles(
 					currentOffset,

@@ -66,4 +66,113 @@ definition {
 
 	}
 
+	@description = "LPS-133867|LPS-135004 - Verify if it's possible map and view the image of user Profile in a Fragment of Display Page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewImageUserProfileFromSpecificEntry {
+
+		// TODO LPS-139031 ViewImageUserProfileFromSpecificEntry pending implementation
+
+	}
+
+	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Big Decimal type for a specific Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DisplaySpecificEntryBigDecimal {
+
+		// TODO LPS-139032 DisplaySpecificEntryBigDecimal pending implementation
+
+	}
+
+	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Boolean type for a specific Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DisplaySpecificEntryBoolean {
+
+		// TODO LPS-139033 DisplaySpecificEntryBoolean pending implementation
+
+	}
+
+	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Date type for a specific Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DisplaySpecificEntryDate {
+
+		// TODO LPS-139034 DisplaySpecificEntryDate pending implementation
+
+	}
+
+	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Double type for a specific Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DisplaySpecificEntryDouble {
+
+		// TODO LPS-139035 DisplaySpecificEntryDouble pending implementation
+
+	}
+
+	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Integer type for a specific Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DisplaySpecificEntryInteger {
+
+		// TODO LPS-139036 DisplaySpecificEntryInteger pending implementation
+
+	}
+
+	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Long type for a specific Object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DisplaySpecificEntryLong {
+
+		// TODO LPS-139037 DisplaySpecificEntryLong pending implementation
+
+	}
+
+	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of String type for a specific Object"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test DisplaySpecificEntryString {
+		property portal.acceptance = "true";
+
+		// TODO LPS-139038 DisplaySpecificEntryString pending implementation
+
+	}
+
+	@description = "LPS-133867|LPS-135004 - Verify it is possible to define a fixed filters with Boolean type for table view on the Display Page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDefineFixedFilterForBooleanType {
+
+		// TODO LPS-139039 CanDefineFixedFilterForBooleanType pending implementation
+
+	}
+
+	@description = "LPS-133867|LPS-135004 - Verify it is possible to define a fixed filters with Picklist type for table view on the Display Page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDefineFixedFilterForPicklistType {
+
+		// TODO LPS-139040 CanDefineFixedFilterForPicklistType pending implementation
+
+	}
+
+	@description = "LPS-133867|LPS-135004 - Verify it is possible to set the pagination as Numeric"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSetPaginationNumeric {
+
+		// TODO LPS-139041 CanSetPaginationNumeric pending implementation
+
+	}
+
+	@description = "LPS-133867|LPS-135004 - Verify it is possible to set the pagination as Simple"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSetPaginationSimple {
+
+		// TODO LPS-139042 CanSetPaginationSimple pending implementation
+
+	}
+
 }

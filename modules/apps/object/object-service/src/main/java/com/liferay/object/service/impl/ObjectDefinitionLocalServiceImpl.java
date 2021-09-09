@@ -48,6 +48,8 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -91,6 +93,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class ObjectDefinitionLocalServiceImpl
 	extends ObjectDefinitionLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition addCustomObjectDefinition(
 			long userId, Map<Locale, String> labelMap, String name,
@@ -105,6 +108,7 @@ public class ObjectDefinitionLocalServiceImpl
 			WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition addOrUpdateSystemObjectDefinition(
 			long companyId,
@@ -181,6 +185,7 @@ public class ObjectDefinitionLocalServiceImpl
 		return objectDefinition;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition addSystemObjectDefinition(
 			long userId, String dbTableName, Map<Locale, String> labelMap,
@@ -468,6 +473,7 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition updateCustomObjectDefinition(
 			Long objectDefinitionId, Map<Locale, String> labelMap, String name,

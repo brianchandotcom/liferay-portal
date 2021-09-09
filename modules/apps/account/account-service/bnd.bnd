@@ -4,4 +4,3 @@ Bundle-Version: 2.0.12
 Liferay-Require-SchemaVersion: 2.2.0
 Liferay-Service: true
 -dsannotations-options: inherit
--liferay-aggregate-resource-bundles: com.liferay.account.lang

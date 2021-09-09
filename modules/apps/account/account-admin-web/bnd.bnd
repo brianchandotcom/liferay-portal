@@ -4,4 +4,3 @@ Bundle-Version: 2.0.0
 Liferay-JS-Submodules-Bridge: account-admin-web
 Web-ContextPath: /account-admin-web
 -dsannotations-options: inherit
--liferay-aggregate-resource-bundles: com.liferay.account.lang

@@ -11,4 +11,3 @@ Export-Package:\
 	com.liferay.account.role,\
 	com.liferay.account.service,\
 	com.liferay.account.service.persistence
--liferay-aggregate-resource-bundles: com.liferay.account.lang

@@ -3,4 +3,3 @@ Bundle-SymbolicName: com.liferay.analytics.settings.web
 Bundle-Version: 5.0.11
 Web-ContextPath: /analytics-settings-web
 -dsannotations-options: inherit
--liferay-aggregate-resource-bundles: com.liferay.portal.settings.lang

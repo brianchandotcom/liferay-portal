@@ -6,4 +6,3 @@ Import-Package:\
 	\
 	*
 Web-ContextPath: /portal-settings-authentication-ldap-web
--liferay-aggregate-resource-bundles: com.liferay.portal.settings.lang

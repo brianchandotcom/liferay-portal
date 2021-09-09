@@ -111,15 +111,13 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productByExternalReferenceCodeDiagramEntries(externalReferenceCode: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productByExternalReferenceCodeDiagramEntries(externalReferenceCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public DiagramEntryPage productByExternalReferenceCodeDiagramEntries(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
-			@GraphQLName("search") String search,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -128,24 +126,19 @@ public class Query {
 			diagramEntryResource -> new DiagramEntryPage(
 				diagramEntryResource.
 					getProductByExternalReferenceCodeDiagramEntriesPage(
-						externalReferenceCode, search,
-						Pagination.of(page, pageSize),
-						_sortsBiFunction.apply(
-							diagramEntryResource, sortsString))));
+						externalReferenceCode, Pagination.of(page, pageSize))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdDiagramEntries(page: ___, pageSize: ___, productId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdDiagramEntries(page: ___, pageSize: ___, productId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public DiagramEntryPage productIdDiagramEntries(
 			@GraphQLName("productId") Long productId,
-			@GraphQLName("search") String search,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -153,9 +146,7 @@ public class Query {
 			this::_populateResourceContext,
 			diagramEntryResource -> new DiagramEntryPage(
 				diagramEntryResource.getProductIdDiagramEntriesPage(
-					productId, search, Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(
-						diagramEntryResource, sortsString))));
+					productId, Pagination.of(page, pageSize))));
 	}
 
 	/**

@@ -15,7 +15,6 @@
 package com.liferay.headless.commerce.shop.by.diagram.resource.v1_0;
 
 import com.liferay.headless.commerce.shop.by.diagram.dto.v1_0.DiagramEntry;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -69,8 +68,7 @@ public interface DiagramEntryResource {
 
 	public Page<DiagramEntry>
 			getProductByExternalReferenceCodeDiagramEntriesPage(
-				String externalReferenceCode, String search,
-				Pagination pagination, Sort[] sorts)
+				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
 	public DiagramEntry postProductByExternalReferenceCodeDiagramEntry(
@@ -78,7 +76,7 @@ public interface DiagramEntryResource {
 		throws Exception;
 
 	public Page<DiagramEntry> getProductIdDiagramEntriesPage(
-			Long productId, String search, Pagination pagination, Sort[] sorts)
+			Long productId, Pagination pagination)
 		throws Exception;
 
 	public DiagramEntry postProductIdDiagramEntry(

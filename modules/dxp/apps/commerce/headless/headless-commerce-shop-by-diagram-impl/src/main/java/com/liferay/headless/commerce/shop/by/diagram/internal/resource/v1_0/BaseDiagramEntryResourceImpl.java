@@ -173,10 +173,8 @@ public abstract class BaseDiagramEntryResourceImpl
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
-			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sort")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
 	@Path(
@@ -189,8 +187,7 @@ public abstract class BaseDiagramEntryResourceImpl
 				@NotNull @Parameter(hidden = true)
 				@PathParam("externalReferenceCode")
 				String externalReferenceCode,
-				@Parameter(hidden = true) @QueryParam("search") String search,
-				@Context Pagination pagination, @Context Sort[] sorts)
+				@Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -234,10 +231,8 @@ public abstract class BaseDiagramEntryResourceImpl
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "productId"),
-			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sort")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
 	@Path("/products/{productId}/diagramEntries")
@@ -246,8 +241,7 @@ public abstract class BaseDiagramEntryResourceImpl
 	public Page<DiagramEntry> getProductIdDiagramEntriesPage(
 			@NotNull @Parameter(hidden = true) @PathParam("productId") Long
 				productId,
-			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			@Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

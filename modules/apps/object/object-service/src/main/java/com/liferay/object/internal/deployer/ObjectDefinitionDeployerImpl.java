@@ -18,7 +18,9 @@ import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
+import com.liferay.object.internal.related.models.ObjectEntry1to1ObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.related.models.ObjectEntry1toMObjectRelatedModelsProviderImpl;
+import com.liferay.object.internal.related.models.ObjectEntryMtoMObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.search.spi.model.index.contributor.ObjectEntryModelDocumentContributor;
 import com.liferay.object.internal.search.spi.model.index.contributor.ObjectEntryModelIndexerWriterContributor;
 import com.liferay.object.internal.search.spi.model.query.contributor.ObjectEntryKeywordQueryContributor;
@@ -176,7 +178,17 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).build()),
 			_bundleContext.registerService(
 				ObjectRelatedModelsProvider.class,
+				new ObjectEntry1to1ObjectRelatedModelsProviderImpl(
+					objectDefinition, _objectEntryLocalService),
+				null),
+			_bundleContext.registerService(
+				ObjectRelatedModelsProvider.class,
 				new ObjectEntry1toMObjectRelatedModelsProviderImpl(
+					objectDefinition, _objectEntryLocalService),
+				null),
+			_bundleContext.registerService(
+				ObjectRelatedModelsProvider.class,
+				new ObjectEntryMtoMObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectEntryLocalService),
 				null),
 			_bundleContext.registerService(

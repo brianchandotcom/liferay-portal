@@ -493,10 +493,6 @@ definition {
 		MessageboardsThread.viewNoXSSPG(
 			threadBody = '''<script>alert(123);</script>''',
 			threadSubject = '''<script>alert(123);</script>''');
-
-		AssertHTMLSourceTextNotPresent(value1 = '''<script>alert(123);</script>''');
-
-		AssertHTMLSourceTextPresent(value1 = '''&lt;script&gt;alert(123);&lt;/script&gt;''');
 	}
 
 	@priority = "4"

@@ -12,12 +12,6 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONWebcontent.addWebContent(
-			content = "This is the content of a web article in English",
-			description = "This is the description of a web article in English",
-			groupName = "Site Name",
-			title = "This is the title of a web article in English");
-
 		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
 
 		var valueReference = Translations.setGoogleCloudTranslationServiceKey();
@@ -27,6 +21,12 @@ definition {
 			settingFieldName = "Enabled",
 			settingName = "Service Account Private Key",
 			settingValue = "${valueReference}");
+
+		JSONWebcontent.addWebContent(
+			content = "This is the content of a web article in English",
+			description = "This is the description of a web article in English",
+			groupName = "Site Name",
+			title = "This is the title of a web article in English");
 	}
 
 	tearDown {

@@ -129,7 +129,9 @@ function CartItem({item: cartItem}) {
 			{!!thumbnail && (
 				<div
 					className="mini-cart-item-thumbnail"
-					style={{backgroundImage: `url(${thumbnail})`}}
+					dangerouslySetInnerHTML={{
+						__html: thumbnail,
+					}}
 				/>
 			)}
 

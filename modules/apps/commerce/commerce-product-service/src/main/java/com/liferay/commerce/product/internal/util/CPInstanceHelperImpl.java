@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.internal.util;
 
+import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.media.CommerceMediaProvider;
@@ -45,6 +46,7 @@ import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionValueRelPriorityComparator;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -266,6 +268,24 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		}
 
 		return cpDefinitionOptionRelListMap;
+	}
+
+	@Override
+	public String getCPInstanceAdaptiveMediaImageHTMLTag(
+			long companyId, long cpInstanceId)
+		throws Exception {
+
+		FileVersion fileVersion = getCPInstanceImageFileVersion(
+			companyId, cpInstanceId);
+
+		String originalImgTag = StringBundler.concat(
+			"<img class=\"aspect-ratio-bg-cover aspect-ratio-item ",
+			"aspect-ratio-item-center-middle aspect-ratio-item-fluid ",
+			"card-type-asset-icon\" src=\"",
+			getCPInstanceThumbnailSrc(cpInstanceId), "\" />");
+
+		return _amImageHTMLTagFactory.create(
+			originalImgTag, fileVersion.getFileEntry());
 	}
 
 	@Override
@@ -680,6 +700,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		return true;
 	}
+
+	@Reference
+	private AMImageHTMLTagFactory _amImageHTMLTagFactory;
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;

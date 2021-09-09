@@ -67,6 +67,10 @@ public interface CPInstanceHelper {
 			getCPDefinitionOptionRelsMap(long cpDefinitionId, String json)
 		throws PortalException;
 
+	public String getCPInstanceAdaptiveMediaImageHTMLTag(
+			long companyId, long cpInstanceId)
+		throws Exception;
+
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			getCPInstanceCPDefinitionOptionRelsMap(long cpInstanceId)
 		throws PortalException;

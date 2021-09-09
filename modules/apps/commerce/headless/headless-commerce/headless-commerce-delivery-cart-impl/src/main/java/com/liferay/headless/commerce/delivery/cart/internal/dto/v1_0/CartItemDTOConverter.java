@@ -92,8 +92,10 @@ public class CartItemDTOConverter
 				sku = commerceOrderItem.getSku();
 				skuId = commerceOrderItem.getCPInstanceId();
 				subscription = commerceOrderItem.isSubscription();
-				thumbnail = _cpInstanceHelper.getCPInstanceThumbnailSrc(
-					commerceOrderItem.getCPInstanceId());
+				thumbnail =
+					_cpInstanceHelper.getCPInstanceAdaptiveMediaImageHTMLTag(
+						commerceOrderItem.getCompanyId(),
+						commerceOrderItem.getCPInstanceId());
 			}
 		};
 	}

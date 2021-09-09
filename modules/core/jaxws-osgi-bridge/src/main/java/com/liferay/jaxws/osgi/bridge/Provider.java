@@ -14,9 +14,7 @@
 
 package com.liferay.jaxws.osgi.bridge;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 import java.net.URL;
 
@@ -33,6 +31,8 @@ import javax.xml.ws.spi.Invoker;
 import javax.xml.ws.spi.ServiceDelegate;
 import javax.xml.ws.wsaddressing.W3CEndpointReference;
 
+import org.osgi.util.tracker.ServiceTracker;
+
 import org.w3c.dom.Element;
 
 /**
@@ -41,10 +41,9 @@ import org.w3c.dom.Element;
 public class Provider extends javax.xml.ws.spi.Provider {
 
 	public Provider() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			javax.xml.ws.spi.Provider.class);
+		_serviceTracker = new ServiceTracker<>(
+			SystemBundleUtil.getBundleContext(),
+			javax.xml.ws.spi.Provider.class, null);
 
 		_serviceTracker.open();
 	}

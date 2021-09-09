@@ -36,10 +36,15 @@ definition {
 
 		Button.click(button = "Create");
 
-		AssertTextEquals(
-			key_card = "${rootTopicName}",
-			locator1 = "Card#CARD_TITLE",
-			value1 = "${rootTopicName}");
+		if ("${invalidCharacters}" == "Topic") {
+			Alert.viewErrorMessage(errorMessage = "The Topic Name cannot contain the following invalid characters");
+		}
+		else {
+			AssertTextEquals(
+				key_card = "${rootTopicName}",
+				locator1 = "Card#CARD_TITLE",
+				value1 = "${rootTopicName}");
+		}
 	}
 
 	macro addSubTopic {
@@ -151,6 +156,10 @@ definition {
 		}
 
 		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
+
+		if ("${invalidCharacters}" == "Tag") {
+			Alert.viewErrorMessage(errorMessage = "The Tag cannot contain the following invalid characters");
+		}
 	}
 
 	macro assertCanonicalURL {

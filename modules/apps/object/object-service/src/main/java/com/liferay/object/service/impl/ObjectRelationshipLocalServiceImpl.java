@@ -114,7 +114,12 @@ public class ObjectRelationshipLocalServiceImpl
 				_objectDefinitionPersistence.findByPrimaryKey(
 					objectDefinitionId2);
 
-			objectRelationship.setDBTableName("R_" + StringUtil.trim(name));
+			objectRelationship.setDBTableName(
+				StringBundler.concat(
+					"R_", objectDefinition1.getCompanyId(),
+					objectDefinition1.getShortName(), "_",
+					objectDefinition2.getShortName(), "_",
+					StringUtil.trim(name)));
 
 			runSQL(
 				StringBundler.concat(

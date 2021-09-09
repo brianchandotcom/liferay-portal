@@ -877,7 +877,7 @@ definition {
 		MenuItem.viewNotPresent(menuItem = "Unsubscribe");
 	}
 
-	@description = "This test covers LPS-77252 and LPS-86797. It ensures that Categories group and Threads group are listed independently with their own pager."
+	@description = "This test covers LPS-132060, LPS-77252 and LPS-86797. It ensures that Categories group and Threads group are listed independently with their own pager."
 	@priority = "4"
 	@refactorneeded
 	test ViewPagersForCategoriesAndThreads {
@@ -911,6 +911,8 @@ definition {
 
 		Pagination.changePagination(itemsPerPage = "4");
 
+		Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
+
 		Click(locator1 = "Pagination#NEXT_LINK");
 
 		AssertTextEquals(
@@ -921,6 +923,8 @@ definition {
 		Click(locator1 = "Pagination#ITEMS_PER_PAGE_SELECT_2");
 
 		MenuItem.click(menuItem = "4");
+
+		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 
 		Click(locator1 = "Pagination#NEXT_LINK_2");
 
@@ -933,6 +937,8 @@ definition {
 			key_threadSubject = "MB Thread Message 1 Subject",
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "MB Thread Message 1 Subject");
+
+		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 
 		for (var categoryName : list "MB Sub Category1 Name,MB Sub Category2 Name,MB Sub Category3 Name,MB Sub Category4 Name,MB Sub Category5 Name,MB Sub Category6 Name") {
 			var parentCategoryId = JSONMBMessage.getCategoryIdByName(

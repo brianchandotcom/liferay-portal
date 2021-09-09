@@ -17,8 +17,10 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factor
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.IsRequiredObjectFieldFunction;
+import com.liferay.portal.kernel.json.JSONFactory;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mateus Santana
@@ -32,7 +34,10 @@ public class IsRequiredObjectFieldFunctionFactory
 
 	@Override
 	public DDMExpressionFunction create() {
-		return new IsRequiredObjectFieldFunction();
+		return new IsRequiredObjectFieldFunction(_jsonFactory);
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

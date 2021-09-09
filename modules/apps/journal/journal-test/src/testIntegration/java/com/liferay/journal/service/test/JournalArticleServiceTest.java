@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -239,10 +240,11 @@ public class JournalArticleServiceTest {
 			content, ddmStructure.getStructureKey(),
 			ddmTemplate.getTemplateKey());
 
+		article.setDocument(SAXReaderUtil.read(content));
+
 		ReflectionTestUtil.invoke(
 			_journalArticleLocalServiceImplInstance, "checkStructure",
-			new Class<?>[] {Long.TYPE, String.class, Double.TYPE},
-			article.getGroupId(), article.getArticleId(), article.getVersion());
+			new Class<?>[] {JournalArticle.class}, article);
 	}
 
 	@Test

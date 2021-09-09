@@ -103,22 +103,13 @@ public class ClusterSampleDispatcher {
 		throw new Exception("Unable to find another cluster node");
 	}
 
-	@Reference(unbind = "-")
-	protected void setClusterExecutor(ClusterExecutor clusterExecutor) {
-		_clusterExecutor = clusterExecutor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setClusterMasterExecutor(
-		ClusterMasterExecutor clusterMasterExecutor) {
-
-		_clusterMasterExecutor = clusterMasterExecutor;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterSampleDispatcher.class);
 
+	@Reference
 	private ClusterExecutor _clusterExecutor;
+
+	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
 
 }

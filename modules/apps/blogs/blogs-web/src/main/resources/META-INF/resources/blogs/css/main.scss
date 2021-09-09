@@ -1,6 +1,21 @@
 @import 'atlas-variables';
+@import 'cadmin-variables';
 
 @import 'common_main';
+
+html#{$cadmin-selector} {
+	.portlet-blogs {
+		.cadmin {
+			.info-bar-container {
+				min-height: 35px;
+
+				.info-bar-center {
+					margin-top: 5px;
+				}
+			}
+		}
+	}
+}
 
 .portlet-blogs {
 	.taglib-custom-attributes-list {
@@ -253,14 +268,6 @@
 			ul {
 				margin-top: 6px;
 			}
-		}
-	}
-
-	.info-bar-container {
-		min-height: 35px;
-
-		.info-bar-center {
-			margin-top: 5px;
 		}
 	}
 

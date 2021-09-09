@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"@clayui/drop-down": "3.35.2",
+		"@clayui/drop-down": "3.35.3",
 		"@clayui/icon": "3.32.0",
-		"@clayui/tooltip": "3.35.2",
+		"@clayui/tooltip": "3.35.3",
 		"axios": "0.21.1",
 		"classnames": "2.3.1",
 		"dagre": "0.8.2",

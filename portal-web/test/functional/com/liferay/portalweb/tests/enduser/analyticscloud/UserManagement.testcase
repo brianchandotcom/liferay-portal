@@ -784,12 +784,25 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9079 | Test Summary: An user not logged in accessing the AC URL by passing workspace parameter"
-	@ignore = "true"
 	@priority = "3"
 	test UserNotLoggedAccessACURLPassingWorkspaceParameter {
+		task ("Copy current URL and SignOut") {
+			var workspaceURL = Navigator.getCurrentURL();
 
-		// TODO LRAC-9079 UserNotLoggedAccessACURLPassingWorkspaceParameter
+			ACWorkspace.signOut();
+		}
 
+		task ("Open URL and LogIn") {
+			Open.openNoError(locator1 = "${workspaceURL}");
+
+			ACLogin.loginAs(
+				emailAddress = "test@liferay.com",
+				password = "test");
+		}
+
+		task ("Assert Page Title") {
+			ACUtils.assertPageTitle(pageTitle = "Sites");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9044 | Test Summary: Users list can be ordered"

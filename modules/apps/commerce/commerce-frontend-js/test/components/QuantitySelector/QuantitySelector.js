@@ -24,12 +24,18 @@ describe('QuantitySelector', () => {
 		let Component;
 		let onUpdateSpy;
 
+		const defaultProps = {
+			maxQuantity: 1000,
+		};
+
 		beforeEach(() => {
 			jest.resetAllMocks();
 			jest.useFakeTimers();
 
 			onUpdateSpy = jest.fn();
-			Component = render(<QuantitySelector onUpdate={onUpdateSpy} />);
+			Component = render(
+				<QuantitySelector onUpdate={onUpdateSpy} {...defaultProps} />
+			);
 		});
 
 		afterEach(() => {
@@ -47,7 +53,7 @@ describe('QuantitySelector', () => {
 			const element = Component.container.querySelector('input');
 
 			const defaultProps = {
-				maxQuantity: 99,
+				maxQuantity: 1000,
 				minQuantity: 1,
 				multipleQuantity: 1,
 				quantity: 1,

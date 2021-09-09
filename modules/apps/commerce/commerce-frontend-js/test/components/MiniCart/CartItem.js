@@ -69,7 +69,7 @@ describe('MiniCart Item', () => {
 			},
 			quantity: 1,
 			settings: {
-				maxQuantity: 1,
+				maxQuantity: 2,
 				minQuantity: 1,
 				multipleQuantity: 1,
 			},

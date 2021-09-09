@@ -22,56 +22,39 @@ definition {
 		}
 	}
 
-	@description = "LPS-137104 - Verify if Objects and its data are displayed as a Content Type and Subtype for a Page Template"
-	@priority = "5"
-	test ObjectDisplayedForPageTemplate {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
-
-		VisualizeObjectDisplayPage.createObjectPageTemplate(
-			contentType = "Object",
-			pageTemplateName = "Object Display Page Template",
-			subtype = "Custom Object");
-
-		VisualizeObjectDisplayPage.validateObjectContentType(contentType = "Object");
-
-		VisualizeObjectDisplayPage.validateObjectSubtype(subtype = "Custom Object");
-	}
-
-	@description = "LPS-137105 - Verify if the Object entries are rendered when previewing it"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test ObjectEntriesAreRendered {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "VisualizeObjectDisplayPage#ObjectEntriesAreRendered";
-
-		// TODO LPS-137101 ObjectEntriesAreRendered pending implementation
-
-	}
-
-	@description = "LPS-137106 - Verify if it is possible to link a Mapped URL with the Objects Page Template"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test ObjectMappedURL {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "VisualizeObjectDisplayPage#ObjectMappedURL";
-
-		// TODO LPS-137103 ObjectMappedURL pending implementation
-
-	}
-
-	@description = "LPS-133867|LPS-135004 - Verify if it's possible map and view the image of user Profile in a Fragment of Display Page"
+	@description = "LPS-133867|LPS-135004 - Verify it is possible to define a fixed filters with Boolean type for table view on the Display Page"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test ViewImageUserProfileFromSpecificEntry {
+	test CanDefineFixedFilterForBooleanType {
 
-		// TODO LPS-139031 ViewImageUserProfileFromSpecificEntry pending implementation
+		// TODO LPS-139039 CanDefineFixedFilterForBooleanType pending implementation
+
+	}
+
+	@description = "LPS-133867|LPS-135004 - Verify it is possible to define a fixed filters with Picklist type for table view on the Display Page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDefineFixedFilterForPicklistType {
+
+		// TODO LPS-139040 CanDefineFixedFilterForPicklistType pending implementation
+
+	}
+
+	@description = "LPS-133867|LPS-135004 - Verify it is possible to set the pagination as Numeric"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSetPaginationNumeric {
+
+		// TODO LPS-139041 CanSetPaginationNumeric pending implementation
+
+	}
+
+	@description = "LPS-133867|LPS-135004 - Verify it is possible to set the pagination as Simple"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSetPaginationSimple {
+
+		// TODO LPS-139042 CanSetPaginationSimple pending implementation
 
 	}
 
@@ -139,39 +122,56 @@ definition {
 
 	}
 
-	@description = "LPS-133867|LPS-135004 - Verify it is possible to define a fixed filters with Boolean type for table view on the Display Page"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanDefineFixedFilterForBooleanType {
+	@description = "LPS-137104 - Verify if Objects and its data are displayed as a Content Type and Subtype for a Page Template"
+	@priority = "5"
+	test ObjectDisplayedForPageTemplate {
+		property portal.acceptance = "true";
 
-		// TODO LPS-139039 CanDefineFixedFilterForBooleanType pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		VisualizeObjectDisplayPage.createObjectPageTemplate(
+			contentType = "Object",
+			pageTemplateName = "Object Display Page Template",
+			subtype = "Custom Object");
+
+		VisualizeObjectDisplayPage.validateObjectContentType(contentType = "Object");
+
+		VisualizeObjectDisplayPage.validateObjectSubtype(subtype = "Custom Object");
+	}
+
+	@description = "LPS-137105 - Verify if the Object entries are rendered when previewing it"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ObjectEntriesAreRendered {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "VisualizeObjectDisplayPage#ObjectEntriesAreRendered";
+
+		// TODO LPS-137101 ObjectEntriesAreRendered pending implementation
 
 	}
 
-	@description = "LPS-133867|LPS-135004 - Verify it is possible to define a fixed filters with Picklist type for table view on the Display Page"
+	@description = "LPS-137106 - Verify if it is possible to link a Mapped URL with the Objects Page Template"
 	@ignore = "Test Stub"
-	@priority = "4"
-	test CanDefineFixedFilterForPicklistType {
+	@priority = "5"
+	test ObjectMappedURL {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "VisualizeObjectDisplayPage#ObjectMappedURL";
 
-		// TODO LPS-139040 CanDefineFixedFilterForPicklistType pending implementation
+		// TODO LPS-137103 ObjectMappedURL pending implementation
 
 	}
 
-	@description = "LPS-133867|LPS-135004 - Verify it is possible to set the pagination as Numeric"
+	@description = "LPS-133867|LPS-135004 - Verify if it's possible map and view the image of user Profile in a Fragment of Display Page"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test CanSetPaginationNumeric {
+	test ViewImageUserProfileFromSpecificEntry {
 
-		// TODO LPS-139041 CanSetPaginationNumeric pending implementation
-
-	}
-
-	@description = "LPS-133867|LPS-135004 - Verify it is possible to set the pagination as Simple"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanSetPaginationSimple {
-
-		// TODO LPS-139042 CanSetPaginationSimple pending implementation
+		// TODO LPS-139031 ViewImageUserProfileFromSpecificEntry pending implementation
 
 	}
 

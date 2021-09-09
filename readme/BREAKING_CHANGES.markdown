@@ -712,3 +712,26 @@ Remove the calling code. Remove `http.header.secure.x.xss.protection` from `port
 The X-Xss-Protection header is no longer supported by modern browsers.
 
 ---------------------------------------
+
+### Renamed Language Keys
+
+- **Date:** 2021-Sep-09
+- **JIRA Ticket:** LPS-135504
+
+#### What changed?
+
+All module language keys were moved to a module called portal-language-lang at `liferay-[dxp|portal]/modules/apps/portal-language/portal-language-lang`. In some cases where modules used the same language key name but different values, the language keys were renamed. 
+
+#### Who is affected?
+
+This affects you if you are using or overriding a language key that has been renamed. [Renamed Language Keys](https://learn.liferay.com/dxp/latest/en/installation-and-upgrades/upgrading-liferay/reference/renamed-language-keys.html) maps the old language key names to the new names.
+
+#### How should I update my code?
+
+Rename all instances of the renamed language keys to their new names based on the mappings in [Renamed Language Keys](https://learn.liferay.com/dxp/latest/en/installation-and-upgrades/upgrading-liferay/reference/renamed-language-keys.html).
+
+#### Why was this change made?
+
+Centralized language keys are easier to manage. Key consolidation, however, required renaming keys that had conflicting values.
+
+---------------------------------------

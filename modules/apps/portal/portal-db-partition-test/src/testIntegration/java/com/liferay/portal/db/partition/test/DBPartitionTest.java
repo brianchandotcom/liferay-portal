@@ -15,6 +15,7 @@
 package com.liferay.portal.db.partition.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -43,6 +44,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	public static void setUpClass() throws Exception {
 		enableDBPartition();
 
+		createControlTable(TEST_CONTROL_TABLE_NAME);
+
 		addDBPartition();
 
 		insertCompanyAndDefaultUser();
@@ -54,82 +57,60 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		dropSchema();
 
+		dropTable(TEST_CONTROL_TABLE_NAME);
+
 		disableDBPartition();
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		if (dbInspector.hasIndex(TEST_CONTROL_TABLE_NAME, TEST_INDEX_NAME)) {
+			dropIndex(TEST_CONTROL_TABLE_NAME);
+		}
+
 		dropTable(TEST_TABLE_NAME);
 	}
 
 	@Test
 	public void testAddIndexControlTable() throws Exception {
-		try {
-			DBPartitionUtil.forEachCompanyId(
-				companyId -> db.runSQL(
-					"create index IX_test on ClassName_ (value)"));
-		}
-		finally {
-			DBPartitionUtil.forEachCompanyId(
-				companyId -> {
-					if (dbInspector.hasIndex("ClassName_", "IX_test")) {
-						db.runSQL("drop index IX_test on ClassName_");
-					}
-				});
-		}
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> createIndex(TEST_CONTROL_TABLE_NAME));
+
+		Assert.assertTrue(
+			dbInspector.hasIndex(TEST_CONTROL_TABLE_NAME, TEST_INDEX_NAME));
 	}
 
 	@Test
 	public void testAddUniqueIndexControlTable() throws Exception {
-		try {
-			DBPartitionUtil.forEachCompanyId(
-				companyId -> db.runSQL(
-					"create unique index IX_test on ClassName_ (value)"));
-		}
-		finally {
-			DBPartitionUtil.forEachCompanyId(
-				companyId -> {
-					if (dbInspector.hasIndex("ClassName_", "IX_test")) {
-						db.runSQL("drop index IX_test on ClassName_");
-					}
-				});
-		}
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> createUniqueIndex(TEST_CONTROL_TABLE_NAME));
+
+		Assert.assertTrue(
+			dbInspector.hasIndex(TEST_CONTROL_TABLE_NAME, TEST_INDEX_NAME));
 	}
 
 	@Test
 	public void testAlterControlTable() throws Exception {
-		try {
-			DBPartitionUtil.forEachCompanyId(
-				companyId -> db.runSQL(
-					"alter table ClassName_ add column testColumn bigint"));
-		}
-		finally {
-			DBPartitionUtil.forEachCompanyId(
-				companyId -> {
-					if (dbInspector.hasColumn("ClassName_", "testColumn")) {
-						db.runSQL(
-							"alter table ClassName_ drop column testColumn");
-					}
-				});
-		}
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> db.runSQL(
+				StringBundler.concat(
+					"alter table ", TEST_CONTROL_TABLE_NAME, " add column ",
+					"testAlterControlTableColumn bigint")));
+
+		Assert.assertTrue(
+			dbInspector.hasColumn(
+				TEST_CONTROL_TABLE_NAME, "testAlterControlTableColumn"));
 	}
 
 	@Test
 	public void testDropIndexControlTable() throws Exception {
-		try {
-			DBPartitionUtil.forEachCompanyId(
-				companyId -> db.runSQL("drop index IX_B27A301F on ClassName_"));
-		}
-		finally {
-			DBPartitionUtil.forEachCompanyId(
-				companyId -> {
-					if (dbInspector.hasIndex("ClassName_", "IX_test")) {
-						db.runSQL(
-							"create unique index IX_B27A301F on ClassName_ " +
-								"(value);");
-					}
-				});
-		}
+		createIndex(TEST_CONTROL_TABLE_NAME);
+
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> dropIndex(TEST_CONTROL_TABLE_NAME));
+
+		Assert.assertTrue(
+			!dbInspector.hasIndex(TEST_CONTROL_TABLE_NAME, TEST_INDEX_NAME));
 	}
 
 	@Test

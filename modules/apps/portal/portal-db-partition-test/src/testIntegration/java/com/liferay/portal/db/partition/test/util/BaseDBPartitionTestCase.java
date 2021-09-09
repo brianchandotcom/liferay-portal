@@ -88,6 +88,26 @@ public abstract class BaseDBPartitionTestCase {
 		}
 	}
 
+	protected static void createControlTable(String tableName)
+		throws Exception {
+
+		db.runSQL(
+			"create table " + tableName + " (testColumn bigint primary key)");
+	}
+
+	protected static void createIndex(String tableName) throws Exception {
+		db.runSQL(getCreateIndexSQL(tableName));
+	}
+
+	protected static void createTable(String tableName) throws Exception {
+		db.runSQL(getCreateTableSQL(tableName));
+	}
+
+	protected static void createUniqueIndex(String tableName) throws Exception {
+		db.runSQL(
+			"create unique index IX_Test on " + tableName + " (testColumn)");
+	}
+
 	protected static void disableDBPartition() {
 		DataAccess.cleanUp(connection);
 
@@ -110,8 +130,16 @@ public abstract class BaseDBPartitionTestCase {
 			_lazyConnectionDataSourceProxy);
 	}
 
+	protected static void dropIndex(String tableName) throws Exception {
+		db.runSQL("drop index IX_Test on " + tableName);
+	}
+
 	protected static void dropSchema() throws Exception {
 		db.runSQL("drop schema if exists " + getSchemaName(COMPANY_ID));
+	}
+
+	protected static void dropTable(String tableName) throws Exception {
+		db.runSQL("drop table if exists " + tableName);
 	}
 
 	protected static void enableDBPartition() throws Exception {
@@ -151,6 +179,15 @@ public abstract class BaseDBPartitionTestCase {
 		ReflectionTestUtil.setFieldValue(
 			InfrastructureUtil.class, "_dataSource",
 			_lazyConnectionDataSourceProxy);
+	}
+
+	protected static String getCreateIndexSQL(String tableName) {
+		return "create index IX_Test on " + tableName + " (testColumn)";
+	}
+
+	protected static String getCreateTableSQL(String tableName) {
+		return "create table " + tableName +
+			" (testColumn bigint primary key, companyId bigint)";
 	}
 
 	protected static String getSchemaName(long companyId) {
@@ -201,20 +238,9 @@ public abstract class BaseDBPartitionTestCase {
 		}
 	}
 
-	protected void dropTable(String tableName) throws Exception {
-		db.runSQL("drop table if exists " + tableName);
-	}
-
-	protected String getCreateIndexSQL(String tableName) {
-		return "create index IX_Test on " + tableName + " (testColumn)";
-	}
-
-	protected String getCreateTableSQL(String tableName) {
-		return "create table " + tableName +
-			" (testColumn bigint primary key, companyId bigint)";
-	}
-
 	protected static final long COMPANY_ID = 123456789L;
+
+	protected static final String TEST_CONTROL_TABLE_NAME = "TestControlTable";
 
 	protected static final String TEST_INDEX_NAME = "IX_Test";
 

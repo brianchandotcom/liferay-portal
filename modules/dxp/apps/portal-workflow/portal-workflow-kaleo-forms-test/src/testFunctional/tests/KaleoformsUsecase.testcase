@@ -3357,6 +3357,7 @@ definition {
 			fieldValue = "4/1/17");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test ProcessUsesCreateFormWhenEditFormIsMissing {
 		Navigator.openURL();
@@ -3631,6 +3632,7 @@ definition {
 			fieldValue = "Kaleo Text Field");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ProcessUsesEditForm {
 		Navigator.openURL();

@@ -73,9 +73,7 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 
 		long groupId = themeDisplay.getScopeGroupId();
 
-		if (themeDisplay.getScopeGroupId() !=
-				layoutDisplayPageObjectProvider.getGroupId()) {
-
+		if (groupId != layoutDisplayPageObjectProvider.getGroupId()) {
 			Group layoutDisplayPageObjectGroup = _groupLocalService.getGroup(
 				layoutDisplayPageObjectProvider.getGroupId());
 

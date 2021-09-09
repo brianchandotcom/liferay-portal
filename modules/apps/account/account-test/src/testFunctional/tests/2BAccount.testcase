@@ -68,6 +68,26 @@ definition {
 		}
 	}
 
+	@description = "This test adds the Add Account Entry permission to Account Admin and assert user can add an account."
+	@priority = "5"
+	test AccountAdminCanAddAccount {
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ACCOUNT_ENTRY",
+			resourceName = "com.liferay.account",
+			roleTitle = "Account Administrator",
+			roleType = "account");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		Accounts.addBusinessAccount(
+			accountDescription = "Accounts Name Description for Test",
+			accountName = "Accounts Name for Test");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		LexiconEntry.viewEntryName(rowEntry = "Accounts Name for Test");
+	}
+
 	@description = "This test asserts that an Account Admin can edit an account he is assigned to."
 	@priority = "4"
 	test AccountAdminCanEditAccount {

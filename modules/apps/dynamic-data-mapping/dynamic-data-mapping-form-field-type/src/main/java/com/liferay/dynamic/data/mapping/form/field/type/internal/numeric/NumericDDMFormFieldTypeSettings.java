@@ -31,11 +31,12 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 @DDMForm(
 	rules = {
 		@DDMFormRule(
-			actions = {
-				"setValue('required', TRUE)",
-				"setValue('readOnly', TRUE)",
-			},
-			condition = "equals(IsRequiredObjectField('objectFieldName'), TRUE)"
+			actions = "setValue('required', TRUE)",
+			condition = "not(isEmpty(getValue('objectFieldName'))) and equals(IsRequiredObjectField(getValue('objectFieldName')), TRUE)"
+		),
+		@DDMFormRule(
+			actions = "setValue('required', FALSE)",
+			condition = "not(isEmpty(getValue('objectFieldName'))) and equals(IsRequiredObjectField(getValue('objectFieldName')), FALSE)"
 		),
 		@DDMFormRule(
 			actions = {

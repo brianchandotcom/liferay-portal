@@ -753,6 +753,10 @@ definition {
 			productSKUList = "MIN55861",
 			warehouseName = "Italy");
 
+		Click(
+			key_text = "Deliver",
+			locator1 = "Button#ANY");
+
 		CommerceNavigator.gotoPortlet(
 			category = "Order Management",
 			portlet = "Shipments");

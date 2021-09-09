@@ -193,4 +193,24 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9230 | Test Summary: Search With No Results"
+	@priority = "1"
+	test ViewNoResultsWhenSearchNonExistentProperty {
+		task ("Sign in AC") {
+			ACUtils.launchAC();
+		}
+
+		task ("Search a non existent property in property menu") {
+			ACProperties.clickPropertyMenuButton();
+
+			Type(
+				locator1 = "ACSidebar#PROPERTY_SEARCH",
+				value1 = "Non Existent Property");
+		}
+
+		task ("View no results returned") {
+			AssertElementNotPresent(locator1 = "ACSidebar#PROPERTY_NAME");
+		}
+	}
+
 }

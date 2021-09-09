@@ -237,6 +237,8 @@ definition {
 	@description = "Verify that a calendar event on draft can be approved"
 	@priority = "4"
 	test CalendarWithDraftStatusCanBecomeApproved {
+		property portal.upstream = "quarantine";
+
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarNavigator.gotoAddEvent();

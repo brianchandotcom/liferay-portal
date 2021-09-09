@@ -168,9 +168,17 @@ public abstract class BaseConvertProcess implements ConvertProcess {
 
 		ServletContext servletContext = getServletContext(httpServletRequest);
 
-		return ResourceBundleLoaderUtil.
-			getResourceBundleLoaderByServletContextName(
-				servletContext.getServletContextName());
+		ResourceBundleLoader resourceBundleLoader =
+			ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByServletContextName(
+					servletContext.getServletContextName());
+
+		if (resourceBundleLoader == null) {
+			resourceBundleLoader =
+				ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+		}
+
+		return resourceBundleLoader;
 	}
 
 	protected ServletContext getServletContext(

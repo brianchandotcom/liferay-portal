@@ -89,9 +89,16 @@ public abstract class BaseJSPAssetRenderer<T>
 
 	protected ResourceBundleLoader acquireResourceBundleLoader() {
 		if (_servletContext != null) {
-			return ResourceBundleLoaderUtil.
-				getResourceBundleLoaderByServletContextName(
-					_servletContext.getServletContextName());
+			ResourceBundleLoader resourceBundleLoader =
+				ResourceBundleLoaderUtil.
+					getResourceBundleLoaderByServletContextName(
+						_servletContext.getServletContextName());
+
+			if (resourceBundleLoader == null) {
+				return ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+			}
+
+			return resourceBundleLoader;
 		}
 
 		return new AggregateResourceBundleLoader(

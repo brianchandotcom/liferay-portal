@@ -89,6 +89,11 @@ public class SPAHelper {
 			ResourceBundleLoaderUtil.
 				getResourceBundleLoaderByServletContextName(servletContextName);
 
+		if (resourceBundleLoader == null) {
+			resourceBundleLoader =
+				ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+		}
+
 		return resourceBundleLoader.loadResourceBundle(locale);
 	}
 

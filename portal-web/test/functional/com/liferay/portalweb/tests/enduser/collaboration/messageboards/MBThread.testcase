@@ -383,6 +383,21 @@ definition {
 			threadSubject = "Message Boards Thread Subject");
 	}
 
+	@description = "This test covers LPS-137634. It ensures that a user cannot publish a thread with a tag contains Java Script."
+	@priority = "3"
+	test CannotPublishThreadWithTagContainsJavaScript {
+		MessageboardsThread.addPG(
+			groupName = "Guest",
+			invalidCharacters = "true",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			tagName = '''<script>alert(123);</script>''',
+			threadBody = '''<script>alert(123);</script>''',
+			threadSubject = '''<script>alert(123);</script>''');
+
+		AssertAlertNotPresent();
+	}
+
 	@description = "This is a test for LPS-136915. It checks that an attachment can be restored."
 	@ignore = "true"
 	@priority = "3"

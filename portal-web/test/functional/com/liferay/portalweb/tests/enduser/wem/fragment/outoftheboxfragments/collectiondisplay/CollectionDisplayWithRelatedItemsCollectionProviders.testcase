@@ -1239,6 +1239,141 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-127025. The DPT author can use custom document type related item collection provider in DPT for Category."
+	@priority = "4"
+	test ViewCollectionItemsBasedOnCustomDocumentTypeOnDisplayPageTemplateForCategory {
+		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#ViewCollectionItemsBasedOnCustomDocumentTypeOnDisplayPageTemplateForCategory";
+
+		task ("Enable the DLFileEntry feature via gogo shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.document.library.web.internal.model.listener.DLFileEntryTypeModelListener");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a web content with category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a blogs entry with category") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${categoryId}",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document with category") {
+			JSONDocument.addFile(
+				assetCategoryIds = "${categoryId}",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a custom document type with a Text field") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMNavigator.gotoDocumentType();
+
+			DMDocumentType.add(
+				dmDocumentTypeFieldNames = "Text",
+				dmDocumentTypeName = "DM Document Type Name");
+		}
+
+		task ("Add a document based on new document type with category") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMDocument.addCP(
+				categoryNameList = "Category Name",
+				dmDocumentTitle = "DM Text Title",
+				dmDocumentTypeName = "DM Document Type Name",
+				textField = "DM Document Text",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a display page template for Category") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Category",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a Collection display fragment to display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the DM Document Type Name related items collection provider and Select the Bordered List") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoItemRelatedListProviderName = "DM Document Type Name",
+				listStyle = "Bordered List");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Associate the display page template to category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.editCP(
+				categoryName = "Category Name",
+				displayPageName = "Display Page Name",
+				displayPageTemplateType = "Specific",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View only the title of document based on custom document type shown in display page template") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "View Display Page",
+				rowEntry = "Category Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+
+			AssertVisible(
+				key_entryContent = "[normalize-space()='DM Text Title']",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+		}
+
+		task ("Disable the DLFileEntry feature via gogo shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:disable com.liferay.document.library.web.internal.model.listener.DLFileEntryTypeModelListener");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+	}
+
 	@description = "This is a test for LPS-127025. The DPT author can use custom web content structure related item collection provider in DPT for Category."
 	@priority = "4"
 	test ViewCollectionItemsBasedOnCustomWebContentStructureOnDisplayPageTemplateForCategory {

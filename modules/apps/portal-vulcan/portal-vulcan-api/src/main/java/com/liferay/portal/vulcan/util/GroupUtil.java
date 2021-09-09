@@ -14,7 +14,14 @@
 
 package com.liferay.portal.vulcan.util;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Javier Gamarra
@@ -29,12 +36,72 @@ public class GroupUtil {
 		return null;
 	}
 
+	public static Long getDepotGroupId(
+		String assetLibraryId, long companyId,
+		DepotEntryLocalService depotEntryLocalService,
+		GroupLocalService groupLocalService) {
+
+		Group group = groupLocalService.fetchGroup(companyId, assetLibraryId);
+
+		if (group == null) {
+			try {
+				DepotEntry depotEntry = depotEntryLocalService.fetchDepotEntry(
+					GetterUtil.getLong(assetLibraryId));
+
+				if (depotEntry == null) {
+					return null;
+				}
+
+				group = depotEntry.getGroup();
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException, portalException);
+				}
+
+				return null;
+			}
+		}
+
+		if (_checkGroup(group)) {
+			return group.getGroupId();
+		}
+
+		return null;
+	}
+
+	public static Long getGroupId(
+		long companyId, String groupKey, GroupLocalService groupLocalService) {
+
+		Group group = groupLocalService.fetchGroup(companyId, groupKey);
+
+		if (group == null) {
+			group = groupLocalService.fetchGroup(GetterUtil.getLong(groupKey));
+		}
+
+		if (_checkGroup(group)) {
+			return group.getGroupId();
+		}
+
+		return null;
+	}
+
 	public static Long getSiteId(Group group) {
 		if (_isDepot(group)) {
 			return null;
 		}
 
 		return group.getGroupId();
+	}
+
+	private static boolean _checkGroup(Group group) {
+		if (_isDepotOrSite(group) ||
+			((group != null) && _isDepotOrSite(group.getLiveGroup()))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static boolean _isDepot(Group group) {
@@ -44,5 +111,15 @@ public class GroupUtil {
 
 		return false;
 	}
+
+	private static boolean _isDepotOrSite(Group group) {
+		if ((group != null) && (group.isDepot() || group.isSite())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(GroupUtil.class);
 
 }

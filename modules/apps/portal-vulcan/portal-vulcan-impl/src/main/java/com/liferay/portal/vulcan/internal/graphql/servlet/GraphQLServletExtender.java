@@ -69,13 +69,13 @@ import com.liferay.portal.vulcan.internal.jaxrs.context.provider.AggregationCont
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProviderUtil;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
-import com.liferay.portal.vulcan.internal.jaxrs.param.converter.provider.SiteParamConverterProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.validation.ValidationUtil;
 import com.liferay.portal.vulcan.internal.multipart.MultipartUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.GroupUtil;
 
 import graphql.ExceptionWhileDataFetching;
 import graphql.GraphQLError;
@@ -944,10 +944,6 @@ public class GraphQLServletExtender {
 			}
 		}
 
-		SiteParamConverterProvider siteParamConverterProvider =
-			new SiteParamConverterProvider(
-				_depotEntryLocalService, _groupLocalService);
-
 		for (int i = 0; i < parameters.length; i++) {
 			Parameter parameter = parameters[i];
 
@@ -979,9 +975,9 @@ public class GraphQLServletExtender {
 			if (parameterName.equals("assetLibraryId") && (argument != null)) {
 				try {
 					argument = String.valueOf(
-						siteParamConverterProvider.getDepotGroupId(
-							(String)argument,
-							CompanyThreadLocal.getCompanyId()));
+						GroupUtil.getDepotGroupId(
+							(String)argument, CompanyThreadLocal.getCompanyId(),
+							_depotEntryLocalService, _groupLocalService));
 				}
 				catch (Exception exception) {
 					throw new Exception(
@@ -994,9 +990,9 @@ public class GraphQLServletExtender {
 			if (parameterName.equals("siteKey") && (argument != null)) {
 				try {
 					argument = String.valueOf(
-						siteParamConverterProvider.getGroupId(
-							CompanyThreadLocal.getCompanyId(),
-							(String)argument));
+						GroupUtil.getGroupId(
+							CompanyThreadLocal.getCompanyId(), (String)argument,
+							_groupLocalService));
 				}
 				catch (Exception exception) {
 					throw new Exception(

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
-import com.liferay.portal.vulcan.internal.jaxrs.param.converter.provider.SiteParamConverterProvider;
+import com.liferay.portal.vulcan.util.GroupUtil;
 
 import java.io.Serializable;
 
@@ -146,10 +146,6 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 			return new HashMap<>();
 		}
 
-		SiteParamConverterProvider siteParamConverterProvider =
-			new SiteParamConverterProvider(
-				_depotEntryLocalService, _groupLocalService);
-
 		for (Map.Entry<String, Serializable> entry : parameters.entrySet()) {
 			String key = entry.getKey();
 			Serializable value = entry.getValue();
@@ -157,14 +153,16 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 			if (key.equals("assetLibraryId") && (value != null)) {
 				parameters.put(
 					key,
-					siteParamConverterProvider.getDepotGroupId(
-						String.valueOf(value), _company.getCompanyId()));
+					GroupUtil.getDepotGroupId(
+						String.valueOf(value), _company.getCompanyId(),
+						_depotEntryLocalService, _groupLocalService));
 			}
 			else if (key.equals("siteId") && (value != null)) {
 				parameters.put(
 					key,
-					siteParamConverterProvider.getGroupId(
-						_company.getCompanyId(), String.valueOf(value)));
+					GroupUtil.getGroupId(
+						_company.getCompanyId(), String.valueOf(value),
+						_groupLocalService));
 			}
 		}
 

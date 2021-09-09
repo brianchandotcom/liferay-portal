@@ -14,6 +14,7 @@
 
 package com.liferay.object.rest.internal.manager.v1_0;
 
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -21,7 +22,6 @@ import com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConvert
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -38,6 +39,7 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.io.Serializable;
@@ -208,7 +210,15 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 				objectDefinition.getScope());
 
 		if (objectScopeProvider.isGroupAware()) {
-			return GetterUtil.getLong(scopeId);
+			if (Objects.equals("site", objectDefinition.getScope())) {
+				return GroupUtil.getGroupId(
+					objectDefinition.getCompanyId(), scopeId,
+					_groupLocalService);
+			}
+
+			return GroupUtil.getDepotGroupId(
+				scopeId, objectDefinition.getCompanyId(),
+				_depotEntryLocalService, _groupLocalService);
 		}
 
 		return 0;
@@ -265,7 +275,10 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	}
 
 	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ObjectEntryDTOConverter _objectEntryDTOConverter;

@@ -12,6 +12,7 @@ dependencies {
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.osgi", name: "org.osgi.annotation", version: "6.0.0"
 	compileOnly project(":apps:batch-engine:batch-engine-api")
+	compileOnly project(":apps:depot:depot-api")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-api")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-liferay-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")

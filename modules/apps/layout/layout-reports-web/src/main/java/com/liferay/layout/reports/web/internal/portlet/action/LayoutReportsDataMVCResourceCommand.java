@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -268,10 +269,20 @@ public class LayoutReportsDataMVCResourceCommand
 						return 1;
 					}
 
-					String languageId1 = LocaleUtil.toW3cLanguageId(locale1);
-					String languageId2 = LocaleUtil.toW3cLanguageId(locale2);
+					Locale locale = themeDisplay.getLocale();
 
-					return languageId1.compareToIgnoreCase(languageId2);
+					String displayLanguage1 = locale1.getDisplayLanguage(
+						locale);
+					String displayLanguage2 = locale2.getDisplayLanguage(
+						locale);
+
+					if (StringUtil.equalsIgnoreCase(
+							displayLanguage1, displayLanguage2)) {
+
+						return -1;
+					}
+
+					return 1;
 				}
 			).map(
 				locale -> {

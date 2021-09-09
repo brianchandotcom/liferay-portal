@@ -128,6 +128,11 @@
 </tr>
 <!-- DATA SOURCE INFORMATION -->
 <tr>
+	<td>DATA_SOURCE_LIST_STATUS</td>
+	<td>//span[contains(@class,'label-item') and contains(.,'${key_listStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DATA_SOURCE_STATUS</td>
 	<td>//div[contains(@class,'data-source-status-root')]//span[text()='${key_dataSourceStatus}']</td>
 	<td></td>

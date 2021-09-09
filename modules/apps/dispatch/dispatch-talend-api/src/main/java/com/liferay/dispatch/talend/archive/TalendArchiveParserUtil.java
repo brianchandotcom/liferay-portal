@@ -352,19 +352,20 @@ public class TalendArchiveParserUtil {
 		List<String> jvmOptionsList = new ArrayList<>();
 
 		for (String jobScriptPathString : jobScriptPathStrings) {
-			BufferedReader bufferedReader = new BufferedReader(
-				new FileReader(jobScriptPathString));
+			try (BufferedReader bufferedReader = new BufferedReader(
+					new FileReader(jobScriptPathString))) {
 
-			String line = bufferedReader.readLine();
+				String line = bufferedReader.readLine();
 
-			while (line != null) {
-				_addJVMOptionsList(jvmOptionsList, line);
+				while (line != null) {
+					_addJVMOptionsList(jvmOptionsList, line);
 
-				line = bufferedReader.readLine();
-			}
+					line = bufferedReader.readLine();
+				}
 
-			if (!jvmOptionsList.isEmpty()) {
-				break;
+				if (!jvmOptionsList.isEmpty()) {
+					break;
+				}
 			}
 		}
 

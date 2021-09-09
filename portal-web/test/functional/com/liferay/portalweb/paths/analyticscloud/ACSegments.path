@@ -177,6 +177,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEGMENT_CRITERIA_PREPOSITION_AND_TIME</td>
+	<td>xpath=((//div[@class='criteria-group'])[${key_indexNested}]//div[@class='criteria-row']//span[${index_2}])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEGMENT_CRITERIA_CONDITION</td>
 	<td>xpath=((//div[@class='criteria-group'])[${key_indexNested}]//div[@class='criteria-row']//span[1])[${index}]</td>
 	<td></td>

@@ -88,7 +88,8 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return TextFormatter.formatPlural(StringUtil.toLowerCase(getName()));
+		return "/c/" +
+			TextFormatter.formatPlural(StringUtil.toLowerCase(getShortName()));
 	}
 
 	@Override

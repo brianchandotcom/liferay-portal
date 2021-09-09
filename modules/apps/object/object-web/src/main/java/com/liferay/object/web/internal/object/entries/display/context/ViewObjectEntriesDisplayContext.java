@@ -42,7 +42,7 @@ public class ViewObjectEntriesDisplayContext {
 	public ViewObjectEntriesDisplayContext(
 		HttpServletRequest httpServletRequest, String restContextPath) {
 
-		_apiURL = "/o/" + restContextPath;
+		_apiURL = "/o" + restContextPath;
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
 

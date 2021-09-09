@@ -83,7 +83,7 @@ definition {
 
 		var objectName = StringUtil.toLowerCase("${objectName}");
 		var curl = '''
-			${portalURL}/o/c_${objectName}s \
+			${portalURL}/o/c/${objectName}s \
 			-H 'Content-Type: application/json' \
 			-u ${userEmailAddress}:${userPassword} \
 			-d '{
@@ -169,7 +169,7 @@ definition {
 
 		var objectName = StringUtil.toLowerCase("${objectName}");
 		var curl = '''
-			${portalURL}/o/${objectName}s/${entryId} \
+			${portalURL}/o/c/${objectName}s/${entryId} \
 			-u ${userEmailAddress}:${userPassword}
 		''';
 
@@ -189,7 +189,7 @@ definition {
 
 		var objectName = StringUtil.toLowerCase("${objectName}");
 		var curl = '''
-			${portalURL}/o/${objectName}s \
+			${portalURL}/o/c/${objectName}s \
 			-u ${userEmailAddress}:${userPassword}
 		''';
 

@@ -87,8 +87,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							"liferay.object.definition.id",
 							objectDefinition.getObjectDefinitionId()
 						).put(
+							"liferay.object.definition.name",
+							objectDefinition.getShortName()
+						).put(
 							"osgi.jaxrs.application.base",
-							"/" + objectDefinition.getRESTContextPath()
+							objectDefinition.getRESTContextPath()
 						).put(
 							"osgi.jaxrs.extension.select",
 							"(osgi.jaxrs.name=Liferay.Vulcan)"
@@ -125,7 +128,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"osgi.jaxrs.extension", "true"
 					).put(
 						"osgi.jaxrs.name",
-						objectDefinition.getRESTContextPath() +
+						objectDefinition.getName() +
 							"ObjectDefinitionContextProvider"
 					).build()),
 				_bundleContext.registerService(
@@ -138,7 +141,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"osgi.jaxrs.extension", "true"
 					).put(
 						"osgi.jaxrs.name",
-						objectDefinition.getRESTContextPath() +
+						objectDefinition.getName() +
 							"RequiredObjectFieldExceptionMapper"
 					).build()));
 		}
@@ -149,20 +152,15 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ObjectDefinitionGraphQLDTOContributor.of(
 					objectDefinition, _objectEntryManager,
 					_objectFieldLocalService.getObjectFields(
-						objectDefinition.getObjectDefinitionId())),
+						objectDefinition.getObjectDefinitionId()),
+					objectScopeProvider),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"dto.name", objectDefinition.getDBTableName()
 				).build()));
 
 		Map<Long, ObjectDefinition> objectDefinitions =
-			_objectDefinitionsMap.get(objectDefinition.getRESTContextPath());
-
-		if (objectDefinitions == null) {
-			objectDefinitions = new HashMap<>();
-
-			_objectDefinitionsMap.put(
-				objectDefinition.getRESTContextPath(), objectDefinitions);
-		}
+			_objectDefinitionsMap.computeIfAbsent(
+				objectDefinition.getRESTContextPath(), k -> new HashMap<>());
 
 		objectDefinitions.put(
 			objectDefinition.getCompanyId(), objectDefinition);

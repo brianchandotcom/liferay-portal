@@ -18,7 +18,6 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.internal.jaxrs.container.request.filter.ObjectDefinitionIdContainerRequestFilter;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.OpenAPIResourceImpl;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.openapi.DTOProperty;
@@ -56,7 +55,7 @@ public class ObjectEntryApplication extends Application {
 				_applicationName, _objectDefinitionId));
 		objects.add(
 			new OpenAPIResourceImpl(
-				_openAPIResource, _getOpenAPISchemaFilter(),
+				_openAPIResource, _getOpenAPISchemaFilter(_applicationPath),
 				new HashSet<Class<?>>() {
 					{
 						add(ObjectEntryResourceImpl.class);
@@ -70,6 +69,10 @@ public class ObjectEntryApplication extends Application {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_applicationName = (String)properties.get("osgi.jaxrs.name");
+		_applicationPath = (String)properties.get(
+			"osgi.jaxrs.application.base");
+		_objectDefinitionName = (String)properties.get(
+			"liferay.object.definition.name");
 
 		_objectDefinitionId = (Long)properties.get(
 			"liferay.object.definition.id");
@@ -78,8 +81,12 @@ public class ObjectEntryApplication extends Application {
 			_objectDefinitionId);
 	}
 
-	private OpenAPISchemaFilter _getOpenAPISchemaFilter() {
+	private OpenAPISchemaFilter _getOpenAPISchemaFilter(
+		String applicationPath) {
+
 		OpenAPISchemaFilter openAPISchemaFilter = new OpenAPISchemaFilter();
+
+		openAPISchemaFilter.setApplicationPath(applicationPath);
 
 		DTOProperty dtoProperty = new DTOProperty("ObjectEntry", "object");
 
@@ -96,19 +103,18 @@ public class ObjectEntryApplication extends Application {
 		openAPISchemaFilter.setDTOProperty(dtoProperty);
 		openAPISchemaFilter.setSchemaMappings(
 			HashMapBuilder.put(
-				"ObjectEntry", _applicationName
+				"ObjectEntry", _objectDefinitionName
 			).put(
-				"PageObjectEntry", "Page" + _applicationName
+				"PageObjectEntry", "Page" + _objectDefinitionName
 			).build());
 
 		return openAPISchemaFilter;
 	}
 
 	private String _applicationName;
+	private String _applicationPath;
 	private Long _objectDefinitionId;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private String _objectDefinitionName;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

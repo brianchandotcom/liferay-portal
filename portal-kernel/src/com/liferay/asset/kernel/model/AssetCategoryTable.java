@@ -17,6 +17,7 @@ package com.liferay.asset.kernel.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -63,10 +64,10 @@ public class AssetCategoryTable extends BaseTable<AssetCategoryTable> {
 		"treePath", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AssetCategoryTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<AssetCategoryTable, String> title = createColumn(
-		"title", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<AssetCategoryTable, String> description = createColumn(
-		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AssetCategoryTable, Clob> title = createColumn(
+		"title", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<AssetCategoryTable, Clob> description = createColumn(
+		"description", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<AssetCategoryTable, Long> vocabularyId = createColumn(
 		"vocabularyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AssetCategoryTable, Date> lastPublishDate =

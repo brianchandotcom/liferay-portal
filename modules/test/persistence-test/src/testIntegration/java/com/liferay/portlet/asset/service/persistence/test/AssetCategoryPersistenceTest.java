@@ -402,8 +402,8 @@ public class AssetCategoryPersistenceTest {
 			"uuid", true, "externalReferenceCode", true, "categoryId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "parentCategoryId",
-			true, "treePath", true, "name", true, "title", true, "description",
-			true, "vocabularyId", true, "lastPublishDate", true);
+			true, "treePath", true, "name", true, "vocabularyId", true,
+			"lastPublishDate", true);
 	}
 
 	@Test

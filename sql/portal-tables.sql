@@ -85,8 +85,8 @@ create table AssetCategory (
 	parentCategoryId LONG,
 	treePath STRING null,
 	name VARCHAR(255) null,
-	title STRING null,
-	description STRING null,
+	title TEXT null,
+	description TEXT null,
 	vocabularyId LONG,
 	lastPublishDate DATE null,
 	primary key (categoryId, ctCollectionId)

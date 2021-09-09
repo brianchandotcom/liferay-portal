@@ -542,6 +542,8 @@ definition {
 					paddingLeft = "2",
 					paddingRight = "2",
 					paddingTop = "2");
+
+				SelectFrame(value1 = "relative=top");
 			}
 		}
 	}

@@ -800,9 +800,9 @@ definition {
 			fieldValue = "1");
 	}
 
-	@description = "LPS-125861 - Verify that the Input Mask can be enabled on intergers"
+	@description = "LPS-125861 - Verify that the Input Mask can be enabled on integers"
 	@priority = "5"
-	test InputMaskCanBeEnabledOnIntergers {
+	test InputMaskCanBeEnabledOnIntegers {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
@@ -819,6 +819,7 @@ definition {
 		FormFields.enableSwitch(fieldName = "Input Mask");
 
 		AssertElementPresent(locator1 = "FormFields#CHARACTER_OPTIONS_SHOW_MORE_BUTTON");
+
 		Click(locator1 = "FormFields#CHARACTER_OPTIONS_SHOW_MORE_BUTTON");
 
 		AssertElementPresent(locator1 = "FormFields#CHARACTER_OPTIONS_SHOW_LESS_BUTTON");
@@ -828,9 +829,9 @@ definition {
 		FormFields.viewNumericInputMask(inputMaskValue = "E.g +__ (__) ____-____");
 	}
 
-	@description = "LPS-130848 - Verify that the Input Mask can be applied on intergers"
+	@description = "LPS-130848 - Verify that the Input Mask can be applied on integers"
 	@priority = "5"
-	test InputMaskIsWorkingOnIntergers {
+	test InputMaskIsWorkingOnIntegers {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");

@@ -30,11 +30,10 @@ import com.liferay.object.service.persistence.ObjectLayoutRowPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -56,7 +55,7 @@ public class ObjectLayoutLocalServiceImpl
 	@Override
 	public ObjectLayout addObjectLayout(
 			long userId, long objectDefinitionId, boolean defaultObjectLayout,
-			Map<Locale, String> nameMap, JSONArray objectLayoutTabsJSONArray)
+			Map<Locale, String> nameMap, List<ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -78,9 +77,44 @@ public class ObjectLayoutLocalServiceImpl
 
 		objectLayout = objectLayoutPersistence.update(objectLayout);
 
-		_addObjectLayoutTabs(
-			user, objectDefinitionId, objectLayout.getObjectLayoutId(),
-			objectLayoutTabsJSONArray);
+		objectLayout.setObjectLayoutTabs(
+			_addObjectLayoutTabs(
+				user, objectDefinitionId, objectLayout.getObjectLayoutId(),
+				objectLayoutTabs));
+
+		return objectLayout;
+	}
+
+	@Override
+	public ObjectLayout deleteObjectLayout(long objectLayoutId)
+		throws PortalException {
+
+		ObjectLayout objectLayout = objectLayoutPersistence.findByPrimaryKey(
+			objectLayoutId);
+
+		_deleteObjectLayoutTabs(objectLayoutId);
+
+		objectLayoutPersistence.remove(objectLayoutId);
+
+		return objectLayout;
+	}
+
+	@Override
+	public ObjectLayout getObjectLayout(long objectLayoutId)
+		throws PortalException {
+
+		ObjectLayout objectLayout = objectLayoutPersistence.findByPrimaryKey(
+			objectLayoutId);
+
+		List<ObjectLayoutTab> objectLayoutTabs =
+			_objectLayoutTabPersistence.findByObjectLayoutId(objectLayoutId);
+
+		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
+			objectLayoutTab.setObjectLayoutBoxes(
+				_getObjectLayoutBoxes(objectLayoutTab));
+		}
+
+		objectLayout.setObjectLayoutTabs(objectLayoutTabs);
 
 		return objectLayout;
 	}
@@ -99,9 +133,10 @@ public class ObjectLayoutLocalServiceImpl
 			objectDefinitionId);
 	}
 
-	private void _addObjectLayoutBox(
+	private ObjectLayoutBox _addObjectLayoutBox(
 			User user, long objectDefinitionId, long objectLayoutTabId,
-			JSONObject jsonObject)
+			boolean collapsable, Map<Locale, String> nameMap, int priority,
+			List<ObjectLayoutRow> objectLayoutRows)
 		throws PortalException {
 
 		ObjectLayoutBox objectLayoutBox = _objectLayoutBoxPersistence.create(
@@ -111,36 +146,50 @@ public class ObjectLayoutLocalServiceImpl
 		objectLayoutBox.setUserId(user.getUserId());
 		objectLayoutBox.setUserName(user.getFullName());
 		objectLayoutBox.setObjectLayoutTabId(objectLayoutTabId);
-		objectLayoutBox.setCollapsable(jsonObject.getBoolean("collapsable"));
-		//objectLayoutBox.setNameMap(nameMap);
-		objectLayoutBox.setPriority(jsonObject.getInt("priority"));
+		objectLayoutBox.setCollapsable(collapsable);
+		objectLayoutBox.setNameMap(nameMap);
+		objectLayoutBox.setPriority(priority);
 
 		objectLayoutBox = _objectLayoutBoxPersistence.update(objectLayoutBox);
 
-		_addObjectLayoutRows(
-			user, objectDefinitionId, objectLayoutBox.getObjectLayoutBoxId(),
-			jsonObject.getJSONArray("objectLayoutRow"));
+		objectLayoutBox.setObjectLayoutRows(
+			_addObjectLayoutRows(
+				user, objectDefinitionId,
+				objectLayoutBox.getObjectLayoutBoxId(), objectLayoutRows));
+
+		return objectLayoutBox;
 	}
 
-	private void _addObjectLayoutBoxes(
+	private List<ObjectLayoutBox> _addObjectLayoutBoxes(
 			User user, long objectDefinitionId, long objectLayoutTabId,
-			JSONArray jsonArray)
+			List<ObjectLayoutBox> objectLayoutBoxes)
 		throws PortalException {
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			_addObjectLayoutBox(
-				user, objectDefinitionId, objectLayoutTabId,
-				jsonArray.getJSONObject(i));
+		List<ObjectLayoutBox> newObjectLayoutBoxes = new ArrayList<>();
+
+		for (ObjectLayoutBox objectLayoutBox : objectLayoutBoxes) {
+			newObjectLayoutBoxes.add(
+				_addObjectLayoutBox(
+					user, objectDefinitionId, objectLayoutTabId,
+					objectLayoutBox.isCollapsable(),
+					objectLayoutBox.getNameMap(), objectLayoutBox.getPriority(),
+					objectLayoutBox.getObjectLayoutRows()));
 		}
+
+		return newObjectLayoutBoxes;
 	}
 
-	private void _addObjectLayoutColumn(
+	private ObjectLayoutColumn _addObjectLayoutColumn(
 			User user, long objectDefinitionId, long objectLayoutRowId,
-			JSONObject jsonObject)
+			long objectFieldId, int priority)
 		throws PortalException {
+
+		ObjectLayoutColumn objectLayoutColumn =
+			_objectLayoutColumnPersistence.create(
+				counterLocalService.increment());
 
 		ObjectField objectField = _objectFieldPersistence.findByPrimaryKey(
-			jsonObject.getLong("objectFieldId"));
+			objectFieldId);
 
 		if (objectField.getObjectDefinitionId() != objectDefinitionId) {
 
@@ -149,35 +198,37 @@ public class ObjectLayoutLocalServiceImpl
 			throw new PortalException();
 		}
 
-		ObjectLayoutColumn objectLayoutColumn =
-			_objectLayoutColumnPersistence.create(
-				counterLocalService.increment());
-
 		objectLayoutColumn.setCompanyId(user.getCompanyId());
 		objectLayoutColumn.setUserId(user.getUserId());
 		objectLayoutColumn.setUserName(user.getFullName());
 		objectLayoutColumn.setObjectFieldId(objectField.getObjectFieldId());
 		objectLayoutColumn.setObjectLayoutRowId(objectLayoutRowId);
-		objectLayoutColumn.setPriority(jsonObject.getInt("priority"));
+		objectLayoutColumn.setPriority(priority);
 
-		_objectLayoutColumnPersistence.update(objectLayoutColumn);
+		return _objectLayoutColumnPersistence.update(objectLayoutColumn);
 	}
 
-	private void _addObjectLayoutColumns(
+	private List<ObjectLayoutColumn> _addObjectLayoutColumns(
 			User user, long objectDefinitionId, long objectLayoutRowId,
-			JSONArray jsonArray)
+			List<ObjectLayoutColumn> objectLayoutColumns)
 		throws PortalException {
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			_addObjectLayoutColumn(
-				user, objectDefinitionId, objectLayoutRowId,
-				jsonArray.getJSONObject(i));
+		List<ObjectLayoutColumn> addObjectLayoutColumns = new ArrayList<>();
+
+		for (ObjectLayoutColumn objectLayoutColumn : objectLayoutColumns) {
+			addObjectLayoutColumns.add(
+				_addObjectLayoutColumn(
+					user, objectDefinitionId, objectLayoutRowId,
+					objectLayoutColumn.getObjectFieldId(),
+					objectLayoutColumn.getPriority()));
 		}
+
+		return addObjectLayoutColumns;
 	}
 
-	private void _addObjectLayoutRow(
+	private ObjectLayoutRow _addObjectLayoutRow(
 			User user, long objectDefinitionId, long objectLayoutBoxId,
-			JSONObject jsonObject)
+			int priority, List<ObjectLayoutColumn> objectLayoutColumns)
 		throws PortalException {
 
 		ObjectLayoutRow objectLayoutRow = _objectLayoutRowPersistence.create(
@@ -187,30 +238,40 @@ public class ObjectLayoutLocalServiceImpl
 		objectLayoutRow.setUserId(user.getUserId());
 		objectLayoutRow.setUserName(user.getFullName());
 		objectLayoutRow.setObjectLayoutBoxId(objectLayoutBoxId);
-		objectLayoutRow.setPriority(jsonObject.getInt("priority"));
+		objectLayoutRow.setPriority(priority);
 
 		objectLayoutRow = _objectLayoutRowPersistence.update(objectLayoutRow);
 
-		_addObjectLayoutColumns(
-			user, objectDefinitionId, objectLayoutRow.getObjectLayoutRowId(),
-			jsonObject.getJSONArray("objectLayoutColumn"));
+		objectLayoutRow.setObjectLayoutColumns(
+			_addObjectLayoutColumns(
+				user, objectDefinitionId,
+				objectLayoutRow.getObjectLayoutRowId(), objectLayoutColumns));
+
+		return objectLayoutRow;
 	}
 
-	private void _addObjectLayoutRows(
+	private List<ObjectLayoutRow> _addObjectLayoutRows(
 			User user, long objectDefinitionId, long objectLayoutBoxId,
-			JSONArray jsonArray)
+			List<ObjectLayoutRow> objectLayoutRows)
 		throws PortalException {
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			_addObjectLayoutRow(
-				user, objectDefinitionId, objectLayoutBoxId,
-				jsonArray.getJSONObject(i));
+		List<ObjectLayoutRow> addObjectLayoutRows = new ArrayList<>();
+
+		for (ObjectLayoutRow objectLayoutRow : objectLayoutRows) {
+			addObjectLayoutRows.add(
+				_addObjectLayoutRow(
+					user, objectDefinitionId, objectLayoutBoxId,
+					objectLayoutRow.getPriority(),
+					objectLayoutRow.getObjectLayoutColumns()));
 		}
+
+		return addObjectLayoutRows;
 	}
 
-	private void _addObjectLayoutTab(
+	private ObjectLayoutTab _addObjectLayoutTab(
 			User user, long objectDefinitionId, long objectLayoutId,
-			JSONObject jsonObject)
+			long objectRelationshipId, Map<Locale, String> nameMap,
+			int priority, List<ObjectLayoutBox> objectLayoutBoxes)
 		throws PortalException {
 
 		ObjectLayoutTab objectLayoutTab = _objectLayoutTabPersistence.create(
@@ -220,26 +281,110 @@ public class ObjectLayoutLocalServiceImpl
 		objectLayoutTab.setUserId(user.getUserId());
 		objectLayoutTab.setUserName(user.getFullName());
 		objectLayoutTab.setObjectLayoutId(objectLayoutId);
-		//objectLayoutTab.setNameMap(nameMap);
-		objectLayoutTab.setPriority(jsonObject.getInt("priority"));
+		objectLayoutTab.setObjectRelationshipId(objectRelationshipId);
+		objectLayoutTab.setNameMap(nameMap);
+		objectLayoutTab.setPriority(priority);
 
 		objectLayoutTab = _objectLayoutTabPersistence.update(objectLayoutTab);
 
-		_addObjectLayoutBoxes(
-			user, objectDefinitionId, objectLayoutTab.getObjectLayoutTabId(),
-			jsonObject.getJSONArray("objectLayoutBox"));
+		objectLayoutTab.setObjectLayoutBoxes(
+			_addObjectLayoutBoxes(
+				user, objectDefinitionId,
+				objectLayoutTab.getObjectLayoutTabId(), objectLayoutBoxes));
+
+		return objectLayoutTab;
 	}
 
-	private void _addObjectLayoutTabs(
+	private List<ObjectLayoutTab> _addObjectLayoutTabs(
 			User user, long objectDefinitionId, long objectLayoutId,
-			JSONArray jsonArray)
+			List<ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException {
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			_addObjectLayoutTab(
-				user, objectDefinitionId, objectLayoutId,
-				jsonArray.getJSONObject(i));
+		List<ObjectLayoutTab> newObjectLayoutTabs = new ArrayList<>();
+
+		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
+			newObjectLayoutTabs.add(
+				_addObjectLayoutTab(
+					user, objectDefinitionId, objectLayoutId,
+					objectLayoutTab.getObjectRelationshipId(),
+					objectLayoutTab.getNameMap(), objectLayoutTab.getPriority(),
+					objectLayoutTab.getObjectLayoutBoxes()));
 		}
+
+		return newObjectLayoutTabs;
+	}
+
+	private void _deleteObjectLayoutBoxes(
+		List<ObjectLayoutTab> objectLayoutTabs) {
+
+		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
+			_deleteObjectLayoutRows(
+				_objectLayoutBoxPersistence.findByObjectLayoutTabId(
+					objectLayoutTab.getObjectLayoutTabId()));
+
+			_objectLayoutBoxPersistence.removeByObjectLayoutTabId(
+				objectLayoutTab.getObjectLayoutTabId());
+		}
+	}
+
+	private void _deleteObjectLayoutColumns(
+		List<ObjectLayoutRow> objectLayoutRows) {
+
+		for (ObjectLayoutRow objectLayoutRow : objectLayoutRows) {
+			_objectLayoutColumnPersistence.removeByObjectLayoutRowId(
+				objectLayoutRow.getObjectLayoutRowId());
+		}
+	}
+
+	private void _deleteObjectLayoutRows(
+		List<ObjectLayoutBox> objectLayoutBoxes) {
+
+		for (ObjectLayoutBox objectLayoutBox : objectLayoutBoxes) {
+			_deleteObjectLayoutColumns(
+				_objectLayoutRowPersistence.findByObjectLayoutBoxId(
+					objectLayoutBox.getObjectLayoutBoxId()));
+
+			_objectLayoutRowPersistence.removeByObjectLayoutBoxId(
+				objectLayoutBox.getObjectLayoutBoxId());
+		}
+	}
+
+	private void _deleteObjectLayoutTabs(long objectLayoutId) {
+		_deleteObjectLayoutBoxes(
+			_objectLayoutTabPersistence.findByObjectLayoutId(objectLayoutId));
+
+		_objectLayoutTabPersistence.removeByObjectLayoutId(objectLayoutId);
+	}
+
+	private List<ObjectLayoutBox> _getObjectLayoutBoxes(
+		ObjectLayoutTab objectLayoutTab) {
+
+		List<ObjectLayoutBox> objectLayoutBoxes =
+			_objectLayoutBoxPersistence.findByObjectLayoutTabId(
+				objectLayoutTab.getObjectLayoutTabId());
+
+		for (ObjectLayoutBox objectLayoutBox : objectLayoutBoxes) {
+			objectLayoutBox.setObjectLayoutRows(
+				_getObjectLayoutRows(objectLayoutBox));
+		}
+
+		return objectLayoutBoxes;
+	}
+
+	private List<ObjectLayoutRow> _getObjectLayoutRows(
+		ObjectLayoutBox objectLayoutBox) {
+
+		List<ObjectLayoutRow> objectLayoutRows =
+			_objectLayoutRowPersistence.findByObjectLayoutBoxId(
+				objectLayoutBox.getObjectLayoutBoxId());
+
+		for (ObjectLayoutRow objectLayoutRow : objectLayoutRows) {
+			objectLayoutRow.setObjectLayoutColumns(
+				_objectLayoutColumnPersistence.findByObjectLayoutRowId(
+					objectLayoutRow.getObjectLayoutRowId()));
+		}
+
+		return objectLayoutRows;
 	}
 
 	@Reference

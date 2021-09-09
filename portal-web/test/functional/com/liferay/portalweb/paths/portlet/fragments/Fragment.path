@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>CONTENT_DISPLAY_FRAGMENT_IMAGE</td>
-	<td>//div[contains(@class,'content')]//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@src,'${key_image}')]</td>
+	<td>//div[contains(@class,'content')]//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@src,'${key_image}')] | //div[contains(@class,'content')]//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@style,'${key_image}')]</td>
 	<td></td>
 </tr>
 <tr>

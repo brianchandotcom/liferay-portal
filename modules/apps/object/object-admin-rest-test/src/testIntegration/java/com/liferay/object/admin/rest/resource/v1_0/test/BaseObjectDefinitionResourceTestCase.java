@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.http.HttpInvoker;
 import com.liferay.object.admin.rest.client.pagination.Page;
+import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.admin.rest.client.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectDefinitionSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -200,7 +201,89 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 	@Test
 	public void testGetObjectDefinitionsPage() throws Exception {
-		Assert.assertTrue(false);
+		Page<ObjectDefinition> page =
+			objectDefinitionResource.getObjectDefinitionsPage(
+				RandomTestUtil.randomString(), Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		ObjectDefinition objectDefinition1 =
+			testGetObjectDefinitionsPage_addObjectDefinition(
+				randomObjectDefinition());
+
+		ObjectDefinition objectDefinition2 =
+			testGetObjectDefinitionsPage_addObjectDefinition(
+				randomObjectDefinition());
+
+		page = objectDefinitionResource.getObjectDefinitionsPage(
+			null, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(objectDefinition1, objectDefinition2),
+			(List<ObjectDefinition>)page.getItems());
+		assertValid(page);
+
+		objectDefinitionResource.deleteObjectDefinition(
+			objectDefinition1.getId());
+
+		objectDefinitionResource.deleteObjectDefinition(
+			objectDefinition2.getId());
+	}
+
+	@Test
+	public void testGetObjectDefinitionsPageWithPagination() throws Exception {
+		ObjectDefinition objectDefinition1 =
+			testGetObjectDefinitionsPage_addObjectDefinition(
+				randomObjectDefinition());
+
+		ObjectDefinition objectDefinition2 =
+			testGetObjectDefinitionsPage_addObjectDefinition(
+				randomObjectDefinition());
+
+		ObjectDefinition objectDefinition3 =
+			testGetObjectDefinitionsPage_addObjectDefinition(
+				randomObjectDefinition());
+
+		Page<ObjectDefinition> page1 =
+			objectDefinitionResource.getObjectDefinitionsPage(
+				null, Pagination.of(1, 2));
+
+		List<ObjectDefinition> objectDefinitions1 =
+			(List<ObjectDefinition>)page1.getItems();
+
+		Assert.assertEquals(
+			objectDefinitions1.toString(), 2, objectDefinitions1.size());
+
+		Page<ObjectDefinition> page2 =
+			objectDefinitionResource.getObjectDefinitionsPage(
+				null, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ObjectDefinition> objectDefinitions2 =
+			(List<ObjectDefinition>)page2.getItems();
+
+		Assert.assertEquals(
+			objectDefinitions2.toString(), 1, objectDefinitions2.size());
+
+		Page<ObjectDefinition> page3 =
+			objectDefinitionResource.getObjectDefinitionsPage(
+				null, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				objectDefinition1, objectDefinition2, objectDefinition3),
+			(List<ObjectDefinition>)page3.getItems());
+	}
+
+	protected ObjectDefinition testGetObjectDefinitionsPage_addObjectDefinition(
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

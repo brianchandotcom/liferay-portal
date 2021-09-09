@@ -41,11 +41,11 @@ public interface ObjectDefinitionResource {
 	}
 
 	public Page<ObjectDefinition> getObjectDefinitionsPage(
-			Pagination pagination)
+			String search, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getObjectDefinitionsPageHttpResponse(
-			Pagination pagination)
+			String search, Pagination pagination)
 		throws Exception;
 
 	public ObjectDefinition postObjectDefinition(
@@ -187,11 +187,11 @@ public interface ObjectDefinitionResource {
 		implements ObjectDefinitionResource {
 
 		public Page<ObjectDefinition> getObjectDefinitionsPage(
-				Pagination pagination)
+				String search, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getObjectDefinitionsPageHttpResponse(pagination);
+				getObjectDefinitionsPageHttpResponse(search, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -231,7 +231,7 @@ public interface ObjectDefinitionResource {
 		}
 
 		public HttpInvoker.HttpResponse getObjectDefinitionsPageHttpResponse(
-				Pagination pagination)
+				String search, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -254,6 +254,10 @@ public interface ObjectDefinitionResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
 
 			if (pagination != null) {
 				httpInvoker.parameter(

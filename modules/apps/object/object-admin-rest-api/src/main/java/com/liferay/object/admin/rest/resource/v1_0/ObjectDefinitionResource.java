@@ -58,7 +58,7 @@ public interface ObjectDefinitionResource {
 	}
 
 	public Page<ObjectDefinition> getObjectDefinitionsPage(
-			Pagination pagination)
+			String search, Pagination pagination)
 		throws Exception;
 
 	public ObjectDefinition postObjectDefinition(

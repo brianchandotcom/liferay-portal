@@ -78,10 +78,11 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitions(page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitions(page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectDefinitionPage objectDefinitions(
+			@GraphQLName("search") String search,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -91,7 +92,7 @@ public class Query {
 			this::_populateResourceContext,
 			objectDefinitionResource -> new ObjectDefinitionPage(
 				objectDefinitionResource.getObjectDefinitionsPage(
-					Pagination.of(page, pageSize))));
+					search, Pagination.of(page, pageSize))));
 	}
 
 	/**

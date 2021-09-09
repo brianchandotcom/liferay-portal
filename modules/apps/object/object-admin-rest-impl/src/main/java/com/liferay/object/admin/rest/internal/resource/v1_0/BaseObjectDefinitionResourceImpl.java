@@ -96,6 +96,7 @@ public abstract class BaseObjectDefinitionResourceImpl
 	@Override
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -104,6 +105,7 @@ public abstract class BaseObjectDefinitionResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ObjectDefinition")})
 	public Page<ObjectDefinition> getObjectDefinitionsPage(
+			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -440,7 +442,7 @@ public abstract class BaseObjectDefinitionResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getObjectDefinitionsPage(pagination);
+		return getObjectDefinitionsPage(search, pagination);
 	}
 
 	@Override

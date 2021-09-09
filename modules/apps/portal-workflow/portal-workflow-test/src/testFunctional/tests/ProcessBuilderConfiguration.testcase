@@ -205,8 +205,6 @@ definition {
 			key_rowNumber = "20",
 			locator1 = "ProcessBuilderListView#PROCESS_NAME_TABLE_ROW",
 			value1 = "Wiki Page");
-
-
 	}
 
 	@description = "Verify that the user is able to order by Workflow"

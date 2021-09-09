@@ -663,6 +663,35 @@ definition {
 		Questions.viewNoPermissionsAddQuestion();
 	}
 
+	@description = "Validate if the user cannot post a question with a tag contains Java Script, it also covers LPS-137561 and LPS-137633."
+	@priority = "4"
+	test CannotPostQuestionWithTagContainsJavaScript {
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.addRootTopic(
+			invalidCharacters = "Topic",
+			rootTopicDescription = '''<script>alert(123);</script>''',
+			rootTopicName = '''<script>alert(123);</script>''');
+
+		Questions.viewDefault();
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "Body AddQuestionWithMoreText",
+			invalidCharacters = "Tag",
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			tagLocatorList = '''<script>alert(123);</script>''',
+			titleField = "Title AddQuestion",
+			topicName = "questions-test-category");
+
+		AssertAlertNotPresent();
+	}
+
 	@description = "Validate if the user can add a comment to an answer, it also covers that the published dates for responses can be shown."
 	@priority = "4"
 	@refactordone

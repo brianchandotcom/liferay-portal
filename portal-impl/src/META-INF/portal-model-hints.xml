@@ -96,10 +96,11 @@
 			<hint name="max-length">255</hint>
 		</field>
 		<field localized="true" name="title" type="String">
+			<hint-collection name="CLOB" />
 			<validator name="required" />
 		</field>
 		<field localized="true" name="description" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 			<hint name="display-width">350</hint>
 		</field>
 		<field name="vocabularyId" type="long" />

@@ -43,7 +43,8 @@ public class UADLanguageUtil {
 				getResourceBundleLoaderByBundleSymbolicName(applicationKey);
 
 		if (resourceBundleLoader == null) {
-			return applicationKey;
+			resourceBundleLoader =
+				ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 		}
 
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(

@@ -75,9 +75,7 @@ public class BlogsEntryAssetRendererFactory
 		BlogsEntryAssetRenderer blogsEntryAssetRenderer =
 			new BlogsEntryAssetRenderer(
 				_blogsEntryLocalService.getEntry(classPK),
-				ResourceBundleLoaderUtil.
-					getResourceBundleLoaderByBundleSymbolicName(
-						"com.liferay.blogs.web"));
+				ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 
 		blogsEntryAssetRenderer.setAssetDisplayPageFriendlyURLProvider(
 			_assetDisplayPageFriendlyURLProvider);
@@ -95,9 +93,7 @@ public class BlogsEntryAssetRendererFactory
 		BlogsEntryAssetRenderer blogsEntryAssetRenderer =
 			new BlogsEntryAssetRenderer(
 				_blogsEntryLocalService.getEntry(groupId, urlTitle),
-				ResourceBundleLoaderUtil.
-					getResourceBundleLoaderByBundleSymbolicName(
-						"com.liferay.blogs.web"));
+				ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 
 		blogsEntryAssetRenderer.setServletContext(_servletContext);
 

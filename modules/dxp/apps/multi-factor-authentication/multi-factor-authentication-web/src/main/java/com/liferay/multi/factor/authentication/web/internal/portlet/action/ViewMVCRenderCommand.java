@@ -127,6 +127,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				getResourceBundleLoaderByBundleSymbolicName(
 					bundle.getSymbolicName());
 
+		if (resourceBundleLoader == null) {
+			resourceBundleLoader =
+				ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+		}
+
 		return GetterUtil.getString(
 			ResourceBundleUtil.getString(
 				resourceBundleLoader.loadResourceBundle(locale),

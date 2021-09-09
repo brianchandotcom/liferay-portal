@@ -20,9 +20,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.social.activities.web.internal.portlet.display.context.util.SocialActivitiesRequestHelper;
 import com.liferay.social.activities.web.internal.util.SocialActivitiesQueryHelper;
@@ -187,12 +185,7 @@ public class DefaultSocialActivitiesDisplayContext
 		}
 
 		ResourceBundleLoader resourceBundleLoader =
-			ResourceBundleLoaderUtil.
-				getResourceBundleLoaderByBundleSymbolicName(
-					"com.liferay.social.activities.web");
-
-		resourceBundleLoader = new AggregateResourceBundleLoader(
-			resourceBundleLoader, LanguageUtil.getResourceBundleLoader());
+			LanguageUtil.getResourceBundleLoader();
 
 		_resourceBundle = resourceBundleLoader.loadResourceBundle(
 			_socialActivitiesRequestHelper.getLocale());

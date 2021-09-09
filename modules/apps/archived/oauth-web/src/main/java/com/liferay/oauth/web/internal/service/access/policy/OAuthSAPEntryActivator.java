@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -73,14 +72,9 @@ public class OAuthSAPEntryActivator {
 			boolean defaultSAPEntry = GetterUtil.getBoolean(
 				sapEntryObjectArray[2]);
 
-			ResourceBundleLoader resourceBundleLoader =
-				ResourceBundleLoaderUtil.
-					getResourceBundleLoaderByBundleSymbolicName(
-						"com.liferay.oauth.web");
-
 			Map<Locale, String> titleMap =
 				ResourceBundleUtil.getLocalizationMap(
-					resourceBundleLoader,
+					ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
 					"service-access-policy-entry-default-title-" + name);
 
 			_sapEntryLocalService.addSAPEntry(

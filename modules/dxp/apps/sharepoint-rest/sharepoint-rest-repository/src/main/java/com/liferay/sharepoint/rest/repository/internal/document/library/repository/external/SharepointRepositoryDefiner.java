@@ -17,6 +17,7 @@ package com.liferay.sharepoint.rest.repository.internal.document.library.reposit
 import com.liferay.document.library.repository.authorization.capability.AuthorizationCapability;
 import com.liferay.document.library.repository.authorization.oauth2.TokenStore;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 import com.liferay.portal.kernel.repository.RepositoryConfigurationBuilder;
@@ -26,9 +27,7 @@ import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration;
 import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointSearchConfiguration;
 import com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.capability.SharepointRepositoryAuthorizationCapability;
@@ -36,7 +35,6 @@ import com.liferay.sharepoint.rest.repository.internal.document.library.reposito
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -62,7 +60,8 @@ public class SharepointRepositoryDefiner implements RepositoryDefiner {
 	@Override
 	public RepositoryConfiguration getRepositoryConfiguration() {
 		RepositoryConfigurationBuilder repositoryConfigurationBuilder =
-			new RepositoryConfigurationBuilder(_resourceBundleLoader);
+			new RepositoryConfigurationBuilder(
+				ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 
 		repositoryConfigurationBuilder.addParameter("library-path");
 		repositoryConfigurationBuilder.addParameter("site-absolute-url");
@@ -72,11 +71,7 @@ public class SharepointRepositoryDefiner implements RepositoryDefiner {
 
 	@Override
 	public String getRepositoryTypeLabel(Locale locale) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
-
-		String label = ResourceBundleUtil.getString(
-			resourceBundle, "sharepoint");
+		String label = LanguageUtil.get(locale, "sharepoint");
 
 		return String.format(
 			"%s (%s)", label, _sharepointRepositoryConfiguration.name());
@@ -136,9 +131,6 @@ public class SharepointRepositoryDefiner implements RepositoryDefiner {
 	@Reference
 	private SharepointRepositoryFactoryProvider _repositoryFactoryProvider;
 
-	private final ResourceBundleLoader _resourceBundleLoader =
-		ResourceBundleLoaderUtil.getResourceBundleLoaderByBundleSymbolicName(
-			"com.liferay.sharepoint.rest.repository");
 	private SharepointRepositoryConfiguration
 		_sharepointRepositoryConfiguration;
 

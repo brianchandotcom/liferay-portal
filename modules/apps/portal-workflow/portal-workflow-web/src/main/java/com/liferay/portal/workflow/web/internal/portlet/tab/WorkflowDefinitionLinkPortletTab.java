@@ -59,9 +59,7 @@ public class WorkflowDefinitionLinkPortletTab extends BaseWorkflowPortletTab {
 			new WorkflowDefinitionLinkDisplayContext(
 				renderRequest, renderResponse,
 				workflowDefinitionLinkLocalService,
-				ResourceBundleLoaderUtil.
-					getResourceBundleLoaderByBundleSymbolicName(
-						"com.liferay.portal.workflow.web"));
+				ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 
 		renderRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT,

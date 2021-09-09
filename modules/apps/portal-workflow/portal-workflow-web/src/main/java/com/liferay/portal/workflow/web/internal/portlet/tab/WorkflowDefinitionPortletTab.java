@@ -80,9 +80,7 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 			WorkflowDefinitionDisplayContext displayContext =
 				new WorkflowDefinitionDisplayContext(
 					renderRequest,
-					ResourceBundleLoaderUtil.
-						getResourceBundleLoaderByBundleSymbolicName(
-							"com.liferay.portal.workflow.web"),
+					ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
 					userLocalService);
 
 			displayContext.setCompanyAdministratorCanPublish(

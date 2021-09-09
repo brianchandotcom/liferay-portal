@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -96,12 +97,19 @@ public class FrontendTokenDefinitionRegistryImpl
 		String themeId = getThemeId(bundle);
 
 		try {
-			return new FrontendTokenDefinitionImpl(
-				jsonFactory.createJSONObject(json), jsonFactory,
+			ResourceBundleLoader resourceBundleLoader =
 				ResourceBundleLoaderUtil.
 					getResourceBundleLoaderByBundleSymbolicName(
-						bundle.getSymbolicName()),
-				themeId);
+						bundle.getSymbolicName());
+
+			if (resourceBundleLoader == null) {
+				resourceBundleLoader =
+					ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+			}
+
+			return new FrontendTokenDefinitionImpl(
+				jsonFactory.createJSONObject(json), jsonFactory,
+				resourceBundleLoader, themeId);
 		}
 		catch (JSONException | RuntimeException exception) {
 			_log.error(

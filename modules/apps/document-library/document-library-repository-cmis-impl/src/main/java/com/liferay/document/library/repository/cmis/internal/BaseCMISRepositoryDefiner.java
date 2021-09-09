@@ -67,9 +67,7 @@ public abstract class BaseCMISRepositoryDefiner extends BaseRepositoryDefiner {
 	protected abstract PortalCapabilityLocator getPortalCapabilityLocator();
 
 	protected ResourceBundleLoader getResourceBundleLoader() {
-		return ResourceBundleLoaderUtil.
-			getResourceBundleLoaderByBundleSymbolicName(
-				"com.liferay.document.library.repository.cmis.impl");
+		return ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 	}
 
 	private static final String _MODEL_RESOURCE_NAME_PREFIX = "model.resource.";

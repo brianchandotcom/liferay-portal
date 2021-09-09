@@ -81,6 +81,11 @@ public class MFASetupUserAccountScreenNavigationEntry
 				getResourceBundleLoaderByBundleSymbolicName(
 					_bundle.getSymbolicName());
 
+		if (resourceBundleLoader == null) {
+			resourceBundleLoader =
+				ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+		}
+
 		return GetterUtil.getString(
 			ResourceBundleUtil.getString(
 				resourceBundleLoader.loadResourceBundle(locale),

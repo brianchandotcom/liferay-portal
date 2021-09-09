@@ -33,11 +33,9 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -54,8 +52,6 @@ import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.annotation.versioning.ProviderType;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eduardo García
@@ -429,37 +425,10 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		ResourceBundleLoader resourceBundleLoader =
-			ResourceBundleLoaderUtil.
-				getResourceBundleLoaderByBundleSymbolicName(
-					bundle.getSymbolicName());
-
-		ResourceBundle ddmDisplayResourceBundle = null;
-
-		if (resourceBundleLoader != null) {
-			ddmDisplayResourceBundle = resourceBundleLoader.loadResourceBundle(
-				locale);
-		}
-
-		ResourceBundle baseDDMDisplayResourceBundle =
-			ResourceBundleUtil.getBundle(
-				"content.Language", locale,
-				BaseDDMDisplay.class.getClassLoader());
-
 		ResourceBundleLoader portalResourceBundleLoader =
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 
-		if (ddmDisplayResourceBundle == null) {
-			return new AggregateResourceBundle(
-				baseDDMDisplayResourceBundle,
-				portalResourceBundleLoader.loadResourceBundle(locale));
-		}
-
-		return new AggregateResourceBundle(
-			ddmDisplayResourceBundle, baseDDMDisplayResourceBundle,
-			portalResourceBundleLoader.loadResourceBundle(locale));
+		return portalResourceBundleLoader.loadResourceBundle(locale);
 	}
 
 	protected String getViewTemplatesURL(

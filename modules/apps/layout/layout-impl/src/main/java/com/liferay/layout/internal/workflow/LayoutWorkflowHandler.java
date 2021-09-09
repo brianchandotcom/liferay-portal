@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,7 +34,6 @@ import java.io.Serializable;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -60,10 +57,7 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 
 	@Override
 	public String getType(Locale locale) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
-
-		return LanguageUtil.get(resourceBundle, "content-page");
+		return LanguageUtil.get(locale, "content-page");
 	}
 
 	@Override
@@ -156,9 +150,5 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 
 	@Reference
 	private Portal _portal;
-
-	private final ResourceBundleLoader _resourceBundleLoader =
-		ResourceBundleLoaderUtil.getResourceBundleLoaderByBundleSymbolicName(
-			"com.liferay.layout.impl");
 
 }

@@ -80,14 +80,6 @@ public class ObjectRelationshipLocalServiceImpl
 		objectRelationship = objectRelationshipPersistence.update(
 			objectRelationship);
 
-		if (Objects.equals(type, ObjectRelationshipConstants.TYPE_ONE_TO_ONE)) {
-			ObjectField objectField = _addObjectField(
-				user, name, objectDefinitionId1, objectDefinitionId2);
-
-			objectRelationship.setObjectFieldId1(
-				objectField.getObjectFieldId());
-		}
-
 		if (Objects.equals(type, ObjectRelationshipConstants.TYPE_ONE_TO_ONE) ||
 			Objects.equals(
 				type, ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {

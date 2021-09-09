@@ -591,6 +591,55 @@ definition {
 		}
 	}
 
+	macro viewSegmentCriteriaSessionAttributes {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		if (!(isSet(key_indexNested))) {
+			var key_indexNested = "1";
+		}
+
+		AssertVisible(
+			index = "${index}",
+			locator1 = "ACSegments#SEGMENT_CRITERIA_TYPE",
+			type = "Session");
+
+		AssertTextEquals(
+			index = "${index}",
+			locator1 = "ACSegments#SEGMENT_CRITERIA_ATTRIBUTE_NAME",
+			value1 = "${attributeName}");
+
+		AssertTextEquals(
+			index = "${index}",
+			locator1 = "ACSegments#SEGMENT_CRITERIA_CONDITION",
+			value1 = "${condition}");
+
+		AssertTextEquals(
+			index = "${index}",
+			locator1 = "ACSegments#SEGMENT_CRITERIA_ATTRIBUTE_VALUE",
+			value1 = "${attributeValue}");
+
+		AssertTextEquals(
+			index = "${index}",
+			index_2 = "2",
+			locator1 = "ACSegments#SEGMENT_CRITERIA_PREPOSITION_AND_TIME",
+			value1 = "${preposition}");
+
+		AssertTextEquals(
+			index = "${index}",
+			index_2 = "3",
+			locator1 = "ACSegments#SEGMENT_CRITERIA_PREPOSITION_AND_TIME",
+			value1 = "${time}");
+
+		if (isSet(conjunction)) {
+			AssertTextEquals(
+				index = "${index}",
+				locator1 = "ACSegments#SEGMENT_CRITERIA_CONJUNCTION",
+				value1 = "${conjunction}");
+		}
+	}
+
 	macro viewSegmentCriteriaWebBehavior {
 		if (isSet(activitiesOption)) {
 			AssertTextEquals(

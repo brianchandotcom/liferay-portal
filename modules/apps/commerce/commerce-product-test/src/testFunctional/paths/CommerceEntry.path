@@ -598,7 +598,7 @@
 	<td>//div[contains(@class,'diagram-footer')]//button[contains(.,'Add Pin')]</td>
 	<td></td>
 </tr>
-<tr>	
+<tr>
 	<td>DIAGRAM_ZOOM_SELECT</td>
 	<td>//select[contains(@aria-label,'Select Label')]</td>
 	<td></td>

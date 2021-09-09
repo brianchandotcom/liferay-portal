@@ -190,9 +190,17 @@ public class ObjectRelationshipLocalServiceImpl
 			ObjectRelationship objectRelationship)
 		throws PortalException {
 
-		// TODO Delete tables and object fields
+		objectRelationship = objectRelationshipPersistence.remove(
+			objectRelationship);
 
-		return objectRelationshipPersistence.remove(objectRelationship);
+		if (Objects.equals(
+				objectRelationship.getType(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+			runSQL("drop table " + objectRelationship.getDBTableName());
+		}
+
+		return objectRelationship;
 	}
 
 	@Override

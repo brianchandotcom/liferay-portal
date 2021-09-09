@@ -32,10 +32,10 @@ definition {
 
 	@description = "This is a use case for LPS-130223. The user can edit a inline text of an OOTB Card fragment after Upgrade."
 	@priority = "4"
-	test CanEditInlineTextOfAnOOTBCardFragmentAfterUpgrade731016 {
+	test CanEditInlineTextOfAnOOTBCardFragmentAfterUpgrade73101 {
 		property data.archive.type = "data-archive-card-fragment";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property portal.version = "7.3.10.16";
+		property portal.version = "7.3.10.1";
 
 		Upgrade.viewEditableCardFragment();
 	}

@@ -61,7 +61,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -755,25 +754,6 @@ public class EditAssetListDisplayContext {
 		).buildPortletURL();
 	}
 
-	public String getRedirectURL() {
-		if (Validator.isNotNull(_redirect)) {
-			return _redirect;
-		}
-
-		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
-
-		if (Validator.isNull(redirect)) {
-			LiferayPortletResponse liferayPortletResponse =
-				PortalUtil.getLiferayPortletResponse(_portletResponse);
-
-			redirect = String.valueOf(liferayPortletResponse.createRenderURL());
-		}
-
-		_redirect = redirect;
-
-		return _redirect;
-	}
-
 	public long[] getReferencedModelsGroupIds() throws PortalException {
 
 		// Referenced models are asset subtypes, tags or categories that
@@ -1254,7 +1234,6 @@ public class EditAssetListDisplayContext {
 	private String _orderByType2;
 	private final PortletRequest _portletRequest;
 	private final PortletResponse _portletResponse;
-	private String _redirect;
 	private long[] _referencedModelsGroupIds;
 	private SearchContainer<AssetListEntryAssetEntryRel> _searchContainer;
 	private SegmentsEntry _segmentsEntry;

@@ -59,7 +59,7 @@ public interface AccountResource {
 	}
 
 	public Page<Account> getAccountsPage(
-			String keywords, Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Account postAccount(Account account) throws Exception;

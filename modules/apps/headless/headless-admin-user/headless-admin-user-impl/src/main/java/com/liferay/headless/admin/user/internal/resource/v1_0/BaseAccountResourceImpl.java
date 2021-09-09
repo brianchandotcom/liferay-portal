@@ -100,7 +100,7 @@ public abstract class BaseAccountResourceImpl
 	@Override
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "keywords"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
@@ -111,7 +111,7 @@ public abstract class BaseAccountResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Account")})
 	public Page<Account> getAccountsPage(
-			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
+			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {
@@ -750,8 +750,7 @@ public abstract class BaseAccountResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getAccountsPage(
-			(String)parameters.get("keywords"), filter, pagination, sorts);
+		return getAccountsPage(search, filter, pagination, sorts);
 	}
 
 	@Override

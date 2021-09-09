@@ -43,12 +43,12 @@ public interface AccountResource {
 	}
 
 	public Page<Account> getAccountsPage(
-			String keywords, String filterString, Pagination pagination,
+			String search, String filterString, Pagination pagination,
 			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getAccountsPageHttpResponse(
-			String keywords, String filterString, Pagination pagination,
+			String search, String filterString, Pagination pagination,
 			String sortString)
 		throws Exception;
 
@@ -270,12 +270,12 @@ public interface AccountResource {
 	public static class AccountResourceImpl implements AccountResource {
 
 		public Page<Account> getAccountsPage(
-				String keywords, String filterString, Pagination pagination,
+				String search, String filterString, Pagination pagination,
 				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getAccountsPageHttpResponse(
-				keywords, filterString, pagination, sortString);
+				search, filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -315,7 +315,7 @@ public interface AccountResource {
 		}
 
 		public HttpInvoker.HttpResponse getAccountsPageHttpResponse(
-				String keywords, String filterString, Pagination pagination,
+				String search, String filterString, Pagination pagination,
 				String sortString)
 			throws Exception {
 
@@ -340,8 +340,8 @@ public interface AccountResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-			if (keywords != null) {
-				httpInvoker.parameter("keywords", String.valueOf(keywords));
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
 			}
 
 			if (filterString != null) {

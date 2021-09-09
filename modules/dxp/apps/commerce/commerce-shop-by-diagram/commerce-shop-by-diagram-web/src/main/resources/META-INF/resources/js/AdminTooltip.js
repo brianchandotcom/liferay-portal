@@ -18,7 +18,8 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {searchDiagrams, searchSkus} from './utilities/utilities';
-
+const SKU = 'sku';
+const DIAGRAM = 'diagram';
 const AdminTooltip = ({
 	deletePin,
 	namespace,
@@ -35,12 +36,12 @@ const AdminTooltip = ({
 	const node = useRef();
 	const dropdownNode = useRef();
 	const [query, setQuery] = useState('');
-	const [linkedValue, setLinkedValue] = useState('sku');
+	const [linkedValue, setLinkedValue] = useState(SKU);
 	const [selectedProduct, setSelectedProduct] = useState(showTooltip.details);
 	const [quantity, setQuantity] = useState(showTooltip.details.quantity);
 
 	useEffect(() => {
-		const getProducts = linkedValue === 'sku' ? searchSkus : searchDiagrams;
+		const getProducts = linkedValue === SKU ? searchSkus : searchDiagrams;
 
 		if (query?.length) {
 			getProducts(query, linkedValue).then((jsonResponse) =>
@@ -131,7 +132,7 @@ const AdminTooltip = ({
 
 								setQuery(event.target.value);
 							}}
-							onFocus={(_e) => {
+							onFocus={() => {
 								setActive(true);
 							}}
 							onKeyUp={(event) => {
@@ -143,7 +144,7 @@ const AdminTooltip = ({
 						<ClayAutocomplete.DropDown active={active && products}>
 							<div ref={dropdownNode}>
 								<ClayDropDown.ItemList>
-									{products?.length && (
+									{!!products?.length && (
 										<ClayDropDown.Item disabled>
 											{Liferay.Language.get(
 												'no-results-found'
@@ -151,7 +152,7 @@ const AdminTooltip = ({
 										</ClayDropDown.Item>
 									)}
 
-									{products?.length &&
+									{!!products?.length &&
 										products.map((product) => (
 											<ClayAutocomplete.Item
 												key={product.id}
@@ -208,7 +209,7 @@ const AdminTooltip = ({
 									cy: null,
 									id: null,
 									label: null,
-									linked_to_sku: 'sku',
+									linked_to_sku: SKU,
 									quantity: null,
 									sku: '',
 								},
@@ -233,7 +234,7 @@ const AdminTooltip = ({
 									cy: null,
 									id: null,
 									label: '',
-									linked_to_sku: 'sku',
+									linked_to_sku: SKU,
 									quantity: null,
 									sku: '',
 								},
@@ -249,7 +250,7 @@ const AdminTooltip = ({
 						onClick={() => {
 							updatePin({
 								diagramEntry: {
-									diagram: linkedValue === 'sku',
+									diagram: linkedValue === SKU,
 									productId: selectedProduct.productId,
 									quantity,
 									sequence: pinPositionLabel,
@@ -291,7 +292,7 @@ AdminTooltip.propTypes = {
 			cy: PropTypes.double,
 			id: PropTypes.number,
 			label: PropTypes.string,
-			linked_to_sku: PropTypes.oneOf(['sku', 'diagram']),
+			linked_to_sku: PropTypes.oneOf([SKU, DIAGRAM]),
 			quantity: PropTypes.number,
 			sku: PropTypes.string,
 		}),

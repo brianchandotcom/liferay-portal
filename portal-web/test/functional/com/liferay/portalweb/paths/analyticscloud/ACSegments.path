@@ -308,6 +308,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREVIEW_CRITERIA_BUTTON</td>
+	<td>//button[@data-testid='preview-criteria-button']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEXT_INPUT</td>
 	<td>xpath=(//div[contains(@class,'criteria-statement')]//div[contains(@class,'input-group-item')]//input[@type='text'])[${index}]</td>
 	<td></td>
@@ -353,6 +358,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEGMENT_MEMBERSHIP_CHART</td>
+	<td>//div[@class='recharts-responsive-container']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEGMENT_MEMBERSHIP_CHART_ACTIVE_POINT</td>
+	<td>xpath=(//*[local-name()='g' and @class='recharts-layer recharts-active-dot'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEGMENT_MEMBERSHIP_CHART_EARLY_DATE_POINT</td>
+	<td>xpath=(//*[local-name()='g' and @class='recharts-layer recharts-cartesian-axis recharts-yAxis yAxis'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEGMENT_MEMBERSHIP_CHART_RECENT_DATE_POINT</td>
+	<td>xpath=(//*[local-name()='g' and @class='recharts-layer recharts-cartesian-axis recharts-yAxis yAxis'])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEGMENT_MEMBERSHIP_CHART_HOVER</td>
 	<td>//table[contains(@class,'analytics-tooltip-chart')]</td>
 	<td></td>
@@ -360,6 +385,11 @@
 <tr>
 	<td>SEGMENT_MEMBERSHIP_CHART_HOVER_MEMBER_CHANGE</td>
 	<td>//tr[@class='analytics-tooltip-chart-row']//div[text()='${key_membershipType}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEGMENT_MEMBERSHIP_CHART_HOVER_DATA_ROW</td>
+	<td>//tr[@class='analytics-tooltip-chart-row' and contains(.,'${key_row}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -376,6 +406,11 @@
 <tr>
 	<td>ADD_MEMBERS_BUTTON</td>
 	<td>//ul/li/button[contains(@class,'btn-primary')]|//ul/li/button[contains(@class,'btn-secondary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEMBER</td>
+	<td>//tr//div[text()='${key_memberName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -423,6 +458,32 @@
 <tr>
 	<td>BREAKDOWN_CHART</td>
 	<td>//div[contains(@class,'chart-container')]</td>
+	<td></td>
+</tr>
+<!-- Segment Membership -->
+<tr>
+	<td>KNOWN_SEGMENT_MEMBERS_FILTER_BY_NAME</td>
+	<td>//button[contains(@class,'btn')]/span[@class='text-truncate' and text()='Name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEGMENT_MEMBERS_NAME_LINK_VIEW_SPECIFIC_ORDER</td>
+	<td>//tbody//tr[${resultOrder}]//div[contains(@class,'table-title')]/a[text()='${key_userName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEGMENT_MEMBERS_ADDED</td>
+	<td>//div[@class='changed-values']/b[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEGMENT_MEMBERS_REMOVED</td>
+	<td>//div[@class='changed-values']/b[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLEAR_DATE_SELECTION_BUTTON</td>
+	<td>//button[contains(.,'Clear Date Selection')]</td>
 	<td></td>
 </tr>
 </tbody>

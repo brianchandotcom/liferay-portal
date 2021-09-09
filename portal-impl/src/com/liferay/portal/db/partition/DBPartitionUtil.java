@@ -438,6 +438,10 @@ public class DBPartitionUtil {
 						}
 					}
 					catch (Exception exception) {
+						throw new SQLException(
+							"Unable to check if the table " + query[2] +
+								" is a control table",
+							exception);
 					}
 				}
 				else if (StringUtil.startsWith(lowerCaseSql, "create index") ||
@@ -457,6 +461,10 @@ public class DBPartitionUtil {
 						}
 					}
 					catch (Exception exception) {
+						throw new SQLException(
+							"Unable to check if the table " + query[4] +
+								" is a control table",
+							exception);
 					}
 				}
 				else if (StringUtil.startsWith(
@@ -476,6 +484,10 @@ public class DBPartitionUtil {
 						}
 					}
 					catch (Exception exception) {
+						throw new SQLException(
+							"Unable to check if the table " + query[5] +
+								" is a control table",
+							exception);
 					}
 				}
 

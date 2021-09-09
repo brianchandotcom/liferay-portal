@@ -100,7 +100,7 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	public String getContentDisplay() {
-		return GetterUtil.getString(_getStyleProperty("display"));
+		return StringPool.BLANK;
 	}
 
 	public String getDisplay() {

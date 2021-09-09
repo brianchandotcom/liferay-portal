@@ -281,7 +281,7 @@ public class RenderLayoutStructureDisplayContext {
 			StyledLayoutStructureItem styledLayoutStructureItem)
 		throws Exception {
 
-		StringBundler cssClassSB = new StringBundler(35);
+		StringBundler cssClassSB = new StringBundler(33);
 
 		if (Validator.isNotNull(styledLayoutStructureItem.getAlign())) {
 			cssClassSB.append(" ");
@@ -304,19 +304,23 @@ public class RenderLayoutStructureDisplayContext {
 				styledLayoutStructureItem.getBorderColorCssClass());
 		}
 
-		if (Objects.equals(
-				styledLayoutStructureItem.getContentDisplay(), "flex-column")) {
+		if (Objects.equals(styledLayoutStructureItem.getDisplay(), "none")) {
+			cssClassSB.append(" d-lg-");
+			cssClassSB.append(styledLayoutStructureItem.getDisplay());
+		}
+		else if (Objects.equals(
+					styledLayoutStructureItem.getContentDisplay(),
+					"flex-column")) {
 
 			cssClassSB.append(" d-flex flex-column");
 		}
-
-		if (Objects.equals(
-				styledLayoutStructureItem.getContentDisplay(), "flex-row")) {
+		else if (Objects.equals(
+					styledLayoutStructureItem.getContentDisplay(),
+					"flex-row")) {
 
 			cssClassSB.append(" d-flex flex-row");
 		}
-
-		if (Validator.isNotNull(styledLayoutStructureItem.getDisplay())) {
+		else if (Validator.isNotNull(styledLayoutStructureItem.getDisplay())) {
 			cssClassSB.append(" d-lg-");
 			cssClassSB.append(styledLayoutStructureItem.getDisplay());
 		}

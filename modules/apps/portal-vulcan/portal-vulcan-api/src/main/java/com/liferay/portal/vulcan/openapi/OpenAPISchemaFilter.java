@@ -22,12 +22,20 @@ import java.util.Map;
  */
 public class OpenAPISchemaFilter {
 
+	public String getApplicationPath() {
+		return _applicationPath;
+	}
+
 	public DTOProperty getDTOProperty() {
 		return _dtoProperty;
 	}
 
 	public Map<String, String> getSchemaMappings() {
 		return _schemaMappings;
+	}
+
+	public void setApplicationPath(String applicationPath) {
+		_applicationPath = applicationPath;
 	}
 
 	public void setDTOProperty(DTOProperty dtoProperty) {
@@ -38,6 +46,7 @@ public class OpenAPISchemaFilter {
 		_schemaMappings = schemaMappings;
 	}
 
+	private String _applicationPath;
 	private DTOProperty _dtoProperty;
 	private Map<String, String> _schemaMappings = new HashMap<>();
 

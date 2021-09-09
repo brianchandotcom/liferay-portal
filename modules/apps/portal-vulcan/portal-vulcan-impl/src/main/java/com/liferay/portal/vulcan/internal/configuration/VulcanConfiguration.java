@@ -41,10 +41,7 @@ public interface VulcanConfiguration {
 	@Meta.AD(deflt = "true", name = "rest-api", required = false)
 	public boolean restEnabled();
 
-	@Meta.AD(
-		description = "changes-will-take-effect-once-the-portal-is-restarted-please-restart-the-portal-now",
-		name = "excluded-operation-ids", required = false
-	)
+	@Meta.AD(name = "excluded-operation-ids", required = false)
 	public String excludedOperationIds();
 
 }

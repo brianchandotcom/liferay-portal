@@ -16,11 +16,13 @@ package com.liferay.portal.vulcan.internal.configuration.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.vulcan.internal.configuration.VulcanConfiguration;
 
 import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -30,23 +32,21 @@ import org.osgi.service.cm.ConfigurationAdmin;
  */
 public class ConfigurationUtil {
 
-	public static Map<String, Configuration> getConfigurations(
-		ConfigurationAdmin configurationAdmin) {
-
-		Map<String, Configuration> configurations = new HashMap<>();
+	public static Set<String> getExcludedOperationIds(
+		ConfigurationAdmin configurationAdmin, String path) {
 
 		try {
 			String filterString = String.format(
-				"(service.factoryPid=%s)", VulcanConfiguration.class.getName());
+				"(&(path=%s)(service.factoryPid=%s))", path,
+				VulcanConfiguration.class.getName());
 
-			for (Configuration configuration :
-					configurationAdmin.listConfigurations(filterString)) {
+			Configuration[] configurations =
+				configurationAdmin.listConfigurations(filterString);
 
-				Dictionary<String, Object> properties =
-					configuration.getProperties();
-
-				configurations.put(
-					(String)properties.get("path"), configuration);
+			if (configurations != null) {
+				for (Configuration configuration : configurations) {
+					return _getExcludedOperationIds(configuration);
+				}
 			}
 		}
 		catch (Exception exception) {
@@ -55,7 +55,18 @@ public class ConfigurationUtil {
 			}
 		}
 
-		return configurations;
+		return new HashSet<>();
+	}
+
+	private static Set<String> _getExcludedOperationIds(
+		Configuration configuration) {
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		String excludedOperationIds = GetterUtil.getString(
+			properties.get("excludedOperationIds"));
+
+		return SetUtil.fromArray(excludedOperationIds.split(","));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

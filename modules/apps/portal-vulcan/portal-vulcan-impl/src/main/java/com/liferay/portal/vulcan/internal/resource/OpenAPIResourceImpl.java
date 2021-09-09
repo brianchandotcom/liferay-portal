@@ -16,6 +16,7 @@ package com.liferay.portal.vulcan.internal.resource;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.vulcan.internal.configuration.util.ConfigurationUtil;
 import com.liferay.portal.vulcan.openapi.DTOProperty;
 import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
@@ -57,7 +58,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Javier Gamarra
@@ -201,6 +204,15 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 				Map<String, List<String>> headers) {
 
 				String operationId = operation.getOperationId();
+
+				Set<String> excludedOperationIds =
+					ConfigurationUtil.getExcludedOperationIds(
+						_configurationAdmin,
+						openAPISchemaFilter.getApplicationPath());
+
+				if (excludedOperationIds.contains(operationId)) {
+					return Optional.empty();
+				}
 
 				for (Map.Entry<String, String> entry :
 						schemaMappings.entrySet()) {
@@ -441,5 +453,8 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 		};
 	}
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 }

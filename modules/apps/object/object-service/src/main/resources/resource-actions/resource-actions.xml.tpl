@@ -36,7 +36,7 @@
 		<weight>1</weight>
 		<permissions>
 			<supports>
-				<action-key>ADD_OBJECT_ENTRY</action-key>
+				<action-key>ADD_ENTRY</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</supports>
 			<guest-defaults />

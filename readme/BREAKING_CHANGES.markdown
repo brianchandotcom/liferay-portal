@@ -720,7 +720,7 @@ The X-Xss-Protection header is no longer supported by modern browsers.
 
 #### What changed?
 
-All module language keys were moved to a module called portal-language-lang at `liferay-[dxp|portal]/modules/apps/portal-language/portal-language-lang`. In some cases where modules used the same language key name but different values, the language keys were renamed. 
+All module language keys were moved to a module called portal-language-lang at `liferay-[dxp|portal]/modules/apps/portal-language/portal-language-lang`. In some cases where modules used the same language key name but different values, the language keys were renamed.
 
 #### Who is affected?
 

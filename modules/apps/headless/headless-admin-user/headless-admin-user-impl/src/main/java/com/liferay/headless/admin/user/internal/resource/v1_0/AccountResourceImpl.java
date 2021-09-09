@@ -125,7 +125,7 @@ public class AccountResourceImpl
 
 	@Override
 	public Page<Account> getAccountsPage(
-			String keywords, Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -148,14 +148,14 @@ public class AccountResourceImpl
 			).build(),
 			booleanQuery -> {
 			},
-			filter, AccountEntry.class.getName(), keywords, pagination,
+			filter, AccountEntry.class.getName(), search, pagination,
 			queryConfig -> {
 			},
 			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 
-				if (Validator.isNotNull(keywords)) {
-					searchContext.setKeywords(keywords);
+				if (Validator.isNotNull(search)) {
+					searchContext.setKeywords(search);
 				}
 			},
 			sorts,

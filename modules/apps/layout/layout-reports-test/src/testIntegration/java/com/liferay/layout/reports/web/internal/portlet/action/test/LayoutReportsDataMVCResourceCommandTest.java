@@ -330,6 +330,53 @@ public class LayoutReportsDataMVCResourceCommandTest {
 				});
 	}
 
+	@Test
+	public void testLanguagesAlphabeticallySorted() throws Exception {
+		LayoutReportsTestUtil.
+			withLayoutReportsGooglePageSpeedGroupConfiguration(
+				RandomTestUtil.randomString(), true, _group.getGroupId(),
+				() -> {
+					Layout layout = LayoutTestUtil.addLayout(
+						_group.getGroupId());
+
+					GroupTestUtil.updateDisplaySettings(
+						_group.getGroupId(),
+						Arrays.asList(
+							LocaleUtil.BRAZIL, LocaleUtil.SPAIN, LocaleUtil.US),
+						LocaleUtil.US);
+
+					JSONObject jsonObject = _serveResource(layout);
+
+					JSONArray pageURLsJSONArray = jsonObject.getJSONArray(
+						"pageURLs");
+
+					Assert.assertEquals(
+						String.valueOf(pageURLsJSONArray), 3,
+						pageURLsJSONArray.length());
+
+					JSONObject englishJSONObject =
+						pageURLsJSONArray.getJSONObject(0);
+
+					Assert.assertEquals(
+						"English (United States)",
+						englishJSONObject.get("languageLabel"));
+
+					JSONObject portugueseJSONObject =
+						pageURLsJSONArray.getJSONObject(1);
+
+					Assert.assertEquals(
+						"Portuguese (Brazil)",
+						portugueseJSONObject.get("languageLabel"));
+
+					JSONObject spanishJSONObject =
+						pageURLsJSONArray.getJSONObject(2);
+
+					Assert.assertEquals(
+						"Spanish (Spain)",
+						spanishJSONObject.get("languageLabel"));
+				});
+	}
+
 	private MockLiferayResourceRequest _getMockLiferayResourceRequest(
 			Layout layout)
 		throws Exception {

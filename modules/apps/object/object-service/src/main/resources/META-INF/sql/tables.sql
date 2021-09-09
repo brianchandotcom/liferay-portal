@@ -144,7 +144,6 @@ create table ObjectRelationship (
 	modifiedDate DATE null,
 	objectDefinitionId1 LONG,
 	objectDefinitionId2 LONG,
-	objectFieldId1 LONG,
 	objectFieldId2 LONG,
 	dbTableName VARCHAR(75) null,
 	label STRING null,

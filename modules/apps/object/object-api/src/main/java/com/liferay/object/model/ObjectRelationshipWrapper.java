@@ -53,7 +53,6 @@ public class ObjectRelationshipWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("objectDefinitionId1", getObjectDefinitionId1());
 		attributes.put("objectDefinitionId2", getObjectDefinitionId2());
-		attributes.put("objectFieldId1", getObjectFieldId1());
 		attributes.put("objectFieldId2", getObjectFieldId2());
 		attributes.put("dbTableName", getDBTableName());
 		attributes.put("label", getLabel());
@@ -124,12 +123,6 @@ public class ObjectRelationshipWrapper
 
 		if (objectDefinitionId2 != null) {
 			setObjectDefinitionId2(objectDefinitionId2);
-		}
-
-		Long objectFieldId1 = (Long)attributes.get("objectFieldId1");
-
-		if (objectFieldId1 != null) {
-			setObjectFieldId1(objectFieldId1);
 		}
 
 		Long objectFieldId2 = (Long)attributes.get("objectFieldId2");
@@ -332,16 +325,6 @@ public class ObjectRelationshipWrapper
 	@Override
 	public long getObjectDefinitionId2() {
 		return model.getObjectDefinitionId2();
-	}
-
-	/**
-	 * Returns the object field id1 of this object relationship.
-	 *
-	 * @return the object field id1 of this object relationship
-	 */
-	@Override
-	public long getObjectFieldId1() {
-		return model.getObjectFieldId1();
 	}
 
 	/**
@@ -586,16 +569,6 @@ public class ObjectRelationshipWrapper
 	@Override
 	public void setObjectDefinitionId2(long objectDefinitionId2) {
 		model.setObjectDefinitionId2(objectDefinitionId2);
-	}
-
-	/**
-	 * Sets the object field id1 of this object relationship.
-	 *
-	 * @param objectFieldId1 the object field id1 of this object relationship
-	 */
-	@Override
-	public void setObjectFieldId1(long objectFieldId1) {
-		model.setObjectFieldId1(objectFieldId1);
 	}
 
 	/**

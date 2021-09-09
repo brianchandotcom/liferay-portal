@@ -143,8 +143,6 @@ public class ObjectRelationshipPersistenceTest {
 
 		newObjectRelationship.setObjectDefinitionId2(RandomTestUtil.nextLong());
 
-		newObjectRelationship.setObjectFieldId1(RandomTestUtil.nextLong());
-
 		newObjectRelationship.setObjectFieldId2(RandomTestUtil.nextLong());
 
 		newObjectRelationship.setDBTableName(RandomTestUtil.randomString());
@@ -192,9 +190,6 @@ public class ObjectRelationshipPersistenceTest {
 		Assert.assertEquals(
 			existingObjectRelationship.getObjectDefinitionId2(),
 			newObjectRelationship.getObjectDefinitionId2());
-		Assert.assertEquals(
-			existingObjectRelationship.getObjectFieldId1(),
-			newObjectRelationship.getObjectFieldId1());
 		Assert.assertEquals(
 			existingObjectRelationship.getObjectFieldId2(),
 			newObjectRelationship.getObjectFieldId2());
@@ -293,8 +288,8 @@ public class ObjectRelationshipPersistenceTest {
 			"objectRelationshipId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"objectDefinitionId1", true, "objectDefinitionId2", true,
-			"objectFieldId1", true, "objectFieldId2", true, "dbTableName", true,
-			"label", true, "name", true, "type", true);
+			"objectFieldId2", true, "dbTableName", true, "label", true, "name",
+			true, "type", true);
 	}
 
 	@Test
@@ -607,8 +602,6 @@ public class ObjectRelationshipPersistenceTest {
 		objectRelationship.setObjectDefinitionId1(RandomTestUtil.nextLong());
 
 		objectRelationship.setObjectDefinitionId2(RandomTestUtil.nextLong());
-
-		objectRelationship.setObjectFieldId1(RandomTestUtil.nextLong());
 
 		objectRelationship.setObjectFieldId2(RandomTestUtil.nextLong());
 

@@ -43,7 +43,6 @@ public class ObjectRelationshipSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setObjectDefinitionId1(model.getObjectDefinitionId1());
 		soapModel.setObjectDefinitionId2(model.getObjectDefinitionId2());
-		soapModel.setObjectFieldId1(model.getObjectFieldId1());
 		soapModel.setObjectFieldId2(model.getObjectFieldId2());
 		soapModel.setDBTableName(model.getDBTableName());
 		soapModel.setLabel(model.getLabel());
@@ -191,14 +190,6 @@ public class ObjectRelationshipSoap implements Serializable {
 		_objectDefinitionId2 = objectDefinitionId2;
 	}
 
-	public long getObjectFieldId1() {
-		return _objectFieldId1;
-	}
-
-	public void setObjectFieldId1(long objectFieldId1) {
-		_objectFieldId1 = objectFieldId1;
-	}
-
 	public long getObjectFieldId2() {
 		return _objectFieldId2;
 	}
@@ -249,7 +240,6 @@ public class ObjectRelationshipSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _objectDefinitionId1;
 	private long _objectDefinitionId2;
-	private long _objectFieldId1;
 	private long _objectFieldId2;
 	private String _dbTableName;
 	private String _label;

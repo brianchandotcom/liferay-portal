@@ -64,9 +64,6 @@ public class ObjectRelationshipTable
 		createColumn(
 			"objectDefinitionId2", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
-	public final Column<ObjectRelationshipTable, Long> objectFieldId1 =
-		createColumn(
-			"objectFieldId1", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ObjectRelationshipTable, Long> objectFieldId2 =
 		createColumn(
 			"objectFieldId2", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);

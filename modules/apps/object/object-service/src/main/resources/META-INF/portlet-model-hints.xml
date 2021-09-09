@@ -145,7 +145,6 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="objectDefinitionId1" type="long" />
 		<field name="objectDefinitionId2" type="long" />
-		<field name="objectFieldId1" type="long" />
 		<field name="objectFieldId2" type="long" />
 		<field name="DBTableName" type="String" />
 		<field localized="true" name="label" type="String" />

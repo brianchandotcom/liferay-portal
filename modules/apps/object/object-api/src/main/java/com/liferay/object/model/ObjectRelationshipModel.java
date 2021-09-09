@@ -237,20 +237,6 @@ public interface ObjectRelationshipModel
 	public void setObjectDefinitionId2(long objectDefinitionId2);
 
 	/**
-	 * Returns the object field id1 of this object relationship.
-	 *
-	 * @return the object field id1 of this object relationship
-	 */
-	public long getObjectFieldId1();
-
-	/**
-	 * Sets the object field id1 of this object relationship.
-	 *
-	 * @param objectFieldId1 the object field id1 of this object relationship
-	 */
-	public void setObjectFieldId1(long objectFieldId1);
-
-	/**
 	 * Returns the object field id2 of this object relationship.
 	 *
 	 * @return the object field id2 of this object relationship

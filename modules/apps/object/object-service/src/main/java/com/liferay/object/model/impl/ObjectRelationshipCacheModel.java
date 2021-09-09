@@ -78,7 +78,7 @@ public class ObjectRelationshipCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -100,8 +100,6 @@ public class ObjectRelationshipCacheModel
 		sb.append(objectDefinitionId1);
 		sb.append(", objectDefinitionId2=");
 		sb.append(objectDefinitionId2);
-		sb.append(", objectFieldId1=");
-		sb.append(objectFieldId1);
 		sb.append(", objectFieldId2=");
 		sb.append(objectFieldId2);
 		sb.append(", dbTableName=");
@@ -158,7 +156,6 @@ public class ObjectRelationshipCacheModel
 
 		objectRelationshipImpl.setObjectDefinitionId1(objectDefinitionId1);
 		objectRelationshipImpl.setObjectDefinitionId2(objectDefinitionId2);
-		objectRelationshipImpl.setObjectFieldId1(objectFieldId1);
 		objectRelationshipImpl.setObjectFieldId2(objectFieldId2);
 
 		if (dbTableName == null) {
@@ -212,8 +209,6 @@ public class ObjectRelationshipCacheModel
 
 		objectDefinitionId2 = objectInput.readLong();
 
-		objectFieldId1 = objectInput.readLong();
-
 		objectFieldId2 = objectInput.readLong();
 		dbTableName = objectInput.readUTF();
 		label = objectInput.readUTF();
@@ -251,8 +246,6 @@ public class ObjectRelationshipCacheModel
 		objectOutput.writeLong(objectDefinitionId1);
 
 		objectOutput.writeLong(objectDefinitionId2);
-
-		objectOutput.writeLong(objectFieldId1);
 
 		objectOutput.writeLong(objectFieldId2);
 
@@ -295,7 +288,6 @@ public class ObjectRelationshipCacheModel
 	public long modifiedDate;
 	public long objectDefinitionId1;
 	public long objectDefinitionId2;
-	public long objectFieldId1;
 	public long objectFieldId2;
 	public String dbTableName;
 	public String label;

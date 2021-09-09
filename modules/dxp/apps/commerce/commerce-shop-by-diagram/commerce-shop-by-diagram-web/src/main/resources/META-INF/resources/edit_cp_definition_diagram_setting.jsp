@@ -126,6 +126,8 @@ CPDefinitionDiagramType cpDefinitionDiagramType = cpDefinitionDiagramSettingDisp
 		HashMapBuilder.<String, Object>put(
 			"currentURL", currentURL
 		).put(
+			"diagramId", (cpDefinitionDiagramSetting != null) ? cpDefinitionDiagramSetting.getCPDefinitionDiagramSettingId() : 0
+		).put(
 			"selectType", liferayPortletResponse.getNamespace() + "selectType"
 		).build()
 	%>'

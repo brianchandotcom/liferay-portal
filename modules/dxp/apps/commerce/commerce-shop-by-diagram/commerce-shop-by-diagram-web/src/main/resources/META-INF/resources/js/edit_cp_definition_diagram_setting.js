@@ -9,15 +9,29 @@
  * distribution rights of the Software.
  */
 
-import {liferayNavigate} from 'commerce-frontend-js/utilities/index';
-import {createPortletURL} from 'frontend-js-web';
+import {fetch} from 'frontend-js-web';
 
-export default function ({currentURL, namespace}) {
-	const portletURL = createPortletURL(currentURL);
+export const HEADERS = new Headers({
+	Accept: 'application/json',
+	'Content-Type': 'application/json',
+});
+
+const DIAGRAMS_ENDPOINT = '/o/headless-commerce-admin-catalog/v1.0/diagrams/';
+
+export default function ({diagramId, namespace}) {
 	const type = document.getElementById(`${namespace}type`);
 	const handleSelectChange = () => {
-		portletURL.searchParams.append('type', type.value);
-		liferayNavigate(portletURL.toString());
+		const url = new URL(
+			DIAGRAMS_ENDPOINT + diagramId,
+			themeDisplay.getPortalURL()
+		);
+		fetch(url, {
+			body: JSON.stringify({
+				type: type.value,
+			}),
+			headers: HEADERS,
+			method: 'PATCH',
+		});
 	};
 
 	type.addEventListener('change', handleSelectChange);

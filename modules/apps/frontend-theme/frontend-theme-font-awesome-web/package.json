@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"liferay-font-awesome": "3.4.1"
+		"liferay-font-awesome": "3.4.2"
 	},
 	"name": "frontend-theme-font-awesome-web",
 	"version": "3.0.9"

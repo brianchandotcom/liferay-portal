@@ -2,7 +2,7 @@
 	"devDependencies": {
 		"compass-mixins": "0.12.10",
 		"gulp": "4.0.2",
-		"liferay-font-awesome": "3.4.0",
+		"liferay-font-awesome": "3.4.2",
 		"liferay-frontend-common-css": "1.0.4",
 		"liferay-frontend-theme-styled": "5.0.0",
 		"liferay-frontend-theme-unstyled": "5.0.0",

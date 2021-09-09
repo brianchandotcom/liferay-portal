@@ -120,9 +120,11 @@ public class ObjectRelationshipLocalServiceImpl
 				StringBundler.concat(
 					"create table ", objectRelationship.getDBTableName(), " (",
 					objectDefinition1.getPKObjectFieldDBColumnName(),
-					" LONG not null primary key ,",
+					" LONG not null,",
 					objectDefinition2.getPKObjectFieldDBColumnName(),
-					" LONG not null primary key)"));
+					" LONG not null, PRIMARY KEY( ",
+					objectDefinition1.getPKObjectFieldDBColumnName(), " , ",
+					objectDefinition2.getPKObjectFieldDBColumnName(), "))"));
 		}
 
 		return objectRelationshipPersistence.update(objectRelationship);

@@ -95,9 +95,6 @@ public class MessageBoardThreadDTOConverter
 				articleBody = mbMessage.getBody();
 				creator = CreatorUtil.toCreator(
 					_portal, dtoConverterContext.getUriInfoOptional(), user);
-				creatorStatistics = CreatorStatisticsUtil.toCreatorStatistics(
-					mbMessage.getGroupId(), languageId,
-					_mbStatsUserLocalService, uriInfoOptional.get(), user);
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),
 					MBMessage.class.getName(), mbMessage.getMessageId(),
@@ -152,6 +149,23 @@ public class MessageBoardThreadDTOConverter
 				threadType = _toThreadType(
 					languageId, mbThread.getGroupId(), mbThread.getPriority());
 				viewCount = mbThread.getViewCount();
+
+				setCreatorStatistics(
+					() -> {
+						if (mbMessage.isAnonymous() || (user == null) ||
+							user.isDefaultUser()) {
+
+							return null;
+						}
+
+						Optional<UriInfo> uriInfoOptional =
+							dtoConverterContext.getUriInfoOptional();
+
+						return CreatorStatisticsUtil.toCreatorStatistics(
+							mbMessage.getGroupId(), languageId,
+							_mbStatsUserLocalService,
+							uriInfoOptional.orElse(null), user);
+					});
 			}
 		};
 	}

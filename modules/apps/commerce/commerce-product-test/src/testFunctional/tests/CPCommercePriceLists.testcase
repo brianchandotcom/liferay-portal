@@ -969,6 +969,12 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Site1");
 
+		Type(
+			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
+			value1 = "U-Joint");
+
+		Click(locator1 = "Button#SUBMIT");
+
 		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
 
 		CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Account1");
@@ -994,6 +1000,12 @@ definition {
 			value1 = "24.00");
 
 		ApplicationsMenu.gotoSite(site = "Site2");
+
+		Type(
+			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
+			value1 = "U-Joint");
+
+		Click(locator1 = "Button#SUBMIT");
 
 		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
 

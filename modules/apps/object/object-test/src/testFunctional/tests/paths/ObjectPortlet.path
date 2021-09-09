@@ -15,6 +15,16 @@
 		<td>//div[contains(@class,'dnd-tbody')]//div[contains(text(),'${key_entry}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>ENTRY_KEBAB_MENU</td>
+		<td>//div[contains(@class,'dnd-tbody')]//div[contains(text(),'${key_entry}')]/following-sibling::div//button</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>DELETE_ENTRY_BUTTON</td>
+		<td>//div[contains(@class,'show')]//button[contains(.,'Delete')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

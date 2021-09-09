@@ -1,5 +1,19 @@
 definition {
 
+	macro assertEntryNotPresent {
+		AssertElementNotPresent(
+			key_entry = "${entry}",
+			locator1 = "ObjectPortlet#ENTRY_VALUE");
+	}
+
+	macro deleteEntry {
+		Click(
+			key_entry = "${entry}",
+			locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+
+		Click(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+	}
+
 	macro viewEntry {
 		AssertElementPresent(
 			key_entry = "${entry}",

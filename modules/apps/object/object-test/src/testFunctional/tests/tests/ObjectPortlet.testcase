@@ -59,13 +59,34 @@ definition {
 	}
 
 	@description = "LPS-135393 - Verify that is possible to delete an entry on the auto-generated table on the Custom Object Portlet"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDeleteEntry {
 		property portal.acceptance = "true";
 
-		// TODO LPS-138959 CanDeleteEntry pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Text",
+			fieldName = "text",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "text",
+			objectName = "CustomObject",
+			value = "Test text");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectPortlet.viewEntry(entry = "Test text");
+
+		ObjectPortlet.deleteEntry(entry = "Test text");
+		ObjectPortlet.assertEntryNotPresent(entry = "Test text");
 	}
 
 	@description = "LPS-135393 - Verify that is possible to order the auto-generated table by an entry on the Custom Object Portlet"

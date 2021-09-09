@@ -120,7 +120,12 @@ definition {
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "text",
 			objectName = "CustomObject",
-			value = "Test Text");
+			value = "Test Text 1");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "text",
+			objectName = "CustomObject",
+			value = "Test Text 2");
 
 		VisualizeObjectCollectionDisplay.addDisplayPageTemplate(
 			contentType = "Object",
@@ -145,9 +150,10 @@ definition {
 			fragmentName = "Heading",
 			label = "Expand Collection Display");
 
-		VisualizeObjectCollectionDisplay.mapFragment(fieldName = "Text");
+		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Text");
 
-		VisualizeObjectCollectionDisplay.viewEntriesFragment(entries = "Test Text");
+		VisualizeObjectCollectionDisplay.viewEntriesFragment(entries = "Test Text 1");
+		VisualizeObjectCollectionDisplay.viewEntriesFragment(entries = "Test Text 2");
 	}
 
 }

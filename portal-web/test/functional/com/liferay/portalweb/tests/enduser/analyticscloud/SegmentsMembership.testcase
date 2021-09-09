@@ -7,13 +7,72 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
+		}
+
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+		}
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Blogs Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
+
+		ACUtils.createBlogsAndAddToPage(layoutName = "Blogs Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents Page",
+			siteName = "Site Name");
+
+		ACUtils.createDMAndAddToPage(layoutName = "Documents Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Web Content Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Page",
+			siteName = "Site Name");
+
+		ACUtils.createWCAndAddToPage(layoutName = "Web Content Page");
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
 	}
 
 	tearDown {
@@ -24,107 +83,1647 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
 
 		ACUtils.tearDownAC();
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8523 | Test Summary: Assert segment membership list shows all known individuals"
-	@ignore = "true"
 	@priority = "4"
 	test AssertSegmentMembershipListShowsAllKnownIndividuals {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8523 AssertSegmentMembershipListShowsAllKnownIndividuals pending implementation
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
 
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Go to the Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+		}
+
+		task ("Add multiple members") {
+			ACSegments.addStaticMultiMember(tableMember = "userfn userln,user1 user1,user2 user2,user3 user3,user4 user4,user5 user5");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("View members of segment") {
+			ACNavigation.switchTab(tabName = "Membership");
+
+			for (var username : list "user1 user1,user2 user2,user3 user3,user4 user4,user5 user5,userfn userln") {
+				AssertVisible(
+					key_userName = "${username}",
+					locator1 = "ACSegments#SEGMENT_MEMBERS");
+			}
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8512 | Test Summary: Segment membership list is searchable"
-	@ignore = "true"
 	@priority = "5"
 	test CanSearchMembershipList {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8512 CanSearchMembershipList pending implementation
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
 
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Go to the Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+		}
+
+		task ("Add multiple members") {
+			ACSegments.addStaticMultiMember(tableMember = "userfn userln,user1 user1,user2 user2,user3 user3,user4 user4,user5 user5");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Search members of segment") {
+			ACNavigation.switchTab(tabName = "Membership");
+
+			for (var username : list "user1 user1,user2 user2,user3 user3,user4 user4,user5 user5,userfn userln") {
+				ACSegments.searchMember(findMember = "${username}");
+
+				AssertVisible(
+					key_userName = "${username}",
+					locator1 = "ACSegments#SEGMENT_MEMBERS");
+			}
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8524 | Test Summary: No change on segment profile selected point"
-	@ignore = "true"
 	@priority = "3"
 	test NoChangeOnSegmentProfileSelectedPoint {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8524 NoChangeOnSegmentProfileSelectedPoint pending implementation
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
 
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Go to the Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+		}
+
+		task ("Add multiple members") {
+			ACSegments.addStaticMultiMember(tableMember = "userfn userln,user1 user1,user2 user2,user3 user3,user4 user4,user5 user5");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to membership tab") {
+			ACNavigation.switchTab(tabName = "Membership");
+		}
+
+		task ("Hover over earliest day") {
+			MouseOver.mouseOverInvisible(locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_EARLY_DATE_POINT");
+		}
+
+		task ("View membership card when hovering") {
+			ACSegments.viewSegmentMembershipChartRowNumbers(
+				row = "Added",
+				value = "0");
+
+			ACSegments.viewSegmentMembershipChartRowNumbers(
+				row = "Removed",
+				value = "0");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8513 | Test Summary: Order the Segment Profile Membership List"
-	@ignore = "true"
 	@priority = "3"
 	test OrderSegmentProfileMembershipList {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8513 OrderSegmentProfileMembershipList pending implementation
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
 
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Go to the Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+		}
+
+		task ("Add multiple members") {
+			ACSegments.addStaticMultiMember(tableMember = "userfn userln,user1 user1,user2 user2,user3 user3,user4 user4,user5 user5");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to membership tab") {
+			ACNavigation.switchTab(tabName = "Membership");
+		}
+
+		task ("View members and order by name descending") {
+			ACSegments.filterKnownSegmentMembersListByName();
+
+			for (var username : list "userfn userln,user5 user5,user4 user4,user3 user3,user2 user2,user1 user1") {
+				ACSegments.viewKnownSegmentMemberNameLinksSpecificOrder(username = "${username}");
+			}
+		}
+
+		task ("View members and order by name ascending") {
+			ACSegments.filterKnownSegmentMembersListByName();
+
+			for (var username : list "user1 user1,user2 user2,user3 user3,user4 user4,user5 user5,userfn userln") {
+				ACSegments.viewKnownSegmentMemberNameLinksSpecificOrder(username = "${username}");
+			}
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8519 | Test Summary: Search a Dynamic Segment's Membership Preview Modal"
-	@ignore = "true"
 	@priority = "3"
 	test SearchDynamicSegmentsMembershipPreviewModal {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8519 SearchDynamicSegmentsMembershipPreviewModal pending implementation
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
 
-	}
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8520 | Test Summary: Search the Segment Profile Membership List"
-	@ignore = "true"
-	@priority = "3"
-	test SearchTheSegmentProfileMembershipList {
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
 
-		// TODO LRAC-8520 SearchTheSegmentProfileMembershipList pending implementation
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
 
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+		}
+
+		task ("Add dynamic segment individual attribute") {
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "fullName");
+
+			ACSegments.editFormControlCriterion(
+				criterionName = "fullName",
+				option = "is unknown");
+		}
+
+		task ("View total member count") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ACSegments#TOTAL_MEMBERS",
+				value1 = "Total Members:");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ACSegments#TOTAL_MEMBERS",
+				value1 = "6");
+		}
+
+		task ("View members of preview segment") {
+			Click(locator1 = "ACSegments#PREVIEW_CRITERIA_BUTTON");
+
+			for (var memberName : list "user1 user1,user2 user2,user3 user3,user4 user4,user5 user5,userfn userln") {
+				AssertVisible(
+					key_memberName = "${memberName}",
+					locator1 = "ACSegments#MEMBER");
+			}
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8522 | Test Summary: Segment Membership graph exist and shows members"
-	@ignore = "true"
 	@priority = "4"
 	test SegmentMembershipGraphExistAndShowsMembers {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8522 SegmentMembershipGraphExistAndShowsMembers pending implementation
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
 
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Go to the Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+		}
+
+		task ("Add multiple members") {
+			ACSegments.addStaticMultiMember(tableMember = "userfn userln,user1 user1,user2 user2,user3 user3,user4 user4,user5 user5");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to membership tab") {
+			ACNavigation.switchTab(tabName = "Membership");
+		}
+
+		// Timing issue will cause this test to fail
+		// The graph shows yesterdays date and would require a full day before you can actually see when a member was added
+
+		task ("View membership graph") {
+			AssertVisible(locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART");
+		}
+
+		task ("View membership counts via graph legend") {
+			ACSegments.viewSegmentMembershipLegendNumbers(
+				anonymousNumber = "0",
+				knownNumber = "6",
+				totalNumber = "6");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8521 | Test Summary: Selected segment membership point can clear date selection"
-	@ignore = "true"
 	@priority = "3"
 	test SelectedSegmentMembershipPointCanClearDateSelection {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8521 SelectedSegmentMembershipPointCanClearDateSelection pending implementation
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
 
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Go to the Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+		}
+
+		task ("Add multiple members") {
+			ACSegments.addStaticMultiMember(tableMember = "userfn userln,user1 user1,user2 user2,user3 user3,user4 user4,user5 user5");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to membership tab") {
+			ACNavigation.switchTab(tabName = "Membership");
+		}
+
+		// Timing issue will cause this test to fail
+		// The graph shows yesterdays date and would require a full day before you can actually see when a member was added
+
+		task ("Hover over most recent day and click") {
+			MouseOver.mouseOverInvisible(locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_RECENT_DATE_POINT");
+
+			Pause(locator1 = "5000");
+
+			Click.clickNoMouseOver(locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_ACTIVE_POINT");
+		}
+
+		task ("Click clear date selection button") {
+			Pause(locator1 = "5000");
+
+			Click(locator1 = "ACSegments#CLEAR_DATE_SELECTION_BUTTON");
+		}
+
+		task ("View removal of added and removed member values") {
+			AssertElementNotPresent(locator1 = "ACSegments#SEGMENT_MEMBERS_ADDED");
+
+			AssertElementNotPresent(locator1 = "ACSegments#SEGMENT_MEMBERS_REMOVED");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8525 | Test Summary: Select point on membership shows individuals added/removed"
-	@ignore = "true"
 	@priority = "3"
 	test SelectPointOnMembershipShowsIndividualsAddedOrRemoved {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8525 SelectPointOnMembershipShowsIndividualsAddedOrRemoved pending implementation
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
 
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Go to the Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+		}
+
+		task ("Add multiple members") {
+			ACSegments.addStaticMultiMember(tableMember = "userfn userln,user1 user1,user2 user2,user3 user3,user4 user4,user5 user5");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to membership tab") {
+			ACNavigation.switchTab(tabName = "Membership");
+		}
+
+		// Timing issue will cause this test to fail
+		// The graph shows yesterdays date and would require a full day before you can actually see when a member was added
+
+		task ("Hover over most recent day and click") {
+			MouseOver.mouseOverInvisible(locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_RECENT_DATE_POINT");
+
+			Pause(locator1 = "5000");
+
+			Click.clickNoMouseOver(locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_ACTIVE_POINT");
+		}
+
+		task ("View added and removed members") {
+			AssertTextEquals(
+				locator1 = "ACSegments#SEGMENT_MEMBERS_ADDED",
+				value1 = "6");
+
+			AssertTextEquals(
+				locator1 = "ACSegments#SEGMENT_MEMBERS_REMOVED",
+				value1 = "0");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8511 | Test Summary: Segment membership graph shows historical increase or decrease in members"
-	@ignore = "true"
 	@priority = "5"
 	test ViewMembershipGraphShowsIncreaseOrDecreaseMembers {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8511 ViewMembershipGraphShowsIncreaseOrDecreaseMembers pending implementation
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
 
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Go to the Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+		}
+
+		task ("Add multiple members") {
+			ACSegments.addStaticMultiMember(tableMember = "userfn userln,user1 user1,user2 user2,user3 user3,user4 user4,user5 user5");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to membership tab") {
+			ACNavigation.switchTab(tabName = "Membership");
+		}
+
+		// Timing issue will cause this test to fail
+		// The graph shows yesterdays date and would require a full day before you can actually see when a member was added
+
+		task ("Hover over most recent day") {
+			MouseOver.mouseOverInvisible(locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_RECENT_DATE_POINT");
+		}
+
+		task ("View membership card when hovering") {
+			ACSegments.viewSegmentMembershipChartRowNumbers(
+				row = "Added",
+				value = "6");
+
+			ACSegments.viewSegmentMembershipChartRowNumbers(
+				row = "Removed",
+				value = "0");
+
+			ACSegments.viewSegmentMembershipChartRowNumbers(
+				row = "Net Change",
+				value = "6");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8510 | Test Summary: Segment membership shows known, anonymous, and total members"
-	@ignore = "true"
 	@priority = "5"
 	test ViewMembershipShowsKnownAnonymousTotalMembers {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8510 ViewMembershipShowsKnownAnonymousTotalMembers pending implementation
+		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
+		// AC Refactor ticket: LRAC-9138
 
+		task ("Add 5 more new users") {
+			for (var n : list "1,2,3,4,5") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the blogs page as different users") {
+			for (var username : list "userea,user1") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+
+				BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the documents page as different users") {
+			for (var username : list "user2,user3") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Documents Page",
+					siteName = "Site Name");
+
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		task ("View the web content page as different users") {
+			for (var username : list "user4,user5") {
+				if ("${username}" == "userea") {
+					var fullName = "userfn userln";
+				}
+
+				else {
+					var fullName = "${username} ${username}";
+				}
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "Web Content Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+
+				ACUtils.closeAllSessions();
+			}
+		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessions();
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Go to the Add Members modal") {
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+		}
+
+		task ("Add multiple members") {
+			ACSegments.addStaticMultiMember(tableMember = "userfn userln,user1 user1,user2 user2,user3 user3,user4 user4,user5 user5");
+		}
+
+		task ("Create the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to membership tab") {
+			ACNavigation.switchTab(tabName = "Membership");
+		}
+
+		// Timing issue will cause this test to fail
+		// The graph shows yesterdays date and would require a full day before you can actually see when a member was added
+
+		task ("Hover over most recent day") {
+			MouseOver.mouseOverInvisible(locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_RECENT_DATE_POINT");
+		}
+
+		task ("View membership card when hovering") {
+			ACSegments.viewSegmentMembershipChartRowNumbers(
+				row = "Total Members",
+				value = "6");
+
+			ACSegments.viewSegmentMembershipChartRowNumbers(
+				row = "Anonymous Members",
+				value = "0");
+
+			ACSegments.viewSegmentMembershipChartRowNumbers(
+				row = "Known Members",
+				value = "6");
+		}
 	}
 
 }

@@ -275,6 +275,15 @@ public class ObjectEntryLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static List<ObjectEntry> getManyToManyRelatedObjectEntries(
+			long groupId, long primaryKey, long objectRelationshipId, int start,
+			int end)
+		throws PortalException {
+
+		return getService().getManyToManyRelatedObjectEntries(
+			groupId, primaryKey, objectRelationshipId, start, end);
+	}
+
 	/**
 	 * Returns a range of all the object entries.
 	 *

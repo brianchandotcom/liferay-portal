@@ -63,6 +63,15 @@ public class ObjectRelationshipLocalServiceWrapper
 			objectRelationship);
 	}
 
+	@Override
+	public void addObjectRelationshipMapEntry(
+			long objectRelationshipId, long primaryKey1, long primaryKey2)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectRelationshipLocalService.addObjectRelationshipMapEntry(
+			objectRelationshipId, primaryKey1, primaryKey2);
+	}
+
 	/**
 	 * Creates a new object relationship with the primary key. Does not add the object relationship to the database.
 	 *

@@ -304,6 +304,17 @@ public class ObjectEntryLocalServiceWrapper
 		return _objectEntryLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectEntry>
+			getManyToManyRelatedObjectEntries(
+				long groupId, long primaryKey, long objectRelationshipId,
+				int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.getManyToManyRelatedObjectEntries(
+			groupId, primaryKey, objectRelationshipId, start, end);
+	}
+
 	/**
 	 * Returns a range of all the object entries.
 	 *

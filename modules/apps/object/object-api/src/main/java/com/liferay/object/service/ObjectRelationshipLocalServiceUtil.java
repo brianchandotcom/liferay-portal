@@ -71,6 +71,14 @@ public class ObjectRelationshipLocalServiceUtil {
 		return getService().addObjectRelationship(objectRelationship);
 	}
 
+	public static void addObjectRelationshipMapEntry(
+			long objectRelationshipId, long primaryKey1, long primaryKey2)
+		throws PortalException {
+
+		getService().addObjectRelationshipMapEntry(
+			objectRelationshipId, primaryKey1, primaryKey2);
+	}
+
 	/**
 	 * Creates a new object relationship with the primary key. Does not add the object relationship to the database.
 	 *

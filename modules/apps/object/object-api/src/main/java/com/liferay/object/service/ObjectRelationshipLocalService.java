@@ -84,6 +84,10 @@ public interface ObjectRelationshipLocalService
 	public ObjectRelationship addObjectRelationship(
 		ObjectRelationship objectRelationship);
 
+	public void addObjectRelationshipMapEntry(
+			long objectRelationshipId, long primaryKey1, long primaryKey2)
+		throws PortalException;
+
 	/**
 	 * Creates a new object relationship with the primary key. Does not add the object relationship to the database.
 	 *

@@ -9,6 +9,8 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                active:
+                    type: boolean
                 dateCreated:
                     format: date
                     readOnly: true

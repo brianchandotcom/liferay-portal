@@ -1594,6 +1594,9 @@ public class GraphQLServletExtender {
 		GraphQLObjectType.Builder graphQLObjectTypeBuilder =
 			new GraphQLObjectType.Builder();
 
+		graphQLObjectTypeBuilder.field(
+			_addField(Scalars.GraphQLLong, graphQLDTOContributor.getIdName()));
+
 		graphQLObjectTypeBuilder.name(graphQLDTOContributor.getTypeName());
 
 		for (GraphQLDTOProperty graphQLDTOProperty :

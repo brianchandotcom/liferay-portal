@@ -317,8 +317,4 @@ html#{$cadmin-selector} {
 			outline: solid $editablesBorderWidth $cadmin-primary;
 		}
 	}
-
-	&.rtl {
-		transform: translate(50%, -50%);
-	}
 }

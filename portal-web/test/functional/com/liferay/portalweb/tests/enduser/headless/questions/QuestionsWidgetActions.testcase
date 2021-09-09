@@ -432,6 +432,25 @@ definition {
 		Questions.deleteQuestion();
 	}
 
+	@description = "Validate if the user can delete a thread through My Activity, it also covers LPS-137639."
+	@priority = "4"
+	test CanDeleteThreadThroughMyActivity {
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoTab(questionTabField = "My Activity");
+
+		Questions.gotoDetails(questionTitle = "MB Thread Message Subject");
+
+		Questions.deleteQuestion();
+
+		Questions.viewTopicDefault();
+	}
+
 	@description = "Validate if the user can delete a topic, it also covers LPS-128699."
 	@priority = "5"
 	@refactordone

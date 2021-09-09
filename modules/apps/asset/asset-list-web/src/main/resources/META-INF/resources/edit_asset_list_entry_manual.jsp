@@ -18,6 +18,8 @@
 
 <%
 portletDisplay.setURLBack(editAssetListDisplayContext.getBackURL());
+
+AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 %>
 
 <portlet:actionURL name="/asset_list/add_asset_entry_selection" var="addAssetEntrySelectionURL">
@@ -25,10 +27,6 @@ portletDisplay.setURLBack(editAssetListDisplayContext.getBackURL());
 </portlet:actionURL>
 
 <portlet:actionURL name="/asset_list/update_asset_list_entry_manual" var="updateAssetListEntryURL" />
-
-<%
-AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
-%>
 
 <c:choose>
 	<c:when test="<%= Validator.isNull(assetListEntry.getAssetEntryType()) %>">

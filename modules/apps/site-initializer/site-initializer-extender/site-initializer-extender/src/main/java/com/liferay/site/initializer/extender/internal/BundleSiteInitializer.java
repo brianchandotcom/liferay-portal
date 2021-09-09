@@ -330,13 +330,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).build();
 
 		for (String resourcePath : resourcePaths) {
-			String jsonCatalog = _read(resourcePath);
+			String json = _read(resourcePath);
 
-			Catalog catalog = Catalog.toDTO(jsonCatalog);
+			Catalog catalog = Catalog.toDTO(json);
 
 			if (catalog == null) {
 				_log.error(
-					"Unable to transform catalog from JSON: " + jsonCatalog);
+					"Unable to transform catalog from JSON: " + json);
 
 				continue;
 			}
@@ -368,13 +368,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).build();
 
 		for (String resourcePath : resourcePaths) {
-			String jsonChannel = _read(resourcePath);
+			String json = _read(resourcePath);
 
-			Channel channel = Channel.toDTO(jsonChannel);
+			Channel channel = Channel.toDTO(json);
 
 			if (channel == null) {
 				_log.error(
-					"Unable to transform channel from JSON: " + jsonChannel);
+					"Unable to transform channel from JSON: " + json);
 
 				continue;
 			}

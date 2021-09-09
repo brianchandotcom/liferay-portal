@@ -61,6 +61,7 @@ import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -78,6 +79,27 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseDiagramResourceImpl
 	implements DiagramResource, EntityModelResource,
 			   VulcanBatchEngineTaskItemDelegate<Diagram> {
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-shop-by-diagram/v1.0/diagrams/{diagramId}' -d $'{"color": ___, "diagramEntries": ___, "id": ___, "imageId": ___, "imageURL": ___, "pins": ___, "radius": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Override
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "diagramId")})
+	@PATCH
+	@Path("/diagrams/{diagramId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Diagram")})
+	public Diagram patchDiagram(
+			@NotNull @Parameter(hidden = true) @PathParam("diagramId") Long
+				diagramId,
+			Diagram diagram)
+		throws Exception {
+
+		return new Diagram();
+	}
 
 	/**
 	 * Invoke this method with the command line:

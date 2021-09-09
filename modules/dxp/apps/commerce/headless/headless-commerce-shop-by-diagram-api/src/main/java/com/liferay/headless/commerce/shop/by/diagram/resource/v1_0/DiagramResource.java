@@ -54,6 +54,9 @@ public interface DiagramResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Diagram patchDiagram(Long diagramId, Diagram diagram)
+		throws Exception;
+
 	public Diagram getProductByExternalReferenceCodeDiagram(
 			String externalReferenceCode)
 		throws Exception;

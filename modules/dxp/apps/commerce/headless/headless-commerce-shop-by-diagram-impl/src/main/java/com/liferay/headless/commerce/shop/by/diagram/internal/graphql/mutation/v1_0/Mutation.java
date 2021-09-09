@@ -73,6 +73,19 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Diagram patchDiagram(
+			@GraphQLName("diagramId") Long diagramId,
+			@GraphQLName("diagram") Diagram diagram)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_diagramResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			diagramResource -> diagramResource.patchDiagram(
+				diagramId, diagram));
+	}
+
+	@GraphQLField
 	public Diagram updateProductByExternalReferenceCodeDiagram(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("diagram") Diagram diagram)

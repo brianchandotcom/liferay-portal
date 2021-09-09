@@ -135,6 +135,18 @@ definition {
 			value1 = "${value}");
 	}
 
+	macro assertDataInUploadField {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		AssertTextEquals(
+			key_fieldLabel = "${fieldLabel}",
+			key_index = "${index}",
+			locator1 = "DataEngineRenderer#SELECTOR_INPUT_INDEXED",
+			value1 = "${webContentUpload}");
+	}
+
 	macro assertImageNotPresent {
 		if (!(isSet(index))) {
 			var index = "1";
@@ -162,6 +174,18 @@ definition {
 			key_optionValue = "${optionValue}",
 			locator1 = "DataEngineRenderer#MULTIPLE_SELECTION_OPTION_INDEXED",
 			optionIndex = "${optionIndex}");
+	}
+
+	macro assertUploadNotPresent {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		AssertElementNotPresent(
+			key_fieldLabel = "${fieldLabel}",
+			key_index = "${index}",
+			locator1 = "DataEngineRenderer#SELECTOR_INPUT_INDEXED",
+			value1 = "${webContentUpload}");
 	}
 
 	macro clearImageField {
@@ -385,6 +409,45 @@ definition {
 			key_fieldLabel = "${fieldLabel}",
 			locator1 = "DataEngineRenderer#TEXT_INPUT_INDEXED",
 			value1 = "${value}");
+	}
+
+	macro inputDataInUploadField {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		Click(
+			fieldLabel = "${fieldLabel}",
+			key_index = "${index}",
+			key_text = "Select",
+			locator1 = "DataEngineRenderer#BUTTON_LABEL_INDEXED");
+
+		if ("${dmNavTab}" == "Documents and Media") {
+			if (isSet(depotName)) {
+				ItemSelector.selectRepositoryImage(
+					depotName = "${depotName}",
+					folderName = "${folderName}",
+					imageFileName = "${webContentUpload}",
+					navTab = "${dmNavTab}");
+			}
+			else if (isSet(dmDocumentTitle)) {
+				ItemSelector.selectDMImage(
+					imageFileName = "${dmDocumentTitle}",
+					navTab = "${dmNavTab}");
+			}
+			else {
+				ItemSelector.uploadFile(
+					navTab = "${dmNavTab}",
+					uploadFileName = "${webContentUpload}");
+			}
+		}
+		else if ("${dmNavTab}" == "User Personal Folder") {
+			ItemSelector.uploadFile(
+				navTab = "${dmNavTab}",
+				uploadFileName = "${webContentUpload}");
+		}
 	}
 
 	macro removeRepeatableField {

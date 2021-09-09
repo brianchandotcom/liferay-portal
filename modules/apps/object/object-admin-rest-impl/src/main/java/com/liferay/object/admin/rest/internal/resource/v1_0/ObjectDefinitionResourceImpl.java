@@ -168,6 +168,7 @@ public class ObjectDefinitionResourceImpl
 					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId()),
 					ObjectFieldUtil::toObjectField, ObjectField.class);
+				scope = objectDefinition.getScope();
 				status = new Status() {
 					{
 						code = objectDefinition.getStatus();

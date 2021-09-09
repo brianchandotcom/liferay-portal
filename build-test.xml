@@ -6173,6 +6173,7 @@ war.path=${app.server.portal.dir}/</echo>
 						<equals arg1="${portal.version}" arg2="6.2.3" />
 						<equals arg1="${portal.version}" arg2="6.2.5" />
 						<equals arg1="${portal.version}" arg2="7.0.4" />
+						<equals arg1="${portal.version}" arg2="7.0.6" />
 						<equals arg1="${portal.version}" arg2="7.1.3" />
 						<equals arg1="${portal.version}" arg2="7.2.0" />
 						<equals arg1="${portal.version}" arg2="7.2.1" />

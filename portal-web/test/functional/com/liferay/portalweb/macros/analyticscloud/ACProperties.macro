@@ -140,8 +140,6 @@ definition {
 	macro switchProperty {
 		ACProperties.clickPropertyMenuButton();
 
-		Click(locator1 = "ACSidebar#PROPERTY_SEARCH");
-
 		Type(
 			locator1 = "ACSidebar#PROPERTY_SEARCH",
 			value1 = "${propertyName}");

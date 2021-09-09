@@ -45,7 +45,9 @@ public class RepositoryEntryStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(RepositoryEntry repositoryEntry)
+	public void onAfterUpdate(
+			RepositoryEntry originalRepositoryEntry,
+			RepositoryEntry repositoryEntry)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(repositoryEntry);

@@ -56,7 +56,9 @@ public class DLFolderStagingModelListener extends BaseModelListener<DLFolder> {
 	}
 
 	@Override
-	public void onAfterUpdate(DLFolder dlFolder) throws ModelListenerException {
+	public void onAfterUpdate(DLFolder originalDLFolder, DLFolder dlFolder)
+		throws ModelListenerException {
+
 		Collection<Long> exportableRepositoryIds = _getExportableRepositoryIds(
 			dlFolder.getGroupId());
 

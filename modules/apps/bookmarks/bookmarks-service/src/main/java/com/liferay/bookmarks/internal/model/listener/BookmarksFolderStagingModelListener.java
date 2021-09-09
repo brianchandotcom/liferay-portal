@@ -45,7 +45,9 @@ public class BookmarksFolderStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(BookmarksFolder bookmarksFolder)
+	public void onAfterUpdate(
+			BookmarksFolder originalBookmarksFolder,
+			BookmarksFolder bookmarksFolder)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(bookmarksFolder);

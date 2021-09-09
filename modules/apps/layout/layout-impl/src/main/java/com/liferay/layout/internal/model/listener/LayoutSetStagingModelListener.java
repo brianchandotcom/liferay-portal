@@ -45,7 +45,7 @@ public class LayoutSetStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(LayoutSet layoutSet)
+	public void onAfterUpdate(LayoutSet originalLayoutSet, LayoutSet layoutSet)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(layoutSet);

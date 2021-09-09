@@ -34,7 +34,9 @@ public class LayoutSetModelListener extends BaseModelListener<LayoutSet> {
 	}
 
 	@Override
-	public void onAfterUpdate(LayoutSet layoutSet) {
+	public void onAfterUpdate(
+		LayoutSet originalLayoutSet, LayoutSet layoutSet) {
+
 		if (layoutSet == null) {
 			return;
 		}

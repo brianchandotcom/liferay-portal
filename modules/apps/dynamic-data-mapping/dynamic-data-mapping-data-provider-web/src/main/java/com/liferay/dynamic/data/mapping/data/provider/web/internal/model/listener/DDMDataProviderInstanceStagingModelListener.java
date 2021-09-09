@@ -45,7 +45,9 @@ public class DDMDataProviderInstanceStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(DDMDataProviderInstance ddmDataProviderInstance)
+	public void onAfterUpdate(
+			DDMDataProviderInstance originalDDMDataProviderInstance,
+			DDMDataProviderInstance ddmDataProviderInstance)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(ddmDataProviderInstance);

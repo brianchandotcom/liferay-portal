@@ -49,7 +49,9 @@ public class CalendarStagingModelListener extends BaseModelListener<Calendar> {
 	}
 
 	@Override
-	public void onAfterUpdate(Calendar calendar) throws ModelListenerException {
+	public void onAfterUpdate(Calendar originalCalendar, Calendar calendar)
+		throws ModelListenerException {
+
 		if (_isSkipEvent(calendar)) {
 			return;
 		}

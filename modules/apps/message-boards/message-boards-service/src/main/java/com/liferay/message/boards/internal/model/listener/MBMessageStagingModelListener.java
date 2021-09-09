@@ -45,7 +45,7 @@ public class MBMessageStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(MBMessage mbMessage)
+	public void onAfterUpdate(MBMessage originalMBMessage, MBMessage mbMessage)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(mbMessage);

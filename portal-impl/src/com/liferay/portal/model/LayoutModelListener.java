@@ -42,7 +42,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	}
 
 	@Override
-	public void onAfterUpdate(Layout layout) {
+	public void onAfterUpdate(Layout originalLayout, Layout layout) {
 		clearCache(layout);
 	}
 

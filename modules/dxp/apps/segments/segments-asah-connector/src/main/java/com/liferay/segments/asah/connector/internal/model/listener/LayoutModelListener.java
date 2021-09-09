@@ -50,7 +50,9 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
-	public void onBeforeUpdate(Layout layout) throws ModelListenerException {
+	public void onBeforeUpdate(Layout originalLayout, Layout layout)
+		throws ModelListenerException {
+
 		if (_isSkipEvent(layout)) {
 			return;
 		}

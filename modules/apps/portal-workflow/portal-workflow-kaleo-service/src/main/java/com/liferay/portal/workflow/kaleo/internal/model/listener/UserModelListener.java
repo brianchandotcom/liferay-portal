@@ -66,7 +66,9 @@ public class UserModelListener extends BaseModelListener<User> {
 	}
 
 	@Override
-	public void onAfterUpdate(User user) throws ModelListenerException {
+	public void onAfterUpdate(User originalUser, User user)
+		throws ModelListenerException {
+
 		try {
 			if (user.getStatus() == WorkflowConstants.STATUS_INACTIVE) {
 				_reassignKaleoTaskInstance(user.getUserId());

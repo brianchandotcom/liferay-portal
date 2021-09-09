@@ -87,7 +87,8 @@ public class RatingsEntryModelListener extends BaseModelListener<RatingsEntry> {
 	}
 
 	@Override
-	public void onBeforeUpdate(RatingsEntry ratingsEntry)
+	public void onBeforeUpdate(
+			RatingsEntry originalRatingsEntry, RatingsEntry ratingsEntry)
 		throws ModelListenerException {
 
 		_updateBlogsStatsUser(ratingsEntry);

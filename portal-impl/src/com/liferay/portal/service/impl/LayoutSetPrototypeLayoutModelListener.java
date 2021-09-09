@@ -45,7 +45,7 @@ public class LayoutSetPrototypeLayoutModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(Layout layout) {
+	public void onAfterUpdate(Layout originalLayout, Layout layout) {
 		updateLayoutSetPrototype(layout, layout.getModifiedDate());
 	}
 

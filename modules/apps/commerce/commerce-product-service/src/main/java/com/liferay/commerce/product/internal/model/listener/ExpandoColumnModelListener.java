@@ -55,7 +55,8 @@ public class ExpandoColumnModelListener
 		}
 	}
 
-	public void onAfterUpdate(ExpandoColumn expandoColumn)
+	public void onAfterUpdate(
+			ExpandoColumn originalExpandoColumn, ExpandoColumn expandoColumn)
 		throws ModelListenerException {
 
 		try {

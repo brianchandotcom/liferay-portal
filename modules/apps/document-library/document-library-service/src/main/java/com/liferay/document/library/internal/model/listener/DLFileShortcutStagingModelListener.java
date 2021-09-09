@@ -45,7 +45,9 @@ public class DLFileShortcutStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(DLFileShortcut dlFileShortcut)
+	public void onAfterUpdate(
+			DLFileShortcut originalDLFileShortcut,
+			DLFileShortcut dlFileShortcut)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(dlFileShortcut);

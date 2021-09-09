@@ -49,7 +49,8 @@ public class SegmentsEntryModelListener
 	extends BaseModelListener<SegmentsEntry> {
 
 	@Override
-	public void onAfterUpdate(SegmentsEntry segmentsEntry)
+	public void onAfterUpdate(
+			SegmentsEntry originalSegmentsEntry, SegmentsEntry segmentsEntry)
 		throws ModelListenerException {
 
 		if (AsahUtil.isSkipAsahEvent(

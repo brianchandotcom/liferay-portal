@@ -69,7 +69,9 @@ public class PortletPreferencesModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(PortletPreferences portletPreferences)
+	public void onAfterUpdate(
+			PortletPreferences originalPortletPreferences,
+			PortletPreferences portletPreferences)
 		throws ModelListenerException {
 
 		_clearConfigurationOverrideInstance(portletPreferences);

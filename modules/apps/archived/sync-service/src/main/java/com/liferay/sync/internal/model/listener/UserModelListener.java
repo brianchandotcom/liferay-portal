@@ -87,10 +87,10 @@ public class UserModelListener extends BaseSyncModelListener<User> {
 	}
 
 	@Override
-	public void onBeforeUpdate(User user) throws ModelListenerException {
-		try {
-			User originalUser = _userLocalService.getUser(user.getUserId());
+	public void onBeforeUpdate(User originalUser, User user)
+		throws ModelListenerException {
 
+		try {
 			if (originalUser.isActive() && !user.isActive()) {
 				List<SyncDevice> syncDevices =
 					_syncDeviceLocalService.getSyncDevices(

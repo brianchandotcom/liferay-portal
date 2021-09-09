@@ -67,7 +67,8 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 	}
 
 	@Override
-	public void onBeforeUpdate(AssetEntry assetEntry)
+	public void onBeforeUpdate(
+			AssetEntry originalAssetEntry, AssetEntry assetEntry)
 		throws ModelListenerException {
 
 		AssetEntry assetEntryFromDatabase =

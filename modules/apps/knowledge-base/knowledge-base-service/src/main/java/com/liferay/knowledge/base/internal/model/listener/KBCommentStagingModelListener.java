@@ -45,7 +45,7 @@ public class KBCommentStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(KBComment kbComment)
+	public void onAfterUpdate(KBComment originalKBComment, KBComment kbComment)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(kbComment);

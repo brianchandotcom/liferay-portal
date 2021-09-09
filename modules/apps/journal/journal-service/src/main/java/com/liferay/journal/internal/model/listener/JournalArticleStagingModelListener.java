@@ -80,7 +80,9 @@ public class JournalArticleStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(JournalArticle journalArticle)
+	public void onAfterUpdate(
+			JournalArticle originalJournalArticle,
+			JournalArticle journalArticle)
 		throws ModelListenerException {
 
 		if (!_isJournalArticleStaged(journalArticle)) {

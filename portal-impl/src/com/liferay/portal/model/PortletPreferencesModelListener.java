@@ -46,7 +46,10 @@ public class PortletPreferencesModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(PortletPreferences portletPreferences) {
+	public void onAfterUpdate(
+		PortletPreferences originalPortletPreferences,
+		PortletPreferences portletPreferences) {
+
 		clearCache(portletPreferences);
 
 		updateLayout(portletPreferences);

@@ -61,7 +61,7 @@ public class UserModelListener extends BaseModelListener<User> {
 	}
 
 	@Override
-	public void onAfterUpdate(User user) {
+	public void onAfterUpdate(User originalUser, User user) {
 		JabberUtil.updatePassword(
 			user.getUserId(), user.getPasswordUnencrypted());
 	}

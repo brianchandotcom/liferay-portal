@@ -35,12 +35,16 @@ public class UserGroupRoleModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(UserGroupRole userGroupRole) {
+	public void onAfterUpdate(
+		UserGroupRole originalUserGroupRole, UserGroupRole userGroupRole) {
+
 		_clearCache(userGroupRole);
 	}
 
 	@Override
-	public void onBeforeUpdate(UserGroupRole userGroupRole) {
+	public void onBeforeUpdate(
+		UserGroupRole originalUserGroupRole, UserGroupRole userGroupRole) {
+
 		UserGroupRoleModelImpl userGroupRoleModelImpl =
 			(UserGroupRoleModelImpl)userGroupRole;
 

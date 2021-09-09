@@ -48,6 +48,7 @@ public class LayoutPageTemplateStructureStagingModelListener
 
 	@Override
 	public void onAfterUpdate(
+			LayoutPageTemplateStructure originalLayoutPageTemplateStructure,
 			LayoutPageTemplateStructure layoutPageTemplateStructure)
 		throws ModelListenerException {
 

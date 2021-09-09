@@ -45,7 +45,7 @@ public class KBArticleStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(KBArticle kbArticle)
+	public void onAfterUpdate(KBArticle originalKBArticle, KBArticle kbArticle)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(kbArticle);

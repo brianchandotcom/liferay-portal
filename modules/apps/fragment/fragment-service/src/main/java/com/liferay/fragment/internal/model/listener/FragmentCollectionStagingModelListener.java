@@ -45,7 +45,9 @@ public class FragmentCollectionStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(FragmentCollection fragmentCollection)
+	public void onAfterUpdate(
+			FragmentCollection originalFragmentCollection,
+			FragmentCollection fragmentCollection)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(fragmentCollection);

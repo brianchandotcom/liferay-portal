@@ -45,7 +45,8 @@ public class DDMStructureStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(DDMStructure ddmStructure)
+	public void onAfterUpdate(
+			DDMStructure originalDDMStructure, DDMStructure ddmStructure)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(ddmStructure);

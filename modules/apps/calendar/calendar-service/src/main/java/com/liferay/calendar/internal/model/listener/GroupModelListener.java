@@ -35,7 +35,9 @@ import org.osgi.service.component.annotations.Reference;
 public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
-	public void onAfterUpdate(Group group) throws ModelListenerException {
+	public void onAfterUpdate(Group originalGroup, Group group)
+		throws ModelListenerException {
+
 		try {
 			CalendarResource calendarResource =
 				_calendarResourceLocalService.fetchCalendarResource(

@@ -45,7 +45,8 @@ public class FragmentEntryStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(FragmentEntry fragmentEntry)
+	public void onAfterUpdate(
+			FragmentEntry originalFragmentEntry, FragmentEntry fragmentEntry)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(fragmentEntry);

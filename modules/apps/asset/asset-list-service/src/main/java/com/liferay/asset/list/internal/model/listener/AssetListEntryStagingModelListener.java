@@ -45,7 +45,9 @@ public class AssetListEntryStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(AssetListEntry assetListEntry)
+	public void onAfterUpdate(
+			AssetListEntry originalAssetListEntry,
+			AssetListEntry assetListEntry)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(assetListEntry);

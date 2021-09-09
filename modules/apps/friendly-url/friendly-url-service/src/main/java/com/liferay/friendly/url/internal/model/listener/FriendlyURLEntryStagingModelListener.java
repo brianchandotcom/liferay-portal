@@ -45,7 +45,9 @@ public class FriendlyURLEntryStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(FriendlyURLEntry friendlyURLEntry)
+	public void onAfterUpdate(
+			FriendlyURLEntry originalFriendlyURLEntry,
+			FriendlyURLEntry friendlyURLEntry)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(friendlyURLEntry);

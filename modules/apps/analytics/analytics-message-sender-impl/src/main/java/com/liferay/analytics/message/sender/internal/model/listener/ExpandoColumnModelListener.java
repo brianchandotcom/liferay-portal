@@ -58,7 +58,8 @@ public class ExpandoColumnModelListener
 	}
 
 	@Override
-	public void onBeforeUpdate(ExpandoColumn expandoColumn)
+	public void onBeforeUpdate(
+			ExpandoColumn originalExpandoColumn, ExpandoColumn expandoColumn)
 		throws ModelListenerException {
 
 		if (!analyticsConfigurationTracker.isActive()) {

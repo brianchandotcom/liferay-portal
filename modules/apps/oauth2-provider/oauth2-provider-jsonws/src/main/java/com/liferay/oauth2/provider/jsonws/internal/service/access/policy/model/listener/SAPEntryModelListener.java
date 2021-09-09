@@ -42,7 +42,9 @@ public class SAPEntryModelListener extends BaseModelListener<SAPEntry> {
 	}
 
 	@Override
-	public void onAfterUpdate(SAPEntry sapEntry) throws ModelListenerException {
+	public void onAfterUpdate(SAPEntry originalSAPEntry, SAPEntry sapEntry)
+		throws ModelListenerException {
+
 		_sapEntryScopeDescriptorFinderRegistrator.register(
 			sapEntry.getCompanyId());
 	}

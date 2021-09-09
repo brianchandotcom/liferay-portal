@@ -69,7 +69,9 @@ public class ResourcePermissionModelListener
 	}
 
 	@Override
-	public void onBeforeUpdate(ResourcePermission resourcePermission)
+	public void onBeforeUpdate(
+			ResourcePermission originalResourcePermission,
+			ResourcePermission resourcePermission)
 		throws ModelListenerException {
 
 		SyncDLObject syncDLObject = getSyncDLObject(resourcePermission);

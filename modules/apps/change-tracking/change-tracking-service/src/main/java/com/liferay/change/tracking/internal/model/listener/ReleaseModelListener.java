@@ -60,7 +60,7 @@ public class ReleaseModelListener extends BaseModelListener<Release> {
 	}
 
 	@Override
-	public void onBeforeUpdate(Release release) {
+	public void onBeforeUpdate(Release originalRelease, Release release) {
 		ReleaseImpl releaseImpl = (ReleaseImpl)release;
 
 		String originalSchemaVersion = releaseImpl.getColumnOriginalValue(

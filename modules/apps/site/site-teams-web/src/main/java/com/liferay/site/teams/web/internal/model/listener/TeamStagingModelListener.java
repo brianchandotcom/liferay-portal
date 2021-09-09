@@ -40,7 +40,9 @@ public class TeamStagingModelListener extends BaseModelListener<Team> {
 	}
 
 	@Override
-	public void onAfterUpdate(Team team) throws ModelListenerException {
+	public void onAfterUpdate(Team originalTeam, Team team)
+		throws ModelListenerException {
+
 		_stagingModelListener.onAfterUpdate(team);
 	}
 

@@ -84,7 +84,9 @@ public class FragmentEntryLinkModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(FragmentEntryLink fragmentEntryLink)
+	public void onAfterUpdate(
+			FragmentEntryLink originalFragmentEntryLink,
+			FragmentEntryLink fragmentEntryLink)
 		throws ModelListenerException {
 
 		_updateLayoutClassedModelUsage(fragmentEntryLink);

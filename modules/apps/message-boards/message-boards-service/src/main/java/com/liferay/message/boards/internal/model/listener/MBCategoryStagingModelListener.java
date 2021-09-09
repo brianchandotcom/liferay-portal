@@ -45,7 +45,8 @@ public class MBCategoryStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(MBCategory mbCategory)
+	public void onAfterUpdate(
+			MBCategory originalMBCategory, MBCategory mbCategory)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(mbCategory);

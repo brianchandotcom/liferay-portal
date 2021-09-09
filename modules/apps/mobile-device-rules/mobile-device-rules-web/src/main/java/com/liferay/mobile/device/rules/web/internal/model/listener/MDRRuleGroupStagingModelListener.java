@@ -45,7 +45,8 @@ public class MDRRuleGroupStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(MDRRuleGroup mdrRuleGroup)
+	public void onAfterUpdate(
+			MDRRuleGroup originalMDRRuleGroup, MDRRuleGroup mdrRuleGroup)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(mdrRuleGroup);

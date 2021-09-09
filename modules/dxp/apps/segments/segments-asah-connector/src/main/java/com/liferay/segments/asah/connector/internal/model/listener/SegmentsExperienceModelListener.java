@@ -51,7 +51,9 @@ public class SegmentsExperienceModelListener
 	extends BaseModelListener<SegmentsExperience> {
 
 	@Override
-	public void onAfterUpdate(SegmentsExperience segmentsExperience)
+	public void onAfterUpdate(
+			SegmentsExperience originalSegmentsExperience,
+			SegmentsExperience segmentsExperience)
 		throws ModelListenerException {
 
 		if (AsahUtil.isSkipAsahEvent(

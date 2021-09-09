@@ -50,7 +50,8 @@ public class DDLRecordSetStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(DDLRecordSet ddlRecordSet)
+	public void onAfterUpdate(
+			DDLRecordSet originalDDLRecordSet, DDLRecordSet ddlRecordSet)
 		throws ModelListenerException {
 
 		if (_isSkipEvent(ddlRecordSet)) {

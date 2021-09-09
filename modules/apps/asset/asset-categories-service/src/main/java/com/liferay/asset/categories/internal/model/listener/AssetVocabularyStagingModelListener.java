@@ -45,7 +45,9 @@ public class AssetVocabularyStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(AssetVocabulary assetVocabulary)
+	public void onAfterUpdate(
+			AssetVocabulary originalAssetVocabulary,
+			AssetVocabulary assetVocabulary)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(assetVocabulary);

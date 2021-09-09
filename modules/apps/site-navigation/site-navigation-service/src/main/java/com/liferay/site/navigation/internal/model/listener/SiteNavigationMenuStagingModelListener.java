@@ -45,7 +45,9 @@ public class SiteNavigationMenuStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(SiteNavigationMenu siteNavigationMenu)
+	public void onAfterUpdate(
+			SiteNavigationMenu originalSiteNavigationMenu,
+			SiteNavigationMenu siteNavigationMenu)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(siteNavigationMenu);

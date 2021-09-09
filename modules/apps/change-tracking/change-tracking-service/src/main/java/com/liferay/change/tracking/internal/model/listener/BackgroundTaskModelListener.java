@@ -37,7 +37,9 @@ public class BackgroundTaskModelListener
 	extends BaseModelListener<BackgroundTask> {
 
 	@Override
-	public void onAfterUpdate(BackgroundTask backgroundTask) {
+	public void onAfterUpdate(
+		BackgroundTask originalBackgroundTask, BackgroundTask backgroundTask) {
+
 		if ((backgroundTask != null) &&
 			Objects.equals(
 				backgroundTask.getTaskExecutorClassName(),

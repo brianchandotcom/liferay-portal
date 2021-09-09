@@ -45,7 +45,9 @@ public class LayoutFriendlyURLStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(LayoutFriendlyURL layoutFriendlyURL)
+	public void onAfterUpdate(
+			LayoutFriendlyURL originalLayoutFriendlyURL,
+			LayoutFriendlyURL layoutFriendlyURL)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(layoutFriendlyURL);

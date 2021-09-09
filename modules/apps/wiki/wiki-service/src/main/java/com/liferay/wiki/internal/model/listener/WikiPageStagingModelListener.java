@@ -40,7 +40,9 @@ public class WikiPageStagingModelListener extends BaseModelListener<WikiPage> {
 	}
 
 	@Override
-	public void onAfterUpdate(WikiPage wikiPage) throws ModelListenerException {
+	public void onAfterUpdate(WikiPage originalWikiPage, WikiPage wikiPage)
+		throws ModelListenerException {
+
 		_stagingModelListener.onAfterUpdate(wikiPage);
 	}
 

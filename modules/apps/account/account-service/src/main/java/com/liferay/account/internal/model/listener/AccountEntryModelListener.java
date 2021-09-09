@@ -98,7 +98,9 @@ public class AccountEntryModelListener extends BaseModelListener<AccountEntry> {
 	}
 
 	@Override
-	public void onAfterUpdate(AccountEntry accountEntry) {
+	public void onAfterUpdate(
+		AccountEntry originalAccountEntry, AccountEntry accountEntry) {
+
 		_reindexAccountEntry(accountEntry);
 	}
 

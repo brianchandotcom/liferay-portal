@@ -45,7 +45,8 @@ public class DDMTemplateStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(DDMTemplate ddmTemplate)
+	public void onAfterUpdate(
+			DDMTemplate originalDDMTemplate, DDMTemplate ddmTemplate)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(ddmTemplate);

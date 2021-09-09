@@ -45,7 +45,9 @@ public class DDMFormInstanceStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(DDMFormInstance ddmFormInstance)
+	public void onAfterUpdate(
+			DDMFormInstance originalDDMFormInstance,
+			DDMFormInstance ddmFormInstance)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(ddmFormInstance);

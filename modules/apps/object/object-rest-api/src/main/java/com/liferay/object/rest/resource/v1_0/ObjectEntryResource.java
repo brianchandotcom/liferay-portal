@@ -66,28 +66,36 @@ public interface ObjectEntryResource {
 	public Response postObjectEntryBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteObjectEntryByExternalReferenceCode(
-			String externalReferenceCode)
+	public void deleteByExternalReferenceCode(String externalReferenceCode)
 		throws Exception;
 
-	public ObjectEntry getObjectEntryByExternalReferenceCode(
-			String externalReferenceCode)
+	public ObjectEntry getByExternalReferenceCode(String externalReferenceCode)
 		throws Exception;
 
-	public ObjectEntry putObjectEntryByExternalReferenceCode(
+	public ObjectEntry putByExternalReferenceCode(
 			String externalReferenceCode, ObjectEntry objectEntry)
 		throws Exception;
 
-	public void deleteSiteObjectEntryByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
+	public Page<ObjectEntry> getScopeScopePage(
+			String scopeId, Boolean flatten, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public ObjectEntry getSiteObjectEntryByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
+	public ObjectEntry postScope(String scopeId, ObjectEntry objectEntry)
 		throws Exception;
 
-	public ObjectEntry putSiteObjectEntryByExternalReferenceCode(
-			Long siteId, String externalReferenceCode, ObjectEntry objectEntry)
+	public void deleteScopeByExternalReferenceCode(
+			String scopeId, String externalReferenceCode)
+		throws Exception;
+
+	public ObjectEntry getScopeByExternalReferenceCode(
+			String scopeId, String externalReferenceCode)
+		throws Exception;
+
+	public ObjectEntry putScopeByExternalReferenceCode(
+			String scopeId, String externalReferenceCode,
+			ObjectEntry objectEntry)
 		throws Exception;
 
 	public void deleteObjectEntry(Long objectEntryId) throws Exception;

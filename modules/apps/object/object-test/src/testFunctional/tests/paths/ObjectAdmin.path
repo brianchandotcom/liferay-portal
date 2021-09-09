@@ -35,7 +35,6 @@
 		<td>//input[@id='objectDefinitionPluralLabel']</td>
 		<td></td>
 	</tr>
-	
 	<tr>
 		<td>VIEW_OBJECT</td>
 		<td>//div[(@class='table-list-title') and contains (.,'${key_name}')]/../../div[contains(text(),'${key_system}')]</td>

@@ -13,7 +13,6 @@ definition {
 		Type(
 			locator1 = "ObjectAdmin#PLURAL_LABEL_CUSTOM_OBJECT",
 			value1 = "${pluralLabelName}");
-
 	}
 
 	macro addObjectFieldViaAPI {

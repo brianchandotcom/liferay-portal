@@ -22,6 +22,16 @@ definition {
 		}
 	}
 
+	@description = "LPS-135386 - Verify if the user can display the entries on a table format"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanDisplayEntriesOnTableFormat {
+		property portal.acceptance = "true";
+
+		// TODO LPS-139022 CanDisplayEntriesOnTableFormat pending implementation
+
+	}
+
 	@description = "LPS-133865 - Verify if the fields from an Object are displayed to be mapped on a fragment"
 	@priority = "5"
 	test FieldsFromObjectDisplayedToBeMapped {

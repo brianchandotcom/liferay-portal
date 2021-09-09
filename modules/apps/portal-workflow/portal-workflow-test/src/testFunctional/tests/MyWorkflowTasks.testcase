@@ -1543,6 +1543,8 @@ definition {
 	@description = "Verify that when the user updates the due date of a task, the time until the due date shows in the table"
 	@priority = "4"
 	test TableShowsTimeLeft {
+		property portal.upstream = "quarantine";
+
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title 1");

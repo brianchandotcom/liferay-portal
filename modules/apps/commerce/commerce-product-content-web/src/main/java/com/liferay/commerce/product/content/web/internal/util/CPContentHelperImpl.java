@@ -439,10 +439,9 @@ public class CPContentHelperImpl implements CPContentHelper {
 			FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();
 
 			String originalImgTag = StringBundler.concat(
-				"<div class=\"aspect-ratio-bg-cover aspect-ratio-item ",
+				"<img class=\"aspect-ratio-bg-cover aspect-ratio-item ",
 				"aspect-ratio-item-center-middle aspect-ratio-item-fluid ",
-				"card-type-asset-icon h-100 w-100\" style=\"",
-				"background-image: url('", url, "')\"></div>");
+				"card-type-asset-icon h-100 w-100\" src=\"", url, "\" />");
 
 			String adaptiveMediaImageHTMLTag = _amImageHTMLTagFactory.create(
 				originalImgTag, fileEntry);

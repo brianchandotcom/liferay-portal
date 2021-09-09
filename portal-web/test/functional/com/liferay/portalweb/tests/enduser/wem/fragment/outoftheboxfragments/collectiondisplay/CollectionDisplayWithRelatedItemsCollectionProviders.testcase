@@ -1118,6 +1118,127 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-127025. The DPT author can use Basic Document related item collection provider in DPT for Category."
+	@priority = "5"
+	test ViewCollectionItemsBasedOnBasicDocumentOnDisplayPageTemplateForCategory {
+		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#ViewCollectionItemsBasedOnBasicDocumentOnDisplayPageTemplateForCategory";
+
+		task ("Enable the DLFileEntry feature via gogo shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.document.library.web.internal.model.listener.DLFileEntryTypeModelListener");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a web content with category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a blogs entry with category") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${categoryId}",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document with category") {
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${categoryId}",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a display page template for Category") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Category",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a Collection display fragment to display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the Basic Document related items collection provider") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoItemRelatedListProviderName = "Basic Document");
+		}
+
+		task ("Add a Content display fragment into the Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				entryTitle = "Sample Collection Item",
+				fragmentName = "Content Display");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Associate the display page template to category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.editCP(
+				categoryName = "Category Name",
+				displayPageName = "Display Page Name",
+				displayPageTemplateType = "Specific",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View only the image of document shown in display page template") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "View Display Page",
+				rowEntry = "Category Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_image = "Document_1.jpg",
+				key_rowPosition = "1",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_IMAGE");
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM");
+		}
+
+		task ("Disable the DLFileEntry feature via gogo shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:disable com.liferay.document.library.web.internal.model.listener.DLFileEntryTypeModelListener");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+	}
+
 	@description = "This is a use case for LPS-127023. The related assets should be in Collection Display when select Related Assets from Related Items Collection Provider."
 	@priority = "5"
 	test ViewRelatedAssetsInCollectionDisplay {

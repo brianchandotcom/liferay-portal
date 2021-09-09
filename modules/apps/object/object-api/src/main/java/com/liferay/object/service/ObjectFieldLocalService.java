@@ -65,6 +65,7 @@ public interface ObjectFieldLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectFieldLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object field local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectFieldLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ObjectField addCustomObjectField(
 			long userId, long listTypeDefinitionId, long objectDefinitionId,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
@@ -85,11 +86,13 @@ public interface ObjectFieldLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectField addObjectField(ObjectField objectField);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public ObjectField addRelationshipObjectField(
 			long userId, long objectDefinitionId, Map<Locale, String> labelMap,
 			String name)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public ObjectField addSystemObjectField(
 			long userId, long objectDefinitionId, String dbColumnName,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
@@ -317,6 +320,7 @@ public interface ObjectFieldLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public ObjectField updateCustomObjectField(
 			long objectFieldId, long listTypeDefinitionId, boolean indexed,
 			boolean indexedAsKeyword, String indexedLanguageId,

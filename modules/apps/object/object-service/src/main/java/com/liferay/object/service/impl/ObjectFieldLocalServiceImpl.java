@@ -30,6 +30,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -56,6 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ObjectFieldLocalServiceImpl
 	extends ObjectFieldLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectField addCustomObjectField(
 			long userId, long listTypeDefinitionId, long objectDefinitionId,
@@ -89,6 +92,7 @@ public class ObjectFieldLocalServiceImpl
 		return objectField;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectField addRelationshipObjectField(
 			long userId, long objectDefinitionId, Map<Locale, String> labelMap,
@@ -122,6 +126,7 @@ public class ObjectFieldLocalServiceImpl
 		return objectField;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectField addSystemObjectField(
 			long userId, long objectDefinitionId, String dbColumnName,
@@ -169,6 +174,7 @@ public class ObjectFieldLocalServiceImpl
 			objectDefinitionId);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectField updateCustomObjectField(
 			long objectFieldId, long listTypeDefinitionId, boolean indexed,

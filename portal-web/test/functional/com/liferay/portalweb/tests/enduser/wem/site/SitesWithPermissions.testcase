@@ -29,7 +29,6 @@ definition {
 	@description = "This is for LPS-121422. The elements are still shown in edit mode after executing reset changes."
 	@priority = "3"
 	test SitesTemplatePermissionPersistence {
-		property osgi.app.includes = "polls";
 		property testray.component.names = "Permissions,Site Administration";
 
 		task ("Add a new site template") {
@@ -59,11 +58,6 @@ definition {
 				navTab = "Widgets",
 				portletName = "Message Boards");
 
-			PageEditor.addElementToColumn(
-				columnNumber = "2",
-				navTab = "Widgets",
-				portletName = "Polls Display");
-
 			PageEditor.clickPublish();
 		}
 
@@ -88,30 +82,12 @@ definition {
 				siteType = "Site Template");
 		}
 
-		task ("Add a poll via Polls admin") {
-			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
-				portlet = "Polls");
-
-			Polls.addPollCP(
-				pollsQuestion = "What is the most important issue for this election?",
-				pollsQuestionChoiceA = "The Economy",
-				pollsQuestionChoiceB = "The National Debt",
-				pollsQuestionTitle = "Election Poll");
-		}
-
 		task ("Assert permissions of each widgets in Home page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Home",
 				siteName = "Site Name");
 
 			PageEditor.assertFragmentSidebarLoaded();
-
-			PermissionsInline.gotoConfigurationPG(portletName = "Polls Display");
-
-			PermissionsInline.assertDefaultPG(roleList = "Guest,Owner,Power User,Site Member,User");
-
-			IFrame.closeFrame();
 
 			PermissionsInline.gotoConfigurationPG(portletName = "Message Boards");
 
@@ -123,8 +99,7 @@ definition {
 				columnNumber = "2",
 				height = "Tall",
 				navTab = "Widgets",
-				portletName = "Asset Publisher",
-				targetFragmentName = "Polls Display");
+				portletName = "Asset Publisher");
 
 			PageEditor.clickPublish();
 		}
@@ -148,31 +123,11 @@ definition {
 		}
 
 		task ("Assert permissions of each widgets in Home page") {
-			PermissionsInline.gotoConfigurationPG(portletName = "Polls Display");
-
-			PermissionsInline.assertDefaultPG(roleList = "Guest,Owner,Power User,Site Member,User");
-
-			IFrame.closeFrame();
-
 			PermissionsInline.gotoConfigurationPG(portletName = "Message Boards");
 
 			PermissionsInline.assertDefaultPG(roleList = "Guest,Owner,Power User,Site Member,User");
 
 			IFrame.closeFrame();
-		}
-
-		task ("Select poll in Polls Display") {
-			Polls.selectPollPageEditor(pollsQuestionTitle = "Election Poll");
-
-			IFrame.closeFrame();
-
-			Refresh();
-
-			Polls.viewPollPG(
-				pollsQuestion = "What is the most important issue for this election?",
-				pollsQuestionChoiceList = "The Economy,The National Debt");
-
-			PageEditor.clickPublish();
 		}
 
 		task ("Add thread in Message Boards") {
@@ -195,7 +150,7 @@ definition {
 				threadSubject = "Thread");
 		}
 
-		task ("View poll and thread as guest") {
+		task ("View Thread as guest") {
 			User.logoutPG();
 
 			var portalURL = PropsUtil.get("portal.url");
@@ -212,14 +167,10 @@ definition {
 				threadBody = "This is the message boards thread.",
 				threadSubject = "Thread");
 
-			Polls.viewPollAsGuestPG(
-				pollsQuestion = "What is the most important issue for this election?",
-				pollsQuestionChoiceList = "The Economy,The National Debt");
-
 			AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 		}
 
-		task ("Remove guest view permissions of Message Boards and Polls Display") {
+		task ("Remove guest view permissions of Message Boards") {
 			SignIn.signIn(
 				userEmailAddress = "test@liferay.com",
 				userPassword = "test");
@@ -229,14 +180,6 @@ definition {
 				siteName = "Site Name");
 
 			PageEditor.assertFragmentSidebarLoaded();
-
-			PermissionsInline.gotoConfigurationPG(portletName = "Polls Display");
-
-			PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
-				addOrRemoveViewPermission = "Remove",
-				roleList = "Guest,Owner,Power User,Site Member,User");
-
-			IFrame.closeFrame();
 
 			PermissionsInline.gotoConfigurationPG(portletName = "Message Boards");
 
@@ -249,17 +192,13 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("Assert the Message Boards and Polls Display are invisible to guest") {
+		task ("Assert the Message Boards is invisible to guest") {
 			User.logoutPG();
 
 			Navigator.openSpecificURL(url = "${portalURL}/web/site-name/home");
 
 			AssertTextEquals(
 				locator1 = "Message#ERROR_1",
-				value1 = "You do not have the roles required to access this portlet.");
-
-			AssertTextEquals(
-				locator1 = "Message#ERROR_2",
 				value1 = "You do not have the roles required to access this portlet.");
 		}
 	}

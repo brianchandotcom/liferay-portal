@@ -98,7 +98,7 @@ export default function CurrentNodes({nodesNames = []}) {
 					onClick={focusNode(node)}
 				>
 					{node}
-					{index !== nodes.length - 1 && ','}
+					{index !== nodesLabels.length - 1 && ','}
 				</a>
 			))}
 			{!!moreNodes.length && (

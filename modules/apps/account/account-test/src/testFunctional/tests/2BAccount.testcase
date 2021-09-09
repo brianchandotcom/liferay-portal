@@ -86,6 +86,22 @@ definition {
 		Navigator.gotoPage(pageName = "2B Account Page");
 
 		LexiconEntry.viewEntryName(rowEntry = "Accounts Name for Test");
+    }
+
+	@description = "This test asserts that an Account can be deactivated and will show Active and Inactive filters."
+	@priority = "4"
+	test AccountAdminCanDeactivateAccount {
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "DELETE",
+			resourceName = "com.liferay.account.model.AccountEntry",
+			roleTitle = "Account Administrator",
+			roleType = "account");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		Accounts.deactivateAccount(accountName = "Account Name");
+
+		Accounts.viewInactiveAccount(accountName = "Account Name");
 	}
 
 	@description = "This test asserts that an Account Admin can edit an account he is assigned to."

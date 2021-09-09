@@ -18,6 +18,8 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
@@ -29,7 +31,10 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 	implements ObjectRelatedModelsProvider<ObjectEntry> {
 
 	public ObjectEntryMtoMObjectRelatedModelsProviderImpl(
-		ObjectDefinition objectDefinition) {
+		ObjectDefinition objectDefinition,
+		ObjectEntryLocalService objectEntryLocalService) {
+
+		_objectEntryLocalService = objectEntryLocalService;
 
 		_className = objectDefinition.getClassName();
 		_objectDefinitionId = objectDefinition.getObjectDefinitionId();
@@ -44,13 +49,16 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 	}
 
 	public List<ObjectEntry> getRelatedModels(
-		long groupId, long objectRelationshipId, long primaryKey, int start,
-		int end) {
+			long groupId, long objectRelationshipId, long primaryKey, int start,
+			int end)
+		throws PortalException {
 
-		return null;
+		return _objectEntryLocalService.getManyToManyRelatedObjectEntries(
+			groupId, primaryKey, objectRelationshipId, start, end);
 	}
 
 	private final String _className;
 	private final long _objectDefinitionId;
+	private final ObjectEntryLocalService _objectEntryLocalService;
 
 }

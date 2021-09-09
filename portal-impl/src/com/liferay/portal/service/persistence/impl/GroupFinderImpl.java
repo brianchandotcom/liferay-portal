@@ -1386,9 +1386,9 @@ public class GroupFinderImpl
 			int pos = join.indexOf("WHERE");
 
 			if (pos != -1) {
-				join = join.substring(pos + 5);
+				join = StringPool.OPEN_PARENTHESIS + join.substring(pos + 5);
 
-				join = join.concat(" AND ");
+				join = join.concat(") AND ");
 			}
 			else {
 				join = StringPool.BLANK;

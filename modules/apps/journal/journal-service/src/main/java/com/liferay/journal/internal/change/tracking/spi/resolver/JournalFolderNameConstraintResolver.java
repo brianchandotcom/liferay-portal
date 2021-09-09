@@ -18,7 +18,7 @@ import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.language.LanguageResources;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -50,7 +50,7 @@ public class JournalFolderNameConstraintResolver
 
 	@Override
 	public ResourceBundle getResourceBundle(Locale locale) {
-		return ResourceBundleUtil.getBundle(locale, "com.liferay.journal.lang");
+		return LanguageResources.getResourceBundle(locale);
 	}
 
 	@Override

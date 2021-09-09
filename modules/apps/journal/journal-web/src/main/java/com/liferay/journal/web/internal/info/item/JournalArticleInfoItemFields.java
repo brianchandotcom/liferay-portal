@@ -44,7 +44,7 @@ public interface JournalArticleInfoItemFields {
 			"authorProfileImage"
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
-				"com.liferay.journal.lang", "author-profile-image")
+				JournalArticleInfoItemFields.class, "author-profile-image")
 		).build();
 	public static final InfoField<DateInfoFieldType> createDateInfoField =
 		InfoField.builder(
@@ -108,7 +108,7 @@ public interface JournalArticleInfoItemFields {
 			"lastEditorName"
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
-				"com.liferay.journal.lang", "last-editor-name")
+				JournalArticleInfoItemFields.class, "last-editor-name")
 		).build();
 	public static final InfoField<ImageInfoFieldType>
 		lastEditorProfileImageInfoField = InfoField.builder(
@@ -148,7 +148,7 @@ public interface JournalArticleInfoItemFields {
 			"smallImage"
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
-				"com.liferay.journal.lang", "small-image")
+				JournalArticleInfoItemFields.class, "small-image")
 		).build();
 	public static final InfoField<TextInfoFieldType> titleInfoField =
 		InfoField.builder(

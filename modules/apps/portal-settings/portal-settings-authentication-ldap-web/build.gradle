@@ -11,7 +11,6 @@ dependencies {
 	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:portal-security:portal-security-ldap-api")
 	compileOnly project(":apps:portal-settings:portal-settings-api")
-	compileOnly project(":apps:portal-settings:portal-settings-lang")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")

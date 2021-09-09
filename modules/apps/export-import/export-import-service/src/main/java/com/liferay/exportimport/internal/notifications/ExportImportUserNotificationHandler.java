@@ -35,15 +35,12 @@ import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 
@@ -74,14 +71,6 @@ public class ExportImportUserNotificationHandler
 
 		Locale locale = _portal.getLocale(serviceContext.getRequest());
 
-		ResourceBundleLoader resourceBundleLoader =
-			ResourceBundleLoaderUtil.
-				getResourceBundleLoaderByBundleSymbolicName(
-					"com.liferay.staging.lang");
-
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			locale);
-
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
 
@@ -99,7 +88,7 @@ public class ExportImportUserNotificationHandler
 			}
 
 			return LanguageUtil.get(
-				resourceBundle,
+				locale,
 				"the-process-referenced-by-this-notification-does-not-exist");
 		}
 
@@ -130,7 +119,7 @@ public class ExportImportUserNotificationHandler
 		String processName = backgroundTaskDisplay.getDisplayName(
 			serviceContext.getRequest());
 
-		return LanguageUtil.format(resourceBundle, message, processName);
+		return LanguageUtil.format(locale, message, processName);
 	}
 
 	@Override

@@ -16,15 +16,12 @@ package com.liferay.account.admin.web.internal.users.admin.management.toolbar;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.users.admin.constants.UsersAdminManagementToolbarKeys;
 import com.liferay.users.admin.management.toolbar.FilterContributor;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -86,14 +83,7 @@ public class AccountUsersFilterContributor implements FilterContributor {
 	}
 
 	private String _getMessage(Locale locale, String key) {
-		return LanguageUtil.get(_getResourceBundle(locale), key);
-	}
-
-	private ResourceBundle _getResourceBundle(Locale locale) {
-		return new AggregateResourceBundle(
-			ResourceBundleUtil.getBundle(locale, "com.liferay.account.lang"),
-			ResourceBundleUtil.getBundle(
-				locale, "com.liferay.users.admin.web"));
+		return LanguageUtil.get(locale, key);
 	}
 
 }

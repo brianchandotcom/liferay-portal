@@ -8,7 +8,6 @@ dependencies {
 	compileOnly project(":apps:archived:portal-security-sso-google-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:portal-settings:portal-settings-api")
-	compileOnly project(":apps:portal-settings:portal-settings-lang")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")

@@ -32,16 +32,13 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -149,7 +146,7 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 			if (article != null) {
 				if (article.isInTrash()) {
 					return LanguageUtil.get(
-						_getResourceBundle(defaultLocale),
+						defaultLocale,
 						"the-selected-web-content-was-moved-to-the-recycle-" +
 							"bin");
 				}
@@ -162,20 +159,11 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 			}
 
 			return LanguageUtil.get(
-				_getResourceBundle(defaultLocale),
-				"the-selected-web-content-was-deleted");
+				defaultLocale, "the-selected-web-content-was-deleted");
 		}
 		catch (JSONException jsonException) {
 			return StringPool.BLANK;
 		}
-	}
-
-	private ResourceBundle _getResourceBundle(Locale locale) {
-		ResourceBundle classResourceBundle = ResourceBundleUtil.getBundle(
-			locale, "com.liferay.journal.lang");
-
-		return new AggregateResourceBundle(
-			classResourceBundle, _portal.getResourceBundle(locale));
 	}
 
 	private String _getValue(String value) {

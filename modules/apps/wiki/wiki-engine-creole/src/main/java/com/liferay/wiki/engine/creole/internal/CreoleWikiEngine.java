@@ -17,8 +17,6 @@ package com.liferay.wiki.engine.creole.internal;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.engine.BaseWikiEngine;
@@ -142,13 +140,6 @@ public class CreoleWikiEngine extends BaseWikiEngine {
 	@Override
 	protected ServletContext getHelpPageServletContext() {
 		return _servletContext;
-	}
-
-	@Override
-	protected ResourceBundleLoader getResourceBundleLoader() {
-		return ResourceBundleLoaderUtil.
-			getResourceBundleLoaderByBundleSymbolicName(
-				"com.liferay.wiki.engine.lang");
 	}
 
 	protected WikiPageNode parse(String creoleCode) {

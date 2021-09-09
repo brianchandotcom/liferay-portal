@@ -22,12 +22,10 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -81,42 +79,39 @@ public class AlloyEditorConfigContributor
 	}
 
 	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, "com.liferay.frontend.editor.lang");
-
 		return JSONUtil.putAll(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "normal"), "p", null,
+				LanguageUtil.get(locale, "normal"), "p", null,
 				_CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
-				LanguageUtil.format(resourceBundle, "heading-x", "1"), "h1",
-				null, _CKEDITOR_STYLE_BLOCK),
+				LanguageUtil.format(locale, "heading-x", "1"), "h1", null,
+				_CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
-				LanguageUtil.format(resourceBundle, "heading-x", "2"), "h2",
-				null, _CKEDITOR_STYLE_BLOCK),
+				LanguageUtil.format(locale, "heading-x", "2"), "h2", null,
+				_CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
-				LanguageUtil.format(resourceBundle, "heading-x", "3"), "h3",
-				null, _CKEDITOR_STYLE_BLOCK),
+				LanguageUtil.format(locale, "heading-x", "3"), "h3", null,
+				_CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
-				LanguageUtil.format(resourceBundle, "heading-x", "4"), "h4",
-				null, _CKEDITOR_STYLE_BLOCK),
+				LanguageUtil.format(locale, "heading-x", "4"), "h4", null,
+				_CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "preformatted-text"), "pre",
-				null, _CKEDITOR_STYLE_BLOCK),
+				LanguageUtil.get(locale, "preformatted-text"), "pre", null,
+				_CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "cited-work"), "cite", null,
+				LanguageUtil.get(locale, "cited-work"), "cite", null,
 				_CKEDITOR_STYLE_INLINE),
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "computer-code"), "code", null,
+				LanguageUtil.get(locale, "computer-code"), "code", null,
 				_CKEDITOR_STYLE_INLINE),
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "info-message"), "div",
+				LanguageUtil.get(locale, "info-message"), "div",
 				"overflow-auto portlet-msg-info", _CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "alert-message"), "div",
+				LanguageUtil.get(locale, "alert-message"), "div",
 				"overflow-auto portlet-msg-alert", _CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "error-message"), "div",
+				LanguageUtil.get(locale, "error-message"), "div",
 				"overflow-auto portlet-msg-error", _CKEDITOR_STYLE_BLOCK));
 	}
 

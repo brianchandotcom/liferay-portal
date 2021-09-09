@@ -28,13 +28,11 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -151,40 +149,31 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 	}
 
 	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, "com.liferay.frontend.editor.lang");
-
 		return JSONUtil.putAll(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "normal"), "p", null),
+				LanguageUtil.get(locale, "normal"), "p", null),
 			getStyleFormatJSONObject(
-				LanguageUtil.format(resourceBundle, "heading-x", "1"), "h1",
-				null),
+				LanguageUtil.format(locale, "heading-x", "1"), "h1", null),
 			getStyleFormatJSONObject(
-				LanguageUtil.format(resourceBundle, "heading-x", "2"), "h2",
-				null),
+				LanguageUtil.format(locale, "heading-x", "2"), "h2", null),
 			getStyleFormatJSONObject(
-				LanguageUtil.format(resourceBundle, "heading-x", "3"), "h3",
-				null),
+				LanguageUtil.format(locale, "heading-x", "3"), "h3", null),
 			getStyleFormatJSONObject(
-				LanguageUtil.format(resourceBundle, "heading-x", "4"), "h4",
-				null),
+				LanguageUtil.format(locale, "heading-x", "4"), "h4", null),
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "preformatted-text"), "pre",
-				null),
+				LanguageUtil.get(locale, "preformatted-text"), "pre", null),
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "cited-work"), "cite", null),
+				LanguageUtil.get(locale, "cited-work"), "cite", null),
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "computer-code"), "code",
-				null),
+				LanguageUtil.get(locale, "computer-code"), "code", null),
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "info-message"), "div",
+				LanguageUtil.get(locale, "info-message"), "div",
 				"overflow-auto portlet-msg-info"),
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "alert-message"), "div",
+				LanguageUtil.get(locale, "alert-message"), "div",
 				"overflow-auto portlet-msg-alert"),
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "error-message"), "div",
+				LanguageUtil.get(locale, "error-message"), "div",
 				"overflow-auto portlet-msg-error"));
 	}
 

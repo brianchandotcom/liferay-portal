@@ -45,7 +45,7 @@ public class FileEntryInfoItemFields {
 			"authorProfileImage"
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
-				"com.liferay.journal.lang", "author-profile-image")
+				FileEntryInfoItemFields.class, "author-profile-image")
 		).build();
 	public static final InfoField<DateInfoFieldType> createDateInfoField =
 		InfoField.builder(

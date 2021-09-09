@@ -10,26 +10,6 @@
 </thead>
 
 <tbody>
-<tr>
-	<td>ADT_IFRAME</td>
-	<td>//iframe[@title='Widget Templates']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RSS_FEEDS</td>
-	<td>//ul[@class='palette-item-content']//li/span[contains(.,'RSS Feeds')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PORTLET_PREFERENCES</td>
-	<td>//ul[@class='palette-item-content']//li/span[contains(.,'Portlet Preferences')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ADT_TABLE-->
 <tr>
 	<td>ADT_TABLE_NAME_1</td>

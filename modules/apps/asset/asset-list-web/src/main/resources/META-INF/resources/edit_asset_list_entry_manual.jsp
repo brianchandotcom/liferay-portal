@@ -17,20 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-String backURL = ParamUtil.getString(request, "backURL");
-
-if (Validator.isNotNull(backURL)) {
-	portletDisplay.setURLBack(backURL);
-}
-else if (Validator.isNull(redirect)) {
-	PortletURL portletURL = renderResponse.createRenderURL();
-
-	backURL = portletURL.toString();
-}
-else {
-	backURL = redirect;
-}
+portletDisplay.setURLBack(editAssetListDisplayContext.getBackURL());
 %>
 
 <portlet:actionURL name="/asset_list/add_asset_entry_selection" var="addAssetEntrySelectionURL">
@@ -53,7 +40,7 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 			name="fm"
 		>
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+			<aui:input name="backURL" type="hidden" value="<%= editAssetListDisplayContext.getBackURL() %>" />
 			<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
 
 			<div class="mb-3 text-muted">
@@ -68,7 +55,7 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 				<liferay-frontend:edit-form-footer>
 					<aui:button disabled="<%= editAssetListDisplayContext.isNoAssetTypeSelected() %>" id="saveButton" onClick='<%= liferayPortletResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
 
-					<aui:button href="<%= backURL %>" type="cancel" />
+					<aui:button href="<%= editAssetListDisplayContext.getBackURL() %>" type="cancel" />
 				</liferay-frontend:edit-form-footer>
 			</c:if>
 		</liferay-frontend:edit-form>
@@ -82,7 +69,7 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 			name="fm"
 		>
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+			<aui:input name="backURL" type="hidden" value="<%= editAssetListDisplayContext.getBackURL() %>" />
 			<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
 			<aui:input name="segmentsEntryId" type="hidden" value="<%= assetListDisplayContext.getSegmentsEntryId() %>" />
 			<aui:input name="assetEntryIds" type="hidden" />

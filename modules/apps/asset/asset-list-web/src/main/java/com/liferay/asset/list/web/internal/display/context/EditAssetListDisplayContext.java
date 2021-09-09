@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -433,6 +434,30 @@ public class EditAssetListDisplayContext {
 		);
 
 		return _availableSegmentsEntries;
+	}
+
+	public String getBackURL() {
+		if (Validator.isNotNull(_backURL)) {
+			return _backURL;
+		}
+
+		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
+		String backURL = ParamUtil.getString(_httpServletRequest, "backURL");
+
+		if (Validator.isNotNull(backURL)) {
+			_backURL = backURL;
+		}
+		else if (Validator.isNotNull(redirect)) {
+			_backURL = redirect;
+		}
+		else {
+			LiferayPortletResponse liferayPortletResponse =
+				PortalUtil.getLiferayPortletResponse(_portletResponse);
+
+			_backURL = String.valueOf(liferayPortletResponse.createRenderURL());
+		}
+
+		return _backURL;
 	}
 
 	public String getCategorySelectorURL() {
@@ -1219,6 +1244,7 @@ public class EditAssetListDisplayContext {
 		_assetRendererFactoryClassProvider;
 	private List<Long> _availableClassNameIds;
 	private List<SegmentsEntry> _availableSegmentsEntries;
+	private String _backURL;
 	private long[] _classNameIds;
 	private long[] _classTypeIds;
 	private String _ddmStructureDisplayFieldValue;

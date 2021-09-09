@@ -288,6 +288,18 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
             responses:
                 200:
                     content:

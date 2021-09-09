@@ -12,6 +12,11 @@ const width = configuration.videoWidth
 	: configuration.videoWidth;
 
 function resize() {
+	const scrollPosition = {
+		left: window.scrollX,
+		top: window.scrollY,
+	};
+
 	content.style.height = '';
 	content.style.width = '';
 
@@ -25,6 +30,8 @@ function resize() {
 
 			content.style.height = contentHeight + 'px';
 			content.style.width = contentWidth + 'px';
+
+			window.scrollTo(scrollPosition);
 		}
 		catch (error) {
 			window.removeEventListener('resize', resize);

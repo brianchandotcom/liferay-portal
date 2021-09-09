@@ -74,6 +74,11 @@ const resize = debounce(function () {
 		return;
 	}
 
+	const scrollPosition = {
+		left: window.scrollX,
+		top: window.scrollY,
+	};
+
 	content.style.height = '';
 	content.style.width = '';
 
@@ -87,6 +92,8 @@ const resize = debounce(function () {
 
 			content.style.height = contentHeight + 'px';
 			content.style.width = contentWidth + 'px';
+
+			window.scrollTo(scrollPosition);
 		}
 		catch (error) {
 			clearInterval(resizeIntervalId);

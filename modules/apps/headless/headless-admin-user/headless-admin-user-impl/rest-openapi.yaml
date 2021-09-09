@@ -993,10 +993,6 @@ paths:
             operationId: getAccountsPage
             parameters:
                 - in: query
-                  name: keywords
-                  schema:
-                      type: string
-                - in: query
                   name: filter
                   schema:
                       type: string
@@ -1008,6 +1004,10 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
                 - in: query
                   name: sort
                   schema:

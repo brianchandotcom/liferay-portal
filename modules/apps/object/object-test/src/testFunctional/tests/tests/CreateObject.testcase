@@ -206,11 +206,22 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Object Name"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotSaveWithSpecialCharacterForObjectName {
 
-		// TODO LPS-138808 CannotSaveWithSpecialCharacterForObjectName pending implementation
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.addNewObject(
+			fieldLabelName = "ObjectTest1",
+			pluralLabelName = "ObjectsTests1");
+
+		Type(
+			locator1 = "ObjectAdmin#NAME_CUSTOM_OBJECT",
+			value1 = "ObjectTest@");
+		
+		ObjectAdmin.saveCustomObject();
+
+		Alert.viewErrorMessage(errorMessage = "Name must only contain letters and digits");
 
 	}
 

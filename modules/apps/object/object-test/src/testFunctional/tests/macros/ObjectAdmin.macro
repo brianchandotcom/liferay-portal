@@ -1,5 +1,21 @@
 definition {
 
+	macro addNewObject {
+		var fieldLabelName = "${fieldLabelName}";
+		var pluralLabelName = "${pluralLabelName}";
+
+		Click(locator1 = "ObjectAdmin#ADD_CUSTOM_OBJECT");
+
+		Type(
+			locator1 = "ObjectAdmin#LABEL_CUSTOM_OBJECT",
+			value1 = "${fieldLabelName}");
+
+		Type(
+			locator1 = "ObjectAdmin#PLURAL_LABEL_CUSTOM_OBJECT",
+			value1 = "${pluralLabelName}");
+
+	}
+
 	macro addObjectFieldViaAPI {
 		JSONObject.addObjectField(
 			fieldLabelName = "${fieldLabelName}",
@@ -79,6 +95,10 @@ definition {
 			objectName = "${objectName}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
+	}
+
+	macro saveCustomObject {
+		Click(locator1 = "ObjectAdmin#SAVE_CUSTOM_OBJECT");
 	}
 
 	macro viewCustomObject {

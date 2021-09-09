@@ -196,18 +196,17 @@ definition {
 			mgDocumentTitle = "DM Document Title 2",
 			mgFolderName = "DM Folder Name");
 
-		Navigator.gotoPage(pageName = "Media Gallery Page");
+		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
-		ApplicationDisplayTemplates.addPG(
+		ApplicationDisplayTemplates.addCP(
 			adtFile = "adt_media_gallery_carousel.ftl",
-			adtType = "Documents and Media",
-			siteName = "Test Site Name");
+			adtType = "Media Gallery");
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 
 		MGPortlet.viewShowAllPG();
 
-		ApplicationDisplayTemplates.selectPortletADT(templateName = "Documents and Media Test ADT");
+		ApplicationDisplayTemplates.selectPortletADT(templateName = "Media Gallery Test ADT");
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 

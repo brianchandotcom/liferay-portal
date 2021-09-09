@@ -177,11 +177,12 @@ definition {
 				vocabularyName = "Vocabulary Name 3");
 		}
 
-		task ("Add a widget template via Categories Navigation") {
-			ApplicationDisplayTemplates.addPG(
+		task ("Add a widget template for Categories Navigation") {
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name-staging");
+
+			ApplicationDisplayTemplates.addCP(
 				adtFile = "adt_categories_navigation_multi_column.ftl",
-				adtType = "Categories Navigation",
-				siteName = "Test Site Name");
+				adtType = "Categories Navigation");
 		}
 
 		task ("Select the widget template in Categories Navigation") {

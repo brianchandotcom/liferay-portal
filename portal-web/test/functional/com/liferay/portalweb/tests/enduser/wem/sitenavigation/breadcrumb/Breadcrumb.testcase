@@ -40,14 +40,12 @@ definition {
 				widgetName = "Breadcrumb");
 		}
 
-		task ("Add a widget template via Breadcrumb widget") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+		task ("Add a widget template for Breadcrumb widget") {
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
-			ApplicationDisplayTemplates.addPortletADTWithFieldEntry(
-				fieldName = "Breadcrumb Entry",
-				portletName = "Breadcrumb");
+			ApplicationDisplayTemplates.addCP(
+				adtType = "Breadcrumb",
+				fieldNameList = "Breadcrumb Entry");
 		}
 
 		task ("Select the widget template in Breadcrumb widget") {

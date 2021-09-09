@@ -587,9 +587,16 @@ definition {
 	}
 
 	macro publishViaSAP {
-		Blogs.clickEllipsisItemCP(
-			entryTitle = "${entryTitle}",
-			item = "Publish to Live");
+		if (IsElementPresent(locator1 = "Portlet#SPECIFIC_TITLE", key_portletTitleName = "Blogs")) {
+			Blogs.clickEllipsisItemPG(
+				entryTitle = "${entryTitle}",
+				item = "Publish to Live");
+		}
+		else {
+			Blogs.clickEllipsisItemCP(
+				entryTitle = "${entryTitle}",
+				item = "Publish to Live");
+		}
 
 		AssertConfirm(value1 = "${confirmMessage}");
 

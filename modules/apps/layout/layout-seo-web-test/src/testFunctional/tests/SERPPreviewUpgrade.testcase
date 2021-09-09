@@ -25,9 +25,9 @@ definition {
 
 	@priority = "5"
 	@refactorneeded
-	test ViewSERPPreview730 {
+	test ViewSERPPreview73101 {
 		property data.archive.type = "data-archive-search-engine-results-page-preview";
-		property portal.version = "7.3.0";
+		property portal.version = "7.3.10.1";
 
 		Upgrade.viewAndEditSERPPreview();
 	}

@@ -14,6 +14,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
+
+		ACUtils.addSiteAndPage();
 	}
 
 	tearDown {
@@ -23,6 +25,9 @@ definition {
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 
 		ACUtils.tearDownAC();
@@ -38,12 +43,80 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8505 | Test Summary: Segment Overview distribution filtered by date"
-	@ignore = "true"
 	@priority = "3"
 	test SegmentOverviewDistributionFilteredByDate {
+		var users = "ac1,ac2";
 
-		// TODO LRAC-8505 SegmentOverviewDistributionFilteredByDate pending implementation
+		task ("Create two new users") {
+			JSONUser.addUser(
+				birthdayDay = "15",
+				birthdayMonth = "2",
+				birthdayYear = "1972",
+				userEmailAddress = "ac1@liferay.com",
+				userFirstName = "ac1",
+				userLastName = "ac1",
+				userScreenName = "ac1");
 
+			JSONUser.addUser(
+				userEmailAddress = "ac2@liferay.com",
+				userFirstName = "ac2",
+				userLastName = "ac2",
+				userScreenName = "ac2");
+		}
+
+		task ("Connect AC to DXP") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Login with the two new users and see page") {
+			for (var name : list "${users}") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${name}@liferay.com",
+					userLoginFullName = "${name} ${name}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+			}
+		}
+
+		task ("Close all sessions, lauch AC, change the property and go to segments") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToSegments();
+		}
+
+		task ("Create a static segment, add two static members and save segment") {
+			ACSegments.createStaticSegment();
+
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+
+			for (var name : list "${users}") {
+				ACSegments.addStaticMember(tableMember = "${name} ${name}");
+			}
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to segments, select a segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.accessSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Switch to Distribution tab") {
+			ACNavigation.switchTab(tabName = "Distribution");
+
+			ACSegments.selectDistributionByAttribute(attribute = "birthDate");
+		}
+
+		task ("View chart entry") {
+			ACSegments.viewBreakdownChartsEntry(key_entry = "1972-03-15T00:00:00.000Z - 50.0% 1986-05-31T00:00:00.000Z - 50.0%");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8506 | Test Summary: Segment Overview distribution filtered by number"

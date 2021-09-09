@@ -234,18 +234,20 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			for (Method method : methods) {
 				Path path = method.getAnnotation(Path.class);
 
-				if (path != null) {
-					String value = path.value();
+				if (path == null) {
+					continue;
+				}
 
-					boolean groupAware = objectScopeProvider.isGroupAware();
-					boolean hasScope = value.contains("scopes");
+				String value = path.value();
 
-					if ((!groupAware && hasScope) ||
-						(groupAware && !hasScope &&
-						 !value.equals("/{objectEntryId}"))) {
+				boolean groupAware = objectScopeProvider.isGroupAware();
+				boolean hasScope = value.contains("scopes");
 
-						excludedOperationIds.add(method.getName());
-					}
+				if ((!groupAware && hasScope) ||
+					(groupAware && !hasScope &&
+					 !value.equals("/{objectEntryId}"))) {
+
+					excludedOperationIds.add(method.getName());
 				}
 			}
 

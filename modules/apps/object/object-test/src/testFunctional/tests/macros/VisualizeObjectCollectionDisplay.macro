@@ -53,4 +53,19 @@ definition {
 			locator1 = "VisualizeObjectCollectionDisplay#VIEW_OBJECT_COLLECTION_DISPLAY");
 	}
 
+	macro viewEntriesFragment {
+		AssertElementPresent(
+			key_entries = "${entries}",
+			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_FRAGMENT");
+	}
+
+	macro addFieldInsideCollectionDisplay {
+		Click(key_label = "${label}", locator1= "VisualizeObjectCollectionDisplay#EXPAND_BUTTON");
+		
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_fragmentName = "${fragmentName}",
+			locator1 = "VisualizeObjectCollectionDisplay#SELECT_HEADING",
+			locator2 = "VisualizeObjectCollectionDisplay#SELECT_COLLECTION_ITEM");
+	}
+
 }

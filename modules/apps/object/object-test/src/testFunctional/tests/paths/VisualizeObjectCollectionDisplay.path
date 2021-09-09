@@ -42,7 +42,7 @@
 	</tr>
 	<tr>
 		<td>FRAGMENT_COLLECTION</td>
-		<td>//div[(@class='page-editor__collection__message')]</td>
+		<td>//div[(@class='page-editor__collection__message')] | //div[@class='page-editor__collection-item empty page-editor__topper']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -57,7 +57,27 @@
 	</tr>
 	<tr>
 		<td>MAP_FRAGMENT</td>
-		<td>//select[@id='_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet__useId_8']</td>
+		<td>//select[@aria-label='Field']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ENTRIES_FRAGMENT</td>
+		<td>//h1[contains(.,'${key_entries}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>EXPAND_BUTTON</td>
+		<td>//button[@aria-label='Expand Collection Display']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_HEADING</td>
+		<td>//div[@aria-label='Select Heading']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_COLLECTION_ITEM</td>
+		<td>//div[@aria-label='Select Collection Item']</td>
 		<td></td>
 	</tr>
 </tbody>

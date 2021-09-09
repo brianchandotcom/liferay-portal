@@ -98,14 +98,51 @@ definition {
 	}
 
 	@description = "LPS-133865 - Verify if the Object entries are rendered inside the Collection Display fragment"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test ObjectEntriesAreRendered {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "VisualizeObjectCollectionDisplay#ObjectEntriesAreRendered";
 
-		// TODO LPS-137103 ObjectEntriesAreRendered pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Text",
+			fieldName = "text",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+		
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(fieldName = "text", objectName = "CustomObject", value = "Test Text");
+
+		VisualizeObjectCollectionDisplay.addDisplayPageTemplate(
+			contentType = "Object",
+			displayPageName = "Blank Display Page",
+			subtype = "Custom Object");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Custom Object");
+
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		VisualizeObjectCollectionDisplay.addFieldForCollectionDisplay(fragmentName = "Heading");
+
+		VisualizeObjectCollectionDisplay.openHeading();
+
+		VisualizeObjectCollectionDisplay.addFieldInsideCollectionDisplay(fragmentName = "Heading", label = "Expand Collection Display");
+		
+		VisualizeObjectCollectionDisplay.mapFragment(fieldName = "Text");
+
+		VisualizeObjectCollectionDisplay.viewEntriesFragment(entries = "Test Text");
 	}
 
 }

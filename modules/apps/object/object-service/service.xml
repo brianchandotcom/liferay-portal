@@ -306,7 +306,6 @@
 
 		<column name="objectDefinitionId1" type="long" />
 		<column name="objectDefinitionId2" type="long" />
-		<column name="objectFieldId1" type="long" />
 		<column name="objectFieldId2" type="long" />
 		<column method-name="DBTableName" name="dbTableName" type="String" />
 		<column localized="true" name="label" type="String" />

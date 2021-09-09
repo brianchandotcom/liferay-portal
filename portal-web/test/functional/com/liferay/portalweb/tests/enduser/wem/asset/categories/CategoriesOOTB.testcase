@@ -204,6 +204,8 @@ definition {
 	Then the Categorization section in Documents and Media will include OOTB Internal (Topic) and Public (Audience & Stage) vocabularies, but the other asset types (External Video Shortcut & Google Drive Shortcut) will not"
 	@priority = "4"
 	test CheckDMVocabularyAssetSubtypeBasicDocument {
+		property osgi.app.includes = "document-library-google-docs";
+
 		task ("Create a vocabulary with Associated Asset Type of Document > Basic Document") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
@@ -271,6 +273,8 @@ definition {
 	Then the Categorization section in Documents and Media will include OOTB Internal (Topic) and Public (Audience & Stage) vocabularies, but the other asset types (Basic Document & Google Drive Shortcut) will not"
 	@priority = "4"
 	test CheckDMVocabularyAssetSubtypeExternalVideoShortcut {
+		property osgi.app.includes = "document-library-google-docs";
+
 		task ("Create a vocabulary with Associated Asset Type of Document > External Video Shortcut") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 

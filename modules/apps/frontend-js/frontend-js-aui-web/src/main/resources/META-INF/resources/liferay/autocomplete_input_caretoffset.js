@@ -97,6 +97,7 @@ AUI.add(
 				if (!instance._inputMirror) {
 					var inputMirror = ANode.create(instance.TPL_INPUT_MIRROR);
 
+					// eslint-disable-next-line @liferay/aui/no-get-body
 					A.getBody().append(inputMirror);
 
 					instance._inputMirror = inputMirror;

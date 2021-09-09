@@ -90,6 +90,7 @@ AUI.add(
 						var rootNode =
 							targetNode ||
 							instance.get('rootNode') ||
+							// eslint-disable-next-line @liferay/aui/no-get-body
 							A.getBody();
 
 						alertsContainer =

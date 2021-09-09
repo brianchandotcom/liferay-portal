@@ -91,6 +91,7 @@ AUI.add(
 
 			instance._timeout = options.timeout;
 
+			// eslint-disable-next-line @liferay/aui/no-get-body
 			instance._body = A.getBody();
 
 			instance._useToggleButton = false;
@@ -357,6 +358,7 @@ AUI.add(
 					instance._useCloseButton = true;
 
 					if (!instance._body) {
+						// eslint-disable-next-line @liferay/aui/no-get-body
 						instance._body = A.getBody();
 					}
 

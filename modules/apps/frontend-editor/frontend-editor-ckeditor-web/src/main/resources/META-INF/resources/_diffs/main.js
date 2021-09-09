@@ -219,7 +219,7 @@ AUI.add(
 							if (event.shiftKey) {
 								var clone = event.currentTarget.clone();
 
-								A.getBody().append(clone);
+								document.body.appendChild(clone);
 
 								clone.simulate('click');
 							}

@@ -1605,80 +1605,67 @@
 		['aui-base', 'liferay-util-window']
 	);
 
-	Liferay.provide(
-		Util,
-		'toggleControls',
-		(node) => {
-			var docBody = A.getBody();
+	Liferay.provide(Util, 'toggleControls', (node) => {
+		const docBody = document.body;
 
-			node = node || docBody;
+		node = node._node || docBody;
 
-			var trigger = node.one('.toggle-controls');
+		const trigger = node.querySelector('.toggle-controls');
 
-			if (trigger) {
-				var controlsVisible = Liferay._editControlsState === 'visible';
+		if (!trigger) {
+			return;
+		}
 
-				var currentState = MAP_TOGGLE_STATE[controlsVisible];
+		let controlsVisible = Liferay._editControlsState === 'visible';
 
-				var icon = trigger.one('.lexicon-icon');
+		let currentState = MAP_TOGGLE_STATE[controlsVisible];
 
-				if (icon) {
-					currentState.icon = icon;
-				}
+		let icon = trigger.querySelector('.lexicon-icon');
 
-				docBody.addClass(currentState.cssClass);
+		if (icon) {
+			currentState.icon = icon;
+		}
 
-				Liferay.fire('toggleControls', {
-					enabled: controlsVisible,
-				});
+		docBody.classList.add(currentState.cssClass);
 
-				trigger.on('tap', () => {
-					controlsVisible = !controlsVisible;
+		Liferay.fire('toggleControls', {
+			enabled: controlsVisible,
+		});
 
-					var prevState = currentState;
+		trigger.addEventListener('click', () => {
+			controlsVisible = !controlsVisible;
 
-					currentState = MAP_TOGGLE_STATE[controlsVisible];
+			const previousState = currentState;
 
-					docBody.toggleClass(prevState.cssClass);
-					docBody.toggleClass(currentState.cssClass);
+			currentState = MAP_TOGGLE_STATE[controlsVisible];
 
-					var editControlsIconClass = currentState.iconCssClass;
-					var editControlsState = currentState.state;
+			docBody.classList.toggle(previousState.cssClass);
+			docBody.classList.toggle(currentState.cssClass);
 
-					if (icon) {
-						var newIcon = currentState.icon;
+			const editControlsIconClass = currentState.iconCssClass;
+			const editControlsState = currentState.state;
 
-						if (!newIcon) {
-							newIcon = Util.getLexiconIcon(
-								editControlsIconClass
-							);
+			const newIcon = Util.getLexiconIcon(editControlsIconClass);
 
-							newIcon = A.one(newIcon);
+			currentState.icon = newIcon;
 
-							currentState.icon = newIcon;
-						}
+			icon.replaceWith(newIcon);
 
-						icon.replace(newIcon);
+			icon = newIcon;
 
-						icon = newIcon;
-					}
+			Liferay._editControlsState = editControlsState;
 
-					Liferay._editControlsState = editControlsState;
+			Liferay.Util.Session.set(
+				'com.liferay.frontend.js.web_toggleControls',
+				editControlsState
+			);
 
-					Liferay.Util.Session.set(
-						'com.liferay.frontend.js.web_toggleControls',
-						editControlsState
-					);
-
-					Liferay.fire('toggleControls', {
-						enabled: controlsVisible,
-						src: 'ui',
-					});
-				});
-			}
-		},
-		['event-tap']
-	);
+			Liferay.fire('toggleControls', {
+				enabled: controlsVisible,
+				src: 'ui',
+			});
+		});
+	});
 
 	Liferay.provide(
 		Util,

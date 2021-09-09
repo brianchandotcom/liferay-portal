@@ -382,6 +382,7 @@
 			}
 
 			if (element) {
+				// eslint-disable-next-line @liferay/aui/no-get-body
 				var pageBody = A.getBody();
 
 				var diff;

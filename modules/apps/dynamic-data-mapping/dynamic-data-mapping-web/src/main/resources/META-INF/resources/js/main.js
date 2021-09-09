@@ -18,7 +18,7 @@ AUI.add(
 		var AArray = A.Array;
 		var Lang = A.Lang;
 
-		var BODY = A.getBody();
+		var BODY = document.body;
 
 		var instanceOf = A.instanceOf;
 		var isArray = Array.isArray;
@@ -797,8 +797,8 @@ AUI.add(
 				_toggleInputDirection(locale) {
 					var rtl = Liferay.Language.direction[locale] === 'rtl';
 
-					BODY.toggleClass('form-builder-ltr-inputs', !rtl);
-					BODY.toggleClass('form-builder-rtl-inputs', rtl);
+					BODY.classList.toggle('form-builder-ltr-inputs', !rtl);
+					BODY.classList.toggle('form-builder-rtl-inputs', rtl);
 				},
 
 				_toggleOptionsEditorInputs(editor) {

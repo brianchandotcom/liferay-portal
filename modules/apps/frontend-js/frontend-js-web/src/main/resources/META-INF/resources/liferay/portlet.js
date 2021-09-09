@@ -77,8 +77,6 @@
 				response.footerJavaScriptPaths || []
 			);
 
-			var body = A.getBody();
-
 			var head = A.one(STR_HEAD);
 
 			if (headerCssPaths.length) {
@@ -87,7 +85,7 @@
 				});
 			}
 
-			var lastChild = body.get('lastChild').getDOM();
+			var lastChild = document.body.lastChild;
 
 			if (footerCssPaths.length) {
 				A.Get.css(footerCssPaths, {

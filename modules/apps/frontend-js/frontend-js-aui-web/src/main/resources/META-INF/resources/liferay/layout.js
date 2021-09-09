@@ -17,8 +17,6 @@ AUI.add(
 	(A) => {
 		var Util = Liferay.Util;
 
-		var BODY = A.getBody();
-
 		var CSS_DRAGGABLE = 'portlet-draggable';
 
 		var LAYOUT_CONFIG = Liferay.Data.layoutConfig;
@@ -435,28 +433,6 @@ AUI.add(
 			};
 
 			var eventHandles = [];
-
-			if (A.UA.ie || A.UA.edge) {
-				eventHandles.push(
-					BODY.delegate(
-						'mouseenter',
-						(event) => {
-							event.currentTarget.addClass('focus');
-						},
-						'.portlet'
-					)
-				);
-
-				eventHandles.push(
-					BODY.delegate(
-						'mouseleave',
-						(event) => {
-							event.currentTarget.removeClass('focus');
-						},
-						'.portlet'
-					)
-				);
-			}
 
 			A.use('liferay-layout-column', () => {
 				Layout.ColumnLayout.register();

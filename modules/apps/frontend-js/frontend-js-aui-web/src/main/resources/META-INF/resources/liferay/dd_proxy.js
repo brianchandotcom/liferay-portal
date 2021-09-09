@@ -19,6 +19,7 @@
 AUI.add(
 	'liferay-dd-proxy',
 	(A) => {
+		// eslint-disable-next-line @liferay/aui/no-get-body
 		var body = A.getBody();
 
 		var DDM = A.DD.DDM;

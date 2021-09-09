@@ -28,7 +28,9 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.templateparser.Transformer;
+import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -62,7 +64,17 @@ public class TemplateDisplayTemplateTransformer {
 
 		Transformer transformer = TransformerHolder.getTransformer();
 
-		Map<String, Object> contextObjects = new HashMap<>();
+		Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+			PortletDisplayTemplateConstants.CURRENT_URL,
+			themeDisplay.getURLCurrent()
+		).put(
+			PortletDisplayTemplateConstants.LOCALE, themeDisplay.getLocale()
+		).put(
+			PortletDisplayTemplateConstants.TEMPLATE_ID,
+			_ddmTemplate.getTemplateId()
+		).put(
+			PortletDisplayTemplateConstants.THEME_DISPLAY, themeDisplay
+		).build();
 
 		for (InfoFieldValue<Object> infoFieldValue :
 				_infoItemFieldValues.getInfoFieldValues()) {

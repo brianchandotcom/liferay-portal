@@ -1,7 +1,7 @@
 @component-name = "portal-upgrades"
 definition {
 
-	property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.assert.warning.exceptions = "true";
@@ -68,6 +68,7 @@ definition {
 	@priority = "5"
 	test ViewMessageBoardsArchive621015 {
 		property data.archive.type = "data-archive-message-boards";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.15";
 
 		Upgrade.addMessageBoards();
@@ -78,6 +79,7 @@ definition {
 	@priority = "5"
 	test ViewMessageBoardsArchive621021 {
 		property data.archive.type = "data-archive-message-boards";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
 		Upgrade.addMessageBoards();

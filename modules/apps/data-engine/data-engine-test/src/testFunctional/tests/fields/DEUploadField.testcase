@@ -127,12 +127,36 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "5"
 	test CanInputData {
+		NavItem.gotoStructures();
 
-		// TODO LRQA-69446	Refactor of Renderer Upload Field
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DEBuilder.addField(
+			fieldLabel = "Upload",
+			fieldName = "Upload");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInUploadField(
+			dmNavTab = "User Personal Folder",
+			fieldLabel = "Upload",
+			webContentUpload = "Document_1.jpg");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInUploadField(
+			fieldLabel = "Upload",
+			webContentUpload = "Document_1.jpg");
 	}
 
 	@description = "This is a stubbed description"

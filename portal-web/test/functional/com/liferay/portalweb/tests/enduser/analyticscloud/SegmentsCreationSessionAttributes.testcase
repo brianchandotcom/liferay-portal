@@ -161,12 +161,50 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9211 | Test Summary: Add segment using a session property 'URL'"
-	@ignore = "true"
 	@priority = "4"
 	test CanCreateSessionAttributeUsingURL {
+		var url = "liferay.com";
 
-		// TODO LRAC-9211 CanCreateSessionAttributeUsingURL pending implementation
+		task ("Connect the DXP to Analytics Cloud") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
 
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+		}
+
+		task ("Add an URL criteria from Session Attributes") {
+			ACSegments.goToSidebarAttributes(criterion = "Session Attributes");
+
+			ACSegments.addSegmentField(segmentField = "URL");
+
+			ACSegments.selectOperator(operator = "is");
+
+			ACSegments.editTextCriterion(textInput = "${url}");
+		}
+
+		task ("Save the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("View criteria in Segment Criteria card") {
+			ACSegments.viewSegmentCriteriaSessionAttributes(
+				attributeName = "URL",
+				attributeValue = '''"${url}"''',
+				condition = "is",
+				preposition = "since",
+				time = "last 24 hours");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9212 | Test Summary: Create a Segment of Session in a Topic"

@@ -114,10 +114,13 @@ definition {
 			fieldType = "String",
 			isRequired = "false",
 			objectName = "CustomObject");
-		
+
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(fieldName = "text", objectName = "CustomObject", value = "Test Text");
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "text",
+			objectName = "CustomObject",
+			value = "Test Text");
 
 		VisualizeObjectCollectionDisplay.addDisplayPageTemplate(
 			contentType = "Object",
@@ -129,8 +132,8 @@ definition {
 			fragmentName = "Collection Display");
 
 		PageEditor.editCollectionDisplay(
-				fragmentName = "Collection Display",
-				infoListProviderName = "Custom Object");
+			fragmentName = "Collection Display",
+			infoListProviderName = "Custom Object");
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
@@ -138,8 +141,10 @@ definition {
 
 		VisualizeObjectCollectionDisplay.openHeading();
 
-		VisualizeObjectCollectionDisplay.addFieldInsideCollectionDisplay(fragmentName = "Heading", label = "Expand Collection Display");
-		
+		VisualizeObjectCollectionDisplay.addFieldInsideCollectionDisplay(
+			fragmentName = "Heading",
+			label = "Expand Collection Display");
+
 		VisualizeObjectCollectionDisplay.mapFragment(fieldName = "Text");
 
 		VisualizeObjectCollectionDisplay.viewEntriesFragment(entries = "Test Text");

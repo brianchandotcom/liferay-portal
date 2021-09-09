@@ -44,7 +44,7 @@ public class LayoutFriendlyURLModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(LayoutFriendlyURL layoutFriendlyURL)
+	public void onAfterUpdate(LayoutFriendlyURL originalLayoutFriendlyURL,LayoutFriendlyURL layoutFriendlyURL)
 		throws ModelListenerException {
 
 		_addFriendlyURLEntry(layoutFriendlyURL);

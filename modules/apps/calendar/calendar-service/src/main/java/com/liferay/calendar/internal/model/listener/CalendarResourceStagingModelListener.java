@@ -53,7 +53,7 @@ public class CalendarResourceStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(CalendarResource calendarResource)
+	public void onAfterUpdate(CalendarResource originalCalendarResource,CalendarResource calendarResource)
 		throws ModelListenerException {
 
 		if (_isSkipEvent(calendarResource)) {

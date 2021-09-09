@@ -45,7 +45,7 @@ public class MBThreadFlagStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(MBThreadFlag mbThreadFlag)
+	public void onAfterUpdate(MBThreadFlag originalMbThreadFlag,MBThreadFlag mbThreadFlag)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(mbThreadFlag);

@@ -40,7 +40,7 @@ public class KBFolderStagingModelListener extends BaseModelListener<KBFolder> {
 	}
 
 	@Override
-	public void onAfterUpdate(KBFolder kbFolder) throws ModelListenerException {
+	public void onAfterUpdate(KBFolder originalKbFolder,KBFolder kbFolder) throws ModelListenerException {
 		_stagingModelListener.onAfterUpdate(kbFolder);
 	}
 

@@ -56,7 +56,7 @@ public class AccountGroupModelListener extends BaseModelListener<AccountGroup> {
 	}
 
 	@Override
-	public void onBeforeUpdate(AccountGroup accountGroup)
+	public void onBeforeUpdate(AccountGroup originalAccountGroup,AccountGroup accountGroup)
 		throws ModelListenerException {
 
 		if (accountGroup.isDefaultAccountGroup()) {

@@ -57,7 +57,7 @@ public class DDMFormInstanceRecordStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(DDMFormInstanceRecord ddmFormInstanceRecord)
+	public void onAfterUpdate(DDMFormInstanceRecord originalDdmFormInstanceRecord,DDMFormInstanceRecord ddmFormInstanceRecord)
 		throws ModelListenerException {
 
 		if (_isSkipEvent(ddmFormInstanceRecord)) {

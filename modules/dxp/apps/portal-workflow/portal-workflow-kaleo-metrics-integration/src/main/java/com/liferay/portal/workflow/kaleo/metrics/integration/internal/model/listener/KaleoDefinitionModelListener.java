@@ -52,7 +52,7 @@ public class KaleoDefinitionModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(KaleoDefinition kaleoDefinition)
+	public void onAfterUpdate(KaleoDefinition originalKaleoDefinition,KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
 		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(

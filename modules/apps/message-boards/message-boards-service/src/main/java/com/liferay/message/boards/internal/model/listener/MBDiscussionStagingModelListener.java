@@ -45,7 +45,7 @@ public class MBDiscussionStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(MBDiscussion mbDiscussion)
+	public void onAfterUpdate(MBDiscussion originalMbDiscussion,MBDiscussion mbDiscussion)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(mbDiscussion);

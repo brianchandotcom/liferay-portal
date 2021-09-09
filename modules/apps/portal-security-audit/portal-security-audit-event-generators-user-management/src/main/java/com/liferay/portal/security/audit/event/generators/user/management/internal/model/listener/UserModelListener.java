@@ -47,7 +47,7 @@ public class UserModelListener extends BaseModelListener<User> {
 		auditOnCreateOrRemove(EventTypes.DELETE, user);
 	}
 
-	public void onBeforeUpdate(User newUser) throws ModelListenerException {
+	public void onBeforeUpdate(User originalNewUser,User newUser) throws ModelListenerException {
 		try {
 			User oldUser = _userLocalService.getUser(newUser.getUserId());
 

@@ -65,7 +65,7 @@ public class RepositoryStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(Repository repository)
+	public void onAfterUpdate(Repository originalRepository,Repository repository)
 		throws ModelListenerException {
 
 		if (!_isRepositoryExportable(repository)) {

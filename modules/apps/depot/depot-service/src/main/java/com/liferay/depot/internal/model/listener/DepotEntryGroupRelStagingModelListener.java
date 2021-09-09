@@ -45,7 +45,7 @@ public class DepotEntryGroupRelStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(DepotEntryGroupRel depotEntryGroupRel)
+	public void onAfterUpdate(DepotEntryGroupRel originalDepotEntryGroupRel,DepotEntryGroupRel depotEntryGroupRel)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(depotEntryGroupRel);

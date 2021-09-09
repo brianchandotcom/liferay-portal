@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ModelListener.class)
 public class AddressModelListener extends BaseModelListener<Address> {
 
-	public void onBeforeUpdate(Address newAddress)
+	public void onBeforeUpdate(Address originalNewAddress,Address newAddress)
 		throws ModelListenerException {
 
 		try {

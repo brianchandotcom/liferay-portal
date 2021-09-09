@@ -45,7 +45,7 @@ public class CalendarBookingStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(CalendarBooking calendarBooking)
+	public void onAfterUpdate( CalendarBooking originalCalendarBooking,CalendarBooking calendarBooking)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(calendarBooking);

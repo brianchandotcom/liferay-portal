@@ -48,7 +48,8 @@ public class LayoutPageTemplateCollectionStagingModelListener
 
 	@Override
 	public void onAfterUpdate(
-			LayoutPageTemplateCollection layoutPageTemplateCollection)
+		LayoutPageTemplateCollection originalLayoutPageTemplateCollection,
+		LayoutPageTemplateCollection layoutPageTemplateCollection)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(layoutPageTemplateCollection);

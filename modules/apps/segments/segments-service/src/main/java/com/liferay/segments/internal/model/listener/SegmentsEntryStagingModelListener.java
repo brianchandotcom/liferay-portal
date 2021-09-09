@@ -45,7 +45,7 @@ public class SegmentsEntryStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(SegmentsEntry segmentsEntry)
+	public void onAfterUpdate(SegmentsEntry originalSegmentsEntry,SegmentsEntry segmentsEntry)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(segmentsEntry);

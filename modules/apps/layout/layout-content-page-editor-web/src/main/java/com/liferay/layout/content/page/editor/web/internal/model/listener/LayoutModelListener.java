@@ -72,7 +72,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	}
 
 	@Override
-	public void onAfterUpdate(Layout layout) throws ModelListenerException {
+	public void onAfterUpdate(Layout originalLayout,Layout layout) throws ModelListenerException {
 		if (!layout.isTypeContent()) {
 			return;
 		}

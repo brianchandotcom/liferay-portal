@@ -45,7 +45,7 @@ public class AssetCategoryStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(AssetCategory assetCategory)
+	public void onAfterUpdate(AssetCategory originalAssetCategory,AssetCategory assetCategory)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(assetCategory);

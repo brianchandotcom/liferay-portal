@@ -45,7 +45,7 @@ public class SegmentsExperimentModelListener
 	extends BaseModelListener<SegmentsExperiment> {
 
 	@Override
-	public void onAfterUpdate(SegmentsExperiment segmentsExperiment)
+	public void onAfterUpdate(SegmentsExperiment originalSegmentsExperiment,SegmentsExperiment segmentsExperiment)
 		throws ModelListenerException {
 
 		if (AsahUtil.isSkipAsahEvent(

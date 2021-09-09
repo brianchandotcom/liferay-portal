@@ -36,13 +36,6 @@ public interface ModelListener<T> {
 			Object associationClassPK)
 		throws ModelListenerException;
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #onAfterUpdate(T,
-	 *             T)}
-	 */
-	@Deprecated
-	public void onAfterUpdate(T model) throws ModelListenerException;
-
 	public void onAfterUpdate(T originalModel, T model)
 		throws ModelListenerException;
 
@@ -59,13 +52,6 @@ public interface ModelListener<T> {
 			Object classPK, String associationClassName,
 			Object associationClassPK)
 		throws ModelListenerException;
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #onBeforeUpdate(T, T)}
-	 */
-	@Deprecated
-	public void onBeforeUpdate(T model) throws ModelListenerException;
 
 	public void onBeforeUpdate(T originalModel, T model)
 		throws ModelListenerException;

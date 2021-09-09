@@ -45,7 +45,7 @@ public class PollsChoiceStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(PollsChoice pollsChoice)
+	public void onAfterUpdate(PollsChoice originalPollsChoice,PollsChoice pollsChoice)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(pollsChoice);

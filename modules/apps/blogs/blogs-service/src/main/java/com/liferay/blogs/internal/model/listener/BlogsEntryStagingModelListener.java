@@ -45,7 +45,7 @@ public class BlogsEntryStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(BlogsEntry blogsEntry)
+	public void onAfterUpdate(BlogsEntry originalBlogsEntry,BlogsEntry blogsEntry)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(blogsEntry);

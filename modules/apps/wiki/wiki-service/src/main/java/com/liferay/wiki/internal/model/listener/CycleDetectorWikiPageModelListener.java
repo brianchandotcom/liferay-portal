@@ -40,7 +40,7 @@ public class CycleDetectorWikiPageModelListener
 	}
 
 	@Override
-	public void onBeforeUpdate(WikiPage model) throws ModelListenerException {
+	public void onBeforeUpdate(WikiPage originalModel,WikiPage model) throws ModelListenerException {
 		if (isCycleDetectedInWikiPagesGraph(model)) {
 			throw new ModelListenerException(
 				"Unable to update wiki page " + model.getTitle() +

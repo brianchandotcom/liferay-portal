@@ -34,7 +34,7 @@ public class UserGroupGroupRoleModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(UserGroupGroupRole userGroupGroupRole) {
+	public void onAfterUpdate(UserGroupGroupRole originalUserGroupGroupRole,UserGroupGroupRole userGroupGroupRole) {
 		PermissionCacheUtil.clearCache();
 	}
 

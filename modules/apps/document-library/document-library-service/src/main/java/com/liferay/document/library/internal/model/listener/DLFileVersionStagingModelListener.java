@@ -74,7 +74,7 @@ public class DLFileVersionStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(DLFileVersion dlFileVersion)
+	public void onAfterUpdate(DLFileVersion originalDlFileVersion,DLFileVersion dlFileVersion)
 		throws ModelListenerException {
 
 		if ((dlFileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED) &&

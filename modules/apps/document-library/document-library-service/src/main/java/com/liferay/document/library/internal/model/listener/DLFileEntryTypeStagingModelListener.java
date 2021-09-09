@@ -49,7 +49,7 @@ public class DLFileEntryTypeStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(DLFileEntryType dlFileEntryType)
+	public void onAfterUpdate(DLFileEntryType originalDlFileEntryType,DLFileEntryType dlFileEntryType)
 		throws ModelListenerException {
 
 		if (!dlFileEntryType.isExportable()) {

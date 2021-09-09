@@ -45,7 +45,7 @@ public class JournalFolderStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(JournalFolder journalFolder)
+	public void onAfterUpdate(JournalFolder originalJournalFolder,JournalFolder journalFolder)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(journalFolder);

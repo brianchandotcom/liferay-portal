@@ -40,7 +40,7 @@ public class MBBanStagingModelListener extends BaseModelListener<MBBan> {
 	}
 
 	@Override
-	public void onAfterUpdate(MBBan mbBan) throws ModelListenerException {
+	public void onAfterUpdate(MBBan originalMbBan,MBBan mbBan) throws ModelListenerException {
 		_stagingModelListener.onAfterUpdate(mbBan);
 	}
 

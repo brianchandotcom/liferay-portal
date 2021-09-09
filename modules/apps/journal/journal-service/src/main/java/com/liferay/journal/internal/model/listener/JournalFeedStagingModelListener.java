@@ -45,7 +45,7 @@ public class JournalFeedStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(JournalFeed journalFeed)
+	public void onAfterUpdate(JournalFeed originalJournalFeed,JournalFeed journalFeed)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(journalFeed);

@@ -35,7 +35,7 @@ public class DDMTemplateModelListener extends BaseModelListener<DDMTemplate> {
 	}
 
 	@Override
-	public void onAfterUpdate(DDMTemplate ddmTemplate) {
+	public void onAfterUpdate(DDMTemplate originalDdmTemplate,DDMTemplate ddmTemplate) {
 		clearCache(ddmTemplate);
 	}
 

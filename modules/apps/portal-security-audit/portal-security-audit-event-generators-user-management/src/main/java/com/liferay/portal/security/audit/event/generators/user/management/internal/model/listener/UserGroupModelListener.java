@@ -77,7 +77,7 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 			associationClassPK);
 	}
 
-	public void onBeforeUpdate(UserGroup newUserGroup)
+	public void onBeforeUpdate(UserGroup originalNewUserGroup,UserGroup newUserGroup)
 		throws ModelListenerException {
 
 		try {

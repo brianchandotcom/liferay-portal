@@ -40,7 +40,7 @@ public class LayoutStagingModelListener extends BaseModelListener<Layout> {
 	}
 
 	@Override
-	public void onAfterUpdate(Layout layout) throws ModelListenerException {
+	public void onAfterUpdate(Layout originalLayout,Layout layout) throws ModelListenerException {
 		_stagingModelListener.onAfterUpdate(layout);
 	}
 

@@ -44,7 +44,7 @@ public class JournalArticleModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(JournalArticle journalArticle) {
+	public void onAfterUpdate(JournalArticle originalJournalArticle,JournalArticle journalArticle) {
 		clearCache(journalArticle);
 	}
 

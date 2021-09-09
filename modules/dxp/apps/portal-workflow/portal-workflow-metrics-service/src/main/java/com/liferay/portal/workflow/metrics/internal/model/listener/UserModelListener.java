@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class UserModelListener extends BaseModelListener<User> {
 
 	@Override
-	public void onBeforeUpdate(User user) throws ModelListenerException {
+	public void onBeforeUpdate(User originalUser,User user) throws ModelListenerException {
 		User currentUser = _userLocalService.fetchUserById(user.getUserId());
 
 		TransactionCommitCallbackUtil.registerCallback(

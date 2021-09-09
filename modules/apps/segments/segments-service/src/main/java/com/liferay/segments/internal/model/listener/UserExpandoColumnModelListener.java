@@ -112,7 +112,7 @@ public class UserExpandoColumnModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(ExpandoColumn expandoColumn)
+	public void onAfterUpdate(ExpandoColumn originalExpandoColumn,ExpandoColumn expandoColumn)
 		throws ModelListenerException {
 
 		if (expandoColumn == null) {

@@ -73,7 +73,7 @@ public class RoleModelListener extends BaseModelListener<Role> {
 			associationClassPK);
 	}
 
-	public void onBeforeUpdate(Role newRole) throws ModelListenerException {
+	public void onBeforeUpdate(Role originalNewRole,Role newRole) throws ModelListenerException {
 		try {
 			Role oldRole = _roleLocalService.getRole(newRole.getRoleId());
 

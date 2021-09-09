@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 
 	@Override
-	public void onAfterUpdate(DDMStructure ddmStructure)
+	public void onAfterUpdate(DDMStructure originalDdmStructure,DDMStructure ddmStructure)
 		throws ModelListenerException {
 
 		try {

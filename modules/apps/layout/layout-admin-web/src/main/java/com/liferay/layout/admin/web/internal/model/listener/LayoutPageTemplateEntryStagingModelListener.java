@@ -45,7 +45,7 @@ public class LayoutPageTemplateEntryStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(LayoutPageTemplateEntry layoutPageTemplateEntry)
+	public void onAfterUpdate(LayoutPageTemplateEntry originalLayoutPageTemplateEntry,LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(layoutPageTemplateEntry);

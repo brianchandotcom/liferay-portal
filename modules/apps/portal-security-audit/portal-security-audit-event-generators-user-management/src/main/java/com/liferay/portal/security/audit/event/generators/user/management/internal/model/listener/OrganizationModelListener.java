@@ -73,7 +73,7 @@ public class OrganizationModelListener extends BaseModelListener<Organization> {
 			associationClassPK);
 	}
 
-	public void onBeforeUpdate(Organization newOrganization)
+	public void onBeforeUpdate(Organization originalNewOrganization,Organization newOrganization)
 		throws ModelListenerException {
 
 		try {

@@ -44,20 +44,10 @@ public class BaseModelListener<T extends BaseModel<T>>
 		throws ModelListenerException {
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #onAfterUpdate(T,
-	 *             T)}
-	 */
-	@Deprecated
-	@Override
-	public void onAfterUpdate(T model) throws ModelListenerException {
-	}
-
 	@Override
 	public void onAfterUpdate(T originalModel, T model)
 		throws ModelListenerException {
 
-		onAfterUpdate(model);
 	}
 
 	@Override
@@ -82,20 +72,10 @@ public class BaseModelListener<T extends BaseModel<T>>
 		throws ModelListenerException {
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #onBeforeUpdate(T, T)}
-	 */
-	@Deprecated
-	@Override
-	public void onBeforeUpdate(T model) throws ModelListenerException {
-	}
-
 	@Override
 	public void onBeforeUpdate(T originalModel, T model)
 		throws ModelListenerException {
 
-		onBeforeUpdate(model);
 	}
 
 }

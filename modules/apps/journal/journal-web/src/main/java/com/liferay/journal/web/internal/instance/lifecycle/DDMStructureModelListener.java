@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -39,6 +40,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -126,8 +128,27 @@ public class DDMStructureModelListener
 
 	@Override
 	public void portalInstanceUnregistered(Company company) {
+		_unregisterCompanyDDMStructures(company.getCompanyId());
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_companyLocalService.forEachCompanyId(
+			companyId -> _unregisterCompanyDDMStructures(companyId));
+	}
+
+	private void _unregisterCompanyDDMStructures(long companyId) {
 		Map<Long, ServiceRegistration<?>> serviceRegistrations =
-			_serviceRegistrations.remove(company.getCompanyId());
+			_serviceRegistrations.remove(companyId);
+
+		if (serviceRegistrations == null) {
+			return;
+		}
 
 		for (Map.Entry<Long, ServiceRegistration<?>> entry :
 				serviceRegistrations.entrySet()) {
@@ -140,12 +161,10 @@ public class DDMStructureModelListener
 		}
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-	}
-
 	private BundleContext _bundleContext;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -42,6 +43,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -98,23 +100,20 @@ public class DLFileEntryTypeModelListener
 
 	@Override
 	public void portalInstanceUnregistered(Company company) {
-		Map<Long, ServiceRegistration<?>> serviceRegistrations =
-			_serviceRegistrations.remove(company.getCompanyId());
-
-		for (Map.Entry<Long, ServiceRegistration<?>> entry :
-				serviceRegistrations.entrySet()) {
-
-			ServiceRegistration<?> serviceRegistration = entry.getValue();
-
-			if (serviceRegistration != null) {
-				serviceRegistration.unregister();
-			}
-		}
+		_unregisterCompanyDLFileEntryTypes(company.getCompanyId());
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_unregisterCompanyDLFileEntryTypes(0);
+
+		_companyLocalService.forEachCompanyId(
+			companyId -> _unregisterCompanyDLFileEntryTypes(companyId));
 	}
 
 	private void _registerCompanyDLFileEntryTypes(Company company) {
@@ -165,7 +164,29 @@ public class DLFileEntryTypeModelListener
 			).build());
 	}
 
+	private void _unregisterCompanyDLFileEntryTypes(long companyId) {
+		Map<Long, ServiceRegistration<?>> serviceRegistrations =
+			_serviceRegistrations.remove(companyId);
+
+		if (serviceRegistrations == null) {
+			return;
+		}
+
+		for (Map.Entry<Long, ServiceRegistration<?>> entry :
+				serviceRegistrations.entrySet()) {
+
+			ServiceRegistration<?> serviceRegistration = entry.getValue();
+
+			if (serviceRegistration != null) {
+				serviceRegistration.unregister();
+			}
+		}
+	}
+
 	private BundleContext _bundleContext;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

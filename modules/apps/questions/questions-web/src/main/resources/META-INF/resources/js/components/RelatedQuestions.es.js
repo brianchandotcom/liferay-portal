@@ -115,18 +115,33 @@ export default withRouter(
 
 								<div className="c-mt-3 small stretched-link-layer">
 									<UserIcon
-										fullName={relatedQuestion.creator?.name}
+										fullName={
+											relatedQuestion.creator
+												? relatedQuestion.creator.name
+												: ''
+										}
 										portraitURL={
-											relatedQuestion.creator?.image
+											relatedQuestion.creator
+												? relatedQuestion.creator.image
+												: ''
 										}
 										size="sm"
-										userId={String(
-											relatedQuestion.creator?.id
-										)}
+										userId={
+											relatedQuestion.creator
+												? String(
+														relatedQuestion.creator
+															.id
+												  )
+												: '0'
+										}
 									/>
 
 									<span className="c-ml-2 font-weight-bold">
-										{relatedQuestion.creator.name}
+										{relatedQuestion.creator
+											? relatedQuestion.creator.name
+											: Liferay.Language.get(
+													'anonymous-user-configuration-name'
+											  )}
 									</span>
 
 									<span className="text-secondary">

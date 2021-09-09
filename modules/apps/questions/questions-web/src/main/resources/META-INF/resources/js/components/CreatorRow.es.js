@@ -29,19 +29,24 @@ export default withRouter(
 	}) => (
 		<Link
 			className="align-items-center border-light btn btn-secondary c-ml-md-3 c-mt-3 c-mt-md-0 c-p-3 d-inline-flex justify-content-center position-relative questions-user"
-			to={`/questions/${sectionTitle}/creator/${creator.id}`}
+			to={`/questions/${sectionTitle}${
+				creator ? `/creator/${creator.id}` : ''
+			}`}
 		>
 			<UserIcon
-				fullName={creator.name}
-				portraitURL={creator.image}
-				userId={String(creator.id)}
+				fullName={creator?.name}
+				portraitURL={creator?.image}
+				userId={String(creator?.id)}
 			/>
 
 			<div className="c-ml-3 text-left">
 				<p className="c-mb-0 small">{timeDifference(dateCreated)}</p>
 
 				<p className="c-mb-0 font-weight-bold text-dark">
-					{creator.name}
+					{creator?.name ||
+						Liferay.Language.get(
+							'anonymous-user-configuration-name'
+						)}
 				</p>
 			</div>
 

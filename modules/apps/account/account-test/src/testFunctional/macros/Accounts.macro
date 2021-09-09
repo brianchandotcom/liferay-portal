@@ -208,6 +208,28 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro addAssigneeToRoleViaUsersTab {
+		Navigator.gotoNavTab(navTab = "Users");
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Assign Roles",
+			rowEntry = "${accountUserName}");
+
+		SelectFrame(
+			key_title = "Assign Roles",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Check(
+			key_tableEntry = "${accountRoleTitle}",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		SelectFrameTop();
+
+		Button.click(button = "Done");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro addBusinessAccount {
 		LexiconEntry.gotoAdd();
 

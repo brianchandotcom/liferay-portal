@@ -55,6 +55,10 @@ public interface GraphQLDTOContributor<D, R> {
 
 	public String getResourceName();
 
+	public String getTypeName();
+
+	public boolean hasScope();
+
 	public R updateDTO(D dto, DTOConverterContext dtoConverterContext, long id)
 		throws Exception;
 

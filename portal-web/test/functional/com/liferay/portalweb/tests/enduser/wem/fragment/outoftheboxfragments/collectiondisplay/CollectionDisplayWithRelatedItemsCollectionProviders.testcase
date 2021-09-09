@@ -1100,6 +1100,398 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-127025. The DPT author can view the available mappable fields of collection item in DPT for Category."
+	@priority = "4"
+	test ViewAvailableMappableFieldsOfCollectionItemOnDisplayPageTemplateForCategory {
+		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#ViewAvailableMappableFieldsOfCollectionItemOnDisplayPageTemplateForCategory";
+
+		task ("Enable the DDMStructure and DLFileEntry feature via gogo shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.journal.web.internal.instance.lifecycle.DDMStructureModelListener");
+
+			GogoShell.viewOutput(outputContent = "true");
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.document.library.web.internal.model.listener.DLFileEntryTypeModelListener");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+
+		task ("Add a web content structure with a Text field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a custom document type with a Text field") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMNavigator.gotoDocumentType();
+
+			DMDocumentType.add(
+				dmDocumentTypeFieldNames = "Text",
+				dmDocumentTypeName = "DM Document Type Name");
+		}
+
+		task ("Add five display page templates for Category") {
+			for (var n : list "1,2,3,4,5") {
+				JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+					contentType = "Category",
+					displayPageTemplateEntryName = "Display Page Name ${n}",
+					groupName = "Test Site Name");
+			}
+		}
+
+		task ("Add a Collection display fragment to the first display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 1");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the Basic Web Content related items collection provider") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoItemRelatedListProviderName = "Basic Web Content");
+		}
+
+		task ("Add a Heading fragment into the Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Sample Collection Item",
+				fragmentName = "Heading");
+		}
+
+		task ("View available mappable fields") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			for (var field : list "Title,Description,Publish Date,Author Name,Last Editor Name") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Basic Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Content (Basic Web Content)",
+				key_value = "Content",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Templates",
+				key_value = "Basic Web Content",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Display Page",
+				key_value = "Display Page URL",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			for (var field : list "All Categories,Topic,Tags") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Categorization",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "Display Date,Expiration Date") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Schedule",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+		}
+
+		task ("Add a Collection display fragment to the second display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 2");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the Blogs with This Category related items collection provider") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoItemRelatedListProviderName = "Blogs with This Category");
+		}
+
+		task ("Add a Heading fragment into the Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Sample Collection Item",
+				fragmentName = "Heading");
+		}
+
+		task ("View available mappable fields") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			for (var field : list "Title,Author Name") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Basic Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "Subtitle,Cover Image Caption,Content") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Content",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "Display Page URL,Description,Display Date") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Configuration",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "All Categories,Topic,Tags") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Categorization",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "Reading Time (Simple),Reading Time (Descriptive)") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Fields",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+		}
+
+		task ("Add a Collection display fragment to the third display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 3");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the Basic Document related items collection provider") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoItemRelatedListProviderName = "Basic Document");
+		}
+
+		task ("Add a Heading fragment into the Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Sample Collection Item",
+				fragmentName = "Heading");
+		}
+
+		task ("View available mappable fields") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			for (var field : list "Title,Description,Version,Publish Date,Author Name") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Basic Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "File Name,Download URL,MIME Type,Size") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "File Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Display Page",
+				key_value = "Display Page URL",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			for (var field : list "All Categories,Topic,Tags") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Categorization",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+		}
+
+		task ("Add a Collection display fragment to the fourth display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 4");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the WC Structure Name related items collection provider") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoItemRelatedListProviderName = "WC Structure Name");
+		}
+
+		task ("Add a Heading fragment into the Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Sample Collection Item",
+				fragmentName = "Heading");
+		}
+
+		task ("View available mappable fields") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			for (var field : list "Title,Description,Publish Date,Author Name,Last Editor Name") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Basic Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Content (WC Structure Name)",
+				key_value = "Text",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Display Page",
+				key_value = "Display Page URL",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			for (var field : list "All Categories,Topic,Tags") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Categorization",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "Display Date,Expiration Date") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Schedule",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+		}
+
+		task ("Add a Collection display fragment to the fifth display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 5");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the Basic Document related items collection provider") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoItemRelatedListProviderName = "Basic Document");
+		}
+
+		task ("Add a Heading fragment into the Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Sample Collection Item",
+				fragmentName = "Heading");
+		}
+
+		task ("View available mappable fields") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			for (var field : list "Title,Description,Version,Publish Date,Author Name") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Basic Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "File Name,Download URL,MIME Type,Size") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "File Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "DM Document Type Name",
+				key_value = "Text",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Display Page",
+				key_value = "Display Page URL",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			for (var field : list "All Categories,Topic,Tags") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Categorization",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+		}
+
+		task ("Disable the DDMStructure and DLFileEntry feature via gogo shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:disable com.liferay.journal.web.internal.instance.lifecycle.DDMStructureModelListener");
+
+			GogoShell.viewOutput(outputContent = "true");
+
+			GogoShell.executeCommand(commandName = "scr:disable com.liferay.document.library.web.internal.model.listener.DLFileEntryTypeModelListener");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+	}
+
 	@description = "This is a test for LPS-127025. The DPT author can use Basic Web Content related item collection provider in DPT for Category."
 	@priority = "5"
 	test ViewCollectionItemsBasedOnBasicWebContentOnDisplayPageTemplateForCategory {

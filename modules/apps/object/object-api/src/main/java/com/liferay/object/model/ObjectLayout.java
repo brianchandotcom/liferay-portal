@@ -56,4 +56,9 @@ public interface ObjectLayout extends ObjectLayoutModel, PersistedModel {
 
 		};
 
+	public java.util.List<ObjectLayoutTab> getObjectLayoutTabs();
+
+	public void setObjectLayoutTabs(
+		java.util.List<ObjectLayoutTab> objectLayoutTabs);
+
 }

@@ -78,7 +78,7 @@ public class ObjectLayoutTabCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -98,6 +98,8 @@ public class ObjectLayoutTabCacheModel
 		sb.append(modifiedDate);
 		sb.append(", objectLayoutId=");
 		sb.append(objectLayoutId);
+		sb.append(", objectRelationshipId=");
+		sb.append(objectRelationshipId);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", priority=");
@@ -146,6 +148,7 @@ public class ObjectLayoutTabCacheModel
 		}
 
 		objectLayoutTabImpl.setObjectLayoutId(objectLayoutId);
+		objectLayoutTabImpl.setObjectRelationshipId(objectRelationshipId);
 
 		if (name == null) {
 			objectLayoutTabImpl.setName("");
@@ -176,6 +179,8 @@ public class ObjectLayoutTabCacheModel
 		modifiedDate = objectInput.readLong();
 
 		objectLayoutId = objectInput.readLong();
+
+		objectRelationshipId = objectInput.readLong();
 		name = objectInput.readUTF();
 
 		priority = objectInput.readInt();
@@ -210,6 +215,8 @@ public class ObjectLayoutTabCacheModel
 
 		objectOutput.writeLong(objectLayoutId);
 
+		objectOutput.writeLong(objectRelationshipId);
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -229,6 +236,7 @@ public class ObjectLayoutTabCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long objectLayoutId;
+	public long objectRelationshipId;
 	public String name;
 	public int priority;
 

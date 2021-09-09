@@ -52,6 +52,7 @@ public class ObjectLayoutTabWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("objectLayoutId", getObjectLayoutId());
+		attributes.put("objectRelationshipId", getObjectRelationshipId());
 		attributes.put("name", getName());
 		attributes.put("priority", getPriority());
 
@@ -112,6 +113,13 @@ public class ObjectLayoutTabWrapper
 
 		if (objectLayoutId != null) {
 			setObjectLayoutId(objectLayoutId);
+		}
+
+		Long objectRelationshipId = (Long)attributes.get(
+			"objectRelationshipId");
+
+		if (objectRelationshipId != null) {
+			setObjectRelationshipId(objectRelationshipId);
 		}
 
 		String name = (String)attributes.get("name");
@@ -258,6 +266,11 @@ public class ObjectLayoutTabWrapper
 		return model.getNameMap();
 	}
 
+	@Override
+	public java.util.List<ObjectLayoutBox> getObjectLayoutBoxes() {
+		return model.getObjectLayoutBoxes();
+	}
+
 	/**
 	 * Returns the object layout ID of this object layout tab.
 	 *
@@ -276,6 +289,16 @@ public class ObjectLayoutTabWrapper
 	@Override
 	public long getObjectLayoutTabId() {
 		return model.getObjectLayoutTabId();
+	}
+
+	/**
+	 * Returns the object relationship ID of this object layout tab.
+	 *
+	 * @return the object relationship ID of this object layout tab
+	 */
+	@Override
+	public long getObjectRelationshipId() {
+		return model.getObjectRelationshipId();
 	}
 
 	/**
@@ -456,6 +479,13 @@ public class ObjectLayoutTabWrapper
 		model.setNameMap(nameMap, defaultLocale);
 	}
 
+	@Override
+	public void setObjectLayoutBoxes(
+		java.util.List<ObjectLayoutBox> objectLayoutBoxes) {
+
+		model.setObjectLayoutBoxes(objectLayoutBoxes);
+	}
+
 	/**
 	 * Sets the object layout ID of this object layout tab.
 	 *
@@ -474,6 +504,16 @@ public class ObjectLayoutTabWrapper
 	@Override
 	public void setObjectLayoutTabId(long objectLayoutTabId) {
 		model.setObjectLayoutTabId(objectLayoutTabId);
+	}
+
+	/**
+	 * Sets the object relationship ID of this object layout tab.
+	 *
+	 * @param objectRelationshipId the object relationship ID of this object layout tab
+	 */
+	@Override
+	public void setObjectRelationshipId(long objectRelationshipId) {
+		model.setObjectRelationshipId(objectRelationshipId);
 	}
 
 	/**

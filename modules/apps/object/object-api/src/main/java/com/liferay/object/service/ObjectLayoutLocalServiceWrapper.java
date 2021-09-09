@@ -37,12 +37,13 @@ public class ObjectLayoutLocalServiceWrapper
 	public com.liferay.object.model.ObjectLayout addObjectLayout(
 			long userId, long objectDefinitionId, boolean defaultObjectLayout,
 			java.util.Map<java.util.Locale, String> nameMap,
-			com.liferay.portal.kernel.json.JSONArray objectLayoutTabsJSONArray)
+			java.util.List<com.liferay.object.model.ObjectLayoutTab>
+				objectLayoutTabs)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectLayoutLocalService.addObjectLayout(
 			userId, objectDefinitionId, defaultObjectLayout, nameMap,
-			objectLayoutTabsJSONArray);
+			objectLayoutTabs);
 	}
 
 	/**
@@ -331,6 +332,14 @@ public class ObjectLayoutLocalServiceWrapper
 		return _objectLayoutLocalService.getObjectLayouts(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectLayout>
+		getObjectLayouts(long objectDefinitionId, int start, int end) {
+
+		return _objectLayoutLocalService.getObjectLayouts(
+			objectDefinitionId, start, end);
+	}
+
 	/**
 	 * Returns the number of object layouts.
 	 *
@@ -339,6 +348,12 @@ public class ObjectLayoutLocalServiceWrapper
 	@Override
 	public int getObjectLayoutsCount() {
 		return _objectLayoutLocalService.getObjectLayoutsCount();
+	}
+
+	@Override
+	public int getObjectLayoutsCount(long objectDefinitionId) {
+		return _objectLayoutLocalService.getObjectLayoutsCount(
+			objectDefinitionId);
 	}
 
 	/**

@@ -48,12 +48,12 @@ public class ObjectLayoutLocalServiceUtil {
 	public static ObjectLayout addObjectLayout(
 			long userId, long objectDefinitionId, boolean defaultObjectLayout,
 			Map<java.util.Locale, String> nameMap,
-			com.liferay.portal.kernel.json.JSONArray objectLayoutTabsJSONArray)
+			List<com.liferay.object.model.ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException {
 
 		return getService().addObjectLayout(
 			userId, objectDefinitionId, defaultObjectLayout, nameMap,
-			objectLayoutTabsJSONArray);
+			objectLayoutTabs);
 	}
 
 	/**
@@ -298,6 +298,12 @@ public class ObjectLayoutLocalServiceUtil {
 		return getService().getObjectLayouts(start, end);
 	}
 
+	public static List<ObjectLayout> getObjectLayouts(
+		long objectDefinitionId, int start, int end) {
+
+		return getService().getObjectLayouts(objectDefinitionId, start, end);
+	}
+
 	/**
 	 * Returns the number of object layouts.
 	 *
@@ -305,6 +311,10 @@ public class ObjectLayoutLocalServiceUtil {
 	 */
 	public static int getObjectLayoutsCount() {
 		return getService().getObjectLayoutsCount();
+	}
+
+	public static int getObjectLayoutsCount(long objectDefinitionId) {
+		return getService().getObjectLayoutsCount(objectDefinitionId);
 	}
 
 	/**

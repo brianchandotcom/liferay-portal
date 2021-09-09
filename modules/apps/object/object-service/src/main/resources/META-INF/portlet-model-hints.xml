@@ -131,6 +131,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="objectLayoutId" type="long" />
+		<field name="objectRelationshipId" type="long" />
 		<field localized="true" name="name" type="String" />
 		<field name="priority" type="int" />
 	</model>

@@ -42,6 +42,7 @@ public class ObjectLayoutTabSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setObjectLayoutId(model.getObjectLayoutId());
+		soapModel.setObjectRelationshipId(model.getObjectRelationshipId());
 		soapModel.setName(model.getName());
 		soapModel.setPriority(model.getPriority());
 
@@ -175,6 +176,14 @@ public class ObjectLayoutTabSoap implements Serializable {
 		_objectLayoutId = objectLayoutId;
 	}
 
+	public long getObjectRelationshipId() {
+		return _objectRelationshipId;
+	}
+
+	public void setObjectRelationshipId(long objectRelationshipId) {
+		_objectRelationshipId = objectRelationshipId;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -200,6 +209,7 @@ public class ObjectLayoutTabSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _objectLayoutId;
+	private long _objectRelationshipId;
 	private String _name;
 	private int _priority;
 

@@ -285,6 +285,11 @@ public class ObjectLayoutBoxWrapper
 		return model.getObjectLayoutBoxId();
 	}
 
+	@Override
+	public java.util.List<ObjectLayoutRow> getObjectLayoutRows() {
+		return model.getObjectLayoutRows();
+	}
+
 	/**
 	 * Returns the object layout tab ID of this object layout box.
 	 *
@@ -501,6 +506,13 @@ public class ObjectLayoutBoxWrapper
 	@Override
 	public void setObjectLayoutBoxId(long objectLayoutBoxId) {
 		model.setObjectLayoutBoxId(objectLayoutBoxId);
+	}
+
+	@Override
+	public void setObjectLayoutRows(
+		java.util.List<ObjectLayoutRow> objectLayoutRows) {
+
+		model.setObjectLayoutRows(objectLayoutRows);
 	}
 
 	/**

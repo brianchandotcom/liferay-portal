@@ -84,7 +84,8 @@ public class ObjectLayoutTabModelImpl
 		{"objectLayoutTabId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"objectLayoutId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"objectLayoutId", Types.BIGINT},
+		{"objectRelationshipId", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"priority", Types.INTEGER}
 	};
 
@@ -101,12 +102,13 @@ public class ObjectLayoutTabModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("objectLayoutId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("objectRelationshipId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectLayoutTab (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectLayoutTabId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectLayoutId LONG,name STRING null,priority INTEGER)";
+		"create table ObjectLayoutTab (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectLayoutTabId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectLayoutId LONG,objectRelationshipId LONG,name STRING null,priority INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectLayoutTab";
 
@@ -331,6 +333,12 @@ public class ObjectLayoutTabModelImpl
 			"objectLayoutId",
 			(BiConsumer<ObjectLayoutTab, Long>)
 				ObjectLayoutTab::setObjectLayoutId);
+		attributeGetterFunctions.put(
+			"objectRelationshipId", ObjectLayoutTab::getObjectRelationshipId);
+		attributeSetterBiConsumers.put(
+			"objectRelationshipId",
+			(BiConsumer<ObjectLayoutTab, Long>)
+				ObjectLayoutTab::setObjectRelationshipId);
 		attributeGetterFunctions.put("name", ObjectLayoutTab::getName);
 		attributeSetterBiConsumers.put(
 			"name",
@@ -531,6 +539,20 @@ public class ObjectLayoutTabModelImpl
 	public long getOriginalObjectLayoutId() {
 		return GetterUtil.getLong(
 			this.<Long>getColumnOriginalValue("objectLayoutId"));
+	}
+
+	@Override
+	public long getObjectRelationshipId() {
+		return _objectRelationshipId;
+	}
+
+	@Override
+	public void setObjectRelationshipId(long objectRelationshipId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_objectRelationshipId = objectRelationshipId;
 	}
 
 	@Override
@@ -790,6 +812,7 @@ public class ObjectLayoutTabModelImpl
 		objectLayoutTabImpl.setCreateDate(getCreateDate());
 		objectLayoutTabImpl.setModifiedDate(getModifiedDate());
 		objectLayoutTabImpl.setObjectLayoutId(getObjectLayoutId());
+		objectLayoutTabImpl.setObjectRelationshipId(getObjectRelationshipId());
 		objectLayoutTabImpl.setName(getName());
 		objectLayoutTabImpl.setPriority(getPriority());
 
@@ -820,6 +843,8 @@ public class ObjectLayoutTabModelImpl
 			this.<Date>getColumnOriginalValue("modifiedDate"));
 		objectLayoutTabImpl.setObjectLayoutId(
 			this.<Long>getColumnOriginalValue("objectLayoutId"));
+		objectLayoutTabImpl.setObjectRelationshipId(
+			this.<Long>getColumnOriginalValue("objectRelationshipId"));
 		objectLayoutTabImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
 		objectLayoutTabImpl.setPriority(
@@ -946,6 +971,9 @@ public class ObjectLayoutTabModelImpl
 
 		objectLayoutTabCacheModel.objectLayoutId = getObjectLayoutId();
 
+		objectLayoutTabCacheModel.objectRelationshipId =
+			getObjectRelationshipId();
+
 		objectLayoutTabCacheModel.name = getName();
 
 		String name = objectLayoutTabCacheModel.name;
@@ -1056,6 +1084,7 @@ public class ObjectLayoutTabModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _objectLayoutId;
+	private long _objectRelationshipId;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private int _priority;
@@ -1098,6 +1127,8 @@ public class ObjectLayoutTabModelImpl
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("objectLayoutId", _objectLayoutId);
+		_columnOriginalValues.put(
+			"objectRelationshipId", _objectRelationshipId);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("priority", _priority);
 	}
@@ -1141,9 +1172,11 @@ public class ObjectLayoutTabModelImpl
 
 		columnBitmasks.put("objectLayoutId", 256L);
 
-		columnBitmasks.put("name", 512L);
+		columnBitmasks.put("objectRelationshipId", 512L);
 
-		columnBitmasks.put("priority", 1024L);
+		columnBitmasks.put("name", 1024L);
+
+		columnBitmasks.put("priority", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

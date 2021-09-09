@@ -289,6 +289,11 @@ public class ObjectLayoutWrapper
 		return model.getObjectLayoutId();
 	}
 
+	@Override
+	public java.util.List<ObjectLayoutTab> getObjectLayoutTabs() {
+		return model.getObjectLayoutTabs();
+	}
+
 	/**
 	 * Returns the primary key of this object layout.
 	 *
@@ -500,6 +505,13 @@ public class ObjectLayoutWrapper
 	@Override
 	public void setObjectLayoutId(long objectLayoutId) {
 		model.setObjectLayoutId(objectLayoutId);
+	}
+
+	@Override
+	public void setObjectLayoutTabs(
+		java.util.List<ObjectLayoutTab> objectLayoutTabs) {
+
+		model.setObjectLayoutTabs(objectLayoutTabs);
 	}
 
 	/**

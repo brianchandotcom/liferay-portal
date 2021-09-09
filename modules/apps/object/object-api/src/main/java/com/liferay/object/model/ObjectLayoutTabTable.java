@@ -53,6 +53,10 @@ public class ObjectLayoutTabTable extends BaseTable<ObjectLayoutTabTable> {
 	public final Column<ObjectLayoutTabTable, Long> objectLayoutId =
 		createColumn(
 			"objectLayoutId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ObjectLayoutTabTable, Long> objectRelationshipId =
+		createColumn(
+			"objectRelationshipId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectLayoutTabTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectLayoutTabTable, Integer> priority = createColumn(

@@ -135,6 +135,8 @@ public class ObjectLayoutTabPersistenceTest {
 
 		newObjectLayoutTab.setObjectLayoutId(RandomTestUtil.nextLong());
 
+		newObjectLayoutTab.setObjectRelationshipId(RandomTestUtil.nextLong());
+
 		newObjectLayoutTab.setName(RandomTestUtil.randomString());
 
 		newObjectLayoutTab.setPriority(RandomTestUtil.nextInt());
@@ -170,6 +172,9 @@ public class ObjectLayoutTabPersistenceTest {
 		Assert.assertEquals(
 			existingObjectLayoutTab.getObjectLayoutId(),
 			newObjectLayoutTab.getObjectLayoutId());
+		Assert.assertEquals(
+			existingObjectLayoutTab.getObjectRelationshipId(),
+			newObjectLayoutTab.getObjectRelationshipId());
 		Assert.assertEquals(
 			existingObjectLayoutTab.getName(), newObjectLayoutTab.getName());
 		Assert.assertEquals(
@@ -230,7 +235,8 @@ public class ObjectLayoutTabPersistenceTest {
 			"ObjectLayoutTab", "mvccVersion", true, "uuid", true,
 			"objectLayoutTabId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"objectLayoutId", true, "name", true, "priority", true);
+			"objectLayoutId", true, "objectRelationshipId", true, "name", true,
+			"priority", true);
 	}
 
 	@Test
@@ -444,6 +450,8 @@ public class ObjectLayoutTabPersistenceTest {
 		objectLayoutTab.setModifiedDate(RandomTestUtil.nextDate());
 
 		objectLayoutTab.setObjectLayoutId(RandomTestUtil.nextLong());
+
+		objectLayoutTab.setObjectRelationshipId(RandomTestUtil.nextLong());
 
 		objectLayoutTab.setName(RandomTestUtil.randomString());
 

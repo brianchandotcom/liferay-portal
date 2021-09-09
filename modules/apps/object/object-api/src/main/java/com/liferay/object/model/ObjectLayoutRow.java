@@ -55,4 +55,9 @@ public interface ObjectLayoutRow extends ObjectLayoutRowModel {
 
 		};
 
+	public java.util.List<ObjectLayoutColumn> getObjectLayoutColumns();
+
+	public void setObjectLayoutColumns(
+		java.util.List<ObjectLayoutColumn> objectLayoutColumns);
+
 }

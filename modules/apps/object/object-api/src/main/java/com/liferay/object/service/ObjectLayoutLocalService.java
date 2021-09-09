@@ -16,6 +16,7 @@ package com.liferay.object.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.object.model.ObjectLayout;
+import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -68,7 +68,7 @@ public interface ObjectLayoutLocalService
 	 */
 	public ObjectLayout addObjectLayout(
 			long userId, long objectDefinitionId, boolean defaultObjectLayout,
-			Map<Locale, String> nameMap, JSONArray objectLayoutTabsJSONArray)
+			Map<Locale, String> nameMap, List<ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException;
 
 	/**
@@ -268,6 +268,10 @@ public interface ObjectLayoutLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectLayout> getObjectLayouts(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectLayout> getObjectLayouts(
+		long objectDefinitionId, int start, int end);
+
 	/**
 	 * Returns the number of object layouts.
 	 *
@@ -275,6 +279,9 @@ public interface ObjectLayoutLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getObjectLayoutsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getObjectLayoutsCount(long objectDefinitionId);
 
 	/**
 	 * Returns the OSGi service identifier.

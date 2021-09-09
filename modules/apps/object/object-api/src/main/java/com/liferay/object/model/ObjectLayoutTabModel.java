@@ -223,6 +223,20 @@ public interface ObjectLayoutTabModel
 	public void setObjectLayoutId(long objectLayoutId);
 
 	/**
+	 * Returns the object relationship ID of this object layout tab.
+	 *
+	 * @return the object relationship ID of this object layout tab
+	 */
+	public long getObjectRelationshipId();
+
+	/**
+	 * Sets the object relationship ID of this object layout tab.
+	 *
+	 * @param objectRelationshipId the object relationship ID of this object layout tab
+	 */
+	public void setObjectRelationshipId(long objectRelationshipId);
+
+	/**
 	 * Returns the name of this object layout tab.
 	 *
 	 * @return the name of this object layout tab

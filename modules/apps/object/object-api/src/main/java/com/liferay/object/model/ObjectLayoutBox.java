@@ -55,4 +55,9 @@ public interface ObjectLayoutBox extends ObjectLayoutBoxModel {
 
 		};
 
+	public java.util.List<ObjectLayoutRow> getObjectLayoutRows();
+
+	public void setObjectLayoutRows(
+		java.util.List<ObjectLayoutRow> objectLayoutRows);
+
 }

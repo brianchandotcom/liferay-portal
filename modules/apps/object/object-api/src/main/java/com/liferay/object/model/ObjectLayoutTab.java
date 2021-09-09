@@ -55,4 +55,9 @@ public interface ObjectLayoutTab extends ObjectLayoutTabModel {
 
 		};
 
+	public java.util.List<ObjectLayoutBox> getObjectLayoutBoxes();
+
+	public void setObjectLayoutBoxes(
+		java.util.List<ObjectLayoutBox> objectLayoutBoxes);
+
 }

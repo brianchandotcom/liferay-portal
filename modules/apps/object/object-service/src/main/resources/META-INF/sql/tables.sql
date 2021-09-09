@@ -129,6 +129,7 @@ create table ObjectLayoutTab (
 	createDate DATE null,
 	modifiedDate DATE null,
 	objectLayoutId LONG,
+	objectRelationshipId LONG,
 	name STRING null,
 	priority INTEGER
 );

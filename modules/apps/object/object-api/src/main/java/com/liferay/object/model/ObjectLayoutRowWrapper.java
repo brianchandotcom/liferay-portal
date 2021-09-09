@@ -175,6 +175,11 @@ public class ObjectLayoutRowWrapper
 		return model.getObjectLayoutBoxId();
 	}
 
+	@Override
+	public java.util.List<ObjectLayoutColumn> getObjectLayoutColumns() {
+		return model.getObjectLayoutColumns();
+	}
+
 	/**
 	 * Returns the object layout row ID of this object layout row.
 	 *
@@ -293,6 +298,13 @@ public class ObjectLayoutRowWrapper
 	@Override
 	public void setObjectLayoutBoxId(long objectLayoutBoxId) {
 		model.setObjectLayoutBoxId(objectLayoutBoxId);
+	}
+
+	@Override
+	public void setObjectLayoutColumns(
+		java.util.List<ObjectLayoutColumn> objectLayoutColumns) {
+
+		model.setObjectLayoutColumns(objectLayoutColumns);
 	}
 
 	/**

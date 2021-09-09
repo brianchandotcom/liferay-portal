@@ -30,7 +30,7 @@ definition {
 	macro mapFragment {
 		Select(
 			locator1 = "VisualizeObjectCollectionDisplay#MAP_FRAGMENT",
-			value1 = "${fieldName}");
+			value1 = "${fieldLabel}");
 	}
 
 	macro openHeading {
@@ -44,7 +44,7 @@ definition {
 	macro viewMappedFragment {
 		AssertSelectedLabel(
 			locator1 = "VisualizeObjectCollectionDisplay#MAP_FRAGMENT",
-			value1 = "${fieldName}");
+			value1 = "${fieldLabel}");
 	}
 
 	macro viewObjectCollectionProvider {

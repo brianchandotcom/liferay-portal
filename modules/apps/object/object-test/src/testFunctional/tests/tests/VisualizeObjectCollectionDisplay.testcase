@@ -33,14 +33,14 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
-			fieldLabelName = "Not Required Field",
+			fieldLabelName = "Number",
 			fieldName = "integer",
 			fieldType = "Integer",
 			isRequired = "false",
 			objectName = "CustomObject");
 
 		ObjectAdmin.addObjectFieldViaAPI(
-			fieldLabelName = "Not Required Field",
+			fieldLabelName = "Text",
 			fieldName = "text",
 			fieldType = "String",
 			isRequired = "false",
@@ -61,13 +61,13 @@ definition {
 
 		VisualizeObjectCollectionDisplay.openHeading();
 
-		VisualizeObjectCollectionDisplay.mapFragment(fieldName = "integer");
+		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Number");
 
-		VisualizeObjectCollectionDisplay.viewMappedFragment(fieldName = "integer");
+		VisualizeObjectCollectionDisplay.viewMappedFragment(fieldLabel = "Number");
 
-		VisualizeObjectCollectionDisplay.mapFragment(fieldName = "text");
+		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Text");
 
-		VisualizeObjectCollectionDisplay.viewMappedFragment(fieldName = "text");
+		VisualizeObjectCollectionDisplay.viewMappedFragment(fieldLabel = "Text");
 	}
 
 	@description = "LPS-133865 - Verify if the Object is displayed to be selected as Collection Provider on the Collection Display fragment"

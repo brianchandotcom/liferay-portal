@@ -14,8 +14,25 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.object.model.ObjectLayoutColumn;
+
+import java.util.List;
+
 /**
  * @author Marco Leo
  */
 public class ObjectLayoutRowImpl extends ObjectLayoutRowBaseImpl {
+
+	public List<ObjectLayoutColumn> getObjectLayoutColumns() {
+		return _objectLayoutColumns;
+	}
+
+	public void setObjectLayoutColumns(
+		List<ObjectLayoutColumn> objectLayoutColumns) {
+
+		_objectLayoutColumns = objectLayoutColumns;
+	}
+
+	private List<ObjectLayoutColumn> _objectLayoutColumns;
+
 }

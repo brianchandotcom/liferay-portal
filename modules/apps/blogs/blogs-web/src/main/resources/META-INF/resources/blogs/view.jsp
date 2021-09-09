@@ -32,6 +32,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 %>
 
 <liferay-ui:success key='<%= portletDisplay.getId() + "requestProcessed" %>' message="your-request-completed-successfully" />
+<liferay-ui:success key="blogEntryPublished" message="the-blog-entry-was-published-succesfully" />
 
 <portlet:actionURL name="/blogs/edit_entry" var="restoreTrashEntriesURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />

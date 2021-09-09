@@ -178,7 +178,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addAssigneeToRoleViaAccountDetailsPage {
+	macro addAssigneeToRoleViaRolesTab {
 		Navigator.gotoNavTab(navTab = "Roles");
 
 		LexiconEntry.gotoEntryMenuItemNoError(

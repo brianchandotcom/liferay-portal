@@ -40,7 +40,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		Accounts.addAssigneeToRoleViaAccountDetailsPage(
+		Accounts.addAssigneeToRoleViaRolesTab(
 			accountRoleTitle = "Account Administrator",
 			assigneeName = "userfn");
 

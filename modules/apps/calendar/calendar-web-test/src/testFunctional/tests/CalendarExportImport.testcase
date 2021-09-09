@@ -80,6 +80,8 @@ definition {
 
 	@priority = "4"
 	test ImportCalendarAndViewEventComment {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Calendar.enableComments(

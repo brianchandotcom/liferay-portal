@@ -34,7 +34,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.io.Serializable;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
 
 import javax.ws.rs.NotFoundException;
@@ -225,10 +224,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		Long objectEntryId) {
 
 		return new DefaultDTOConverterContext(
-			contextAcceptLanguage.isAcceptAllLanguages(),
-			Collections.singletonMap(
-				"delete", Collections.singletonMap("delete", "")),
-			null, contextHttpServletRequest, objectEntryId,
+			contextAcceptLanguage.isAcceptAllLanguages(), null, null,
+			contextHttpServletRequest, objectEntryId,
 			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 			contextUser);
 	}

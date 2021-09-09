@@ -168,56 +168,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		return serviceRegistrations;
 	}
 
-	private void _excludeScopedMethods(
-		ObjectDefinition objectDefinition,
-		ObjectScopeProvider objectScopeProvider) {
-		try {
-			String factoryPid =
-				"com.liferay.portal.vulcan.internal.configuration." +
-					"VulcanConfiguration";
-
-			Configuration configuration =
-				_configurationAdmin.createFactoryConfiguration(
-					factoryPid, "?");
-
-			Method[] methods =
-				BaseObjectEntryResourceImpl.class.getMethods();
-
-			List<String> excludedOperationIds = new ArrayList<>();
-
-			for (Method method : methods) {
-				Path path = method.getAnnotation(Path.class);
-
-				if (path != null) {
-					String value = path.value();
-
-					boolean groupAware = objectScopeProvider.isGroupAware();
-					boolean hasScope = value.contains("scopes");
-
-					if ((!groupAware && hasScope) ||
-						(groupAware && !hasScope &&
-						 !value.equals("/{objectEntryId}"))) {
-
-						excludedOperationIds.add(method.getName());
-					}
-				}
-			}
-
-			configuration.update(
-				HashMapDictionaryBuilder.put(
-					"excludedOperationIds",
-					StringUtil.merge(excludedOperationIds, ",")
-				).put(
-					"path", objectDefinition.getRESTContextPath()
-				).build());
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
-	}
-
 	public ObjectDefinition getObjectDefinition(
 		long companyId, String restContextPath) {
 
@@ -263,6 +213,55 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+	}
+
+	private void _excludeScopedMethods(
+		ObjectDefinition objectDefinition,
+		ObjectScopeProvider objectScopeProvider) {
+
+		try {
+			String factoryPid =
+				"com.liferay.portal.vulcan.internal.configuration." +
+					"VulcanConfiguration";
+
+			Configuration configuration =
+				_configurationAdmin.createFactoryConfiguration(factoryPid, "?");
+
+			Method[] methods = BaseObjectEntryResourceImpl.class.getMethods();
+
+			List<String> excludedOperationIds = new ArrayList<>();
+
+			for (Method method : methods) {
+				Path path = method.getAnnotation(Path.class);
+
+				if (path != null) {
+					String value = path.value();
+
+					boolean groupAware = objectScopeProvider.isGroupAware();
+					boolean hasScope = value.contains("scopes");
+
+					if ((!groupAware && hasScope) ||
+						(groupAware && !hasScope &&
+						 !value.equals("/{objectEntryId}"))) {
+
+						excludedOperationIds.add(method.getName());
+					}
+				}
+			}
+
+			configuration.update(
+				HashMapDictionaryBuilder.put(
+					"excludedOperationIds",
+					StringUtil.merge(excludedOperationIds, ",")
+				).put(
+					"path", objectDefinition.getRESTContextPath()
+				).build());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

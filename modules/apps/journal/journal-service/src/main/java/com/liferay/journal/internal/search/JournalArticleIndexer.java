@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.internal.util.JournalUtil;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -56,14 +54,11 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
@@ -76,7 +71,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.batch.BatchIndexingHelper;
 import com.liferay.portal.search.filter.DateRangeFilterBuilder;
@@ -95,12 +89,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -748,47 +740,19 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 
 		try {
-			JournalArticleDisplay articleDisplay = null;
-
-			String description = document.get(
+			content = document.get(
 				snippetLocale,
 				Field.SNIPPET + StringPool.UNDERLINE + Field.DESCRIPTION,
 				Field.DESCRIPTION);
 
-			if (Validator.isBlank(description)) {
-				articleDisplay = _createArticleDisplay(
-					document, snippetLocale, portletRequest, portletResponse);
-
-				content = _html.stripHtml(articleDisplay.getDescription());
-			}
-			else {
-				content = _stripAndHighlight(description);
+			if (!Validator.isBlank(content)) {
+				return content;
 			}
 
-			content = _html.replaceNewLine(content);
-
-			if (Validator.isBlank(content)) {
-				if (articleDisplay == null) {
-					articleDisplay = _createArticleDisplay(
-						document, snippetLocale, portletRequest,
-						portletResponse);
-				}
-
-				content = _html.extractText(articleDisplay.getContent());
-			}
-
-			String snippet = document.get(
+			content = document.get(
 				snippetLocale,
-				Field.SNIPPET + StringPool.UNDERLINE + Field.CONTENT);
-
-			Set<String> highlights = new HashSet<>();
-
-			HighlightUtil.addSnippet(document, highlights, snippet, "temp");
-
-			content = HighlightUtil.highlight(
-				content, ArrayUtil.toStringArray(highlights),
-				HighlightUtil.HIGHLIGHT_TAG_OPEN,
-				HighlightUtil.HIGHLIGHT_TAG_CLOSE);
+				Field.SNIPPET + StringPool.UNDERLINE + Field.CONTENT,
+				Field.CONTENT);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -966,24 +930,6 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	@Reference
 	protected UIDFactory uidFactory;
 
-	private JournalArticleDisplay _createArticleDisplay(
-		Document document, Locale snippetLocale, PortletRequest portletRequest,
-		PortletResponse portletResponse) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
-		String articleId = document.get(Field.ARTICLE_ID);
-		double version = GetterUtil.getDouble(document.get(Field.VERSION));
-
-		return _journalContent.getDisplay(
-			groupId, articleId, version, null, Constants.VIEW,
-			LocaleUtil.toLanguageId(snippetLocale), 1,
-			new PortletRequestModel(portletRequest, portletResponse),
-			themeDisplay);
-	}
-
 	private void _deleteDocument(JournalArticle article) throws Exception {
 		if ((article.getCtCollectionId() == 0) &&
 			!CTCollectionThreadLocal.isProductionMode()) {
@@ -1052,26 +998,6 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			}
 		}
 	}
-
-	private String _stripAndHighlight(String text) {
-		text = StringUtil.replace(
-			text, _HIGHLIGHT_TAGS, _ESCAPE_SAFE_HIGHLIGHTS);
-
-		text = _html.stripHtml(text);
-
-		text = StringUtil.replace(
-			text, _ESCAPE_SAFE_HIGHLIGHTS, _HIGHLIGHT_TAGS);
-
-		return text;
-	}
-
-	private static final String[] _ESCAPE_SAFE_HIGHLIGHTS = {
-		"[@HIGHLIGHT1@]", "[@HIGHLIGHT2@]"
-	};
-
-	private static final String[] _HIGHLIGHT_TAGS = {
-		HighlightUtil.HIGHLIGHT_TAG_OPEN, HighlightUtil.HIGHLIGHT_TAG_CLOSE
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleIndexer.class);

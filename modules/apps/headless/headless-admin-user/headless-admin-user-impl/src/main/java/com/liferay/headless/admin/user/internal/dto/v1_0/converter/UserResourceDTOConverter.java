@@ -116,6 +116,7 @@ public class UserResourceDTOConverter
 					accountEntryUserRel -> _toAccountBrief(
 						accountEntryUserRel, dtoConverterContext, user),
 					AccountBrief.class);
+				actions = dtoConverterContext.getActions();
 				additionalName = user.getMiddleName();
 				alternateName = user.getScreenName();
 				birthDate = user.getBirthday();

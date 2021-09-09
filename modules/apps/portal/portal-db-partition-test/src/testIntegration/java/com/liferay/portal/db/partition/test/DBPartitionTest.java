@@ -80,6 +80,23 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
+	public void testAddUniqueIndexControlTable() throws Exception {
+		try {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> db.runSQL(
+					"create unique index IX_test on ClassName_ (value)"));
+		}
+		finally {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> {
+					if (dbInspector.hasIndex("ClassName_", "IX_test")) {
+						db.runSQL("drop index IX_test on ClassName_");
+					}
+				});
+		}
+	}
+
+	@Test
 	public void testAlterControlTable() throws Exception {
 		try {
 			DBPartitionUtil.forEachCompanyId(

@@ -227,6 +227,18 @@ public abstract class BaseDBPartitionTestCase {
 		}
 	}
 
+	protected void createAndPopulateControlTable(String tableName)
+		throws Exception {
+
+		try (Statement statement = connection.createStatement()) {
+			statement.execute(
+				"create table " + tableName +
+					" (testColumn bigint primary key)");
+
+			statement.execute("insert into " + tableName + " values (1)");
+		}
+	}
+
 	protected void createAndPopulateTable(String tableName) throws Exception {
 		try (Statement statement = connection.createStatement()) {
 			statement.execute(getCreateTableSQL(tableName));

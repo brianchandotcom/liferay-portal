@@ -160,11 +160,11 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		int viewsCount = _getViewsCount();
 
 		String fullTestTableName =
-			getSchemaName(COMPANY_ID) + "." + TEST_TABLE_NAME;
+			getSchemaName(COMPANY_ID) + "." + TEST_CONTROL_TABLE_NAME;
 
 		try {
-			createAndPopulateTable(TEST_TABLE_NAME);
-			createAndPopulateTable(fullTestTableName);
+			createAndPopulateControlTable(TEST_CONTROL_TABLE_NAME);
+			createAndPopulateControlTable(fullTestTableName);
 
 			try {
 				_removeDBPartition();
@@ -177,7 +177,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			}
 		}
 		finally {
-			dropTable(TEST_TABLE_NAME);
+			dropTable(TEST_CONTROL_TABLE_NAME);
 		}
 	}
 

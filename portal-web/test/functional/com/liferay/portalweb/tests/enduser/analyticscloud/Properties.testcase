@@ -349,8 +349,8 @@ definition {
 			ACSettings.goToDataSources();
 
 			AssertElementNotPresent(
-				dsStatus = "Active",
-				locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_STATUS",
+				key_listStatus = "Active",
+				locator1 = "ACSettings#DATA_SOURCE_LIST_STATUS",
 				value1 = "Active");
 		}
 		task ("Connect AC to DXP") {
@@ -365,8 +365,8 @@ definition {
 			ACSettings.goToDataSources();
 
 			AssertElementPresent(
-				dsStatus = "Active",
-				locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_STATUS");
+				key_listStatus = "Active",
+				locator1 = "ACSettings#DATA_SOURCE_LIST_STATUS");
 		}
 	}
 

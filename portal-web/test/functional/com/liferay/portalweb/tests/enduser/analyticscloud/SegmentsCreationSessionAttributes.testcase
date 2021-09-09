@@ -112,12 +112,55 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9213 | Test Summary: Show 'duplicate' and 'delete' options in a list for every segment criteria"
-	@ignore = "true"
 	@priority = "4"
 	test SegmentCriteriaOptionsContainsDuplicateAndDelete {
+		task ("Connect the DXP to Analytics Cloud") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
 
-		// TODO LRAC-9213 SegmentCriteriaOptionsContainsDuplicateAndDelete pending implementation
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
 
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+		}
+
+		task ("Add criterias from differents attributes") {
+			ACSegments.goToSidebarAttributes(criterion = "Session Attributes");
+
+			ACSegments.addSegmentField(segmentField = "URL");
+
+			ACSegments.goToSidebarAttributes(criterion = "Account Attributes");
+
+			ACSegments.addSegmentField(segmentField = "accountName");
+		}
+
+		task ("Assert that Duplicate and Delete are present in the criterias options") {
+			Click(
+				criteriaName = "URL",
+				index = "1",
+				locator1 = "ACSegments#CRITERIA_ELLIPSIS");
+
+			MenuItem.viewPresent(menuItem = "Duplicate");
+
+			MenuItem.viewPresent(menuItem = "Delete");
+
+			Click(
+				criteriaName = "accountName",
+				index = "1",
+				locator1 = "ACSegments#CRITERIA_ELLIPSIS");
+
+			MenuItem.viewPresent(menuItem = "Duplicate");
+
+			MenuItem.viewPresent(menuItem = "Delete");
+		}
 	}
 
 }

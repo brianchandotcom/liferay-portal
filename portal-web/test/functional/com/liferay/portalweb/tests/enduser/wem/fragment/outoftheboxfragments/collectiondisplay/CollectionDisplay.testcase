@@ -2439,6 +2439,8 @@ definition {
 	@description = "This is a use case for LPS-123825. The user could navigate through pages in Collection Display with the Numeric pagination."
 	@priority = "5"
 	test NavigateToPagesInCollectionDisplayWithNumericPagination {
+		property portal.acceptance = "true";
+
 		task ("Add 5 web contents") {
 			for (var i : list "1,2,3,4,5") {
 				JSONWebcontent.addWebContent(
@@ -2847,6 +2849,8 @@ definition {
 	@description = "This is a use case for LPS-123825. The user could navigate through pages in Collection Display with the Simple pagination."
 	@priority = "5"
 	test NavigateToPagesInCollectionDisplayWithSimplePagination {
+		property portal.acceptance = "true";
+
 		task ("Add 5 web contents") {
 			for (var i : list "1,2,3,4,5") {
 				JSONWebcontent.addWebContent(
@@ -6013,6 +6017,7 @@ definition {
 	@description = "This is a use case for LPS-127023. The related assets should be in Collection Display when select Related Assets from Related Items Collection Provider."
 	@priority = "5"
 	test ViewRelatedAssetsInCollectionDisplay {
+		property portal.acceptance = "true";
 		property testray.main.component.name = "Display Pages";
 
 		task ("Add a display page template for Web Content Article and Basic Web Content") {

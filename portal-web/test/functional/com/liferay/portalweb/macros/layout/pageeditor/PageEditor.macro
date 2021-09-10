@@ -262,13 +262,13 @@ definition {
 					key_displayStyle = "${displayStyle}", locator1 =
 					"PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
 				Click(
-						key_displayStyle = "",
-						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+					key_displayStyle = "",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 			}
 
 			AssertVisible(
-					key_displayStyle = "${displayStyle}",
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+				key_displayStyle = "${displayStyle}",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 
 			Navigator.gotoNavTab(navTab = "${navTab}");
 
@@ -343,8 +343,7 @@ definition {
 					key_position = "${position}",
 					locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 
-				Click(
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_CLEAR_BUTTON");
+				Click(locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_CLEAR_BUTTON");
 			}
 		}
 		else {

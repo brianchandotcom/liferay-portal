@@ -21,7 +21,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Matthew Tambara
  */
-@ExtendedObjectClassDefinition(category = "module-container")
+@ExtendedObjectClassDefinition(
+	category = "module-container", liferayLearnMessageKey = "general",
+	liferayLearnMessageResource = "portal-bundle-blacklist-impl"
+)
 @Meta.OCD(
 	id = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration",
 	localization = "content/Language",

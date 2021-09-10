@@ -728,4 +728,16 @@ definition {
 			value1 = "Top Interests");
 	}
 
+	macro searchTheSegmentProfile {
+		var key_segmentName = "${searchTerm}";
+
+		Type(
+			locator1 = "ACSegments#SEARCH_MEMBER",
+			value1 = "${key_segmentName}");
+
+		KeyPress(
+			locator1 = "ACSegments#SEARCH_MEMBER",
+			value1 = "\ENTER");
+	
+	}
 }

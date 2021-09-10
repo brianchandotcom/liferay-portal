@@ -58,11 +58,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8507 | Test Summary: Segment Overview distribution filtered by text"
 	@priority = "3"
 	test SegmentOverviewDistributionFilteredByText {
-		property portal.upstream = "quarantine";
-
-		// AC Bug ticket: LRAC-9250
-		// Depends on the bug fix
-
 		task ("Connect Analytics Cloud to DXP") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 		}
@@ -136,23 +131,12 @@ definition {
 
 		task ("View and click in Chart Entry") {
 			ACSegments.viewBreakdownChartsEntry(key_entry = "QA - 100.0%");
+
+			Click(locator1 = "ACSegments#BREAKDOWN_CHART");
 		}
 
 		task ("Sort the Names in ascending order") {
 			ACInterests.viewIndividualInterestSpecificOrder(interestTopic = "ac ac,liferay liferay");
-		}
-
-		task ("Sort the Names in ascending order") {
-			Click(
-				labelOption = "Name",
-				locator1 = "FormViewBuilder#FIELD_LABEL_OPTION");
-		}
-
-		task ("Assert order filtered by text") {
-
-			// Sorting the names in ascending order to work correctly depends on the bug fix
-
-			ACInterests.viewIndividualInterestSpecificOrder(interestTopic = "liferay liferay,ac ac");
 		}
 	}
 

@@ -19,10 +19,14 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -32,12 +36,15 @@ import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.taglib.servlet.PipingServletResponseFactory;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -51,10 +58,12 @@ public class ObjectEntriesDetailsDisplayContext {
 
 	public ObjectEntriesDetailsDisplayContext(
 		DDMFormRenderer ddmFormRenderer, HttpServletRequest httpServletRequest,
+		ListTypeEntryLocalService listTypeEntryLocalService,
 		ObjectEntryService objectEntryService,
 		ObjectFieldLocalService objectFieldLocalService) {
 
 		_ddmFormRenderer = ddmFormRenderer;
+		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_objectEntryService = objectEntryService;
 		_objectFieldLocalService = objectFieldLocalService;
 
@@ -82,9 +91,7 @@ public class ObjectEntriesDetailsDisplayContext {
 		return _objectEntry;
 	}
 
-	public String renderDDMForm(PageContext pageContext)
-		throws PortalException {
-
+	public String renderDDMForm(PageContext pageContext) throws Exception {
 		DDMForm ddmForm = _getDDMForm();
 
 		DDMFormRenderingContext ddmFormRenderingContext =
@@ -121,6 +128,24 @@ public class ObjectEntriesDetailsDisplayContext {
 		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
 	}
 
+	private DDMFormFieldOptions _getDDMFieldOptions(long listTypeDefinitionId) {
+		List<ListTypeEntry> listTypeEntries =
+			_listTypeEntryLocalService.getListTypeEntries(listTypeDefinitionId);
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		for (ListTypeEntry listTypeEntry : listTypeEntries) {
+			ddmFormFieldOptions.addOptionLabel(
+				listTypeEntry.getKey(), _objectRequestHelper.getLocale(),
+				GetterUtil.getString(
+					listTypeEntry.getName(_objectRequestHelper.getLocale()),
+					listTypeEntry.getName(
+						listTypeEntry.getDefaultLanguageId())));
+		}
+
+		return ddmFormFieldOptions;
+	}
+
 	private DDMForm _getDDMForm() {
 		ObjectDefinition objectDefinition = getObjectDefinition();
 
@@ -145,6 +170,11 @@ public class ObjectEntriesDetailsDisplayContext {
 		DDMFormField ddmFormField = new DDMFormField(
 			objectField.getName(), DDMFormFieldTypeConstants.TEXT);
 
+		_setDDMFormFieldProperties(
+			ddmFormField,
+			GetterUtil.getLong(objectField.getListTypeDefinitionId()),
+			objectField.getType());
+
 		LocalizedValue ddmFormFieldLabelLocalizedValue = new LocalizedValue(
 			_objectRequestHelper.getLocale());
 
@@ -160,8 +190,7 @@ public class ObjectEntriesDetailsDisplayContext {
 	}
 
 	private DDMFormValues _getDDMFormValues(
-			DDMForm ddmForm, ObjectEntry objectEntry)
-		throws PortalException {
+		DDMForm ddmForm, ObjectEntry objectEntry) {
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
@@ -190,7 +219,41 @@ public class ObjectEntriesDetailsDisplayContext {
 		return ddmFormValues;
 	}
 
+	private void _setDDMFormFieldProperties(
+		DDMFormField ddmFormField, long listTypeDefinitionId, String type) {
+
+		if (_doubleTypes.contains(type)) {
+			ddmFormField.setType(DDMFormFieldTypeConstants.NUMERIC);
+			ddmFormField.setProperty(
+				FieldConstants.DATA_TYPE, FieldConstants.DOUBLE);
+		}
+		else if (_integerTypes.contains(type)) {
+			ddmFormField.setType(DDMFormFieldTypeConstants.NUMERIC);
+			ddmFormField.setProperty(
+				FieldConstants.DATA_TYPE, FieldConstants.INTEGER);
+		}
+		else if (StringUtil.equals(type, "Boolean")) {
+			ddmFormField.setType(DDMFormFieldTypeConstants.CHECKBOX);
+		}
+		else if (StringUtil.equals(type, "Date")) {
+			ddmFormField.setType(DDMFormFieldTypeConstants.DATE);
+		}
+		else if (StringUtil.equals(type, "String") &&
+				 (listTypeDefinitionId > 0)) {
+
+			ddmFormField.setType(DDMFormFieldTypeConstants.SELECT);
+			ddmFormField.setDDMFormFieldOptions(
+				_getDDMFieldOptions(listTypeDefinitionId));
+		}
+	}
+
+	private static final List<String> _doubleTypes = Arrays.asList(
+		"BigDecimal", "Double");
+	private static final List<String> _integerTypes = Arrays.asList(
+		"Integer", "Long");
+
 	private final DDMFormRenderer _ddmFormRenderer;
+	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private ObjectEntry _objectEntry;
 	private final ObjectEntryService _objectEntryService;
 	private final ObjectFieldLocalService _objectFieldLocalService;

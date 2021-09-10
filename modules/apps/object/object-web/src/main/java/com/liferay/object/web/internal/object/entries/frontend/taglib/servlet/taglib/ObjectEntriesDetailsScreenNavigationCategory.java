@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -81,7 +82,8 @@ public class ObjectEntriesDetailsScreenNavigationCategory
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ObjectEntriesDetailsDisplayContext(
-				_ddmFormRenderer, httpServletRequest, _objectEntryService,
+				_ddmFormRenderer, httpServletRequest,
+				_listTypeEntryLocalService, _objectEntryService,
 				_objectFieldLocalService));
 
 		_jspRenderer.renderJSP(
@@ -94,6 +96,9 @@ public class ObjectEntriesDetailsScreenNavigationCategory
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Reference
 	private ObjectEntryService _objectEntryService;

@@ -215,6 +215,33 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteObjectField(
+			@GraphQLName("objectFieldId") Long objectFieldId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_objectFieldResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectFieldResource -> objectFieldResource.deleteObjectField(
+				objectFieldId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteObjectFieldBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectFieldResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectFieldResource -> objectFieldResource.deleteObjectFieldBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
 	public ObjectField patchObjectField(
 			@GraphQLName("objectFieldId") Long objectFieldId,
 			@GraphQLName("objectField") ObjectField objectField)

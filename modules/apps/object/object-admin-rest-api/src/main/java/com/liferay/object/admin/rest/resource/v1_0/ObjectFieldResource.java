@@ -69,6 +69,11 @@ public interface ObjectFieldResource {
 			Long objectDefinitionId, String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteObjectField(Long objectFieldId) throws Exception;
+
+	public Response deleteObjectFieldBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public ObjectField getObjectField(Long objectFieldId) throws Exception;
 
 	public ObjectField patchObjectField(

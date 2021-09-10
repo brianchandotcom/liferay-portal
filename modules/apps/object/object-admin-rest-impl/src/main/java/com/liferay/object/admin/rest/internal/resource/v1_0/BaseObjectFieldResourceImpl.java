@@ -62,6 +62,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
@@ -175,6 +176,61 @@ public abstract class BaseObjectFieldResourceImpl
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.postImportTask(
 				ObjectField.class.getName(), callbackURL, null, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/object-admin/v1.0/object-fields/{objectFieldId}'  -u 'test@liferay.com:test'
+	 */
+	@DELETE
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "objectFieldId")}
+	)
+	@Path("/object-fields/{objectFieldId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ObjectField")})
+	public void deleteObjectField(
+			@NotNull @Parameter(hidden = true) @PathParam("objectFieldId") Long
+				objectFieldId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/object-admin/v1.0/object-fields/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@DELETE
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/object-fields/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "ObjectField")})
+	public Response deleteObjectFieldBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.deleteImportTask(
+				ObjectField.class.getName(), callbackURL, object)
 		).build();
 	}
 
@@ -346,6 +402,10 @@ public abstract class BaseObjectFieldResourceImpl
 			java.util.Collection<ObjectField> objectFields,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		for (ObjectField objectField : objectFields) {
+			deleteObjectField(objectField.getId());
+		}
 	}
 
 	@Override

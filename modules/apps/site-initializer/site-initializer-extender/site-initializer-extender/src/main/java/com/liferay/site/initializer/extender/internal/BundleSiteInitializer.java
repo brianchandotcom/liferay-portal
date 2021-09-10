@@ -17,6 +17,8 @@ package com.liferay.site.initializer.extender.internal;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.commerce.product.importer.CPFileImporter;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
@@ -55,13 +57,19 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -84,11 +92,13 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -107,6 +117,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		CatalogResource.Factory catalogResourceFactory,
 		ChannelResource.Factory channelResourceFactory,
+		CPFileImporter cpFileImporter,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -118,7 +129,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JournalArticleLocalService journalArticleLocalService,
 		JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
-		Portal portal, ServletContext servletContext,
+		Portal portal,
+		ResourcePermissionLocalService resourcePermissionLocalService,
+		RoleLocalService roleLocalService, ServletContext servletContext,
 		StructuredContentFolderResource.Factory
 			structuredContentFolderResourceFactory,
 		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
@@ -130,6 +143,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_bundle = bundle;
 		_catalogResourceFactory = catalogResourceFactory;
 		_channelResourceFactory = channelResourceFactory;
+		_cpFileImporter = cpFileImporter;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
@@ -142,6 +156,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_jsonFactory = jsonFactory;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_portal = portal;
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+		_roleLocalService = roleLocalService;
 		_servletContext = servletContext;
 		_structuredContentFolderResourceFactory =
 			structuredContentFolderResourceFactory;
@@ -202,7 +218,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_addAssetListEntries(serviceContext);
 			_addCommerceCatalogs(serviceContext);
-			_addCommerceChannels(serviceContext);
+
+			List<Channel> commerceChannels = _addCommerceChannels(
+				serviceContext);
+
 			_addDDMTemplates(serviceContext);
 			_addFragmentEntries(serviceContext);
 			_addJournalArticles(
@@ -210,6 +229,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addObjectDefinitions(serviceContext);
 			_addStyleBookEntries(serviceContext);
 			_addTaxonomyVocabularies(serviceContext);
+
+			_addRoles(serviceContext);
+			_addResourcePermissions(
+				"/site-initializer/resource-permissions" +
+					"/resource-permissions.json",
+				serviceContext);
+
+			_addCommerceModelResourcePermissions(
+				CommerceChannel.class.getName(), commerceChannels,
+				"/site-initializer/model-resource-permissions" +
+					"/model-resource-permissions.json",
+				serviceContext);
 		}
 		catch (Exception exception) {
 			throw new InitializationException(exception);
@@ -347,14 +378,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addCommerceChannels(ServiceContext serviceContext)
+	private List<Channel> _addCommerceChannels(ServiceContext serviceContext)
 		throws Exception {
 
-		_addCommerceChannels(
+		return _addCommerceChannels(
 			"/site-initializer/commerce-channels", serviceContext);
 	}
 
-	private void _addCommerceChannels(
+	private List<Channel> _addCommerceChannels(
 			String parentResourcePath, ServiceContext serviceContext)
 		throws Exception {
 
@@ -362,7 +393,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			parentResourcePath);
 
 		if (SetUtil.isEmpty(resourcePaths)) {
-			return;
+			return new ArrayList<>();
 		}
 
 		ChannelResource.Builder channelResourceBuilder =
@@ -371,6 +402,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ChannelResource channelResource = channelResourceBuilder.user(
 			serviceContext.fetchUser()
 		).build();
+
+		List<Channel> commerceChannels = new ArrayList<>();
 
 		for (String resourcePath : resourcePaths) {
 			String json = _read(resourcePath);
@@ -384,8 +417,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			channelResource.postChannel(channel);
+			channel = channelResource.postChannel(channel);
+
+			commerceChannels.add(channel);
 		}
+
+		return commerceChannels;
 	}
 
 	private void _addDDMStructures(ServiceContext serviceContext)
@@ -692,6 +729,48 @@ public class BundleSiteInitializer implements SiteInitializer {
 			"/site-initializer/journal-articles", serviceContext);
 	}
 
+	private void _addCommerceModelResourcePermissions(
+			String className, List<Channel> commerceChannels, String path,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		for (Channel commerceChannel : commerceChannels) {
+			_addModelResourcePermissions(
+				className, String.valueOf(commerceChannel.getId()), path, serviceContext);
+		}
+	}
+
+	private void _addModelResourcePermissions(
+			String className, String instacePrimKey, String path,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String json = _read(path);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			ModelPermissions modelPermissions = ModelPermissionsFactory.create(
+				HashMapBuilder.put(
+					jsonObject.getString("roleName"),
+					ArrayUtil.toStringArray(
+						jsonObject.getJSONArray("actionIds"))
+				).build(),
+				null);
+
+			_resourcePermissionLocalService.addModelResourcePermissions(
+				serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
+				serviceContext.getUserId(), className, instacePrimKey,
+				modelPermissions);
+		}
+	}
+
 	private void _addObjectDefinitions(ServiceContext serviceContext)
 		throws Exception {
 
@@ -736,6 +815,50 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			}
 		}
+	}
+
+	private void _addResourcePermissions(
+			String path, ServiceContext serviceContext)
+		throws Exception {
+
+		String json = _read(path);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			Role role = _roleLocalService.fetchRole(
+				serviceContext.getCompanyId(),
+				jsonObject.getString("roleName"));
+
+			_resourcePermissionLocalService.addResourcePermission(
+				serviceContext.getCompanyId(),
+				jsonObject.getString("resourceName"),
+				jsonObject.getInt("scope"), jsonObject.getString("primKey"),
+				role.getRoleId(), jsonObject.getString("actionId"));
+		}
+	}
+
+	private void _addRoles(ServiceContext serviceContext) throws Exception {
+		_addRoles("/site-initializer/roles/roles.json", serviceContext);
+	}
+
+	private void _addRoles(String path, ServiceContext serviceContext)
+		throws Exception {
+
+		String json = _read(path);
+
+		if (json == null) {
+			return;
+		}
+
+		_cpFileImporter.createRoles(
+			_jsonFactory.createJSONArray(json), serviceContext);
 	}
 
 	private Long _addStructuredContentFolders(
@@ -1016,6 +1139,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final CatalogResource.Factory _catalogResourceFactory;
 	private final ChannelResource.Factory _channelResourceFactory;
 	private final ClassLoader _classLoader;
+	private final CPFileImporter _cpFileImporter;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
@@ -1029,6 +1153,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private final Portal _portal;
+	private final ResourcePermissionLocalService
+		_resourcePermissionLocalService;
+	private final RoleLocalService _roleLocalService;
 	private final ServletContext _servletContext;
 	private final StructuredContentFolderResource.Factory
 		_structuredContentFolderResourceFactory;

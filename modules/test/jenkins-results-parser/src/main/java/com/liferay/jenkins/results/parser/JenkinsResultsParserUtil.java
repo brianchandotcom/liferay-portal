@@ -1404,11 +1404,13 @@ public class JenkinsResultsParserUtil {
 		while (true) {
 			String timeStamp = String.valueOf(getCurrentTimeMillis());
 
-			if (_timeStamps.contains(timeStamp)) {
-				continue;
-			}
+			synchronized (_timeStamps) {
+				if (_timeStamps.contains(timeStamp)) {
+					continue;
+				}
 
-			_timeStamps.add(timeStamp);
+				_timeStamps.add(timeStamp);
+			}
 
 			return timeStamp;
 		}

@@ -48,6 +48,10 @@ public @interface ExtendedObjectClassDefinition {
 
 	public boolean generateUI() default true;
 
+	public String liferayLearnMessageKey() default "";
+
+	public String liferayLearnMessageResource() default "";
+
 	public String[] nameArguments() default {};
 
 	public Scope scope() default Scope.SYSTEM;

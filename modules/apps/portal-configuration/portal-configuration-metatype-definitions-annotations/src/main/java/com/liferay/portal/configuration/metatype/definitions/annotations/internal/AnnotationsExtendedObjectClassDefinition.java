@@ -207,6 +207,12 @@ public class AnnotationsExtendedObjectClassDefinition
 			"generateUI",
 			Boolean.toString(extendedObjectClassDefinition.generateUI())
 		).put(
+			"liferayLearnMessageKey",
+			extendedObjectClassDefinition.liferayLearnMessageKey()
+		).put(
+			"liferayLearnMessageResource",
+			extendedObjectClassDefinition.liferayLearnMessageResource()
+		).put(
 			"name-arguments",
 			StringUtil.merge(extendedObjectClassDefinition.nameArguments())
 		).put(

@@ -79,7 +79,7 @@ public class DDMFormInstanceRecordVersionModelListenerTest
 		);
 
 		_ddmFormInstanceRecordVersionModelListener.onAfterUpdate(
-			ddmFormInstanceRecordVersion);
+			null, ddmFormInstanceRecordVersion);
 	}
 
 	@Test
@@ -107,7 +107,7 @@ public class DDMFormInstanceRecordVersionModelListenerTest
 		);
 
 		_ddmFormInstanceRecordVersionModelListener.onBeforeUpdate(
-			ddmFormInstanceRecordVersion);
+			null, ddmFormInstanceRecordVersion);
 	}
 
 	private void _setUpDDMFormInstanceRecordVersionModelListener() {

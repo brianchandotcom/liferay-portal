@@ -170,93 +170,12 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectEntry"
             tags: ["ObjectEntry"]
-    "/scopes/{scopeId}":
-        get:
-            operationId: getScopeScopePage
-            parameters:
-                - in: path
-                  name: scopeId
-                  schema:
-                      type: string
-                - in: query
-                  name: aggregationTerms
-                  schema:
-                      items:
-                          type: string
-                      type: array
-                - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/ObjectEntry"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/ObjectEntry"
-                                type: array
-            tags: ["ObjectEntry"]
-        post:
-            operationId: postScope
-            parameters:
-                - in: path
-                  name: scopeId
-                  schema:
-                      type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/ObjectEntry"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/ObjectEntry"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/ObjectEntry"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/ObjectEntry"
-            tags: ["ObjectEntry"]
-    "/scopes/{scopeId}/by-external-reference-code/{externalReferenceCode}":
+    "/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}":
         delete:
-            operationId: deleteScopeByExternalReferenceCode
+            operationId: deleteScopeScopeKeyByExternalReferenceCode
             parameters:
                 - in: path
-                  name: scopeId
+                  name: scopeKey
                   required: true
                   schema:
                       type: string
@@ -272,10 +191,10 @@ paths:
                         application/xml: {}
             tags: ["ObjectEntry"]
         get:
-            operationId: getScopeByExternalReferenceCode
+            operationId: getScopeScopeKeyByExternalReferenceCode
             parameters:
                 - in: path
-                  name: scopeId
+                  name: scopeKey
                   required: true
                   schema:
                       type: string
@@ -295,10 +214,10 @@ paths:
                                 $ref: "#/components/schemas/ObjectEntry"
             tags: ["ObjectEntry"]
         put:
-            operationId: putScopeByExternalReferenceCode
+            operationId: putScopeScopeKeyByExternalReferenceCode
             parameters:
                 - in: path
-                  name: scopeId
+                  name: scopeKey
                   required: true
                   schema:
                       type: string
@@ -396,6 +315,87 @@ paths:
                   schema:
                       format: int64
                       type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectEntry"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectEntry"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+            tags: ["ObjectEntry"]
+    /scopes/{scopeKey}:
+        get:
+            operationId: getScopeScopeKeyPage
+            parameters:
+                - in: path
+                  name: scopeKey
+                  schema:
+                      type: string
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ObjectEntry"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ObjectEntry"
+                                type: array
+            tags: ["ObjectEntry"]
+        post:
+            operationId: postScopeScopeKey
+            parameters:
+                - in: path
+                  name: scopeKey
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:

@@ -18,7 +18,11 @@ import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin;
 import com.liferay.commerce.shop.by.diagram.service.base.CPDefinitionDiagramPinLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 
 import java.util.List;
 
@@ -60,10 +64,27 @@ public class CPDefinitionDiagramPinLocalServiceImpl
 		return cpDefinitionDiagramPinPersistence.update(cpDefinitionDiagramPin);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CPDefinitionDiagramPin deleteCPDefinitionDiagramPin(
+		CPDefinitionDiagramPin cpDefinitionDiagramPin) {
+
+		return cpDefinitionDiagramPinPersistence.remove(cpDefinitionDiagramPin);
+	}
+
 	@Override
 	public void deleteCPDefinitionDiagramPins(long cpDefinitionId) {
-		cpDefinitionDiagramPinPersistence.removeByCPDefinitionId(
-			cpDefinitionId);
+		List<CPDefinitionDiagramPin> cpDefinitionDiagramPins =
+			cpDefinitionDiagramPinPersistence.findByCPDefinitionId(
+				cpDefinitionId);
+
+		for (CPDefinitionDiagramPin cpDefinitionDiagramPin :
+				cpDefinitionDiagramPins) {
+
+			cpDefinitionDiagramPinLocalService.deleteCPDefinitionDiagramPin(
+				cpDefinitionDiagramPin);
+		}
 	}
 
 	@Override

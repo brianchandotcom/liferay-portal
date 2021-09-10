@@ -18,7 +18,11 @@ import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.service.base.CPDefinitionDiagramSettingLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -62,6 +66,16 @@ public class CPDefinitionDiagramSettingLocalServiceImpl
 			cpDefinitionDiagramSetting);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CPDefinitionDiagramSetting deleteCPDefinitionDiagramSetting(
+		CPDefinitionDiagramSetting cpDefinitionDiagramSetting) {
+
+		return cpDefinitionDiagramSettingPersistence.remove(
+			cpDefinitionDiagramSetting);
+	}
+
 	@Override
 	public CPDefinitionDiagramSetting deleteCPDefinitionDiagramSetting(
 			long cpDefinitionDiagramSettingId)
@@ -82,8 +96,12 @@ public class CPDefinitionDiagramSettingLocalServiceImpl
 		throws PortalException {
 
 		CPDefinitionDiagramSetting cpDefinitionDiagramSetting =
-			cpDefinitionDiagramSettingPersistence.findByCPDefinitionId(
+			cpDefinitionDiagramSettingPersistence.fetchByCPDefinitionId(
 				cpDefinitionId);
+
+		if (cpDefinitionDiagramSetting == null) {
+			return null;
+		}
 
 		return cpDefinitionDiagramSettingLocalService.
 			deleteCPDefinitionDiagramSetting(cpDefinitionDiagramSetting);

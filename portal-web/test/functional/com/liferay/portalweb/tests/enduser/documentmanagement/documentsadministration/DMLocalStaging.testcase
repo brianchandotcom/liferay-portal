@@ -65,13 +65,43 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136819. It checks that a file version can be deleted and published."
-	@ignore = "true"
 	@priority = "4"
 	test CanPublishDeletedFileVersion {
 		property portal.acceptance = "false";
 
-		// TODO LPS-136819 CanPublishDeletedFileVersion pending implementation
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Site Name-staging",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
 
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.editCP(
+			dmDocumentTitle = "Document_2.jpg",
+			dmDocumentTitleEdit = "DM Document Title Edit");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title Edit",
+			groupName = "Site Name (Staging)",
+			site = "false",
+			siteURLKey = "site-name-staging");
+
+		DMDocument.deleteVersion(dmDocumentVersionNumber = "1.1");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		Staging.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish the selected document?",
+			entry = "Document_2.jpg");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_2.jpg");
 	}
 
 	@description = "This is a test for LPS-136824. It checks that a folder with multiple files can be deleted using the normal publication process."

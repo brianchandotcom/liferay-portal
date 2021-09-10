@@ -62,6 +62,8 @@ public class ObjectEntriesTableClayDataSetDisplayView
 				clayTableSchemaField);
 		}
 
+		clayTableSchemaBuilder.addClayTableSchemaField("creator.name", "author");
+
 		_clayTableSchema = clayTableSchemaBuilder.build();
 	}
 

@@ -1457,6 +1457,13 @@ definition {
 		}
 	}
 
+	macro viewFieldText {
+		AssertElementPresent(
+			key_fieldLabel = "${fieldText}",
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#CHECKBOX_TEXT_LABEL");
+	}
+
 	macro viewFieldValidationErrorMessage {
 		var key_fieldName = "${fieldName}";
 

@@ -1783,6 +1783,15 @@ war.path=${app.server.portal.dir}/</echo>
 							</fileset>
 						</chmod>
 
+						<chmod
+							perm="a+rwx"
+							type="both"
+						>
+							<fileset
+								dir="${test.app.server.parent.dir}/elasticsearch-sidecar"
+							/>
+						</chmod>
+
 						<local name="jmx.remote.port.overwrite" />
 
 						<math

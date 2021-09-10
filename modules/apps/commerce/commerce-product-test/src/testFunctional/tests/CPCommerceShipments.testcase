@@ -751,11 +751,8 @@ definition {
 
 		CommerceOrders.createShipment(
 			productSKUList = "MIN55861",
-			warehouseName = "Italy");
-
-		Click(
-			key_text = "Deliver",
-			locator1 = "Button#ANY");
+			warehouseName = "Italy",
+			complement = "Deliver");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Order Management",

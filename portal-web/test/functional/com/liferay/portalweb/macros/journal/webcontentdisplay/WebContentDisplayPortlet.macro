@@ -595,6 +595,20 @@ definition {
 		AssertVisible(locator1 = "Home#PAGE_ACTIVE");
 	}
 
+	macro viewNotPresent {
+		var key_fieldName = "${metadataName}";
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertElementNotPresent(
+			key_fieldName = "${metadataName}",
+			locator1 = "Portlet#CONFIGURATION_CHECKBOX");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
 	macro viewRecycleBinMessage {
 		var key_webContentTitle = "${webContentTitle}";
 

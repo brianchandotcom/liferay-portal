@@ -202,9 +202,9 @@ definition {
 			dmFolderDescription = "DM Folder Description",
 			dmFolderDescriptionEdit = "DM Folder Description Edit",
 			dmFolderName = "DM Folder Name",
-			dmFolderNameEdit = "DM Folder Name Name");
+			dmFolderNameEdit = "DM Folder Name Edit");
 
-		DMFolder.viewCP(dmFolderName = "DM Folder Name Name");
+		DMFolder.viewCP(dmFolderName = "DM Folder Name Edit");
 	}
 
 	@description = "This ensures that a LAR file consisting of a DL document and image can be imported in a depot."

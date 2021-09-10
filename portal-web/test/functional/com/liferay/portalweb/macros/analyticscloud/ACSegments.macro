@@ -421,6 +421,18 @@ definition {
 			value1 = "\ENTER");
 	}
 
+	macro searchTheSegmentProfile {
+		var key_segmentName = "${searchTerm}";
+
+		Type(
+			locator1 = "ACSegments#SEARCH_MEMBER",
+			value1 = "${key_segmentName}");
+
+		KeyPress(
+			locator1 = "ACSegments#SEARCH_MEMBER",
+			value1 = "\ENTER");
+	}
+
 	macro selectDistributionByAttribute {
 		Click(locator1 = "ACSegments#ATTRIBUTE_TEXT_INPUT");
 
@@ -728,16 +740,4 @@ definition {
 			value1 = "Top Interests");
 	}
 
-	macro searchTheSegmentProfile {
-		var key_segmentName = "${searchTerm}";
-
-		Type(
-			locator1 = "ACSegments#SEARCH_MEMBER",
-			value1 = "${key_segmentName}");
-
-		KeyPress(
-			locator1 = "ACSegments#SEARCH_MEMBER",
-			value1 = "\ENTER");
-	
-	}
 }

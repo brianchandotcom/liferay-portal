@@ -57,6 +57,9 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
 
 		ACUtils.tearDownAC();
 	}
@@ -136,12 +139,94 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8625 | Test Summary: Search the Segment Profile Distribution"
-	@ignore = "true"
 	@priority = "3"
 	test CanSearchTheSegmentProfileDistribution {
+		var userList = "DXP,LiferayAC";
 
-		// TODO LRAC-8625 CanSearchTheSegmentProfileDistribution pending implementation
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
+		task ("Create new users") {
+			for (var userCreate : list "${userList}") {
+				JSONUser.addUser(
+					jobTitle = "QA",
+					userEmailAddress = "${userCreate}@liferay.com",
+					userFirstName = "${userCreate}",
+					userLastName = "${userCreate}",
+					userScreenName = "${userCreate}");
+			}
+		}
+
+		ACDXPSettings.syncNewContactData();
+
+		task ("View AC Page as new user") {
+			for (var userLogin : list "${userList}") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${userLogin}@liferay.com",
+					userLoginFullName = "${userLogin} ${userLogin}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Add new user as member") {
+			for (var userAdd : list "${userList}") {
+				ACSegments.addStaticMember(tableMember = "${userAdd} ${userAdd}");
+			}
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to Segments") {
+			ACNavigation.goToSegments();
+
+			ACSegments.accessSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Filter Attribute") {
+			ACNavigation.switchTab(tabName = "Distribution");
+
+			ACSegments.selectDistributionByAttribute(attribute = "jobTitle");
+		}
+
+		task ("Click on the category in the dashboard") {
+			Click(locator1 = "ACSegments#BREAKDOWN_CHART");
+		}
+
+		task ("Assert that a right word will be found") {
+			for (var userSearch : list "${userList}") {
+				ACSegments.searchTheSegmentProfile(searchTerm = "${userSearch} ${userSearch}");
+
+				ACInterests.viewIndividualInterestSpecificOrder(interestTopic = "${userSearch} ${userSearch}");
+			}
+		}
+
+		task ("Assert that a wrong word will be not found") {
+			ACSegments.searchTheSegmentProfile(searchTerm = "wrong");
+
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8624 | Test Summary: Order the Segment Profile Distribution"

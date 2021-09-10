@@ -156,6 +156,56 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-124478. The template creator could copy an information template."
+	@priority = "4"
+	@uitest
+	test CopyInformationTemplate {
+		task ("Add an information template for Asset") {
+			JSONDDMtemplate.addInformationTemplate(
+				groupName = "Test Site Name",
+				itemType = "Asset",
+				name = "Test Information Template");
+		}
+
+		task ("Access to the template editor") {
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+
+			InformationTemplates.gotoInformationTemplateEllipsisItem(
+				informationTemplateName = "Test Information Template",
+				item = "Edit");
+		}
+
+		task ("Add the Test Information Template field") {
+			InformationTemplates.addField(
+				fieldName = "Test Information Template",
+				panelTitle = "Information Templates");
+		}
+
+		task ("Save the information template") {
+			PortletEntry.save();
+		}
+
+		task ("View the information template entry") {
+			InformationTemplates.viewTemplate(
+				informationTemplateName = "Test Information Template",
+				itemType = "Asset");
+		}
+
+		task ("Copy the information template") {
+			InformationTemplates.copyCP(
+				informationTemplateCopyName = "Test Information Template (Copy)",
+				informationTemplateName = "Test Information Template");
+		}
+
+		task ("View both information templates shown") {
+			for (var informationTemplateName : list "Test Information Template,Test Information Template (Copy)") {
+				InformationTemplates.viewTemplate(
+					informationTemplateName = "${informationTemplateName}",
+					itemType = "Asset");
+			}
+		}
+	}
+
 	@description = "This is a use case for LPS-124478. The template creator could delete an information template."
 	@priority = "4"
 	@uitest

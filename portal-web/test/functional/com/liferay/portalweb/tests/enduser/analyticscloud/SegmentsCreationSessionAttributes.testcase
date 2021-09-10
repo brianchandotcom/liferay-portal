@@ -9,13 +9,21 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
+		}
+
+		task ("Add a new site and page") {
+			ACUtils.addSiteAndPage();
+		}
 	}
 
 	tearDown {
@@ -30,22 +38,81 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9204 | Test Summary: Add segment using a session property 'Device Brand'"
-	@ignore = "true"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9204 | Test Summary: Add segment using a session property 'Device'"
 	@priority = "4"
-	test CanCreateSessionAttributeUsingDeviceBrand {
+	test CanCreateSessionAttributeUsingDevice {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-9204 CanCreateSessionAttributeUsingDeviceBrand pending implementation
+		// AC Refactor: timing issue for total members and membership card
+		// AC Refactor ticket: LRAC-9264
 
-	}
+		task ("Connect the DXP to Analytics Cloud") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9205 | Test Summary: Add segment using a session property 'Device Model'"
-	@ignore = "true"
-	@priority = "4"
-	test CanCreateSessionAttributeUsingDeviceModel {
+		task ("Launch DXP and visit the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
 
-		// TODO LRAC-9205 CanCreateSessionAttributeUsingDeviceModel pending implementation
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
 
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		// Total Members data is taking too much time to appear
+
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "New Segment Test");
+		}
+
+		task ("Add a Device Brand field") {
+			ACSegments.goToSidebarAttributes(criterion = "Session Attributes");
+
+			ACSegments.addSegmentField(segmentField = "Device");
+
+			ACSegments.selectOperator(operator = "is");
+
+			ACSegments.editTextCriterion(textInput = "Desktop");
+		}
+
+		task ("Save the segment") {
+			ACSegments.saveSegment();
+		}
+
+		task ("Assert the criteria is correct in Segment Criteria card") {
+			ACSegments.viewSegmentCriteriaSessionAttributes(
+				attributeName = "Device",
+				attributeValue = '''"Desktop"''',
+				condition = "is",
+				preposition = "since",
+				time = "last 24 hours");
+		}
+
+		task ("Assert that the user is present on the segment") {
+			ACNavigation.switchTab(tabName = "Membership");
+
+			ACSegments.assertMember(memberName = "Test Test");
+
+			ACNavigation.switchTab(tabName = "Overview");
+
+			// Takes too much time to the card data appear
+
+			ACSegments.viewSegmentMembershipLegendNumbers(
+				anonymousNumber = "0",
+				knownNumber = "1",
+				totalNumber = "1");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9206 | Test Summary: Add segment using a session property 'Language'"

@@ -15,6 +15,8 @@
 package com.liferay.portal.kernel.webdav;
 
 import com.liferay.document.library.kernel.util.DL;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -37,15 +40,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.GroupFriendlyURLComparator;
 import com.liferay.portal.kernel.xml.Namespace;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.collections.ServiceRegistrationMap;
-import com.liferay.registry.collections.ServiceRegistrationMapImpl;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -55,6 +49,10 @@ import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Brian Wing Shun Chan
@@ -72,10 +70,6 @@ public class WebDAVUtil {
 
 	public static final String TOKEN_PREFIX = "opaquelocktoken:";
 
-	public static void addStorage(WebDAVStorage storage) {
-		_webDAVUtil._addStorage(storage);
-	}
-
 	public static Namespace createNamespace(String prefix, String uri) {
 		Namespace namespace = null;
 
@@ -90,10 +84,6 @@ public class WebDAVUtil {
 		}
 
 		return namespace;
-	}
-
-	public static void deleteStorage(WebDAVStorage storage) {
-		_webDAVUtil._deleteStorage(storage);
 	}
 
 	public static long getDepth(HttpServletRequest httpServletRequest) {
@@ -221,10 +211,6 @@ public class WebDAVUtil {
 		return groupsList;
 	}
 
-	public static WebDAVUtil getInstance() {
-		return _webDAVUtil;
-	}
-
 	public static String getLockUuid(HttpServletRequest httpServletRequest)
 		throws WebDAVException {
 
@@ -278,7 +264,7 @@ public class WebDAVUtil {
 	}
 
 	public static WebDAVStorage getStorage(String token) {
-		return _webDAVUtil._getStorage(token);
+		return _storages.getService(token);
 	}
 
 	public static String getStorageToken(Portlet portlet) {
@@ -293,7 +279,7 @@ public class WebDAVUtil {
 	}
 
 	public static Collection<String> getStorageTokens() {
-		return _webDAVUtil._getStorageTokens();
+		return _storages.keySet();
 	}
 
 	public static long getTimeout(HttpServletRequest httpServletRequest) {
@@ -320,7 +306,16 @@ public class WebDAVUtil {
 	}
 
 	public static boolean isOverwrite(HttpServletRequest httpServletRequest) {
-		return _webDAVUtil._isOverwrite(httpServletRequest);
+		String value = GetterUtil.getString(
+			httpServletRequest.getHeader("Overwrite"));
+
+		if (StringUtil.equalsIgnoreCase(value, "F") ||
+			!GetterUtil.getBoolean(value)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	public static String stripManualCheckInRequiredPath(String url) {
@@ -352,18 +347,23 @@ public class WebDAVUtil {
 		return url;
 	}
 
-	private WebDAVUtil() {
-		_storages = ServiceTrackerCollections.openSingleValueMap(
-			WebDAVStorage.class, "webdav.storage.token",
+	private static final String _TIME_PREFIX = "Second-";
+
+	private static final Log _log = LogFactoryUtil.getLog(WebDAVUtil.class);
+
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+
+	private static final ServiceTrackerMap<String, WebDAVStorage> _storages =
+		ServiceTrackerMapFactory.openSingleValueMap(
+			_bundleContext, WebDAVStorage.class, "webdav.storage.token",
 			new ServiceTrackerCustomizer<WebDAVStorage, WebDAVStorage>() {
 
 				@Override
 				public WebDAVStorage addingService(
 					ServiceReference<WebDAVStorage> serviceReference) {
 
-					Registry registry = RegistryUtil.getRegistry();
-
-					WebDAVStorage webDAVStorage = registry.getService(
+					WebDAVStorage webDAVStorage = _bundleContext.getService(
 						serviceReference);
 
 					setToken(serviceReference, webDAVStorage);
@@ -383,6 +383,8 @@ public class WebDAVUtil {
 				public void removedService(
 					ServiceReference<WebDAVStorage> serviceReference,
 					WebDAVStorage webDAVStorage) {
+
+					_bundleContext.ungetService(serviceReference);
 				}
 
 				protected void setToken(
@@ -396,55 +398,5 @@ public class WebDAVUtil {
 				}
 
 			});
-	}
-
-	private void _addStorage(WebDAVStorage storage) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceRegistration<WebDAVStorage> serviceRegistration =
-			registry.registerService(WebDAVStorage.class, storage);
-
-		_serviceRegistrationMap.put(storage, serviceRegistration);
-	}
-
-	private void _deleteStorage(WebDAVStorage storage) {
-		ServiceRegistration<WebDAVStorage> serviceRegistration =
-			_serviceRegistrationMap.remove(storage);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-	}
-
-	private WebDAVStorage _getStorage(String token) {
-		return _storages.getService(token);
-	}
-
-	private Collection<String> _getStorageTokens() {
-		return _storages.keySet();
-	}
-
-	private boolean _isOverwrite(HttpServletRequest httpServletRequest) {
-		String value = GetterUtil.getString(
-			httpServletRequest.getHeader("Overwrite"));
-
-		if (StringUtil.equalsIgnoreCase(value, "F") ||
-			!GetterUtil.getBoolean(value)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	private static final String _TIME_PREFIX = "Second-";
-
-	private static final Log _log = LogFactoryUtil.getLog(WebDAVUtil.class);
-
-	private static final WebDAVUtil _webDAVUtil = new WebDAVUtil();
-
-	private final ServiceRegistrationMap<WebDAVStorage>
-		_serviceRegistrationMap = new ServiceRegistrationMapImpl<>();
-	private final ServiceTrackerMap<String, WebDAVStorage> _storages;
 
 }

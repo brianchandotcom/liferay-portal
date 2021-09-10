@@ -14,11 +14,12 @@
 
 package com.liferay.portal.kernel.group.capability;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.GroupCapabilityContributor;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +69,10 @@ public class GroupCapabilityUtil {
 		return groupCapabilities;
 	}
 
-	private static final ServiceTrackerList<GroupCapabilityContributor>
-		_groupCapabilityContributors = ServiceTrackerCollections.openList(
-			GroupCapabilityContributor.class);
+	private static final ServiceTrackerList
+		<GroupCapabilityContributor, GroupCapabilityContributor>
+			_groupCapabilityContributors = ServiceTrackerListFactory.open(
+				SystemBundleUtil.getBundleContext(),
+				GroupCapabilityContributor.class);
 
 }

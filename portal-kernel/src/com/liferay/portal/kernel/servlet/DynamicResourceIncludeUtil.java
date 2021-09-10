@@ -14,15 +14,15 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.collections.ServiceTrackerCollections;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import java.util.List;
 
 import javax.servlet.ServletContext;
 
@@ -96,7 +96,8 @@ public class DynamicResourceIncludeUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DynamicResourceIncludeUtil.class);
 
-	private static final List<ServletContext> _servletContexts =
-		ServiceTrackerCollections.openList(ServletContext.class);
+	private static final ServiceTrackerList<ServletContext, ServletContext>
+		_servletContexts = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(), ServletContext.class);
 
 }

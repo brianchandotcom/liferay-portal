@@ -14,21 +14,22 @@
 
 package com.liferay.portal.kernel.servlet.taglib;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Carlos Sierra Andrés
@@ -37,7 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DynamicIncludeUtil {
 
 	public static List<DynamicInclude> getDynamicIncludes(String key) {
-		return _dynamicIncludeUtil._dynamicIncludes.getService(key);
+		return _dynamicIncludes.getService(key);
 	}
 
 	public static boolean hasDynamicInclude(String key) {
@@ -82,8 +83,17 @@ public class DynamicIncludeUtil {
 	}
 
 	private DynamicIncludeUtil() {
-		_dynamicIncludes = ServiceTrackerCollections.openMultiValueMap(
-			DynamicInclude.class, null,
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DynamicIncludeUtil.class);
+
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+
+	private static final ServiceTrackerMap<String, List<DynamicInclude>>
+		_dynamicIncludes = ServiceTrackerMapFactory.openMultiValueMap(
+			_bundleContext, DynamicInclude.class, null,
 			new ServiceReferenceMapper<String, DynamicInclude>() {
 
 				@Override
@@ -91,9 +101,7 @@ public class DynamicIncludeUtil {
 					ServiceReference<DynamicInclude> serviceReference,
 					final Emitter<String> emitter) {
 
-					Registry registry = RegistryUtil.getRegistry();
-
-					DynamicInclude dynamicInclude = registry.getService(
+					DynamicInclude dynamicInclude = _bundleContext.getService(
 						serviceReference);
 
 					dynamicInclude.register(
@@ -106,19 +114,9 @@ public class DynamicIncludeUtil {
 
 						});
 
-					registry.ungetService(serviceReference);
+					_bundleContext.ungetService(serviceReference);
 				}
 
 			});
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DynamicIncludeUtil.class);
-
-	private static final DynamicIncludeUtil _dynamicIncludeUtil =
-		new DynamicIncludeUtil();
-
-	private final ServiceTrackerMap<String, List<DynamicInclude>>
-		_dynamicIncludes;
 
 }

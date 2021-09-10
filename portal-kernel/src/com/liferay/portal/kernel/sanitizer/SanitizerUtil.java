@@ -14,8 +14,9 @@
 
 package com.liferay.portal.kernel.sanitizer;
 
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 import java.util.Map;
 
@@ -61,7 +62,8 @@ public class SanitizerUtil {
 		return content;
 	}
 
-	private static final ServiceTrackerList<Sanitizer> _sanitizers =
-		ServiceTrackerCollections.openList(Sanitizer.class);
+	private static final ServiceTrackerList<Sanitizer, Sanitizer> _sanitizers =
+		ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(), Sanitizer.class);
 
 }

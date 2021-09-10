@@ -14,15 +14,16 @@
 
 package com.liferay.portal.kernel.portlet.configuration.icon;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.util.StringPlus;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Eudaldo Alonso
@@ -33,7 +34,7 @@ public class PortletConfigurationIconServiceReferenceMapper
 	@Override
 	public void map(
 		ServiceReference<PortletConfigurationIcon> serviceReference,
-		Emitter<String> emitter) {
+		ServiceReferenceMapper.Emitter<String> emitter) {
 
 		String portletId = (String)serviceReference.getProperty(
 			"javax.portlet.name");

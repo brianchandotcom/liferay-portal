@@ -14,8 +14,11 @@
 
 package com.liferay.portal.kernel.resource.bundle;
 
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Carlos Sierra Andrés
@@ -56,12 +59,16 @@ public class ResourceBundleLoaderUtil {
 		_servletContextNameServiceTrackerMap;
 
 	static {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
 		_bundleSymbolicNameServiceTrackerMap =
-			ServiceTrackerCollections.openSingleValueMap(
-				ResourceBundleLoader.class, "bundle.symbolic.name");
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, ResourceBundleLoader.class,
+				"bundle.symbolic.name");
 		_servletContextNameServiceTrackerMap =
-			ServiceTrackerCollections.openSingleValueMap(
-				ResourceBundleLoader.class, "servlet.context.name");
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, ResourceBundleLoader.class,
+				"servlet.context.name");
 	}
 
 }

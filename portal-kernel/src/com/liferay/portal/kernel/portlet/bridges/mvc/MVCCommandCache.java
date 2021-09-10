@@ -14,17 +14,18 @@
 
 package com.liferay.portal.kernel.portlet.bridges.mvc;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.registry.util.StringPlus;
 
 import java.util.ArrayList;
@@ -191,7 +192,8 @@ public class MVCCommandCache<T extends MVCCommand> {
 			synchronized (this) {
 				if (_serviceTrackerMap == null) {
 					_serviceTrackerMap =
-						ServiceTrackerCollections.openSingleValueMap(
+						ServiceTrackerMapFactory.openSingleValueMap(
+							SystemBundleUtil.getBundleContext(),
 							_mvcCommandClass, _filterString,
 							_SERVICE_REFERENCE_MAPPER);
 				}

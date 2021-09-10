@@ -15,24 +15,19 @@
 package com.liferay.asset.kernel;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRankingUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.collections.ServiceRegistrationMap;
-import com.liferay.registry.collections.ServiceRegistrationMapImpl;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Bruno Farache
@@ -128,49 +123,6 @@ public class AssetRendererFactoryRegistryUtil {
 		).toArray();
 	}
 
-	public static void register(AssetRendererFactory<?> assetRendererFactory) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceRegistration<AssetRendererFactory<?>> serviceRegistration =
-			registry.registerService(
-				(Class<AssetRendererFactory<?>>)
-					(Class<?>)AssetRendererFactory.class,
-				assetRendererFactory);
-
-		_serviceRegistrationMap.put(assetRendererFactory, serviceRegistration);
-	}
-
-	public static void register(
-		List<AssetRendererFactory<?>> assetRendererFactories) {
-
-		for (AssetRendererFactory<?> assetRendererFactory :
-				assetRendererFactories) {
-
-			register(assetRendererFactory);
-		}
-	}
-
-	public static void unregister(
-		AssetRendererFactory<?> assetRendererFactory) {
-
-		ServiceRegistration<AssetRendererFactory<?>> serviceRegistration =
-			_serviceRegistrationMap.remove(assetRendererFactory);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-	}
-
-	public static void unregister(
-		List<AssetRendererFactory<?>> assetRendererFactories) {
-
-		for (AssetRendererFactory<?> assetRendererFactory :
-				assetRendererFactories) {
-
-			unregister(assetRendererFactory);
-		}
-	}
-
 	private static Map<String, AssetRendererFactory<?>>
 		_filterAssetRendererFactories(
 			long companyId,
@@ -195,51 +147,38 @@ public class AssetRendererFactoryRegistryUtil {
 		return filteredAssetRendererFactories;
 	}
 
-	private static Comparator<ServiceReference<AssetRendererFactory<?>>>
-		_getServiceReferenceComparator() {
-
-		Comparator<ServiceReference<AssetRendererFactory<?>>>
-			serviceReferenceComparator = ServiceRankingUtil::compare;
-
-		return serviceReferenceComparator.reversed();
-	}
-
 	private AssetRendererFactoryRegistryUtil() {
 	}
 
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+
 	private static final ServiceTrackerMap<String, AssetRendererFactory<?>>
 		_classNameAssetRenderFactoriesServiceTrackerMap =
-			ServiceTrackerCollections.openSingleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
+				_bundleContext,
 				(Class<AssetRendererFactory<?>>)
 					(Class<?>)AssetRendererFactory.class,
 				null,
 				(serviceReference, emitter) -> {
-					Registry registry = RegistryUtil.getRegistry();
-
 					AssetRendererFactory<?> assetRendererFactory =
-						registry.getService(serviceReference);
+						_bundleContext.getService(serviceReference);
 
 					emitter.emit(assetRendererFactory.getClassName());
-				},
-				_getServiceReferenceComparator());
-
-	private static final ServiceRegistrationMap<AssetRendererFactory<?>>
-		_serviceRegistrationMap = new ServiceRegistrationMapImpl<>();
+				});
 
 	private static final ServiceTrackerMap<String, AssetRendererFactory<?>>
 		_typeAssetRenderFactoriesServiceTrackerMap =
-			ServiceTrackerCollections.openSingleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
+				_bundleContext,
 				(Class<AssetRendererFactory<?>>)
 					(Class<?>)AssetRendererFactory.class,
 				null,
 				(serviceReference, emitter) -> {
-					Registry registry = RegistryUtil.getRegistry();
-
 					AssetRendererFactory<?> assetRendererFactory =
-						registry.getService(serviceReference);
+						_bundleContext.getService(serviceReference);
 
 					emitter.emit(assetRendererFactory.getType());
-				},
-				_getServiceReferenceComparator());
+				});
 
 }

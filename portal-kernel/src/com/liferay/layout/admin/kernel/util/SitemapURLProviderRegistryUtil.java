@@ -14,17 +14,15 @@
 
 package com.liferay.layout.admin.kernel.util;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.collections.ServiceRegistrationMap;
-import com.liferay.registry.collections.ServiceRegistrationMapImpl;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Eduardo García
@@ -49,45 +47,16 @@ public class SitemapURLProviderRegistryUtil {
 		return sitemapURLProviders;
 	}
 
-	public static void register(SitemapURLProvider sitemapURLProvider) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceRegistration<SitemapURLProvider> serviceRegistration =
-			registry.registerService(
-				SitemapURLProvider.class, sitemapURLProvider);
-
-		_serviceRegistrationMap.put(sitemapURLProvider, serviceRegistration);
-	}
-
-	public static void unregister(
-		List<SitemapURLProvider> sitemapURLProviders) {
-
-		for (SitemapURLProvider sitemapURLProvider : sitemapURLProviders) {
-			unregister(sitemapURLProvider);
-		}
-	}
-
-	public static void unregister(SitemapURLProvider sitemapURLProvider) {
-		ServiceRegistration<SitemapURLProvider> serviceRegistration =
-			_serviceRegistrationMap.remove(sitemapURLProvider);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-	}
-
-	private static final ServiceRegistrationMap<SitemapURLProvider>
-		_serviceRegistrationMap = new ServiceRegistrationMapImpl<>();
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 
 	private static final ServiceTrackerMap<String, SitemapURLProvider>
 		_sitemapURLProvidersServiceTrackerMap =
-			ServiceTrackerCollections.openSingleValueMap(
-				SitemapURLProvider.class, null,
+			ServiceTrackerMapFactory.openSingleValueMap(
+				_bundleContext, SitemapURLProvider.class, null,
 				(serviceReference, emitter) -> {
-					Registry registry = RegistryUtil.getRegistry();
-
-					SitemapURLProvider sitemapURLProvider = registry.getService(
-						serviceReference);
+					SitemapURLProvider sitemapURLProvider =
+						_bundleContext.getService(serviceReference);
 
 					emitter.emit(sitemapURLProvider.getClassName());
 				});

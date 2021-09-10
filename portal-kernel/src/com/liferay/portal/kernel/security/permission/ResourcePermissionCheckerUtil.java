@@ -14,9 +14,12 @@
 
 package com.liferay.portal.kernel.security.permission;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Roberto Díaz
@@ -46,12 +49,15 @@ public class ResourcePermissionCheckerUtil {
 			permissionChecker, classPK, actionId);
 	}
 
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private static final ServiceTrackerMap<String, PortletResourcePermission>
-		_portletPermissions = ServiceTrackerCollections.openSingleValueMap(
-			PortletResourcePermission.class, "resource.name");
+		_portletPermissions = ServiceTrackerMapFactory.openSingleValueMap(
+			_bundleContext, PortletResourcePermission.class, "resource.name");
 	private static final ServiceTrackerMap<String, ResourcePermissionChecker>
 		_resourcePermissionCheckers =
-			ServiceTrackerCollections.openSingleValueMap(
-				ResourcePermissionChecker.class, "resource.name");
+			ServiceTrackerMapFactory.openSingleValueMap(
+				_bundleContext, ResourcePermissionChecker.class,
+				"resource.name");
 
 }

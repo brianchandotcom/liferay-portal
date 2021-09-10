@@ -14,16 +14,14 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.io.Serializable;
 
@@ -32,6 +30,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author     Sergio González
@@ -140,7 +141,7 @@ public class FormNavigatorEntryUtil {
 
 		FormNavigatorEntryConfigurationHelper
 			formNavigatorEntryConfigurationHelper =
-				_formNavigatorEntryUtil._serviceTracker.getService();
+				_formNavigatorEntryConfigurationHelper;
 
 		if (formNavigatorEntryConfigurationHelper == null) {
 			return Optional.empty();
@@ -161,7 +162,7 @@ public class FormNavigatorEntryUtil {
 			return formNavigationEntriesOptional.get();
 		}
 
-		return (List)_formNavigatorEntryUtil._formNavigatorEntries.getService(
+		return (List)_formNavigatorEntries.getService(
 			_getKey(formNavigatorId, categoryKey));
 	}
 
@@ -169,12 +170,16 @@ public class FormNavigatorEntryUtil {
 		return formNavigatorId + StringPool.PERIOD + categoryKey;
 	}
 
-	@SuppressWarnings("rawtypes")
 	private FormNavigatorEntryUtil() {
-		Registry registry = RegistryUtil.getRegistry();
+	}
 
-		_formNavigatorEntries = ServiceTrackerCollections.openMultiValueMap(
-			FormNavigatorEntry.class, null,
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+
+	@SuppressWarnings("rawtypes")
+	private static final ServiceTrackerMap<String, List<FormNavigatorEntry>>
+		_formNavigatorEntries = ServiceTrackerMapFactory.openMultiValueMap(
+			_bundleContext, FormNavigatorEntry.class, null,
 			new ServiceReferenceMapper<String, FormNavigatorEntry>() {
 
 				@Override
@@ -183,41 +188,31 @@ public class FormNavigatorEntryUtil {
 					Emitter<String> emitter) {
 
 					FormNavigatorEntry<?> formNavigatorEntry =
-						registry.getService(serviceReference);
+						_bundleContext.getService(serviceReference);
 
 					emitter.emit(
 						_getKey(
 							formNavigatorEntry.getFormNavigatorId(),
 							formNavigatorEntry.getCategoryKey()));
 
-					registry.ungetService(serviceReference);
+					_bundleContext.ungetService(serviceReference);
 				}
 
 			},
 			new PropertyServiceReferenceComparator<FormNavigatorEntry>(
 				"form.navigator.entry.order"));
 
-		_serviceTracker = registry.trackServices(
-			FormNavigatorEntryConfigurationHelper.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final FormNavigatorEntryUtil _formNavigatorEntryUtil =
-		new FormNavigatorEntryUtil();
-
-	@SuppressWarnings("rawtypes")
-	private final ServiceTrackerMap<String, List<FormNavigatorEntry>>
-		_formNavigatorEntries;
-
-	private final ServiceTracker
-		<FormNavigatorEntryConfigurationHelper,
-		 FormNavigatorEntryConfigurationHelper> _serviceTracker;
+	private static volatile FormNavigatorEntryConfigurationHelper
+		_formNavigatorEntryConfigurationHelper =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				FormNavigatorEntryConfigurationHelper.class,
+				FormNavigatorEntryUtil.class,
+				"_formNavigatorEntryConfigurationHelper", false, true);
 
 	/**
 	 * @see com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator
 	 */
-	private class PropertyServiceReferenceComparator<T>
+	private static class PropertyServiceReferenceComparator<T>
 		implements Comparator<ServiceReference<T>>, Serializable {
 
 		public PropertyServiceReferenceComparator(String propertyKey) {

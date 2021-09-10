@@ -17,12 +17,13 @@ package com.liferay.portal.kernel.portlet;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -148,23 +149,28 @@ public class PortletProviderUtil {
 	}
 
 	private static final ServiceTrackerMap<String, AddPortletProvider>
-		_addServiceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
-			AddPortletProvider.class, "model.class.name");
+		_addServiceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			SystemBundleUtil.getBundleContext(), AddPortletProvider.class,
+			"model.class.name");
 	private static final ServiceTrackerMap<String, BrowsePortletProvider>
-		_browseServiceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
-			BrowsePortletProvider.class, "model.class.name");
+		_browseServiceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			SystemBundleUtil.getBundleContext(), BrowsePortletProvider.class,
+			"model.class.name");
 	private static final ServiceTrackerMap<String, EditPortletProvider>
-		_editServiceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
-			EditPortletProvider.class, "model.class.name");
+		_editServiceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			SystemBundleUtil.getBundleContext(), EditPortletProvider.class,
+			"model.class.name");
 	private static final ServiceTrackerMap<String, ManagePortletProvider>
-		_manageServiceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
-			ManagePortletProvider.class, "model.class.name");
+		_manageServiceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			SystemBundleUtil.getBundleContext(), ManagePortletProvider.class,
+			"model.class.name");
 	private static final ServiceTrackerMap<String, PreviewPortletProvider>
-		_previewServiceTrackerMap =
-			ServiceTrackerCollections.openSingleValueMap(
-				PreviewPortletProvider.class, "model.class.name");
+		_previewServiceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			SystemBundleUtil.getBundleContext(), PreviewPortletProvider.class,
+			"model.class.name");
 	private static final ServiceTrackerMap<String, ViewPortletProvider>
-		_viewServiceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
-			ViewPortletProvider.class, "model.class.name");
+		_viewServiceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			SystemBundleUtil.getBundleContext(), ViewPortletProvider.class,
+			"model.class.name");
 
 }

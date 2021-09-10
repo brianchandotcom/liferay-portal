@@ -14,8 +14,11 @@
 
 package com.liferay.portal.kernel.settings;
 
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+
+import java.util.Iterator;
 
 /**
  * @author Iván Zaera
@@ -52,7 +55,10 @@ public class SettingsLocatorHelperUtil {
 	}
 
 	public static SettingsLocatorHelper getSettingsLocatorHelper() {
-		return _settingsLocatorHelpers.get(0);
+		Iterator<SettingsLocatorHelper> iterator =
+			_settingsLocatorHelpers.iterator();
+
+		return iterator.next();
 	}
 
 	public Settings getConfigurationBeanSettings(String settingsId) {
@@ -86,8 +92,10 @@ public class SettingsLocatorHelperUtil {
 		return getSettingsLocatorHelper().getServerSettings(settingsId);
 	}
 
-	private static final ServiceTrackerList<SettingsLocatorHelper>
-		_settingsLocatorHelpers = ServiceTrackerCollections.openList(
-			SettingsLocatorHelper.class);
+	private static final ServiceTrackerList
+		<SettingsLocatorHelper, SettingsLocatorHelper> _settingsLocatorHelpers =
+			ServiceTrackerListFactory.open(
+				SystemBundleUtil.getBundleContext(),
+				SettingsLocatorHelper.class);
 
 }

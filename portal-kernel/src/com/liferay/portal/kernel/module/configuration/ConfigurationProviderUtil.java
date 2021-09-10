@@ -14,12 +14,14 @@
 
 package com.liferay.portal.kernel.module.configuration;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.settings.SettingsLocator;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.util.Dictionary;
+import java.util.Iterator;
 
 /**
  * @author Jorge Ferrer
@@ -86,7 +88,10 @@ public class ConfigurationProviderUtil {
 	}
 
 	public static ConfigurationProvider getConfigurationProvider() {
-		return _configurationProvider.get(0);
+		Iterator<ConfigurationProvider> iterator =
+			_configurationProvider.iterator();
+
+		return iterator.next();
 	}
 
 	public static <T> T getGroupConfiguration(Class<T> clazz, long groupId)
@@ -163,8 +168,10 @@ public class ConfigurationProviderUtil {
 		configurationProvider.saveSystemConfiguration(clazz, properties);
 	}
 
-	private static final ServiceTrackerList<ConfigurationProvider>
-		_configurationProvider = ServiceTrackerCollections.openList(
-			ConfigurationProvider.class);
+	private static final ServiceTrackerList
+		<ConfigurationProvider, ConfigurationProvider> _configurationProvider =
+			ServiceTrackerListFactory.open(
+				SystemBundleUtil.getBundleContext(),
+				ConfigurationProvider.class);
 
 }

@@ -14,8 +14,9 @@
 
 package com.liferay.portal.kernel.servlet.taglib;
 
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 /**
  * @author Carlos Sierra Andrés
@@ -25,15 +26,12 @@ public class TagDynamicIdFactoryRegistry {
 	public static TagDynamicIdFactory getTagDynamicIdFactory(
 		String tagClassName) {
 
-		return _tagDynamicIdFactoryRegistry._tagDynamicIdFactories.getService(
-			tagClassName);
+		return _tagDynamicIdFactories.getService(tagClassName);
 	}
 
-	private static final TagDynamicIdFactoryRegistry
-		_tagDynamicIdFactoryRegistry = new TagDynamicIdFactoryRegistry();
-
-	private final ServiceTrackerMap<String, TagDynamicIdFactory>
-		_tagDynamicIdFactories = ServiceTrackerCollections.openSingleValueMap(
-			TagDynamicIdFactory.class, "tagClassName");
+	private static final ServiceTrackerMap<String, TagDynamicIdFactory>
+		_tagDynamicIdFactories = ServiceTrackerMapFactory.openSingleValueMap(
+			SystemBundleUtil.getBundleContext(), TagDynamicIdFactory.class,
+			"tagClassName");
 
 }

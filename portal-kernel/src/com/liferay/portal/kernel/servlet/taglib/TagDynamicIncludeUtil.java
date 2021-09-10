@@ -14,23 +14,24 @@
 
 package com.liferay.portal.kernel.servlet.taglib;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Carlos Sierra Andrés
@@ -41,7 +42,7 @@ public class TagDynamicIncludeUtil {
 	public static List<TagDynamicInclude> getTagDynamicIncludes(
 		String tagClassName, String tagDynamicId, String tagPoint) {
 
-		return _tagDynamicIncludeUtil._tagDynamicIncludes.getService(
+		return _tagDynamicIncludes.getService(
 			_getKey(tagClassName, tagDynamicId, tagPoint));
 	}
 
@@ -102,8 +103,17 @@ public class TagDynamicIncludeUtil {
 	}
 
 	private TagDynamicIncludeUtil() {
-		_tagDynamicIncludes = ServiceTrackerCollections.openMultiValueMap(
-			TagDynamicInclude.class, null,
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TagDynamicIncludeUtil.class);
+
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+
+	private static final ServiceTrackerMap<String, List<TagDynamicInclude>>
+		_tagDynamicIncludes = ServiceTrackerMapFactory.openMultiValueMap(
+			_bundleContext, TagDynamicInclude.class, null,
 			new ServiceReferenceMapper<String, TagDynamicInclude>() {
 
 				@Override
@@ -111,10 +121,8 @@ public class TagDynamicIncludeUtil {
 					ServiceReference<TagDynamicInclude> serviceReference,
 					final Emitter<String> emitter) {
 
-					Registry registry = RegistryUtil.getRegistry();
-
-					TagDynamicInclude tagDynamicInclude = registry.getService(
-						serviceReference);
+					TagDynamicInclude tagDynamicInclude =
+						_bundleContext.getService(serviceReference);
 
 					try {
 						tagDynamicInclude.register(
@@ -134,20 +142,10 @@ public class TagDynamicIncludeUtil {
 							});
 					}
 					finally {
-						registry.ungetService(serviceReference);
+						_bundleContext.ungetService(serviceReference);
 					}
 				}
 
 			});
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		TagDynamicIncludeUtil.class);
-
-	private static final TagDynamicIncludeUtil _tagDynamicIncludeUtil =
-		new TagDynamicIncludeUtil();
-
-	private final ServiceTrackerMap<String, List<TagDynamicInclude>>
-		_tagDynamicIncludes;
 
 }

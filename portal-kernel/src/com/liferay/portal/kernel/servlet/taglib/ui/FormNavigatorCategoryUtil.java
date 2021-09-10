@@ -14,14 +14,12 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.io.Serializable;
 
@@ -30,6 +28,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author     Sergio González
@@ -43,8 +44,7 @@ public class FormNavigatorCategoryUtil {
 		String formNavigatorId) {
 
 		List<FormNavigatorCategory> formNavigatorCategories =
-			_formNavigatorCategoryUtil._formNavigatorCategories.getService(
-				formNavigatorId);
+			_formNavigatorCategories.getService(formNavigatorId);
 
 		if (formNavigatorCategories != null) {
 			return formNavigatorCategories;
@@ -100,8 +100,14 @@ public class FormNavigatorCategoryUtil {
 	}
 
 	private FormNavigatorCategoryUtil() {
-		_formNavigatorCategories = ServiceTrackerCollections.openMultiValueMap(
-			FormNavigatorCategory.class, null,
+	}
+
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+
+	private static final ServiceTrackerMap<String, List<FormNavigatorCategory>>
+		_formNavigatorCategories = ServiceTrackerMapFactory.openMultiValueMap(
+			_bundleContext, FormNavigatorCategory.class, null,
 			new ServiceReferenceMapper<String, FormNavigatorCategory>() {
 
 				@Override
@@ -109,31 +115,22 @@ public class FormNavigatorCategoryUtil {
 					ServiceReference<FormNavigatorCategory> serviceReference,
 					Emitter<String> emitter) {
 
-					Registry registry = RegistryUtil.getRegistry();
-
 					FormNavigatorCategory formNavigatorCategory =
-						registry.getService(serviceReference);
+						_bundleContext.getService(serviceReference);
 
 					emitter.emit(formNavigatorCategory.getFormNavigatorId());
 
-					registry.ungetService(serviceReference);
+					_bundleContext.ungetService(serviceReference);
 				}
 
 			},
 			new PropertyServiceReferenceComparator<FormNavigatorCategory>(
 				"form.navigator.category.order"));
-	}
-
-	private static final FormNavigatorCategoryUtil _formNavigatorCategoryUtil =
-		new FormNavigatorCategoryUtil();
-
-	private final ServiceTrackerMap<String, List<FormNavigatorCategory>>
-		_formNavigatorCategories;
 
 	/**
 	 * @see com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator
 	 */
-	private class PropertyServiceReferenceComparator<T>
+	private static class PropertyServiceReferenceComparator<T>
 		implements Comparator<ServiceReference<T>>, Serializable {
 
 		public PropertyServiceReferenceComparator(String propertyKey) {

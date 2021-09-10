@@ -14,23 +14,21 @@
 
 package com.liferay.portal.kernel.workflow;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.io.Serializable;
 
@@ -41,6 +39,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.function.Predicate;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Bruno Farache
@@ -271,6 +272,8 @@ public class WorkflowHandlerRegistryUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowHandlerRegistryUtil.class);
 
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private static final ServiceTrackerMap<String, WorkflowHandler<?>>
 		_scopeableWorkflowHandlerServiceTrackerMap;
 	private static final ServiceTrackerMap<String, WorkflowHandler<?>>
@@ -284,9 +287,7 @@ public class WorkflowHandlerRegistryUtil {
 			ServiceReference<WorkflowHandler<?>> serviceReference,
 			Emitter<String> emitter) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			WorkflowHandler<?> workflowHandler = registry.getService(
+			WorkflowHandler<?> workflowHandler = _bundleContext.getService(
 				serviceReference);
 
 			if (_predicate.test(workflowHandler)) {
@@ -306,13 +307,15 @@ public class WorkflowHandlerRegistryUtil {
 
 	static {
 		_workflowHandlerServiceTrackerMap =
-			ServiceTrackerCollections.openSingleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
+				_bundleContext,
 				(Class<WorkflowHandler<?>>)(Class<?>)WorkflowHandler.class,
 				null,
 				new WorkflowHandlerServiceReferenceMapper(handler -> true));
 
 		_scopeableWorkflowHandlerServiceTrackerMap =
-			ServiceTrackerCollections.openSingleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
+				_bundleContext,
 				(Class<WorkflowHandler<?>>)(Class<?>)WorkflowHandler.class,
 				null,
 				new WorkflowHandlerServiceReferenceMapper(

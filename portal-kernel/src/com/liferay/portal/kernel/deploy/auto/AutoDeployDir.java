@@ -14,18 +14,19 @@
 
 package com.liferay.portal.kernel.deploy.auto;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.io.File;
 import java.io.IOException;
@@ -373,9 +374,10 @@ public class AutoDeployDir {
 	private static final Log _log = LogFactoryUtil.getLog(AutoDeployDir.class);
 
 	private static AutoDeployScanner _autoDeployScanner;
-	private static final ServiceTrackerList<AutoDeployListener>
-		_serviceTrackerList = ServiceTrackerCollections.openList(
-			AutoDeployListener.class);
+	private static final ServiceTrackerList
+		<AutoDeployListener, AutoDeployListener> _serviceTrackerList =
+			ServiceTrackerListFactory.open(
+				SystemBundleUtil.getBundleContext(), AutoDeployListener.class);
 	private static final Pattern _versionPattern = Pattern.compile(
 		"-[\\d]+((\\.[\\d]+)+(-.+)*)\\.war$");
 

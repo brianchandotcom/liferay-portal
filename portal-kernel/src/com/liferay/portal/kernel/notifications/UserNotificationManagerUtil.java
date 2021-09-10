@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.notifications;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -21,26 +23,20 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.collections.ServiceRegistrationMap;
-import com.liferay.registry.collections.ServiceRegistrationMapImpl;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Jonathan Lee
@@ -48,171 +44,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class UserNotificationManagerUtil {
 
-	public static void addUserNotificationDefinition(
-		String portletId,
-		UserNotificationDefinition userNotificationDefinition) {
-
-		_userNotificationManagerUtil._addUserNotificationDefinition(
-			portletId, userNotificationDefinition);
-	}
-
-	public static void addUserNotificationHandler(
-		UserNotificationHandler userNotificationHandler) {
-
-		_userNotificationManagerUtil._addUserNotificationHandler(
-			userNotificationHandler);
-	}
-
-	public static void deleteUserNotificationDefinitions(String portletId) {
-		_userNotificationManagerUtil._deleteUserNotificationDefinitions(
-			portletId);
-	}
-
-	public static void deleteUserNotificationHandler(
-		UserNotificationHandler userNotificationHandler) {
-
-		_userNotificationManagerUtil._deleteUserNotificationHandler(
-			userNotificationHandler);
-	}
-
 	public static UserNotificationDefinition fetchUserNotificationDefinition(
-		String portletId, long classNameId, int notificationType) {
-
-		return _userNotificationManagerUtil._fetchUserNotificationDefinition(
-			portletId, classNameId, notificationType);
-	}
-
-	public static Map<String, List<UserNotificationDefinition>>
-		getActiveUserNotificationDefinitions() {
-
-		return _userNotificationManagerUtil._getUserNotificationDefinitions(
-			true);
-	}
-
-	public static Map<String, List<UserNotificationDefinition>>
-		getUserNotificationDefinitions() {
-
-		return _userNotificationManagerUtil._getUserNotificationDefinitions(
-			false);
-	}
-
-	public static Map<String, Map<String, UserNotificationHandler>>
-		getUserNotificationHandlers() {
-
-		return Collections.unmodifiableMap(
-			_userNotificationManagerUtil._userNotificationHandlers);
-	}
-
-	public static UserNotificationFeedEntry interpret(
-			String selector, UserNotificationEvent userNotificationEvent,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return _userNotificationManagerUtil._interpret(
-			selector, userNotificationEvent, serviceContext);
-	}
-
-	public static boolean isDeliver(
-			long userId, String portletId, long classNameId,
-			int notificationType, int deliveryType)
-		throws PortalException {
-
-		return _userNotificationManagerUtil._isDeliver(
-			userId, StringPool.BLANK, portletId, classNameId, notificationType,
-			deliveryType, null);
-	}
-
-	public static boolean isDeliver(
-			long userId, String selector, String portletId, long classNameId,
-			int notificationType, int deliveryType,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return _userNotificationManagerUtil._isDeliver(
-			userId, selector, portletId, classNameId, notificationType,
-			deliveryType, serviceContext);
-	}
-
-	private UserNotificationManagerUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_userNotificationHandlerServiceTracker = registry.trackServices(
-			UserNotificationHandler.class,
-			new UserNotificationHandlerServiceTrackerCustomizer());
-
-		_userNotificationHandlerServiceTracker.open();
-	}
-
-	private void _addUserNotificationDefinition(
-		String portletId,
-		UserNotificationDefinition userNotificationDefinition) {
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceRegistration<UserNotificationDefinition> serviceRegistration =
-			registry.registerService(
-				UserNotificationDefinition.class, userNotificationDefinition,
-				HashMapBuilder.<String, Object>put(
-					"javax.portlet.name", portletId
-				).build());
-
-		List<ServiceRegistration<UserNotificationDefinition>>
-			serviceRegistrations = new ArrayList<>();
-
-		List<ServiceRegistration<UserNotificationDefinition>>
-			userNotificationServiceRegistrations =
-				_userNotificationDefinitionServiceRegistrations.get(portletId);
-
-		if ((userNotificationServiceRegistrations != null) &&
-			!userNotificationServiceRegistrations.isEmpty()) {
-
-			serviceRegistrations.addAll(userNotificationServiceRegistrations);
-		}
-
-		serviceRegistrations.add(serviceRegistration);
-
-		_userNotificationDefinitionServiceRegistrations.put(
-			portletId, serviceRegistrations);
-	}
-
-	private void _addUserNotificationHandler(
-		UserNotificationHandler userNotificationHandler) {
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceRegistration<UserNotificationHandler> serviceRegistration =
-			registry.registerService(
-				UserNotificationHandler.class, userNotificationHandler);
-
-		_userNotificationHandlerServiceRegistrationMap.put(
-			userNotificationHandler, serviceRegistration);
-	}
-
-	private void _deleteUserNotificationDefinitions(String portletId) {
-		List<ServiceRegistration<UserNotificationDefinition>>
-			serviceRegistrations =
-				_userNotificationDefinitionServiceRegistrations.get(portletId);
-
-		for (ServiceRegistration<UserNotificationDefinition>
-				serviceRegistration : serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
-	}
-
-	private void _deleteUserNotificationHandler(
-		UserNotificationHandler userNotificationHandler) {
-
-		ServiceRegistration<UserNotificationHandler> serviceRegistration =
-			_userNotificationHandlerServiceRegistrationMap.get(
-				userNotificationHandler);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-	}
-
-	private UserNotificationDefinition _fetchUserNotificationDefinition(
 		String portletId, long classNameId, int notificationType) {
 
 		List<UserNotificationDefinition> userNotificationDefinitions =
@@ -236,38 +68,25 @@ public class UserNotificationManagerUtil {
 		return null;
 	}
 
-	private Map<String, List<UserNotificationDefinition>>
-		_getUserNotificationDefinitions(boolean active) {
+	public static Map<String, List<UserNotificationDefinition>>
+		getActiveUserNotificationDefinitions() {
 
-		Map<String, List<UserNotificationDefinition>>
-			userNotificationDefinitionsMap = new ConcurrentHashMap<>();
-
-		ServiceTrackerMap<String, List<UserNotificationDefinition>>
-			userNotificationDefinitionsServiceTrackerMap =
-				_userNotificationManagerUtil._userNotificationDefinitions;
-
-		for (String portletId :
-				userNotificationDefinitionsServiceTrackerMap.keySet()) {
-
-			if (active) {
-				Portlet portlet = PortletLocalServiceUtil.getPortletById(
-					portletId);
-
-				if (portlet == null) {
-					continue;
-				}
-			}
-
-			userNotificationDefinitionsMap.put(
-				portletId,
-				userNotificationDefinitionsServiceTrackerMap.getService(
-					portletId));
-		}
-
-		return Collections.unmodifiableMap(userNotificationDefinitionsMap);
+		return _getUserNotificationDefinitions(true);
 	}
 
-	private UserNotificationFeedEntry _interpret(
+	public static Map<String, List<UserNotificationDefinition>>
+		getUserNotificationDefinitions() {
+
+		return _getUserNotificationDefinitions(false);
+	}
+
+	public static Map<String, Map<String, UserNotificationHandler>>
+		getUserNotificationHandlers() {
+
+		return Collections.unmodifiableMap(_userNotificationHandlers);
+	}
+
+	public static UserNotificationFeedEntry interpret(
 			String selector, UserNotificationEvent userNotificationEvent,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -294,7 +113,51 @@ public class UserNotificationManagerUtil {
 			userNotificationEvent, serviceContext);
 	}
 
-	private boolean _isDeliver(
+	public static boolean isDeliver(
+			long userId, String portletId, long classNameId,
+			int notificationType, int deliveryType)
+		throws PortalException {
+
+		return _isDeliver(
+			userId, StringPool.BLANK, portletId, classNameId, notificationType,
+			deliveryType, null);
+	}
+
+	public static boolean isDeliver(
+			long userId, String selector, String portletId, long classNameId,
+			int notificationType, int deliveryType,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return _isDeliver(
+			userId, selector, portletId, classNameId, notificationType,
+			deliveryType, serviceContext);
+	}
+
+	private static Map<String, List<UserNotificationDefinition>>
+		_getUserNotificationDefinitions(boolean active) {
+
+		Map<String, List<UserNotificationDefinition>>
+			userNotificationDefinitionsMap = new ConcurrentHashMap<>();
+
+		for (String portletId : _userNotificationDefinitions.keySet()) {
+			if (active) {
+				Portlet portlet = PortletLocalServiceUtil.getPortletById(
+					portletId);
+
+				if (portlet == null) {
+					continue;
+				}
+			}
+
+			userNotificationDefinitionsMap.put(
+				portletId, _userNotificationDefinitions.getService(portletId));
+		}
+
+		return Collections.unmodifiableMap(userNotificationDefinitionsMap);
+	}
+
+	private static boolean _isDeliver(
 			long userId, String selector, String portletId, long classNameId,
 			int notificationType, int deliveryType,
 			ServiceContext serviceContext)
@@ -326,27 +189,21 @@ public class UserNotificationManagerUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserNotificationManagerUtil.class);
 
-	private static final UserNotificationManagerUtil
-		_userNotificationManagerUtil = new UserNotificationManagerUtil();
-
-	private final ServiceTrackerMap<String, List<UserNotificationDefinition>>
-		_userNotificationDefinitions =
-			ServiceTrackerCollections.openMultiValueMap(
-				UserNotificationDefinition.class, "javax.portlet.name");
-	private final ConcurrentHashMap
-		<String, List<ServiceRegistration<UserNotificationDefinition>>>
-			_userNotificationDefinitionServiceRegistrations =
-				new ConcurrentHashMap<>();
-	private final Map<String, Map<String, UserNotificationHandler>>
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+	private static final ServiceTrackerMap
+		<String, List<UserNotificationDefinition>>
+			_userNotificationDefinitions =
+				ServiceTrackerMapFactory.openMultiValueMap(
+					_bundleContext, UserNotificationDefinition.class,
+					"javax.portlet.name");
+	private static final Map<String, Map<String, UserNotificationHandler>>
 		_userNotificationHandlers = new ConcurrentHashMap<>();
-	private final ServiceRegistrationMap<UserNotificationHandler>
-		_userNotificationHandlerServiceRegistrationMap =
-			new ServiceRegistrationMapImpl<>();
-	private final ServiceTracker
+	private static final ServiceTracker
 		<UserNotificationHandler, UserNotificationHandler>
 			_userNotificationHandlerServiceTracker;
 
-	private class UserNotificationHandlerServiceTrackerCustomizer
+	private static class UserNotificationHandlerServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<UserNotificationHandler, UserNotificationHandler> {
 
@@ -354,10 +211,8 @@ public class UserNotificationManagerUtil {
 		public UserNotificationHandler addingService(
 			ServiceReference<UserNotificationHandler> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
 			UserNotificationHandler userNotificationHandler =
-				registry.getService(serviceReference);
+				_bundleContext.getService(serviceReference);
 
 			String selector = userNotificationHandler.getSelector();
 
@@ -389,9 +244,7 @@ public class UserNotificationManagerUtil {
 			ServiceReference<UserNotificationHandler> serviceReference,
 			UserNotificationHandler userNotificationHandler) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 
 			Map<String, UserNotificationHandler> userNotificationHandlers =
 				_userNotificationHandlers.get(
@@ -405,6 +258,14 @@ public class UserNotificationManagerUtil {
 				userNotificationHandler.getPortletId());
 		}
 
+	}
+
+	static {
+		_userNotificationHandlerServiceTracker = new ServiceTracker<>(
+			_bundleContext, UserNotificationHandler.class,
+			new UserNotificationHandlerServiceTrackerCustomizer());
+
+		_userNotificationHandlerServiceTracker.open();
 	}
 
 }

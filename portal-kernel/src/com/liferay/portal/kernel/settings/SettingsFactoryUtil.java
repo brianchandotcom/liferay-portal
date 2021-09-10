@@ -14,9 +14,11 @@
 
 package com.liferay.portal.kernel.settings;
 
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -51,7 +53,9 @@ public class SettingsFactoryUtil {
 	}
 
 	public static SettingsFactory getSettingsFactory() {
-		return _settingsFactories.get(0);
+		Iterator<SettingsFactory> iterator = _settingsFactories.iterator();
+
+		return iterator.next();
 	}
 
 	public static void registerSettingsMetadata(
@@ -62,8 +66,8 @@ public class SettingsFactoryUtil {
 			settingsClass, configurationBean, fallbackKeys);
 	}
 
-	private static final ServiceTrackerList<SettingsFactory>
-		_settingsFactories = ServiceTrackerCollections.openList(
-			SettingsFactory.class);
+	private static final ServiceTrackerList<SettingsFactory, SettingsFactory>
+		_settingsFactories = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(), SettingsFactory.class);
 
 }

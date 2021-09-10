@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseDestination;
 import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationEventListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -545,11 +546,18 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 			BaseAsyncDestination baseAsyncDestination =
 				(BaseAsyncDestination)destination;
 
+			String type = baseAsyncDestination.getDestinationType();
+
 			baseAsyncDestination.setMaximumQueueSize(
 				destinationWorkerConfiguration.maxQueueSize());
-			baseAsyncDestination.setWorkersSize(
-				destinationWorkerConfiguration.workerCoreSize(),
-				destinationWorkerConfiguration.workerMaxSize());
+
+			if (!type.equals(
+					DestinationConfiguration.DESTINATION_TYPE_SERIAL)) {
+
+				baseAsyncDestination.setWorkersSize(
+					destinationWorkerConfiguration.workerCoreSize(),
+					destinationWorkerConfiguration.workerMaxSize());
+			}
 		}
 	}
 

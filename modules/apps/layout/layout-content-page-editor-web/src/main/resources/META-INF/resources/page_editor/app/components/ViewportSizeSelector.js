@@ -101,7 +101,7 @@ const SelectorButtonList = ({
 	Object.values(availableViewportSizes).map(({icon, label, sizeId}) =>
 		dropdown ? (
 			<ClayDropDown.Item
-				key={label}
+				key={sizeId}
 				onClick={() => onSelect(sizeId)}
 				symbolLeft={icon}
 			>
@@ -110,6 +110,7 @@ const SelectorButtonList = ({
 		) : (
 			<SelectorButton
 				icon={icon}
+				key={sizeId}
 				label={label}
 				onSelect={onSelect}
 				selectedSize={selectedSize}

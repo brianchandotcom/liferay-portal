@@ -384,7 +384,7 @@ definition {
 
 			ApplicationDisplayTemplates.addCP(
 				adtFile = "adt_tags_color.ftl",
-				adtType = "Tags Navigation");
+				adtType = "Tag Cloud");
 		}
 
 		task ("Select the widget template in Tags Navigation") {
@@ -392,7 +392,7 @@ definition {
 				pageName = "ADT Test Page",
 				siteName = "Test Site Name");
 
-			ApplicationDisplayTemplates.selectPortletADT(templateName = "Tags Navigation Test ADT");
+			ApplicationDisplayTemplates.selectPortletADT(templateName = "Tag Cloud Test ADT");
 		}
 
 		task ("View the widget template applied to Tags Navigation") {

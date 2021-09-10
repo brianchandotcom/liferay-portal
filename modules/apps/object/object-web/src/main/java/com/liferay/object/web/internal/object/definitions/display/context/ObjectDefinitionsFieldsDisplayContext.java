@@ -66,7 +66,11 @@ public class ObjectDefinitionsFieldsDisplayContext {
 				).buildString(),
 				"view", "view",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
-				"get", null, "sidePanel"));
+				"get", null, "sidePanel"),
+			new ClayDataSetActionDropdownItem(
+				"/o/object-admin/v1.0/object-fields/{id}", "trash", "delete",
+				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
+				"delete", "delete", "async"));
 	}
 
 	public CreationMenu getCreationMenu() throws Exception {

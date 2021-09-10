@@ -1,0 +1,112 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content and Application Templates";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a use case for LPS-124478. The template creator could create an information template."
+	@priority = "5"
+	@uitest
+	test AddInformationTemplate {
+		task ("Navigate to the Information Templates admin") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Templates");
+
+			Navigator.gotoNavTab(navTab = "Information Templates");
+		}
+
+		task ("Add an information template for Web Content Article and Basic Web Content") {
+			InformationTemplates.addCP(
+				informationTemplateName = "Test Information Template",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+		}
+
+		task ("Add the Title and Description fields") {
+			for (var fieldName : list "Title,Description") {
+				InformationTemplates.addField(
+					fieldName = "${fieldName}",
+					panelTitle = "Basic Information");
+			}
+		}
+
+		task ("Add description") {
+			InformationTemplates.addDescription(informationTemplateDescription = "This is a description");
+		}
+
+		task ("View the language, Item Type, Item Subtype, Template Key, URL, WebDAV URL fields") {
+			AssertSelectedLabel(
+				key_fieldLabel = "Language",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "FreeMarker (.ftl)");
+
+			AssertVisible(
+				label = "Item Type",
+				locator1 = "InformationTemplates#TEMPLATE_TYPE",
+				type = "Web Content Article");
+
+			AssertVisible(
+				label = "Item Subtype",
+				locator1 = "InformationTemplates#TEMPLATE_TYPE",
+				type = "Basic Web Content");
+
+			for (var fieldName : list "Template Key,URL,WebDAV URL") {
+				AssertTextNotEquals(
+					key_text = "${fieldName}",
+					locator1 = "TextInput#ANY",
+					value1 = "");
+			}
+		}
+
+		task ("Save the information template") {
+			PortletEntry.save();
+		}
+
+		task ("View the information template entry") {
+			InformationTemplates.viewTemplate(
+				informationTemplateName = "Test Information Template",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+		}
+
+		task ("Access to the template editor") {
+			InformationTemplates.gotoInformationTemplateEllipsisItem(
+				informationTemplateName = "Test Information Template",
+				item = "Edit");
+		}
+
+		task ("View the script content shown in code mirror") {
+			InformationTemplates.viewScriptContent(scriptContent = "title.getData()");
+
+			InformationTemplates.viewScriptContent(scriptContent = "description.getData()");
+		}
+
+		task ("View the description in Properties panel") {
+			InformationTemplates.viewDescription(informationTemplateDescription = "This is a description");
+		}
+	}
+
+}

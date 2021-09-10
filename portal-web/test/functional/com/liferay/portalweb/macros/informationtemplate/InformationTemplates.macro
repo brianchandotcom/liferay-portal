@@ -41,6 +41,10 @@ definition {
 			locator1 = "DDMEditTemplate#WEB_CONTENT_SCRIPT_VARIABLE");
 	}
 
+	macro editName {
+		PortletEntry.inputName(name = "${informationTemplateName}");
+	}
+
 	macro gotoInformationTemplateEllipsisItem {
 		Click(
 			key_tableEntry = "${informationTemplateName}",

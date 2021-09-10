@@ -138,6 +138,24 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 			extensionAttributes.get("description-arguments"));
 	}
 
+	public String getDocKey() {
+		Map<String, String> extensionAttributes =
+			_extendedObjectClassDefinition.getExtensionAttributes(
+				com.liferay.portal.configuration.metatype.annotations.
+					ExtendedObjectClassDefinition.XML_NAMESPACE);
+
+		return extensionAttributes.get("docKey");
+	}
+
+	public String getDocResource() {
+		Map<String, String> extensionAttributes =
+			_extendedObjectClassDefinition.getExtensionAttributes(
+				com.liferay.portal.configuration.metatype.annotations.
+					ExtendedObjectClassDefinition.XML_NAMESPACE);
+
+		return extensionAttributes.get("docResource");
+	}
+
 	public ExtendedAttributeDefinition getExtendedAttributeDefinition(
 		String id) {
 

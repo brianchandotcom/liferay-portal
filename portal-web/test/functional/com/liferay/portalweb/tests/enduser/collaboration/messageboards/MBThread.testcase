@@ -383,9 +383,9 @@ definition {
 			threadSubject = "Message Boards Thread Subject");
 	}
 
-	@description = "This test covers LPS-137634. It ensures that a user cannot publish a thread with a tag contains Java Script."
+	@description = "This test covers LPS-137634. It ensures that a user cannot publish a thread with a tag that contains Java Script."
 	@priority = "3"
-	test CannotPublishThreadWithTagContainsJavaScript {
+	test CannotPublishThreadWithTagContainingJavaScript {
 		MessageboardsThread.addPG(
 			groupName = "Guest",
 			invalidCharacters = "true",

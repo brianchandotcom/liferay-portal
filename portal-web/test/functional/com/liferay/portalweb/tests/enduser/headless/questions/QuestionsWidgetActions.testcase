@@ -663,9 +663,9 @@ definition {
 		Questions.viewNoPermissionsAddQuestion();
 	}
 
-	@description = "Validate if the user cannot post a question with a tag contains Java Script, it also covers LPS-137561 and LPS-137633."
+	@description = "Validate that the user cannot post a question with a tag containing Java Script. It also covers LPS-137561 and LPS-137633."
 	@priority = "4"
-	test CannotPostQuestionWithTagContainsJavaScript {
+	test CannotPostQuestionWithTagContainingJavaScript {
 		Navigator.gotoPage(pageName = "Questions Page");
 
 		Questions.addRootTopic(

@@ -34,6 +34,8 @@
 				"userId", themeDisplay.getUserId()
 			).put(
 				"userName", PortalUtil.getUserName(themeDisplay.getUserId(), String.valueOf(themeDisplay.getUserId()))
+			).put(
+				"workflowInstanceTrackerEnabled", FFWorkflowMetricsConfigurationUtil.workflowInstanceTrackerEnabled()
 			).build()
 		%>'
 	/>

@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>CreateObject</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CreateObject</td></tr>
+</thead>
+
+<tbody>
+	<tr>
+		<td>VIEW_OBJECT</td>
+		<td>//a[contains(.,'${key_labelName}')]/../../..//a[@class='btn btn-secondary btn-sm link-monospaced']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OBJECT_LABEL</td>
+		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_label']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SAVE_BUTTON</td>
+		<td>//button[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_save']</td>
+		<td></td>
+	</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -383,11 +383,30 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object label after it is published"
-	@ignore = "Test Stub"
 	@priority = "4"
-	test CanUpdateObjectLabelAfter Published {
+	test CanUpdateObjectLabelAfterPublished {
+	property portal.acceptance = "true";
 
-		// TODO LPS-138842 CanUpdateObjectLabelAfter Published pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		CreateObject.viewObject(labelName = "CustomObject");
+
+		CreateObject.editLabel(labelName = "Update Custom Object");
+		
+		CreateObject.saveObject();
+	
+		ObjectAdmin.openObjectAdmin();
+
+		CreateObject.viewObject(labelName = "CustomObject");
+		
+		CreateObject.viewObjectLabel(labelName = "Update Custom Object");
 
 	}
 

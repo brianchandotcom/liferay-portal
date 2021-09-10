@@ -142,9 +142,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 			ObjectEntry addObjectEntry = _objectEntryManager.addObjectEntry(
 				_getDTOConverterContext(null, user, ddmForm.getDefaultLocale()),
-				user.getUserId(),
-				String.valueOf(ddmStorageAdapterSaveRequest.getScopeGroupId()),
-				objectDefinition,
+				user.getUserId(), objectDefinition,
 				new ObjectEntry() {
 					{
 						properties = _getObjectEntryProperties(
@@ -152,7 +150,8 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 							_objectFieldLocalService.getObjectFields(
 								objectDefinitionId));
 					}
-				});
+				},
+				String.valueOf(ddmStorageAdapterSaveRequest.getScopeGroupId()));
 
 			return DDMStorageAdapterSaveResponse.Builder.newBuilder(
 				addObjectEntry.getId()

@@ -86,8 +86,8 @@ public class ObjectDefinitionGraphQLDTOContributor
 		return _toMap(
 			_objectEntryManager.addObjectEntry(
 				dtoConverterContext, dtoConverterContext.getUserId(),
-				(String)dtoConverterContext.getAttribute("scopeKey"),
-				_objectDefinition, _toObjectEntry(dto)));
+				_objectDefinition, _toObjectEntry(dto),
+				(String)dtoConverterContext.getAttribute("scopeKey")));
 	}
 
 	@Override
@@ -119,9 +119,9 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 		Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
 			(Long)dtoConverterContext.getAttribute("companyId"),
-			(String)dtoConverterContext.getAttribute("scopeKey"),
-			_objectDefinition, aggregation, dtoConverterContext, filter,
-			pagination, search, sorts);
+			_objectDefinition,
+			(String)dtoConverterContext.getAttribute("scopeKey"), aggregation,
+			dtoConverterContext, filter, pagination, search, sorts);
 
 		Collection<ObjectEntry> items = page.getItems();
 

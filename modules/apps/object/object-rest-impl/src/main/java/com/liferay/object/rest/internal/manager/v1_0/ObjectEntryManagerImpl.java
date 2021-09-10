@@ -67,8 +67,8 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	@Override
 	public ObjectEntry addObjectEntry(
 			DTOConverterContext dtoConverterContext, long userId,
-			String scopeKey, ObjectDefinition objectDefinition,
-			ObjectEntry objectEntry)
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			String scopeKey)
 		throws Exception {
 
 		return _objectEntryDTOConverter.toDTO(
@@ -86,8 +86,9 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	@Override
 	public ObjectEntry addOrUpdateObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, long userId, String scopeKey,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+			String externalReferenceCode, long userId,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			String scopeKey)
 		throws Exception {
 
 		return _objectEntryDTOConverter.toDTO(
@@ -110,8 +111,8 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 	@Override
 	public void deleteObjectEntry(
-			String externalReferenceCode, long companyId, String scopeKey,
-			ObjectDefinition objectDefinition)
+			String externalReferenceCode, long companyId,
+			ObjectDefinition objectDefinition, String scopeKey)
 		throws Exception {
 
 		_objectEntryLocalService.deleteObjectEntry(
@@ -121,7 +122,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 	@Override
 	public Page<ObjectEntry> getObjectEntries(
-			long companyId, String scopeKey, ObjectDefinition objectDefinition,
+			long companyId, ObjectDefinition objectDefinition, String scopeKey,
 			Aggregation aggregation, DTOConverterContext dtoConverterContext,
 			Filter filter, Pagination pagination, String search, Sort[] sorts)
 		throws Exception {
@@ -170,8 +171,8 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	@Override
 	public ObjectEntry getObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, long companyId, String scopeKey,
-			ObjectDefinition objectDefinition)
+			String externalReferenceCode, long companyId,
+			ObjectDefinition objectDefinition, String scopeKey)
 		throws Exception {
 
 		return _objectEntryDTOConverter.toDTO(

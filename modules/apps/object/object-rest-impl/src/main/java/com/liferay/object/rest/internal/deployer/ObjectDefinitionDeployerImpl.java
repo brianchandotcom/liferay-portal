@@ -23,7 +23,6 @@ import com.liferay.object.rest.internal.resource.v1_0.BaseObjectEntryResourceImp
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -275,9 +274,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	private final Map<String, Map<Long, ObjectDefinition>>
 		_objectDefinitionsMap = new HashMap<>();

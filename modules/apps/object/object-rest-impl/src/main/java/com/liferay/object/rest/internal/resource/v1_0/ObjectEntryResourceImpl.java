@@ -81,8 +81,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throws Exception {
 
 		_objectEntryManager.deleteObjectEntry(
-			externalReferenceCode, contextCompany.getCompanyId(), null,
-			_objectDefinition);
+			externalReferenceCode, contextCompany.getCompanyId(),
+			_objectDefinition, null);
 	}
 
 	@Override
@@ -96,8 +96,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throws Exception {
 
 		_objectEntryManager.deleteObjectEntry(
-			externalReferenceCode, contextCompany.getCompanyId(), scopeKey,
-			_objectDefinition);
+			externalReferenceCode, contextCompany.getCompanyId(),
+			_objectDefinition, scopeKey);
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		return _objectEntryManager.getObjectEntry(
 			_getDTOConverterContext(null), externalReferenceCode,
-			contextCompany.getCompanyId(), null, _objectDefinition);
+			contextCompany.getCompanyId(), _objectDefinition, null);
 	}
 
 	@Override
@@ -127,7 +127,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throws Exception {
 
 		return _objectEntryManager.getObjectEntries(
-			contextCompany.getCompanyId(), null, _objectDefinition, aggregation,
+			contextCompany.getCompanyId(), _objectDefinition, null, aggregation,
 			_getDTOConverterContext(null), filter, pagination, search, sorts);
 	}
 
@@ -144,7 +144,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		return _objectEntryManager.getObjectEntry(
 			_getDTOConverterContext(null), externalReferenceCode,
-			contextCompany.getCompanyId(), scopeKey, _objectDefinition);
+			contextCompany.getCompanyId(), _objectDefinition, scopeKey);
 	}
 
 	@Override
@@ -155,7 +155,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throws Exception {
 
 		return _objectEntryManager.getObjectEntries(
-			contextCompany.getCompanyId(), scopeKey, _objectDefinition,
+			contextCompany.getCompanyId(), _objectDefinition, scopeKey,
 			aggregation, _getDTOConverterContext(null), filter, pagination,
 			search, sorts);
 	}
@@ -165,8 +165,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throws Exception {
 
 		return _objectEntryManager.addObjectEntry(
-			_getDTOConverterContext(null), contextUser.getUserId(), null,
-			_objectDefinition, objectEntry);
+			_getDTOConverterContext(null), contextUser.getUserId(),
+			_objectDefinition, objectEntry, null);
 	}
 
 	@Override
@@ -175,8 +175,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throws Exception {
 
 		return _objectEntryManager.addObjectEntry(
-			_getDTOConverterContext(null), contextUser.getUserId(), scopeKey,
-			_objectDefinition, objectEntry);
+			_getDTOConverterContext(null), contextUser.getUserId(),
+			_objectDefinition, objectEntry, scopeKey);
 	}
 
 	@Override
@@ -186,7 +186,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		return _objectEntryManager.addOrUpdateObjectEntry(
 			_getDTOConverterContext(null), externalReferenceCode,
-			contextUser.getUserId(), null, _objectDefinition, objectEntry);
+			contextUser.getUserId(), _objectDefinition, objectEntry, null);
 	}
 
 	@Override
@@ -207,7 +207,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		return _objectEntryManager.addOrUpdateObjectEntry(
 			_getDTOConverterContext(null), externalReferenceCode,
-			contextUser.getUserId(), scopeKey, _objectDefinition, objectEntry);
+			contextUser.getUserId(), _objectDefinition, objectEntry, scopeKey);
 	}
 
 	@Override

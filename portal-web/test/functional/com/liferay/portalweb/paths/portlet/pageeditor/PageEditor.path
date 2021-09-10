@@ -231,6 +231,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEWPORT</td>
+	<td>//div[contains(@class,'layout-viewport')][contains(@class,'${key_deviceType}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEWPORT_HANDLE</td>
 	<td>//div[contains(@class,'page-editor__layout-viewport__handle')]</td>
 	<td></td>

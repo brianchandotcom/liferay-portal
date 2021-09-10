@@ -345,66 +345,6 @@ definition {
 		BlogsEntry.viewNoRelatedAssetPG(assetTitle = "DM Document Title 2");
 	}
 
-	@description = "This is a use case for LPS-72145."
-	@priority = "4"
-	test AssertDeletedPollsOnLivingSiteWithoutPublishToLive {
-		property portal.release = "false";
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Polls Display");
-
-		Polls.addPollPG(
-			pollsQuestion = "Test Poll Display",
-			pollsQuestionChoiceA = "Yes",
-			pollsQuestionChoiceB = "No",
-			pollsQuestionTitle = "Polls Name");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		Polls.selectPollPG(pollsQuestionTitle = "Polls Name");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		ProductMenu.gotoLiveSite(site = "Site Name");
-
-		Polls.viewPollOnLivingSite(
-			pollsQuestion = "Test Poll Display",
-			pollsQuestionChoiceList = "Yes,No",
-			pollsQuestionTotalVotes = "0",
-			pollsQuestionVoteCount = "0",
-			pollsQuestionVotePercent = "0%");
-
-		ProductMenu.gotoStagingSite(site = "Site Name");
-
-		Polls.DeletePollCP(pollsQuestionTitle = "Polls Name");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		AssertTextNotPresent(value1 = "Test Poll Display");
-
-		ProductMenu.gotoLiveSite(site = "Site Name");
-
-		Polls.viewPollOnLivingSite(
-			pollsQuestion = "Test Poll Display",
-			pollsQuestionChoiceList = "Yes,No",
-			pollsQuestionTotalVotes = "0",
-			pollsQuestionVoteCount = "0",
-			pollsQuestionVotePercent = "0%");
-	}
-
 	@description = "This is a use case for LPS-123156."
 	@priority = "3"
 	test AssertPublishTemplateInfo {

@@ -516,46 +516,45 @@ To make file, page and web content DDM fields easy to reference in the database 
 
 ---------------------------------------
 
-### Class `com.liferay.portal.kernel.util.StringBundler` has been deprecated
+### Replaced com.liferay.portal.kernel.util.StringBundler with com.liferay.petra.string.StringBundler
 - **Date:** 2021-Jun-25
 - **JIRA Ticket:** [LPS-133200](https://issues.liferay.com/browse/LPS-133200)
 
 #### What changed?
 
-A number of methods that return type
-`com.liferay.portal.kernel.util.StringBundler` have been changed to return type
-`com.liferay.petra.string.StringBundler`. This list includes:
+The `com.liferay.petra.string.StringBundler` class has been deprecated. The `com.liferay.portal.kernel.util.StringBundler` class has replaced it.
 
-- com.liferay.frontend.taglib.dynamic.section.BaseJSPDynamicSection.java#modify
-- com.liferay.frontend.taglib.dynamic.section.DynamicSection#modify
-- com.liferay.portal.kernel.io.unsync.UnsyncStringWriter#getStringBundler
-- com.liferay.portal.kernel.layoutconfiguration.util.RuntimePage#getProcessedTemplate
-- com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil#getProcessedTemplate
-- com.liferay.portal.kernel.servlet.BufferCacheServletResponse#getStringBundler
-- com.liferay.portal.kernel.servlet.taglib.BodyContentWrapper.java#getStringBundler
-- com.liferay.portal.kernel.theme.PortletDisplay#getContent
-- com.liferay.portal.kernel.util.StringUtil#replaceToStringBundler
-- com.liferay.portal.kernel.util.StringUtil#replaceWithStringBundler
-- com.liferay.portal.layoutconfiguration.util.PortletRenderer#render
-- com.liferay.portal.layoutconfiguration.util.PortletRenderer#renderAjax
-- com.liferay.portal.layoutconfiguration.util.RuntimePageImpl#getProcessedTemplate
-- com.liferay.taglib.BaseBodyTagSupport#getBodyContentAsStringBundler
-- com.liferay.taglib.BodyContentWrapper#getStringBundler
-- com.liferay.taglib.aui.NavBarTag#getResponsiveButtonsSB
+Here are some methods that now return `com.liferay.petra.string.StringBundler` instead of `com.liferay.portal.kernel.util.StringBundler`:
+
+- `com.liferay.frontend.taglib.dynamic.section.BaseJSPDynamicSection.java#modify`
+- `com.liferay.frontend.taglib.dynamic.section.DynamicSection#modify`
+- `com.liferay.portal.kernel.io.unsync.UnsyncStringWriter#getStringBundler`
+- `com.liferay.portal.kernel.layoutconfiguration.util.RuntimePage#getProcessedTemplate`
+- `com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil#getProcessedTemplate`
+- `com.liferay.portal.kernel.servlet.BufferCacheServletResponse#getStringBundler`
+- `com.liferay.portal.kernel.servlet.taglib.BodyContentWrapper.java#getStringBundler`
+- `com.liferay.portal.kernel.theme.PortletDisplay#getContent`
+- `com.liferay.portal.kernel.util.StringUtil#replaceToStringBundler`
+- `com.liferay.portal.kernel.util.StringUtil#replaceWithStringBundler`
+- `com.liferay.portal.layoutconfiguration.util.PortletRenderer#render`
+- `com.liferay.portal.layoutconfiguration.util.PortletRenderer#renderAjax`
+- `com.liferay.portal.layoutconfiguration.util.RuntimePageImpl#getProcessedTemplate`
+- `com.liferay.taglib.BaseBodyTagSupport#getBodyContentAsStringBundler`
+- `com.liferay.taglib.BodyContentWrapper#getStringBundler`
+- `com.liferay.taglib.aui.NavBarTag#getResponsiveButtonsSB`
 
 #### Who is affected?
 
-Everyone calling one of these methods
+This affects you if you call one of these methods.
 
 #### How should I update my code?
 
 Import `com.liferay.petra.string.StringBundler` instead of
-`com.liferay.portal.kernel.util.StringBundler`
+`com.liferay.portal.kernel.util.StringBundler`.
 
 #### Why was this change made?
 
-This change was made in order to deprecate class
-`com.liferay.portal.kernel.util.StringBundler`
+The `com.liferay.petra.string.StringBundler` class has been deprecated.
 
 ---------------------------------------
 

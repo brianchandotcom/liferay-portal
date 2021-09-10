@@ -1,0 +1,276 @@
+@component-name = "core-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "System Settings";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = "5"
+	test CanUserEditOverrideConfigValueViaUI {
+		property custom.properties = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_articleCommentsEnabled=B&quot;false&quot;";
+		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
+		property osgi.module.configurations = "articleCommentsEnabled=B&quot;true&quot;";
+		property test.name.skip.portal.instance = "SystemSettings#CanUserEditOverrideConfigValueViaUI";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Web Content",
+			configurationName = "Web Content",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "articleCommentsEnabled");
+
+		FormFields.viewFieldText(
+			fieldName = "articleCommentsEnabled",
+			fieldText = "Set this to true to enable comments for journal articles. This field has been set by a portal property and cannot be changed here.");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Web Content Page Test");
+
+		Navigator.gotoPage(pageName = "Web Content Page Test");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+		IFrame.closeFrame();
+
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Configuration");
+
+		WebContentDisplayPortlet.viewNotPresent(metadataNameList = "Comments");
+
+		IFrame.closeFrame();
+	}
+
+	@priority = "4"
+	test CanUserEditOverrideConfigValueViaUIWithBothPropertiesUsed {
+		property custom.properties = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_articleCommentsEnabled=B&quot;true&quot;";
+		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
+		property osgi.module.configurations = "articleCommentsEnabled=B&quot;false&quot;";
+		property test.name.skip.portal.instance = "SystemSettings#CanUserEditOverrideConfigValueViaUIWithBothPropertiesUsed";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Web Content",
+			configurationName = "Web Content",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewCheckboxChecked(fieldName = "articleCommentsEnabled");
+
+		FormFields.viewFieldText(
+			fieldName = "articleCommentsEnabled",
+			fieldText = "Set this to true to enable comments for journal articles. This field has been set by a portal property and cannot be changed here.");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Web Content Page Test");
+
+		Navigator.gotoPage(pageName = "Web Content Page Test");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+		IFrame.closeFrame();
+
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Configuration");
+
+		WebContentDisplayPortlet.configureSetupPG(
+			enableViewCountIncrement = "true",
+			metadataNameList = "Comments");
+
+		WebContentDisplayPortlet.saveConfiguration();
+
+		IFrame.closeFrame();
+
+		Comments.addPG(entryComment = "WC WebContent Content Comment");
+
+		Comments.viewPG(
+			commentCount = "1",
+			entryComment = "WC WebContent Content Comment",
+			userFullName = "Test Test (You)");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Web Content",
+			configurationName = "Web Content",
+			configurationScope = "Virtual Instance Scope");
+
+		SystemSettings.saveConfiguration();
+
+		Navigator.gotoPage(pageName = "Web Content Page Test");
+
+		Comments.viewPG(
+			commentCount = "1",
+			entryComment = "WC WebContent Content Comment",
+			userFullName = "Test Test (You)");
+	}
+
+	@priority = "5"
+	test CanUserUpdateConfigValueViaUI {
+		property test.name.skip.portal.instance = "SystemSettings#CanUserUpdateConfigValueViaUI";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Web Content",
+			configurationName = "Web Content",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewCheckboxChecked(fieldName = "articleCommentsEnabled");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Web Content Page Test");
+
+		Navigator.gotoPage(pageName = "Web Content Page Test");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+		IFrame.closeFrame();
+
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Configuration");
+
+		WebContentDisplayPortlet.configureSetupPG(
+			enableViewCountIncrement = "true",
+			metadataNameList = "Comments");
+
+		WebContentDisplayPortlet.saveConfiguration();
+
+		IFrame.closeFrame();
+
+		Comments.addPG(entryComment = "WC WebContent Content Comment");
+
+		Comments.viewPG(
+			commentCount = "1",
+			entryComment = "WC WebContent Content Comment",
+			userFullName = "Test Test (You)");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "properties-configuration-overrides -Darticle.comments.enabled=false");
+
+		Pause(locator1 = "10000");
+
+		Navigator.gotoPage(pageName = "Web Content Page Test");
+
+		Comments.viewNoComments(entryComment = "WC WebContent Content Comment");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Web Content",
+			configurationName = "Web Content",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "articleCommentsEnabled");
+
+		FormFields.enableCheckbox(fieldName = "articleCommentsEnabled");
+
+		SystemSettings.saveConfiguration();
+
+		Navigator.gotoPage(pageName = "Web Content Page Test");
+
+		Comments.viewPG(
+			commentCount = "1",
+			entryComment = "WC WebContent Content Comment",
+			userFullName = "Test Test (You)");
+
+		ContentConfiguration.getConfigFileContent(
+			configFileName = "com.liferay.journal.configuration.JournalServiceConfiguration.config",
+			expectedText = "articleCommentsEnabled = B&quot;true&quot;");
+	}
+
+}

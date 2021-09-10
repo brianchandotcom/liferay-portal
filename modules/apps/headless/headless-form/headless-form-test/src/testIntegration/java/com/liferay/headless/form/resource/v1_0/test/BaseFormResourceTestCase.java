@@ -255,13 +255,13 @@ public abstract class BaseFormResourceTestCase {
 
 	@Test
 	public void testGetSiteFormsPage() throws Exception {
-		Page<Form> page = formResource.getSiteFormsPage(
-			testGetSiteFormsPage_getSiteId(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long siteId = testGetSiteFormsPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteFormsPage_getIrrelevantSiteId();
+
+		Page<Form> page = formResource.getSiteFormsPage(
+			siteId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantSiteId != null) {
 			Form irrelevantForm = testGetSiteFormsPage_addForm(
@@ -281,7 +281,7 @@ public abstract class BaseFormResourceTestCase {
 
 		Form form2 = testGetSiteFormsPage_addForm(siteId, randomForm());
 
-		page = formResource.getSiteFormsPage(siteId, Pagination.of(1, 2));
+		page = formResource.getSiteFormsPage(siteId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -347,7 +347,7 @@ public abstract class BaseFormResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 
 					put("siteKey", "\"" + siteId + "\"");
 				}
@@ -368,7 +368,7 @@ public abstract class BaseFormResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/forms");
 
-		Assert.assertEquals(2, formsJSONObject.get("totalCount"));
+		Assert.assertEquals(2, formsJSONObject.getLong("totalCount"));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(form1, form2),
@@ -429,6 +429,20 @@ public abstract class BaseFormResourceTestCase {
 		Assert.assertTrue(
 			formDocument1 + " does not equal " + formDocument2,
 			equals(formDocument1, formDocument2));
+	}
+
+	protected void assertContains(Form form, List<Form> forms) {
+		boolean contains = false;
+
+		for (Form item : forms) {
+			if (equals(form, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(forms + " does not contain " + form, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

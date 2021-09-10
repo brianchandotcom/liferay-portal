@@ -197,13 +197,13 @@ public abstract class BaseSegmentResourceTestCase {
 
 	@Test
 	public void testGetSiteSegmentsPage() throws Exception {
-		Page<Segment> page = segmentResource.getSiteSegmentsPage(
-			testGetSiteSegmentsPage_getSiteId(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long siteId = testGetSiteSegmentsPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteSegmentsPage_getIrrelevantSiteId();
+
+		Page<Segment> page = segmentResource.getSiteSegmentsPage(
+			siteId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantSiteId != null) {
 			Segment irrelevantSegment = testGetSiteSegmentsPage_addSegment(
@@ -226,7 +226,8 @@ public abstract class BaseSegmentResourceTestCase {
 		Segment segment2 = testGetSiteSegmentsPage_addSegment(
 			siteId, randomSegment());
 
-		page = segmentResource.getSiteSegmentsPage(siteId, Pagination.of(1, 2));
+		page = segmentResource.getSiteSegmentsPage(
+			siteId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -299,7 +300,7 @@ public abstract class BaseSegmentResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 
 					put("siteKey", "\"" + siteId + "\"");
 				}
@@ -320,7 +321,7 @@ public abstract class BaseSegmentResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/segments");
 
-		Assert.assertEquals(2, segmentsJSONObject.get("totalCount"));
+		Assert.assertEquals(2, segmentsJSONObject.getLong("totalCount"));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(segment1, segment2),
@@ -330,12 +331,6 @@ public abstract class BaseSegmentResourceTestCase {
 
 	@Test
 	public void testGetSiteUserAccountSegmentsPage() throws Exception {
-		Page<Segment> page = segmentResource.getSiteUserAccountSegmentsPage(
-			testGetSiteUserAccountSegmentsPage_getSiteId(),
-			testGetSiteUserAccountSegmentsPage_getUserAccountId());
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long siteId = testGetSiteUserAccountSegmentsPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteUserAccountSegmentsPage_getIrrelevantSiteId();
@@ -343,6 +338,11 @@ public abstract class BaseSegmentResourceTestCase {
 			testGetSiteUserAccountSegmentsPage_getUserAccountId();
 		Long irrelevantUserAccountId =
 			testGetSiteUserAccountSegmentsPage_getIrrelevantUserAccountId();
+
+		Page<Segment> page = segmentResource.getSiteUserAccountSegmentsPage(
+			siteId, userAccountId);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if ((irrelevantSiteId != null) && (irrelevantUserAccountId != null)) {
 			Segment irrelevantSegment =
@@ -441,6 +441,20 @@ public abstract class BaseSegmentResourceTestCase {
 
 			assertEquals(segment1, segment2);
 		}
+	}
+
+	protected void assertContains(Segment segment, List<Segment> segments) {
+		boolean contains = false;
+
+		for (Segment item : segments) {
+			if (equals(segment, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(segments + " does not contain " + segment, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

@@ -26,6 +26,7 @@ import com.liferay.headless.admin.batch.planner.client.dto.v1_0.Log;
 import com.liferay.headless.admin.batch.planner.client.dto.v1_0.Plan;
 import com.liferay.headless.admin.batch.planner.client.http.HttpInvoker;
 import com.liferay.headless.admin.batch.planner.client.pagination.Page;
+import com.liferay.headless.admin.batch.planner.client.pagination.Pagination;
 import com.liferay.headless.admin.batch.planner.client.resource.v1_0.PlanResource;
 import com.liferay.headless.admin.batch.planner.client.serdes.v1_0.PlanSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -198,7 +200,66 @@ public abstract class BasePlanResourceTestCase {
 
 	@Test
 	public void testGetPlansPage() throws Exception {
-		Assert.assertTrue(false);
+		Page<Plan> page = planResource.getPlansPage(Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		Plan plan1 = testGetPlansPage_addPlan(randomPlan());
+
+		Plan plan2 = testGetPlansPage_addPlan(randomPlan());
+
+		page = planResource.getPlansPage(Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(plan1, (List<Plan>)page.getItems());
+		assertContains(plan2, (List<Plan>)page.getItems());
+		assertValid(page);
+
+		planResource.deletePlan(plan1.getId());
+
+		planResource.deletePlan(plan2.getId());
+	}
+
+	@Test
+	public void testGetPlansPageWithPagination() throws Exception {
+		Page<Plan> totalPage = planResource.getPlansPage(null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
+		Plan plan1 = testGetPlansPage_addPlan(randomPlan());
+
+		Plan plan2 = testGetPlansPage_addPlan(randomPlan());
+
+		Plan plan3 = testGetPlansPage_addPlan(randomPlan());
+
+		Page<Plan> page1 = planResource.getPlansPage(
+			Pagination.of(1, totalCount + 2));
+
+		List<Plan> plans1 = (List<Plan>)page1.getItems();
+
+		Assert.assertEquals(plans1.toString(), totalCount + 2, plans1.size());
+
+		Page<Plan> page2 = planResource.getPlansPage(
+			Pagination.of(2, totalCount + 2));
+
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+		List<Plan> plans2 = (List<Plan>)page2.getItems();
+
+		Assert.assertEquals(plans2.toString(), 1, plans2.size());
+
+		Page<Plan> page3 = planResource.getPlansPage(
+			Pagination.of(1, totalCount + 3));
+
+		assertContains(plan1, (List<Plan>)page3.getItems());
+		assertContains(plan2, (List<Plan>)page3.getItems());
+		assertContains(plan3, (List<Plan>)page3.getItems());
+	}
+
+	protected Plan testGetPlansPage_addPlan(Plan plan) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -302,6 +363,20 @@ public abstract class BasePlanResourceTestCase {
 
 			assertEquals(plan1, plan2);
 		}
+	}
+
+	protected void assertContains(Plan plan, List<Plan> plans) {
+		boolean contains = false;
+
+		for (Plan item : plans) {
+			if (equals(plan, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(plans + " does not contain " + plan, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

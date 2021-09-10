@@ -402,6 +402,23 @@ public abstract class BaseBillingAddressResourceTestCase {
 		}
 	}
 
+	protected void assertContains(
+		BillingAddress billingAddress, List<BillingAddress> billingAddresses) {
+
+		boolean contains = false;
+
+		for (BillingAddress item : billingAddresses) {
+			if (equals(billingAddress, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			billingAddresses + " does not contain " + billingAddress, contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<BillingAddress> billingAddresses1,
 		List<BillingAddress> billingAddresses2) {

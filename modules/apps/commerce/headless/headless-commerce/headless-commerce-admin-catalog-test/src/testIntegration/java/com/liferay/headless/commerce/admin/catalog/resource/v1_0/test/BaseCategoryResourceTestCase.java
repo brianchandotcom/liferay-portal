@@ -198,17 +198,16 @@ public abstract class BaseCategoryResourceTestCase {
 	public void testGetProductByExternalReferenceCodeCategoriesPage()
 		throws Exception {
 
-		Page<Category> page =
-			categoryResource.getProductByExternalReferenceCodeCategoriesPage(
-				testGetProductByExternalReferenceCodeCategoriesPage_getExternalReferenceCode(),
-				Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetProductByExternalReferenceCodeCategoriesPage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
 			testGetProductByExternalReferenceCodeCategoriesPage_getIrrelevantExternalReferenceCode();
+
+		Page<Category> page =
+			categoryResource.getProductByExternalReferenceCodeCategoriesPage(
+				externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantExternalReferenceCode != null) {
 			Category irrelevantCategory =
@@ -238,7 +237,7 @@ public abstract class BaseCategoryResourceTestCase {
 				externalReferenceCode, randomCategory());
 
 		page = categoryResource.getProductByExternalReferenceCodeCategoriesPage(
-			externalReferenceCode, Pagination.of(1, 2));
+			externalReferenceCode, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -327,13 +326,13 @@ public abstract class BaseCategoryResourceTestCase {
 
 	@Test
 	public void testGetProductIdCategoriesPage() throws Exception {
-		Page<Category> page = categoryResource.getProductIdCategoriesPage(
-			testGetProductIdCategoriesPage_getId(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetProductIdCategoriesPage_getId();
 		Long irrelevantId = testGetProductIdCategoriesPage_getIrrelevantId();
+
+		Page<Category> page = categoryResource.getProductIdCategoriesPage(
+			id, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			Category irrelevantCategory =
@@ -358,7 +357,7 @@ public abstract class BaseCategoryResourceTestCase {
 			id, randomCategory());
 
 		page = categoryResource.getProductIdCategoriesPage(
-			id, Pagination.of(1, 2));
+			id, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -461,6 +460,23 @@ public abstract class BaseCategoryResourceTestCase {
 
 			assertEquals(category1, category2);
 		}
+	}
+
+	protected void assertContains(
+		Category category, List<Category> categories) {
+
+		boolean contains = false;
+
+		for (Category item : categories) {
+			if (equals(category, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			categories + " does not contain " + category, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

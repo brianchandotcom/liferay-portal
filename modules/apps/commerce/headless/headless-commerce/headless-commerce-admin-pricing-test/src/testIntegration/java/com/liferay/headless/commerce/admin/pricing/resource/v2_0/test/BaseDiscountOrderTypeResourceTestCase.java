@@ -217,18 +217,17 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 	public void testGetDiscountByExternalReferenceCodeDiscountOrderTypesPage()
 		throws Exception {
 
-		Page<DiscountOrderType> page =
-			discountOrderTypeResource.
-				getDiscountByExternalReferenceCodeDiscountOrderTypesPage(
-					testGetDiscountByExternalReferenceCodeDiscountOrderTypesPage_getExternalReferenceCode(),
-					Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountOrderTypesPage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountOrderTypesPage_getIrrelevantExternalReferenceCode();
+
+		Page<DiscountOrderType> page =
+			discountOrderTypeResource.
+				getDiscountByExternalReferenceCodeDiscountOrderTypesPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantExternalReferenceCode != null) {
 			DiscountOrderType irrelevantDiscountOrderType =
@@ -260,7 +259,7 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 		page =
 			discountOrderTypeResource.
 				getDiscountByExternalReferenceCodeDiscountOrderTypesPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -374,16 +373,16 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 
 	@Test
 	public void testGetDiscountIdDiscountOrderTypesPage() throws Exception {
-		Page<DiscountOrderType> page =
-			discountOrderTypeResource.getDiscountIdDiscountOrderTypesPage(
-				testGetDiscountIdDiscountOrderTypesPage_getId(),
-				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetDiscountIdDiscountOrderTypesPage_getId();
 		Long irrelevantId =
 			testGetDiscountIdDiscountOrderTypesPage_getIrrelevantId();
+
+		Page<DiscountOrderType> page =
+			discountOrderTypeResource.getDiscountIdDiscountOrderTypesPage(
+				id, RandomTestUtil.randomString(), null, Pagination.of(1, 10),
+				null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			DiscountOrderType irrelevantDiscountOrderType =
@@ -411,7 +410,7 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 				id, randomDiscountOrderType());
 
 		page = discountOrderTypeResource.getDiscountIdDiscountOrderTypesPage(
-			id, null, null, Pagination.of(1, 2), null);
+			id, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -746,6 +745,25 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 
 			assertEquals(discountOrderType1, discountOrderType2);
 		}
+	}
+
+	protected void assertContains(
+		DiscountOrderType discountOrderType,
+		List<DiscountOrderType> discountOrderTypes) {
+
+		boolean contains = false;
+
+		for (DiscountOrderType item : discountOrderTypes) {
+			if (equals(discountOrderType, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			discountOrderTypes + " does not contain " + discountOrderType,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

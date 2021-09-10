@@ -194,19 +194,17 @@ public abstract class BaseCategoryResourceTestCase {
 
 	@Test
 	public void testGetChannelProductCategoriesPage() throws Exception {
-		Page<Category> page = categoryResource.getChannelProductCategoriesPage(
-			testGetChannelProductCategoriesPage_getChannelId(),
-			testGetChannelProductCategoriesPage_getProductId(),
-			Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long channelId = testGetChannelProductCategoriesPage_getChannelId();
 		Long irrelevantChannelId =
 			testGetChannelProductCategoriesPage_getIrrelevantChannelId();
 		Long productId = testGetChannelProductCategoriesPage_getProductId();
 		Long irrelevantProductId =
 			testGetChannelProductCategoriesPage_getIrrelevantProductId();
+
+		Page<Category> page = categoryResource.getChannelProductCategoriesPage(
+			channelId, productId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if ((irrelevantChannelId != null) && (irrelevantProductId != null)) {
 			Category irrelevantCategory =
@@ -232,7 +230,7 @@ public abstract class BaseCategoryResourceTestCase {
 			channelId, productId, randomCategory());
 
 		page = categoryResource.getChannelProductCategoriesPage(
-			channelId, productId, Pagination.of(1, 2));
+			channelId, productId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -346,6 +344,23 @@ public abstract class BaseCategoryResourceTestCase {
 
 			assertEquals(category1, category2);
 		}
+	}
+
+	protected void assertContains(
+		Category category, List<Category> categories) {
+
+		boolean contains = false;
+
+		for (Category item : categories) {
+			if (equals(category, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			categories + " does not contain " + category, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

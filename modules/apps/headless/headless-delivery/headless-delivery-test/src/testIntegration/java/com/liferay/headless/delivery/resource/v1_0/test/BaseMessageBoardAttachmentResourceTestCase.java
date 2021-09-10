@@ -349,17 +349,17 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 	public void testGetMessageBoardMessageMessageBoardAttachmentsPage()
 		throws Exception {
 
-		Page<MessageBoardAttachment> page =
-			messageBoardAttachmentResource.
-				getMessageBoardMessageMessageBoardAttachmentsPage(
-					testGetMessageBoardMessageMessageBoardAttachmentsPage_getMessageBoardMessageId());
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long messageBoardMessageId =
 			testGetMessageBoardMessageMessageBoardAttachmentsPage_getMessageBoardMessageId();
 		Long irrelevantMessageBoardMessageId =
 			testGetMessageBoardMessageMessageBoardAttachmentsPage_getIrrelevantMessageBoardMessageId();
+
+		Page<MessageBoardAttachment> page =
+			messageBoardAttachmentResource.
+				getMessageBoardMessageMessageBoardAttachmentsPage(
+					messageBoardMessageId);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantMessageBoardMessageId != null) {
 			MessageBoardAttachment irrelevantMessageBoardAttachment =
@@ -469,17 +469,17 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 	public void testGetMessageBoardThreadMessageBoardAttachmentsPage()
 		throws Exception {
 
-		Page<MessageBoardAttachment> page =
-			messageBoardAttachmentResource.
-				getMessageBoardThreadMessageBoardAttachmentsPage(
-					testGetMessageBoardThreadMessageBoardAttachmentsPage_getMessageBoardThreadId());
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long messageBoardThreadId =
 			testGetMessageBoardThreadMessageBoardAttachmentsPage_getMessageBoardThreadId();
 		Long irrelevantMessageBoardThreadId =
 			testGetMessageBoardThreadMessageBoardAttachmentsPage_getIrrelevantMessageBoardThreadId();
+
+		Page<MessageBoardAttachment> page =
+			messageBoardAttachmentResource.
+				getMessageBoardThreadMessageBoardAttachmentsPage(
+					messageBoardThreadId);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantMessageBoardThreadId != null) {
 			MessageBoardAttachment irrelevantMessageBoardAttachment =
@@ -626,6 +626,26 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 
 			assertEquals(messageBoardAttachment1, messageBoardAttachment2);
 		}
+	}
+
+	protected void assertContains(
+		MessageBoardAttachment messageBoardAttachment,
+		List<MessageBoardAttachment> messageBoardAttachments) {
+
+		boolean contains = false;
+
+		for (MessageBoardAttachment item : messageBoardAttachments) {
+			if (equals(messageBoardAttachment, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			messageBoardAttachments + " does not contain " +
+				messageBoardAttachment,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

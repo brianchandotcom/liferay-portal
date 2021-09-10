@@ -232,6 +232,25 @@ public abstract class BaseHistogramMetricResourceTestCase {
 		}
 	}
 
+	protected void assertContains(
+		HistogramMetric histogramMetric,
+		List<HistogramMetric> histogramMetrics) {
+
+		boolean contains = false;
+
+		for (HistogramMetric item : histogramMetrics) {
+			if (equals(histogramMetric, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			histogramMetrics + " does not contain " + histogramMetric,
+			contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<HistogramMetric> histogramMetrics1,
 		List<HistogramMetric> histogramMetrics2) {

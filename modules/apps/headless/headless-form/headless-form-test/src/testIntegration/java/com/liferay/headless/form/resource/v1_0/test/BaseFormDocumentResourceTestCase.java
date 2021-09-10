@@ -352,6 +352,23 @@ public abstract class BaseFormDocumentResourceTestCase {
 		}
 	}
 
+	protected void assertContains(
+		FormDocument formDocument, List<FormDocument> formDocuments) {
+
+		boolean contains = false;
+
+		for (FormDocument item : formDocuments) {
+			if (equals(formDocument, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			formDocuments + " does not contain " + formDocument, contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<FormDocument> formDocuments1, List<FormDocument> formDocuments2) {
 

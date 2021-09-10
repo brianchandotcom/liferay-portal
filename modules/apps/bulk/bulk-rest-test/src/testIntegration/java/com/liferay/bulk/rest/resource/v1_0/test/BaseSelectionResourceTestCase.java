@@ -229,6 +229,23 @@ public abstract class BaseSelectionResourceTestCase {
 		}
 	}
 
+	protected void assertContains(
+		Selection selection, List<Selection> selections) {
+
+		boolean contains = false;
+
+		for (Selection item : selections) {
+			if (equals(selection, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			selections + " does not contain " + selection, contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<Selection> selections1, List<Selection> selections2) {
 

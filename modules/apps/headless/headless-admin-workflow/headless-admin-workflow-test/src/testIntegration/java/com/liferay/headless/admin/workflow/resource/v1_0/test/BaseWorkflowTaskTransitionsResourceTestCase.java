@@ -250,6 +250,26 @@ public abstract class BaseWorkflowTaskTransitionsResourceTestCase {
 		}
 	}
 
+	protected void assertContains(
+		WorkflowTaskTransitions workflowTaskTransitions,
+		List<WorkflowTaskTransitions> workflowTaskTransitionses) {
+
+		boolean contains = false;
+
+		for (WorkflowTaskTransitions item : workflowTaskTransitionses) {
+			if (equals(workflowTaskTransitions, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			workflowTaskTransitionses + " does not contain " +
+				workflowTaskTransitions,
+			contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<WorkflowTaskTransitions> workflowTaskTransitionses1,
 		List<WorkflowTaskTransitions> workflowTaskTransitionses2) {

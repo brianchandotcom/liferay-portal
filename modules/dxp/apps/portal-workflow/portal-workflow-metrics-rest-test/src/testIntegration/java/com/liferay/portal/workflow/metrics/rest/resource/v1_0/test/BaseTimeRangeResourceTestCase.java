@@ -192,7 +192,30 @@ public abstract class BaseTimeRangeResourceTestCase {
 
 	@Test
 	public void testGetTimeRangesPage() throws Exception {
-		Assert.assertTrue(false);
+		Page<TimeRange> page = timeRangeResource.getTimeRangesPage();
+
+		long totalCount = page.getTotalCount();
+
+		TimeRange timeRange1 = testGetTimeRangesPage_addTimeRange(
+			randomTimeRange());
+
+		TimeRange timeRange2 = testGetTimeRangesPage_addTimeRange(
+			randomTimeRange());
+
+		page = timeRangeResource.getTimeRangesPage();
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(timeRange1, (List<TimeRange>)page.getItems());
+		assertContains(timeRange2, (List<TimeRange>)page.getItems());
+		assertValid(page);
+	}
+
+	protected TimeRange testGetTimeRangesPage_addTimeRange(TimeRange timeRange)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -210,7 +233,7 @@ public abstract class BaseTimeRangeResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/timeRanges");
 
-		Assert.assertEquals(0, timeRangesJSONObject.get("totalCount"));
+		long totalCount = timeRangesJSONObject.getLong("totalCount");
 
 		TimeRange timeRange1 = testGraphQLTimeRange_addTimeRange();
 		TimeRange timeRange2 = testGraphQLTimeRange_addTimeRange();
@@ -219,10 +242,16 @@ public abstract class BaseTimeRangeResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/timeRanges");
 
-		Assert.assertEquals(2, timeRangesJSONObject.get("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, timeRangesJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(timeRange1, timeRange2),
+		assertContains(
+			timeRange1,
+			Arrays.asList(
+				TimeRangeSerDes.toDTOs(
+					timeRangesJSONObject.getString("items"))));
+		assertContains(
+			timeRange2,
 			Arrays.asList(
 				TimeRangeSerDes.toDTOs(
 					timeRangesJSONObject.getString("items"))));
@@ -258,6 +287,23 @@ public abstract class BaseTimeRangeResourceTestCase {
 
 			assertEquals(timeRange1, timeRange2);
 		}
+	}
+
+	protected void assertContains(
+		TimeRange timeRange, List<TimeRange> timeRanges) {
+
+		boolean contains = false;
+
+		for (TimeRange item : timeRanges) {
+			if (equals(timeRange, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			timeRanges + " does not contain " + timeRange, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

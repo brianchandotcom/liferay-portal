@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -207,21 +208,21 @@ public abstract class BaseChannelResourceTestCase {
 	@Test
 	public void testGetChannelsPage() throws Exception {
 		Page<Channel> page = channelResource.getChannelsPage(
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+			RandomTestUtil.randomString(), null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		Channel channel1 = testGetChannelsPage_addChannel(randomChannel());
 
 		Channel channel2 = testGetChannelsPage_addChannel(randomChannel());
 
 		page = channelResource.getChannelsPage(
-			null, null, Pagination.of(1, 2), null);
+			null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(channel1, channel2), (List<Channel>)page.getItems());
+		assertContains(channel1, (List<Channel>)page.getItems());
+		assertContains(channel2, (List<Channel>)page.getItems());
 		assertValid(page);
 
 		channelResource.deleteChannel(channel1.getId());
@@ -280,6 +281,11 @@ public abstract class BaseChannelResourceTestCase {
 
 	@Test
 	public void testGetChannelsPageWithPagination() throws Exception {
+		Page<Channel> totalPage = channelResource.getChannelsPage(
+			null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
 		Channel channel1 = testGetChannelsPage_addChannel(randomChannel());
 
 		Channel channel2 = testGetChannelsPage_addChannel(randomChannel());
@@ -287,27 +293,28 @@ public abstract class BaseChannelResourceTestCase {
 		Channel channel3 = testGetChannelsPage_addChannel(randomChannel());
 
 		Page<Channel> page1 = channelResource.getChannelsPage(
-			null, null, Pagination.of(1, 2), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<Channel> channels1 = (List<Channel>)page1.getItems();
 
-		Assert.assertEquals(channels1.toString(), 2, channels1.size());
+		Assert.assertEquals(
+			channels1.toString(), totalCount + 2, channels1.size());
 
 		Page<Channel> page2 = channelResource.getChannelsPage(
-			null, null, Pagination.of(2, 2), null);
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Channel> channels2 = (List<Channel>)page2.getItems();
 
 		Assert.assertEquals(channels2.toString(), 1, channels2.size());
 
 		Page<Channel> page3 = channelResource.getChannelsPage(
-			null, null, Pagination.of(1, 3), null);
+			null, null, Pagination.of(1, totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(channel1, channel2, channel3),
-			(List<Channel>)page3.getItems());
+		assertContains(channel1, (List<Channel>)page3.getItems());
+		assertContains(channel2, (List<Channel>)page3.getItems());
+		assertContains(channel3, (List<Channel>)page3.getItems());
 	}
 
 	@Test
@@ -438,7 +445,7 @@ public abstract class BaseChannelResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -448,7 +455,7 @@ public abstract class BaseChannelResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/channels");
 
-		Assert.assertEquals(0, channelsJSONObject.get("totalCount"));
+		long totalCount = channelsJSONObject.getLong("totalCount");
 
 		Channel channel1 = testGraphQLChannel_addChannel();
 		Channel channel2 = testGraphQLChannel_addChannel();
@@ -457,10 +464,15 @@ public abstract class BaseChannelResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/channels");
 
-		Assert.assertEquals(2, channelsJSONObject.get("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, channelsJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(channel1, channel2),
+		assertContains(
+			channel1,
+			Arrays.asList(
+				ChannelSerDes.toDTOs(channelsJSONObject.getString("items"))));
+		assertContains(
+			channel2,
 			Arrays.asList(
 				ChannelSerDes.toDTOs(channelsJSONObject.getString("items"))));
 	}
@@ -670,6 +682,20 @@ public abstract class BaseChannelResourceTestCase {
 
 			assertEquals(channel1, channel2);
 		}
+	}
+
+	protected void assertContains(Channel channel, List<Channel> channels) {
+		boolean contains = false;
+
+		for (Channel item : channels) {
+			if (equals(channel, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(channels + " does not contain " + channel, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

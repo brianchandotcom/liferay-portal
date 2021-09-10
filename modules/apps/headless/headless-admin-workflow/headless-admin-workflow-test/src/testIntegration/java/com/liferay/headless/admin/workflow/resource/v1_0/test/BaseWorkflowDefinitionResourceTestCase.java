@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -210,9 +211,9 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 	public void testGetWorkflowDefinitionsPage() throws Exception {
 		Page<WorkflowDefinition> page =
 			workflowDefinitionResource.getWorkflowDefinitionsPage(
-				null, Pagination.of(1, 2), null);
+				null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		WorkflowDefinition workflowDefinition1 =
 			testGetWorkflowDefinitionsPage_addWorkflowDefinition(
@@ -223,19 +224,26 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 				randomWorkflowDefinition());
 
 		page = workflowDefinitionResource.getWorkflowDefinitionsPage(
-			null, Pagination.of(1, 2), null);
+			null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(workflowDefinition1, workflowDefinition2),
-			(List<WorkflowDefinition>)page.getItems());
+		assertContains(
+			workflowDefinition1, (List<WorkflowDefinition>)page.getItems());
+		assertContains(
+			workflowDefinition2, (List<WorkflowDefinition>)page.getItems());
 		assertValid(page);
 	}
 
 	@Test
 	public void testGetWorkflowDefinitionsPageWithPagination()
 		throws Exception {
+
+		Page<WorkflowDefinition> totalPage =
+			workflowDefinitionResource.getWorkflowDefinitionsPage(
+				null, null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
 
 		WorkflowDefinition workflowDefinition1 =
 			testGetWorkflowDefinitionsPage_addWorkflowDefinition(
@@ -251,19 +259,20 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		Page<WorkflowDefinition> page1 =
 			workflowDefinitionResource.getWorkflowDefinitionsPage(
-				null, Pagination.of(1, 2), null);
+				null, Pagination.of(1, totalCount + 2), null);
 
 		List<WorkflowDefinition> workflowDefinitions1 =
 			(List<WorkflowDefinition>)page1.getItems();
 
 		Assert.assertEquals(
-			workflowDefinitions1.toString(), 2, workflowDefinitions1.size());
+			workflowDefinitions1.toString(), totalCount + 2,
+			workflowDefinitions1.size());
 
 		Page<WorkflowDefinition> page2 =
 			workflowDefinitionResource.getWorkflowDefinitionsPage(
-				null, Pagination.of(2, 2), null);
+				null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<WorkflowDefinition> workflowDefinitions2 =
 			(List<WorkflowDefinition>)page2.getItems();
@@ -273,12 +282,14 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		Page<WorkflowDefinition> page3 =
 			workflowDefinitionResource.getWorkflowDefinitionsPage(
-				null, Pagination.of(1, 3), null);
+				null, Pagination.of(1, totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(
-				workflowDefinition1, workflowDefinition2, workflowDefinition3),
-			(List<WorkflowDefinition>)page3.getItems());
+		assertContains(
+			workflowDefinition1, (List<WorkflowDefinition>)page3.getItems());
+		assertContains(
+			workflowDefinition2, (List<WorkflowDefinition>)page3.getItems());
+		assertContains(
+			workflowDefinition3, (List<WorkflowDefinition>)page3.getItems());
 	}
 
 	@Test
@@ -543,6 +554,25 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 			assertEquals(workflowDefinition1, workflowDefinition2);
 		}
+	}
+
+	protected void assertContains(
+		WorkflowDefinition workflowDefinition,
+		List<WorkflowDefinition> workflowDefinitions) {
+
+		boolean contains = false;
+
+		for (WorkflowDefinition item : workflowDefinitions) {
+			if (equals(workflowDefinition, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			workflowDefinitions + " does not contain " + workflowDefinition,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

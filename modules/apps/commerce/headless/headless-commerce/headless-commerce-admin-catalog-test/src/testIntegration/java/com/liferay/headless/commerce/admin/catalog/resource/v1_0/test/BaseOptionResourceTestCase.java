@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -203,21 +204,21 @@ public abstract class BaseOptionResourceTestCase {
 	@Test
 	public void testGetOptionsPage() throws Exception {
 		Page<Option> page = optionResource.getOptionsPage(
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+			RandomTestUtil.randomString(), null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		Option option1 = testGetOptionsPage_addOption(randomOption());
 
 		Option option2 = testGetOptionsPage_addOption(randomOption());
 
 		page = optionResource.getOptionsPage(
-			null, null, Pagination.of(1, 2), null);
+			null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(option1, option2), (List<Option>)page.getItems());
+		assertContains(option1, (List<Option>)page.getItems());
+		assertContains(option2, (List<Option>)page.getItems());
 		assertValid(page);
 
 		optionResource.deleteOption(option1.getId());
@@ -276,6 +277,11 @@ public abstract class BaseOptionResourceTestCase {
 
 	@Test
 	public void testGetOptionsPageWithPagination() throws Exception {
+		Page<Option> totalPage = optionResource.getOptionsPage(
+			null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
 		Option option1 = testGetOptionsPage_addOption(randomOption());
 
 		Option option2 = testGetOptionsPage_addOption(randomOption());
@@ -283,27 +289,28 @@ public abstract class BaseOptionResourceTestCase {
 		Option option3 = testGetOptionsPage_addOption(randomOption());
 
 		Page<Option> page1 = optionResource.getOptionsPage(
-			null, null, Pagination.of(1, 2), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<Option> options1 = (List<Option>)page1.getItems();
 
-		Assert.assertEquals(options1.toString(), 2, options1.size());
+		Assert.assertEquals(
+			options1.toString(), totalCount + 2, options1.size());
 
 		Page<Option> page2 = optionResource.getOptionsPage(
-			null, null, Pagination.of(2, 2), null);
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Option> options2 = (List<Option>)page2.getItems();
 
 		Assert.assertEquals(options2.toString(), 1, options2.size());
 
 		Page<Option> page3 = optionResource.getOptionsPage(
-			null, null, Pagination.of(1, 3), null);
+			null, null, Pagination.of(1, totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(option1, option2, option3),
-			(List<Option>)page3.getItems());
+		assertContains(option1, (List<Option>)page3.getItems());
+		assertContains(option2, (List<Option>)page3.getItems());
+		assertContains(option3, (List<Option>)page3.getItems());
 	}
 
 	@Test
@@ -434,7 +441,7 @@ public abstract class BaseOptionResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -444,7 +451,7 @@ public abstract class BaseOptionResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/options");
 
-		Assert.assertEquals(0, optionsJSONObject.get("totalCount"));
+		long totalCount = optionsJSONObject.getLong("totalCount");
 
 		Option option1 = testGraphQLOption_addOption();
 		Option option2 = testGraphQLOption_addOption();
@@ -453,10 +460,15 @@ public abstract class BaseOptionResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/options");
 
-		Assert.assertEquals(2, optionsJSONObject.get("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, optionsJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(option1, option2),
+		assertContains(
+			option1,
+			Arrays.asList(
+				OptionSerDes.toDTOs(optionsJSONObject.getString("items"))));
+		assertContains(
+			option2,
 			Arrays.asList(
 				OptionSerDes.toDTOs(optionsJSONObject.getString("items"))));
 	}
@@ -721,6 +733,20 @@ public abstract class BaseOptionResourceTestCase {
 
 			assertEquals(option1, option2);
 		}
+	}
+
+	protected void assertContains(Option option, List<Option> options) {
+		boolean contains = false;
+
+		for (Option item : options) {
+			if (equals(option, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(options + " does not contain " + option, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

@@ -195,15 +195,15 @@ public abstract class BasePhoneResourceTestCase {
 
 	@Test
 	public void testGetOrganizationPhonesPage() throws Exception {
-		Page<Phone> page = phoneResource.getOrganizationPhonesPage(
-			testGetOrganizationPhonesPage_getOrganizationId());
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String organizationId =
 			testGetOrganizationPhonesPage_getOrganizationId();
 		String irrelevantOrganizationId =
 			testGetOrganizationPhonesPage_getIrrelevantOrganizationId();
+
+		Page<Phone> page = phoneResource.getOrganizationPhonesPage(
+			organizationId);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantOrganizationId != null) {
 			Phone irrelevantPhone = testGetOrganizationPhonesPage_addPhone(
@@ -313,14 +313,14 @@ public abstract class BasePhoneResourceTestCase {
 
 	@Test
 	public void testGetUserAccountPhonesPage() throws Exception {
-		Page<Phone> page = phoneResource.getUserAccountPhonesPage(
-			testGetUserAccountPhonesPage_getUserAccountId());
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long userAccountId = testGetUserAccountPhonesPage_getUserAccountId();
 		Long irrelevantUserAccountId =
 			testGetUserAccountPhonesPage_getIrrelevantUserAccountId();
+
+		Page<Phone> page = phoneResource.getUserAccountPhonesPage(
+			userAccountId);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantUserAccountId != null) {
 			Phone irrelevantPhone = testGetUserAccountPhonesPage_addPhone(
@@ -399,6 +399,20 @@ public abstract class BasePhoneResourceTestCase {
 
 			assertEquals(phone1, phone2);
 		}
+	}
+
+	protected void assertContains(Phone phone, List<Phone> phones) {
+		boolean contains = false;
+
+		for (Phone item : phones) {
+			if (equals(phone, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(phones + " does not contain " + phone, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

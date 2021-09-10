@@ -193,7 +193,26 @@ public abstract class BaseIndexResourceTestCase {
 
 	@Test
 	public void testGetIndexesPage() throws Exception {
-		Assert.assertTrue(false);
+		Page<Index> page = indexResource.getIndexesPage();
+
+		long totalCount = page.getTotalCount();
+
+		Index index1 = testGetIndexesPage_addIndex(randomIndex());
+
+		Index index2 = testGetIndexesPage_addIndex(randomIndex());
+
+		page = indexResource.getIndexesPage();
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(index1, (List<Index>)page.getItems());
+		assertContains(index2, (List<Index>)page.getItems());
+		assertValid(page);
+	}
+
+	protected Index testGetIndexesPage_addIndex(Index index) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -233,6 +252,20 @@ public abstract class BaseIndexResourceTestCase {
 
 			assertEquals(index1, index2);
 		}
+	}
+
+	protected void assertContains(Index index, List<Index> indexes) {
+		boolean contains = false;
+
+		for (Index item : indexes) {
+			if (equals(index, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(indexes + " does not contain " + index, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

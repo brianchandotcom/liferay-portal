@@ -25,8 +25,10 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.headless.commerce.admin.account.client.dto.v1_0.AccountGroup;
 import com.liferay.headless.commerce.admin.account.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.account.client.pagination.Page;
+import com.liferay.headless.commerce.admin.account.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.account.client.resource.v1_0.AccountGroupResource;
 import com.liferay.headless.commerce.admin.account.client.serdes.v1_0.AccountGroupSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -41,21 +43,26 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +74,9 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -194,7 +203,251 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 	@Test
 	public void testGetAccountGroupsPage() throws Exception {
-		Assert.assertTrue(false);
+		Page<AccountGroup> page = accountGroupResource.getAccountGroupsPage(
+			null, Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		AccountGroup accountGroup1 = testGetAccountGroupsPage_addAccountGroup(
+			randomAccountGroup());
+
+		AccountGroup accountGroup2 = testGetAccountGroupsPage_addAccountGroup(
+			randomAccountGroup());
+
+		page = accountGroupResource.getAccountGroupsPage(
+			null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(accountGroup1, (List<AccountGroup>)page.getItems());
+		assertContains(accountGroup2, (List<AccountGroup>)page.getItems());
+		assertValid(page);
+
+		accountGroupResource.deleteAccountGroup(accountGroup1.getId());
+
+		accountGroupResource.deleteAccountGroup(accountGroup2.getId());
+	}
+
+	@Test
+	public void testGetAccountGroupsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		AccountGroup accountGroup1 = randomAccountGroup();
+
+		accountGroup1 = testGetAccountGroupsPage_addAccountGroup(accountGroup1);
+
+		for (EntityField entityField : entityFields) {
+			Page<AccountGroup> page = accountGroupResource.getAccountGroupsPage(
+				getFilterString(entityField, "between", accountGroup1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(accountGroup1),
+				(List<AccountGroup>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetAccountGroupsPageWithFilterStringEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		AccountGroup accountGroup1 = testGetAccountGroupsPage_addAccountGroup(
+			randomAccountGroup());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountGroup accountGroup2 = testGetAccountGroupsPage_addAccountGroup(
+			randomAccountGroup());
+
+		for (EntityField entityField : entityFields) {
+			Page<AccountGroup> page = accountGroupResource.getAccountGroupsPage(
+				getFilterString(entityField, "eq", accountGroup1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(accountGroup1),
+				(List<AccountGroup>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetAccountGroupsPageWithPagination() throws Exception {
+		Page<AccountGroup> totalPage =
+			accountGroupResource.getAccountGroupsPage(null, null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
+		AccountGroup accountGroup1 = testGetAccountGroupsPage_addAccountGroup(
+			randomAccountGroup());
+
+		AccountGroup accountGroup2 = testGetAccountGroupsPage_addAccountGroup(
+			randomAccountGroup());
+
+		AccountGroup accountGroup3 = testGetAccountGroupsPage_addAccountGroup(
+			randomAccountGroup());
+
+		Page<AccountGroup> page1 = accountGroupResource.getAccountGroupsPage(
+			null, Pagination.of(1, totalCount + 2), null);
+
+		List<AccountGroup> accountGroups1 =
+			(List<AccountGroup>)page1.getItems();
+
+		Assert.assertEquals(
+			accountGroups1.toString(), totalCount + 2, accountGroups1.size());
+
+		Page<AccountGroup> page2 = accountGroupResource.getAccountGroupsPage(
+			null, Pagination.of(2, totalCount + 2), null);
+
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+		List<AccountGroup> accountGroups2 =
+			(List<AccountGroup>)page2.getItems();
+
+		Assert.assertEquals(
+			accountGroups2.toString(), 1, accountGroups2.size());
+
+		Page<AccountGroup> page3 = accountGroupResource.getAccountGroupsPage(
+			null, Pagination.of(1, totalCount + 3), null);
+
+		assertContains(accountGroup1, (List<AccountGroup>)page3.getItems());
+		assertContains(accountGroup2, (List<AccountGroup>)page3.getItems());
+		assertContains(accountGroup3, (List<AccountGroup>)page3.getItems());
+	}
+
+	@Test
+	public void testGetAccountGroupsPageWithSortDateTime() throws Exception {
+		testGetAccountGroupsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, accountGroup1, accountGroup2) -> {
+				BeanUtils.setProperty(
+					accountGroup1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetAccountGroupsPageWithSortInteger() throws Exception {
+		testGetAccountGroupsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, accountGroup1, accountGroup2) -> {
+				BeanUtils.setProperty(accountGroup1, entityField.getName(), 0);
+				BeanUtils.setProperty(accountGroup2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetAccountGroupsPageWithSortString() throws Exception {
+		testGetAccountGroupsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, accountGroup1, accountGroup2) -> {
+				Class<?> clazz = accountGroup1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						accountGroup1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						accountGroup2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanUtils.setProperty(
+						accountGroup1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanUtils.setProperty(
+						accountGroup2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						accountGroup1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanUtils.setProperty(
+						accountGroup2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetAccountGroupsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, AccountGroup, AccountGroup, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		AccountGroup accountGroup1 = randomAccountGroup();
+		AccountGroup accountGroup2 = randomAccountGroup();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, accountGroup1, accountGroup2);
+		}
+
+		accountGroup1 = testGetAccountGroupsPage_addAccountGroup(accountGroup1);
+
+		accountGroup2 = testGetAccountGroupsPage_addAccountGroup(accountGroup2);
+
+		for (EntityField entityField : entityFields) {
+			Page<AccountGroup> ascPage =
+				accountGroupResource.getAccountGroupsPage(
+					null, Pagination.of(1, 2), entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(accountGroup1, accountGroup2),
+				(List<AccountGroup>)ascPage.getItems());
+
+			Page<AccountGroup> descPage =
+				accountGroupResource.getAccountGroupsPage(
+					null, Pagination.of(1, 2), entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(accountGroup2, accountGroup1),
+				(List<AccountGroup>)descPage.getItems());
+		}
+	}
+
+	protected AccountGroup testGetAccountGroupsPage_addAccountGroup(
+			AccountGroup accountGroup)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -204,7 +457,7 @@ public abstract class BaseAccountGroupResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -214,7 +467,7 @@ public abstract class BaseAccountGroupResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/accountGroups");
 
-		Assert.assertEquals(0, accountGroupsJSONObject.get("totalCount"));
+		long totalCount = accountGroupsJSONObject.getLong("totalCount");
 
 		AccountGroup accountGroup1 = testGraphQLAccountGroup_addAccountGroup();
 		AccountGroup accountGroup2 = testGraphQLAccountGroup_addAccountGroup();
@@ -223,10 +476,16 @@ public abstract class BaseAccountGroupResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/accountGroups");
 
-		Assert.assertEquals(2, accountGroupsJSONObject.get("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, accountGroupsJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(accountGroup1, accountGroup2),
+		assertContains(
+			accountGroup1,
+			Arrays.asList(
+				AccountGroupSerDes.toDTOs(
+					accountGroupsJSONObject.getString("items"))));
+		assertContains(
+			accountGroup2,
 			Arrays.asList(
 				AccountGroupSerDes.toDTOs(
 					accountGroupsJSONObject.getString("items"))));
@@ -491,6 +750,9 @@ public abstract class BaseAccountGroupResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
+
 	protected AccountGroup testGraphQLAccountGroup_addAccountGroup()
 		throws Exception {
 
@@ -525,6 +787,23 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 			assertEquals(accountGroup1, accountGroup2);
 		}
+	}
+
+	protected void assertContains(
+		AccountGroup accountGroup, List<AccountGroup> accountGroups) {
+
+		boolean contains = false;
+
+		for (AccountGroup item : accountGroups) {
+			if (equals(accountGroup, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			accountGroups + " does not contain " + accountGroup, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

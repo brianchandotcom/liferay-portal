@@ -198,17 +198,16 @@ public abstract class BaseTransitionResourceTestCase {
 
 	@Test
 	public void testGetWorkflowInstanceNextTransitionsPage() throws Exception {
-		Page<Transition> page =
-			transitionResource.getWorkflowInstanceNextTransitionsPage(
-				testGetWorkflowInstanceNextTransitionsPage_getWorkflowInstanceId(),
-				Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long workflowInstanceId =
 			testGetWorkflowInstanceNextTransitionsPage_getWorkflowInstanceId();
 		Long irrelevantWorkflowInstanceId =
 			testGetWorkflowInstanceNextTransitionsPage_getIrrelevantWorkflowInstanceId();
+
+		Page<Transition> page =
+			transitionResource.getWorkflowInstanceNextTransitionsPage(
+				workflowInstanceId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantWorkflowInstanceId != null) {
 			Transition irrelevantTransition =
@@ -235,7 +234,7 @@ public abstract class BaseTransitionResourceTestCase {
 				workflowInstanceId, randomTransition());
 
 		page = transitionResource.getWorkflowInstanceNextTransitionsPage(
-			workflowInstanceId, Pagination.of(1, 2));
+			workflowInstanceId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -317,17 +316,16 @@ public abstract class BaseTransitionResourceTestCase {
 
 	@Test
 	public void testGetWorkflowTaskNextTransitionsPage() throws Exception {
-		Page<Transition> page =
-			transitionResource.getWorkflowTaskNextTransitionsPage(
-				testGetWorkflowTaskNextTransitionsPage_getWorkflowTaskId(),
-				Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long workflowTaskId =
 			testGetWorkflowTaskNextTransitionsPage_getWorkflowTaskId();
 		Long irrelevantWorkflowTaskId =
 			testGetWorkflowTaskNextTransitionsPage_getIrrelevantWorkflowTaskId();
+
+		Page<Transition> page =
+			transitionResource.getWorkflowTaskNextTransitionsPage(
+				workflowTaskId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantWorkflowTaskId != null) {
 			Transition irrelevantTransition =
@@ -354,7 +352,7 @@ public abstract class BaseTransitionResourceTestCase {
 				workflowTaskId, randomTransition());
 
 		page = transitionResource.getWorkflowTaskNextTransitionsPage(
-			workflowTaskId, Pagination.of(1, 2));
+			workflowTaskId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -459,6 +457,23 @@ public abstract class BaseTransitionResourceTestCase {
 
 			assertEquals(transition1, transition2);
 		}
+	}
+
+	protected void assertContains(
+		Transition transition, List<Transition> transitions) {
+
+		boolean contains = false;
+
+		for (Transition item : transitions) {
+			if (equals(transition, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			transitions + " does not contain " + transition, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

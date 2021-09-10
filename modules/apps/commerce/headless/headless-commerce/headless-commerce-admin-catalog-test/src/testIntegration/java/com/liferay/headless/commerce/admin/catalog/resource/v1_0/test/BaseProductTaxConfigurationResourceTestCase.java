@@ -393,6 +393,26 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 		}
 	}
 
+	protected void assertContains(
+		ProductTaxConfiguration productTaxConfiguration,
+		List<ProductTaxConfiguration> productTaxConfigurations) {
+
+		boolean contains = false;
+
+		for (ProductTaxConfiguration item : productTaxConfigurations) {
+			if (equals(productTaxConfiguration, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			productTaxConfigurations + " does not contain " +
+				productTaxConfiguration,
+			contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<ProductTaxConfiguration> productTaxConfigurations1,
 		List<ProductTaxConfiguration> productTaxConfigurations2) {

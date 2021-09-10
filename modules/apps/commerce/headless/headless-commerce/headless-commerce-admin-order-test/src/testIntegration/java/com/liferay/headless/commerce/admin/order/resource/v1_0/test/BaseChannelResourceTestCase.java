@@ -420,6 +420,20 @@ public abstract class BaseChannelResourceTestCase {
 		}
 	}
 
+	protected void assertContains(Channel channel, List<Channel> channels) {
+		boolean contains = false;
+
+		for (Channel item : channels) {
+			if (equals(channel, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(channels + " does not contain " + channel, contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<Channel> channels1, List<Channel> channels2) {
 

@@ -242,18 +242,17 @@ public abstract class BaseProductGroupProductResourceTestCase {
 	public void testGetProductGroupByExternalReferenceCodeProductGroupProductsPage()
 		throws Exception {
 
-		Page<ProductGroupProduct> page =
-			productGroupProductResource.
-				getProductGroupByExternalReferenceCodeProductGroupProductsPage(
-					testGetProductGroupByExternalReferenceCodeProductGroupProductsPage_getExternalReferenceCode(),
-					Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetProductGroupByExternalReferenceCodeProductGroupProductsPage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
 			testGetProductGroupByExternalReferenceCodeProductGroupProductsPage_getIrrelevantExternalReferenceCode();
+
+		Page<ProductGroupProduct> page =
+			productGroupProductResource.
+				getProductGroupByExternalReferenceCodeProductGroupProductsPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantExternalReferenceCode != null) {
 			ProductGroupProduct irrelevantProductGroupProduct =
@@ -285,7 +284,7 @@ public abstract class BaseProductGroupProductResourceTestCase {
 		page =
 			productGroupProductResource.
 				getProductGroupByExternalReferenceCodeProductGroupProductsPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -409,17 +408,16 @@ public abstract class BaseProductGroupProductResourceTestCase {
 	public void testGetProductGroupIdProductGroupProductsPage()
 		throws Exception {
 
-		Page<ProductGroupProduct> page =
-			productGroupProductResource.
-				getProductGroupIdProductGroupProductsPage(
-					testGetProductGroupIdProductGroupProductsPage_getId(),
-					Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetProductGroupIdProductGroupProductsPage_getId();
 		Long irrelevantId =
 			testGetProductGroupIdProductGroupProductsPage_getIrrelevantId();
+
+		Page<ProductGroupProduct> page =
+			productGroupProductResource.
+				getProductGroupIdProductGroupProductsPage(
+					id, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			ProductGroupProduct irrelevantProductGroupProduct =
@@ -450,7 +448,7 @@ public abstract class BaseProductGroupProductResourceTestCase {
 		page =
 			productGroupProductResource.
 				getProductGroupIdProductGroupProductsPage(
-					id, Pagination.of(1, 2));
+					id, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -605,6 +603,25 @@ public abstract class BaseProductGroupProductResourceTestCase {
 
 			assertEquals(productGroupProduct1, productGroupProduct2);
 		}
+	}
+
+	protected void assertContains(
+		ProductGroupProduct productGroupProduct,
+		List<ProductGroupProduct> productGroupProducts) {
+
+		boolean contains = false;
+
+		for (ProductGroupProduct item : productGroupProducts) {
+			if (equals(productGroupProduct, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			productGroupProducts + " does not contain " + productGroupProduct,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

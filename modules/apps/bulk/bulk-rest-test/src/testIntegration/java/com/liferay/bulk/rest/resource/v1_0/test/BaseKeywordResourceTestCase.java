@@ -221,6 +221,20 @@ public abstract class BaseKeywordResourceTestCase {
 		}
 	}
 
+	protected void assertContains(Keyword keyword, List<Keyword> keywords) {
+		boolean contains = false;
+
+		for (Keyword item : keywords) {
+			if (equals(keyword, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(keywords + " does not contain " + keyword, contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<Keyword> keywords1, List<Keyword> keywords2) {
 

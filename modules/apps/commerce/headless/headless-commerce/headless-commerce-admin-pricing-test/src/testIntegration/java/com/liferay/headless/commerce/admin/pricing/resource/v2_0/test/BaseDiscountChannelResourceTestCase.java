@@ -216,18 +216,17 @@ public abstract class BaseDiscountChannelResourceTestCase {
 	public void testGetDiscountByExternalReferenceCodeDiscountChannelsPage()
 		throws Exception {
 
-		Page<DiscountChannel> page =
-			discountChannelResource.
-				getDiscountByExternalReferenceCodeDiscountChannelsPage(
-					testGetDiscountByExternalReferenceCodeDiscountChannelsPage_getExternalReferenceCode(),
-					Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountChannelsPage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountChannelsPage_getIrrelevantExternalReferenceCode();
+
+		Page<DiscountChannel> page =
+			discountChannelResource.
+				getDiscountByExternalReferenceCodeDiscountChannelsPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantExternalReferenceCode != null) {
 			DiscountChannel irrelevantDiscountChannel =
@@ -259,7 +258,7 @@ public abstract class BaseDiscountChannelResourceTestCase {
 		page =
 			discountChannelResource.
 				getDiscountByExternalReferenceCodeDiscountChannelsPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -371,16 +370,16 @@ public abstract class BaseDiscountChannelResourceTestCase {
 
 	@Test
 	public void testGetDiscountIdDiscountChannelsPage() throws Exception {
-		Page<DiscountChannel> page =
-			discountChannelResource.getDiscountIdDiscountChannelsPage(
-				testGetDiscountIdDiscountChannelsPage_getId(),
-				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetDiscountIdDiscountChannelsPage_getId();
 		Long irrelevantId =
 			testGetDiscountIdDiscountChannelsPage_getIrrelevantId();
+
+		Page<DiscountChannel> page =
+			discountChannelResource.getDiscountIdDiscountChannelsPage(
+				id, RandomTestUtil.randomString(), null, Pagination.of(1, 10),
+				null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			DiscountChannel irrelevantDiscountChannel =
@@ -407,7 +406,7 @@ public abstract class BaseDiscountChannelResourceTestCase {
 				id, randomDiscountChannel());
 
 		page = discountChannelResource.getDiscountIdDiscountChannelsPage(
-			id, null, null, Pagination.of(1, 2), null);
+			id, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -739,6 +738,25 @@ public abstract class BaseDiscountChannelResourceTestCase {
 
 			assertEquals(discountChannel1, discountChannel2);
 		}
+	}
+
+	protected void assertContains(
+		DiscountChannel discountChannel,
+		List<DiscountChannel> discountChannels) {
+
+		boolean contains = false;
+
+		for (DiscountChannel item : discountChannels) {
+			if (equals(discountChannel, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			discountChannels + " does not contain " + discountChannel,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

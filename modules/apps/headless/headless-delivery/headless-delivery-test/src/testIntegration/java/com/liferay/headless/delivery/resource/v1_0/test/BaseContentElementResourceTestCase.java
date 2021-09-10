@@ -217,18 +217,17 @@ public abstract class BaseContentElementResourceTestCase {
 
 	@Test
 	public void testGetAssetLibraryContentElementsPage() throws Exception {
-		Page<ContentElement> page =
-			contentElementResource.getAssetLibraryContentElementsPage(
-				testGetAssetLibraryContentElementsPage_getAssetLibraryId(),
-				RandomTestUtil.randomString(), null, null, Pagination.of(1, 2),
-				null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long assetLibraryId =
 			testGetAssetLibraryContentElementsPage_getAssetLibraryId();
 		Long irrelevantAssetLibraryId =
 			testGetAssetLibraryContentElementsPage_getIrrelevantAssetLibraryId();
+
+		Page<ContentElement> page =
+			contentElementResource.getAssetLibraryContentElementsPage(
+				assetLibraryId, RandomTestUtil.randomString(), null, null,
+				Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantAssetLibraryId != null) {
 			ContentElement irrelevantContentElement =
@@ -256,7 +255,7 @@ public abstract class BaseContentElementResourceTestCase {
 				assetLibraryId, randomContentElement());
 
 		page = contentElementResource.getAssetLibraryContentElementsPage(
-			assetLibraryId, null, null, null, Pagination.of(1, 2), null);
+			assetLibraryId, null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -542,17 +541,16 @@ public abstract class BaseContentElementResourceTestCase {
 
 	@Test
 	public void testGetSiteContentElementsPage() throws Exception {
-		Page<ContentElement> page =
-			contentElementResource.getSiteContentElementsPage(
-				testGetSiteContentElementsPage_getSiteId(),
-				RandomTestUtil.randomString(), null, null, Pagination.of(1, 2),
-				null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long siteId = testGetSiteContentElementsPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteContentElementsPage_getIrrelevantSiteId();
+
+		Page<ContentElement> page =
+			contentElementResource.getSiteContentElementsPage(
+				siteId, RandomTestUtil.randomString(), null, null,
+				Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantSiteId != null) {
 			ContentElement irrelevantContentElement =
@@ -579,7 +577,7 @@ public abstract class BaseContentElementResourceTestCase {
 				siteId, randomContentElement());
 
 		page = contentElementResource.getSiteContentElementsPage(
-			siteId, null, null, null, Pagination.of(1, 2), null);
+			siteId, null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -861,7 +859,7 @@ public abstract class BaseContentElementResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 
 					put("siteKey", "\"" + siteId + "\"");
 				}
@@ -884,7 +882,7 @@ public abstract class BaseContentElementResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/contentElements");
 
-		Assert.assertEquals(2, contentElementsJSONObject.get("totalCount"));
+		Assert.assertEquals(2, contentElementsJSONObject.getLong("totalCount"));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contentElement1, contentElement2),
@@ -931,6 +929,23 @@ public abstract class BaseContentElementResourceTestCase {
 
 			assertEquals(contentElement1, contentElement2);
 		}
+	}
+
+	protected void assertContains(
+		ContentElement contentElement, List<ContentElement> contentElements) {
+
+		boolean contains = false;
+
+		for (ContentElement item : contentElements) {
+			if (equals(contentElement, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			contentElements + " does not contain " + contentElement, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

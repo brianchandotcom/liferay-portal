@@ -227,18 +227,17 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 	public void testGetPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage()
 		throws Exception {
 
-		Page<PriceModifierProductGroup> page =
-			priceModifierProductGroupResource.
-				getPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage(
-					testGetPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage_getExternalReferenceCode(),
-					Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
 			testGetPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage_getIrrelevantExternalReferenceCode();
+
+		Page<PriceModifierProductGroup> page =
+			priceModifierProductGroupResource.
+				getPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantExternalReferenceCode != null) {
 			PriceModifierProductGroup irrelevantPriceModifierProductGroup =
@@ -270,7 +269,7 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 		page =
 			priceModifierProductGroupResource.
 				getPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -392,18 +391,17 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 	public void testGetPriceModifierIdPriceModifierProductGroupsPage()
 		throws Exception {
 
-		Page<PriceModifierProductGroup> page =
-			priceModifierProductGroupResource.
-				getPriceModifierIdPriceModifierProductGroupsPage(
-					testGetPriceModifierIdPriceModifierProductGroupsPage_getId(),
-					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
-					null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetPriceModifierIdPriceModifierProductGroupsPage_getId();
 		Long irrelevantId =
 			testGetPriceModifierIdPriceModifierProductGroupsPage_getIrrelevantId();
+
+		Page<PriceModifierProductGroup> page =
+			priceModifierProductGroupResource.
+				getPriceModifierIdPriceModifierProductGroupsPage(
+					id, RandomTestUtil.randomString(), null,
+					Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			PriceModifierProductGroup irrelevantPriceModifierProductGroup =
@@ -434,7 +432,7 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 		page =
 			priceModifierProductGroupResource.
 				getPriceModifierIdPriceModifierProductGroupsPage(
-					id, null, null, Pagination.of(1, 2), null);
+					id, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -804,6 +802,26 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 			assertEquals(
 				priceModifierProductGroup1, priceModifierProductGroup2);
 		}
+	}
+
+	protected void assertContains(
+		PriceModifierProductGroup priceModifierProductGroup,
+		List<PriceModifierProductGroup> priceModifierProductGroups) {
+
+		boolean contains = false;
+
+		for (PriceModifierProductGroup item : priceModifierProductGroups) {
+			if (equals(priceModifierProductGroup, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			priceModifierProductGroups + " does not contain " +
+				priceModifierProductGroup,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

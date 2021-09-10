@@ -195,17 +195,17 @@ public abstract class BaseDataRecordResourceTestCase {
 
 	@Test
 	public void testGetDataDefinitionDataRecordsPage() throws Exception {
-		Page<DataRecord> page =
-			dataRecordResource.getDataDefinitionDataRecordsPage(
-				testGetDataDefinitionDataRecordsPage_getDataDefinitionId(),
-				null, RandomTestUtil.randomString(), Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long dataDefinitionId =
 			testGetDataDefinitionDataRecordsPage_getDataDefinitionId();
 		Long irrelevantDataDefinitionId =
 			testGetDataDefinitionDataRecordsPage_getIrrelevantDataDefinitionId();
+
+		Page<DataRecord> page =
+			dataRecordResource.getDataDefinitionDataRecordsPage(
+				dataDefinitionId, null, RandomTestUtil.randomString(),
+				Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantDataDefinitionId != null) {
 			DataRecord irrelevantDataRecord =
@@ -233,7 +233,7 @@ public abstract class BaseDataRecordResourceTestCase {
 				dataDefinitionId, randomDataRecord());
 
 		page = dataRecordResource.getDataDefinitionDataRecordsPage(
-			dataDefinitionId, null, null, Pagination.of(1, 2), null);
+			dataDefinitionId, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -464,17 +464,17 @@ public abstract class BaseDataRecordResourceTestCase {
 
 	@Test
 	public void testGetDataRecordCollectionDataRecordsPage() throws Exception {
-		Page<DataRecord> page =
-			dataRecordResource.getDataRecordCollectionDataRecordsPage(
-				testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId(),
-				null, RandomTestUtil.randomString(), Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long dataRecordCollectionId =
 			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId();
 		Long irrelevantDataRecordCollectionId =
 			testGetDataRecordCollectionDataRecordsPage_getIrrelevantDataRecordCollectionId();
+
+		Page<DataRecord> page =
+			dataRecordResource.getDataRecordCollectionDataRecordsPage(
+				dataRecordCollectionId, null, RandomTestUtil.randomString(),
+				Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantDataRecordCollectionId != null) {
 			DataRecord irrelevantDataRecord =
@@ -503,7 +503,7 @@ public abstract class BaseDataRecordResourceTestCase {
 				dataRecordCollectionId, randomDataRecord());
 
 		page = dataRecordResource.getDataRecordCollectionDataRecordsPage(
-			dataRecordCollectionId, null, null, Pagination.of(1, 2), null);
+			dataRecordCollectionId, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -936,6 +936,23 @@ public abstract class BaseDataRecordResourceTestCase {
 
 			assertEquals(dataRecord1, dataRecord2);
 		}
+	}
+
+	protected void assertContains(
+		DataRecord dataRecord, List<DataRecord> dataRecords) {
+
+		boolean contains = false;
+
+		for (DataRecord item : dataRecords) {
+			if (equals(dataRecord, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			dataRecords + " does not contain " + dataRecord, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

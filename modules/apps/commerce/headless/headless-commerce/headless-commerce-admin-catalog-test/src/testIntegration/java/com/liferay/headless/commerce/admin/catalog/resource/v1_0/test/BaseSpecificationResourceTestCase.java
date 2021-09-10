@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -201,9 +202,9 @@ public abstract class BaseSpecificationResourceTestCase {
 	@Test
 	public void testGetSpecificationsPage() throws Exception {
 		Page<Specification> page = specificationResource.getSpecificationsPage(
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+			RandomTestUtil.randomString(), null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		Specification specification1 =
 			testGetSpecificationsPage_addSpecification(randomSpecification());
@@ -212,13 +213,12 @@ public abstract class BaseSpecificationResourceTestCase {
 			testGetSpecificationsPage_addSpecification(randomSpecification());
 
 		page = specificationResource.getSpecificationsPage(
-			null, null, Pagination.of(1, 2), null);
+			null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(specification1, specification2),
-			(List<Specification>)page.getItems());
+		assertContains(specification1, (List<Specification>)page.getItems());
+		assertContains(specification2, (List<Specification>)page.getItems());
 		assertValid(page);
 
 		specificationResource.deleteSpecification(specification1.getId());
@@ -287,6 +287,11 @@ public abstract class BaseSpecificationResourceTestCase {
 
 	@Test
 	public void testGetSpecificationsPageWithPagination() throws Exception {
+		Page<Specification> totalPage =
+			specificationResource.getSpecificationsPage(null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
 		Specification specification1 =
 			testGetSpecificationsPage_addSpecification(randomSpecification());
 
@@ -297,18 +302,18 @@ public abstract class BaseSpecificationResourceTestCase {
 			testGetSpecificationsPage_addSpecification(randomSpecification());
 
 		Page<Specification> page1 = specificationResource.getSpecificationsPage(
-			null, null, Pagination.of(1, 2), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<Specification> specifications1 =
 			(List<Specification>)page1.getItems();
 
 		Assert.assertEquals(
-			specifications1.toString(), 2, specifications1.size());
+			specifications1.toString(), totalCount + 2, specifications1.size());
 
 		Page<Specification> page2 = specificationResource.getSpecificationsPage(
-			null, null, Pagination.of(2, 2), null);
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Specification> specifications2 =
 			(List<Specification>)page2.getItems();
@@ -317,11 +322,11 @@ public abstract class BaseSpecificationResourceTestCase {
 			specifications2.toString(), 1, specifications2.size());
 
 		Page<Specification> page3 = specificationResource.getSpecificationsPage(
-			null, null, Pagination.of(1, 3), null);
+			null, null, Pagination.of(1, totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(specification1, specification2, specification3),
-			(List<Specification>)page3.getItems());
+		assertContains(specification1, (List<Specification>)page3.getItems());
+		assertContains(specification2, (List<Specification>)page3.getItems());
+		assertContains(specification3, (List<Specification>)page3.getItems());
 	}
 
 	@Test
@@ -459,7 +464,7 @@ public abstract class BaseSpecificationResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -469,7 +474,7 @@ public abstract class BaseSpecificationResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/specifications");
 
-		Assert.assertEquals(0, specificationsJSONObject.get("totalCount"));
+		long totalCount = specificationsJSONObject.getLong("totalCount");
 
 		Specification specification1 =
 			testGraphQLSpecification_addSpecification();
@@ -480,10 +485,16 @@ public abstract class BaseSpecificationResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/specifications");
 
-		Assert.assertEquals(2, specificationsJSONObject.get("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, specificationsJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(specification1, specification2),
+		assertContains(
+			specification1,
+			Arrays.asList(
+				SpecificationSerDes.toDTOs(
+					specificationsJSONObject.getString("items"))));
+		assertContains(
+			specification2,
 			Arrays.asList(
 				SpecificationSerDes.toDTOs(
 					specificationsJSONObject.getString("items"))));
@@ -673,6 +684,23 @@ public abstract class BaseSpecificationResourceTestCase {
 
 			assertEquals(specification1, specification2);
 		}
+	}
+
+	protected void assertContains(
+		Specification specification, List<Specification> specifications) {
+
+		boolean contains = false;
+
+		for (Specification item : specifications) {
+			if (equals(specification, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			specifications + " does not contain " + specification, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

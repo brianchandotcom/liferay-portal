@@ -281,6 +281,23 @@ public abstract class BaseSLAResultResourceTestCase {
 		}
 	}
 
+	protected void assertContains(
+		SLAResult slaResult, List<SLAResult> slaResults) {
+
+		boolean contains = false;
+
+		for (SLAResult item : slaResults) {
+			if (equals(slaResult, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			slaResults + " does not contain " + slaResult, contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<SLAResult> slaResults1, List<SLAResult> slaResults2) {
 

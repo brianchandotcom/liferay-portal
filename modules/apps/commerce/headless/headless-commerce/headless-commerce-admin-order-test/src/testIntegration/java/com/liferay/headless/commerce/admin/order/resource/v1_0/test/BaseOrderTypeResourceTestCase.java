@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -201,9 +202,9 @@ public abstract class BaseOrderTypeResourceTestCase {
 	@Test
 	public void testGetOrderTypesPage() throws Exception {
 		Page<OrderType> page = orderTypeResource.getOrderTypesPage(
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+			RandomTestUtil.randomString(), null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		OrderType orderType1 = testGetOrderTypesPage_addOrderType(
 			randomOrderType());
@@ -212,13 +213,12 @@ public abstract class BaseOrderTypeResourceTestCase {
 			randomOrderType());
 
 		page = orderTypeResource.getOrderTypesPage(
-			null, null, Pagination.of(1, 2), null);
+			null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(orderType1, orderType2),
-			(List<OrderType>)page.getItems());
+		assertContains(orderType1, (List<OrderType>)page.getItems());
+		assertContains(orderType2, (List<OrderType>)page.getItems());
 		assertValid(page);
 
 		orderTypeResource.deleteOrderType(orderType1.getId());
@@ -281,6 +281,11 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 	@Test
 	public void testGetOrderTypesPageWithPagination() throws Exception {
+		Page<OrderType> totalPage = orderTypeResource.getOrderTypesPage(
+			null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
 		OrderType orderType1 = testGetOrderTypesPage_addOrderType(
 			randomOrderType());
 
@@ -291,27 +296,28 @@ public abstract class BaseOrderTypeResourceTestCase {
 			randomOrderType());
 
 		Page<OrderType> page1 = orderTypeResource.getOrderTypesPage(
-			null, null, Pagination.of(1, 2), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<OrderType> orderTypes1 = (List<OrderType>)page1.getItems();
 
-		Assert.assertEquals(orderTypes1.toString(), 2, orderTypes1.size());
+		Assert.assertEquals(
+			orderTypes1.toString(), totalCount + 2, orderTypes1.size());
 
 		Page<OrderType> page2 = orderTypeResource.getOrderTypesPage(
-			null, null, Pagination.of(2, 2), null);
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<OrderType> orderTypes2 = (List<OrderType>)page2.getItems();
 
 		Assert.assertEquals(orderTypes2.toString(), 1, orderTypes2.size());
 
 		Page<OrderType> page3 = orderTypeResource.getOrderTypesPage(
-			null, null, Pagination.of(1, 3), null);
+			null, null, Pagination.of(1, totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(orderType1, orderType2, orderType3),
-			(List<OrderType>)page3.getItems());
+		assertContains(orderType1, (List<OrderType>)page3.getItems());
+		assertContains(orderType2, (List<OrderType>)page3.getItems());
+		assertContains(orderType3, (List<OrderType>)page3.getItems());
 	}
 
 	@Test
@@ -442,7 +448,7 @@ public abstract class BaseOrderTypeResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -452,7 +458,7 @@ public abstract class BaseOrderTypeResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/orderTypes");
 
-		Assert.assertEquals(0, orderTypesJSONObject.get("totalCount"));
+		long totalCount = orderTypesJSONObject.getLong("totalCount");
 
 		OrderType orderType1 = testGraphQLOrderType_addOrderType();
 		OrderType orderType2 = testGraphQLOrderType_addOrderType();
@@ -461,10 +467,16 @@ public abstract class BaseOrderTypeResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/orderTypes");
 
-		Assert.assertEquals(2, orderTypesJSONObject.get("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, orderTypesJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(orderType1, orderType2),
+		assertContains(
+			orderType1,
+			Arrays.asList(
+				OrderTypeSerDes.toDTOs(
+					orderTypesJSONObject.getString("items"))));
+		assertContains(
+			orderType2,
 			Arrays.asList(
 				OrderTypeSerDes.toDTOs(
 					orderTypesJSONObject.getString("items"))));
@@ -794,6 +806,23 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 			assertEquals(orderType1, orderType2);
 		}
+	}
+
+	protected void assertContains(
+		OrderType orderType, List<OrderType> orderTypes) {
+
+		boolean contains = false;
+
+		for (OrderType item : orderTypes) {
+			if (equals(orderType, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			orderTypes + " does not contain " + orderType, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

@@ -198,20 +198,18 @@ public abstract class BaseProductOptionResourceTestCase {
 
 	@Test
 	public void testGetChannelProductOptionsPage() throws Exception {
-		Page<ProductOption> page =
-			productOptionResource.getChannelProductOptionsPage(
-				testGetChannelProductOptionsPage_getChannelId(),
-				testGetChannelProductOptionsPage_getProductId(),
-				Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long channelId = testGetChannelProductOptionsPage_getChannelId();
 		Long irrelevantChannelId =
 			testGetChannelProductOptionsPage_getIrrelevantChannelId();
 		Long productId = testGetChannelProductOptionsPage_getProductId();
 		Long irrelevantProductId =
 			testGetChannelProductOptionsPage_getIrrelevantProductId();
+
+		Page<ProductOption> page =
+			productOptionResource.getChannelProductOptionsPage(
+				channelId, productId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if ((irrelevantChannelId != null) && (irrelevantProductId != null)) {
 			ProductOption irrelevantProductOption =
@@ -239,7 +237,7 @@ public abstract class BaseProductOptionResourceTestCase {
 				channelId, productId, randomProductOption());
 
 		page = productOptionResource.getChannelProductOptionsPage(
-			channelId, productId, Pagination.of(1, 2));
+			channelId, productId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -368,6 +366,23 @@ public abstract class BaseProductOptionResourceTestCase {
 
 			assertEquals(productOption1, productOption2);
 		}
+	}
+
+	protected void assertContains(
+		ProductOption productOption, List<ProductOption> productOptions) {
+
+		boolean contains = false;
+
+		for (ProductOption item : productOptions) {
+			if (equals(productOption, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			productOptions + " does not contain " + productOption, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

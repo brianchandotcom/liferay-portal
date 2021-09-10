@@ -211,18 +211,18 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	public void testGetDataDefinitionByContentTypeContentTypePage()
 		throws Exception {
 
-		Page<DataDefinition> page =
-			dataDefinitionResource.
-				getDataDefinitionByContentTypeContentTypePage(
-					testGetDataDefinitionByContentTypeContentTypePage_getContentType(),
-					RandomTestUtil.randomString(), Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String contentType =
 			testGetDataDefinitionByContentTypeContentTypePage_getContentType();
 		String irrelevantContentType =
 			testGetDataDefinitionByContentTypeContentTypePage_getIrrelevantContentType();
+
+		Page<DataDefinition> page =
+			dataDefinitionResource.
+				getDataDefinitionByContentTypeContentTypePage(
+					contentType, RandomTestUtil.randomString(),
+					Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantContentType != null) {
 			DataDefinition irrelevantDataDefinition =
@@ -253,7 +253,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		page =
 			dataDefinitionResource.
 				getDataDefinitionByContentTypeContentTypePage(
-					contentType, null, Pagination.of(1, 2), null);
+					contentType, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -759,15 +759,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	public void testGetSiteDataDefinitionByContentTypeContentTypePage()
 		throws Exception {
 
-		Page<DataDefinition> page =
-			dataDefinitionResource.
-				getSiteDataDefinitionByContentTypeContentTypePage(
-					testGetSiteDataDefinitionByContentTypeContentTypePage_getSiteId(),
-					testGetSiteDataDefinitionByContentTypeContentTypePage_getContentType(),
-					RandomTestUtil.randomString(), Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long siteId =
 			testGetSiteDataDefinitionByContentTypeContentTypePage_getSiteId();
 		Long irrelevantSiteId =
@@ -776,6 +767,14 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			testGetSiteDataDefinitionByContentTypeContentTypePage_getContentType();
 		String irrelevantContentType =
 			testGetSiteDataDefinitionByContentTypeContentTypePage_getIrrelevantContentType();
+
+		Page<DataDefinition> page =
+			dataDefinitionResource.
+				getSiteDataDefinitionByContentTypeContentTypePage(
+					siteId, contentType, RandomTestUtil.randomString(),
+					Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if ((irrelevantSiteId != null) && (irrelevantContentType != null)) {
 			DataDefinition irrelevantDataDefinition =
@@ -808,7 +807,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		page =
 			dataDefinitionResource.
 				getSiteDataDefinitionByContentTypeContentTypePage(
-					siteId, contentType, null, Pagination.of(1, 2), null);
+					siteId, contentType, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -1205,6 +1204,23 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 			assertEquals(dataDefinition1, dataDefinition2);
 		}
+	}
+
+	protected void assertContains(
+		DataDefinition dataDefinition, List<DataDefinition> dataDefinitions) {
+
+		boolean contains = false;
+
+		for (DataDefinition item : dataDefinitions) {
+			if (equals(dataDefinition, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			dataDefinitions + " does not contain " + dataDefinition, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

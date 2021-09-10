@@ -351,6 +351,23 @@ public abstract class BaseExperimentResourceTestCase {
 		}
 	}
 
+	protected void assertContains(
+		Experiment experiment, List<Experiment> experiments) {
+
+		boolean contains = false;
+
+		for (Experiment item : experiments) {
+			if (equals(experiment, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			experiments + " does not contain " + experiment, contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<Experiment> experiments1, List<Experiment> experiments2) {
 

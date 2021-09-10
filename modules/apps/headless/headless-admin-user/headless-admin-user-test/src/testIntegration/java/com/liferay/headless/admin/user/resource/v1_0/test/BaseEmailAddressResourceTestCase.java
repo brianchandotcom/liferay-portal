@@ -254,16 +254,16 @@ public abstract class BaseEmailAddressResourceTestCase {
 
 	@Test
 	public void testGetOrganizationEmailAddressesPage() throws Exception {
-		Page<EmailAddress> page =
-			emailAddressResource.getOrganizationEmailAddressesPage(
-				testGetOrganizationEmailAddressesPage_getOrganizationId());
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String organizationId =
 			testGetOrganizationEmailAddressesPage_getOrganizationId();
 		String irrelevantOrganizationId =
 			testGetOrganizationEmailAddressesPage_getIrrelevantOrganizationId();
+
+		Page<EmailAddress> page =
+			emailAddressResource.getOrganizationEmailAddressesPage(
+				organizationId);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantOrganizationId != null) {
 			EmailAddress irrelevantEmailAddress =
@@ -325,16 +325,16 @@ public abstract class BaseEmailAddressResourceTestCase {
 
 	@Test
 	public void testGetUserAccountEmailAddressesPage() throws Exception {
-		Page<EmailAddress> page =
-			emailAddressResource.getUserAccountEmailAddressesPage(
-				testGetUserAccountEmailAddressesPage_getUserAccountId());
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long userAccountId =
 			testGetUserAccountEmailAddressesPage_getUserAccountId();
 		Long irrelevantUserAccountId =
 			testGetUserAccountEmailAddressesPage_getIrrelevantUserAccountId();
+
+		Page<EmailAddress> page =
+			emailAddressResource.getUserAccountEmailAddressesPage(
+				userAccountId);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantUserAccountId != null) {
 			EmailAddress irrelevantEmailAddress =
@@ -428,6 +428,23 @@ public abstract class BaseEmailAddressResourceTestCase {
 
 			assertEquals(emailAddress1, emailAddress2);
 		}
+	}
+
+	protected void assertContains(
+		EmailAddress emailAddress, List<EmailAddress> emailAddresses) {
+
+		boolean contains = false;
+
+		for (EmailAddress item : emailAddresses) {
+			if (equals(emailAddress, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			emailAddresses + " does not contain " + emailAddress, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

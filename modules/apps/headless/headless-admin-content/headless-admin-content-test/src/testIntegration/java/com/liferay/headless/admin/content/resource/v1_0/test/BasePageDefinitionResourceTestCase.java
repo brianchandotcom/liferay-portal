@@ -220,6 +220,23 @@ public abstract class BasePageDefinitionResourceTestCase {
 		}
 	}
 
+	protected void assertContains(
+		PageDefinition pageDefinition, List<PageDefinition> pageDefinitions) {
+
+		boolean contains = false;
+
+		for (PageDefinition item : pageDefinitions) {
+			if (equals(pageDefinition, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			pageDefinitions + " does not contain " + pageDefinition, contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<PageDefinition> pageDefinitions1,
 		List<PageDefinition> pageDefinitions2) {

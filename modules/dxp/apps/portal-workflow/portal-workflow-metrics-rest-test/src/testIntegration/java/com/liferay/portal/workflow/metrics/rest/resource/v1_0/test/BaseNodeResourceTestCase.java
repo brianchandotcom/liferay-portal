@@ -198,14 +198,13 @@ public abstract class BaseNodeResourceTestCase {
 
 	@Test
 	public void testGetProcessNodesPage() throws Exception {
-		Page<Node> page = nodeResource.getProcessNodesPage(
-			testGetProcessNodesPage_getProcessId());
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long processId = testGetProcessNodesPage_getProcessId();
 		Long irrelevantProcessId =
 			testGetProcessNodesPage_getIrrelevantProcessId();
+
+		Page<Node> page = nodeResource.getProcessNodesPage(processId);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantProcessId != null) {
 			Node irrelevantNode = testGetProcessNodesPage_addNode(
@@ -308,6 +307,20 @@ public abstract class BaseNodeResourceTestCase {
 
 			assertEquals(node1, node2);
 		}
+	}
+
+	protected void assertContains(Node node, List<Node> nodes) {
+		boolean contains = false;
+
+		for (Node item : nodes) {
+			if (equals(node, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(nodes + " does not contain " + node, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

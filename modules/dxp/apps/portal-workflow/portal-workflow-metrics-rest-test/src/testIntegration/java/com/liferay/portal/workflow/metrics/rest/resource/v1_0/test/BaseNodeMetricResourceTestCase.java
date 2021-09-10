@@ -194,17 +194,16 @@ public abstract class BaseNodeMetricResourceTestCase {
 
 	@Test
 	public void testGetProcessNodeMetricsPage() throws Exception {
-		Page<NodeMetric> page = nodeMetricResource.getProcessNodeMetricsPage(
-			testGetProcessNodeMetricsPage_getProcessId(), null,
-			RandomTestUtil.nextDate(), RandomTestUtil.nextDate(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long processId = testGetProcessNodeMetricsPage_getProcessId();
 		Long irrelevantProcessId =
 			testGetProcessNodeMetricsPage_getIrrelevantProcessId();
+
+		Page<NodeMetric> page = nodeMetricResource.getProcessNodeMetricsPage(
+			processId, null, RandomTestUtil.nextDate(),
+			RandomTestUtil.nextDate(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantProcessId != null) {
 			NodeMetric irrelevantNodeMetric =
@@ -230,7 +229,8 @@ public abstract class BaseNodeMetricResourceTestCase {
 			processId, randomNodeMetric());
 
 		page = nodeMetricResource.getProcessNodeMetricsPage(
-			processId, null, null, null, null, null, Pagination.of(1, 2), null);
+			processId, null, null, null, null, null, Pagination.of(1, 10),
+			null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -449,6 +449,23 @@ public abstract class BaseNodeMetricResourceTestCase {
 
 			assertEquals(nodeMetric1, nodeMetric2);
 		}
+	}
+
+	protected void assertContains(
+		NodeMetric nodeMetric, List<NodeMetric> nodeMetrics) {
+
+		boolean contains = false;
+
+		for (NodeMetric item : nodeMetrics) {
+			if (equals(nodeMetric, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			nodeMetrics + " does not contain " + nodeMetric, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

@@ -210,18 +210,17 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 	public void testGetPriceListByExternalReferenceCodePriceListOrderTypesPage()
 		throws Exception {
 
-		Page<PriceListOrderType> page =
-			priceListOrderTypeResource.
-				getPriceListByExternalReferenceCodePriceListOrderTypesPage(
-					testGetPriceListByExternalReferenceCodePriceListOrderTypesPage_getExternalReferenceCode(),
-					Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetPriceListByExternalReferenceCodePriceListOrderTypesPage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
 			testGetPriceListByExternalReferenceCodePriceListOrderTypesPage_getIrrelevantExternalReferenceCode();
+
+		Page<PriceListOrderType> page =
+			priceListOrderTypeResource.
+				getPriceListByExternalReferenceCodePriceListOrderTypesPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantExternalReferenceCode != null) {
 			PriceListOrderType irrelevantPriceListOrderType =
@@ -253,7 +252,7 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 		page =
 			priceListOrderTypeResource.
 				getPriceListByExternalReferenceCodePriceListOrderTypesPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -368,16 +367,15 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 
 	@Test
 	public void testGetPriceListIdPriceListOrderTypesPage() throws Exception {
-		Page<PriceListOrderType> page =
-			priceListOrderTypeResource.getPriceListIdPriceListOrderTypesPage(
-				testGetPriceListIdPriceListOrderTypesPage_getId(),
-				RandomTestUtil.randomString(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetPriceListIdPriceListOrderTypesPage_getId();
 		Long irrelevantId =
 			testGetPriceListIdPriceListOrderTypesPage_getIrrelevantId();
+
+		Page<PriceListOrderType> page =
+			priceListOrderTypeResource.getPriceListIdPriceListOrderTypesPage(
+				id, RandomTestUtil.randomString(), Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			PriceListOrderType irrelevantPriceListOrderType =
@@ -406,7 +404,7 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 				id, randomPriceListOrderType());
 
 		page = priceListOrderTypeResource.getPriceListIdPriceListOrderTypesPage(
-			id, null, Pagination.of(1, 2));
+			id, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -542,6 +540,25 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 
 			assertEquals(priceListOrderType1, priceListOrderType2);
 		}
+	}
+
+	protected void assertContains(
+		PriceListOrderType priceListOrderType,
+		List<PriceListOrderType> priceListOrderTypes) {
+
+		boolean contains = false;
+
+		for (PriceListOrderType item : priceListOrderTypes) {
+			if (equals(priceListOrderType, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			priceListOrderTypes + " does not contain " + priceListOrderType,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

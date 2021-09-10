@@ -333,6 +333,20 @@ public abstract class BaseSkuResourceTestCase {
 		}
 	}
 
+	protected void assertContains(Sku sku, List<Sku> skus) {
+		boolean contains = false;
+
+		for (Sku item : skus) {
+			if (equals(sku, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(skus + " does not contain " + sku, contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(List<Sku> skus1, List<Sku> skus2) {
 		Assert.assertEquals(skus1.size(), skus2.size());
 

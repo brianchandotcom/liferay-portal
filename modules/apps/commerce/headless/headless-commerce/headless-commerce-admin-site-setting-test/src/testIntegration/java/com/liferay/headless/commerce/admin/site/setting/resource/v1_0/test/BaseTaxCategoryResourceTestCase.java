@@ -190,17 +190,16 @@ public abstract class BaseTaxCategoryResourceTestCase {
 	public void testGetCommerceAdminSiteSettingGroupTaxCategoryPage()
 		throws Exception {
 
-		Page<TaxCategory> page =
-			taxCategoryResource.getCommerceAdminSiteSettingGroupTaxCategoryPage(
-				testGetCommerceAdminSiteSettingGroupTaxCategoryPage_getGroupId(),
-				Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long groupId =
 			testGetCommerceAdminSiteSettingGroupTaxCategoryPage_getGroupId();
 		Long irrelevantGroupId =
 			testGetCommerceAdminSiteSettingGroupTaxCategoryPage_getIrrelevantGroupId();
+
+		Page<TaxCategory> page =
+			taxCategoryResource.getCommerceAdminSiteSettingGroupTaxCategoryPage(
+				groupId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantGroupId != null) {
 			TaxCategory irrelevantTaxCategory =
@@ -230,7 +229,7 @@ public abstract class BaseTaxCategoryResourceTestCase {
 
 		page =
 			taxCategoryResource.getCommerceAdminSiteSettingGroupTaxCategoryPage(
-				groupId, Pagination.of(1, 2));
+				groupId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -494,6 +493,23 @@ public abstract class BaseTaxCategoryResourceTestCase {
 
 			assertEquals(taxCategory1, taxCategory2);
 		}
+	}
+
+	protected void assertContains(
+		TaxCategory taxCategory, List<TaxCategory> taxCategories) {
+
+		boolean contains = false;
+
+		for (TaxCategory item : taxCategories) {
+			if (equals(taxCategory, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			taxCategories + " does not contain " + taxCategory, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

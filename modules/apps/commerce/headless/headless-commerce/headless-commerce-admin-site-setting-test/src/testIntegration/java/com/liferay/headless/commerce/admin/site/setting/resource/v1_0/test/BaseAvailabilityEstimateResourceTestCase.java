@@ -325,18 +325,17 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 	public void testGetCommerceAdminSiteSettingGroupAvailabilityEstimatePage()
 		throws Exception {
 
-		Page<AvailabilityEstimate> page =
-			availabilityEstimateResource.
-				getCommerceAdminSiteSettingGroupAvailabilityEstimatePage(
-					testGetCommerceAdminSiteSettingGroupAvailabilityEstimatePage_getGroupId(),
-					Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long groupId =
 			testGetCommerceAdminSiteSettingGroupAvailabilityEstimatePage_getGroupId();
 		Long irrelevantGroupId =
 			testGetCommerceAdminSiteSettingGroupAvailabilityEstimatePage_getIrrelevantGroupId();
+
+		Page<AvailabilityEstimate> page =
+			availabilityEstimateResource.
+				getCommerceAdminSiteSettingGroupAvailabilityEstimatePage(
+					groupId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantGroupId != null) {
 			AvailabilityEstimate irrelevantAvailabilityEstimate =
@@ -367,7 +366,7 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 		page =
 			availabilityEstimateResource.
 				getCommerceAdminSiteSettingGroupAvailabilityEstimatePage(
-					groupId, Pagination.of(1, 2));
+					groupId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -528,6 +527,25 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 
 			assertEquals(availabilityEstimate1, availabilityEstimate2);
 		}
+	}
+
+	protected void assertContains(
+		AvailabilityEstimate availabilityEstimate,
+		List<AvailabilityEstimate> availabilityEstimates) {
+
+		boolean contains = false;
+
+		for (AvailabilityEstimate item : availabilityEstimates) {
+			if (equals(availabilityEstimate, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			availabilityEstimates + " does not contain " + availabilityEstimate,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

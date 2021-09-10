@@ -230,6 +230,25 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		}
 	}
 
+	protected void assertContains(
+		TaxonomyVocabulary taxonomyVocabulary,
+		List<TaxonomyVocabulary> taxonomyVocabularies) {
+
+		boolean contains = false;
+
+		for (TaxonomyVocabulary item : taxonomyVocabularies) {
+			if (equals(taxonomyVocabulary, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			taxonomyVocabularies + " does not contain " + taxonomyVocabulary,
+			contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<TaxonomyVocabulary> taxonomyVocabularies1,
 		List<TaxonomyVocabulary> taxonomyVocabularies2) {

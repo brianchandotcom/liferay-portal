@@ -212,17 +212,17 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 	public void testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage()
 		throws Exception {
 
-		Page<KnowledgeBaseAttachment> page =
-			knowledgeBaseAttachmentResource.
-				getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
-					testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId());
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long knowledgeBaseArticleId =
 			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId();
 		Long irrelevantKnowledgeBaseArticleId =
 			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getIrrelevantKnowledgeBaseArticleId();
+
+		Page<KnowledgeBaseAttachment> page =
+			knowledgeBaseAttachmentResource.
+				getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
+					knowledgeBaseArticleId);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantKnowledgeBaseArticleId != null) {
 			KnowledgeBaseAttachment irrelevantKnowledgeBaseAttachment =
@@ -507,6 +507,26 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 
 			assertEquals(knowledgeBaseAttachment1, knowledgeBaseAttachment2);
 		}
+	}
+
+	protected void assertContains(
+		KnowledgeBaseAttachment knowledgeBaseAttachment,
+		List<KnowledgeBaseAttachment> knowledgeBaseAttachments) {
+
+		boolean contains = false;
+
+		for (KnowledgeBaseAttachment item : knowledgeBaseAttachments) {
+			if (equals(knowledgeBaseAttachment, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			knowledgeBaseAttachments + " does not contain " +
+				knowledgeBaseAttachment,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

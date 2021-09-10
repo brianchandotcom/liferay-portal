@@ -196,18 +196,17 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	public void testGetObjectDefinitionObjectRelationshipsPage()
 		throws Exception {
 
-		Page<ObjectRelationship> page =
-			objectRelationshipResource.
-				getObjectDefinitionObjectRelationshipsPage(
-					testGetObjectDefinitionObjectRelationshipsPage_getObjectDefinitionId(),
-					Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long objectDefinitionId =
 			testGetObjectDefinitionObjectRelationshipsPage_getObjectDefinitionId();
 		Long irrelevantObjectDefinitionId =
 			testGetObjectDefinitionObjectRelationshipsPage_getIrrelevantObjectDefinitionId();
+
+		Page<ObjectRelationship> page =
+			objectRelationshipResource.
+				getObjectDefinitionObjectRelationshipsPage(
+					objectDefinitionId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantObjectDefinitionId != null) {
 			ObjectRelationship irrelevantObjectRelationship =
@@ -239,7 +238,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		page =
 			objectRelationshipResource.
 				getObjectDefinitionObjectRelationshipsPage(
-					objectDefinitionId, Pagination.of(1, 2));
+					objectDefinitionId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -392,6 +391,25 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 
 			assertEquals(objectRelationship1, objectRelationship2);
 		}
+	}
+
+	protected void assertContains(
+		ObjectRelationship objectRelationship,
+		List<ObjectRelationship> objectRelationships) {
+
+		boolean contains = false;
+
+		for (ObjectRelationship item : objectRelationships) {
+			if (equals(objectRelationship, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			objectRelationships + " does not contain " + objectRelationship,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

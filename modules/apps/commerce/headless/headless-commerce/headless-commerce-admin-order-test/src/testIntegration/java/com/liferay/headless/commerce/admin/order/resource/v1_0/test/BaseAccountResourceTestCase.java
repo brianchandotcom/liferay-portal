@@ -358,6 +358,20 @@ public abstract class BaseAccountResourceTestCase {
 		}
 	}
 
+	protected void assertContains(Account account, List<Account> accounts) {
+		boolean contains = false;
+
+		for (Account item : accounts) {
+			if (equals(account, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(accounts + " does not contain " + account, contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<Account> accounts1, List<Account> accounts2) {
 

@@ -358,13 +358,13 @@ public abstract class BaseCartItemResourceTestCase {
 
 	@Test
 	public void testGetCartItemsPage() throws Exception {
-		Page<CartItem> page = cartItemResource.getCartItemsPage(
-			testGetCartItemsPage_getCartId(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long cartId = testGetCartItemsPage_getCartId();
 		Long irrelevantCartId = testGetCartItemsPage_getIrrelevantCartId();
+
+		Page<CartItem> page = cartItemResource.getCartItemsPage(
+			cartId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantCartId != null) {
 			CartItem irrelevantCartItem = testGetCartItemsPage_addCartItem(
@@ -387,7 +387,7 @@ public abstract class BaseCartItemResourceTestCase {
 		CartItem cartItem2 = testGetCartItemsPage_addCartItem(
 			cartId, randomCartItem());
 
-		page = cartItemResource.getCartItemsPage(cartId, Pagination.of(1, 2));
+		page = cartItemResource.getCartItemsPage(cartId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -464,7 +464,7 @@ public abstract class BaseCartItemResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 
 					put("cartId", cartId);
 				}
@@ -485,7 +485,7 @@ public abstract class BaseCartItemResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/cartItems");
 
-		Assert.assertEquals(2, cartItemsJSONObject.get("totalCount"));
+		Assert.assertEquals(2, cartItemsJSONObject.getLong("totalCount"));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(cartItem1, cartItem2),
@@ -540,6 +540,21 @@ public abstract class BaseCartItemResourceTestCase {
 
 			assertEquals(cartItem1, cartItem2);
 		}
+	}
+
+	protected void assertContains(CartItem cartItem, List<CartItem> cartItems) {
+		boolean contains = false;
+
+		for (CartItem item : cartItems) {
+			if (equals(cartItem, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			cartItems + " does not contain " + cartItem, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

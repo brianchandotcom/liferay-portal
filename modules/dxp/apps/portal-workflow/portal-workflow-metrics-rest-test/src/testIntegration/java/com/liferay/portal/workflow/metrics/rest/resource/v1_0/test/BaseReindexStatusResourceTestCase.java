@@ -191,7 +191,32 @@ public abstract class BaseReindexStatusResourceTestCase {
 
 	@Test
 	public void testGetReindexStatusesPage() throws Exception {
-		Assert.assertTrue(false);
+		Page<ReindexStatus> page =
+			reindexStatusResource.getReindexStatusesPage();
+
+		long totalCount = page.getTotalCount();
+
+		ReindexStatus reindexStatus1 =
+			testGetReindexStatusesPage_addReindexStatus(randomReindexStatus());
+
+		ReindexStatus reindexStatus2 =
+			testGetReindexStatusesPage_addReindexStatus(randomReindexStatus());
+
+		page = reindexStatusResource.getReindexStatusesPage();
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(reindexStatus1, (List<ReindexStatus>)page.getItems());
+		assertContains(reindexStatus2, (List<ReindexStatus>)page.getItems());
+		assertValid(page);
+	}
+
+	protected ReindexStatus testGetReindexStatusesPage_addReindexStatus(
+			ReindexStatus reindexStatus)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -227,6 +252,23 @@ public abstract class BaseReindexStatusResourceTestCase {
 
 			assertEquals(reindexStatus1, reindexStatus2);
 		}
+	}
+
+	protected void assertContains(
+		ReindexStatus reindexStatus, List<ReindexStatus> reindexStatuses) {
+
+		boolean contains = false;
+
+		for (ReindexStatus item : reindexStatuses) {
+			if (equals(reindexStatus, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			reindexStatuses + " does not contain " + reindexStatus, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

@@ -194,17 +194,17 @@ public abstract class BaseObjectFieldResourceTestCase {
 
 	@Test
 	public void testGetObjectDefinitionObjectFieldsPage() throws Exception {
-		Page<ObjectField> page =
-			objectFieldResource.getObjectDefinitionObjectFieldsPage(
-				testGetObjectDefinitionObjectFieldsPage_getObjectDefinitionId(),
-				RandomTestUtil.randomString(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long objectDefinitionId =
 			testGetObjectDefinitionObjectFieldsPage_getObjectDefinitionId();
 		Long irrelevantObjectDefinitionId =
 			testGetObjectDefinitionObjectFieldsPage_getIrrelevantObjectDefinitionId();
+
+		Page<ObjectField> page =
+			objectFieldResource.getObjectDefinitionObjectFieldsPage(
+				objectDefinitionId, RandomTestUtil.randomString(),
+				Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantObjectDefinitionId != null) {
 			ObjectField irrelevantObjectField =
@@ -232,7 +232,7 @@ public abstract class BaseObjectFieldResourceTestCase {
 				objectDefinitionId, randomObjectField());
 
 		page = objectFieldResource.getObjectDefinitionObjectFieldsPage(
-			objectDefinitionId, null, Pagination.of(1, 2));
+			objectDefinitionId, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -479,6 +479,23 @@ public abstract class BaseObjectFieldResourceTestCase {
 
 			assertEquals(objectField1, objectField2);
 		}
+	}
+
+	protected void assertContains(
+		ObjectField objectField, List<ObjectField> objectFields) {
+
+		boolean contains = false;
+
+		for (ObjectField item : objectFields) {
+			if (equals(objectField, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			objectFields + " does not contain " + objectField, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

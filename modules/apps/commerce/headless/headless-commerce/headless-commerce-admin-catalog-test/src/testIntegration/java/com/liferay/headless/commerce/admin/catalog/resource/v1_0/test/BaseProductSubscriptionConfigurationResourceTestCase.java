@@ -292,6 +292,29 @@ public abstract class BaseProductSubscriptionConfigurationResourceTestCase {
 		}
 	}
 
+	protected void assertContains(
+		ProductSubscriptionConfiguration productSubscriptionConfiguration,
+		List<ProductSubscriptionConfiguration>
+			productSubscriptionConfigurations) {
+
+		boolean contains = false;
+
+		for (ProductSubscriptionConfiguration item :
+				productSubscriptionConfigurations) {
+
+			if (equals(productSubscriptionConfiguration, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			productSubscriptionConfigurations + " does not contain " +
+				productSubscriptionConfiguration,
+			contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<ProductSubscriptionConfiguration>
 			productSubscriptionConfigurations1,

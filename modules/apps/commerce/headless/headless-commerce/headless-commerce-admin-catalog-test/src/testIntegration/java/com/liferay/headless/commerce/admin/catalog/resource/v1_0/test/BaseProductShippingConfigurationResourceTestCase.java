@@ -286,6 +286,28 @@ public abstract class BaseProductShippingConfigurationResourceTestCase {
 		}
 	}
 
+	protected void assertContains(
+		ProductShippingConfiguration productShippingConfiguration,
+		List<ProductShippingConfiguration> productShippingConfigurations) {
+
+		boolean contains = false;
+
+		for (ProductShippingConfiguration item :
+				productShippingConfigurations) {
+
+			if (equals(productShippingConfiguration, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			productShippingConfigurations + " does not contain " +
+				productShippingConfiguration,
+			contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<ProductShippingConfiguration> productShippingConfigurations1,
 		List<ProductShippingConfiguration> productShippingConfigurations2) {

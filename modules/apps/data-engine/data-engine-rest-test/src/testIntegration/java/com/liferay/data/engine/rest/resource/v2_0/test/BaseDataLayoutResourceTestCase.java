@@ -222,17 +222,17 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 	@Test
 	public void testGetDataDefinitionDataLayoutsPage() throws Exception {
-		Page<DataLayout> page =
-			dataLayoutResource.getDataDefinitionDataLayoutsPage(
-				testGetDataDefinitionDataLayoutsPage_getDataDefinitionId(),
-				RandomTestUtil.randomString(), Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long dataDefinitionId =
 			testGetDataDefinitionDataLayoutsPage_getDataDefinitionId();
 		Long irrelevantDataDefinitionId =
 			testGetDataDefinitionDataLayoutsPage_getIrrelevantDataDefinitionId();
+
+		Page<DataLayout> page =
+			dataLayoutResource.getDataDefinitionDataLayoutsPage(
+				dataDefinitionId, RandomTestUtil.randomString(),
+				Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantDataDefinitionId != null) {
 			DataLayout irrelevantDataLayout =
@@ -259,7 +259,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 				dataDefinitionId, randomDataLayout());
 
 		page = dataLayoutResource.getDataDefinitionDataLayoutsPage(
-			dataDefinitionId, null, Pagination.of(1, 2), null);
+			dataDefinitionId, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -751,6 +751,23 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 			assertEquals(dataLayout1, dataLayout2);
 		}
+	}
+
+	protected void assertContains(
+		DataLayout dataLayout, List<DataLayout> dataLayouts) {
+
+		boolean contains = false;
+
+		for (DataLayout item : dataLayouts) {
+			if (equals(dataLayout, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			dataLayouts + " does not contain " + dataLayout, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

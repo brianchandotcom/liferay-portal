@@ -199,17 +199,16 @@ public abstract class BaseListTypeEntryResourceTestCase {
 	public void testGetListTypeDefinitionListTypeEntriesPage()
 		throws Exception {
 
-		Page<ListTypeEntry> page =
-			listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
-				testGetListTypeDefinitionListTypeEntriesPage_getListTypeDefinitionId(),
-				Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long listTypeDefinitionId =
 			testGetListTypeDefinitionListTypeEntriesPage_getListTypeDefinitionId();
 		Long irrelevantListTypeDefinitionId =
 			testGetListTypeDefinitionListTypeEntriesPage_getIrrelevantListTypeDefinitionId();
+
+		Page<ListTypeEntry> page =
+			listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
+				listTypeDefinitionId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantListTypeDefinitionId != null) {
 			ListTypeEntry irrelevantListTypeEntry =
@@ -238,7 +237,7 @@ public abstract class BaseListTypeEntryResourceTestCase {
 				listTypeDefinitionId, randomListTypeEntry());
 
 		page = listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
-			listTypeDefinitionId, Pagination.of(1, 2));
+			listTypeDefinitionId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -379,6 +378,23 @@ public abstract class BaseListTypeEntryResourceTestCase {
 
 			assertEquals(listTypeEntry1, listTypeEntry2);
 		}
+	}
+
+	protected void assertContains(
+		ListTypeEntry listTypeEntry, List<ListTypeEntry> listTypeEntries) {
+
+		boolean contains = false;
+
+		for (ListTypeEntry item : listTypeEntries) {
+			if (equals(listTypeEntry, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			listTypeEntries + " does not contain " + listTypeEntry, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

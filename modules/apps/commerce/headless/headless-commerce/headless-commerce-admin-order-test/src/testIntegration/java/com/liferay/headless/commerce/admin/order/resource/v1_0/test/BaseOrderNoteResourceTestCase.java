@@ -425,17 +425,16 @@ public abstract class BaseOrderNoteResourceTestCase {
 	public void testGetOrderByExternalReferenceCodeOrderNotesPage()
 		throws Exception {
 
-		Page<OrderNote> page =
-			orderNoteResource.getOrderByExternalReferenceCodeOrderNotesPage(
-				testGetOrderByExternalReferenceCodeOrderNotesPage_getExternalReferenceCode(),
-				Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetOrderByExternalReferenceCodeOrderNotesPage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
 			testGetOrderByExternalReferenceCodeOrderNotesPage_getIrrelevantExternalReferenceCode();
+
+		Page<OrderNote> page =
+			orderNoteResource.getOrderByExternalReferenceCodeOrderNotesPage(
+				externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantExternalReferenceCode != null) {
 			OrderNote irrelevantOrderNote =
@@ -464,7 +463,7 @@ public abstract class BaseOrderNoteResourceTestCase {
 				externalReferenceCode, randomOrderNote());
 
 		page = orderNoteResource.getOrderByExternalReferenceCodeOrderNotesPage(
-			externalReferenceCode, Pagination.of(1, 2));
+			externalReferenceCode, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -573,13 +572,13 @@ public abstract class BaseOrderNoteResourceTestCase {
 
 	@Test
 	public void testGetOrderIdOrderNotesPage() throws Exception {
-		Page<OrderNote> page = orderNoteResource.getOrderIdOrderNotesPage(
-			testGetOrderIdOrderNotesPage_getId(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetOrderIdOrderNotesPage_getId();
 		Long irrelevantId = testGetOrderIdOrderNotesPage_getIrrelevantId();
+
+		Page<OrderNote> page = orderNoteResource.getOrderIdOrderNotesPage(
+			id, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			OrderNote irrelevantOrderNote =
@@ -604,7 +603,7 @@ public abstract class BaseOrderNoteResourceTestCase {
 			id, randomOrderNote());
 
 		page = orderNoteResource.getOrderIdOrderNotesPage(
-			id, Pagination.of(1, 2));
+			id, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -723,6 +722,23 @@ public abstract class BaseOrderNoteResourceTestCase {
 
 			assertEquals(orderNote1, orderNote2);
 		}
+	}
+
+	protected void assertContains(
+		OrderNote orderNote, List<OrderNote> orderNotes) {
+
+		boolean contains = false;
+
+		for (OrderNote item : orderNotes) {
+			if (equals(orderNote, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			orderNotes + " does not contain " + orderNote, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

@@ -336,16 +336,16 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 
 	@Test
 	public void testGetWikiPageWikiPageAttachmentsPage() throws Exception {
-		Page<WikiPageAttachment> page =
-			wikiPageAttachmentResource.getWikiPageWikiPageAttachmentsPage(
-				testGetWikiPageWikiPageAttachmentsPage_getWikiPageId());
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long wikiPageId =
 			testGetWikiPageWikiPageAttachmentsPage_getWikiPageId();
 		Long irrelevantWikiPageId =
 			testGetWikiPageWikiPageAttachmentsPage_getIrrelevantWikiPageId();
+
+		Page<WikiPageAttachment> page =
+			wikiPageAttachmentResource.getWikiPageWikiPageAttachmentsPage(
+				wikiPageId);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantWikiPageId != null) {
 			WikiPageAttachment irrelevantWikiPageAttachment =
@@ -480,6 +480,25 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 
 			assertEquals(wikiPageAttachment1, wikiPageAttachment2);
 		}
+	}
+
+	protected void assertContains(
+		WikiPageAttachment wikiPageAttachment,
+		List<WikiPageAttachment> wikiPageAttachments) {
+
+		boolean contains = false;
+
+		for (WikiPageAttachment item : wikiPageAttachments) {
+			if (equals(wikiPageAttachment, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			wikiPageAttachments + " does not contain " + wikiPageAttachment,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

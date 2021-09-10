@@ -214,17 +214,16 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 	@Test
 	public void testGetSiteStructuredContentsPage() throws Exception {
-		Page<StructuredContent> page =
-			structuredContentResource.getSiteStructuredContentsPage(
-				testGetSiteStructuredContentsPage_getSiteId(), null,
-				RandomTestUtil.randomString(), null, null, Pagination.of(1, 2),
-				null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long siteId = testGetSiteStructuredContentsPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteStructuredContentsPage_getIrrelevantSiteId();
+
+		Page<StructuredContent> page =
+			structuredContentResource.getSiteStructuredContentsPage(
+				siteId, null, RandomTestUtil.randomString(), null, null,
+				Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantSiteId != null) {
 			StructuredContent irrelevantStructuredContent =
@@ -252,7 +251,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 				siteId, randomStructuredContent());
 
 		page = structuredContentResource.getSiteStructuredContentsPage(
-			siteId, null, null, null, null, Pagination.of(1, 2), null);
+			siteId, null, null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -541,7 +540,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 
 					put("siteKey", "\"" + siteId + "\"");
 				}
@@ -564,7 +563,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/structuredContents");
 
-		Assert.assertEquals(2, structuredContentsJSONObject.get("totalCount"));
+		Assert.assertEquals(
+			2, structuredContentsJSONObject.getLong("totalCount"));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(structuredContent1, structuredContent2),
@@ -700,16 +700,16 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 	@Test
 	public void testGetStructuredContentsVersionsPage() throws Exception {
-		Page<StructuredContent> page =
-			structuredContentResource.getStructuredContentsVersionsPage(
-				testGetStructuredContentsVersionsPage_getStructuredContentId());
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long structuredContentId =
 			testGetStructuredContentsVersionsPage_getStructuredContentId();
 		Long irrelevantStructuredContentId =
 			testGetStructuredContentsVersionsPage_getIrrelevantStructuredContentId();
+
+		Page<StructuredContent> page =
+			structuredContentResource.getStructuredContentsVersionsPage(
+				structuredContentId);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantStructuredContentId != null) {
 			StructuredContent irrelevantStructuredContent =
@@ -812,6 +812,25 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			assertEquals(structuredContent1, structuredContent2);
 		}
+	}
+
+	protected void assertContains(
+		StructuredContent structuredContent,
+		List<StructuredContent> structuredContents) {
+
+		boolean contains = false;
+
+		for (StructuredContent item : structuredContents) {
+			if (equals(structuredContent, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			structuredContents + " does not contain " + structuredContent,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

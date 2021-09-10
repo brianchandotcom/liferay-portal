@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -195,9 +196,9 @@ public abstract class BaseProcessMetricResourceTestCase {
 	@Test
 	public void testGetProcessMetricsPage() throws Exception {
 		Page<ProcessMetric> page = processMetricResource.getProcessMetricsPage(
-			RandomTestUtil.randomString(), Pagination.of(1, 2), null);
+			RandomTestUtil.randomString(), Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		ProcessMetric processMetric1 =
 			testGetProcessMetricsPage_addProcessMetric(randomProcessMetric());
@@ -206,18 +207,22 @@ public abstract class BaseProcessMetricResourceTestCase {
 			testGetProcessMetricsPage_addProcessMetric(randomProcessMetric());
 
 		page = processMetricResource.getProcessMetricsPage(
-			null, Pagination.of(1, 2), null);
+			null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(processMetric1, processMetric2),
-			(List<ProcessMetric>)page.getItems());
+		assertContains(processMetric1, (List<ProcessMetric>)page.getItems());
+		assertContains(processMetric2, (List<ProcessMetric>)page.getItems());
 		assertValid(page);
 	}
 
 	@Test
 	public void testGetProcessMetricsPageWithPagination() throws Exception {
+		Page<ProcessMetric> totalPage =
+			processMetricResource.getProcessMetricsPage(null, null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
 		ProcessMetric processMetric1 =
 			testGetProcessMetricsPage_addProcessMetric(randomProcessMetric());
 
@@ -228,18 +233,18 @@ public abstract class BaseProcessMetricResourceTestCase {
 			testGetProcessMetricsPage_addProcessMetric(randomProcessMetric());
 
 		Page<ProcessMetric> page1 = processMetricResource.getProcessMetricsPage(
-			null, Pagination.of(1, 2), null);
+			null, Pagination.of(1, totalCount + 2), null);
 
 		List<ProcessMetric> processMetrics1 =
 			(List<ProcessMetric>)page1.getItems();
 
 		Assert.assertEquals(
-			processMetrics1.toString(), 2, processMetrics1.size());
+			processMetrics1.toString(), totalCount + 2, processMetrics1.size());
 
 		Page<ProcessMetric> page2 = processMetricResource.getProcessMetricsPage(
-			null, Pagination.of(2, 2), null);
+			null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ProcessMetric> processMetrics2 =
 			(List<ProcessMetric>)page2.getItems();
@@ -248,11 +253,11 @@ public abstract class BaseProcessMetricResourceTestCase {
 			processMetrics2.toString(), 1, processMetrics2.size());
 
 		Page<ProcessMetric> page3 = processMetricResource.getProcessMetricsPage(
-			null, Pagination.of(1, 3), null);
+			null, Pagination.of(1, totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(processMetric1, processMetric2, processMetric3),
-			(List<ProcessMetric>)page3.getItems());
+		assertContains(processMetric1, (List<ProcessMetric>)page3.getItems());
+		assertContains(processMetric2, (List<ProcessMetric>)page3.getItems());
+		assertContains(processMetric3, (List<ProcessMetric>)page3.getItems());
 	}
 
 	@Test
@@ -429,6 +434,23 @@ public abstract class BaseProcessMetricResourceTestCase {
 
 			assertEquals(processMetric1, processMetric2);
 		}
+	}
+
+	protected void assertContains(
+		ProcessMetric processMetric, List<ProcessMetric> processMetrics) {
+
+		boolean contains = false;
+
+		for (ProcessMetric item : processMetrics) {
+			if (equals(processMetric, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			processMetrics + " does not contain " + processMetric, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

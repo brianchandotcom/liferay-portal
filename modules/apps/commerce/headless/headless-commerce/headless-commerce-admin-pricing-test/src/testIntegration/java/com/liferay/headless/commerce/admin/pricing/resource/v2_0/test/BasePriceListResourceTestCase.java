@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -209,9 +210,9 @@ public abstract class BasePriceListResourceTestCase {
 	@Test
 	public void testGetPriceListsPage() throws Exception {
 		Page<PriceList> page = priceListResource.getPriceListsPage(
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+			RandomTestUtil.randomString(), null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		PriceList priceList1 = testGetPriceListsPage_addPriceList(
 			randomPriceList());
@@ -220,13 +221,12 @@ public abstract class BasePriceListResourceTestCase {
 			randomPriceList());
 
 		page = priceListResource.getPriceListsPage(
-			null, null, Pagination.of(1, 2), null);
+			null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(priceList1, priceList2),
-			(List<PriceList>)page.getItems());
+		assertContains(priceList1, (List<PriceList>)page.getItems());
+		assertContains(priceList2, (List<PriceList>)page.getItems());
 		assertValid(page);
 
 		priceListResource.deletePriceList(priceList1.getId());
@@ -289,6 +289,11 @@ public abstract class BasePriceListResourceTestCase {
 
 	@Test
 	public void testGetPriceListsPageWithPagination() throws Exception {
+		Page<PriceList> totalPage = priceListResource.getPriceListsPage(
+			null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
 		PriceList priceList1 = testGetPriceListsPage_addPriceList(
 			randomPriceList());
 
@@ -299,27 +304,28 @@ public abstract class BasePriceListResourceTestCase {
 			randomPriceList());
 
 		Page<PriceList> page1 = priceListResource.getPriceListsPage(
-			null, null, Pagination.of(1, 2), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<PriceList> priceLists1 = (List<PriceList>)page1.getItems();
 
-		Assert.assertEquals(priceLists1.toString(), 2, priceLists1.size());
+		Assert.assertEquals(
+			priceLists1.toString(), totalCount + 2, priceLists1.size());
 
 		Page<PriceList> page2 = priceListResource.getPriceListsPage(
-			null, null, Pagination.of(2, 2), null);
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<PriceList> priceLists2 = (List<PriceList>)page2.getItems();
 
 		Assert.assertEquals(priceLists2.toString(), 1, priceLists2.size());
 
 		Page<PriceList> page3 = priceListResource.getPriceListsPage(
-			null, null, Pagination.of(1, 3), null);
+			null, null, Pagination.of(1, totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(priceList1, priceList2, priceList3),
-			(List<PriceList>)page3.getItems());
+		assertContains(priceList1, (List<PriceList>)page3.getItems());
+		assertContains(priceList2, (List<PriceList>)page3.getItems());
+		assertContains(priceList3, (List<PriceList>)page3.getItems());
 	}
 
 	@Test
@@ -450,7 +456,7 @@ public abstract class BasePriceListResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -460,7 +466,7 @@ public abstract class BasePriceListResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/priceLists");
 
-		Assert.assertEquals(0, priceListsJSONObject.get("totalCount"));
+		long totalCount = priceListsJSONObject.getLong("totalCount");
 
 		PriceList priceList1 = testGraphQLPriceList_addPriceList();
 		PriceList priceList2 = testGraphQLPriceList_addPriceList();
@@ -469,10 +475,16 @@ public abstract class BasePriceListResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/priceLists");
 
-		Assert.assertEquals(2, priceListsJSONObject.get("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, priceListsJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(priceList1, priceList2),
+		assertContains(
+			priceList1,
+			Arrays.asList(
+				PriceListSerDes.toDTOs(
+					priceListsJSONObject.getString("items"))));
+		assertContains(
+			priceList2,
 			Arrays.asList(
 				PriceListSerDes.toDTOs(
 					priceListsJSONObject.getString("items"))));
@@ -802,6 +814,23 @@ public abstract class BasePriceListResourceTestCase {
 
 			assertEquals(priceList1, priceList2);
 		}
+	}
+
+	protected void assertContains(
+		PriceList priceList, List<PriceList> priceLists) {
+
+		boolean contains = false;
+
+		for (PriceList item : priceLists) {
+			if (equals(priceList, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			priceLists + " does not contain " + priceList, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

@@ -280,6 +280,25 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		}
 	}
 
+	protected void assertContains(
+		ProductConfiguration productConfiguration,
+		List<ProductConfiguration> productConfigurations) {
+
+		boolean contains = false;
+
+		for (ProductConfiguration item : productConfigurations) {
+			if (equals(productConfiguration, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			productConfigurations + " does not contain " + productConfiguration,
+			contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<ProductConfiguration> productConfigurations1,
 		List<ProductConfiguration> productConfigurations2) {

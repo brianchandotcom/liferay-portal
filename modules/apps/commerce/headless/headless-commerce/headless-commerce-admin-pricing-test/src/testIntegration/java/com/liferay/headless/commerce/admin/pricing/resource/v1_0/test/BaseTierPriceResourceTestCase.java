@@ -198,18 +198,17 @@ public abstract class BaseTierPriceResourceTestCase {
 	public void testGetPriceEntryByExternalReferenceCodeTierPricesPage()
 		throws Exception {
 
-		Page<TierPrice> page =
-			tierPriceResource.
-				getPriceEntryByExternalReferenceCodeTierPricesPage(
-					testGetPriceEntryByExternalReferenceCodeTierPricesPage_getExternalReferenceCode(),
-					Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetPriceEntryByExternalReferenceCodeTierPricesPage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
 			testGetPriceEntryByExternalReferenceCodeTierPricesPage_getIrrelevantExternalReferenceCode();
+
+		Page<TierPrice> page =
+			tierPriceResource.
+				getPriceEntryByExternalReferenceCodeTierPricesPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantExternalReferenceCode != null) {
 			TierPrice irrelevantTierPrice =
@@ -241,7 +240,7 @@ public abstract class BaseTierPriceResourceTestCase {
 		page =
 			tierPriceResource.
 				getPriceEntryByExternalReferenceCodeTierPricesPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -353,13 +352,13 @@ public abstract class BaseTierPriceResourceTestCase {
 
 	@Test
 	public void testGetPriceEntryIdTierPricesPage() throws Exception {
-		Page<TierPrice> page = tierPriceResource.getPriceEntryIdTierPricesPage(
-			testGetPriceEntryIdTierPricesPage_getId(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetPriceEntryIdTierPricesPage_getId();
 		Long irrelevantId = testGetPriceEntryIdTierPricesPage_getIrrelevantId();
+
+		Page<TierPrice> page = tierPriceResource.getPriceEntryIdTierPricesPage(
+			id, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			TierPrice irrelevantTierPrice =
@@ -384,7 +383,7 @@ public abstract class BaseTierPriceResourceTestCase {
 			id, randomTierPrice());
 
 		page = tierPriceResource.getPriceEntryIdTierPricesPage(
-			id, Pagination.of(1, 2));
+			id, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -729,6 +728,23 @@ public abstract class BaseTierPriceResourceTestCase {
 
 			assertEquals(tierPrice1, tierPrice2);
 		}
+	}
+
+	protected void assertContains(
+		TierPrice tierPrice, List<TierPrice> tierPrices) {
+
+		boolean contains = false;
+
+		for (TierPrice item : tierPrices) {
+			if (equals(tierPrice, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			tierPrices + " does not contain " + tierPrice, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

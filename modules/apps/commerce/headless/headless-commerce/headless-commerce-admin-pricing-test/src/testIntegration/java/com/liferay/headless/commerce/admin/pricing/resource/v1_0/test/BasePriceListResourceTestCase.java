@@ -25,8 +25,10 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.headless.commerce.admin.pricing.client.dto.v1_0.PriceList;
 import com.liferay.headless.commerce.admin.pricing.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.pricing.client.pagination.Page;
+import com.liferay.headless.commerce.admin.pricing.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.pricing.client.resource.v1_0.PriceListResource;
 import com.liferay.headless.commerce.admin.pricing.client.serdes.v1_0.PriceListSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -41,21 +43,26 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +74,7 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
 
@@ -197,7 +205,242 @@ public abstract class BasePriceListResourceTestCase {
 
 	@Test
 	public void testGetPriceListsPage() throws Exception {
-		Assert.assertTrue(false);
+		Page<PriceList> page = priceListResource.getPriceListsPage(
+			null, Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		PriceList priceList1 = testGetPriceListsPage_addPriceList(
+			randomPriceList());
+
+		PriceList priceList2 = testGetPriceListsPage_addPriceList(
+			randomPriceList());
+
+		page = priceListResource.getPriceListsPage(
+			null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(priceList1, (List<PriceList>)page.getItems());
+		assertContains(priceList2, (List<PriceList>)page.getItems());
+		assertValid(page);
+
+		priceListResource.deletePriceList(priceList1.getId());
+
+		priceListResource.deletePriceList(priceList2.getId());
+	}
+
+	@Test
+	public void testGetPriceListsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		PriceList priceList1 = randomPriceList();
+
+		priceList1 = testGetPriceListsPage_addPriceList(priceList1);
+
+		for (EntityField entityField : entityFields) {
+			Page<PriceList> page = priceListResource.getPriceListsPage(
+				getFilterString(entityField, "between", priceList1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(priceList1),
+				(List<PriceList>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetPriceListsPageWithFilterStringEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		PriceList priceList1 = testGetPriceListsPage_addPriceList(
+			randomPriceList());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PriceList priceList2 = testGetPriceListsPage_addPriceList(
+			randomPriceList());
+
+		for (EntityField entityField : entityFields) {
+			Page<PriceList> page = priceListResource.getPriceListsPage(
+				getFilterString(entityField, "eq", priceList1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(priceList1),
+				(List<PriceList>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetPriceListsPageWithPagination() throws Exception {
+		Page<PriceList> totalPage = priceListResource.getPriceListsPage(
+			null, null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
+		PriceList priceList1 = testGetPriceListsPage_addPriceList(
+			randomPriceList());
+
+		PriceList priceList2 = testGetPriceListsPage_addPriceList(
+			randomPriceList());
+
+		PriceList priceList3 = testGetPriceListsPage_addPriceList(
+			randomPriceList());
+
+		Page<PriceList> page1 = priceListResource.getPriceListsPage(
+			null, Pagination.of(1, totalCount + 2), null);
+
+		List<PriceList> priceLists1 = (List<PriceList>)page1.getItems();
+
+		Assert.assertEquals(
+			priceLists1.toString(), totalCount + 2, priceLists1.size());
+
+		Page<PriceList> page2 = priceListResource.getPriceListsPage(
+			null, Pagination.of(2, totalCount + 2), null);
+
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+		List<PriceList> priceLists2 = (List<PriceList>)page2.getItems();
+
+		Assert.assertEquals(priceLists2.toString(), 1, priceLists2.size());
+
+		Page<PriceList> page3 = priceListResource.getPriceListsPage(
+			null, Pagination.of(1, totalCount + 3), null);
+
+		assertContains(priceList1, (List<PriceList>)page3.getItems());
+		assertContains(priceList2, (List<PriceList>)page3.getItems());
+		assertContains(priceList3, (List<PriceList>)page3.getItems());
+	}
+
+	@Test
+	public void testGetPriceListsPageWithSortDateTime() throws Exception {
+		testGetPriceListsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, priceList1, priceList2) -> {
+				BeanUtils.setProperty(
+					priceList1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetPriceListsPageWithSortInteger() throws Exception {
+		testGetPriceListsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, priceList1, priceList2) -> {
+				BeanUtils.setProperty(priceList1, entityField.getName(), 0);
+				BeanUtils.setProperty(priceList2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetPriceListsPageWithSortString() throws Exception {
+		testGetPriceListsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, priceList1, priceList2) -> {
+				Class<?> clazz = priceList1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						priceList1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						priceList2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanUtils.setProperty(
+						priceList1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanUtils.setProperty(
+						priceList2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						priceList1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanUtils.setProperty(
+						priceList2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetPriceListsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, PriceList, PriceList, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		PriceList priceList1 = randomPriceList();
+		PriceList priceList2 = randomPriceList();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, priceList1, priceList2);
+		}
+
+		priceList1 = testGetPriceListsPage_addPriceList(priceList1);
+
+		priceList2 = testGetPriceListsPage_addPriceList(priceList2);
+
+		for (EntityField entityField : entityFields) {
+			Page<PriceList> ascPage = priceListResource.getPriceListsPage(
+				null, Pagination.of(1, 2), entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(priceList1, priceList2),
+				(List<PriceList>)ascPage.getItems());
+
+			Page<PriceList> descPage = priceListResource.getPriceListsPage(
+				null, Pagination.of(1, 2), entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(priceList2, priceList1),
+				(List<PriceList>)descPage.getItems());
+		}
+	}
+
+	protected PriceList testGetPriceListsPage_addPriceList(PriceList priceList)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -207,7 +450,7 @@ public abstract class BasePriceListResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -217,7 +460,7 @@ public abstract class BasePriceListResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/priceLists");
 
-		Assert.assertEquals(0, priceListsJSONObject.get("totalCount"));
+		long totalCount = priceListsJSONObject.getLong("totalCount");
 
 		PriceList priceList1 = testGraphQLPriceList_addPriceList();
 		PriceList priceList2 = testGraphQLPriceList_addPriceList();
@@ -226,10 +469,16 @@ public abstract class BasePriceListResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/priceLists");
 
-		Assert.assertEquals(2, priceListsJSONObject.get("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, priceListsJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(priceList1, priceList2),
+		assertContains(
+			priceList1,
+			Arrays.asList(
+				PriceListSerDes.toDTOs(
+					priceListsJSONObject.getString("items"))));
+		assertContains(
+			priceList2,
 			Arrays.asList(
 				PriceListSerDes.toDTOs(
 					priceListsJSONObject.getString("items"))));
@@ -477,6 +726,9 @@ public abstract class BasePriceListResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
+
 	protected PriceList testGraphQLPriceList_addPriceList() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
@@ -507,6 +759,23 @@ public abstract class BasePriceListResourceTestCase {
 
 			assertEquals(priceList1, priceList2);
 		}
+	}
+
+	protected void assertContains(
+		PriceList priceList, List<PriceList> priceLists) {
+
+		boolean contains = false;
+
+		for (PriceList item : priceLists) {
+			if (equals(priceList, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			priceLists + " does not contain " + priceList, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

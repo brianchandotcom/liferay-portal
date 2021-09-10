@@ -211,18 +211,17 @@ public abstract class BasePriceModifierResourceTestCase {
 	public void testGetPriceListByExternalReferenceCodePriceModifiersPage()
 		throws Exception {
 
-		Page<PriceModifier> page =
-			priceModifierResource.
-				getPriceListByExternalReferenceCodePriceModifiersPage(
-					testGetPriceListByExternalReferenceCodePriceModifiersPage_getExternalReferenceCode(),
-					Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetPriceListByExternalReferenceCodePriceModifiersPage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
 			testGetPriceListByExternalReferenceCodePriceModifiersPage_getIrrelevantExternalReferenceCode();
+
+		Page<PriceModifier> page =
+			priceModifierResource.
+				getPriceListByExternalReferenceCodePriceModifiersPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantExternalReferenceCode != null) {
 			PriceModifier irrelevantPriceModifier =
@@ -254,7 +253,7 @@ public abstract class BasePriceModifierResourceTestCase {
 		page =
 			priceModifierResource.
 				getPriceListByExternalReferenceCodePriceModifiersPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -370,16 +369,16 @@ public abstract class BasePriceModifierResourceTestCase {
 
 	@Test
 	public void testGetPriceListIdPriceModifiersPage() throws Exception {
-		Page<PriceModifier> page =
-			priceModifierResource.getPriceListIdPriceModifiersPage(
-				testGetPriceListIdPriceModifiersPage_getId(),
-				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetPriceListIdPriceModifiersPage_getId();
 		Long irrelevantId =
 			testGetPriceListIdPriceModifiersPage_getIrrelevantId();
+
+		Page<PriceModifier> page =
+			priceModifierResource.getPriceListIdPriceModifiersPage(
+				id, RandomTestUtil.randomString(), null, Pagination.of(1, 10),
+				null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			PriceModifier irrelevantPriceModifier =
@@ -406,7 +405,7 @@ public abstract class BasePriceModifierResourceTestCase {
 				id, randomPriceModifier());
 
 		page = priceModifierResource.getPriceListIdPriceModifiersPage(
-			id, null, null, Pagination.of(1, 2), null);
+			id, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -988,6 +987,23 @@ public abstract class BasePriceModifierResourceTestCase {
 
 			assertEquals(priceModifier1, priceModifier2);
 		}
+	}
+
+	protected void assertContains(
+		PriceModifier priceModifier, List<PriceModifier> priceModifiers) {
+
+		boolean contains = false;
+
+		for (PriceModifier item : priceModifiers) {
+			if (equals(priceModifier, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			priceModifiers + " does not contain " + priceModifier, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

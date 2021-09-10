@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -425,21 +426,21 @@ public abstract class BaseCatalogResourceTestCase {
 	@Test
 	public void testGetCatalogsPage() throws Exception {
 		Page<Catalog> page = catalogResource.getCatalogsPage(
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+			RandomTestUtil.randomString(), null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		Catalog catalog1 = testGetCatalogsPage_addCatalog(randomCatalog());
 
 		Catalog catalog2 = testGetCatalogsPage_addCatalog(randomCatalog());
 
 		page = catalogResource.getCatalogsPage(
-			null, null, Pagination.of(1, 2), null);
+			null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(catalog1, catalog2), (List<Catalog>)page.getItems());
+		assertContains(catalog1, (List<Catalog>)page.getItems());
+		assertContains(catalog2, (List<Catalog>)page.getItems());
 		assertValid(page);
 
 		catalogResource.deleteCatalog(catalog1.getId());
@@ -498,6 +499,11 @@ public abstract class BaseCatalogResourceTestCase {
 
 	@Test
 	public void testGetCatalogsPageWithPagination() throws Exception {
+		Page<Catalog> totalPage = catalogResource.getCatalogsPage(
+			null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
 		Catalog catalog1 = testGetCatalogsPage_addCatalog(randomCatalog());
 
 		Catalog catalog2 = testGetCatalogsPage_addCatalog(randomCatalog());
@@ -505,27 +511,28 @@ public abstract class BaseCatalogResourceTestCase {
 		Catalog catalog3 = testGetCatalogsPage_addCatalog(randomCatalog());
 
 		Page<Catalog> page1 = catalogResource.getCatalogsPage(
-			null, null, Pagination.of(1, 2), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<Catalog> catalogs1 = (List<Catalog>)page1.getItems();
 
-		Assert.assertEquals(catalogs1.toString(), 2, catalogs1.size());
+		Assert.assertEquals(
+			catalogs1.toString(), totalCount + 2, catalogs1.size());
 
 		Page<Catalog> page2 = catalogResource.getCatalogsPage(
-			null, null, Pagination.of(2, 2), null);
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Catalog> catalogs2 = (List<Catalog>)page2.getItems();
 
 		Assert.assertEquals(catalogs2.toString(), 1, catalogs2.size());
 
 		Page<Catalog> page3 = catalogResource.getCatalogsPage(
-			null, null, Pagination.of(1, 3), null);
+			null, null, Pagination.of(1, totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(catalog1, catalog2, catalog3),
-			(List<Catalog>)page3.getItems());
+		assertContains(catalog1, (List<Catalog>)page3.getItems());
+		assertContains(catalog2, (List<Catalog>)page3.getItems());
+		assertContains(catalog3, (List<Catalog>)page3.getItems());
 	}
 
 	@Test
@@ -656,7 +663,7 @@ public abstract class BaseCatalogResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -666,7 +673,7 @@ public abstract class BaseCatalogResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/catalogs");
 
-		Assert.assertEquals(0, catalogsJSONObject.get("totalCount"));
+		long totalCount = catalogsJSONObject.getLong("totalCount");
 
 		Catalog catalog1 = testGraphQLCatalog_addCatalog();
 		Catalog catalog2 = testGraphQLCatalog_addCatalog();
@@ -675,10 +682,15 @@ public abstract class BaseCatalogResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/catalogs");
 
-		Assert.assertEquals(2, catalogsJSONObject.get("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, catalogsJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(catalog1, catalog2),
+		assertContains(
+			catalog1,
+			Arrays.asList(
+				CatalogSerDes.toDTOs(catalogsJSONObject.getString("items"))));
+		assertContains(
+			catalog2,
 			Arrays.asList(
 				CatalogSerDes.toDTOs(catalogsJSONObject.getString("items"))));
 	}
@@ -866,6 +878,20 @@ public abstract class BaseCatalogResourceTestCase {
 
 			assertEquals(catalog1, catalog2);
 		}
+	}
+
+	protected void assertContains(Catalog catalog, List<Catalog> catalogs) {
+		boolean contains = false;
+
+		for (Catalog item : catalogs) {
+			if (equals(catalog, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(catalogs + " does not contain " + catalog, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

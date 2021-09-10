@@ -245,18 +245,17 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 	public void testGetPriceListByExternalReferenceCodePriceListAccountGroupPage()
 		throws Exception {
 
-		Page<PriceListAccountGroup> page =
-			priceListAccountGroupResource.
-				getPriceListByExternalReferenceCodePriceListAccountGroupPage(
-					testGetPriceListByExternalReferenceCodePriceListAccountGroupPage_getExternalReferenceCode(),
-					Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetPriceListByExternalReferenceCodePriceListAccountGroupPage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
 			testGetPriceListByExternalReferenceCodePriceListAccountGroupPage_getIrrelevantExternalReferenceCode();
+
+		Page<PriceListAccountGroup> page =
+			priceListAccountGroupResource.
+				getPriceListByExternalReferenceCodePriceListAccountGroupPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantExternalReferenceCode != null) {
 			PriceListAccountGroup irrelevantPriceListAccountGroup =
@@ -288,7 +287,7 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 		page =
 			priceListAccountGroupResource.
 				getPriceListByExternalReferenceCodePriceListAccountGroupPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -414,17 +413,16 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 	public void testGetPriceListIdPriceListAccountGroupsPage()
 		throws Exception {
 
-		Page<PriceListAccountGroup> page =
-			priceListAccountGroupResource.
-				getPriceListIdPriceListAccountGroupsPage(
-					testGetPriceListIdPriceListAccountGroupsPage_getId(),
-					Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetPriceListIdPriceListAccountGroupsPage_getId();
 		Long irrelevantId =
 			testGetPriceListIdPriceListAccountGroupsPage_getIrrelevantId();
+
+		Page<PriceListAccountGroup> page =
+			priceListAccountGroupResource.
+				getPriceListIdPriceListAccountGroupsPage(
+					id, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			PriceListAccountGroup irrelevantPriceListAccountGroup =
@@ -455,7 +453,7 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 		page =
 			priceListAccountGroupResource.
 				getPriceListIdPriceListAccountGroupsPage(
-					id, Pagination.of(1, 2));
+					id, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -613,6 +611,26 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 
 			assertEquals(priceListAccountGroup1, priceListAccountGroup2);
 		}
+	}
+
+	protected void assertContains(
+		PriceListAccountGroup priceListAccountGroup,
+		List<PriceListAccountGroup> priceListAccountGroups) {
+
+		boolean contains = false;
+
+		for (PriceListAccountGroup item : priceListAccountGroups) {
+			if (equals(priceListAccountGroup, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			priceListAccountGroups + " does not contain " +
+				priceListAccountGroup,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

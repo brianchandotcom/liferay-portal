@@ -193,14 +193,6 @@ public abstract class BaseRelatedProductResourceTestCase {
 
 	@Test
 	public void testGetChannelProductRelatedProductsPage() throws Exception {
-		Page<RelatedProduct> page =
-			relatedProductResource.getChannelProductRelatedProductsPage(
-				testGetChannelProductRelatedProductsPage_getChannelId(),
-				testGetChannelProductRelatedProductsPage_getProductId(),
-				RandomTestUtil.randomString(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long channelId =
 			testGetChannelProductRelatedProductsPage_getChannelId();
 		Long irrelevantChannelId =
@@ -209,6 +201,13 @@ public abstract class BaseRelatedProductResourceTestCase {
 			testGetChannelProductRelatedProductsPage_getProductId();
 		Long irrelevantProductId =
 			testGetChannelProductRelatedProductsPage_getIrrelevantProductId();
+
+		Page<RelatedProduct> page =
+			relatedProductResource.getChannelProductRelatedProductsPage(
+				channelId, productId, RandomTestUtil.randomString(),
+				Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if ((irrelevantChannelId != null) && (irrelevantProductId != null)) {
 			RelatedProduct irrelevantRelatedProduct =
@@ -237,7 +236,7 @@ public abstract class BaseRelatedProductResourceTestCase {
 				channelId, productId, randomRelatedProduct());
 
 		page = relatedProductResource.getChannelProductRelatedProductsPage(
-			channelId, productId, null, Pagination.of(1, 2));
+			channelId, productId, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -371,6 +370,23 @@ public abstract class BaseRelatedProductResourceTestCase {
 
 			assertEquals(relatedProduct1, relatedProduct2);
 		}
+	}
+
+	protected void assertContains(
+		RelatedProduct relatedProduct, List<RelatedProduct> relatedProducts) {
+
+		boolean contains = false;
+
+		for (RelatedProduct item : relatedProducts) {
+			if (equals(relatedProduct, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			relatedProducts + " does not contain " + relatedProduct, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

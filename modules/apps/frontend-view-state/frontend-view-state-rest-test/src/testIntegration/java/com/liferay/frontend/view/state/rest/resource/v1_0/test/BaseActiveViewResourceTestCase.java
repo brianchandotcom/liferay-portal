@@ -144,6 +144,21 @@ public abstract class BaseActiveViewResourceTestCase {
 		}
 	}
 
+	protected void assertContains(Object activeView, List<Object> activeViews) {
+		boolean contains = false;
+
+		for (Object item : activeViews) {
+			if (equals(activeView, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			activeViews + " does not contain " + activeView, contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<Object> activeViews1, List<Object> activeViews2) {
 

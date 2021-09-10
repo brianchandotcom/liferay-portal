@@ -197,13 +197,13 @@ public abstract class BaseLogResourceTestCase {
 
 	@Test
 	public void testGetPlanLogsPage() throws Exception {
-		Page<Log> page = logResource.getPlanLogsPage(
-			testGetPlanLogsPage_getPlanId(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long planId = testGetPlanLogsPage_getPlanId();
 		Long irrelevantPlanId = testGetPlanLogsPage_getIrrelevantPlanId();
+
+		Page<Log> page = logResource.getPlanLogsPage(
+			planId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantPlanId != null) {
 			Log irrelevantLog = testGetPlanLogsPage_addLog(
@@ -223,7 +223,7 @@ public abstract class BaseLogResourceTestCase {
 
 		Log log2 = testGetPlanLogsPage_addLog(planId, randomLog());
 
-		page = logResource.getPlanLogsPage(planId, Pagination.of(1, 2));
+		page = logResource.getPlanLogsPage(planId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -307,6 +307,20 @@ public abstract class BaseLogResourceTestCase {
 
 			assertEquals(log1, log2);
 		}
+	}
+
+	protected void assertContains(Log log, List<Log> logs) {
+		boolean contains = false;
+
+		for (Log item : logs) {
+			if (equals(log, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(logs + " does not contain " + log, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(List<Log> logs1, List<Log> logs2) {

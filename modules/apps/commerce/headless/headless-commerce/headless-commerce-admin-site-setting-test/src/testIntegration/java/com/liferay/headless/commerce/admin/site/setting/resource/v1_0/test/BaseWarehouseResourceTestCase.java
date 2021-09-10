@@ -207,17 +207,16 @@ public abstract class BaseWarehouseResourceTestCase {
 	public void testGetCommerceAdminSiteSettingGroupWarehousePage()
 		throws Exception {
 
-		Page<Warehouse> page =
-			warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
-				testGetCommerceAdminSiteSettingGroupWarehousePage_getGroupId(),
-				null, Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long groupId =
 			testGetCommerceAdminSiteSettingGroupWarehousePage_getGroupId();
 		Long irrelevantGroupId =
 			testGetCommerceAdminSiteSettingGroupWarehousePage_getIrrelevantGroupId();
+
+		Page<Warehouse> page =
+			warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
+				groupId, null, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantGroupId != null) {
 			Warehouse irrelevantWarehouse =
@@ -245,7 +244,7 @@ public abstract class BaseWarehouseResourceTestCase {
 				groupId, randomWarehouse());
 
 		page = warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
-			groupId, null, Pagination.of(1, 2));
+			groupId, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -496,6 +495,23 @@ public abstract class BaseWarehouseResourceTestCase {
 
 			assertEquals(warehouse1, warehouse2);
 		}
+	}
+
+	protected void assertContains(
+		Warehouse warehouse, List<Warehouse> warehouses) {
+
+		boolean contains = false;
+
+		for (Warehouse item : warehouses) {
+			if (equals(warehouse, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			warehouses + " does not contain " + warehouse, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

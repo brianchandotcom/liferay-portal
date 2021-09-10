@@ -220,6 +220,23 @@ public abstract class BaseAssigneeMetricResourceTestCase {
 		}
 	}
 
+	protected void assertContains(
+		AssigneeMetric assigneeMetric, List<AssigneeMetric> assigneeMetrics) {
+
+		boolean contains = false;
+
+		for (AssigneeMetric item : assigneeMetrics) {
+			if (equals(assigneeMetric, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			assigneeMetrics + " does not contain " + assigneeMetric, contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<AssigneeMetric> assigneeMetrics1,
 		List<AssigneeMetric> assigneeMetrics2) {

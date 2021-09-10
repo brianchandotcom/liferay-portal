@@ -204,16 +204,16 @@ public abstract class BaseInstanceResourceTestCase {
 
 	@Test
 	public void testGetProcessInstancesPage() throws Exception {
-		Page<Instance> page = instanceResource.getProcessInstancesPage(
-			testGetProcessInstancesPage_getProcessId(), null, null,
-			RandomTestUtil.nextDate(), RandomTestUtil.nextDate(), null, null,
-			null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long processId = testGetProcessInstancesPage_getProcessId();
 		Long irrelevantProcessId =
 			testGetProcessInstancesPage_getIrrelevantProcessId();
+
+		Page<Instance> page = instanceResource.getProcessInstancesPage(
+			processId, null, null, RandomTestUtil.nextDate(),
+			RandomTestUtil.nextDate(), null, null, null, Pagination.of(1, 10),
+			null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantProcessId != null) {
 			Instance irrelevantInstance =
@@ -240,7 +240,7 @@ public abstract class BaseInstanceResourceTestCase {
 
 		page = instanceResource.getProcessInstancesPage(
 			processId, null, null, null, null, null, null, null,
-			Pagination.of(1, 2), null);
+			Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -608,6 +608,21 @@ public abstract class BaseInstanceResourceTestCase {
 
 			assertEquals(instance1, instance2);
 		}
+	}
+
+	protected void assertContains(Instance instance, List<Instance> instances) {
+		boolean contains = false;
+
+		for (Instance item : instances) {
+			if (equals(instance, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			instances + " does not contain " + instance, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

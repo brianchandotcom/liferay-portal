@@ -208,14 +208,14 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 	@Test
 	public void testGetSiteWikiNodesPage() throws Exception {
-		Page<WikiNode> page = wikiNodeResource.getSiteWikiNodesPage(
-			testGetSiteWikiNodesPage_getSiteId(), RandomTestUtil.randomString(),
-			null, null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long siteId = testGetSiteWikiNodesPage_getSiteId();
 		Long irrelevantSiteId = testGetSiteWikiNodesPage_getIrrelevantSiteId();
+
+		Page<WikiNode> page = wikiNodeResource.getSiteWikiNodesPage(
+			siteId, RandomTestUtil.randomString(), null, null,
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantSiteId != null) {
 			WikiNode irrelevantWikiNode = testGetSiteWikiNodesPage_addWikiNode(
@@ -239,7 +239,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 			siteId, randomWikiNode());
 
 		page = wikiNodeResource.getSiteWikiNodesPage(
-			siteId, null, null, null, Pagination.of(1, 2), null);
+			siteId, null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -493,7 +493,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 
 					put("siteKey", "\"" + siteId + "\"");
 				}
@@ -514,7 +514,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/wikiNodes");
 
-		Assert.assertEquals(2, wikiNodesJSONObject.get("totalCount"));
+		Assert.assertEquals(2, wikiNodesJSONObject.getLong("totalCount"));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(wikiNode1, wikiNode2),
@@ -1132,6 +1132,21 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 			assertEquals(wikiNode1, wikiNode2);
 		}
+	}
+
+	protected void assertContains(WikiNode wikiNode, List<WikiNode> wikiNodes) {
+		boolean contains = false;
+
+		for (WikiNode item : wikiNodes) {
+			if (equals(wikiNode, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			wikiNodes + " does not contain " + wikiNode, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

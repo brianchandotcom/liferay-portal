@@ -359,6 +359,20 @@ public abstract class BaseAddressResourceTestCase {
 		}
 	}
 
+	protected void assertContains(Address address, List<Address> addresses) {
+		boolean contains = false;
+
+		for (Address item : addresses) {
+			if (equals(address, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(addresses + " does not contain " + address, contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<Address> addresses1, List<Address> addresses2) {
 

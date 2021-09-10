@@ -193,15 +193,15 @@ public abstract class BaseWebUrlResourceTestCase {
 
 	@Test
 	public void testGetOrganizationWebUrlsPage() throws Exception {
-		Page<WebUrl> page = webUrlResource.getOrganizationWebUrlsPage(
-			testGetOrganizationWebUrlsPage_getOrganizationId());
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String organizationId =
 			testGetOrganizationWebUrlsPage_getOrganizationId();
 		String irrelevantOrganizationId =
 			testGetOrganizationWebUrlsPage_getIrrelevantOrganizationId();
+
+		Page<WebUrl> page = webUrlResource.getOrganizationWebUrlsPage(
+			organizationId);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantOrganizationId != null) {
 			WebUrl irrelevantWebUrl = testGetOrganizationWebUrlsPage_addWebUrl(
@@ -256,14 +256,14 @@ public abstract class BaseWebUrlResourceTestCase {
 
 	@Test
 	public void testGetUserAccountWebUrlsPage() throws Exception {
-		Page<WebUrl> page = webUrlResource.getUserAccountWebUrlsPage(
-			testGetUserAccountWebUrlsPage_getUserAccountId());
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long userAccountId = testGetUserAccountWebUrlsPage_getUserAccountId();
 		Long irrelevantUserAccountId =
 			testGetUserAccountWebUrlsPage_getIrrelevantUserAccountId();
+
+		Page<WebUrl> page = webUrlResource.getUserAccountWebUrlsPage(
+			userAccountId);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantUserAccountId != null) {
 			WebUrl irrelevantWebUrl = testGetUserAccountWebUrlsPage_addWebUrl(
@@ -398,6 +398,20 @@ public abstract class BaseWebUrlResourceTestCase {
 
 			assertEquals(webUrl1, webUrl2);
 		}
+	}
+
+	protected void assertContains(WebUrl webUrl, List<WebUrl> webUrls) {
+		boolean contains = false;
+
+		for (WebUrl item : webUrls) {
+			if (equals(webUrl, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(webUrls + " does not contain " + webUrl, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

@@ -201,18 +201,17 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 	public void testGetAccountByExternalReferenceCodeAccountOrganizationsPage()
 		throws Exception {
 
-		Page<AccountOrganization> page =
-			accountOrganizationResource.
-				getAccountByExternalReferenceCodeAccountOrganizationsPage(
-					testGetAccountByExternalReferenceCodeAccountOrganizationsPage_getExternalReferenceCode(),
-					Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetAccountByExternalReferenceCodeAccountOrganizationsPage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
 			testGetAccountByExternalReferenceCodeAccountOrganizationsPage_getIrrelevantExternalReferenceCode();
+
+		Page<AccountOrganization> page =
+			accountOrganizationResource.
+				getAccountByExternalReferenceCodeAccountOrganizationsPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantExternalReferenceCode != null) {
 			AccountOrganization irrelevantAccountOrganization =
@@ -244,7 +243,7 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 		page =
 			accountOrganizationResource.
 				getAccountByExternalReferenceCodeAccountOrganizationsPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -388,16 +387,15 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 
 	@Test
 	public void testGetAccountIdAccountOrganizationsPage() throws Exception {
-		Page<AccountOrganization> page =
-			accountOrganizationResource.getAccountIdAccountOrganizationsPage(
-				testGetAccountIdAccountOrganizationsPage_getId(),
-				Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetAccountIdAccountOrganizationsPage_getId();
 		Long irrelevantId =
 			testGetAccountIdAccountOrganizationsPage_getIrrelevantId();
+
+		Page<AccountOrganization> page =
+			accountOrganizationResource.getAccountIdAccountOrganizationsPage(
+				id, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			AccountOrganization irrelevantAccountOrganization =
@@ -426,7 +424,7 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 				id, randomAccountOrganization());
 
 		page = accountOrganizationResource.getAccountIdAccountOrganizationsPage(
-			id, Pagination.of(1, 2));
+			id, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -585,6 +583,25 @@ public abstract class BaseAccountOrganizationResourceTestCase {
 
 			assertEquals(accountOrganization1, accountOrganization2);
 		}
+	}
+
+	protected void assertContains(
+		AccountOrganization accountOrganization,
+		List<AccountOrganization> accountOrganizations) {
+
+		boolean contains = false;
+
+		for (AccountOrganization item : accountOrganizations) {
+			if (equals(accountOrganization, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			accountOrganizations + " does not contain " + accountOrganization,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

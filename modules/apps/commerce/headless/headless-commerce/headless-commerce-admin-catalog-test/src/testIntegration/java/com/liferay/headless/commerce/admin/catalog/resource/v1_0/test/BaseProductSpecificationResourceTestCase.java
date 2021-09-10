@@ -197,16 +197,15 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 	@Test
 	public void testGetProductIdProductSpecificationsPage() throws Exception {
-		Page<ProductSpecification> page =
-			productSpecificationResource.getProductIdProductSpecificationsPage(
-				testGetProductIdProductSpecificationsPage_getId(),
-				Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetProductIdProductSpecificationsPage_getId();
 		Long irrelevantId =
 			testGetProductIdProductSpecificationsPage_getIrrelevantId();
+
+		Page<ProductSpecification> page =
+			productSpecificationResource.getProductIdProductSpecificationsPage(
+				id, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			ProductSpecification irrelevantProductSpecification =
@@ -236,7 +235,7 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 		page =
 			productSpecificationResource.getProductIdProductSpecificationsPage(
-				id, Pagination.of(1, 2));
+				id, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -383,6 +382,25 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 			assertEquals(productSpecification1, productSpecification2);
 		}
+	}
+
+	protected void assertContains(
+		ProductSpecification productSpecification,
+		List<ProductSpecification> productSpecifications) {
+
+		boolean contains = false;
+
+		for (ProductSpecification item : productSpecifications) {
+			if (equals(productSpecification, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			productSpecifications + " does not contain " + productSpecification,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

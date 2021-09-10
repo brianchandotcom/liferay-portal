@@ -202,17 +202,17 @@ public abstract class BaseProductOptionValueResourceTestCase {
 	public void testGetProductOptionIdProductOptionValuesPage()
 		throws Exception {
 
-		Page<ProductOptionValue> page =
-			productOptionValueResource.
-				getProductOptionIdProductOptionValuesPage(
-					testGetProductOptionIdProductOptionValuesPage_getId(),
-					RandomTestUtil.randomString(), Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetProductOptionIdProductOptionValuesPage_getId();
 		Long irrelevantId =
 			testGetProductOptionIdProductOptionValuesPage_getIrrelevantId();
+
+		Page<ProductOptionValue> page =
+			productOptionValueResource.
+				getProductOptionIdProductOptionValuesPage(
+					id, RandomTestUtil.randomString(), Pagination.of(1, 10),
+					null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			ProductOptionValue irrelevantProductOptionValue =
@@ -243,7 +243,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		page =
 			productOptionValueResource.
 				getProductOptionIdProductOptionValuesPage(
-					id, null, Pagination.of(1, 2), null);
+					id, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -525,6 +525,25 @@ public abstract class BaseProductOptionValueResourceTestCase {
 
 			assertEquals(productOptionValue1, productOptionValue2);
 		}
+	}
+
+	protected void assertContains(
+		ProductOptionValue productOptionValue,
+		List<ProductOptionValue> productOptionValues) {
+
+		boolean contains = false;
+
+		for (ProductOptionValue item : productOptionValues) {
+			if (equals(productOptionValue, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			productOptionValues + " does not contain " + productOptionValue,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

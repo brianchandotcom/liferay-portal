@@ -214,18 +214,17 @@ public abstract class BaseDiscountSkuResourceTestCase {
 	public void testGetDiscountByExternalReferenceCodeDiscountSkusPage()
 		throws Exception {
 
-		Page<DiscountSku> page =
-			discountSkuResource.
-				getDiscountByExternalReferenceCodeDiscountSkusPage(
-					testGetDiscountByExternalReferenceCodeDiscountSkusPage_getExternalReferenceCode(),
-					Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountSkusPage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountSkusPage_getIrrelevantExternalReferenceCode();
+
+		Page<DiscountSku> page =
+			discountSkuResource.
+				getDiscountByExternalReferenceCodeDiscountSkusPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantExternalReferenceCode != null) {
 			DiscountSku irrelevantDiscountSku =
@@ -257,7 +256,7 @@ public abstract class BaseDiscountSkuResourceTestCase {
 		page =
 			discountSkuResource.
 				getDiscountByExternalReferenceCodeDiscountSkusPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -365,15 +364,15 @@ public abstract class BaseDiscountSkuResourceTestCase {
 
 	@Test
 	public void testGetDiscountIdDiscountSkusPage() throws Exception {
-		Page<DiscountSku> page =
-			discountSkuResource.getDiscountIdDiscountSkusPage(
-				testGetDiscountIdDiscountSkusPage_getId(),
-				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetDiscountIdDiscountSkusPage_getId();
 		Long irrelevantId = testGetDiscountIdDiscountSkusPage_getIrrelevantId();
+
+		Page<DiscountSku> page =
+			discountSkuResource.getDiscountIdDiscountSkusPage(
+				id, RandomTestUtil.randomString(), null, Pagination.of(1, 10),
+				null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			DiscountSku irrelevantDiscountSku =
@@ -400,7 +399,7 @@ public abstract class BaseDiscountSkuResourceTestCase {
 				id, randomDiscountSku());
 
 		page = discountSkuResource.getDiscountIdDiscountSkusPage(
-			id, null, null, Pagination.of(1, 2), null);
+			id, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -714,6 +713,23 @@ public abstract class BaseDiscountSkuResourceTestCase {
 
 			assertEquals(discountSku1, discountSku2);
 		}
+	}
+
+	protected void assertContains(
+		DiscountSku discountSku, List<DiscountSku> discountSkus) {
+
+		boolean contains = false;
+
+		for (DiscountSku item : discountSkus) {
+			if (equals(discountSku, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			discountSkus + " does not contain " + discountSku, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

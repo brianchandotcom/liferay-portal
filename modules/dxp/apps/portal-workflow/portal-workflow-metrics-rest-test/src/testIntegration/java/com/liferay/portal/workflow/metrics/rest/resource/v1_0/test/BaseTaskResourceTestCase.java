@@ -202,14 +202,13 @@ public abstract class BaseTaskResourceTestCase {
 
 	@Test
 	public void testGetProcessTasksPage() throws Exception {
-		Page<Task> page = taskResource.getProcessTasksPage(
-			testGetProcessTasksPage_getProcessId());
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long processId = testGetProcessTasksPage_getProcessId();
 		Long irrelevantProcessId =
 			testGetProcessTasksPage_getIrrelevantProcessId();
+
+		Page<Task> page = taskResource.getProcessTasksPage(processId);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantProcessId != null) {
 			Task irrelevantTask = testGetProcessTasksPage_addTask(
@@ -428,6 +427,20 @@ public abstract class BaseTaskResourceTestCase {
 
 			assertEquals(task1, task2);
 		}
+	}
+
+	protected void assertContains(Task task, List<Task> tasks) {
+		boolean contains = false;
+
+		for (Task item : tasks) {
+			if (equals(task, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(tasks + " does not contain " + task, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

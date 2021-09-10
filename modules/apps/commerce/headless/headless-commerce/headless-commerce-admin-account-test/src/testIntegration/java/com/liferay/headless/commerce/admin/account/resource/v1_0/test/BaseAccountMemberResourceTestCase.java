@@ -201,18 +201,17 @@ public abstract class BaseAccountMemberResourceTestCase {
 	public void testGetAccountByExternalReferenceCodeAccountMembersPage()
 		throws Exception {
 
-		Page<AccountMember> page =
-			accountMemberResource.
-				getAccountByExternalReferenceCodeAccountMembersPage(
-					testGetAccountByExternalReferenceCodeAccountMembersPage_getExternalReferenceCode(),
-					Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetAccountByExternalReferenceCodeAccountMembersPage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
 			testGetAccountByExternalReferenceCodeAccountMembersPage_getIrrelevantExternalReferenceCode();
+
+		Page<AccountMember> page =
+			accountMemberResource.
+				getAccountByExternalReferenceCodeAccountMembersPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantExternalReferenceCode != null) {
 			AccountMember irrelevantAccountMember =
@@ -244,7 +243,7 @@ public abstract class BaseAccountMemberResourceTestCase {
 		page =
 			accountMemberResource.
 				getAccountByExternalReferenceCodeAccountMembersPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -391,16 +390,15 @@ public abstract class BaseAccountMemberResourceTestCase {
 
 	@Test
 	public void testGetAccountIdAccountMembersPage() throws Exception {
-		Page<AccountMember> page =
-			accountMemberResource.getAccountIdAccountMembersPage(
-				testGetAccountIdAccountMembersPage_getId(),
-				Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetAccountIdAccountMembersPage_getId();
 		Long irrelevantId =
 			testGetAccountIdAccountMembersPage_getIrrelevantId();
+
+		Page<AccountMember> page =
+			accountMemberResource.getAccountIdAccountMembersPage(
+				id, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			AccountMember irrelevantAccountMember =
@@ -427,7 +425,7 @@ public abstract class BaseAccountMemberResourceTestCase {
 				id, randomAccountMember());
 
 		page = accountMemberResource.getAccountIdAccountMembersPage(
-			id, Pagination.of(1, 2));
+			id, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -580,6 +578,23 @@ public abstract class BaseAccountMemberResourceTestCase {
 
 			assertEquals(accountMember1, accountMember2);
 		}
+	}
+
+	protected void assertContains(
+		AccountMember accountMember, List<AccountMember> accountMembers) {
+
+		boolean contains = false;
+
+		for (AccountMember item : accountMembers) {
+			if (equals(accountMember, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			accountMembers + " does not contain " + accountMember, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

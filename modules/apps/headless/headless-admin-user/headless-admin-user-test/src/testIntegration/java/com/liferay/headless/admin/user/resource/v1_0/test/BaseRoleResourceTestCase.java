@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -197,49 +198,57 @@ public abstract class BaseRoleResourceTestCase {
 
 	@Test
 	public void testGetRolesPage() throws Exception {
-		Page<Role> page = roleResource.getRolesPage(null, Pagination.of(1, 2));
+		Page<Role> page = roleResource.getRolesPage(null, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		Role role1 = testGetRolesPage_addRole(randomRole());
 
 		Role role2 = testGetRolesPage_addRole(randomRole());
 
-		page = roleResource.getRolesPage(null, Pagination.of(1, 2));
+		page = roleResource.getRolesPage(null, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(role1, role2), (List<Role>)page.getItems());
+		assertContains(role1, (List<Role>)page.getItems());
+		assertContains(role2, (List<Role>)page.getItems());
 		assertValid(page);
 	}
 
 	@Test
 	public void testGetRolesPageWithPagination() throws Exception {
+		Page<Role> totalPage = roleResource.getRolesPage(null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
 		Role role1 = testGetRolesPage_addRole(randomRole());
 
 		Role role2 = testGetRolesPage_addRole(randomRole());
 
 		Role role3 = testGetRolesPage_addRole(randomRole());
 
-		Page<Role> page1 = roleResource.getRolesPage(null, Pagination.of(1, 2));
+		Page<Role> page1 = roleResource.getRolesPage(
+			null, Pagination.of(1, totalCount + 2));
 
 		List<Role> roles1 = (List<Role>)page1.getItems();
 
-		Assert.assertEquals(roles1.toString(), 2, roles1.size());
+		Assert.assertEquals(roles1.toString(), totalCount + 2, roles1.size());
 
-		Page<Role> page2 = roleResource.getRolesPage(null, Pagination.of(2, 2));
+		Page<Role> page2 = roleResource.getRolesPage(
+			null, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Role> roles2 = (List<Role>)page2.getItems();
 
 		Assert.assertEquals(roles2.toString(), 1, roles2.size());
 
-		Page<Role> page3 = roleResource.getRolesPage(null, Pagination.of(1, 3));
+		Page<Role> page3 = roleResource.getRolesPage(
+			null, Pagination.of(1, totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(role1, role2, role3), (List<Role>)page3.getItems());
+		assertContains(role1, (List<Role>)page3.getItems());
+		assertContains(role2, (List<Role>)page3.getItems());
+		assertContains(role3, (List<Role>)page3.getItems());
 	}
 
 	protected Role testGetRolesPage_addRole(Role role) throws Exception {
@@ -254,7 +263,7 @@ public abstract class BaseRoleResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -264,7 +273,7 @@ public abstract class BaseRoleResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/roles");
 
-		Assert.assertEquals(0, rolesJSONObject.get("totalCount"));
+		long totalCount = rolesJSONObject.getLong("totalCount");
 
 		Role role1 = testGraphQLRole_addRole();
 		Role role2 = testGraphQLRole_addRole();
@@ -273,10 +282,15 @@ public abstract class BaseRoleResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/roles");
 
-		Assert.assertEquals(2, rolesJSONObject.get("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, rolesJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(role1, role2),
+		assertContains(
+			role1,
+			Arrays.asList(
+				RoleSerDes.toDTOs(rolesJSONObject.getString("items"))));
+		assertContains(
+			role2,
 			Arrays.asList(
 				RoleSerDes.toDTOs(rolesJSONObject.getString("items"))));
 	}
@@ -491,6 +505,20 @@ public abstract class BaseRoleResourceTestCase {
 
 			assertEquals(role1, role2);
 		}
+	}
+
+	protected void assertContains(Role role, List<Role> roles) {
+		boolean contains = false;
+
+		for (Role item : roles) {
+			if (equals(role, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(roles + " does not contain " + role, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

@@ -219,17 +219,17 @@ public abstract class BaseDataListViewResourceTestCase {
 
 	@Test
 	public void testGetDataDefinitionDataListViewsPage() throws Exception {
-		Page<DataListView> page =
-			dataListViewResource.getDataDefinitionDataListViewsPage(
-				testGetDataDefinitionDataListViewsPage_getDataDefinitionId(),
-				RandomTestUtil.randomString(), Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long dataDefinitionId =
 			testGetDataDefinitionDataListViewsPage_getDataDefinitionId();
 		Long irrelevantDataDefinitionId =
 			testGetDataDefinitionDataListViewsPage_getIrrelevantDataDefinitionId();
+
+		Page<DataListView> page =
+			dataListViewResource.getDataDefinitionDataListViewsPage(
+				dataDefinitionId, RandomTestUtil.randomString(),
+				Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantDataDefinitionId != null) {
 			DataListView irrelevantDataListView =
@@ -256,7 +256,7 @@ public abstract class BaseDataListViewResourceTestCase {
 				dataDefinitionId, randomDataListView());
 
 		page = dataListViewResource.getDataDefinitionDataListViewsPage(
-			dataDefinitionId, null, Pagination.of(1, 2), null);
+			dataDefinitionId, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -670,6 +670,23 @@ public abstract class BaseDataListViewResourceTestCase {
 
 			assertEquals(dataListView1, dataListView2);
 		}
+	}
+
+	protected void assertContains(
+		DataListView dataListView, List<DataListView> dataListViews) {
+
+		boolean contains = false;
+
+		for (DataListView item : dataListViews) {
+			if (equals(dataListView, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			dataListViews + " does not contain " + dataListView, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

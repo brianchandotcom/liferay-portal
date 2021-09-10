@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -211,21 +212,21 @@ public abstract class BaseProductResourceTestCase {
 	@Test
 	public void testGetProductsPage() throws Exception {
 		Page<Product> page = productResource.getProductsPage(
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+			RandomTestUtil.randomString(), null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		Product product1 = testGetProductsPage_addProduct(randomProduct());
 
 		Product product2 = testGetProductsPage_addProduct(randomProduct());
 
 		page = productResource.getProductsPage(
-			null, null, Pagination.of(1, 2), null);
+			null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(product1, product2), (List<Product>)page.getItems());
+		assertContains(product1, (List<Product>)page.getItems());
+		assertContains(product2, (List<Product>)page.getItems());
 		assertValid(page);
 
 		productResource.deleteProduct(product1.getId());
@@ -284,6 +285,11 @@ public abstract class BaseProductResourceTestCase {
 
 	@Test
 	public void testGetProductsPageWithPagination() throws Exception {
+		Page<Product> totalPage = productResource.getProductsPage(
+			null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
 		Product product1 = testGetProductsPage_addProduct(randomProduct());
 
 		Product product2 = testGetProductsPage_addProduct(randomProduct());
@@ -291,27 +297,28 @@ public abstract class BaseProductResourceTestCase {
 		Product product3 = testGetProductsPage_addProduct(randomProduct());
 
 		Page<Product> page1 = productResource.getProductsPage(
-			null, null, Pagination.of(1, 2), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<Product> products1 = (List<Product>)page1.getItems();
 
-		Assert.assertEquals(products1.toString(), 2, products1.size());
+		Assert.assertEquals(
+			products1.toString(), totalCount + 2, products1.size());
 
 		Page<Product> page2 = productResource.getProductsPage(
-			null, null, Pagination.of(2, 2), null);
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Product> products2 = (List<Product>)page2.getItems();
 
 		Assert.assertEquals(products2.toString(), 1, products2.size());
 
 		Page<Product> page3 = productResource.getProductsPage(
-			null, null, Pagination.of(1, 3), null);
+			null, null, Pagination.of(1, totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(product1, product2, product3),
-			(List<Product>)page3.getItems());
+		assertContains(product1, (List<Product>)page3.getItems());
+		assertContains(product2, (List<Product>)page3.getItems());
+		assertContains(product3, (List<Product>)page3.getItems());
 	}
 
 	@Test
@@ -442,7 +449,7 @@ public abstract class BaseProductResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -452,7 +459,7 @@ public abstract class BaseProductResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/products");
 
-		Assert.assertEquals(0, productsJSONObject.get("totalCount"));
+		long totalCount = productsJSONObject.getLong("totalCount");
 
 		Product product1 = testGraphQLProduct_addProduct();
 		Product product2 = testGraphQLProduct_addProduct();
@@ -461,10 +468,15 @@ public abstract class BaseProductResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/products");
 
-		Assert.assertEquals(2, productsJSONObject.get("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, productsJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(product1, product2),
+		assertContains(
+			product1,
+			Arrays.asList(
+				ProductSerDes.toDTOs(productsJSONObject.getString("items"))));
+		assertContains(
+			product2,
 			Arrays.asList(
 				ProductSerDes.toDTOs(productsJSONObject.getString("items"))));
 	}
@@ -774,6 +786,20 @@ public abstract class BaseProductResourceTestCase {
 
 			assertEquals(product1, product2);
 		}
+	}
+
+	protected void assertContains(Product product, List<Product> products) {
+		boolean contains = false;
+
+		for (Product item : products) {
+			if (equals(product, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(products + " does not contain " + product, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

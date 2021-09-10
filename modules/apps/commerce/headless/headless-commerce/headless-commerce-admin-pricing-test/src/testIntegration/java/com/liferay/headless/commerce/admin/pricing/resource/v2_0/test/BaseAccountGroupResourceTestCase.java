@@ -361,6 +361,23 @@ public abstract class BaseAccountGroupResourceTestCase {
 		}
 	}
 
+	protected void assertContains(
+		AccountGroup accountGroup, List<AccountGroup> accountGroups) {
+
+		boolean contains = false;
+
+		for (AccountGroup item : accountGroups) {
+			if (equals(accountGroup, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			accountGroups + " does not contain " + accountGroup, contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<AccountGroup> accountGroups1, List<AccountGroup> accountGroups2) {
 

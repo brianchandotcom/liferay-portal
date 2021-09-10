@@ -228,6 +228,21 @@ public abstract class BaseAssigneeResourceTestCase {
 		}
 	}
 
+	protected void assertContains(Assignee assignee, List<Assignee> assignees) {
+		boolean contains = false;
+
+		for (Assignee item : assignees) {
+			if (equals(assignee, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			assignees + " does not contain " + assignee, contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<Assignee> assignees1, List<Assignee> assignees2) {
 

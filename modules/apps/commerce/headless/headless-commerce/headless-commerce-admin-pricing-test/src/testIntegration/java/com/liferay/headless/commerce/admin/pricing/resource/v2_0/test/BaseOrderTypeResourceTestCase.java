@@ -346,6 +346,23 @@ public abstract class BaseOrderTypeResourceTestCase {
 		}
 	}
 
+	protected void assertContains(
+		OrderType orderType, List<OrderType> orderTypes) {
+
+		boolean contains = false;
+
+		for (OrderType item : orderTypes) {
+			if (equals(orderType, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			orderTypes + " does not contain " + orderType, contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<OrderType> orderTypes1, List<OrderType> orderTypes2) {
 

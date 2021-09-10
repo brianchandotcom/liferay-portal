@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -201,9 +202,10 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 	public void testGetWorkflowInstancesPage() throws Exception {
 		Page<WorkflowInstance> page =
 			workflowInstanceResource.getWorkflowInstancesPage(
-				RandomTestUtil.randomString(), null, null, Pagination.of(1, 2));
+				RandomTestUtil.randomString(), null, null,
+				Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		WorkflowInstance workflowInstance1 =
 			testGetWorkflowInstancesPage_addWorkflowInstance(
@@ -214,13 +216,14 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 				randomWorkflowInstance());
 
 		page = workflowInstanceResource.getWorkflowInstancesPage(
-			null, null, null, Pagination.of(1, 2));
+			null, null, null, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(workflowInstance1, workflowInstance2),
-			(List<WorkflowInstance>)page.getItems());
+		assertContains(
+			workflowInstance1, (List<WorkflowInstance>)page.getItems());
+		assertContains(
+			workflowInstance2, (List<WorkflowInstance>)page.getItems());
 		assertValid(page);
 
 		workflowInstanceResource.deleteWorkflowInstance(
@@ -232,6 +235,12 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 
 	@Test
 	public void testGetWorkflowInstancesPageWithPagination() throws Exception {
+		Page<WorkflowInstance> totalPage =
+			workflowInstanceResource.getWorkflowInstancesPage(
+				null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
 		WorkflowInstance workflowInstance1 =
 			testGetWorkflowInstancesPage_addWorkflowInstance(
 				randomWorkflowInstance());
@@ -246,19 +255,20 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 
 		Page<WorkflowInstance> page1 =
 			workflowInstanceResource.getWorkflowInstancesPage(
-				null, null, null, Pagination.of(1, 2));
+				null, null, null, Pagination.of(1, totalCount + 2));
 
 		List<WorkflowInstance> workflowInstances1 =
 			(List<WorkflowInstance>)page1.getItems();
 
 		Assert.assertEquals(
-			workflowInstances1.toString(), 2, workflowInstances1.size());
+			workflowInstances1.toString(), totalCount + 2,
+			workflowInstances1.size());
 
 		Page<WorkflowInstance> page2 =
 			workflowInstanceResource.getWorkflowInstancesPage(
-				null, null, null, Pagination.of(2, 2));
+				null, null, null, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<WorkflowInstance> workflowInstances2 =
 			(List<WorkflowInstance>)page2.getItems();
@@ -268,12 +278,14 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 
 		Page<WorkflowInstance> page3 =
 			workflowInstanceResource.getWorkflowInstancesPage(
-				null, null, null, Pagination.of(1, 3));
+				null, null, null, Pagination.of(1, totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(
-				workflowInstance1, workflowInstance2, workflowInstance3),
-			(List<WorkflowInstance>)page3.getItems());
+		assertContains(
+			workflowInstance1, (List<WorkflowInstance>)page3.getItems());
+		assertContains(
+			workflowInstance2, (List<WorkflowInstance>)page3.getItems());
+		assertContains(
+			workflowInstance3, (List<WorkflowInstance>)page3.getItems());
 	}
 
 	protected WorkflowInstance testGetWorkflowInstancesPage_addWorkflowInstance(
@@ -291,7 +303,7 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -301,7 +313,7 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/workflowInstances");
 
-		Assert.assertEquals(0, workflowInstancesJSONObject.get("totalCount"));
+		long totalCount = workflowInstancesJSONObject.getLong("totalCount");
 
 		WorkflowInstance workflowInstance1 =
 			testGraphQLWorkflowInstance_addWorkflowInstance();
@@ -312,10 +324,16 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/workflowInstances");
 
-		Assert.assertEquals(2, workflowInstancesJSONObject.get("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, workflowInstancesJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(workflowInstance1, workflowInstance2),
+		assertContains(
+			workflowInstance1,
+			Arrays.asList(
+				WorkflowInstanceSerDes.toDTOs(
+					workflowInstancesJSONObject.getString("items"))));
+		assertContains(
+			workflowInstance2,
 			Arrays.asList(
 				WorkflowInstanceSerDes.toDTOs(
 					workflowInstancesJSONObject.getString("items"))));
@@ -527,6 +545,25 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 
 			assertEquals(workflowInstance1, workflowInstance2);
 		}
+	}
+
+	protected void assertContains(
+		WorkflowInstance workflowInstance,
+		List<WorkflowInstance> workflowInstances) {
+
+		boolean contains = false;
+
+		for (WorkflowInstance item : workflowInstances) {
+			if (equals(workflowInstance, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			workflowInstances + " does not contain " + workflowInstance,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

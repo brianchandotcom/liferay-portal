@@ -405,6 +405,20 @@ public abstract class BaseProductResourceTestCase {
 		}
 	}
 
+	protected void assertContains(Product product, List<Product> products) {
+		boolean contains = false;
+
+		for (Product item : products) {
+			if (equals(product, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(products + " does not contain " + product, contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<Product> products1, List<Product> products2) {
 

@@ -191,14 +191,13 @@ public abstract class BaseRoleResourceTestCase {
 
 	@Test
 	public void testGetProcessRolesPage() throws Exception {
-		Page<Role> page = roleResource.getProcessRolesPage(
-			testGetProcessRolesPage_getProcessId(), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long processId = testGetProcessRolesPage_getProcessId();
 		Long irrelevantProcessId =
 			testGetProcessRolesPage_getIrrelevantProcessId();
+
+		Page<Role> page = roleResource.getProcessRolesPage(processId, null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantProcessId != null) {
 			Role irrelevantRole = testGetProcessRolesPage_addRole(
@@ -271,6 +270,20 @@ public abstract class BaseRoleResourceTestCase {
 
 			assertEquals(role1, role2);
 		}
+	}
+
+	protected void assertContains(Role role, List<Role> roles) {
+		boolean contains = false;
+
+		for (Role item : roles) {
+			if (equals(role, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(roles + " does not contain " + role, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

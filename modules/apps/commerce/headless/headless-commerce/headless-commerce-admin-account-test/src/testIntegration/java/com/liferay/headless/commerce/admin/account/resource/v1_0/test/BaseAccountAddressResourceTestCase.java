@@ -519,18 +519,17 @@ public abstract class BaseAccountAddressResourceTestCase {
 	public void testGetAccountByExternalReferenceCodeAccountAddressesPage()
 		throws Exception {
 
-		Page<AccountAddress> page =
-			accountAddressResource.
-				getAccountByExternalReferenceCodeAccountAddressesPage(
-					testGetAccountByExternalReferenceCodeAccountAddressesPage_getExternalReferenceCode(),
-					Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetAccountByExternalReferenceCodeAccountAddressesPage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
 			testGetAccountByExternalReferenceCodeAccountAddressesPage_getIrrelevantExternalReferenceCode();
+
+		Page<AccountAddress> page =
+			accountAddressResource.
+				getAccountByExternalReferenceCodeAccountAddressesPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantExternalReferenceCode != null) {
 			AccountAddress irrelevantAccountAddress =
@@ -562,7 +561,7 @@ public abstract class BaseAccountAddressResourceTestCase {
 		page =
 			accountAddressResource.
 				getAccountByExternalReferenceCodeAccountAddressesPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -678,16 +677,15 @@ public abstract class BaseAccountAddressResourceTestCase {
 
 	@Test
 	public void testGetAccountIdAccountAddressesPage() throws Exception {
-		Page<AccountAddress> page =
-			accountAddressResource.getAccountIdAccountAddressesPage(
-				testGetAccountIdAccountAddressesPage_getId(),
-				Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetAccountIdAccountAddressesPage_getId();
 		Long irrelevantId =
 			testGetAccountIdAccountAddressesPage_getIrrelevantId();
+
+		Page<AccountAddress> page =
+			accountAddressResource.getAccountIdAccountAddressesPage(
+				id, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			AccountAddress irrelevantAccountAddress =
@@ -714,7 +712,7 @@ public abstract class BaseAccountAddressResourceTestCase {
 				id, randomAccountAddress());
 
 		page = accountAddressResource.getAccountIdAccountAddressesPage(
-			id, Pagination.of(1, 2));
+			id, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -854,6 +852,23 @@ public abstract class BaseAccountAddressResourceTestCase {
 
 			assertEquals(accountAddress1, accountAddress2);
 		}
+	}
+
+	protected void assertContains(
+		AccountAddress accountAddress, List<AccountAddress> accountAddresses) {
+
+		boolean contains = false;
+
+		for (AccountAddress item : accountAddresses) {
+			if (equals(accountAddress, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			accountAddresses + " does not contain " + accountAddress, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

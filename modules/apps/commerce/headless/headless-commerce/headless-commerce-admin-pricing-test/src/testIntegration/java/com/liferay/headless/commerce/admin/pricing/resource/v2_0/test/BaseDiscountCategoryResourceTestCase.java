@@ -216,18 +216,17 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 	public void testGetDiscountByExternalReferenceCodeDiscountCategoriesPage()
 		throws Exception {
 
-		Page<DiscountCategory> page =
-			discountCategoryResource.
-				getDiscountByExternalReferenceCodeDiscountCategoriesPage(
-					testGetDiscountByExternalReferenceCodeDiscountCategoriesPage_getExternalReferenceCode(),
-					Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountCategoriesPage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountCategoriesPage_getIrrelevantExternalReferenceCode();
+
+		Page<DiscountCategory> page =
+			discountCategoryResource.
+				getDiscountByExternalReferenceCodeDiscountCategoriesPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantExternalReferenceCode != null) {
 			DiscountCategory irrelevantDiscountCategory =
@@ -259,7 +258,7 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 		page =
 			discountCategoryResource.
 				getDiscountByExternalReferenceCodeDiscountCategoriesPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -372,16 +371,16 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 
 	@Test
 	public void testGetDiscountIdDiscountCategoriesPage() throws Exception {
-		Page<DiscountCategory> page =
-			discountCategoryResource.getDiscountIdDiscountCategoriesPage(
-				testGetDiscountIdDiscountCategoriesPage_getId(),
-				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetDiscountIdDiscountCategoriesPage_getId();
 		Long irrelevantId =
 			testGetDiscountIdDiscountCategoriesPage_getIrrelevantId();
+
+		Page<DiscountCategory> page =
+			discountCategoryResource.getDiscountIdDiscountCategoriesPage(
+				id, RandomTestUtil.randomString(), null, Pagination.of(1, 10),
+				null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			DiscountCategory irrelevantDiscountCategory =
@@ -408,7 +407,7 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 				id, randomDiscountCategory());
 
 		page = discountCategoryResource.getDiscountIdDiscountCategoriesPage(
-			id, null, null, Pagination.of(1, 2), null);
+			id, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -743,6 +742,25 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 
 			assertEquals(discountCategory1, discountCategory2);
 		}
+	}
+
+	protected void assertContains(
+		DiscountCategory discountCategory,
+		List<DiscountCategory> discountCategories) {
+
+		boolean contains = false;
+
+		for (DiscountCategory item : discountCategories) {
+			if (equals(discountCategory, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			discountCategories + " does not contain " + discountCategory,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

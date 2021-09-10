@@ -196,18 +196,17 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 	public void testGetCommerceAdminSiteSettingGroupMeasurementUnitPage()
 		throws Exception {
 
-		Page<MeasurementUnit> page =
-			measurementUnitResource.
-				getCommerceAdminSiteSettingGroupMeasurementUnitPage(
-					testGetCommerceAdminSiteSettingGroupMeasurementUnitPage_getGroupId(),
-					null, Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long groupId =
 			testGetCommerceAdminSiteSettingGroupMeasurementUnitPage_getGroupId();
 		Long irrelevantGroupId =
 			testGetCommerceAdminSiteSettingGroupMeasurementUnitPage_getIrrelevantGroupId();
+
+		Page<MeasurementUnit> page =
+			measurementUnitResource.
+				getCommerceAdminSiteSettingGroupMeasurementUnitPage(
+					groupId, null, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantGroupId != null) {
 			MeasurementUnit irrelevantMeasurementUnit =
@@ -238,7 +237,7 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		page =
 			measurementUnitResource.
 				getCommerceAdminSiteSettingGroupMeasurementUnitPage(
-					groupId, null, Pagination.of(1, 2));
+					groupId, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -515,6 +514,25 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 			assertEquals(measurementUnit1, measurementUnit2);
 		}
+	}
+
+	protected void assertContains(
+		MeasurementUnit measurementUnit,
+		List<MeasurementUnit> measurementUnits) {
+
+		boolean contains = false;
+
+		for (MeasurementUnit item : measurementUnits) {
+			if (equals(measurementUnit, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			measurementUnits + " does not contain " + measurementUnit,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

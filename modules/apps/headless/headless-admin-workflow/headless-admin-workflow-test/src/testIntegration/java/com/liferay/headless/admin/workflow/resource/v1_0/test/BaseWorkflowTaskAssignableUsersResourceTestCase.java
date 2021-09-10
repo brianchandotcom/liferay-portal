@@ -254,6 +254,26 @@ public abstract class BaseWorkflowTaskAssignableUsersResourceTestCase {
 		}
 	}
 
+	protected void assertContains(
+		WorkflowTaskAssignableUsers workflowTaskAssignableUsers,
+		List<WorkflowTaskAssignableUsers> workflowTaskAssignableUserses) {
+
+		boolean contains = false;
+
+		for (WorkflowTaskAssignableUsers item : workflowTaskAssignableUserses) {
+			if (equals(workflowTaskAssignableUsers, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			workflowTaskAssignableUserses + " does not contain " +
+				workflowTaskAssignableUsers,
+			contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<WorkflowTaskAssignableUsers> workflowTaskAssignableUserses1,
 		List<WorkflowTaskAssignableUsers> workflowTaskAssignableUserses2) {

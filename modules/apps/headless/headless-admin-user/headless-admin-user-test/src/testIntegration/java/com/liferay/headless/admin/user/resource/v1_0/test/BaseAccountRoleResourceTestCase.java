@@ -256,14 +256,6 @@ public abstract class BaseAccountRoleResourceTestCase {
 	public void testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage()
 		throws Exception {
 
-		Page<AccountRole> page =
-			accountRoleResource.
-				getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage(
-					testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getAccountExternalReferenceCode(),
-					testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getUserAccountExternalReferenceCode());
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String accountExternalReferenceCode =
 			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getAccountExternalReferenceCode();
 		String irrelevantAccountExternalReferenceCode =
@@ -272,6 +264,14 @@ public abstract class BaseAccountRoleResourceTestCase {
 			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getUserAccountExternalReferenceCode();
 		String irrelevantUserAccountExternalReferenceCode =
 			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getIrrelevantUserAccountExternalReferenceCode();
+
+		Page<AccountRole> page =
+			accountRoleResource.
+				getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage(
+					accountExternalReferenceCode,
+					userAccountExternalReferenceCode);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if ((irrelevantAccountExternalReferenceCode != null) &&
 			(irrelevantUserAccountExternalReferenceCode != null)) {
@@ -365,18 +365,18 @@ public abstract class BaseAccountRoleResourceTestCase {
 	public void testGetAccountAccountRolesByExternalReferenceCodePage()
 		throws Exception {
 
-		Page<AccountRole> page =
-			accountRoleResource.
-				getAccountAccountRolesByExternalReferenceCodePage(
-					testGetAccountAccountRolesByExternalReferenceCodePage_getExternalReferenceCode(),
-					RandomTestUtil.randomString(), Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetAccountAccountRolesByExternalReferenceCodePage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
 			testGetAccountAccountRolesByExternalReferenceCodePage_getIrrelevantExternalReferenceCode();
+
+		Page<AccountRole> page =
+			accountRoleResource.
+				getAccountAccountRolesByExternalReferenceCodePage(
+					externalReferenceCode, RandomTestUtil.randomString(),
+					Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantExternalReferenceCode != null) {
 			AccountRole irrelevantAccountRole =
@@ -409,7 +409,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 		page =
 			accountRoleResource.
 				getAccountAccountRolesByExternalReferenceCodePage(
-					externalReferenceCode, null, Pagination.of(1, 2), null);
+					externalReferenceCode, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -704,14 +704,6 @@ public abstract class BaseAccountRoleResourceTestCase {
 	public void testGetAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage()
 		throws Exception {
 
-		Page<AccountRole> page =
-			accountRoleResource.
-				getAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage(
-					testGetAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage_getExternalReferenceCode(),
-					testGetAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage_getEmailAddress());
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
@@ -720,6 +712,13 @@ public abstract class BaseAccountRoleResourceTestCase {
 			testGetAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage_getEmailAddress();
 		String irrelevantEmailAddress =
 			testGetAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage_getIrrelevantEmailAddress();
+
+		Page<AccountRole> page =
+			accountRoleResource.
+				getAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage(
+					externalReferenceCode, emailAddress);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if ((irrelevantExternalReferenceCode != null) &&
 			(irrelevantEmailAddress != null)) {
@@ -806,15 +805,15 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 	@Test
 	public void testGetAccountAccountRolesPage() throws Exception {
-		Page<AccountRole> page = accountRoleResource.getAccountAccountRolesPage(
-			testGetAccountAccountRolesPage_getAccountId(),
-			RandomTestUtil.randomString(), Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long accountId = testGetAccountAccountRolesPage_getAccountId();
 		Long irrelevantAccountId =
 			testGetAccountAccountRolesPage_getIrrelevantAccountId();
+
+		Page<AccountRole> page = accountRoleResource.getAccountAccountRolesPage(
+			accountId, RandomTestUtil.randomString(), Pagination.of(1, 10),
+			null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantAccountId != null) {
 			AccountRole irrelevantAccountRole =
@@ -841,7 +840,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 				accountId, randomAccountRole());
 
 		page = accountRoleResource.getAccountAccountRolesPage(
-			accountId, null, Pagination.of(1, 2), null);
+			accountId, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -1148,6 +1147,23 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 			assertEquals(accountRole1, accountRole2);
 		}
+	}
+
+	protected void assertContains(
+		AccountRole accountRole, List<AccountRole> accountRoles) {
+
+		boolean contains = false;
+
+		for (AccountRole item : accountRoles) {
+			if (equals(accountRole, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			accountRoles + " does not contain " + accountRole, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

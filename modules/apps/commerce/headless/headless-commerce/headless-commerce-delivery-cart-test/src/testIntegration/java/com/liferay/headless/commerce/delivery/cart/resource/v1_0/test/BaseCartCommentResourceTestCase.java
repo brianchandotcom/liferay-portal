@@ -364,13 +364,13 @@ public abstract class BaseCartCommentResourceTestCase {
 
 	@Test
 	public void testGetCartCommentsPage() throws Exception {
-		Page<CartComment> page = cartCommentResource.getCartCommentsPage(
-			testGetCartCommentsPage_getCartId(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long cartId = testGetCartCommentsPage_getCartId();
 		Long irrelevantCartId = testGetCartCommentsPage_getIrrelevantCartId();
+
+		Page<CartComment> page = cartCommentResource.getCartCommentsPage(
+			cartId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantCartId != null) {
 			CartComment irrelevantCartComment =
@@ -395,7 +395,7 @@ public abstract class BaseCartCommentResourceTestCase {
 			cartId, randomCartComment());
 
 		page = cartCommentResource.getCartCommentsPage(
-			cartId, Pagination.of(1, 2));
+			cartId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -474,7 +474,7 @@ public abstract class BaseCartCommentResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 
 					put("cartId", cartId);
 				}
@@ -495,7 +495,7 @@ public abstract class BaseCartCommentResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/cartComments");
 
-		Assert.assertEquals(2, cartCommentsJSONObject.get("totalCount"));
+		Assert.assertEquals(2, cartCommentsJSONObject.getLong("totalCount"));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(cartComment1, cartComment2),
@@ -557,6 +557,23 @@ public abstract class BaseCartCommentResourceTestCase {
 
 			assertEquals(cartComment1, cartComment2);
 		}
+	}
+
+	protected void assertContains(
+		CartComment cartComment, List<CartComment> cartComments) {
+
+		boolean contains = false;
+
+		for (CartComment item : cartComments) {
+			if (equals(cartComment, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			cartComments + " does not contain " + cartComment, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

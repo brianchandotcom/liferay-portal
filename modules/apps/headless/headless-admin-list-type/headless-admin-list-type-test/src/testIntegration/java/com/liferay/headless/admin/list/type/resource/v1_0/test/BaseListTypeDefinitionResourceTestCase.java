@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.client.http.HttpInvoker;
 import com.liferay.headless.admin.list.type.client.pagination.Page;
+import com.liferay.headless.admin.list.type.client.pagination.Pagination;
 import com.liferay.headless.admin.list.type.client.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.headless.admin.list.type.client.serdes.v1_0.ListTypeDefinitionSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -195,7 +197,101 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 
 	@Test
 	public void testGetListTypeDefinitionsPage() throws Exception {
-		Assert.assertTrue(false);
+		Page<ListTypeDefinition> page =
+			listTypeDefinitionResource.getListTypeDefinitionsPage(
+				Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		ListTypeDefinition listTypeDefinition1 =
+			testGetListTypeDefinitionsPage_addListTypeDefinition(
+				randomListTypeDefinition());
+
+		ListTypeDefinition listTypeDefinition2 =
+			testGetListTypeDefinitionsPage_addListTypeDefinition(
+				randomListTypeDefinition());
+
+		page = listTypeDefinitionResource.getListTypeDefinitionsPage(
+			Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(
+			listTypeDefinition1, (List<ListTypeDefinition>)page.getItems());
+		assertContains(
+			listTypeDefinition2, (List<ListTypeDefinition>)page.getItems());
+		assertValid(page);
+
+		listTypeDefinitionResource.deleteListTypeDefinition(
+			listTypeDefinition1.getId());
+
+		listTypeDefinitionResource.deleteListTypeDefinition(
+			listTypeDefinition2.getId());
+	}
+
+	@Test
+	public void testGetListTypeDefinitionsPageWithPagination()
+		throws Exception {
+
+		Page<ListTypeDefinition> totalPage =
+			listTypeDefinitionResource.getListTypeDefinitionsPage(null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
+		ListTypeDefinition listTypeDefinition1 =
+			testGetListTypeDefinitionsPage_addListTypeDefinition(
+				randomListTypeDefinition());
+
+		ListTypeDefinition listTypeDefinition2 =
+			testGetListTypeDefinitionsPage_addListTypeDefinition(
+				randomListTypeDefinition());
+
+		ListTypeDefinition listTypeDefinition3 =
+			testGetListTypeDefinitionsPage_addListTypeDefinition(
+				randomListTypeDefinition());
+
+		Page<ListTypeDefinition> page1 =
+			listTypeDefinitionResource.getListTypeDefinitionsPage(
+				Pagination.of(1, totalCount + 2));
+
+		List<ListTypeDefinition> listTypeDefinitions1 =
+			(List<ListTypeDefinition>)page1.getItems();
+
+		Assert.assertEquals(
+			listTypeDefinitions1.toString(), totalCount + 2,
+			listTypeDefinitions1.size());
+
+		Page<ListTypeDefinition> page2 =
+			listTypeDefinitionResource.getListTypeDefinitionsPage(
+				Pagination.of(2, totalCount + 2));
+
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+		List<ListTypeDefinition> listTypeDefinitions2 =
+			(List<ListTypeDefinition>)page2.getItems();
+
+		Assert.assertEquals(
+			listTypeDefinitions2.toString(), 1, listTypeDefinitions2.size());
+
+		Page<ListTypeDefinition> page3 =
+			listTypeDefinitionResource.getListTypeDefinitionsPage(
+				Pagination.of(1, totalCount + 3));
+
+		assertContains(
+			listTypeDefinition1, (List<ListTypeDefinition>)page3.getItems());
+		assertContains(
+			listTypeDefinition2, (List<ListTypeDefinition>)page3.getItems());
+		assertContains(
+			listTypeDefinition3, (List<ListTypeDefinition>)page3.getItems());
+	}
+
+	protected ListTypeDefinition
+			testGetListTypeDefinitionsPage_addListTypeDefinition(
+				ListTypeDefinition listTypeDefinition)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -205,7 +301,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -216,7 +312,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 				invokeGraphQLQuery(graphQLField), "JSONObject/data",
 				"JSONObject/listTypeDefinitions");
 
-		Assert.assertEquals(0, listTypeDefinitionsJSONObject.get("totalCount"));
+		long totalCount = listTypeDefinitionsJSONObject.getLong("totalCount");
 
 		ListTypeDefinition listTypeDefinition1 =
 			testGraphQLListTypeDefinition_addListTypeDefinition();
@@ -227,10 +323,17 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/listTypeDefinitions");
 
-		Assert.assertEquals(2, listTypeDefinitionsJSONObject.get("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2,
+			listTypeDefinitionsJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(listTypeDefinition1, listTypeDefinition2),
+		assertContains(
+			listTypeDefinition1,
+			Arrays.asList(
+				ListTypeDefinitionSerDes.toDTOs(
+					listTypeDefinitionsJSONObject.getString("items"))));
+		assertContains(
+			listTypeDefinition2,
 			Arrays.asList(
 				ListTypeDefinitionSerDes.toDTOs(
 					listTypeDefinitionsJSONObject.getString("items"))));
@@ -461,6 +564,25 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 
 			assertEquals(listTypeDefinition1, listTypeDefinition2);
 		}
+	}
+
+	protected void assertContains(
+		ListTypeDefinition listTypeDefinition,
+		List<ListTypeDefinition> listTypeDefinitions) {
+
+		boolean contains = false;
+
+		for (ListTypeDefinition item : listTypeDefinitions) {
+			if (equals(listTypeDefinition, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			listTypeDefinitions + " does not contain " + listTypeDefinition,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

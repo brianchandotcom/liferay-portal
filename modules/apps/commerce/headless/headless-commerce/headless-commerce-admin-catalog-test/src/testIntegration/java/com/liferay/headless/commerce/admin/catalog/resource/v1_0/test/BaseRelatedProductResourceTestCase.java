@@ -199,18 +199,18 @@ public abstract class BaseRelatedProductResourceTestCase {
 	public void testGetProductByExternalReferenceCodeRelatedProductsPage()
 		throws Exception {
 
-		Page<RelatedProduct> page =
-			relatedProductResource.
-				getProductByExternalReferenceCodeRelatedProductsPage(
-					testGetProductByExternalReferenceCodeRelatedProductsPage_getExternalReferenceCode(),
-					RandomTestUtil.randomString(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetProductByExternalReferenceCodeRelatedProductsPage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
 			testGetProductByExternalReferenceCodeRelatedProductsPage_getIrrelevantExternalReferenceCode();
+
+		Page<RelatedProduct> page =
+			relatedProductResource.
+				getProductByExternalReferenceCodeRelatedProductsPage(
+					externalReferenceCode, RandomTestUtil.randomString(),
+					Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantExternalReferenceCode != null) {
 			RelatedProduct irrelevantRelatedProduct =
@@ -243,7 +243,7 @@ public abstract class BaseRelatedProductResourceTestCase {
 		page =
 			relatedProductResource.
 				getProductByExternalReferenceCodeRelatedProductsPage(
-					externalReferenceCode, null, Pagination.of(1, 2));
+					externalReferenceCode, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -359,16 +359,15 @@ public abstract class BaseRelatedProductResourceTestCase {
 
 	@Test
 	public void testGetProductIdRelatedProductsPage() throws Exception {
-		Page<RelatedProduct> page =
-			relatedProductResource.getProductIdRelatedProductsPage(
-				testGetProductIdRelatedProductsPage_getId(),
-				RandomTestUtil.randomString(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetProductIdRelatedProductsPage_getId();
 		Long irrelevantId =
 			testGetProductIdRelatedProductsPage_getIrrelevantId();
+
+		Page<RelatedProduct> page =
+			relatedProductResource.getProductIdRelatedProductsPage(
+				id, RandomTestUtil.randomString(), Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			RelatedProduct irrelevantRelatedProduct =
@@ -395,7 +394,7 @@ public abstract class BaseRelatedProductResourceTestCase {
 				id, randomRelatedProduct());
 
 		page = relatedProductResource.getProductIdRelatedProductsPage(
-			id, null, Pagination.of(1, 2));
+			id, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -658,6 +657,23 @@ public abstract class BaseRelatedProductResourceTestCase {
 
 			assertEquals(relatedProduct1, relatedProduct2);
 		}
+	}
+
+	protected void assertContains(
+		RelatedProduct relatedProduct, List<RelatedProduct> relatedProducts) {
+
+		boolean contains = false;
+
+		for (RelatedProduct item : relatedProducts) {
+			if (equals(relatedProduct, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			relatedProducts + " does not contain " + relatedProduct, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

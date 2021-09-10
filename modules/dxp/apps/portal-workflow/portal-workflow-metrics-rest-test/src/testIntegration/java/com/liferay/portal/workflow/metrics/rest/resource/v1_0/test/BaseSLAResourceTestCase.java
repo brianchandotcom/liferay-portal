@@ -198,14 +198,14 @@ public abstract class BaseSLAResourceTestCase {
 
 	@Test
 	public void testGetProcessSLAsPage() throws Exception {
-		Page<SLA> page = slaResource.getProcessSLAsPage(
-			testGetProcessSLAsPage_getProcessId(), null, Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long processId = testGetProcessSLAsPage_getProcessId();
 		Long irrelevantProcessId =
 			testGetProcessSLAsPage_getIrrelevantProcessId();
+
+		Page<SLA> page = slaResource.getProcessSLAsPage(
+			processId, null, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantProcessId != null) {
 			SLA irrelevantSLA = testGetProcessSLAsPage_addSLA(
@@ -226,7 +226,7 @@ public abstract class BaseSLAResourceTestCase {
 		SLA sla2 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
 		page = slaResource.getProcessSLAsPage(
-			processId, null, Pagination.of(1, 2));
+			processId, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -458,6 +458,20 @@ public abstract class BaseSLAResourceTestCase {
 
 			assertEquals(sla1, sla2);
 		}
+	}
+
+	protected void assertContains(SLA sla, List<SLA> slas) {
+		boolean contains = false;
+
+		for (SLA item : slas) {
+			if (equals(sla, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(slas + " does not contain " + sla, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(List<SLA> slas1, List<SLA> slas2) {

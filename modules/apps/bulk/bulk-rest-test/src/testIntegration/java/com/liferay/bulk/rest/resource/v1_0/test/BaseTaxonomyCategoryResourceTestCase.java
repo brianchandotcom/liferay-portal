@@ -222,6 +222,25 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		}
 	}
 
+	protected void assertContains(
+		TaxonomyCategory taxonomyCategory,
+		List<TaxonomyCategory> taxonomyCategories) {
+
+		boolean contains = false;
+
+		for (TaxonomyCategory item : taxonomyCategories) {
+			if (equals(taxonomyCategory, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			taxonomyCategories + " does not contain " + taxonomyCategory,
+			contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<TaxonomyCategory> taxonomyCategories1,
 		List<TaxonomyCategory> taxonomyCategories2) {

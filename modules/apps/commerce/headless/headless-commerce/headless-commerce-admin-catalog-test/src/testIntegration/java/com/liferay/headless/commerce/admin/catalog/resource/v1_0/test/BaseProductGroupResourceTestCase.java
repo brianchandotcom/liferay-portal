@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -201,9 +202,9 @@ public abstract class BaseProductGroupResourceTestCase {
 	@Test
 	public void testGetProductGroupsPage() throws Exception {
 		Page<ProductGroup> page = productGroupResource.getProductGroupsPage(
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+			RandomTestUtil.randomString(), null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		ProductGroup productGroup1 = testGetProductGroupsPage_addProductGroup(
 			randomProductGroup());
@@ -212,13 +213,12 @@ public abstract class BaseProductGroupResourceTestCase {
 			randomProductGroup());
 
 		page = productGroupResource.getProductGroupsPage(
-			null, null, Pagination.of(1, 2), null);
+			null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(productGroup1, productGroup2),
-			(List<ProductGroup>)page.getItems());
+		assertContains(productGroup1, (List<ProductGroup>)page.getItems());
+		assertContains(productGroup2, (List<ProductGroup>)page.getItems());
 		assertValid(page);
 
 		productGroupResource.deleteProductGroup(productGroup1.getId());
@@ -283,6 +283,11 @@ public abstract class BaseProductGroupResourceTestCase {
 
 	@Test
 	public void testGetProductGroupsPageWithPagination() throws Exception {
+		Page<ProductGroup> totalPage =
+			productGroupResource.getProductGroupsPage(null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
 		ProductGroup productGroup1 = testGetProductGroupsPage_addProductGroup(
 			randomProductGroup());
 
@@ -293,18 +298,18 @@ public abstract class BaseProductGroupResourceTestCase {
 			randomProductGroup());
 
 		Page<ProductGroup> page1 = productGroupResource.getProductGroupsPage(
-			null, null, Pagination.of(1, 2), null);
+			null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<ProductGroup> productGroups1 =
 			(List<ProductGroup>)page1.getItems();
 
 		Assert.assertEquals(
-			productGroups1.toString(), 2, productGroups1.size());
+			productGroups1.toString(), totalCount + 2, productGroups1.size());
 
 		Page<ProductGroup> page2 = productGroupResource.getProductGroupsPage(
-			null, null, Pagination.of(2, 2), null);
+			null, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ProductGroup> productGroups2 =
 			(List<ProductGroup>)page2.getItems();
@@ -313,11 +318,11 @@ public abstract class BaseProductGroupResourceTestCase {
 			productGroups2.toString(), 1, productGroups2.size());
 
 		Page<ProductGroup> page3 = productGroupResource.getProductGroupsPage(
-			null, null, Pagination.of(1, 3), null);
+			null, null, Pagination.of(1, totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(productGroup1, productGroup2, productGroup3),
-			(List<ProductGroup>)page3.getItems());
+		assertContains(productGroup1, (List<ProductGroup>)page3.getItems());
+		assertContains(productGroup2, (List<ProductGroup>)page3.getItems());
+		assertContains(productGroup3, (List<ProductGroup>)page3.getItems());
 	}
 
 	@Test
@@ -452,7 +457,7 @@ public abstract class BaseProductGroupResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 				}
 			},
 			new GraphQLField("items", getGraphQLFields()),
@@ -462,7 +467,7 @@ public abstract class BaseProductGroupResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/productGroups");
 
-		Assert.assertEquals(0, productGroupsJSONObject.get("totalCount"));
+		long totalCount = productGroupsJSONObject.getLong("totalCount");
 
 		ProductGroup productGroup1 = testGraphQLProductGroup_addProductGroup();
 		ProductGroup productGroup2 = testGraphQLProductGroup_addProductGroup();
@@ -471,10 +476,16 @@ public abstract class BaseProductGroupResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/productGroups");
 
-		Assert.assertEquals(2, productGroupsJSONObject.get("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, productGroupsJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(productGroup1, productGroup2),
+		assertContains(
+			productGroup1,
+			Arrays.asList(
+				ProductGroupSerDes.toDTOs(
+					productGroupsJSONObject.getString("items"))));
+		assertContains(
+			productGroup2,
 			Arrays.asList(
 				ProductGroupSerDes.toDTOs(
 					productGroupsJSONObject.getString("items"))));
@@ -776,6 +787,23 @@ public abstract class BaseProductGroupResourceTestCase {
 
 			assertEquals(productGroup1, productGroup2);
 		}
+	}
+
+	protected void assertContains(
+		ProductGroup productGroup, List<ProductGroup> productGroups) {
+
+		boolean contains = false;
+
+		for (ProductGroup item : productGroups) {
+			if (equals(productGroup, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			productGroups + " does not contain " + productGroup, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

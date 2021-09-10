@@ -231,6 +231,20 @@ public abstract class BaseStatusResourceTestCase {
 			equals(experiment1, experiment2));
 	}
 
+	protected void assertContains(Status status, List<Status> statuses) {
+		boolean contains = false;
+
+		for (Status item : statuses) {
+			if (equals(status, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(statuses + " does not contain " + status, contains);
+	}
+
 	protected void assertEqualsIgnoringOrder(
 		List<Status> statuses1, List<Status> statuses2) {
 

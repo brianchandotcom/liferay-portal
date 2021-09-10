@@ -341,14 +341,14 @@ public abstract class BaseShipmentItemResourceTestCase {
 
 	@Test
 	public void testGetShipmentItemsPage() throws Exception {
-		Page<ShipmentItem> page = shipmentItemResource.getShipmentItemsPage(
-			testGetShipmentItemsPage_getShipmentId(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long shipmentId = testGetShipmentItemsPage_getShipmentId();
 		Long irrelevantShipmentId =
 			testGetShipmentItemsPage_getIrrelevantShipmentId();
+
+		Page<ShipmentItem> page = shipmentItemResource.getShipmentItemsPage(
+			shipmentId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantShipmentId != null) {
 			ShipmentItem irrelevantShipmentItem =
@@ -373,7 +373,7 @@ public abstract class BaseShipmentItemResourceTestCase {
 			shipmentId, randomShipmentItem());
 
 		page = shipmentItemResource.getShipmentItemsPage(
-			shipmentId, Pagination.of(1, 2));
+			shipmentId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -456,7 +456,7 @@ public abstract class BaseShipmentItemResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 
 					put("shipmentId", shipmentId);
 				}
@@ -477,7 +477,7 @@ public abstract class BaseShipmentItemResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/shipmentItems");
 
-		Assert.assertEquals(2, shipmentItemsJSONObject.get("totalCount"));
+		Assert.assertEquals(2, shipmentItemsJSONObject.getLong("totalCount"));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(shipmentItem1, shipmentItem2),
@@ -539,6 +539,23 @@ public abstract class BaseShipmentItemResourceTestCase {
 
 			assertEquals(shipmentItem1, shipmentItem2);
 		}
+	}
+
+	protected void assertContains(
+		ShipmentItem shipmentItem, List<ShipmentItem> shipmentItems) {
+
+		boolean contains = false;
+
+		for (ShipmentItem item : shipmentItems) {
+			if (equals(shipmentItem, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			shipmentItems + " does not contain " + shipmentItem, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

@@ -195,15 +195,14 @@ public abstract class BasePaymentMethodResourceTestCase {
 
 	@Test
 	public void testGetCartPaymentMethodsPage() throws Exception {
-		Page<PaymentMethod> page =
-			paymentMethodResource.getCartPaymentMethodsPage(
-				testGetCartPaymentMethodsPage_getCartId());
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long cartId = testGetCartPaymentMethodsPage_getCartId();
 		Long irrelevantCartId =
 			testGetCartPaymentMethodsPage_getIrrelevantCartId();
+
+		Page<PaymentMethod> page =
+			paymentMethodResource.getCartPaymentMethodsPage(cartId);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantCartId != null) {
 			PaymentMethod irrelevantPaymentMethod =
@@ -286,6 +285,23 @@ public abstract class BasePaymentMethodResourceTestCase {
 
 			assertEquals(paymentMethod1, paymentMethod2);
 		}
+	}
+
+	protected void assertContains(
+		PaymentMethod paymentMethod, List<PaymentMethod> paymentMethods) {
+
+		boolean contains = false;
+
+		for (PaymentMethod item : paymentMethods) {
+			if (equals(paymentMethod, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			paymentMethods + " does not contain " + paymentMethod, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

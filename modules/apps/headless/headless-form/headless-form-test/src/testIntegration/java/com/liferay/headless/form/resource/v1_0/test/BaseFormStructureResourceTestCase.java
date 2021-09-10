@@ -260,15 +260,15 @@ public abstract class BaseFormStructureResourceTestCase {
 
 	@Test
 	public void testGetSiteFormStructuresPage() throws Exception {
-		Page<FormStructure> page =
-			formStructureResource.getSiteFormStructuresPage(
-				testGetSiteFormStructuresPage_getSiteId(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long siteId = testGetSiteFormStructuresPage_getSiteId();
 		Long irrelevantSiteId =
 			testGetSiteFormStructuresPage_getIrrelevantSiteId();
+
+		Page<FormStructure> page =
+			formStructureResource.getSiteFormStructuresPage(
+				siteId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantSiteId != null) {
 			FormStructure irrelevantFormStructure =
@@ -295,7 +295,7 @@ public abstract class BaseFormStructureResourceTestCase {
 				siteId, randomFormStructure());
 
 		page = formStructureResource.getSiteFormStructuresPage(
-			siteId, Pagination.of(1, 2));
+			siteId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -379,7 +379,7 @@ public abstract class BaseFormStructureResourceTestCase {
 			new HashMap<String, Object>() {
 				{
 					put("page", 1);
-					put("pageSize", 2);
+					put("pageSize", 10);
 
 					put("siteKey", "\"" + siteId + "\"");
 				}
@@ -402,7 +402,7 @@ public abstract class BaseFormStructureResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/formStructures");
 
-		Assert.assertEquals(2, formStructuresJSONObject.get("totalCount"));
+		Assert.assertEquals(2, formStructuresJSONObject.getLong("totalCount"));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(formStructure1, formStructure2),
@@ -446,6 +446,23 @@ public abstract class BaseFormStructureResourceTestCase {
 
 			assertEquals(formStructure1, formStructure2);
 		}
+	}
+
+	protected void assertContains(
+		FormStructure formStructure, List<FormStructure> formStructures) {
+
+		boolean contains = false;
+
+		for (FormStructure item : formStructures) {
+			if (equals(formStructure, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			formStructures + " does not contain " + formStructure, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

@@ -401,18 +401,17 @@ public abstract class BaseCartResourceTestCase {
 
 	@Test
 	public void testGetChannelCartsPage() throws Exception {
-		Page<Cart> page = cartResource.getChannelCartsPage(
-			testGetChannelCartsPage_getAccountId(),
-			testGetChannelCartsPage_getChannelId(), Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long accountId = testGetChannelCartsPage_getAccountId();
 		Long irrelevantAccountId =
 			testGetChannelCartsPage_getIrrelevantAccountId();
 		Long channelId = testGetChannelCartsPage_getChannelId();
 		Long irrelevantChannelId =
 			testGetChannelCartsPage_getIrrelevantChannelId();
+
+		Page<Cart> page = cartResource.getChannelCartsPage(
+			accountId, channelId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if ((irrelevantAccountId != null) && (irrelevantChannelId != null)) {
 			Cart irrelevantCart = testGetChannelCartsPage_addCart(
@@ -436,7 +435,7 @@ public abstract class BaseCartResourceTestCase {
 			accountId, channelId, randomCart());
 
 		page = cartResource.getChannelCartsPage(
-			accountId, channelId, Pagination.of(1, 2));
+			accountId, channelId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -558,6 +557,20 @@ public abstract class BaseCartResourceTestCase {
 
 			assertEquals(cart1, cart2);
 		}
+	}
+
+	protected void assertContains(Cart cart, List<Cart> carts) {
+		boolean contains = false;
+
+		for (Cart item : carts) {
+			if (equals(cart, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(carts + " does not contain " + cart, contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

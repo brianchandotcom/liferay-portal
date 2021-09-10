@@ -215,18 +215,17 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 	public void testGetOrderTypeByExternalReferenceCodeOrderTypeChannelsPage()
 		throws Exception {
 
-		Page<OrderTypeChannel> page =
-			orderTypeChannelResource.
-				getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage(
-					testGetOrderTypeByExternalReferenceCodeOrderTypeChannelsPage_getExternalReferenceCode(),
-					Pagination.of(1, 2));
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		String externalReferenceCode =
 			testGetOrderTypeByExternalReferenceCodeOrderTypeChannelsPage_getExternalReferenceCode();
 		String irrelevantExternalReferenceCode =
 			testGetOrderTypeByExternalReferenceCodeOrderTypeChannelsPage_getIrrelevantExternalReferenceCode();
+
+		Page<OrderTypeChannel> page =
+			orderTypeChannelResource.
+				getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantExternalReferenceCode != null) {
 			OrderTypeChannel irrelevantOrderTypeChannel =
@@ -258,7 +257,7 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 		page =
 			orderTypeChannelResource.
 				getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -371,16 +370,15 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 
 	@Test
 	public void testGetOrderTypeIdOrderTypeChannelsPage() throws Exception {
-		Page<OrderTypeChannel> page =
-			orderTypeChannelResource.getOrderTypeIdOrderTypeChannelsPage(
-				testGetOrderTypeIdOrderTypeChannelsPage_getId(),
-				RandomTestUtil.randomString(), Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
 		Long id = testGetOrderTypeIdOrderTypeChannelsPage_getId();
 		Long irrelevantId =
 			testGetOrderTypeIdOrderTypeChannelsPage_getIrrelevantId();
+
+		Page<OrderTypeChannel> page =
+			orderTypeChannelResource.getOrderTypeIdOrderTypeChannelsPage(
+				id, RandomTestUtil.randomString(), Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantId != null) {
 			OrderTypeChannel irrelevantOrderTypeChannel =
@@ -407,7 +405,7 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 				id, randomOrderTypeChannel());
 
 		page = orderTypeChannelResource.getOrderTypeIdOrderTypeChannelsPage(
-			id, null, Pagination.of(1, 2), null);
+			id, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -672,6 +670,25 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 
 			assertEquals(orderTypeChannel1, orderTypeChannel2);
 		}
+	}
+
+	protected void assertContains(
+		OrderTypeChannel orderTypeChannel,
+		List<OrderTypeChannel> orderTypeChannels) {
+
+		boolean contains = false;
+
+		for (OrderTypeChannel item : orderTypeChannels) {
+			if (equals(orderTypeChannel, item)) {
+				contains = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			orderTypeChannels + " does not contain " + orderTypeChannel,
+			contains);
 	}
 
 	protected void assertEqualsIgnoringOrder(

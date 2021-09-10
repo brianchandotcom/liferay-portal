@@ -2454,6 +2454,22 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
 	}
 
+	@description = "This test asserts that domain validation is not present in Person Accounts."
+	@priority = "4"
+	test ValidDomainSectionDoesNotDisplayInPersonAccounts {
+		AccountConfiguration.enableAccountEmailDomain();
+
+		Accounts.openAccountsAdmin();
+
+		Accounts.addPersonAccount(accountName = "Person Account");
+
+		Accounts.openAccountsAdmin();
+
+		Accounts.gotoEdit(accountName = "Person Account");
+
+		AssertElementNotPresent(locator1 = "Account#VALID_DOMAINS_HEADING");
+	}
+
 	@description = "This test sets a valid domain for a business account. It adds a user with a different domain and asserts that warning displays when a user attempts to do so."
 	@priority = "3"
 	test WarningDisplaysWhenAddingAUserWithInvalidDomain {

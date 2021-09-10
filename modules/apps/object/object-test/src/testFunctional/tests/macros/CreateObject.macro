@@ -6,6 +6,12 @@ definition {
 			value1 = "${labelName}");
 	}
 
+	macro assertObjectPluralLabel {
+		AssertTextEquals(
+			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
+			value1 = "${pluralLabelName}");
+	}
+
 	macro editLabel {
 		Type(
 			locator1 = "CreateObject#OBJECT_LABEL",
@@ -26,18 +32,6 @@ definition {
 		Click(
 			key_labelName = "${labelName}",
 			locator1 = "CreateObject#VIEW_OBJECT");
-	}
-
-	macro viewObjectLabel {
-		AssertTextEquals(
-			locator1 = "CreateObject#OBJECT_LABEL",
-			value1 = "${labelName}");
-	}
-
-	macro viewObjectPluralLabel {
-		AssertTextEquals(
-			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
-			value1 = "${pluralLabelName}");
 	}
 
 }

@@ -645,36 +645,42 @@ This change removes deprecated legacy code from DXP/Portal and improves code per
 
 ---------------------------------------
 
-### Some static methods in `com.liferay.portal.kernel.servlet.SanitizedServletResponse` have been removed because these relate to the X-Xss-Protection header which is not supported by modern browsers.
+### Removed Some SanitizedServletResponse Static Methods, the HttpHeaders X_XSS_PROTECTION Constant, and http.header.secure.x.xss.protection Portal Property
 - **Date:** 2021-Aug-05
 - **JIRA Ticket:** [LPS-134188](https://issues.liferay.com/browse/LPS-134188)
 
 #### What changed?
 
-The following methods have been removed:
+The following methods, constant, and portal property have been removed.
 
-- com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditor
-- com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditor
-- com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditorOnNextRequest
-- com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditorOnNextRequest
+Methods:
 
-A related constant has been removed also:
+- `com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditor`
+- `com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditor`
+- `com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditorOnNextRequest`
+- `com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditorOnNextRequest`
 
-- com.liferay.portal.kernel.servlet.HttpHeaders#X_XSS_PROTECTION
+Constant:
 
-Finally, the `http.header.secure.x.xss.protection` portal property has been removed.
+- `com.liferay.portal.kernel.servlet.HttpHeaders#X_XSS_PROTECTION`
+
+Portal Property:
+
+- `http.header.secure.x.xss.protection`
 
 #### Who is affected?
 
-Everyone calling one of these methods or referencing the constant. However, such calling code should be removed anyway, because it will have no effect on modern browsers and might give a false sense of security.
+This affects you if you call these methods, use the constant, or use the portal property.
 
 #### How should I update my code?
 
-Remove the calling code. Remove `http.header.secure.x.xss.protection` from `portal-ext.properties` if it exists there.
+Remove your code that calls these methods or uses the constant. The X-Xss-Protection header has no effect on modern browsers and may give a false sense of security.
+
+Remove the `http.header.secure.x.xss.protection` property from your portal property extension files (e.g., `portal-ext.properties`).
 
 #### Why was this change made?
 
-The X-Xss-Protection header is no longer supported by modern browsers.
+The X-Xss-Protection header is no longer supported by modern browsers. These static methods, constant, and portal property relate to the X-Xss-Protection header.
 
 ---------------------------------------
 

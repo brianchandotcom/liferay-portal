@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -231,6 +232,12 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				List<Object> collection =
 					renderCollectionLayoutStructureItemDisplayContext.
 						getCollection();
+
+				if (ListUtil.isEmpty(collection)) {
+					_renderEmptyState(jspWriter);
+
+					return;
+				}
 
 				int numberOfRows =
 					renderCollectionLayoutStructureItemDisplayContext.
@@ -544,6 +551,19 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				layoutStructureItem.getChildrenItemIds(),
 				renderLayoutStructureDisplayContext);
 		}
+	}
+
+	private void _renderEmptyState(JspWriter jspWriter) throws Exception {
+		jspWriter.write("<div class=\"c-empty-state\">");
+		jspWriter.write("<div class=\"c-empty-state-title mt-0\">");
+		jspWriter.write("<span class=\"text-truncate-inline\">");
+		jspWriter.write("<span class=\"text-truncate\">");
+		jspWriter.write(LanguageUtil.get(getRequest(), "no-results-found"));
+		jspWriter.write("</span></span></div>");
+		jspWriter.write("<div class=\"c-empty-state-text\">");
+		jspWriter.write(
+			LanguageUtil.get(getRequest(), "sorry-there-are-no-results-found"));
+		jspWriter.write("</div></div>");
 	}
 
 	private void _renderFragmentStyledLayoutStructureItem(

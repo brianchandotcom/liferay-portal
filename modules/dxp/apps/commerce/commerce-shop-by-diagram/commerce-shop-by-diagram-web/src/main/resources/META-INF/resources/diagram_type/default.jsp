@@ -22,6 +22,8 @@ CPDefinitionDiagramSettingDisplayContext cpDefinitionDiagramSettingDisplayContex
 CPDefinition cpDefinition = cpDefinitionDiagramSettingDisplayContext.getCPDefinition();
 
 String type = DefaultCPDefinitionDiagramType.KEY;
+
+CPDefinitionDiagramSetting cpDefinitionDiagramSetting = cpDefinitionDiagramSettingDisplayContext.fetchCPDefinitionDiagramSetting();
 %>
 
 <%@ include file="/diagram_type/diagram.jspf" %>

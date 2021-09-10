@@ -23,7 +23,9 @@
 			HashMapBuilder.<String, Object>put(
 				"datasetDisplayId", CSDiagramDataSetConstants.CS_DIAGRAM_MAPPED_PRODUCTS_DATA_SET_KEY
 			).put(
-				"enablePanZoom", true
+				"diagramId", (cpDefinitionDiagramSetting != null) ? cpDefinitionDiagramSetting.getCPDefinitionDiagramSettingId() : 0
+			).put(
+			"enablePanZoom", true
 			).put(
 				"enableResetZoom", true
 			).put(

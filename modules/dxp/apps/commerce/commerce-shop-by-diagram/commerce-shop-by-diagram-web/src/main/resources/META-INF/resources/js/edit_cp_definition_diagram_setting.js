@@ -42,3 +42,31 @@ export default function ({diagramId, namespace}) {
 		},
 	};
 }
+
+export function updateDiagramColor(diagramId, color) {
+	const url = new URL(
+		DIAGRAMS_ENDPOINT + diagramId,
+		themeDisplay.getPortalURL()
+	);
+	fetch(url, {
+		body: JSON.stringify({
+			color,
+		}),
+		headers: HEADERS,
+		method: 'PATCH',
+	});
+}
+
+export function updateDiagramRadius(diagramId, radius) {
+	const url = new URL(
+		DIAGRAMS_ENDPOINT + diagramId,
+		themeDisplay.getPortalURL()
+	);
+	fetch(url, {
+		body: JSON.stringify({
+			radius,
+		}),
+		headers: HEADERS,
+		method: 'PATCH',
+	});
+}

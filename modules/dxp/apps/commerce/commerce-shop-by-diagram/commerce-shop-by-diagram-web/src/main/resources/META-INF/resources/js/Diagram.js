@@ -28,6 +28,7 @@ const PINS = 'pins';
 
 const Diagram = ({
 	datasetDisplayId,
+	diagramId,
 	enablePanZoom,
 	enableResetZoom,
 	imageSettings,
@@ -190,6 +191,7 @@ const Diagram = ({
 			<ClayIconSpriteContext.Provider value={spritemap}>
 				<DiagramHeader
 					addNewPinState={addNewPinState}
+					diagramId={diagramId}
 					importPinSchema={importPinSchema}
 					isAdmin={isAdmin}
 					namespace={namespace}
@@ -279,6 +281,7 @@ const Diagram = ({
 };
 
 Diagram.defaultProps = {
+	diagramId: 0,
 	enablePanZoom: true,
 	enableResetZoom: true,
 	imageSettings: {
@@ -361,6 +364,7 @@ Diagram.propTypes = {
 			sku: PropTypes.string,
 		})
 	),
+	diagramId: PropTypes.number,
 	enablePanZoom: PropTypes.bool,
 	enableResetZoom: PropTypes.bool,
 	imageSettings: PropTypes.shape({

@@ -58,6 +58,27 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public void setActive(
+		UnsafeSupplier<Boolean, Exception> activeUnsafeSupplier) {
+
+		try {
+			active = activeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean active;
+
 	public Date getDateCreated() {
 		return dateCreated;
 	}

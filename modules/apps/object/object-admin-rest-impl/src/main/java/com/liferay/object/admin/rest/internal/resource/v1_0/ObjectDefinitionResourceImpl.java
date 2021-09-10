@@ -24,6 +24,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
@@ -111,6 +112,7 @@ public class ObjectDefinitionResourceImpl
 		return _toObjectDefinition(
 			_objectDefinitionService.updateCustomObjectDefinition(
 				objectDefinitionId,
+				GetterUtil.getBoolean(objectDefinition.getActive(), true),
 				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
 				objectDefinition.getName(), objectDefinition.getPanelAppOrder(),
 				objectDefinition.getPanelCategoryKey(),

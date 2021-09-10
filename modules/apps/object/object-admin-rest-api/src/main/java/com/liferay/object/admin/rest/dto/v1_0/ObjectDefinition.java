@@ -88,6 +88,34 @@ public class ObjectDefinition implements Serializable {
 	protected Map<String, Map<String, String>> actions;
 
 	@Schema
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	@JsonIgnore
+	public void setActive(
+		UnsafeSupplier<Boolean, Exception> activeUnsafeSupplier) {
+
+		try {
+			active = activeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean active;
+
+	@Schema
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -494,6 +522,16 @@ public class ObjectDefinition implements Serializable {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(actions));
+		}
+
+		if (active != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"active\": ");
+
+			sb.append(active);
 		}
 
 		if (dateCreated != null) {

@@ -156,6 +156,54 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-124478. The template creator could delete an information template."
+	@priority = "4"
+	@uitest
+	test DeleteInformationTemplate {
+		task ("Add an information template for Document and Basic Document") {
+			JSONDDMtemplate.addInformationTemplate(
+				groupName = "Test Site Name",
+				itemSubtype = "Basic Document",
+				itemType = "Document",
+				name = "Test Information Template");
+		}
+
+		task ("Access to the template editor") {
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+
+			InformationTemplates.gotoInformationTemplateEllipsisItem(
+				informationTemplateName = "Test Information Template",
+				item = "Edit");
+		}
+
+		task ("Add the Title and Preview Image fields") {
+			for (var fieldName : list "Title,Preview Image") {
+				InformationTemplates.addField(
+					fieldName = "${fieldName}",
+					panelTitle = "Basic Information");
+			}
+		}
+
+		task ("Save the information template") {
+			PortletEntry.save();
+		}
+
+		task ("View the information template entry") {
+			InformationTemplates.viewTemplate(
+				informationTemplateName = "Test Information Template",
+				itemSubtype = "Basic Document",
+				itemType = "Document");
+		}
+
+		task ("Delete the information template") {
+			InformationTemplates.deleteCP(informationTemplateName = "Test Information Template");
+		}
+
+		task ("View the information template is deleted") {
+			InformationTemplates.viewTemplateNotPresent(informationTemplateName = "Test Information Template");
+		}
+	}
+
 	@description = "This is a use case for LPS-124478. The template creator could edit an information template."
 	@priority = "5"
 	@uitest

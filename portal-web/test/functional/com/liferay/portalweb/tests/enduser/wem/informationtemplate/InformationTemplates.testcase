@@ -156,4 +156,84 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-124478. The template creator could edit an information template."
+	@priority = "5"
+	@uitest
+	test EditInformationTemplate {
+		task ("Add an information template for Category") {
+			JSONDDMtemplate.addInformationTemplate(
+				groupName = "Test Site Name",
+				itemType = "Category",
+				name = "Test Information Template");
+		}
+
+		task ("Access to the template editor") {
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+
+			InformationTemplates.gotoInformationTemplateEllipsisItem(
+				informationTemplateName = "Test Information Template",
+				item = "Edit");
+		}
+
+		task ("Add the Name and Vocabulary fields") {
+			for (var fieldName : list "Name,Vocabulary") {
+				InformationTemplates.addField(
+					fieldName = "${fieldName}",
+					panelTitle = "Basic Information");
+			}
+		}
+
+		task ("Save the information template") {
+			PortletEntry.save();
+		}
+
+		task ("View the information template entry") {
+			InformationTemplates.viewTemplate(
+				informationTemplateName = "Test Information Template",
+				itemType = "Category");
+		}
+
+		task ("Edit the information template") {
+			InformationTemplates.gotoInformationTemplateEllipsisItem(
+				informationTemplateName = "Test Information Template",
+				item = "Edit");
+		}
+
+		task ("Rename the information template") {
+			InformationTemplates.editName(informationTemplateName = "Test Information Template Edited");
+		}
+
+		task ("Clear the script content in code mirror") {
+			InformationTemplates.inputScript(scriptContent = "");
+		}
+
+		task ("Add the Name and Description fields") {
+			for (var fieldName : list "Name,Description") {
+				InformationTemplates.addField(
+					fieldName = "${fieldName}",
+					panelTitle = "Basic Information");
+			}
+		}
+
+		task ("Save the information template") {
+			PortletEntry.save();
+		}
+
+		task ("View the information template entry is renamed") {
+			InformationTemplates.viewTemplate(informationTemplateName = "Test Information Template Edited");
+		}
+
+		task ("Edit the information template") {
+			InformationTemplates.gotoInformationTemplateEllipsisItem(
+				informationTemplateName = "Test Information Template Edited",
+				item = "Edit");
+		}
+
+		task ("View the edited script content shown in code mirror") {
+			InformationTemplates.viewScriptContent(scriptContent = "name.getData()");
+
+			InformationTemplates.viewScriptContent(scriptContent = "description.getData()");
+		}
+	}
+
 }

@@ -1,0 +1,92 @@
+definition {
+
+	macro addCP {
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "${informationTemplateName}");
+
+		if (isSet(itemType)) {
+			Select(
+				key_fieldLabel = "Item Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${itemType}");
+		}
+
+		if (isSet(itemSubtype)) {
+			Select(
+				key_fieldLabel = "Item Subtype",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${itemSubtype}");
+		}
+
+		PortletEntry.save();
+	}
+
+	macro addDescription {
+		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
+
+		Navigator.gotoSidebarTab(tabName = "Properties");
+
+		PortletEntry.inputDescription(description = "${informationTemplateDescription}");
+	}
+
+	macro addField {
+		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
+
+		Navigator.gotoSidebarTab(tabName = "Elements");
+
+		Click(
+			key_panelTitle = "${panelTitle}",
+			key_variableName = "${fieldName}",
+			locator1 = "DDMEditTemplate#WEB_CONTENT_SCRIPT_VARIABLE");
+	}
+
+	macro gotoInformationTemplateEllipsisItem {
+		Click(
+			key_tableEntry = "${informationTemplateName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "${item}");
+	}
+
+	macro viewDescription {
+		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
+
+		Navigator.gotoSidebarTab(tabName = "Properties");
+
+		AssertTextEquals(
+			locator1 = "TextArea#DESCRIPTION",
+			value1 = "${informationTemplateDescription}");
+	}
+
+	macro viewScriptContent {
+		AssertTextEquals.assertPartialText(
+			locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
+			value1 = "${scriptContent}");
+	}
+
+	macro viewTemplate {
+		AssertTextEquals(
+			key_columnName = "name",
+			key_tableEntry = "${informationTemplateName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+			value1 = "${informationTemplateName}");
+
+		if (isSet(itemType)) {
+			AssertTextEquals(
+				key_columnName = "item-type",
+				key_tableEntry = "${informationTemplateName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+				value1 = "${itemType}");
+		}
+
+		if (isSet(itemSubtype)) {
+			AssertTextEquals(
+				key_columnName = "item-subtype",
+				key_tableEntry = "${informationTemplateName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+				value1 = "${itemSubtype}");
+		}
+	}
+
+}

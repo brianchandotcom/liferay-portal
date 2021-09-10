@@ -37,7 +37,6 @@ definition {
 	@refactorneeded
 	test ViewNotifications71105 {
 		property data.archive.type = "data-archive-notifications";
-		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.1.10.5";
 
 		Upgrade.viewNotifications();
@@ -47,7 +46,6 @@ definition {
 	@refactorneeded
 	test ViewNotifications72104 {
 		property data.archive.type = "data-archive-notifications";
-		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.10.4";
 
 		Upgrade.viewNotifications();
@@ -57,7 +55,6 @@ definition {
 	@refactorneeded
 	test ViewNotifications73101 {
 		property data.archive.type = "data-archive-notifications";
-		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.3.10.1";
 
 		Upgrade.viewNotifications();
@@ -85,7 +82,6 @@ definition {
 	@refactorneeded
 	test ViewNotifications701015 {
 		property data.archive.type = "data-archive-notifications";
-		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.10.15";
 
 		Upgrade.viewNotifications();

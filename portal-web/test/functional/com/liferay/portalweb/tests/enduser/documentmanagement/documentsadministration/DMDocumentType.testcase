@@ -349,13 +349,35 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136815. It checks that a document type cannot be deleted when it is being used by a document."
-	@ignore = "true"
 	@priority = "4"
 	test CannotDeleteWhenBeingUsed {
 		property portal.acceptance = "false";
 
-		// TODO LPS-136815 CannotDeleteWhenBeingUsed pending implementation
+		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
 
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name",
+			skipNavigation = "true");
+
+		DMNavigator.openToAddEntry(
+			documentTypeName = "DM Document Type Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.editDocument(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.txt",
+			dmDocumentTitle = "Document_2.txt");
+
+		PortletEntry.publish();
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.delete(
+			dmDocumentTypeName = "DM Document Type Name",
+			documentTypeHasReference = "true");
 	}
 
 	@description = "This test covers LPS-109066. It ensures that the localizable field available languages can be displayed correctly."
@@ -449,7 +471,7 @@ definition {
 
 		DMNavigator.gotoDocumentType();
 
-		DMDocumentType.deletePG(dmDocumentTypeName = "DM Document Type Name");
+		DMDocumentType.delete(dmDocumentTypeName = "DM Document Type Name");
 
 		DMDocumentType.viewDefaultCP();
 	}

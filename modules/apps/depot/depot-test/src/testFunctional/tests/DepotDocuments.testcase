@@ -168,7 +168,7 @@ definition {
 
 		DMDocument.editCP(
 			displayPageTemplateDisabled = "true",
-			dmDocumentDescription = "DM Document Description1",
+			dmDocumentDescription = "DM Document Description",
 			dmDocumentDescriptionEdit = "DM Document Description Edit",
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentTitleEdit = "DM Document Title Edit");

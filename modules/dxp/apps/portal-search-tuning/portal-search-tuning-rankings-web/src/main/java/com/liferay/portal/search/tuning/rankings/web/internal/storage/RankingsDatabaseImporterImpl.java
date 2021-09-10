@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.storage;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -43,6 +44,51 @@ public class RankingsDatabaseImporterImpl implements RankingsDatabaseImporter {
 
 	@Override
 	public void populateDatabase(long companyId) {
+		try {
+			_populateDatabase(companyId);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to import rankings from the index to the ",
+						"database for company id ", companyId, ". Make sure ",
+						"the search engine is connected, then run the ",
+						"rankings database importer Groovy script"),
+					exception);
+			}
+		}
+	}
+
+	@Reference
+	protected DocumentToRankingTranslator documentToRankingTranslator;
+
+	@Reference
+	protected Queries queries;
+
+	@Reference
+	protected RankingIndexNameBuilder rankingIndexNameBuilder;
+
+	@Reference
+	protected RankingIndexReindexer rankingIndexReindexer;
+
+	@Reference
+	protected RankingJSONStorageHelper rankingJSONStorageHelper;
+
+	@Reference
+	protected SearchEngineAdapter searchEngineAdapter;
+
+	private boolean _isStandardFormat(String id) {
+		String[] parts = StringUtil.split(id, "_PORTLET_");
+
+		if (parts.length == 2) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private void _populateDatabase(long companyId) {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		RankingIndexName rankingIndexName =
@@ -95,34 +141,6 @@ public class RankingsDatabaseImporterImpl implements RankingsDatabaseImporter {
 		catch (Exception exception) {
 			_log.error("Unable to reindex " + rankingIndexName.getIndexName());
 		}
-	}
-
-	@Reference
-	protected DocumentToRankingTranslator documentToRankingTranslator;
-
-	@Reference
-	protected Queries queries;
-
-	@Reference
-	protected RankingIndexNameBuilder rankingIndexNameBuilder;
-
-	@Reference
-	protected RankingIndexReindexer rankingIndexReindexer;
-
-	@Reference
-	protected RankingJSONStorageHelper rankingJSONStorageHelper;
-
-	@Reference
-	protected SearchEngineAdapter searchEngineAdapter;
-
-	private boolean _isStandardFormat(String id) {
-		String[] parts = StringUtil.split(id, "_PORTLET_");
-
-		if (parts.length == 2) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

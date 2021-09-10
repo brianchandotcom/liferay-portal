@@ -113,6 +113,7 @@ const ACTIONS = {
 
 	preview({itemData}) {
 		openModal({
+			iframeBodyCssClass: '',
 			title: itemData.title,
 			url: itemData.previewURL,
 		});

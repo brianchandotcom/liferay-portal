@@ -116,6 +116,7 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 
 	preview(itemData) {
 		openModal({
+			iframeBodyCssClass: '',
 			title: itemData.title,
 			url: itemData.previewURL,
 		});

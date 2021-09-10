@@ -83,6 +83,7 @@ export default function ({
 			);
 
 			openSelectionModal({
+				iframeBodyCssClass: '',
 				onSelect: (selectedItem) => changeDDMTemplate(selectedItem),
 				selectEventName: namespaceId('preview'),
 				title: Liferay.Language.get('title'),

@@ -1896,6 +1896,73 @@ definition {
 			phoneNumber = "+86 (0)411 88120855");
 	}
 
+	@description = "This test unassigns a role to an Account User in the Account Details page via Users tab"
+	@priority = "3"
+	test CanUnassignRolesViaUsersTab {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account Name",
+			accountEntryType = "Business");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.addOwnedAccountRole(accountRoleTitle = "Account Specific Role");
+
+		AccountUsers.openAccountUsersAdmin();
+
+		AccountUsers.addUser(
+			accountName = "Account Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "userfn userln");
+
+		AssertTextEquals(
+			key_columnName = "lfr-account-roles-column",
+			key_rowEntry = "userfn userln",
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
+			value1 = "Account Administrator");
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Assign Roles",
+			rowEntry = "userfn userln");
+
+		SelectFrame(
+			key_title = "Assign Roles",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Uncheck(
+			key_tableEntry = "Account Administrator",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		SelectFrameTop();
+
+		Button.click(button = "Done");
+
+		Alert.viewSuccessMessage();
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Navigator.gotoNavTab(navTab = "Users");
+
+		AssertElementPresent(
+			key_columnName = "lfr-account-roles-column",
+			key_rowEntry = "userfn userln",
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
+			value1 = "");
+	}
+
 	@description = "This tests canceling account creation will not save it."
 	@priority = "3"
 	test ClickingCancelOrBackWillNotSaveAccount {

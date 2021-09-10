@@ -288,7 +288,7 @@ definition {
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_navigation=file_entry_metadata_sets");
 	}
 
-	// Usually used (openTo) navigations for refactoring or adding new tests with SACRED model
+	// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
 	macro openToAddDocumentType {
 		Navigator.openWithAppendToBaseURL(

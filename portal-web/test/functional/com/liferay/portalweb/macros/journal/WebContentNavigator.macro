@@ -153,7 +153,7 @@ definition {
 			value1 = "${templateName}");
 	}
 
-	// Usually used (openTo) navigations for refactoring or adding new tests with SACRED model
+	// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
 	macro openToAddBasicArticle {
 		var baseURL = "${baseURL}";

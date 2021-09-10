@@ -995,23 +995,6 @@ definition {
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
-			portlet = "Catalogs");
-
-		Click(locator1 = "Button#PLUS");
-
-		CommerceEntry.addNewCatalogsEntry(
-			catalogCurrency = "US Dollar",
-			catalogLanguage = "English (United States)",
-			catalogName = "Master");
-
-		AssertClickNoError(
-			locator1 = "Button#SUBMIT",
-			value1 = "Submit");
-
-		Refresh();
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
 			portlet = "Products");
 
 		CPCommerceCatalog.newProductsEntry(

@@ -1,0 +1,22 @@
+<html>
+<head>
+<title>InformationTemplates</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">InformationTemplates</td></tr>
+</thead>
+
+<tbody>
+<!--PROPERTIES_PANEL-->
+<tr>
+	<td>TEMPLATE_TYPE</td>
+	<td>//div[contains(@class,'template-properties')]//p[contains(@class,'label')][normalize-space()='${label}']//following-sibling::p[contains(@class,'small')][normalize-space(text())='${type}']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

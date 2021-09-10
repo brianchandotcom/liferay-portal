@@ -684,37 +684,43 @@ The X-Xss-Protection header is no longer supported by modern browsers. These sta
 
 ---------------------------------------
 
-### OpenIdConnectServiceHandler interface removed
+### Replaced the OpenIdConnectServiceHandler Interface With the OpenIdConnectAuthenticationHandler
 - **Date:** 2021-Aug-09
 - **JIRA Ticket:** [LPS-124898](https://issues.liferay.com/browse/LPS-124898)
 
 #### What changed?
 
-In order to deliver improvements to OIDC refresh token handling, the authentication process has been improved to handle post-authentication processing.
+The `OpenIdConnectServiceHandler` interface has been removed and replaced by the `OpenIdConnectAuthenticationHandler` interface.
 
-The following interface has been removed:
+Old interface:
 
-- portal.security.sso.openid.connect.OpenIdConnectServiceHandler
+```
+portal.security.sso.openid.connect.OpenIdConnectServiceHandler
+```
 
-And replaced by:
+New interface:
 
-- portal.security.sso.openid.connect.OpenIdConnectAuthenticationHandler
+```
+portal.security.sso.openid.connect.OpenIdConnectAuthenticationHandler
+```
 
 #### Who is affected?
 
-Everyone implementing or using this interface directly.
+This affects you if you are implementing or using the `OpenIdConnectServiceHandler` interface.
 
 #### How should I update my code?
 
-If the code invokes the old interface, change this to invoke the new interface. This means providing an `UnsafeConsumer` which is responsible for signing in the portal user. If on the other hand you have provided a custom implementation of the interface, then you will need to instead implement the new interface and provide a means of refreshing the user's OIDC access tokens using the provided refresh tokens. Otherwise portal sessions will invalidate upon the expiry of the initial access token.
+If your code invokes the `OpenIdConnectServiceHandler` interface, change it to invoke the `OpenIdConnectAuthenticationHandler` interface. This requires providing an `UnsafeConsumer` for signing in the DXP/Portal user.
+
+If you have implemented the `OpenIdConnectServiceHandler` interface, implement the `OpenIdConnectAuthenticationHandler` interface and provide a way to refresh the user's OIDC access tokens using the provided refresh tokens. If you don't make this provision, sessions will invalidate when the initial access tokens expire.
 
 #### Why was this change made?
 
-For two reasons:
+This change improves OIDC refresh token handling. The change was made for these reasons:
 
-- To detach the access token refresh process from HTTP request handling. Because this can cause problems maintaining OIDC sessions with providers that only allow refresh tokens to be used once. Resulting in premature portal session invalidation.
+- To detach the access token refresh process from HTTP request handling. Without this detachment, there can be problems maintaining OIDC sessions with providers that only allow refresh tokens to be used once. Premature portal session invalidation can occur.
 
-- To avoid premature portal session invalidation for OIDC providers that provide refresh tokens that expiry at the same time as their corresponding access tokens.
+- To avoid premature portal session invalidation for OIDC providers that provide refresh tokens that expire at the same time as their corresponding access tokens.
 
 ---------------------------------------
 

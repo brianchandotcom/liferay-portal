@@ -1,0 +1,263 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Translation Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page Name",
+			type = "content");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "This ensures that a translator without permissions cannot translate a content page to Chinese."
+	@priority = "5"
+	test CannotTranslateToChineseWithoutPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Button");
+
+		PageEditor.clickPublish();
+
+		Permissions.setUpRegRoleLoginUserCP(
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "UPDATE_LAYOUT_CONTENT",
+			resourceName = "com.liferay.portal.kernel.model.Layout",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "TRANSLATE",
+			resourceName = "com.liferay.translation.es_ES",
+			roleTitle = "Regrole Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		WaitForPageLoad();
+
+		ContentPagesNavigator.goToTranslation(pageName = "Test Site Name");
+
+		Translations.viewTargetLocales(
+			currentTargetLocale = "zh-CN",
+			noTargetLocale = "zh-CN",
+			targetLocale = "es-ES");
+	}
+
+	@description = "This ensures that a button on a content page can be translated and published properly."
+	@priority = "5"
+	test CanPublishTranslatedHeadingAfterReview {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.clickPublish();
+
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Translation");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		WaitForPageLoad();
+
+		ContentPagesNavigator.goToTranslation(pageName = "Test Site Name");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "ja-JP");
+
+		Translations.translateFragmentField(
+			fieldName = "link",
+			fragmentText = "これは見出しです");
+
+		Button.clickSubmitForPublication();
+
+		Alert.viewSuccessMessage();
+
+		ContentPagesNavigator.openViewContentPage(
+			locale = "ja",
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		AssertTextEquals(
+			key_fragmentName = "heading",
+			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+			value1 = "Heading Example");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Translation of Test Content Page Name to ja-JP",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Translation of Test Content Page Name to ja-JP",
+			workflowAssetType = "Translation",
+			workflowTask = "Review");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			locale = "ja",
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		AssertTextEquals(
+			key_fragmentName = "heading",
+			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+			value1 = "これは見出しです");
+	}
+
+	@description = "This ensures that a button on a content page can be translated and published properly."
+	@priority = "5"
+	test CanTranslateAndPublishButtonFragment {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Button");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		WaitForPageLoad();
+
+		ContentPagesNavigator.goToTranslation(pageName = "Test Site Name");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "ja-JP");
+
+		Translations.translateFragmentField(
+			fieldName = "link",
+			fragmentText = "これはボタンリンクです");
+
+		PortletEntry.publish();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			locale = "ja",
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		AssertTextEquals(
+			key_fragmentName = "button",
+			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+			value1 = "これはボタンリンクです");
+	}
+
+	@description = "This ensures that an HTML fragment on a content page can be translated and published properly."
+	@priority = "5"
+	test CanTranslateAndPublishHTMLFragment {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "HTML");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		WaitForPageLoad();
+
+		ContentPagesNavigator.goToTranslation(pageName = "Test Site Name");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.translateFragmentField(
+			fieldName = "element-html",
+			fragmentText = "este es un campo html");
+
+		PortletEntry.publish();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.clickPublish();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		ContentPagesNavigator.openViewContentPage(
+			locale = "es",
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		AssertTextEquals(
+			key_fragmentName = "html",
+			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+			value1 = "este es un campo html");
+	}
+
+}

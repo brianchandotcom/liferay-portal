@@ -37,6 +37,14 @@ public class StopWatchRecord implements Comparable<StopWatchRecord> {
 		_jsonObject.put("startTimestamp", startTimestamp);
 	}
 
+	public StopWatchRecord(String name, long startTimestamp, long duration) {
+		_jsonObject = new JSONObject();
+
+		_jsonObject.put("duration", duration);
+		_jsonObject.put("name", name);
+		_jsonObject.put("startTimestamp", startTimestamp);
+	}
+
 	public void addChildStopWatchRecord(
 		StopWatchRecord newChildStopWatchRecord) {
 

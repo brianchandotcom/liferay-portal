@@ -275,7 +275,7 @@ definition {
 			AssertTextEquals.assertPartialText(
 				key_metricName = "${metricName}",
 				locator1 = "ACUsage#USAGE_SINCE",
-				value1 = "usageSince");
+				value1 = "${usageSince}");
 		}
 	}
 

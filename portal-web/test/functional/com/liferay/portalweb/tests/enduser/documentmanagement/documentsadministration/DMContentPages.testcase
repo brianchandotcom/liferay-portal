@@ -45,6 +45,10 @@ definition {
 
 		PageEditor.clickPublish();
 
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.addMultiplePG(
@@ -126,6 +130,10 @@ definition {
 
 		PageEditor.clickPublish();
 
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMFolder.addPG(
@@ -177,6 +185,10 @@ definition {
 		DMDocument.enableActionsMenuOnPortlet();
 
 		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

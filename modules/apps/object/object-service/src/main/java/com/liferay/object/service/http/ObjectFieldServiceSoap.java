@@ -14,9 +14,15 @@
 
 package com.liferay.object.service.http;
 
+import com.liferay.object.service.ObjectFieldServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.object.service.ObjectFieldServiceUtil</code> service
+ * <code>ObjectFieldServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,21 @@ package com.liferay.object.service.http;
  */
 @Deprecated
 public class ObjectFieldServiceSoap {
+
+	public static void deleteObjectField(long objectFieldId)
+		throws RemoteException {
+
+		try {
+			ObjectFieldServiceUtil.deleteObjectField(objectFieldId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ObjectFieldServiceSoap.class);
+
 }

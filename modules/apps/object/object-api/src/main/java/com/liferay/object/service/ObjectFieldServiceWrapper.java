@@ -30,6 +30,11 @@ public class ObjectFieldServiceWrapper
 		_objectFieldService = objectFieldService;
 	}
 
+	@Override
+	public void deleteObjectField(long objectFieldId) throws Exception {
+		_objectFieldService.deleteObjectField(objectFieldId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

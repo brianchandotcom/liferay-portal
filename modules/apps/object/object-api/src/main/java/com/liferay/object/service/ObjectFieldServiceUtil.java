@@ -33,6 +33,11 @@ public class ObjectFieldServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectFieldServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void deleteObjectField(long objectFieldId)
+		throws java.lang.Exception {
+
+		getService().deleteObjectField(objectFieldId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.

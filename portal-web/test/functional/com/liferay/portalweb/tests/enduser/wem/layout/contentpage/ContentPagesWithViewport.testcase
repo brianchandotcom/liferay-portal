@@ -25,14 +25,6 @@ definition {
 	}
 
 	tearDown {
-		task ("Go back to Desktop viewport") {
-			SelectFrame(value1 = "relative=top");
-
-			Click(
-				key_deviceType = "Desktop",
-				locator1 = "PageEditor#DEVICE_TYPE");
-		}
-
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {

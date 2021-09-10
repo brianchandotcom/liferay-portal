@@ -1,0 +1,200 @@
+[
+	{
+		"actions": [
+			{
+				"actionIds": [
+					"MANAGE_AVAILABLE_ACCOUNTS"
+				],
+				"resource": "com.liferay.commerce.account"
+			},
+			{
+				"actionIds": [
+					"MANAGE_ORGANIZATIONS"
+				],
+				"resource": "com.liferay.commerce.account.model.CommerceAccount"
+			},
+			{
+				"actionIds": [
+					"CHECKOUT_OPEN_COMMERCE_ORDERS",
+					"VIEW_OPEN_COMMERCE_ORDERS"
+				],
+				"resource": "com.liferay.commerce.order"
+			}
+		],
+		"name": "Sales Agent",
+		"scope": 1,
+		"type": 1
+	},
+	{
+		"actions": [
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL"
+				],
+				"resource": "com_liferay_commerce_pricing_web_internal_portlet_CommercePriceListPortlet"
+			},
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL"
+				],
+				"resource": "com_liferay_commerce_pricing_web_internal_portlet_CommercePromotionPortlet"
+			},
+			{
+				"actionIds": [
+					"ADD_COMMERCE_PRICE_LIST"
+				],
+				"resource": "com.liferay.commerce.price.list"
+			},
+			{
+				"actionIds": [
+					"DELETE",
+					"UPDATE",
+					"VIEW"
+				],
+				"resource": "com.liferay.commerce.price.list.model.CommercePriceList"
+			},
+			{
+				"actionIds": [
+					"VIEW_CONTROL_PANEL"
+				],
+				"resource": "90"
+			}
+		],
+		"name": "Discount Manager",
+		"scope": 1,
+		"type": 1
+	},
+	{
+		"actions": [
+			{
+				"actionIds": [
+					"ADD_COMMERCE_CATALOG"
+				],
+				"resource": "com.liferay.commerce.catalog"
+			},
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL"
+				],
+				"resource": "com_liferay_commerce_catalog_web_internal_portlet_CommerceCatalogsPortlet"
+			},
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL"
+				],
+				"resource": "com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet"
+			},
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL",
+					"VIEW"
+				],
+				"resource": "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet"
+			},
+			{
+				"actionIds": [
+					"ADD_CATEGORY",
+					"ADD_VOCABULARY"
+				],
+				"resource": "com.liferay.asset.categories"
+			},
+			{
+				"actionIds": [
+					"VIEW_CONTROL_PANEL"
+				],
+				"resource": "90"
+			},
+			{
+				"actionIds": [
+					"UPDATE",
+					"VIEW"
+				],
+				"resource": "com.liferay.commerce.product.model.CommerceCatalog"
+			}
+		],
+		"name": "Category Manager",
+		"scope": 1,
+		"type": 1
+	},
+	{
+		"actions": [
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL"
+				],
+				"resource": "com_liferay_commerce_inventory_web_internal_portlet_CommerceInventoryPortlet"
+			},
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL"
+				],
+				"resource": "com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet"
+			},
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL"
+				],
+				"resource": "com_liferay_commerce_shipment_web_internal_portlet_CommerceShipmentPortlet"
+			},
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL"
+				],
+				"resource": "com_liferay_commerce_subscription_web_internal_portlet_CommerceSubscriptionEntryPortlet"
+			},
+			{
+				"actionIds": [
+					"MANAGE_AVAILABLE_ACCOUNTS"
+				],
+				"resource": "com.liferay.commerce.account"
+			},
+			{
+				"actionIds": [
+					"MANAGE_COMMERCE_SHIPMENTS"
+				],
+				"resource": "com.liferay.commerce.shipment"
+			},
+			{
+				"actionIds": [
+					"MANAGE_COMMERCE_SUBSCRIPTIONS"
+				],
+				"resource": "com.liferay.commerce.subscription"
+			},
+			{
+				"actionIds": [
+					"MANAGE_COMMERCE_ORDERS"
+				],
+				"resource": "com.liferay.commerce.order"
+			},
+			{
+				"actionIds": [
+					"MANAGE_INVENTORY"
+				],
+				"resource": "com.liferay.commerce.inventory"
+			},
+			{
+				"actionIds": [
+					"VIEW_CONTROL_PANEL"
+				],
+				"resource": "90"
+			}
+		],
+		"name": "Operations Manager",
+		"scope": 1,
+		"type": 1
+	},
+	{
+		"actions": [
+			{
+				"actionIds": [
+					"CHECKOUT_OPEN_COMMERCE_ORDERS",
+					"VIEW_OPEN_COMMERCE_ORDERS"
+				],
+				"resource": "com.liferay.commerce.order"
+			}
+		],
+		"name": "Punch Out",
+		"scope": 3,
+		"type": 2
+	}
+]

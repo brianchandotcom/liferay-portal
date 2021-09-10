@@ -15,6 +15,7 @@
 package com.liferay.site.initializer.extender.internal;
 
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -31,6 +32,8 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -74,12 +77,13 @@ public class SiteInitializerExtender
 			new SiteInitializerExtension(
 				_assetListEntryLocalService, bundle, _bundleContext,
 				_catalogResourceFactory, _channelResourceFactory,
-				_ddmStructureLocalService, _ddmTemplateLocalService,
-				_defaultDDMStructureHelper, _dlURLHelper,
-				_documentFolderResourceFactory, _documentResourceFactory,
-				_fragmentsImporter, _groupLocalService,
-				_journalArticleLocalService, _jsonFactory,
+				_cpFileImporter, _ddmStructureLocalService,
+				_ddmTemplateLocalService, _defaultDDMStructureHelper,
+				_dlURLHelper, _documentFolderResourceFactory,
+				_documentResourceFactory, _fragmentsImporter,
+				_groupLocalService, _journalArticleLocalService, _jsonFactory,
 				_objectDefinitionResourceFactory, _portal,
+				_resourcePermissionLocalService, _roleLocalService,
 				_structuredContentFolderResourceFactory,
 				_styleBookEntryZipProcessor, _taxonomyCategoryResourceFactory,
 				_taxonomyVocabularyResourceFactory, _userLocalService);
@@ -131,6 +135,9 @@ public class SiteInitializerExtender
 	private ChannelResource.Factory _channelResourceFactory;
 
 	@Reference
+	private CPFileImporter _cpFileImporter;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
@@ -165,6 +172,12 @@ public class SiteInitializerExtender
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private StructuredContentFolderResource.Factory

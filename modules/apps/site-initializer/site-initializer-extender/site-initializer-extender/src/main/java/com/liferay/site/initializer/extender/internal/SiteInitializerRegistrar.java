@@ -15,6 +15,7 @@
 package com.liferay.site.initializer.extender.internal;
 
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -31,6 +32,8 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -53,6 +56,7 @@ public class SiteInitializerRegistrar {
 		BundleContext bundleContext,
 		CatalogResource.Factory catalogResourceFactory,
 		ChannelResource.Factory channelResourceFactory,
+		CPFileImporter cpFileImporter,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -65,6 +69,8 @@ public class SiteInitializerRegistrar {
 		JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		Portal portal,
+		ResourcePermissionLocalService resourcePermissionLocalService,
+		RoleLocalService roleLocalService,
 		StructuredContentFolderResource.Factory
 			structuredContentFolderResourceFactory,
 		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
@@ -77,6 +83,7 @@ public class SiteInitializerRegistrar {
 		_bundleContext = bundleContext;
 		_catalogResourceFactory = catalogResourceFactory;
 		_channelResourceFactory = channelResourceFactory;
+		_cpFileImporter = cpFileImporter;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
@@ -89,6 +96,8 @@ public class SiteInitializerRegistrar {
 		_jsonFactory = jsonFactory;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_portal = portal;
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+		_roleLocalService = roleLocalService;
 		_structuredContentFolderResourceFactory =
 			structuredContentFolderResourceFactory;
 		_styleBookEntryZipProcessor = styleBookEntryZipProcessor;
@@ -106,13 +115,15 @@ public class SiteInitializerRegistrar {
 			SiteInitializer.class,
 			new BundleSiteInitializer(
 				_assetListEntryLocalService, _bundle, _catalogResourceFactory,
-				_channelResourceFactory, _ddmStructureLocalService,
-				_ddmTemplateLocalService, _defaultDDMStructureHelper,
-				_dlURLHelper, _documentFolderResourceFactory,
-				_documentResourceFactory, _fragmentsImporter,
-				_groupLocalService, _journalArticleLocalService, _jsonFactory,
-				_objectDefinitionResourceFactory, _portal, _servletContext,
-				_structuredContentFolderResourceFactory,
+				_channelResourceFactory, _cpFileImporter,
+				_ddmStructureLocalService, _ddmTemplateLocalService,
+				_defaultDDMStructureHelper, _dlURLHelper,
+				_documentFolderResourceFactory, _documentResourceFactory,
+				_fragmentsImporter, _groupLocalService,
+				_journalArticleLocalService, _jsonFactory,
+				_objectDefinitionResourceFactory, _portal,
+				_resourcePermissionLocalService, _roleLocalService,
+				_servletContext, _structuredContentFolderResourceFactory,
 				_styleBookEntryZipProcessor, _taxonomyCategoryResourceFactory,
 				_taxonomyVocabularyResourceFactory, _userLocalService),
 			MapUtil.singletonDictionary(
@@ -128,6 +139,7 @@ public class SiteInitializerRegistrar {
 	private final BundleContext _bundleContext;
 	private final CatalogResource.Factory _catalogResourceFactory;
 	private final ChannelResource.Factory _channelResourceFactory;
+	private final CPFileImporter _cpFileImporter;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
@@ -141,6 +153,9 @@ public class SiteInitializerRegistrar {
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private final Portal _portal;
+	private final ResourcePermissionLocalService
+		_resourcePermissionLocalService;
+	private final RoleLocalService _roleLocalService;
 	private ServiceRegistration<?> _serviceRegistration;
 	private ServletContext _servletContext;
 	private final StructuredContentFolderResource.Factory

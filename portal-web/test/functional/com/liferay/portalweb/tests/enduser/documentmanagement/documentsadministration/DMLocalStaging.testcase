@@ -67,8 +67,6 @@ definition {
 	@description = "This is a test for LPS-136819. It checks that a file version can be deleted and published."
 	@priority = "4"
 	test CanPublishDeletedFileVersion {
-		property portal.acceptance = "false";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_2.jpg",
@@ -117,8 +115,6 @@ definition {
 	@description = "This is a test for LPS-136818. It checks that a folder with multiple files can be published using the SAP."
 	@priority = "4"
 	test CanPublishFolderWithMultipleFilesViaSAP {
-		property portal.acceptance = "false";
-
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -204,8 +200,6 @@ definition {
 	@description = "This is a test for LPS-136817. It checks that a shortcut can be published using the SAP."
 	@priority = "4"
 	test CanPublishShortcutViaSAP {
-		property portal.acceptance = "false";
-
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		JSONDocument.addFileWithUploadedFile(

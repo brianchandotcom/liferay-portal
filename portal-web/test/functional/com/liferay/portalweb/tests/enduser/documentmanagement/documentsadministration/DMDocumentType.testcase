@@ -351,8 +351,6 @@ definition {
 	@description = "This is a test for LPS-136815. It checks that a document type cannot be deleted when it is being used by a document."
 	@priority = "4"
 	test CannotDeleteWhenBeingUsed {
-		property portal.acceptance = "false";
-
 		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
 
 		DMDocumentType.add(

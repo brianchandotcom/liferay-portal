@@ -176,6 +176,28 @@ definition {
 		JSONCurlUtil.delete("${curl}");
 	}
 
+	@summary = "Get a objectDefinitionId by name"
+	macro getObjectDefinitionId {
+		Variables.assertDefined(parameterList = "${name}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/object.objectdefinition/get-object-definitions \
+				-u test@liferay.com:test \
+				-d <CURL_DATA[start=-1]CURL_DATA> \
+				-d <CURL_DATA[end=-1]CURL_DATA>
+		''';
+
+		var objectDefinitionId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${name}')]['objectDefinitionId']");
+
+		if ("${objectDefinitionId}" == "") {
+			echo("The ${name} doesn't exist.");
+		}
+
+		return "${objectDefinitionId}";
+	}
+
 	macro getObjectEntryId {
 		var portalURL = JSONCompany.getPortalURL();
 

@@ -49,6 +49,17 @@ definition {
 		MenuItem.clickNoError(menuItem = "${item}");
 	}
 
+	macro importScript {
+		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
+
+		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			inputFieldId = "importScript",
+			locator1 = "TextInput#INPUT_ID",
+			value1 = "${scriptFile}");
+	}
+
 	macro openInformationTemplatesAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_template_web_internal_portlet_TemplatePortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_template_web_internal_portlet_TemplatePortlet_tabs1=information-templates");
 	}

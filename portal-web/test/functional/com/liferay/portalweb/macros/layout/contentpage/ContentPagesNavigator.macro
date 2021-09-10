@@ -9,6 +9,12 @@ definition {
 		return "${key}";
 	}
 
+	macro goToTranslation {
+		SitePages.clickPageMenu(pageName = "${pageName}");
+
+		MenuItem.click(menuItem = "Translate");
+	}
+
 	macro openEditContentPage {
 		if (!(isSet(siteURLKey))) {
 			var siteURLKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
@@ -24,6 +30,10 @@ definition {
 	}
 
 	macro openViewContentPage {
+		if (!(isSet(locale))) {
+			var locale = "en";
+		}
+
 		if (!(isSet(siteURLKey))) {
 			var siteURLKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
 		}
@@ -32,7 +42,7 @@ definition {
 			var pageFriendlyUrl = ContentPagesNavigator._convertNameToKey(name = "${pageName}");
 		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${pageFriendlyUrl}");
+		Navigator.openWithAppendToBaseURL(urlAppend = "/${locale}/web/${siteURLKey}/${pageFriendlyUrl}");
 	}
 
 }

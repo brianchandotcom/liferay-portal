@@ -291,6 +291,21 @@ definition {
 			value1 = "update-translation-file -Dtranslation.content.target.original=<![CDATA[<p>${webContentContent}</p>]]></target> -Dtranslation.content.target=<![CDATA[<p>${contentTranslateion}</p>]]></target> -Dtranslation.description.target.original=<![CDATA[<p>${webContentDescription}</p>]]></target> -Dtranslation.description.target=<![CDATA[<p>${descriptionTranslateion}</p>]]></target> -Dtranslation.file.encoding=${encoding} -Dtranslation.title.target.original=<![CDATA[${webContentTitle}]]></target> -Dtranslation.title.target=<![CDATA[${titleTranslation}]]></target> -Dtranslation.zip.file.name=${translationZipFileName} -Dtranslation.file.name=${translationFileName} -Dtranslation.file.rename=${translationFileRename}");
 	}
 
+	macro translateFragmentField {
+		if ("${fieldName}" == "HTML") {
+			Type.typeCodeMirrorEditorNoError(
+				locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
+				value1 = "${fragmentText}");
+		}
+
+		else {
+			Type(
+				key_fieldName = "${fieldName}",
+				locator1 = "TextInput#TRANSLATIONS_TARGET_FIELD",
+				value1 = "${fragmentText}");
+		}
+	}
+
 	macro translateSpecificFieldsWithGoogle {
 		for (var fieldName : list "${fieldNameList}") {
 			Click.clickNoMouseOver(

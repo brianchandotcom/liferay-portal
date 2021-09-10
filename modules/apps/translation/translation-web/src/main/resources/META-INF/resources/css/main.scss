@@ -154,4 +154,26 @@ $productMenuWidth: 320px;
 			margin-top: 0.25rem;
 		}
 	}
+
+	&-export {
+		.translation-experiences-wrapper {
+			margin-bottom: 1.5rem;
+			max-height: 40rem;
+			overflow-x: auto;
+
+			.list-group {
+				margin-bottom: 0;
+			}
+
+			.list-group-label {
+				margin: 0;
+				padding-bottom: $label-padding-y;
+				padding-top: $label-padding-y;
+
+				.autofit-col {
+					padding: 0;
+				}
+			}
+		}
+	}
 }

@@ -16,9 +16,73 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayInput, ClaySelect} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
+import ClayList from '@clayui/list';
 import {addParams, createPortletURL} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
+
+const Experiences = ({
+	experiences,
+	onChangeExperience,
+	selectedExperiencesIds,
+}) => {
+	if (experiences?.length > 1) {
+		return (
+			<>
+				<label className="mb-2">
+					{Liferay.Language.get('select-experiences')}
+				</label>
+				<div className="translation-experiences-wrapper">
+					<ClayList>
+						{experiences.map(({label, segment, value}) => {
+							const checked =
+								selectedExperiencesIds.indexOf(value) != -1;
+
+							return (
+								<ClayList.Item flex key={value}>
+									<ClayList.ItemField>
+										<ClayCheckbox
+											checked={checked}
+											id={value}
+											onChange={() => {
+												onChangeExperience(
+													!checked,
+													value
+												);
+											}}
+											value={value}
+										/>
+									</ClayList.ItemField>
+									<ClayList.ItemField expand>
+										<ClayLayout.ContentRow
+											className="list-group-label"
+											containerElement="label"
+											htmlFor={value}
+										>
+											<ClayLayout.ContentCol>
+												{label}
+											</ClayLayout.ContentCol>
+											<ClayLayout.ContentCol
+												className="text-right"
+												expand
+											>
+												<span className="small text-secondary">
+													{segment}
+												</span>
+											</ClayLayout.ContentCol>
+										</ClayLayout.ContentRow>
+									</ClayList.ItemField>
+								</ClayList.Item>
+							);
+						})}
+					</ClayList>
+				</div>
+			</>
+		);
+	}
+
+	return null;
+};
 
 const ExportFileFormats = ({
 	availableExportFileFormats,
@@ -117,6 +181,7 @@ const ExportTranslation = ({
 	availableSourceLocales,
 	availableTargetLocales,
 	defaultSourceLanguageId,
+	experiences,
 	exportTranslationURL: initialExportTranslationURL,
 	portletNamespace,
 	redirectURL,
@@ -131,6 +196,10 @@ const ExportTranslation = ({
 
 	const [selectedTargetLanguageIds, setSelectedTargetLanguageIds] = useState(
 		[]
+	);
+
+	const [selectedExperiencesIds, setSelectedExperiencesIds] = useState(() =>
+		experiences?.length ? experiences.map(({value}) => value) : []
 	);
 
 	const exportTranslationURL = addParams(
@@ -148,6 +217,16 @@ const ExportTranslation = ({
 		);
 	};
 
+	const onChangeExperience = (checked, selectedExperienceId) => {
+		setSelectedExperiencesIds((experiencesIds) =>
+			checked
+				? experiencesIds.concat(selectedExperienceId)
+				: experiencesIds.filter(
+						(experienceId) => experienceId != selectedExperienceId
+				  )
+		);
+	};
+
 	return (
 		<ClayForm
 			className="export-modal-content"
@@ -159,6 +238,12 @@ const ExportTranslation = ({
 					sourceLanguageId,
 					targetLanguageIds: selectedTargetLanguageIds.join(','),
 				};
+
+				if (selectedExperiencesIds.length) {
+					params.selectedExperiencesIds = selectedExperiencesIds.join(
+						','
+					);
+				}
 
 				location.href = createPortletURL(exportTranslationURL, params);
 			}}
@@ -213,9 +298,19 @@ const ExportTranslation = ({
 				</ClayLayout.Row>
 			</ClayForm.Group>
 
+			<Experiences
+				experiences={experiences}
+				onChangeExperience={onChangeExperience}
+				selectedExperiencesIds={selectedExperiencesIds}
+			/>
+
 			<ClayButton.Group spaced>
 				<ClayButton
-					disabled={selectedTargetLanguageIds.length === 0}
+					disabled={
+						selectedTargetLanguageIds.length === 0 ||
+						(experiences?.length > 1 &&
+							selectedExperiencesIds.length === 0)
+					}
 					displayType="primary"
 					type="submit"
 				>
@@ -250,6 +345,13 @@ ExportTranslation.propTypes = {
 		})
 	).isRequired,
 	defaultSourceLanguageId: PropTypes.string.isRequired,
+	experiences: PropTypes.arrayOf(
+		PropTypes.shape({
+			label: PropTypes.string.isRequired,
+			segment: PropTypes.string.isRequired,
+			value: PropTypes.string.isRequired,
+		})
+	),
 	keys: PropTypes.array,
 };
 

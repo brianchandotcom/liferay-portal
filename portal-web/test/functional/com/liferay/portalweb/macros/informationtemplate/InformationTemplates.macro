@@ -41,6 +41,24 @@ definition {
 			locator1 = "DDMEditTemplate#WEB_CONTENT_SCRIPT_VARIABLE");
 	}
 
+	macro copyCP {
+		InformationTemplates.gotoInformationTemplateEllipsisItem(
+			informationTemplateName = "${informationTemplateName}",
+			item = "Copy");
+
+		if (isSet(informationTemplateCopyName)) {
+			PortletEntry.inputName(name = "${informationTemplateCopyName}");
+		}
+
+		if (isSet(description)) {
+			PortletEntry.inputDescription(description = "${description}");
+		}
+
+		Click(locator1 = "Button#COPY");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro deleteCP {
 		InformationTemplates.gotoInformationTemplateEllipsisItem(
 			informationTemplateName = "${informationTemplateName}",

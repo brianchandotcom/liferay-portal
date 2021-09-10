@@ -90,7 +90,7 @@ public class ObjectDefinitionGraphQLTest {
 				_objectDefinition.getObjectDefinitionId());
 
 		_objectDefinitionName = _objectDefinition.getShortName();
-		_objectDefinitionPrimaryKeyName = StringUtil.removeSubstring(
+		_objectDefinitionPrimaryKeyName = StringUtil.removeFirst(
 			_objectDefinition.getPKObjectFieldName(), "c_");
 
 		_objectEntry = ObjectEntryLocalServiceUtil.addObjectEntry(

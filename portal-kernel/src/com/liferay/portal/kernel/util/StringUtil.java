@@ -2265,6 +2265,24 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	public static String removeFirst(String s, String oldSub) {
+		if (s == null) {
+			return null;
+		}
+
+		if (oldSub == null) {
+			return s;
+		}
+
+		int index = s.indexOf(oldSub);
+
+		if (index == -1) {
+			return s;
+		}
+
+		return s.substring(0, index) + s.substring(index + oldSub.length());
+	}
+
 	/**
 	 * Removes the <code>remove</code> string from string <code>s</code> that
 	 * represents a list of comma delimited strings.
@@ -2365,6 +2383,24 @@ public class StringUtil {
 		}
 
 		return s;
+	}
+
+	public static String removeLast(String s, String oldSub) {
+		if (s == null) {
+			return null;
+		}
+
+		if (oldSub == null) {
+			return s;
+		}
+
+		int index = s.lastIndexOf(oldSub);
+
+		if (index == -1) {
+			return s;
+		}
+
+		return s.substring(0, index) + s.substring(index + oldSub.length());
 	}
 
 	public static String removeSubstring(String s, String oldSub) {

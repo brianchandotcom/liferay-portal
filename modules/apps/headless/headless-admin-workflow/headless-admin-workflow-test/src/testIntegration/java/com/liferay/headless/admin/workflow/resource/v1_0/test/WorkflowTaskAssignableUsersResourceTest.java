@@ -29,8 +29,6 @@ import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowTaskT
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
-import java.util.Arrays;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,22 +47,35 @@ public class WorkflowTaskAssignableUsersResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_workflowInstance = WorkflowInstanceTestUtil.addWorkflowInstance(
-			testGroup.getGroupId(), ObjectReviewedTestUtil.addObjectReviewed(),
-			WorkflowDefinitionTestUtil.addWorkflowDefinition());
+		WorkflowInstance workflowInstance =
+			WorkflowInstanceTestUtil.addWorkflowInstance(
+				testGroup.getGroupId(),
+				ObjectReviewedTestUtil.addObjectReviewed(),
+				WorkflowDefinitionTestUtil.addWorkflowDefinition());
+
+		_workflowTask = WorkflowTaskTestUtil.getWorkflowTask(
+			workflowInstance.getId());
 	}
 
 	@Override
 	@Test
 	public void testPostWorkflowTaskAssignableUser() throws Exception {
-		WorkflowTask workflowTask = WorkflowTaskTestUtil.getWorkflowTask(
-			_workflowInstance.getId());
+		_assertPostWorkflowTaskAssignableUser();
+
+		_assertPostWorkflowTaskAssignableUser(
+			AssigneeTestUtil.addAssignee(testGroup),
+			AssigneeTestUtil.addAssignee(testGroup));
+	}
+
+	private void _assertPostWorkflowTaskAssignableUser(
+			Assignee... expectedAssignableUsers)
+		throws Exception {
 
 		WorkflowTaskAssignableUsers workflowTaskAssignableUsers =
 			workflowTaskAssignableUsersResource.postWorkflowTaskAssignableUser(
 				new WorkflowTaskIds() {
 					{
-						workflowTaskIds = new Long[] {workflowTask.getId()};
+						workflowTaskIds = new Long[] {_workflowTask.getId()};
 					}
 				});
 
@@ -77,40 +88,21 @@ public class WorkflowTaskAssignableUsersResourceTest
 				0);
 
 		Assert.assertEquals(
-			workflowTask.getId(),
+			_workflowTask.getId(),
 			workflowTaskAssignableUser.getWorkflowTaskId());
 		Assert.assertEquals(
-			0,
+			expectedAssignableUsers.length,
 			ArrayUtil.getLength(
 				workflowTaskAssignableUser.getAssignableUsers()));
 
-		Assignee assignee = AssigneeTestUtil.addAssignee(testGroup);
-
-		workflowTaskAssignableUsers =
-			workflowTaskAssignableUsersResource.postWorkflowTaskAssignableUser(
-				new WorkflowTaskIds() {
-					{
-						workflowTaskIds = new Long[] {workflowTask.getId()};
-					}
-				});
-
-		workflowTaskAssignableUser =
-			(WorkflowTaskAssignableUser)ArrayUtil.getValue(
-				workflowTaskAssignableUsers.getWorkflowTaskAssignableUsers(),
-				0);
-
-		Assert.assertEquals(
-			workflowTask.getId(),
-			workflowTaskAssignableUser.getWorkflowTaskId());
-
-		Assignee[] assignableUsers =
-			workflowTaskAssignableUser.getAssignableUsers();
-
-		Assert.assertEquals(
-			Arrays.toString(assignableUsers), 1, assignableUsers.length);
-		Assert.assertEquals(assignee, assignableUsers[0]);
+		for (Assignee expectedAssignableUser : expectedAssignableUsers) {
+			Assert.assertTrue(
+				ArrayUtil.contains(
+					workflowTaskAssignableUser.getAssignableUsers(),
+					expectedAssignableUser));
+		}
 	}
 
-	private WorkflowInstance _workflowInstance;
+	private WorkflowTask _workflowTask;
 
 }

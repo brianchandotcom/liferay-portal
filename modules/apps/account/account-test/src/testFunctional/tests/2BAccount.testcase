@@ -88,6 +88,30 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Accounts Name for Test");
 	}
 
+	@description = "This test asserts that an Account Admin can add a new user to an account"
+	@priority = "5"
+	test AccountAdminCanAddNewUserToAccount {
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.addNewUserToBusinessAccount(
+			accountName = "Account Name",
+			assigneeName = "userfn1",
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+		Accounts.viewAssignee(assigneeName = "userfn1");
+	}
+
 	@description = "This test asserts that an Account can be deactivated and will show Active and Inactive filters."
 	@priority = "4"
 	test AccountAdminCanDeactivateAccount {

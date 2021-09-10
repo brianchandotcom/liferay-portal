@@ -35,6 +35,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.io.input.ReversedLinesFileReader;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -69,7 +70,22 @@ public class CISystemHistoryReportUtil {
 			String jobName, String testSuiteName, String dateString)
 		throws IOException {
 
-		_getBuildResultJSONObjects(jobName, testSuiteName, dateString);
+		List<JSONObject> buildResultJSONObjects = _getBuildResultJSONObjects(
+			jobName, testSuiteName, dateString);
+
+		StringBuilder sb = new StringBuilder();
+
+		for (DurationReport durationReport : _getDurationReports()) {
+			sb.append(
+				durationReport.getDateDurationsJavascriptContent(
+					buildResultJSONObjects, dateString));
+		}
+
+		JenkinsResultsParserUtil.write(
+			new File(
+				_CI_SYSTEM_HISTORY_REPORT_DIR,
+				"js/durations-" + dateString + ".js"),
+			sb.toString());
 	}
 
 	protected static void writeDateDurationsJavascriptFiles(
@@ -483,6 +499,27 @@ public class CISystemHistoryReportUtil {
 				"\\\"([^\\\"]+_\\d{4}_\\d{2})\\\"", "$1");
 		}
 
+		public String getDateDurationsJavascriptContent(
+			List<JSONObject> buildResultJSONObjects, String dateString) {
+
+			List<Long> durations = getDurations(buildResultJSONObjects);
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("var ");
+			sb.append(getDateJavascriptVarName(dateString));
+			sb.append(" = ");
+			sb.append(getDateJavascriptVarValue(dateString, durations));
+
+			sb.append("\nvar ");
+			sb.append(getDurationsJavascriptVarName(dateString));
+			sb.append(" = ");
+			sb.append(durations);
+			sb.append("\n\n");
+
+			return sb.toString();
+		}
+
 		public String getDateJavascriptVarName(String dateString) {
 			return JenkinsResultsParserUtil.combine(
 				_getJavascriptID(), "_date_", dateString.replaceAll("-", "_"));
@@ -497,6 +534,99 @@ public class CISystemHistoryReportUtil {
 			}
 
 			return dateDurationJavascriptVars;
+		}
+
+		public String getDateJavascriptVarValue(
+			String dateString, List<Long> durations) {
+
+			JSONArray jsonArray = new JSONArray();
+
+			jsonArray.put(dateString);
+
+			if ((durations == null) || durations.isEmpty()) {
+				return jsonArray.toString();
+			}
+
+			String meanString = JenkinsResultsParserUtil.toDurationString(
+				JenkinsResultsParserUtil.getAverage(durations));
+
+			jsonArray.put("mean: " + meanString);
+
+			jsonArray.put("total: " + String.format("%,d", durations.size()));
+
+			return jsonArray.toString();
+		}
+
+		public List<Long> getDurations(
+			List<JSONObject> buildResultJSONObjects) {
+
+			List<Long> durations = new ArrayList<>();
+
+			for (JSONObject buildResultJSONObject : buildResultJSONObjects) {
+				if (!buildResultJSONObject.has("duration")) {
+					continue;
+				}
+
+				if (_buildType.equals("top.level")) {
+					StopWatchRecordsGroup stopWatchRecordsGroup =
+						new StopWatchRecordsGroup(buildResultJSONObject);
+
+					if (_durationReportType.equals("active.duration")) {
+						durations.add(
+							_getActiveDuration(stopWatchRecordsGroup));
+
+						continue;
+					}
+
+					if (_durationReportType.equals("passive.duration")) {
+						durations.add(
+							_getPassiveDuration(stopWatchRecordsGroup));
+
+						continue;
+					}
+
+					durations.add(
+						_getDuration(
+							stopWatchRecordsGroup, _durationReportType));
+
+					continue;
+				}
+
+				if (!_buildType.equals("downstream") ||
+					!buildResultJSONObject.has("batchResults")) {
+
+					continue;
+				}
+
+				JSONArray batchResultsJSONArray =
+					buildResultJSONObject.getJSONArray("batchResults");
+
+				for (int i = 0; i < batchResultsJSONArray.length(); i++) {
+					JSONObject batchResultsJSONObject =
+						batchResultsJSONArray.getJSONObject(i);
+
+					if (!batchResultsJSONObject.has("buildResults")) {
+						continue;
+					}
+
+					JSONArray buildResultsJSONArray =
+						batchResultsJSONObject.getJSONArray("buildResults");
+
+					for (int j = 0; j < buildResultsJSONArray.length(); j++) {
+						StopWatchRecordsGroup stopWatchRecordsGroup =
+							new StopWatchRecordsGroup(
+								buildResultsJSONArray.getJSONObject(j));
+
+						durations.add(
+							_getDuration(
+								stopWatchRecordsGroup, _durationReportType));
+					}
+				}
+			}
+
+			durations.removeAll(Collections.singleton(0L));
+
+			return durations;
 		}
 
 		public String getDurationsJavascriptVarName(String dateString) {
@@ -530,6 +660,53 @@ public class CISystemHistoryReportUtil {
 			_durationReportType = durationReportType;
 		}
 
+		private long _getActiveDuration(
+			StopWatchRecordsGroup stopWatchRecordsGroup) {
+
+			if (stopWatchRecordsGroup == null) {
+				return 0L;
+			}
+
+			long passiveDuration = _getPassiveDuration(stopWatchRecordsGroup);
+
+			if (passiveDuration == 0) {
+				return 0L;
+			}
+
+			long totalDuration = _getDuration(
+				stopWatchRecordsGroup, "total.duration");
+
+			if (passiveDuration > totalDuration) {
+				return totalDuration;
+			}
+
+			return totalDuration - passiveDuration;
+		}
+
+		private long _getDuration(
+			StopWatchRecordsGroup stopWatchRecordsGroup,
+			String durationReportType) {
+
+			if (stopWatchRecordsGroup == null) {
+				return 0L;
+			}
+
+			StopWatchRecord stopWatchRecord = stopWatchRecordsGroup.get(
+				durationReportType);
+
+			if (stopWatchRecord == null) {
+				return 0L;
+			}
+
+			long duration = stopWatchRecord.getDuration();
+
+			if (duration < 0) {
+				return 0L;
+			}
+
+			return duration;
+		}
+
 		private String _getID() {
 			String id = _buildType + "-" + _durationReportType;
 
@@ -546,6 +723,28 @@ public class CISystemHistoryReportUtil {
 			javascriptID = javascriptID.replaceAll("\\.", "_");
 
 			return javascriptID;
+		}
+
+		private long _getPassiveDuration(
+			StopWatchRecordsGroup stopWatchRecordsGroup) {
+
+			if (stopWatchRecordsGroup == null) {
+				return 0L;
+			}
+
+			long passiveDuration = 0L;
+
+			passiveDuration += _getDuration(
+				stopWatchRecordsGroup, "wait.for.invoked.jobs");
+			passiveDuration += _getDuration(
+				stopWatchRecordsGroup, "wait.for.invoked.smoke.jobs");
+
+			if (passiveDuration > 0L) {
+				return passiveDuration;
+			}
+
+			return _getDuration(
+				stopWatchRecordsGroup, "invoke.downstream.builds");
 		}
 
 		private final String _buildType;

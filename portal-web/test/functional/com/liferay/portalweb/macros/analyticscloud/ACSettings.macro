@@ -701,6 +701,10 @@ definition {
 	}
 
 	macro getCurrentNumber {
+		WaitForVisible(
+			key_metricName = "${metricName}",
+			locator1 = "ACUsage#USAGE_CURRENT_NUMBER");
+
 		var current = selenium.getText("//div[contains(@class,'overview-usage')][.//h3[contains(@class,'metric-name')][normalize-space(text())='${metricName}']]//span[contains(@class,'metric-current')]");
 
 		return "${current}";

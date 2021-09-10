@@ -460,7 +460,7 @@ definition {
 
 		CreateObject.viewObject(labelName = "CustomObject");
 
-		CreateObject.editPluralLabel(labelName = "Update Plural Label Custom Object");
+		CreateObject.editPluralLabel(pluralLabelName = "Update Plural Label Custom Object");
 
 		CreateObject.saveObject();
 
@@ -468,16 +468,30 @@ definition {
 
 		CreateObject.viewObject(labelName = "CustomObject");
 
-		CreateObject.viewObjectPluralLabel(labelName = "Update Plural Label Custom Object");
+		CreateObject.viewObjectPluralLabel(pluralLabelName = "Update Plural Label Custom Object");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object plural label before it is published"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanUpdateObjectPluralLabelBeforePublished {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-138838 CanUpdateObjectPluralLabelBeforePublished pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		CreateObject.viewObject(labelName = "CustomObject");
+
+		CreateObject.editPluralLabel(pluralLabelName = "Update Plural Label Custom Object");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.openObjectAdmin();
+
+		CreateObject.viewObject(labelName = "CustomObject");
+
+		CreateObject.viewObjectPluralLabel(pluralLabelName = "Update Plural Label Custom Object");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object scope before it is published"

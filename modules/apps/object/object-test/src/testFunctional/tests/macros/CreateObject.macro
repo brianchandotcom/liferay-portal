@@ -9,7 +9,7 @@ definition {
 	macro editPluralLabel {
 		Type(
 			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
-			value1 = "${labelName}");
+			value1 = "${pluralLabelName}");
 	}
 
 	macro saveObject {
@@ -31,7 +31,7 @@ definition {
 	macro viewObjectPluralLabel {
 		AssertTextEquals(
 			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
-			value1 = "${labelName}");
+			value1 = "${pluralLabelName}");
 	}
 
 }

@@ -249,7 +249,6 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
-	@ignore = "true"
 	test AssertSidecarDoesNotCluster {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";

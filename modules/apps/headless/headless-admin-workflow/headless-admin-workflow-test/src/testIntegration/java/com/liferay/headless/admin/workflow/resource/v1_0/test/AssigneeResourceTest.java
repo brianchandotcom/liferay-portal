@@ -16,7 +16,6 @@ package com.liferay.headless.admin.workflow.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.Assignee;
-import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowInstance;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTask;
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.AssigneeTestUtil;
@@ -27,7 +26,6 @@ import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowTaskT
 import com.liferay.portal.kernel.test.rule.DataGuard;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
 /**
@@ -37,14 +35,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class AssigneeResourceTest extends BaseAssigneeResourceTestCase {
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		BaseAssigneeResourceTestCase.setUpClass();
-
-		_workflowDefinition =
-			WorkflowDefinitionTestUtil.addWorkflowDefinition();
-	}
-
 	@Before
 	@Override
 	public void setUp() throws Exception {
@@ -52,7 +42,7 @@ public class AssigneeResourceTest extends BaseAssigneeResourceTestCase {
 
 		_workflowInstance = WorkflowInstanceTestUtil.addWorkflowInstance(
 			testGroup.getGroupId(), ObjectReviewedTestUtil.addObjectReviewed(),
-			_workflowDefinition);
+			WorkflowDefinitionTestUtil.addWorkflowDefinition());
 	}
 
 	@Override
@@ -77,8 +67,6 @@ public class AssigneeResourceTest extends BaseAssigneeResourceTestCase {
 
 		return workflowTask.getId();
 	}
-
-	private static WorkflowDefinition _workflowDefinition;
 
 	private WorkflowInstance _workflowInstance;
 

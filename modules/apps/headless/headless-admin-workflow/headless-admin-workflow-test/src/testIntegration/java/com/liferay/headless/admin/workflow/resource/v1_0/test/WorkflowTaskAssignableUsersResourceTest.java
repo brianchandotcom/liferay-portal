@@ -16,7 +16,6 @@ package com.liferay.headless.admin.workflow.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.Assignee;
-import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowInstance;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTask;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTaskAssignableUser;
@@ -34,7 +33,6 @@ import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -46,14 +44,6 @@ import org.junit.runner.RunWith;
 public class WorkflowTaskAssignableUsersResourceTest
 	extends BaseWorkflowTaskAssignableUsersResourceTestCase {
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		BaseWorkflowTaskAssignableUsersResourceTestCase.setUpClass();
-
-		_workflowDefinition =
-			WorkflowDefinitionTestUtil.addWorkflowDefinition();
-	}
-
 	@Before
 	@Override
 	public void setUp() throws Exception {
@@ -61,7 +51,7 @@ public class WorkflowTaskAssignableUsersResourceTest
 
 		_workflowInstance = WorkflowInstanceTestUtil.addWorkflowInstance(
 			testGroup.getGroupId(), ObjectReviewedTestUtil.addObjectReviewed(),
-			_workflowDefinition);
+			WorkflowDefinitionTestUtil.addWorkflowDefinition());
 	}
 
 	@Override
@@ -120,8 +110,6 @@ public class WorkflowTaskAssignableUsersResourceTest
 			Arrays.toString(assignableUsers), 1, assignableUsers.length);
 		Assert.assertEquals(assignee, assignableUsers[0]);
 	}
-
-	private static WorkflowDefinition _workflowDefinition;
 
 	private WorkflowInstance _workflowInstance;
 

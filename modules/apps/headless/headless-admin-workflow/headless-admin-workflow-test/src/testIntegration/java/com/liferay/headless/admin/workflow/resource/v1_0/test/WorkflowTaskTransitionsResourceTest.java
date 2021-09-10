@@ -16,7 +16,6 @@ package com.liferay.headless.admin.workflow.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.Transition;
-import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowInstance;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTask;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTaskIds;
@@ -33,7 +32,6 @@ import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -45,14 +43,6 @@ import org.junit.runner.RunWith;
 public class WorkflowTaskTransitionsResourceTest
 	extends BaseWorkflowTaskTransitionsResourceTestCase {
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		BaseWorkflowTaskTransitionsResourceTestCase.setUpClass();
-
-		_workflowDefinition =
-			WorkflowDefinitionTestUtil.addWorkflowDefinition();
-	}
-
 	@Before
 	@Override
 	public void setUp() throws Exception {
@@ -60,7 +50,7 @@ public class WorkflowTaskTransitionsResourceTest
 
 		_workflowInstance = WorkflowInstanceTestUtil.addWorkflowInstance(
 			testGroup.getGroupId(), ObjectReviewedTestUtil.addObjectReviewed(),
-			_workflowDefinition);
+			WorkflowDefinitionTestUtil.addWorkflowDefinition());
 	}
 
 	@Override
@@ -94,8 +84,6 @@ public class WorkflowTaskTransitionsResourceTest
 					expectedTransitionNames, transition.getName()));
 		}
 	}
-
-	private static WorkflowDefinition _workflowDefinition;
 
 	private WorkflowInstance _workflowInstance;
 

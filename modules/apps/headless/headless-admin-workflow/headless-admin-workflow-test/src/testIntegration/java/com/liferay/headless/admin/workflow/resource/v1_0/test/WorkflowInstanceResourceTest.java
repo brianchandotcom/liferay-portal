@@ -32,7 +32,7 @@ import java.util.List;
 import org.hamcrest.CoreMatchers;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -44,9 +44,10 @@ import org.junit.runner.RunWith;
 public class WorkflowInstanceResourceTest
 	extends BaseWorkflowInstanceResourceTestCase {
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		BaseWorkflowInstanceResourceTestCase.setUpClass();
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
 
 		_workflowDefinition =
 			WorkflowDefinitionTestUtil.addWorkflowDefinition();
@@ -213,6 +214,6 @@ public class WorkflowInstanceResourceTest
 		}
 	}
 
-	private static WorkflowDefinition _workflowDefinition;
+	private WorkflowDefinition _workflowDefinition;
 
 }

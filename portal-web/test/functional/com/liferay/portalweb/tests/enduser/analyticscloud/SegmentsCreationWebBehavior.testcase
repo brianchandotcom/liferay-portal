@@ -601,7 +601,7 @@ definition {
 			month = "${staticMonth}",
 			occurenceNumber = "4",
 			searchTerm = "Web Content AC Title",
-			timeOption = "after",
+			timeOption = "before",
 			year = "${staticYear}");
 
 		ACSegments.saveSegment();

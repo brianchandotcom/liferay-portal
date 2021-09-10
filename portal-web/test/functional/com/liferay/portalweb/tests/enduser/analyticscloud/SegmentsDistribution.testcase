@@ -65,9 +65,59 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanDistributionChartFilteredDateProperty {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8626 CanDistributionChartFilteredDateProperty pending implementation
+		task ("View AC Page as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Add new user as member") {
+			ACSegments.addStaticMember(tableMember = "userfn userln");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to Segments") {
+			ACNavigation.goToSegments();
+
+			ACSegments.accessSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Filter Attribute") {
+			ACNavigation.switchTab(tabName = "Distribution");
+
+			ACSegments.selectDistributionByAttribute(attribute = "birthDate");
+		}
+
+		task ("View Chart Entry") {
+			ACSegments.viewBreakdownChartsEntry(key_entry = "1986-05-31T00:00:00.000Z - 100.0%");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8627 | Test Summary: Segment distribution chart can be filtered by number property"

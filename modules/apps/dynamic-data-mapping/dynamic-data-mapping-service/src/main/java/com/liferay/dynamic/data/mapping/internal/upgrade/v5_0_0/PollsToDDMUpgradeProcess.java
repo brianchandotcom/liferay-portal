@@ -128,6 +128,10 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		_upgradeDDMFormInstance();
 
+		if (!hasTable("PollsQuestion")) {
+			return;
+		}
+
 		_upgradePollsQuestions();
 
 		runSQL("delete from PollsVote");

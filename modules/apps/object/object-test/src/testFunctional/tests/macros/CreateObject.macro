@@ -1,5 +1,11 @@
 definition {
 
+	macro assertObjectLabel {
+		AssertTextEquals(
+			locator1 = "CreateObject#OBJECT_LABEL",
+			value1 = "${labelName}");
+	}
+
 	macro editLabel {
 		Type(
 			locator1 = "CreateObject#OBJECT_LABEL",

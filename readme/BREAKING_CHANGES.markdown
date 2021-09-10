@@ -731,7 +731,7 @@ This change improves OIDC refresh token handling. The change was made for these 
 
 #### What changed?
 
-All module language keys were moved to a module called portal-language-lang at `liferay-[dxp|portal]/modules/apps/portal-language/portal-language-lang`. In some cases where modules used the same language key name but different values, the language keys were renamed.
+All module language keys were moved to a module called `portal-language-lang` at `liferay-[dxp|portal]/modules/apps/portal-language/portal-language-lang`. In some cases where modules used language keys with the same name but different values, language keys were added to accommodate the different values. From an affected module's perspective, the language key has been renamed.
 
 #### Who is affected?
 
@@ -743,6 +743,6 @@ Rename all instances of the renamed language keys to their new names based on th
 
 #### Why was this change made?
 
-Centralized language keys are easier to manage. Key consolidation, however, required renaming keys that had conflicting values.
+Centralized language keys are easier to manage.
 
 ---------------------------------------

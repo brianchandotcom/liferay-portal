@@ -261,10 +261,14 @@ definition {
 			if (IsElementNotPresent(
 					key_displayStyle = "${displayStyle}", locator1 =
 					"PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
-				Click(key_displayStyle = "");
+				Click(
+						key_displayStyle = "",
+						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 			}
 
-			AssertVisible(key_displayStyle = "${displayStyle}");
+			AssertVisible(
+					key_displayStyle = "${displayStyle}",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
 
 			Navigator.gotoNavTab(navTab = "${navTab}");
 
@@ -276,6 +280,7 @@ definition {
 					key_elementType = "Container",
 					key_fragmentName = "${fragmentName}",
 					key_position = "${position}",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM",
 					locator2 = "PageEditor#CONTAINER_CONTAINER",
 					value1 = "");
 			}
@@ -288,34 +293,35 @@ definition {
 					key_elementType = "Container",
 					key_fragmentName = "${fragmentName}",
 					key_position = "${position}",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 					locator2 = "PageEditor#CONTAINER_CONTAINER",
 					value1 = "");
 			}
 
 			if (("${navTab}" == "Widgets") && ("${displayStyle}" == "card")) {
 				Type.sendKeysApplicationSearch(
-					locator1 =
-					"PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+					locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
 					value1 = "${portletName}");
 
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_elementType = "Container",
 					key_portletName = "${portletName}",
 					key_position = "${position}",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET_CARD_ITEM",
 					locator2 = "PageEditor#CONTAINER_CONTAINER",
 					value1 = "${portletName}");
 			}
 
 			if (("${navTab}" == "Widgets") && ("${displayStyle}" == "list")) {
 				Type.sendKeysApplicationSearch(
-					locator1 =
-					"PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+					locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
 					value1 = "${portletName}");
 
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_elementType = "Container",
 					key_portletName = "${portletName}",
 					key_position = "${position}",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
 					locator2 = "PageEditor#CONTAINER_CONTAINER",
 					value1 = "${portletName}");
 			}
@@ -324,26 +330,21 @@ definition {
 
 			if ("${navTab}" == "Fragments") {
 				AssertElementPresent(
-					key_elementHeader =
-					"//li[contains(@class,'topper__title') and contains(.,'${fragmentName}')]",
+					key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${fragmentName}')]",
 					key_elementType = "Container",
 					key_position = "${position}",
-					locator1 =
-					"PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+					locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 			}
 
 			if ("${navTab}" == "Widgets") {
 				AssertElementPresent(
-					key_elementHeader =
-					"//li[contains(@class,'topper__title') and contains(.,'${portletName}')]",
+					key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${portletName}')]",
 					key_elementType = "Container",
 					key_position = "${position}",
-					locator1 =
-					"PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+					locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 
 				Click(
-					locator1 =
-					"PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_CLEAR_BUTTON");
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_CLEAR_BUTTON");
 			}
 		}
 		else {
@@ -3159,7 +3160,9 @@ definition {
 		if (!(isSet(targetElementName))) {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_elementName = "${elementName}",
-				key_targetElementName = "Container");
+				key_targetElementName = "Container",
+				locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",
+				locator2 = "Treeview#NODE_DRAGGABLE_TARGET_ELEMENT");
 		}
 		else {
 			WaitForElementPresent(

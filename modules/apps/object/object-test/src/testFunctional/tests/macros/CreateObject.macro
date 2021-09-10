@@ -27,11 +27,11 @@ definition {
 			locator1 = "CreateObject#OBJECT_LABEL",
 			value1 = "${labelName}");
 	}
+
 	macro viewObjectPluralLabel {
 		AssertTextEquals(
 			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
 			value1 = "${labelName}");
 	}
-
 
 }

@@ -761,7 +761,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
-			conditionOperator = "Is empty",
+			conditionOperator = "Is Empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(

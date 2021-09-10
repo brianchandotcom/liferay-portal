@@ -394,7 +394,7 @@ definition {
 		FormFields.enableCheckbox(fieldName = "Validation");
 
 		FormFields.editValidationTargetArgument(
-			validationArgument = "Is greater than",
+			validationArgument = "Is Greater Than",
 			validationErrorMessage = "Test Error",
 			validationInput = "122");
 
@@ -441,7 +441,7 @@ definition {
 		FormFields.enableCheckbox(fieldName = "Validation");
 
 		FormFields.editValidationTargetArgument(
-			validationArgument = "Is greater than or Equal To",
+			validationArgument = "Is Greater Than Or Equal To",
 			validationErrorMessage = "Test Error",
 			validationInput = "123");
 
@@ -488,7 +488,7 @@ definition {
 		FormFields.enableCheckbox(fieldName = "Validation");
 
 		FormFields.editValidationTargetArgument(
-			validationArgument = "Is less than",
+			validationArgument = "Is Less Than",
 			validationErrorMessage = "Test Error",
 			validationInput = "123");
 
@@ -535,7 +535,7 @@ definition {
 		FormFields.enableCheckbox(fieldName = "Validation");
 
 		FormFields.editValidationTargetArgument(
-			validationArgument = "Is less than or Equal To",
+			validationArgument = "Is Less Than Or Equal To",
 			validationErrorMessage = "Test Error",
 			validationInput = "123");
 

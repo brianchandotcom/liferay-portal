@@ -492,7 +492,7 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Numeric",
 			conditionFieldValue = "5",
-			conditionOperator = "Is greater than or Equal To",
+			conditionOperator = "Is Greater Than Or Equal To",
 			conditionRowNumber = "1",
 			conditionValueType = "Value");
 
@@ -508,7 +508,7 @@ definition {
 			actionTarget = "Paragraph",
 			conditionField = "Numeric",
 			conditionFieldConstant = "5",
-			conditionOperator = "Is greater than or Equal To",
+			conditionOperator = "Is Greater Than Or Equal To",
 			ruleNumber = "1");
 
 		FormsAdminNavigator.gotoFormBuilder();
@@ -563,7 +563,7 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Numeric",
 			conditionFieldValue = "5",
-			conditionOperator = "Is greater than",
+			conditionOperator = "Is Greater Than",
 			conditionRowNumber = "1",
 			conditionValueType = "Value");
 
@@ -578,7 +578,7 @@ definition {
 			action = "Enable",
 			actionTarget = "Text",
 			conditionField = "Numeric",
-			conditionOperator = "Is greater than",
+			conditionOperator = "Is Greater Than",
 			ruleNumber = "1");
 
 		FormsAdminNavigator.gotoFormBuilder();
@@ -636,7 +636,7 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Numeric",
 			conditionFieldValue = "5",
-			conditionOperator = "Is less than or Equal To",
+			conditionOperator = "Is Less Than Or Equal To",
 			conditionRowNumber = "1",
 			conditionValueType = "Value");
 
@@ -651,7 +651,7 @@ definition {
 			action = "Show",
 			actionTarget = "Text",
 			conditionField = "Numeric",
-			conditionOperator = "Is less than or Equal To",
+			conditionOperator = "Is Less Than Or Equal To",
 			ruleNumber = "1");
 
 		FormsAdminNavigator.gotoFormBuilder();
@@ -721,7 +721,7 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Numeric",
 			conditionFieldValue = "5",
-			conditionOperator = "Is less than",
+			conditionOperator = "Is Less Than",
 			conditionRowNumber = "1",
 			conditionValueType = "Value");
 
@@ -736,7 +736,7 @@ definition {
 			action = "Show",
 			actionTarget = "Paragraph",
 			conditionField = "Numeric",
-			conditionOperator = "Is less than",
+			conditionOperator = "Is Less Than",
 			ruleNumber = "1");
 
 		FormsAdminNavigator.gotoFormBuilder();

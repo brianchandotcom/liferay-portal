@@ -124,4 +124,10 @@ definition {
 		}
 	}
 
+	macro viewTemplateNotPresent {
+		AssertElementNotPresent(
+			key_tableEntry = "${informationTemplateName}",
+			locator1 = "LexiconTable#TABLE_ENTRY");
+	}
+
 }

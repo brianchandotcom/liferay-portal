@@ -138,6 +138,8 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setModifiedDate(RandomTestUtil.nextDate());
 
+		newObjectDefinition.setActive(RandomTestUtil.randomBoolean());
+
 		newObjectDefinition.setDBTableName(RandomTestUtil.randomString());
 
 		newObjectDefinition.setLabel(RandomTestUtil.randomString());
@@ -191,6 +193,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingObjectDefinition.getModifiedDate()),
 			Time.getShortTimestamp(newObjectDefinition.getModifiedDate()));
+		Assert.assertEquals(
+			existingObjectDefinition.isActive(),
+			newObjectDefinition.isActive());
 		Assert.assertEquals(
 			existingObjectDefinition.getDBTableName(),
 			newObjectDefinition.getDBTableName());
@@ -305,10 +310,11 @@ public class ObjectDefinitionPersistenceTest {
 			"ObjectDefinition", "mvccVersion", true, "uuid", true,
 			"objectDefinitionId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"dbTableName", true, "label", true, "name", true, "panelAppOrder",
-			true, "panelCategoryKey", true, "pkObjectFieldDBColumnName", true,
-			"pkObjectFieldName", true, "pluralLabel", true, "scope", true,
-			"system", true, "version", true, "status", true);
+			"active", true, "dbTableName", true, "label", true, "name", true,
+			"panelAppOrder", true, "panelCategoryKey", true,
+			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
+			"pluralLabel", true, "scope", true, "system", true, "version", true,
+			"status", true);
 	}
 
 	@Test
@@ -610,6 +616,8 @@ public class ObjectDefinitionPersistenceTest {
 		objectDefinition.setCreateDate(RandomTestUtil.nextDate());
 
 		objectDefinition.setModifiedDate(RandomTestUtil.nextDate());
+
+		objectDefinition.setActive(RandomTestUtil.randomBoolean());
 
 		objectDefinition.setDBTableName(RandomTestUtil.randomString());
 

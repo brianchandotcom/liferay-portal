@@ -41,6 +41,7 @@ public class ObjectDefinitionSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setActive(model.isActive());
 		soapModel.setDBTableName(model.getDBTableName());
 		soapModel.setLabel(model.getLabel());
 		soapModel.setName(model.getName());
@@ -179,6 +180,18 @@ public class ObjectDefinitionSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public boolean getActive() {
+		return _active;
+	}
+
+	public boolean isActive() {
+		return _active;
+	}
+
+	public void setActive(boolean active) {
+		_active = active;
+	}
+
 	public String getDBTableName() {
 		return _dbTableName;
 	}
@@ -287,6 +300,7 @@ public class ObjectDefinitionSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _active;
 	private String _dbTableName;
 	private String _label;
 	private String _name;

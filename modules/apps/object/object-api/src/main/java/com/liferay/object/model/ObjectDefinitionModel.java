@@ -209,6 +209,27 @@ public interface ObjectDefinitionModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the active of this object definition.
+	 *
+	 * @return the active of this object definition
+	 */
+	public boolean getActive();
+
+	/**
+	 * Returns <code>true</code> if this object definition is active.
+	 *
+	 * @return <code>true</code> if this object definition is active; <code>false</code> otherwise
+	 */
+	public boolean isActive();
+
+	/**
+	 * Sets whether this object definition is active.
+	 *
+	 * @param active the active of this object definition
+	 */
+	public void setActive(boolean active);
+
+	/**
 	 * Returns the db table name of this object definition.
 	 *
 	 * @return the db table name of this object definition

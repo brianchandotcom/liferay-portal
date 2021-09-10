@@ -75,7 +75,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 				</clay:row>
 
 				<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-					<aui:input label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= objectDefinition.isSystem() %>" />
+					<aui:input label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= objectDefinition.isActive() %>" />
 				</aui:field-wrapper>
 			</clay:sheet-section>
 

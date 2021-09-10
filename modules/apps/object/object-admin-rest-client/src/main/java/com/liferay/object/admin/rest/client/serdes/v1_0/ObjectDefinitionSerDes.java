@@ -74,6 +74,16 @@ public class ObjectDefinitionSerDes {
 			sb.append(_toJSON(objectDefinition.getActions()));
 		}
 
+		if (objectDefinition.getActive() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"active\": ");
+
+			sb.append(objectDefinition.getActive());
+		}
+
 		if (objectDefinition.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -290,6 +300,13 @@ public class ObjectDefinitionSerDes {
 			map.put("actions", String.valueOf(objectDefinition.getActions()));
 		}
 
+		if (objectDefinition.getActive() == null) {
+			map.put("active", null);
+		}
+		else {
+			map.put("active", String.valueOf(objectDefinition.getActive()));
+		}
+
 		if (objectDefinition.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -423,6 +440,11 @@ public class ObjectDefinitionSerDes {
 					objectDefinition.setActions(
 						(Map)ObjectDefinitionSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "active")) {
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setActive((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

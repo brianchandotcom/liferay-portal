@@ -103,14 +103,15 @@ public class ObjectDefinitionServiceUtil {
 	}
 
 	public static ObjectDefinition updateCustomObjectDefinition(
-			Long objectDefinitionId, Map<java.util.Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
+			Long objectDefinitionId, boolean active,
+			Map<java.util.Locale, String> labelMap, String name,
+			String panelAppOrder, String panelCategoryKey,
 			Map<java.util.Locale, String> pluralLabelMap, String scope)
 		throws PortalException {
 
 		return getService().updateCustomObjectDefinition(
-			objectDefinitionId, labelMap, name, panelAppOrder, panelCategoryKey,
-			pluralLabelMap, scope);
+			objectDefinitionId, active, labelMap, name, panelAppOrder,
+			panelCategoryKey, pluralLabelMap, scope);
 	}
 
 	public static ObjectDefinitionService getService() {

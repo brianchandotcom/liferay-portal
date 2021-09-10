@@ -7,6 +7,7 @@ create table ObjectDefinition (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	active_ BOOLEAN,
 	dbTableName VARCHAR(75) null,
 	label STRING null,
 	name VARCHAR(75) null,

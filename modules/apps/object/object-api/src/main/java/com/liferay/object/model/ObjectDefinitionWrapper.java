@@ -51,6 +51,7 @@ public class ObjectDefinitionWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("active", isActive());
 		attributes.put("dbTableName", getDBTableName());
 		attributes.put("label", getLabel());
 		attributes.put("name", getName());
@@ -116,6 +117,12 @@ public class ObjectDefinitionWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Boolean active = (Boolean)attributes.get("active");
+
+		if (active != null) {
+			setActive(active);
 		}
 
 		String dbTableName = (String)attributes.get("dbTableName");
@@ -195,6 +202,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public ObjectDefinition cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	/**
+	 * Returns the active of this object definition.
+	 *
+	 * @return the active of this object definition
+	 */
+	@Override
+	public boolean getActive() {
+		return model.getActive();
 	}
 
 	@Override
@@ -594,6 +611,16 @@ public class ObjectDefinitionWrapper
 		return model.getVersion();
 	}
 
+	/**
+	 * Returns <code>true</code> if this object definition is active.
+	 *
+	 * @return <code>true</code> if this object definition is active; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isActive() {
+		return model.isActive();
+	}
+
 	@Override
 	public boolean isApproved() {
 		return model.isApproved();
@@ -627,6 +654,16 @@ public class ObjectDefinitionWrapper
 		throws com.liferay.portal.kernel.exception.LocaleException {
 
 		model.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	/**
+	 * Sets whether this object definition is active.
+	 *
+	 * @param active the active of this object definition
+	 */
+	@Override
+	public void setActive(boolean active) {
+		model.setActive(active);
 	}
 
 	/**

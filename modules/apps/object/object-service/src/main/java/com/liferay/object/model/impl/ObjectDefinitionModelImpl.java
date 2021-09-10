@@ -88,9 +88,9 @@ public class ObjectDefinitionModelImpl
 		{"objectDefinitionId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"dbTableName", Types.VARCHAR}, {"label", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"panelAppOrder", Types.VARCHAR},
-		{"panelCategoryKey", Types.VARCHAR},
+		{"active_", Types.BOOLEAN}, {"dbTableName", Types.VARCHAR},
+		{"label", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"panelAppOrder", Types.VARCHAR}, {"panelCategoryKey", Types.VARCHAR},
 		{"pkObjectFieldDBColumnName", Types.VARCHAR},
 		{"pkObjectFieldName", Types.VARCHAR}, {"pluralLabel", Types.VARCHAR},
 		{"scope", Types.VARCHAR}, {"system_", Types.BOOLEAN},
@@ -109,6 +109,7 @@ public class ObjectDefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("dbTableName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("label", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
@@ -124,7 +125,7 @@ public class ObjectDefinitionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dbTableName VARCHAR(75) null,label STRING null,name VARCHAR(75) null,panelAppOrder VARCHAR(75) null,panelCategoryKey VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,pluralLabel STRING null,scope VARCHAR(75) null,system_ BOOLEAN,version INTEGER,status INTEGER)";
+		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,dbTableName VARCHAR(75) null,label STRING null,name VARCHAR(75) null,panelAppOrder VARCHAR(75) null,panelCategoryKey VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,pluralLabel STRING null,scope VARCHAR(75) null,system_ BOOLEAN,version INTEGER,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectDefinition";
 
@@ -207,6 +208,7 @@ public class ObjectDefinitionModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setActive(soapModel.isActive());
 		model.setDBTableName(soapModel.getDBTableName());
 		model.setLabel(soapModel.getLabel());
 		model.setName(soapModel.getName());
@@ -417,6 +419,10 @@ public class ObjectDefinitionModelImpl
 			"modifiedDate",
 			(BiConsumer<ObjectDefinition, Date>)
 				ObjectDefinition::setModifiedDate);
+		attributeGetterFunctions.put("active", ObjectDefinition::getActive);
+		attributeSetterBiConsumers.put(
+			"active",
+			(BiConsumer<ObjectDefinition, Boolean>)ObjectDefinition::setActive);
 		attributeGetterFunctions.put(
 			"dbTableName", ObjectDefinition::getDBTableName);
 		attributeSetterBiConsumers.put(
@@ -655,6 +661,27 @@ public class ObjectDefinitionModelImpl
 		}
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public boolean getActive() {
+		return _active;
+	}
+
+	@JSON
+	@Override
+	public boolean isActive() {
+		return _active;
+	}
+
+	@Override
+	public void setActive(boolean active) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_active = active;
 	}
 
 	@JSON
@@ -1256,6 +1283,7 @@ public class ObjectDefinitionModelImpl
 		objectDefinitionImpl.setUserName(getUserName());
 		objectDefinitionImpl.setCreateDate(getCreateDate());
 		objectDefinitionImpl.setModifiedDate(getModifiedDate());
+		objectDefinitionImpl.setActive(isActive());
 		objectDefinitionImpl.setDBTableName(getDBTableName());
 		objectDefinitionImpl.setLabel(getLabel());
 		objectDefinitionImpl.setName(getName());
@@ -1295,6 +1323,8 @@ public class ObjectDefinitionModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		objectDefinitionImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		objectDefinitionImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
 		objectDefinitionImpl.setDBTableName(
 			this.<String>getColumnOriginalValue("dbTableName"));
 		objectDefinitionImpl.setLabel(
@@ -1436,6 +1466,8 @@ public class ObjectDefinitionModelImpl
 		else {
 			objectDefinitionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
+
+		objectDefinitionCacheModel.active = isActive();
 
 		objectDefinitionCacheModel.dbTableName = getDBTableName();
 
@@ -1619,6 +1651,7 @@ public class ObjectDefinitionModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private boolean _active;
 	private String _dbTableName;
 	private String _label;
 	private String _labelCurrentLanguageId;
@@ -1671,6 +1704,7 @@ public class ObjectDefinitionModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("active_", _active);
 		_columnOriginalValues.put("dbTableName", _dbTableName);
 		_columnOriginalValues.put("label", _label);
 		_columnOriginalValues.put("name", _name);
@@ -1692,6 +1726,7 @@ public class ObjectDefinitionModelImpl
 		Map<String, String> attributeNames = new HashMap<>();
 
 		attributeNames.put("uuid_", "uuid");
+		attributeNames.put("active_", "active");
 		attributeNames.put("system_", "system");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
@@ -1724,29 +1759,31 @@ public class ObjectDefinitionModelImpl
 
 		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("dbTableName", 256L);
+		columnBitmasks.put("active_", 256L);
 
-		columnBitmasks.put("label", 512L);
+		columnBitmasks.put("dbTableName", 512L);
 
-		columnBitmasks.put("name", 1024L);
+		columnBitmasks.put("label", 1024L);
 
-		columnBitmasks.put("panelAppOrder", 2048L);
+		columnBitmasks.put("name", 2048L);
 
-		columnBitmasks.put("panelCategoryKey", 4096L);
+		columnBitmasks.put("panelAppOrder", 4096L);
 
-		columnBitmasks.put("pkObjectFieldDBColumnName", 8192L);
+		columnBitmasks.put("panelCategoryKey", 8192L);
 
-		columnBitmasks.put("pkObjectFieldName", 16384L);
+		columnBitmasks.put("pkObjectFieldDBColumnName", 16384L);
 
-		columnBitmasks.put("pluralLabel", 32768L);
+		columnBitmasks.put("pkObjectFieldName", 32768L);
 
-		columnBitmasks.put("scope", 65536L);
+		columnBitmasks.put("pluralLabel", 65536L);
 
-		columnBitmasks.put("system_", 131072L);
+		columnBitmasks.put("scope", 131072L);
 
-		columnBitmasks.put("version", 262144L);
+		columnBitmasks.put("system_", 262144L);
 
-		columnBitmasks.put("status", 524288L);
+		columnBitmasks.put("version", 524288L);
+
+		columnBitmasks.put("status", 1048576L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

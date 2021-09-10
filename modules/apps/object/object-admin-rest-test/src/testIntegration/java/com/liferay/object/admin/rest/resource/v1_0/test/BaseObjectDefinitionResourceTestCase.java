@@ -684,6 +684,14 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("active", additionalAssertFieldName)) {
+				if (objectDefinition.getActive() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("label", additionalAssertFieldName)) {
 				if (objectDefinition.getLabel() == null) {
 					valid = false;
@@ -864,6 +872,17 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				if (!equals(
 						(Map)objectDefinition1.getActions(),
 						(Map)objectDefinition2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("active", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectDefinition1.getActive(),
+						objectDefinition2.getActive())) {
 
 					return false;
 				}
@@ -1116,6 +1135,11 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("active")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("dateCreated")) {
 			if (operator.equals("between")) {
 				sb = new StringBundler();
@@ -1295,6 +1319,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	protected ObjectDefinition randomObjectDefinition() throws Exception {
 		return new ObjectDefinition() {
 			{
+				active = RandomTestUtil.randomBoolean();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();

@@ -897,6 +897,7 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Collections.emptyList());
 
+		Assert.assertEquals(true, objectDefinition.isActive());
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Able"),
 			objectDefinition.getLabelMap());
@@ -908,10 +909,12 @@ public class ObjectDefinitionLocalServiceTest {
 		objectDefinition =
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
 				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.isActive(),
 				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
 				LocalizedMapUtil.getLocalizedMap("Ables"),
 				objectDefinition.getScope());
 
+		Assert.assertEquals(true, objectDefinition.isActive());
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Able"),
 			objectDefinition.getLabelMap());
@@ -922,11 +925,12 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition =
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
-				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getObjectDefinitionId(), false,
 				LocalizedMapUtil.getLocalizedMap("Baker"), "Baker", null, null,
 				LocalizedMapUtil.getLocalizedMap("Bakers"),
 				objectDefinition.getScope());
 
+		Assert.assertEquals(false, objectDefinition.isActive());
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Baker"),
 			objectDefinition.getLabelMap());
@@ -941,11 +945,12 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition =
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
-				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getObjectDefinitionId(), true,
 				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie", null,
 				null, LocalizedMapUtil.getLocalizedMap("Charlies"),
 				objectDefinition.getScope());
 
+		Assert.assertEquals(true, objectDefinition.isActive());
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Charlie"),
 			objectDefinition.getLabelMap());

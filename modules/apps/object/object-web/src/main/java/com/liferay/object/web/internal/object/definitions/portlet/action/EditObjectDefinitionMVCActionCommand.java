@@ -76,6 +76,7 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		long objectDefinitionId = ParamUtil.getLong(
 			actionRequest, "objectDefinitionId");
 
+		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 		Map<Locale, String> labelMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "label");
 		String name = ParamUtil.getString(actionRequest, "shortName");
@@ -89,7 +90,7 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			_objectDefinitionService.updateCustomObjectDefinition(
-				objectDefinitionId, labelMap, name, panelCategoryOrder,
+				objectDefinitionId, active, labelMap, name, panelCategoryOrder,
 				panelCategoryKey, pluralLabelMap, scope);
 		}
 		catch (Exception exception) {

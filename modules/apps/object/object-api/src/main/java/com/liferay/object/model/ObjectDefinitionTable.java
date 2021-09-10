@@ -52,6 +52,8 @@ public class ObjectDefinitionTable extends BaseTable<ObjectDefinitionTable> {
 	public final Column<ObjectDefinitionTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<ObjectDefinitionTable, Boolean> active = createColumn(
+		"active_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, String> dbTableName =
 		createColumn(
 			"dbTableName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

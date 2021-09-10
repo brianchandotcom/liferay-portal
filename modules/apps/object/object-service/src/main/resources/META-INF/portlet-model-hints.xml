@@ -10,6 +10,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="active" type="boolean" />
 		<field name="DBTableName" type="String">
 			<validator name="required" />
 		</field>

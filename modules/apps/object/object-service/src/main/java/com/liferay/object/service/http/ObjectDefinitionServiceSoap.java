@@ -228,9 +228,10 @@ public class ObjectDefinitionServiceSoap {
 
 	public static com.liferay.object.model.ObjectDefinitionSoap
 			updateCustomObjectDefinition(
-				Long objectDefinitionId, String[] labelMapLanguageIds,
-				String[] labelMapValues, String name, String panelAppOrder,
-				String panelCategoryKey, String[] pluralLabelMapLanguageIds,
+				Long objectDefinitionId, boolean active,
+				String[] labelMapLanguageIds, String[] labelMapValues,
+				String name, String panelAppOrder, String panelCategoryKey,
+				String[] pluralLabelMapLanguageIds,
 				String[] pluralLabelMapValues, String scope)
 		throws RemoteException {
 
@@ -243,7 +244,7 @@ public class ObjectDefinitionServiceSoap {
 
 			com.liferay.object.model.ObjectDefinition returnValue =
 				ObjectDefinitionServiceUtil.updateCustomObjectDefinition(
-					objectDefinitionId, labelMap, name, panelAppOrder,
+					objectDefinitionId, active, labelMap, name, panelAppOrder,
 					panelCategoryKey, pluralLabelMap, scope);
 
 			return com.liferay.object.model.ObjectDefinitionSoap.toSoapModel(

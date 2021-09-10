@@ -44,6 +44,7 @@ import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
+import com.liferay.translation.web.internal.configuration.FFLayoutExperienceSelectorConfiguration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,8 +68,10 @@ import javax.servlet.http.HttpServletRequest;
 public class ExportTranslationDisplayContext {
 
 	public ExportTranslationDisplayContext(
-		long classNameId, long classPK, long groupId,
-		HttpServletRequest httpServletRequest,
+		long classNameId, long classPK,
+		FFLayoutExperienceSelectorConfiguration
+			ffLayoutExperienceSelectorConfiguration,
+		long groupId, HttpServletRequest httpServletRequest,
 		InfoItemServiceTracker infoItemServiceTracker,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, Object model,
@@ -81,6 +84,8 @@ public class ExportTranslationDisplayContext {
 		_className = PortalUtil.getClassName(_classNameId);
 
 		_classPK = classPK;
+		_ffLayoutExperienceSelectorConfiguration =
+			ffLayoutExperienceSelectorConfiguration;
 		_groupId = groupId;
 		_httpServletRequest = httpServletRequest;
 		_infoItemServiceTracker = infoItemServiceTracker;
@@ -115,13 +120,6 @@ public class ExportTranslationDisplayContext {
 			return null;
 		}
 
-		List<SegmentsExperience> segmentsExperiences =
-			SegmentsExperienceServiceUtil.getSegmentsExperiences(
-				_groupId, PortalUtil.getClassNameId(Layout.class.getName()),
-				_classPK, true);
-
-		boolean addedDefault = false;
-
 		HashMap<String, String> defaultExperience = HashMapBuilder.put(
 			"label",
 			SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
@@ -136,6 +134,19 @@ public class ExportTranslationDisplayContext {
 		).build();
 
 		List<Map<String, String>> experiences = new ArrayList<>();
+
+		if (!_ffLayoutExperienceSelectorConfiguration.enabled()) {
+			experiences.add(defaultExperience);
+
+			return experiences;
+		}
+
+		List<SegmentsExperience> segmentsExperiences =
+			SegmentsExperienceServiceUtil.getSegmentsExperiences(
+				_groupId, PortalUtil.getClassNameId(Layout.class.getName()),
+				_classPK, true);
+
+		boolean addedDefault = false;
 
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
 			if ((segmentsExperience.getPriority() <
@@ -339,6 +350,8 @@ public class ExportTranslationDisplayContext {
 	private final String _className;
 	private final long _classNameId;
 	private final long _classPK;
+	private final FFLayoutExperienceSelectorConfiguration
+		_ffLayoutExperienceSelectorConfiguration;
 	private final long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoItemServiceTracker _infoItemServiceTracker;

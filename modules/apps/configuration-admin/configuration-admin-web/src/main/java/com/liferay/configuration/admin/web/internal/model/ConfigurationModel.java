@@ -220,6 +220,24 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 			extensionAttributes.get("factoryInstanceLabelAttribute"));
 	}
 
+	public String getLiferayLearnMessageKey() {
+		Map<String, String> extensionAttributes =
+			_extendedObjectClassDefinition.getExtensionAttributes(
+				com.liferay.portal.configuration.metatype.annotations.
+					ExtendedObjectClassDefinition.XML_NAMESPACE);
+
+		return extensionAttributes.get("liferayLearnMessageKey");
+	}
+
+	public String getLiferayLearnMessageResource() {
+		Map<String, String> extensionAttributes =
+			_extendedObjectClassDefinition.getExtensionAttributes(
+				com.liferay.portal.configuration.metatype.annotations.
+					ExtendedObjectClassDefinition.XML_NAMESPACE);
+
+		return extensionAttributes.get("liferayLearnMessageResource");
+	}
+
 	@Override
 	public String getName() {
 		return _extendedObjectClassDefinition.getName();

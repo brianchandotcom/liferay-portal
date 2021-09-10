@@ -651,7 +651,7 @@ definition {
 
 		Button.clickSave();
 
-		CommerceEntry.gotoNestedMenu(nestedMenu = "Accounts");
+		Navigator.gotoNavTab(navTab = "Accounts");
 
 		Click(locator1 = "Button#PLUS");
 

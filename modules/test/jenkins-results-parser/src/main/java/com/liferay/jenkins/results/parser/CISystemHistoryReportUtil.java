@@ -21,8 +21,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -33,7 +38,21 @@ public class CISystemHistoryReportUtil {
 			String jobName, String testSuiteName)
 		throws IOException {
 
+		writeAllDurationsJavascriptFile();
+
 		writeIndexHtmlFile();
+	}
+
+	protected static void writeAllDurationsJavascriptFile() throws IOException {
+		StringBuilder sb = new StringBuilder();
+
+		for (DurationReport durationReport : _getDurationReports()) {
+			sb.append(durationReport.getAllDurationsJavascriptContent());
+		}
+
+		JenkinsResultsParserUtil.write(
+			new File(_CI_SYSTEM_HISTORY_REPORT_DIR, "js/all-durations.js"),
+			sb.toString());
 	}
 
 	protected static void writeIndexHtmlFile() throws IOException {
@@ -61,12 +80,39 @@ public class CISystemHistoryReportUtil {
 			content.replaceAll("\\t\\t<script-durations />\\n", sb.toString()));
 	}
 
+	private static List<DurationReport> _getDurationReports() {
+		List<DurationReport> durationReports = new ArrayList<>();
+
+		for (String propertyName : _buildProperties.stringPropertyNames()) {
+			Matcher matcher = _durationPropertyPattern.matcher(propertyName);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			durationReports.add(
+				new DurationReport(
+					matcher.group("buildType"),
+					matcher.group("durationReportType")));
+		}
+
+		Collections.sort(durationReports);
+
+		return durationReports;
+	}
+
 	private static final File _CI_SYSTEM_HISTORY_REPORT_DIR;
 
 	private static final int _MONTHS_PER_YEAR = 12;
 
+	private static final long _START_TIME =
+		JenkinsResultsParserUtil.getCurrentTimeMillis();
+
 	private static final Properties _buildProperties;
 	private static final List<String> _dateStrings;
+	private static final Pattern _durationPropertyPattern = Pattern.compile(
+		"ci.system.history.title\\[(?<buildType>[^\\]]+)\\]" +
+			"\\[(?<durationReportType>[^\\]]+)\\]");
 
 	static {
 		_buildProperties = new Properties() {
@@ -96,6 +142,125 @@ public class CISystemHistoryReportUtil {
 				}
 			}
 		};
+	}
+
+	private static class DurationReport implements Comparable<DurationReport> {
+
+		@Override
+		public int compareTo(DurationReport durationReport) {
+			String id = durationReport._getID();
+
+			return id.compareTo(_getID());
+		}
+
+		public String getAllDurationsJavascriptContent() {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("var ");
+			sb.append(getAllDurationsJavascriptVarName());
+			sb.append(" = ");
+			sb.append(getAllDurationsJavascriptVarValue());
+			sb.append(";\n");
+
+			sb.append("createContainer(");
+			sb.append(getAllDurationsJavascriptVarName());
+			sb.append(");\n\n");
+
+			return sb.toString();
+		}
+
+		public String getAllDurationsJavascriptVarName() {
+			return JenkinsResultsParserUtil.combine(
+				_getJavascriptID(), "_all_durations");
+		}
+
+		public String getAllDurationsJavascriptVarValue() {
+			JSONObject jsonObject = new JSONObject();
+
+			jsonObject.put("description", _description);
+			jsonObject.put("durations", getDurationsJavascriptVarNames());
+			jsonObject.put("durations_dates", getDateJavascriptVarNames());
+			jsonObject.put("id", _getID());
+			jsonObject.put(
+				"modification_date", "new Date(" + _START_TIME + ")");
+			jsonObject.put("title", _title);
+
+			String javascriptVarValue = jsonObject.toString();
+
+			return javascriptVarValue.replaceAll(
+				"\\\"([^\\\"]+_\\d{4}_\\d{2})\\\"", "$1");
+		}
+
+		public String getDateJavascriptVarName(String dateString) {
+			return JenkinsResultsParserUtil.combine(
+				_getJavascriptID(), "_date_", dateString.replaceAll("-", "_"));
+		}
+
+		public List<String> getDateJavascriptVarNames() {
+			List<String> dateDurationJavascriptVars = new ArrayList<>();
+
+			for (String dateString : _dateStrings) {
+				dateDurationJavascriptVars.add(
+					getDateJavascriptVarName(dateString));
+			}
+
+			return dateDurationJavascriptVars;
+		}
+
+		public String getDurationsJavascriptVarName(String dateString) {
+			return JenkinsResultsParserUtil.combine(
+				_getJavascriptID(), "_durations_",
+				dateString.replaceAll("-", "_"));
+		}
+
+		public List<String> getDurationsJavascriptVarNames() {
+			List<String> durationsJavascriptVarNames = new ArrayList<>();
+
+			for (String dateString : _dateStrings) {
+				durationsJavascriptVarNames.add(
+					getDurationsJavascriptVarName(dateString));
+			}
+
+			return durationsJavascriptVarNames;
+		}
+
+		private DurationReport(String buildType, String durationReportType) {
+			_buildType = buildType;
+
+			_description = JenkinsResultsParserUtil.getProperty(
+				_buildProperties, "ci.system.history.description", buildType,
+				durationReportType);
+
+			_title = JenkinsResultsParserUtil.getProperty(
+				_buildProperties, "ci.system.history.title", buildType,
+				durationReportType);
+
+			_durationReportType = durationReportType;
+		}
+
+		private String _getID() {
+			String id = _buildType + "-" + _durationReportType;
+
+			id = id.replaceAll("_", "-");
+			id = id.replaceAll("\\.", "-");
+
+			return id;
+		}
+
+		private String _getJavascriptID() {
+			String javascriptID = _buildType + "_" + _durationReportType;
+
+			javascriptID = javascriptID.replaceAll("-", "_");
+			javascriptID = javascriptID.replaceAll("\\.", "_");
+
+			return javascriptID;
+		}
+
+		private final String _buildType;
+		private final String _description;
+		private final String _durationReportType;
+		private final String _title;
+
 	}
 
 }

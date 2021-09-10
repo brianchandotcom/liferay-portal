@@ -19,6 +19,8 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.Map;
+
 /**
  * @author Gabriel Albuquerque
  */
@@ -45,6 +47,17 @@ public class ObjectFieldUtil {
 					serviceBuilderObjectField.getType());
 			}
 		};
+	}
+
+	public static ObjectField toObjectField(
+		com.liferay.object.model.ObjectField serviceBuilderObjectField,
+		Map<String, Map<String, String>> actions) {
+
+		ObjectField objectField = toObjectField(serviceBuilderObjectField);
+
+		objectField.setActions(actions);
+
+		return objectField;
 	}
 
 	public static com.liferay.object.model.ObjectField toObjectField(

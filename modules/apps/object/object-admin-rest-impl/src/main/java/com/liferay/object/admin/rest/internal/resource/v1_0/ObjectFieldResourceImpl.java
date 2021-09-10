@@ -18,10 +18,13 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -30,6 +33,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,6 +61,10 @@ public class ObjectFieldResourceImpl
 			Long objectDefinitionId, String search, Pagination pagination)
 		throws Exception {
 
+		com.liferay.object.model.ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinitionId);
+
 		return SearchUtil.search(
 			Collections.emptyMap(),
 			booleanQuery -> {
@@ -74,7 +82,8 @@ public class ObjectFieldResourceImpl
 			null,
 			document -> ObjectFieldUtil.toObjectField(
 				_objectFieldLocalService.getObjectField(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
+				_getActions(objectDefinition)));
 	}
 
 	@Override
@@ -113,6 +122,29 @@ public class ObjectFieldResourceImpl
 				objectField.getName(), objectField.getRequired(),
 				objectField.getTypeAsString()));
 	}
+
+	private Map<String, Map<String, String>> _getActions(
+		com.liferay.object.model.ObjectDefinition objectDefinition) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			() -> {
+				if (objectDefinition.isApproved() ||
+					objectDefinition.isSystem()) {
+
+					return null;
+				}
+
+				return addAction(
+					ActionKeys.DELETE, "deleteObjectField",
+					com.liferay.object.model.ObjectDefinition.class.getName(),
+					objectDefinition.getObjectDefinitionId());
+			}
+		).build();
+	}
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

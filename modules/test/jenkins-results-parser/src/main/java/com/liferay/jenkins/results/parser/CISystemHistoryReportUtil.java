@@ -17,15 +17,23 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.charset.Charset;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.io.input.ReversedLinesFileReader;
 
 import org.json.JSONObject;
 
@@ -40,6 +48,8 @@ public class CISystemHistoryReportUtil {
 
 		writeAllDurationsJavascriptFile();
 
+		writeDateDurationsJavascriptFiles(jobName, testSuiteName);
+
 		writeIndexHtmlFile();
 	}
 
@@ -53,6 +63,23 @@ public class CISystemHistoryReportUtil {
 		JenkinsResultsParserUtil.write(
 			new File(_CI_SYSTEM_HISTORY_REPORT_DIR, "js/all-durations.js"),
 			sb.toString());
+	}
+
+	protected static void writeDateDurationsJavascriptFile(
+			String jobName, String testSuiteName, String dateString)
+		throws IOException {
+
+		_getBuildResultJSONObjects(jobName, testSuiteName, dateString);
+	}
+
+	protected static void writeDateDurationsJavascriptFiles(
+			String jobName, String testSuiteName)
+		throws IOException {
+
+		for (String dateString : _dateStrings) {
+			writeDateDurationsJavascriptFile(
+				jobName, testSuiteName, dateString);
+		}
 	}
 
 	protected static void writeIndexHtmlFile() throws IOException {
@@ -80,6 +107,204 @@ public class CISystemHistoryReportUtil {
 			content.replaceAll("\\t\\t<script-durations />\\n", sb.toString()));
 	}
 
+	private static List<JSONObject> _getBuildResultJSONObjects(
+		String jobName, final String testSuiteName, String dateString) {
+
+		List<File> jenkinsConsoleGzFiles = _getJenkinsConsoleGzFiles(
+			jobName, dateString);
+
+		List<Callable<JSONObject>> callables = new ArrayList<>();
+
+		System.out.println(
+			"Processing " + jenkinsConsoleGzFiles.size() + " files");
+
+		for (final File jenkinsConsoleGzFile : jenkinsConsoleGzFiles) {
+			callables.add(
+				new Callable<JSONObject>() {
+
+					@Override
+					public JSONObject call() throws Exception {
+						long start =
+							JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+						try {
+							if (!Objects.equals(
+									testSuiteName,
+									_getCurrentTestSuiteName())) {
+
+								return null;
+							}
+
+							return _getBuildResultJSONObject();
+						}
+						finally {
+							long end =
+								JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+							System.out.println(
+								JenkinsResultsParserUtil.combine(
+									JenkinsResultsParserUtil.getCanonicalPath(
+										jenkinsConsoleGzFile),
+									" processed in ",
+									JenkinsResultsParserUtil.toDurationString(
+										end - start)));
+						}
+					}
+
+					private JSONObject _getBuildResultJSONObject() {
+						File buildResultGzFile = new File(
+							jenkinsConsoleGzFile.getParentFile(),
+							"build-result.json.gz");
+
+						if (!buildResultGzFile.exists()) {
+							return null;
+						}
+
+						String timestamp =
+							JenkinsResultsParserUtil.getDistinctTimeStamp();
+
+						File buildResultGzTempFile = new File(
+							"build-result-" + timestamp + "json.gz");
+
+						try {
+							JenkinsResultsParserUtil.copy(
+								buildResultGzFile, buildResultGzTempFile);
+						}
+						catch (Exception exception) {
+							return null;
+						}
+
+						File buildResultTempFile = new File(
+							"build-result-" + timestamp + "json");
+
+						try {
+							JenkinsResultsParserUtil.unGzip(
+								buildResultGzTempFile, buildResultTempFile);
+						}
+						catch (Exception exception) {
+							return null;
+						}
+						finally {
+							if (buildResultGzTempFile.exists()) {
+								JenkinsResultsParserUtil.delete(
+									buildResultGzTempFile);
+							}
+						}
+
+						try {
+							return new JSONObject(
+								JenkinsResultsParserUtil.read(
+									buildResultTempFile));
+						}
+						catch (Exception exception) {
+							return null;
+						}
+						finally {
+							if (buildResultTempFile.exists()) {
+								JenkinsResultsParserUtil.delete(
+									buildResultTempFile);
+							}
+						}
+					}
+
+					private String _getCurrentTestSuiteName() {
+						if (!jenkinsConsoleGzFile.exists()) {
+							return null;
+						}
+
+						String timestamp =
+							JenkinsResultsParserUtil.getDistinctTimeStamp();
+
+						File jenkinsConsoleGzTempFile = new File(
+							"jenkins-console-" + timestamp + ".txt.gz");
+
+						try {
+							JenkinsResultsParserUtil.copy(
+								jenkinsConsoleGzFile, jenkinsConsoleGzTempFile);
+						}
+						catch (Exception exception) {
+							return null;
+						}
+
+						File jenkinsConsoleTempFile = new File(
+							"jenkins-console-" + timestamp + ".txt");
+
+						try {
+							JenkinsResultsParserUtil.unGzip(
+								jenkinsConsoleGzTempFile,
+								jenkinsConsoleTempFile);
+						}
+						catch (Exception exception) {
+							return null;
+						}
+						finally {
+							if (jenkinsConsoleGzTempFile.exists()) {
+								JenkinsResultsParserUtil.delete(
+									jenkinsConsoleGzTempFile);
+							}
+						}
+
+						try (ReversedLinesFileReader reversedLinesFileReader =
+								new ReversedLinesFileReader(
+									jenkinsConsoleTempFile,
+									Charset.defaultCharset())) {
+
+							String line;
+
+							long start =
+								JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+							while ((line =
+										reversedLinesFileReader.readLine()) !=
+											null) {
+
+								long end =
+									JenkinsResultsParserUtil.
+										getCurrentTimeMillis();
+
+								long duration = end - start;
+
+								if (duration >= (10 * 1000)) {
+									break;
+								}
+
+								Matcher matcher =
+									_jenkinsConsolePattern.matcher(line);
+
+								if (matcher.find()) {
+									return matcher.group("testSuiteName");
+								}
+							}
+						}
+						catch (Exception exception) {
+							return null;
+						}
+						finally {
+							if (jenkinsConsoleTempFile.exists()) {
+								JenkinsResultsParserUtil.delete(
+									jenkinsConsoleTempFile);
+							}
+						}
+
+						return null;
+					}
+
+				});
+		}
+
+		ParallelExecutor<JSONObject> parallelExecutor = new ParallelExecutor<>(
+			callables, _executorService);
+
+		List<JSONObject> buildResultJSONObjects = parallelExecutor.execute();
+
+		buildResultJSONObjects.removeAll(Collections.singleton(null));
+
+		System.out.println(
+			"Found " + buildResultJSONObjects.size() + " build results");
+
+		return buildResultJSONObjects;
+	}
+
 	private static List<DurationReport> _getDurationReports() {
 		List<DurationReport> durationReports = new ArrayList<>();
 
@@ -101,6 +326,63 @@ public class CISystemHistoryReportUtil {
 		return durationReports;
 	}
 
+	private static List<File> _getJenkinsConsoleGzFiles(
+		String jobName, String dateString) {
+
+		List<File> jenkinsConsoleGzFiles = new ArrayList<>();
+
+		File testrayLogsDateDir = new File(_TESTRAY_LOGS_DIR, dateString);
+
+		if (!testrayLogsDateDir.exists()) {
+			return jenkinsConsoleGzFiles;
+		}
+
+		Process process;
+
+		try {
+			process = JenkinsResultsParserUtil.executeBashCommands(
+				true, _TESTRAY_LOGS_DIR, 1000 * 60 * 60,
+				JenkinsResultsParserUtil.combine(
+					"find ", dateString, "/*/",
+					JenkinsResultsParserUtil.escapeForBash(jobName),
+					"/*/jenkins-console.txt.gz"));
+		}
+		catch (IOException | TimeoutException exception) {
+			return jenkinsConsoleGzFiles;
+		}
+
+		int exitValue = process.exitValue();
+
+		if (exitValue != 0) {
+			return jenkinsConsoleGzFiles;
+		}
+
+		String output = null;
+
+		try {
+			output = JenkinsResultsParserUtil.readInputStream(
+				process.getInputStream());
+
+			output = output.replace("Finished executing Bash commands.\n", "");
+
+			output = output.trim();
+		}
+		catch (IOException ioException) {
+			return jenkinsConsoleGzFiles;
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(output)) {
+			return jenkinsConsoleGzFiles;
+		}
+
+		for (String jenkinsConsoleGzFilePath : output.split("\n")) {
+			jenkinsConsoleGzFiles.add(
+				new File(_TESTRAY_LOGS_DIR, jenkinsConsoleGzFilePath));
+		}
+
+		return jenkinsConsoleGzFiles;
+	}
+
 	private static final File _CI_SYSTEM_HISTORY_REPORT_DIR;
 
 	private static final int _MONTHS_PER_YEAR = 12;
@@ -108,11 +390,17 @@ public class CISystemHistoryReportUtil {
 	private static final long _START_TIME =
 		JenkinsResultsParserUtil.getCurrentTimeMillis();
 
+	private static final File _TESTRAY_LOGS_DIR;
+
 	private static final Properties _buildProperties;
 	private static final List<String> _dateStrings;
 	private static final Pattern _durationPropertyPattern = Pattern.compile(
 		"ci.system.history.title\\[(?<buildType>[^\\]]+)\\]" +
 			"\\[(?<durationReportType>[^\\]]+)\\]");
+	private static final ExecutorService _executorService =
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(50, true);
+	private static final Pattern _jenkinsConsolePattern = Pattern.compile(
+		"[\\s\\S]*CI_TEST_SUITE[=](?<testSuiteName>[^&]+)[\\s\\S]*");
 
 	static {
 		_buildProperties = new Properties() {
@@ -142,6 +430,10 @@ public class CISystemHistoryReportUtil {
 				}
 			}
 		};
+
+		_TESTRAY_LOGS_DIR = new File(
+			_buildProperties.getProperty("jenkins.testray.results.dir"),
+			"production/logs");
 	}
 
 	private static class DurationReport implements Comparable<DurationReport> {

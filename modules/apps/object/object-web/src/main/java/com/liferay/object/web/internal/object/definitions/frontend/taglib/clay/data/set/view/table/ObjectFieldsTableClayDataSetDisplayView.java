@@ -48,6 +48,12 @@ public class ObjectFieldsTableClayDataSetDisplayView
 
 		clayTableSchemaBuilder.addClayTableSchemaField("type", "type");
 
+		ClayTableSchemaField requiredClayTableSchemaField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"required", "mandatory");
+
+		requiredClayTableSchemaField.setContentRenderer("boolean");
+
 		return clayTableSchemaBuilder.build();
 	}
 

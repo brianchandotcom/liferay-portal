@@ -1,21 +1,25 @@
 definition {
-    macro viewObject {
-        Click(key_labelName = "${labelName}",locator1 = "CreateObject#VIEW_OBJECT");
-    }
 
-    macro editLabel {
+	macro editLabel {
 		Type(
 			locator1 = "CreateObject#OBJECT_LABEL",
 			value1 = "${labelName}");
-    }
+	}
 
-    macro saveObject {
+	macro saveObject {
 		Click(locator1 = "CreateObject#SAVE_BUTTON");
-    }
+	}
 
-    macro viewObjectLabel {
+	macro viewObject {
+		Click(
+			key_labelName = "${labelName}",
+			locator1 = "CreateObject#VIEW_OBJECT");
+	}
+
+	macro viewObjectLabel {
 		AssertTextEquals(
 			locator1 = "CreateObject#OBJECT_LABEL",
 			value1 = "${labelName}");
-    }
+	}
+
 }

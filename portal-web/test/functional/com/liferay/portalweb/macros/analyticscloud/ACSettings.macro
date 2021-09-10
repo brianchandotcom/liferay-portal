@@ -702,7 +702,6 @@ definition {
 
 	macro getCurrentNumber {
 		var current = selenium.getText("//div[contains(@class,'overview-usage')][.//h3[contains(@class,'metric-name')][normalize-space(text())='${metricName}']]//span[contains(@class,'metric-current')]");
-		var current = StringUtil.extractDigits("${current}");
 
 		return "${current}";
 	}

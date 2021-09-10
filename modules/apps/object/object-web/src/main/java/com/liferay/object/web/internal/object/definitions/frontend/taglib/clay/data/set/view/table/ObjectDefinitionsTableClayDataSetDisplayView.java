@@ -46,10 +46,18 @@ public class ObjectDefinitionsTableClayDataSetDisplayView
 
 		nameClayTableSchemaField.setContentRenderer("actionLink");
 
+		clayTableSchemaBuilder.addClayTableSchemaField("scope", "scope");
+
 		ClayTableSchemaField systemClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("system", "system");
 
 		systemClayTableSchemaField.setContentRenderer("boolean");
+
+		ClayTableSchemaField dateClayTableSchemaField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"dateModified", "modified-date");
+
+		dateClayTableSchemaField.setContentRenderer("date");
 
 		ClayTableSchemaField statusClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("status", "status");

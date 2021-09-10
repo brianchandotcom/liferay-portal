@@ -95,22 +95,22 @@ public class SiteParamConverterProvider
 		return null;
 	}
 
-	public Long getDepotGroupId(String assetLibraryId, long companyId) {
-		if (assetLibraryId == null) {
+	public Long getDepotGroupId(String assetLibraryKey, long companyId) {
+		if (assetLibraryKey == null) {
 			return null;
 		}
 
 		return GroupUtil.getDepotGroupId(
-			assetLibraryId, companyId, _depotEntryLocalService,
+			assetLibraryKey, companyId, _depotEntryLocalService,
 			_groupLocalService);
 	}
 
-	public Long getGroupId(long companyId, String siteId) {
-		if (siteId == null) {
+	public Long getGroupId(long companyId, String siteKey) {
+		if (siteKey == null) {
 			return null;
 		}
 
-		return GroupUtil.getGroupId(companyId, siteId, _groupLocalService);
+		return GroupUtil.getGroupId(companyId, siteKey, _groupLocalService);
 	}
 
 	@Override

@@ -37,16 +37,16 @@ public class GroupUtil {
 	}
 
 	public static Long getDepotGroupId(
-		String assetLibraryId, long companyId,
+		String assetLibraryKey, long companyId,
 		DepotEntryLocalService depotEntryLocalService,
 		GroupLocalService groupLocalService) {
 
-		Group group = groupLocalService.fetchGroup(companyId, assetLibraryId);
+		Group group = groupLocalService.fetchGroup(companyId, assetLibraryKey);
 
 		if (group == null) {
 			try {
 				DepotEntry depotEntry = depotEntryLocalService.fetchDepotEntry(
-					GetterUtil.getLong(assetLibraryId));
+					GetterUtil.getLong(assetLibraryKey));
 
 				if (depotEntry == null) {
 					return null;

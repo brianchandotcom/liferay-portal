@@ -4002,6 +4002,12 @@ public class JenkinsResultsParserUtil {
 			propertiesFile.delete();
 		}
 
+		File parentFile = propertiesFile.getParentFile();
+
+		if (!parentFile.exists()) {
+			parentFile.mkdirs();
+		}
+
 		if (properties.isEmpty()) {
 			return;
 		}

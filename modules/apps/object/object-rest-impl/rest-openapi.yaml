@@ -30,6 +30,20 @@ components:
                         type: object
                     type: object
                     x-json-map: true
+                status:
+                    $ref: "#/components/schemas/Status"
+                    readOnly: true
+            type: object
+        Status:
+            properties:
+                code:
+                    format: int32
+                    readOnly: true
+                    type: integer
+                label:
+                    type: string
+                label_i18n:
+                    type: string
             type: object
 info:
     license:

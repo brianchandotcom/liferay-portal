@@ -15,9 +15,13 @@
 package com.liferay.object.rest.internal.dto.v1_0.converter;
 
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -57,6 +61,18 @@ public class ObjectEntryDTOConverter
 				externalReferenceCode = objectEntry.getExternalReferenceCode();
 				id = objectEntry.getObjectEntryId();
 				properties = (Map)objectEntry.getValues();
+				status = new Status() {
+					{
+						code = objectEntry.getStatus();
+						label = WorkflowConstants.getStatusLabel(
+							objectEntry.getStatus());
+						label_i18n = LanguageUtil.get(
+							LanguageResources.getResourceBundle(
+								dtoConverterContext.getLocale()),
+							WorkflowConstants.getStatusLabel(
+								objectEntry.getStatus()));
+					}
+				};
 			}
 		};
 	}

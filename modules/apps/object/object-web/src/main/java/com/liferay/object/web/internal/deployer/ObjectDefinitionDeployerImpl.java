@@ -16,6 +16,7 @@ package com.liferay.object.web.internal.deployer;
 
 import com.liferay.application.list.PanelApp;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilter;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
@@ -29,6 +30,7 @@ import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.item.selector.ObjectEntryItemSelectorView;
 import com.liferay.object.web.internal.object.entries.application.list.ObjectEntriesPanelApp;
+import com.liferay.object.web.internal.object.entries.frontend.taglib.clay.data.set.filter.ObjectEntryStatusClayTableDataSetFilter;
 import com.liferay.object.web.internal.object.entries.frontend.taglib.clay.data.set.view.table.ObjectEntriesTableClayDataSetDisplayView;
 import com.liferay.object.web.internal.object.entries.portlet.ObjectEntriesPortlet;
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryMVCActionCommand;
@@ -66,6 +68,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_clayTableSchemaBuilderFactory, objectDefinition,
 					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId())),
+				HashMapDictionaryBuilder.put(
+					"clay.data.set.display.name",
+					objectDefinition.getPortletId()
+				).build()),
+			_bundleContext.registerService(
+				ClayDataSetFilter.class,
+				new ObjectEntryStatusClayTableDataSetFilter(),
 				HashMapDictionaryBuilder.put(
 					"clay.data.set.display.name",
 					objectDefinition.getPortletId()

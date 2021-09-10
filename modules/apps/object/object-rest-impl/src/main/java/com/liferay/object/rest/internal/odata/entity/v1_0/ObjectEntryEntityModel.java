@@ -18,6 +18,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.BooleanEntityField;
+import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.DateEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.DoubleEntityField;
@@ -63,6 +64,10 @@ public class ObjectEntryEntityModel implements EntityModel {
 				"objectDefinitionId", locale -> "objectDefinitionId")
 		).put(
 			"siteId", new IntegerEntityField("siteId", locale -> Field.GROUP_ID)
+		).put(
+			"status",
+			new CollectionEntityField(
+				new IntegerEntityField("status", locale -> Field.STATUS))
 		).put(
 			"userId", new IntegerEntityField("userId", locale -> Field.USER_ID)
 		).build();

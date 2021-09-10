@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.tuning.synonyms.web.internal.storage;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,6 +45,51 @@ public class SynonymSetsDatabaseImporterImpl
 
 	@Override
 	public void populateDatabase(long companyId) {
+		try {
+			_populateDatabase(companyId);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to import synonym sets from the index to the ",
+						"database for company id ", companyId, ". Make sure ",
+						"the search engine is connected, then run the synonym ",
+						"sets database importer Groovy script"),
+					exception);
+			}
+		}
+	}
+
+	@Reference
+	protected DocumentToSynonymSetTranslator documentToSynonymSetTranslator;
+
+	@Reference
+	protected Queries queries;
+
+	@Reference
+	protected SearchEngineAdapter searchEngineAdapter;
+
+	@Reference
+	protected SynonymSetIndexNameBuilder synonymSetIndexNameBuilder;
+
+	@Reference
+	protected SynonymSetIndexReindexer synonymSetIndexReindexer;
+
+	@Reference
+	protected SynonymSetJSONStorageHelper synonymSetJSONStorageHelper;
+
+	private boolean _isStandardFormat(String id) {
+		String[] parts = StringUtil.split(id, "_PORTLET_");
+
+		if (parts.length == 2) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private void _populateDatabase(long companyId) {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		SynonymSetIndexName synonymSetIndexName =
@@ -97,34 +143,6 @@ public class SynonymSetsDatabaseImporterImpl
 			_log.error(
 				"Unable to reindex " + synonymSetIndexName.getIndexName());
 		}
-	}
-
-	@Reference
-	protected DocumentToSynonymSetTranslator documentToSynonymSetTranslator;
-
-	@Reference
-	protected Queries queries;
-
-	@Reference
-	protected SearchEngineAdapter searchEngineAdapter;
-
-	@Reference
-	protected SynonymSetIndexNameBuilder synonymSetIndexNameBuilder;
-
-	@Reference
-	protected SynonymSetIndexReindexer synonymSetIndexReindexer;
-
-	@Reference
-	protected SynonymSetJSONStorageHelper synonymSetJSONStorageHelper;
-
-	private boolean _isStandardFormat(String id) {
-		String[] parts = StringUtil.split(id, "_PORTLET_");
-
-		if (parts.length == 2) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

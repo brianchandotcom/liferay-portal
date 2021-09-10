@@ -15,7 +15,13 @@
 package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
+import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
+import com.liferay.data.engine.rest.dto.v2_0.DataLayoutColumn;
+import com.liferay.data.engine.rest.dto.v2_0.DataLayoutPage;
+import com.liferay.data.engine.rest.dto.v2_0.DataLayoutRow;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
+import com.liferay.dynamic.data.mapping.util.DDMFormFieldUtil;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,6 +38,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.upload.UploadPortletRequestImpl;
+
+import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -81,6 +90,8 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getUser()
 				).build();
 
+			_uniquifyDataDefinitionFields(dataDefinition);
+
 			dataDefinitionResource.postSiteDataDefinitionByContentType(
 				themeDisplay.getScopeGroupId(), "journal", dataDefinition);
 
@@ -103,6 +114,11 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		sendRedirect(actionRequest, actionResponse);
 	}
 
+	private String _generateFieldName(String fieldName) {
+		return DDMFormFieldUtil.getDDMFormFieldName(
+			fieldName.substring(0, fieldName.length() - 8));
+	}
+
 	private UploadPortletRequest _getUploadPortletRequest(
 		ActionRequest actionRequest) {
 
@@ -115,6 +131,94 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			liferayPortletRequest,
 			_portal.getPortletNamespace(
 				liferayPortletRequest.getPortletName()));
+	}
+
+	private void _uniquifyDataDefinitionFields(DataDefinition dataDefinition) {
+		for (DataDefinitionField dataDefinitionField :
+				dataDefinition.getDataDefinitionFields()) {
+
+			String oldFieldName = dataDefinitionField.getName();
+
+			String newFieldName = _generateFieldName(oldFieldName);
+
+			if (Objects.equals(
+					dataDefinitionField.getFieldType(), "fieldset")) {
+
+				_uniquifyDataDefinitionFieldset(dataDefinitionField);
+			}
+
+			dataDefinitionField.setName((String)newFieldName);
+
+			DataLayout dataLayout = dataDefinition.getDefaultDataLayout();
+
+			for (DataLayoutPage dataLayoutPage :
+					dataLayout.getDataLayoutPages()) {
+
+				for (DataLayoutRow dataLayoutRow :
+						dataLayoutPage.getDataLayoutRows()) {
+
+					for (DataLayoutColumn dataLayoutColumn :
+							dataLayoutRow.getDataLayoutColumns()) {
+
+						String[] dataLayoutColumnFieldNames =
+							dataLayoutColumn.getFieldNames();
+
+						for (int i = 0; i < dataLayoutColumnFieldNames.length;
+							 i++) {
+
+							if (dataLayoutColumnFieldNames[i].equals(
+									oldFieldName)) {
+
+								dataLayoutColumnFieldNames[i] = newFieldName;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private void _uniquifyDataDefinitionFieldset(
+		DataDefinitionField dataDefinitionField) {
+
+		for (DataDefinitionField nestedDataDefinitionField :
+				dataDefinitionField.getNestedDataDefinitionFields()) {
+
+			if (Objects.equals(
+					nestedDataDefinitionField.getFieldType(), "fieldset")) {
+
+				_uniquifyDataDefinitionFieldset(nestedDataDefinitionField);
+			}
+
+			String oldFieldName = nestedDataDefinitionField.getName();
+
+			String newFieldName = _generateFieldName(oldFieldName);
+
+			nestedDataDefinitionField.setName((String)newFieldName);
+
+			Map<String, Object> customProperties =
+				dataDefinitionField.getCustomProperties();
+
+			Object[] rows = (Object[])customProperties.get("rows");
+
+			for (Object row : rows) {
+				Map<String, Object> rowMap = (Map<String, Object>)row;
+
+				Object[] columns = (Object[])rowMap.get("columns");
+
+				for (Object column : columns) {
+					Map<String, Object> columnMap = (Map<String, Object>)column;
+
+					Object[] fields = (Object[])columnMap.get("fields");
+
+					for (int i = 0; i < fields.length; i++) {
+						if (Objects.equals(fields[i], oldFieldName)) {
+							fields[i] = newFieldName;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

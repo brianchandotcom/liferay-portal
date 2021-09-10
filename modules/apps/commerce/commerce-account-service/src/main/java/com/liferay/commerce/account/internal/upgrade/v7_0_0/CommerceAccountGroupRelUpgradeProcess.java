@@ -53,9 +53,10 @@ public class CommerceAccountGroupRelUpgradeProcess extends UpgradeProcess {
 				accountGroupRel.setCompanyId(resultSet.getLong("companyId"));
 				accountGroupRel.setUserId(resultSet.getLong("userId"));
 				accountGroupRel.setUserName(resultSet.getString("userName"));
-				accountGroupRel.setCreateDate(resultSet.getTime("createDate"));
+				accountGroupRel.setCreateDate(
+					resultSet.getTimestamp("createDate"));
 				accountGroupRel.setModifiedDate(
-					resultSet.getTime("modifiedDate"));
+					resultSet.getTimestamp("modifiedDate"));
 				accountGroupRel.setAccountGroupId(
 					resultSet.getLong("commerceAccountGroupId"));
 				accountGroupRel.setClassNameId(

@@ -2827,39 +2827,28 @@ definition {
 
 	@priority = "4"
 	test ViewStagedAndLiveContentInSearchResults {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		SitePages.addPublicPage(
 			inheritChanges = "disable",
 			pageName = "search",
 			pageTemplateName = "Search");
 
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			portlet = "Staging");
+		Navigator.openSiteURL(siteName = "Site Name");
 
-		Staging.activateStagingCP(siteName = "Site Name");
+		SearchPortlets.configureEmbeddedSearchBar(searchScope = "Let the User Choose");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		WebContent.addArticleCP(
 			webContentContent = "WC Content",
 			webContentTitle = "Apple");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "search",
-			siteName = "Site Name");
+		Navigator.openStagingSiteURL(siteName = "Site Name");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 
@@ -2883,26 +2872,19 @@ definition {
 			searchAssetTitle = "Apple",
 			searchAssetType = "Web Content Article");
 
-		SearchPortlets.chooseEmbeddedScope(searchScope = "This Site");
-
 		Navigator.gotoStagedView();
 
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive();
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
-		WebContent.deleteStagedCP(
-			pageName = "search",
-			siteName = "Site Name",
+		WebContent.deleteCP(
+			siteURLKey = "site-name-staging",
 			webContentTitle = "Apple");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "search",
-			siteName = "Site Name");
+		Navigator.openStagingSiteURL(siteName = "Site Name");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 

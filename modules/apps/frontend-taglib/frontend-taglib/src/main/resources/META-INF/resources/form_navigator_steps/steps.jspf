@@ -255,13 +255,13 @@
 		var redirect = A.one('#<portlet:namespace />redirect');
 
 		if (redirect) {
-			var url = new A.Url(
+			const url = new URL(
 				redirect.val() ||
 					'<%= formNavigatorStepsDisplayContext.getPortletURL() %>'
 			);
 
-			url.setAnchor(null);
-			url.setParameter('<portlet:namespace />historyKey', sectionId);
+			url.hash = '';
+			url.searchParams.set('<portlet:namespace />historyKey', sectionId);
 
 			redirect.val(url.toString());
 		}
@@ -338,12 +338,15 @@
 		);
 	}
 	else {
-		var currentUrl = new A.Url(location.href);
+		const currentUrl = new URL(location.href);
 
-		var currentAnchor = currentUrl.getAnchor();
+		let currentAnchor;
 
-		if (!currentAnchor) {
-			currentAnchor = currentUrl.getParameter(
+		if (currentUrl.hash) {
+			currentAnchor = currentUrl.hash.substring(1);
+		}
+		else {
+			currentAnchor = currentUrl.searchParams.get(
 				'<portlet:namespace />historyKey'
 			);
 		}

@@ -206,9 +206,9 @@ AUI.add(
 				},
 
 				_isActionUrl(url) {
-					var uri = new A.Url(url);
+					const uri = new URL(url);
 
-					return Number(uri.getParameter('p_p_lifecycle')) === 1;
+					return Number(uri.searchParams.get('p_p_lifecycle')) === 1;
 				},
 
 				_notifyRowToggle() {

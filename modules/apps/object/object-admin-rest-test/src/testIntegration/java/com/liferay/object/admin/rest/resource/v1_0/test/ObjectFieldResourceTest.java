@@ -21,6 +21,8 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 
@@ -58,7 +60,15 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 		super.tearDown();
 
 		if (_objectField != null) {
-			ObjectFieldLocalServiceUtil.deleteObjectField(_objectField.getId());
+			try {
+				ObjectFieldLocalServiceUtil.deleteObjectField(
+					_objectField.getId());
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
+			}
 		}
 	}
 
@@ -84,6 +94,13 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 		objectField.setType(ObjectField.Type.create("String"));
 
 		return objectField;
+	}
+
+	@Override
+	protected ObjectField testDeleteObjectField_addObjectField()
+		throws Exception {
+
+		return _addObjectField();
 	}
 
 	@Override
@@ -123,6 +140,9 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 
 		return _objectField;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectFieldResourceTest.class);
 
 	private ObjectDefinition _objectDefinition;
 	private ObjectField _objectField;

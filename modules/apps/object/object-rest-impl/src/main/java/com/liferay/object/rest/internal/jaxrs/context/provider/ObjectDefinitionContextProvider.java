@@ -49,7 +49,7 @@ public class ObjectDefinitionContextProvider
 		String restContextPath = (String)message.getContextualProperty(
 			"org.apache.cxf.message.Message.BASE_PATH");
 
-		restContextPath = StringUtil.removeSubstring(restContextPath, "/o");
+		restContextPath = restContextPath.substring(2);
 		restContextPath = StringUtil.replaceLast(restContextPath, '/', "");
 
 		return _objectDefinitionDeployerImpl.getObjectDefinition(

@@ -480,16 +480,6 @@ definition {
 			previewImage = "Image_2.jpg");
 	}
 
-	@description = "This is a test for LPS-136820. It checks that a pending file entry will not be published to live."
-	@ignore = "true"
-	@priority = "4"
-	test PendingEntryWillNotBePublishedToLive {
-		property portal.acceptance = "false";
-
-		// TODO LPS-136820 PendingEntryWillNotBePublishedToLive pending implementation
-
-	}
-
 	@description = "This is a use case for LPS-79925."
 	@priority = "5"
 	@refactorneeded

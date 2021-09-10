@@ -2875,24 +2875,15 @@ definition {
 			searchAssetTitle = "Apple",
 			searchAssetType = "Web Content Article");
 
-		// LPS-83060
+		SearchPortlets.chooseEmbeddedScope(searchScope = "Everything");
 
-		/* <execute macro="SearchPortlets#configureEmbeddedScope">
-			<var name="searchScope" value="Everything" />
-		</execute>
+		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 
-		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Web Content Article" />
-		</execute>
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Web Content Article");
 
-		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
-			<var name="searchAssetTitle" value="WebContent Title" />
-			<var name="searchAssetType" value="Web Content Article" />
-		</execute>
-
-		<execute macro="SearchPortlets#configureEmbeddedScope">
-			<var name="searchScope" value="This Site" />
-		</execute> */
+		SearchPortlets.chooseEmbeddedScope(searchScope = "This Site");
 
 		Navigator.gotoStagedView();
 

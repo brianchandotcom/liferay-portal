@@ -21,6 +21,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>OBJECT_PLURAL_LABEL</td>
+		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_pluralLabel']</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>SAVE_BUTTON</td>
 		<td>//button[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_save']</td>
 		<td></td>

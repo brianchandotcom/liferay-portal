@@ -209,8 +209,17 @@ public class ObjectEntriesDetailsDisplayContext {
 						new DDMFormFieldValue();
 
 					ddmFormFieldValue.setName(entry.getKey());
-					ddmFormFieldValue.setValue(
-						new UnlocalizedValue(String.valueOf(entry.getValue())));
+
+					Serializable serializable = entry.getValue();
+
+					if (serializable == null) {
+						ddmFormFieldValue.setValue(
+							new UnlocalizedValue(GetterUtil.DEFAULT_STRING));
+					}
+					else {
+						ddmFormFieldValue.setValue(
+							new UnlocalizedValue(String.valueOf(serializable)));
+					}
 
 					return ddmFormFieldValue;
 				}));

@@ -347,6 +347,10 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			return GetterUtil.getBoolean(value);
 		}
 		else if (Objects.equals(objectFieldType, "Double")) {
+			if (value.isEmpty()) {
+				value = String.valueOf(GetterUtil.DEFAULT_DOUBLE);
+			}
+
 			NumberFormat numberFormat = NumberFormat.getInstance(locale);
 
 			return GetterUtil.getDouble(numberFormat.parse(value));

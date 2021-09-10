@@ -69,8 +69,10 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.search.document.Document;
@@ -1169,10 +1171,24 @@ public class ObjectEntryLocalServiceImpl
 			preparedStatement.setBoolean(index, GetterUtil.getBoolean(value));
 		}
 		else if (sqlType == Types.DATE) {
-			Date date = (Date)value;
+			String valueString = GetterUtil.getString(value);
 
-			preparedStatement.setTimestamp(
-				index, new Timestamp(date.getTime()));
+			if (value instanceof Date) {
+				Date date = (Date)value;
+
+				preparedStatement.setTimestamp(
+					index, new Timestamp(date.getTime()));
+			}
+			else if (valueString.isEmpty()) {
+				preparedStatement.setTimestamp(index, null);
+			}
+			else {
+				Date date = DateUtil.parseDate(
+					"yyyy-MM-dd", valueString, LocaleUtil.getSiteDefault());
+
+				preparedStatement.setTimestamp(
+					index, new Timestamp(date.getTime()));
+			}
 		}
 		else if (sqlType == Types.DECIMAL) {
 			preparedStatement.setBigDecimal(

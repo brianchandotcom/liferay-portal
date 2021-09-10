@@ -14,22 +14,23 @@
 
 package com.liferay.portal.model.adapter.builder;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilder;
 import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilderLocator;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.io.Closeable;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Carlos Sierra Andrés
@@ -104,10 +105,13 @@ public class ServiceTrackerMapModelAdapterBuilderLocator
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceTrackerMapModelAdapterBuilderLocator.class);
 
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private final ServiceTrackerMap<String, ModelAdapterBuilder>
-		_modelAdapterBuilders = ServiceTrackerCollections.openSingleValueMap(
-			ModelAdapterBuilder.class, null,
+		_modelAdapterBuilders = ServiceTrackerMapFactory.openSingleValueMap(
+			_bundleContext, ModelAdapterBuilder.class, null,
 			new ServiceReferenceMapper<String, ModelAdapterBuilder>() {
 
 				@Override
@@ -115,10 +119,8 @@ public class ServiceTrackerMapModelAdapterBuilderLocator
 					ServiceReference<ModelAdapterBuilder> serviceReference,
 					Emitter<String> emitter) {
 
-					Registry registry = RegistryUtil.getRegistry();
-
 					ModelAdapterBuilder modelAdapterBuilder =
-						registry.getService(serviceReference);
+						_bundleContext.getService(serviceReference);
 
 					Type genericInterface = _getGenericInterface(
 						modelAdapterBuilder, ModelAdapterBuilder.class);

@@ -14,25 +14,18 @@
 
 package com.liferay.portal.events;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.events.LifecycleEvent;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -114,47 +107,6 @@ public class EventsProcessorUtil {
 		lifecycleAction.processLifecycleEvent(lifecycleEvent);
 	}
 
-	public static void registerEvent(String key, Object event) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceRegistration<LifecycleAction> serviceRegistration =
-			registry.registerService(
-				LifecycleAction.class, (LifecycleAction)event,
-				HashMapBuilder.<String, Object>put(
-					"key", key
-				).build());
-
-		Map<Object, ServiceRegistration<LifecycleAction>>
-			serviceRegistrationMap = _serviceRegistrationMaps.get(key);
-
-		if (serviceRegistrationMap == null) {
-			_serviceRegistrationMaps.putIfAbsent(
-				key,
-				new ConcurrentHashMap
-					<Object, ServiceRegistration<LifecycleAction>>());
-
-			serviceRegistrationMap = _serviceRegistrationMaps.get(key);
-		}
-
-		serviceRegistrationMap.put(event, serviceRegistration);
-	}
-
-	public static void unregisterEvent(String key, Object event) {
-		Map<Object, ServiceRegistration<LifecycleAction>>
-			serviceRegistrationMap = _serviceRegistrationMaps.get(key);
-
-		if (serviceRegistrationMap != null) {
-			ServiceRegistration<LifecycleAction> serviceRegistration =
-				serviceRegistrationMap.remove(event);
-
-			if (serviceRegistration != null) {
-				serviceRegistration.unregister();
-			}
-
-			_serviceRegistrationMaps.remove(key, Collections.emptyList());
-		}
-	}
-
 	protected EventsProcessorUtil() {
 	}
 
@@ -162,10 +114,7 @@ public class EventsProcessorUtil {
 		EventsProcessorUtil.class);
 
 	private static final ServiceTrackerMap<String, List<LifecycleAction>>
-		_lifecycleActions = ServiceTrackerCollections.openMultiValueMap(
-			LifecycleAction.class, "key");
-	private static final ConcurrentMap
-		<String, Map<Object, ServiceRegistration<LifecycleAction>>>
-			_serviceRegistrationMaps = new ConcurrentHashMap<>();
+		_lifecycleActions = ServiceTrackerMapFactory.openMultiValueMap(
+			SystemBundleUtil.getBundleContext(), LifecycleAction.class, "key");
 
 }

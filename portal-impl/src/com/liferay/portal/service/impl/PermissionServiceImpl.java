@@ -16,6 +16,8 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
@@ -40,8 +43,6 @@ import com.liferay.portal.kernel.service.permission.TeamPermissionUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.service.base.PermissionServiceBaseImpl;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.List;
 
@@ -234,10 +235,12 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 
 	private static final ServiceTrackerMap<String, BaseModelPermissionChecker>
 		_baseModelPermissionCheckers =
-			ServiceTrackerCollections.openSingleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
+				SystemBundleUtil.getBundleContext(),
 				BaseModelPermissionChecker.class, "model.class.name");
 	private static final ServiceTrackerMap<String, ModelResourcePermission<?>>
-		_modelPermissions = ServiceTrackerCollections.openSingleValueMap(
+		_modelPermissions = ServiceTrackerMapFactory.openSingleValueMap(
+			SystemBundleUtil.getBundleContext(),
 			(Class<ModelResourcePermission<?>>)
 				(Class<?>)ModelResourcePermission.class,
 			"model.class.name");

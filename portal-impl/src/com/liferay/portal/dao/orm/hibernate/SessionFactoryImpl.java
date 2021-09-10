@@ -14,6 +14,8 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.dao.orm.Dialect;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -21,11 +23,10 @@ import com.liferay.portal.kernel.dao.orm.SessionCustomizer;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.sql.Connection;
 
@@ -151,8 +152,9 @@ public class SessionFactoryImpl implements SessionFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SessionFactoryImpl.class);
 
-	private final ServiceTrackerList<SessionCustomizer> _sessionCustomizers =
-		ServiceTrackerCollections.openList(SessionCustomizer.class);
+	private final ServiceTrackerList<SessionCustomizer, SessionCustomizer>
+		_sessionCustomizers = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(), SessionCustomizer.class);
 	private ClassLoader _sessionFactoryClassLoader;
 	private SessionFactoryImplementor _sessionFactoryImplementor;
 

@@ -14,11 +14,14 @@
 
 package com.liferay.portal.servlet.filters.autologin;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
@@ -35,12 +38,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -272,50 +269,9 @@ public class AutoLoginFilter extends BasePortalFilter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AutoLoginFilter.class);
 
-	private static final ServiceTrackerList<AutoLogin> _autoLogins =
-		ServiceTrackerCollections.openList(
-			AutoLogin.class, new AutoLoginServiceTrackerCustomizer());
-
-	private static class AutoLoginServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<AutoLogin, AutoLogin> {
-
-		@Override
-		public AutoLogin addingService(
-			ServiceReference<AutoLogin> serviceReference) {
-
-			if (GetterUtil.getBoolean(
-					serviceReference.getProperty("private.auto.login"))) {
-
-				return null;
-			}
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			AutoLogin autoLogin = registry.getService(serviceReference);
-
-			if (autoLogin == null) {
-				return null;
-			}
-
-			return autoLogin;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<AutoLogin> serviceReference, AutoLogin autoLogin) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<AutoLogin> serviceReference, AutoLogin autoLogin) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			_autoLogins.remove(autoLogin);
-		}
-
-	}
+	private static final ServiceTrackerList<AutoLogin, AutoLogin> _autoLogins =
+		ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(), AutoLogin.class,
+			"(!(private.auto.login=*))");
 
 }

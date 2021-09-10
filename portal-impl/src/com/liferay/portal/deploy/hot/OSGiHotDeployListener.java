@@ -14,12 +14,13 @@
 
 package com.liferay.portal.deploy.hot;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
 import com.liferay.portal.kernel.deploy.hot.HotDeployListener;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 /**
  * @author Adolfo Pérez
@@ -44,7 +45,8 @@ public class OSGiHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
-	private final ServiceTrackerList<HotDeployListener> _serviceTrackerList =
-		ServiceTrackerCollections.openList(HotDeployListener.class);
+	private final ServiceTrackerList<HotDeployListener, HotDeployListener>
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(), HotDeployListener.class);
 
 }

@@ -14,19 +14,20 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.model.impl.LayoutTypeControllerImpl;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Raymond Augé
@@ -74,20 +75,20 @@ public class LayoutTypeControllerTracker {
 		_serviceTrackerMap;
 
 	static {
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		for (String type : _LAYOUT_TYPES) {
-			registry.registerService(
+			bundleContext.registerService(
 				LayoutTypeController.class, new LayoutTypeControllerImpl(type),
-				HashMapBuilder.<String, Object>put(
+				HashMapDictionaryBuilder.<String, Object>put(
 					"layout.type", type
 				).put(
 					"service.ranking", Integer.MIN_VALUE
 				).build());
 		}
 
-		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
-			LayoutTypeController.class, "layout.type");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, LayoutTypeController.class, "layout.type");
 	}
 
 }

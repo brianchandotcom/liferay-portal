@@ -14,14 +14,15 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.AuthFailure;
 import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,7 @@ public class AuthPipeline {
 			Map<String, String[]> headerMap, Map<String, String[]> parameterMap)
 		throws AuthException {
 
-		return _authPipeline._authenticate(
+		return _authenticate(
 			key, companyId, emailAddress, password,
 			CompanyConstants.AUTH_TYPE_EA, headerMap, parameterMap);
 	}
@@ -46,7 +47,7 @@ public class AuthPipeline {
 			Map<String, String[]> headerMap, Map<String, String[]> parameterMap)
 		throws AuthException {
 
-		return _authPipeline._authenticate(
+		return _authenticate(
 			key, companyId, screenName, password, CompanyConstants.AUTH_TYPE_SN,
 			headerMap, parameterMap);
 	}
@@ -56,7 +57,7 @@ public class AuthPipeline {
 			Map<String, String[]> headerMap, Map<String, String[]> parameterMap)
 		throws AuthException {
 
-		return _authPipeline._authenticate(
+		return _authenticate(
 			key, companyId, String.valueOf(userId), password,
 			CompanyConstants.AUTH_TYPE_ID, headerMap, parameterMap);
 	}
@@ -66,7 +67,7 @@ public class AuthPipeline {
 			Map<String, String[]> headerMap, Map<String, String[]> parameterMap)
 		throws AuthException {
 
-		_authPipeline._onFailure(
+		_onFailure(
 			key, companyId, emailAddress, CompanyConstants.AUTH_TYPE_EA,
 			headerMap, parameterMap);
 	}
@@ -76,7 +77,7 @@ public class AuthPipeline {
 			Map<String, String[]> headerMap, Map<String, String[]> parameterMap)
 		throws AuthException {
 
-		_authPipeline._onFailure(
+		_onFailure(
 			key, companyId, screenName, CompanyConstants.AUTH_TYPE_SN,
 			headerMap, parameterMap);
 	}
@@ -86,7 +87,7 @@ public class AuthPipeline {
 			Map<String, String[]> headerMap, Map<String, String[]> parameterMap)
 		throws AuthException {
 
-		_authPipeline._onFailure(
+		_onFailure(
 			key, companyId, String.valueOf(userId),
 			CompanyConstants.AUTH_TYPE_ID, headerMap, parameterMap);
 	}
@@ -117,14 +118,7 @@ public class AuthPipeline {
 		onFailureByUserId(key, companyId, userId, headerMap, parameterMap);
 	}
 
-	private AuthPipeline() {
-		_authenticators = ServiceTrackerCollections.openMultiValueMap(
-			Authenticator.class, "key");
-		_authFailures = ServiceTrackerCollections.openMultiValueMap(
-			AuthFailure.class, "key");
-	}
-
-	private int _authenticate(
+	private static int _authenticate(
 			String key, long companyId, String login, String password,
 			String authType, Map<String, String[]> headerMap,
 			Map<String, String[]> parameterMap)
@@ -179,7 +173,7 @@ public class AuthPipeline {
 		return Authenticator.SUCCESS;
 	}
 
-	private void _onFailure(
+	private static void _onFailure(
 			String key, long companyId, String login, String authType,
 			Map<String, String[]> headerMap, Map<String, String[]> parameterMap)
 		throws AuthException {
@@ -216,10 +210,11 @@ public class AuthPipeline {
 		}
 	}
 
-	private static final AuthPipeline _authPipeline = new AuthPipeline();
-
-	private final ServiceTrackerMap<String, List<Authenticator>>
-		_authenticators;
-	private final ServiceTrackerMap<String, List<AuthFailure>> _authFailures;
+	private static final ServiceTrackerMap<String, List<Authenticator>>
+		_authenticators = ServiceTrackerMapFactory.openMultiValueMap(
+			SystemBundleUtil.getBundleContext(), Authenticator.class, "key");
+	private static final ServiceTrackerMap<String, List<AuthFailure>>
+		_authFailures = ServiceTrackerMapFactory.openMultiValueMap(
+			SystemBundleUtil.getBundleContext(), AuthFailure.class, "key");
 
 }

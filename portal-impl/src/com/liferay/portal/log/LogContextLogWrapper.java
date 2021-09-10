@@ -14,17 +14,18 @@
 
 package com.liferay.portal.log;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogContext;
 import com.liferay.portal.kernel.log.LogWrapper;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.util.Collections;
 import java.util.List;
@@ -114,7 +115,8 @@ public class LogContextLogWrapper extends LogWrapper {
 	}
 
 	private Object _getLogContextMessage(Object message) {
-		ServiceTrackerList<LogContext> serviceTrackerList = _serviceTrackerList;
+		ServiceTrackerList<LogContext, LogContext> serviceTrackerList =
+			_serviceTrackerList;
 
 		if (serviceTrackerList == null) {
 			return message;
@@ -164,7 +166,8 @@ public class LogContextLogWrapper extends LogWrapper {
 		return sb.toString();
 	}
 
-	private static volatile ServiceTrackerList<LogContext> _serviceTrackerList;
+	private static volatile ServiceTrackerList<LogContext, LogContext>
+		_serviceTrackerList;
 
 	static {
 		PortalLifecycleUtil.register(
@@ -172,8 +175,8 @@ public class LogContextLogWrapper extends LogWrapper {
 
 				@Override
 				protected void doPortalDestroy() {
-					ServiceTrackerList<LogContext> serviceTrackerList =
-						_serviceTrackerList;
+					ServiceTrackerList<LogContext, LogContext>
+						serviceTrackerList = _serviceTrackerList;
 
 					_serviceTrackerList = null;
 
@@ -184,8 +187,8 @@ public class LogContextLogWrapper extends LogWrapper {
 
 				@Override
 				protected void doPortalInit() {
-					_serviceTrackerList = ServiceTrackerCollections.openList(
-						LogContext.class);
+					_serviceTrackerList = ServiceTrackerListFactory.open(
+						SystemBundleUtil.getBundleContext(), LogContext.class);
 				}
 
 			},

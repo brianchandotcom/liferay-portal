@@ -14,14 +14,15 @@
 
 package com.liferay.portlet.internal;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncListenerFactory;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManager;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManagerFactory;
 import com.liferay.portlet.AsyncPortletServletRequest;
 import com.liferay.portlet.PortletAsyncListenerAdapter;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import javax.portlet.PortletAsyncContext;
 import javax.portlet.PortletAsyncListener;
@@ -319,12 +320,14 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 
 	private static final ServiceTrackerMap<String, PortletAsyncListenerFactory>
 		_portletAsyncListenerFactories =
-			ServiceTrackerCollections.openSingleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
+				SystemBundleUtil.getBundleContext(),
 				PortletAsyncListenerFactory.class, "servlet.context.name");
 	private static final ServiceTrackerMap
 		<String, PortletAsyncScopeManagerFactory>
 			_portletAsyncScopeManagerFactories =
-				ServiceTrackerCollections.openSingleValueMap(
+				ServiceTrackerMapFactory.openSingleValueMap(
+					SystemBundleUtil.getBundleContext(),
 					PortletAsyncScopeManagerFactory.class,
 					"servlet.context.name");
 

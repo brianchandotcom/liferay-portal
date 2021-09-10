@@ -14,15 +14,16 @@
 
 package com.liferay.portal.editor.configuration;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigTransformer;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.Map;
 
@@ -76,7 +77,8 @@ public class EditorConfigurationFactoryImpl
 	private static EditorConfigProvider _editorConfigProvider;
 	private static final ServiceTrackerMap<String, EditorConfigTransformer>
 		_editorConfigTransformerServiceTrackerMap =
-			ServiceTrackerCollections.openSingleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
+				SystemBundleUtil.getBundleContext(),
 				EditorConfigTransformer.class, "editor.name");
 	private static EditorOptionsProvider _editorOptionsProvider;
 

@@ -14,16 +14,18 @@
 
 package com.liferay.portal.social;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.social.SocialActivityManager;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.Date;
+
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author     Adolfo Pérez
@@ -115,7 +117,8 @@ public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 	private final SocialActivityManager<T> _defaultSocialActivityManager;
 
 	private final ServiceTrackerMap<String, SocialActivityManager<T>>
-		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			SystemBundleUtil.getBundleContext(),
 			(Class<SocialActivityManager<T>>)
 				(Class<?>)SocialActivityManager.class,
 			"(model.class.name=*)",

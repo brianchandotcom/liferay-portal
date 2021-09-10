@@ -14,12 +14,14 @@
 
 package com.liferay.portal.module.framework;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.registry.collections.ServiceTrackerCollections;
 
 import java.io.IOException;
 
-import java.util.List;
+import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -38,7 +40,9 @@ public class ModuleFrameworkServletAdapter extends HttpServlet {
 			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		if (_servlets.isEmpty()) {
+		Iterator<HttpServlet> iterator = _servlets.iterator();
+
+		if (!iterator.hasNext()) {
 			PortalUtil.sendError(
 				HttpServletResponse.SC_SERVICE_UNAVAILABLE,
 				new ServletException("Module framework is unavailable"),
@@ -47,14 +51,14 @@ public class ModuleFrameworkServletAdapter extends HttpServlet {
 			return;
 		}
 
-		HttpServlet httpServlet = _servlets.get(0);
+		HttpServlet httpServlet = iterator.next();
 
 		httpServlet.service(httpServletRequest, httpServletResponse);
 	}
 
-	private final List<HttpServlet> _servlets =
-		ServiceTrackerCollections.openList(
-			HttpServlet.class,
+	private final ServiceTrackerList<HttpServlet, HttpServlet> _servlets =
+		ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(), HttpServlet.class,
 			"(&(bean.id=" + HttpServlet.class.getName() +
 				")(original.bean=*))");
 

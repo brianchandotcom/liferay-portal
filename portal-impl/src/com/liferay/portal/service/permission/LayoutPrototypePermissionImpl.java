@@ -14,12 +14,13 @@
 
 package com.liferay.portal.service.permission;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.LayoutPrototypePermission;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
 
 /**
  * @author Jorge Ferrer
@@ -65,8 +66,10 @@ public class LayoutPrototypePermissionImpl
 		return false;
 	}
 
-	private final ServiceTrackerList<LayoutPrototypePermission>
-		_layoutPrototypePermissions = ServiceTrackerCollections.openList(
-			LayoutPrototypePermission.class, "(extended=true)");
+	private final ServiceTrackerList
+		<LayoutPrototypePermission, LayoutPrototypePermission>
+			_layoutPrototypePermissions = ServiceTrackerListFactory.open(
+				SystemBundleUtil.getBundleContext(),
+				LayoutPrototypePermission.class, "(extended=true)");
 
 }

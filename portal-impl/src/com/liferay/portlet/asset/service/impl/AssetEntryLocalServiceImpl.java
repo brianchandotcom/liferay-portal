@@ -26,12 +26,15 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.kernel.validator.AssetEntryValidator;
 import com.liferay.asset.kernel.validator.AssetEntryValidatorExclusionRule;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -54,8 +57,6 @@ import com.liferay.portal.kernel.view.count.ViewCountManagerUtil;
 import com.liferay.portlet.asset.service.base.AssetEntryLocalServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.util.AssetSearcher;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 
 import java.util.ArrayList;
@@ -1370,11 +1371,13 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	private final ServiceTrackerMap
 		<String, List<AssetEntryValidatorExclusionRule>>
 			_assetEntryValidatorExclusionRuleServiceTrackerMap =
-				ServiceTrackerCollections.openMultiValueMap(
+				ServiceTrackerMapFactory.openMultiValueMap(
+					SystemBundleUtil.getBundleContext(),
 					AssetEntryValidatorExclusionRule.class, "model.class.name");
 	private final ServiceTrackerMap<String, List<AssetEntryValidator>>
 		_assetEntryValidatorServiceTrackerMap =
-			ServiceTrackerCollections.openMultiValueMap(
-				AssetEntryValidator.class, "model.class.name");
+			ServiceTrackerMapFactory.openMultiValueMap(
+				SystemBundleUtil.getBundleContext(), AssetEntryValidator.class,
+				"model.class.name");
 
 }

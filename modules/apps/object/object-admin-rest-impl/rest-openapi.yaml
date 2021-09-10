@@ -417,6 +417,21 @@ paths:
                         application/xml: {}
             tags: ["ObjectDefinition"]
     "/object-fields/{objectFieldId}":
+        delete:
+            operationId: deleteObjectField
+            parameters:
+                - in: path
+                  name: objectFieldId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ObjectField"]
         get:
             operationId: getObjectField
             parameters:

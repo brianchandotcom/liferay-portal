@@ -304,7 +304,7 @@ definition {
 
 		ACSettings.goToUsage();
 
-		var newIdividuals = ${currentIndividuals} + 1;
+		var newIdividuals = MathUtil.sum("${currentIndividuals}", "1");
 
 		ACSettings.assertOverviewUsage(
 			current = "${newIdividuals}",
@@ -424,7 +424,7 @@ definition {
 
 			var currentPageViews = ACSettings.getCurrentNumber(metricName = "Page Views");
 
-			var sumPageViews = ${currentPageViews} + 3;
+			var sumPageViews = MathUtil.sum("${currentIndividuals}", "3");
 
 			ACUtils.launchDXP();
 
@@ -439,14 +439,12 @@ definition {
 			ACSettings.goToUsage();
 
 			var currentPageViews = ACSettings.getCurrentNumber(metricName = "Page Views");
-
-			var replacePageViews2 = StringUtil.extractDigits("${currentPageViews}");
 		}
 
 		task ("Compare the values") {
 			TestUtils.assertEquals(
 				actual = "${sumPageViews}",
-				expected = "${replacePageViews2}");
+				expected = "${currentPageViews}");
 		}
 	}
 

@@ -553,6 +553,12 @@ definition {
 			accountEntryName = "Account Name",
 			accountEntryType = "Business");
 
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.addOwnedAccountRole(accountRoleTitle = "Account Specific Role");
+
 		AccountUsers.openAccountUsersAdmin();
 
 		AccountUsers.addUser(
@@ -577,7 +583,7 @@ definition {
 			value1 = "Account Administrator");
 
 		Accounts.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "Buyer",
+			accountRoleTitle = "Account Specific Role",
 			accountUserName = "userfn userln");
 
 		Accounts.openAccountsAdmin();
@@ -590,7 +596,7 @@ definition {
 			key_columnName = "lfr-account-roles-column",
 			key_rowEntry = "userfn userln",
 			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
-			value1 = "Account Administrator, Buyer");
+			value1 = "Account Administrator, Account Specific Role");
 	}
 
 	@description = "This test updates an account's status from Active to Inactive asserts change saves successfully."

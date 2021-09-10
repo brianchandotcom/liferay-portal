@@ -59,18 +59,24 @@ export const mergePages = (
 	const newPagesVisitor = new PagesVisitor(newPages);
 	const sourcePagesVisitor = new PagesVisitor(sourcePages);
 
+	const sourceFieldsByName = new Map();
+	const sourceFieldsByFieldName = new Map();
+
+	sourcePagesVisitor.mapFields(
+		(field) => {
+			sourceFieldsByName.set(field.name, field);
+			sourceFieldsByFieldName.set(field.fieldName, field);
+		},
+		false,
+		true
+	);
+
 	return newPagesVisitor.mapFields(
 		(field) => {
-			let sourceField =
-				sourcePagesVisitor.findField(({name}) => name === field.name) ||
+			const sourceField =
+				sourceFieldsByName.get(field.name) ??
+				sourceFieldsByFieldName.get(field.fieldName) ??
 				{};
-
-			if (!sourceField || Object.keys(sourceField).length === 0) {
-				sourceField =
-					sourcePagesVisitor.findField(
-						({fieldName}) => fieldName === field.fieldName
-					) || {};
-			}
 
 			let fieldValue = field.valueChanged
 				? field.value

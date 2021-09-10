@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -33,15 +34,25 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
+import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -99,6 +110,65 @@ public class ExportTranslationDisplayContext {
 			displayName, " (", locale.getDisplayCountry(currentLocale), ")");
 	}
 
+	public List<Map<String, String>> getExperiences() throws PortalException {
+		if (!Objects.equals(_className, Layout.class.getName())) {
+			return null;
+		}
+
+		List<SegmentsExperience> segmentsExperiences =
+			SegmentsExperienceServiceUtil.getSegmentsExperiences(
+				_groupId, PortalUtil.getClassNameId(Layout.class.getName()),
+				_classPK, true);
+
+		boolean addedDefault = false;
+
+		HashMap<String, String> defaultExperience = HashMapBuilder.put(
+			"label",
+			SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
+				_themeDisplay.getLocale())
+		).put(
+			"segment",
+			_getSegmentsEntryName(
+				SegmentsEntryConstants.ID_DEFAULT, _themeDisplay.getLocale())
+		).put(
+			"value",
+			String.valueOf((Object)SegmentsExperienceConstants.ID_DEFAULT)
+		).build();
+
+		List<Map<String, String>> experiences = new ArrayList<>();
+
+		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
+			if ((segmentsExperience.getPriority() <
+					SegmentsExperienceConstants.PRIORITY_DEFAULT) &&
+				!addedDefault) {
+
+				experiences.add(defaultExperience);
+
+				addedDefault = true;
+			}
+
+			experiences.add(
+				HashMapBuilder.put(
+					"label",
+					segmentsExperience.getName(_themeDisplay.getLocale())
+				).put(
+					"segment",
+					_getSegmentsEntryName(
+						segmentsExperience.getSegmentsEntryId(),
+						_themeDisplay.getLocale())
+				).put(
+					"value",
+					String.valueOf(segmentsExperience.getSegmentsExperienceId())
+				).build());
+		}
+
+		if (!addedDefault) {
+			experiences.add(defaultExperience);
+		}
+
+		return experiences;
+	}
+
 	public Map<String, Object> getExportTranslationData()
 		throws PortalException {
 
@@ -145,6 +215,8 @@ public class ExportTranslationDisplayContext {
 			"classPK", _classPK
 		).put(
 			"defaultSourceLanguageId", _getDefaultSourceLanguageId()
+		).put(
+			"experiences", getExperiences()
 		).put(
 			"exportTranslationURL", _getExportTranslationURLString()
 		).put(
@@ -251,6 +323,17 @@ public class ExportTranslationDisplayContext {
 				)));
 
 		return jsonArray;
+	}
+
+	private String _getSegmentsEntryName(long segmentsEntryId, Locale locale) {
+		if (segmentsEntryId == SegmentsEntryConstants.ID_DEFAULT) {
+			return SegmentsEntryConstants.getDefaultSegmentsEntryName(locale);
+		}
+
+		SegmentsEntry segmentsEntry =
+			SegmentsEntryLocalServiceUtil.fetchSegmentsEntry(segmentsEntryId);
+
+		return segmentsEntry.getName(locale);
 	}
 
 	private final String _className;

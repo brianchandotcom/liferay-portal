@@ -109,4 +109,51 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-124478. The template creator could create an information template via script file."
+	@priority = "4"
+	@uitest
+	test AddInformationTemplateViaScriptFile {
+		task ("Navigate to the Information Templates admin") {
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Add an information template for Blogs Entry") {
+			InformationTemplates.addCP(
+				informationTemplateName = "Test Information Template",
+				itemType = "Blogs Entry");
+		}
+
+		task ("Import a script file") {
+			InformationTemplates.importScript(scriptFile = "information_template_blogs.ftl");
+		}
+
+		task ("Save the information template") {
+			PortletEntry.save();
+		}
+
+		task ("View the information template entry") {
+			InformationTemplates.viewTemplate(
+				informationTemplateName = "Test Information Template",
+				itemType = "Blogs Entry");
+		}
+
+		task ("Access to the template editor") {
+			InformationTemplates.gotoInformationTemplateEllipsisItem(
+				informationTemplateName = "Test Information Template",
+				item = "Edit");
+		}
+
+		task ("View the script content shown in code mirror") {
+			InformationTemplates.viewScriptContent(scriptContent = "title.getData()");
+
+			InformationTemplates.viewScriptContent(scriptContent = "coverImage.getData()");
+
+			InformationTemplates.viewScriptContent(scriptContent = "description.getData()");
+
+			InformationTemplates.viewScriptContent(scriptContent = "displayDate.getData()");
+
+			InformationTemplates.viewScriptContent(scriptContent = '''dateUtil.getDate(displayDate_DateObj, "dd MMM yyyy - HH:mm:ss", locale)''');
+		}
+	}
+
 }

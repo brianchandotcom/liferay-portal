@@ -19,7 +19,7 @@ Here are some of the types of changes documented in this file:
 Each change must have a brief descriptive title and contain the following information:
 
 * **[Title]** Provide a brief descriptive title. Use past tense and follow the capitalization rules from <http://en.wikibooks.org/wiki/Basic_Book_Design/Capitalizing_Words_in_Titles>.
-* **Date:** Specify the date you submitted the change. Format the date as *YYYY-MMM-DD* (e.g., 2014-Feb-25).
+* **Date:** Specify the date you submitted the change. Format the date as *YYYY-MMM-DD* (e.g., 2014-Feb-03).
 * **JIRA Ticket:** Reference the related JIRA ticket (e.g., LPS-12345) (Optional).
 * **What changed?** Identify the affected component and the type of change that was made.
 * **Who is affected?** Are end-users affected? Are developers affected? If the only affected people are those using a certain feature or API, say so.
@@ -117,30 +117,6 @@ This change aligns with [Adobe dropping support for Flash](https://www.adobe.com
 
 ---------------------------------------
 
-### Refactored AntivirusScanner Support and Clamd Integration
-- **Date:** 2020-Oct-21
-- **JIRA Ticket:** [LPS-122280](https://issues.liferay.com/browse/LPS-122280)
-
-#### What changed?
-
-The portal's Clamd integration implementation has been replaced by an OSGi service that uses a Clamd remote service. The AntivirusScanner OSGi integration has replaced the AntivirusScanner implementation selection portal properties and AntivirusScanner implementation hook registration portal properties.
-
-#### Who is affected?
-
-This affects you if you are using the portal's Clamd integration implementation or if you are providing your own AntivirusScanner implementation via a hook.
-
-#### How should I update my code?
-
-Enable the new Clamd integration and AntivirusScanner support. See [Enabling Antivirus Scanning for Uploaded Files](https://learn.liferay.com/dxp/latest/en/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files.html).
-
-If you are providing your own AntivirusScanner implementation via a hook, convert it to an OSGi service that has a service ranking higher greater than zero. The Clamd remote service AntivirusScanner implementation service ranking is zero.
-
-#### Why was this change made?
-
-This change supports container environments better and unifies the API to do OSGi integration.
-
----------------------------------------
-
 ### Removed the AssetEntries_AssetCategories Table and Corresponding Code
 - **Date:** 2020-Oct-16
 - **JIRA Ticket:** [LPS-89065](https://issues.liferay.com/browse/LPS-89065)
@@ -162,6 +138,30 @@ Use the new methods in `AssetEntryAssetCategoryRelLocalService`. Note, that the 
 This change removes an unnecessary table and corresponding code.
 
 It is a followup step to the [Liferay AssetEntries_AssetCategories Is No Longer Used](https://learn.liferay.com/dxp/latest/en/liferay-internals/reference/7-2-breaking-changes.html#liferay-assetentries-assetcategories-is-no-longer-used) 7.2 breaking change where the table was replaced by the `AssetEntryAssetCategoryRel` table and the corresponding interfaces in `AssetEntryLocalService` and `AssetCategoryLocalService` were moved into `AssetEntryAssetCategoryRelLocalService`.
+
+---------------------------------------
+
+### Refactored AntivirusScanner Support and Clamd Integration
+- **Date:** 2020-Oct-21
+- **JIRA Ticket:** [LPS-122280](https://issues.liferay.com/browse/LPS-122280)
+
+#### What changed?
+
+The portal's Clamd integration implementation has been replaced by an OSGi service that uses a Clamd remote service. The AntivirusScanner OSGi integration has replaced the AntivirusScanner implementation selection portal properties and AntivirusScanner implementation hook registration portal properties.
+
+#### Who is affected?
+
+This affects you if you are using the portal's Clamd integration implementation or if you are providing your own AntivirusScanner implementation via a hook.
+
+#### How should I update my code?
+
+Enable the new Clamd integration and AntivirusScanner support. See [Enabling Antivirus Scanning for Uploaded Files](https://learn.liferay.com/dxp/latest/en/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files.html).
+
+If you are providing your own AntivirusScanner implementation via a hook, convert it to an OSGi service that has a service ranking higher greater than zero. The Clamd remote service AntivirusScanner implementation service ranking is zero.
+
+#### Why was this change made?
+
+This change supports container environments better and unifies the API to do OSGi integration.
 
 ---------------------------------------
 
@@ -273,7 +273,7 @@ Moving frontend resource minification from run time to build time reduces server
 ---------------------------------------
 
 ### Removed the SoyPortlet Class
-- **Date:** 2020-Dec-9
+- **Date:** 2020-Dec-09
 - **JIRA Ticket:** [LPS-122955](https://issues.liferay.com/browse/LPS-122955)
 
 #### What changed?
@@ -332,6 +332,28 @@ This is done as a way to simplify our frontend technical offering and better foc
 A further exploration and analysis of the different front-end options available can be found in [The State of Frontend Infrastructure](https://liferay.dev/blogs/-/blogs/the-state-of-frontend-infrastructure) including a rationale on why we are moving away from Soy:
 
 > Liferay invested several years into Soy believing it was "the Holy Grail". We believed the ability to compile Closure Templates would provide us with performance comparable to JSP and accommodate reusable components from other JavaScript frameworks. While Soy came close to achieving some of our goals, we never hit the performance we wanted and more importantly, we felt like we were the only people using this technology.
+
+---------------------------------------
+
+### Removed CSS Compatibility Layer
+- **Date:** 2021-Jan-02
+- **JIRA Ticket:** [LPS-123359](https://issues.liferay.com/browse/LPS-123359)
+
+#### What changed?
+
+The support for Boostrap 3 markup has been deleted and is no longer available.
+
+#### Who is affected?
+
+This affects you if you are using Boostrap 3 markup or if you have not correctly migrated to Boostrap 4 markup.
+
+#### How should I update my code?
+
+If you are using Clay markup you can update it by following the last [Clay components](https://clayui.com/docs/components/index.html) version. If your markup is based on Boostrap 3, you can update the markup with Boostrap 4 markup following the [Bootstrap migration guidelines](https://getbootstrap.com/docs/4.4/migration/).
+
+#### Why was this change made?
+
+The configurable CSS compatibility layer simplified migrating from Liferay 7.0 to 7.1 but removing the layer resolves conflicts with new styles and improves general CSS weight.
 
 ---------------------------------------
 
@@ -422,28 +444,6 @@ Make sure to pass a `true` value to boolean attributes you want present in the D
 #### Why was this change made?
 
 This change was made for better compliance with [the HTML Standard](https://html.spec.whatwg.org/#boolean-attribute), which says that "The presence of a boolean attribute on an element represents the true value, and the absence of the attribute represents the false value. If the attribute is present, its value must either be the empty string or a value that is an ASCII case-insensitive match for the attribute's canonical name."
-
----------------------------------------
-
-### Removed CSS Compatibility Layer
-- **Date:** 2021-Jan-2
-- **JIRA Ticket:** [LPS-123359](https://issues.liferay.com/browse/LPS-123359)
-
-#### What changed?
-
-The support for Boostrap 3 markup has been deleted and is no longer available.
-
-#### Who is affected?
-
-This affects you if you are using Boostrap 3 markup or if you have not correctly migrated to Boostrap 4 markup.
-
-#### How should I update my code?
-
-If you are using Clay markup you can update it by following the last [Clay components](https://clayui.com/docs/components/index.html) version. If your markup is based on Boostrap 3, you can update the markup with Boostrap 4 markup following the [Bootstrap migration guidelines](https://getbootstrap.com/docs/4.4/migration/).
-
-#### Why was this change made?
-
-The configurable CSS compatibility layer simplified migrating from Liferay 7.0 to 7.1 but removing the layer resolves conflicts with new styles and improves general CSS weight.
 
 ---------------------------------------
 
@@ -560,7 +560,7 @@ This change was made in order to deprecate class
 ---------------------------------------
 
 ### UserLocalService related classes have modified public API
-- **Date:** 2021-Jul-7
+- **Date:** 2021-Jul-07
 - **JIRA Ticket:** [LPS-134096](https://issues.liferay.com/browse/LPS-134096)
 
 #### What changed?
@@ -646,6 +646,39 @@ This change was made to remove deprecated legacy code from Portal and improve th
 
 ---------------------------------------
 
+### Some static methods in `com.liferay.portal.kernel.servlet.SanitizedServletResponse` have been removed because these relate to the X-Xss-Protection header which is not supported by modern browsers.
+- **Date:** 2021-Aug-05
+- **JIRA Ticket:** [LPS-134188](https://issues.liferay.com/browse/LPS-134188)
+
+#### What changed?
+
+The following methods have been removed:
+
+- com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditor
+- com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditor
+- com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditorOnNextRequest
+- com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditorOnNextRequest
+
+A related constant has been removed also:
+
+- com.liferay.portal.kernel.servlet.HttpHeaders#X_XSS_PROTECTION
+
+Finally, the `http.header.secure.x.xss.protection` portal property has been removed.
+
+#### Who is affected?
+
+Everyone calling one of these methods or referencing the constant. However, such calling code should be removed anyway, because it will have no effect on modern browsers and might give a false sense of security.
+
+#### How should I update my code?
+
+Remove the calling code. Remove `http.header.secure.x.xss.protection` from `portal-ext.properties` if it exists there.
+
+#### Why was this change made?
+
+The X-Xss-Protection header is no longer supported by modern browsers.
+
+---------------------------------------
+
 ### OpenIdConnectServiceHandler interface removed
 - **Date:** 2021-Aug-09
 - **JIRA Ticket:** [LPS-124898](https://issues.liferay.com/browse/LPS-124898)
@@ -677,39 +710,6 @@ For two reasons:
 - To detach the access token refresh process from HTTP request handling. Because this can cause problems maintaining OIDC sessions with providers that only allow refresh tokens to be used once. Resulting in premature portal session invalidation.
 
 - To avoid premature portal session invalidation for OIDC providers that provide refresh tokens that expiry at the same time as their corresponding access tokens.
-
----------------------------------------
-
-### Some static methods in `com.liferay.portal.kernel.servlet.SanitizedServletResponse` have been removed because these relate to the X-Xss-Protection header which is not supported by modern browsers.
-- **Date:** 2021-Aug-05
-- **JIRA Ticket:** [LPS-134188](https://issues.liferay.com/browse/LPS-134188)
-
-#### What changed?
-
-The following methods have been removed:
-
-- com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditor
-- com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditor
-- com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditorOnNextRequest
-- com.liferay.portal.kernel.servlet.SanitizedServletResponse#disableXSSAuditorOnNextRequest
-
-A related constant has been removed also:
-
-- com.liferay.portal.kernel.servlet.HttpHeaders#X_XSS_PROTECTION
-
-Finally, the `http.header.secure.x.xss.protection` portal property has been removed.
-
-#### Who is affected?
-
-Everyone calling one of these methods or referencing the constant. However, such calling code should be removed anyway, because it will have no effect on modern browsers and might give a false sense of security.
-
-#### How should I update my code?
-
-Remove the calling code. Remove `http.header.secure.x.xss.protection` from `portal-ext.properties` if it exists there.  
-
-#### Why was this change made?
-
-The X-Xss-Protection header is no longer supported by modern browsers.
 
 ---------------------------------------
 

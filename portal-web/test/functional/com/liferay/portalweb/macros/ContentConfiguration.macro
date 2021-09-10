@@ -112,6 +112,20 @@ definition {
 		Click(locator1 = "Checkbox#PERMISSIONS");
 	}
 
+	macro getConfigFileContent {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var fileContent = FileUtil.read("${liferayHome}/osgi/configs/${configFileName}");
+
+		return "${fileContent}";
+
+		if (contains("${fileContent}", "${expectedText}")) {
+			echo("Able to find expected text: ${expectedText}");
+		}
+		else {
+			fail("Unable to find expected text: ${expectedText}");
+		}
+	}
+
 	macro pageDeletion {
 		Click(locator1 = "StagingPublishToLive#CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX");
 

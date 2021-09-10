@@ -14,10 +14,15 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.base.ObjectFieldServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -30,4 +35,23 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
+
+	@Override
+	public void deleteObjectField(long objectFieldId) throws Exception {
+		ObjectField objectField = objectFieldPersistence.findByPrimaryKey(
+			objectFieldId);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectField.getObjectDefinitionId(),
+			ActionKeys.DELETE);
+
+		objectFieldLocalService.deleteObjectField(objectFieldId);
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"
+	)
+	private ModelResourcePermission<ObjectDefinition>
+		_objectDefinitionModelResourcePermission;
+
 }

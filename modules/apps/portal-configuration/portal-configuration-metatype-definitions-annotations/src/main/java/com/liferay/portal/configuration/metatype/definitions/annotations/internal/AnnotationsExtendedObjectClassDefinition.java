@@ -201,6 +201,10 @@ public class AnnotationsExtendedObjectClassDefinition
 			StringUtil.merge(
 				extendedObjectClassDefinition.descriptionArguments())
 		).put(
+			"docKey", extendedObjectClassDefinition.docKey()
+		).put(
+			"docResource", extendedObjectClassDefinition.docResource()
+		).put(
 			"factoryInstanceLabelAttribute",
 			extendedObjectClassDefinition.factoryInstanceLabelAttribute()
 		).put(

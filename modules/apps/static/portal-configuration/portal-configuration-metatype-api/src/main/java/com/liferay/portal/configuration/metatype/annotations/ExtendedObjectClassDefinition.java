@@ -44,6 +44,10 @@ public @interface ExtendedObjectClassDefinition {
 
 	public String[] descriptionArguments() default {};
 
+	public String docKey() default "";
+
+	public String docResource() default "";
+
 	public String factoryInstanceLabelAttribute() default "";
 
 	public boolean generateUI() default true;

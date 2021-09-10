@@ -36,19 +36,19 @@ public interface ObjectEntryManager {
 
 	public ObjectEntry addOrUpdateObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, long userId, String scopeId,
+			String externalReferenceCode, long userId, String scopeKey,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws Exception;
 
 	public void deleteObjectEntry(long objectEntryId) throws Exception;
 
 	public void deleteObjectEntry(
-			String externalReferenceCode, long companyId, String scopeId,
+			String externalReferenceCode, long companyId, String scopeKey,
 			ObjectDefinition objectDefinition)
 		throws Exception;
 
 	public Page<ObjectEntry> getObjectEntries(
-			long companyId, String scopeId, ObjectDefinition objectDefinition,
+			long companyId, String scopeKey, ObjectDefinition objectDefinition,
 			Aggregation aggregation, DTOConverterContext dtoConverterContext,
 			Filter filter, Pagination pagination, String search, Sort[] sorts)
 		throws Exception;
@@ -59,7 +59,7 @@ public interface ObjectEntryManager {
 
 	public ObjectEntry getObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, long companyId, String scopeId,
+			String externalReferenceCode, long companyId, String scopeKey,
 			ObjectDefinition objectDefinition)
 		throws Exception;
 

@@ -91,12 +91,12 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
-	public void deleteScopeByExternalReferenceCode(
-			String scopeId, String externalReferenceCode)
+	public void deleteScopeScopeKeyByExternalReferenceCode(
+			String scopeKey, String externalReferenceCode)
 		throws Exception {
 
 		_objectEntryManager.deleteObjectEntry(
-			externalReferenceCode, contextCompany.getCompanyId(), scopeId,
+			externalReferenceCode, contextCompany.getCompanyId(), scopeKey,
 			_objectDefinition);
 	}
 
@@ -138,24 +138,24 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
-	public ObjectEntry getScopeByExternalReferenceCode(
-			String scopeId, String externalReferenceCode)
+	public ObjectEntry getScopeScopeKeyByExternalReferenceCode(
+			String scopeKey, String externalReferenceCode)
 		throws Exception {
 
 		return _objectEntryManager.getObjectEntry(
 			_getDTOConverterContext(null), externalReferenceCode,
-			contextCompany.getCompanyId(), scopeId, _objectDefinition);
+			contextCompany.getCompanyId(), scopeKey, _objectDefinition);
 	}
 
 	@Override
-	public Page<ObjectEntry> getScopeScopePage(
-			String scopeId, Boolean flatten, String search,
+	public Page<ObjectEntry> getScopeScopeKeyPage(
+			String scopeKey, Boolean flatten, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
 
 		return _objectEntryManager.getObjectEntries(
-			contextCompany.getCompanyId(), scopeId, _objectDefinition,
+			contextCompany.getCompanyId(), scopeKey, _objectDefinition,
 			aggregation, _getDTOConverterContext(null), filter, pagination,
 			search, sorts);
 	}
@@ -170,11 +170,12 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
-	public ObjectEntry postScope(String scopeId, ObjectEntry objectEntry)
+	public ObjectEntry postScopeScopeKey(
+			String scopeKey, ObjectEntry objectEntry)
 		throws Exception {
 
 		return _objectEntryManager.addObjectEntry(
-			_getDTOConverterContext(null), contextUser.getUserId(), scopeId,
+			_getDTOConverterContext(null), contextUser.getUserId(), scopeKey,
 			_objectDefinition, objectEntry);
 	}
 
@@ -199,14 +200,14 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
-	public ObjectEntry putScopeByExternalReferenceCode(
-			String scopeId, String externalReferenceCode,
+	public ObjectEntry putScopeScopeKeyByExternalReferenceCode(
+			String scopeKey, String externalReferenceCode,
 			ObjectEntry objectEntry)
 		throws Exception {
 
 		return _objectEntryManager.addOrUpdateObjectEntry(
 			_getDTOConverterContext(null), externalReferenceCode,
-			contextUser.getUserId(), scopeId, _objectDefinition, objectEntry);
+			contextUser.getUserId(), scopeKey, _objectDefinition, objectEntry);
 	}
 
 	@Override

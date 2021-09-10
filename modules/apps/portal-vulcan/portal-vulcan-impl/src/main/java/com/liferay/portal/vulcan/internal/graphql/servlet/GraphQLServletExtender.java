@@ -1752,7 +1752,7 @@ public class GraphQLServletExtender {
 
 		if (graphQLDTOContributor.hasScope()) {
 			graphQLArguments.add(
-				_addArgument(Scalars.GraphQLString, "scopeId"));
+				_addArgument(Scalars.GraphQLString, "scopeKey"));
 		}
 
 		mutationGraphQLObjectTypeBuilder.field(
@@ -1772,9 +1772,9 @@ public class GraphQLServletExtender {
 						_getDTOConverterContext(
 							dataFetchingEnvironment,
 							HashMapBuilder.<String, Serializable>put(
-								"scopeId",
+								"scopeKey",
 								(String)dataFetchingEnvironment.getArgument(
-									"scopeId")
+									"scopeKey")
 							).build()))
 			).build());
 
@@ -1833,7 +1833,7 @@ public class GraphQLServletExtender {
 
 		if (graphQLDTOContributor.hasScope()) {
 			graphQLArguments.add(
-				_addArgument(Scalars.GraphQLString, "scopeId"));
+				_addArgument(Scalars.GraphQLString, "scopeKey"));
 		}
 
 		queryGraphQLObjectTypeBuilder.field(
@@ -1876,9 +1876,9 @@ public class GraphQLServletExtender {
 							HashMapBuilder.<String, Serializable>put(
 								"companyId", CompanyThreadLocal.getCompanyId()
 							).put(
-								"scopeId",
+								"scopeKey",
 								(String)dataFetchingEnvironment.getArgument(
-									"scopeId")
+									"scopeKey")
 							).build()),
 						_getFilter(
 							acceptLanguage,

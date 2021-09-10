@@ -86,7 +86,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		return _toMap(
 			_objectEntryManager.addObjectEntry(
 				dtoConverterContext, dtoConverterContext.getUserId(),
-				(String)dtoConverterContext.getAttribute("scopeId"),
+				(String)dtoConverterContext.getAttribute("scopeKey"),
 				_objectDefinition, _toObjectEntry(dto)));
 	}
 
@@ -119,7 +119,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 		Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
 			(Long)dtoConverterContext.getAttribute("companyId"),
-			(String)dtoConverterContext.getAttribute("scopeId"),
+			(String)dtoConverterContext.getAttribute("scopeKey"),
 			_objectDefinition, aggregation, dtoConverterContext, filter,
 			pagination, search, sorts);
 

@@ -67,7 +67,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	@Override
 	public ObjectEntry addObjectEntry(
 			DTOConverterContext dtoConverterContext, long userId,
-			String scopeId, ObjectDefinition objectDefinition,
+			String scopeKey, ObjectDefinition objectDefinition,
 			ObjectEntry objectEntry)
 		throws Exception {
 
@@ -76,7 +76,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 		return _objectEntryDTOConverter.toDTO(
 			dtoConverterContext,
 			_objectEntryLocalService.addObjectEntry(
-				userId, _getGroupId(objectDefinition, scopeId),
+				userId, _getGroupId(objectDefinition, scopeKey),
 				objectDefinitionId,
 				_toObjectValues(
 					objectDefinitionId, objectEntry.getProperties(),
@@ -87,7 +87,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	@Override
 	public ObjectEntry addOrUpdateObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, long userId, String scopeId,
+			String externalReferenceCode, long userId, String scopeKey,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws Exception {
 
@@ -97,7 +97,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 			dtoConverterContext,
 			_objectEntryLocalService.addOrUpdateObjectEntry(
 				externalReferenceCode, userId,
-				_getGroupId(objectDefinition, scopeId), objectDefinitionId,
+				_getGroupId(objectDefinition, scopeKey), objectDefinitionId,
 				_toObjectValues(
 					objectDefinitionId, objectEntry.getProperties(),
 					dtoConverterContext.getLocale()),
@@ -111,18 +111,18 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 	@Override
 	public void deleteObjectEntry(
-			String externalReferenceCode, long companyId, String scopeId,
+			String externalReferenceCode, long companyId, String scopeKey,
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
 		_objectEntryLocalService.deleteObjectEntry(
 			externalReferenceCode, companyId,
-			_getGroupId(objectDefinition, scopeId));
+			_getGroupId(objectDefinition, scopeKey));
 	}
 
 	@Override
 	public Page<ObjectEntry> getObjectEntries(
-			long companyId, String scopeId, ObjectDefinition objectDefinition,
+			long companyId, String scopeKey, ObjectDefinition objectDefinition,
 			Aggregation aggregation, DTOConverterContext dtoConverterContext,
 			Filter filter, Pagination pagination, String search, Sort[] sorts)
 		throws Exception {
@@ -150,7 +150,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 					"objectDefinitionId", objectDefinitionId);
 				searchContext.setCompanyId(companyId);
 				searchContext.setGroupIds(
-					new long[] {_getGroupId(objectDefinition, scopeId)});
+					new long[] {_getGroupId(objectDefinition, scopeKey)});
 			},
 			sorts,
 			document -> getObjectEntry(
@@ -171,7 +171,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	@Override
 	public ObjectEntry getObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, long companyId, String scope,
+			String externalReferenceCode, long companyId, String scopeKey,
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
@@ -179,7 +179,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 			dtoConverterContext,
 			_objectEntryLocalService.getObjectEntry(
 				externalReferenceCode, companyId,
-				_getGroupId(objectDefinition, scope)));
+				_getGroupId(objectDefinition, scopeKey)));
 	}
 
 	@Override
@@ -203,7 +203,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	}
 
 	private long _getGroupId(
-		ObjectDefinition objectDefinition, String scopeId) {
+		ObjectDefinition objectDefinition, String scopeKey) {
 
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
@@ -212,12 +212,12 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 		if (objectScopeProvider.isGroupAware()) {
 			if (Objects.equals("site", objectDefinition.getScope())) {
 				return GroupUtil.getGroupId(
-					objectDefinition.getCompanyId(), scopeId,
+					objectDefinition.getCompanyId(), scopeKey,
 					_groupLocalService);
 			}
 
 			return GroupUtil.getDepotGroupId(
-				scopeId, objectDefinition.getCompanyId(),
+				scopeKey, objectDefinition.getCompanyId(),
 				_depotEntryLocalService, _groupLocalService);
 		}
 

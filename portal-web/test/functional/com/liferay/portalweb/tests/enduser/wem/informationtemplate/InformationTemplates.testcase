@@ -206,6 +206,74 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-124478. The template creator could define permissions of an information template."
+	@priority = "4"
+	@uitest
+	test DefinePermissionsOfInformationTemplate {
+		task ("Add an information template for Object and CommerceOrder") {
+			JSONDDMtemplate.addInformationTemplate(
+				groupName = "Test Site Name",
+				itemSubtype = "CommerceOrder",
+				itemType = "Object",
+				name = "Test Information Template");
+		}
+
+		task ("Access to the template editor") {
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+
+			InformationTemplates.gotoInformationTemplateEllipsisItem(
+				informationTemplateName = "Test Information Template",
+				item = "Edit");
+		}
+
+		task ("Add the User Name and Order Status field") {
+			InformationTemplates.addField(
+				fieldName = "User Name",
+				panelTitle = "Basic Information");
+
+			InformationTemplates.addField(
+				fieldName = "Order Status",
+				panelTitle = "Commerce Order");
+		}
+
+		task ("Save the information template") {
+			PortletEntry.save();
+		}
+
+		task ("View the information template entry") {
+			InformationTemplates.viewTemplate(
+				informationTemplateName = "Test Information Template",
+				itemSubtype = "Commerce Order",
+				itemType = "Object");
+		}
+
+		task ("Grant the View permission of information template to Power User") {
+			InformationTemplates.gotoInformationTemplateEllipsisItem(
+				informationTemplateName = "Test Information Template",
+				item = "Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+				addOrRemoveViewPermission = "Add",
+				roleList = "Power User");
+
+			IFrame.closeFrame();
+		}
+
+		task ("View the Power User has View permission of information template") {
+			InformationTemplates.gotoInformationTemplateEllipsisItem(
+				informationTemplateName = "Test Information Template",
+				item = "Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			PermissionsInline.viewPermissionsChecked(
+				permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Power User");
+		}
+	}
+
 	@description = "This is a use case for LPS-124478. The template creator could delete an information template."
 	@priority = "4"
 	@uitest

@@ -100,7 +100,7 @@ definition {
 	}
 
 	macro viewDueDateValue {
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			key_workflowAssetTitle = "${workflowAssetTitle}",
 			key_workflowTask = "${workflowTask}",
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE",

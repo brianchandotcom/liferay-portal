@@ -1543,7 +1543,7 @@ definition {
 	@description = "Verify that when the user updates the due date of a task, the time until the due date shows in the table"
 	@priority = "4"
 	test TableShowsTimeLeft {
-		property portal.upstream = "quarantine";
+		
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -1559,7 +1559,7 @@ definition {
 			workflowAssetType = "Blogs Entry");
 
 		MyWorkflowTasks.viewDueDateValue(
-			dueDateValue = "Within 23 Hours",
+			dueDateValue = "Within",
 			workflowAssetTitle = "Blogs Entry Title 1",
 			workflowTask = "Blogs Entry");
 
@@ -1571,7 +1571,7 @@ definition {
 			workflowAssetType = "Blogs Entry");
 
 		MyWorkflowTasks.viewDueDateValue(
-			dueDateValue = "Within 1 Month",
+			dueDateValue = "Within",
 			workflowAssetTitle = "Blogs Entry Title 1",
 			workflowTask = "Blogs Entry");
 
@@ -1583,7 +1583,7 @@ definition {
 			workflowAssetType = "Blogs Entry");
 
 		MyWorkflowTasks.viewDueDateValue(
-			dueDateValue = "Within 12 Months",
+			dueDateValue = "Within",
 			workflowAssetTitle = "Blogs Entry Title 1",
 			workflowTask = "Blogs Entry");
 	}

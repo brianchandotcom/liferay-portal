@@ -228,12 +228,22 @@ definition {
 				expected = "0");
 		}
 
-		task ("View the usage percentage on Individuals card not equals 0") {
+		task ("View the usage percentage on Individuals card") {
 			var percentage = ACSettings.getUsagePercentage(metricName = "Individuals");
 
-			TestUtils.assertNotEquals(
-				actual = "${percentage}",
-				expected = "0%");
+			var result = MathUtil.isGreaterThan("${current}", "550");
+
+			if ("${result}" == "true") {
+				TestUtils.assertNotEquals(
+					actual = "${percentage}",
+					expected = "0%");
+			}
+
+			else {
+				TestUtils.assertEquals(
+					actual = "${percentage}",
+					expected = "0%");
+			}
 		}
 
 		task ("View the oveview usage on Individuals card") {
@@ -365,12 +375,22 @@ definition {
 				expected = "0");
 		}
 
-		task ("View the usage percentage on Page Views not equals 0") {
+		task ("View the usage percentage on Page Views") {
 			var percentage = ACSettings.getUsagePercentage(metricName = "Page Views");
 
-			TestUtils.assertNotEquals(
-				actual = "${percentage}",
-				expected = "0%");
+			var result = MathUtil.isGreaterThan("${current}", "375,000");
+
+			if ("${result}" == "true") {
+				TestUtils.assertNotEquals(
+					actual = "${percentage}",
+					expected = "0%");
+			}
+
+			else {
+				TestUtils.assertEquals(
+					actual = "${percentage}",
+					expected = "0%");
+			}
 		}
 
 		task ("View the oveview usage on Page Views card") {

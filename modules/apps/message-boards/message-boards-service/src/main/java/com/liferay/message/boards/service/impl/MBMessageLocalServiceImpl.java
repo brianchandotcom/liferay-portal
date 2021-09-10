@@ -1909,6 +1909,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return entryURL;
 		}
 
+		String link = GetterUtil.getString(serviceContext.getAttribute("link"));
+
+		if (Validator.isNotNull(link)) {
+			return link + message.getUrlSubject();
+		}
+
 		HttpServletRequest httpServletRequest = serviceContext.getRequest();
 
 		if (httpServletRequest == null) {

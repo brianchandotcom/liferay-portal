@@ -560,7 +560,7 @@ public class MessageBoardThreadResourceImpl
 				).build());
 		}
 
-		serviceContext.setAttribute("entryURL", link);
+		serviceContext.setAttribute("link", link);
 
 		if (messageBoardThread.getId() == null) {
 			serviceContext.setCommand("add");

@@ -494,25 +494,25 @@ This change was made to align and standarize all OAuth 2.0 constants in our code
 
 ---------------------------------------
 
-### Removed JournalArticle Content Field
+### Removed JournalArticle's Content Field
 - **Date:** 2021-May-21
 - **JIRA Ticket:** [LPS-129058](https://issues.liferay.com/browse/LPS-129058)
 
 #### What changed?
 
-JournalArticle content is now stored by DDM Field services.
+`JournalArticle` content is now stored by Dynamic Data Mapping (DDM) Field services.
 
 #### Who is affected?
 
-Anyone directly setting the JournalArticle content field.
+This affects you if you are directly setting the `JournalArticle` content field.
 
 #### How should I update my code?
 
-Use the new update methods in `JournalArticleLocalService` instead of setting the content field.
+Use `JournalArticleLocalService`'s update methods instead of directly setting the content field.
 
 #### Why was this change made?
 
-To make file, page and web content DDM fields easy to reference in the database without fetching and parsing the content.
+This change facilitates referencing file, page, and web content DDM fields in the database without fetching and parsing the content.
 
 ---------------------------------------
 

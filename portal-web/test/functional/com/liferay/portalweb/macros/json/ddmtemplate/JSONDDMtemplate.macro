@@ -1,0 +1,66 @@
+definition {
+
+	macro addInformationTemplate {
+		Variables.assertDefined(parameterList = "${groupName},${itemType},${name}");
+
+		var groupId = JSONDDMtemplateSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+
+		var globalGroupId = JSONDDMtemplateSetter.setGroupId(groupName = "Global", site = "true");
+
+		var classNameId = JSONDDMtemplateSetter.setClassNameId(itemType = "${itemType}");
+
+		var descriptionMap = JSONDDMtemplateSetter.setDescriptionMap(description = "${description}");
+
+		var nameMap = JSONDDMtemplateSetter.setNameMap(title = "${name}");
+
+		if ("${itemType}" == "Asset" || "${itemType}" == "Blogs Entry" || "${itemType}" == "Category" || "${itemSubtype}" == "Basic Document") {
+			var classPK = "0";
+		}
+
+		else if ("${itemType}" == "Web Content Article") {
+			if ("${itemSubtype}" == "Basic Web Content") {
+				var classPK = JSONDDMstructure._getStructureId(
+					classNameId = "${classNameId}",
+					groupId = "${globalGroupId}",
+					structureName = "Basic Web Content");
+			}
+
+			else {
+				var classPK = JSONDDMstructure._getStructureId(
+					classNameId = "${classNameId}",
+					groupId = "${groupId}",
+					structureName = "${itemSubtype}");
+			}
+		}
+
+		else if ("${itemType}" == "Document") {
+			if ("${itemSubtype}" == "Basic Web Content") {
+				var classPK = JSONDLfileentrytype._getFileEntryTypeId(
+					fileEntryTypeName = "Google Drive Shortcut",
+					groupId = "${globalGroupId}");
+			}
+
+			else {
+				var classPK = JSONDLfileentrytype._getFileEntryTypeId(
+					fileEntryTypeName = "${itemSubtype}",
+					groupId = "${groupId}");
+			}
+		}
+
+		else if ("${itemType}" == "Object") {
+			var classPK = JSONObject.getObjectDefinitionId(name = "${itemSubtype}");
+		}
+
+		var templateKey = JSONDDMtemplateAPI._addInformationTemplate(
+			classNameId = "${classNameId}",
+			classPK = "${classPK}",
+			descriptionMap = "${descriptionMap}",
+			groupId = "${groupId}",
+			language = "${language}",
+			nameMap = "${nameMap}",
+			script = "${script}");
+
+		return "${templateKey}";
+	}
+
+}

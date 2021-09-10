@@ -1,0 +1,38 @@
+definition {
+
+	macro _addInformationTemplate {
+		Variables.assertDefined(parameterList = "${classNameId},${classPK},${groupId},${nameMap}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(language))) {
+			var language = "ftl";
+		}
+
+		if (!(isSet(script))) {
+			var script = "%3C%23--%0AAdd elements from the sidebar to define your template. Type %22%24%7B%22 to use the%0Aautocomplete feature.%0A--%3E";
+		}
+
+		var resourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.info.item.provider.InfoItemFormProvider");
+
+		var curl = '''
+			${portalURL}/api/jsonws/ddm.ddmtemplate/add-template \
+				-u test@liferay.com:test \
+				-d groupId=${groupId}
+				-d classNameId=${classNameId} \
+				-d classPK=${classPK} \
+				-d resourceClassNameId=${resourceClassNameId} \
+				-d nameMap=${nameMap} \
+				-d descriptionMap=${descriptionMap} \
+				-d type=display \
+				-d mode= \
+				-d language=${language} \
+				-d script=${script}
+		''';
+
+		var templateKey = JSONCurlUtil.post("${curl}", "$..templateKey");
+
+		return "${templateKey}";
+	}
+
+}

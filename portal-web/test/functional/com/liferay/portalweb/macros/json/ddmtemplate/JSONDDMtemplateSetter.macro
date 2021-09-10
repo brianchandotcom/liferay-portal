@@ -1,0 +1,68 @@
+definition {
+
+	macro setClassNameId {
+		Variables.assertDefined(parameterList = "${itemType}");
+
+		if ("${itemType}" == "Web Content Article") {
+			var value = "com.liferay.journal.model.JournalArticle";
+		}
+
+		else if ("${itemType}" == "Document") {
+			var value = "com.liferay.portal.kernel.repository.model.FileEntry";
+		}
+
+		else if ("${itemType}" == "Blogs Entry") {
+			var value = "com.liferay.blogs.model.BlogsEntry";
+		}
+
+		else if ("${itemType}" == "Category") {
+			var value = "com.liferay.asset.kernel.model.AssetCategory";
+		}
+
+		else if ("${itemType}" == "Asset") {
+			var value = "com.liferay.asset.kernel.model.AssetEntry";
+		}
+
+		else if ("${itemType}" == "Object") {
+			var value = "com.liferay.object.model.ObjectEntry";
+		}
+
+		else {
+			fail("'value' is either invalid or not yet set.");
+		}
+
+		var classNameId = JSONClassname._getClassNameId(value = "${value}");
+
+		return "${classNameId}";
+	}
+
+	macro setDescriptionMap {
+		if (isSet(description)) {
+			var descriptionMap = '''{"en_US":"${description}"}''';
+		}
+		else {
+			var descriptionMap = "{}";
+		}
+
+		return "${descriptionMap}";
+	}
+
+	macro setGroupId {
+		Variables.assertDefined(parameterList = "${groupName}");
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		return "${groupId}";
+	}
+
+	macro setNameMap {
+		var nameMap = '''{"en_US":"${name}"}''';
+
+		return "${nameMap}";
+	}
+
+}

@@ -19,6 +19,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectFieldService;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -44,6 +45,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class ObjectFieldResourceImpl
 	extends BaseObjectFieldResourceImpl implements NestedFieldSupport {
+
+	@Override
+	public void deleteObjectField(Long objectFieldId) throws Exception {
+		_objectFieldService.deleteObjectField(objectFieldId);
+	}
 
 	@NestedField(parentClass = ObjectDefinition.class, value = "objectFields")
 	@Override
@@ -110,5 +116,8 @@ public class ObjectFieldResourceImpl
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectFieldService _objectFieldService;
 
 }

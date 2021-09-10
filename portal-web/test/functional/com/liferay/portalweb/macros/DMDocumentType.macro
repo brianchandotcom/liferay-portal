@@ -63,23 +63,7 @@ definition {
 		}
 	}
 
-	macro deleteFields {
-		DMDocumentType.selectDocumentTypeFrame();
-
-		var key_dmDocumentTypeName = "${dmDocumentTypeName}";
-
-		LexiconEntry.openEntryMenu(rowEntry = "${dmDocumentTypeName}");
-
-		MenuItem.clickNoError(menuItem = "Edit");
-
-		for (var fieldFieldLabel : list "${fieldFieldLabel}") {
-			DataEngine.delete(fieldFieldLabel = "${fieldFieldLabel}");
-		}
-
-		DDLDataDefinition.save();
-	}
-
-	macro deletePG {
+	macro delete {
 		DMDocumentType.selectDocumentTypeFrame();
 
 		var key_dmDocumentTypeName = "${dmDocumentTypeName}";
@@ -104,6 +88,22 @@ definition {
 				locator1 = "DocumentsAndMediaDocumentTypes#DOCUMENT_TYPES_TABLE_NAME",
 				value1 = "${dmDocumentTypeName}");
 		}
+	}
+
+	macro deleteFields {
+		DMDocumentType.selectDocumentTypeFrame();
+
+		var key_dmDocumentTypeName = "${dmDocumentTypeName}";
+
+		LexiconEntry.openEntryMenu(rowEntry = "${dmDocumentTypeName}");
+
+		MenuItem.clickNoError(menuItem = "Edit");
+
+		for (var fieldFieldLabel : list "${fieldFieldLabel}") {
+			DataEngine.delete(fieldFieldLabel = "${fieldFieldLabel}");
+		}
+
+		DDLDataDefinition.save();
 	}
 
 	macro edit {

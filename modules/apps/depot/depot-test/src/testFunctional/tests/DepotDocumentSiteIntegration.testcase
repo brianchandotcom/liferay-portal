@@ -231,7 +231,7 @@ definition {
 
 		DMNavigator.gotoDocumentType();
 
-		DMDocumentType.deletePG(
+		DMDocumentType.delete(
 			dmDocumentTypeName = "DM Document Type Depot",
 			documentTypeHasReference = "true");
 

@@ -4051,28 +4051,6 @@ definition {
 			locator1 = "Publications#LIST_REVERT_DISABLED");
 	}
 
-	macro viewPolls {
-		Navigator.gotoPage(pageName = "Polls");
-
-		AssertElementNotPresent(locator1 = "Message#INFO");
-
-		Navigator.gotoPage(pageName = "Polls");
-
-		Polls.viewPollPG(
-			pollsQuestion = "Sample Polls Question",
-			pollsQuestionChoiceList = "Yes,No");
-
-		Polls.votePollPG(pollsQuestionChoice = "Yes");
-
-		Navigator.gotoPage(pageName = "Polls");
-
-		Polls.viewVotedPollPG(
-			pollsQuestionChoice = "Yes",
-			pollsQuestionTotalVotes = "1",
-			pollsQuestionVoteCount = "1",
-			pollsQuestionVotePercent = "100%");
-	}
-
 	macro viewPortalCORS {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",

@@ -170,12 +170,15 @@ definition {
 			displayPageTemplateDisabled = "true",
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentFileEdit = "Document_3.jpg",
+			dmDocumentFileNameEdit = "Document_3.jpg",
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentTitleEdit = "DM Document Title Edit");
 
 		DMDocument.viewEditCP(
+			dmDocumentFileName = "Document_3.jpg",
 			dmDocumentTitleEdit = "DM Document Title Edit",
-			dmDocumentVersionNumber = "1.1");
+			dmDocumentVersionNumber = "2.0");
 	}
 
 	@description = "This ensures that a folder can be edited in a depot."

@@ -76,25 +76,26 @@ public interface ObjectEntryResource {
 			String externalReferenceCode, ObjectEntry objectEntry)
 		throws Exception;
 
-	public Page<ObjectEntry> getScopeScopePage(
-			String scopeId, Boolean flatten, String search,
+	public Page<ObjectEntry> getScopeScopeKeyPage(
+			String scopeKey, Boolean flatten, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public ObjectEntry postScope(String scopeId, ObjectEntry objectEntry)
+	public ObjectEntry postScopeScopeKey(
+			String scopeKey, ObjectEntry objectEntry)
 		throws Exception;
 
-	public void deleteScopeByExternalReferenceCode(
-			String scopeId, String externalReferenceCode)
+	public void deleteScopeScopeKeyByExternalReferenceCode(
+			String scopeKey, String externalReferenceCode)
 		throws Exception;
 
-	public ObjectEntry getScopeByExternalReferenceCode(
-			String scopeId, String externalReferenceCode)
+	public ObjectEntry getScopeScopeKeyByExternalReferenceCode(
+			String scopeKey, String externalReferenceCode)
 		throws Exception;
 
-	public ObjectEntry putScopeByExternalReferenceCode(
-			String scopeId, String externalReferenceCode,
+	public ObjectEntry putScopeScopeKeyByExternalReferenceCode(
+			String scopeKey, String externalReferenceCode,
 			ObjectEntry objectEntry)
 		throws Exception;
 

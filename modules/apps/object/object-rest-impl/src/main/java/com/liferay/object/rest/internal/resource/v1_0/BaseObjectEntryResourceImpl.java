@@ -217,7 +217,7 @@ public abstract class BaseObjectEntryResourceImpl
 	@Override
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "scopeId"),
+			@Parameter(in = ParameterIn.PATH, name = "scopeKey"),
 			@Parameter(in = ParameterIn.QUERY, name = "flatten"),
 			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
@@ -226,11 +226,11 @@ public abstract class BaseObjectEntryResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
-	@Path("/scopes/{scopeId}")
+	@Path("/scopes/{scopeKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ObjectEntry")})
-	public Page<ObjectEntry> getScopeScopePage(
-			@Parameter(hidden = true) @PathParam("scopeId") String scopeId,
+	public Page<ObjectEntry> getScopeScopeKeyPage(
+			@Parameter(hidden = true) @PathParam("scopeKey") String scopeKey,
 			@Parameter(hidden = true) @QueryParam("flatten") Boolean flatten,
 			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context com.liferay.portal.vulcan.aggregation.Aggregation
@@ -244,13 +244,13 @@ public abstract class BaseObjectEntryResourceImpl
 
 	@Consumes({"application/json", "application/xml"})
 	@Override
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "scopeId")})
-	@Path("/scopes/{scopeId}")
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "scopeKey")})
+	@Path("/scopes/{scopeKey}")
 	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ObjectEntry")})
-	public ObjectEntry postScope(
-			@Parameter(hidden = true) @PathParam("scopeId") String scopeId,
+	public ObjectEntry postScopeScopeKey(
+			@Parameter(hidden = true) @PathParam("scopeKey") String scopeKey,
 			ObjectEntry objectEntry)
 		throws Exception {
 
@@ -261,18 +261,18 @@ public abstract class BaseObjectEntryResourceImpl
 	@Override
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "scopeId"),
+			@Parameter(in = ParameterIn.PATH, name = "scopeKey"),
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
 	@Path(
-		"/scopes/{scopeId}/by-external-reference-code/{externalReferenceCode}"
+		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}"
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ObjectEntry")})
-	public void deleteScopeByExternalReferenceCode(
-			@NotNull @Parameter(hidden = true) @PathParam("scopeId") String
-				scopeId,
+	public void deleteScopeScopeKeyByExternalReferenceCode(
+			@NotNull @Parameter(hidden = true) @PathParam("scopeKey") String
+				scopeKey,
 			@NotNull @Parameter(hidden = true)
 			@PathParam("externalReferenceCode")
 			String externalReferenceCode)
@@ -283,18 +283,18 @@ public abstract class BaseObjectEntryResourceImpl
 	@Override
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "scopeId"),
+			@Parameter(in = ParameterIn.PATH, name = "scopeKey"),
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
 	@Path(
-		"/scopes/{scopeId}/by-external-reference-code/{externalReferenceCode}"
+		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}"
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ObjectEntry")})
-	public ObjectEntry getScopeByExternalReferenceCode(
-			@NotNull @Parameter(hidden = true) @PathParam("scopeId") String
-				scopeId,
+	public ObjectEntry getScopeScopeKeyByExternalReferenceCode(
+			@NotNull @Parameter(hidden = true) @PathParam("scopeKey") String
+				scopeKey,
 			@NotNull @Parameter(hidden = true)
 			@PathParam("externalReferenceCode")
 			String externalReferenceCode)
@@ -307,19 +307,19 @@ public abstract class BaseObjectEntryResourceImpl
 	@Override
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "scopeId"),
+			@Parameter(in = ParameterIn.PATH, name = "scopeKey"),
 			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
 		}
 	)
 	@Path(
-		"/scopes/{scopeId}/by-external-reference-code/{externalReferenceCode}"
+		"/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}"
 	)
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "ObjectEntry")})
-	public ObjectEntry putScopeByExternalReferenceCode(
-			@NotNull @Parameter(hidden = true) @PathParam("scopeId") String
-				scopeId,
+	public ObjectEntry putScopeScopeKeyByExternalReferenceCode(
+			@NotNull @Parameter(hidden = true) @PathParam("scopeKey") String
+				scopeKey,
 			@NotNull @Parameter(hidden = true)
 			@PathParam("externalReferenceCode")
 			String externalReferenceCode,

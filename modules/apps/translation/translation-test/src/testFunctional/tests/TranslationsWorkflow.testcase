@@ -79,9 +79,7 @@ definition {
 			webContentDescription = "WC WebContent Descripción",
 			webContentTitle = "WC WebContent Título");
 
-		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
+		Button.clickSubmitForPublication();
 
 		Alert.viewSuccessMessage();
 

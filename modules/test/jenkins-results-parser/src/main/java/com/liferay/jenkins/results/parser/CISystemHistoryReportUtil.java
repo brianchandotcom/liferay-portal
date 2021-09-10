@@ -14,264 +14,85 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.testray.TestrayBuild;
-import com.liferay.jenkins.results.parser.testray.TestrayRoutine;
-
+import java.io.File;
 import java.io.IOException;
-
-import java.text.NumberFormat;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.Properties;
 
 /**
  * @author Michael Hashimoto
  */
 public class CISystemHistoryReportUtil {
 
-	public static void writeTestrayDataJavaScriptFile(
-			String filePath, TestrayRoutine testrayRoutine, String nameFilter)
+	public static void generateCISystemHistoryReport(
+			String jobName, String testSuiteName)
 		throws IOException {
 
-		List<Callable<String>> callables = new ArrayList<>();
+		writeIndexHtmlFile();
+	}
 
-		for (String month : _recentTestrayBuilds.keySet()) {
-			List<TestrayBuild> builds = testrayRoutine.getTestrayBuilds(
-				2500, month, nameFilter);
+	protected static void writeIndexHtmlFile() throws IOException {
+		File indexHtmlFile = new File(
+			_CI_SYSTEM_HISTORY_REPORT_DIR, "index.html");
 
-			_recentTestrayBuilds.put(month, builds);
-
-			for (final TestrayBuild testrayBuild : builds) {
-				callables.add(
-					new Callable<String>() {
-
-						@Override
-						public String call() throws Exception {
-							return testrayBuild.getResult();
-						}
-
-					});
-			}
+		if (!indexHtmlFile.exists()) {
+			return;
 		}
 
-		ParallelExecutor<String> parallelExecutor = new ParallelExecutor<>(
-			callables, _executorService);
-
-		parallelExecutor.execute();
+		String content = JenkinsResultsParserUtil.read(indexHtmlFile);
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("var topLevelTotalBuildDurationData = ");
-		sb.append(_getTopLevelTotalBuildDurationJSONObject());
-
-		sb.append("\nvar topLevelActiveBuildDurationData = ");
-		sb.append(_getTopLevelActiveBuildDurationJSONObject());
-
-		sb.append("\nvar downstreamBuildDurationData = ");
-		sb.append(_getDownstreamBuildDurationJSONObject());
-
-		sb.append("\nvar testrayDataGeneratedDate = new Date(");
-		sb.append(JenkinsResultsParserUtil.getCurrentTimeMillis());
-		sb.append(");");
-
-		JenkinsResultsParserUtil.write(filePath, sb.toString());
-	}
-
-	private static JSONObject _getDownstreamBuildDurationJSONObject() {
-		JSONObject datesDurationsJSONObject = new JSONObject();
-
-		JSONArray datesJSONArray = new JSONArray();
-		JSONArray durationsJSONArray = new JSONArray();
-
-		List<String> months = new ArrayList<>(_recentTestrayBuilds.keySet());
-
-		Collections.sort(months);
-
-		for (String month : months) {
-			List<Long> durations = new ArrayList<>();
-
-			for (TestrayBuild testrayBuild : _recentTestrayBuilds.get(month)) {
-				List<Long> downstreamDurations =
-					testrayBuild.getDownstreamBuildDurations();
-
-				if (downstreamDurations == null) {
-					continue;
-				}
-
-				for (Long downstreamDuration : downstreamDurations) {
-					if ((downstreamDuration == null) ||
-						(downstreamDuration < 0)) {
-
-						continue;
-					}
-
-					durations.add(downstreamDuration);
-				}
-			}
-
-			if (durations.isEmpty()) {
-				datesJSONArray.put(month);
-			}
-			else {
-				String meanDuration = JenkinsResultsParserUtil.combine(
-					"mean: ",
-					JenkinsResultsParserUtil.toDurationString(
-						JenkinsResultsParserUtil.getAverage(durations)));
-
-				NumberFormat numberFormat = NumberFormat.getNumberInstance(
-					Locale.US);
-
-				String total = JenkinsResultsParserUtil.combine(
-					"total: ", numberFormat.format(durations.size()));
-
-				datesJSONArray.put(new String[] {month, meanDuration, total});
-			}
-
-			Collections.sort(durations);
-
-			durationsJSONArray.put(durations);
+		for (String dateString : _dateStrings) {
+			sb.append("\t\t<script src=\"js/durations-");
+			sb.append(dateString);
+			sb.append(".js\"></script>\n");
 		}
 
-		datesDurationsJSONObject.put("dates", datesJSONArray);
-		datesDurationsJSONObject.put("durations", durationsJSONArray);
+		sb.append("\n\t\t<script src=\"js/all-durations.js\"></script>\n");
 
-		return datesDurationsJSONObject;
+		JenkinsResultsParserUtil.write(
+			indexHtmlFile,
+			content.replaceAll("\\t\\t<script-durations />\\n", sb.toString()));
 	}
 
-	private static JSONObject _getTopLevelActiveBuildDurationJSONObject() {
-		JSONObject jsonObject = new JSONObject();
-
-		JSONArray datesJSONArray = new JSONArray();
-		JSONArray durationsJSONArray = new JSONArray();
-
-		List<String> months = new ArrayList<>(_recentTestrayBuilds.keySet());
-
-		Collections.sort(months);
-
-		for (String month : months) {
-			List<Long> durations = new ArrayList<>();
-
-			for (TestrayBuild testrayBuild : _recentTestrayBuilds.get(month)) {
-				Long duration = testrayBuild.getTopLevelActiveBuildDuration();
-
-				if ((duration == null) || (duration < 0)) {
-					continue;
-				}
-
-				durations.add(duration);
-			}
-
-			if (durations.isEmpty()) {
-				datesJSONArray.put(month);
-			}
-			else {
-				String meanDuration = JenkinsResultsParserUtil.combine(
-					"mean: ",
-					JenkinsResultsParserUtil.toDurationString(
-						JenkinsResultsParserUtil.getAverage(durations)));
-
-				NumberFormat numberFormat = NumberFormat.getNumberInstance(
-					Locale.US);
-
-				String total = JenkinsResultsParserUtil.combine(
-					"total: ", numberFormat.format(durations.size()));
-
-				datesJSONArray.put(new String[] {month, meanDuration, total});
-			}
-
-			Collections.sort(durations);
-
-			durationsJSONArray.put(durations);
-		}
-
-		jsonObject.put("dates", datesJSONArray);
-		jsonObject.put("durations", durationsJSONArray);
-
-		return jsonObject;
-	}
-
-	private static JSONObject _getTopLevelTotalBuildDurationJSONObject() {
-		JSONObject jsonObject = new JSONObject();
-
-		JSONArray datesJSONArray = new JSONArray();
-		JSONArray durationsJSONArray = new JSONArray();
-
-		List<String> months = new ArrayList<>(_recentTestrayBuilds.keySet());
-
-		Collections.sort(months);
-
-		for (String month : months) {
-			List<Long> durations = new ArrayList<>();
-
-			for (TestrayBuild testrayBuild : _recentTestrayBuilds.get(month)) {
-				Long duration = testrayBuild.getTopLevelBuildDuration();
-
-				if ((duration == null) || (duration < 0)) {
-					continue;
-				}
-
-				durations.add(duration);
-			}
-
-			if (durations.isEmpty()) {
-				datesJSONArray.put(month);
-			}
-			else {
-				String meanDuration = JenkinsResultsParserUtil.combine(
-					"mean: ",
-					JenkinsResultsParserUtil.toDurationString(
-						JenkinsResultsParserUtil.getAverage(durations)));
-
-				NumberFormat numberFormat = NumberFormat.getNumberInstance(
-					Locale.US);
-
-				String total = JenkinsResultsParserUtil.combine(
-					"total: ", numberFormat.format(durations.size()));
-
-				datesJSONArray.put(new String[] {month, meanDuration, total});
-			}
-
-			Collections.sort(durations);
-
-			durationsJSONArray.put(durations);
-		}
-
-		jsonObject.put("dates", datesJSONArray);
-		jsonObject.put("durations", durationsJSONArray);
-
-		return jsonObject;
-	}
+	private static final File _CI_SYSTEM_HISTORY_REPORT_DIR;
 
 	private static final int _MONTHS_PER_YEAR = 12;
 
-	private static final ExecutorService _executorService =
-		JenkinsResultsParserUtil.getNewThreadPoolExecutor(25, true);
-	private static final HashMap<String, List<TestrayBuild>>
-		_recentTestrayBuilds;
+	private static final Properties _buildProperties;
+	private static final List<String> _dateStrings;
 
 	static {
-		_recentTestrayBuilds = new HashMap<String, List<TestrayBuild>>() {
+		_buildProperties = new Properties() {
+			{
+				try {
+					putAll(JenkinsResultsParserUtil.getBuildProperties());
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+			}
+		};
+
+		_CI_SYSTEM_HISTORY_REPORT_DIR = new File(
+			_buildProperties.getProperty("ci.system.history.report.dir"));
+
+		_dateStrings = new ArrayList() {
 			{
 				LocalDate currentLocalDate = LocalDate.now();
 
-				for (int i = 0; i < _MONTHS_PER_YEAR; i++) {
+				for (int i = _MONTHS_PER_YEAR - 1; i >= 0; i--) {
 					LocalDate localDate = currentLocalDate.minusMonths(i);
 
-					put(
+					add(
 						localDate.format(
-							DateTimeFormatter.ofPattern("yyyy-MM")),
-						new ArrayList<TestrayBuild>());
+							DateTimeFormatter.ofPattern("yyyy-MM")));
 				}
 			}
 		};

@@ -3372,6 +3372,32 @@ definition {
 			value1 = "${filter}");
 	}
 
+	macro switchViewport {
+		Click(
+			key_deviceType = "${deviceType}",
+			locator1 = "PageEditor#DEVICE_TYPE");
+
+		if ("${deviceType}" == "Desktop") {
+			var viewport = "desktop";
+		}
+
+		else if ("${deviceType}" == "Tablet") {
+			var viewport = "tablet";
+		}
+
+		else if ("${deviceType}" == "Landscape Phone") {
+			var viewport = "landscapeMobile";
+		}
+
+		else if ("${deviceType}" == "Portrait Phone") {
+			var viewport = "portraitMobile";
+		}
+
+		WaitForVisible(
+			key_deviceType = "${viewport}",
+			locator1 = "PageEditor#VIEWPORT");
+	}
+
 	macro viewCannotAddFragmentToOutsideOfDropZone {
 		WaitForPageLoad();
 

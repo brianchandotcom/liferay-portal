@@ -32,9 +32,91 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test SegmentOverviewDistributionFilteredByBoolean {
+		var users = "user1,user2";
 
-		// TODO LRAC-8504 SegmentOverviewDistributionFilteredByBoolean pending implementation
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+		}
 
+		task ("Add a new user") {
+			for (var user : list "${users}") {
+				JSONUser.addUser(
+					userEmailAddress = "${user}@liferay.com",
+					userFirstName = "${user}",
+					userLastName = "${user}",
+					userScreenName = "${user}");
+			}
+		}
+
+		task ("Connect the DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("View AC Page as new user") {
+			for (var user : list "${users}") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${user}@liferay.com",
+					userLoginFullName = "${user} ${user}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a CSV Data Source") {
+			ACSettings.addCSVDataSource(
+				dataSourceName = "CSV Call List",
+				sourceFileName = "contacts_doNotCall.csv");
+		}
+
+		task ("Exit Settings") {
+			ACNavigation.exitSettings();
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Add new user as member") {
+			for (var user : list "${users}") {
+				ACSegments.addStaticMember(tableMember = "${user} ${user}");
+			}
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to Segments") {
+			ACNavigation.goToSegments();
+
+			ACSegments.accessSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Filter Attribute by Boolean identifier in Overview") {
+			ACSegments.addBreakdownByAttribute(
+				attribute = "doNotCall",
+				breakdownName = "Segment Overview Test");
+		}
+
+		task ("View Breakdown Chart") {
+			ACIndividualsDashboard.viewBreakdownRecharts(
+				fillColor = "#4B9BFF",
+				tick = "false");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8505 | Test Summary: Segment Overview distribution filtered by date"

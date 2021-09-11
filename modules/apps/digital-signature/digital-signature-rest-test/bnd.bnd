@@ -1,0 +1,4 @@
+Bundle-Name: headless-digital-signature-test
+Bundle-SymbolicName: headless.digital.signature.test
+Bundle-Version: 1.0.0
+-includeresource: headless.digital.signature.client.jar=../headless-digital-signature-client/build/libs/headless.digital.signature.client-1.0.0.jar;lib:=true

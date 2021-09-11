@@ -1,0 +1,11 @@
+info:
+    description:
+        "HeadlessDigitalSignature REST API. A Java client JAR is available for use with the group ID 'com.liferay',
+        artifact ID 'com.liferay.digital.signature.client', and version '1.0.0'.. A Java client JAR is available for use
+        with the group ID 'com.liferay', artifact ID 'com.liferay.digital.signature.rest.client', and version '1.0.0'."
+    license:
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    title: "HeadlessDigitalSignature"
+    version: v1.0
+openapi: 3.0.1

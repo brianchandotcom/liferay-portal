@@ -1,3 +1,88 @@
+components:
+    schemas:
+        DSDocument:
+            properties:
+                data:
+                    description:
+                        The document's data.
+                    type: string
+                dsDocumentId:
+                    description:
+                        The document's id.
+                    type: string
+                fileExtension:
+                    description:
+                        The document's file extension.
+                    type: string
+                name:
+                    description:
+                        The document's name.
+                    type: string
+                uri:
+                    description:
+                        The document's URI.
+                    type: string
+        DSEnvelope:
+            properties:
+                dateCreated:
+                    format: date
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date
+                    readOnly: true
+                    type: string
+                dsDocument:
+                    items:
+                        $ref: "#/components/schemas/DSDocument"
+                        type: array
+                dsRecipient:
+                    items:
+                        $ref: "#/components/schemas/DSRecipient"
+                        type: array
+                emailBlurb:
+                    description:
+                        The envelope's email body.
+                    type: string
+                emailSubject:
+                    description:
+                        The envelope's email subject.
+                    type: string
+                id:
+                    description:
+                        The envelope's Id.
+                    type: string
+                name:
+                    description:
+                        The envelope's name.
+                    type: string
+                senderEmailAddress:
+                    description:
+                        The envelope's senderEmailAddress.
+                    type: string
+                status:
+                    description:
+                        The envelope's status.
+                    type: string
+            type: object
+        DSRecipient:
+            properties:
+                dsRecipientId:
+                    description:
+                        The recipient's Id.
+                    type: string
+                emailAddress:
+                    description:
+                        The recipient's email address.
+                    type: string
+                name:
+                    description:
+                        The recipient's name.
+                    type: string
+                status:
+                    description:
+                        The recipient's status.
+                    type: string
 info:
     description:
         "HeadlessDigitalSignature REST API. A Java client JAR is available for use with the group ID 'com.liferay',
@@ -9,3 +94,108 @@ info:
     title: "HeadlessDigitalSignature"
     version: v1.0
 openapi: 3.0.1
+paths:
+    "/envelopes/{companyId}/{groupId}":
+        get:
+            operationId: getDSEnvelopesPage
+            parameters:
+                - in: path
+                  name: companyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: groupId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DSEnvelope"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DSEnvelope"
+                                type: array
+            tags: ["DSEnvelope"]
+        post:
+            operationId: postDSEnvelope
+            parameters:
+                - in: path
+                  name: companyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: groupId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DSEnvelope"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DSEnvelope"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DSEnvelope"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DSEnvelope"
+            tags: ["DSEnvelope"]
+    "/envelopes/{companyId}/{groupId}/{envelopeId}":
+        get:
+            description:
+                Retrieves an envelope.
+            operationId: getDSEnvelope
+            parameters:
+                - in: path
+                  name: companyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: groupId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: envelopeId
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DSEnvelope"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DSEnvelope"
+            tags: ["DSEnvelope"]

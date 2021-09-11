@@ -10,6 +10,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:bulk:bulk-rest-api")
 	compileOnly project(":apps:bulk:bulk-selection-api")
+	compileOnly project(":apps:digital-signature:digital-signature-api")
 	compileOnly project(":apps:digital-signature:digital-signature-rest-api")
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")

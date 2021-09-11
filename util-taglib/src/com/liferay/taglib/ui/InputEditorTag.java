@@ -14,10 +14,14 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.editor.Editor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -31,12 +35,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.taglib.BaseValidatorTagSupport;
 import com.liferay.taglib.aui.AUIUtil;
 
@@ -56,6 +54,9 @@ import javax.portlet.PortletResponse;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -540,13 +541,15 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 
 	private static final String _TOOLBAR_SET_DEFAULT = "liferay";
 
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private static final Function<InvocationHandler, Map<?, ?>>
 		_mapProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
 			Map.class);
 
 	private static final ServiceTrackerMap<String, Editor> _serviceTrackerMap =
-		ServiceTrackerCollections.openSingleValueMap(
-			Editor.class, null,
+		ServiceTrackerMapFactory.openSingleValueMap(
+			_bundleContext, Editor.class, null,
 			new ServiceReferenceMapper<String, Editor>() {
 
 				@Override
@@ -554,9 +557,7 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 					ServiceReference<Editor> serviceReference,
 					Emitter<String> emitter) {
 
-					Registry registry = RegistryUtil.getRegistry();
-
-					Editor editor = registry.getService(serviceReference);
+					Editor editor = _bundleContext.getService(serviceReference);
 
 					emitter.emit(editor.getName());
 				}

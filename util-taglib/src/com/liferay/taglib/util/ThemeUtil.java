@@ -14,10 +14,13 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
@@ -33,8 +36,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.io.Writer;
 
@@ -234,9 +235,11 @@ public class ThemeUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(ThemeUtil.class);
 
-	private static final ServiceTrackerList<TemplateContextContributor>
-		_templateContextContributors = ServiceTrackerCollections.openList(
-			TemplateContextContributor.class,
-			"(type=" + TemplateContextContributor.TYPE_THEME + ")");
+	private static final ServiceTrackerList
+		<TemplateContextContributor, TemplateContextContributor>
+			_templateContextContributors = ServiceTrackerListFactory.open(
+				SystemBundleUtil.getBundleContext(),
+				TemplateContextContributor.class,
+				"(type=" + TemplateContextContributor.TYPE_THEME + ")");
 
 }

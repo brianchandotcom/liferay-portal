@@ -60,8 +60,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsImpl;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.Locale;
 
@@ -78,8 +76,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -89,10 +85,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Adam Brandizzi
  */
 @PrepareForTest(
-	{
-		LocaleUtil.class, ResourceBundleUtil.class,
-		ResourceBundleLoaderUtil.class, ServiceTrackerCollections.class
-	}
+	{LocaleUtil.class, ResourceBundleUtil.class, ResourceBundleLoaderUtil.class}
 )
 @RunWith(PowerMockRunner.class)
 public class DDMFormAdminDisplayContextTest extends PowerMockito {
@@ -105,7 +98,6 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 	@Before
 	public void setUp() throws Exception {
 		setUpPortalUtil();
-		setUpServiceTrackerCollections();
 
 		setUpLanguageUtil();
 		setUpResourceBundleUtil();
@@ -364,18 +356,6 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpServiceTrackerCollections() {
-		mockStatic(ServiceTrackerCollections.class, Mockito.RETURNS_MOCKS);
-
-		stub(
-			method(
-				ServiceTrackerCollections.class, "openSingleValueMap",
-				Class.class, String.class)
-		).toReturn(
-			_serviceTrackerMap
-		);
-	}
-
 	private DDMFormContextToDDMFormValues _getDDMFormContextToDDMFormValues()
 		throws Exception {
 
@@ -414,8 +394,5 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 
 	private DDMFormAdminDisplayContext _ddmFormAdminDisplayContext;
 	private RenderRequest _renderRequest;
-
-	@Mock
-	private ServiceTrackerMap<String, ResourceBundleLoader> _serviceTrackerMap;
 
 }

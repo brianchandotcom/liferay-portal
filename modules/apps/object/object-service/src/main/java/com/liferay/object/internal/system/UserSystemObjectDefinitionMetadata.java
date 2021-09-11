@@ -18,6 +18,10 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.Table;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserTable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +37,11 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = SystemObjectDefinitionMetadata.class)
 public class UserSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
+
+	@Override
+	public String getClassName() {
+		return User.class.getName();
+	}
 
 	@Override
 	public String getDBTableName() {
@@ -63,9 +72,17 @@ public class UserSystemObjectDefinitionMetadata
 		return createLabelMap("users");
 	}
 
+	public Column<?, Long> getPrimaryKeyColumn() {
+		return UserTable.INSTANCE.userId;
+	}
+
 	@Override
 	public String getScope() {
 		return ObjectDefinitionConstants.SCOPE_COMPANY;
+	}
+
+	public Table getTable() {
+		return UserTable.INSTANCE;
 	}
 
 	@Override

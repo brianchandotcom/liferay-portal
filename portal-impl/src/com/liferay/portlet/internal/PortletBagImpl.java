@@ -571,13 +571,6 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public void setPortletDataHandlerInstances(
-		List<PortletDataHandler> portletDataHandlerInstances) {
-
-		_portletDataHandlerInstances = portletDataHandlerInstances;
-	}
-
-	@Override
 	public void setPortletInstance(Portlet portletInstance) {
 		_portletInstance = portletInstance;
 	}

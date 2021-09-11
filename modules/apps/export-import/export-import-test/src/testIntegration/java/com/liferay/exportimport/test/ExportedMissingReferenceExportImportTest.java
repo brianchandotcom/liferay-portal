@@ -41,6 +41,7 @@ import com.liferay.portal.dao.orm.hibernate.DynamicQueryFactoryImpl;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -294,7 +295,9 @@ public class ExportedMissingReferenceExportImportTest
 		List<PortletDataHandler> oldDataHandlerInstances =
 			portletBag.getPortletDataHandlerInstances();
 
-		portletBag.setPortletDataHandlerInstances(portletDataHandlerInstances);
+		ReflectionTestUtil.setFieldValue(
+			portletBag, "_portletDataHandlerInstances",
+			portletDataHandlerInstances);
 
 		return oldDataHandlerInstances;
 	}

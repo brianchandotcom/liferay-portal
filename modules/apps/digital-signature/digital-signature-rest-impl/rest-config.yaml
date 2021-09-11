@@ -1,0 +1,9 @@
+apiDir: "../digital-signature-rest-api/src/main/java"
+apiPackagePath: "com.liferay.digital.signature.rest"
+application:
+    baseURI: "/headless-digital-signature"
+    className: "HeadlessDigitalSignatureApplication"
+    name: "HeadlessDigitalSignature"
+author: "José Abelenda"
+clientDir: "../digital-signature-rest-client/src/main/java"
+testDir: "../digital-signature-rest-test/src/testIntegration/java"

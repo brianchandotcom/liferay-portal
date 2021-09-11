@@ -15,6 +15,8 @@
 package com.liferay.object.system;
 
 import com.liferay.object.model.ObjectField;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.Table;
 
 import java.util.List;
 import java.util.Locale;
@@ -25,6 +27,10 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  */
 public interface SystemObjectDefinitionMetadata {
+
+	public default String getClassName() {
+		return null;
+	}
 
 	public default String getDBTableName() {
 		return null;
@@ -46,7 +52,15 @@ public interface SystemObjectDefinitionMetadata {
 
 	public Map<Locale, String> getPluralLabelMap();
 
+	public default Column<?, Long> getPrimaryKeyColumn() {
+		return null;
+	}
+
 	public String getScope();
+
+	public default Table getTable() {
+		return null;
+	}
 
 	public int getVersion();
 

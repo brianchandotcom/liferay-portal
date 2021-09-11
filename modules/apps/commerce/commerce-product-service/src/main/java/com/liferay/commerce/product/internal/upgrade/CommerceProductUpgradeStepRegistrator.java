@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
@@ -237,6 +238,17 @@ public class CommerceProductUpgradeStepRegistrator
 			"3.5.1", "3.6.0",
 			new com.liferay.commerce.product.internal.upgrade.v3_6_0.
 				CPInstanceUpgradeProcess());
+
+		registry.register(
+			"3.6.0", "3.7.0",
+			new CTModelUpgradeProcess(
+				"CommerceCatalog", "CommerceChannel", "CommerceChannelRel",
+				"CPAttachmentFileEntry", "CPDefinition", "CPDefinitionLink",
+				"CPDefinitionOptionRel", "CPDefinitionOptionValueRel",
+				"CPDSpecificationOptionValue", "CPDisplayLayout", "CPInstance",
+				"CPInstanceOptionValueRel", "CPMeasurementUnit", "CPOption",
+				"CPOptionCategory", "CPOptionValue", "CProduct",
+				"CPSpecificationOption", "CPTaxCategory"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");

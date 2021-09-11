@@ -16,6 +16,36 @@ definition {
 		Click(locator1 = "ACSegments#ADD_BUTTON");
 	}
 
+	macro addBreakdownByAttribute {
+		Click(locator1 = "ACSegments#ADD_BREAKDOWN_BUTTON");
+
+		Click(locator1 = "ACSegments#SEGMENT_OVERVIEW_ATTRIBUTE");
+
+		Type(
+			locator1 = "ACSegments#SEGMENT_OVERVIEW_ATTRIBUTE",
+			value1 = "${attribute}");
+
+		Click(
+			locator1 = "ACSegments#ATTRIBUTE_DROPDOWN_MENU_ITEM",
+			menuItem = "${attribute}");
+
+		if (isSet(binsAmount)) {
+			Click(locator1 = "ACSegments#BINS_INPUT");
+
+			Type(
+				locator1 = "ACSegments#BINS_INPUT",
+				value1 = "${binsAmount}");
+		}
+
+		Click(locator1 = "ACSegments#BREAKDOWN_NAME_INPUT");
+
+		Type(
+			locator1 = "ACSegments#BREAKDOWN_NAME_INPUT",
+			value1 = "${breakdownName}");
+
+		Click(locator1 = "Button#SAVE");
+	}
+
 	macro addNestedSegmentField {
 		Type(
 			locator1 = "ACSegments#SEARCH_SEGMENT",

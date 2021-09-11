@@ -36,6 +36,7 @@ public class CPInstanceOptionValueRelSoap implements Serializable {
 		CPInstanceOptionValueRelSoap soapModel =
 			new CPInstanceOptionValueRelSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCPInstanceOptionValueRelId(
 			model.getCPInstanceOptionValueRelId());
@@ -111,6 +112,14 @@ public class CPInstanceOptionValueRelSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCPInstanceOptionValueRelId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -203,6 +212,7 @@ public class CPInstanceOptionValueRelSoap implements Serializable {
 		_CPInstanceId = CPInstanceId;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _CPInstanceOptionValueRelId;
 	private long _groupId;

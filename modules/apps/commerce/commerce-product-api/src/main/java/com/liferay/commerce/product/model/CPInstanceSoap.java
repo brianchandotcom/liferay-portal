@@ -35,6 +35,7 @@ public class CPInstanceSoap implements Serializable {
 	public static CPInstanceSoap toSoapModel(CPInstance model) {
 		CPInstanceSoap soapModel = new CPInstanceSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setCPInstanceId(model.getCPInstanceId());
@@ -135,6 +136,14 @@ public class CPInstanceSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCPInstanceId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -499,6 +508,7 @@ public class CPInstanceSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _CPInstanceId;

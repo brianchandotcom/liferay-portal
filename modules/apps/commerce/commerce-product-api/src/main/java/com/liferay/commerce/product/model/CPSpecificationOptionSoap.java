@@ -35,6 +35,7 @@ public class CPSpecificationOptionSoap implements Serializable {
 
 		CPSpecificationOptionSoap soapModel = new CPSpecificationOptionSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCPSpecificationOptionId(
 			model.getCPSpecificationOptionId());
@@ -109,6 +110,14 @@ public class CPSpecificationOptionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCPSpecificationOptionId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -219,6 +228,7 @@ public class CPSpecificationOptionSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _CPSpecificationOptionId;
 	private long _companyId;

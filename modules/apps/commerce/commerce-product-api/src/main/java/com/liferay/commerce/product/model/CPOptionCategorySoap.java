@@ -33,6 +33,7 @@ public class CPOptionCategorySoap implements Serializable {
 	public static CPOptionCategorySoap toSoapModel(CPOptionCategory model) {
 		CPOptionCategorySoap soapModel = new CPOptionCategorySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCPOptionCategoryId(model.getCPOptionCategoryId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -104,6 +105,14 @@ public class CPOptionCategorySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCPOptionCategoryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -202,6 +211,7 @@ public class CPOptionCategorySoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _CPOptionCategoryId;
 	private long _companyId;

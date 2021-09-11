@@ -42,6 +42,7 @@ public class CommerceCatalogWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("commerceCatalogId", getCommerceCatalogId());
 		attributes.put("companyId", getCompanyId());
@@ -60,6 +61,12 @@ public class CommerceCatalogWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String externalReferenceCode = (String)attributes.get(
 			"externalReferenceCode");
 
@@ -216,6 +223,16 @@ public class CommerceCatalogWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this commerce catalog.
+	 *
+	 * @return the mvcc version of this commerce catalog
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the name of this commerce catalog.
 	 *
 	 * @return the name of this commerce catalog
@@ -358,6 +375,16 @@ public class CommerceCatalogWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this commerce catalog.
+	 *
+	 * @param mvccVersion the mvcc version of this commerce catalog
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

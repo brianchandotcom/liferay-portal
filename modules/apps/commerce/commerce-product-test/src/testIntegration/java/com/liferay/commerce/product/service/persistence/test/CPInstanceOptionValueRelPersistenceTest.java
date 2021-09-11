@@ -129,6 +129,8 @@ public class CPInstanceOptionValueRelPersistenceTest {
 		CPInstanceOptionValueRel newCPInstanceOptionValueRel =
 			_persistence.create(pk);
 
+		newCPInstanceOptionValueRel.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCPInstanceOptionValueRel.setUuid(RandomTestUtil.randomString());
 
 		newCPInstanceOptionValueRel.setGroupId(RandomTestUtil.nextLong());
@@ -158,6 +160,9 @@ public class CPInstanceOptionValueRelPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCPInstanceOptionValueRel.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCPInstanceOptionValueRel.getMvccVersion(),
+			newCPInstanceOptionValueRel.getMvccVersion());
 		Assert.assertEquals(
 			existingCPInstanceOptionValueRel.getUuid(),
 			newCPInstanceOptionValueRel.getUuid());
@@ -293,7 +298,7 @@ public class CPInstanceOptionValueRelPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CPInstanceOptionValueRel", "uuid", true,
+			"CPInstanceOptionValueRel", "mvccVersion", true, "uuid", true,
 			"CPInstanceOptionValueRelId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "CPDefinitionOptionRelId", true,
@@ -643,6 +648,8 @@ public class CPInstanceOptionValueRelPersistenceTest {
 
 		CPInstanceOptionValueRel cpInstanceOptionValueRel = _persistence.create(
 			pk);
+
+		cpInstanceOptionValueRel.setMvccVersion(RandomTestUtil.nextLong());
 
 		cpInstanceOptionValueRel.setUuid(RandomTestUtil.randomString());
 

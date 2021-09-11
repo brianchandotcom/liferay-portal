@@ -35,6 +35,7 @@ public class CPAttachmentFileEntrySoap implements Serializable {
 
 		CPAttachmentFileEntrySoap soapModel = new CPAttachmentFileEntrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setCPAttachmentFileEntryId(
@@ -121,6 +122,14 @@ public class CPAttachmentFileEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCPAttachmentFileEntryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -327,6 +336,7 @@ public class CPAttachmentFileEntrySoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _CPAttachmentFileEntryId;

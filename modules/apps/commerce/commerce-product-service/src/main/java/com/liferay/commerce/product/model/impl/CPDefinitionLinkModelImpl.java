@@ -77,18 +77,20 @@ public class CPDefinitionLinkModelImpl
 	public static final String TABLE_NAME = "CPDefinitionLink";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"CPDefinitionLinkId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"CPDefinitionId", Types.BIGINT}, {"CProductId", Types.BIGINT},
-		{"priority", Types.DOUBLE}, {"type_", Types.VARCHAR}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"CPDefinitionLinkId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"CPDefinitionId", Types.BIGINT},
+		{"CProductId", Types.BIGINT}, {"priority", Types.DOUBLE},
+		{"type_", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPDefinitionLinkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -104,7 +106,7 @@ public class CPDefinitionLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDefinitionLink (uuid_ VARCHAR(75) null,CPDefinitionLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CProductId LONG,priority DOUBLE,type_ VARCHAR(75) null)";
+		"create table CPDefinitionLink (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CProductId LONG,priority DOUBLE,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionLink";
 
@@ -196,6 +198,7 @@ public class CPDefinitionLinkModelImpl
 
 		CPDefinitionLink model = new CPDefinitionLinkImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCPDefinitionLinkId(soapModel.getCPDefinitionLinkId());
 		model.setGroupId(soapModel.getGroupId());
@@ -367,6 +370,12 @@ public class CPDefinitionLinkModelImpl
 			attributeSetterBiConsumers =
 				new LinkedHashMap<String, BiConsumer<CPDefinitionLink, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", CPDefinitionLink::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CPDefinitionLink, Long>)
+				CPDefinitionLink::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CPDefinitionLink::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -433,6 +442,21 @@ public class CPDefinitionLinkModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -771,6 +795,7 @@ public class CPDefinitionLinkModelImpl
 	public Object clone() {
 		CPDefinitionLinkImpl cpDefinitionLinkImpl = new CPDefinitionLinkImpl();
 
+		cpDefinitionLinkImpl.setMvccVersion(getMvccVersion());
 		cpDefinitionLinkImpl.setUuid(getUuid());
 		cpDefinitionLinkImpl.setCPDefinitionLinkId(getCPDefinitionLinkId());
 		cpDefinitionLinkImpl.setGroupId(getGroupId());
@@ -793,6 +818,8 @@ public class CPDefinitionLinkModelImpl
 	public CPDefinitionLink cloneWithOriginalValues() {
 		CPDefinitionLinkImpl cpDefinitionLinkImpl = new CPDefinitionLinkImpl();
 
+		cpDefinitionLinkImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		cpDefinitionLinkImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		cpDefinitionLinkImpl.setCPDefinitionLinkId(
@@ -900,6 +927,8 @@ public class CPDefinitionLinkModelImpl
 	public CacheModel<CPDefinitionLink> toCacheModel() {
 		CPDefinitionLinkCacheModel cpDefinitionLinkCacheModel =
 			new CPDefinitionLinkCacheModel();
+
+		cpDefinitionLinkCacheModel.mvccVersion = getMvccVersion();
 
 		cpDefinitionLinkCacheModel.uuid = getUuid();
 
@@ -1048,6 +1077,7 @@ public class CPDefinitionLinkModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _CPDefinitionLinkId;
 	private long _groupId;
@@ -1091,6 +1121,7 @@ public class CPDefinitionLinkModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("CPDefinitionLinkId", _CPDefinitionLinkId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -1127,29 +1158,31 @@ public class CPDefinitionLinkModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("uuid_", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("CPDefinitionLinkId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("groupId", 4L);
+		columnBitmasks.put("CPDefinitionLinkId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("CPDefinitionId", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("CProductId", 512L);
+		columnBitmasks.put("CPDefinitionId", 512L);
 
-		columnBitmasks.put("priority", 1024L);
+		columnBitmasks.put("CProductId", 1024L);
 
-		columnBitmasks.put("type_", 2048L);
+		columnBitmasks.put("priority", 2048L);
+
+		columnBitmasks.put("type_", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

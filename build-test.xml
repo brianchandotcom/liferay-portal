@@ -13976,23 +13976,41 @@ url=${short.hostname}:8080</echo>
 			</then>
 		</if>
 
-		<replace
-			file="${selenium.output.dir.name}/${translation.file.name}.${translation.file.type}"
-			token="${translation.title.target.original}"
-			value="${translation.title.target}"
-		/>
+		<if>
+			<equals arg1="${contentpage.translation.file}" arg2="true" />
+			<then>
+				<replace
+					file="${selenium.output.dir.name}/${translation.file.name}.${translation.file.type}"
+					token="${contentpage.translation.title.target.original}"
+					value="${contentpage.translation.title.target}"
+				/>
 
-		<replace
-			file="${selenium.output.dir.name}/${translation.file.name}.${translation.file.type}"
-			token="${translation.content.target.original}"
-			value="${translation.content.target}"
-		/>
+				<replace
+					file="${selenium.output.dir.name}/${translation.file.name}.${translation.file.type}"
+					token="${contentpage.translation.fragment.target.original}"
+					value="${contentpage.translation.fragment.target}"
+				/>
+			</then>
+			<else>
+				<replace
+					file="${selenium.output.dir.name}/${translation.file.name}.${translation.file.type}"
+					token="${translation.title.target.original}"
+					value="${translation.title.target}"
+				/>
 
-		<replace
-			file="${selenium.output.dir.name}/${translation.file.name}.${translation.file.type}"
-			token="${translation.description.target.original}"
-			value="${translation.description.target}"
-		/>
+				<replace
+					file="${selenium.output.dir.name}/${translation.file.name}.${translation.file.type}"
+					token="${translation.content.target.original}"
+					value="${translation.content.target}"
+				/>
+
+				<replace
+					file="${selenium.output.dir.name}/${translation.file.name}.${translation.file.type}"
+					token="${translation.description.target.original}"
+					value="${translation.description.target}"
+				/>
+			</else>
+		</if>
 
 		<if>
 			<equals arg1="${translation.file.encoding}" arg2="utf8" />

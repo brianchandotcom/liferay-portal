@@ -297,7 +297,23 @@ public class ExportedMissingReferenceExportImportTest
 
 		ReflectionTestUtil.setFieldValue(
 			portletBag, "_portletDataHandlerInstances",
-			portletDataHandlerInstances);
+			new ServiceTrackerList<PortletDataHandler, PortletDataHandler>() {
+
+				@Override
+				public void close() {
+				}
+
+				@Override
+				public Iterator<PortletDataHandler> iterator() {
+					return portletDataHandlerInstances.iterator();
+				}
+
+				@Override
+				public int size() {
+					return portletDataHandlerInstances.size();
+				}
+
+			});
 
 		return oldDataHandlerInstances;
 	}

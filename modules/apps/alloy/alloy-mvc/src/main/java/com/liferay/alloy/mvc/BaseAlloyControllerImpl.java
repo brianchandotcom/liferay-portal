@@ -50,8 +50,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletBag;
-import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
@@ -100,7 +98,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -825,19 +822,20 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		baseAlloyIndexer.setAlloyServiceInvoker(alloyServiceInvoker);
 		baseAlloyIndexer.setClassName(portlet.getModelClassName());
 
-		PortletBag portletBag = PortletBagPool.get(portlet.getPortletId());
-
-		List<Indexer<?>> indexerInstances = portletBag.getIndexerInstances();
-
 		if (existingIndexer != null) {
 			IndexerRegistryUtil.unregister(existingIndexer);
-
-			indexerInstances.remove(existingIndexer);
 		}
 
 		IndexerRegistryUtil.register(indexer);
 
-		indexerInstances.add(indexer);
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		bundleContext.registerService(
+			Indexer.class, indexer,
+			MapUtil.singletonDictionary(
+				"javax.portlet.name", portlet.getPortletName()));
 	}
 
 	protected void initMessageListener(

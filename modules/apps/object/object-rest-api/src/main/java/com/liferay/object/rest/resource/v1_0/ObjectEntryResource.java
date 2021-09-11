@@ -76,16 +76,6 @@ public interface ObjectEntryResource {
 			String externalReferenceCode, ObjectEntry objectEntry)
 		throws Exception;
 
-	public Page<ObjectEntry> getScopeScopeKeyPage(
-			String scopeKey, Boolean flatten, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			Filter filter, Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public ObjectEntry postScopeScopeKey(
-			String scopeKey, ObjectEntry objectEntry)
-		throws Exception;
-
 	public void deleteScopeScopeKeyByExternalReferenceCode(
 			String scopeKey, String externalReferenceCode)
 		throws Exception;
@@ -115,6 +105,16 @@ public interface ObjectEntryResource {
 		throws Exception;
 
 	public Response putObjectEntryBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Page<ObjectEntry> getScopeScopeKeyPage(
+			String scopeKey, Boolean flatten, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public ObjectEntry postScopeScopeKey(
+			String scopeKey, ObjectEntry objectEntry)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

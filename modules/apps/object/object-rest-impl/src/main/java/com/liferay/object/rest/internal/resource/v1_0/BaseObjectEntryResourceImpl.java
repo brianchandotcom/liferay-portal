@@ -213,50 +213,6 @@ public abstract class BaseObjectEntryResourceImpl
 		return new ObjectEntry();
 	}
 
-	@GET
-	@Override
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "scopeKey"),
-			@Parameter(in = ParameterIn.QUERY, name = "flatten"),
-			@Parameter(in = ParameterIn.QUERY, name = "search"),
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sort")
-		}
-	)
-	@Path("/scopes/{scopeKey}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "ObjectEntry")})
-	public Page<ObjectEntry> getScopeScopeKeyPage(
-			@Parameter(hidden = true) @PathParam("scopeKey") String scopeKey,
-			@Parameter(hidden = true) @QueryParam("flatten") Boolean flatten,
-			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context com.liferay.portal.vulcan.aggregation.Aggregation
-				aggregation,
-			@Context Filter filter, @Context Pagination pagination,
-			@Context Sort[] sorts)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	@Consumes({"application/json", "application/xml"})
-	@Override
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "scopeKey")})
-	@Path("/scopes/{scopeKey}")
-	@POST
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "ObjectEntry")})
-	public ObjectEntry postScopeScopeKey(
-			@Parameter(hidden = true) @PathParam("scopeKey") String scopeKey,
-			ObjectEntry objectEntry)
-		throws Exception {
-
-		return new ObjectEntry();
-	}
-
 	@DELETE
 	@Override
 	@Parameters(
@@ -480,6 +436,50 @@ public abstract class BaseObjectEntryResourceImpl
 			vulcanBatchEngineImportTaskResource.putImportTask(
 				ObjectEntry.class.getName(), callbackURL, object)
 		).build();
+	}
+
+	@GET
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "scopeKey"),
+			@Parameter(in = ParameterIn.QUERY, name = "flatten"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
+		}
+	)
+	@Path("/scopes/{scopeKey}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ObjectEntry")})
+	public Page<ObjectEntry> getScopeScopeKeyPage(
+			@Parameter(hidden = true) @PathParam("scopeKey") String scopeKey,
+			@Parameter(hidden = true) @QueryParam("flatten") Boolean flatten,
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context com.liferay.portal.vulcan.aggregation.Aggregation
+				aggregation,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Consumes({"application/json", "application/xml"})
+	@Override
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "scopeKey")})
+	@Path("/scopes/{scopeKey}")
+	@POST
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ObjectEntry")})
+	public ObjectEntry postScopeScopeKey(
+			@Parameter(hidden = true) @PathParam("scopeKey") String scopeKey,
+			ObjectEntry objectEntry)
+		throws Exception {
+
+		return new ObjectEntry();
 	}
 
 	@Override

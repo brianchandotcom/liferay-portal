@@ -14,14 +14,9 @@
 
 package com.liferay.exportimport.kernel.xstream;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.collections.ServiceRegistrationMap;
-import com.liferay.registry.collections.ServiceRegistrationMapImpl;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,94 +27,18 @@ import java.util.Set;
 public class XStreamConverterRegistryUtil {
 
 	public static Set<XStreamConverter> getXStreamConverters() {
-		return _xStreamConverterRegistryUtil._getXStreamConverters();
-	}
+		Set<XStreamConverter> xStreamConverters = new HashSet<>();
 
-	public static void register(XStreamConverter xStreamConverter) {
-		_xStreamConverterRegistryUtil._register(xStreamConverter);
-	}
+		_xStreamConverters.forEach(xStreamConverters::add);
 
-	public static void unregister(XStreamConverter xStreamConverter) {
-		_xStreamConverterRegistryUtil._unregister(xStreamConverter);
+		return xStreamConverters;
 	}
 
 	private XStreamConverterRegistryUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			XStreamConverter.class,
-			new XStreamConverterServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
-	private Set<XStreamConverter> _getXStreamConverters() {
-		return _xStreamConverters;
-	}
-
-	private void _register(XStreamConverter xStreamConverter) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceRegistration<XStreamConverter> serviceRegistration =
-			registry.registerService(XStreamConverter.class, xStreamConverter);
-
-		_serviceRegistrationMap.put(xStreamConverter, serviceRegistration);
-	}
-
-	private void _unregister(XStreamConverter xStreamConverter) {
-		ServiceRegistration<XStreamConverter> serviceRegistration =
-			_serviceRegistrationMap.remove(xStreamConverter);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-	}
-
-	private static final XStreamConverterRegistryUtil
-		_xStreamConverterRegistryUtil = new XStreamConverterRegistryUtil();
-
-	private final ServiceRegistrationMap<XStreamConverter>
-		_serviceRegistrationMap = new ServiceRegistrationMapImpl<>();
-	private final ServiceTracker<XStreamConverter, XStreamConverter>
-		_serviceTracker;
-	private final Set<XStreamConverter> _xStreamConverters = new HashSet<>();
-
-	private class XStreamConverterServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<XStreamConverter, XStreamConverter> {
-
-		@Override
-		public XStreamConverter addingService(
-			ServiceReference<XStreamConverter> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			XStreamConverter xStreamConverter = registry.getService(
-				serviceReference);
-
-			_xStreamConverters.add(xStreamConverter);
-
-			return xStreamConverter;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<XStreamConverter> serviceReference,
-			XStreamConverter xStreamConverter) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<XStreamConverter> serviceReference,
-			XStreamConverter xStreamConverter) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			_xStreamConverters.remove(xStreamConverter);
-		}
-
-	}
+	private static final ServiceTrackerList<XStreamConverter, XStreamConverter>
+		_xStreamConverters = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(), XStreamConverter.class);
 
 }

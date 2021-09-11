@@ -14,19 +14,14 @@
 
 package com.liferay.portal.kernel.trash;
 
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.collections.ServiceRegistrationMap;
-import com.liferay.registry.collections.ServiceRegistrationMapImpl;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentSkipListMap;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Alexander Chow
@@ -34,111 +29,26 @@ import java.util.concurrent.ConcurrentSkipListMap;
 public class TrashHandlerRegistryUtil {
 
 	public static TrashHandler getTrashHandler(String className) {
-		return _trashHandlerRegistryUtil._getTrashHandler(className);
+		return _trashHandlers.getService(className);
 	}
 
 	public static List<TrashHandler> getTrashHandlers() {
-		return _trashHandlerRegistryUtil._getTrashHandlers();
+		return new ArrayList<>(_trashHandlers.values());
 	}
 
-	public static void register(List<TrashHandler> trashHandlers) {
-		for (TrashHandler trashHandler : trashHandlers) {
-			register(trashHandler);
-		}
-	}
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 
-	public static void register(TrashHandler trashHandler) {
-		_trashHandlerRegistryUtil._register(trashHandler);
-	}
+	private static final ServiceTrackerMap<String, TrashHandler>
+		_trashHandlers = ServiceTrackerMapFactory.openSingleValueMap(
+			_bundleContext, TrashHandler.class, null,
+			(serviceReference, emitter) -> {
+				TrashHandler trashHandler = _bundleContext.getService(
+					serviceReference);
 
-	public static void unregister(List<TrashHandler> trashHandlers) {
-		for (TrashHandler trashHandler : trashHandlers) {
-			unregister(trashHandler);
-		}
-	}
+				emitter.emit(trashHandler.getClassName());
 
-	public static void unregister(TrashHandler trashHandler) {
-		_trashHandlerRegistryUtil._unregister(trashHandler);
-	}
-
-	private TrashHandlerRegistryUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			TrashHandler.class, new TrashHandlerServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
-
-	private TrashHandler _getTrashHandler(String className) {
-		return _trashHandlers.get(className);
-	}
-
-	private List<TrashHandler> _getTrashHandlers() {
-		return ListUtil.fromMapValues(_trashHandlers);
-	}
-
-	private void _register(TrashHandler trashHandler) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceRegistration<TrashHandler> serviceRegistration =
-			registry.registerService(TrashHandler.class, trashHandler);
-
-		_serviceRegistrationMap.put(trashHandler, serviceRegistration);
-	}
-
-	private void _unregister(TrashHandler trashHandler) {
-		ServiceRegistration<TrashHandler> serviceRegistration =
-			_serviceRegistrationMap.remove(trashHandler);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-	}
-
-	private static final TrashHandlerRegistryUtil _trashHandlerRegistryUtil =
-		new TrashHandlerRegistryUtil();
-
-	private final ServiceRegistrationMap<TrashHandler> _serviceRegistrationMap =
-		new ServiceRegistrationMapImpl<>();
-	private final ServiceTracker<TrashHandler, TrashHandler> _serviceTracker;
-	private final Map<String, TrashHandler> _trashHandlers =
-		new ConcurrentSkipListMap<>();
-
-	private class TrashHandlerServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<TrashHandler, TrashHandler> {
-
-		@Override
-		public TrashHandler addingService(
-			ServiceReference<TrashHandler> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			TrashHandler trashHandler = registry.getService(serviceReference);
-
-			_trashHandlers.put(trashHandler.getClassName(), trashHandler);
-
-			return trashHandler;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<TrashHandler> serviceReference,
-			TrashHandler trashHandler) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<TrashHandler> serviceReference,
-			TrashHandler trashHandler) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			_trashHandlers.remove(trashHandler.getClassName());
-		}
-
-	}
+				_bundleContext.ungetService(serviceReference);
+			});
 
 }

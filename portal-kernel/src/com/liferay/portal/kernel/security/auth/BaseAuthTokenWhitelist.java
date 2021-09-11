@@ -15,18 +15,15 @@
 package com.liferay.portal.kernel.security.auth;
 
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.collections.StringServiceRegistrationMap;
-import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 import com.liferay.registry.util.StringPlus;
 
 import java.util.ArrayList;
@@ -35,6 +32,9 @@ import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Tomas Polesovsky
@@ -80,11 +80,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	}
 
 	protected void destroy() {
-		for (ServiceRegistration<?> serviceRegistration :
-				serviceRegistrations.values()) {
-
-			serviceRegistration.unregister();
-		}
+		serviceRegistrations.forEach(ServiceRegistration::unregister);
 
 		for (ServiceTracker<?, ?> serviceTracker : serviceTrackers) {
 			serviceTracker.close();
@@ -95,17 +91,10 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 		String[] values = PropsUtil.getArray(key);
 
 		if (values.length > 0) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			ServiceRegistration<Object> serviceRegistration =
-				registry.registerService(
+			serviceRegistrations.add(
+				_bundleContext.registerService(
 					Object.class, new Object(),
-					HashMapBuilder.<String, Object>put(
-						key, values
-					).build());
-
-			serviceRegistrations.put(
-				StringUtil.merge(values), serviceRegistration);
+					MapUtil.singletonDictionary(key, values)));
 		}
 	}
 
@@ -125,10 +114,13 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 		return serviceTracker;
 	}
 
-	protected final StringServiceRegistrationMap<Object> serviceRegistrations =
-		new StringServiceRegistrationMapImpl<>();
+	protected final List<ServiceRegistration<?>> serviceRegistrations =
+		new ArrayList<>();
 	protected final List<ServiceTracker<Object, Object>> serviceTrackers =
 		new ArrayList<>();
+
+	private final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 
 	private static class TokenWhitelistTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, Object> {

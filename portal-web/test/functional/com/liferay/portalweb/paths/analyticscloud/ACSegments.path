@@ -17,8 +17,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_BREAKDOWN_BUTTON</td>
+	<td>//div[contains(@class,'distribution-card')]//button[*[name()='svg'][contains(@class,'icon-plus')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANONYMOUS_LABEL</td>
 	<td>//div[@class='card-header']/div/span[@class='label-item' and text()='Include Anonymous']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BINS_INPUT</td>
+	<td>//input[contains(@id,'numberOfBins')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BREAKDOWN_NAME_INPUT</td>
+	<td>//input[@type='text' and @name='title']</td>
 	<td></td>
 </tr>
 <tr>
@@ -209,6 +224,11 @@
 <tr>
 	<td>SEGMENT_MEMBERSHIP_CARD</td>
 	<td>//div[@class='criteria-row']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEGMENT_OVERVIEW_ATTRIBUTE</td>
+	<td>//div[contains(@class, 'input-group-item')]//input[contains(@id, 'property')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -459,7 +479,7 @@
 	<td>xpath=(//div[contains(@class,'table-responsive')]/table/tbody/tr/td[contains(@class,'name-cell-root')]//a)[3]</td>
 	<td></td>
 </tr>
-<!-- Distribution Breakdown -->
+<!-- Segment Distribution Breakdown -->
 <tr>
 	<td>ATTRIBUTE_DROPDOWN_MENU_ITEM</td>
 	<td>//ul[contains(@class,'dropdown-menu')][contains(@class,'show')]//button[.//span[normalize-space(text())='${menuItem}']]</td>
@@ -467,7 +487,7 @@
 </tr>
 <tr>
 	<td>ATTRIBUTE_TEXT_INPUT</td>
-	<td>//input[contains(@id,'breakdown')]</td>
+	<td>//div[contains(@class, 'input-group-item')]//input[contains(@id, 'breakdown')]</td>
 	<td></td>
 </tr>
 <tr>

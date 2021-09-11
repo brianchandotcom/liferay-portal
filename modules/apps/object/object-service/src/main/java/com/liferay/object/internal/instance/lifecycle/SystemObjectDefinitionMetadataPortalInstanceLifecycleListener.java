@@ -14,7 +14,12 @@
 
 package com.liferay.object.internal.instance.lifecycle;
 
+import com.liferay.object.internal.related.models.SystemObject1toMObjectRelatedModelsProviderImpl;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.persistence.ObjectFieldPersistence;
+import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
@@ -27,6 +32,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -62,6 +68,8 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 		if (_log.isDebugEnabled()) {
 			_log.debug("Activate " + bundleContext);
 		}
+
+		_bundleContext = bundleContext;
 
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, SystemObjectDefinitionMetadata.class, null,
@@ -135,8 +143,18 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 		}
 
 		try {
-			_objectDefinitionLocalService.addOrUpdateSystemObjectDefinition(
-				companyId, systemObjectDefinitionMetadata);
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.addOrUpdateSystemObjectDefinition(
+					companyId, systemObjectDefinitionMetadata);
+
+			_bundleContext.registerService(
+				ObjectRelatedModelsProvider.class,
+				new SystemObject1toMObjectRelatedModelsProviderImpl(
+					objectDefinition, _objectFieldPersistence,
+					_objectRelationshipPersistence,
+					_persistedModelLocalServiceRegistry,
+					systemObjectDefinitionMetadata),
+				null);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
@@ -146,11 +164,23 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 	private static final Log _log = LogFactoryUtil.getLog(
 		SystemObjectDefinitionMetadataPortalInstanceLifecycleListener.class);
 
+	private BundleContext _bundleContext;
+
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectFieldPersistence _objectFieldPersistence;
+
+	@Reference
+	private ObjectRelationshipPersistence _objectRelationshipPersistence;
+
+	@Reference
+	private PersistedModelLocalServiceRegistry
+		_persistedModelLocalServiceRegistry;
 
 	private ServiceTrackerList
 		<SystemObjectDefinitionMetadata, SystemObjectDefinitionMetadata>

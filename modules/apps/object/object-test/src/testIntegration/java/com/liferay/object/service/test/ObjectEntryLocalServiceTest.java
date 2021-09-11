@@ -561,7 +561,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(null, values.get("middleName"));
 		Assert.assertEquals(0, values.get("numberOfBooksWritten"));
 		Assert.assertEquals(null, values.get("portrait"));
-		Assert.assertEquals(null, values.get("speed"));
+		Assert.assertEquals(_getBigDecimal(0L), values.get("speed"));
 		Assert.assertEquals(0D, values.get("weight"));
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(), values.get("c_testId"));
@@ -957,7 +957,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(null, values.get("middleName"));
 		Assert.assertEquals(0, values.get("numberOfBooksWritten"));
 		Assert.assertEquals(null, values.get("portrait"));
-		Assert.assertEquals(null, values.get("speed"));
+		Assert.assertEquals(_getBigDecimal(0L), values.get("speed"));
 		Assert.assertEquals(0D, values.get("weight"));
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(), values.get("c_testId"));

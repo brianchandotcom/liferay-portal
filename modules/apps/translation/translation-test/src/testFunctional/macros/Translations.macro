@@ -1,7 +1,12 @@
 definition {
 
 	macro assertFileNameFromTempFolder {
-		var translationZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "${webContentTitle}*.zip");
+		if (isSet(pageName)) {
+			var translationZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "${pageName}*.zip");
+		}
+		else {
+			var translationZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "${webContentTitle}*.zip");
+		}
 
 		echo("## translationZipFileName: ${translationZipFileName}");
 
@@ -74,19 +79,37 @@ definition {
 	}
 
 	macro gotoExportTranslation {
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		if (isSet(pageName)) {
+			WaitForPageLoad();
 
-		Click.waitForMenuToggleJSClick(
-			key_webContentTitle = "${webContentTitle}",
-			locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
+			Click(
+				key_pageName = "${pageName}",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+		}
+		else {
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			Click.waitForMenuToggleJSClick(
+				key_webContentTitle = "${webContentTitle}",
+				locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
+		}
 
 		MenuItem.click(menuItem = "Export for Translation");
 	}
 
 	macro gotoImportTranslation {
-		Click.waitForMenuToggleJSClick(
-			key_webContentTitle = "${webContentTitle}",
-			locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
+		if (isSet(pageName)) {
+			WaitForPageLoad();
+
+			Click(
+				key_pageName = "${pageName}",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+		}
+		else {
+			Click.waitForMenuToggleJSClick(
+				key_webContentTitle = "${webContentTitle}",
+				locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
+		}
 
 		MenuItem.click(menuItem = "Import Translation");
 	}
@@ -100,15 +123,27 @@ definition {
 	}
 
 	macro importTranslation {
-		Translations.gotoImportTranslation(webContentTitle = "${webContentTitle}");
+		if (isSet(pageName)) {
+			Translations.gotoImportTranslation(pageName = "${pageName}");
+		}
+		else {
+			Translations.gotoImportTranslation(webContentTitle = "${webContentTitle}");
+		}
 
 		AssertClick(
 			locator1 = "Button#SELECT_FILE",
 			value1 = "Select File");
 
-		UploadTempFile.uploadTempFileHiddenNoMouseOver(
-			locator1 = "TextInput#FILE",
-			value1 = "${fileName}");
+		if (isSet(uploadInvalidFile)) {
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = "${uploadInvalidFile}");
+		}
+		else {
+			UploadTempFile.uploadTempFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = "${fileName}");
+		}
 
 		if ("${workflow}" == "true") {
 			PortletEntry.submitForPublication();
@@ -116,6 +151,10 @@ definition {
 
 		else if ("${workflowResubmit}" == "true") {
 			PortletEntry.save();
+		}
+
+		else if ("${validateInvalidFile}" == "true") {
+			Button.clickPublish();
 		}
 
 		else {
@@ -212,6 +251,12 @@ definition {
 		var attributes = '''{${attributes}}''';
 
 		return "${attributes}";
+	}
+
+	macro translateContentPageFile {
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "update-translation-file -Dcontentpage.translation.fragment.target.original=<![CDATA[${fragmentContent}]]></target> -Dcontentpage.translation.fragment.target=<![CDATA[${fragmentContentTranslation}]]></target> -Dcontentpage.translation.title.target.original=<![CDATA[${pageName}]]></target> -Dcontentpage.translation.title.target=<![CDATA[${pageNameTranslation}]]></target> -Dtranslation.file.encoding=${encoding} -Dtranslation.file.name=${translationFileName} -Dcontentpage.translation.file=${contentPageTranslation} -Dtranslation.zip.file.name=${translationZipFileName}");
 	}
 
 	macro translateFields {

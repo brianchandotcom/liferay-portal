@@ -40,6 +40,8 @@ public interface SystemObjectDefinitionMetadata {
 
 	public Column<?, Long> getPrimaryKeyColumn();
 
+	public String getRESTContextPath();
+
 	public String getScope();
 
 	public Table getTable();

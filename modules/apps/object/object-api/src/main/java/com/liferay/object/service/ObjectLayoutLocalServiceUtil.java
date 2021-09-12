@@ -335,6 +335,16 @@ public class ObjectLayoutLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static ObjectLayout updateObjectLayout(
+			long objectLayoutId, boolean defaultObjectLayout,
+			Map<java.util.Locale, String> nameMap,
+			List<com.liferay.object.model.ObjectLayoutTab> objectLayoutTabs)
+		throws PortalException {
+
+		return getService().updateObjectLayout(
+			objectLayoutId, defaultObjectLayout, nameMap, objectLayoutTabs);
+	}
+
 	/**
 	 * Updates the object layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

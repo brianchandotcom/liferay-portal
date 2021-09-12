@@ -37,16 +37,6 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	}
 
 	@Override
-	public String getClassName() {
-		if (isSystem()) {
-			throw new UnsupportedOperationException();
-		}
-
-		return "com.liferay.object.model.ObjectDefinition#" +
-			getObjectDefinitionId();
-	}
-
-	@Override
 	public String getDestinationName() {
 		return StringBundler.concat(
 			"liferay/object/", getCompanyId(), StringPool.SLASH,

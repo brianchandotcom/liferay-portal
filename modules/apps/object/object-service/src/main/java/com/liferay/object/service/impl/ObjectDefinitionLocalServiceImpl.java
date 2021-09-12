@@ -105,8 +105,8 @@ public class ObjectDefinitionLocalServiceImpl
 		throws PortalException {
 
 		return _addObjectDefinition(
-			userId, null, labelMap, name, panelAppOrder, panelCategoryKey, null,
-			null, pluralLabelMap, scope, false, 0,
+			userId, null, null, labelMap, name, panelAppOrder, panelCategoryKey,
+			null, null, pluralLabelMap, scope, false, 0,
 			WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
@@ -136,7 +136,8 @@ public class ObjectDefinitionLocalServiceImpl
 				systemObjectDefinitionMetadata.getPrimaryKeyColumn();
 
 			return addSystemObjectDefinition(
-				userId, table.getTableName(),
+				userId, systemObjectDefinitionMetadata.getClassName(),
+				table.getTableName(),
 				systemObjectDefinitionMetadata.getLabelMap(),
 				systemObjectDefinitionMetadata.getName(),
 				primaryKeyColumn.getName(), primaryKeyColumn.getName(),
@@ -193,14 +194,15 @@ public class ObjectDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition addSystemObjectDefinition(
-			long userId, String dbTableName, Map<Locale, String> labelMap,
-			String name, String pkObjectFieldDBColumnName,
-			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
-			String scope, int version, List<ObjectField> objectFields)
+			long userId, String className, String dbTableName,
+			Map<Locale, String> labelMap, String name,
+			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			Map<Locale, String> pluralLabelMap, String scope, int version,
+			List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
-			userId, dbTableName, labelMap, name, null, null,
+			userId, className, dbTableName, labelMap, name, null, null,
 			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, scope,
 			true, version, WorkflowConstants.STATUS_APPROVED, objectFields);
 	}
@@ -540,11 +542,12 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private ObjectDefinition _addObjectDefinition(
-			long userId, String dbTableName, Map<Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
-			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			Map<Locale, String> pluralLabelMap, String scope, boolean system,
-			int version, int status, List<ObjectField> objectFields)
+			long userId, String className, String dbTableName,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, String pkObjectFieldDBColumnName,
+			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
+			String scope, boolean system, int version, int status,
+			List<ObjectField> objectFields)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -576,6 +579,9 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setUserName(user.getFullName());
 		objectDefinition.setActive(true);
 		objectDefinition.setDBTableName(dbTableName);
+		objectDefinition.setClassName(
+			_getClassName(
+				className, objectDefinition.getObjectDefinitionId(), system));
 		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectDefinition.setName(name);
 		objectDefinition.setPanelAppOrder(panelAppOrder);
@@ -649,6 +655,17 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		runSQL(sql);
+	}
+
+	private String _getClassName(
+		String className, long objectDefinitionId, boolean system) {
+
+		if (system) {
+			return className;
+		}
+
+		return "com.liferay.object.model.ObjectDefinition#" +
+			objectDefinitionId;
 	}
 
 	private String _getDBTableName(

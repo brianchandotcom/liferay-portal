@@ -68,6 +68,11 @@ public class UserSystemObjectDefinitionMetadata
 	}
 
 	@Override
+	public String getRESTContextPath() {
+		return "headless-admin-user/v1.0/user-accounts";
+	}
+
+	@Override
 	public String getScope() {
 		return ObjectDefinitionConstants.SCOPE_COMPANY;
 	}

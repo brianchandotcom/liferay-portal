@@ -132,6 +132,32 @@ public class ObjectLayoutLocalServiceImpl
 			objectDefinitionId);
 	}
 
+	@Override
+	public ObjectLayout updateObjectLayout(
+			long objectLayoutId, boolean defaultObjectLayout,
+			Map<Locale, String> nameMap, List<ObjectLayoutTab> objectLayoutTabs)
+		throws PortalException {
+
+		ObjectLayout objectLayout = objectLayoutPersistence.findByPrimaryKey(
+			objectLayoutId);
+
+		_deleteObjectLayoutTabs(objectLayoutId);
+
+		objectLayout.setDefaultObjectLayout(defaultObjectLayout);
+		objectLayout.setNameMap(nameMap);
+
+		objectLayout = objectLayoutPersistence.update(objectLayout);
+
+		User user = _userLocalService.getUser(objectLayout.getUserId());
+
+		objectLayout.setObjectLayoutTabs(
+			_addObjectLayoutTabs(
+				user, objectLayout.getObjectDefinitionId(),
+				objectLayout.getObjectLayoutId(), objectLayoutTabs));
+
+		return objectLayout;
+	}
+
 	private ObjectLayoutBox _addObjectLayoutBox(
 			User user, long objectDefinitionId, long objectLayoutTabId,
 			boolean collapsable, Map<Locale, String> nameMap, int priority,

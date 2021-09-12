@@ -367,7 +367,7 @@ public class ObjectFieldLocalServiceTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
-				TestPropsValues.getUserId(), null,
+				TestPropsValues.getUserId(), "Test", null,
 				LocalizedMapUtil.getLocalizedMap("Test"), "Test", null, null,
 				LocalizedMapUtil.getLocalizedMap("Tests"),
 				ObjectDefinitionConstants.SCOPE_COMPANY, 1,
@@ -514,7 +514,7 @@ public class ObjectFieldLocalServiceTest {
 		try {
 			objectDefinition =
 				_objectDefinitionLocalService.addSystemObjectDefinition(
-					TestPropsValues.getUserId(), null,
+					TestPropsValues.getUserId(), "Test", null,
 					LocalizedMapUtil.getLocalizedMap("Test"), "Test", null,
 					null, LocalizedMapUtil.getLocalizedMap("Tests"),
 					ObjectDefinitionConstants.SCOPE_COMPANY, 1,

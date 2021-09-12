@@ -40,10 +40,7 @@ import com.liferay.portal.module.framework.ModuleFramework;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.collections.ServiceTrackerMapFactory;
-import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
 import com.liferay.registry.internal.RegistryImpl;
-import com.liferay.registry.internal.ServiceTrackerMapFactoryImpl;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -223,15 +220,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			new RegistryImpl(_framework.getBundleContext()));
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Binding the OSGi framework to the service tracker map " +
-					"factory");
-		}
-
-		ServiceTrackerMapFactoryUtil.setServiceTrackerMapFactory(
-			new ServiceTrackerMapFactoryImpl(_framework.getBundleContext()));
-
-		if (_log.isDebugEnabled()) {
 			_log.debug("Initialized the OSGi framework");
 		}
 	}
@@ -319,16 +307,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			registryImpl.closeServiceTrackers();
 		}
 
-		ServiceTrackerMapFactory serviceTrackerMapFactory =
-			ServiceTrackerMapFactoryUtil.getServiceTrackerMapFactory();
-
-		if (serviceTrackerMapFactory instanceof ServiceTrackerMapFactoryImpl) {
-			ServiceTrackerMapFactoryImpl serviceTrackerMapFactoryImpl =
-				(ServiceTrackerMapFactoryImpl)serviceTrackerMapFactory;
-
-			serviceTrackerMapFactoryImpl.clearServiceTrackerMaps();
-		}
-
 		_framework.stop();
 
 		frameworkEvent = _framework.waitForStop(timeout);
@@ -344,8 +322,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		RegistryUtil.setRegistry(null);
-
-		ServiceTrackerMapFactoryUtil.setServiceTrackerMapFactory(null);
 
 		if (Boolean.parseBoolean(System.getenv("LIFERAY_CLEAN_OSGI_STATE"))) {
 			_cleanOSGiStateFolder();

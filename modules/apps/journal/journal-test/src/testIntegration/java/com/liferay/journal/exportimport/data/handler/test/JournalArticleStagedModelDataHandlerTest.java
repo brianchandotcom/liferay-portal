@@ -73,6 +73,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
+
 /**
  * @author Daniel Kocsis
  */
@@ -127,11 +132,14 @@ public class JournalArticleStagedModelDataHandlerTest
 			new TestLayoutStagedModelDataHandler(
 				originalLayoutStagedModelDataHandler);
 
-		StagedModelDataHandlerRegistryUtil.unregister(
-			originalLayoutStagedModelDataHandler);
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-		StagedModelDataHandlerRegistryUtil.register(
-			testLayoutStagedModelDataHandler);
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration<?> serviceRegistration =
+			bundleContext.registerService(
+				StagedModelDataHandler.class, testLayoutStagedModelDataHandler,
+				MapUtil.singletonDictionary("service.ranking", 100));
 
 		try {
 			StagedModelDataHandlerUtil.importStagedModel(
@@ -140,11 +148,7 @@ public class JournalArticleStagedModelDataHandlerTest
 		finally {
 			ExportImportThreadLocal.setPortletImportInProcess(false);
 
-			StagedModelDataHandlerRegistryUtil.unregister(
-				testLayoutStagedModelDataHandler);
-
-			StagedModelDataHandlerRegistryUtil.register(
-				originalLayoutStagedModelDataHandler);
+			serviceRegistration.unregister();
 		}
 
 		JournalArticle importJournalArticle =

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -32,10 +33,8 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.collections.ServiceTrackerMap;
-import com.liferay.registry.collections.ServiceTrackerMapFactory;
-import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -121,12 +120,6 @@ public class AuthVerifierPipelineTest {
 		AuthVerifierPipeline authVerifierPipeline = new AuthVerifierPipeline(
 			Collections.singletonList(authVerifierConfiguration), "");
 
-		ServiceTrackerMapFactoryUtil.setServiceTrackerMapFactory(
-			(ServiceTrackerMapFactory)ProxyUtil.newProxyInstance(
-				AuthVerifierPipeline.class.getClassLoader(),
-				new Class<?>[] {ServiceTrackerMapFactory.class},
-				(proxy, method, args) -> null));
-
 		ReflectionTestUtil.setFieldValue(
 			AuthVerifierRegistry.class, "_serviceTrackerMap",
 			new ServiceTrackerMap<String, AuthVerifier>() {
@@ -154,6 +147,11 @@ public class AuthVerifierPipelineTest {
 
 				@Override
 				public Set<String> keySet() {
+					return null;
+				}
+
+				@Override
+				public Collection<AuthVerifier> values() {
 					return null;
 				}
 

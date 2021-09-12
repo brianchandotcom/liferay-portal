@@ -187,6 +187,14 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	@Override
+	public ObjectRelationship fetchObjectRelationshipByObjectFieldId2(
+		long objectFieldId2) {
+
+		return objectRelationshipPersistence.fetchByObjectFieldId2(
+			objectFieldId2);
+	}
+
+	@Override
 	public List<ObjectRelationship> getObjectRelationships(
 		long objectDefinitionId1, int start, int end) {
 

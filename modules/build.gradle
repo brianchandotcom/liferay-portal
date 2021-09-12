@@ -629,6 +629,12 @@ gradle.taskGraph.useFilter {
 		if (deployOnlyProfile && !FileUtil.exists(task.project, ".lfrbuild-${deployOnlyProfile}")) {
 			return false
 		}
+
+		String releaseProfile = System.properties["release.profile"]
+
+		if (releaseProfile && FileUtil.exists(task.project, ".lfrbuild-releng-ignore")) {
+			return false
+		}
 	}
 	else if (task.name == "test") {
 		if (!_hasTestClasses(task, "src/test/java")) {

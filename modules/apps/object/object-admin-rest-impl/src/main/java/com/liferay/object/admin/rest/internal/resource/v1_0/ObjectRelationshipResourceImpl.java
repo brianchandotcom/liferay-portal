@@ -83,7 +83,7 @@ public class ObjectRelationshipResourceImpl
 					objectRelationship.getObjectDefinitionId1();
 				objectDefinitionId2 =
 					objectRelationship.getObjectDefinitionId2();
-				type = ObjectRelationship.Type.valueOf(
+				type = ObjectRelationship.Type.create(
 					objectRelationship.getType());
 			}
 		};

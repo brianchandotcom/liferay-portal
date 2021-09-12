@@ -323,6 +323,9 @@
 		<finder name="ObjectDefinitionId2" return-type="Collection">
 			<finder-column name="objectDefinitionId2" />
 		</finder>
+		<finder name="ObjectFieldId2" return-type="ObjectRelationship">
+			<finder-column name="objectFieldId2" />
+		</finder>
 		<finder name="ODI1_N" return-type="ObjectRelationship">
 			<finder-column name="objectDefinitionId1" />
 			<finder-column name="name" />

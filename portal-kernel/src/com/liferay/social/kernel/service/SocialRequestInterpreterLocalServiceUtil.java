@@ -35,32 +35,6 @@ public class SocialRequestInterpreterLocalServiceUtil {
 	 */
 
 	/**
-	 * Adds the social request interpreter to the list of available
-	 * interpreters.
-	 *
-	 * @param requestInterpreter the social request interpreter
-	 */
-	public static void addRequestInterpreter(
-		com.liferay.social.kernel.model.SocialRequestInterpreter
-			requestInterpreter) {
-
-		getService().addRequestInterpreter(requestInterpreter);
-	}
-
-	/**
-	 * Removes the social request interpreter from the list of available
-	 * interpreters.
-	 *
-	 * @param requestInterpreter the social request interpreter
-	 */
-	public static void deleteRequestInterpreter(
-		com.liferay.social.kernel.model.SocialRequestInterpreter
-			requestInterpreter) {
-
-		getService().deleteRequestInterpreter(requestInterpreter);
-	}
-
-	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier

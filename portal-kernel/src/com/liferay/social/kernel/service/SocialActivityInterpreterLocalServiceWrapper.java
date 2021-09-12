@@ -36,32 +36,6 @@ public class SocialActivityInterpreterLocalServiceWrapper
 			socialActivityInterpreterLocalService;
 	}
 
-	/**
-	 * Adds the activity interpreter to the list of available interpreters.
-	 *
-	 * @param activityInterpreter the activity interpreter
-	 */
-	@Override
-	public void addActivityInterpreter(
-		SocialActivityInterpreter activityInterpreter) {
-
-		_socialActivityInterpreterLocalService.addActivityInterpreter(
-			activityInterpreter);
-	}
-
-	/**
-	 * Removes the activity interpreter from the list of available interpreters.
-	 *
-	 * @param activityInterpreter the activity interpreter
-	 */
-	@Override
-	public void deleteActivityInterpreter(
-		SocialActivityInterpreter activityInterpreter) {
-
-		_socialActivityInterpreterLocalService.deleteActivityInterpreter(
-			activityInterpreter);
-	}
-
 	@Override
 	public java.util.Map<String, java.util.List<SocialActivityInterpreter>>
 		getActivityInterpreters() {

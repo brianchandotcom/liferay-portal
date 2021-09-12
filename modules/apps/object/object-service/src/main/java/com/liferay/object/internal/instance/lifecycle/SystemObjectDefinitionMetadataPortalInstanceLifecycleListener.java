@@ -15,8 +15,11 @@
 package com.liferay.object.internal.instance.lifecycle;
 
 import com.liferay.object.internal.related.models.SystemObject1toMObjectRelatedModelsProviderImpl;
+import com.liferay.object.internal.rest.context.RESTContextPathResolverImpl;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.rest.context.RESTContextPathResolver;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -33,6 +36,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -155,6 +159,17 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 					_persistedModelLocalServiceRegistry,
 					systemObjectDefinitionMetadata),
 				null);
+
+			_bundleContext.registerService(
+				RESTContextPathResolver.class,
+				new RESTContextPathResolverImpl(
+					"/o/" + systemObjectDefinitionMetadata.getRESTContextPath(),
+					_objectScopeProviderRegistry.getObjectScopeProvider(
+						objectDefinition.getScope()),
+					true),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"model.class.name", objectDefinition.getClassName()
+				).build());
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
@@ -177,6 +192,9 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Reference
+	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 	@Reference
 	private PersistedModelLocalServiceRegistry

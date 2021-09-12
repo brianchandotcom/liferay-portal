@@ -219,6 +219,10 @@ public interface ObjectRelationshipLocalService
 	public ObjectRelationship fetchObjectRelationship(
 		long objectRelationshipId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectRelationship fetchObjectRelationshipByObjectFieldId2(
+		long objectFieldId2);
+
 	/**
 	 * Returns the object relationship with the matching UUID and company.
 	 *

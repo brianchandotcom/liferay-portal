@@ -144,6 +144,8 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setLabel(RandomTestUtil.randomString());
 
+		newObjectDefinition.setClassName(RandomTestUtil.randomString());
+
 		newObjectDefinition.setName(RandomTestUtil.randomString());
 
 		newObjectDefinition.setPanelAppOrder(RandomTestUtil.randomString());
@@ -202,6 +204,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.getLabel(),
 			newObjectDefinition.getLabel());
+		Assert.assertEquals(
+			existingObjectDefinition.getClassName(),
+			newObjectDefinition.getClassName());
 		Assert.assertEquals(
 			existingObjectDefinition.getName(), newObjectDefinition.getName());
 		Assert.assertEquals(
@@ -310,8 +315,8 @@ public class ObjectDefinitionPersistenceTest {
 			"ObjectDefinition", "mvccVersion", true, "uuid", true,
 			"objectDefinitionId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"active", true, "dbTableName", true, "label", true, "name", true,
-			"panelAppOrder", true, "panelCategoryKey", true,
+			"active", true, "dbTableName", true, "label", true, "className",
+			true, "name", true, "panelAppOrder", true, "panelCategoryKey", true,
 			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
 			"pluralLabel", true, "scope", true, "system", true, "version", true,
 			"status", true);
@@ -622,6 +627,8 @@ public class ObjectDefinitionPersistenceTest {
 		objectDefinition.setDBTableName(RandomTestUtil.randomString());
 
 		objectDefinition.setLabel(RandomTestUtil.randomString());
+
+		objectDefinition.setClassName(RandomTestUtil.randomString());
 
 		objectDefinition.setName(RandomTestUtil.randomString());
 

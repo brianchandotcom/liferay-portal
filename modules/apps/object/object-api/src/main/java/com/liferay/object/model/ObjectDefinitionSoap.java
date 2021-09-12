@@ -44,6 +44,7 @@ public class ObjectDefinitionSoap implements Serializable {
 		soapModel.setActive(model.isActive());
 		soapModel.setDBTableName(model.getDBTableName());
 		soapModel.setLabel(model.getLabel());
+		soapModel.setClassName(model.getClassName());
 		soapModel.setName(model.getName());
 		soapModel.setPanelAppOrder(model.getPanelAppOrder());
 		soapModel.setPanelCategoryKey(model.getPanelCategoryKey());
@@ -208,6 +209,14 @@ public class ObjectDefinitionSoap implements Serializable {
 		_label = label;
 	}
 
+	public String getClassName() {
+		return _className;
+	}
+
+	public void setClassName(String className) {
+		_className = className;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -303,6 +312,7 @@ public class ObjectDefinitionSoap implements Serializable {
 	private boolean _active;
 	private String _dbTableName;
 	private String _label;
+	private String _className;
 	private String _name;
 	private String _panelAppOrder;
 	private String _panelCategoryKey;

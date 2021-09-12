@@ -261,6 +261,14 @@ public class ObjectRelationshipLocalServiceWrapper
 			objectRelationshipId);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectRelationship
+		fetchObjectRelationshipByObjectFieldId2(long objectFieldId2) {
+
+		return _objectRelationshipLocalService.
+			fetchObjectRelationshipByObjectFieldId2(objectFieldId2);
+	}
+
 	/**
 	 * Returns the object relationship with the matching UUID and company.
 	 *

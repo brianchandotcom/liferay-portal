@@ -54,6 +54,7 @@ public class ObjectDefinitionWrapper
 		attributes.put("active", isActive());
 		attributes.put("dbTableName", getDBTableName());
 		attributes.put("label", getLabel());
+		attributes.put("className", getClassName());
 		attributes.put("name", getName());
 		attributes.put("panelAppOrder", getPanelAppOrder());
 		attributes.put("panelCategoryKey", getPanelCategoryKey());
@@ -135,6 +136,12 @@ public class ObjectDefinitionWrapper
 
 		if (label != null) {
 			setLabel(label);
+		}
+
+		String className = (String)attributes.get("className");
+
+		if (className != null) {
+			setClassName(className);
 		}
 
 		String name = (String)attributes.get("name");
@@ -219,6 +226,11 @@ public class ObjectDefinitionWrapper
 		return model.getAvailableLanguageIds();
 	}
 
+	/**
+	 * Returns the class name of this object definition.
+	 *
+	 * @return the class name of this object definition
+	 */
 	@Override
 	public String getClassName() {
 		return model.getClassName();
@@ -664,6 +676,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setActive(boolean active) {
 		model.setActive(active);
+	}
+
+	/**
+	 * Sets the class name of this object definition.
+	 *
+	 * @param className the class name of this object definition
+	 */
+	@Override
+	public void setClassName(String className) {
+		model.setClassName(className);
 	}
 
 	/**

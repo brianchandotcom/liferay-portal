@@ -830,6 +830,67 @@ public class ObjectRelationshipUtil {
 	}
 
 	/**
+	 * Returns the object relationship where objectFieldId2 = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
+	 *
+	 * @param objectFieldId2 the object field id2
+	 * @return the matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship findByObjectFieldId2(long objectFieldId2)
+		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
+
+		return getPersistence().findByObjectFieldId2(objectFieldId2);
+	}
+
+	/**
+	 * Returns the object relationship where objectFieldId2 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param objectFieldId2 the object field id2
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship fetchByObjectFieldId2(
+		long objectFieldId2) {
+
+		return getPersistence().fetchByObjectFieldId2(objectFieldId2);
+	}
+
+	/**
+	 * Returns the object relationship where objectFieldId2 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param objectFieldId2 the object field id2
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship fetchByObjectFieldId2(
+		long objectFieldId2, boolean useFinderCache) {
+
+		return getPersistence().fetchByObjectFieldId2(
+			objectFieldId2, useFinderCache);
+	}
+
+	/**
+	 * Removes the object relationship where objectFieldId2 = &#63; from the database.
+	 *
+	 * @param objectFieldId2 the object field id2
+	 * @return the object relationship that was removed
+	 */
+	public static ObjectRelationship removeByObjectFieldId2(long objectFieldId2)
+		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
+
+		return getPersistence().removeByObjectFieldId2(objectFieldId2);
+	}
+
+	/**
+	 * Returns the number of object relationships where objectFieldId2 = &#63;.
+	 *
+	 * @param objectFieldId2 the object field id2
+	 * @return the number of matching object relationships
+	 */
+	public static int countByObjectFieldId2(long objectFieldId2) {
+		return getPersistence().countByObjectFieldId2(objectFieldId2);
+	}
+
+	/**
 	 * Returns the object relationship where objectDefinitionId1 = &#63; and name = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
 	 *
 	 * @param objectDefinitionId1 the object definition id1

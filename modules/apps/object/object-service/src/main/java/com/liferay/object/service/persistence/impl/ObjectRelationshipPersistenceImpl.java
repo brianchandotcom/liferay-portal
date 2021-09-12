@@ -2250,6 +2250,221 @@ public class ObjectRelationshipPersistenceImpl
 		_FINDER_COLUMN_OBJECTDEFINITIONID2_OBJECTDEFINITIONID2_2 =
 			"objectRelationship.objectDefinitionId2 = ?";
 
+	private FinderPath _finderPathFetchByObjectFieldId2;
+	private FinderPath _finderPathCountByObjectFieldId2;
+
+	/**
+	 * Returns the object relationship where objectFieldId2 = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
+	 *
+	 * @param objectFieldId2 the object field id2
+	 * @return the matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	@Override
+	public ObjectRelationship findByObjectFieldId2(long objectFieldId2)
+		throws NoSuchObjectRelationshipException {
+
+		ObjectRelationship objectRelationship = fetchByObjectFieldId2(
+			objectFieldId2);
+
+		if (objectRelationship == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("objectFieldId2=");
+			sb.append(objectFieldId2);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchObjectRelationshipException(sb.toString());
+		}
+
+		return objectRelationship;
+	}
+
+	/**
+	 * Returns the object relationship where objectFieldId2 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param objectFieldId2 the object field id2
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	@Override
+	public ObjectRelationship fetchByObjectFieldId2(long objectFieldId2) {
+		return fetchByObjectFieldId2(objectFieldId2, true);
+	}
+
+	/**
+	 * Returns the object relationship where objectFieldId2 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param objectFieldId2 the object field id2
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	@Override
+	public ObjectRelationship fetchByObjectFieldId2(
+		long objectFieldId2, boolean useFinderCache) {
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {objectFieldId2};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByObjectFieldId2, finderArgs);
+		}
+
+		if (result instanceof ObjectRelationship) {
+			ObjectRelationship objectRelationship = (ObjectRelationship)result;
+
+			if (objectFieldId2 != objectRelationship.getObjectFieldId2()) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_SELECT_OBJECTRELATIONSHIP_WHERE);
+
+			sb.append(_FINDER_COLUMN_OBJECTFIELDID2_OBJECTFIELDID2_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(objectFieldId2);
+
+				List<ObjectRelationship> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByObjectFieldId2, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {objectFieldId2};
+							}
+
+							_log.warn(
+								"ObjectRelationshipPersistenceImpl.fetchByObjectFieldId2(long, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					ObjectRelationship objectRelationship = list.get(0);
+
+					result = objectRelationship;
+
+					cacheResult(objectRelationship);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ObjectRelationship)result;
+		}
+	}
+
+	/**
+	 * Removes the object relationship where objectFieldId2 = &#63; from the database.
+	 *
+	 * @param objectFieldId2 the object field id2
+	 * @return the object relationship that was removed
+	 */
+	@Override
+	public ObjectRelationship removeByObjectFieldId2(long objectFieldId2)
+		throws NoSuchObjectRelationshipException {
+
+		ObjectRelationship objectRelationship = findByObjectFieldId2(
+			objectFieldId2);
+
+		return remove(objectRelationship);
+	}
+
+	/**
+	 * Returns the number of object relationships where objectFieldId2 = &#63;.
+	 *
+	 * @param objectFieldId2 the object field id2
+	 * @return the number of matching object relationships
+	 */
+	@Override
+	public int countByObjectFieldId2(long objectFieldId2) {
+		FinderPath finderPath = _finderPathCountByObjectFieldId2;
+
+		Object[] finderArgs = new Object[] {objectFieldId2};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_OBJECTRELATIONSHIP_WHERE);
+
+			sb.append(_FINDER_COLUMN_OBJECTFIELDID2_OBJECTFIELDID2_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(objectFieldId2);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_OBJECTFIELDID2_OBJECTFIELDID2_2 =
+		"objectRelationship.objectFieldId2 = ?";
+
 	private FinderPath _finderPathFetchByODI1_N;
 	private FinderPath _finderPathCountByODI1_N;
 
@@ -3272,6 +3487,11 @@ public class ObjectRelationshipPersistenceImpl
 			objectRelationship);
 
 		finderCache.putResult(
+			_finderPathFetchByObjectFieldId2,
+			new Object[] {objectRelationship.getObjectFieldId2()},
+			objectRelationship);
+
+		finderCache.putResult(
 			_finderPathFetchByODI1_N,
 			new Object[] {
 				objectRelationship.getObjectDefinitionId1(),
@@ -3345,6 +3565,16 @@ public class ObjectRelationshipPersistenceImpl
 		ObjectRelationshipModelImpl objectRelationshipModelImpl) {
 
 		Object[] args = new Object[] {
+			objectRelationshipModelImpl.getObjectFieldId2()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByObjectFieldId2, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByObjectFieldId2, args,
+			objectRelationshipModelImpl);
+
+		args = new Object[] {
 			objectRelationshipModelImpl.getObjectDefinitionId1(),
 			objectRelationshipModelImpl.getName()
 		};
@@ -3903,6 +4133,16 @@ public class ObjectRelationshipPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByObjectDefinitionId2", new String[] {Long.class.getName()},
 			new String[] {"objectDefinitionId2"}, false);
+
+		_finderPathFetchByObjectFieldId2 = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByObjectFieldId2",
+			new String[] {Long.class.getName()},
+			new String[] {"objectFieldId2"}, true);
+
+		_finderPathCountByObjectFieldId2 = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByObjectFieldId2",
+			new String[] {Long.class.getName()},
+			new String[] {"objectFieldId2"}, false);
 
 		_finderPathFetchByODI1_N = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByODI1_N",

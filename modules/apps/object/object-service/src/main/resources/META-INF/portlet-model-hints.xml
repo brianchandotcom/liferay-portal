@@ -17,6 +17,7 @@
 		<field localized="true" name="label" type="String">
 			<validator name="required" />
 		</field>
+		<field name="className" type="String" />
 		<field name="name" type="String" />
 		<field name="panelAppOrder" type="String" />
 		<field name="panelCategoryKey" type="String" />

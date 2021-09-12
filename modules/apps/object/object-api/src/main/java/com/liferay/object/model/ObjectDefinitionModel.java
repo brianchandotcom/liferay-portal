@@ -344,6 +344,21 @@ public interface ObjectDefinitionModel
 	public void setLabelMap(Map<Locale, String> labelMap, Locale defaultLocale);
 
 	/**
+	 * Returns the class name of this object definition.
+	 *
+	 * @return the class name of this object definition
+	 */
+	@AutoEscape
+	public String getClassName();
+
+	/**
+	 * Sets the class name of this object definition.
+	 *
+	 * @param className the class name of this object definition
+	 */
+	public void setClassName(String className);
+
+	/**
 	 * Returns the name of this object definition.
 	 *
 	 * @return the name of this object definition

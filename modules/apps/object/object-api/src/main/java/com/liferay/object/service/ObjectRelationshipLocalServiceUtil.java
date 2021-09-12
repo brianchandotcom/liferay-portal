@@ -238,6 +238,13 @@ public class ObjectRelationshipLocalServiceUtil {
 		return getService().fetchObjectRelationship(objectRelationshipId);
 	}
 
+	public static ObjectRelationship fetchObjectRelationshipByObjectFieldId2(
+		long objectFieldId2) {
+
+		return getService().fetchObjectRelationshipByObjectFieldId2(
+			objectFieldId2);
+	}
+
 	/**
 	 * Returns the object relationship with the matching UUID and company.
 	 *

@@ -240,6 +240,13 @@ public class ObjectRelationshipPersistenceTest {
 	}
 
 	@Test
+	public void testCountByObjectFieldId2() throws Exception {
+		_persistence.countByObjectFieldId2(RandomTestUtil.nextLong());
+
+		_persistence.countByObjectFieldId2(0L);
+	}
+
+	@Test
 	public void testCountByODI1_N() throws Exception {
 		_persistence.countByODI1_N(RandomTestUtil.nextLong(), "");
 
@@ -568,6 +575,12 @@ public class ObjectRelationshipPersistenceTest {
 	}
 
 	private void _assertOriginalValues(ObjectRelationship objectRelationship) {
+		Assert.assertEquals(
+			Long.valueOf(objectRelationship.getObjectFieldId2()),
+			ReflectionTestUtil.<Long>invoke(
+				objectRelationship, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "objectFieldId2"));
+
 		Assert.assertEquals(
 			Long.valueOf(objectRelationship.getObjectDefinitionId1()),
 			ReflectionTestUtil.<Long>invoke(

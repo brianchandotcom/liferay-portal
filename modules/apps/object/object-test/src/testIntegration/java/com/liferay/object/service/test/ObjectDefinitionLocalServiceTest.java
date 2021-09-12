@@ -457,6 +457,11 @@ public class ObjectDefinitionLocalServiceTest {
 					}
 
 					@Override
+					public String getRESTContextPath() {
+						return "/";
+					}
+
+					@Override
 					public String getScope() {
 						return ObjectDefinitionConstants.SCOPE_COMPANY;
 					}
@@ -538,6 +543,11 @@ public class ObjectDefinitionLocalServiceTest {
 					public Column<?, Long> getPrimaryKeyColumn() {
 						return UserNotificationEventTable.INSTANCE.
 							userNotificationEventId;
+					}
+
+					@Override
+					public String getRESTContextPath() {
+						return "/";
 					}
 
 					@Override

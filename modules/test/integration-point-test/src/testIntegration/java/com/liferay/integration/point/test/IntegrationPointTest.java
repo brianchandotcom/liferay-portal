@@ -17,6 +17,7 @@ package com.liferay.integration.point.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamConverterRegistryUtil;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.portal.kernel.format.PhoneNumberFormat;
 import com.liferay.portal.kernel.format.PhoneNumberFormatUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
@@ -114,9 +115,13 @@ public class IntegrationPointTest {
 		_serviceRegistration = _bundleContext.registerService(
 			Sanitizer.class, sanitizer, new HashMapDictionary<>());
 
-		List<Sanitizer> sanitizers = new ArrayList<>(
+		List<Sanitizer> sanitizers = new ArrayList<>();
+
+		ServiceTrackerList<Sanitizer, Sanitizer> serviceTrackerList =
 			ReflectionTestUtil.getFieldValue(
-				SanitizerUtil.class, "_sanitizers"));
+				SanitizerUtil.class, "_sanitizers");
+
+		serviceTrackerList.forEach(sanitizers::add);
 
 		Assert.assertTrue(
 			"Mock sanitizer not found in " + sanitizers,

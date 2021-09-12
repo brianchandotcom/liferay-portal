@@ -298,6 +298,11 @@ public interface ObjectLayoutLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public ObjectLayout updateObjectLayout(
+			long objectLayoutId, boolean defaultObjectLayout,
+			Map<Locale, String> nameMap, List<ObjectLayoutTab> objectLayoutTabs)
+		throws PortalException;
+
 	/**
 	 * Updates the object layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

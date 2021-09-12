@@ -377,6 +377,18 @@ public class ObjectLayoutLocalServiceWrapper
 		return _objectLayoutLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectLayout updateObjectLayout(
+			long objectLayoutId, boolean defaultObjectLayout,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.List<com.liferay.object.model.ObjectLayoutTab>
+				objectLayoutTabs)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectLayoutLocalService.updateObjectLayout(
+			objectLayoutId, defaultObjectLayout, nameMap, objectLayoutTabs);
+	}
+
 	/**
 	 * Updates the object layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

@@ -7,6 +7,7 @@ Export-Package:\
 	com.liferay.object.exception,\
 	com.liferay.object.model,\
 	com.liferay.object.related.models,\
+	com.liferay.object.rest.context,\
 	com.liferay.object.scope,\
 	com.liferay.object.service,\
 	com.liferay.object.service.persistence,\

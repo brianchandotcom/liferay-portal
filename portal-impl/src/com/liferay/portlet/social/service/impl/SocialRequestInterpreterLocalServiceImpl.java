@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.social.service.base.SocialRequestInterpreterLocalServiceBaseImpl;
@@ -29,18 +28,14 @@ import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.collections.ServiceRegistrationMap;
-import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 import com.liferay.social.kernel.model.SocialRequest;
 import com.liferay.social.kernel.model.SocialRequestFeedEntry;
 import com.liferay.social.kernel.model.SocialRequestInterpreter;
 import com.liferay.social.kernel.model.impl.SocialRequestInterpreterImpl;
 
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -64,35 +59,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class SocialRequestInterpreterLocalServiceImpl
 	extends SocialRequestInterpreterLocalServiceBaseImpl {
 
-	/**
-	 * Adds the social request interpreter to the list of available
-	 * interpreters.
-	 *
-	 * @param requestInterpreter the social request interpreter
-	 */
-	@Override
-	public void addRequestInterpreter(
-		SocialRequestInterpreter requestInterpreter) {
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
-			"javax.portlet.name",
-			() -> {
-				SocialRequestInterpreterImpl socialRequestInterpreterImpl =
-					(SocialRequestInterpreterImpl)requestInterpreter;
-
-				return socialRequestInterpreterImpl.getPortletId();
-			}
-		).build();
-
-		ServiceRegistration<SocialRequestInterpreter> serviceRegistration =
-			registry.registerService(
-				SocialRequestInterpreter.class, requestInterpreter, properties);
-
-		_serviceRegistrationMap.put(requestInterpreter, serviceRegistration);
-	}
-
 	@Override
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
@@ -107,24 +73,6 @@ public class SocialRequestInterpreterLocalServiceImpl
 			filter, new SocialRequestInterpreterServiceTrackerCustomizer());
 
 		_serviceTracker.open();
-	}
-
-	/**
-	 * Removes the social request interpreter from the list of available
-	 * interpreters.
-	 *
-	 * @param requestInterpreter the social request interpreter
-	 */
-	@Override
-	public void deleteRequestInterpreter(
-		SocialRequestInterpreter requestInterpreter) {
-
-		ServiceRegistration<SocialRequestInterpreter> serviceRegistration =
-			_serviceRegistrationMap.remove(requestInterpreter);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
 	}
 
 	/**
@@ -289,8 +237,6 @@ public class SocialRequestInterpreterLocalServiceImpl
 
 	private final List<SocialRequestInterpreter> _requestInterpreters =
 		new CopyOnWriteArrayList<>();
-	private final ServiceRegistrationMap<SocialRequestInterpreter>
-		_serviceRegistrationMap = new ServiceRegistrationMapImpl<>();
 	private ServiceTracker<SocialRequestInterpreter, SocialRequestInterpreter>
 		_serviceTracker;
 

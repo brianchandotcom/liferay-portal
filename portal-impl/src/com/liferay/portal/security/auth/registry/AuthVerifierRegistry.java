@@ -14,6 +14,9 @@
 
 package com.liferay.portal.security.auth.registry;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierConfiguration;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -25,14 +28,11 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceReferenceMapperFactory;
-import com.liferay.registry.collections.ServiceTrackerMap;
-import com.liferay.registry.collections.ServiceTrackerMapFactory;
-import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
 
 import java.util.HashMap;
 import java.util.Properties;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Carlos Sierra Andrés
@@ -119,21 +119,10 @@ public class AuthVerifierRegistry {
 	}
 
 	static {
-		ServiceTrackerMapFactory serviceTrackerMapFactory =
-			ServiceTrackerMapFactoryUtil.getServiceTrackerMapFactory();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		ServiceReferenceMapper<String, AuthVerifier>
-			authVerifierServiceReferenceMapper =
-				ServiceReferenceMapperFactory.create(
-					(authVerifier, emitter) -> {
-						Class<? extends AuthVerifier> clazz =
-							authVerifier.getClass();
-
-						emitter.emit(clazz.getSimpleName());
-					});
-
-		_serviceTrackerMap = serviceTrackerMapFactory.openSingleValueMap(
-			AuthVerifier.class, null,
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, AuthVerifier.class, null,
 			(serviceReference, emitter) -> {
 				String authVerifierClassName = GetterUtil.getString(
 					serviceReference.getProperty("auth.verifier.class.name"));
@@ -142,8 +131,15 @@ public class AuthVerifierRegistry {
 					emitter.emit(authVerifierClassName);
 				}
 				else {
-					authVerifierServiceReferenceMapper.map(
-						serviceReference, emitter);
+					AuthVerifier authVerifier = bundleContext.getService(
+						serviceReference);
+
+					Class<? extends AuthVerifier> clazz =
+						authVerifier.getClass();
+
+					emitter.emit(clazz.getSimpleName());
+
+					bundleContext.ungetService(serviceReference);
 				}
 			});
 

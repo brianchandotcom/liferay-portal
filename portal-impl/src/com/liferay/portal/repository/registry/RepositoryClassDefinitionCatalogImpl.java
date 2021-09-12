@@ -32,8 +32,6 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.collections.StringServiceRegistrationMap;
-import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
 import java.util.Collection;
 import java.util.Map;
@@ -135,7 +133,7 @@ public class RepositoryClassDefinitionCatalogImpl
 		ExternalRepositoryFactoryUtil.unregisterExternalRepositoryFactory(
 			className);
 
-		ServiceRegistration<RepositoryDefiner> serviceRegistration =
+		ServiceRegistration<?> serviceRegistration =
 			_serviceRegistrations.remove(className);
 
 		serviceRegistration.unregister();
@@ -163,8 +161,8 @@ public class RepositoryClassDefinitionCatalogImpl
 	private RepositoryFactory _legacyExternalRepositoryFactory;
 	private final Map<String, RepositoryClassDefinition>
 		_repositoryClassDefinitions = new ConcurrentHashMap<>();
-	private final StringServiceRegistrationMap<RepositoryDefiner>
-		_serviceRegistrations = new StringServiceRegistrationMapImpl<>();
+	private final Map<String, ServiceRegistration<?>> _serviceRegistrations =
+		new ConcurrentHashMap<>();
 	private ServiceTracker
 		<RepositoryDefiner, ServiceRegistration<RepositoryFactory>>
 			_serviceTracker;

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -28,11 +27,8 @@ import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.collections.ServiceRegistrationMap;
-import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityFeedEntry;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
@@ -67,35 +63,6 @@ import javax.servlet.http.HttpServletRequest;
 public class SocialActivityInterpreterLocalServiceImpl
 	extends SocialActivityInterpreterLocalServiceBaseImpl {
 
-	/**
-	 * Adds the activity interpreter to the list of available interpreters.
-	 *
-	 * @param activityInterpreter the activity interpreter
-	 */
-	@Override
-	public void addActivityInterpreter(
-		SocialActivityInterpreter activityInterpreter) {
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
-			"javax.portlet.name",
-			() -> {
-				SocialActivityInterpreterImpl socialActivityInterpreterImpl =
-					(SocialActivityInterpreterImpl)activityInterpreter;
-
-				return socialActivityInterpreterImpl.getPortletId();
-			}
-		).build();
-
-		ServiceRegistration<SocialActivityInterpreter> serviceRegistration =
-			registry.registerService(
-				SocialActivityInterpreter.class, activityInterpreter,
-				properties);
-
-		_serviceRegistrationMap.put(activityInterpreter, serviceRegistration);
-	}
-
 	@Override
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
@@ -110,23 +77,6 @@ public class SocialActivityInterpreterLocalServiceImpl
 			filter, new SocialActivityInterpreterServiceTrackerCustomizer());
 
 		_serviceTracker.open();
-	}
-
-	/**
-	 * Removes the activity interpreter from the list of available interpreters.
-	 *
-	 * @param activityInterpreter the activity interpreter
-	 */
-	@Override
-	public void deleteActivityInterpreter(
-		SocialActivityInterpreter activityInterpreter) {
-
-		ServiceRegistration<SocialActivityInterpreter> serviceRegistration =
-			_serviceRegistrationMap.remove(activityInterpreter);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
 	}
 
 	@Override
@@ -330,8 +280,6 @@ public class SocialActivityInterpreterLocalServiceImpl
 
 	private final Map<String, List<SocialActivityInterpreter>>
 		_activityInterpreters = new HashMap<>();
-	private final ServiceRegistrationMap<SocialActivityInterpreter>
-		_serviceRegistrationMap = new ServiceRegistrationMapImpl<>();
 	private ServiceTracker<SocialActivityInterpreter, SocialActivityInterpreter>
 		_serviceTracker;
 

@@ -277,7 +277,7 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setRequired(required);
 		objectField.setType(type);
 
-		return objectFieldPersistence.update(objectField);
+		return objectFieldLocalService.updateObjectField(objectField);
 	}
 
 	private void _validateIndexed(

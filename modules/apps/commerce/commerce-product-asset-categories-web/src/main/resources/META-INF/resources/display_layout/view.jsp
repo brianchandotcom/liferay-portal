@@ -75,17 +75,22 @@ if (selLayout != null) {
 	module="js/EditAssetCategoryCPDisplayLayout"
 />
 
-<clay:data-set-display
-	contextParams='<%=
-		HashMapBuilder.<String, String>put(
-			"commerceChannelId", String.valueOf(categoryCPDisplayLayoutDisplayContext.getCommerceChannelId())
-		).build()
-	%>'
-	creationMenu="<%= categoryCPDisplayLayoutDisplayContext.getCreationMenu() %>"
-	dataProviderKey="<%= CommerceCategoryDisplayPageClayTable.NAME %>"
-	id="<%= CommerceCategoryDisplayPageClayTable.NAME %>"
-	itemsPerPage="<%= 10 %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
-	pageNumber="<%= 1 %>"
-	portletURL="<%= categoryCPDisplayLayoutDisplayContext.getPortletURL() %>"
-/>
+<commerce-ui:panel
+	bodyClasses="p-0"
+	title='<%= LanguageUtil.get(request, "override-default-category-display-page") %>'
+>
+	<clay:data-set-display
+		contextParams='<%=
+			HashMapBuilder.<String, String>put(
+				"commerceChannelId", String.valueOf(categoryCPDisplayLayoutDisplayContext.getCommerceChannelId())
+			).build()
+		%>'
+		creationMenu="<%= categoryCPDisplayLayoutDisplayContext.getCreationMenu() %>"
+		dataProviderKey="<%= CommerceCategoryDisplayPageClayTable.NAME %>"
+		id="<%= CommerceCategoryDisplayPageClayTable.NAME %>"
+		itemsPerPage="<%= 10 %>"
+		namespace="<%= liferayPortletResponse.getNamespace() %>"
+		pageNumber="<%= 1 %>"
+		portletURL="<%= categoryCPDisplayLayoutDisplayContext.getPortletURL() %>"
+	/>
+</commerce-ui:panel>

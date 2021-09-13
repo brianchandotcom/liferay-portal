@@ -85,17 +85,22 @@ if (selLayout != null) {
 	module="js/EditDisplayLayout"
 />
 
-<clay:data-set-display
-	contextParams='<%=
-		HashMapBuilder.<String, String>put(
-			"commerceChannelId", String.valueOf(cpDefinitionDisplayLayoutDisplayContext.getCommerceChannelId())
-		).build()
-	%>'
-	creationMenu="<%= cpDefinitionDisplayLayoutDisplayContext.getCreationMenu() %>"
-	dataProviderKey="<%= CommerceProductDisplayPageClayTable.NAME %>"
-	id="<%= CommerceProductDisplayPageClayTable.NAME %>"
-	itemsPerPage="<%= 10 %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
-	pageNumber="<%= 1 %>"
-	portletURL="<%= currentURLObj %>"
-/>
+<commerce-ui:panel
+	bodyClasses="p-0"
+	title='<%= LanguageUtil.get(request, "override-default-product-display-page") %>'
+>
+	<clay:data-set-display
+		contextParams='<%=
+			HashMapBuilder.<String, String>put(
+				"commerceChannelId", String.valueOf(cpDefinitionDisplayLayoutDisplayContext.getCommerceChannelId())
+			).build()
+		%>'
+		creationMenu="<%= cpDefinitionDisplayLayoutDisplayContext.getCreationMenu() %>"
+		dataProviderKey="<%= CommerceProductDisplayPageClayTable.NAME %>"
+		id="<%= CommerceProductDisplayPageClayTable.NAME %>"
+		itemsPerPage="<%= 10 %>"
+		namespace="<%= liferayPortletResponse.getNamespace() %>"
+		pageNumber="<%= 1 %>"
+		portletURL="<%= currentURLObj %>"
+	/>
+</commerce-ui:panel>

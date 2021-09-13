@@ -74,7 +74,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8627 | Test Summary: Segment distribution chart can be filtered by number property"
-	@ignore = "true"
 	@priority = "3"
 	test CanDistributionChartFilteredNumber {
 		property portal.upstream = "quarantine";

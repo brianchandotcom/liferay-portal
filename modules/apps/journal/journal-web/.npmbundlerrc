@@ -3,9 +3,6 @@
 		"imports": {
 			"@liferay/template-web": {
 				"/": ">=1.0.0"
-        	},
-			"translation-web": {
-				"/": ">=2.0.7"
 			}
 		}
 	}

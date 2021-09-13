@@ -53,7 +53,6 @@ dependencies {
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":apps:style-book:style-book-api")
 	compileOnly project(":apps:translation:translation-api")
-	compileOnly project(":apps:translation:translation-web")
 	compileOnly project(":apps:upload:upload-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")

@@ -123,6 +123,25 @@ public class SiteNavigationMenuItemServiceSoap {
 		}
 	}
 
+	public static Long[] getSiteNavigationMenuItemParentIds(
+			long siteNavigationMenuId, String typeSettingsKeyword)
+		throws RemoteException {
+
+		try {
+			java.util.List<Long> returnValue =
+				SiteNavigationMenuItemServiceUtil.
+					getSiteNavigationMenuItemParentIds(
+						siteNavigationMenuId, typeSettingsKeyword);
+
+			return returnValue.toArray(new Long[returnValue.size()]);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItemSoap[]
 			getSiteNavigationMenuItems(long siteNavigationMenuId)
 		throws RemoteException {

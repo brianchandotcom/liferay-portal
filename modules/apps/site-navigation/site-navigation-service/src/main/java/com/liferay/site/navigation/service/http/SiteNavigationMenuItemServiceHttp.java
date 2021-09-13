@@ -179,6 +179,40 @@ public class SiteNavigationMenuItemServiceHttp {
 		}
 	}
 
+	public static java.util.List<Long> getSiteNavigationMenuItemParentIds(
+		HttpPrincipal httpPrincipal, long siteNavigationMenuId,
+		String typeSettingsKeyword) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SiteNavigationMenuItemServiceUtil.class,
+				"getSiteNavigationMenuItemParentIds",
+				_getSiteNavigationMenuItemParentIdsParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, siteNavigationMenuId, typeSettingsKeyword);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List<Long>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static java.util.List
 		<com.liferay.site.navigation.model.SiteNavigationMenuItem>
 			getSiteNavigationMenuItems(
@@ -188,7 +222,7 @@ public class SiteNavigationMenuItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				SiteNavigationMenuItemServiceUtil.class,
 				"getSiteNavigationMenuItems",
-				_getSiteNavigationMenuItemsParameterTypes3);
+				_getSiteNavigationMenuItemsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, siteNavigationMenuId);
@@ -227,7 +261,7 @@ public class SiteNavigationMenuItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				SiteNavigationMenuItemServiceUtil.class,
 				"getSiteNavigationMenuItems",
-				_getSiteNavigationMenuItemsParameterTypes4);
+				_getSiteNavigationMenuItemsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, siteNavigationMenuId,
@@ -273,7 +307,7 @@ public class SiteNavigationMenuItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				SiteNavigationMenuItemServiceUtil.class,
 				"updateSiteNavigationMenuItem",
-				_updateSiteNavigationMenuItemParameterTypes5);
+				_updateSiteNavigationMenuItemParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, siteNavigationMenuId, parentSiteNavigationMenuItemId,
@@ -319,7 +353,7 @@ public class SiteNavigationMenuItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				SiteNavigationMenuItemServiceUtil.class,
 				"updateSiteNavigationMenuItem",
-				_updateSiteNavigationMenuItemParameterTypes6);
+				_updateSiteNavigationMenuItemParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, siteNavigationMenuId, typeSettings, serviceContext);
@@ -367,16 +401,20 @@ public class SiteNavigationMenuItemServiceHttp {
 		_deleteSiteNavigationMenuItemsParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getSiteNavigationMenuItemsParameterTypes3 =
-		new Class[] {long.class};
+	private static final Class<?>[]
+		_getSiteNavigationMenuItemParentIdsParameterTypes3 = new Class[] {
+			long.class, String.class
+		};
 	private static final Class<?>[] _getSiteNavigationMenuItemsParameterTypes4 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getSiteNavigationMenuItemsParameterTypes5 =
 		new Class[] {long.class, long.class};
 	private static final Class<?>[]
-		_updateSiteNavigationMenuItemParameterTypes5 = new Class[] {
+		_updateSiteNavigationMenuItemParameterTypes6 = new Class[] {
 			long.class, long.class, int.class
 		};
 	private static final Class<?>[]
-		_updateSiteNavigationMenuItemParameterTypes6 = new Class[] {
+		_updateSiteNavigationMenuItemParameterTypes7 = new Class[] {
 			long.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};

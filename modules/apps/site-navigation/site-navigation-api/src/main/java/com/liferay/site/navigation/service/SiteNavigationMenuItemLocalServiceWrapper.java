@@ -377,6 +377,15 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 			getSiteNavigationMenuItemByUuidAndGroupId(uuid, groupId);
 	}
 
+	@Override
+	public java.util.List<Long> getSiteNavigationMenuItemParentIds(
+		long siteNavigationMenuId, String typeSettingsKeyword) {
+
+		return _siteNavigationMenuItemLocalService.
+			getSiteNavigationMenuItemParentIds(
+				siteNavigationMenuId, typeSettingsKeyword);
+	}
+
 	/**
 	 * Returns a range of all the site navigation menu items.
 	 *

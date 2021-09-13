@@ -14,36 +14,43 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author André de Oliveira
+ * @author Bryan Engler
  */
-public class Elasticsearch7140Distribution implements Distribution {
+public class ElasticsearchDistribution implements Distribution {
+
+	public ElasticsearchDistribution(String version) {
+		_version = version;
+	}
 
 	@Override
 	public Distributable getElasticsearchDistributable() {
 		return new DistributableImpl(
-			"https://artifacts.elastic.co/downloads/elasticsearch" +
-				"/elasticsearch-7.14.0-no-jdk-linux-x86_64.tar.gz");
+			StringBundler.concat(
+				"https://artifacts.elastic.co/downloads/elasticsearch",
+				"/elasticsearch-", _version, "-no-jdk-linux-x86_64.tar.gz"));
 	}
 
 	@Override
 	public List<Distributable> getPluginDistributables() {
 		return Arrays.asList(
-			new DistributableImpl(
-				"https://artifacts.elastic.co/downloads/elasticsearch-plugins" +
-					"/analysis-icu/analysis-icu-7.14.0.zip"),
-			new DistributableImpl(
-				"https://artifacts.elastic.co/downloads/elasticsearch-plugins" +
-					"/analysis-kuromoji/analysis-kuromoji-7.14.0.zip"),
-			new DistributableImpl(
-				"https://artifacts.elastic.co/downloads/elasticsearch-plugins" +
-					"/analysis-smartcn/analysis-smartcn-7.14.0.zip"),
-			new DistributableImpl(
-				"https://artifacts.elastic.co/downloads/elasticsearch-plugins" +
-					"/analysis-stempel/analysis-stempel-7.14.0.zip"));
+			new DistributableImpl(getPluginUrl("analysis-icu")),
+			new DistributableImpl(getPluginUrl("analysis-kuromoji")),
+			new DistributableImpl(getPluginUrl("analysis-smartcn")),
+			new DistributableImpl(getPluginUrl("analysis-stempel")));
 	}
+
+	protected String getPluginUrl(String plugin) {
+		return StringBundler.concat(
+			"https://artifacts.elastic.co/downloads/elasticsearch-plugins/",
+			plugin, "/", plugin, "-", _version, ".zip");
+	}
+
+	private final String _version;
 
 }

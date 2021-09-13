@@ -177,6 +177,34 @@ public class Mutation {
 					listTypeDefinitionId, callbackURL, object));
 	}
 
+	@GraphQLField
+	public boolean deleteListTypeEntry(
+			@GraphQLName("listTypeEntryId") Long listTypeEntryId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_listTypeEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			listTypeEntryResource -> listTypeEntryResource.deleteListTypeEntry(
+				listTypeEntryId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteListTypeEntryBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_listTypeEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			listTypeEntryResource ->
+				listTypeEntryResource.deleteListTypeEntryBatch(
+					callbackURL, object));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,

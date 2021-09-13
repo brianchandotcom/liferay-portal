@@ -245,6 +245,10 @@ public abstract class BaseListTypeEntryResourceTestCase {
 			Arrays.asList(listTypeEntry1, listTypeEntry2),
 			(List<ListTypeEntry>)page.getItems());
 		assertValid(page);
+
+		listTypeEntryResource.deleteListTypeEntry(listTypeEntry1.getId());
+
+		listTypeEntryResource.deleteListTypeEntry(listTypeEntry2.getId());
 	}
 
 	@Test
@@ -341,6 +345,43 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		return listTypeEntryResource.postListTypeDefinitionListTypeEntry(
 			testGetListTypeDefinitionListTypeEntriesPage_getListTypeDefinitionId(),
 			listTypeEntry);
+	}
+
+	@Test
+	public void testDeleteListTypeEntry() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ListTypeEntry listTypeEntry =
+			testDeleteListTypeEntry_addListTypeEntry();
+
+		assertHttpResponseStatusCode(
+			204,
+			listTypeEntryResource.deleteListTypeEntryHttpResponse(
+				listTypeEntry.getId()));
+	}
+
+	protected ListTypeEntry testDeleteListTypeEntry_addListTypeEntry()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteListTypeEntry() throws Exception {
+		ListTypeEntry listTypeEntry =
+			testGraphQLListTypeEntry_addListTypeEntry();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteListTypeEntry",
+						new HashMap<String, Object>() {
+							{
+								put("listTypeEntryId", listTypeEntry.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteListTypeEntry"));
 	}
 
 	protected ListTypeEntry testGraphQLListTypeEntry_addListTypeEntry()

@@ -62,6 +62,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -181,6 +182,61 @@ public abstract class BaseListTypeEntryResourceImpl
 		).build();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-entries/{listTypeEntryId}'  -u 'test@liferay.com:test'
+	 */
+	@DELETE
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "listTypeEntryId")}
+	)
+	@Path("/list-type-entries/{listTypeEntryId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ListTypeEntry")})
+	public void deleteListTypeEntry(
+			@NotNull @Parameter(hidden = true) @PathParam("listTypeEntryId")
+				Long listTypeEntryId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-entries/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@DELETE
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/list-type-entries/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "ListTypeEntry")})
+	public Response deleteListTypeEntryBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.deleteImportTask(
+				ListTypeEntry.class.getName(), callbackURL, object)
+		).build();
+	}
+
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
@@ -203,6 +259,10 @@ public abstract class BaseListTypeEntryResourceImpl
 			java.util.Collection<ListTypeEntry> listTypeEntries,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		for (ListTypeEntry listTypeEntry : listTypeEntries) {
+			deleteListTypeEntry(listTypeEntry.getId());
+		}
 	}
 
 	@Override

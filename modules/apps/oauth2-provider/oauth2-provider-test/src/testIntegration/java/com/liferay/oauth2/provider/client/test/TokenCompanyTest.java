@@ -44,12 +44,6 @@ public class TokenCompanyTest extends BaseClientTestCase {
 		getToken("oauthTestApplication", "myhost.xyz");
 
 		getToken("oauthTestApplicationAllowed", "myhostallowed.xyz");
-
-		Assert.assertEquals(
-			"invalid_grant",
-			getToken(
-				"oauthTestApplicationDefault", "myhostdefaultuser.xyz",
-				this::getClientCredentialsResponse, this::parseError));
 	}
 
 	public static class AnnotatedApplicationTestPreparatorBundleActivator
@@ -67,12 +61,6 @@ public class TokenCompanyTest extends BaseClientTestCase {
 			createOAuth2Application(
 				adminUser.getCompanyId(), adminUser,
 				"oauthTestApplicationAllowed");
-
-			Company company = createCompany("myhostdefaultuser");
-
-			createOAuth2Application(
-				company.getCompanyId(), company.getDefaultUser(),
-				"oauthTestApplicationDefault");
 		}
 
 	}

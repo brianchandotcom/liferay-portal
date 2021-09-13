@@ -165,8 +165,6 @@ definition {
 	@description = "LPS-106219 - Verify that when all items are selected to be reassigned in a filtered All Items page, the bulk modal is considering the filter results"
 	@priority = "4"
 	test BulkReassignConsiderFilteredResultsFromAllItemsPage {
-		property portal.upstream = "quarantine";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -200,6 +198,8 @@ definition {
 		Pause(locator1 = "1000");
 
 		Refresh();
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSIGNEE_HEADER");
 
 		Click(
 			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
@@ -272,7 +272,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test FilterOptionsAreAlphabeticallyOrdered {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsListReassignTasks#FilterOptionsAreAlphabeticallyOrdered";
 
 		WorkflowMetrics.createUsersGroovy(numberOfUsers = "1");
@@ -310,6 +309,8 @@ definition {
 		Pause(locator1 = "1000");
 
 		Refresh();
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSIGNEE_HEADER");
 
 		Click(
 			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",

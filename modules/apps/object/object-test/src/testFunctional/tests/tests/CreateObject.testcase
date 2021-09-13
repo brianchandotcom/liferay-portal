@@ -435,7 +435,6 @@ definition {
 	@description = "LPS-135635 - Verify it is possible to update the Object name before it is published"
 	@priority = "4"
 	test CanUpdateObjectNameBeforePublished {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -454,7 +453,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "ObjectAdmin#DETAILS_NAME_CUSTOM_OBJECT",
 			value1 = "CustomObject2");
-
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object panel category key before it is published"

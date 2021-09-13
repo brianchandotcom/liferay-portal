@@ -85,27 +85,25 @@ definition {
 	}
 
 	macro editCustomObject {
-		
 		if (isSet(fieldName)) {
 			Type(
 				locator1 = "ObjectAdmin#DETAILS_NAME_CUSTOM_OBJECT",
 				value1 = "${fieldName}");
 		}
-		
+
 		if (isSet(fieldLabelName)) {
 			Type(
 				locator1 = "ObjectAdmin#DETAILS_LABEL_CUSTOM_OBJECT",
 				value1 = "${labelName}");
 		}
-		
+
 		if (isSet(pluralLabelName)) {
 			Type(
 				locator1 = "ObjectAdmin#DETAILS_PLURAL_LABEL_CUSTOM_OBJECT",
 				value1 = "${pluralLabelName}");
 		}
-		
+
 		Button.clickSave();
-		
 	}
 
 	macro goToCustomObject {

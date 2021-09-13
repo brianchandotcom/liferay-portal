@@ -15,29 +15,45 @@
 package com.liferay.template.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.info.item.capability.TemplateInfoItemCapability;
+import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,7 +61,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Eudaldo Alonso
  */
 public class InformationTemplatesManagementToolbarDisplayContext
-	extends BaseTemplateManagementToolbarDisplayContext {
+	extends SearchContainerManagementToolbarDisplayContext {
 
 	public InformationTemplatesManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
@@ -65,6 +81,22 @@ public class InformationTemplatesManagementToolbarDisplayContext
 		_infoItemServiceTracker =
 			(InfoItemServiceTracker)liferayPortletRequest.getAttribute(
 				InfoItemServiceTracker.class.getName());
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "deleteSelectedDDMTemplates");
+				dropdownItem.setIcon("times-circle");
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+				dropdownItem.setQuickAction(true);
+			}
+		).build();
 	}
 
 	public Map<String, Object> getAdditionalProps() {
@@ -75,7 +107,7 @@ public class InformationTemplatesManagementToolbarDisplayContext
 			).setActionName(
 				"/template/add_ddm_template"
 			).setRedirect(
-				themeDisplay.getURLCurrent()
+				_themeDisplay.getURLCurrent()
 			).setParameter(
 				"resourceClassNameId",
 				_informationTemplatesTemplateDisplayContext.
@@ -84,6 +116,33 @@ public class InformationTemplatesManagementToolbarDisplayContext
 		).put(
 			"itemTypes", _getItemTypesJSONArray()
 		).build();
+	}
+
+	public String getAvailableActions(DDMTemplate ddmTemplate)
+		throws PortalException {
+
+		if (DDMTemplatePermission.contains(
+				_themeDisplay.getPermissionChecker(), ddmTemplate,
+				ActionKeys.DELETE)) {
+
+			return "deleteSelectedDDMTemplates";
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@Override
+	public String getClearResultsURL() {
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setKeywords(
+			StringPool.BLANK
+		).buildString();
+	}
+
+	@Override
+	public String getComponentId() {
+		return "templateManagementToolbar";
 	}
 
 	@Override
@@ -100,9 +159,52 @@ public class InformationTemplatesManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "addInformationTemplate");
 				dropdownItem.setLabel(
-					LanguageUtil.get(themeDisplay.getLocale(), "add"));
+					LanguageUtil.get(_themeDisplay.getLocale(), "add"));
 			}
 		).build();
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return "TEMPLATE_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
+	}
+
+	@Override
+	public String getSearchActionURL() {
+		PortletURL searchActionURL = getPortletURL();
+
+		return searchActionURL.toString();
+	}
+
+	@Override
+	public String getSearchContainerId() {
+		return "ddmTemplates";
+	}
+
+	protected boolean containsAddPortletDisplayTemplatePermission(
+		String resourceName, String actionId) {
+
+		try {
+			return PortletPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(), _themeDisplay.getLayout(),
+				resourceName, actionId, false, false);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to check permission for resource name " +
+						resourceName,
+					portalException);
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	protected String[] getOrderByKeys() {
+		return new String[] {"modified-date", "id"};
 	}
 
 	private JSONArray _getItemTypesJSONArray() {
@@ -128,13 +230,13 @@ public class InformationTemplatesManagementToolbarDisplayContext
 			if (infoItemFormVariationsProvider != null) {
 				Collection<InfoItemFormVariation> infoItemFormVariations =
 					infoItemFormVariationsProvider.getInfoItemFormVariations(
-						themeDisplay.getScopeGroupId());
+						_themeDisplay.getScopeGroupId());
 
 				infoItemFormVariations = ListUtil.sort(
 					new ArrayList<>(infoItemFormVariations),
 					Comparator.comparing(
 						infoItemFormVariation -> infoItemFormVariation.getLabel(
-							themeDisplay.getLocale())));
+							_themeDisplay.getLocale())));
 
 				for (InfoItemFormVariation infoItemFormVariation :
 						infoItemFormVariations) {
@@ -143,7 +245,7 @@ public class InformationTemplatesManagementToolbarDisplayContext
 						JSONUtil.put(
 							"label",
 							infoItemFormVariation.getLabel(
-								themeDisplay.getLocale())
+								_themeDisplay.getLocale())
 						).put(
 							"value", infoItemFormVariation.getKey()
 						));
@@ -153,7 +255,7 @@ public class InformationTemplatesManagementToolbarDisplayContext
 			itemTypesJSONArray.put(
 				JSONUtil.put(
 					"label",
-					infoItemClassDetails.getLabel(themeDisplay.getLocale())
+					infoItemClassDetails.getLabel(_themeDisplay.getLocale())
 				).put(
 					"subtypes", itemSubtypesJSONArray
 				).put(
@@ -167,8 +269,12 @@ public class InformationTemplatesManagementToolbarDisplayContext
 		return itemTypesJSONArray;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		InformationTemplatesManagementToolbarDisplayContext.class);
+
 	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private final InformationTemplatesTemplateDisplayContext
 		_informationTemplatesTemplateDisplayContext;
+	private final ThemeDisplay _themeDisplay;
 
 }

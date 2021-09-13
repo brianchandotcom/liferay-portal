@@ -15,16 +15,28 @@
 package com.liferay.template.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.template.comparator.TemplateHandlerComparator;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,7 +50,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Eudaldo Alonso
  */
 public class WidgetTemplatesManagementToolbarDisplayContext
-	extends BaseTemplateManagementToolbarDisplayContext {
+	extends SearchContainerManagementToolbarDisplayContext {
 
 	public WidgetTemplatesManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
@@ -53,6 +65,49 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 
 		_widgetTemplatesTemplateDisplayContext =
 			widgetTemplatesTemplateDisplayContext;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "deleteSelectedDDMTemplates");
+				dropdownItem.setIcon("times-circle");
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+				dropdownItem.setQuickAction(true);
+			}
+		).build();
+	}
+
+	public String getAvailableActions(DDMTemplate ddmTemplate)
+		throws PortalException {
+
+		if (DDMTemplatePermission.contains(
+				_themeDisplay.getPermissionChecker(), ddmTemplate,
+				ActionKeys.DELETE)) {
+
+			return "deleteSelectedDDMTemplates";
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@Override
+	public String getClearResultsURL() {
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setKeywords(
+			StringPool.BLANK
+		).buildString();
+	}
+
+	@Override
+	public String getComponentId() {
+		return "templateManagementToolbar";
 	}
 
 	@Override
@@ -75,11 +130,11 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 		).setMVCRenderCommandName(
 			"/template/edit_ddm_template"
 		).setRedirect(
-			themeDisplay.getURLCurrent()
+			_themeDisplay.getURLCurrent()
 		).setTabs1(
 			_widgetTemplatesTemplateDisplayContext.getTabs1()
 		).setParameter(
-			"groupId", themeDisplay.getScopeGroupId()
+			"groupId", _themeDisplay.getScopeGroupId()
 		).setParameter(
 			"type", DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY
 		).buildPortletURL();
@@ -106,11 +161,54 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 						LanguageUtil.get(
 							httpServletRequest,
 							addAllowedTemplateHandler.getName(
-								themeDisplay.getLocale())));
+								_themeDisplay.getLocale())));
 				});
 		}
 
 		return creationMenu;
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return "TEMPLATE_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
+	}
+
+	@Override
+	public String getSearchActionURL() {
+		PortletURL searchActionURL = getPortletURL();
+
+		return searchActionURL.toString();
+	}
+
+	@Override
+	public String getSearchContainerId() {
+		return "ddmTemplates";
+	}
+
+	protected boolean containsAddPortletDisplayTemplatePermission(
+		String resourceName, String actionId) {
+
+		try {
+			return PortletPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(), _themeDisplay.getLayout(),
+				resourceName, actionId, false, false);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to check permission for resource name " +
+						resourceName,
+					portalException);
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	protected String[] getOrderByKeys() {
+		return new String[] {"modified-date", "id"};
 	}
 
 	private List<TemplateHandler> _getAddAllowedTemplateHandlers() {
@@ -132,11 +230,15 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 
 		Collections.sort(
 			addAllowedTemplateHandlers,
-			new TemplateHandlerComparator(themeDisplay.getLocale()));
+			new TemplateHandlerComparator(_themeDisplay.getLocale()));
 
 		return addAllowedTemplateHandlers;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		WidgetTemplatesManagementToolbarDisplayContext.class);
+
+	private final ThemeDisplay _themeDisplay;
 	private final WidgetTemplatesTemplateDisplayContext
 		_widgetTemplatesTemplateDisplayContext;
 

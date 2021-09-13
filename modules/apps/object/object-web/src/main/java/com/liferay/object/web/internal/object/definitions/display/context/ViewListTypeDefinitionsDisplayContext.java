@@ -62,7 +62,11 @@ public class ViewListTypeDefinitionsDisplayContext {
 				).buildString(),
 				"view", "view",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
-				"get", null, "sidePanel"));
+				"get", null, "sidePanel"),
+			new ClayDataSetActionDropdownItem(
+				getAPIURL() + "/{id}", "trash", "delete",
+				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
+				"delete", "delete", "async"));
 	}
 
 	public CreationMenu getCreationMenu() {

@@ -62,7 +62,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8626 | Test Summary: Segment distribution chart can be filtered by date property"
-	@ignore = "true"
 	@priority = "5"
 	test CanDistributionChartFilteredDateProperty {
 		task ("Get site assigned property name") {

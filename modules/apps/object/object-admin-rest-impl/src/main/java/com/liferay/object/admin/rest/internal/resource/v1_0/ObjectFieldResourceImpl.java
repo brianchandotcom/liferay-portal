@@ -33,7 +33,9 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -80,10 +82,14 @@ public class ObjectFieldResourceImpl
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 			},
 			null,
-			document -> ObjectFieldUtil.toObjectField(
-				_objectFieldLocalService.getObjectField(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
-				_getActions(objectDefinition)));
+			document -> {
+				com.liferay.object.model.ObjectField objectField =
+					_objectFieldLocalService.getObjectField(
+						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
+
+				return ObjectFieldUtil.toObjectField(
+					objectField, _getActions(objectDefinition, objectField));
+			});
 	}
 
 	@Override
@@ -124,22 +130,23 @@ public class ObjectFieldResourceImpl
 	}
 
 	private Map<String, Map<String, String>> _getActions(
-		com.liferay.object.model.ObjectDefinition objectDefinition) {
+		com.liferay.object.model.ObjectDefinition objectDefinition,
+		com.liferay.object.model.ObjectField objectField) {
+
+		if ((objectDefinition.isApproved() || objectDefinition.isSystem()) &&
+			!Objects.equals(
+				objectDefinition.getExtensionDBTableName(),
+				objectField.getDBTableName())) {
+
+			return new HashMap<>();
+		}
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
-			() -> {
-				if (objectDefinition.isApproved() ||
-					objectDefinition.isSystem()) {
-
-					return null;
-				}
-
-				return addAction(
-					ActionKeys.DELETE, "deleteObjectField",
-					com.liferay.object.model.ObjectDefinition.class.getName(),
-					objectDefinition.getObjectDefinitionId());
-			}
+			addAction(
+				ActionKeys.DELETE, "deleteObjectField",
+				com.liferay.object.model.ObjectDefinition.class.getName(),
+				objectDefinition.getObjectDefinitionId())
 		).build();
 	}
 

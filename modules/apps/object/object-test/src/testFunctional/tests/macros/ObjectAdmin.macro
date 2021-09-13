@@ -45,8 +45,6 @@ definition {
 	}
 
 	macro clickFieldsSearchableSectionRadioOption {
-		SelectFrame(locator1 = "IFrame#IFRAME");
-
 		Click.javaScriptClick(
 			key_radioOption = "${radioOption}",
 			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
@@ -97,6 +95,8 @@ definition {
 		Click(
 			key_fieldName = "${fieldName}",
 			locator1 = "ObjectAdmin#SELECT_OBJECT_FIELD");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
 	}
 
 	macro goToFieldsTab {

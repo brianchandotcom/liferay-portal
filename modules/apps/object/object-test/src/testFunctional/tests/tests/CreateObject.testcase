@@ -295,8 +295,6 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
 
-		SelectFrame(locator1 = "IFrame#IFRAME");
-
 		AssertElementPresent(locator1 = "ObjectAdmin#VIEW_SEARCHABLE_SECTION_DISABLED");
 	}
 

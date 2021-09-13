@@ -28,6 +28,7 @@ definition {
 
 	macro addObjectFieldViaUI {
 		LexiconEntry.gotoAdd();
+
 		Type(
 			locator1 = "ObjectAdmin#OBJECT_FIELDS_LABEL_INPUT",
 			value1 = "${fieldLabel}");

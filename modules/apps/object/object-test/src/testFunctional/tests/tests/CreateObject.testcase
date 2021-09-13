@@ -225,6 +225,8 @@ definition {
 	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Object Name"
 	@priority = "4"
 	test CannotSaveWithSpecialCharacterForObjectName {
+		ObjectAdmin.openObjectAdmin();
+
 		ObjectAdmin.addNewObject(
 			fieldLabelName = "ObjectTest1",
 			pluralLabelName = "ObjectsTests1");

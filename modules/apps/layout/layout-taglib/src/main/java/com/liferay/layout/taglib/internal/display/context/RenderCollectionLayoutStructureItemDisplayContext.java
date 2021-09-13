@@ -331,17 +331,6 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	public Map<String, Object> getNumericCollectionPaginationAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"collectionId", _collectionStyledLayoutStructureItem.getItemId()
-		).put(
-			"numberOfItems",
-			_collectionStyledLayoutStructureItem.getNumberOfItems()
-		).put(
-			"numberOfItemsPerPage",
-			_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage()
-		).put(
-			"paginationType",
-			_collectionStyledLayoutStructureItem.getPaginationType()
-		).put(
-			"totalPages", getNumberOfPages()
 		).build();
 	}
 

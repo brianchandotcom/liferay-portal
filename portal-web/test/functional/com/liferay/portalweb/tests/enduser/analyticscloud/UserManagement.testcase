@@ -214,7 +214,7 @@ definition {
 		}
 
 		task ("Delete Pending All Users") {
-			ACSettings.deletePendingAllUsers();
+			ACSettings.deleteAllPendingAllUsers();
 		}
 	}
 
@@ -254,7 +254,7 @@ definition {
 		}
 
 		task ("Delete Pending All Users") {
-			ACSettings.deletePendingAllUsers();
+			ACSettings.deleteAllPendingUsers();
 		}
 	}
 
@@ -299,7 +299,7 @@ definition {
 		}
 
 		task ("Delete Pending All Users") {
-			ACSettings.deletePendingAllUsers();
+			ACSettings.deleteAllPendingUsers();
 		}
 	}
 
@@ -615,7 +615,7 @@ definition {
 		}
 
 		task ("Delete Pending All Users") {
-			ACSettings.deletePendingAllUsers();
+			ACSettings.deleteAllPendingUsers();
 		}
 	}
 
@@ -695,7 +695,7 @@ definition {
 		}
 
 		task ("Delete Pending All Users") {
-			ACSettings.deletePendingAllUsers();
+			ACSettings.deleteAllPendingUsers();
 		}
 	}
 
@@ -745,7 +745,7 @@ definition {
 		}
 
 		task ("Delete Pending All Users") {
-			ACSettings.deletePendingAllUsers();
+			ACSettings.deleteAllPendingUsers();
 		}
 	}
 

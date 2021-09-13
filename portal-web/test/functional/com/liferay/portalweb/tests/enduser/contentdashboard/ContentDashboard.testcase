@@ -1679,44 +1679,6 @@ definition {
 			vocabularyName = "Vocabulary Name");
 	}
 
-	@description = "LPS-132411 Given The Type filter modal
-	When the user selects one or more subtypes
-	Then the subtypes selected appear as filter boxes above the Content table in the Content Dashboard, with the format Subtype: [subtypen_name]"
-	@priority = "5"
-	test FilterBySubtype {
-		property portal.acceptance = "true";
-
-		task ("Create a Web Content") {
-			JSONWebcontent.addWebContent(
-				content = "Webcontent Content",
-				groupName = "Test Site Name",
-				title = "Webcontent Title");
-		}
-		
-		task ("Navigate to the content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-		}
-
-		task ("Filter by Type") {
-			ContentDashboard.filterByType(
-				filterOption = "Type",
-				subtypeName = "Basic Web Content");
-		}
-
-		task ("Assert that the web content and filter label are present") {
-			AssertTextPresent(
-				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-				value1 = "Webcontent Title");
-
-			AssertTextPresent(
-				locator1 = "ContentDashboard#FILTER_TEXT",
-				value1 = "Subtype: Basic Web Content");
-		}
-	}
-
 	@description = "Validate if the user can filter by multiple tags"
 	@priority = "5"
 	test FilterByMultipleTags {
@@ -1966,6 +1928,44 @@ definition {
 		WebContent.deleteCP(
 			siteURLKey = "test-site-name",
 			webContentTitle = "WC Title Scheduled");
+	}
+
+	@description = "LPS-132411 Given The Type filter modal
+	When the user selects one or more subtypes
+	Then the subtypes selected appear as filter boxes above the Content table in the Content Dashboard, with the format Subtype: [subtypen_name]"
+	@priority = "5"
+	test FilterBySubtype {
+		property portal.acceptance = "true";
+
+		task ("Create a Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
+
+		task ("Navigate to the content Dashboard") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Filter by Type") {
+			ContentDashboard.filterByType(
+				filterOption = "Type",
+				subtypeName = "Basic Web Content");
+		}
+
+		task ("Assert that the web content and filter label are present") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "Webcontent Title");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Subtype: Basic Web Content");
+		}
 	}
 
 	@description = "Validate if the user can filter by tag"

@@ -264,36 +264,6 @@ definition {
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
-	macro filterByType {
-		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
-			AssertClickNoError(
-				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
-				value1 = "Filter and Order");
-		}
-
-		var key_filterOption = "${filterOption}";
-
-		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
-
-		Click(locator1 = "ContentDashboard#SEARCH_SUBTYPE_FIELD");
-
-		Type(
-			locator1 = "ContentDashboard#SEARCH_SUBTYPE_FIELD",
-			value1 = "${subtypeName}");
-
-		Click(locator1 = "ContentDashboard#SUBTYPE_NAME_ELEMENT");
-
-		SelectFrame(value1 = "relative=top");
-
-		AssertClickNoError(
-			locator1 = "Button#SELECT",
-			value1 = "Select");
-
-		SelectFrame(value1 = "relative=top");
-	}
-
 	macro filterByTag {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
@@ -323,6 +293,36 @@ definition {
 		else {
 			Click(locator1 = "ContentDashboard#CHECKBOX_TAGS");
 		}
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertClickNoError(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro filterByType {
+		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
+			AssertClickNoError(
+				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
+				value1 = "Filter and Order");
+		}
+
+		var key_filterOption = "${filterOption}";
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+		Click(locator1 = "ContentDashboard#SEARCH_SUBTYPE_FIELD");
+
+		Type(
+			locator1 = "ContentDashboard#SEARCH_SUBTYPE_FIELD",
+			value1 = "${subtypeName}");
+
+		Click(locator1 = "ContentDashboard#SUBTYPE_NAME_ELEMENT");
 
 		SelectFrame(value1 = "relative=top");
 

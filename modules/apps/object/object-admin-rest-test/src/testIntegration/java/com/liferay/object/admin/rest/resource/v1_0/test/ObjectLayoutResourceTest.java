@@ -15,14 +15,171 @@
 package com.liferay.object.admin.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectLayout;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectLayoutBox;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectLayoutColumn;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectLayoutRow;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectLayoutTab;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 
+import java.util.Collections;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		String value = "A" + RandomTestUtil.randomString();
+
+		_objectDefinition =
+			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				LocalizedMapUtil.getLocalizedMap(value), value, null, null,
+				LocalizedMapUtil.getLocalizedMap(value),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				Collections.emptyList());
+
+		_objectField = ObjectFieldLocalServiceUtil.addCustomObjectField(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(), false, false, null,
+			LocalizedMapUtil.getLocalizedMap("Able"), "able", true, "String");
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		if (_objectDefinition != null) {
+			ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
+				_objectDefinition.getObjectDefinitionId());
+		}
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetObjectLayout() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetObjectLayoutNotFound() {
+	}
+
+	@Override
+	protected ObjectLayout randomObjectLayout() throws Exception {
+		ObjectLayout objectLayout = super.randomObjectLayout();
+
+		objectLayout.setDefaultObjectLayout(true);
+		objectLayout.setName(
+			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
+		objectLayout.setObjectDefinitionId(
+			_objectDefinition.getObjectDefinitionId());
+		objectLayout.setObjectLayoutTabs(
+			new ObjectLayoutTab[] {_randomObjectLayoutTab()});
+
+		return objectLayout;
+	}
+
+	@Override
+	protected Long
+			testGetObjectDefinitionObjectLayoutsPage_getObjectDefinitionId()
+		throws Exception {
+
+		return _objectDefinition.getObjectDefinitionId();
+	}
+
+	@Override
+	protected ObjectLayout testGetObjectLayout_addObjectLayout()
+		throws Exception {
+
+		return objectLayoutResource.postObjectDefinitionObjectLayout(
+			_objectDefinition.getObjectDefinitionId(), randomObjectLayout());
+	}
+
+	@Override
+	protected ObjectLayout testGraphQLObjectLayout_addObjectLayout()
+		throws Exception {
+
+		return objectLayoutResource.postObjectDefinitionObjectLayout(
+			_objectDefinition.getObjectDefinitionId(), randomObjectLayout());
+	}
+
+	@Override
+	protected ObjectLayout testPutObjectLayout_addObjectLayout()
+		throws Exception {
+
+		return objectLayoutResource.postObjectDefinitionObjectLayout(
+			_objectDefinition.getObjectDefinitionId(), randomObjectLayout());
+	}
+
+	private ObjectLayoutBox _randomObjectLayoutBox() {
+		return new ObjectLayoutBox() {
+			{
+				collapsable = RandomTestUtil.randomBoolean();
+				name = Collections.singletonMap(
+					"en-US", RandomTestUtil.randomString());
+				objectLayoutRows = new ObjectLayoutRow[] {
+					_randomObjectLayoutRow()
+				};
+				priority = RandomTestUtil.randomInt();
+			}
+		};
+	}
+
+	private ObjectLayoutColumn _randomObjectLayoutColumn() {
+		return new ObjectLayoutColumn() {
+			{
+				objectFieldId = _objectField.getObjectFieldId();
+				priority = RandomTestUtil.randomInt();
+			}
+		};
+	}
+
+	private ObjectLayoutRow _randomObjectLayoutRow() {
+		return new ObjectLayoutRow() {
+			{
+				objectLayoutColumns = new ObjectLayoutColumn[] {
+					_randomObjectLayoutColumn()
+				};
+				priority = RandomTestUtil.randomInt();
+			}
+		};
+	}
+
+	private ObjectLayoutTab _randomObjectLayoutTab() {
+		return new ObjectLayoutTab() {
+			{
+				name = Collections.singletonMap(
+					"en-US", RandomTestUtil.randomString());
+				objectLayoutBoxes = new ObjectLayoutBox[] {
+					_randomObjectLayoutBox()
+				};
+				priority = RandomTestUtil.randomInt();
+			}
+		};
+	}
+
+	private ObjectDefinition _objectDefinition;
+	private ObjectField _objectField;
+
 }

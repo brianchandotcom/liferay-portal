@@ -13,7 +13,6 @@
 		"prop-types": "15.7.2",
 		"react": "16.12.0"
 	},
-	"main": "index.js",
 	"name": "translation-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

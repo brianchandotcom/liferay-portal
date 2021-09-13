@@ -1,9 +1,0 @@
-{
-	"config": {
-		"imports": {
-			"translation-web": {
-				"/": ">=2.0.7"
-			}
-		}
-	}
-}

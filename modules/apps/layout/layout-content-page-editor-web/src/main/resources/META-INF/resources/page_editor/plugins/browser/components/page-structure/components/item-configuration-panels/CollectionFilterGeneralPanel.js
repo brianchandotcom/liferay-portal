@@ -87,7 +87,7 @@ export const CollectionFilterGeneralPanel = ({item}) => {
 		return (
 			<p className="alert alert-info text-center" role="alert">
 				{Liferay.Language.get(
-					'display-a-collection-on-the-page-so-that-you-can-use-the-collection-filter-fragment'
+					'display-a-collection-on-the-page-which-support-at-least-one-type-of-filter'
 				)}
 			</p>
 		);

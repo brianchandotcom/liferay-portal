@@ -1,0 +1,266 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+		}
+
+		task ("Add a new site and widget page") {
+			ACUtils.addSiteAndPage();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8920 | Test Summary: Assert individuals overview top interest"
+	@priority = "5"
+	test AssertIndividualOverviewTopInterest {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: data doesn't appear on time and the test needs data from a past date
+		// AC Refactor ticket: LRAC-9266
+
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add specific pages and web contents to Site as interest topics") {
+			Navigator.openSiteURL(siteName = "Site Name");
+
+			for (var layoutName : list "Movies,Music,Science") {
+				JSONLayout.addPublicLayout(
+					groupName = "Site Name",
+					layoutName = "${layoutName}");
+
+				ACUtils.createWCAndAddToPage(
+					layoutName = "${layoutName}",
+					webContentTitle = "Web Content Title ${layoutName}");
+			}
+		}
+
+		task ("Add new users and sync the Contact Data") {
+			for (var name : list "ac,usera") {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
+			}
+
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View new pages in site as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			for (var pageName : list "Movies,Music,Science") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+
+			for (var pageName : list "Movies,Music") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("View new pages in site as another new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "usera@liferay.com",
+				userLoginFullName = "usera usera");
+
+			for (var pageName : list "Movies") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to Individule Overview Tab") {
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Overview");
+		}
+
+		task ("View Top Interests as of Today card") {
+			ACCards.viewCards(cardTitle = "Top Interests as of Today");
+		}
+
+		task ("Assert individuals overview top 1 interest") {
+			ACInterests.viewIndividualInterestSpecificOrder(interestTopic = "Movies");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8919 | Test Summary: Top Interests as of today shows the top 5 interest topics for all individuals"
+	@priority = "5"
+	test ShowsTop5InterestTopicsForAllIndividuals {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: data doesn't appear on time and the test needs data from a past date
+		// AC Refactor ticket: LRAC-9267
+
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add specific pages and web contents to Site as interest topics") {
+			Navigator.openSiteURL(siteName = "Site Name");
+
+			for (var layoutName : list "Movies,Music,Science,Sports,Technology,Arts") {
+				JSONLayout.addPublicLayout(
+					groupName = "Site Name",
+					layoutName = "${layoutName}");
+
+				ACUtils.createWCAndAddToPage(
+					layoutName = "${layoutName}",
+					webContentTitle = "Web Content Title ${layoutName}");
+			}
+		}
+
+		task ("Add new users and sync the Contact Data") {
+			for (var name : list "ac1,ac2,ac3,ac4,ac5,ac6") {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
+			}
+
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View new pages in site as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac1@liferay.com",
+				userLoginFullName = "ac1 ac1");
+
+			for (var pageName : list "Movies,Music,Science,Sports,Technology,Arts") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("View new pages in site as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac2@liferay.com",
+				userLoginFullName = "ac2 ac2");
+
+			for (var pageName : list "Movies,Music,Science,Sports,Technology") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("View new pages in site as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac3@liferay.com",
+				userLoginFullName = "ac3 ac3");
+
+			for (var pageName : list "Movies,Music,Science,Sports") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("View new pages in site as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac4@liferay.com",
+				userLoginFullName = "ac4 ac4");
+
+			for (var pageName : list "Movies,Music,Science") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("View new pages in site as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac5@liferay.com",
+				userLoginFullName = "ac5 ac5");
+
+			for (var pageName : list "Movies,Music") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("View new pages in site as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac6@liferay.com",
+				userLoginFullName = "ac6 ac6");
+
+			for (var pageName : list "Movies") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to Individule Overview Tab") {
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Overview");
+		}
+
+		task ("View Top Interests as of Today card") {
+			ACCards.viewCards(cardTitle = "Top Interests as of Today");
+		}
+
+		task ("Assert top 5 interest topics for all individuals") {
+			ACInterests.viewIndividualInterestSpecificOrder(interestTopic = "Movies,Music,Science,Sports,Technology");
+		}
+	}
+
+}

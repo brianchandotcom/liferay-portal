@@ -137,5 +137,22 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 		if (ddmStructure) {
 			ddmStructure.addEventListener('click', onClick);
 		}
+
+		const languageSelect = document.getElementById('<portlet:namespace />language');
+
+		const onChange = (event) => {
+			const portletURL = new Liferay.Util.PortletURL.createPortletURL(
+				window.location.href,
+				{
+					language: event.target.value,
+				}
+			);
+
+			Liferay.Util.navigate(portletURL.toString());
+		};
+
+		if (languageSelect) {
+			languageSelect.addEventListener('change', onChange);
+		}
 	</aui:script>
 </c:if>

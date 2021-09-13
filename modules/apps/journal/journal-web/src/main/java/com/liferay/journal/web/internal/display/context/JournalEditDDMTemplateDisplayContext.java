@@ -158,6 +158,8 @@ public class JournalEditDDMTemplateDisplayContext {
 				"classPK", getClassPK()
 			).setParameter(
 				"ddmTemplateId", getDDMTemplateId()
+			).setParameter(
+				"language", getLanguage()
 			).setWindowState(
 				LiferayWindowState.EXCLUSIVE
 			).buildString()

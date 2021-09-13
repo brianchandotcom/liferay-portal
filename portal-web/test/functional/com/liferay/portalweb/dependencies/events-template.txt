@@ -1,1 +1,0 @@
-<div class="card card-horizontal">   <div class="card-row">    <div class="card-col-field">     <img alt="thumbnail" src="${EventCoverImage.getData()}" style="max-width: 125px;">    </div>     <div class="card-col-content card-col-gutters">     <h2>${EventHeadline.getData()}</h2>     <p>${EventLeadText.getData()}</p>    </div>   </div>  </div>

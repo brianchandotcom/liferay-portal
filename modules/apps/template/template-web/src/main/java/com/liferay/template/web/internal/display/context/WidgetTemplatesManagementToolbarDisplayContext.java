@@ -142,21 +142,17 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 		for (TemplateHandler addAllowedTemplateHandler :
 				addAllowedTemplateHandlers) {
 
-			addDDMTemplateURL.setParameter(
-				"classNameId",
-				String.valueOf(
-					PortalUtil.getClassNameId(
-						addAllowedTemplateHandler.getClassName())));
-			addDDMTemplateURL.setParameter("classPK", "0");
-			addDDMTemplateURL.setParameter(
-				"resourceClassNameId",
-				String.valueOf(
-					_widgetTemplatesTemplateDisplayContext.
-						getResourceClassNameId()));
-
 			creationMenu.addPrimaryDropdownItem(
 				dropdownItem -> {
-					dropdownItem.setHref(addDDMTemplateURL);
+					dropdownItem.setHref(
+						addDDMTemplateURL, "classNameId",
+						String.valueOf(
+							PortalUtil.getClassNameId(
+								addAllowedTemplateHandler.getClassName())),
+						"classPK", "0", "resourceClassNameId",
+						String.valueOf(
+							_widgetTemplatesTemplateDisplayContext.
+								getResourceClassNameId()));
 					dropdownItem.setLabel(
 						LanguageUtil.get(
 							httpServletRequest,

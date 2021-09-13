@@ -120,6 +120,10 @@ definition {
 				value1 = "${threadBody}");
 		}
 		else {
+			if ("${bold}" == "true") {
+				FormFields.toggleCKEditorContentStyle(optionTool = "Bold");
+			}
+
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			Type(
@@ -1387,9 +1391,17 @@ definition {
 			locator1 = "MessageBoardsThread#THREAD_SUBJECT",
 			value1 = "${threadSubject}");
 
-		AssertTextEquals(
-			locator1 = "MessageBoardsThread#THREAD_BODY",
-			value1 = "${threadBody}");
+		if ("${bold}" == "true") {
+			AssertTextEquals(
+				locator1 = "MessageBoardsThread#THREAD_BODY_BOLD",
+				value1 = "${threadBody}");
+		}
+
+		else {
+			AssertTextEquals(
+				locator1 = "MessageBoardsThread#THREAD_BODY",
+				value1 = "${threadBody}");
+		}
 
 		if (isSet(fontSize)) {
 			AssertTextEquals(

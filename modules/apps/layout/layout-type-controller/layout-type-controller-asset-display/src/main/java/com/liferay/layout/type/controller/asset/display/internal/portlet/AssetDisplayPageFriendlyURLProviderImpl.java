@@ -77,7 +77,9 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 			Group layoutDisplayPageObjectGroup = _groupLocalService.getGroup(
 				layoutDisplayPageObjectProvider.getGroupId());
 
-			if (!layoutDisplayPageObjectGroup.isCompany()) {
+			if (!layoutDisplayPageObjectGroup.isCompany() &&
+				!layoutDisplayPageObjectGroup.isDepot()) {
+
 				groupId = layoutDisplayPageObjectGroup.getGroupId();
 			}
 		}

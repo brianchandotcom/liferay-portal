@@ -45,6 +45,7 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 
 					<clay:headless-data-set-display
 						apiURL="<%= viewListTypeEntriesDisplayContext.getAPIURL() %>"
+						clayDataSetActionDropdownItems="<%= viewListTypeEntriesDisplayContext.getClayDataSetActionDropdownItems() %>"
 						creationMenu="<%= viewListTypeEntriesDisplayContext.getCreationMenu() %>"
 						formId="fm"
 						id="<%= ObjectDefinitionsClayDataSetDisplayNames.LIST_TYPE_DEFINITION_ITEMS %>"

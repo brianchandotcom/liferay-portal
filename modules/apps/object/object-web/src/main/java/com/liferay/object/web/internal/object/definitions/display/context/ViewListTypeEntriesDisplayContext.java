@@ -14,11 +14,15 @@
 
 package com.liferay.object.web.internal.object.definitions.display.context;
 
+import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -36,6 +40,18 @@ public class ViewListTypeEntriesDisplayContext {
 	public String getAPIURL() {
 		return "/o/headless-admin-list-type/v1.0/list-type-definitions/" +
 			_getListTypeDefinitionId() + "/list-type-entries";
+	}
+
+	public List<ClayDataSetActionDropdownItem>
+			getClayDataSetActionDropdownItems()
+		throws Exception {
+
+		return Arrays.asList(
+			new ClayDataSetActionDropdownItem(
+				"/o/headless-admin-list-type/v1.0/list-type-entries/{id}",
+				"trash", "delete",
+				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
+				"delete", "delete", "async"));
 	}
 
 	public CreationMenu getCreationMenu() {

@@ -134,6 +134,8 @@ public class EditDDMTemplateDisplayContext {
 				"classPK", getClassPK()
 			).setParameter(
 				"ddmTemplateId", getDDMTemplateId()
+			).setParameter(
+				"language", getLanguageType()
 			).setWindowState(
 				LiferayWindowState.EXCLUSIVE
 			).buildString()

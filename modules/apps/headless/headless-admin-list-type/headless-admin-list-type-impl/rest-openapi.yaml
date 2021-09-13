@@ -236,3 +236,19 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ListTypeEntry"
             tags: ["ListTypeEntry"]
+    "/list-type-entries/{listTypeEntryId}":
+        delete:
+            operationId: deleteListTypeEntry
+            parameters:
+                - in: path
+                  name: listTypeEntryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ListTypeEntry"]

@@ -524,6 +524,19 @@ definition {
 		Click(locator1 = "ACSettings#CONTINUE_BUTTON");
 	}
 
+	@summary = "The macro deletes all users that have pending status."
+	macro deleteAllPendingUsers {
+		ACSettings.goToUserManagement();
+
+		while (IsElementPresent(locator1= "ACSettings#VIEW_STATUS_PENDING")) {
+			if (IsElementPresent(locator1= "ACSettings#VIEW_STATUS_PENDING")) {
+				Click(locator1 = "ACSettings#DELETE_USER");
+
+				Click(locator1 = "ACSettings#CONTINUE_BUTTON");
+			}
+		}
+	}
+
 	@summary = "Deletes all properties \
 	@param propertyList the list of properties you want to delete (optional)"
 	macro deleteAllProperties {
@@ -639,19 +652,6 @@ definition {
 			Click(locator1 = "ACSettings#KEYWORD_DELETE_ICON");
 
 			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
-		}
-	}
-
-	@summary = "The macro deletes all users that have pending status."
-	macro deleteAllPendingUsers {
-		ACSettings.goToUserManagement();
-
-		while (IsElementPresent(locator1= "ACSettings#VIEW_STATUS_PENDING")) {
-			if (IsElementPresent(locator1= "ACSettings#VIEW_STATUS_PENDING")) {
-				Click(locator1 = "ACSettings#DELETE_USER");
-
-				Click(locator1 = "ACSettings#CONTINUE_BUTTON");
-			}
 		}
 	}
 

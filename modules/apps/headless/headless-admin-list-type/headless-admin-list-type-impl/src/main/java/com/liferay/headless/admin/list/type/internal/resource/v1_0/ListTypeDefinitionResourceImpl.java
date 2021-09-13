@@ -21,6 +21,8 @@ import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionReso
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -99,6 +101,14 @@ public class ListTypeDefinitionResourceImpl
 
 		return new ListTypeDefinition() {
 			{
+				actions = HashMapBuilder.put(
+					"delete",
+					addAction(
+						ActionKeys.DELETE, "deleteListTypeDefinition",
+						com.liferay.list.type.model.ListTypeDefinition.class.
+							getName(),
+						serviceBuilderListTypeEntry.getListTypeDefinitionId())
+				).build();
 				dateCreated = serviceBuilderListTypeEntry.getCreateDate();
 				dateModified = serviceBuilderListTypeEntry.getModifiedDate();
 				id = serviceBuilderListTypeEntry.getListTypeDefinitionId();

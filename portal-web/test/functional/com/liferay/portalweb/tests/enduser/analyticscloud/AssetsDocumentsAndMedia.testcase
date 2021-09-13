@@ -452,12 +452,66 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8412 | Test Summary: Documents location card shows downloads by the expected location"
-	@ignore = "true"
 	@priority = "5"
-	test DocumentsLocationCardShowsViewsByExpectedLocation {
+	test DocumentsLocationCardShowsDownloadsByExpectedLocation {
+		task ("Connect the DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8412 DocumentsLocationCardShowsViewsByExpectedLocation
+		task ("Download the document") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 
+			DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
+		}
+
+		task ("Get the ip country") {
+			var country = ACUtils.getIPCountry();
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to Documents and Media tab in Asset dashboard") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Documents and Media");
+		}
+
+		task ("Change the time filter to Last 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Navigate to the Overview tab in document report entry") {
+			ACNavigation.openItem(itemName = "DM AC Title");
+		}
+
+		task ("View the time filter of Downloads by Location map is Last 24 Hours") {
+			ACTimeFilter.assertCurrentTimeFilterRange(
+				cardName = "Downloads by Location",
+				timeFilterRange = "Last 24 hours");
+		}
+
+		task ("View the Downloads by location info shown in geomap") {
+			ACUtils.viewNoResultsMessageNotPresent(noResultMessage = "There are no downloads on any location on the selected period.");
+
+			ACCards.viewGeomapContainer(cardTitle = "Downloads by Location");
+
+			ACCards.viewGeomapTableText(
+				cardTitle = "Downloads by Location",
+				leftText = "${country}",
+				rightText = "1 100%");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8415 | Test Summary: Documents downloads by technology card shows downloads by the expected browser"

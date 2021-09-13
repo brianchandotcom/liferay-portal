@@ -93,17 +93,15 @@ definition {
 		Click(locator1 = "ObjectPortlet#OBJECT_FIELDS_TAB");
 
 		ObjectAdmin.addObjectFieldViaUI(
-            fieldLabel = "Custom Field",
-            fieldType = "Date",
-            isMandatory = "false"
-        );
+			fieldLabel = "Custom Field",
+			fieldType = "Date",
+			isMandatory = "false");
 
 		Refresh();
 
 		ObjectAdmin.assertObjectField(
 			fieldName = "customField",
 			fieldType = "Date");
-
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a Double field"
@@ -227,7 +225,6 @@ definition {
 	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Object Name"
 	@priority = "4"
 	test CannotSaveWithSpecialCharacterForObjectName {
-
 		ObjectAdmin.addNewObject(
 			fieldLabelName = "ObjectTest1",
 			pluralLabelName = "ObjectsTests1");

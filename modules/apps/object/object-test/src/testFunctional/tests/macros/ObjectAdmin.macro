@@ -27,23 +27,21 @@ definition {
 	}
 
 	macro addObjectFieldViaUI {
-        LexiconEntry.gotoAdd();
-        Type(
-                locator1 = "ObjectAdmin#OBJECT_FIELDS_LABEL_INPUT",
-                value1 = "${fieldLabel}");              
-        
-        Select(
-            locator1 = "ObjectAdmin#OBJECT_FIELDS_TYPE",
-            value1 = "${fieldType}");
-        
-        if ("${isMandatory}" == "true") {
-            Check.checkToggleSwitch(
-            locator1 = "ObjectAdmin#OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH");
-        }
-        
-        
-        Button.clickSave();
-    }
+		LexiconEntry.gotoAdd();
+		Type(
+			locator1 = "ObjectAdmin#OBJECT_FIELDS_LABEL_INPUT",
+			value1 = "${fieldLabel}");
+
+		Select(
+			locator1 = "ObjectAdmin#OBJECT_FIELDS_TYPE",
+			value1 = "${fieldType}");
+
+		if ("${isMandatory}" == "true") {
+			Check.checkToggleSwitch(locator1 = "ObjectAdmin#OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH");
+		}
+
+		Button.clickSave();
+	}
 
 	macro addObjectSingleFieldEntryViaAPI {
 		JSONObject.addObjectSingleFieldEntry(
@@ -61,6 +59,19 @@ definition {
 			pluralLabelName = "${pluralLabelName}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
+	}
+
+	macro assertObjectField {
+		var key_fieldName = "${fieldName}";
+		var key_fieldType = "${fieldType}";
+
+		AssertElementPresent(
+			locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_NAME",
+			value1 = "${fieldName}");
+
+		AssertElementPresent(
+			locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_TYPE",
+			value1 = "${fieldType}");
 	}
 
 	macro clickFieldsSearchableSectionRadioOption {
@@ -147,19 +158,6 @@ definition {
 	macro viewFieldSearchableSectionLanguage {
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELD_SEARCHABLE_LANGUAGE_LABEL");
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELD_SEARCHABLE_LANGUAGE_OPTION");
-	}
-	
-	macro assertObjectField {
-		var key_fieldName = "${fieldName}";
-		var key_fieldType = "${fieldType}";
-
-		AssertElementPresent(
-			locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_NAME",
-			value1 = "${fieldName}");
-
-		AssertElementPresent(
-			locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_TYPE",
-			value1 = "${fieldType}");
 	}
 
 	macro viewSystemObject {

@@ -247,7 +247,7 @@ definition {
 	@description = "Verify that the user is able to reverse sort direction"
 	@priority = "2"
 	test CanReverseSortDirection {
-		property portal.upstream = "quarantine";
+		
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -265,7 +265,7 @@ definition {
 
 		AssertElementPresent(
 			key_fieldName = "Blogs Entry",
-			key_order = "19",
+			key_order = "20",
 			locator1 = "WorkflowConfiguration#PROCESS_BUILDER_TABLE_FIELD_NAME");
 	}
 

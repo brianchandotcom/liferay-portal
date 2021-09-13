@@ -479,6 +479,14 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (listTypeEntry.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (listTypeEntry.getKey() == null) {
 					valid = false;
@@ -602,6 +610,17 @@ public abstract class BaseListTypeEntryResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)listTypeEntry1.getActions(),
+						(Map)listTypeEntry2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -770,6 +789,11 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("dateCreated")) {
 			if (operator.equals("between")) {

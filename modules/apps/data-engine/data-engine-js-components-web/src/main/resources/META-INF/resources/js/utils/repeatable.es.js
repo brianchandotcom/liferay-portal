@@ -16,8 +16,6 @@ const FIELD_NAME_REGEX = /(_\w+_)ddm\$\$(.+)\$(\w+)\$(\d+)\$\$(\w+)/;
 
 const NESTED_FIELD_NAME_REGEX = /(_\w+_)ddm\$\$(.+)\$(\w+)\$(\d+)#(.+)\$(\w+)\$(\d+)\$\$(\w+)/;
 
-export const generateInstanceId = () => Math.random().toString(36).substr(2, 8);
-
 export const parseName = (name) => {
 	let parsed = {};
 	const result = FIELD_NAME_REGEX.exec(name);

@@ -12,13 +12,12 @@
  * details.
  */
 
-import {
-	PagesVisitor,
-	generateInstanceId,
-	normalizeFieldName,
-} from 'data-engine-js-components-web';
+import {PagesVisitor, normalizeFieldName} from 'data-engine-js-components-web';
 import {updateFieldValidationProperty} from 'data-engine-js-components-web/js/core/utils/fields';
-import {getDefaultFieldName} from 'data-engine-js-components-web/js/utils/fieldSupport';
+import {
+	generateInstanceId,
+	getDefaultFieldName,
+} from 'data-engine-js-components-web/js/utils/fieldSupport';
 
 export const getSettingsContextProperty = (
 	settingsContext,
@@ -121,7 +120,7 @@ export const updateSettingsContextInstanceId = ({settingsContext}) => {
 		pages: visitor.mapFields((field) => {
 			const newField = {
 				...field,
-				instanceId: generateInstanceId(8),
+				instanceId: generateInstanceId(),
 			};
 
 			return newField;

@@ -68,7 +68,7 @@ export function getDDMFormField({
 		}
 	});
 	if (!ddmFormField.instanceId) {
-		ddmFormField.instanceId = FieldSupport.generateInstanceId(8);
+		ddmFormField.instanceId = FieldSupport.generateInstanceId();
 	}
 
 	return ddmFormField;

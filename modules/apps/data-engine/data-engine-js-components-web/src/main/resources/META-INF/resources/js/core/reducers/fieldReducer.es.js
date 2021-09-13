@@ -12,8 +12,8 @@
  * details.
  */
 
+import {generateInstanceId} from '../../utils/fieldSupport';
 import {
-	generateInstanceId,
 	generateName,
 	generateNestedFieldName,
 	parseName,

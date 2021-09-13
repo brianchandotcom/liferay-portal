@@ -12,12 +12,12 @@
  * details.
  */
 
-import {getFieldProperties, localizeField} from '../../utils/fieldSupport';
 import {
 	generateInstanceId,
-	generateName,
-	getRepeatedIndex,
-} from '../../utils/repeatable.es';
+	getFieldProperties,
+	localizeField,
+} from '../../utils/fieldSupport';
+import {generateName, getRepeatedIndex} from '../../utils/repeatable.es';
 import {PagesVisitor} from '../../utils/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 

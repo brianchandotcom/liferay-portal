@@ -114,23 +114,10 @@ export const addField = ({
 	};
 };
 
-export const generateId = (length, allowOnlyNumbers = false) => {
-	let text = '';
-
-	const possible = allowOnlyNumbers
-		? '0123456789'
-		: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-	for (let i = 0; i < length; i++) {
-		text += possible.charAt(Math.floor(Math.random() * possible.length));
-	}
-
-	return text;
-};
-
-export const generateInstanceId = (length) => {
-	return generateId(length);
-};
+export const generateInstanceId = (isNumbersOnly) =>
+	Math.random()
+		.toString(isNumbersOnly ? 10 : 36)
+		.substr(2, 8);
 
 export const getDefaultFieldName = (isOptionField = false, fieldType = '') => {
 	const defaultFieldName = fieldType?.label
@@ -139,7 +126,7 @@ export const getDefaultFieldName = (isOptionField = false, fieldType = '') => {
 		? Liferay.Language.get('option')
 		: Liferay.Language.get('field');
 
-	return defaultFieldName + generateId(8, true);
+	return defaultFieldName + generateInstanceId(true);
 };
 
 export const removeField = (
@@ -353,7 +340,7 @@ export const normalizeSettingsContextPages = (
 				});
 			}
 
-			const newInstanceId = generateInstanceId(8);
+			const newInstanceId = generateInstanceId();
 
 			if (field.type === 'rich_text' && field.editorConfig) {
 				field = {
@@ -415,7 +402,7 @@ export const createField = (props, event) => {
 		}
 	}
 
-	const instanceId = generateInstanceId(8);
+	const instanceId = generateInstanceId();
 
 	const newField = {
 		...fieldType,

@@ -174,7 +174,7 @@ function evaluateFieldLeft(fieldLeft, value) {
 		}
 		case 'rich_text': {
 			if (editorConfig) {
-				const instanceId = FieldSupport.generateInstanceId(8);
+				const instanceId = FieldSupport.generateInstanceId();
 
 				props.editorConfig = FieldSupport.formatEditorConfig(
 					editorConfig,

@@ -23,12 +23,7 @@ export {getUid} from './utils/formId.es';
 export * as FormSupport from './utils/FormSupport.es';
 export {parseProps} from './utils/parseProps.es';
 export {getConnectedReactComponentAdapter} from './utils/ReactComponentAdapter.es';
-export {
-	generateInstanceId,
-	generateName,
-	getRepeatedIndex,
-	parseName,
-} from './utils/repeatable.es';
+export {generateName, getRepeatedIndex, parseName} from './utils/repeatable.es';
 export * as RulesSupport from './utils/rulesSupport';
 export {default as setDataRecord} from './utils/setDataRecord.es';
 export * as StringUtils from './utils/strings';

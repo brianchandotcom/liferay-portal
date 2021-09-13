@@ -21,9 +21,12 @@ import {
 } from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/util/settingsContext.es';
 
 import {findFieldByFieldName} from '../../utils/FormSupport.es';
-import {getDefaultFieldName, localizeField} from '../../utils/fieldSupport';
+import {
+	generateInstanceId,
+	getDefaultFieldName,
+	localizeField,
+} from '../../utils/fieldSupport';
 import {normalizeFieldName} from '../../utils/fields.es';
-import {generateInstanceId} from '../../utils/repeatable.es';
 import {sub} from '../../utils/strings';
 import {PagesVisitor} from '../../utils/visitors.es';
 
@@ -216,7 +219,7 @@ export const createDuplicatedField = (originalField, props, blacklist = []) => {
 		newFieldName
 	);
 
-	duplicatedField.instanceId = generateInstanceId(8);
+	duplicatedField.instanceId = generateInstanceId();
 
 	availableLanguageIds.forEach((availableLanguageId) => {
 		const label = getLabel(

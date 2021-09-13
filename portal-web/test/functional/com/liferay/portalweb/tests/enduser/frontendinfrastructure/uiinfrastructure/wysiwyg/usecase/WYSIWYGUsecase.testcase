@@ -87,14 +87,12 @@ definition {
 	test CanAddHyperlinkToExistingText {
 		property portal.acceptance = "true";
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
-
 		JSONWebcontent.addWebContent(
 			content = "Test Link",
-			groupName = "Test Site Name",
+			groupName = "WYSIWYG Site Name",
 			title = "Test Web Content");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "wysiwyg-site-name");
 
 		WebContent.viewTitle(webContentTitle = "Test Web Content");
 

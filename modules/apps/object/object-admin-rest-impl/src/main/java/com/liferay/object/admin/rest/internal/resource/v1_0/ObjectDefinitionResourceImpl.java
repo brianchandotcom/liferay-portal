@@ -134,6 +134,10 @@ public class ObjectDefinitionResourceImpl
 	private ObjectDefinition _toObjectDefinition(
 		com.liferay.object.model.ObjectDefinition objectDefinition) {
 
+		long objectDefinitionId = objectDefinition.getObjectDefinitionId();
+		String permissionName =
+			com.liferay.object.model.ObjectDefinition.class.getName();
+
 		return new ObjectDefinition() {
 			{
 				actions = HashMapBuilder.put(
@@ -147,30 +151,26 @@ public class ObjectDefinitionResourceImpl
 
 						return addAction(
 							ActionKeys.DELETE, "deleteObjectDefinition",
-							com.liferay.object.model.ObjectDefinition.class.
-								getName(),
-							objectDefinition.getObjectDefinitionId());
+							permissionName, objectDefinitionId);
 					}
 				).put(
 					"get",
 					addAction(
-						ActionKeys.VIEW, "getObjectDefinition",
-						ObjectDefinition.class.getName(),
-						objectDefinition.getObjectDefinitionId())
+						ActionKeys.VIEW, "getObjectDefinition", permissionName,
+						objectDefinitionId)
 				).put(
 					"update",
 					addAction(
 						ActionKeys.UPDATE, "postObjectDefinition",
-						ObjectDefinition.class.getName(),
-						objectDefinition.getObjectDefinitionId())
+						permissionName, objectDefinitionId)
 				).build();
 				dateCreated = objectDefinition.getCreateDate();
 				dateModified = objectDefinition.getModifiedDate();
-				id = objectDefinition.getObjectDefinitionId();
+				id = objectDefinitionId;
 				name = objectDefinition.getShortName();
 				objectFields = transformToArray(
 					_objectFieldLocalService.getObjectFields(
-						objectDefinition.getObjectDefinitionId()),
+						objectDefinitionId),
 					ObjectFieldUtil::toObjectField, ObjectField.class);
 				scope = objectDefinition.getScope();
 				status = new Status() {

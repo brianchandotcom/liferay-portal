@@ -18,6 +18,10 @@ definition {
 		Button.click(button = "Apply");
 	}
 
+	macro clickAssign {
+		Button.click(button = "Assign");
+	}
+
 	macro clickCancel {
 		Button.click(button = "Cancel");
 	}

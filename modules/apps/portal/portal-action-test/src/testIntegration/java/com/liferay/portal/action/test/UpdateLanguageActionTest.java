@@ -212,7 +212,9 @@ public class UpdateLanguageActionTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setParameter(
-			"redirect", RandomTestUtil.randomString());
+			"redirect",
+			RandomTestUtil.randomString() + " " +
+				RandomTestUtil.randomString());
 
 		updateLanguageAction.getRedirect(
 			mockHttpServletRequest, new ThemeDisplay(), _targetLocale);

@@ -89,25 +89,82 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8550 | Test Summary: Add segment using an organization property 'hierarchy path'"
 	@priority = "4"
 	test CanCreateSegmentUsingOrganizationPropertyHierarchyPath {
-		task ("Add user") {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Team not sure of which values or what steps are expected in this test
+		// AC Refactor ticket: LRAC-9279
+
+		task ("Add users") {
 			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = "userea1@liferay.com");
+
+			JSONUser.addUser(
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea2@liferay.com");
+
+			JSONUser.addUser(
+				userEmailAddress = "userea3@liferay.com",
+				userFirstName = "userfn3",
+				userLastName = "userln3",
+				userScreenName = "usersn3");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea3@liferay.com");
+
+			JSONUser.addUser(
+				userEmailAddress = "userea4@liferay.com",
+				userFirstName = "userfn4",
+				userLastName = "userln4",
+				userScreenName = "usersn4");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea4@liferay.com");
+
+			JSONUser.addUser(
+				userEmailAddress = "userea5@liferay.com",
+				userFirstName = "userfn5",
+				userLastName = "userln5",
+				userScreenName = "usersn5");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea5@liferay.com");
 		}
 
 		task ("Add organization and add the user to the organization") {
-			JSONOrganization.addOrganization(organizationName = "Organization Name");
+			JSONOrganization.addOrganization(organizationName = "Organization Name 1");
 
 			JSONOrganization.assignUserToOrganization(
-				organizationName = "Organization Name",
-				userEmailAddress = "userea@liferay.com");
+				organizationName = "Organization Name 1",
+				userEmailAddress = "userea1@liferay.com");
+
+			JSONOrganization.addOrganization(
+				organizationName = "Organization Name 11}",
+				parentOrganizationName = "Organization Name 1");
+
+			JSONOrganization.addOrganization(
+				organizationName = "Organization Name 111}",
+				parentOrganizationName = "Organization Name 11");
 		}
 
 		task ("Connect to AC") {

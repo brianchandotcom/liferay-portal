@@ -33,7 +33,7 @@ definition {
 			locator1 = "ObjectAdmin#OBJECT_FIELDS_LABEL_INPUT",
 			value1 = "${fieldLabel}");
 
-		if ("${typeName}" == "true") {
+		if (isSet(fieldName)) {
 			Type(
 				locator1 = "ObjectAdmin#OBJECT_FIELDS_NAME_INPUT",
 				value1 = "${fieldName}");
@@ -149,10 +149,10 @@ definition {
 			locator1 = "ObjectAdmin#VIEW_OBJECT");
 	}
 
-	macro viewFieldNameErrorMessage {
+	macro viewFieldErrorMessage {
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
-			value1 = "Name must only contain letters and digits");
+			value1 = "${message}");
 	}
 
 	macro viewFieldSearchableSectionLanguage {

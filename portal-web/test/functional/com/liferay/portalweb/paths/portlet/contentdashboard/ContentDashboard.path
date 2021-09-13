@@ -266,7 +266,7 @@
 </tr>
 <tr>
 	<td>SEARCH_SUBTYPE_FIELD</td>
-	<td>//*[contains(@class,'form-control input-group-inset input-group-inset-after') and contains(@name,'ItemSelector')]</td>
+	<td>//*[contains(@class, 'input-group-inset')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -280,8 +280,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUBTYPE_ELEMENT_CHECKBOX</td>
-	<td>//*[contains(@type, 'checkbox') and contains(@title,'Select')]</td>
+	<td>SUBTYPE_NAME_ELEMENT</td>
+	<td>//*[contains(@class, 'text-truncate') and contains(text(),'${subtypeName}')]</td>
 	<td></td>
 </tr>
 <tr>

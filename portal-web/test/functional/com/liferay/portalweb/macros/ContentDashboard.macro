@@ -264,7 +264,7 @@ definition {
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
-	macro filterBySubtype {
+	macro filterByType {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
@@ -283,11 +283,7 @@ definition {
 			locator1 = "ContentDashboard#SEARCH_SUBTYPE_FIELD",
 			value1 = "${subtypeName}");
 
-		KeyPress(
-			locator1 = "ContentDashboard#SEARCH_FIELD",
-			value1 = "\ENTER");
-
-		Click(locator1 = "ContentDashboard#SUBTYPE_ELEMENT_CHECKBOX");
+		Click(locator1 = "ContentDashboard#SUBTYPE_NAME_ELEMENT");
 
 		SelectFrame(value1 = "relative=top");
 

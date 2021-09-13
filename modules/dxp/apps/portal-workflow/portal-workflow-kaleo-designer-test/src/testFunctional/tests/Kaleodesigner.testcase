@@ -125,7 +125,6 @@ definition {
 
 	@priority = "3"
 	test AddJoinXORNodeEditNameAndDesciptionAndDeleteViaViewTab {
-		
 		property test.name.skip.portal.instance = "Kaleodesigner#AddJoinXORNodeEditNameAndDesciptionAndDeleteViaViewTab";
 
 		ApplicationsMenu.gotoPortlet(

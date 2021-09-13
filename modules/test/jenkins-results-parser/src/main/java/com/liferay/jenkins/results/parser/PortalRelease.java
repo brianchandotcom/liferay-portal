@@ -314,6 +314,104 @@ public class PortalRelease {
 		return _getRemoteURL(_wildFlyURLString);
 	}
 
+	public void setDependenciesURL(URL dependenciesURL) {
+		if (dependenciesURL == null) {
+			_dependenciesURLString = null;
+
+			return;
+		}
+
+		_dependenciesURLString = JenkinsResultsParserUtil.getLocalURL(
+			dependenciesURL.toString());
+	}
+
+	public void setGlassFishURL(URL glassFishURL) {
+		if (glassFishURL == null) {
+			_glassFishURLString = null;
+
+			return;
+		}
+
+		_glassFishURLString = JenkinsResultsParserUtil.getLocalURL(
+			glassFishURL.toString());
+	}
+
+	public void setJBossURL(URL jbossURL) {
+		if (jbossURL == null) {
+			_jbossURLString = null;
+
+			return;
+		}
+
+		_jbossURLString = JenkinsResultsParserUtil.getLocalURL(
+			jbossURL.toString());
+	}
+
+	public void setOSGiURL(URL osgiURL) {
+		if (osgiURL == null) {
+			_osgiURLString = null;
+
+			return;
+		}
+
+		_osgiURLString = JenkinsResultsParserUtil.getLocalURL(
+			osgiURL.toString());
+	}
+
+	public void setPortalWarURL(URL portalWarURL) {
+		if (portalWarURL == null) {
+			_portalWarURLString = null;
+
+			return;
+		}
+
+		_portalWarURLString = JenkinsResultsParserUtil.getLocalURL(
+			portalWarURL.toString());
+	}
+
+	public void setSQLURL(URL sqlURL) {
+		if (sqlURL == null) {
+			_sqlURLString = null;
+
+			return;
+		}
+
+		_sqlURLString = JenkinsResultsParserUtil.getLocalURL(sqlURL.toString());
+	}
+
+	public void setTomcatURL(URL tomcatURL) {
+		if (tomcatURL == null) {
+			_tomcatURLString = null;
+
+			return;
+		}
+
+		_tomcatURLString = JenkinsResultsParserUtil.getLocalURL(
+			tomcatURL.toString());
+	}
+
+	public void setToolsURL(URL toolsURL) {
+		if (toolsURL == null) {
+			_toolsURLString = null;
+
+			return;
+		}
+
+		_toolsURLString = JenkinsResultsParserUtil.getLocalURL(
+			toolsURL.toString());
+	}
+
+	public void setWildFlyURL(URL wildFlyURL) {
+		if (wildFlyURL == null) {
+			_wildFlyURLString = null;
+
+			return;
+		}
+
+		_wildFlyURLString = JenkinsResultsParserUtil.getLocalURL(
+			wildFlyURL.toString());
+	}
+
 	private URL _getLocalURL(String urlString) {
 		if (urlString == null) {
 			return null;

@@ -19,13 +19,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		// ACUtils.tearDownDXP();
+		ACUtils.tearDownDXP();
 
-		// if ("${testPortalInstance}" == "true") {
-		// 	PortalInstances.tearDownCP();
-		// }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 
-		// ACUtils.tearDownAC();
+		ACUtils.tearDownAC();
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8548 | Test Summary: Add segment using an organization property 'date modified'"
@@ -33,7 +33,7 @@ definition {
 	test CanCreateSegmentUsingOrganizationPropertyDateModified {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Team not sure of which steps should be done to assert Date modified	
+		// AC Refactor: Team not sure of which steps should be done to assert Date modified
 		// AC Refactor ticket: LRAC-9277
 
 		task ("Add user") {
@@ -55,7 +55,7 @@ definition {
 			JSONOrganization.assignUserToOrganization(
 				organizationName = "Organization Name",
 				userEmailAddress = "userea@liferay.com");
-		}	
+		}
 
 		task ("Connect to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -207,11 +207,10 @@ definition {
 	test CanCreateSegmentUsingOrganizationPropertyName {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Team not sure of which steps should be done to assert property Name, please check steps and update if necessary	
+		// AC Refactor: Team not sure of which steps should be done to assert property Name, please check steps and update if necessary
 		// AC Refactor ticket: LRAC-9278
 
 		task ("Add users") {
-
 			JSONUser.addUser(
 				userEmailAddress = "userea1@liferay.com",
 				userFirstName = "userfn1",
@@ -235,8 +234,7 @@ definition {
 				userEmailAddress = "userea2@liferay.com");
 		}
 
-		task ("Add organization and add the user to the organization") { 
-
+		task ("Add organization and add the user to the organization") {
 			JSONOrganization.addOrganization(organizationName = "Organization Name 1");
 
 			JSONOrganization.assignUserToOrganization(
@@ -274,8 +272,8 @@ definition {
 				userLoginFullName = "userfn1 userln1");
 
 			Navigator.gotoSitePage(
-					pageName = "Blogs Page",
-					siteName = "Site Name");
+				pageName = "Blogs Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close sessions") {
@@ -310,7 +308,6 @@ definition {
 
 		task ("Assert Test Name is also present in segment criteria") {
 			ACSegments.assertCriteriaTable(criteriaName = "Organization Name 1");
-
 		}
 
 		task ("Add a new segment using the organization roperty Name for Organization Name 2") {
@@ -335,23 +332,22 @@ definition {
 
 		task ("Assert Test Name is also present in segment criteria") {
 			ACSegments.assertCriteriaTable(criteriaName = "Organization Name 2");
-
 		}
 
 		task ("Assert that informations are shown correctly") {
 			ACNavigation.goToSegments();
 
 			ACSegments.assertMembershipValue(
-				segmentName = "Dynamic Segment Test 1",
-				membership = "1");
+				membership = "1",
+				segmentName = "Dynamic Segment Test 1");
 
 			ACSegments.assertTotalActivitiesValue(
 				segmentName = "Dynamic Segment Test 1",
 				totalActivities = "1");
 
 			ACSegments.assertMembershipValue(
-				segmentName = "Dynamic Segment Test 2",
-				membership = "0");
+				membership = "0",
+				segmentName = "Dynamic Segment Test 2");
 
 			ACSegments.assertTotalActivitiesValue(
 				segmentName = "Dynamic Segment Test 2",
@@ -362,14 +358,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8551 | Test Summary: Add segment using an organization property 'organization'"
 	@priority = "4"
 	test CanCreateSegmentUsingOrganizationPropertyOrganization {
-
 		property portal.upstream = "quarantine";
 
 		// AC Refactor: Team not sure of which steps should be done to assert property Type, please check steps and update if necessary. This ticket is blocked by a bug, please check refactor comment section
 		// AC Refactor ticket: LRAC-9324
 
 		task ("Add users") {
-
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
@@ -382,8 +376,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add organization and add the user to the organization") { 
-
+		task ("Add organization and add the user to the organization") {
 			JSONOrganization.addOrganization(organizationName = "Organization Name");
 
 			JSONOrganization.assignUserToOrganization(
@@ -415,8 +408,8 @@ definition {
 				userLoginFullName = "userfn userln");
 
 			Navigator.gotoSitePage(
-					pageName = "Blogs Page",
-					siteName = "Site Name");
+				pageName = "Blogs Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close sessions") {
@@ -457,36 +450,24 @@ definition {
 			ACNavigation.goToSegments();
 
 			ACSegments.assertMembershipValue(
-				segmentName = "Dynamic Segment Test",
-				membership = "1");
+				membership = "1",
+				segmentName = "Dynamic Segment Test");
 
 			ACSegments.assertTotalActivitiesValue(
 				segmentName = "Dynamic Segment Test",
 				totalActivities = "1");
-
 		}
 	}
 
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8552 | Test Summary: Add segment using an organization property 'parent organization'"
-	@ignore = "true"
 	@priority = "4"
 	test CanCreateSegmentUsingOrganizationPropertyParentOrganization {
-
-		// TODO LRAC-8552 CanCreateSegmentUsingOrganizationPropertyParentOrganization pending implementation
-
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8553 | Test Summary: Add segment using an organization property 'type'"
-	@priority = "4"
-	test CanCreateSegmentUsingOrganizationPropertyType {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Team not sure of which steps should be done to assert property Type, please check steps and update if necessary	
-		// AC Refactor ticket: LRAC-9280
-		task ("Add users") {
+		// AC Refactor: Team not sure of which steps should be done to assert property Type, please check steps and update if necessary. This ticket is blocked by a bug, please check refactor comment section
+		// AC Refactor ticket: LRAC-9323
 
+		task ("Add users") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
@@ -499,8 +480,115 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add organization and add the user to the organization") { 
+		task ("Add organization and add the user to the organization") {
+			JSONOrganization.addOrganization(organizationName = "Organization Name");
 
+			JSONOrganization.addOrganization(
+				organizationName = "Organization Name child}",
+				parentOrganizationName = "Organization Name");
+
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Organization Name child",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add blog") {
+			ACUtils.addSiteAndPage();
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Blogs Page");
+
+			Navigator.gotoSitePage(
+				pageName = "Blogs Page",
+				siteName = "Site Name");
+
+			ACUtils.createBlogsAndAddToPage(layoutName = "Blogs Page");
+		}
+
+		task ("Connect to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Interact with DXP with user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoSitePage(
+				pageName = "Blogs Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Launch AC and enter in the new property") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new segment using the organization property Parent Organization") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+
+			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
+
+			ACSegments.addSegmentField(segmentField = "Parent Organization");
+
+			ACSegments.addOrganizationName(organizationName = "Organization Name");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Assert Organization is present in Segment Criteria") {
+			ACSegments.assertCriteriaTable(criteriaName = "Parent Organization");
+		}
+
+		task ("Assert Organization Name is also present in segment criteria") {
+			ACSegments.assertCriteriaTable(criteriaName = "Organization Name");
+		}
+
+		task ("Assert that informations are shown correctly") {
+			ACNavigation.goToSegments();
+
+			ACSegments.assertMembershipValue(
+				membership = "1",
+				segmentName = "Dynamic Segment Test");
+
+			ACSegments.assertTotalActivitiesValue(
+				segmentName = "Dynamic Segment Test",
+				totalActivities = "1");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8553 | Test Summary: Add segment using an organization property 'type'"
+	@priority = "4"
+	test CanCreateSegmentUsingOrganizationPropertyType {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Team not sure of which steps should be done to assert property Type, please check steps and update if necessary
+		// AC Refactor ticket: LRAC-9280
+
+		task ("Add users") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add organization and add the user to the organization") {
 			JSONOrganization.addOrganization(organizationName = "Organization Name");
 
 			JSONOrganization.assignUserToOrganization(
@@ -532,8 +620,8 @@ definition {
 				userLoginFullName = "userfn userln");
 
 			Navigator.gotoSitePage(
-					pageName = "Blogs Page",
-					siteName = "Site Name");
+				pageName = "Blogs Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close sessions") {
@@ -574,13 +662,12 @@ definition {
 			ACNavigation.goToSegments();
 
 			ACSegments.assertMembershipValue(
-				segmentName = "Dynamic Segment Test",
-				membership = "1");
+				membership = "1",
+				segmentName = "Dynamic Segment Test");
 
 			ACSegments.assertTotalActivitiesValue(
 				segmentName = "Dynamic Segment Test",
 				totalActivities = "1");
-
 		}
 	}
 

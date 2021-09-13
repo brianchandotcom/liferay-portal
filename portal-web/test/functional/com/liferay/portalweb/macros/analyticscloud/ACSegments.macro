@@ -1,19 +1,5 @@
 definition {
 
-	macro assertMembershipValue{
-			AssertElementPresent(
-				segmentName = "${segmentName}",
-				membershipName = "${membership}",
-				locator1 = "ACSegments#SEGMENT_TABLE_MEMBERSHIP_NAME_AND_VALUE");	
-	}
-
-	macro assertTotalActivitiesValue{
-			AssertElementPresent(
-				segmentName = "${segmentName}",
-				totalActivitiesNumber = "${totalActivities}",
-				locator1 = "ACSegments#SEGMENT_TABLE_TOTAL_ACTIVITIES_NAME_AND_VALUE");	
-	}
-
 	macro accessSegment {
 		var key_segmentName = "${segmentName}";
 
@@ -45,6 +31,12 @@ definition {
 			index = "${index}",
 			locator1 = "ACSegments#SEGMENT_CRITERION_ITEM",
 			locator2 = "ACSegments#CRITERIA_STATEMENT_BODY");
+	}
+
+	macro addOrganizationName {
+		Type(
+			locator1 = "ACSegments#ORGANIZATION_NAME_INPUT",
+			value1 = "${organizationName}");
 	}
 
 	macro addSegmentField {
@@ -99,6 +91,13 @@ definition {
 			locator1 = "ACSegments#TABLE_CHECKBOX");
 	}
 
+	macro assertMembershipValue {
+		AssertElementPresent(
+			locator1 = "ACSegments#SEGMENT_TABLE_MEMBERSHIP_NAME_AND_VALUE",
+			membershipName = "${membership}",
+			segmentName = "${segmentName}");
+	}
+
 	macro assertSegmentAttributeNotPresent {
 		var key_SegmentField = "${segmentField}";
 
@@ -115,6 +114,13 @@ definition {
 		var key_segmentName = "${segmentName}";
 
 		AssertElementPresent(locator1 = "ACSegments#SELECT_SEGMENT");
+	}
+
+	macro assertTotalActivitiesValue {
+		AssertElementPresent(
+			locator1 = "ACSegments#SEGMENT_TABLE_TOTAL_ACTIVITIES_NAME_AND_VALUE",
+			segmentName = "${segmentName}",
+			totalActivitiesNumber = "${totalActivities}");
 	}
 
 	macro cancelSegment {
@@ -481,12 +487,6 @@ definition {
 		KeyPress(
 			locator1 = "ACSegments#SEARCH_MEMBER",
 			value1 = "\ENTER");
-	}
-	
-	macro addOrganizationName { 
-		Type(
-			locator1 = "ACSegments#ORGANIZATION_NAME_INPUT",
-			value1 = "${organizationName}");
 	}
 
 	macro selectDistributionByAttribute {

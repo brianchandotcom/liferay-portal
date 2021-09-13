@@ -15,7 +15,7 @@
 export default function getDataAttributes(data) {
 	return data
 		? Object.entries(data).reduce((acc, [key, value]) => {
-				acc[`data-${key}`] = value;
+				acc[`data-${key.toLowerCase()}`] = value;
 
 				return acc;
 		  }, {})

@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -113,6 +115,9 @@ public class JournalHelperImpl implements JournalHelper {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
 		if (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return themeDisplay.translate("home");
 		}
@@ -130,14 +135,36 @@ public class JournalHelperImpl implements JournalHelper {
 		sb.append(StringPool.SPACE);
 
 		for (JournalFolder curFolder : folders) {
-			sb.append(StringPool.RAQUO_CHAR);
-			sb.append(StringPool.SPACE);
-			sb.append(curFolder.getName());
+			if (permissionChecker.hasPermission(
+					curFolder.getGroupId(), JournalFolder.class.getName(),
+					curFolder.getFolderId(), ActionKeys.VIEW)) {
+
+				sb.append(StringPool.RAQUO_CHAR);
+				sb.append(StringPool.SPACE);
+				sb.append(curFolder.getName());
+				sb.append(StringPool.SPACE);
+			}
+			else {
+				sb.append(StringPool.RAQUO_CHAR);
+				sb.append(StringPool.SPACE);
+				sb.append(StringPool.TRIPLE_PERIOD);
+				sb.append(StringPool.SPACE);
+			}
 		}
 
-		sb.append(StringPool.RAQUO_CHAR);
-		sb.append(StringPool.SPACE);
-		sb.append(folder.getName());
+		if (permissionChecker.hasPermission(
+				folder.getGroupId(), JournalFolder.class.getName(),
+				folder.getFolderId(), ActionKeys.VIEW)) {
+
+			sb.append(StringPool.RAQUO_CHAR);
+			sb.append(StringPool.SPACE);
+			sb.append(folder.getName());
+		}
+		else {
+			sb.append(StringPool.RAQUO_CHAR);
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.TRIPLE_PERIOD);
+		}
 
 		return sb.toString();
 	}

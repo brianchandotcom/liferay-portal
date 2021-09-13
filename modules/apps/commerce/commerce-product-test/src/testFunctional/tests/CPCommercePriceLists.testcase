@@ -657,7 +657,7 @@ definition {
 
 		CommerceItemSelector.selectEntry(entryName = "Account1");
 
-		Button.clickAdd();
+		Button.clickAssign();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Pricing",

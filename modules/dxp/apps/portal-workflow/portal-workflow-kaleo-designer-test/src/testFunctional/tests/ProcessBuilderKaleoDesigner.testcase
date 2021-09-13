@@ -663,7 +663,6 @@ definition {
 	@description = "Verify that each type of Node has Actions property"
 	@priority = "4"
 	test HasActionsProperty {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#HasActionsProperty";
 
 		ApplicationsMenu.gotoPortlet(
@@ -681,25 +680,25 @@ definition {
 
 		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ACTIONS");
 
-		KaleoDesigner.addNodeViaViewTab(
+		KaleoDesigner.addAndFillNodesByDragAndDrop(
 			nodeDescription = "Join Node Description",
 			nodeName = "Join",
 			nodeNodeLabel = "Join",
+			nodeTitleAndPositionList = "Join;Task;400.100",
 			nodeType = "join");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "Join");
 
 		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ACTIONS");
 
-		KaleoDesigner.addConnectorAndNodeViaViewTab(
-			connectorName = "Submit",
-			newNode = "Join XOR",
-			newNodeDescription = "JoinXOR Description",
-			newNodeName = "JoinXOR",
-			newNodeType = "join-xor",
-			nodeType = "start");
+		KaleoDesigner.addAndFillNodesByDragAndDrop(
+			nodeDescription = "Join XOR Node Description",
+			nodeName = "Join XOR",
+			nodeNodeLabel = "Join XOR",
+			nodeTitleAndPositionList = "Join XOR;360.200",
+			nodeType = "join-xor");
 
-		KaleoDesigner.selectNode(nodeNodeLabel = "JoinXOR");
+		KaleoDesigner.selectNode(nodeNodeLabel = "Join XOR");
 
 		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ACTIONS");
 	}

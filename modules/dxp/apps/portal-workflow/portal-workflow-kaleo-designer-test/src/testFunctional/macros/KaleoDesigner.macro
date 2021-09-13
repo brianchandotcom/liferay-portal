@@ -1,5 +1,19 @@
 definition {
 
+	macro addAndFillNodesByDragAndDrop {
+		ProcessBuilderKaleoDesigner.addNodesByDragging(nodeTitleAndPositionList = "${nodeTitleAndPositionList}");
+
+		var key_nodeType = "${nodeType}";
+
+		Pause(locator1 = "1000");
+
+		Click(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DEFAULT");
+
+		KaleoDesigner.editNodeName(nodeName = "${nodeName}");
+
+		KaleoDesigner.editNodeDescription(nodeDescription = "${nodeDescription}");
+	}
+
 	macro addConnectorAndNodeViaViewTab {
 		var key_nodeType = StringUtil.replace("${nodeType}", "-", "_");
 

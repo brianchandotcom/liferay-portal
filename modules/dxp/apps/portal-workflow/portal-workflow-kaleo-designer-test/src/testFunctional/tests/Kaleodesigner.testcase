@@ -51,7 +51,6 @@ definition {
 
 	@priority = "4"
 	test AddEndNodeEditNameAndDesciptionAndDeleteViaViewTab {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#AddEndNodeEditNameAndDesciptionAndDeleteViaViewTab";
 
 		ApplicationsMenu.gotoPortlet(
@@ -61,10 +60,11 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
-		KaleoDesigner.addNodeViaViewTab(
+		KaleoDesigner.addAndFillNodesByDragAndDrop(
 			nodeDescription = "TestEndNode Node Description",
 			nodeName = "TestEndNode",
 			nodeNodeLabel = "TestEndNode",
+			nodeTitleAndPositionList = "End;180.70",
 			nodeType = "end");
 
 		KaleoDesigner.viewNodeType(
@@ -100,7 +100,6 @@ definition {
 
 	@priority = "3"
 	test AddJoinNodeEditNameAndDesciptionAndDeleteViaViewTab {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#AddJoinNodeEditNameAndDesciptionAndDeleteViaViewTab";
 
 		ApplicationsMenu.gotoPortlet(
@@ -110,10 +109,11 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
-		KaleoDesigner.addNodeViaViewTab(
+		KaleoDesigner.addAndFillNodesByDragAndDrop(
 			nodeDescription = "Join Node Description",
 			nodeName = "Join",
 			nodeNodeLabel = "Join",
+			nodeTitleAndPositionList = "Join;280.270",
 			nodeType = "join");
 
 		KaleoDesigner.viewNodeType(
@@ -125,7 +125,7 @@ definition {
 
 	@priority = "3"
 	test AddJoinXORNodeEditNameAndDesciptionAndDeleteViaViewTab {
-		property portal.upstream = "quarantine";
+		
 		property test.name.skip.portal.instance = "Kaleodesigner#AddJoinXORNodeEditNameAndDesciptionAndDeleteViaViewTab";
 
 		ApplicationsMenu.gotoPortlet(
@@ -135,10 +135,11 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
-		KaleoDesigner.addNodeViaViewTab(
+		KaleoDesigner.addAndFillNodesByDragAndDrop(
 			nodeDescription = "Join XOR Node Description",
 			nodeName = "Join XOR",
 			nodeNodeLabel = "Join XOR",
+			nodeTitleAndPositionList = "Join XOR;360.200",
 			nodeType = "join-xor");
 
 		KaleoDesigner.viewNodeType(
@@ -150,7 +151,7 @@ definition {
 
 	@priority = "5"
 	test AddJoinXORWorkflowDefinitionViaViewTab {
-		property test.name.skip.portal.instance = "Kaleodesigner#AddJoinXORNodeEditNameAndDesciptionAndDeleteViaViewTab";
+		property test.name.skip.portal.instance = "Kaleodesigner#AddJoinXORWorkflowDefinitionViaViewTab";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -792,7 +793,6 @@ definition {
 
 	@priority = "3"
 	test PublishWorkflowDefinitionWithInvalidConditionNodeAndViewErrorMessage {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidConditionNodeAndViewErrorMessage";
 
 		ApplicationsMenu.gotoPortlet(
@@ -810,10 +810,11 @@ definition {
 
 		KaleoDesigner.deleteNode(nodeNodeLabel = "EndNode");
 
-		KaleoDesigner.addNodeViaViewTab(
+		KaleoDesigner.addAndFillNodesByDragAndDrop(
 			nodeDescription = "Start Node Description",
 			nodeName = "Start",
 			nodeNodeLabel = "Start",
+			nodeTitleAndPositionList = "Start;360.70",
 			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
@@ -837,7 +838,6 @@ definition {
 
 	@priority = "3"
 	test PublishWorkflowDefinitionWithInvalidConditionNodeSettingsAndViewErrorMessage {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidConditionNodeSettingsAndViewErrorMessage";
 
 		var nodeScript = '''
@@ -891,10 +891,11 @@ definition {
 
 		KaleoDesigner.deleteNode(nodeNodeLabel = "EndNode");
 
-		KaleoDesigner.addNodeViaViewTab(
+		KaleoDesigner.addAndFillNodesByDragAndDrop(
 			nodeDescription = "Start Node Description",
 			nodeName = "Start",
 			nodeNodeLabel = "Start",
+			nodeTitleAndPositionList = "Start;360.70",
 			nodeType = "start");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(

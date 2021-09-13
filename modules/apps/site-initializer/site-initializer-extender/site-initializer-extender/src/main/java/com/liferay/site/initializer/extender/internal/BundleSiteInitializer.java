@@ -92,7 +92,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Dictionary;
@@ -226,13 +225,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				documentsStringUtilReplaceValues, serviceContext);
 			_addObjectDefinitions(serviceContext);
 
-			Map<String, List<SiteNavigationMenu>> layoutsSiteNavigationMenuMap =
-				new HashMap<>();
 			Map<String, Long> siteNavigationMenuMap = new HashMap<>();
 
-			_addSiteNavigationMenus(
-				layoutsSiteNavigationMenuMap, siteNavigationMenuMap,
-				serviceContext);
+			_addSiteNavigationMenus(siteNavigationMenuMap, serviceContext);
 
 			_addLayoutPageTemplateEntries(
 				serviceContext, siteNavigationMenuMap);
@@ -864,7 +859,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addSiteNavigationMenus(
-			Map<String, List<SiteNavigationMenu>> layoutsSiteNavigationMenuMap,
 			Map<String, Long> siteNavigationMenuMap,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -891,16 +885,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			siteNavigationMenuMap.put(
 				name, siteNavigationMenu.getSiteNavigationMenuId());
-
-			JSONArray pagesJSONArray = jsonObject.getJSONArray("pages");
-
-			for (int j = 0; j < pagesJSONArray.length(); j++) {
-				List<SiteNavigationMenu> siteNavigationMenus =
-					layoutsSiteNavigationMenuMap.computeIfAbsent(
-						pagesJSONArray.getString(j), key -> new ArrayList<>());
-
-				siteNavigationMenus.add(siteNavigationMenu);
-			}
 		}
 	}
 

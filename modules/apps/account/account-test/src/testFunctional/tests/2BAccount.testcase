@@ -104,6 +104,20 @@ definition {
 		Accounts.viewInactiveAccount(accountName = "Account Name");
 	}
 
+	@description = "This test asserts that an Account can be deleted."
+	@priority = "4"
+	test AccountAdminCanDeleteAccount {
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "DELETE",
+			resourceName = "com.liferay.account.model.AccountEntry",
+			roleTitle = "Account Administrator",
+			roleType = "account");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		Accounts.deleteAccount(accountName = "Account Name");
+	}
+
 	@description = "This test asserts that an Account Admin can edit an account he is assigned to."
 	@priority = "4"
 	test AccountAdminCanEditAccount {

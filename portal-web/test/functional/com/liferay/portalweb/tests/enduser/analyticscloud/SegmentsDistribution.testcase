@@ -272,7 +272,9 @@ definition {
 			}
 		}
 
-		task ("Switch to new property in AC") {
+		task ("Launch AC and Switch to new property") {
+			ACUtils.closeAllSessionsAndWait();
+
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = "${propertyName}");
@@ -308,9 +310,7 @@ definition {
 			ACSegments.selectDistributionByAttribute(attribute = "jobTitle");
 		}
 
-		task ("View and click in Chart Entry") {
-			ACSegments.viewBreakdownChartsEntry(key_entry = "QA - 100.0%");
-
+		task ("Click in Chart Entry") {
 			Click(locator1 = "ACSegments#BREAKDOWN_CHART");
 		}
 
@@ -324,11 +324,8 @@ definition {
 				locator1 = "FormViewBuilder#FIELD_LABEL_OPTION");
 		}
 
-		task ("Assert order filtered by text") {
+		// Sorting the names in ascending order to work correctly depends on the bug fix
 
-			// Sorting the names in ascending order to work correctly depends on the bug fix
-
-			ACInterests.viewIndividualInterestSpecificOrder(interestTopic = "liferay liferay,ac ac");
-		}
 	}
+
 }

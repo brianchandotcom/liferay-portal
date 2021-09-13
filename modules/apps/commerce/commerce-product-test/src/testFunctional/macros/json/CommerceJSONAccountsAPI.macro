@@ -1,5 +1,59 @@
 definition {
 
+	macro _deleteAllCommerceAccounts {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var accountsCount = CommerceJSONAccountsAPI._getCommerceAccountsCount();
+
+		if ("${accountsCount}" != "0") {
+			var accountIds = CommerceJSONAccountsAPI._getCommerceAccountIds(accountCount = "${accountsCount}");
+
+			for (var accountId : list "${accountIds}") {
+				echo("Deleting Commerce account with id: ${accountId}");
+
+				var curl = '''
+					${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountId} \
+					-u test@liferay.com:test \
+					-H 'accept: application/json' \
+				''';
+
+				JSONCurlUtil.delete("${curl}");
+			}
+		}
+		else {
+			echo("No Commerce Accounts to be deleted");
+		}
+	}
+
+	macro _getCommerceAccountIds {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(accountCount)) {
+			var accountsCount = "${accountCount}";
+		}
+		else {
+			var accountsCount = "100";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts?pageSize=${accountsCount} \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var accountIds = JSONCurlUtil.get("${curl}", "$..['id']");
+
+		return "${accountIds}";
+	}
+
 	macro _getCommerceAccountsCount {
 		var baseURL = "${baseURL}";
 
@@ -18,63 +72,6 @@ definition {
 		echo("The Commerce accounts count is: ${accountsCount}");
 
 		return "${accountsCount}";
-
-	}
-
-	macro _getCommerceAccountIds {
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		if(isSet(accountCount)){
-			var accountsCount = "${accountCount}";
-		}
-		else {
-			var accountsCount = "100";
-		}
-
-		var curl = '''
-			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts?pageSize=${accountsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-		''';
-
-		var accountIds = JSONCurlUtil.get("${curl}", "$..['id']");
-
-		return "${accountIds}";
-	}
-
-	macro _deleteAllCommerceAccounts{
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		var accountsCount = CommerceJSONAccountsAPI._getCommerceAccountsCount();
-
-		if ("${accountsCount}" != "0"){
-
-			var accountIds = CommerceJSONAccountsAPI._getCommerceAccountIds(accountCount = "${accountsCount}");
-
-			for (var accountId : list "${accountIds}") {
-				echo("Deleting Commerce account with id: ${accountId}");
-
-				var curl = '''
-					${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
-				''';
-
-				JSONCurlUtil.delete("${curl}");
-
-			}
-		}
-		else {
-			echo("No Commerce Accounts to be deleted");
-		}
 	}
 
 }

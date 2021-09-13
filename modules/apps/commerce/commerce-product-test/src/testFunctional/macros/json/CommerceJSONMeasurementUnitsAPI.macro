@@ -1,5 +1,32 @@
 definition {
 
+	macro _deleteCommerceMeasurementUnits {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var commerceMeasurementUnitsIds = CommerceJSONMeasurementUnitsAPI._getCommerceMeasurementUnits();
+
+		if ("${commerceMeasurementUnitsIds}" != "") {
+			for (var commerceMeasurementUnitsId : list "${commerceMeasurementUnitsIds}") {
+				echo("Deleting Commerce Measurement Units with id: ${commerceMeasurementUnitsId}");
+
+				var curl = '''
+					${baseURL}/api/jsonws/commerce.cpmeasurementunit/delete-cp-measurement-unit \
+						-u test@liferay.com:test \
+						-d cpMeasurementUnitId=${commerceMeasurementUnitsId}
+				''';
+
+				JSONCurlUtil.post("${curl}");
+			}
+		}
+		else {
+			echo("No Commerce Measurement Units to be deleted");
+		}
+	}
+
 	macro _getCommerceMeasurementUnits {
 		var baseURL = "${baseURL}";
 
@@ -25,34 +52,6 @@ definition {
 		echo("commerceMeasurementUnits: ${commerceMeasurementUnits}");
 
 		return "${commerceMeasurementUnits}";
-
-	}
-
-	macro _deleteCommerceMeasurementUnits{
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		var commerceMeasurementUnitsIds = CommerceJSONMeasurementUnitsAPI._getCommerceMeasurementUnits();
-
-		if ("${commerceMeasurementUnitsIds}" != ""){
-			for (var commerceMeasurementUnitsId : list "${commerceMeasurementUnitsIds}") {
-				echo("Deleting Commerce Measurement Units with id: ${commerceMeasurementUnitsId}");
-
-				var curl = '''
-					${baseURL}/api/jsonws/commerce.cpmeasurementunit/delete-cp-measurement-unit \
-						-u test@liferay.com:test \
-						-d cpMeasurementUnitId=${commerceMeasurementUnitsId}
-				''';
-
-				JSONCurlUtil.post("${curl}");
-			}
-		}
-		else {
-			echo("No Commerce Measurement Units to be deleted");
-		}
 	}
 
 }

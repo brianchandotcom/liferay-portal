@@ -1,5 +1,32 @@
 definition {
 
+	macro _deleteCommerceCurrencies {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var commerceCurrenciesIds = CommerceJSONCurrenciesAPI._getCommerceCurrencies();
+
+		if ("${commerceCurrenciesIds}" != "") {
+			for (var commerceCurrenciesId : list "${commerceCurrenciesIds}") {
+				echo("Deleting Commerce Currency with id: ${commerceCurrenciesId}");
+
+				var curl = '''
+					${baseURL}/api/jsonws/commerce.commercecurrency/delete-commerce-currency \
+						-u test@liferay.com:test \
+						-d commerceCurrencyId=${commerceCurrenciesId}
+				''';
+
+				JSONCurlUtil.post("${curl}");
+			}
+		}
+		else {
+			echo("No Commerce Currency to be deleted");
+		}
+	}
+
 	macro _getCommerceCurrencies {
 		var baseURL = "${baseURL}";
 
@@ -25,34 +52,6 @@ definition {
 		echo("commerceCurrencies: ${commerceCurrencies}");
 
 		return "${commerceCurrencies}";
-
-	}
-
-	macro _deleteCommerceCurrencies{
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		var commerceCurrenciesIds = CommerceJSONCurrenciesAPI._getCommerceCurrencies();
-
-		if ("${commerceCurrenciesIds}" != ""){
-			for (var commerceCurrenciesId : list "${commerceCurrenciesIds}") {
-				echo("Deleting Commerce Currency with id: ${commerceCurrenciesId}");
-
-				var curl = '''
-					${baseURL}/api/jsonws/commerce.commercecurrency/delete-commerce-currency \
-						-u test@liferay.com:test \
-						-d commerceCurrencyId=${commerceCurrenciesId}
-				''';
-
-				JSONCurlUtil.post("${curl}");
-			}
-		}
-		else {
-			echo("No Commerce Currency to be deleted");
-		}
 	}
 
 }

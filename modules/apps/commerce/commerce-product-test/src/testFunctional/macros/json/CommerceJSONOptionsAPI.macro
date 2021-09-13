@@ -1,5 +1,59 @@
 definition {
 
+	macro _deleteAllCommerceOptions {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var optionsCount = CommerceJSONOptionsAPI._getCommerceOptionsCount();
+
+		if ("${optionsCount}" != "0") {
+			var optionIds = CommerceJSONOptionsAPI._getCommerceOptionIds(optionCount = "${optionsCount}");
+
+			for (var optionId : list "${optionIds}") {
+				echo("Deleting Commerce option with id: ${optionId}");
+
+				var curl = '''
+					${baseURL}/o/headless-commerce-admin-catalog/v1.0/options/${optionId} \
+					-u test@liferay.com:test \
+					-H 'accept: application/json' \
+				''';
+
+				JSONCurlUtil.delete("${curl}");
+			}
+		}
+		else {
+			echo("No Commerce Option to be deleted");
+		}
+	}
+
+	macro _getCommerceOptionIds {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(optionCount)) {
+			var optionsCount = "${optionCount}";
+		}
+		else {
+			var optionsCount = "100";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/options?pageSize=${optionsCount} \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var optionIds = JSONCurlUtil.get("${curl}", "$..['id']");
+
+		return "${optionIds}";
+	}
+
 	macro _getCommerceOptionsCount {
 		var baseURL = "${baseURL}";
 
@@ -18,63 +72,6 @@ definition {
 		echo("The Commerce option count is: ${optionsCount}");
 
 		return "${optionsCount}";
-
-	}
-
-	macro _getCommerceOptionIds {
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		if(isSet(optionCount)){
-			var optionsCount = "${optionCount}";
-		}
-		else {
-			var optionsCount = "100";
-		}
-
-		var curl = '''
-			${baseURL}/o/headless-commerce-admin-catalog/v1.0/options?pageSize=${optionsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-		''';
-
-		var optionIds = JSONCurlUtil.get("${curl}", "$..['id']");
-
-		return "${optionIds}";
-	}
-
-	macro _deleteAllCommerceOptions{
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		var optionsCount = CommerceJSONOptionsAPI._getCommerceOptionsCount();
-
-		if ("${optionsCount}" != "0"){
-
-			var optionIds = CommerceJSONOptionsAPI._getCommerceOptionIds(optionCount = "${optionsCount}");
-
-			for (var optionId : list "${optionIds}") {
-				echo("Deleting Commerce option with id: ${optionId}");
-
-				var curl = '''
-					${baseURL}/o/headless-commerce-admin-catalog/v1.0/options/${optionId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
-				''';
-
-				JSONCurlUtil.delete("${curl}");
-
-			}
-		}
-		else {
-			echo("No Commerce Option to be deleted");
-		}
 	}
 
 }

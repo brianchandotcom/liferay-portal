@@ -1,5 +1,59 @@
 definition {
 
+	macro _deleteAllCommerceProducts {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var productsCount = CommerceJSONProductsAPI._getCommerceProductsCount();
+
+		if ("${productsCount}" != "0") {
+			var productIds = CommerceJSONProductsAPI._getCommerceProductIds(prodCount = "${productsCount}");
+
+			for (var productId : list "${productIds}") {
+				echo("Deleting Commerce product with productId: ${productId}");
+
+				var curl = '''
+					${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId} \
+					-u test@liferay.com:test \
+					-H 'accept: application/json' \
+				''';
+
+				JSONCurlUtil.delete("${curl}");
+			}
+		}
+		else {
+			echo("No Commerce Products to be deleted");
+		}
+	}
+
+	macro _getCommerceProductIds {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(prodCount)) {
+			var productsCount = "${prodCount}";
+		}
+		else {
+			var productsCount = "100";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products?pageSize=${productsCount} \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var productIds = JSONCurlUtil.get("${curl}", "$..['productId']");
+
+		return "${productIds}";
+	}
+
 	macro _getCommerceProductsCount {
 		var baseURL = "${baseURL}";
 
@@ -18,63 +72,6 @@ definition {
 		echo("The Commerce product count is: ${productsCount}");
 
 		return "${productsCount}";
-
-	}
-
-	macro _getCommerceProductIds {
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		if(isSet(prodCount)){
-			var productsCount = "${prodCount}";
-		}
-		else {
-			var productsCount = "100";
-		}
-
-		var curl = '''
-			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products?pageSize=${productsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-		''';
-
-		var productIds = JSONCurlUtil.get("${curl}", "$..['productId']");
-
-		return "${productIds}";
-	}
-
-	macro _deleteAllCommerceProducts{
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		var productsCount = CommerceJSONProductsAPI._getCommerceProductsCount();
-
-		if ("${productsCount}" != "0"){
-
-			var productIds = CommerceJSONProductsAPI._getCommerceProductIds(prodCount = "${productsCount}");
-
-			for (var productId : list "${productIds}") {
-				echo("Deleting Commerce product with productId: ${productId}");
-
-				var curl = '''
-					${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
-				''';
-
-				JSONCurlUtil.delete("${curl}");
-
-			}
-		}
-		else {
-			echo("No Commerce Products to be deleted");
-		}
 	}
 
 }

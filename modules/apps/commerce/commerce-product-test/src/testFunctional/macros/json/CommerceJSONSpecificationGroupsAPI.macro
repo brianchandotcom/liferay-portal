@@ -1,5 +1,59 @@
 definition {
 
+	macro _deleteAllCommerceSpecificationGroups {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var specificationGroupsCount = CommerceJSONSpecificationGroupsAPI._getCommerceSpecificationGroupsCount();
+
+		if ("${specificationGroupsCount}" != "0") {
+			var specificationGroupIds = CommerceJSONSpecificationGroupsAPI._getCommerceSpecificationGroupIds(specificationGroupsCount = "${specificationGroupsCount}");
+
+			for (var specificationGroupId : list "${specificationGroupIds}") {
+				echo("Deleting Commerce specification group with id: ${specificationGroupId}");
+
+				var curl = '''
+					${baseURL}/o/headless-commerce-admin-catalog/v1.0/optionCategories/${specificationGroupId} \
+					-u test@liferay.com:test \
+					-H 'accept: application/json' \
+				''';
+
+				JSONCurlUtil.delete("${curl}");
+			}
+		}
+		else {
+			echo("No Commerce Specification Groups to be deleted");
+		}
+	}
+
+	macro _getCommerceSpecificationGroupIds {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(specificationGroupsCount)) {
+			var specificationGroupsCount = "${specificationGroupCount}";
+		}
+		else {
+			var specificationGroupsCount = "100";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/optionCategories?pageSize=${specificationGroupsCount} \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var specificationGroupIds = JSONCurlUtil.get("${curl}", "$..['id']");
+
+		return "${specificationGroupIds}";
+	}
+
 	macro _getCommerceSpecificationGroupsCount {
 		var baseURL = "${baseURL}";
 
@@ -18,63 +72,6 @@ definition {
 		echo("The Commerce specification groups count is: ${specificationGroupsCount}");
 
 		return "${specificationGroupsCount}";
-
-	}
-
-	macro _getCommerceSpecificationGroupIds {
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		if(isSet(specificationGroupsCount)){
-			var specificationGroupsCount = "${specificationGroupCount}";
-		}
-		else {
-			var specificationGroupsCount = "100";
-		}
-
-		var curl = '''
-			${baseURL}/o/headless-commerce-admin-catalog/v1.0/optionCategories?pageSize=${specificationGroupsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-		''';
-
-		var specificationGroupIds = JSONCurlUtil.get("${curl}", "$..['id']");
-
-		return "${specificationGroupIds}";
-	}
-
-	macro _deleteAllCommerceSpecificationGroups{
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		var specificationGroupsCount = CommerceJSONSpecificationGroupsAPI._getCommerceSpecificationGroupsCount();
-
-		if ("${specificationGroupsCount}" != "0"){
-
-			var specificationGroupIds = CommerceJSONSpecificationGroupsAPI._getCommerceSpecificationGroupIds(specificationGroupsCount = "${specificationGroupsCount}");
-
-			for (var specificationGroupId : list "${specificationGroupIds}") {
-				echo("Deleting Commerce specification group with id: ${specificationGroupId}");
-
-				var curl = '''
-					${baseURL}/o/headless-commerce-admin-catalog/v1.0/optionCategories/${specificationGroupId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
-				''';
-
-				JSONCurlUtil.delete("${curl}");
-
-			}
-		}
-		else {
-			echo("No Commerce Specification Groups to be deleted");
-		}
 	}
 
 }

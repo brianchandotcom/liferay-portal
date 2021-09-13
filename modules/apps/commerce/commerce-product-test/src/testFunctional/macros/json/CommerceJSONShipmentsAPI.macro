@@ -1,5 +1,59 @@
 definition {
 
+	macro _deleteAllCommerceShipments {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var shipmentsCount = CommerceJSONShipmentsAPI._getCommerceShipmentsCount();
+
+		if ("${shipmentsCount}" != "0") {
+			var shipmentIds = CommerceJSONShipmentsAPI._getCommerceShipmentIds(shipmentCount = "${shipmentsCount}");
+
+			for (var shipmentId : list "${shipmentIds}") {
+				echo("Deleting Commerce shipment with id: ${shipmentId}");
+
+				var curl = '''
+					${baseURL}/o/headless-commerce-admin-shipment/v1.0/shipments/${shipmentId} \
+					-u test@liferay.com:test \
+					-H 'accept: application/json' \
+				''';
+
+				JSONCurlUtil.delete("${curl}");
+			}
+		}
+		else {
+			echo("No Commerce Shipments to be deleted");
+		}
+	}
+
+	macro _getCommerceShipmentIds {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(shipmentCount)) {
+			var shipmentsCount = "${shipmentCount}";
+		}
+		else {
+			var shipmentsCount = "100";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-shipment/v1.0/shipments?pageSize=${shipmentsCount} \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var shipmentIds = JSONCurlUtil.get("${curl}", "$..['id']");
+
+		return "${shipmentIds}";
+	}
+
 	macro _getCommerceShipmentsCount {
 		var baseURL = "${baseURL}";
 
@@ -18,62 +72,6 @@ definition {
 		echo("The Commerce shipments count is: ${shipmentsCount}");
 
 		return "${shipmentsCount}";
-
-	}
-
-	macro _getCommerceShipmentIds {
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		if(isSet(shipmentCount)){
-			var shipmentsCount = "${shipmentCount}";
-		}
-		else {
-			var shipmentsCount = "100";
-		}
-
-		var curl = '''
-			${baseURL}/o/headless-commerce-admin-shipment/v1.0/shipments?pageSize=${shipmentsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-		''';
-
-		var shipmentIds = JSONCurlUtil.get("${curl}", "$..['id']");
-
-		return "${shipmentIds}";
-	}
-
-	macro _deleteAllCommerceShipments{
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		var shipmentsCount = CommerceJSONShipmentsAPI._getCommerceShipmentsCount();
-
-		if ("${shipmentsCount}" != "0"){
-
-			var shipmentIds = CommerceJSONShipmentsAPI._getCommerceShipmentIds(shipmentCount = "${shipmentsCount}");
-
-			for (var shipmentId : list "${shipmentIds}") {
-				echo("Deleting Commerce shipment with id: ${shipmentId}");
-
-				var curl = '''
-					${baseURL}/o/headless-commerce-admin-shipment/v1.0/shipments/${shipmentId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
-				''';
-
-				JSONCurlUtil.delete("${curl}");
-			}
-		}
-		else {
-			echo("No Commerce Shipments to be deleted");
-		}
 	}
 
 }

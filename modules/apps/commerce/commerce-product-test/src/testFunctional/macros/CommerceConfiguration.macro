@@ -120,7 +120,7 @@ definition {
 
 		IsElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
 
-        CommerceJSONSpecificationGroupsAPI._deleteAllCommerceSpecificationGroups();
+		CommerceJSONSpecificationGroupsAPI._deleteAllCommerceSpecificationGroups();
 
 		CommerceJSONSpecificationsAPI._deleteAllCommerceSpecifications();
 
@@ -148,7 +148,9 @@ definition {
 			category = "Product Management",
 			portlet = "Catalogs");
 
-		IsElementPresent(key_rowNumber = "1", locator1 = "CommerceNavigation#ENTRY_NAME_N");
+		IsElementPresent(
+			key_rowNumber = "1",
+			locator1 = "CommerceNavigation#ENTRY_NAME_N");
 
 		CommerceJSONPriceListsAndPromotionsAPI._deleteAllNoMasterPriceListsAndPromotions();
 
@@ -156,13 +158,17 @@ definition {
 			category = "Pricing",
 			portlet = "Price Lists");
 
-        IsElementPresent(key_rowNumber = "1", locator1 = "CommerceNavigation#ENTRY_NAME_N");
+		IsElementPresent(
+			key_rowNumber = "1",
+			locator1 = "CommerceNavigation#ENTRY_NAME_N");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Pricing",
 			portlet = "Promotions");
 
-		IsElementPresent(key_rowNumber = "1", locator1 = "CommerceNavigation#ENTRY_NAME_N");
+		IsElementPresent(
+			key_rowNumber = "1",
+			locator1 = "CommerceNavigation#ENTRY_NAME_N");
 
 		CommerceJSONDiscountsAPI._deleteAllCommerceDiscounts();
 

@@ -1,5 +1,30 @@
 definition {
 
+	macro _deleteAllNoMasterPriceListsAndPromotions {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var priceListAndPromotionIds = CommerceJSONPriceListsAndPromotionsAPI._getCommerceNoMasterPriceListsAndPromotions();
+
+		if ("${priceListAndPromotionIds}" != "") {
+			for (var priceListAndPromotionId : list "${priceListAndPromotionIds}") {
+				var curl = '''
+					${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists/${priceListAndPromotionId} \
+					-u test@liferay.com:test \
+					-H 'accept: application/json' \
+				''';
+
+				JSONCurlUtil.delete("${curl}");
+			}
+		}
+		else {
+			echo("No Commerce Price Lists And Promotions to be deleted");
+		}
+	}
+
 	macro _getCommerceNoMasterPriceListsAndPromotions {
 		var baseURL = "${baseURL}";
 
@@ -7,7 +32,7 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		if(isSet(priceListAndPromotionCount)){
+		if (isSet(priceListAndPromotionCount)) {
 			var priceListsAndPromotionsCount = "${priceListAndPromotionCount}";
 		}
 		else {
@@ -23,32 +48,6 @@ definition {
 		var priceListAndPromotionIds = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] != 'Master Base Promotion' && @['name'] != 'Master Base Price List')].['id']");
 
 		return "${priceListAndPromotionIds}";
-	}
-
-	macro _deleteAllNoMasterPriceListsAndPromotions {
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		var priceListAndPromotionIds = CommerceJSONPriceListsAndPromotionsAPI._getCommerceNoMasterPriceListsAndPromotions();
-
-		if ("${priceListAndPromotionIds}" != ""){
-			for (var priceListAndPromotionId : list "${priceListAndPromotionIds}") {
-
-				var curl = '''
-					${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists/${priceListAndPromotionId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
-				''';
-
-				JSONCurlUtil.delete("${curl}");
-			}
-		}
-		else {
-			echo("No Commerce Price Lists And Promotions to be deleted");
-		}
 	}
 
 }

@@ -1,5 +1,59 @@
 definition {
 
+	macro _deleteAllCommerceAccountGroups {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var accountGroupsCount = CommerceJSONAccountGroupsAPI._getCommerceAccountGroupsCount();
+
+		if ("${accountGroupsCount}" != "0") {
+			var accountGroupIds = CommerceJSONAccountGroupsAPI._getCommerceAccountGroupIds(accountGroupCount = "${accountGroupsCount}");
+
+			for (var accountGroupId : list "${accountGroupIds}") {
+				echo("Deleting Commerce account group with id: ${accountGroupId}");
+
+				var curl = '''
+					${baseURL}/o/headless-commerce-admin-account/v1.0/accountGroups/${accountGroupId} \
+					-u test@liferay.com:test \
+					-H 'accept: application/json' \
+				''';
+
+				JSONCurlUtil.delete("${curl}");
+			}
+		}
+		else {
+			echo("No Commerce Account Groups to be deleted");
+		}
+	}
+
+	macro _getCommerceAccountGroupIds {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(accountGroupCount)) {
+			var accountGroupsCount = "${accountGroupCount}";
+		}
+		else {
+			var accountGroupsCount = "100";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accountGroups?pageSize=${accountGroupsCount} \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var accountGroupIds = JSONCurlUtil.get("${curl}", "$..['id']");
+
+		return "${accountGroupIds}";
+	}
+
 	macro _getCommerceAccountGroupsCount {
 		var baseURL = "${baseURL}";
 
@@ -18,63 +72,6 @@ definition {
 		echo("The Commerce account group count is: ${accountGroupsCount}");
 
 		return "${accountGroupsCount}";
-
-	}
-
-	macro _getCommerceAccountGroupIds {
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		if(isSet(accountGroupCount)){
-			var accountGroupsCount = "${accountGroupCount}";
-		}
-		else {
-			var accountGroupsCount = "100";
-		}
-
-		var curl = '''
-			${baseURL}/o/headless-commerce-admin-account/v1.0/accountGroups?pageSize=${accountGroupsCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-		''';
-
-		var accountGroupIds = JSONCurlUtil.get("${curl}", "$..['id']");
-
-		return "${accountGroupIds}";
-	}
-
-	macro _deleteAllCommerceAccountGroups{
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		var accountGroupsCount = CommerceJSONAccountGroupsAPI._getCommerceAccountGroupsCount();
-
-		if ("${accountGroupsCount}" != "0"){
-
-			var accountGroupIds = CommerceJSONAccountGroupsAPI._getCommerceAccountGroupIds(accountGroupCount = "${accountGroupsCount}");
-
-			for (var accountGroupId : list "${accountGroupIds}") {
-				echo("Deleting Commerce account group with id: ${accountGroupId}");
-
-				var curl = '''
-					${baseURL}/o/headless-commerce-admin-account/v1.0/accountGroups/${accountGroupId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
-				''';
-
-				JSONCurlUtil.delete("${curl}");
-
-			}
-		}
-		else {
-			echo("No Commerce Account Groups to be deleted");
-		}
 	}
 
 }

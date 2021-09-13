@@ -1,5 +1,32 @@
 definition {
 
+	macro _deleteCommerceAvailableEstimates {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var commerceAvailabilityEstimateIds = CommerceJSONAvailableEstimatesAPI._getCommerceAvailableEstimates();
+
+		if ("${commerceAvailabilityEstimateIds}" != "") {
+			for (var commerceAvailabilityEstimateId : list "${commerceAvailabilityEstimateIds}") {
+				echo("Deleting Commerce commerceAvailabilityEstimate with id: ${commerceAvailabilityEstimateId}");
+
+				var curl = '''
+					${baseURL}/api/jsonws/commerce.commerceavailabilityestimate/delete-commerce-availability-estimate \
+						-u test@liferay.com:test \
+						-d commerceAvailabilityEstimateId=${commerceAvailabilityEstimateId}
+				''';
+
+				JSONCurlUtil.post("${curl}");
+			}
+		}
+		else {
+			echo("No Commerce Availability Estimate to be deleted");
+		}
+	}
+
 	macro _getCommerceAvailableEstimates {
 		var baseURL = "${baseURL}";
 
@@ -25,34 +52,6 @@ definition {
 		echo("availableEstimates: ${availableEstimates}");
 
 		return "${availableEstimates}";
-
-	}
-
-	macro _deleteCommerceAvailableEstimates{
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		var commerceAvailabilityEstimateIds = CommerceJSONAvailableEstimatesAPI._getCommerceAvailableEstimates();
-
-		if ("${commerceAvailabilityEstimateIds}" != ""){
-			for (var commerceAvailabilityEstimateId : list "${commerceAvailabilityEstimateIds}") {
-				echo("Deleting Commerce commerceAvailabilityEstimate with id: ${commerceAvailabilityEstimateId}");
-
-				var curl = '''
-					${baseURL}/api/jsonws/commerce.commerceavailabilityestimate/delete-commerce-availability-estimate \
-						-u test@liferay.com:test \
-						-d commerceAvailabilityEstimateId=${commerceAvailabilityEstimateId}
-				''';
-
-				JSONCurlUtil.post("${curl}");
-			}
-		}
-		else {
-			echo("No Commerce Availability Estimate to be deleted");
-		}
 	}
 
 }

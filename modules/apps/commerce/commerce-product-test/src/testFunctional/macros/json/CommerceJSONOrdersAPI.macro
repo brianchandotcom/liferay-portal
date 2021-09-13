@@ -1,5 +1,59 @@
 definition {
 
+	macro _deleteAllCommerceOrders {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var ordersCount = CommerceJSONOrdersAPI._getCommerceOrdersCount();
+
+		if ("${ordersCount}" != "0") {
+			var orderIds = CommerceJSONOrdersAPI._getCommerceOrderIds(orderCount = "${ordersCount}");
+
+			for (var orderId : list "${orderIds}") {
+				echo("Deleting Commerce order with id: ${orderId}");
+
+				var curl = '''
+					${baseURL}/o/headless-commerce-admin-order/v1.0/orders/${orderId} \
+					-u test@liferay.com:test \
+					-H 'accept: application/json' \
+				''';
+
+				JSONCurlUtil.delete("${curl}");
+			}
+		}
+		else {
+			echo("No Commerce Orders to be deleted");
+		}
+	}
+
+	macro _getCommerceOrderIds {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(orderCount)) {
+			var ordersCount = "${orderCount}";
+		}
+		else {
+			var ordersCount = "100";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-order/v1.0/orders?pageSize=${ordersCount} \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var orderIds = JSONCurlUtil.get("${curl}", "$..['id']");
+
+		return "${orderIds}";
+	}
+
 	macro _getCommerceOrdersCount {
 		var baseURL = "${baseURL}";
 
@@ -18,62 +72,6 @@ definition {
 		echo("The Commerce orders count is: ${ordersCount}");
 
 		return "${ordersCount}";
-
-	}
-
-	macro _getCommerceOrderIds {
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		if(isSet(orderCount)){
-			var ordersCount = "${orderCount}";
-		}
-		else {
-			var ordersCount = "100";
-		}
-
-		var curl = '''
-			${baseURL}/o/headless-commerce-admin-order/v1.0/orders?pageSize=${ordersCount} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-		''';
-
-		var orderIds = JSONCurlUtil.get("${curl}", "$..['id']");
-
-		return "${orderIds}";
-	}
-
-	macro _deleteAllCommerceOrders{
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		var ordersCount = CommerceJSONOrdersAPI._getCommerceOrdersCount();
-
-		if ("${ordersCount}" != "0"){
-
-			var orderIds = CommerceJSONOrdersAPI._getCommerceOrderIds(orderCount = "${ordersCount}");
-
-			for (var orderId : list "${orderIds}") {
-				echo("Deleting Commerce order with id: ${orderId}");
-
-				var curl = '''
-					${baseURL}/o/headless-commerce-admin-order/v1.0/orders/${orderId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
-				''';
-
-				JSONCurlUtil.delete("${curl}");
-			}
-		}
-		else {
-			echo("No Commerce Orders to be deleted");
-		}
 	}
 
 }

@@ -1,5 +1,32 @@
 definition {
 
+	macro _deleteCommerceSites {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var commerceSitesIds = CommerceJSONSitesAPI._getCommerceSites();
+
+		if ("${commerceSitesIds}" != "") {
+			for (var commerceSitesId : list "${commerceSitesIds}") {
+				echo("Deleting Commerce Sites with id: ${commerceSitesId}");
+
+				var curl = '''
+					${baseURL}/api/jsonws/group/delete-group \
+						-u test@liferay.com:test \
+						-d groupId=${commerceSitesId}
+				''';
+
+				JSONCurlUtil.post("${curl}");
+			}
+		}
+		else {
+			echo("No Commerce Sites to be deleted");
+		}
+	}
+
 	macro _getCommerceSites {
 		var baseURL = "${baseURL}";
 
@@ -21,34 +48,6 @@ definition {
 		echo("commerceSites: ${commerceSites}");
 
 		return "${commerceSites}";
-
-	}
-
-	macro _deleteCommerceSites{
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		var commerceSitesIds = CommerceJSONSitesAPI._getCommerceSites();
-
-		if ("${commerceSitesIds}" != ""){
-			for (var commerceSitesId : list "${commerceSitesIds}") {
-				echo("Deleting Commerce Sites with id: ${commerceSitesId}");
-
-				var curl = '''
-					${baseURL}/api/jsonws/group/delete-group \
-						-u test@liferay.com:test \
-						-d groupId=${commerceSitesId}
-				''';
-
-				JSONCurlUtil.post("${curl}");
-			}
-		}
-		else {
-			echo("No Commerce Sites to be deleted");
-		}
 	}
 
 }

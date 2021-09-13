@@ -1,5 +1,30 @@
 definition {
 
+	macro _deleteAllNoSystemCommerceCatalogs {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var catalogIds = CommerceJSONCatalogsAPI._getCommerceNoSystemCatalogIds();
+
+		if ("${catalogIds}" != "") {
+			for (var catalogId : list "${catalogIds}") {
+				var curl = '''
+					${baseURL}/o/headless-commerce-admin-catalog/v1.0/catalog/${catalogId} \
+					-u test@liferay.com:test \
+					-H 'accept: application/json' \
+				''';
+
+				JSONCurlUtil.delete("${curl}");
+			}
+		}
+		else {
+			echo("No Commerce Catalogs to be deleted");
+		}
+	}
+
 	macro _getCommerceNoSystemCatalogIds {
 		var baseURL = "${baseURL}";
 		var masterCatalogName = "Master";
@@ -8,7 +33,7 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		if(isSet(catalogCount)){
+		if (isSet(catalogCount)) {
 			var catalogsCount = "${catalogCount}";
 		}
 		else {
@@ -24,32 +49,6 @@ definition {
 		var catalogIds = JSONCurlUtil.get("${curl}", "$.items[?(@['system'] == false)].['id']");
 
 		return "${catalogIds}";
-	}
-
-	macro _deleteAllNoSystemCommerceCatalogs{
-		var baseURL = "${baseURL}";
-
-		if (contains("${baseURL}", "{baseURL}")) {
-			var baseURL = PropsUtil.get("portal.url");
-		}
-
-		var catalogIds = CommerceJSONCatalogsAPI._getCommerceNoSystemCatalogIds();
-
-		if ("${catalogIds}" != ""){
-			for (var catalogId : list "${catalogIds}") {
-
-				var curl = '''
-					${baseURL}/o/headless-commerce-admin-catalog/v1.0/catalog/${catalogId} \
-					-u test@liferay.com:test \
-					-H 'accept: application/json' \
-				''';
-
-				JSONCurlUtil.delete("${curl}");
-			}
-		}
-		else {
-			echo("No Commerce Catalogs to be deleted");
-		}
 	}
 
 }

@@ -580,7 +580,7 @@ public class WorkflowMetricsRESTTestHelper {
 			task.getNodeId(), "name", task.getName(), "taskId", task.getId());
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
+			10, TimeUnit.SECONDS,
 			() -> {
 				_assertCount(
 					booleanQuery -> booleanQuery.addMustQueryClauses(
@@ -665,7 +665,7 @@ public class WorkflowMetricsRESTTestHelper {
 			task.getNodeId(), "name", task.getName(), "taskId", task.getId());
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
+			10, TimeUnit.SECONDS,
 			() -> {
 				_assertCount(
 					booleanQuery -> booleanQuery.addMustQueryClauses(
@@ -1240,7 +1240,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 		for (SLAResult slaResult : slaResults) {
 			IdempotentRetryAssert.retryAssert(
-				3, TimeUnit.SECONDS,
+				10, TimeUnit.SECONDS,
 				() -> {
 					_assertCount(
 						booleanQuery -> booleanQuery.addMustQueryClauses(

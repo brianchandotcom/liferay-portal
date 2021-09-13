@@ -63,6 +63,16 @@ public class ListTypeDefinitionSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (listTypeDefinition.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(listTypeDefinition.getActions()));
+		}
+
 		if (listTypeDefinition.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -176,6 +186,13 @@ public class ListTypeDefinitionSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (listTypeDefinition.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(listTypeDefinition.getActions()));
+		}
+
 		if (listTypeDefinition.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -248,7 +265,14 @@ public class ListTypeDefinitionSerDes {
 			ListTypeDefinition listTypeDefinition, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					listTypeDefinition.setActions(
+						(Map)ListTypeDefinitionSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				if (jsonParserFieldValue != null) {
 					listTypeDefinition.setDateCreated(
 						toDate((String)jsonParserFieldValue));

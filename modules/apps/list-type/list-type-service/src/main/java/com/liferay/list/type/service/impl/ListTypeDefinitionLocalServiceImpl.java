@@ -16,6 +16,7 @@ package com.liferay.list.type.service.impl;
 
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.base.ListTypeDefinitionLocalServiceBaseImpl;
+import com.liferay.list.type.service.persistence.ListTypeEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -58,6 +59,28 @@ public class ListTypeDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public ListTypeDefinition deleteListTypeDefinition(
+		ListTypeDefinition listTypeDefinition) {
+
+		_listTypeEntryPersistence.removeByListTypeDefinitionId(
+			listTypeDefinition.getListTypeDefinitionId());
+
+		return listTypeDefinitionPersistence.remove(listTypeDefinition);
+	}
+
+	@Override
+	public ListTypeDefinition deleteListTypeDefinition(
+			long listTypeDefinitionId)
+		throws PortalException {
+
+		ListTypeDefinition listTypeDefinition =
+			listTypeDefinitionPersistence.findByPrimaryKey(
+				listTypeDefinitionId);
+
+		return deleteListTypeDefinition(listTypeDefinition);
+	}
+
+	@Override
 	public ListTypeDefinition updateListTypeDefinition(
 			long listTypeDefinitionId, Map<Locale, String> nameMap)
 		throws PortalException {
@@ -70,6 +93,9 @@ public class ListTypeDefinitionLocalServiceImpl
 
 		return listTypeDefinitionPersistence.update(listTypeDefinition);
 	}
+
+	@Reference
+	private ListTypeEntryPersistence _listTypeEntryPersistence;
 
 	@Reference
 	private UserLocalService _userLocalService;

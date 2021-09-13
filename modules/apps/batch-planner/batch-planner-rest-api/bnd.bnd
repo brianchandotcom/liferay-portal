@@ -1,6 +1,6 @@
-Bundle-Name: Liferay Headless Admin Batch Planner API
-Bundle-SymbolicName: com.liferay.headless.admin.batch.planner.api
+Bundle-Name: Liferay Batch Planner REST API
+Bundle-SymbolicName: com.liferay.batch.planner.rest.api
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.headless.admin.batch.planner.dto.v1_0,\
-	com.liferay.headless.admin.batch.planner.resource.v1_0
+	com.liferay.batch.planner.rest.dto.v1_0,\
+	com.liferay.batch.planner.rest.resource.v1_0

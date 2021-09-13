@@ -1,12 +1,12 @@
-apiDir: "../headless-admin-batch-planner-api/src/main/java"
-apiPackagePath: "com.liferay.headless.admin.batch.planner"
+apiDir: "../batch-planner-rest-api/src/main/java"
+apiPackagePath: "com.liferay.batch.planner.rest"
 application:
     baseURI: "/headless-admin-batch-planner"
     className: "HeadlessAdminBatchPlannerApplication"
     name: "Liferay.Headless.Admin.Batch.Planner"
 author: "Matija Petanjek"
-clientDir: "../headless-admin-batch-planner-client/src/main/java"
+clientDir: "../batch-planner-rest-client/src/main/java"
 forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false
-testDir: "../headless-admin-batch-planner-test/src/testIntegration/java"
+testDir: "../batch-planner-rest-test/src/testIntegration/java"

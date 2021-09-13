@@ -2081,6 +2081,8 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Similar Single Approver Process");
 
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSIGNEE_HEADER");
+
 		AssertElementPresent(
 			key_assigneeName = "user1 user1, user2 user2, user3 user3",
 			key_order = "1",

@@ -6,8 +6,6 @@ definition {
 
 		selenium.waitForElementPresent();
 
-		selenium.mouseOver();
-
 		selenium.uploadFile();
 
 		selenium.assertJavaScriptErrors();

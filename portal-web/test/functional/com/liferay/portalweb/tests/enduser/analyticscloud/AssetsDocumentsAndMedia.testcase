@@ -613,9 +613,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8118 | Test Summary: Document known individuals list shows the individuals who have viewed the documents"
 	@priority = "5"
 	test KnownIndividualsListShowsIndividualsWhoHaveViewedDocuments {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		for (var name : list "ac,liferay,dxp") {
+		for (var name : list "ac,liferay") {
 			JSONUser.addUser(
 				userEmailAddress = "${name}@liferay.com",
 				userFirstName = "${name}",
@@ -623,9 +621,9 @@ definition {
 				userScreenName = "${name}");
 		}
 
-		ACDXPSettings.syncNewContactData();
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		for (var name : list "ac,liferay,dxp") {
+		for (var name : list "ac,liferay") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "${name}@liferay.com",
 				userLoginFullName = "${name} ${name}");
@@ -636,7 +634,7 @@ definition {
 
 			DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
 
-			Pause(locator1 = "5000");
+			Pause(locator1 = "10000");
 		}
 
 		JSONUser.addUser(
@@ -681,7 +679,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		for (var name : list "ac,liferay,dxp") {
+		for (var name : list "ac,liferay") {
 			AssertElementPresent(
 				key_userName = "${name} ${name}",
 				locator1 = "ACSegments#SEGMENT_MEMBERS");
@@ -712,6 +710,7 @@ definition {
 		}
 
 		ACUtils.closeAllSessionsAndWait();
+
 		ACUtils.launchAC();
 
 		ACProperties.switchProperty(propertyName = "${propertyName}");

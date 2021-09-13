@@ -40,9 +40,14 @@
 		<td>//div[(@class='table-list-title') and contains (.,'${key_name}')]/../../div[contains(text(),'${key_system}')]</td>
 		<td></td>
 	</tr>
-		<tr>
+	<tr>
 		<td>VIEW_CUSTOM_OBJECT</td>
 		<td>//div[contains(text(),'No')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_SEARCHABLE_SECTION_DISABLED</td>
+		<td>//label[contains(@class,'simple-toggle-switch toggle-switch disabled')]//span[contains(text(),'Searchable')]</td>
 		<td></td>
 	</tr>
 	<tr>

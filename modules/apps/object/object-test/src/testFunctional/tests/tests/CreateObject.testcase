@@ -271,12 +271,35 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Searchable section after the Object is published"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotUpdateSearchableSectionAfterPublished {
 
-		// TODO LPS-138858 CannotUpdateSearchableSectionAfterPublished pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Text",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		AssertElementPresent(locator1 = "ObjectAdmin#VIEW_SEARCHABLE_SECTION_DISABLED");
+		
 	}
 
 	@description = "LPS-135549 - Verify it is possible to Publish a Custom Object"

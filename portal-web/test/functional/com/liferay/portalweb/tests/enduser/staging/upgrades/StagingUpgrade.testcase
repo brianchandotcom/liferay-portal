@@ -102,38 +102,6 @@ definition {
 
 	@description = "This is a use case for LPS-132493."
 	@priority = "5"
-	test PublishPageVersioningAfterUpgrade701016 {
-		property data.archive.type = "data-archive-local-staging-with-page-versioning";
-		property portal.version = "7.0.10.16";
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Navigator.gotoSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		Staging.viewStagingLocalLiveVariationMessagePG(
-			pageName = "Staging Test Page",
-			sitePagesVariationName = "Site Pages Variation Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Variation Page",
-			siteName = "Site Name");
-
-		Staging.viewStagingLocalLiveVariationMessagePG(
-			pageName = "Test Variation Page",
-			pagesVariationName = "Page Variation Name",
-			sitePagesVariationName = "Site Pages Variation Name");
-	}
-
-	@description = "This is a use case for LPS-132493."
-	@priority = "5"
 	test PublishPageVersioningAfterUpgrade71103 {
 		property data.archive.type = "data-archive-local-staging-with-page-versioning";
 		property portal.version = "7.1.10.3";
@@ -201,6 +169,38 @@ definition {
 	test PublishPageVersioningAfterUpgrade73101 {
 		property data.archive.type = "data-archive-local-staging-with-page-versioning";
 		property portal.version = "7.3.10.1";
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.viewStagingLocalLiveVariationMessagePG(
+			pageName = "Staging Test Page",
+			sitePagesVariationName = "Site Pages Variation Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Variation Page",
+			siteName = "Site Name");
+
+		Staging.viewStagingLocalLiveVariationMessagePG(
+			pageName = "Test Variation Page",
+			pagesVariationName = "Page Variation Name",
+			sitePagesVariationName = "Site Pages Variation Name");
+	}
+
+	@description = "This is a use case for LPS-132493."
+	@priority = "5"
+	test PublishPageVersioningAfterUpgrade701016 {
+		property data.archive.type = "data-archive-local-staging-with-page-versioning";
+		property portal.version = "7.0.10.16";
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",

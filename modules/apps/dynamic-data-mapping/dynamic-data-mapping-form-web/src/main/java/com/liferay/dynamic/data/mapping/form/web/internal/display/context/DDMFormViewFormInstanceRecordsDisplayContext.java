@@ -277,6 +277,24 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		).build();
 	}
 
+	public String getLocalizedColumnValues(String columnValues) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Stream<String> stream = Arrays.stream(
+			columnValues.split(StringPool.COMMA_AND_SPACE));
+
+		return StringUtil.merge(
+			stream.map(
+				value -> value.toLowerCase()
+			).map(
+				value -> LanguageUtil.get(themeDisplay.getLocale(), value)
+			).toArray(
+				String[]::new
+			),
+			StringPool.COMMA_AND_SPACE);
+	}
+
 	public List<NavigationItem> getNavigationItems() {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {

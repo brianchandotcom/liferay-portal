@@ -149,8 +149,7 @@ public class InformationTemplatesManagementToolbarDisplayContext
 	public CreationMenu getCreationMenu() {
 		if (!_informationTemplatesTemplateDisplayContext.
 				isAddDDMTemplateEnabled() ||
-			!containsAddPortletDisplayTemplatePermission(
-				TemplatePortletKeys.TEMPLATE, DDMActionKeys.ADD_TEMPLATE)) {
+			!containsAddPortletDisplayTemplatePermission()) {
 
 			return null;
 		}
@@ -181,20 +180,19 @@ public class InformationTemplatesManagementToolbarDisplayContext
 		return "ddmTemplates";
 	}
 
-	protected boolean containsAddPortletDisplayTemplatePermission(
-		String resourceName, String actionId) {
-
+	protected boolean containsAddPortletDisplayTemplatePermission() {
 		try {
 			return PortletPermissionUtil.contains(
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroupId(), _themeDisplay.getLayout(),
-				resourceName, actionId, false, false);
+				TemplatePortletKeys.TEMPLATE, DDMActionKeys.ADD_TEMPLATE, false,
+				false);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to check permission for resource name " +
-						resourceName,
+						TemplatePortletKeys.TEMPLATE,
 					portalException);
 			}
 		}
@@ -204,15 +202,13 @@ public class InformationTemplatesManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
-		return new String[] {"modified-date", "id"};
+		return new String[] {"name"};
 	}
 
 	private JSONArray _getItemTypesJSONArray() {
 		JSONArray itemTypesJSONArray = JSONFactoryUtil.createJSONArray();
 
-		if (!containsAddPortletDisplayTemplatePermission(
-				TemplatePortletKeys.TEMPLATE, DDMActionKeys.ADD_TEMPLATE)) {
-
+		if (!containsAddPortletDisplayTemplatePermission()) {
 			return itemTypesJSONArray;
 		}
 

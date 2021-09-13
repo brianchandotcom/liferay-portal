@@ -186,13 +186,14 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 	}
 
 	protected boolean containsAddPortletDisplayTemplatePermission(
-		String resourceName, String actionId) {
+		String resourceName) {
 
 		try {
 			return PortletPermissionUtil.contains(
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroupId(), _themeDisplay.getLayout(),
-				resourceName, actionId, false, false);
+				resourceName, ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE, false,
+				false);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -221,8 +222,7 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 				TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
 
 			if (containsAddPortletDisplayTemplatePermission(
-					templateHandler.getResourceName(),
-					ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
+					templateHandler.getResourceName())) {
 
 				addAllowedTemplateHandlers.add(templateHandler);
 			}

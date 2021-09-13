@@ -25,7 +25,7 @@
 			).put(
 				"diagramId", (cpDefinitionDiagramSetting != null) ? cpDefinitionDiagramSetting.getCPDefinitionDiagramSettingId() : 0
 			).put(
-			"enablePanZoom", true
+				"enablePanZoom", true
 			).put(
 				"enableResetZoom", true
 			).put(

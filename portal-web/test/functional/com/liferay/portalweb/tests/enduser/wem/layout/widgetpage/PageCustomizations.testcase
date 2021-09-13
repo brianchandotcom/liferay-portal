@@ -223,8 +223,6 @@ definition {
 
 		Portlet.addPG(portletName = "Web Content Display");
 
-		Refresh();
-
 		Portlet.viewSpecificPG(portletName = "Web Content Display");
 
 		Portlet.deletePG(portletName = "Language Selector");
@@ -232,8 +230,6 @@ definition {
 		Portlet.viewNoSpecificPG(portletName = "Language Selector");
 
 		Portlet.addPG(portletName = "Language Selector");
-
-		Refresh();
 
 		Portlet.viewSpecificPG(portletName = "Language Selector");
 

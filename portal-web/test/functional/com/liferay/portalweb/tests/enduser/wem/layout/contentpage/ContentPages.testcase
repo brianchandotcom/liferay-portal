@@ -1294,19 +1294,13 @@ definition {
 
 			PageEditor.addWidget(portletName = "Asset Publisher");
 
-			Refresh();
-
 			PageEditor.addWidget(
 				portletName = "Blogs",
 				targetFragmentName = "Asset Publisher");
 
-			Refresh();
-
 			PageEditor.addWidget(
 				portletName = "Documents and Media",
 				targetFragmentName = "Blogs");
-
-			Refresh();
 
 			PageEditor.addWidget(
 				portletName = "My Sites",

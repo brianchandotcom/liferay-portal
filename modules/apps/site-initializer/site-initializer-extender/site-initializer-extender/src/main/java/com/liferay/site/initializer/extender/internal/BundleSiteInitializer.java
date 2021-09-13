@@ -43,6 +43,9 @@ import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.petra.string.StringBundler;
@@ -62,6 +65,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -72,6 +76,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -121,6 +127,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		GroupLocalService groupLocalService,
 		JournalArticleLocalService journalArticleLocalService,
 		JSONFactory jsonFactory,
+		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
+		LayoutPageTemplatesImporter layoutPageTemplatesImporter,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		Portal portal, ServletContext servletContext,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService,
@@ -145,6 +153,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_groupLocalService = groupLocalService;
 		_journalArticleLocalService = journalArticleLocalService;
 		_jsonFactory = jsonFactory;
+		_layoutPageTemplateEntryLocalService =
+			layoutPageTemplateEntryLocalService;
+		_layoutPageTemplatesImporter = layoutPageTemplatesImporter;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_portal = portal;
 		_servletContext = servletContext;
@@ -222,6 +233,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addSiteNavigationMenus(
 				layoutsSiteNavigationMenuMap, siteNavigationMenuMap,
 				serviceContext);
+
+			_addLayoutPageTemplateEntries(
+				serviceContext, siteNavigationMenuMap);
+
+			_setDefaultLayoutPageTemplateEntries(serviceContext);
 
 			_addStyleBookEntries(serviceContext);
 			_addTaxonomyVocabularies(serviceContext);
@@ -707,6 +723,100 @@ public class BundleSiteInitializer implements SiteInitializer {
 			"/site-initializer/journal-articles", serviceContext);
 	}
 
+	private void _addLayoutPageTemplateEntries(
+			ServiceContext serviceContext,
+			Map<String, Long> siteNavigationMenuMap)
+		throws Exception {
+
+		Map<String, String> ddmStructureKeysMap = new HashMap<>();
+
+		List<DDMStructure> ddmStructures =
+			_ddmStructureLocalService.getStructures(
+				serviceContext.getScopeGroupId(),
+				_portal.getClassNameId(JournalArticle.class.getName()));
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			ddmStructureKeysMap.put(
+				StringUtil.toUpperCase(ddmStructure.getStructureKey()),
+				String.valueOf(ddmStructure.getStructureId()));
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(
+			_read(
+				"/site-initializer/layout-page-templates" +
+					"/layout-page-template-keys.json"));
+
+		Object[] layoutPageTemplateObjects = JSONUtil.toObjectArray(jsonArray);
+
+		Map<String, String> layoutPageTemplateKeys = new HashMap<>();
+
+		for (Object layoutPageTemplateObject : layoutPageTemplateObjects) {
+			JSONObject layoutPageTemplateJSONObject =
+				(JSONObject)layoutPageTemplateObject;
+
+			String key = layoutPageTemplateJSONObject.getString("key");
+
+			String value = layoutPageTemplateJSONObject.getString("value");
+
+			if (key.endsWith("MENU_ID")) {
+				layoutPageTemplateKeys.put(
+					key, String.valueOf(siteNavigationMenuMap.get(value)));
+			}
+			else if (key.startsWith("LAYOUT_URL")) {
+				layoutPageTemplateKeys.put(
+					key, _getPrivateFriendlyURL(serviceContext, value));
+			}
+			else {
+				layoutPageTemplateKeys.put(key, value);
+			}
+		}
+
+		layoutPageTemplateKeys.put(
+			"SCOPE_GROUP_ID", String.valueOf(serviceContext.getScopeGroupId()));
+
+		Enumeration<URL> enumeration = _bundle.findEntries(
+			"/site-initializer/layout-page-templates" +
+				"/layout-page-template-definitions",
+			StringPool.STAR, true);
+
+		if (enumeration == null) {
+			return;
+		}
+
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+		while (enumeration.hasMoreElements()) {
+			URL url = enumeration.nextElement();
+
+			if (StringUtil.endsWith(url.getPath(), ".json")) {
+				String content = StringUtil.read(url.openStream());
+
+				content = StringUtil.replace(
+					content, "\"[£", "£]\"", ddmStructureKeysMap);
+
+				content = StringUtil.replace(
+					content, "[$", "$]", layoutPageTemplateKeys);
+
+				zipWriter.addEntry(
+					StringUtil.removeSubstring(
+						url.getPath(),
+						"/site-initializer/layout-page-templates/"),
+					content);
+			}
+			else {
+				zipWriter.addEntry(
+					StringUtil.removeSubstring(
+						url.getPath(),
+						"/site-initializer/layout-page-templates/"),
+					url.openStream());
+			}
+		}
+
+		_layoutPageTemplatesImporter.importFile(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			zipWriter.getFile(), false);
+	}
+
 	private void _addObjectDefinitions(ServiceContext serviceContext)
 		throws Exception {
 
@@ -1042,6 +1152,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return taxonomyCategory;
 	}
 
+	private String _getPrivateFriendlyURL(
+			ServiceContext serviceContext, String layoutName)
+		throws Exception {
+
+		Group scopeGroup = serviceContext.getScopeGroup();
+
+		return StringBundler.concat(
+			_portal.getPathFriendlyURLPrivateGroup(),
+			scopeGroup.getFriendlyURL(), StringPool.FORWARD_SLASH, layoutName);
+	}
+
 	private String _read(String resourcePath) throws Exception {
 		InputStream inputStream = _servletContext.getResourceAsStream(
 			resourcePath);
@@ -1060,6 +1181,32 @@ public class BundleSiteInitializer implements SiteInitializer {
 			path.substring(0, path.lastIndexOf("/") + 1) + fileName);
 
 		return StringUtil.read(entryURL.openStream());
+	}
+
+	private void _setDefaultLayoutPageTemplateEntries(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(
+			_read(
+				"/site-initializer/layout-page-templates" +
+					"/layout-page-template-entries-default.json"));
+
+		String[] defaultTemplateEntries = ArrayUtil.toStringArray(jsonArray);
+
+		for (String defaultTemplateEntry : defaultTemplateEntries) {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntry(
+						serviceContext.getScopeGroupId(), defaultTemplateEntry);
+
+			if (layoutPageTemplateEntry != null) {
+				_layoutPageTemplateEntryLocalService.
+					updateLayoutPageTemplateEntry(
+						layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+						true);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -1082,6 +1229,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final GroupLocalService _groupLocalService;
 	private final JournalArticleLocalService _journalArticleLocalService;
 	private final JSONFactory _jsonFactory;
+	private final LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+	private final LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private final Portal _portal;

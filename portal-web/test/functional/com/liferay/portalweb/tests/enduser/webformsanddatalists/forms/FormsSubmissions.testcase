@@ -405,7 +405,7 @@ definition {
 
 		FormsAdmin.addForm();
 
-		Form.editName(formName = "Form 1");
+		Form.editName();
 
 		Form.gotoAddField(
 			fieldPositionNumber = "0",

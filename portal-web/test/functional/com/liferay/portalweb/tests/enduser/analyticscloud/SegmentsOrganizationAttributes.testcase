@@ -31,6 +31,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8548 | Test Summary: Add segment using an organization property 'date modified'"
 	@priority = "4"
 	test CanCreateSegmentUsingOrganizationPropertyDateModified {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Team not sure of which steps should be done to assert Date modified	
+		// AC Refactor ticket: LRAC-9277
+
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -50,7 +55,7 @@ definition {
 			JSONOrganization.assignUserToOrganization(
 				organizationName = "Organization Name",
 				userEmailAddress = "userea@liferay.com");
-		}
+		}	
 
 		task ("Connect to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

@@ -14,8 +14,6 @@
 
 package com.liferay.petra.sql.dsl.spi.expression;
 
-import com.liferay.petra.function.UnsafeSupplier;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -46,18 +44,6 @@ public class DefaultPredicate
 		return new DefaultPredicate(this, Operand.AND, expression);
 	}
 
-	@Override
-	public Predicate and(
-		UnsafeSupplier<Expression<Boolean>, Exception> unsafeSupplier) {
-
-		try {
-			return and(unsafeSupplier.get());
-		}
-		catch (Exception exception) {
-			return ReflectionUtil.throwException(exception);
-		}
-	}
-
 	public Expression<?> getLeftExpression() {
 		return _leftExpression;
 	}
@@ -81,18 +67,6 @@ public class DefaultPredicate
 		}
 
 		return new DefaultPredicate(this, Operand.OR, expression);
-	}
-
-	@Override
-	public Predicate or(
-		UnsafeSupplier<Expression<Boolean>, Exception> unsafeSupplier) {
-
-		try {
-			return or(unsafeSupplier.get());
-		}
-		catch (Exception exception) {
-			return ReflectionUtil.throwException(exception);
-		}
 	}
 
 	@Override

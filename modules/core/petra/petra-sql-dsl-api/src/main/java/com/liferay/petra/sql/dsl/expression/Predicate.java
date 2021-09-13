@@ -51,13 +51,21 @@ public interface Predicate extends Expression<Boolean> {
 
 	public Predicate and(Expression<Boolean> expression);
 
-	public Predicate and(
-		UnsafeSupplier<Expression<Boolean>, Exception> unsafeSupplier);
+	public default <T extends Throwable> Predicate and(
+			UnsafeSupplier<Expression<Boolean>, T> unsafeSupplier)
+		throws T {
+
+		return and(unsafeSupplier.get());
+	}
 
 	public Predicate or(Expression<Boolean> expression);
 
-	public Predicate or(
-		UnsafeSupplier<Expression<Boolean>, Exception> unsafeSupplier);
+	public default <T extends Throwable> Predicate or(
+			UnsafeSupplier<Expression<Boolean>, T> unsafeSupplier)
+		throws T {
+
+		return or(unsafeSupplier.get());
+	}
 
 	public Predicate withParentheses();
 

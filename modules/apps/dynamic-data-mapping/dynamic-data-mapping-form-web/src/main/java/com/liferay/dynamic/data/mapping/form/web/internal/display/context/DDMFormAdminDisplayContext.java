@@ -120,6 +120,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -674,7 +675,14 @@ public class DDMFormAdminDisplayContext {
 				ddmFormBuilderContextResponse.getContext()));
 	}
 
-	public List<NavigationItem> getFormBuilderNavigationItems() {
+	public List<NavigationItem> getFormBuilderNavigationItems()
+		throws PortalException {
+
+		DDMFormInstance formInstance = getDDMFormInstance();
+
+		String storageType =
+			(formInstance != null) ? formInstance.getStorageType() : "";
+
 		HttpServletRequest httpServletRequest =
 			ddmFormAdminRequestHelper.getRequest();
 
@@ -686,6 +694,8 @@ public class DDMFormAdminDisplayContext {
 					LanguageUtil.get(httpServletRequest, "form"));
 			}
 		).add(
+			() -> !((formInstance != null) &&
+			  Objects.equals(formInstance.getStorageType(), "object")),
 			navigationItem -> {
 				navigationItem.putData("action", "showRules");
 
@@ -693,6 +703,7 @@ public class DDMFormAdminDisplayContext {
 					LanguageUtil.get(httpServletRequest, "rules"));
 			}
 		).add(
+			() -> !storageType.equals("object"),
 			navigationItem -> {
 				navigationItem.putData("action", "showReport");
 

@@ -21,6 +21,8 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 
+import java.util.Objects;
+
 /**
  * @author Rafael Praxedes
  */
@@ -78,17 +80,33 @@ public class FormInstancePermissionCheckerHelper {
 	public boolean isShowShareIcon(DDMFormInstance formInstance)
 		throws PortalException {
 
-		return DDMFormInstancePermission.contains(
-			_formAdminRequestHelper.getPermissionChecker(), formInstance,
-			ActionKeys.VIEW);
+		if (!((formInstance != null) &&
+			  Objects.equals(formInstance.getStorageType(), "object")) &&
+			DDMFormInstancePermission.contains(
+				_formAdminRequestHelper.getPermissionChecker(), formInstance,
+				ActionKeys.VIEW)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowViewEntriesIcon(DDMFormInstance formInstance)
 		throws PortalException {
 
-		return DDMFormInstancePermission.contains(
-			_formAdminRequestHelper.getPermissionChecker(), formInstance,
-			ActionKeys.VIEW);
+		String storageType =
+			(formInstance != null) ? formInstance.getStorageType() : "";
+
+		if (!storageType.equals("object") &&
+			DDMFormInstancePermission.contains(
+				_formAdminRequestHelper.getPermissionChecker(), formInstance,
+				ActionKeys.VIEW)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private final DDMFormAdminRequestHelper _formAdminRequestHelper;

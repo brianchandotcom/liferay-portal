@@ -1,0 +1,232 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "private-navbar"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "image-logo",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								},
+								"fragmentLink": {
+									"href": {
+										"value": "/web/guest"
+									},
+									"target": "Self"
+								}
+							}
+						},
+						{
+							"id": "image-user",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								}
+							}
+						}
+					],
+					"fragmentStyle": {
+						"backgroundFragmentImage": {
+						},
+						"borderRadius": "",
+						"borderWidth": "0",
+						"fontFamily": "",
+						"fontSize": "",
+						"fontWeight": "",
+						"height": "",
+						"marginBottom": "",
+						"marginLeft": "",
+						"marginRight": "",
+						"marginTop": "",
+						"maxHeight": "",
+						"maxWidth": "",
+						"minHeight": "",
+						"minWidth": "",
+						"opacity": "100",
+						"overflow": "",
+						"paddingBottom": "",
+						"paddingLeft": "",
+						"paddingRight": "",
+						"paddingTop": "",
+						"shadow": "",
+						"textAlign": "",
+						"width": ""
+					},
+					"widgetInstances": [
+						{
+							"widgetConfig": {
+								"displayDepth": "0",
+								"displayStyle": "ddmTemplate_NAVBAR-BLANK-FTL",
+								"displayStyleGroupId": "[$SCOPE_GROUP_ID$]",
+								"expandedLevels": "auto",
+								"rootMenuItemLevel": "0",
+								"rootMenuItemType": "absolute",
+								"siteNavigationMenuId": "[$CUSTOMER_PORTAL_SITE_NAVIGATION_MENU_ID$]",
+								"siteNavigationMenuType": "-1"
+							},
+							"widgetInstanceId": "nav",
+							"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
+						}
+					]
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragmentSettings": {
+						"unallowedFragments": [
+							{
+								"key": "BASIC_COMPONENT-slider"
+							},
+							{
+								"key": "FEATURED_CONTENT-features"
+							},
+							{
+								"key": "FOOTERS-footer-nav-dark"
+							},
+							{
+								"key": "NAVIGATION_BARS-header-light"
+							},
+							{
+								"key": "FEATURED_CONTENT-banner-center"
+							},
+							{
+								"key": "FEATURED_CONTENT-banner"
+							},
+							{
+								"key": "FEATURED_CONTENT-banner-cover-center"
+							},
+							{
+								"key": "FEATURED_CONTENT-highlights"
+							},
+							{
+								"key": "FEATURED_CONTENT-banner-cover"
+							},
+							{
+								"key": "NAVIGATION_BARS-header-dark"
+							},
+							{
+								"key": "FEATURED_CONTENT-highlights-circle"
+							},
+							{
+								"key": "BASIC_COMPONENT-spacer"
+							},
+							{
+								"key": "FEATURED_CONTENT-banner-slider"
+							},
+							{
+								"key": "FOOTERS-footer-nav-light"
+							},
+							{
+								"key": "BASIC_COMPONENT-card"
+							}
+						]
+					}
+				},
+				"type": "DropZone"
+			},
+			{
+				"definition": {
+					"fragment": {
+						"key": "private-footer"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "Social01",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "Social02",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "Copy",
+							"value": {
+							}
+						},
+						{
+							"id": "Social03",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "Social04",
+							"value": {
+								"fragmentImage": {
+									"url": {
+										"value_i18n": {
+										}
+									}
+								}
+							}
+						}
+					],
+					"fragmentStyle": {
+						"backgroundFragmentImage": {
+						},
+						"borderRadius": "",
+						"borderWidth": "0",
+						"fontFamily": "",
+						"fontSize": "",
+						"fontWeight": "",
+						"height": "",
+						"marginBottom": "0",
+						"marginLeft": "0",
+						"marginRight": "0",
+						"marginTop": "0",
+						"maxHeight": "",
+						"maxWidth": "",
+						"minHeight": "",
+						"minWidth": "",
+						"opacity": "100",
+						"overflow": "",
+						"paddingBottom": "0",
+						"paddingLeft": "0",
+						"paddingRight": "0",
+						"paddingTop": "0",
+						"shadow": "",
+						"textAlign": "",
+						"width": ""
+					}
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	}
+}

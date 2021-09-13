@@ -1,0 +1,18 @@
+[
+	{
+		"key": "CUSTOMER_PORTAL_SITE_NAVIGATION_MENU_ID",
+		"value": "Customer Portal Menu"
+	},
+	{
+		"key": "LAYOUT_URL_CLAIMS",
+		"value": "claims"
+	},
+	{
+		"key": "LAYOUT_URL_POLICIES",
+		"value": "policies"
+	},
+	{
+		"key": "PUBLIC_SITE_NAVIGATION_MENU_ID",
+		"value": "Public Menu"
+	}
+]

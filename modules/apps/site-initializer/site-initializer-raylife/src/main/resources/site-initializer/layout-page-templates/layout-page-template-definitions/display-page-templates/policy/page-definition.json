@@ -1,0 +1,780 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "product-detail-page-header"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "nav",
+							"value": {
+								"fragmentLink": {
+									"href": {
+										"value": "[$LAYOUT_URL_POLICIES$]"
+									},
+									"target": "Self"
+								},
+								"text": {
+									"value_i18n": {
+										"en_US": "Policies"
+									}
+								}
+							}
+						},
+						{
+							"id": "Title",
+							"value": {
+								"text": {
+									"mapping": {
+										"fieldKey": "PolicyName",
+										"itemReference": {
+											"contextSource": "DisplayPageItem"
+										}
+									}
+								}
+							}
+						}
+					],
+					"fragmentStyle": {
+						"backgroundFragmentImage": {
+						},
+						"borderRadius": "",
+						"borderWidth": "0",
+						"fontFamily": "",
+						"fontSize": "",
+						"fontWeight": "",
+						"height": "",
+						"marginBottom": "0",
+						"marginLeft": "0",
+						"marginRight": "0",
+						"marginTop": "0",
+						"maxHeight": "",
+						"maxWidth": "",
+						"minHeight": "",
+						"minWidth": "",
+						"opacity": "100",
+						"overflow": "",
+						"paddingBottom": "0",
+						"paddingLeft": "0",
+						"paddingRight": "0",
+						"paddingTop": "0",
+						"shadow": "",
+						"textAlign": "",
+						"width": ""
+					}
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"backgroundColor": "",
+					"backgroundFragmentImage": {
+					},
+					"fragmentStyle": {
+						"backgroundColor": "lightColor",
+						"backgroundFragmentImage": {
+						},
+						"borderRadius": "",
+						"borderWidth": "0",
+						"fontFamily": "",
+						"fontSize": "",
+						"fontWeight": "",
+						"height": "",
+						"marginBottom": "0",
+						"marginLeft": "0",
+						"marginRight": "0",
+						"marginTop": "0",
+						"maxHeight": "",
+						"maxWidth": "",
+						"minHeight": "",
+						"minWidth": "",
+						"opacity": "100",
+						"overflow": "",
+						"paddingBottom": "6",
+						"paddingLeft": "0",
+						"paddingRight": "0",
+						"paddingTop": "6",
+						"shadow": "",
+						"textAlign": "",
+						"width": ""
+					},
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 6,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 6,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"backgroundColor": "",
+							"backgroundFragmentImage": {
+							},
+							"fragmentStyle": {
+								"backgroundColor": "",
+								"backgroundFragmentImage": {
+								},
+								"borderRadius": "",
+								"borderWidth": "0",
+								"fontFamily": "",
+								"fontSize": "",
+								"fontWeight": "",
+								"height": "",
+								"marginBottom": "0",
+								"marginLeft": "0",
+								"marginRight": "0",
+								"marginTop": "0",
+								"maxHeight": "",
+								"maxWidth": "",
+								"minHeight": "",
+								"minWidth": "",
+								"opacity": "100",
+								"overflow": "",
+								"paddingBottom": "0",
+								"paddingLeft": "3",
+								"paddingRight": "3",
+								"paddingTop": "0",
+								"shadow": "",
+								"textAlign": "",
+								"width": ""
+							},
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 1,
+								"paddingRight": 1,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"backgroundFragmentImage": {
+										},
+										"borderRadius": "",
+										"borderWidth": "0",
+										"fontFamily": "",
+										"fontSize": "",
+										"fontWeight": "",
+										"height": "",
+										"marginBottom": "0",
+										"marginLeft": "0",
+										"marginRight": "0",
+										"marginTop": "0",
+										"maxHeight": "",
+										"maxWidth": "",
+										"minHeight": "",
+										"minWidth": "",
+										"opacity": "100",
+										"overflow": "",
+										"paddingBottom": "0",
+										"paddingLeft": "0",
+										"paddingRight": "0",
+										"paddingTop": "0",
+										"shadow": "",
+										"textAlign": "",
+										"width": ""
+									},
+									"gutters": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {
+											}
+										}
+									]
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 4
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "product-resources"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "Action",
+															"value": {
+																"fragmentLink": {
+																	"href": {
+																		"value": "#"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"backgroundFragmentImage": {
+														},
+														"borderRadius": "",
+														"borderWidth": "0",
+														"fontFamily": "",
+														"fontSize": "",
+														"fontWeight": "",
+														"height": "",
+														"marginBottom": "0",
+														"marginLeft": "0",
+														"marginRight": "0",
+														"marginTop": "0",
+														"maxHeight": "",
+														"maxWidth": "",
+														"minHeight": "",
+														"minWidth": "",
+														"opacity": "100",
+														"overflow": "",
+														"paddingBottom": "0",
+														"paddingLeft": "0",
+														"paddingRight": "0",
+														"paddingTop": "0",
+														"shadow": "",
+														"textAlign": "",
+														"width": ""
+													}
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 8
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "policy-content"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "Owner",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "PolicyOwner",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Policy-Owner",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "PolicyOwner",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Reference",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "YearlyFee",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Edit",
+															"value": {
+																"fragmentLink": {
+																	"href": {
+																		"value": "#"
+																	}
+																}
+															}
+														},
+														{
+															"id": "Additional-Driver",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "SecondaryDriver",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Image",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "PolicyImage",
+																			"itemReference": {
+																				"contextSource": "DisplayPageItem"
+																			}
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Name",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "PolicyName",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Plate",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "CarPlate",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Type",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "PolicyType",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Coverages",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "Coverages",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Pay-Method",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "PayMethod",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Version",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "Version",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Main-Driver",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "MainDriver900a",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Manufacturer",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "Manufacturer",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Model",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "Model",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Purchase-Date",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "PurchaseDate",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Contract",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "PolicyContract",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Receipts",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "LatestReceipts",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"backgroundFragmentImage": {
+														},
+														"borderRadius": "",
+														"borderWidth": "0",
+														"fontFamily": "",
+														"fontSize": "",
+														"fontWeight": "",
+														"height": "",
+														"marginBottom": "0",
+														"marginLeft": "0",
+														"marginRight": "0",
+														"marginTop": "0",
+														"maxHeight": "",
+														"maxWidth": "",
+														"minHeight": "",
+														"minWidth": "",
+														"opacity": "100",
+														"overflow": "",
+														"paddingBottom": "0",
+														"paddingLeft": "0",
+														"paddingRight": "0",
+														"paddingTop": "0",
+														"shadow": "",
+														"textAlign": "",
+														"width": ""
+													}
+												},
+												"pageElements": [
+													{
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-html"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-html",
+																			"value": {
+																				"html": {
+																					"mapping": {
+																						"fieldKey": "Coverages",
+																						"itemReference": {
+																							"contextSource": "DisplayPageItem"
+																						}
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"backgroundFragmentImage": {
+																		},
+																		"borderRadius": "",
+																		"borderWidth": "0",
+																		"fontFamily": "",
+																		"fontSize": "",
+																		"fontWeight": "",
+																		"height": "",
+																		"marginBottom": "0",
+																		"marginLeft": "0",
+																		"marginRight": "0",
+																		"marginTop": "0",
+																		"maxHeight": "",
+																		"maxWidth": "",
+																		"minHeight": "",
+																		"minWidth": "",
+																		"opacity": "100",
+																		"overflow": "",
+																		"paddingBottom": "0",
+																		"paddingLeft": "0",
+																		"paddingRight": "0",
+																		"paddingTop": "0",
+																		"shadow": "",
+																		"textAlign": "",
+																		"width": ""
+																	}
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "FragmentDropZone"
+													},
+													{
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-html"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-html",
+																			"value": {
+																				"html": {
+																					"mapping": {
+																						"fieldKey": "PolicyContract",
+																						"itemReference": {
+																							"contextSource": "DisplayPageItem"
+																						}
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"backgroundFragmentImage": {
+																		},
+																		"borderRadius": "",
+																		"borderWidth": "0",
+																		"fontFamily": "",
+																		"fontSize": "",
+																		"fontWeight": "",
+																		"height": "",
+																		"marginBottom": "0",
+																		"marginLeft": "0",
+																		"marginRight": "0",
+																		"marginTop": "0",
+																		"maxHeight": "",
+																		"maxWidth": "",
+																		"minHeight": "",
+																		"minWidth": "",
+																		"opacity": "100",
+																		"overflow": "",
+																		"paddingBottom": "0",
+																		"paddingLeft": "0",
+																		"paddingRight": "0",
+																		"paddingTop": "0",
+																		"shadow": "",
+																		"textAlign": "",
+																		"width": ""
+																	}
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "FragmentDropZone"
+													},
+													{
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-html"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-html",
+																			"value": {
+																				"html": {
+																					"mapping": {
+																						"fieldKey": "LatestReceipts",
+																						"itemReference": {
+																							"contextSource": "DisplayPageItem"
+																						}
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"backgroundFragmentImage": {
+																		},
+																		"borderRadius": "",
+																		"borderWidth": "0",
+																		"fontFamily": "",
+																		"fontSize": "",
+																		"fontWeight": "",
+																		"height": "",
+																		"marginBottom": "0",
+																		"marginLeft": "0",
+																		"marginRight": "0",
+																		"marginTop": "0",
+																		"maxHeight": "",
+																		"maxWidth": "",
+																		"minHeight": "",
+																		"minWidth": "",
+																		"opacity": "100",
+																		"overflow": "",
+																		"paddingBottom": "0",
+																		"paddingLeft": "0",
+																		"paddingRight": "0",
+																		"paddingTop": "0",
+																		"shadow": "",
+																		"textAlign": "",
+																		"width": ""
+																	}
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "FragmentDropZone"
+													}
+												],
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "customer-portal"
+		}
+	}
+}

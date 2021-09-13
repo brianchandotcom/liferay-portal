@@ -1,0 +1,634 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "product-detail-page-header"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "nav",
+							"value": {
+								"fragmentLink": {
+									"href": {
+										"value": "[$LAYOUT_URL_CLAIMS$]"
+									},
+									"target": "Self"
+								},
+								"text": {
+									"value_i18n": {
+										"en_US": "Claims"
+									}
+								}
+							}
+						},
+						{
+							"id": "Title",
+							"value": {
+								"text": {
+									"mapping": {
+										"fieldKey": "PolicyName",
+										"itemReference": {
+											"contextSource": "DisplayPageItem"
+										}
+									}
+								}
+							}
+						}
+					],
+					"fragmentStyle": {
+						"backgroundFragmentImage": {
+						},
+						"borderRadius": "",
+						"borderWidth": "0",
+						"fontFamily": "",
+						"fontSize": "",
+						"fontWeight": "",
+						"height": "",
+						"marginBottom": "",
+						"marginLeft": "",
+						"marginRight": "",
+						"marginTop": "",
+						"maxHeight": "",
+						"maxWidth": "",
+						"minHeight": "",
+						"minWidth": "",
+						"opacity": "100",
+						"overflow": "",
+						"paddingBottom": "",
+						"paddingLeft": "",
+						"paddingRight": "",
+						"paddingTop": "",
+						"shadow": "",
+						"textAlign": "",
+						"width": ""
+					}
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"backgroundColor": "",
+					"backgroundFragmentImage": {
+					},
+					"fragmentStyle": {
+						"backgroundColor": "lightColor",
+						"backgroundFragmentImage": {
+						},
+						"borderRadius": "",
+						"borderWidth": "0",
+						"fontFamily": "",
+						"fontSize": "",
+						"fontWeight": "",
+						"height": "",
+						"marginBottom": "0",
+						"marginLeft": "0",
+						"marginRight": "0",
+						"marginTop": "0",
+						"maxHeight": "",
+						"maxWidth": "",
+						"minHeight": "",
+						"minWidth": "",
+						"opacity": "100",
+						"overflow": "",
+						"paddingBottom": "6",
+						"paddingLeft": "3",
+						"paddingRight": "3",
+						"paddingTop": "6",
+						"shadow": "",
+						"textAlign": "",
+						"width": ""
+					},
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 6,
+						"paddingLeft": 1,
+						"paddingRight": 1,
+						"paddingTop": 6,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"backgroundColor": "",
+							"backgroundFragmentImage": {
+							},
+							"fragmentStyle": {
+								"backgroundFragmentImage": {
+								},
+								"borderRadius": "",
+								"borderWidth": "0",
+								"fontFamily": "",
+								"fontSize": "",
+								"fontWeight": "",
+								"height": "",
+								"marginBottom": "",
+								"marginLeft": "",
+								"marginRight": "",
+								"marginTop": "",
+								"maxHeight": "",
+								"maxWidth": "",
+								"minHeight": "",
+								"minWidth": "",
+								"opacity": "100",
+								"overflow": "",
+								"paddingBottom": "",
+								"paddingLeft": "3",
+								"paddingRight": "3",
+								"paddingTop": "",
+								"shadow": "",
+								"textAlign": "",
+								"width": ""
+							},
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 1,
+								"paddingRight": 1,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"backgroundFragmentImage": {
+										},
+										"borderRadius": "",
+										"borderWidth": "0",
+										"fontFamily": "",
+										"fontSize": "",
+										"fontWeight": "",
+										"height": "",
+										"marginBottom": "",
+										"marginLeft": "",
+										"marginRight": "",
+										"marginTop": "",
+										"maxHeight": "",
+										"maxWidth": "",
+										"minHeight": "",
+										"minWidth": "",
+										"opacity": "100",
+										"overflow": "",
+										"paddingBottom": "",
+										"paddingLeft": "",
+										"paddingRight": "",
+										"paddingTop": "",
+										"shadow": "",
+										"textAlign": "",
+										"width": ""
+									},
+									"gutters": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {
+											}
+										}
+									]
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 4
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "claim-steps"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "Status Image 02",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "ExpertStatusImage",
+																			"itemReference": {
+																				"contextSource": "DisplayPageItem"
+																			}
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Status Image 01",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "OpeningStatusImaget055",
+																			"itemReference": {
+																				"contextSource": "DisplayPageItem"
+																			}
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Status Image 04",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "RepairStatusImage",
+																			"itemReference": {
+																				"contextSource": "DisplayPageItem"
+																			}
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Status Image 03",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "ReportStatusImage",
+																			"itemReference": {
+																				"contextSource": "DisplayPageItem"
+																			}
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Step Status 06",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "ClaimClosing",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Step Status 04",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "RepairService",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Step Status 05",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "InvoiceManagement",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Step Status 02",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "ExpertVisit",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Step Status 03",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "ExpertReport",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Status Image 06",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "ClosingStatusImage",
+																			"itemReference": {
+																				"contextSource": "DisplayPageItem"
+																			}
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Step Status 01",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "ClaimOpening1q33",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Status Image 05",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "InvoiceStatusImage",
+																			"itemReference": {
+																				"contextSource": "DisplayPageItem"
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"backgroundFragmentImage": {
+														},
+														"borderRadius": "",
+														"borderWidth": "0",
+														"fontFamily": "",
+														"fontSize": "",
+														"fontWeight": "",
+														"height": "",
+														"marginBottom": "",
+														"marginLeft": "",
+														"marginRight": "",
+														"marginTop": "",
+														"maxHeight": "",
+														"maxWidth": "",
+														"minHeight": "",
+														"minWidth": "",
+														"opacity": "100",
+														"overflow": "",
+														"paddingBottom": "",
+														"paddingLeft": "",
+														"paddingRight": "",
+														"paddingTop": "",
+														"shadow": "",
+														"textAlign": "",
+														"width": ""
+													}
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 8
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "product-content"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "PolicyName",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "PolicyName",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Summary",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "ClaimSummary",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Edit",
+															"value": {
+																"fragmentLink": {
+																	"href": {
+																		"value": "#"
+																	}
+																}
+															}
+														},
+														{
+															"id": "Box01",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "Reports",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Box02",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "Communications",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Image",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "Image2ap7",
+																			"itemReference": {
+																				"contextSource": "DisplayPageItem"
+																			}
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "ClaimReference",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "ReferenceNumber",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "Damages",
+															"value": {
+																"text": {
+																	"mapping": {
+																		"fieldKey": "Damages",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"backgroundFragmentImage": {
+														},
+														"borderRadius": "",
+														"borderWidth": "0",
+														"fontFamily": "",
+														"fontSize": "",
+														"fontWeight": "",
+														"height": "",
+														"marginBottom": "",
+														"marginLeft": "",
+														"marginRight": "",
+														"marginTop": "",
+														"maxHeight": "",
+														"maxWidth": "",
+														"minHeight": "",
+														"minWidth": "",
+														"opacity": "100",
+														"overflow": "",
+														"paddingBottom": "",
+														"paddingLeft": "",
+														"paddingRight": "",
+														"paddingTop": "",
+														"shadow": "",
+														"textAlign": "",
+														"width": ""
+													}
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "customer-portal"
+		}
+	}
+}

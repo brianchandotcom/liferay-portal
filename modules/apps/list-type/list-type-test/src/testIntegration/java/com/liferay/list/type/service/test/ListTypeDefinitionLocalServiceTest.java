@@ -16,7 +16,9 @@ package com.liferay.list.type.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalServiceUtil;
+import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -54,6 +56,34 @@ public class ListTypeDefinitionLocalServiceTest {
 		Assert.assertNotNull(
 			ListTypeDefinitionLocalServiceUtil.fetchListTypeDefinition(
 				listTypeDefinition.getListTypeDefinitionId()));
+	}
+
+	@Test
+	public void testDeleteListTypeDefinition() throws Exception {
+		ListTypeDefinition listTypeDefinition =
+			ListTypeDefinitionLocalServiceUtil.addListTypeDefinition(
+				TestPropsValues.getUserId(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()));
+
+		ListTypeEntry listTypeEntry =
+			ListTypeEntryLocalServiceUtil.addListTypeEntry(
+				TestPropsValues.getUserId(),
+				listTypeDefinition.getListTypeDefinitionId(), "test",
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()));
+
+		Assert.assertNotNull(listTypeEntry);
+
+		ListTypeDefinitionLocalServiceUtil.deleteListTypeDefinition(
+			listTypeDefinition.getListTypeDefinitionId());
+
+		Assert.assertNull(
+			ListTypeDefinitionLocalServiceUtil.fetchListTypeDefinition(
+				listTypeDefinition.getListTypeDefinitionId()));
+		Assert.assertNull(
+			ListTypeEntryLocalServiceUtil.fetchListTypeEntry(
+				listTypeEntry.getListTypeEntryId()));
 	}
 
 }

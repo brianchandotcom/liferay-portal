@@ -132,13 +132,31 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a String field"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanCreateStringField {
 		property portal.acceptance = "true";
 
-		// TODO LPS-138823 CanCreateStringField pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Field",
+			fieldType = "String",
+			isMandatory = "false");
+
+		Refresh();
+
+		ObjectAdmin.assertObjectField(
+			fieldName = "customField",
+			fieldType = "String");
 	}
 
 	@description = "LPS-135549 - Verify that it is not possible to create a Object with a duplicated Object Name"

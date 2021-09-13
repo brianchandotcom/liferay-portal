@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -210,13 +211,9 @@ public class WorkflowDefinitionDisplayContext {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						_getOrderByDropdownItem(
-							"last-modified",
-							_getCurrentOrder(httpServletRequest),
-							httpServletRequest)
+							"last-modified", httpServletRequest)
 					).add(
-						_getOrderByDropdownItem(
-							"title", _getCurrentOrder(httpServletRequest),
-							httpServletRequest)
+						_getOrderByDropdownItem("title", httpServletRequest)
 					).build());
 
 				dropdownGroupItem.setLabel(
@@ -418,33 +415,19 @@ public class WorkflowDefinitionDisplayContext {
 	public String getSortingURL(HttpServletRequest httpServletRequest)
 		throws PortletException {
 
-		return PortletURLBuilder.createRenderURL(
-			_workflowDefinitionRequestHelper.getLiferayPortletResponse()
-		).setParameter(
-			"definitionsNavigation",
-			() -> {
-				String definitionsNavigation = ParamUtil.getString(
-					httpServletRequest, "definitionsNavigation");
+		PortletURL sortingURL = PortletURLUtil.clone(
+			_getPortletURL(httpServletRequest),
+			_workflowDefinitionRequestHelper.getLiferayPortletResponse());
 
-				if (Validator.isNotNull(definitionsNavigation)) {
-					return definitionsNavigation;
-				}
+		String orderByType = getOrderByType();
 
-				return null;
-			}
-		).setParameter(
-			"orderByType",
-			() -> {
-				String orderByType = ParamUtil.getString(
-					httpServletRequest, "orderByType", "asc");
+		if (Validator.isNotNull(orderByType)) {
+			sortingURL.setParameter(
+				"orderByType",
+				Objects.equals(orderByType, "asc") ? "desc" : "asc");
+		}
 
-				if (Objects.equals(orderByType, "asc")) {
-					return "desc";
-				}
-
-				return "asc";
-			}
-		).buildString();
+		return sortingURL.toString();
 	}
 
 	public String getTitle(WorkflowDefinition workflowDefinition) {
@@ -641,10 +624,6 @@ public class WorkflowDefinitionDisplayContext {
 			httpServletRequest, "definitionsNavigation", "all");
 	}
 
-	private String _getCurrentOrder(HttpServletRequest httpServletRequest) {
-		return ParamUtil.getString(httpServletRequest, "orderByCol", "title");
-	}
-
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getFilterNavigationDropdownItem(
 			String navigation, String currentNavigation,
@@ -666,12 +645,12 @@ public class WorkflowDefinitionDisplayContext {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception> _getOrderByDropdownItem(
-		String orderByCol, String currentOrder,
-		HttpServletRequest httpServletRequest) {
+		String orderByCol, HttpServletRequest httpServletRequest) {
 
 		return dropdownItem -> {
-			dropdownItem.setActive(Objects.equals(currentOrder, orderByCol));
-			dropdownItem.setHref(_getPortletURL(httpServletRequest));
+			dropdownItem.setActive(orderByCol.equals(getOrderByCol()));
+			dropdownItem.setHref(
+				_getPortletURL(httpServletRequest), "orderByCol", orderByCol);
 			dropdownItem.setLabel(
 				LanguageUtil.get(
 					_workflowDefinitionRequestHelper.getRequest(), orderByCol));

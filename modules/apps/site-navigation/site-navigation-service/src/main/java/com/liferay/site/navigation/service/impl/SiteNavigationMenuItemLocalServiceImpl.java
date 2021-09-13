@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.service.impl;
 
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,6 +34,7 @@ import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemTypeEx
 import com.liferay.site.navigation.exception.SiteNavigationMenuItemNameException;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.model.SiteNavigationMenuItemTable;
 import com.liferay.site.navigation.service.base.SiteNavigationMenuItemLocalServiceBaseImpl;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
@@ -189,6 +191,26 @@ public class SiteNavigationMenuItemLocalServiceImpl
 			siteNavigationMenuItemPersistence.removeBySiteNavigationMenuId(
 				siteNavigationMenu.getSiteNavigationMenuId());
 		}
+	}
+
+	@Override
+	public List<Long> getSiteNavigationMenuItemParentIds(
+		long siteNavigationMenuId, String typeSettingsKeyword) {
+
+		return siteNavigationMenuItemPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				SiteNavigationMenuItemTable.INSTANCE.
+					parentSiteNavigationMenuItemId
+			).from(
+				SiteNavigationMenuItemTable.INSTANCE
+			).where(
+				SiteNavigationMenuItemTable.INSTANCE.siteNavigationMenuId.eq(
+					siteNavigationMenuId
+				).and(
+					SiteNavigationMenuItemTable.INSTANCE.typeSettings.like(
+						typeSettingsKeyword)
+				)
+			));
 	}
 
 	@Override

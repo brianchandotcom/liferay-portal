@@ -17,6 +17,7 @@ export default {
 		'AddToCart',
 		'AddToWishList',
 		'Autocomplete',
+		'AutocompletePureComponent',
 		'DropdownMenu',
 		'Gallery',
 		'ItemFinder',

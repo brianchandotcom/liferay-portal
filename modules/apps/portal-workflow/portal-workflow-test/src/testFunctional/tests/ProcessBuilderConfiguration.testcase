@@ -247,8 +247,6 @@ definition {
 	@description = "Verify that the user is able to reverse sort direction"
 	@priority = "2"
 	test CanReverseSortDirection {
-		
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

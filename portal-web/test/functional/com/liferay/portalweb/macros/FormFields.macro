@@ -154,7 +154,7 @@ definition {
 	}
 
 	macro disableSwitch {
-		Click(
+		Uncheck.uncheckToggleSwitch(
 			key_fieldName = "${fieldName}",
 			locator1 = "FormFields#SWITCH");
 
@@ -496,6 +496,13 @@ definition {
 				fieldName = "confirmationErrorMessage",
 				fieldValue = "${confirmationErrorMessage}");
 		}
+	}
+
+	macro editRequiredErrorMessage {
+		Type(
+			key_fieldName = "requiredErrorMessage",
+			locator1 = "FormFields#TEXT_FIELD",
+			value1 = "${errorMessage}");
 	}
 
 	macro editText {
@@ -1774,6 +1781,12 @@ definition {
 
 	macro viewRequiredAsteriskNotPresent {
 		AssertElementNotPresent(locator1 = "Icon#ASTERISK");
+	}
+
+	macro viewRequiredErrorMessage {
+		AssertElementPresent(
+			key_errorMessage = "${errorMessage}",
+			locator1 = "FormFields#SIDEBAR_BASIC_ERROR_MESSAGE");
 	}
 
 	macro viewRichTextPredefinedValue {

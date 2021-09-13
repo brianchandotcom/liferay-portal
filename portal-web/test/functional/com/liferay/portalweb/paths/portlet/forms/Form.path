@@ -509,6 +509,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SIDEBAR_NOT_VISIBLE_FIELD</td>
+	<td>//div[contains(@data-field-name,'${key_dataFieldName}')]//div[contains(@class,'form-group hide')]//label[contains(text(),'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SIDEBAR_NOT_VISIBLE_TAB</td>
 	<td>//li[contains(@class,'nav-item hide')]//span[contains(text(),'${key_switchOption}')]</td>
 	<td></td>

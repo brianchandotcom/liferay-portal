@@ -1270,6 +1270,111 @@ definition {
 			key_fieldReferenceValue = "Text1234");
 	}
 
+	@description = "LPS-129419 - Verify that the Required Field Error Message can be Edited"
+	@priority = "5"
+	test RequiredFieldErrorMessageCanBeEdited {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormFields.enableSwitch(fieldName = "Required");
+
+		FormFields.viewRequiredAsterisk();
+
+		AssertElementPresent(locator1 = "FormFields#SIDEBAR_BASIC_DEFAULT_ERROR_MESSAGE");
+
+		FormFields.disableSwitch(fieldName = "Required");
+
+		AssertElementPresent(
+			key_dataFieldName = "requiredErrorMessage",
+			key_fieldName = "Error Message",
+			locator1 = "Form#SIDEBAR_NOT_VISIBLE_FIELD");
+
+		FormFields.enableSwitch(fieldName = "Required");
+
+		FormFields.editRequiredErrorMessage(errorMessage = "This is a customized message to test feature: 12345 &!@#$%");
+
+		FormFields.viewRequiredErrorMessage(errorMessage = "This is a customized message to test feature: 12345 &!@#$%");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "This is a customized message to test feature: 12345 &!@#$%");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test");
+
+		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "This is a customized message to test feature: 12345 &!@#$%r");
+
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
+
+		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Text",
+			fieldValue = "Test");
+	}
+
+	@description = "LPS-129419 - Verify that the Required Field Error Message can be translated"
+	@priority = "5"
+	test RequiredFieldErrorMessageCanBeTranslated {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormFields.enableSwitch(fieldName = "Required");
+
+		FormFields.viewRequiredAsterisk();
+
+		FormFields.editRequiredErrorMessage(errorMessage = "This is a customized message to default language US");
+
+		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+		FormFields.viewRequiredErrorMessage(errorMessage = "This is a customized message to default language US");
+
+		FormFields.editRequiredErrorMessage(errorMessage = "Essa é uma mensagem customizada para o português brasileiro");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewRequiredAsterisk();
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "This is a customized message to default language US");
+
+		FormPortlet.changeLocale(locale = "português-Brasil");
+
+		AssertClick(
+			locator1 = "Button#MAIN_CONTENT_SUBMIT",
+			value1 = "Submeter");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Essa é uma mensagem customizada para o português brasileiro");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Teste");
+
+		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Essa é uma mensagem customizada para o português brasileiro");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
+
+		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Text",
+			fieldValue = "Teste");
+	}
+
 	@description = "Verify that the Field Type can be changed"
 	@ignore = "Test Stub"
 	@priority = "5"

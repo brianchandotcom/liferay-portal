@@ -1140,13 +1140,13 @@ public class SQLDSLTest {
 			"MainExample.name = ? and MainExample.mainExampleId > ?",
 			predicate.toString());
 
-		predicate = predicate.and(null);
+		predicate = predicate.and((Expression<Boolean>)null);
 
 		Assert.assertEquals(
 			"MainExample.name = ? and MainExample.mainExampleId > ?",
 			predicate.toString());
 
-		predicate = predicate.or(null);
+		predicate = predicate.or((Expression<Boolean>)null);
 
 		Assert.assertEquals(
 			"MainExample.name = ? and MainExample.mainExampleId > ?",

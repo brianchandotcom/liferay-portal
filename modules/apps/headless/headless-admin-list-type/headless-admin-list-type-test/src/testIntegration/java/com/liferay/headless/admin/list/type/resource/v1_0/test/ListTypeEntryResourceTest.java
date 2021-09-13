@@ -44,6 +44,12 @@ public class ListTypeEntryResourceTest
 				Collections.singletonMap(LocaleUtil.getDefault(), "test"));
 	}
 
+	protected ListTypeEntry testDeleteListTypeEntry_addListTypeEntry()
+		throws Exception {
+
+		return _addListTypeEntry();
+	}
+
 	@Override
 	protected Long
 		testGetListTypeDefinitionListTypeEntriesPage_getListTypeDefinitionId() {

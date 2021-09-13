@@ -97,7 +97,7 @@ public class ListTypeDefinitionResourceImpl
 
 	private ListTypeDefinition _toListTypeDefinition(
 		com.liferay.list.type.model.ListTypeDefinition
-			serviceBuilderListTypeEntry) {
+			serviceBuilderListTypeDefinition) {
 
 		return new ListTypeDefinition() {
 			{
@@ -107,23 +107,26 @@ public class ListTypeDefinitionResourceImpl
 						ActionKeys.DELETE, "deleteListTypeDefinition",
 						com.liferay.list.type.model.ListTypeDefinition.class.
 							getName(),
-						serviceBuilderListTypeEntry.getListTypeDefinitionId())
+						serviceBuilderListTypeDefinition.
+							getListTypeDefinitionId())
 				).build();
-				dateCreated = serviceBuilderListTypeEntry.getCreateDate();
-				dateModified = serviceBuilderListTypeEntry.getModifiedDate();
-				id = serviceBuilderListTypeEntry.getListTypeDefinitionId();
+				dateCreated = serviceBuilderListTypeDefinition.getCreateDate();
+				dateModified =
+					serviceBuilderListTypeDefinition.getModifiedDate();
+				id = serviceBuilderListTypeDefinition.getListTypeDefinitionId();
 				listTypeEntries = transformToArray(
 					_listTypeEntryLocalService.getListTypeEntries(
-						serviceBuilderListTypeEntry.getListTypeDefinitionId(),
+						serviceBuilderListTypeDefinition.
+							getListTypeDefinitionId(),
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 					listTypeEntry -> ListTypeEntryUtil.toListTypeEntry(
 						contextAcceptLanguage.getPreferredLocale(),
 						listTypeEntry),
 					ListTypeEntry.class);
-				name = serviceBuilderListTypeEntry.getName(
+				name = serviceBuilderListTypeDefinition.getName(
 					contextAcceptLanguage.getPreferredLocale());
 				name_i18n = LocalizedMapUtil.getI18nMap(
-					serviceBuilderListTypeEntry.getNameMap());
+					serviceBuilderListTypeDefinition.getNameMap());
 			}
 		};
 	}

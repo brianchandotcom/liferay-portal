@@ -323,7 +323,12 @@ public class RenderLayoutStructureTag extends IncludeTag {
 					"/NumericCollectionPaginationPropsTransformer");
 			paginationBarTag.setShowDeltasDropDown(false);
 			paginationBarTag.setTotalItems(
-				collectionStyledLayoutStructureItem.getNumberOfItems());
+				Math.max(
+					1,
+					Math.min(
+						collectionStyledLayoutStructureItem.getNumberOfItems(),
+						renderCollectionLayoutStructureItemDisplayContext.
+							getCollectionCount())));
 
 			paginationBarTag.doTag(pageContext);
 		}

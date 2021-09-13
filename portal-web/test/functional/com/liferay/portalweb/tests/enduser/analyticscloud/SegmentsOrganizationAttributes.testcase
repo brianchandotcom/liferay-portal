@@ -207,7 +207,7 @@ definition {
 	test CanCreateSegmentUsingOrganizationPropertyName {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Team not sure of which steps should be done to assert Name, please check steps and update if necessary	
+		// AC Refactor: Team not sure of which steps should be done to assert property Name, please check steps and update if necessary	
 		// AC Refactor ticket: LRAC-9278
 
 		task ("Add users") {
@@ -380,7 +380,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8553 | Test Summary: Add segment using an organization property 'type'"
 	@priority = "4"
 	test CanCreateSegmentUsingOrganizationPropertyType {
-		task ("Add user") {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Team not sure of which steps should be done to assert property Type, please check steps and update if necessary	
+		// AC Refactor ticket: LRAC-9280
+		task ("Add users") {
+
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
@@ -393,16 +398,45 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add organization and add the user to the organization") {
+		task ("Add organization and add the user to the organization") { 
+
 			JSONOrganization.addOrganization(organizationName = "Organization Name");
 
 			JSONOrganization.assignUserToOrganization(
-				organizationName = "Organization Name",
+				organizationName = "Organization Name ",
 				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add blog") {
+			ACUtils.addSiteAndPage();
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Blogs Page");
+
+			Navigator.gotoSitePage(
+				pageName = "Blogs Page",
+				siteName = "Site Name");
+
+			ACUtils.createBlogsAndAddToPage(layoutName = "Blogs Page");
 		}
 
 		task ("Connect to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Interact with DXP with user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Launch AC and enter in the new property") {
@@ -433,6 +467,19 @@ definition {
 
 		task ("Assert Test Name is also present in segment criteria") {
 			ACSegments.assertCriteriaTable(criteriaName = "Test Type");
+		}
+
+		task ("Assert that informations are shown correctly") {
+			ACNavigation.goToSegments();
+
+			ACSegments.assertMembershipValue(
+				segmentName = "Dynamic Segment Test",
+				membership = "1");
+
+			ACSegments.assertTotalActivitiesValue(
+				segmentName = "Dynamic Segment Test",
+				totalActivities = "1");
+
 		}
 	}
 

@@ -26,6 +26,21 @@
 		<td></td>
 	</tr>
 	<tr>
+        <td>OBJECT_FIELDS_LABEL_INPUT</td>
+        <td>//input[contains(@id,'objectFieldLabel')]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH</td>
+        <td>//input[contains(@class,'toggle-switch-check')]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>OBJECT_FIELDS_TYPE</td>
+        <td>//select[contains(@id,'objectFieldType')]</td>
+        <td></td>
+    </tr>
+	<tr>
 		<td>LABEL_CUSTOM_OBJECT</td>
 		<td>//input[@id='objectDefinitionLabel']</td>
 		<td></td>
@@ -40,9 +55,19 @@
 		<td>//div[(@class='table-list-title') and contains (.,'${key_name}')]/../../div[contains(text(),'${key_system}')]</td>
 		<td></td>
 	</tr>
-		<tr>
+	<tr>
 		<td>VIEW_CUSTOM_OBJECT</td>
 		<td>//div[contains(text(),'No')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_OBJECT_FIELD_NAME</td>
+		<td>//div[(@class = 'dnd-td')]//a[contains(text(), '${key_fieldName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_OBJECT_FIELD_TYPE</td>
+		<td>//div[(@class = 'dnd-td') and contains (text(),'${key_fieldType}')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -79,11 +79,30 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a Date field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCreateDateField {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-138819 CanCreateDateField pending implementation
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		Click(locator1 = "ObjectPortlet#OBJECT_FIELDS_TAB");
+
+		ObjectAdmin.addObjectFieldViaUI(
+            fieldLabel = "Custom Field",
+            fieldType = "Date",
+            isMandatory = "false"
+        );
+
+		Refresh();
+
+		ObjectAdmin.assertObjectField(
+			fieldName = "customField",
+			fieldType = "Date");
 
 	}
 
@@ -208,7 +227,6 @@ definition {
 	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Object Name"
 	@priority = "4"
 	test CannotSaveWithSpecialCharacterForObjectName {
-		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.addNewObject(
 			fieldLabelName = "ObjectTest1",

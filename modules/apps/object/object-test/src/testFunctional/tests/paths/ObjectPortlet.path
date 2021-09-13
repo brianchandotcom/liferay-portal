@@ -26,8 +26,13 @@
 		<td></td>
 	</tr>
 	<tr>
-	<td>SELECT_CUSTOM_OBJECT</td>
+		<td>SELECT_CUSTOM_OBJECT</td>
 		<td>//div[(@class='table-list-title') and contains (.,'${key_name}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OBJECT_FIELDS_TAB</td>
+		<td>//div[@class='container-fluid container-fluid-max-xl']//a[contains(text(),'Fields')]</td>
 		<td></td>
 	</tr>
 </tbody>

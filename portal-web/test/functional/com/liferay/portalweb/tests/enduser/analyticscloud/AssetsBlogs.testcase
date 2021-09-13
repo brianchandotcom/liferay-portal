@@ -278,12 +278,66 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8378 | Test Summary: Blogs location card shows views by the expected location"
-	@ignore = "true"
 	@priority = "5"
 	test BlogsLocationCardShowsViewsByExpectedLocation {
+		task ("Connect the DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8378 BlogsLocationCardShowsViewsByExpectedLocation
+		task ("View the blogs entry") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 
+			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+		}
+
+		task ("Get the ip country") {
+			var country = ACUtils.getIPCountry();
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Navigate to Blogs tab in Asset dashboard") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Blogs");
+		}
+
+		task ("Change the time filter to Last 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Navigate to the Overview tab in blogs report entry") {
+			ACNavigation.openItem(itemName = "Blogs AC Title");
+		}
+
+		task ("View the time filter of Views by Location map is Last 24 Hours") {
+			ACTimeFilter.assertCurrentTimeFilterRange(
+				cardName = "Views by Location",
+				timeFilterRange = "Last 24 hours");
+		}
+
+		task ("View the views by location info shown in geomap") {
+			ACUtils.viewNoResultsMessageNotPresent(noResultMessage = "There are no views on any location on the selected period.");
+
+			ACCards.viewGeomapContainer(cardTitle = "Views by Location");
+
+			ACCards.viewGeomapTableText(
+				cardTitle = "Views by Location",
+				leftText = "${country}",
+				rightText = "1 100%");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8386 | Test Summary: Blogs views by technology card shows views by the expected browser"

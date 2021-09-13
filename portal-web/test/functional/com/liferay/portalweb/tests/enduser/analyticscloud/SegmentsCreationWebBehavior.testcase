@@ -781,7 +781,7 @@ definition {
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-			Pause(locator1 = "100");
+			Pause(locator1 = "5000");
 		}
 
 		ACUtils.closeAllSessionsAndWait();
@@ -1022,7 +1022,10 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+
 			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+			Pause(locator1 = "5000");
 		}
 
 		ACUtils.closeAllSessionsAndWait();

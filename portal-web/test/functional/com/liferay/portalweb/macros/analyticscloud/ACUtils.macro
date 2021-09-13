@@ -572,6 +572,12 @@ definition {
 			value1 = "${noResultMessage}");
 	}
 
+	macro viewNoResultsMessageNotPresent {
+		AssertElementNotPresent(
+			key_noResultMessage = "${noResultMessage}",
+			locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE");
+	}
+
 	macro viewPaginationItemsPerPage {
 		AssertTextEquals(
 			locator1 = "ACUtils#PAGINATION_ITEMS_PER_PAGE_SELECT",

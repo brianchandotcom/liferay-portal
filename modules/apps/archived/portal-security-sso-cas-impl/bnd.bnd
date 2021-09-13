@@ -7,3 +7,4 @@ Import-Package:\
 	!junit.*,\
 	\
 	*
+-fixupmessages: Classes found in the wrong directory: ...;is:=ignore

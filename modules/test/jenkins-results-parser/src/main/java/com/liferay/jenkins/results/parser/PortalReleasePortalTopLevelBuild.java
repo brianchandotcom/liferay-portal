@@ -70,12 +70,58 @@ public class PortalReleasePortalTopLevelBuild extends PortalTopLevelBuild {
 				getParameterValue("TEST_PORTAL_RELEASE_TOMCAT_URL"));
 
 			_portalRelease = new PortalRelease(portalReleaseTomcatURL);
+
+			String dependenciesURLString = getParameterValue(
+				"TEST_PORTAL_RELEASE_DEPENDENCIES_URL");
+
+			if (_isURL(dependenciesURLString)) {
+				_portalRelease.setDependenciesURL(
+					new URL(dependenciesURLString));
+			}
+
+			String osgiURLString = getParameterValue(
+				"TEST_PORTAL_RELEASE_OSGI_URL");
+
+			if (_isURL(osgiURLString)) {
+				_portalRelease.setOSGiURL(new URL(osgiURLString));
+			}
+
+			String portalWarURLString = getParameterValue(
+				"TEST_PORTAL_RELEASE_WAR_URL");
+
+			if (_isURL(portalWarURLString)) {
+				_portalRelease.setPortalWarURL(new URL(portalWarURLString));
+			}
+
+			String sqlURLString = getParameterValue(
+				"TEST_PORTAL_RELEASE_SQL_URL");
+
+			if (_isURL(sqlURLString)) {
+				_portalRelease.setSQLURL(new URL(sqlURLString));
+			}
+
+			String toolsURLString = getParameterValue(
+				"TEST_PORTAL_RELEASE_TOOLS_URL");
+
+			if (_isURL(toolsURLString)) {
+				_portalRelease.setToolsURL(new URL(toolsURLString));
+			}
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);
 		}
 
 		return _portalRelease;
+	}
+
+	private boolean _isURL(String urlString) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(urlString) ||
+			!urlString.matches("https?://.+")) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

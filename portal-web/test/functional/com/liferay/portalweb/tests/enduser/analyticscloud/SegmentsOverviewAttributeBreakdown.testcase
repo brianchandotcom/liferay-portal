@@ -108,14 +108,22 @@ definition {
 			ACSegments.accessSegment(segmentName = "Static Segment Test");
 		}
 
-		task ("Switch to Distribution tab") {
-			ACNavigation.switchTab(tabName = "Distribution");
-
-			ACSegments.selectDistributionByAttribute(attribute = "birthDate");
+		task ("Filter Attribute by date identifier in Overview") {
+			ACSegments.addBreakdownByAttribute(
+				attribute = "birthDate",
+				breakdownName = "Segment Overview Test");
 		}
 
 		task ("View chart entry") {
-			ACSegments.viewBreakdownChartsEntry(key_entry = "1972-03-15T00:00:00.000Z - 50.0% 1986-05-31T00:00:00.000Z - 50.0%");
+			ACIndividualsDashboard.viewBreakdownRecharts(
+				fillColor = "#4B9BFF",
+				index = "1",
+				tick = "1972-03-15T00:00:00.000Z");
+
+			ACIndividualsDashboard.viewBreakdownRecharts(
+				fillColor = "#4B9BFF",
+				index = "2",
+				tick = "1986-05-31T00:00:00.000Z");
 		}
 	}
 

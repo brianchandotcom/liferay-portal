@@ -82,8 +82,6 @@ public class MessageBoardThreadDTOConverter
 			dtoConverterContext.getLocale());
 		MBMessage mbMessage = _mbMessageLocalService.getMessage(
 			mbThread.getRootMessageId());
-		Optional<UriInfo> uriInfoOptional =
-			dtoConverterContext.getUriInfoOptional();
 		User user = _userLocalService.fetchUser(mbThread.getUserId());
 
 		return new MessageBoardThread() {

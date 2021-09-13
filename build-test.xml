@@ -11265,7 +11265,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 						/>
 
 						<execute>
-							cp -r ${tstamp.value}/*/elasticsearch7 ${liferay.home}/
+							cp -r ${tstamp.value}/*/elasticsearch-sidecar ${liferay.home}/
 						</execute>
 
 						<delete file="${test.build.portal.elasticsearch.zip.name}" />

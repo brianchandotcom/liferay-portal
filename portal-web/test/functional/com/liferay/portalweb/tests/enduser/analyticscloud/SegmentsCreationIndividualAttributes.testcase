@@ -271,12 +271,79 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8568 | Test Summary: Add segment using an individual property 'user'"
-	@ignore = "true"
 	@priority = "4"
 	test CanAddSegmentUsingIndividualPropertyUser {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8568 CanAddSegmentUsingIndividualPropertyUser pending implementation
+		// AC Refactor: DXP User never appears
+		// AC Refactor ticket: LRAC-9281
+		// AC Bug ticket: LRAC-9263
 
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View the page as the new added user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("Pause for 30 seconds") {
+			Pause(locator1 = "30000");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new dynamic segment using Individual Property User") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Using Individual Property User");
+
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "DXP User");
+
+			ACSegments.selectOperator(operator = "is");
+
+			ACSegments.selectDocument(
+				documentTitle = "ac ac",
+				indexField = "1");
+		}
+
+		task ("View and asset user") {
+			ACSegments.previewSegmentMembership();
+
+			ACAssets.viewAssets(assetName = "ac ac");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Asset user present in the Segments") {
+			ACNavigation.switchTab(tabName = "Membership");
+
+			AssertElementPresent(
+				key_userName = "ac ac",
+				locator1 = "ACSegments#SEGMENT_MEMBERS");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8567 | Test Summary: Add segment using an individual property 'user group'"

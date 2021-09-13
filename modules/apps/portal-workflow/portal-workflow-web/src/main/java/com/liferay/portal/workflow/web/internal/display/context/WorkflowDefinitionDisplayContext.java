@@ -210,13 +210,9 @@ public class WorkflowDefinitionDisplayContext {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						_getOrderByDropdownItem(
-							"last-modified",
-							_getCurrentOrder(httpServletRequest),
-							httpServletRequest)
+							httpServletRequest, "last-modified")
 					).add(
-						_getOrderByDropdownItem(
-							"title", _getCurrentOrder(httpServletRequest),
-							httpServletRequest)
+						_getOrderByDropdownItem(httpServletRequest, "title")
 					).build());
 
 				dropdownGroupItem.setLabel(
@@ -433,6 +429,10 @@ public class WorkflowDefinitionDisplayContext {
 				return null;
 			}
 		).setParameter(
+			"orderByCol",
+			ParamUtil.getString(
+				httpServletRequest, "orderByCol", "last-modified")
+		).setParameter(
 			"orderByType",
 			() -> {
 				String orderByType = ParamUtil.getString(
@@ -641,10 +641,6 @@ public class WorkflowDefinitionDisplayContext {
 			httpServletRequest, "definitionsNavigation", "all");
 	}
 
-	private String _getCurrentOrder(HttpServletRequest httpServletRequest) {
-		return ParamUtil.getString(httpServletRequest, "orderByCol", "title");
-	}
-
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getFilterNavigationDropdownItem(
 			String navigation, String currentNavigation,
@@ -666,12 +662,12 @@ public class WorkflowDefinitionDisplayContext {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception> _getOrderByDropdownItem(
-		String orderByCol, String currentOrder,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, String orderByCol) {
 
 		return dropdownItem -> {
-			dropdownItem.setActive(Objects.equals(currentOrder, orderByCol));
-			dropdownItem.setHref(_getPortletURL(httpServletRequest));
+			dropdownItem.setActive(Objects.equals(getOrderByCol(), orderByCol));
+			dropdownItem.setHref(
+				_getPortletURL(httpServletRequest), "orderByCol", orderByCol);
 			dropdownItem.setLabel(
 				LanguageUtil.get(
 					_workflowDefinitionRequestHelper.getRequest(), orderByCol));

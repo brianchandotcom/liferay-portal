@@ -1053,6 +1053,7 @@ definition {
 	}
 
 	@description = "Verify that in Update Due Date, the due date is required"
+	@ignore = "true"
 	@priority = "3"
 	test DueDateIsRequired {
 		JSONBlog.addEntry(

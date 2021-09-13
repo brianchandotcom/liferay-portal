@@ -842,7 +842,7 @@ definition {
 		}
 
 		task ("View the views by location info shown in geomap") {
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no views on any location on the selected period.");
+			ACUtils.viewNoResultsMessageNotPresent(noResultMessage = "There are no views on any location on the selected period.");
 
 			ACCards.viewGeomapContainer(cardTitle = "Views by Location");
 

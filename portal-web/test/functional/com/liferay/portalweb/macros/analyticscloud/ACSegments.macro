@@ -1,5 +1,19 @@
 definition {
 
+	macro assertMembershipValue{
+			AssertElementPresent(
+				segmentName = "${segmentName}",
+				membershipName = "${membership}",
+				locator1 = "ACSegments#SEGMENT_TABLE_MEMBERSHIP_NAME_AND_VALUE");	
+	}
+
+	macro assertTotalActivitiesValue{
+			AssertElementPresent(
+				segmentName = "${segmentName}",
+				totalActivitiesNumber = "${totalActivities}",
+				locator1 = "ACSegments#SEGMENT_TABLE_TOTAL_ACTIVITIES_NAME_AND_VALUE");	
+	}
+
 	macro accessSegment {
 		var key_segmentName = "${segmentName}";
 
@@ -31,12 +45,6 @@ definition {
 			index = "${index}",
 			locator1 = "ACSegments#SEGMENT_CRITERION_ITEM",
 			locator2 = "ACSegments#CRITERIA_STATEMENT_BODY");
-	}
-
-	macro addOrganizationName {
-		Type(
-			locator1 = "ACSegments#ORGANIZATION_NAME_INPUT",
-			value1 = "${organizationName}");
 	}
 
 	macro addSegmentField {

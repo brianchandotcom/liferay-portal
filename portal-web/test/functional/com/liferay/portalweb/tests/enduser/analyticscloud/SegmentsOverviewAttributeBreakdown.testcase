@@ -209,12 +209,108 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8506 | Test Summary: Segment Overview distribution filtered by number"
-	@ignore = "true"
 	@priority = "3"
 	test SegmentOverviewDistributionFilteredByNumber {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8506 SegmentOverviewDistributionFilteredByNumber pending implementation
+		// AC Refactor: It is not possible to filter the segment distribution by an attribute of type number
+		// AC Refactor ticket: LRAC-9336
 
+		var users = "user1,user2";
+
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+		}
+
+		task ("Add a new user") {
+			for (var user : list "${users}") {
+				JSONUser.addUser(
+					userEmailAddress = "${user}@liferay.com",
+					userFirstName = "${user}",
+					userLastName = "${user}",
+					userScreenName = "${user}");
+			}
+		}
+
+		task ("Connect the DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("View AC Page as new user") {
+			for (var user : list "${users}") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${user}@liferay.com",
+					userLoginFullName = "${user} ${user}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a CSV Data Source") {
+			ACSettings.addCSVDataSource(
+				dataSourceName = "CSV Age",
+				fieldName = "age",
+				fieldType = "Number",
+				newField = "true",
+				selectAnalyticsCloudField = "true",
+				sourceFileName = "contacts_age.csv");
+		}
+
+		task ("Exit Settings") {
+			ACNavigation.exitSettings();
+		}
+
+		task ("Add a new static segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+		}
+
+		task ("Type the segment name") {
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Add new user as member") {
+			for (var user : list "${users}") {
+				ACSegments.addStaticMember(tableMember = "${user} ${user}");
+			}
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to Segments") {
+			ACNavigation.goToSegments();
+
+			ACSegments.accessSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Filter Attribute") {
+			ACSegments.addBreakdownByAttribute(
+				attribute = "age",
+				binsAmount = "10",
+				breakdownName = "AC Breakdown Test");
+		}
+
+		task ("View Chart Entry") {
+
+			// Grafic don't show up on screen.
+
+			for (var user : list "${users}") {
+				ACIndividualsDashboard.viewBreakdownRecharts(
+					fillColor = "#4B9BFF",
+					tick = "${user} - 50.0%");
+			}
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8507 | Test Summary: Segment Overview distribution filtered by text"

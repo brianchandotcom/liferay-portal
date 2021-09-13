@@ -19,11 +19,15 @@ import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.internal.dto.v1_0.util.ListTypeEntryUtil;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeEntryResource;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,6 +62,7 @@ public class ListTypeEntryResourceImpl
 					listTypeDefinitionId, pagination.getStartPosition(),
 					pagination.getEndPosition()),
 				listTypeEntry -> ListTypeEntryUtil.toListTypeEntry(
+					_getActions(listTypeEntry),
 					contextAcceptLanguage.getPreferredLocale(), listTypeEntry)),
 			pagination,
 			_listTypeEntryLocalService.getListTypeEntriesCount(
@@ -76,6 +81,18 @@ public class ListTypeEntryResourceImpl
 				listTypeEntry.getKey(),
 				LocalizedMapUtil.getLocalizedMap(
 					listTypeEntry.getName_i18n())));
+	}
+
+	private Map<String, Map<String, String>> _getActions(
+		com.liferay.list.type.model.ListTypeEntry serviceBuilderListTypeEntry) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			addAction(
+				ActionKeys.DELETE, "deleteListTypeEntry",
+				com.liferay.list.type.model.ListTypeDefinition.class.getName(),
+				serviceBuilderListTypeEntry.getListTypeDefinitionId())
+		).build();
 	}
 
 	@Reference

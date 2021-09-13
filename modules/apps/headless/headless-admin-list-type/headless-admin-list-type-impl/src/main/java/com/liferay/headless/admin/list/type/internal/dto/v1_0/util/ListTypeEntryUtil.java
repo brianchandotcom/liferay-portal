@@ -18,6 +18,7 @@ import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Gabriel Albuquerque
@@ -40,6 +41,18 @@ public class ListTypeEntryUtil {
 				type = serviceBuilderListTypeEntry.getType();
 			}
 		};
+	}
+
+	public static ListTypeEntry toListTypeEntry(
+		Map<String, Map<String, String>> actions, Locale locale,
+		com.liferay.list.type.model.ListTypeEntry serviceBuilderListTypeEntry) {
+
+		ListTypeEntry listTypeEntry = toListTypeEntry(
+			locale, serviceBuilderListTypeEntry);
+
+		listTypeEntry.setActions(actions);
+
+		return listTypeEntry;
 	}
 
 }

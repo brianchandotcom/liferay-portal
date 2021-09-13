@@ -244,6 +244,14 @@ public class ElasticsearchInstanceSettingsBuilder {
 		put("monitor.jvm.gc.enabled", StringPool.FALSE);
 	}
 
+	protected void configureXPack() {
+		put("xpack.ml.enabled", false);
+		put("xpack.monitoring.enabled", false);
+		put("xpack.security.enabled", false);
+		put("xpack.sql.enabled", false);
+		put("xpack.watcher.enabled", false);
+	}
+
 	protected Path getHomePath() {
 		Path homePath = _elasticsearchInstancePaths.getHomePath();
 
@@ -297,7 +305,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 
 		configureTestMode();
 
-		put("xpack.ml.enabled", false);
+		configureXPack();
 	}
 
 	protected void loadSettingsContributors() {

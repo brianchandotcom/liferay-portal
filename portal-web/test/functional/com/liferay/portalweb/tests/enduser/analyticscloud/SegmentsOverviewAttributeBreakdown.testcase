@@ -196,33 +196,16 @@ definition {
 			ACSegments.accessSegment(segmentName = "Static Segment Test");
 		}
 
-		task ("Filter Attribute") {
-			ACNavigation.switchTab(tabName = "Distribution");
-
-			ACSegments.selectDistributionByAttribute(attribute = "jobTitle");
+		task ("Filter Attribute by Boolean identifier in Overview") {
+			ACSegments.addBreakdownByAttribute(
+				attribute = "jobTitle",
+				breakdownName = "QA");
 		}
 
-		task ("View and click in Chart Entry") {
-			ACSegments.viewBreakdownChartsEntry(key_entry = "QA - 100.0%");
-
-			Click(locator1 = "ACSegments#BREAKDOWN_CHART");
-		}
-
-		task ("Sort the Names in ascending order") {
-			ACInterests.viewIndividualInterestSpecificOrder(interestTopic = "ac ac,liferay liferay");
-		}
-
-		task ("Sort the Names in ascending order") {
-			Click(
-				labelOption = "Name",
-				locator1 = "FormViewBuilder#FIELD_LABEL_OPTION");
-		}
-
-		task ("Assert order filtered by text") {
-
-			// Sorting the names in ascending order to work correctly depends on the bug fix
-
-			ACInterests.viewIndividualInterestSpecificOrder(interestTopic = "liferay liferay,ac ac");
+		task ("View Breakdown Chart") {
+			ACIndividualsDashboard.viewBreakdownRecharts(
+				fillColor = "#4B9BFF",
+				tick = "QA");
 		}
 	}
 

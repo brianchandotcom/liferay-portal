@@ -1032,26 +1032,23 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 		protected final long ctCollectionId;
 
 		private void _visit(BinaryExpression binaryExpression) {
-			Deque<Expression> stack = new LinkedList<Expression>() {
-				{
-					offer(null);
-				}
-			};
+			Deque<Expression> deque = new LinkedList<>();
 
-			Expression expression = binaryExpression;
+			deque.add(binaryExpression);
 
-			while (expression != null) {
+			Expression expression = null;
+
+			while ((expression = deque.poll()) != null) {
 				if (expression instanceof BinaryExpression) {
-					binaryExpression = (BinaryExpression)expression;
+					BinaryExpression nextBinaryExpression =
+						(BinaryExpression)expression;
 
-					stack.push(binaryExpression.getRightExpression());
+					deque.push(nextBinaryExpression.getRightExpression());
 
-					expression = binaryExpression.getLeftExpression();
+					deque.push(nextBinaryExpression.getLeftExpression());
 				}
 				else {
 					expression.accept(this);
-
-					expression = stack.pop();
 				}
 			}
 		}

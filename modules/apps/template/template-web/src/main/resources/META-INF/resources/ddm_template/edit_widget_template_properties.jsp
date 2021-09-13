@@ -105,16 +105,7 @@ DDMTemplate ddmTemplate = editDDMTemplateDisplayContext.getDDMTemplate();
 		</c:if>
 	</div>
 
-	<aui:script>
-		Liferay.Util.toggleSelectBox(
-			'<portlet:namespace />smallImageSource',
-			'url',
-			'<portlet:namespace />smallImageURLContainer'
-		);
-		Liferay.Util.toggleSelectBox(
-			'<portlet:namespace />smallImageSource',
-			'file',
-			'<portlet:namespace />smallImageFileContainer'
-		);
-	</aui:script>
+	<liferay-frontend:component
+		module="js/ddm_template/EditWidgetTemplateProperties"
+	/>
 </div>

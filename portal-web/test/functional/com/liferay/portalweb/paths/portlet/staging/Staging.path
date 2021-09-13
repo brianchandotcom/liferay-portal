@@ -279,6 +279,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIVE_MENU_MESSAGE_DETAILS</td>
+	<td>//span[@class='last-publication-variation-details']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

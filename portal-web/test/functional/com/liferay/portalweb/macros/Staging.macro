@@ -1539,6 +1539,12 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Staging#LIVE_MENU_MESSAGE",
 			value1 = "Page ${pageName} was last published from ${sitePagesVariationName}.");
+
+		if (isSet(pagesVariationName)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Staging#LIVE_MENU_MESSAGE_DETAILS",
+				value1 = "Variation: ${pagesVariationName}");
+		}
 	}
 
 	macro viewStagingWorkflowStatusPG {

@@ -643,7 +643,7 @@ definition {
 	}
 
 	@summary = "The macro deletes all users that have pending status."
-	macro deletePendingAllUsers {
+	macro deleteAllPendingUsers {
 		ACSettings.goToUserManagement();
 
 		while (IsElementPresent(locator1= "ACSettings#VIEW_STATUS_PENDING")) {

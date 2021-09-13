@@ -1,0 +1,79 @@
+definition {
+
+	macro _getCommerceDiscountsCount {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var discountsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
+
+		echo("The Commerce discounts count is: ${discountsCount}");
+
+		return "${discountsCount}";
+
+	}
+
+	macro _getCommerceDiscountIds {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if(isSet(discountCount)){
+			var discountsCount = "${discountCount}";
+		}
+		else {
+			var discountsCount = "100";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts?pageSize=${discountsCount} \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var discountIds = JSONCurlUtil.get("${curl}", "$..['id']");
+
+		return "${discountIds}";
+	}
+
+	macro _deleteAllCommerceDiscounts{
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var discountsCount = CommerceJSONDiscountsAPI._getCommerceDiscountsCount();
+
+		if ("${discountsCount}" != "0"){
+
+			var discountIds = CommerceJSONDiscountsAPI._getCommerceDiscountIds(discountCount = "${discountsCount}");
+
+			for (var discountId : list "${discountIds}") {
+				echo("Deleting Commerce discount with id: ${discountId}");
+
+				var curl = '''
+					${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts/${discountId} \
+					-u test@liferay.com:test \
+					-H 'accept: application/json' \
+				''';
+
+				JSONCurlUtil.delete("${curl}");
+			}
+		}
+		else {
+			echo("No Commerce Discounts to be deleted");
+		}
+	}
+
+}

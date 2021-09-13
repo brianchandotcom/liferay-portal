@@ -1,0 +1,80 @@
+definition {
+
+	macro _getCommerceChannelsCount {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-channel/v1.0/channels \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var channelsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
+
+		echo("The Commerce channels count is: ${channelsCount}");
+
+		return "${channelsCount}";
+
+	}
+
+	macro _getCommerceChannelIds {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if(isSet(channelCount)){
+			var channelsCount = "${channelCount}";
+		}
+		else {
+			var channelsCount = "100";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-channel/v1.0/channels?pageSize=${channelsCount} \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var channelIds = JSONCurlUtil.get("${curl}", "$..['id']");
+
+		return "${channelIds}";
+	}
+
+	macro _deleteAllCommerceChannels{
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var channelsCount = CommerceJSONChannelsAPI._getCommerceChannelsCount();
+
+		if ("${channelsCount}" != "0"){
+
+			var channelIds = CommerceJSONChannelsAPI._getCommerceChannelIds(channelCount = "${channelsCount}");
+
+			for (var channelId : list "${channelIds}") {
+				echo("Deleting Commerce channel with id: ${channelId}");
+
+				var curl = '''
+					${baseURL}/o/headless-commerce-admin-channel/v1.0/channels/${channelId} \
+					-u test@liferay.com:test \
+					-H 'accept: application/json' \
+				''';
+
+				JSONCurlUtil.delete("${curl}");
+
+			}
+		}
+		else {
+			echo("No Commerce Channels to be deleted");
+		}
+	}
+
+}

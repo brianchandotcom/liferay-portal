@@ -1,0 +1,58 @@
+definition {
+
+	macro _getCommerceTaxCategories {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var curl = '''
+			  ${baseURL}/api/jsonws/commerce.cptaxcategory/get-cp-tax-categories \
+				  -u test@liferay.com:test \
+				  -d companyId=${companyId} \
+				  -d "start=-1" \
+				  -d "end=-1" \
+				  -d -orderByComparator=''
+		''';
+
+		echo("curl: ${curl}");
+
+		var commerceTaxCategories = JSONCurlUtil.post("${curl}", "$..['CPTaxCategoryId']");
+
+		echo("commerceTaxCategories: ${commerceTaxCategories}");
+
+		return "${commerceTaxCategories}";
+
+	}
+
+	macro _deleteCommerceTaxCategories{
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var commerceTaxCategoriesIds = CommerceJSONTaxCategoriesAPI._getCommerceTaxCategories();
+
+		if ("${commerceTaxCategoriesIds}" != ""){
+			for (var commerceTaxCategoriesId : list "${commerceTaxCategoriesIds}") {
+				echo("Deleting Commerce Tax Categories with id: ${commerceTaxCategoriesId}");
+
+				var curl = '''
+					${baseURL}/api/jsonws/commerce.cptaxcategory/delete-cp-tax-category \
+						-u test@liferay.com:test \
+						-d cpTaxCategoryId=${commerceTaxCategoriesId}
+				''';
+
+				JSONCurlUtil.post("${curl}");
+			}
+		}
+		else {
+			echo("No Commerce Tax Categories to be deleted");
+		}
+	}
+
+}

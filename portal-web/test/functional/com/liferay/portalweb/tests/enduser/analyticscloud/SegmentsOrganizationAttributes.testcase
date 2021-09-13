@@ -19,13 +19,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ACUtils.tearDownDXP();
+		// ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
+		// if ("${testPortalInstance}" == "true") {
+		// 	PortalInstances.tearDownCP();
+		// }
 
-		ACUtils.tearDownAC();
+		// ACUtils.tearDownAC();
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8548 | Test Summary: Add segment using an organization property 'date modified'"
@@ -148,29 +148,81 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8549 | Test Summary: Add segment using an organization property 'name'"
 	@priority = "4"
 	test CanCreateSegmentUsingOrganizationPropertyName {
-		task ("Add user") {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Team not sure of which steps should be done to assert Name, please check steps and update if necessary	
+		// AC Refactor ticket: LRAC-9278
+
+		task ("Add users") {
+
 			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = "userea1@liferay.com");
+
+			JSONUser.addUser(
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea2@liferay.com");
 		}
 
-		task ("Add organization and add the user to the organization") {
-			JSONOrganization.addOrganization(organizationName = "Organization Name");
+		task ("Add organization and add the user to the organization") { 
+
+			JSONOrganization.addOrganization(organizationName = "Organization Name 1");
 
 			JSONOrganization.assignUserToOrganization(
-				organizationName = "Organization Name",
-				userEmailAddress = "userea@liferay.com");
+				organizationName = "Organization Name 1",
+				userEmailAddress = "userea1@liferay.com");
+
+			JSONOrganization.addOrganization(organizationName = "Organization Name 2");
+
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Organization Name 2",
+				userEmailAddress = "userea2@liferay.com");
+		}
+
+		task ("Add blog") {
+			ACUtils.addSiteAndPage();
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Blogs Page");
+
+			Navigator.gotoSitePage(
+				pageName = "Blogs Page",
+				siteName = "Site Name");
+
+			ACUtils.createBlogsAndAddToPage(layoutName = "Blogs Page");
 		}
 
 		task ("Connect to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Interact with DXP with user1") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+
+			Navigator.gotoSitePage(
+					pageName = "Blogs Page",
+					siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Launch AC and enter in the new property") {
@@ -179,18 +231,18 @@ definition {
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 		}
 
-		task ("Add a new segment using the organization property Name") {
+		task ("Add a new segment using the organization roperty Name for Organization Name 1") {
 			ACNavigation.goToSegments();
 
 			ACSegments.createDynamicSegment();
 
-			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test 1");
 
 			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
 
 			ACSegments.addSegmentField(segmentField = "Name");
 
-			ACSegments.addOrganizationName(organizationName = "Test Name");
+			ACSegments.addOrganizationName(organizationName = "Organization Name 1");
 
 			ACSegments.saveSegment();
 		}
@@ -200,7 +252,53 @@ definition {
 		}
 
 		task ("Assert Test Name is also present in segment criteria") {
-			ACSegments.assertCriteriaTable(criteriaName = "Test Name");
+			ACSegments.assertCriteriaTable(criteriaName = "Organization Name 1");
+
+		}
+
+		task ("Add a new segment using the organization roperty Name for Organization Name 2") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test 2");
+
+			ACSegments.goToSidebarAttributes(criterion = "Organization Attributes");
+
+			ACSegments.addSegmentField(segmentField = "Name");
+
+			ACSegments.addOrganizationName(organizationName = "Organization Name 2");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Assert Name is present in Segment Criteria") {
+			ACSegments.assertCriteriaTable(criteriaName = "Name");
+		}
+
+		task ("Assert Test Name is also present in segment criteria") {
+			ACSegments.assertCriteriaTable(criteriaName = "Organization Name 2");
+
+		}
+
+		task ("Assert that informations are shown correctly") {
+			ACNavigation.goToSegments();
+
+			ACSegments.assertMembershipValue(
+				segmentName = "Dynamic Segment Test 1",
+				membership = "1");
+
+			ACSegments.assertTotalActivitiesValue(
+				segmentName = "Dynamic Segment Test 1",
+				totalActivities = "1");
+
+			ACSegments.assertMembershipValue(
+				segmentName = "Dynamic Segment Test 2",
+				membership = "0");
+
+			ACSegments.assertTotalActivitiesValue(
+				segmentName = "Dynamic Segment Test 2",
+				totalActivities = "0");
 		}
 	}
 

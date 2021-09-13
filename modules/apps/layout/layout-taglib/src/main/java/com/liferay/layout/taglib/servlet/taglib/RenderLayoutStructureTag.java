@@ -310,7 +310,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			PaginationBarTag paginationBarTag = new PaginationBarTag();
 
 			paginationBarTag.setActiveDelta(
-				collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
+				renderCollectionLayoutStructureItemDisplayContext.
+					getMaxNumberOfItemsPerPage());
 			paginationBarTag.setActivePage(
 				renderCollectionLayoutStructureItemDisplayContext.
 					getActivePage());
@@ -323,12 +324,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 					"/NumericCollectionPaginationPropsTransformer");
 			paginationBarTag.setShowDeltasDropDown(false);
 			paginationBarTag.setTotalItems(
-				Math.max(
-					1,
-					Math.min(
-						collectionStyledLayoutStructureItem.getNumberOfItems(),
-						renderCollectionLayoutStructureItemDisplayContext.
-							getCollectionCount())));
+				renderCollectionLayoutStructureItemDisplayContext.
+					getTotalNumberOfItems());
 
 			paginationBarTag.doTag(pageContext);
 		}

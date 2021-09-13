@@ -263,9 +263,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return _numberOfItemsToDisplay;
 		}
 
-		_numberOfItemsToDisplay = Math.min(
-			getCollectionCount(),
-			_collectionStyledLayoutStructureItem.getNumberOfItems());
+		_numberOfItemsToDisplay = getTotalNumberOfItems();
 
 		if (Validator.isNotNull(
 				_collectionStyledLayoutStructureItem.getPaginationType()) &&
@@ -340,6 +338,12 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		).put(
 			"collectionId", _collectionStyledLayoutStructureItem.getItemId()
 		).build();
+	}
+
+	public int getTotalNumberOfItems() {
+		return Math.min(
+			getCollectionCount(),
+			_collectionStyledLayoutStructureItem.getNumberOfItems());
 	}
 
 	private Map<String, String[]> _getConfiguration() {

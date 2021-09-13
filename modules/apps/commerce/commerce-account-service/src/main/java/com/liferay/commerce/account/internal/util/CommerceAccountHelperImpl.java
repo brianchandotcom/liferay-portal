@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.account.internal.util;
 
+import com.liferay.account.manager.CurrentAccountEntryManager;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountGroupRelLocalService;
@@ -22,6 +23,7 @@ import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.constants.CommerceAccountPortletKeys;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.model.CommerceAccountModel;
+import com.liferay.commerce.account.model.impl.CommerceAccountImpl;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
@@ -37,7 +39,6 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.SessionParamUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -47,7 +48,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -135,21 +135,9 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 			long commerceChannelGroupId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		httpServletRequest = _portal.getOriginalServletRequest(
-			httpServletRequest);
-
-		CommerceAccount commerceAccount = null;
-
-		String curGroupCommerceAccountIdKey =
-			_CURRENT_COMMERCE_ACCOUNT_ID_KEY + commerceChannelGroupId;
-
-		long currentCommerceAccountId = SessionParamUtil.getLong(
-			httpServletRequest, curGroupCommerceAccountIdKey);
-
-		if (currentCommerceAccountId > 0) {
-			commerceAccount = _commerceAccountService.fetchCommerceAccount(
-				currentCommerceAccountId);
-		}
+		CommerceAccount commerceAccount = CommerceAccountImpl.fromAccountEntry(
+			_currentAccountEntryManager.getCurrentAccountEntry(
+				commerceChannelGroupId, _portal.getUserId(httpServletRequest)));
 
 		if ((commerceAccount == null) || !commerceAccount.isActive()) {
 			commerceAccount = _getSingleCommerceAccount(
@@ -194,15 +182,9 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 			_checkAccountType(commerceChannelGroupId, commerceAccountId);
 		}
 
-		String curGroupOrganizationIdKey =
-			_CURRENT_COMMERCE_ACCOUNT_ID_KEY + commerceChannelGroupId;
-
-		httpServletRequest = _portal.getOriginalServletRequest(
-			httpServletRequest);
-
-		HttpSession httpSession = httpServletRequest.getSession();
-
-		httpSession.setAttribute(curGroupOrganizationIdKey, commerceAccountId);
+		_currentAccountEntryManager.setCurrentAccountEntry(
+			commerceAccountId, commerceChannelGroupId,
+			_portal.getUserId(httpServletRequest));
 	}
 
 	private void _checkAccountType(
@@ -276,9 +258,6 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 		return null;
 	}
 
-	private static final String _CURRENT_COMMERCE_ACCOUNT_ID_KEY =
-		"LIFERAY_SHARED_CURRENT_COMMERCE_ACCOUNT_ID_";
-
 	@Reference
 	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
@@ -293,6 +272,9 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CurrentAccountEntryManager _currentAccountEntryManager;
 
 	@Reference
 	private Portal _portal;

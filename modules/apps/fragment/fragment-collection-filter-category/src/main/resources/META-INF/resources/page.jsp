@@ -16,13 +16,13 @@
 
 <%@ include file="/init.jsp" %>
 
-<p class="font-weight-bold mb-1 <%= fragmentCollectionFilterCategoryDisplayContext.isShowLabel() ? "" : "sr-only" %>">
+<p class="font-weight-semi-bold mb-1 <%= fragmentCollectionFilterCategoryDisplayContext.isShowLabel() ? "" : "sr-only" %>">
 	<%= fragmentCollectionFilterCategoryDisplayContext.getLabel() %>
 </p>
 
 <div>
 	<clay:button
-		cssClass="bg-light dropdown-toggle font-weight-bold form-control-select form-control-sm text-left w-100"
+		cssClass="bg-light dropdown-toggle font-weight-normal form-control-select form-control-sm text-left w-100"
 		disabled="<%= true %>"
 		displayType="secondary"
 		label='<%= LanguageUtil.get(request, "select") %>'

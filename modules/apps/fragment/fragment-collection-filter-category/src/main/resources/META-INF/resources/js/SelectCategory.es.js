@@ -146,7 +146,7 @@ export default function SelectCategory({
 			searchable={showSearch}
 			trigger={
 				<ClayButton
-					className="bg-light form-control-select form-control-sm text-left w-100"
+					className="bg-light font-weight-normal form-control-select form-control-sm text-left w-100"
 					displayType="secondary"
 					small
 				>

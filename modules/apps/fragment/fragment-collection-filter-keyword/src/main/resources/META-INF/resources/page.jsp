@@ -22,9 +22,9 @@
 
 <div class="input-group">
 	<div class="input-group-item">
-		<input class="form-control form-control-sm input-group-inset input-group-inset-after" id="<%= fragmentCollectionFilterKeywordDisplayContext.getFragmentEntryLinkNamespace() + "keywordsInput" %>" placeholder="<%= LanguageUtil.get(request, "search") %>" type="text" value="" />
+		<input class="form-control form-control-sm input-group-inset input-group-inset-after" id="<%= fragmentCollectionFilterKeywordDisplayContext.getFragmentEntryLinkNamespace() + "keywordsInput" %>" placeholder="<%= LanguageUtil.get(request, "search") %>" style="border-color: var(--gray-400);" type="text" value="" />
 
-		<div class="input-group-inset-item input-group-inset-item-after">
+		<div class="input-group-inset-item input-group-inset-item-after" style="border-color: var(--gray-400);">
 			<clay:button
 				aria-label='<%= LanguageUtil.get(request, "submit") %>'
 				disabled="<%= fragmentCollectionFilterKeywordDisplayContext.isDisabled() %>"

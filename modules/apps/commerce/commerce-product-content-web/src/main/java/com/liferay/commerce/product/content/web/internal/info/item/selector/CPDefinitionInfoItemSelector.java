@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.content.web.internal.info.item.selector;
 
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
-import com.liferay.commerce.product.model.CProduct;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.info.item.selector.InfoItemSelector;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -36,7 +36,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alec Sloan
  */
 @Component(enabled = false, service = InfoItemSelector.class)
-public class CProductInfoItemSelector implements InfoItemSelector<CProduct> {
+public class CPDefinitionInfoItemSelector
+	implements InfoItemSelector<CPDefinition> {
 
 	@Override
 	public PortletURL getInfoItemSelectorPortletURL(

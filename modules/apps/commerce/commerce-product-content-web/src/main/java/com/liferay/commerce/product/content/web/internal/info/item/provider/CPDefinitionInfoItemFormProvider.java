@@ -14,11 +14,10 @@
 
 package com.liferay.commerce.product.content.web.internal.info.item.provider;
 
-import com.liferay.commerce.product.content.web.internal.info.CProductInfoItemFields;
-import com.liferay.commerce.product.model.CProduct;
+import com.liferay.commerce.product.content.web.internal.info.CPDefinitionInfoItemFields;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -34,14 +33,15 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
+ * @author Alec Sloan
  */
 @Component(
 	enabled = false, immediate = true,
 	property = Constants.SERVICE_RANKING + ":Integer=10",
 	service = InfoItemFormProvider.class
 )
-public class CProductInfoItemFormProvider
-	implements InfoItemFormProvider<CProduct> {
+public class CPDefinitionInfoItemFormProvider
+	implements InfoItemFormProvider<CPDefinition> {
 
 	@Override
 	public InfoForm getInfoForm() {
@@ -54,7 +54,7 @@ public class CProductInfoItemFormProvider
 			infoLocalizedValueBuilder.value(
 				locale,
 				ResourceActionsUtil.getModelResource(
-					locale, CProduct.class.getName()));
+					locale, CPDefinition.class.getName()));
 		}
 
 		return InfoForm.builder(
@@ -62,24 +62,24 @@ public class CProductInfoItemFormProvider
 			_getBasicInformationInfoFieldSet()
 		).infoFieldSetEntry(
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(
-				CProduct.class.getName())
+				CPDefinition.class.getName())
 		).infoFieldSetEntry(
 			_getDisplayPageInfoFieldSet()
 		).labelInfoLocalizedValue(
 			infoLocalizedValueBuilder.build()
 		).name(
-			CProduct.class.getName()
+			CPDefinition.class.getName()
 		).build();
 	}
 
 	private InfoFieldSet _getBasicInformationInfoFieldSet() {
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
-			CProductInfoItemFields.titleInfoField
+			CPDefinitionInfoItemFields.titleInfoField
 		).infoFieldSetEntry(
-			CProductInfoItemFields.descriptionInfoField
+			CPDefinitionInfoItemFields.descriptionInfoField
 		).infoFieldSetEntry(
-			CProductInfoItemFields.defaultImage
+			CPDefinitionInfoItemFields.defaultImage
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				"com.liferay.commerce.lang", "basic-information")
@@ -91,17 +91,13 @@ public class CProductInfoItemFormProvider
 	private InfoFieldSet _getDisplayPageInfoFieldSet() {
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
-			CProductInfoItemFields.displayPageUrlInfoField
+			CPDefinitionInfoItemFields.displayPageUrlInfoField
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "configuration")
 		).name(
 			"configuration"
 		).build();
 	}
-
-	@Reference
-	private InfoItemFieldReaderFieldSetProvider
-		_infoItemFieldReaderFieldSetProvider;
 
 	@Reference
 	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;

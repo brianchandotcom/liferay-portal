@@ -14,10 +14,11 @@
 
 package com.liferay.commerce.product.content.web.internal.item.selector;
 
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CProductLocalService;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.info.item.selector.InfoItemSelectorView;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
@@ -26,7 +27,6 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -62,13 +62,13 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, property = "item.selector.view.order:Integer=600",
 	service = ItemSelectorView.class
 )
-public class CProductItemSelectorView
+public class CPDefinitionItemSelectorView
 	implements InfoItemSelectorView,
 			   ItemSelectorView<InfoItemItemSelectorCriterion> {
 
 	@Override
 	public String getClassName() {
-		return CProduct.class.getName();
+		return CPDefinition.class.getName();
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class CProductItemSelectorView
 		_itemSelectorViewDescriptorRenderer.renderHTML(
 			servletRequest, servletResponse, infoItemItemSelectorCriterion,
 			portletURL, itemSelectedEventName, search,
-			new CProductsItemSelectorViewDescriptor(
+			new CPDefinitionItemSelectorViewDescriptor(
 				(HttpServletRequest)servletRequest, portletURL));
 	}
 
@@ -115,9 +115,6 @@ public class CProductItemSelectorView
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
-	private CProductLocalService _cProductLocalService;
-
-	@Reference
 	private ItemSelectorViewDescriptorRenderer<InfoItemItemSelectorCriterion>
 		_itemSelectorViewDescriptorRenderer;
 
@@ -127,13 +124,13 @@ public class CProductItemSelectorView
 	@Reference
 	private Portal _portal;
 
-	private class CProductItemDescriptor
+	private class CPDefinitionItemDescriptor
 		implements ItemSelectorViewDescriptor.ItemDescriptor {
 
-		public CProductItemDescriptor(
-			CProduct cProduct, HttpServletRequest httpServletRequest) {
+		public CPDefinitionItemDescriptor(
+			CPDefinition cpDefinition, HttpServletRequest httpServletRequest) {
 
-			_cProduct = cProduct;
+			_cpDefinition = cpDefinition;
 			_httpServletRequest = httpServletRequest;
 		}
 
@@ -144,19 +141,20 @@ public class CProductItemSelectorView
 
 		@Override
 		public String getImageURL() {
-			CPDefinition cpDefinition = _getCpDefinition();
-
 			try {
-				return cpDefinition.getDefaultImageFileURL();
+				return _cpDefinition.getDefaultImageThumbnailSrc(
+					CommerceUtil.getCommerceAccountId(
+						(CommerceContext)_httpServletRequest.getAttribute(
+							CommerceWebKeys.COMMERCE_CONTEXT)));
 			}
-			catch (PortalException portalException) {
-				throw new SystemException(portalException);
+			catch (Exception exception) {
+				throw new SystemException(exception);
 			}
 		}
 
 		@Override
 		public Date getModifiedDate() {
-			return _cProduct.getModifiedDate();
+			return _cpDefinition.getModifiedDate();
 		}
 
 		@Override
@@ -165,26 +163,25 @@ public class CProductItemSelectorView
 				(ThemeDisplay)_httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			CPDefinition cpDefinition = _getCpDefinition();
-
 			return JSONUtil.put(
-				"className", CProduct.class.getName()
+				"className", CPDefinition.class.getName()
 			).put(
-				"classNameId", _portal.getClassNameId(CProduct.class.getName())
+				"classNameId",
+				_portal.getClassNameId(CPDefinition.class.getName())
 			).put(
-				"classPK", _cProduct.getCProductId()
+				"classPK", _cpDefinition.getCPDefinitionId()
 			).put(
-				"title", cpDefinition.getName(themeDisplay.getLanguageId())
+				"title", _cpDefinition.getName(themeDisplay.getLanguageId())
 			).put(
 				"type",
 				ResourceActionsUtil.getModelResource(
-					themeDisplay.getLocale(), CProduct.class.getName())
+					themeDisplay.getLocale(), CPDefinition.class.getName())
 			).toString();
 		}
 
 		@Override
 		public String getSubtitle(Locale locale) {
-			Date modifiedDate = _cProduct.getModifiedDate();
+			Date modifiedDate = _cpDefinition.getModifiedDate();
 
 			String modifiedDateDescription = _language.getTimeDescription(
 				locale, System.currentTimeMillis() - modifiedDate.getTime(),
@@ -194,46 +191,34 @@ public class CProductItemSelectorView
 				locale, "x-ago-by-x",
 				new Object[] {
 					modifiedDateDescription,
-					HtmlUtil.escape(_cProduct.getUserName())
+					HtmlUtil.escape(_cpDefinition.getUserName())
 				});
 		}
 
 		@Override
 		public String getTitle(Locale locale) {
-			CPDefinition cpDefinition = _getCpDefinition();
-
-			return cpDefinition.getName(locale.getLanguage());
+			return _cpDefinition.getName(locale.getLanguage());
 		}
 
 		@Override
 		public long getUserId() {
-			return _cProduct.getUserId();
+			return _cpDefinition.getUserId();
 		}
 
 		@Override
 		public String getUserName() {
-			return _cProduct.getUserName();
+			return _cpDefinition.getUserName();
 		}
 
-		private CPDefinition _getCpDefinition() {
-			try {
-				return _cpDefinitionLocalService.getCPDefinition(
-					_cProduct.getPublishedCPDefinitionId());
-			}
-			catch (PortalException portalException) {
-				throw new SystemException(portalException);
-			}
-		}
-
-		private final CProduct _cProduct;
+		private final CPDefinition _cpDefinition;
 		private HttpServletRequest _httpServletRequest;
 
 	}
 
-	private class CProductsItemSelectorViewDescriptor
-		implements ItemSelectorViewDescriptor<CProduct> {
+	private class CPDefinitionItemSelectorViewDescriptor
+		implements ItemSelectorViewDescriptor<CPDefinition> {
 
-		public CProductsItemSelectorViewDescriptor(
+		public CPDefinitionItemSelectorViewDescriptor(
 			HttpServletRequest httpServletRequest, PortletURL portletURL) {
 
 			_httpServletRequest = httpServletRequest;
@@ -241,8 +226,9 @@ public class CProductItemSelectorView
 		}
 
 		@Override
-		public ItemDescriptor getItemDescriptor(CProduct cProduct) {
-			return new CProductItemDescriptor(cProduct, _httpServletRequest);
+		public ItemDescriptor getItemDescriptor(CPDefinition cpDefinition) {
+			return new CPDefinitionItemDescriptor(
+				cpDefinition, _httpServletRequest);
 		}
 
 		@Override
@@ -251,21 +237,22 @@ public class CProductItemSelectorView
 		}
 
 		@Override
-		public SearchContainer<CProduct> getSearchContainer() {
-			SearchContainer<CProduct> entriesSearchContainer =
+		public SearchContainer<CPDefinition> getSearchContainer() {
+			SearchContainer<CPDefinition> entriesSearchContainer =
 				new SearchContainer<>(
 					(PortletRequest)_httpServletRequest.getAttribute(
 						JavaConstants.JAVAX_PORTLET_REQUEST),
 					_portletURL, null, "no-entries-were-found");
 
 			entriesSearchContainer.setTotal(
-				_cProductLocalService.getCProductsCount());
+				_cpDefinitionLocalService.getCPDefinitionsCount());
 
-			List<CProduct> cProducts = _cProductLocalService.getCProducts(
-				entriesSearchContainer.getStart(),
-				entriesSearchContainer.getEnd());
+			List<CPDefinition> cpDefinitions =
+				_cpDefinitionLocalService.getCPDefinitions(
+					entriesSearchContainer.getStart(),
+					entriesSearchContainer.getEnd());
 
-			entriesSearchContainer.setResults(cProducts);
+			entriesSearchContainer.setResults(cpDefinitions);
 
 			return entriesSearchContainer;
 		}

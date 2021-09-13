@@ -23,7 +23,7 @@ import com.liferay.info.localized.InfoLocalizedValue;
 /**
  * @author Eudaldo Alonso
  */
-public interface CProductInfoItemFields {
+public interface CPDefinitionInfoItemFields {
 
 	public static final InfoField<ImageInfoFieldType> defaultImage =
 		InfoField.builder(
@@ -43,7 +43,7 @@ public interface CProductInfoItemFields {
 			"description"
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
-				CProductInfoItemFields.class, "description")
+				CPDefinitionInfoItemFields.class, "description")
 		).build();
 	public static final InfoField<URLInfoFieldType> displayPageUrlInfoField =
 		InfoField.builder(
@@ -62,7 +62,8 @@ public interface CProductInfoItemFields {
 		).name(
 			"title"
 		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(CProductInfoItemFields.class, "title")
+			InfoLocalizedValue.localize(
+				CPDefinitionInfoItemFields.class, "title")
 		).build();
 
 }

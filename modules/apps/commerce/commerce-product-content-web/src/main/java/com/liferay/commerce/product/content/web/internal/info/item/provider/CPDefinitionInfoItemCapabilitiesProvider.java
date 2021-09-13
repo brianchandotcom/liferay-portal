@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.content.web.internal.info.item.provider;
 
-import com.liferay.commerce.product.model.CProduct;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.info.item.capability.InfoItemCapability;
 import com.liferay.info.item.provider.InfoItemCapabilitiesProvider;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
@@ -28,10 +28,11 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
+ * @author Alec Sloan
  */
 @Component(enabled = false, service = InfoItemCapabilitiesProvider.class)
-public class CProductInfoItemCapabilitiesProvider
-	implements InfoItemCapabilitiesProvider<CProduct> {
+public class CPDefinitionInfoItemCapabilitiesProvider
+	implements InfoItemCapabilitiesProvider<CPDefinition> {
 
 	@Override
 	public List<InfoItemCapability> getInfoItemCapabilities() {

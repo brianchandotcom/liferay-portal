@@ -15,8 +15,6 @@
 package com.liferay.commerce.product.content.web.internal.layout.display.page;
 
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CProduct;
-import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -26,29 +24,26 @@ import java.util.Locale;
 
 /**
  * @author Eudaldo Alonso
+ * @author Alec Sloan
  */
-public class CProductLayoutDisplayPageObjectProvider
-	implements LayoutDisplayPageObjectProvider<CProduct> {
+public class CPDefinitionLayoutDisplayPageObjectProvider
+	implements LayoutDisplayPageObjectProvider<CPDefinition> {
 
-	public CProductLayoutDisplayPageObjectProvider(
-		CProduct cProduct, long groupId) {
+	public CPDefinitionLayoutDisplayPageObjectProvider(
+		CPDefinition cpDefinition, long groupId) {
 
-		_cProduct = cProduct;
+		_cpDefinition = cpDefinition;
 		_groupId = groupId;
-
-		_cpDefinition =
-			CPDefinitionLocalServiceUtil.fetchCPDefinitionByCProductId(
-				cProduct.getCProductId());
 	}
 
 	@Override
 	public long getClassNameId() {
-		return PortalUtil.getClassNameId(CProduct.class);
+		return PortalUtil.getClassNameId(CPDefinition.class);
 	}
 
 	@Override
 	public long getClassPK() {
-		return _cProduct.getCProductId();
+		return _cpDefinition.getCPDefinitionId();
 	}
 
 	@Override
@@ -62,8 +57,8 @@ public class CProductLayoutDisplayPageObjectProvider
 	}
 
 	@Override
-	public CProduct getDisplayObject() {
-		return _cProduct;
+	public CPDefinition getDisplayObject() {
+		return _cpDefinition;
 	}
 
 	@Override
@@ -87,7 +82,6 @@ public class CProductLayoutDisplayPageObjectProvider
 	}
 
 	private final CPDefinition _cpDefinition;
-	private final CProduct _cProduct;
 	private final long _groupId;
 
 }

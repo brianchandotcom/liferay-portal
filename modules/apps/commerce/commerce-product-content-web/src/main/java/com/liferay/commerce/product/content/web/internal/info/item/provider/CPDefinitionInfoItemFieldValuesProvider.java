@@ -14,10 +14,8 @@
 
 package com.liferay.commerce.product.content.web.internal.info.item.provider;
 
-import com.liferay.commerce.product.content.web.internal.info.CProductInfoItemFields;
+import com.liferay.commerce.product.content.web.internal.info.CPDefinitionInfoItemFields;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CProduct;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -46,37 +44,35 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	service = InfoItemFieldValuesProvider.class
 )
-public class CProductInfoItemFieldValuesProvider
-	implements InfoItemFieldValuesProvider<CProduct> {
+public class CPDefinitionInfoItemFieldValuesProvider
+	implements InfoItemFieldValuesProvider<CPDefinition> {
 
 	@Override
-	public InfoItemFieldValues getInfoItemFieldValues(CProduct cProduct) {
+	public InfoItemFieldValues getInfoItemFieldValues(
+		CPDefinition cpDefinition) {
+
 		return InfoItemFieldValues.builder(
 		).infoFieldValues(
-			_getCProductInfoFieldValues(cProduct)
+			_getCPDefinitionInfoFieldValues(cpDefinition)
 		).infoFieldValues(
 			_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
-				CProduct.class.getName(), cProduct)
+				CPDefinition.class.getName(), cpDefinition)
 		).infoItemReference(
 			new InfoItemReference(
-				CProduct.class.getName(), cProduct.getCProductId())
+				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId())
 		).build();
 	}
 
-	private List<InfoFieldValue<Object>> _getCProductInfoFieldValues(
-		CProduct cProduct) {
+	private List<InfoFieldValue<Object>> _getCPDefinitionInfoFieldValues(
+		CPDefinition cpDefinition) {
 
-		List<InfoFieldValue<Object>> cProductInfoFieldValues =
+		List<InfoFieldValue<Object>> cpDefinitionInfoFieldValues =
 			new ArrayList<>();
 
 		try {
-			CPDefinition cpDefinition =
-				_cpDefinitionLocalService.fetchCPDefinitionByCProductId(
-					cProduct.getCProductId());
-
-			cProductInfoFieldValues.add(
+			cpDefinitionInfoFieldValues.add(
 				new InfoFieldValue<>(
-					CProductInfoItemFields.titleInfoField,
+					CPDefinitionInfoItemFields.titleInfoField,
 					InfoLocalizedValue.<String>builder(
 					).defaultLocale(
 						LocaleUtil.fromLanguageId(
@@ -84,9 +80,9 @@ public class CProductInfoItemFieldValuesProvider
 					).values(
 						cpDefinition.getNameMap()
 					).build()));
-			cProductInfoFieldValues.add(
+			cpDefinitionInfoFieldValues.add(
 				new InfoFieldValue<>(
-					CProductInfoItemFields.descriptionInfoField,
+					CPDefinitionInfoItemFields.descriptionInfoField,
 					InfoLocalizedValue.<String>builder(
 					).defaultLocale(
 						LocaleUtil.fromLanguageId(
@@ -94,27 +90,26 @@ public class CProductInfoItemFieldValuesProvider
 					).values(
 						cpDefinition.getDescriptionMap()
 					).build()));
-			cProductInfoFieldValues.add(
+			cpDefinitionInfoFieldValues.add(
 				new InfoFieldValue<>(
-					CProductInfoItemFields.defaultImage,
+					CPDefinitionInfoItemFields.defaultImage,
 					cpDefinition.getDefaultImageFileURL()));
 
 			ThemeDisplay themeDisplay = _getThemeDisplay();
 
 			if (themeDisplay != null) {
-				cProductInfoFieldValues.add(
+				cpDefinitionInfoFieldValues.add(
 					new InfoFieldValue<>(
-						CProductInfoItemFields.displayPageUrlInfoField,
+						CPDefinitionInfoItemFields.displayPageUrlInfoField,
 						_cpDefinitionHelper.getFriendlyURL(
-							cProduct.getPublishedCPDefinitionId(),
-							themeDisplay)));
+							cpDefinition.getCPDefinitionId(), themeDisplay)));
 			}
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
 		}
 
-		return cProductInfoFieldValues;
+		return cpDefinitionInfoFieldValues;
 	}
 
 	private ThemeDisplay _getThemeDisplay() {
@@ -130,9 +125,6 @@ public class CProductInfoItemFieldValuesProvider
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;
-
-	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider

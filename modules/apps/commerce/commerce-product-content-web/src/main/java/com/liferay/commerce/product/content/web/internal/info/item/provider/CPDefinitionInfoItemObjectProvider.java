@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.product.content.web.internal.info.item.provider;
 
-import com.liferay.commerce.product.model.CProduct;
-import com.liferay.commerce.product.service.CProductLocalService;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
@@ -26,6 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Guilherme Camacho
+ * @author Alec Sloan
  */
 @Component(
 	enabled = false, immediate = true,
@@ -35,11 +36,11 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = InfoItemObjectProvider.class
 )
-public class CProductInfoItemObjectProvider
-	implements InfoItemObjectProvider<CProduct> {
+public class CPDefinitionInfoItemObjectProvider
+	implements InfoItemObjectProvider<CPDefinition> {
 
 	@Override
-	public CProduct getInfoItem(InfoItemIdentifier infoItemIdentifier)
+	public CPDefinition getInfoItem(InfoItemIdentifier infoItemIdentifier)
 		throws NoSuchInfoItemException {
 
 		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
@@ -50,20 +51,22 @@ public class CProductInfoItemObjectProvider
 		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
 			(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
-		CProduct cProduct = _cProductLocalService.fetchCProduct(
+		CPDefinition cpDefinition = _cpDefinitionLocalService.fetchCPDefinition(
 			classPKInfoItemIdentifier.getClassPK());
 
-		if (cProduct == null) {
+		if (cpDefinition == null) {
 			throw new NoSuchInfoItemException(
 				"Unable to get commerce product " +
 					classPKInfoItemIdentifier.getClassPK());
 		}
 
-		return cProduct;
+		return cpDefinition;
 	}
 
 	@Override
-	public CProduct getInfoItem(long classPK) throws NoSuchInfoItemException {
+	public CPDefinition getInfoItem(long classPK)
+		throws NoSuchInfoItemException {
+
 		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
 			new ClassPKInfoItemIdentifier(classPK);
 
@@ -71,6 +74,6 @@ public class CProductInfoItemObjectProvider
 	}
 
 	@Reference
-	private CProductLocalService _cProductLocalService;
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 }

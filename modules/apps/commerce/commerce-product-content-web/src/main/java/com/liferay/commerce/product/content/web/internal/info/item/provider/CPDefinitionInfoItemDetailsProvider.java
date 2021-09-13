@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.content.web.internal.info.item.provider;
 
-import com.liferay.commerce.product.model.CProduct;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemReference;
@@ -25,26 +25,28 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
+ * @author Alec Sloan
  */
 @Component(
 	enabled = false, immediate = true,
 	property = Constants.SERVICE_RANKING + ":Integer=10",
 	service = InfoItemDetailsProvider.class
 )
-public class CProductInfoItemDetailsProvider
-	implements InfoItemDetailsProvider<CProduct> {
+public class CPDefinitionInfoItemDetailsProvider
+	implements InfoItemDetailsProvider<CPDefinition> {
 
 	@Override
 	public InfoItemClassDetails getInfoItemClassDetails() {
-		return new InfoItemClassDetails(CProduct.class.getName());
+		return new InfoItemClassDetails(CPDefinition.class.getName());
 	}
 
 	@Override
-	public InfoItemDetails getInfoItemDetails(CProduct cProduct) {
+	public InfoItemDetails getInfoItemDetails(CPDefinition cpDefinition) {
 		return new InfoItemDetails(
 			getInfoItemClassDetails(),
 			new InfoItemReference(
-				CProduct.class.getName(), cProduct.getCProductId()));
+				CPDefinition.class.getName(),
+				cpDefinition.getCPDefinitionId()));
 	}
 
 }

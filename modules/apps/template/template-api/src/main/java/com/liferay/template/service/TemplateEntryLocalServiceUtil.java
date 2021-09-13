@@ -44,6 +44,16 @@ public class TemplateEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.template.service.impl.TemplateEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static TemplateEntry addTemplateEntry(
+			long userId, long groupId, String infoItemClassName,
+			String infoItemFormVariationKey, long ddmTemplateId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addTemplateEntry(
+			userId, groupId, infoItemClassName, infoItemFormVariationKey,
+			ddmTemplateId, serviceContext);
+	}
 
 	/**
 	 * Adds the template entry to the database. Also notifies the appropriate model listeners.
@@ -211,6 +221,12 @@ public class TemplateEntryLocalServiceUtil {
 		return getService().fetchTemplateEntry(templateEntryId);
 	}
 
+	public static TemplateEntry fetchTemplateEntryByDDMTemplateId(
+		long ddmTemplateId) {
+
+		return getService().fetchTemplateEntryByDDMTemplateId(ddmTemplateId);
+	}
+
 	/**
 	 * Returns the template entry matching the UUID and group.
 	 *
@@ -278,6 +294,14 @@ public class TemplateEntryLocalServiceUtil {
 		return getService().getTemplateEntries(start, end);
 	}
 
+	public static List<TemplateEntry> getTemplateEntries(
+		long groupId, int start, int end,
+		OrderByComparator<TemplateEntry> orderByComparator) {
+
+		return getService().getTemplateEntries(
+			groupId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns all the template entries matching the UUID and company.
 	 *
@@ -319,6 +343,10 @@ public class TemplateEntryLocalServiceUtil {
 		return getService().getTemplateEntriesCount();
 	}
 
+	public static int getTemplateEntriesCount(long groupId) {
+		return getService().getTemplateEntriesCount(groupId);
+	}
+
 	/**
 	 * Returns the template entry with the primary key.
 	 *
@@ -345,6 +373,15 @@ public class TemplateEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getTemplateEntryByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static TemplateEntry updateTemplateEntry(
+			long templateEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateTemplateEntry(
+			templateEntryId, serviceContext);
 	}
 
 	/**

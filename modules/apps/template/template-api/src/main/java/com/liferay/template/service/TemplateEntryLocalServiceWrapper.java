@@ -33,6 +33,18 @@ public class TemplateEntryLocalServiceWrapper
 		_templateEntryLocalService = templateEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.template.model.TemplateEntry addTemplateEntry(
+			long userId, long groupId, String infoItemClassName,
+			String infoItemFormVariationKey, long ddmTemplateId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _templateEntryLocalService.addTemplateEntry(
+			userId, groupId, infoItemClassName, infoItemFormVariationKey,
+			ddmTemplateId, serviceContext);
+	}
+
 	/**
 	 * Adds the template entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -231,6 +243,14 @@ public class TemplateEntryLocalServiceWrapper
 		return _templateEntryLocalService.fetchTemplateEntry(templateEntryId);
 	}
 
+	@Override
+	public com.liferay.template.model.TemplateEntry
+		fetchTemplateEntryByDDMTemplateId(long ddmTemplateId) {
+
+		return _templateEntryLocalService.fetchTemplateEntryByDDMTemplateId(
+			ddmTemplateId);
+	}
+
 	/**
 	 * Returns the template entry matching the UUID and group.
 	 *
@@ -309,6 +329,17 @@ public class TemplateEntryLocalServiceWrapper
 		return _templateEntryLocalService.getTemplateEntries(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.template.model.TemplateEntry>
+		getTemplateEntries(
+			long groupId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.template.model.TemplateEntry> orderByComparator) {
+
+		return _templateEntryLocalService.getTemplateEntries(
+			groupId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns all the template entries matching the UUID and company.
 	 *
@@ -355,6 +386,11 @@ public class TemplateEntryLocalServiceWrapper
 		return _templateEntryLocalService.getTemplateEntriesCount();
 	}
 
+	@Override
+	public int getTemplateEntriesCount(long groupId) {
+		return _templateEntryLocalService.getTemplateEntriesCount(groupId);
+	}
+
 	/**
 	 * Returns the template entry with the primary key.
 	 *
@@ -385,6 +421,16 @@ public class TemplateEntryLocalServiceWrapper
 
 		return _templateEntryLocalService.getTemplateEntryByUuidAndGroupId(
 			uuid, groupId);
+	}
+
+	@Override
+	public com.liferay.template.model.TemplateEntry updateTemplateEntry(
+			long templateEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _templateEntryLocalService.updateTemplateEntry(
+			templateEntryId, serviceContext);
 	}
 
 	/**

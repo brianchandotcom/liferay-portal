@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -63,6 +64,11 @@ public interface TemplateEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.template.service.impl.TemplateEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the template entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link TemplateEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public TemplateEntry addTemplateEntry(
+			long userId, long groupId, String infoItemClassName,
+			String infoItemFormVariationKey, long ddmTemplateId,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the template entry to the database. Also notifies the appropriate model listeners.
@@ -202,6 +208,9 @@ public interface TemplateEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TemplateEntry fetchTemplateEntry(long templateEntryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TemplateEntry fetchTemplateEntryByDDMTemplateId(long ddmTemplateId);
+
 	/**
 	 * Returns the template entry matching the UUID and group.
 	 *
@@ -252,6 +261,11 @@ public interface TemplateEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<TemplateEntry> getTemplateEntries(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<TemplateEntry> getTemplateEntries(
+		long groupId, int start, int end,
+		OrderByComparator<TemplateEntry> orderByComparator);
+
 	/**
 	 * Returns all the template entries matching the UUID and company.
 	 *
@@ -286,6 +300,9 @@ public interface TemplateEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTemplateEntriesCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getTemplateEntriesCount(long groupId);
+
 	/**
 	 * Returns the template entry with the primary key.
 	 *
@@ -308,6 +325,10 @@ public interface TemplateEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TemplateEntry getTemplateEntryByUuidAndGroupId(
 			String uuid, long groupId)
+		throws PortalException;
+
+	public TemplateEntry updateTemplateEntry(
+			long templateEntryId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

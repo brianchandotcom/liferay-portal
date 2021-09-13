@@ -430,6 +430,28 @@ definition {
 		FormPortlet.submit();
 
 		Form.viewRedirectedURL(friendlyURL = "${friendlyURL}");
+
+		Navigator.gotoPage(pageName = "Form Page 1");
+
+		Portlet.addPG(
+			pageName = "Form Page 1",
+			portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm();
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Form Page 1");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "test");
+
+		FormPortlet.submit();
+
+		Form.viewRedirectedURL(friendlyURL = "${friendlyURL}");
 	}
 
 	@description = "LPS-60818 - Verify that a Form can require CAPTCHA before being accessed"

@@ -91,7 +91,7 @@ if (tabs1.equals("published")) {
 	iteratorURL="<%= iteratorURL %>"
 >
 	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="addURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/designer/edit_kaleo_definition_version.jsp" />
+		<portlet:param name="mvcPath" value="<%= KaleoDesignerUtil.getJspPath() %>" />
 		<portlet:param name="closeRedirect" value="<%= backURL %>" />
 	</liferay-portlet:renderURL>
 

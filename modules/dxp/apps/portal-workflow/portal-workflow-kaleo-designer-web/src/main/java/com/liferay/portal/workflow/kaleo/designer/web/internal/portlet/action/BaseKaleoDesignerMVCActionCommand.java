@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.util.KaleoDesignerUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
@@ -188,8 +189,7 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
 			actionRequest, themeDisplay.getPpid(), PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(
-			"mvcPath", "/designer/edit_kaleo_definition_version.jsp");
+		portletURL.setParameter("mvcPath", KaleoDesignerUtil.getJspPath());
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 

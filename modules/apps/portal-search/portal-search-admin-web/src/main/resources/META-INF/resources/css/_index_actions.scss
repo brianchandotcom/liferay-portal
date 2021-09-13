@@ -6,4 +6,54 @@
 	.list-group-item-flex .autofit-col .list-group-title:only-child {
 		min-height: 40px;
 	}
+
+	.execution-scope-sheet {
+		.custom-radio {
+			&:last-child {
+				margin-bottom: 32px;
+			}
+
+			margin-bottom: 10px;
+		}
+
+		.list-group-item {
+			&:first-child {
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+			}
+
+			cursor: pointer;
+		}
+
+		.management-bar,
+		.subnav-tbar {
+			border: 0.0625rem solid #e7e7ed;
+			border-bottom: unset;
+		}
+
+		.pagination-bar {
+			display: block;
+			flex-wrap: nowrap;
+			text-align: center;
+
+			.pagination {
+				margin: auto;
+				width: fit-content;
+			}
+		}
+
+		.subnav-tbar {
+			display: block;
+			padding-left: 16px;
+			padding-right: 16px;
+
+			.instance-labels {
+				margin-top: 12px;
+
+				.label {
+					margin-right: 10px;
+				}
+			}
+		}
+	}
 }

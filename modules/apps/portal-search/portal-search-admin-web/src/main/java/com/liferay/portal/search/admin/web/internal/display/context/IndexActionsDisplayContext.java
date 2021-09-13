@@ -12,20 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.search.admin.web.internal.constants;
+package com.liferay.portal.search.admin.web.internal.display.context;
+
+import java.util.Map;
 
 /**
- * @author Adam Brandizzi
+ * @author Olivia Yu
  */
-public class SearchAdminWebKeys {
+public class IndexActionsDisplayContext {
 
-	public static final String FIELD_MAPPINGS_DISPLAY_CONTEXT =
-		"FIELD_MAPPINGS_DISPLAY_CONTEXT";
+	public Map<String, Object> getData() {
+		return _data;
+	}
 
-	public static final String INDEX_ACTIONS_DISPLAY_CONTEXT =
-		"INDEX_ACTIONS_DISPLAY_CONTEXT";
+	public void setData(Map<String, Object> data) {
+		_data = data;
+	}
 
-	public static final String SEARCH_ENGINE_DISPLAY_CONTEXT =
-		"SEARCH_ENGINE_DISPLAY_CONTEXT";
+	private Map<String, Object> _data;
 
 }

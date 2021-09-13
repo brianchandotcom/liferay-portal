@@ -152,7 +152,26 @@ AUI.add(
 
 					instance._addInputsFromData(data);
 
+					var companyIds = document.getElementById(
+						instance.ns('companyIds')
+					).value;
+
+					if (!companyIds) {
+						this._showError(
+							Liferay.Language.get('missing-instance-error')
+						);
+
+						return;
+					}
+
 					submitForm(form, instance.get(STR_URL));
+				},
+
+				_showError(message) {
+					Liferay.Util.openToast({
+						message,
+						type: 'danger',
+					});
 				},
 
 				_updateIndexActions() {

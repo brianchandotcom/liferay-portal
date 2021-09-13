@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.admin.web.internal.constants.SearchAdminPortletKeys;
 import com.liferay.portal.search.admin.web.internal.constants.SearchAdminWebKeys;
 import com.liferay.portal.search.admin.web.internal.display.context.FieldMappingsDisplayBuilder;
+import com.liferay.portal.search.admin.web.internal.display.context.IndexActionsDisplayBuilder;
 import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayBuilder;
 import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayContext;
 import com.liferay.portal.search.admin.web.internal.display.context.SearchEngineDisplayBuilder;
@@ -130,6 +131,15 @@ public class SearchAdminPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				SearchAdminWebKeys.FIELD_MAPPINGS_DISPLAY_CONTEXT,
 				fieldMappingsDisplayBuilder.build());
+		}
+		else {
+			IndexActionsDisplayBuilder indexActionsDisplayBuilder =
+				new IndexActionsDisplayBuilder(
+					_language, _portal, renderRequest, renderResponse);
+
+			renderRequest.setAttribute(
+				SearchAdminWebKeys.INDEX_ACTIONS_DISPLAY_CONTEXT,
+				indexActionsDisplayBuilder.build());
 		}
 
 		super.render(renderRequest, renderResponse);

@@ -42,6 +42,12 @@ public class DictionaryReindexer {
 		}
 	}
 
+	public void reindexDictionaries(long[] companyIds) throws SearchException {
+		for (long companyId : companyIds) {
+			reindexDictionaries(companyId);
+		}
+	}
+
 	protected void reindexDictionaries(long companyId) throws SearchException {
 		_indexWriterHelper.indexQuerySuggestionDictionaries(companyId);
 		_indexWriterHelper.indexSpellCheckerDictionaries(companyId);

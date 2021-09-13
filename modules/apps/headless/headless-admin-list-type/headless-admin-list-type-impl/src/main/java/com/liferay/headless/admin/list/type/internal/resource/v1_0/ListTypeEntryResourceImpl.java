@@ -40,6 +40,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ListTypeEntryResourceImpl
 	extends BaseListTypeEntryResourceImpl implements NestedFieldSupport {
 
+	@Override
+	public void deleteListTypeEntry(Long listTypeEntryId) throws Exception {
+		_listTypeEntryLocalService.deleteListTypeEntry(listTypeEntryId);
+	}
+
 	@NestedField(
 		parentClass = ListTypeDefinition.class, value = "listTypeEntries"
 	)

@@ -83,7 +83,7 @@ public abstract class BaseTemplateDisplayContext {
 		DDMTemplateActionDropdownItemsProvider
 			ddmTemplateActionDropdownItemsProvider =
 				new DDMTemplateActionDropdownItemsProvider(
-					isAddDDMTemplateEnabled(), ddmTemplate, _httpServletRequest,
+					isAddButtonEnabled(), ddmTemplate, _httpServletRequest,
 					_liferayPortletResponse, getTabs1());
 
 		return ddmTemplateActionDropdownItemsProvider.getActionDropdownItems();
@@ -202,7 +202,7 @@ public abstract class BaseTemplateDisplayContext {
 
 	public abstract String getTemplateTypeLabel(long classNameId);
 
-	public boolean isAddDDMTemplateEnabled() {
+	public boolean isAddButtonEnabled() {
 		if (!_ddmWebConfiguration.enableTemplateCreation()) {
 			return false;
 		}

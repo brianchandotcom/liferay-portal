@@ -147,8 +147,7 @@ public class InformationTemplatesManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		if (!_informationTemplatesTemplateDisplayContext.
-				isAddDDMTemplateEnabled() ||
+		if (!_informationTemplatesTemplateDisplayContext.isAddButtonEnabled() ||
 			!containsAddPortletDisplayTemplatePermission()) {
 
 			return null;

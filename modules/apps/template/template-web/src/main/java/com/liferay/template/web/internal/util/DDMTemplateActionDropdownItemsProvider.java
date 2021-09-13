@@ -39,11 +39,11 @@ import javax.servlet.http.HttpServletRequest;
 public class DDMTemplateActionDropdownItemsProvider {
 
 	public DDMTemplateActionDropdownItemsProvider(
-		boolean addDDMTemplateEnabled, DDMTemplate ddmTemplate,
+		boolean addButtonEnabled, DDMTemplate ddmTemplate,
 		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse, String tabs1) {
 
-		_addDDMTemplateEnabled = addDDMTemplateEnabled;
+		_addButtonEnabled = addButtonEnabled;
 		_ddmTemplate = ddmTemplate;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -70,7 +70,7 @@ public class DDMTemplateActionDropdownItemsProvider {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						() ->
-							_addDDMTemplateEnabled &&
+							_addButtonEnabled &&
 							DDMTemplatePermission.containsAddTemplatePermission(
 								_themeDisplay.getPermissionChecker(),
 								_themeDisplay.getScopeGroupId(),
@@ -185,7 +185,7 @@ public class DDMTemplateActionDropdownItemsProvider {
 		};
 	}
 
-	private final boolean _addDDMTemplateEnabled;
+	private final boolean _addButtonEnabled;
 	private final DDMTemplate _ddmTemplate;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

@@ -112,7 +112,7 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		if (!_widgetTemplatesTemplateDisplayContext.isAddDDMTemplateEnabled()) {
+		if (!_widgetTemplatesTemplateDisplayContext.isAddButtonEnabled()) {
 			return null;
 		}
 

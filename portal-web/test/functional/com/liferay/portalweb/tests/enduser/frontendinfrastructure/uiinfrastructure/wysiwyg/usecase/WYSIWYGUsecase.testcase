@@ -320,6 +320,11 @@ definition {
 	test CanEditTextInPreviewSourceContent {
 		property portal.upstream = "quarantine";
 
+		JSONWebcontent.addWebContent(
+			content = "",
+			groupName = "WYSIWYG Site Name",
+			title = "Web Content Title");
+
 		Open(locator1 = "http://www.standards-schmandards.com/exhibits/wysiwyg/sampledoc.htm");
 
 		SelectFieldText(locator1 = "//body");
@@ -329,10 +334,6 @@ definition {
 		Navigator.openURL();
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "wysiwyg-site-name");
-
-		VerifyElementPresent(
-			key_assetTitle = "Web Content Title",
-			locator1 = "WC#ENTRY_LIST_TITLE");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 

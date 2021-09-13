@@ -184,7 +184,7 @@ definition {
 		}
 
 		task ("Delete Pending All Users") {
-			ACSettings.deletePendingAllUsers();
+			ACSettings.deleteAllPendingUsers();
 		}
 	}
 

@@ -36,14 +36,6 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 			condition = "not(equals(getValue('ddmDataProviderInstanceId'), ''))"
 		),
 		@DDMFormRule(
-			actions = "setValue('required', TRUE)",
-			condition = "not(isEmpty(getValue('objectFieldName'))) and equals(IsRequiredObjectField(getValue('objectFieldName')), TRUE)"
-		),
-		@DDMFormRule(
-			actions = "setValue('required', FALSE)",
-			condition = "not(isEmpty(getValue('objectFieldName'))) and equals(IsRequiredObjectField(getValue('objectFieldName')), FALSE)"
-		),
-		@DDMFormRule(
 			actions = {
 				"setVisible('autocomplete', TRUE)",
 				"setVisible('repeatable', TRUE)",
@@ -76,6 +68,13 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 				"setVisible('requireConfirmation', FALSE)"
 			},
 			condition = "not(equals(getValue('displayStyle'), 'singleline'))"
+		),
+		@DDMFormRule(
+			actions = {
+				"setEnabled('required', FALSE)",
+				"setValue('required', IsRequiredObjectField(getValue('objectFieldName')))"
+			},
+			condition = "not(isEmpty(getValue('objectFieldName')))"
 		),
 		@DDMFormRule(
 			actions = {

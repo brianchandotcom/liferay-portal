@@ -43,6 +43,10 @@ public class AccountConstants {
 		ACCOUNT_ENTRY_TYPE_PERSON
 	};
 
+	public static final String[] ACCOUNT_ENTRY_TYPES_DEFAULT_ALLOWED_TYPES = {
+		ACCOUNT_ENTRY_TYPE_BUSINESS, ACCOUNT_ENTRY_TYPE_PERSON
+	};
+
 	public static final String ACCOUNT_GROUP_NAME_GUEST = "Guest";
 
 	public static final String ACCOUNT_GROUP_TYPE_DYNAMIC = "dynamic";

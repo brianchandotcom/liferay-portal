@@ -945,7 +945,7 @@ definition {
 			category = "category",
 			pageName = "Questions Page",
 			portalURL = "${portalURL}",
-			title = "question@#");
+			title = "question-");
 	}
 
 	@description = "Validate if the user can create the second answer to a question, it also covers LPS-125810."

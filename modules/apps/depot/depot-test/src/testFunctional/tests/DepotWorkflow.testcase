@@ -379,11 +379,12 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ApproveWCInFolder {
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		JSONWebcontent.addFolder(
+			folderName = "WC Folder Name",
+			groupName = "Test Depot Name",
+			site = "false");
 
-		WebContentFolder.addCP(
-			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentFolder.configureWorkflowCP(
 			folderName = "WC Folder Name",
@@ -931,11 +932,12 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test RestoreWCFolderWorkflowToDefault {
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		JSONWebcontent.addFolder(
+			folderName = "WC Folder Name",
+			groupName = "Test Depot Name",
+			site = "false");
 
-		WebContentFolder.addCP(
-			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentFolder.configureWorkflowCP(
 			folderName = "WC Folder Name",

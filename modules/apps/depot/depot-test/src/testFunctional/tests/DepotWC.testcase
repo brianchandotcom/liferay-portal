@@ -34,11 +34,12 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CanDeleteFolder {
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		JSONWebcontent.addFolder(
+			folderName = "WC Folder Name",
+			groupName = "Test Depot Name",
+			site = "false");
 
-		WebContentFolder.addCP(
-			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentFolder.moveToRecycleBinCP(
 			assetType = "Web Content Folder",
@@ -269,11 +270,12 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		JSONWebcontent.addFolder(
+			folderName = "WC Folder Name",
+			groupName = "Test Depot Name",
+			site = "false");
 
-		WebContentFolder.addCP(
-			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContent.moveToFolderCP(
 			folderName = "WC Folder Name",

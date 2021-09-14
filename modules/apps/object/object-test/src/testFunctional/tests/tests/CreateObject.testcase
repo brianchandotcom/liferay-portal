@@ -216,11 +216,24 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Object Label field blank"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotLeaveObjectLabelFieldBlank {
 
-		// TODO LPS-138809 CannotLeaveObjectLabelFieldBlank pending implementation
+		ObjectAdmin.openObjectAdmin();
+
+		Click(locator1 = "ObjectAdmin#ADD_CUSTOM_OBJECT");
+
+		Type(
+			locator1 = "ObjectAdmin#PLURAL_LABEL_CUSTOM_OBJECT",
+			value1 = "Custom Objects");
+
+		Type(
+			locator1 = "ObjectAdmin#NAME_CUSTOM_OBJECT",
+			value1 = "Custom Object");
+
+		ObjectAdmin.saveCustomObject();
+
+		Alert.viewErrorMessage(errorMessage = "Label is null for locale English (United States)");
 
 	}
 

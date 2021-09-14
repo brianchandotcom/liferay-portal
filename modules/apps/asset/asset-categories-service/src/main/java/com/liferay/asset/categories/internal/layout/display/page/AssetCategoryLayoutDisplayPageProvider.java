@@ -111,7 +111,7 @@ public class AssetCategoryLayoutDisplayPageProvider
 
 	@Override
 	public String getURLSeparator() {
-		return "/v/";
+		return "/g/";
 	}
 
 	@Override

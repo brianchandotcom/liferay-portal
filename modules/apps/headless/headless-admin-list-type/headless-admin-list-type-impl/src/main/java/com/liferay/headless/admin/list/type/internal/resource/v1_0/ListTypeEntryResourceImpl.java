@@ -83,6 +83,19 @@ public class ListTypeEntryResourceImpl
 					listTypeEntry.getName_i18n())));
 	}
 
+	@Override
+	public ListTypeEntry putListTypeEntry(
+			Long listTypeEntryId, ListTypeEntry listTypeEntry)
+		throws Exception {
+
+		return ListTypeEntryUtil.toListTypeEntry(
+			null, contextAcceptLanguage.getPreferredLocale(),
+			_listTypeEntryLocalService.updateListTypeEntry(
+				listTypeEntryId,
+				LocalizedMapUtil.getLocalizedMap(
+					listTypeEntry.getName_i18n())));
+	}
+
 	private Map<String, Map<String, String>> _getActions(
 		com.liferay.list.type.model.ListTypeEntry serviceBuilderListTypeEntry) {
 

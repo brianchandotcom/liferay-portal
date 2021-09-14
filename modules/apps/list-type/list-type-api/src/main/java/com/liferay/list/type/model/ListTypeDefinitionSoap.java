@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.list.type.service.http.ListTypeDefinitionServiceSoap}.
  *
  * @author Gabriel Albuquerque
  * @deprecated As of Athanasius (7.3.x), with no direct replacement

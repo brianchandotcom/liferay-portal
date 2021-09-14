@@ -19,6 +19,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeDefinitionModel;
+import com.liferay.list.type.model.ListTypeDefinitionSoap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
@@ -46,10 +47,12 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -69,6 +72,7 @@ import java.util.function.Function;
  * @see ListTypeDefinitionImpl
  * @generated
  */
+@JSON(strict = true)
 public class ListTypeDefinitionModelImpl
 	extends BaseModelImpl<ListTypeDefinition>
 	implements ListTypeDefinitionModel {
@@ -151,6 +155,59 @@ public class ListTypeDefinitionModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+	}
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static ListTypeDefinition toModel(ListTypeDefinitionSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		ListTypeDefinition model = new ListTypeDefinitionImpl();
+
+		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setUuid(soapModel.getUuid());
+		model.setListTypeDefinitionId(soapModel.getListTypeDefinitionId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setName(soapModel.getName());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static List<ListTypeDefinition> toModels(
+		ListTypeDefinitionSoap[] soapModels) {
+
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<ListTypeDefinition> models = new ArrayList<ListTypeDefinition>(
+			soapModels.length);
+
+		for (ListTypeDefinitionSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
 	}
 
 	public ListTypeDefinitionModelImpl() {
@@ -339,6 +396,7 @@ public class ListTypeDefinitionModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -353,6 +411,7 @@ public class ListTypeDefinitionModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -381,6 +440,7 @@ public class ListTypeDefinitionModelImpl
 		return getColumnOriginalValue("uuid_");
 	}
 
+	@JSON
 	@Override
 	public long getListTypeDefinitionId() {
 		return _listTypeDefinitionId;
@@ -395,6 +455,7 @@ public class ListTypeDefinitionModelImpl
 		_listTypeDefinitionId = listTypeDefinitionId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -419,6 +480,7 @@ public class ListTypeDefinitionModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -449,6 +511,7 @@ public class ListTypeDefinitionModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -468,6 +531,7 @@ public class ListTypeDefinitionModelImpl
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -482,6 +546,7 @@ public class ListTypeDefinitionModelImpl
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -502,6 +567,7 @@ public class ListTypeDefinitionModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {

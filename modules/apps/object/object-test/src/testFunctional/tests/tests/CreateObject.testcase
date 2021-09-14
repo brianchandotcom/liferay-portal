@@ -158,7 +158,6 @@ definition {
 		ObjectAdmin.assertObjectField(
 			fieldName = "customField",
 			fieldType = "Double");
-
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create an Integer field"

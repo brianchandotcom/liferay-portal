@@ -95,12 +95,19 @@ renderResponse.setTitle(exportTranslationDisplayContext.getTitle());
 											cssClass="list-group-label"
 											for='<%= "experience_" + experience.get("value") %>'
 										>
-											<clay:content-col><%= experience.get("label") %></clay:content-col>
+											<clay:content-col
+												cssClass="translation-experience-name"
+											>
+												<div class="text-truncate" title="<%= experience.get("label") %>">
+													<%= experience.get("label") %>
+												</div>
+											</clay:content-col>
+
 											<clay:content-col
 												cssClass="text-right"
 												expand="<%= true %>"
 											>
-												<span class="small text-secondary"><%= experience.get("segment") %></span>
+												<span class="small text-secondary text-truncate"><%= experience.get("segment") %></span>
 											</clay:content-col>
 										</clay:content-row>
 									</clay:content-col>

@@ -78,7 +78,7 @@
 </tr>
 <tr>
 	<td>CRITERIA_ROW</td>
-	<td>//div[contains(@class,'criteria-row')]//b[contains(text(),'${key_CriteriaName}')]</td>
+	<td>//div[contains(@class,'criteria-row')][contains(.,'${key_CriteriaName}')]</td>
 	<td></td>
 </tr>
 <tr>

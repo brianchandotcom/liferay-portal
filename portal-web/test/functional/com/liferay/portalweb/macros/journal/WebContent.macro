@@ -301,8 +301,6 @@ definition {
 			value1 = "Publish");
 
 		Pause(locator1 = "5000");
-
-		var key_assetTitle = "${webContentTitle}";
 	}
 
 	macro addPGViaWCD {

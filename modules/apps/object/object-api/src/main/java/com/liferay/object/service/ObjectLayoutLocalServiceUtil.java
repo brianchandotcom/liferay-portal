@@ -240,6 +240,12 @@ public class ObjectLayoutLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static ObjectLayout getDefaultObjectLayout(long objectDefinitionId)
+		throws PortalException {
+
+		return getService().getDefaultObjectLayout(objectDefinitionId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

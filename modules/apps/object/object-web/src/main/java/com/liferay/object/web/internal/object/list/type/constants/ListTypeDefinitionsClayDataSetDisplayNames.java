@@ -12,19 +12,16 @@
  * details.
  */
 
-package com.liferay.object.web.internal.object.definitions.constants;
+package com.liferay.object.web.internal.object.list.type.constants;
 
 /**
  * @author Gabriel Albuquerque
  */
-public class ObjectDefinitionsClayDataSetDisplayNames {
+public class ListTypeDefinitionsClayDataSetDisplayNames {
 
-	public static final String OBJECT_DEFINITIONS = "objectDefinitions";
+	public static final String LIST_TYPE_DEFINITION_ITEMS =
+		"listTypeDefinitionItems";
 
-	public static final String OBJECT_FIELDS = "objectFields";
-
-	public static final String OBJECT_LAYOUTS = "objectLayouts";
-
-	public static final String OBJECT_RELATIONSHIPS = "objectRelationships";
+	public static final String LIST_TYPE_DEFINITIONS = "listTypeDefinitions";
 
 }

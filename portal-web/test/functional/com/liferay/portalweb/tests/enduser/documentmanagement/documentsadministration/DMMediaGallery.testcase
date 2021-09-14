@@ -196,7 +196,7 @@ definition {
 			mgDocumentTitle = "DM Document Title 2",
 			mgFolderName = "DM Folder Name");
 
-		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
 
 		ApplicationDisplayTemplates.addCP(
 			adtFile = "adt_media_gallery_carousel.ftl",

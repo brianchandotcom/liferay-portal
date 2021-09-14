@@ -10,9 +10,19 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field localized="true" name="name" type="String" />
-		<field name="url" type="String">
+		<field name="customElementCSSURLs" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="customElementHTMLElementName" type="String">
+			<hint name="max-length">256</hint>
+		</field>
+		<field name="customElementURLs" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="iframeURL" type="String">
 			<hint name="max-length">1024</hint>
 		</field>
+		<field localized="true" name="name" type="String" />
+		<field name="type" type="String" />
 	</model>
 </model-hints>

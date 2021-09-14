@@ -40,7 +40,6 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 
 					<aui:select disabled="<%= objectDefinition.isApproved() %>" name="type" onChange='<%= liferayPortletResponse.getNamespace() + "onChangeFieldType(event);" %>' required="<%= true %>">
 						<aui:option label="BigDecimal" selected='<%= objectField.getType().equals("BigDecimal") %>' value="BigDecimal" />
-						<aui:option label="Blob" selected='<%= objectField.getType().equals("Blob") %>' value="Blob" />
 						<aui:option label="Boolean" selected='<%= objectField.getType().equals("Boolean") %>' value="Boolean" />
 						<aui:option label="Date" selected='<%= objectField.getType().equals("Date") %>' value="Date" />
 						<aui:option label="Double" selected='<%= objectField.getType().equals("Double") %>' value="Double" />

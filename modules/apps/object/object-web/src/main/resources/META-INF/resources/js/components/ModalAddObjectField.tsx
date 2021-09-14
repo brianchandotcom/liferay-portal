@@ -53,7 +53,6 @@ type TFormatName = (str: string) => string;
 
 const objectFieldTypes = [
 	'BigDecimal',
-	'Blob',
 	'Boolean',
 	'Date',
 	'Double',

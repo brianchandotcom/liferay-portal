@@ -301,6 +301,33 @@ definition {
 		User.logoutPG();
 	}
 
+	@summary = "Deletes if present, catalogs, price lists or promotions, excluding Master occurrencies"
+	macro commerceTearDownExcludingMaster {
+		var elementsList= "";
+		var count = "1";
+
+		while (IsElementPresent(key_rowNumber = "${count}", locator1 = "CommerceNavigation#ENTRY_NAME_N")) {
+			var key_rowNumber = "${count}";
+			var entryName = selenium.getText("CommerceNavigation#ENTRY_NAME_N");
+
+			if (("${entryName}" != "Master") && ("${entryName}" != "Master Base Price List") && ("${entryName}" != "Master Base Promotion")) {
+				elementsList = StringUtil.add("${elementsList}", "${entryName}");
+			}
+			var count = ${count} + 1;
+		}
+
+		if ("${elementsList}" != "") {
+			for (var catalogName : list "${elementsList}") {
+				ClickNoError(
+					key_entryName = "${catalogName}",
+					locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
+				CommerceEntry.clickNoError(menuItem = "Delete");
+				AssertElementPresent(locator1 = "Message#SUCCESS");
+				AssertElementNotPresent(locator1 = "Message#ERROR");
+			}
+		}
+	}
+
 	macro reindexAllSearchIndexes {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

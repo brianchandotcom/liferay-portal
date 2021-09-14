@@ -16,9 +16,11 @@ package com.liferay.headless.commerce.shop.by.diagram.internal.resource.v1_0;
 
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry;
-import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramEntryService;
+import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
 import com.liferay.headless.commerce.shop.by.diagram.dto.v1_0.DiagramEntry;
 import com.liferay.headless.commerce.shop.by.diagram.internal.dto.v1_0.converter.DiagramEntryDTOConverter;
 import com.liferay.headless.commerce.shop.by.diagram.resource.v1_0.DiagramEntryResource;
@@ -44,8 +46,7 @@ public class DiagramEntryResourceImpl extends BaseDiagramEntryResourceImpl {
 
 	@Override
 	public void deleteDiagramEntry(Long diagramEntryId) throws Exception {
-		_cpDefinitionDiagramEntryService.deleteCPDefinitionDiagramEntry(
-			diagramEntryId);
+		_csDiagramEntryService.deleteCSDiagramEntry(diagramEntryId);
 	}
 
 	@Override
@@ -91,33 +92,25 @@ public class DiagramEntryResourceImpl extends BaseDiagramEntryResourceImpl {
 			Long diagramEntryId, DiagramEntry diagramEntry)
 		throws Exception {
 
-		CPDefinitionDiagramEntry cpDefinitionDiagramEntry =
-			_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntry(
-				diagramEntryId);
+		CSDiagramEntry csDiagramEntry =
+			_csDiagramEntryService.getCSDiagramEntry(diagramEntryId);
 
-		_cpDefinitionDiagramEntryService.updateCPDefinitionDiagramEntry(
-			cpDefinitionDiagramEntry.getCPDefinitionDiagramEntryId(),
+		_csDiagramEntryService.updateCSDiagramEntry(
+			csDiagramEntry.getCSDiagramEntryId(),
 			GetterUtil.get(
-				diagramEntry.getSkuUuid(),
-				cpDefinitionDiagramEntry.getCPInstanceUuid()),
+				diagramEntry.getSkuUuid(), csDiagramEntry.getCPInstanceId()),
 			GetterUtil.get(
-				diagramEntry.getProductId(),
-				cpDefinitionDiagramEntry.getCProductId()),
+				diagramEntry.getProductId(), csDiagramEntry.getCProductId()),
 			GetterUtil.get(
-				diagramEntry.getDiagram(),
-				cpDefinitionDiagramEntry.isDiagram()),
+				diagramEntry.getDiagram(), csDiagramEntry.isDiagram()),
 			GetterUtil.get(
-				diagramEntry.getQuantity(),
-				cpDefinitionDiagramEntry.getQuantity()),
+				diagramEntry.getQuantity(), csDiagramEntry.getQuantity()),
 			GetterUtil.get(
-				diagramEntry.getSku(), cpDefinitionDiagramEntry.getSku()),
-			GetterUtil.get(
-				diagramEntry.getSequence(),
-				cpDefinitionDiagramEntry.getSequence()),
+				diagramEntry.getSequence(), csDiagramEntry.getSequence()),
+			GetterUtil.get(diagramEntry.getSku(), csDiagramEntry.getSku()),
 			new ServiceContext());
 
-		return _toDiagramEntry(
-			cpDefinitionDiagramEntry.getCPDefinitionDiagramEntryId());
+		return _toDiagramEntry(csDiagramEntry.getCSDiagramEntryId());
 	}
 
 	@Override
@@ -159,50 +152,71 @@ public class DiagramEntryResourceImpl extends BaseDiagramEntryResourceImpl {
 			long cpDefinitionId, DiagramEntry diagramEntry)
 		throws Exception {
 
-		CPDefinitionDiagramEntry cpDefinitionDiagramEntry =
-			_cpDefinitionDiagramEntryService.addCPDefinitionDiagramEntry(
-				cpDefinitionId, GetterUtil.getString(diagramEntry.getSkuUuid()),
-				GetterUtil.getLong(diagramEntry.getProductId()),
+		long skuId = GetterUtil.getLong(diagramEntry.getSkuUuid());
+
+		CPInstance cpInstance = _cpInstanceService.fetchByExternalReferenceCode(
+			diagramEntry.getSkuExternalReferenceCode(),
+			contextCompany.getCompanyId());
+
+		if (cpInstance != null) {
+			skuId = cpInstance.getCPInstanceId();
+		}
+
+		long productId = GetterUtil.getLong(diagramEntry.getProductId());
+
+		CPDefinition cpDefinition =
+			_cpDefinitionService.
+				fetchCPDefinitionByCProductExternalReferenceCode(
+					diagramEntry.getProductExternalReferenceCode(),
+					contextCompany.getCompanyId());
+
+		if (cpDefinition != null) {
+			productId = cpDefinition.getCProductId();
+		}
+
+		CSDiagramEntry csDiagramEntry =
+			_csDiagramEntryService.addCSDiagramEntry(
+				cpDefinitionId, skuId, productId,
 				GetterUtil.getBoolean(diagramEntry.getDiagram()),
 				GetterUtil.getInteger(diagramEntry.getQuantity()),
 				GetterUtil.getString(diagramEntry.getSequence()),
 				GetterUtil.getString(diagramEntry.getSku()),
 				new ServiceContext());
 
-		return _toDiagramEntry(
-			cpDefinitionDiagramEntry.getCPDefinitionDiagramEntryId());
+		return _toDiagramEntry(csDiagramEntry.getCSDiagramEntryId());
 	}
 
 	private Page<DiagramEntry> _getDiagramEntriesPage(
-			long cpDefintionId, Pagination pagination)
+			long cpDefinitionId, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
 			transform(
-				_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntries(
-					cpDefintionId, pagination.getStartPosition(),
+				_csDiagramEntryService.getCSDiagramEntries(
+					cpDefinitionId, pagination.getStartPosition(),
 					pagination.getEndPosition()),
-				cpDefinitionDiagramEntry -> _toDiagramEntry(
-					cpDefinitionDiagramEntry.getCPDefinitionDiagramEntryId())),
+				csDiagramEntry -> _toDiagramEntry(
+					csDiagramEntry.getCSDiagramEntryId())),
 			pagination,
-			_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntriesCount(
-				cpDefintionId));
+			_csDiagramEntryService.getCSDiagramEntriesCount(cpDefinitionId));
 	}
 
-	private DiagramEntry _toDiagramEntry(long cpDefinitionDiagramEntryId)
+	private DiagramEntry _toDiagramEntry(long csDiagramEntryId)
 		throws Exception {
 
 		return _diagramEntryDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				cpDefinitionDiagramEntryId,
-				contextAcceptLanguage.getPreferredLocale()));
+				csDiagramEntryId, contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Reference
-	private CPDefinitionDiagramEntryService _cpDefinitionDiagramEntryService;
+	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private CPDefinitionService _cpDefinitionService;
+	private CPInstanceService _cpInstanceService;
+
+	@Reference
+	private CSDiagramEntryService _csDiagramEntryService;
 
 	@Reference
 	private DiagramEntryDTOConverter _diagramEntryDTOConverter;

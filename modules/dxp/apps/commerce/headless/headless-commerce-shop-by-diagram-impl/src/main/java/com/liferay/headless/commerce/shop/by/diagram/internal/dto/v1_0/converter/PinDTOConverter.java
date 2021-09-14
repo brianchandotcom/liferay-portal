@@ -14,10 +14,10 @@
 
 package com.liferay.headless.commerce.shop.by.diagram.internal.dto.v1_0.converter;
 
-import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry;
-import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin;
-import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramEntryService;
-import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramPinService;
+import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
+import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinService;
 import com.liferay.headless.commerce.shop.by.diagram.dto.v1_0.Pin;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -31,11 +31,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false,
-	property = "model.class.name=com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin",
+	property = "model.class.name=com.liferay.commerce.shop.by.diagram.model.CSDiagramPin",
 	service = {DTOConverter.class, PinDTOConverter.class}
 )
-public class PinDTOConverter
-	implements DTOConverter<CPDefinitionDiagramEntry, Pin> {
+public class PinDTOConverter implements DTOConverter<CSDiagramEntry, Pin> {
 
 	@Override
 	public String getContentType() {
@@ -44,33 +43,30 @@ public class PinDTOConverter
 
 	@Override
 	public Pin toDTO(DTOConverterContext dtoConverterContext) throws Exception {
-		CPDefinitionDiagramPin cpDefinitionDiagramPin =
-			_cpDefinitionDiagramPinService.getCPDefinitionDiagramPin(
-				(Long)dtoConverterContext.getId());
+		CSDiagramPin csDiagramPin = _csDiagramPinService.getCSDiagramPin(
+			(Long)dtoConverterContext.getId());
 
 		return new Pin() {
 			{
-				id = cpDefinitionDiagramPin.getCPDefinitionDiagramPinId();
-				positionX = cpDefinitionDiagramPin.getPositionX();
-				positionY = cpDefinitionDiagramPin.getPositionY();
-				sequence = cpDefinitionDiagramPin.getSequence();
+				id = csDiagramPin.getCSDiagramPinId();
+				positionX = csDiagramPin.getPositionX();
+				positionY = csDiagramPin.getPositionY();
+				sequence = csDiagramPin.getSequence();
 
 				setDiagramEntry(
 					() -> {
-						CPDefinitionDiagramEntry cpDefinitionDiagramEntry =
-							_cpDefinitionDiagramEntryService.
-								fetchCPDefinitionDiagramEntry(
-									cpDefinitionDiagramPin.getCPDefinitionId(),
-									cpDefinitionDiagramPin.getSequence());
+						CSDiagramEntry csDiagramEntry =
+							_csDiagramEntryService.fetchCSDiagramEntry(
+								csDiagramPin.getCPDefinitionId(),
+								csDiagramPin.getSequence());
 
-						if (cpDefinitionDiagramEntry == null) {
+						if (csDiagramEntry == null) {
 							return null;
 						}
 
 						return _diagramEntryDTOConverter.toDTO(
 							new DefaultDTOConverterContext(
-								cpDefinitionDiagramEntry.
-									getCPDefinitionDiagramEntryId(),
+								csDiagramEntry.getCSDiagramEntryId(),
 								dtoConverterContext.getLocale()));
 					});
 			}
@@ -78,10 +74,10 @@ public class PinDTOConverter
 	}
 
 	@Reference
-	private CPDefinitionDiagramEntryService _cpDefinitionDiagramEntryService;
+	private CSDiagramEntryService _csDiagramEntryService;
 
 	@Reference
-	private CPDefinitionDiagramPinService _cpDefinitionDiagramPinService;
+	private CSDiagramPinService _csDiagramPinService;
 
 	@Reference
 	private DiagramEntryDTOConverter _diagramEntryDTOConverter;

@@ -15,10 +15,10 @@
 package com.liferay.headless.commerce.shop.by.diagram.internal.dto.v1_0.converter;
 
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
-import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting;
-import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramEntryService;
-import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramPinService;
-import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingService;
+import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinService;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.headless.commerce.shop.by.diagram.dto.v1_0.Diagram;
 import com.liferay.headless.commerce.shop.by.diagram.dto.v1_0.DiagramEntry;
@@ -38,11 +38,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false,
-	property = "model.class.name=com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting",
+	property = "model.class.name=com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting",
 	service = {DiagramDTOConverter.class, DTOConverter.class}
 )
 public class DiagramDTOConverter
-	implements DTOConverter<CPDefinitionDiagramSetting, Diagram> {
+	implements DTOConverter<CSDiagramSetting, Diagram> {
 
 	@Override
 	public String getContentType() {
@@ -53,45 +53,39 @@ public class DiagramDTOConverter
 	public Diagram toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		CPDefinitionDiagramSetting cpDefinitionDiagramSetting =
-			_cpDefinitionDiagramSettingService.getCPDefinitionDiagramSetting(
+		CSDiagramSetting csDiagramSetting =
+			_csDiagramSettingService.getCSDiagramSetting(
 				(Long)dtoConverterContext.getId());
 
 		return new Diagram() {
 			{
-				color = cpDefinitionDiagramSetting.getColor();
+				color = csDiagramSetting.getColor();
 				diagramEntries = TransformUtil.transformToArray(
-					_cpDefinitionDiagramEntryService.
-						getCPDefinitionDiagramEntries(
-							cpDefinitionDiagramSetting.getCPDefinitionId(),
-							QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-					cpDefinitionDiagramEntry -> _diagramEntryDTOConverter.toDTO(
+					_csDiagramEntryService.getCSDiagramEntries(
+						csDiagramSetting.getCPDefinitionId(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS),
+					csDiagramEntry -> _diagramEntryDTOConverter.toDTO(
 						new DefaultDTOConverterContext(
-							cpDefinitionDiagramEntry.
-								getCPDefinitionDiagramEntryId(),
+							csDiagramEntry.getCSDiagramEntryId(),
 							dtoConverterContext.getLocale())),
 					DiagramEntry.class);
-				id =
-					cpDefinitionDiagramSetting.
-						getCPDefinitionDiagramSettingId();
+				id = csDiagramSetting.getCSDiagramSettingId();
 				pins = TransformUtil.transformToArray(
-					_cpDefinitionDiagramPinService.getCPDefinitionDiagramPins(
-						cpDefinitionDiagramSetting.getCPDefinitionId(),
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-					cpDefinitionDiagramPin -> _pinDTOConverter.toDTO(
+					_csDiagramPinService.getCSDiagramPins(
+						csDiagramSetting.getCPDefinitionId(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS),
+					csDiagramPin -> _pinDTOConverter.toDTO(
 						new DefaultDTOConverterContext(
-							cpDefinitionDiagramPin.
-								getCPDefinitionDiagramPinId(),
+							csDiagramPin.getCSDiagramPinId(),
 							dtoConverterContext.getLocale())),
 					Pin.class);
-				radius = cpDefinitionDiagramSetting.getRadius();
-				type = cpDefinitionDiagramSetting.getType();
+				radius = csDiagramSetting.getRadius();
+				type = csDiagramSetting.getType();
 
 				setImageURL(
 					() -> {
 						CPAttachmentFileEntry cpAttachmentFileEntry =
-							cpDefinitionDiagramSetting.
-								getCPAttachmentFileEntry();
+							csDiagramSetting.getCPAttachmentFileEntry();
 
 						FileEntry fileEntry =
 							cpAttachmentFileEntry.fetchFileEntry();
@@ -108,14 +102,13 @@ public class DiagramDTOConverter
 	}
 
 	@Reference
-	private CPDefinitionDiagramEntryService _cpDefinitionDiagramEntryService;
+	private CSDiagramEntryService _csDiagramEntryService;
 
 	@Reference
-	private CPDefinitionDiagramPinService _cpDefinitionDiagramPinService;
+	private CSDiagramPinService _csDiagramPinService;
 
 	@Reference
-	private CPDefinitionDiagramSettingService
-		_cpDefinitionDiagramSettingService;
+	private CSDiagramSettingService _csDiagramSettingService;
 
 	@Reference
 	private DiagramEntryDTOConverter _diagramEntryDTOConverter;

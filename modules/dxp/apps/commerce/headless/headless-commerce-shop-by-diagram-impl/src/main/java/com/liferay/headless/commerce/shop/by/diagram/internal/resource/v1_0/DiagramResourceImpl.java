@@ -17,8 +17,8 @@ package com.liferay.headless.commerce.shop.by.diagram.internal.resource.v1_0;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting;
-import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramSettingService;
+import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingService;
 import com.liferay.headless.commerce.shop.by.diagram.dto.v1_0.Diagram;
 import com.liferay.headless.commerce.shop.by.diagram.internal.dto.v1_0.converter.DiagramDTOConverter;
 import com.liferay.headless.commerce.shop.by.diagram.resource.v1_0.DiagramResource;
@@ -55,13 +55,11 @@ public class DiagramResourceImpl extends BaseDiagramResourceImpl {
 					externalReferenceCode);
 		}
 
-		CPDefinitionDiagramSetting cpDefinitionDiagramSetting =
-			_cpDefinitionDiagramSettingService.
-				getCPDefinitionDiagramSettingByCPDefinitionId(
-					cpDefinition.getCPDefinitionId());
+		CSDiagramSetting csDiagramSetting =
+			_csDiagramSettingService.getCSDiagramSettingByCPDefinitionId(
+				cpDefinition.getCPDefinitionId());
 
-		return _toDiagram(
-			cpDefinitionDiagramSetting.getCPDefinitionDiagramSettingId());
+		return _toDiagram(csDiagramSetting.getCSDiagramSettingId());
 	}
 
 	@Override
@@ -74,31 +72,28 @@ public class DiagramResourceImpl extends BaseDiagramResourceImpl {
 				"Unable to find product with ID " + productId);
 		}
 
-		CPDefinitionDiagramSetting cpDefinitionDiagramSetting =
-			_cpDefinitionDiagramSettingService.
-				getCPDefinitionDiagramSettingByCPDefinitionId(
-					cpDefinition.getCPDefinitionId());
+		CSDiagramSetting csDiagramSetting =
+			_csDiagramSettingService.getCSDiagramSettingByCPDefinitionId(
+				cpDefinition.getCPDefinitionId());
 
-		return _toDiagram(
-			cpDefinitionDiagramSetting.getCPDefinitionDiagramSettingId());
+		return _toDiagram(csDiagramSetting.getCSDiagramSettingId());
 	}
 
 	@Override
 	public Diagram patchDiagram(Long diagramId, Diagram diagram)
 		throws Exception {
 
-		CPDefinitionDiagramSetting cpDefinitionDiagramSetting =
-			_cpDefinitionDiagramSettingService.getCPDefinitionDiagramSetting(
-				diagramId);
+		CSDiagramSetting csDiagramSetting =
+			_csDiagramSettingService.getCSDiagramSetting(diagramId);
 
-		_cpDefinitionDiagramSettingService.updateCPDefinitionDiagramSetting(
-			diagramId, cpDefinitionDiagramSetting.getCPAttachmentFileEntryId(),
+		_csDiagramSettingService.updateCSDiagramSetting(
+			diagramId, csDiagramSetting.getCPAttachmentFileEntryId(),
 			GetterUtil.getString(
-				diagram.getColor(), cpDefinitionDiagramSetting.getColor()),
+				diagram.getColor(), csDiagramSetting.getColor()),
 			GetterUtil.getDouble(
-				diagram.getRadius(), cpDefinitionDiagramSetting.getRadius()),
+				diagram.getRadius(), csDiagramSetting.getRadius()),
 			GetterUtil.getString(
-				diagram.getType(), cpDefinitionDiagramSetting.getType()));
+				diagram.getType(), csDiagramSetting.getType()));
 
 		return _toDiagram(diagramId);
 	}
@@ -140,60 +135,46 @@ public class DiagramResourceImpl extends BaseDiagramResourceImpl {
 	private Diagram _addOrUpdateDiagram(long cpDefinitionId, Diagram diagram)
 		throws Exception {
 
-		CPDefinitionDiagramSetting cpDefinitionDiagramSetting =
-			_cpDefinitionDiagramSettingService.
-				fetchCPDefinitionDiagramSettingByCPDefinitionId(cpDefinitionId);
+		CSDiagramSetting csDiagramSetting =
+			_csDiagramSettingService.fetchCSDiagramSettingByCPDefinitionId(
+				cpDefinitionId);
 
-		if (cpDefinitionDiagramSetting == null) {
-			cpDefinitionDiagramSetting =
-				_cpDefinitionDiagramSettingService.
-					addCPDefinitionDiagramSetting(
-						cpDefinitionId,
-						GetterUtil.getLong(diagram.getImageId()),
-						GetterUtil.getString(diagram.getColor()),
-						GetterUtil.getDouble(diagram.getRadius()),
-						GetterUtil.getString(diagram.getType()));
+		if (csDiagramSetting == null) {
+			csDiagramSetting = _csDiagramSettingService.addCSDiagramSetting(
+				cpDefinitionId, GetterUtil.getLong(diagram.getImageId()),
+				GetterUtil.getString(diagram.getColor()),
+				GetterUtil.getDouble(diagram.getRadius()),
+				GetterUtil.getString(diagram.getType()));
 		}
 		else {
-			cpDefinitionDiagramSetting =
-				_cpDefinitionDiagramSettingService.
-					updateCPDefinitionDiagramSetting(
-						cpDefinitionDiagramSetting.
-							getCPDefinitionDiagramSettingId(),
-						GetterUtil.get(
-							diagram.getImageId(),
-							cpDefinitionDiagramSetting.
-								getCPAttachmentFileEntryId()),
-						GetterUtil.getString(
-							diagram.getColor(),
-							cpDefinitionDiagramSetting.getColor()),
-						GetterUtil.getDouble(
-							diagram.getRadius(),
-							cpDefinitionDiagramSetting.getRadius()),
-						GetterUtil.getString(
-							diagram.getType(),
-							cpDefinitionDiagramSetting.getType()));
+			csDiagramSetting = _csDiagramSettingService.updateCSDiagramSetting(
+				csDiagramSetting.getCSDiagramSettingId(),
+				GetterUtil.get(
+					diagram.getImageId(),
+					csDiagramSetting.getCPAttachmentFileEntryId()),
+				GetterUtil.getString(
+					diagram.getColor(), csDiagramSetting.getColor()),
+				GetterUtil.getDouble(
+					diagram.getRadius(), csDiagramSetting.getRadius()),
+				GetterUtil.getString(
+					diagram.getType(), csDiagramSetting.getType()));
 		}
 
-		return _toDiagram(
-			cpDefinitionDiagramSetting.getCPDefinitionDiagramSettingId());
+		return _toDiagram(csDiagramSetting.getCSDiagramSettingId());
 	}
 
-	private Diagram _toDiagram(long cpDefinitionDiagramSettingId)
-		throws Exception {
-
+	private Diagram _toDiagram(long csDiagramSettingId) throws Exception {
 		return _diagramDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				cpDefinitionDiagramSettingId,
+				csDiagramSettingId,
 				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Reference
-	private CPDefinitionDiagramSettingService
-		_cpDefinitionDiagramSettingService;
+	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private CPDefinitionService _cpDefinitionService;
+	private CSDiagramSettingService _csDiagramSettingService;
 
 	@Reference
 	private DiagramDTOConverter _diagramDTOConverter;

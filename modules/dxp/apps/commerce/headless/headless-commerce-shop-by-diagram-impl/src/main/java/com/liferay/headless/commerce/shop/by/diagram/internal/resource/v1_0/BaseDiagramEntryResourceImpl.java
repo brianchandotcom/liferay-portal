@@ -143,7 +143,7 @@ public abstract class BaseDiagramEntryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-shop-by-diagram/v1.0/diagramEntries/{diagramEntryId}' -d $'{"diagram": ___, "expando": ___, "id": ___, "productId": ___, "quantity": ___, "sequence": ___, "sku": ___, "skuUuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-shop-by-diagram/v1.0/diagramEntries/{diagramEntryId}' -d $'{"diagram": ___, "expando": ___, "id": ___, "productExternalReferenceCode": ___, "productId": ___, "quantity": ___, "sequence": ___, "sku": ___, "skuExternalReferenceCode": ___, "skuUuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Override
@@ -196,7 +196,7 @@ public abstract class BaseDiagramEntryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-shop-by-diagram/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/diagramEntries' -d $'{"diagram": ___, "expando": ___, "id": ___, "productId": ___, "quantity": ___, "sequence": ___, "sku": ___, "skuUuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-shop-by-diagram/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/diagramEntries' -d $'{"diagram": ___, "expando": ___, "id": ___, "productExternalReferenceCode": ___, "productId": ___, "quantity": ___, "sequence": ___, "sku": ___, "skuExternalReferenceCode": ___, "skuUuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Override
@@ -250,7 +250,7 @@ public abstract class BaseDiagramEntryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-shop-by-diagram/v1.0/products/{productId}/diagramEntries' -d $'{"diagram": ___, "expando": ___, "id": ___, "productId": ___, "quantity": ___, "sequence": ___, "sku": ___, "skuUuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-shop-by-diagram/v1.0/products/{productId}/diagramEntries' -d $'{"diagram": ___, "expando": ___, "id": ___, "productExternalReferenceCode": ___, "productId": ___, "quantity": ___, "sequence": ___, "sku": ___, "skuExternalReferenceCode": ___, "skuUuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Override

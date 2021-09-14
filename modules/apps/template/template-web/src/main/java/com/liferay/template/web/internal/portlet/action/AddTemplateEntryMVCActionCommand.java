@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
+public class AddTemplateEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -119,7 +119,8 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 			JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
 
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				themeDisplay.getLocale(), AddDDMTemplateMVCActionCommand.class);
+				themeDisplay.getLocale(),
+				AddTemplateEntryMVCActionCommand.class);
 
 			if (portalException instanceof TemplateNameException) {
 				errorJSONObject.put(
@@ -168,7 +169,7 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AddDDMTemplateMVCActionCommand.class);
+		AddTemplateEntryMVCActionCommand.class);
 
 	@Reference
 	private DDMTemplateService _ddmTemplateService;

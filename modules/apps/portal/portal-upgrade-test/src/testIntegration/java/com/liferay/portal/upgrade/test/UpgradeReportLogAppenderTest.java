@@ -17,6 +17,8 @@ package com.liferay.portal.upgrade.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -36,6 +39,8 @@ import com.liferay.portal.util.PropsValues;
 import java.io.File;
 
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.core.Appender;
 
@@ -73,6 +78,104 @@ public class UpgradeReportLogAppenderTest {
 			}
 
 			reportsDir.delete();
+		}
+	}
+
+	@Test
+	public void testDatabaseTablesCounts() throws Exception {
+		DB db = DBManagerUtil.getDB();
+
+		String table1Name = "UpgradeReportTable1";
+		String table2Name = "UpgradeReportTable2";
+
+		db.runSQL(
+			new String[] {
+				"create table " + table1Name +
+					" (id LONG not null primary key)",
+				"create table " + table2Name +
+					" (id LONG not null primary key)",
+				"insert into " + table2Name + " (id) values (1)"
+			});
+
+		_appender.start();
+
+		db.runSQL(
+			new String[] {
+				"insert into " + table1Name + " (id) values (1)",
+				"delete from " + table2Name + " where id = 1"
+			});
+
+		_appender.stop();
+
+		if (_reportContent == null) {
+			_reportContent = _getReportContent();
+		}
+
+		Matcher matcher = _pattern.matcher(_reportContent);
+
+		boolean table1Exists = false;
+		boolean table2Exists = false;
+
+		while (matcher.find()) {
+			String tableName = matcher.group(1);
+
+			int initialCount = GetterUtil.getInteger(matcher.group(2), -1);
+			int finalCount = GetterUtil.getInteger(matcher.group(3), -1);
+
+			if (tableName.equals(table1Name)) {
+				table1Exists = true;
+
+				Assert.assertEquals(0, initialCount);
+				Assert.assertEquals(1, finalCount);
+			}
+			else if (tableName.equals(table2Name)) {
+				table2Exists = true;
+
+				Assert.assertEquals(1, initialCount);
+				Assert.assertEquals(0, finalCount);
+			}
+			else {
+				Assert.assertTrue((initialCount > 0) || (finalCount > 0));
+			}
+		}
+
+		Assert.assertTrue(table1Exists && table2Exists);
+
+		db.runSQL(
+			new String[] {
+				"drop table if exists " + table1Name,
+				"drop table if exists " + table2Name
+			});
+	}
+
+	@Test
+	public void testDatabaseTablesIsSorted() throws Exception {
+		_appender.start();
+		_appender.stop();
+
+		if (_reportContent == null) {
+			_reportContent = _getReportContent();
+		}
+
+		Matcher matcher = _pattern.matcher(_reportContent);
+
+		String prevTableName = null;
+		int prevInitialCount = Integer.MAX_VALUE;
+
+		while (matcher.find()) {
+			int initialCount = GetterUtil.getInteger(matcher.group(2), -1);
+
+			String tableName = matcher.group(1);
+
+			if (initialCount == prevInitialCount) {
+				Assert.assertTrue(prevTableName.compareTo(tableName) < 0);
+			}
+			else {
+				Assert.assertTrue(initialCount < prevInitialCount);
+			}
+
+			prevTableName = tableName;
+			prevInitialCount = initialCount;
 		}
 	}
 
@@ -244,6 +347,9 @@ public class UpgradeReportLogAppenderTest {
 
 		return FileUtil.read(reportFile);
 	}
+
+	private static final Pattern _pattern = Pattern.compile(
+		"(\\w+_?)\\s+(\\d+|-)\\s+(\\d+|-)\n");
 
 	@Inject
 	private Appender _appender;

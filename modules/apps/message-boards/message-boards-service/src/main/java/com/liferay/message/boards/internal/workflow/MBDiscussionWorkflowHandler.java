@@ -66,7 +66,19 @@ public class MBDiscussionWorkflowHandler extends MBMessageWorkflowHandler {
 			MBMessage model, Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		boolean workflowReviewComment = false;
+		if (_isWorkflowReviewComment(workflowContext)) {
+			updateStatus(WorkflowConstants.STATUS_APPROVED, workflowContext);
+
+			return;
+		}
+
+		_workflowInstanceLinkLocalService.startWorkflowInstance(
+			companyId, groupId, userId, getClassName(), classPK,
+			workflowContext);
+	}
+
+	private boolean _isWorkflowReviewComment(
+		Map<String, Serializable> workflowContext) {
 
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
@@ -76,21 +88,11 @@ public class MBDiscussionWorkflowHandler extends MBMessageWorkflowHandler {
 
 		for (String portletId : _WORKFLOW_PORTLET_IDS) {
 			if (namespace.contains(portletId)) {
-				workflowReviewComment = true;
-
-				break;
+				return true;
 			}
 		}
 
-		if (workflowReviewComment) {
-			updateStatus(WorkflowConstants.STATUS_APPROVED, workflowContext);
-
-			return;
-		}
-
-		_workflowInstanceLinkLocalService.startWorkflowInstance(
-			companyId, groupId, userId, getClassName(), classPK,
-			workflowContext);
+		return false;
 	}
 
 	private static final String[] _WORKFLOW_PORTLET_IDS = {

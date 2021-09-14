@@ -68,6 +68,20 @@ definition {
 			userPassword = "${userPassword}");
 	}
 
+	macro assertKeywordAndText {
+		AssertElementPresent(locator1 = "ObjectAdmin#SEARCHABLE_SECTION_TITLE");
+
+		AssertElementNotPresent(locator1 = "ObjectAdmin#VIEW_SEARCHABLE_SECTION_DISABLED");
+
+		AssertElementPresent(
+			key_radioOption = "Keyword",
+			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
+
+		AssertElementPresent(
+			key_radioOption = "Text",
+			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
+	}
+
 	macro assertObjectField {
 		var key_fieldName = "${fieldName}";
 		var key_fieldType = "${fieldType}";

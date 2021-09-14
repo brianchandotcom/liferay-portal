@@ -743,11 +743,34 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify that the field with String type has the options Keyword and Text under the Searchable section"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test KeywordAndTextDisplayedForStringTypeField {
 
-		// TODO LPS-138834 KeywordAndTextDisplayedForStringTypeField pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.goToFieldsDetails(fieldName = "customField");
+
+		ObjectAdmin.assertKeywordAndText();
+
+		
 
 	}
 

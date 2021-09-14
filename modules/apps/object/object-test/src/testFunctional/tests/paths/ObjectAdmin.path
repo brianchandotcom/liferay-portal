@@ -71,6 +71,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>SEARCHABLE_SECTION_TITLE</td>
+		<td>//h2[contains (text(), 'Searchable')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>OBJECT_FIELDS_TAB</td>
 		<td>//a[contains(text(),'Fields')]</td>
 		<td></td>

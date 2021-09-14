@@ -205,6 +205,33 @@ public class Mutation {
 					callbackURL, object));
 	}
 
+	@GraphQLField
+	public ListTypeEntry updateListTypeEntry(
+			@GraphQLName("listTypeEntryId") Long listTypeEntryId,
+			@GraphQLName("listTypeEntry") ListTypeEntry listTypeEntry)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_listTypeEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			listTypeEntryResource -> listTypeEntryResource.putListTypeEntry(
+				listTypeEntryId, listTypeEntry));
+	}
+
+	@GraphQLField
+	public Response updateListTypeEntryBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_listTypeEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			listTypeEntryResource ->
+				listTypeEntryResource.putListTypeEntryBatch(
+					callbackURL, object));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,

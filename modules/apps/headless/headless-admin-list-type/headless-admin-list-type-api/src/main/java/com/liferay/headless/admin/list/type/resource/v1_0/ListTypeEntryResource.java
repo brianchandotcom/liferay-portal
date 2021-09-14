@@ -74,6 +74,16 @@ public interface ListTypeEntryResource {
 	public Response deleteListTypeEntryBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public ListTypeEntry getListTypeEntry(Long listTypeEntryId)
+		throws Exception;
+
+	public ListTypeEntry putListTypeEntry(
+			Long listTypeEntryId, ListTypeEntry listTypeEntry)
+		throws Exception;
+
+	public Response putListTypeEntryBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

@@ -65,6 +65,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -237,6 +238,86 @@ public abstract class BaseListTypeEntryResourceImpl
 		).build();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-entries/{listTypeEntryId}'  -u 'test@liferay.com:test'
+	 */
+	@GET
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "listTypeEntryId")}
+	)
+	@Path("/list-type-entries/{listTypeEntryId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ListTypeEntry")})
+	public ListTypeEntry getListTypeEntry(
+			@NotNull @Parameter(hidden = true) @PathParam("listTypeEntryId")
+				Long listTypeEntryId)
+		throws Exception {
+
+		return new ListTypeEntry();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-entries/{listTypeEntryId}' -d $'{"key": ___, "name": ___, "name_i18n": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "listTypeEntryId")}
+	)
+	@Path("/list-type-entries/{listTypeEntryId}")
+	@Produces({"application/json", "application/xml"})
+	@PUT
+	@Tags(value = {@Tag(name = "ListTypeEntry")})
+	public ListTypeEntry putListTypeEntry(
+			@NotNull @Parameter(hidden = true) @PathParam("listTypeEntryId")
+				Long listTypeEntryId,
+			ListTypeEntry listTypeEntry)
+		throws Exception {
+
+		return new ListTypeEntry();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-entries/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/list-type-entries/batch")
+	@Produces("application/json")
+	@PUT
+	@Tags(value = {@Tag(name = "ListTypeEntry")})
+	public Response putListTypeEntryBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.putImportTask(
+				ListTypeEntry.class.getName(), callbackURL, object)
+		).build();
+	}
+
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
@@ -316,6 +397,13 @@ public abstract class BaseListTypeEntryResourceImpl
 			java.util.Collection<ListTypeEntry> listTypeEntries,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		for (ListTypeEntry listTypeEntry : listTypeEntries) {
+			putListTypeEntry(
+				listTypeEntry.getId() != null ? listTypeEntry.getId() :
+					Long.parseLong((String)parameters.get("listTypeEntryId")),
+				listTypeEntry);
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

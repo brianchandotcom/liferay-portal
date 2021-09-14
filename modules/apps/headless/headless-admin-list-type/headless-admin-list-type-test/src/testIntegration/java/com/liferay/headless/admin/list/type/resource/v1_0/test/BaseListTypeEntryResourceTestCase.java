@@ -30,6 +30,7 @@ import com.liferay.headless.admin.list.type.client.resource.v1_0.ListTypeEntryRe
 import com.liferay.headless.admin.list.type.client.serdes.v1_0.ListTypeEntrySerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -357,6 +358,14 @@ public abstract class BaseListTypeEntryResourceTestCase {
 			204,
 			listTypeEntryResource.deleteListTypeEntryHttpResponse(
 				listTypeEntry.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			listTypeEntryResource.getListTypeEntryHttpResponse(
+				listTypeEntry.getId()));
+
+		assertHttpResponseStatusCode(
+			404, listTypeEntryResource.getListTypeEntryHttpResponse(0L));
 	}
 
 	protected ListTypeEntry testDeleteListTypeEntry_addListTypeEntry()
@@ -382,6 +391,112 @@ public abstract class BaseListTypeEntryResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteListTypeEntry"));
+
+		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"listTypeEntry",
+					new HashMap<String, Object>() {
+						{
+							put("listTypeEntryId", listTypeEntry.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	@Test
+	public void testGetListTypeEntry() throws Exception {
+		ListTypeEntry postListTypeEntry =
+			testGetListTypeEntry_addListTypeEntry();
+
+		ListTypeEntry getListTypeEntry = listTypeEntryResource.getListTypeEntry(
+			postListTypeEntry.getId());
+
+		assertEquals(postListTypeEntry, getListTypeEntry);
+		assertValid(getListTypeEntry);
+	}
+
+	protected ListTypeEntry testGetListTypeEntry_addListTypeEntry()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetListTypeEntry() throws Exception {
+		ListTypeEntry listTypeEntry =
+			testGraphQLListTypeEntry_addListTypeEntry();
+
+		Assert.assertTrue(
+			equals(
+				listTypeEntry,
+				ListTypeEntrySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"listTypeEntry",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"listTypeEntryId",
+											listTypeEntry.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/listTypeEntry"))));
+	}
+
+	@Test
+	public void testGraphQLGetListTypeEntryNotFound() throws Exception {
+		Long irrelevantListTypeEntryId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"listTypeEntry",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"listTypeEntryId",
+									irrelevantListTypeEntryId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testPutListTypeEntry() throws Exception {
+		ListTypeEntry postListTypeEntry =
+			testPutListTypeEntry_addListTypeEntry();
+
+		ListTypeEntry randomListTypeEntry = randomListTypeEntry();
+
+		ListTypeEntry putListTypeEntry = listTypeEntryResource.putListTypeEntry(
+			postListTypeEntry.getId(), randomListTypeEntry);
+
+		assertEquals(randomListTypeEntry, putListTypeEntry);
+		assertValid(putListTypeEntry);
+
+		ListTypeEntry getListTypeEntry = listTypeEntryResource.getListTypeEntry(
+			putListTypeEntry.getId());
+
+		assertEquals(randomListTypeEntry, getListTypeEntry);
+		assertValid(getListTypeEntry);
+	}
+
+	protected ListTypeEntry testPutListTypeEntry_addListTypeEntry()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected ListTypeEntry testGraphQLListTypeEntry_addListTypeEntry()

@@ -122,6 +122,23 @@ public class Query {
 					listTypeDefinitionId, Pagination.of(page, pageSize))));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {listTypeEntry(listTypeEntryId: ___){actions, dateCreated, dateModified, id, key, name, name_i18n, type}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ListTypeEntry listTypeEntry(
+			@GraphQLName("listTypeEntryId") Long listTypeEntryId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_listTypeEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			listTypeEntryResource -> listTypeEntryResource.getListTypeEntry(
+				listTypeEntryId));
+	}
+
 	@GraphQLName("ListTypeDefinitionPage")
 	public class ListTypeDefinitionPage {
 

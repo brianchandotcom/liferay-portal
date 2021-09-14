@@ -167,6 +167,8 @@ definition {
 			templateName = "WC Template Name Edited",
 			templatePreviousName = "WC Template Name");
 
+		LexiconCard.viewCardTitle(card = "WC Template Name Edited");
+
 		NavItem.gotoStructures();
 
 		WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");

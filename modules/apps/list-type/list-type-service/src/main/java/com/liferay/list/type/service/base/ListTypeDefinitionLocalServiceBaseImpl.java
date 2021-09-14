@@ -145,11 +145,13 @@ public abstract class ListTypeDefinitionLocalServiceBaseImpl
 	 *
 	 * @param listTypeDefinition the list type definition
 	 * @return the list type definition that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ListTypeDefinition deleteListTypeDefinition(
-		ListTypeDefinition listTypeDefinition) {
+			ListTypeDefinition listTypeDefinition)
+		throws PortalException {
 
 		return listTypeDefinitionPersistence.remove(listTypeDefinition);
 	}

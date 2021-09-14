@@ -100,9 +100,11 @@ public class ListTypeDefinitionLocalServiceUtil {
 	 *
 	 * @param listTypeDefinition the list type definition
 	 * @return the list type definition that was removed
+	 * @throws PortalException
 	 */
 	public static ListTypeDefinition deleteListTypeDefinition(
-		ListTypeDefinition listTypeDefinition) {
+			ListTypeDefinition listTypeDefinition)
+		throws PortalException {
 
 		return getService().deleteListTypeDefinition(listTypeDefinition);
 	}

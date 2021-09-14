@@ -109,10 +109,12 @@ public interface ListTypeDefinitionLocalService
 	 *
 	 * @param listTypeDefinition the list type definition
 	 * @return the list type definition that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public ListTypeDefinition deleteListTypeDefinition(
-		ListTypeDefinition listTypeDefinition);
+			ListTypeDefinition listTypeDefinition)
+		throws PortalException;
 
 	/**
 	 * Deletes the list type definition with the primary key from the database. Also notifies the appropriate model listeners.

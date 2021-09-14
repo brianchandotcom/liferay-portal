@@ -95,11 +95,14 @@ public class ListTypeDefinitionLocalServiceWrapper
 	 *
 	 * @param listTypeDefinition the list type definition
 	 * @return the list type definition that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.list.type.model.ListTypeDefinition
-		deleteListTypeDefinition(
-			com.liferay.list.type.model.ListTypeDefinition listTypeDefinition) {
+			deleteListTypeDefinition(
+				com.liferay.list.type.model.ListTypeDefinition
+					listTypeDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _listTypeDefinitionLocalService.deleteListTypeDefinition(
 			listTypeDefinition);

@@ -35,7 +35,7 @@ definition {
 	@description = "This ensures that a user can select depot web content from different repositories through WCD on a connected site."
 	@priority = "4"
 	@refactorneeded
-	test ChangeWCDSelection {
+	test CanChangeWCDSelection {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Test New Page Name");
@@ -93,7 +93,7 @@ definition {
 	@description = "This ensures that web content using a structure stored in AL can be removed on a connected site."
 	@priority = "4"
 	@refactorneeded
-	test RemoveCustomizedWC {
+	test CanRemoveCustomizedWC {
 		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
 
 		WebContentStructures.addCP(
@@ -154,7 +154,7 @@ definition {
 	@description = "This test covers LPS-117063 and LPS-117068. It ensures that web content using a structure stored in AL can be selected without NPE throwing and removed from the disconnected site."
 	@priority = "4"
 	@refactorneeded
-	test RemoveCustomizedWCFromDisconnectedSite {
+	test CanRemoveCustomizedWCFromDisconnectedSite {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Remove Customized WC Depot Name");
@@ -239,7 +239,7 @@ definition {
 	@description = "This test covers LPS-118395. It ensures that a web content in a depot can be selected through the page template."
 	@priority = "4"
 	@refactorneeded
-	test SelectDepotContentViaPageTemplate {
+	test CanSelectDepotContentViaPageTemplate {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
@@ -290,7 +290,7 @@ definition {
 	@description = "This test covers LPS-105119. It ensures that a web content in a depot can be selected through the field."
 	@priority = "4"
 	@refactorneeded
-	test SelectDepotContentViaWebContentField {
+	test CanSelectDepotContentViaWebContentField {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name");
@@ -364,7 +364,7 @@ definition {
 	@description = "This ensures that a depot web content can be selected through the fragment in a content page on a connected site."
 	@priority = "5"
 	@refactorneeded
-	test SelectFromFragmentInContentPage {
+	test CanSelectFromFragmentInContentPage {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Fragment Depot Name");
@@ -406,7 +406,7 @@ definition {
 	@description = "This ensures that a depot web content can be selected through the fragment in a display page template on a connected site."
 	@priority = "5"
 	@refactorneeded
-	test SelectFromFragmentInDisplayPageTemplate {
+	test CanSelectFromFragmentInDisplayPageTemplate {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
 			groupName = "Test Depot Name",
@@ -461,7 +461,7 @@ definition {
 	@description = "This ensures that a depot web content can be selected through WCD on a connected site."
 	@priority = "5"
 	@refactorneeded
-	test SelectFromWCD {
+	test CanSelectFromWCD {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
 			groupName = "Test Depot Name",
@@ -499,7 +499,7 @@ definition {
 	@description = "This ensures that a depot web content can be selected through WCD in a content page on a connected site."
 	@priority = "4"
 	@refactorneeded
-	test SelectFromWidgetInContentPage {
+	test CanSelectFromWidgetInContentPage {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
 			groupName = "Test Depot Name",
@@ -531,7 +531,7 @@ definition {
 	@description = "This ensures that a depot web content can be selected through WCD in a display page template on a connected site."
 	@priority = "4"
 	@refactorneeded
-	test SelectFromWidgetInDisplayPageTemplate {
+	test CanSelectFromWidgetInDisplayPageTemplate {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
 			groupName = "Test Depot Name",
@@ -564,7 +564,7 @@ definition {
 	@description = "This ensures that a user can use a structure stored in AL to create a template on a connected site."
 	@priority = "5"
 	@refactorneeded
-	test SelectStructureInDepotViaTemplateOnSite {
+	test CanSelectStructureInDepotViaTemplateOnSite {
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
@@ -599,7 +599,7 @@ definition {
 	@description = "This ensures that a user can use structures stored in AL to create articles and display them in AP on a connected site."
 	@priority = "5"
 	@refactorneeded
-	test ViewCustomizedWCInAP {
+	test CanViewCustomizedWCInAP {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name");
@@ -681,7 +681,7 @@ definition {
 	@description = "This ensures that a user can use a structure stored in AL to create an article and display it in WCD on a connected site."
 	@priority = "5"
 	@refactorneeded
-	test ViewCustomizedWCInWCD {
+	test CanViewCustomizedWCInWCD {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name");
@@ -756,7 +756,7 @@ definition {
 	@description = "This ensures that a user can see information of WC structure from more iframe about which AL owns it."
 	@priority = "4"
 	@refactorneeded
-	test ViewStructuresScopeList {
+	test CanViewStructuresScopeList {
 		for (var i : list "1,2,3") {
 			JSONDepot.addDepot(
 				depotDescription = "This is the description of a depot",

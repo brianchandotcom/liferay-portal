@@ -234,12 +234,26 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Type field blank"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotLeaveTypeFieldBlank {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-138829 CannotLeaveTypeFieldBlank pending implementation
+		Navigator.openURL();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Field",
+			fieldType = "Choose an Option");
+
+		ObjectAdmin.viewFieldErrorMessage(message = "Invalid type null");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with the first character of the Object Name in lower case"

@@ -24,15 +24,20 @@ import com.liferay.asset.list.util.AssetListPortletUtil;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -44,12 +49,15 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,6 +77,14 @@ public class AssetListEntryItemSelectorDisplayContext {
 		_language = language;
 		_portletURL = portletURL;
 		_infoListItemSelectorCriterion = infoListItemSelectorCriterion;
+	}
+
+	public List<BreadcrumbEntry> getBreadcrumbEntries(PortletURL currentURL)
+		throws PortalException, PortletException {
+
+		return Arrays.asList(
+			_getGroupSelectorBreadcrumbEntry(currentURL),
+			_getCurrentGroupBreadcrumbEntry(currentURL));
 	}
 
 	public String getDisplayStyle() {
@@ -327,6 +343,51 @@ public class AssetListEntryItemSelectorDisplayContext {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private BreadcrumbEntry _getCurrentGroupBreadcrumbEntry(
+			PortletURL currentURL)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+		breadcrumbEntry.setTitle(
+			scopeGroup.getDescriptiveName(_httpServletRequest.getLocale()));
+		breadcrumbEntry.setURL(currentURL.toString());
+
+		return breadcrumbEntry;
+	}
+
+	private BreadcrumbEntry _getGroupSelectorBreadcrumbEntry(
+			PortletURL currentURL)
+		throws PortletException {
+
+		PortletResponse portletResponse =
+			(PortletResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+		breadcrumbEntry.setTitle(
+			LanguageUtil.get(_httpServletRequest, "sites-and-libraries"));
+		breadcrumbEntry.setURL(
+			PortletURLBuilder.create(
+				PortletURLUtil.clone(
+					currentURL,
+					PortalUtil.getLiferayPortletResponse(portletResponse))
+			).setParameter(
+				"groupType", "site"
+			).setParameter(
+				"showGroupSelector", true
+			).buildString());
+
+		return breadcrumbEntry;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

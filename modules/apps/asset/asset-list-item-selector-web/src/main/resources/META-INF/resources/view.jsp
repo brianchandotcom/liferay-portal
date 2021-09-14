@@ -30,6 +30,10 @@ SearchContainer<AssetListEntry> searchContainer = assetListEntryItemSelectorDisp
 	cssClass="item-selector lfr-item-viewer"
 	id='<%= liferayPortletResponse.getNamespace() + "entriesContainer" %>'
 >
+	<liferay-site-navigation:breadcrumb
+		breadcrumbEntries="<%= assetListEntryItemSelectorDisplayContext.getBreadcrumbEntries(currentURLObj) %>"
+	/>
+
 	<liferay-ui:search-container
 		id="entries"
 		searchContainer="<%= searchContainer %>"

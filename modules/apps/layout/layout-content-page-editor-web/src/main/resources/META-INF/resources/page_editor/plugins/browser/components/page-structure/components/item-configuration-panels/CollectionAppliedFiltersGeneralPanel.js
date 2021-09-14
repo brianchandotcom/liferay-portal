@@ -49,21 +49,18 @@ export const CollectionAppliedFiltersGeneralPanel = ({item}) => {
 	);
 
 	const [filterableCollections, setFilterableCollections] = useState(null);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		if (!filterableCollections) {
-			if (isEmptyArray(collections)) {
-				setFilterableCollections({});
+		setLoading(true);
 
-				return;
-			}
-
-			CollectionService.getCollectionSupportedFilters(
-				collections.map((item) => ({
-					collectionId: item.itemId,
-					layoutObjectReference: item.config?.collection,
-				}))
-			).then((response) => {
+		CollectionService.getCollectionSupportedFilters(
+			collections.map((item) => ({
+				collectionId: item.itemId,
+				layoutObjectReference: item.config?.collection,
+			}))
+		)
+			.then((response) => {
 				const nextFilterableCollections = {};
 
 				collections
@@ -79,9 +76,9 @@ export const CollectionAppliedFiltersGeneralPanel = ({item}) => {
 					});
 
 				setFilterableCollections(nextFilterableCollections);
-			});
-		}
-	}, [filterableCollections, collections]);
+			})
+			.finally(() => setLoading(false));
+	}, [collections]);
 
 	const languageId = useSelector(selectLanguageId);
 
@@ -102,7 +99,7 @@ export const CollectionAppliedFiltersGeneralPanel = ({item}) => {
 		[dispatch, fragmentEntryLink, languageId]
 	);
 
-	if (!filterableCollections) {
+	if (loading) {
 		return <ClayLoadingIndicator className="my-0" small />;
 	}
 

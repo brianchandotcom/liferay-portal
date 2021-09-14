@@ -14,13 +14,19 @@
 
 package com.liferay.list.type.service;
 
+import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -47,6 +53,27 @@ public interface ListTypeDefinitionService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.list.type.service.impl.ListTypeDefinitionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the list type definition remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ListTypeDefinitionServiceUtil} if injection and service tracking are not available.
 	 */
+	public ListTypeDefinition addListTypeDefinition(
+			long userId, Map<Locale, String> nameMap)
+		throws PortalException;
+
+	public ListTypeDefinition deleteListTypeDefinition(
+			ListTypeDefinition listTypeDefinition)
+		throws PortalException;
+
+	public ListTypeDefinition deleteListTypeDefinition(
+			long listTypeDefinitionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ListTypeDefinition getListTypeDefinition(long listTypeDefinitionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ListTypeDefinition> getListTypeDefinitions(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getListTypeDefinitionsCount();
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -54,5 +81,9 @@ public interface ListTypeDefinitionService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public ListTypeDefinition updateListTypeDefinition(
+			long listTypeDefinitionId, Map<Locale, String> nameMap)
+		throws PortalException;
 
 }

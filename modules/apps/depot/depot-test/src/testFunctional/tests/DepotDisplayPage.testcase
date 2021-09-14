@@ -589,9 +589,7 @@ definition {
 	test MapDMWithOpenGraph {
 		var portalURL = PropsUtil.get("portal.url");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMNavigator.gotoDocumentType();
+		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
@@ -708,9 +706,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test MapDMWithSEO {
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMNavigator.gotoDocumentType();
+		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
@@ -1005,9 +1001,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMNavigator.gotoDocumentType();
+		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",

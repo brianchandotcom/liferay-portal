@@ -35,13 +35,7 @@ definition {
 	@refactorneeded
 	test AddDocTypeDocumentsManually {
 		for (var i : list "1,2") {
-			DepotNavigator.openDepotAdmin();
-
-			DepotNavigator.gotoDepotPortlet(
-				depotName = "Test Depot Name",
-				portlet = "Documents and Media");
-
-			DMNavigator.gotoDocumentType();
+			DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
 
 			DMDocumentType.add(
 				dmDocumentTypeDescription = "DM Document Type Description",
@@ -575,9 +569,7 @@ definition {
 			site = "false",
 			title = "Depot Manual Asset List");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMNavigator.gotoDocumentType();
+		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",

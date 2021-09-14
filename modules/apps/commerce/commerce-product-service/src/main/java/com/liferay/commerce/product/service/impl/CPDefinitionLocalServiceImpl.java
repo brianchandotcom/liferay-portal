@@ -751,6 +751,7 @@ public class CPDefinitionLocalServiceImpl
 
 			newCPInstance.setUuid(PortalUUIDUtil.generate());
 			newCPInstance.setCPInstanceId(counterLocalService.increment());
+			newCPInstance.setCPInstanceUuid(PortalUUIDUtil.generate());
 
 			newCPInstance.setCPDefinitionId(newCPDefinitionId);
 

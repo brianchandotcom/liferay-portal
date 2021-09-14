@@ -20,8 +20,9 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,9 +52,8 @@ public class ObjectsDataProvider implements DDMDataProvider {
 
 			List<ObjectDefinition> objectDefinitions =
 				_objectDefinitionLocalService.getObjectDefinitions(
-					0,
-					_objectDefinitionLocalService.getObjectDefinitionsCount(
-						ddmDataProviderRequest.getCompanyId()));
+					ddmDataProviderRequest.getCompanyId(), true,
+					WorkflowConstants.STATUS_APPROVED);
 
 			for (ObjectDefinition objectDefinition : objectDefinitions) {
 				keyValuePairs.add(
@@ -68,8 +68,8 @@ public class ObjectsDataProvider implements DDMDataProvider {
 
 			return builder.build();
 		}
-		catch (PortalException portalException) {
-			throw new DDMDataProviderException(portalException);
+		catch (SystemException systemException) {
+			throw new DDMDataProviderException(systemException);
 		}
 	}
 

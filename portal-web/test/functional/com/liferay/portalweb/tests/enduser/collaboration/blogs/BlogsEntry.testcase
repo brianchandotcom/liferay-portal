@@ -154,16 +154,6 @@ definition {
 
 	}
 
-	@description = "This is a test for LPS-136769. It checks that a friendly URL can be added with escape characters."
-	@ignore = "true"
-	@priority = "3"
-	test CanAddFriendlyURLWithEscapeCharacters {
-		property portal.acceptance = "false";
-
-		// TODO LPS-136769 CanAddFriendlyURLWithEscapeCharacters pending implementation
-
-	}
-
 	@description = "This test checks that HTML is rendered in the blog content field."
 	@priority = "4"
 	@refactordone
@@ -1056,6 +1046,16 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = '''"><img src=xss onerror=alert(1)>''',
 			entryTitle = '''"><img src=xss onerror=alert(1)>''');
+	}
+
+	@description = "This is a test for LPS-136769. It checks that a friendly URL can be added with escape characters."
+	@ignore = "true"
+	@priority = "3"
+	test URLWithEscapeCharactersWillBeNormalized {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136769 CanAddFriendlyURLWithEscapeCharacters pending implementation
+
 	}
 
 }

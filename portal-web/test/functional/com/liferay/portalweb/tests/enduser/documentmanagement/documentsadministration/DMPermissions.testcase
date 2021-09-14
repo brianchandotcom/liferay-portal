@@ -677,16 +677,6 @@ definition {
 			value1 = "You do not have the required permissions.");
 	}
 
-	@description = "This is a test for LPS-136832. It checks that a guest cannot access a folder without permissions."
-	@ignore = "true"
-	@priority = "3"
-	test GuestCannotAccessFolder {
-		property portal.acceptance = "false";
-
-		// TODO LPS-136832 GuestCannotAccessFolder pending implementation
-
-	}
-
 	@description = "This is a test for LPS-136833. It checks that a guest cannot add a document in a folder without permissions."
 	@ignore = "true"
 	@priority = "3"
@@ -744,6 +734,16 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-136838 GuestCannotViewFolder pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136832. It checks that a guest cannot access a folder without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test GuestWithAccessToFolderCanAccessImageThroughURL {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136832 GuestCannotAccessFolder pending implementation
 
 	}
 
@@ -941,16 +941,6 @@ definition {
 			uploadFrom = "dependencies");
 	}
 
-	@description = "This is a test for LPS-136840. It checks that a site member cannot access a folder without permissions."
-	@ignore = "true"
-	@priority = "3"
-	test SiteMemberCannotAccessFolder {
-		property portal.acceptance = "false";
-
-		// TODO LPS-136840 SiteMemberCannotAccessFolder pending implementation
-
-	}
-
 	@description = "This is a test for LPS-136841. It checks that a site member cannot add a document in a folder without permissions."
 	@ignore = "true"
 	@priority = "3"
@@ -1068,6 +1058,16 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-136852 SiteMemberCannotViewFolder pending implementation
+
+	}
+
+	@description = "This is a test for LPS-136840. It checks that a site member cannot access a folder without permissions."
+	@ignore = "true"
+	@priority = "3"
+	test SiteMemberWithAccessToFolderCanAccessImageThroughURL {
+		property portal.acceptance = "false";
+
+		// TODO LPS-136840 SiteMemberCannotAccessFolder pending implementation
 
 	}
 

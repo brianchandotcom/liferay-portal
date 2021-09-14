@@ -474,6 +474,59 @@ definition {
 			previewImage = "Image_2.jpg");
 	}
 
+	@description = "This test covers LPS-82539."
+	@priority = "5"
+	@refactorneeded
+	test PendingEntryWillNotBePublishedToLive {
+		DMFolder.addCP(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder 1");
+
+		DMFolder.configureWorkflowCP(
+			dmFolderName = "DM Folder 1",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Default Workflow");
+
+		DMFolder.viewCP(dmFolderName = "DM Folder 1");
+
+		DMDocument.addWithWorkflowCP(
+			dmDocumentDescription = "DM Document in Folder 1",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document in Folder 1");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "DM Document in Folder 1",
+			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS",
+			value1 = "Pending");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		Staging.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish the selected folder?",
+			entry = "DM Folder 1");
+
+		ProductMenu.gotoLiveSite(site = "Guest");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		AssertTextEquals(
+			key_dmFolderName = "DM Folder 1",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
+			value1 = "DM Folder 1");
+
+		DMFolder.viewCP(dmFolderName = "DM Folder 1");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no documents or media files in this folder.");
+	}
+
 	@description = "This is a use case for LPS-79925."
 	@priority = "5"
 	@refactorneeded
@@ -842,59 +895,6 @@ definition {
 			numericValue = "123",
 			textContent = "DM Document Text",
 			textFieldLabel = "Company");
-	}
-
-	@description = "This test covers LPS-82539."
-	@priority = "5"
-	@refactorneeded
-	test PublishFolderWithWorkflow {
-		DMFolder.addCP(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder 1");
-
-		DMFolder.configureWorkflowCP(
-			dmFolderName = "DM Folder 1",
-			workflowDefinition = "Single Approver",
-			workflowRestriction = "Default Workflow");
-
-		DMFolder.viewCP(dmFolderName = "DM Folder 1");
-
-		DMDocument.addWithWorkflowCP(
-			dmDocumentDescription = "DM Document in Folder 1",
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document in Folder 1");
-
-		AssertTextEquals(
-			key_dmDocumentTitle = "DM Document in Folder 1",
-			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS",
-			value1 = "Pending");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
-
-		Staging.publishViaSAP(
-			confirmMessage = "Are you sure you want to publish the selected folder?",
-			entry = "DM Folder 1");
-
-		ProductMenu.gotoLiveSite(site = "Guest");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		AssertTextEquals(
-			key_dmFolderName = "DM Folder 1",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-			value1 = "DM Folder 1");
-
-		DMFolder.viewCP(dmFolderName = "DM Folder 1");
-
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no documents or media files in this folder.");
 	}
 
 	@description = "This test covers LPS-82532. It ensures documents inside the subfolder that's being published to live are also published."

@@ -218,7 +218,6 @@ definition {
 	@description = "LPS-135549 - Verify it is not possible to leave the Object Label field blank"
 	@priority = "4"
 	test CannotLeaveObjectLabelFieldBlank {
-
 		ObjectAdmin.openObjectAdmin();
 
 		Click(locator1 = "ObjectAdmin#ADD_CUSTOM_OBJECT");
@@ -234,7 +233,6 @@ definition {
 		ObjectAdmin.saveCustomObject();
 
 		Alert.viewErrorMessage(errorMessage = "Label is null for locale English (United States)");
-
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Object Name field blank"

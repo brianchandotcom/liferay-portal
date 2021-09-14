@@ -1998,29 +1998,32 @@ public class ResourcePermissionLocalServiceImpl
 		boolean modified = false;
 
 		try {
-			if (_updateResourcePermission(
-					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name,
-					0, guestRole.getRoleId(), Boolean.TRUE,
-					guestActionIds.toArray(new String[0]),
-					ResourcePermissionConstants.OPERATOR_SET, true,
-					resourcePermissionsMap) ||
-				_updateResourcePermission(
-					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name,
-					0, ownerRole.getRoleId(), Boolean.FALSE,
-					ownerActionIds.toArray(new String[0]),
-					ResourcePermissionConstants.OPERATOR_SET, true,
-					resourcePermissionsMap)) {
+			boolean guestPermissionModified = _updateResourcePermission(
+				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name, 0,
+				guestRole.getRoleId(), Boolean.TRUE,
+				guestActionIds.toArray(new String[0]),
+				ResourcePermissionConstants.OPERATOR_SET, true,
+				resourcePermissionsMap);
+			boolean ownerPermissionModified = _updateResourcePermission(
+				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name, 0,
+				ownerRole.getRoleId(), Boolean.FALSE,
+				ownerActionIds.toArray(new String[0]),
+				ResourcePermissionConstants.OPERATOR_SET, true,
+				resourcePermissionsMap);
 
-				modified = true;
-			}
+			boolean siteMemberPermissionModified = false;
 
-			if ((groupActionIds != null) &&
-				_updateResourcePermission(
+			if (groupActionIds != null) {
+				siteMemberPermissionModified = _updateResourcePermission(
 					companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name,
 					0, siteMemberRole.getRoleId(), Boolean.FALSE,
 					groupActionIds.toArray(new String[0]),
 					ResourcePermissionConstants.OPERATOR_SET, true,
-					resourcePermissionsMap)) {
+					resourcePermissionsMap);
+			}
+
+			if (guestPermissionModified || ownerPermissionModified ||
+				siteMemberPermissionModified) {
 
 				modified = true;
 			}

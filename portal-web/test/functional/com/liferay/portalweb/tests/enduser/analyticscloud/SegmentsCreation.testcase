@@ -103,6 +103,8 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "3000");
 			}
 		}
 
@@ -1148,6 +1150,8 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "3000");
 			}
 		}
 
@@ -1247,6 +1251,8 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "3000");
 			}
 		}
 

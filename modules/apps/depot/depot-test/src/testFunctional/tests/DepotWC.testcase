@@ -114,12 +114,9 @@ definition {
 	@description = "This ensures that a web content folder can be edited in a depot."
 	@priority = "3"
 	@refactorneeded
+	@uitest
 	test EditFolder {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Edit Folder Depot");
-
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Edit Folder Depot");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",

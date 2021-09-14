@@ -102,7 +102,7 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 				return;
 			}
 
-			SessionErrors.add(actionRequest, TalendArchiveException.class);
+			SessionErrors.add(actionRequest, exception.getClass());
 
 			sendRedirect(
 				actionRequest, actionResponse,

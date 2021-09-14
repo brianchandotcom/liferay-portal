@@ -474,66 +474,67 @@ public class RemoteAppEntryUtil {
 	}
 
 	/**
-	 * Returns the remote app entry where companyId = &#63; and url = &#63; or throws a <code>NoSuchRemoteAppEntryException</code> if it could not be found.
+	 * Returns the remote app entry where companyId = &#63; and iframeURL = &#63; or throws a <code>NoSuchRemoteAppEntryException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
-	 * @param url the url
+	 * @param iframeURL the iframe url
 	 * @return the matching remote app entry
 	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
 	 */
-	public static RemoteAppEntry findByC_U(long companyId, String url)
+	public static RemoteAppEntry findByC_IU(long companyId, String iframeURL)
 		throws com.liferay.remote.app.exception.NoSuchRemoteAppEntryException {
 
-		return getPersistence().findByC_U(companyId, url);
+		return getPersistence().findByC_IU(companyId, iframeURL);
 	}
 
 	/**
-	 * Returns the remote app entry where companyId = &#63; and url = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the remote app entry where companyId = &#63; and iframeURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param url the url
+	 * @param iframeURL the iframe url
 	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
-	public static RemoteAppEntry fetchByC_U(long companyId, String url) {
-		return getPersistence().fetchByC_U(companyId, url);
+	public static RemoteAppEntry fetchByC_IU(long companyId, String iframeURL) {
+		return getPersistence().fetchByC_IU(companyId, iframeURL);
 	}
 
 	/**
-	 * Returns the remote app entry where companyId = &#63; and url = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the remote app entry where companyId = &#63; and iframeURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param url the url
+	 * @param iframeURL the iframe url
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
-	public static RemoteAppEntry fetchByC_U(
-		long companyId, String url, boolean useFinderCache) {
+	public static RemoteAppEntry fetchByC_IU(
+		long companyId, String iframeURL, boolean useFinderCache) {
 
-		return getPersistence().fetchByC_U(companyId, url, useFinderCache);
+		return getPersistence().fetchByC_IU(
+			companyId, iframeURL, useFinderCache);
 	}
 
 	/**
-	 * Removes the remote app entry where companyId = &#63; and url = &#63; from the database.
+	 * Removes the remote app entry where companyId = &#63; and iframeURL = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @param url the url
+	 * @param iframeURL the iframe url
 	 * @return the remote app entry that was removed
 	 */
-	public static RemoteAppEntry removeByC_U(long companyId, String url)
+	public static RemoteAppEntry removeByC_IU(long companyId, String iframeURL)
 		throws com.liferay.remote.app.exception.NoSuchRemoteAppEntryException {
 
-		return getPersistence().removeByC_U(companyId, url);
+		return getPersistence().removeByC_IU(companyId, iframeURL);
 	}
 
 	/**
-	 * Returns the number of remote app entries where companyId = &#63; and url = &#63;.
+	 * Returns the number of remote app entries where companyId = &#63; and iframeURL = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param url the url
+	 * @param iframeURL the iframe url
 	 * @return the number of matching remote app entries
 	 */
-	public static int countByC_U(long companyId, String url) {
-		return getPersistence().countByC_U(companyId, url);
+	public static int countByC_IU(long companyId, String iframeURL) {
+		return getPersistence().countByC_IU(companyId, iframeURL);
 	}
 
 	/**

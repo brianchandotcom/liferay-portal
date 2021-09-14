@@ -340,54 +340,54 @@ public interface RemoteAppEntryPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
-	 * Returns the remote app entry where companyId = &#63; and url = &#63; or throws a <code>NoSuchRemoteAppEntryException</code> if it could not be found.
+	 * Returns the remote app entry where companyId = &#63; and iframeURL = &#63; or throws a <code>NoSuchRemoteAppEntryException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
-	 * @param url the url
+	 * @param iframeURL the iframe url
 	 * @return the matching remote app entry
 	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
 	 */
-	public RemoteAppEntry findByC_U(long companyId, String url)
+	public RemoteAppEntry findByC_IU(long companyId, String iframeURL)
 		throws NoSuchRemoteAppEntryException;
 
 	/**
-	 * Returns the remote app entry where companyId = &#63; and url = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the remote app entry where companyId = &#63; and iframeURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param url the url
+	 * @param iframeURL the iframe url
 	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
-	public RemoteAppEntry fetchByC_U(long companyId, String url);
+	public RemoteAppEntry fetchByC_IU(long companyId, String iframeURL);
 
 	/**
-	 * Returns the remote app entry where companyId = &#63; and url = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the remote app entry where companyId = &#63; and iframeURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param url the url
+	 * @param iframeURL the iframe url
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
-	public RemoteAppEntry fetchByC_U(
-		long companyId, String url, boolean useFinderCache);
+	public RemoteAppEntry fetchByC_IU(
+		long companyId, String iframeURL, boolean useFinderCache);
 
 	/**
-	 * Removes the remote app entry where companyId = &#63; and url = &#63; from the database.
+	 * Removes the remote app entry where companyId = &#63; and iframeURL = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @param url the url
+	 * @param iframeURL the iframe url
 	 * @return the remote app entry that was removed
 	 */
-	public RemoteAppEntry removeByC_U(long companyId, String url)
+	public RemoteAppEntry removeByC_IU(long companyId, String iframeURL)
 		throws NoSuchRemoteAppEntryException;
 
 	/**
-	 * Returns the number of remote app entries where companyId = &#63; and url = &#63;.
+	 * Returns the number of remote app entries where companyId = &#63; and iframeURL = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param url the url
+	 * @param iframeURL the iframe url
 	 * @return the number of matching remote app entries
 	 */
-	public int countByC_U(long companyId, String url);
+	public int countByC_IU(long companyId, String iframeURL);
 
 	/**
 	 * Caches the remote app entry in the entity cache if it is enabled.

@@ -69,8 +69,15 @@ public interface RemoteAppEntryLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.remote.app.service.impl.RemoteAppEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the remote app entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RemoteAppEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	@Indexable(type = IndexableType.REINDEX)
-	public RemoteAppEntry addRemoteAppEntry(
-			long userId, Map<Locale, String> nameMap, String url,
+	public RemoteAppEntry addCustomElementRemoteAppEntry(
+			long userId, Map<Locale, String> nameMap,
+			String customElementCSSURLs, String customElementHTMLElementName,
+			String customElementURLs, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public RemoteAppEntry addIframeRemoteAppEntry(
+			long userId, Map<Locale, String> nameMap, String iframeURL,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -312,8 +319,16 @@ public interface RemoteAppEntryLocalService
 	public void undeployRemoteAppEntry(RemoteAppEntry remoteAppEntry);
 
 	@Indexable(type = IndexableType.REINDEX)
-	public RemoteAppEntry updateRemoteAppEntry(
-			long remoteAppEntryId, Map<Locale, String> nameMap, String url)
+	public RemoteAppEntry updateCustomElementRemoteAppEntry(
+			long remoteAppEntryId, Map<Locale, String> nameMap,
+			String customElementCSSURLs, String customElementHTMLElementName,
+			String customElementURLs)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public RemoteAppEntry updateIframeRemoteAppEntry(
+			long remoteAppEntryId, Map<Locale, String> nameMap,
+			String iframeURL)
 		throws PortalException;
 
 	/**

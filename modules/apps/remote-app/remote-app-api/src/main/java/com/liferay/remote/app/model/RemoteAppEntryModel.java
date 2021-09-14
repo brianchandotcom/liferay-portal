@@ -210,6 +210,67 @@ public interface RemoteAppEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the custom element cssur ls of this remote app entry.
+	 *
+	 * @return the custom element cssur ls of this remote app entry
+	 */
+	@AutoEscape
+	public String getCustomElementCSSURLs();
+
+	/**
+	 * Sets the custom element cssur ls of this remote app entry.
+	 *
+	 * @param customElementCSSURLs the custom element cssur ls of this remote app entry
+	 */
+	public void setCustomElementCSSURLs(String customElementCSSURLs);
+
+	/**
+	 * Returns the custom element html element name of this remote app entry.
+	 *
+	 * @return the custom element html element name of this remote app entry
+	 */
+	@AutoEscape
+	public String getCustomElementHTMLElementName();
+
+	/**
+	 * Sets the custom element html element name of this remote app entry.
+	 *
+	 * @param customElementHTMLElementName the custom element html element name of this remote app entry
+	 */
+	public void setCustomElementHTMLElementName(
+		String customElementHTMLElementName);
+
+	/**
+	 * Returns the custom element ur ls of this remote app entry.
+	 *
+	 * @return the custom element ur ls of this remote app entry
+	 */
+	@AutoEscape
+	public String getCustomElementURLs();
+
+	/**
+	 * Sets the custom element ur ls of this remote app entry.
+	 *
+	 * @param customElementURLs the custom element ur ls of this remote app entry
+	 */
+	public void setCustomElementURLs(String customElementURLs);
+
+	/**
+	 * Returns the iframe url of this remote app entry.
+	 *
+	 * @return the iframe url of this remote app entry
+	 */
+	@AutoEscape
+	public String getIframeURL();
+
+	/**
+	 * Sets the iframe url of this remote app entry.
+	 *
+	 * @param iframeURL the iframe url of this remote app entry
+	 */
+	public void setIframeURL(String iframeURL);
+
+	/**
 	 * Returns the name of this remote app entry.
 	 *
 	 * @return the name of this remote app entry
@@ -309,19 +370,19 @@ public interface RemoteAppEntryModel
 	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
 
 	/**
-	 * Returns the url of this remote app entry.
+	 * Returns the type of this remote app entry.
 	 *
-	 * @return the url of this remote app entry
+	 * @return the type of this remote app entry
 	 */
 	@AutoEscape
-	public String getUrl();
+	public String getType();
 
 	/**
-	 * Sets the url of this remote app entry.
+	 * Sets the type of this remote app entry.
 	 *
-	 * @param url the url of this remote app entry
+	 * @param type the type of this remote app entry
 	 */
-	public void setUrl(String url);
+	public void setType(String type);
 
 	/**
 	 * Returns the container model ID of this remote app entry.

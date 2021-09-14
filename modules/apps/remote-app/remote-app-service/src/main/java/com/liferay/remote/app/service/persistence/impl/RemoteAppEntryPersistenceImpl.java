@@ -1208,22 +1208,22 @@ public class RemoteAppEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"remoteAppEntry.companyId = ?";
 
-	private FinderPath _finderPathFetchByC_U;
-	private FinderPath _finderPathCountByC_U;
+	private FinderPath _finderPathFetchByC_IU;
+	private FinderPath _finderPathCountByC_IU;
 
 	/**
-	 * Returns the remote app entry where companyId = &#63; and url = &#63; or throws a <code>NoSuchRemoteAppEntryException</code> if it could not be found.
+	 * Returns the remote app entry where companyId = &#63; and iframeURL = &#63; or throws a <code>NoSuchRemoteAppEntryException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
-	 * @param url the url
+	 * @param iframeURL the iframe url
 	 * @return the matching remote app entry
 	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
 	 */
 	@Override
-	public RemoteAppEntry findByC_U(long companyId, String url)
+	public RemoteAppEntry findByC_IU(long companyId, String iframeURL)
 		throws NoSuchRemoteAppEntryException {
 
-		RemoteAppEntry remoteAppEntry = fetchByC_U(companyId, url);
+		RemoteAppEntry remoteAppEntry = fetchByC_IU(companyId, iframeURL);
 
 		if (remoteAppEntry == null) {
 			StringBundler sb = new StringBundler(6);
@@ -1233,8 +1233,8 @@ public class RemoteAppEntryPersistenceImpl
 			sb.append("companyId=");
 			sb.append(companyId);
 
-			sb.append(", url=");
-			sb.append(url);
+			sb.append(", iframeURL=");
+			sb.append(iframeURL);
 
 			sb.append("}");
 
@@ -1249,48 +1249,48 @@ public class RemoteAppEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the remote app entry where companyId = &#63; and url = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the remote app entry where companyId = &#63; and iframeURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param url the url
+	 * @param iframeURL the iframe url
 	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	@Override
-	public RemoteAppEntry fetchByC_U(long companyId, String url) {
-		return fetchByC_U(companyId, url, true);
+	public RemoteAppEntry fetchByC_IU(long companyId, String iframeURL) {
+		return fetchByC_IU(companyId, iframeURL, true);
 	}
 
 	/**
-	 * Returns the remote app entry where companyId = &#63; and url = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the remote app entry where companyId = &#63; and iframeURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param url the url
+	 * @param iframeURL the iframe url
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	@Override
-	public RemoteAppEntry fetchByC_U(
-		long companyId, String url, boolean useFinderCache) {
+	public RemoteAppEntry fetchByC_IU(
+		long companyId, String iframeURL, boolean useFinderCache) {
 
-		url = Objects.toString(url, "");
+		iframeURL = Objects.toString(iframeURL, "");
 
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, url};
+			finderArgs = new Object[] {companyId, iframeURL};
 		}
 
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_U, finderArgs);
+			result = finderCache.getResult(_finderPathFetchByC_IU, finderArgs);
 		}
 
 		if (result instanceof RemoteAppEntry) {
 			RemoteAppEntry remoteAppEntry = (RemoteAppEntry)result;
 
 			if ((companyId != remoteAppEntry.getCompanyId()) ||
-				!Objects.equals(url, remoteAppEntry.getUrl())) {
+				!Objects.equals(iframeURL, remoteAppEntry.getIframeURL())) {
 
 				result = null;
 			}
@@ -1301,17 +1301,17 @@ public class RemoteAppEntryPersistenceImpl
 
 			sb.append(_SQL_SELECT_REMOTEAPPENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_U_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_IU_COMPANYID_2);
 
-			boolean bindUrl = false;
+			boolean bindIframeURL = false;
 
-			if (url.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_U_URL_3);
+			if (iframeURL.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_IU_IFRAMEURL_3);
 			}
 			else {
-				bindUrl = true;
+				bindIframeURL = true;
 
-				sb.append(_FINDER_COLUMN_C_U_URL_2);
+				sb.append(_FINDER_COLUMN_C_IU_IFRAMEURL_2);
 			}
 
 			String sql = sb.toString();
@@ -1327,8 +1327,8 @@ public class RemoteAppEntryPersistenceImpl
 
 				queryPos.add(companyId);
 
-				if (bindUrl) {
-					queryPos.add(url);
+				if (bindIframeURL) {
+					queryPos.add(iframeURL);
 				}
 
 				List<RemoteAppEntry> list = query.list();
@@ -1336,7 +1336,7 @@ public class RemoteAppEntryPersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByC_U, finderArgs, list);
+							_finderPathFetchByC_IU, finderArgs, list);
 					}
 				}
 				else {
@@ -1364,35 +1364,35 @@ public class RemoteAppEntryPersistenceImpl
 	}
 
 	/**
-	 * Removes the remote app entry where companyId = &#63; and url = &#63; from the database.
+	 * Removes the remote app entry where companyId = &#63; and iframeURL = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @param url the url
+	 * @param iframeURL the iframe url
 	 * @return the remote app entry that was removed
 	 */
 	@Override
-	public RemoteAppEntry removeByC_U(long companyId, String url)
+	public RemoteAppEntry removeByC_IU(long companyId, String iframeURL)
 		throws NoSuchRemoteAppEntryException {
 
-		RemoteAppEntry remoteAppEntry = findByC_U(companyId, url);
+		RemoteAppEntry remoteAppEntry = findByC_IU(companyId, iframeURL);
 
 		return remove(remoteAppEntry);
 	}
 
 	/**
-	 * Returns the number of remote app entries where companyId = &#63; and url = &#63;.
+	 * Returns the number of remote app entries where companyId = &#63; and iframeURL = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param url the url
+	 * @param iframeURL the iframe url
 	 * @return the number of matching remote app entries
 	 */
 	@Override
-	public int countByC_U(long companyId, String url) {
-		url = Objects.toString(url, "");
+	public int countByC_IU(long companyId, String iframeURL) {
+		iframeURL = Objects.toString(iframeURL, "");
 
-		FinderPath finderPath = _finderPathCountByC_U;
+		FinderPath finderPath = _finderPathCountByC_IU;
 
-		Object[] finderArgs = new Object[] {companyId, url};
+		Object[] finderArgs = new Object[] {companyId, iframeURL};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
@@ -1401,17 +1401,17 @@ public class RemoteAppEntryPersistenceImpl
 
 			sb.append(_SQL_COUNT_REMOTEAPPENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_U_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_IU_COMPANYID_2);
 
-			boolean bindUrl = false;
+			boolean bindIframeURL = false;
 
-			if (url.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_U_URL_3);
+			if (iframeURL.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_IU_IFRAMEURL_3);
 			}
 			else {
-				bindUrl = true;
+				bindIframeURL = true;
 
-				sb.append(_FINDER_COLUMN_C_U_URL_2);
+				sb.append(_FINDER_COLUMN_C_IU_IFRAMEURL_2);
 			}
 
 			String sql = sb.toString();
@@ -1427,8 +1427,8 @@ public class RemoteAppEntryPersistenceImpl
 
 				queryPos.add(companyId);
 
-				if (bindUrl) {
-					queryPos.add(url);
+				if (bindIframeURL) {
+					queryPos.add(iframeURL);
 				}
 
 				count = (Long)query.uniqueResult();
@@ -1446,19 +1446,20 @@ public class RemoteAppEntryPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_U_COMPANYID_2 =
+	private static final String _FINDER_COLUMN_C_IU_COMPANYID_2 =
 		"remoteAppEntry.companyId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_U_URL_2 =
-		"remoteAppEntry.url = ?";
+	private static final String _FINDER_COLUMN_C_IU_IFRAMEURL_2 =
+		"remoteAppEntry.iframeURL = ?";
 
-	private static final String _FINDER_COLUMN_C_U_URL_3 =
-		"(remoteAppEntry.url IS NULL OR remoteAppEntry.url = '')";
+	private static final String _FINDER_COLUMN_C_IU_IFRAMEURL_3 =
+		"(remoteAppEntry.iframeURL IS NULL OR remoteAppEntry.iframeURL = '')";
 
 	public RemoteAppEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put("type", "type_");
 
 		setDBColumnNames(dbColumnNames);
 
@@ -1482,9 +1483,9 @@ public class RemoteAppEntryPersistenceImpl
 			remoteAppEntry);
 
 		finderCache.putResult(
-			_finderPathFetchByC_U,
+			_finderPathFetchByC_IU,
 			new Object[] {
-				remoteAppEntry.getCompanyId(), remoteAppEntry.getUrl()
+				remoteAppEntry.getCompanyId(), remoteAppEntry.getIframeURL()
 			},
 			remoteAppEntry);
 	}
@@ -1553,12 +1554,12 @@ public class RemoteAppEntryPersistenceImpl
 
 		Object[] args = new Object[] {
 			remoteAppEntryModelImpl.getCompanyId(),
-			remoteAppEntryModelImpl.getUrl()
+			remoteAppEntryModelImpl.getIframeURL()
 		};
 
-		finderCache.putResult(_finderPathCountByC_U, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathCountByC_IU, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByC_U, args, remoteAppEntryModelImpl);
+			_finderPathFetchByC_IU, args, remoteAppEntryModelImpl);
 	}
 
 	/**
@@ -2066,15 +2067,15 @@ public class RemoteAppEntryPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
-		_finderPathFetchByC_U = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_U",
+		_finderPathFetchByC_IU = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_IU",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "url"}, true);
+			new String[] {"companyId", "iframeURL"}, true);
 
-		_finderPathCountByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
+		_finderPathCountByC_IU = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_IU",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "url"}, false);
+			new String[] {"companyId", "iframeURL"}, false);
 	}
 
 	@Deactivate
@@ -2138,7 +2139,7 @@ public class RemoteAppEntryPersistenceImpl
 		RemoteAppEntryPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid"});
+		new String[] {"uuid", "type"});
 
 	@Override
 	protected FinderCache getFinderCache() {

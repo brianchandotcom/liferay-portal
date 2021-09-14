@@ -51,8 +51,13 @@ public class RemoteAppEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("customElementCSSURLs", getCustomElementCSSURLs());
+		attributes.put(
+			"customElementHTMLElementName", getCustomElementHTMLElementName());
+		attributes.put("customElementURLs", getCustomElementURLs());
+		attributes.put("iframeURL", getIframeURL());
 		attributes.put("name", getName());
-		attributes.put("url", getUrl());
+		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -107,16 +112,42 @@ public class RemoteAppEntryWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		String customElementCSSURLs = (String)attributes.get(
+			"customElementCSSURLs");
+
+		if (customElementCSSURLs != null) {
+			setCustomElementCSSURLs(customElementCSSURLs);
+		}
+
+		String customElementHTMLElementName = (String)attributes.get(
+			"customElementHTMLElementName");
+
+		if (customElementHTMLElementName != null) {
+			setCustomElementHTMLElementName(customElementHTMLElementName);
+		}
+
+		String customElementURLs = (String)attributes.get("customElementURLs");
+
+		if (customElementURLs != null) {
+			setCustomElementURLs(customElementURLs);
+		}
+
+		String iframeURL = (String)attributes.get("iframeURL");
+
+		if (iframeURL != null) {
+			setIframeURL(iframeURL);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
 			setName(name);
 		}
 
-		String url = (String)attributes.get("url");
+		String type = (String)attributes.get("type");
 
-		if (url != null) {
-			setUrl(url);
+		if (type != null) {
+			setType(type);
 		}
 	}
 
@@ -170,9 +201,49 @@ public class RemoteAppEntryWrapper
 		return model.getCreateDate();
 	}
 
+	/**
+	 * Returns the custom element cssur ls of this remote app entry.
+	 *
+	 * @return the custom element cssur ls of this remote app entry
+	 */
+	@Override
+	public String getCustomElementCSSURLs() {
+		return model.getCustomElementCSSURLs();
+	}
+
+	/**
+	 * Returns the custom element html element name of this remote app entry.
+	 *
+	 * @return the custom element html element name of this remote app entry
+	 */
+	@Override
+	public String getCustomElementHTMLElementName() {
+		return model.getCustomElementHTMLElementName();
+	}
+
+	/**
+	 * Returns the custom element ur ls of this remote app entry.
+	 *
+	 * @return the custom element ur ls of this remote app entry
+	 */
+	@Override
+	public String getCustomElementURLs() {
+		return model.getCustomElementURLs();
+	}
+
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the iframe url of this remote app entry.
+	 *
+	 * @return the iframe url of this remote app entry
+	 */
+	@Override
+	public String getIframeURL() {
+		return model.getIframeURL();
 	}
 
 	/**
@@ -302,13 +373,13 @@ public class RemoteAppEntryWrapper
 	}
 
 	/**
-	 * Returns the url of this remote app entry.
+	 * Returns the type of this remote app entry.
 	 *
-	 * @return the url of this remote app entry
+	 * @return the type of this remote app entry
 	 */
 	@Override
-	public String getUrl() {
-		return model.getUrl();
+	public String getType() {
+		return model.getType();
 	}
 
 	/**
@@ -399,6 +470,48 @@ public class RemoteAppEntryWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the custom element cssur ls of this remote app entry.
+	 *
+	 * @param customElementCSSURLs the custom element cssur ls of this remote app entry
+	 */
+	@Override
+	public void setCustomElementCSSURLs(String customElementCSSURLs) {
+		model.setCustomElementCSSURLs(customElementCSSURLs);
+	}
+
+	/**
+	 * Sets the custom element html element name of this remote app entry.
+	 *
+	 * @param customElementHTMLElementName the custom element html element name of this remote app entry
+	 */
+	@Override
+	public void setCustomElementHTMLElementName(
+		String customElementHTMLElementName) {
+
+		model.setCustomElementHTMLElementName(customElementHTMLElementName);
+	}
+
+	/**
+	 * Sets the custom element ur ls of this remote app entry.
+	 *
+	 * @param customElementURLs the custom element ur ls of this remote app entry
+	 */
+	@Override
+	public void setCustomElementURLs(String customElementURLs) {
+		model.setCustomElementURLs(customElementURLs);
+	}
+
+	/**
+	 * Sets the iframe url of this remote app entry.
+	 *
+	 * @param iframeURL the iframe url of this remote app entry
+	 */
+	@Override
+	public void setIframeURL(String iframeURL) {
+		model.setIframeURL(iframeURL);
 	}
 
 	/**
@@ -515,13 +628,13 @@ public class RemoteAppEntryWrapper
 	}
 
 	/**
-	 * Sets the url of this remote app entry.
+	 * Sets the type of this remote app entry.
 	 *
-	 * @param url the url of this remote app entry
+	 * @param type the type of this remote app entry
 	 */
 	@Override
-	public void setUrl(String url) {
-		model.setUrl(url);
+	public void setType(String type) {
+		model.setType(type);
 	}
 
 	/**

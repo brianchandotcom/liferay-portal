@@ -77,7 +77,7 @@ public class RemoteAppEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -95,10 +95,18 @@ public class RemoteAppEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", customElementCSSURLs=");
+		sb.append(customElementCSSURLs);
+		sb.append(", customElementHTMLElementName=");
+		sb.append(customElementHTMLElementName);
+		sb.append(", customElementURLs=");
+		sb.append(customElementURLs);
+		sb.append(", iframeURL=");
+		sb.append(iframeURL);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", url=");
-		sb.append(url);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append("}");
 
 		return sb.toString();
@@ -142,6 +150,35 @@ public class RemoteAppEntryCacheModel
 			remoteAppEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (customElementCSSURLs == null) {
+			remoteAppEntryImpl.setCustomElementCSSURLs("");
+		}
+		else {
+			remoteAppEntryImpl.setCustomElementCSSURLs(customElementCSSURLs);
+		}
+
+		if (customElementHTMLElementName == null) {
+			remoteAppEntryImpl.setCustomElementHTMLElementName("");
+		}
+		else {
+			remoteAppEntryImpl.setCustomElementHTMLElementName(
+				customElementHTMLElementName);
+		}
+
+		if (customElementURLs == null) {
+			remoteAppEntryImpl.setCustomElementURLs("");
+		}
+		else {
+			remoteAppEntryImpl.setCustomElementURLs(customElementURLs);
+		}
+
+		if (iframeURL == null) {
+			remoteAppEntryImpl.setIframeURL("");
+		}
+		else {
+			remoteAppEntryImpl.setIframeURL(iframeURL);
+		}
+
 		if (name == null) {
 			remoteAppEntryImpl.setName("");
 		}
@@ -149,11 +186,11 @@ public class RemoteAppEntryCacheModel
 			remoteAppEntryImpl.setName(name);
 		}
 
-		if (url == null) {
-			remoteAppEntryImpl.setUrl("");
+		if (type == null) {
+			remoteAppEntryImpl.setType("");
 		}
 		else {
-			remoteAppEntryImpl.setUrl(url);
+			remoteAppEntryImpl.setType(type);
 		}
 
 		remoteAppEntryImpl.resetOriginalValues();
@@ -162,7 +199,9 @@ public class RemoteAppEntryCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -174,8 +213,12 @@ public class RemoteAppEntryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		customElementCSSURLs = (String)objectInput.readObject();
+		customElementHTMLElementName = objectInput.readUTF();
+		customElementURLs = (String)objectInput.readObject();
+		iframeURL = objectInput.readUTF();
 		name = objectInput.readUTF();
-		url = objectInput.readUTF();
+		type = objectInput.readUTF();
 	}
 
 	@Override
@@ -205,6 +248,34 @@ public class RemoteAppEntryCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		if (customElementCSSURLs == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(customElementCSSURLs);
+		}
+
+		if (customElementHTMLElementName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(customElementHTMLElementName);
+		}
+
+		if (customElementURLs == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(customElementURLs);
+		}
+
+		if (iframeURL == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(iframeURL);
+		}
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -212,11 +283,11 @@ public class RemoteAppEntryCacheModel
 			objectOutput.writeUTF(name);
 		}
 
-		if (url == null) {
+		if (type == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(url);
+			objectOutput.writeUTF(type);
 		}
 	}
 
@@ -228,7 +299,11 @@ public class RemoteAppEntryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String customElementCSSURLs;
+	public String customElementHTMLElementName;
+	public String customElementURLs;
+	public String iframeURL;
 	public String name;
-	public String url;
+	public String type;
 
 }

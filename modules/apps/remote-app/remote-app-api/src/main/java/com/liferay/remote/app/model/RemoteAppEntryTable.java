@@ -17,6 +17,7 @@ package com.liferay.remote.app.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -50,10 +51,23 @@ public class RemoteAppEntryTable extends BaseTable<RemoteAppEntryTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<RemoteAppEntryTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<RemoteAppEntryTable, Clob> customElementCSSURLs =
+		createColumn(
+			"customElementCSSURLs", Clob.class, Types.CLOB,
+			Column.FLAG_DEFAULT);
+	public final Column<RemoteAppEntryTable, String>
+		customElementHTMLElementName = createColumn(
+			"customElementHTMLElementName", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<RemoteAppEntryTable, Clob> customElementURLs =
+		createColumn(
+			"customElementURLs", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<RemoteAppEntryTable, String> iframeURL = createColumn(
+		"iframeURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<RemoteAppEntryTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<RemoteAppEntryTable, String> url = createColumn(
-		"url", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<RemoteAppEntryTable, String> type = createColumn(
+		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private RemoteAppEntryTable() {
 		super("RemoteAppEntry", RemoteAppEntryTable::new);

@@ -45,13 +45,26 @@ public class RemoteAppEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.remote.app.service.impl.RemoteAppEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static RemoteAppEntry addRemoteAppEntry(
-			long userId, Map<java.util.Locale, String> nameMap, String url,
+	public static RemoteAppEntry addCustomElementRemoteAppEntry(
+			long userId, Map<java.util.Locale, String> nameMap,
+			String customElementCSSURLs, String customElementHTMLElementName,
+			String customElementURLs,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().addRemoteAppEntry(
-			userId, nameMap, url, serviceContext);
+		return getService().addCustomElementRemoteAppEntry(
+			userId, nameMap, customElementCSSURLs, customElementHTMLElementName,
+			customElementURLs, serviceContext);
+	}
+
+	public static RemoteAppEntry addIframeRemoteAppEntry(
+			long userId, Map<java.util.Locale, String> nameMap,
+			String iframeURL,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addIframeRemoteAppEntry(
+			userId, nameMap, iframeURL, serviceContext);
 	}
 
 	/**
@@ -352,13 +365,24 @@ public class RemoteAppEntryLocalServiceUtil {
 		getService().undeployRemoteAppEntry(remoteAppEntry);
 	}
 
-	public static RemoteAppEntry updateRemoteAppEntry(
+	public static RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, Map<java.util.Locale, String> nameMap,
-			String url)
+			String customElementCSSURLs, String customElementHTMLElementName,
+			String customElementURLs)
 		throws PortalException {
 
-		return getService().updateRemoteAppEntry(
-			remoteAppEntryId, nameMap, url);
+		return getService().updateCustomElementRemoteAppEntry(
+			remoteAppEntryId, nameMap, customElementCSSURLs,
+			customElementHTMLElementName, customElementURLs);
+	}
+
+	public static RemoteAppEntry updateIframeRemoteAppEntry(
+			long remoteAppEntryId, Map<java.util.Locale, String> nameMap,
+			String iframeURL)
+		throws PortalException {
+
+		return getService().updateIframeRemoteAppEntry(
+			remoteAppEntryId, nameMap, iframeURL);
 	}
 
 	/**

@@ -138,9 +138,19 @@ public class RemoteAppEntryPersistenceTest {
 
 		newRemoteAppEntry.setModifiedDate(RandomTestUtil.nextDate());
 
+		newRemoteAppEntry.setCustomElementCSSURLs(
+			RandomTestUtil.randomString());
+
+		newRemoteAppEntry.setCustomElementHTMLElementName(
+			RandomTestUtil.randomString());
+
+		newRemoteAppEntry.setCustomElementURLs(RandomTestUtil.randomString());
+
+		newRemoteAppEntry.setIframeURL(RandomTestUtil.randomString());
+
 		newRemoteAppEntry.setName(RandomTestUtil.randomString());
 
-		newRemoteAppEntry.setUrl(RandomTestUtil.randomString());
+		newRemoteAppEntry.setType(RandomTestUtil.randomString());
 
 		_remoteAppEntries.add(_persistence.update(newRemoteAppEntry));
 
@@ -170,9 +180,21 @@ public class RemoteAppEntryPersistenceTest {
 			Time.getShortTimestamp(existingRemoteAppEntry.getModifiedDate()),
 			Time.getShortTimestamp(newRemoteAppEntry.getModifiedDate()));
 		Assert.assertEquals(
+			existingRemoteAppEntry.getCustomElementCSSURLs(),
+			newRemoteAppEntry.getCustomElementCSSURLs());
+		Assert.assertEquals(
+			existingRemoteAppEntry.getCustomElementHTMLElementName(),
+			newRemoteAppEntry.getCustomElementHTMLElementName());
+		Assert.assertEquals(
+			existingRemoteAppEntry.getCustomElementURLs(),
+			newRemoteAppEntry.getCustomElementURLs());
+		Assert.assertEquals(
+			existingRemoteAppEntry.getIframeURL(),
+			newRemoteAppEntry.getIframeURL());
+		Assert.assertEquals(
 			existingRemoteAppEntry.getName(), newRemoteAppEntry.getName());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getUrl(), newRemoteAppEntry.getUrl());
+			existingRemoteAppEntry.getType(), newRemoteAppEntry.getType());
 	}
 
 	@Test
@@ -194,12 +216,12 @@ public class RemoteAppEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_U() throws Exception {
-		_persistence.countByC_U(RandomTestUtil.nextLong(), "");
+	public void testCountByC_IU() throws Exception {
+		_persistence.countByC_IU(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByC_U(0L, "null");
+		_persistence.countByC_IU(0L, "null");
 
-		_persistence.countByC_U(0L, (String)null);
+		_persistence.countByC_IU(0L, (String)null);
 	}
 
 	@Test
@@ -229,8 +251,9 @@ public class RemoteAppEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"RemoteAppEntry", "mvccVersion", true, "uuid", true,
 			"remoteAppEntryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true, "url", true);
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"customElementHTMLElementName", true, "iframeURL", true, "name",
+			true, "type", true);
 	}
 
 	@Test
@@ -504,10 +527,10 @@ public class RemoteAppEntryPersistenceTest {
 				remoteAppEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
-			remoteAppEntry.getUrl(),
+			remoteAppEntry.getIframeURL(),
 			ReflectionTestUtil.invoke(
 				remoteAppEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "url"));
+				new Class<?>[] {String.class}, "iframeURL"));
 	}
 
 	protected RemoteAppEntry addRemoteAppEntry() throws Exception {
@@ -529,9 +552,18 @@ public class RemoteAppEntryPersistenceTest {
 
 		remoteAppEntry.setModifiedDate(RandomTestUtil.nextDate());
 
+		remoteAppEntry.setCustomElementCSSURLs(RandomTestUtil.randomString());
+
+		remoteAppEntry.setCustomElementHTMLElementName(
+			RandomTestUtil.randomString());
+
+		remoteAppEntry.setCustomElementURLs(RandomTestUtil.randomString());
+
+		remoteAppEntry.setIframeURL(RandomTestUtil.randomString());
+
 		remoteAppEntry.setName(RandomTestUtil.randomString());
 
-		remoteAppEntry.setUrl(RandomTestUtil.randomString());
+		remoteAppEntry.setType(RandomTestUtil.randomString());
 
 		_remoteAppEntries.add(_persistence.update(remoteAppEntry));
 

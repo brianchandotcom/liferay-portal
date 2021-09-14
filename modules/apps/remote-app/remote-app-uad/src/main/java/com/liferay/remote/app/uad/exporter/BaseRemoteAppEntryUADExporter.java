@@ -55,7 +55,7 @@ public abstract class BaseRemoteAppEntryUADExporter
 
 	@Override
 	protected String toXmlString(RemoteAppEntry remoteAppEntry) {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.remote.app.model.RemoteAppEntry");
@@ -74,12 +74,28 @@ public abstract class BaseRemoteAppEntryUADExporter
 		sb.append(remoteAppEntry.getUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>customElementCSSURLs</column-name><column-value><![CDATA[");
+		sb.append(remoteAppEntry.getCustomElementCSSURLs());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>customElementHTMLElementName</column-name><column-value><![CDATA[");
+		sb.append(remoteAppEntry.getCustomElementHTMLElementName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>customElementURLs</column-name><column-value><![CDATA[");
+		sb.append(remoteAppEntry.getCustomElementURLs());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>iframeURL</column-name><column-value><![CDATA[");
+		sb.append(remoteAppEntry.getIframeURL());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(remoteAppEntry.getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>url</column-name><column-value><![CDATA[");
-		sb.append(remoteAppEntry.getUrl());
+			"<column><column-name>type</column-name><column-value><![CDATA[");
+		sb.append(remoteAppEntry.getType());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

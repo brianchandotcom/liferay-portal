@@ -84,7 +84,10 @@ public class RemoteAppEntryModelImpl
 		{"remoteAppEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"url", Types.VARCHAR}
+		{"customElementCSSURLs", Types.CLOB},
+		{"customElementHTMLElementName", Types.VARCHAR},
+		{"customElementURLs", Types.CLOB}, {"iframeURL", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"type_", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -99,12 +102,16 @@ public class RemoteAppEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("customElementCSSURLs", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("customElementHTMLElementName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("customElementURLs", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("iframeURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("url", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RemoteAppEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,remoteAppEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,url VARCHAR(1024) null)";
+		"create table RemoteAppEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,remoteAppEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,customElementCSSURLs TEXT null,customElementHTMLElementName VARCHAR(256) null,customElementURLs TEXT null,iframeURL VARCHAR(1024) null,name STRING null,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table RemoteAppEntry";
 
@@ -130,7 +137,7 @@ public class RemoteAppEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long URL_COLUMN_BITMASK = 2L;
+	public static final long IFRAMEURL_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
@@ -320,13 +327,37 @@ public class RemoteAppEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<RemoteAppEntry, Date>)RemoteAppEntry::setModifiedDate);
+		attributeGetterFunctions.put(
+			"customElementCSSURLs", RemoteAppEntry::getCustomElementCSSURLs);
+		attributeSetterBiConsumers.put(
+			"customElementCSSURLs",
+			(BiConsumer<RemoteAppEntry, String>)
+				RemoteAppEntry::setCustomElementCSSURLs);
+		attributeGetterFunctions.put(
+			"customElementHTMLElementName",
+			RemoteAppEntry::getCustomElementHTMLElementName);
+		attributeSetterBiConsumers.put(
+			"customElementHTMLElementName",
+			(BiConsumer<RemoteAppEntry, String>)
+				RemoteAppEntry::setCustomElementHTMLElementName);
+		attributeGetterFunctions.put(
+			"customElementURLs", RemoteAppEntry::getCustomElementURLs);
+		attributeSetterBiConsumers.put(
+			"customElementURLs",
+			(BiConsumer<RemoteAppEntry, String>)
+				RemoteAppEntry::setCustomElementURLs);
+		attributeGetterFunctions.put("iframeURL", RemoteAppEntry::getIframeURL);
+		attributeSetterBiConsumers.put(
+			"iframeURL",
+			(BiConsumer<RemoteAppEntry, String>)RemoteAppEntry::setIframeURL);
 		attributeGetterFunctions.put("name", RemoteAppEntry::getName);
 		attributeSetterBiConsumers.put(
 			"name",
 			(BiConsumer<RemoteAppEntry, String>)RemoteAppEntry::setName);
-		attributeGetterFunctions.put("url", RemoteAppEntry::getUrl);
+		attributeGetterFunctions.put("type", RemoteAppEntry::getType);
 		attributeSetterBiConsumers.put(
-			"url", (BiConsumer<RemoteAppEntry, String>)RemoteAppEntry::setUrl);
+			"type",
+			(BiConsumer<RemoteAppEntry, String>)RemoteAppEntry::setType);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -498,6 +529,93 @@ public class RemoteAppEntryModelImpl
 	}
 
 	@Override
+	public String getCustomElementCSSURLs() {
+		if (_customElementCSSURLs == null) {
+			return "";
+		}
+		else {
+			return _customElementCSSURLs;
+		}
+	}
+
+	@Override
+	public void setCustomElementCSSURLs(String customElementCSSURLs) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_customElementCSSURLs = customElementCSSURLs;
+	}
+
+	@Override
+	public String getCustomElementHTMLElementName() {
+		if (_customElementHTMLElementName == null) {
+			return "";
+		}
+		else {
+			return _customElementHTMLElementName;
+		}
+	}
+
+	@Override
+	public void setCustomElementHTMLElementName(
+		String customElementHTMLElementName) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_customElementHTMLElementName = customElementHTMLElementName;
+	}
+
+	@Override
+	public String getCustomElementURLs() {
+		if (_customElementURLs == null) {
+			return "";
+		}
+		else {
+			return _customElementURLs;
+		}
+	}
+
+	@Override
+	public void setCustomElementURLs(String customElementURLs) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_customElementURLs = customElementURLs;
+	}
+
+	@Override
+	public String getIframeURL() {
+		if (_iframeURL == null) {
+			return "";
+		}
+		else {
+			return _iframeURL;
+		}
+	}
+
+	@Override
+	public void setIframeURL(String iframeURL) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_iframeURL = iframeURL;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalIframeURL() {
+		return getColumnOriginalValue("iframeURL");
+	}
+
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -604,31 +722,22 @@ public class RemoteAppEntryModelImpl
 	}
 
 	@Override
-	public String getUrl() {
-		if (_url == null) {
+	public String getType() {
+		if (_type == null) {
 			return "";
 		}
 		else {
-			return _url;
+			return _type;
 		}
 	}
 
 	@Override
-	public void setUrl(String url) {
+	public void setType(String type) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_url = url;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public String getOriginalUrl() {
-		return getColumnOriginalValue("url");
+		_type = type;
 	}
 
 	@Override
@@ -791,8 +900,13 @@ public class RemoteAppEntryModelImpl
 		remoteAppEntryImpl.setUserName(getUserName());
 		remoteAppEntryImpl.setCreateDate(getCreateDate());
 		remoteAppEntryImpl.setModifiedDate(getModifiedDate());
+		remoteAppEntryImpl.setCustomElementCSSURLs(getCustomElementCSSURLs());
+		remoteAppEntryImpl.setCustomElementHTMLElementName(
+			getCustomElementHTMLElementName());
+		remoteAppEntryImpl.setCustomElementURLs(getCustomElementURLs());
+		remoteAppEntryImpl.setIframeURL(getIframeURL());
 		remoteAppEntryImpl.setName(getName());
-		remoteAppEntryImpl.setUrl(getUrl());
+		remoteAppEntryImpl.setType(getType());
 
 		remoteAppEntryImpl.resetOriginalValues();
 
@@ -819,8 +933,18 @@ public class RemoteAppEntryModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		remoteAppEntryImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		remoteAppEntryImpl.setCustomElementCSSURLs(
+			this.<String>getColumnOriginalValue("customElementCSSURLs"));
+		remoteAppEntryImpl.setCustomElementHTMLElementName(
+			this.<String>getColumnOriginalValue(
+				"customElementHTMLElementName"));
+		remoteAppEntryImpl.setCustomElementURLs(
+			this.<String>getColumnOriginalValue("customElementURLs"));
+		remoteAppEntryImpl.setIframeURL(
+			this.<String>getColumnOriginalValue("iframeURL"));
 		remoteAppEntryImpl.setName(this.<String>getColumnOriginalValue("name"));
-		remoteAppEntryImpl.setUrl(this.<String>getColumnOriginalValue("url"));
+		remoteAppEntryImpl.setType(
+			this.<String>getColumnOriginalValue("type_"));
 
 		return remoteAppEntryImpl;
 	}
@@ -939,6 +1063,46 @@ public class RemoteAppEntryModelImpl
 			remoteAppEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		remoteAppEntryCacheModel.customElementCSSURLs =
+			getCustomElementCSSURLs();
+
+		String customElementCSSURLs =
+			remoteAppEntryCacheModel.customElementCSSURLs;
+
+		if ((customElementCSSURLs != null) &&
+			(customElementCSSURLs.length() == 0)) {
+
+			remoteAppEntryCacheModel.customElementCSSURLs = null;
+		}
+
+		remoteAppEntryCacheModel.customElementHTMLElementName =
+			getCustomElementHTMLElementName();
+
+		String customElementHTMLElementName =
+			remoteAppEntryCacheModel.customElementHTMLElementName;
+
+		if ((customElementHTMLElementName != null) &&
+			(customElementHTMLElementName.length() == 0)) {
+
+			remoteAppEntryCacheModel.customElementHTMLElementName = null;
+		}
+
+		remoteAppEntryCacheModel.customElementURLs = getCustomElementURLs();
+
+		String customElementURLs = remoteAppEntryCacheModel.customElementURLs;
+
+		if ((customElementURLs != null) && (customElementURLs.length() == 0)) {
+			remoteAppEntryCacheModel.customElementURLs = null;
+		}
+
+		remoteAppEntryCacheModel.iframeURL = getIframeURL();
+
+		String iframeURL = remoteAppEntryCacheModel.iframeURL;
+
+		if ((iframeURL != null) && (iframeURL.length() == 0)) {
+			remoteAppEntryCacheModel.iframeURL = null;
+		}
+
 		remoteAppEntryCacheModel.name = getName();
 
 		String name = remoteAppEntryCacheModel.name;
@@ -947,12 +1111,12 @@ public class RemoteAppEntryModelImpl
 			remoteAppEntryCacheModel.name = null;
 		}
 
-		remoteAppEntryCacheModel.url = getUrl();
+		remoteAppEntryCacheModel.type = getType();
 
-		String url = remoteAppEntryCacheModel.url;
+		String type = remoteAppEntryCacheModel.type;
 
-		if ((url != null) && (url.length() == 0)) {
-			remoteAppEntryCacheModel.url = null;
+		if ((type != null) && (type.length() == 0)) {
+			remoteAppEntryCacheModel.type = null;
 		}
 
 		return remoteAppEntryCacheModel;
@@ -1054,9 +1218,13 @@ public class RemoteAppEntryModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _customElementCSSURLs;
+	private String _customElementHTMLElementName;
+	private String _customElementURLs;
+	private String _iframeURL;
 	private String _name;
 	private String _nameCurrentLanguageId;
-	private String _url;
+	private String _type;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1095,8 +1263,14 @@ public class RemoteAppEntryModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put(
+			"customElementCSSURLs", _customElementCSSURLs);
+		_columnOriginalValues.put(
+			"customElementHTMLElementName", _customElementHTMLElementName);
+		_columnOriginalValues.put("customElementURLs", _customElementURLs);
+		_columnOriginalValues.put("iframeURL", _iframeURL);
 		_columnOriginalValues.put("name", _name);
-		_columnOriginalValues.put("url", _url);
+		_columnOriginalValues.put("type_", _type);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1105,6 +1279,7 @@ public class RemoteAppEntryModelImpl
 		Map<String, String> attributeNames = new HashMap<>();
 
 		attributeNames.put("uuid_", "uuid");
+		attributeNames.put("type_", "type");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -1136,9 +1311,17 @@ public class RemoteAppEntryModelImpl
 
 		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("name", 256L);
+		columnBitmasks.put("customElementCSSURLs", 256L);
 
-		columnBitmasks.put("url", 512L);
+		columnBitmasks.put("customElementHTMLElementName", 512L);
+
+		columnBitmasks.put("customElementURLs", 1024L);
+
+		columnBitmasks.put("iframeURL", 2048L);
+
+		columnBitmasks.put("name", 4096L);
+
+		columnBitmasks.put("type_", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

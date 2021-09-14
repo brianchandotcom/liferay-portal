@@ -416,21 +416,13 @@ definition {
 
 	@description = "This is a use case for LPS-72949."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanPublishUpdatedEntryTitle {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
-			groupName = "Site Name (Staging)",
-			site = "false");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
+			groupName = "Site Name",
+			site = "true");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Blogs Page",
@@ -526,146 +518,6 @@ definition {
 
 		// TODO LPS-136805 CanRepublishVideoViaSAP pending implementation
 
-	}
-
-	@description = "This is a use case for LPS-80543."
-	@priority = "5"
-	@refactorneeded
-	test ViewBlogsAsAGuestAndSiteMember {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONUser.addUserToSite(
-			groupName = "Site Name",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		Blogs.addEntryWithUploadedCoverImage(
-			coverImageName = "Document_1",
-			entryContent = "Blogs Entry Content 1",
-			entryTitle = "Blogs Entry Title 1",
-			navTab = "Blog Images",
-			uploadFileName = "Document_1.jpg");
-
-		Button.clickPublish();
-
-		Pause(locator1 = "3000");
-
-		Alert.viewSuccessMessage();
-
-		BlogsNavigator.gotoAddEntry();
-
-		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title 2");
-
-		BlogsEntry.addContentWithInlineImage(
-			entryContent = "Blogs Entry Content 2",
-			navTab = "Blog Images",
-			uploadFileName = "Document_2.jpg");
-
-		Pause(locator1 = "3000");
-
-		PortletEntry.publish();
-
-		BlogsNavigator.gotoAddEntry();
-
-		BlogsEntry.addEntryContent(
-			entryContent = "Blogs Entry Content 3",
-			entryTitle = "Blogs Entry Title 3");
-
-		AlloyEditor.addEntryExternalURL(entryExternalURL = "www.liferay.com");
-
-		PortletEntry.publish();
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title 1",
-			layoutName = "Staging Blogs Page",
-			siteURLKey = "site-name");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content 1",
-			entryTitle = "Blogs Entry Title 1",
-			uploadFileName = "Document_1.jpg");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title 2",
-			layoutName = "Staging Blogs Page",
-			siteURLKey = "site-name");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content 2",
-			entryInlineImage = "Document_2.jpg",
-			entryTitle = "Blogs Entry Title 2");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title 3",
-			layoutName = "Staging Blogs Page",
-			siteURLKey = "site-name");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content 3",
-			entryExternalURL = "https://www.liferay.com",
-			entryTitle = "Blogs Entry Title 3");
-
-		Open(locator1 = "${portalURL}/web/site-name-staging/staging-blogs-page");
-
-		User.logoutPG();
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title 1",
-			layoutName = "Staging Blogs Page",
-			siteURLKey = "site-name");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content 1",
-			entryTitle = "Blogs Entry Title 1",
-			uploadFileName = "Document_1.jpg");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title 2",
-			layoutName = "Staging Blogs Page",
-			siteURLKey = "site-name");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content 2",
-			entryInlineImage = "Document_2.jpg",
-			entryTitle = "Blogs Entry Title 2");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title 3",
-			layoutName = "Staging Blogs Page",
-			siteURLKey = "site-name");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blogs Entry Content 3",
-			entryExternalURL = "https://www.liferay.com",
-			entryTitle = "Blogs Entry Title 3");
-
-		Open(locator1 = "${portalURL}/web/site-name-staging/staging-blogs-page");
 	}
 
 }

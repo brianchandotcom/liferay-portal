@@ -57,7 +57,11 @@ definition {
 	}
 
 	macro typeFileContent {
-		var content = TestCase.getFileContent(fileName = "${fileName}");
+		var testBaseDirName = PropsUtil.get("test.base.dir.name");
+		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
+		var filePath = "${testBaseDirName}tests/enduser/wem/fragment/${testDependenciesDirName}/${fileName}";
+		var filePath = FileUtil.fixFilePath("${filePath}");
+		var content = FileUtil.read("${filePath}");
 
 		var fileExtension = File.getFileExtension(fileName = "${fileName}");
 

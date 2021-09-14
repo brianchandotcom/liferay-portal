@@ -3,13 +3,9 @@ definition {
 	macro getFragmentFileContent {
 		var baseDir = PropsUtil.get("test.base.dir.name");
 		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
-
-		if (isSet(path)) {
-			var fileContent = FileUtil.read("${baseDir}${dependenciesDir}/${path}");
-		}
-		else {
-			var fileContent = FileUtil.read("${baseDir}${dependenciesDir}/fragment/${fileName}");
-		}
+		var filePath = "${baseDir}tests/enduser/wem/fragment/${dependenciesDir}/${fileName}";
+		var filePath = FileUtil.fixFilePath("${filePath}");
+		var fileContent = FileUtil.read("${filePath}");
 
 		var os = OSDetector.isWindows();
 
@@ -21,6 +17,7 @@ definition {
 
 			return "${fileContent}";
 		}
+
 		else {
 			return "${fileContent}";
 		}

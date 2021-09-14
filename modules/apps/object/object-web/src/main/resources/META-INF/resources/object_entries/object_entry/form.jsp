@@ -19,10 +19,10 @@
 <%
 String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
 
-ObjectEntriesDetailsDisplayContext objectEntriesDetailsDisplayContext = (ObjectEntriesDetailsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+ObjectEntryDisplayContext objectEntryDisplayContext = (ObjectEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-ObjectDefinition objectDefinition = objectEntriesDetailsDisplayContext.getObjectDefinition();
-ObjectEntry objectEntry = objectEntriesDetailsDisplayContext.getObjectEntry();
+ObjectDefinition objectDefinition = objectEntryDisplayContext.getObjectDefinition();
+ObjectEntry objectEntry = objectEntryDisplayContext.getObjectEntry();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
@@ -46,7 +46,7 @@ portletDisplay.setURLBack(backURL);
 					<clay:col
 						md="11"
 					>
-						<%= objectEntriesDetailsDisplayContext.renderDDMForm(pageContext) %>
+						<%= objectEntryDisplayContext.renderDDMForm(pageContext) %>
 					</clay:col>
 				</clay:row>
 			</clay:sheet-section>

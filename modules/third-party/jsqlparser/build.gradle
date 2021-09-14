@@ -6,7 +6,6 @@ task patch(type: PatchTask)
 
 dependencies {
 	compileOnly group: "com.github.jsqlparser", name: "jsqlparser", version: "2.1"
-	compileOnly project(":core:petra:petra-string")
 }
 
 patch {

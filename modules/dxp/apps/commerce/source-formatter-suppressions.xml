@@ -2,7 +2,6 @@
 
 <suppressions>
 	<source-check>
-		<suppress checks="JavaConfigurationCategoryCheck" files="commerce-shop-by-diagram/commerce-shop-by-diagram-api/src/main/java/com/liferay/commerce/shop/by/diagram/configuration/CPDefinitionDiagramSettingImageConfiguration\.java" />
 		<suppress checks="JavaPackagePathCheck" files="commerce-dashboard-web/src/main/java/com/liferay/commerce/dashboard/web/internal/configuration/definition/CommerceDashboardForecastPortletInstanceConfigurationBeanDeclaration\.java" />
 	</source-check>
 </suppressions>

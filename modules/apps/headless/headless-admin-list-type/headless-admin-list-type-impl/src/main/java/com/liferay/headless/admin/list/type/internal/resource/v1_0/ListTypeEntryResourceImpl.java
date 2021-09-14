@@ -70,6 +70,15 @@ public class ListTypeEntryResourceImpl
 	}
 
 	@Override
+	public ListTypeEntry getListTypeEntry(Long listTypeEntryId)
+		throws Exception {
+
+		return ListTypeEntryUtil.toListTypeEntry(
+			null, contextAcceptLanguage.getPreferredLocale(),
+			_listTypeEntryLocalService.getListTypeEntry(listTypeEntryId));
+	}
+
+	@Override
 	public ListTypeEntry postListTypeDefinitionListTypeEntry(
 			Long listTypeDefinitionId, ListTypeEntry listTypeEntry)
 		throws Exception {

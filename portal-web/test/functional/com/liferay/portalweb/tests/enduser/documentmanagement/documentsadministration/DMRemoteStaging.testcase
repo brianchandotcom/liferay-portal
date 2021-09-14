@@ -48,6 +48,21 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-83426. It ensures repository actions are all available after enabling remote staging."
+	@priority = "5"
+	test AllActionsAreAvailableInRepository {
+		property test.name.skip.portal.instance = "DMRemoteStagingDM#AllActionsAreAvailableInRepository";
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_3.txt",
+			dmDocumentTitle = "Document_3.txt");
+
+		DMDocument.viewStagingDetailsManagementBar(dmDocumentTitle = "Document_3.txt");
+	}
+
 	@description = "This ensures that the document using custom document type can be deleted and republished."
 	@priority = "5"
 	@refactorneeded

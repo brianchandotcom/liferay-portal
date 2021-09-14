@@ -34,8 +34,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
 import com.liferay.remote.app.exception.DuplicateRemoteAppEntryException;
+import com.liferay.remote.app.exception.InvalidRemoteAppEntryTypeException;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.base.RemoteAppEntryLocalServiceBaseImpl;
 
@@ -67,15 +69,53 @@ public class RemoteAppEntryLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public RemoteAppEntry addRemoteAppEntry(
-			long userId, Map<Locale, String> nameMap, String url,
+	public RemoteAppEntry addCustomElementRemoteAppEntry(
+			long userId, Map<Locale, String> nameMap,
+			String customElementCSSURLs, String customElementHTMLElementName,
+			String customElementURLs, ServiceContext serviceContext)
+		throws PortalException {
+
+		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
+		customElementHTMLElementName = StringUtil.trim(
+			customElementHTMLElementName);
+		customElementURLs = StringUtil.trim(customElementURLs);
+
+		long remoteAppEntryId = counterLocalService.increment();
+
+		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
+			remoteAppEntryId);
+
+		User user = userLocalService.getUser(userId);
+
+		remoteAppEntry.setUuid(serviceContext.getUuid());
+		remoteAppEntry.setCompanyId(user.getCompanyId());
+		remoteAppEntry.setUserId(user.getUserId());
+		remoteAppEntry.setUserName(user.getFullName());
+		remoteAppEntry.setNameMap(nameMap);
+		remoteAppEntry.setCustomElementCSSURLs(customElementCSSURLs);
+		remoteAppEntry.setCustomElementHTMLElementName(
+			customElementHTMLElementName);
+		remoteAppEntry.setCustomElementURLs(customElementURLs);
+		remoteAppEntry.setType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT);
+
+		_validateCustomElementRemoteAppEntry(remoteAppEntry);
+
+		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
+
+		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
+
+		return remoteAppEntry;
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public RemoteAppEntry addIframeRemoteAppEntry(
+			long userId, Map<Locale, String> nameMap, String iframeURL,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
-		url = StringUtil.trim(url);
-
-		_validate(0, user.getCompanyId(), url);
+		iframeURL = StringUtil.trim(iframeURL);
 
 		long remoteAppEntryId = counterLocalService.increment();
 
@@ -87,7 +127,10 @@ public class RemoteAppEntryLocalServiceImpl
 		remoteAppEntry.setUserId(user.getUserId());
 		remoteAppEntry.setUserName(user.getFullName());
 		remoteAppEntry.setNameMap(nameMap);
-		remoteAppEntry.setUrl(url);
+		remoteAppEntry.setIframeURL(iframeURL);
+		remoteAppEntry.setType(RemoteAppConstants.TYPE_IFRAME);
+
+		_validateIframeRemoteAppEntry(remoteAppEntry);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
@@ -191,19 +234,51 @@ public class RemoteAppEntryLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public RemoteAppEntry updateRemoteAppEntry(
-			long remoteAppEntryId, Map<Locale, String> nameMap, String url)
+	public RemoteAppEntry updateCustomElementRemoteAppEntry(
+			long remoteAppEntryId, Map<Locale, String> nameMap,
+			String customElementCSSURLs, String customElementHTMLElementName,
+			String customElementURLs)
 		throws PortalException {
 
-		url = StringUtil.trim(url);
+		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
+		customElementHTMLElementName = StringUtil.trim(
+			customElementHTMLElementName);
+		customElementURLs = StringUtil.trim(customElementURLs);
 
 		RemoteAppEntry remoteAppEntry =
 			remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
 
-		_validate(remoteAppEntryId, remoteAppEntry.getCompanyId(), url);
+		remoteAppEntry.setNameMap(nameMap);
+		remoteAppEntry.setCustomElementCSSURLs(customElementCSSURLs);
+		remoteAppEntry.setCustomElementHTMLElementName(
+			customElementHTMLElementName);
+		remoteAppEntry.setCustomElementURLs(customElementURLs);
+
+		_validateCustomElementRemoteAppEntry(remoteAppEntry);
+
+		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
+
+		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
+
+		return remoteAppEntry;
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public RemoteAppEntry updateIframeRemoteAppEntry(
+			long remoteAppEntryId, Map<Locale, String> nameMap,
+			String iframeURL)
+		throws PortalException {
+
+		iframeURL = StringUtil.trim(iframeURL);
+
+		RemoteAppEntry remoteAppEntry =
+			remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
 
 		remoteAppEntry.setNameMap(nameMap);
-		remoteAppEntry.setUrl(url);
+		remoteAppEntry.setIframeURL(iframeURL);
+
+		_validateIframeRemoteAppEntry(remoteAppEntry);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
@@ -280,16 +355,29 @@ public class RemoteAppEntryLocalServiceImpl
 		return remoteAppEntries;
 	}
 
-	private void _validate(long remoteAppEntryId, long companyId, String url)
+	private void _validateCustomElementRemoteAppEntry(
+			RemoteAppEntry remoteAppEntry)
+		throws InvalidRemoteAppEntryTypeException {
+
+		String type = remoteAppEntry.getType();
+
+		if (!type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+			throw new InvalidRemoteAppEntryTypeException(type);
+		}
+	}
+
+	private void _validateIframeRemoteAppEntry(RemoteAppEntry remoteAppEntry)
 		throws PortalException {
 
-		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.fetchByC_U(
-			companyId, url);
+		RemoteAppEntry remoteAppEntry2 = remoteAppEntryPersistence.fetchByC_IU(
+			remoteAppEntry.getCompanyId(), remoteAppEntry.getIframeURL());
 
-		if ((remoteAppEntry != null) &&
-			(remoteAppEntry.getRemoteAppEntryId() != remoteAppEntryId)) {
+		if ((remoteAppEntry2 != null) &&
+			(remoteAppEntry2.getRemoteAppEntryId() !=
+				remoteAppEntry.getRemoteAppEntryId())) {
 
-			throw new DuplicateRemoteAppEntryException("Duplicate URL " + url);
+			throw new DuplicateRemoteAppEntryException(
+				"Duplicate iframe URL " + remoteAppEntry.getIframeURL());
 		}
 	}
 

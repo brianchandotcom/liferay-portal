@@ -14,11 +14,14 @@
 
 package com.liferay.petra.sql.dsl.spi.expression;
 
+import com.liferay.petra.sql.dsl.ast.ASTNode;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.spi.ast.BaseASTNode;
 
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -70,6 +73,13 @@ public class DefaultPredicate
 	}
 
 	@Override
+	public void toSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
+		doToSQL(consumer, astNodeListener);
+	}
+
+	@Override
 	public Predicate withParentheses() {
 		if (_wrapParentheses) {
 			return this;
@@ -83,18 +93,39 @@ public class DefaultPredicate
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		if (_wrapParentheses) {
-			consumer.accept("(");
-		}
+		Deque<ASTNode> deque = new LinkedList<>();
 
-		_leftExpression.toSQL(consumer, astNodeListener);
+		deque.push(this);
 
-		consumer.accept(_operand.getStringWithSpaces());
+		ASTNode astNode = null;
 
-		_rightExpression.toSQL(consumer, astNodeListener);
+		while ((astNode = deque.poll()) != null) {
+			if (astNode instanceof DefaultPredicate) {
+				if (astNodeListener != null) {
+					astNodeListener.process(astNode);
+				}
 
-		if (_wrapParentheses) {
-			consumer.accept(")");
+				DefaultPredicate defaultPredicate = (DefaultPredicate)astNode;
+
+				if (defaultPredicate.isWrapParentheses()) {
+					deque.push(new ASTNodeAdapter(")"));
+				}
+
+				deque.push(defaultPredicate.getRightExpression());
+
+				Operand operand = defaultPredicate.getOperand();
+
+				deque.push(new ASTNodeAdapter(operand.getStringWithSpaces()));
+
+				deque.push(defaultPredicate.getLeftExpression());
+
+				if (defaultPredicate.isWrapParentheses()) {
+					deque.push(new ASTNodeAdapter("("));
+				}
+			}
+			else {
+				astNode.toSQL(consumer, astNodeListener);
+			}
 		}
 	}
 
@@ -112,5 +143,22 @@ public class DefaultPredicate
 	private final Operand _operand;
 	private final Expression<?> _rightExpression;
 	private final boolean _wrapParentheses;
+
+	private static class ASTNodeAdapter implements ASTNode {
+
+		@Override
+		public void toSQL(
+			Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
+			consumer.accept(_value);
+		}
+
+		private ASTNodeAdapter(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 }

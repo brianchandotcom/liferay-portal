@@ -401,6 +401,16 @@ public class ListTypeEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.list.type.model.ListTypeEntry updateListTypeEntry(
+			long listTypeEntryId,
+			java.util.Map<java.util.Locale, String> nameMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _listTypeEntryLocalService.updateListTypeEntry(
+			listTypeEntryId, nameMap);
+	}
+
+	@Override
 	public ListTypeEntryLocalService getWrappedService() {
 		return _listTypeEntryLocalService;
 	}

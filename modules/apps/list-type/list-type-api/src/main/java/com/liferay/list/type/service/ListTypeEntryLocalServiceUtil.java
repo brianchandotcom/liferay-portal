@@ -359,6 +359,13 @@ public class ListTypeEntryLocalServiceUtil {
 		return getService().updateListTypeEntry(listTypeEntry);
 	}
 
+	public static ListTypeEntry updateListTypeEntry(
+			long listTypeEntryId, Map<java.util.Locale, String> nameMap)
+		throws PortalException {
+
+		return getService().updateListTypeEntry(listTypeEntryId, nameMap);
+	}
+
 	public static ListTypeEntryLocalService getService() {
 		return _service;
 	}

@@ -56,6 +56,11 @@ public class AssetListEntryVerticalCard extends BaseVerticalCard {
 	}
 
 	@Override
+	public String getStickerIcon() {
+		return "filter";
+	}
+
+	@Override
 	public String getSubtitle() {
 		String type = _assetListEntryItemSelectorDisplayContext.getType(
 			_assetListEntry, themeDisplay.getLocale());

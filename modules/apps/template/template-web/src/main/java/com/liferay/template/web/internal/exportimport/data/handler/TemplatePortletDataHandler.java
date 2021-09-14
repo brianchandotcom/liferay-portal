@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.template.constants.TemplatePortletKeys;
+import com.liferay.template.model.TemplateEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -265,6 +266,10 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 
 		portletDataHandlerControls.add(
 			new PortletDataHandlerBoolean(NAMESPACE, "template", true, true));
+		portletDataHandlerControls.add(
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "template", true, false, null,
+				TemplateEntry.class.getName()));
 
 		for (TemplateHandler templateHandler :
 				_templateHandlerRegistry.getTemplateHandlers()) {

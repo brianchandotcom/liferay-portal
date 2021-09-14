@@ -83,6 +83,28 @@ definition {
 	}
 
 	@priority = "5"
+	test CanOverrideValueWithoutConfigFile {
+		property custom.properties = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_articleCommentsEnabled=B&quot;false&quot;";
+		property test.name.skip.portal.instance = "SystemSettings#CanOverrideValueWithoutConfigFile";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Web Content",
+			configurationName = "Web Content",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "articleCommentsEnabled");
+
+		FormFields.viewFieldText(
+			fieldName = "articleCommentsEnabled",
+			fieldText = "Set this to true to enable comments for journal articles. This field has been set by a portal property and cannot be changed here.");
+	}
+
+	@priority = "5"
 	test CanUpdateConfigValueViaUI {
 		property test.name.skip.portal.instance = "SystemSettings#CanUpdateConfigValueViaUI";
 

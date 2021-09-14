@@ -43,6 +43,7 @@ public class RemoteAppEntryTableClayDataSetDisplayView
 
 		_addClayTableSchemaField(
 			clayTableSchemaBuilder, "name", "name", "actionLink");
+		_addClayTableSchemaField(clayTableSchemaBuilder, "type", "type");
 		_addClayTableSchemaField(clayTableSchemaBuilder, "url", "url");
 
 		return clayTableSchemaBuilder.build();

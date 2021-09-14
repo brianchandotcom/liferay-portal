@@ -14,6 +14,9 @@
 
 package com.liferay.remote.app.web.internal.frontend.taglib.clay.data.set;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.model.RemoteAppEntry;
 
 import java.util.Locale;
@@ -38,8 +41,32 @@ public class RemoteAppClayDataSetEntry {
 		return _remoteAppEntry.getRemoteAppEntryId();
 	}
 
+	public String getType() {
+		String type = _remoteAppEntry.getType();
+
+		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+			return LanguageUtil.get(_locale, "custom-element");
+		}
+		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
+			return LanguageUtil.get(_locale, "iframe");
+		}
+
+		return type;
+	}
+
 	public String getURL() {
-		return _remoteAppEntry.getUrl();
+		String type = _remoteAppEntry.getType();
+
+		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+			String customElementURLs = _remoteAppEntry.getCustomElementURLs();
+
+			return customElementURLs.split(StringPool.NEW_LINE)[0];
+		}
+		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
+			return _remoteAppEntry.getIframeURL();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private final Locale _locale;

@@ -1671,6 +1671,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test PublishDMWithDocumentType {
+		property test.name.skip.portal.instance = "DepotLocalStagingDM#PublishDMWithDocumentType";
+
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DepotNavigator.switchStagingStatus(stagingItem = "Staging");

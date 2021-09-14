@@ -21,7 +21,7 @@ import TemplateModal from './TemplateModal';
 const DEFAULT_MODAL_CONTAINER_ID = 'templateModal';
 
 export default function openTemplateModal({
-	addDDMTemplateURL,
+	addTemplateEntryURL,
 	itemTypes,
 	namespace,
 }) {
@@ -33,7 +33,7 @@ export default function openTemplateModal({
 
 	render(
 		<TemplateModal
-			addDDMTemplateURL={addDDMTemplateURL}
+			addTemplateEntryURL={addTemplateEntryURL}
 			itemTypes={itemTypes}
 			namespace={namespace}
 			onModalClose={dispose}

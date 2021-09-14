@@ -15,11 +15,11 @@
 import openTemplateModal from './modal/openTemplateModal';
 
 export default function propsTransformer({
-	additionalProps: {addDDMTemplateURL, itemTypes} = {},
+	additionalProps: {addTemplateEntryURL, itemTypes} = {},
 	portletNamespace,
 	...otherProps
 }) {
-	const deleteSelectedDDMTemplates = () => {
+	const deleteSelectedTemplateEntries = () => {
 		if (
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
@@ -40,16 +40,16 @@ export default function propsTransformer({
 
 			const action = data?.action;
 
-			if (action === 'deleteSelectedDDMTemplates') {
-				deleteSelectedDDMTemplates();
+			if (action === 'deleteSelectedTemplateEntries') {
+				deleteSelectedTemplateEntries();
 			}
 		},
 		onCreateButtonClick(event, {item}) {
 			const action = item?.data?.action;
 
-			if (action === 'addInformationTemplate') {
+			if (action === 'addInformationTemplateEntry') {
 				openTemplateModal({
-					addDDMTemplateURL,
+					addTemplateEntryURL,
 					itemTypes,
 					namespace: portletNamespace,
 				});

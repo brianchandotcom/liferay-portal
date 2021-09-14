@@ -15,20 +15,20 @@
 import {openModal} from 'frontend-js-web';
 
 const ACTIONS = {
-	deleteDDMTemplate({deleteDDMTemplateURL}) {
+	deleteTemplateEntry({deleteTemplateEntryURL}) {
 		if (
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 			)
 		) {
-			submitForm(document.hrefFm, deleteDDMTemplateURL);
+			submitForm(document.hrefFm, deleteTemplateEntryURL);
 		}
 	},
 
-	permissionsDDMTemplate({permissionsDDMTemplateURL}) {
+	permissionsTemplateEntry({permissionsTemplateEntryURL}) {
 		openModal({
 			title: Liferay.Language.get('permissions'),
-			url: permissionsDDMTemplateURL,
+			url: permissionsTemplateEntryURL,
 		});
 	},
 };

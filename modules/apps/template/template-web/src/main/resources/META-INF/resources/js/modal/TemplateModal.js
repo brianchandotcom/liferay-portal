@@ -32,7 +32,7 @@ const DEFAULT_OPTION = {
 };
 
 export default function TemplateModal({
-	addDDMTemplateURL,
+	addTemplateEntryURL,
 	itemTypes = [],
 	namespace,
 	onModalClose,
@@ -71,7 +71,10 @@ export default function TemplateModal({
 			name,
 		});
 
-		fetch(addDDMTemplateURL, {body: objectToFormData(body), method: 'POST'})
+		fetch(addTemplateEntryURL, {
+			body: objectToFormData(body),
+			method: 'POST',
+		})
 			.then((response) => response.json())
 			.then((responseContent) => {
 				if (responseContent.error) {
@@ -213,7 +216,7 @@ export default function TemplateModal({
 	);
 }
 TemplateModal.propTypes = {
-	addDDMTemplateURL: PropTypes.string.isRequired,
+	addTemplateEntryURL: PropTypes.string.isRequired,
 	itemTypes: PropTypes.arrayOf(
 		PropTypes.shape({
 			label: PropTypes.string,

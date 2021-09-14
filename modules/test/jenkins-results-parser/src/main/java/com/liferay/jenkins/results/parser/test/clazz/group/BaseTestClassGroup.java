@@ -14,10 +14,15 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.BuildDatabase;
+import com.liferay.jenkins.results.parser.BuildDatabaseUtil;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
 import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @author Peter Yoo
@@ -98,6 +103,17 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 
 	protected void addTestClass(TestClassGroup.TestClass testClass) {
 		testClasses.add(testClass);
+	}
+
+	protected String getBuildStartProperty(String propertyName) {
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase(
+			JenkinsResultsParserUtil.getBuildDirPath(), true);
+
+		Properties startProperties = buildDatabase.getProperties(
+			"start.properties");
+
+		return JenkinsResultsParserUtil.getProperty(
+			startProperties, propertyName);
 	}
 
 	protected final List<TestClassGroup.TestClass> testClasses =

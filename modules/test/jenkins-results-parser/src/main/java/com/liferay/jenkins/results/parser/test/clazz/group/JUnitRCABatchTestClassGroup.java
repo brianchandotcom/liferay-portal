@@ -91,6 +91,11 @@ public class JUnitRCABatchTestClassGroup extends RCABatchTestClassGroup {
 		String portalBatchTestSelector = System.getenv(
 			"PORTAL_BATCH_TEST_SELECTOR");
 
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalBatchTestSelector)) {
+			portalBatchTestSelector = getBuildStartProperty(
+				"PORTAL_BATCH_TEST_SELECTOR");
+		}
+
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalBatchTestSelector)) {
 			Collections.addAll(
 				includeGlobs,

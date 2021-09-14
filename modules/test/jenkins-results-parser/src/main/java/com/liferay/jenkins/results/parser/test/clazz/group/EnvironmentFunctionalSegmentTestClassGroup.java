@@ -177,6 +177,11 @@ public class EnvironmentFunctionalSegmentTestClassGroup
 		String fixPackZipURL = System.getenv("TEST_BUILD_FIX_PACK_ZIP_URL");
 
 		if ((fixPackZipURL == null) || !fixPackZipURL.matches("https?://.*")) {
+			fixPackZipURL = getBuildStartProperty(
+				"TEST_BUILD_FIX_PACK_ZIP_URL");
+		}
+
+		if ((fixPackZipURL == null) || !fixPackZipURL.matches("https?://.*")) {
 			return null;
 		}
 
@@ -218,7 +223,11 @@ public class EnvironmentFunctionalSegmentTestClassGroup
 
 		String testrayBuildName = System.getenv("TESTRAY_BUILD_NAME");
 
-		if ((testrayBuildName == null) || testrayBuildName.isEmpty()) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildName)) {
+			testrayBuildName = getBuildStartProperty("TESTRAY_BUILD_NAME");
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildName)) {
 			return null;
 		}
 

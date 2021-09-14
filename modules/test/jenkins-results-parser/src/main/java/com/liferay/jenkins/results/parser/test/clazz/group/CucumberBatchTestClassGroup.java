@@ -166,13 +166,17 @@ public class CucumberBatchTestClassGroup extends BatchTestClassGroup {
 	private String _getCucumberOptions() {
 		String cucumberOptions = System.getenv("CUCUMBER_OPTIONS");
 
-		if (cucumberOptions == null) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(cucumberOptions)) {
+			cucumberOptions = getBuildStartProperty("CUCUMBER_OPTIONS");
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(cucumberOptions)) {
 			cucumberOptions = JenkinsResultsParserUtil.getProperty(
 				getJobProperties(), "test.batch.cucumber.options",
 				getTestSuiteName(), getBatchName());
 		}
 
-		if (cucumberOptions == null) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(cucumberOptions)) {
 			cucumberOptions = JenkinsResultsParserUtil.getProperty(
 				getJobProperties(), "analytics.cloud.cucumber.options");
 		}

@@ -47,6 +47,11 @@ public class FunctionalRCABatchTestClassGroup extends RCABatchTestClassGroup {
 			"PORTAL_BATCH_TEST_SELECTOR");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(portalBatchTestSelector)) {
+			portalBatchTestSelector = getBuildStartProperty(
+				"PORTAL_BATCH_TEST_SELECTOR");
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalBatchTestSelector)) {
 			return;
 		}
 

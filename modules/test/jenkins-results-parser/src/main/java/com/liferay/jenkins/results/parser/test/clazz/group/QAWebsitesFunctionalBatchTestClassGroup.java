@@ -65,6 +65,10 @@ public class QAWebsitesFunctionalBatchTestClassGroup
 
 		String query = System.getenv("TEST_QA_WEBSITES_PROPERTY_QUERY");
 
+		if (JenkinsResultsParserUtil.isNullOrEmpty(query)) {
+			query = getBuildStartProperty("TEST_QA_WEBSITES_PROPERTY_QUERY");
+		}
+
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(query)) {
 			return query;
 		}

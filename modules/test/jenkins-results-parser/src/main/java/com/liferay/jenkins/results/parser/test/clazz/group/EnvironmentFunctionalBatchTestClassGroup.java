@@ -62,6 +62,11 @@ public class EnvironmentFunctionalBatchTestClassGroup
 
 		String propertyQuery = System.getenv("TEST_BATCH_RUN_PROPERTY_QUERY");
 
+		if (JenkinsResultsParserUtil.isNullOrEmpty(propertyQuery)) {
+			propertyQuery = getBuildStartProperty(
+				"TEST_BATCH_RUN_PROPERTY_QUERY");
+		}
+
 		if ((propertyQuery != null) && !propertyQuery.isEmpty()) {
 			return propertyQuery;
 		}

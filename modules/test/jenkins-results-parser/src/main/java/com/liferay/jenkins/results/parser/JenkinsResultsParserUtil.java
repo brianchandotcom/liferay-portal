@@ -952,6 +952,34 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
+	public static String getBuildDirPath() {
+		String buildNumber = System.getenv("BUILD_NUMBER");
+		String jobName = System.getenv("JOB_NAME");
+		String masterHostname = System.getenv("MASTER_HOSTNAME");
+
+		if (isNullOrEmpty(buildNumber) || isNullOrEmpty(jobName) ||
+			isNullOrEmpty(masterHostname)) {
+
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		if (isWindows()) {
+			sb.append("C:");
+		}
+
+		sb.append("/tmp/jenkins/");
+		sb.append(masterHostname);
+		sb.append("/");
+		sb.append(
+			jobName.replaceAll("([^/]+)/AXIS_VARIABLE=([^,]+),.*", "$1/$2"));
+		sb.append("/");
+		sb.append(buildNumber);
+
+		return sb.toString();
+	}
+
 	public static String getBuildID(String topLevelBuildURL) {
 		Matcher matcher = _topLevelBuildURLPattern.matcher(topLevelBuildURL);
 

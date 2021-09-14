@@ -259,3 +259,49 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["ListTypeEntry"]
+        get:
+            operationId: getListTypeEntry
+            parameters:
+                - in: path
+                  name: listTypeEntryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeEntry"
+            tags: ["ListTypeEntry"]
+        put:
+            operationId: putListTypeEntry
+            parameters:
+                - in: path
+                  name: listTypeEntryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ListTypeEntry"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ListTypeEntry"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeEntry"
+            tags: ["ListTypeEntry"]

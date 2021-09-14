@@ -51,12 +51,28 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a BigDecimal field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCreateBigDecimalField {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-138817 CanCreateBigDecimalField pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Field",
+			fieldType = "BigDecimal");
+
+		Refresh();
+
+		ObjectAdmin.assertObjectField(
+			fieldName = "customField",
+			fieldType = "BigDecimal");
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a Boolean field"

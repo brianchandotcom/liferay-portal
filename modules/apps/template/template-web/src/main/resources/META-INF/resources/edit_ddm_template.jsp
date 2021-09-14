@@ -20,6 +20,7 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 long ddmTemplateId = ParamUtil.getLong(request, "ddmTemplateId");
+long templateEntryId = ParamUtil.getLong(request, "templateEntryId");
 
 DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(ddmTemplateId);
 
@@ -48,6 +49,7 @@ else {
 <aui:form action="<%= updateDDMTemplateURL %>" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="ddmTemplateId" type="hidden" value="<%= ddmTemplateId %>" />
+	<aui:input name="templateEntryId" type="hidden" value="<%= templateEntryId %>" />
 	<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
 	<aui:input name="classPK" type="hidden" value="<%= classPK %>" />
 	<aui:input name="classNameId" type="hidden" value="<%= classNameId %>" />

@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.service.TemplateEntryLocalServiceUtil;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -66,15 +68,17 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 
 	@Override
 	public String getTemplateSubtypeLabel() {
+		TemplateEntry templateEntry = _getTemplateEntry();
+
 		return Optional.ofNullable(
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class,
-				PortalUtil.getClassName(getClassNameId()))
+				templateEntry.getInfoItemClassName())
 		).map(
 			infoItemFormVariationsProvider ->
 				infoItemFormVariationsProvider.getInfoItemFormVariation(
 					_themeDisplay.getScopeGroupId(),
-					String.valueOf(getClassPK()))
+					templateEntry.getInfoItemFormVariationKey())
 		).map(
 			infoItemFormVariation -> infoItemFormVariation.getLabel(
 				_themeDisplay.getLocale())
@@ -85,10 +89,12 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 
 	@Override
 	public String getTemplateTypeLabel() {
+		TemplateEntry templateEntry = _getTemplateEntry();
+
 		return Optional.ofNullable(
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemDetailsProvider.class,
-				PortalUtil.getClassName(getClassNameId()))
+				templateEntry.getInfoItemClassName())
 		).map(
 			InfoItemDetailsProvider::getInfoItemClassDetails
 		).map(
@@ -96,8 +102,7 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 				_themeDisplay.getLocale())
 		).orElse(
 			ResourceActionsUtil.getModelResource(
-				_themeDisplay.getLocale(),
-				PortalUtil.getClassName(getClassNameId()))
+				_themeDisplay.getLocale(), templateEntry.getInfoItemClassName())
 		);
 	}
 
@@ -110,17 +115,18 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 	protected Collection<TemplateVariableGroup> getTemplateVariableGroups()
 		throws Exception {
 
-		String itemClassName = PortalUtil.getClassName(getClassNameId());
+		TemplateEntry templateEntry = _getTemplateEntry();
 
 		InfoItemFormProvider<?> infoItemFormProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFormProvider.class, itemClassName);
+				InfoItemFormProvider.class,
+				templateEntry.getInfoItemClassName());
 
 		if (infoItemFormProvider == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to get info item form provider for class name " +
-						itemClassName);
+						templateEntry.getInfoItemClassName());
 			}
 
 			return super.getTemplateVariableGroups();
@@ -181,10 +187,22 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 		return templateVariableGroups;
 	}
 
+	private TemplateEntry _getTemplateEntry() {
+		if (_templateEntry != null) {
+			return _templateEntry;
+		}
+
+		_templateEntry = TemplateEntryLocalServiceUtil.fetchTemplateEntry(
+			getTemplateEntryId());
+
+		return _templateEntry;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		InformationTemplatesEditDDMTemplateDisplayContext.class);
 
 	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private TemplateEntry _templateEntry;
 	private final TemplateVariableCodeHandler _templateVariableCodeHandler =
 		new DDMTemplateVariableCodeHandler(
 			InformationTemplatesTemplateDisplayContext.class.getClassLoader(),

@@ -122,6 +122,8 @@ public class EditDDMTemplateDisplayContext {
 				"classPK", getClassPK()
 			).setParameter(
 				"ddmTemplateId", getDDMTemplateId()
+			).setParameter(
+				"templateEntryId", getTemplateEntryId()
 			).setWindowState(
 				LiferayWindowState.EXCLUSIVE
 			).buildString()
@@ -192,6 +194,17 @@ public class EditDDMTemplateDisplayContext {
 			_liferayPortletRequest, "tabs1", "widget-templates");
 
 		return _tabs1;
+	}
+
+	public long getTemplateEntryId() {
+		if (_templateEntryId != null) {
+			return _templateEntryId;
+		}
+
+		_templateEntryId = ParamUtil.getLong(
+			_liferayPortletRequest, "templateEntryId");
+
+		return _templateEntryId;
 	}
 
 	public String getTemplateSubtypeLabel() {
@@ -367,6 +380,7 @@ public class EditDDMTemplateDisplayContext {
 	private Boolean _smallImage;
 	private String _smallImageSource;
 	private String _tabs1;
+	private Long _templateEntryId;
 	private final ThemeDisplay _themeDisplay;
 
 }

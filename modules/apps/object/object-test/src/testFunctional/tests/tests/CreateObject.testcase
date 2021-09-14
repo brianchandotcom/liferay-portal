@@ -816,14 +816,9 @@ definition {
 	@description = "LPS-135549 - Verify that the columns Name, System and Status are displayed for the Objects table"
 	@priority = "4"
 	test ColumnsAreDisplayedObjectsTable {
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.assertObjectColumnsAreDisplayed();
-
-		
-		
-
 	}
 
 	@description = "LPS-135549 - Verify that the Field Name is autofilled when Label is filled"

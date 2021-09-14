@@ -38,6 +38,7 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 		<aui:input name="remoteAppEntryId" type="hidden" value="<%= remoteAppEntryId %>" />
 
 		<liferay-ui:error exception="<%= DuplicateRemoteAppEntryException.class %>" message="please-enter-a-unique-remote-app-url" />
+		<liferay-ui:error exception="<%= InvalidRemoteAppEntryTypeException.class %>" message="please-enter-a-valid-remote-app-type" />
 
 		<aui:model-context bean="<%= remoteAppEntry %>" model="<%= RemoteAppEntry.class %>" />
 
@@ -51,9 +52,20 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 					/>
 				</aui:field-wrapper>
 
-				<aui:input name="url">
+				<aui:select disabled="<%= remoteAppEntry != null %>" name="type" showEmptyOption="<%= false %>">
+					<aui:option label="custom-element" selected="<%= (remoteAppEntry != null) && RemoteAppConstants.TYPE_CUSTOM_ELEMENT.equals(remoteAppEntry.getType()) %>" value="<%= RemoteAppConstants.TYPE_CUSTOM_ELEMENT %>" />
+					<aui:option label="iframe" selected="<%= (remoteAppEntry != null) && RemoteAppConstants.TYPE_IFRAME.equals(remoteAppEntry.getType()) %>" value="<%= RemoteAppConstants.TYPE_IFRAME %>" />
+				</aui:select>
+
+				<aui:input label="url" name="iframeURL">
 					<aui:validator name="url" />
 				</aui:input>
+
+				<aui:input helpMessage="custom-element-urls-help" label="custom-element-urls" name="customElementURLs" type="textarea" />
+
+				<aui:input label="html-element-name" name="customElementHTMLElementName" />
+
+				<aui:input helpMessage="css-urls-help" label="css-urls" name="customElementCSSURLs" type="textarea" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 

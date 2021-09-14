@@ -14,6 +14,7 @@
 
 package com.liferay.remote.app.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -23,7 +24,9 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.exception.DuplicateRemoteAppEntryException;
+import com.liferay.remote.app.exception.InvalidRemoteAppEntryTypeException;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.remote.app.web.internal.constants.RemoteAppAdminPortletKeys;
@@ -50,6 +53,37 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 
+	protected void doAdd(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortalException {
+
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+		String type = ParamUtil.getString(actionRequest, "type");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			RemoteAppEntry.class.getName(), actionRequest);
+
+		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+			_remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
+				serviceContext.getUserId(), nameMap,
+				ParamUtil.getString(actionRequest, "customElementCSSURLs"),
+				ParamUtil.getString(
+					actionRequest, "customElementHTMLElementName"),
+				ParamUtil.getString(actionRequest, "customElementURLs"),
+				serviceContext);
+		}
+		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
+			_remoteAppEntryLocalService.addIframeRemoteAppEntry(
+				serviceContext.getUserId(), nameMap,
+				ParamUtil.getString(actionRequest, "iframeURL"),
+				serviceContext);
+		}
+		else {
+			throw new InvalidRemoteAppEntryTypeException(type);
+		}
+	}
+
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -58,24 +92,11 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-				actionRequest, "name");
-			String url = ParamUtil.getString(actionRequest, "url");
-
 			if (cmd.equals(Constants.ADD)) {
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(
-						RemoteAppEntry.class.getName(), actionRequest);
-
-				_remoteAppEntryLocalService.addRemoteAppEntry(
-					serviceContext.getUserId(), nameMap, url, serviceContext);
+				doAdd(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
-				long remoteAppEntryId = ParamUtil.getLong(
-					actionRequest, "remoteAppEntryId");
-
-				_remoteAppEntryLocalService.updateRemoteAppEntry(
-					remoteAppEntryId, nameMap, url);
+				doUpdate(actionRequest, actionResponse);
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -91,6 +112,39 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			else {
 				throw exception;
 			}
+		}
+	}
+
+	protected void doUpdate(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortalException {
+
+		long remoteAppEntryId = ParamUtil.getLong(
+			actionRequest, "remoteAppEntryId");
+
+		RemoteAppEntry remoteAppEntry =
+			_remoteAppEntryLocalService.getRemoteAppEntry(remoteAppEntryId);
+
+		String type = remoteAppEntry.getType();
+
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+
+		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+			_remoteAppEntryLocalService.updateCustomElementRemoteAppEntry(
+				remoteAppEntryId, nameMap,
+				ParamUtil.getString(actionRequest, "customElementCSSURLs"),
+				ParamUtil.getString(
+					actionRequest, "customElementHTMLElementName"),
+				ParamUtil.getString(actionRequest, "customElementURLs"));
+		}
+		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
+			_remoteAppEntryLocalService.updateIframeRemoteAppEntry(
+				remoteAppEntryId, nameMap,
+				ParamUtil.getString(actionRequest, "iframeURL"));
+		}
+		else {
+			throw new InvalidRemoteAppEntryTypeException(type);
 		}
 	}
 

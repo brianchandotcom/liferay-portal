@@ -21,7 +21,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Shuyang Zhou
  */
-@ExtendedObjectClassDefinition(category = "antivirus")
+@ExtendedObjectClassDefinition(
+	category = "antivirus", liferayLearnMessageKey = "general",
+	liferayLearnMessageResource = "antivirus-clamd-scanner"
+)
 @Meta.OCD(
 	id = "com.liferay.antivirus.clamd.scanner.internal.configuration.ClamdAntivirusScannerConfiguration",
 	localization = "content/Language",

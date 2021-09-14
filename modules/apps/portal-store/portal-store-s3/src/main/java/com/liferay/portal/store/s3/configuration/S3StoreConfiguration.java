@@ -21,7 +21,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Manuel de la Peña
  */
-@ExtendedObjectClassDefinition(category = "file-storage")
+@ExtendedObjectClassDefinition(
+	category = "file-storage", liferayLearnMessageKey = "general",
+	liferayLearnMessageResource = "portal-store-s3"
+)
 @Meta.OCD(
 	id = "com.liferay.portal.store.s3.configuration.S3StoreConfiguration",
 	localization = "content/Language", name = "s3-store-configuration-name"

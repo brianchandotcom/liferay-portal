@@ -21,7 +21,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Michael C. Han
  */
-@ExtendedObjectClassDefinition(category = "module-container")
+@ExtendedObjectClassDefinition(
+	category = "module-container", liferayLearnMessageKey = "general",
+	liferayLearnMessageResource = "portal-component-blacklist-impl"
+)
 @Meta.OCD(
 	id = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration",
 	localization = "content/Language",

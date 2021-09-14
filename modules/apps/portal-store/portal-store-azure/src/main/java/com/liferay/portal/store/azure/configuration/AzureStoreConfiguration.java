@@ -21,7 +21,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Josef Sustacek
  */
-@ExtendedObjectClassDefinition(category = "file-storage")
+@ExtendedObjectClassDefinition(
+	category = "file-storage", liferayLearnMessageKey = "general",
+	liferayLearnMessageResource = "portal-store-azure"
+)
 @Meta.OCD(
 	id = "com.liferay.portal.store.azure.configuration.AzureStoreConfiguration",
 	localization = "content/Language", name = "azure-store-configuration-name"

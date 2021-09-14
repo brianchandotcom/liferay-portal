@@ -21,7 +21,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Manuel de la Peña
  */
-@ExtendedObjectClassDefinition(category = "file-storage")
+@ExtendedObjectClassDefinition(
+	category = "file-storage", liferayLearnMessageKey = "simple",
+	liferayLearnMessageResource = "portal-store-file-system"
+)
 @Meta.OCD(
 	id = "com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration",
 	localization = "content/Language",

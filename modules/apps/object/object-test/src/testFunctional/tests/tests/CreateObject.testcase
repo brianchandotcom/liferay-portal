@@ -129,12 +129,28 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create an Integer field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCreateIntegerField {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-138821 CanCreateIntegerField pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Field",
+			fieldType = "Integer");
+
+		Refresh();
+
+		ObjectAdmin.assertObjectField(
+			fieldName = "customField",
+			fieldType = "Integer");
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a Long field"

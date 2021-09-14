@@ -1375,6 +1375,48 @@ definition {
 			fieldValue = "Teste");
 	}
 
+	@description = "LRQA-43072 - Verify that Text Field can be autosaved"
+	@priority = "5"
+	test TextFieldCanBeAutosaved {
+		property forms.functional = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text",
+			label = "First Field");
+
+		Form.save();
+
+		Form.addTextField(fieldPositionNumber = "1");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text",
+			label = "For Autosave");
+
+		Form.gotoAutocompleteTab();
+
+		Form.enableAutocompleteConfiguration();
+
+		Pause(locator1 = "60000");
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName();
+
+		AssertElementPresent(
+			key_name = "First Field",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
+		AssertElementPresent(
+			key_name = "For Autosave",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+	}
+
 	@description = "Verify that the Field Type can be changed"
 	@ignore = "Test Stub"
 	@priority = "5"

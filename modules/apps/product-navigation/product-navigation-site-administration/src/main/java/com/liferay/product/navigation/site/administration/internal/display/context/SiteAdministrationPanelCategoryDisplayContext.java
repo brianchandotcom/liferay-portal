@@ -60,6 +60,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Julio Camarero
  */
@@ -501,8 +503,12 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			return;
 		}
 
-		_groupProvider.setGroup(
-			PortalUtil.getHttpServletRequest(_portletRequest), _group);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(_portletRequest);
+
+		_recentGroupManager.addRecentGroup(httpServletRequest, groupId);
+
+		_groupProvider.setGroup(httpServletRequest, _group);
 	}
 
 	private Layout _getFirstLayout(Group group) {

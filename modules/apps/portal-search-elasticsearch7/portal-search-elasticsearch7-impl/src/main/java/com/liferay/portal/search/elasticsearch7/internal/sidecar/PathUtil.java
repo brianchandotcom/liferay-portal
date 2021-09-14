@@ -100,7 +100,9 @@ public class PathUtil {
 							Path file, BasicFileAttributes basicFileAttributes)
 						throws IOException {
 
-						if (excludedPathList.contains(file.getParent())) {
+						if (excludedPathList.contains(file.getParent()) ||
+							file.endsWith(_CONTROLLER_PATH)) {
+
 							return FileVisitResult.CONTINUE;
 						}
 
@@ -182,6 +184,9 @@ public class PathUtil {
 			Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
 		}
 	}
+
+	private static final String _CONTROLLER_PATH =
+		"modules/x-pack-ml/platform/linux-x86_64/bin/controller";
 
 	private static final Log _log = LogFactoryUtil.getLog(PathUtil.class);
 

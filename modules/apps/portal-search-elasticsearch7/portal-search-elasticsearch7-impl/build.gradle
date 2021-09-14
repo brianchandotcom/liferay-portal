@@ -149,6 +149,7 @@ deploySidecar {
 			includeEmptyDirs = false
 
 			exclude "elasticsearch-${sidecarElasticsearchServerVersion}/modules/ingest-geoip/**"
+			exclude "elasticsearch-${sidecarElasticsearchServerVersion}/modules/x-pack-ml/platform/linux-x86_64/bin/controller"
 			include "elasticsearch-${sidecarElasticsearchServerVersion}/lib/**"
 			include "elasticsearch-${sidecarElasticsearchServerVersion}/modules/**"
 

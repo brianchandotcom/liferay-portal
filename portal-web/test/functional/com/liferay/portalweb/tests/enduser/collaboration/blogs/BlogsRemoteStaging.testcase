@@ -128,7 +128,7 @@ definition {
 
 	@description = "This is a use case for LPS-72461."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanPublishEntry {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
@@ -152,8 +152,6 @@ definition {
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive(remoteStaging = "true");
-
-		Pause(locator1 = "5000");
 
 		AssertConsoleTextNotPresent(value1 = "RuntimeException");
 

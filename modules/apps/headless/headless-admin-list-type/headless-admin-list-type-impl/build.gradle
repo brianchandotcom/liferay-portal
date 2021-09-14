@@ -10,6 +10,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:headless:headless-admin-list-type:headless-admin-list-type-api")
 	compileOnly project(":apps:list-type:list-type-api")
+	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":core:petra:petra-function")

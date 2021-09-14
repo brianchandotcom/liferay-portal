@@ -20,6 +20,7 @@ import com.liferay.headless.admin.list.type.internal.dto.v1_0.util.ListTypeEntry
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -103,12 +104,24 @@ public class ListTypeDefinitionResourceImpl
 			{
 				actions = HashMapBuilder.put(
 					"delete",
-					addAction(
-						ActionKeys.DELETE, "deleteListTypeDefinition",
-						com.liferay.list.type.model.ListTypeDefinition.class.
-							getName(),
-						serviceBuilderListTypeDefinition.
-							getListTypeDefinitionId())
+					() -> {
+						int count =
+							_objectFieldLocalService.
+								getObjectFieldsCountByListTypeDefinitionId(
+									serviceBuilderListTypeDefinition.
+										getListTypeDefinitionId());
+
+						if (count > 0) {
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.DELETE, "deleteListTypeDefinition",
+							com.liferay.list.type.model.ListTypeDefinition.
+								class.getName(),
+							serviceBuilderListTypeDefinition.
+								getListTypeDefinitionId());
+					}
 				).build();
 				dateCreated = serviceBuilderListTypeDefinition.getCreateDate();
 				dateModified =
@@ -136,5 +149,8 @@ public class ListTypeDefinitionResourceImpl
 
 	@Reference
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 }

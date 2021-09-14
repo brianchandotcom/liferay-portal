@@ -30,10 +30,6 @@ definition {
 	}
 
 	macro openViewContentPage {
-		if (!(isSet(locale))) {
-			var locale = "en";
-		}
-
 		if (!(isSet(siteURLKey))) {
 			var siteURLKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
 		}
@@ -42,7 +38,13 @@ definition {
 			var pageFriendlyUrl = ContentPagesNavigator._convertNameToKey(name = "${pageName}");
 		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "${locale}/web/${siteURLKey}/${pageFriendlyUrl}");
+		if (isSet(locale)) {
+			Navigator.openWithAppendToBaseURL(urlAppend = "${locale}/web/${siteURLKey}/${pageFriendlyUrl}");
+		}
+
+		else {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${pageFriendlyUrl}");
+		}
 	}
 
 }

@@ -180,11 +180,6 @@ public class RenderLayoutStructureTag extends IncludeTag {
 					collectionStyledLayoutStructureItem, httpServletRequest,
 					httpServletResponse);
 
-		InfoListRenderer<Object> infoListRenderer =
-			(InfoListRenderer<Object>)
-				renderCollectionLayoutStructureItemDisplayContext.
-					getInfoListRenderer();
-
 		jspWriter.write("<div class=\"");
 		jspWriter.write(
 			renderLayoutStructureDisplayContext.getCssClass(
@@ -194,6 +189,20 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			renderLayoutStructureDisplayContext.getStyle(
 				collectionStyledLayoutStructureItem));
 		jspWriter.write("\">");
+
+		List<Object> collection =
+			renderCollectionLayoutStructureItemDisplayContext.getCollection();
+
+		if (ListUtil.isEmpty(collection)) {
+			_renderEmptyState(jspWriter);
+
+			return;
+		}
+
+		InfoListRenderer<Object> infoListRenderer =
+			(InfoListRenderer<Object>)
+				renderCollectionLayoutStructureItemDisplayContext.
+					getInfoListRenderer();
 
 		if (infoListRenderer != null) {
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
@@ -211,10 +220,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			defaultInfoListRendererContext.setTemplateKey(
 				collectionStyledLayoutStructureItem.getTemplateKey());
 
-			infoListRenderer.render(
-				renderCollectionLayoutStructureItemDisplayContext.
-					getCollection(),
-				defaultInfoListRendererContext);
+			infoListRenderer.render(collection, defaultInfoListRendererContext);
 
 			jspWriter.write(unsyncStringWriter.toString());
 		}
@@ -228,16 +234,6 @@ public class RenderLayoutStructureTag extends IncludeTag {
 					LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
 					renderCollectionLayoutStructureItemDisplayContext.
 						getCollectionLayoutDisplayPageProvider());
-
-				List<Object> collection =
-					renderCollectionLayoutStructureItemDisplayContext.
-						getCollection();
-
-				if (ListUtil.isEmpty(collection)) {
-					_renderEmptyState(jspWriter);
-
-					return;
-				}
 
 				int numberOfRows =
 					renderCollectionLayoutStructureItemDisplayContext.

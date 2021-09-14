@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>CARD</td>
-	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]</td>
+	<td>//*[contains(@class,'card-body')][contains(.,'${key_card}')]</td>
 	<td></td>
 </tr>
 <tr>

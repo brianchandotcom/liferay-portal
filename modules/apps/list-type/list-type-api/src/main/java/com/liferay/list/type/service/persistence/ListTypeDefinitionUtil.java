@@ -276,6 +276,74 @@ public class ListTypeDefinitionUtil {
 	}
 
 	/**
+	 * Returns all the list type definitions that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching list type definitions that the user has permission to view
+	 */
+	public static List<ListTypeDefinition> filterFindByUuid(String uuid) {
+		return getPersistence().filterFindByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the list type definitions that the user has permission to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of list type definitions
+	 * @param end the upper bound of the range of list type definitions (not inclusive)
+	 * @return the range of matching list type definitions that the user has permission to view
+	 */
+	public static List<ListTypeDefinition> filterFindByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().filterFindByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the list type definitions that the user has permissions to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of list type definitions
+	 * @param end the upper bound of the range of list type definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching list type definitions that the user has permission to view
+	 */
+	public static List<ListTypeDefinition> filterFindByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<ListTypeDefinition> orderByComparator) {
+
+		return getPersistence().filterFindByUuid(
+			uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the list type definitions before and after the current list type definition in the ordered set of list type definitions that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param listTypeDefinitionId the primary key of the current list type definition
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next list type definition
+	 * @throws NoSuchListTypeDefinitionException if a list type definition with the primary key could not be found
+	 */
+	public static ListTypeDefinition[] filterFindByUuid_PrevAndNext(
+			long listTypeDefinitionId, String uuid,
+			OrderByComparator<ListTypeDefinition> orderByComparator)
+		throws com.liferay.list.type.exception.
+			NoSuchListTypeDefinitionException {
+
+		return getPersistence().filterFindByUuid_PrevAndNext(
+			listTypeDefinitionId, uuid, orderByComparator);
+	}
+
+	/**
 	 * Removes all the list type definitions where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -292,6 +360,16 @@ public class ListTypeDefinitionUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
+	}
+
+	/**
+	 * Returns the number of list type definitions that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching list type definitions that the user has permission to view
+	 */
+	public static int filterCountByUuid(String uuid) {
+		return getPersistence().filterCountByUuid(uuid);
 	}
 
 	/**
@@ -463,6 +541,80 @@ public class ListTypeDefinitionUtil {
 	}
 
 	/**
+	 * Returns all the list type definitions that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching list type definitions that the user has permission to view
+	 */
+	public static List<ListTypeDefinition> filterFindByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().filterFindByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the list type definitions that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of list type definitions
+	 * @param end the upper bound of the range of list type definitions (not inclusive)
+	 * @return the range of matching list type definitions that the user has permission to view
+	 */
+	public static List<ListTypeDefinition> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().filterFindByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the list type definitions that the user has permissions to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of list type definitions
+	 * @param end the upper bound of the range of list type definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching list type definitions that the user has permission to view
+	 */
+	public static List<ListTypeDefinition> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<ListTypeDefinition> orderByComparator) {
+
+		return getPersistence().filterFindByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the list type definitions before and after the current list type definition in the ordered set of list type definitions that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param listTypeDefinitionId the primary key of the current list type definition
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next list type definition
+	 * @throws NoSuchListTypeDefinitionException if a list type definition with the primary key could not be found
+	 */
+	public static ListTypeDefinition[] filterFindByUuid_C_PrevAndNext(
+			long listTypeDefinitionId, String uuid, long companyId,
+			OrderByComparator<ListTypeDefinition> orderByComparator)
+		throws com.liferay.list.type.exception.
+			NoSuchListTypeDefinitionException {
+
+		return getPersistence().filterFindByUuid_C_PrevAndNext(
+			listTypeDefinitionId, uuid, companyId, orderByComparator);
+	}
+
+	/**
 	 * Removes all the list type definitions where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -481,6 +633,17 @@ public class ListTypeDefinitionUtil {
 	 */
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns the number of list type definitions that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching list type definitions that the user has permission to view
+	 */
+	public static int filterCountByUuid_C(String uuid, long companyId) {
+		return getPersistence().filterCountByUuid_C(uuid, companyId);
 	}
 
 	/**

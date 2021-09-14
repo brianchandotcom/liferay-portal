@@ -105,10 +105,6 @@ public class PortalRelease {
 		_dependenciesURLString = _getURLString(
 			bundlesBaseURL, bundlesBaseURLContent,
 			_dependenciesFileNamePattern);
-		_tomcatURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _tomcatFileNamePattern);
-		_jbossURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _jbossFileNamePattern);
 		_glassFishURLString = _getURLString(
 			bundlesBaseURL, bundlesBaseURLContent, _glassFishFileNamePattern);
 		_jbossURLString = _getURLString(
@@ -117,10 +113,12 @@ public class PortalRelease {
 			bundlesBaseURL, bundlesBaseURLContent, _osgiFileNamePattern);
 		_portalWarURLString = _getURLString(
 			bundlesBaseURL, bundlesBaseURLContent, _portalWarFileNamePattern);
-		_toolsURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _toolsFileNamePattern);
 		_sqlURLString = _getURLString(
 			bundlesBaseURL, bundlesBaseURLContent, _sqlFileNamePattern);
+		_tomcatURLString = _getURLString(
+			bundlesBaseURL, bundlesBaseURLContent, _tomcatFileNamePattern);
+		_toolsURLString = _getURLString(
+			bundlesBaseURL, bundlesBaseURLContent, _toolsFileNamePattern);
 		_wildFlyURLString = _getURLString(
 			bundlesBaseURL, bundlesBaseURLContent, _wildFlyFileNamePattern);
 	}
@@ -188,10 +186,6 @@ public class PortalRelease {
 		_dependenciesURLString = _getURLString(
 			bundlesBaseURL, bundlesBaseURLContent,
 			_dependenciesFileNamePattern);
-		_tomcatURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _tomcatFileNamePattern);
-		_jbossURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _jbossFileNamePattern);
 		_glassFishURLString = _getURLString(
 			bundlesBaseURL, bundlesBaseURLContent, _glassFishFileNamePattern);
 		_jbossURLString = _getURLString(
@@ -200,10 +194,12 @@ public class PortalRelease {
 			bundlesBaseURL, bundlesBaseURLContent, _osgiFileNamePattern);
 		_portalWarURLString = _getURLString(
 			bundlesBaseURL, bundlesBaseURLContent, _portalWarFileNamePattern);
-		_toolsURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _toolsFileNamePattern);
 		_sqlURLString = _getURLString(
 			bundlesBaseURL, bundlesBaseURLContent, _sqlFileNamePattern);
+		_tomcatURLString = _getURLString(
+			bundlesBaseURL, bundlesBaseURLContent, _tomcatFileNamePattern);
+		_toolsURLString = _getURLString(
+			bundlesBaseURL, bundlesBaseURLContent, _toolsFileNamePattern);
 		_wildFlyURLString = _getURLString(
 			bundlesBaseURL, bundlesBaseURLContent, _wildFlyFileNamePattern);
 	}

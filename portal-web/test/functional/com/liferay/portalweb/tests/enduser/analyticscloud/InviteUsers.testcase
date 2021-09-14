@@ -15,7 +15,7 @@ definition {
 
 		ACUtils.launchDXP();
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Liferay DXP");
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		ACUtils.launchAC();
 	}

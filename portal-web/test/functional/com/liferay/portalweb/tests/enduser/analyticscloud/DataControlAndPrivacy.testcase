@@ -79,7 +79,7 @@ definition {
 	@priority = "5"
 	test CanCreateAccessRequest {
 		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Liferay DXP");
+			var propertyName = ACDXPSettings.getAssignedPropertyName();
 		}
 
 		task ("Switch the property in AC") {
@@ -115,7 +115,7 @@ definition {
 	@priority = "5"
 	test CanCreateDeleteRequest {
 		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Liferay DXP");
+			var propertyName = ACDXPSettings.getAssignedPropertyName();
 		}
 
 		task ("Switch the property in AC") {
@@ -151,7 +151,7 @@ definition {
 	@priority = "5"
 	test CanCreateSuppressRequest {
 		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Liferay DXP");
+			var propertyName = ACDXPSettings.getAssignedPropertyName();
 		}
 
 		task ("Switch the property in AC") {
@@ -184,7 +184,7 @@ definition {
 	@priority = "3"
 	test CanUnsuppressUser {
 		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Liferay DXP");
+			var propertyName = ACDXPSettings.getAssignedPropertyName();
 		}
 
 		task ("Switch the property in AC") {
@@ -239,7 +239,7 @@ definition {
 	@priority = "5"
 	test SuppressedUserAppearsInSuppressedUserList {
 		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Liferay DXP");
+			var propertyName = ACDXPSettings.getAssignedPropertyName();
 		}
 
 		task ("Switch the property in AC") {

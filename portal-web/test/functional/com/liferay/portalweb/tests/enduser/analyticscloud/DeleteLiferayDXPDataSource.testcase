@@ -32,7 +32,7 @@ definition {
 	@priority = "4"
 	test DeleteDXPDataSourceViaTokenAuth {
 		task ("Site creation and connection with AC") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Liferay");
+			ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 			ACUtils.launchAC();
 		}

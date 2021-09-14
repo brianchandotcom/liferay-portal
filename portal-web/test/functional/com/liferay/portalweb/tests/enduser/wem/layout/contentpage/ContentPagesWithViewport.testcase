@@ -352,7 +352,7 @@ definition {
 				deviceType = "Desktop",
 				modal = "true");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			for (var n : list "1,2,3,4") {
 				AssertTextEquals(
@@ -375,7 +375,7 @@ definition {
 				deviceType = "Tablet",
 				modal = "true");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			for (var n : list "1,2,3") {
 				AssertTextEquals(
@@ -400,7 +400,7 @@ definition {
 				deviceType = "Landscape Phone",
 				modal = "true");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			for (var n : list "1,2") {
 				AssertTextEquals(
@@ -425,7 +425,7 @@ definition {
 				deviceType = "Portrait Phone",
 				modal = "true");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			AssertTextEquals(
 				key_fragmentName = "heading",

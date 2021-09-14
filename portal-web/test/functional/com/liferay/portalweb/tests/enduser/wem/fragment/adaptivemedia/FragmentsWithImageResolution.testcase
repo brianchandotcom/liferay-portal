@@ -528,7 +528,7 @@ definition {
 				deviceType = "Portrait Phone",
 				modal = "true");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
@@ -716,7 +716,7 @@ definition {
 				deviceType = "Tablet",
 				modal = "true");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {

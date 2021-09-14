@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.util;
+package com.liferay.portal.workflow.kaleo.internal.util;
 
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
@@ -35,9 +35,7 @@ import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Michael C. Han
- * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
-@Deprecated
 public class RoleUtil {
 
 	public static Role getRole(

@@ -38,8 +38,8 @@ definition {
 
 	@description = "This ensures that a depot image can be used through Blogs on a connected site."
 	@priority = "5"
-	@refactorneeded
-	test AddImageViaBlogs {
+	@refactordone
+	test CanAddImageViaBlogs {
 		DepotNavigator.openDepotAdmin();
 
 		JSONDocument.addFileWithUploadedFile(
@@ -72,8 +72,8 @@ definition {
 
 	@description = "This ensures that a depot image can be used through page creation on a connected site."
 	@priority = "5"
-	@refactorneeded
-	test AddImageViaContentPage {
+	@refactordone
+	test CanAddImageViaContentPage {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.jpeg",
@@ -111,8 +111,8 @@ definition {
 
 	@description = "This ensures that a depot image can be used through web content on a connected site."
 	@priority = "5"
-	@refactorneeded
-	test AddImageViaWebContent {
+	@refactordone
+	test CanAddImageViaWebContent {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_2.jpeg",
@@ -181,8 +181,8 @@ definition {
 
 	@description = "This ensures that a document using a type stored in AL can be removed on a connected site."
 	@priority = "5"
-	@refactorneeded
-	test RemoveDMWithDocumentType {
+	@refactordone
+	test CanRemoveDMWithDocumentType {
 		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
 
 		DMDocumentType.add(
@@ -230,8 +230,8 @@ definition {
 
 	@description = "This ensures that a document using a type stored in AL can be viewed on the connected site widgets."
 	@priority = "4"
-	@refactorneeded
-	test ViewDMwithDocumentTypeOnSiteWidgets {
+	@refactordone
+	test CanViewDMwithDocumentTypeOnSiteWidgets {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name");
@@ -294,8 +294,8 @@ definition {
 
 	@description = "This ensures that a document using a type stored in AL can be viewed in related assets on a connected site."
 	@priority = "4"
-	@refactorneeded
-	test ViewDocumentTypeInRelatedAssets {
+	@refactordone
+	test CanViewDocumentTypeInRelatedAssets {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
@@ -354,8 +354,8 @@ definition {
 
 	@description = "This ensures that the depot assets can be used through Related Assets on a connected site."
 	@priority = "4"
-	@refactorneeded
-	test ViewRelatedAssets {
+	@refactordone
+	test CanViewRelatedAssets {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name");

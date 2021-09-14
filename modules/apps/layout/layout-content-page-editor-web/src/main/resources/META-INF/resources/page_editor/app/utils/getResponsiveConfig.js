@@ -57,7 +57,7 @@ function mergeDeep(...objects) {
 			) {
 				target[key] = mergeDeep(target[key], object[key]);
 			}
-			else {
+			else if (object[key]) {
 				target[key] = object[key];
 			}
 		});

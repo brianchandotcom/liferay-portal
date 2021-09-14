@@ -63,7 +63,7 @@ export const CheckboxField = ({field, onValueSelect, value}) => {
 							data-tooltip-align="bottom"
 							displayType="secondary"
 							onClick={() => {
-								onValueSelect(field.name, field.defaultValue);
+								onValueSelect(field.name, null);
 							}}
 							small
 							symbol="restore"

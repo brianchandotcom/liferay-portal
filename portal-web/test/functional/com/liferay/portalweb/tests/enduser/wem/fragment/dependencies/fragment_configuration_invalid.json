@@ -1,23 +1,23 @@
 {
 	"fieldSets": [
 		{
-			"label": heading,
 			"fields": [
 				{
-					"name": headingAppliedStyle,
-					"type": select,
+					"name": "headingAppliedStyle",
+					"type": "select",
 					"typeOptions": {
 						"values": [
 							{
-								"value": dark
+								"value": "dark"
 							},
 							{
-								"value": light
+								"value": "light"
 							}
 						]
 					}
 				}
-			]
+			],
+			"label": "heading"
 		}
 	]
 }

@@ -24,11 +24,15 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.Map;
@@ -56,7 +60,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 
 		try {
 			return HashMapBuilder.<String, Object>put(
-				"apiURL", _getAPIURL(ddmFormField, ddmFormFieldRenderingContext)
+				"apiUrl", _getAPIURL(ddmFormField, ddmFormFieldRenderingContext)
 			).put(
 				"initialLabel", ddmFormFieldRenderingContext.getValue()
 			).put(
@@ -78,16 +82,40 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		return Collections.<String, Object>emptyMap();
 	}
 
+	protected String getValue(String valueString) {
+		try {
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(valueString);
+
+			return GetterUtil.getString(jsonArray.get(0));
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException, jsonException);
+			}
+		}
+
+		return valueString;
+	}
+
 	private String _getAPIURL(
 			DDMFormField ddmFormField,
 			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
 		throws PortalException {
 
+		String apiUrl = GetterUtil.getString(
+			ddmFormField.getProperty("apiUrl"));
+
+		if (Validator.isNotNull(apiUrl)) {
+			return apiUrl;
+		}
+
 		String apiURL = _portal.getPortalURL(
 			ddmFormFieldRenderingContext.getHttpServletRequest());
 
 		long objectDefinitionId = GetterUtil.getLong(
-			ddmFormField.getProperty("objectDefinitionId"));
+			getValue(
+				GetterUtil.getString(
+					ddmFormField.getProperty("objectDefinitionId"))));
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(

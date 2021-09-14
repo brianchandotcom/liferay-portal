@@ -814,11 +814,15 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify that the columns Name, System and Status are displayed for the Objects table"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ColumnsAreDisplayedObjectsTable {
 
-		// TODO LPS-138804 ColumnsAreDisplayedObjectsTable pending implementation
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.assertObjectColumnsAreDisplayed();
+
+		
+		
 
 	}
 

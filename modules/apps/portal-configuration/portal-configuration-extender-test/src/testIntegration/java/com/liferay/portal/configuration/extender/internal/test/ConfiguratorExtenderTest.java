@@ -104,24 +104,7 @@ public class ConfiguratorExtenderTest {
 	public void testConfiguringEndpointsAndExtendersProgrammatically()
 		throws Exception {
 
-		Bundle bundle = null;
-
-		BundleContext bundleContext = _bundle.getBundleContext();
-
-		_installJAR(bundleContext);
-
-		for (Bundle curBundle : bundleContext.getBundles()) {
-			if (_JAR_BUNDLE_SYMBOLIC_NAME.equals(curBundle.getSymbolicName())) {
-				bundle = curBundle;
-
-				break;
-			}
-		}
-
-		Assert.assertNotNull(
-			"Unable to find bundle with symbolic name: " +
-				_JAR_BUNDLE_SYMBOLIC_NAME,
-			bundle);
+		Bundle bundle = _installJAR(_bundle.getBundleContext());
 
 		try {
 			Configuration[] configurations =
@@ -407,7 +390,7 @@ public class ConfiguratorExtenderTest {
 		}
 	}
 
-	private void _installJAR(BundleContext bundleContext) throws Exception {
+	private Bundle _installJAR(BundleContext bundleContext) throws Exception {
 		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream()) {
 
@@ -462,6 +445,8 @@ public class ConfiguratorExtenderTest {
 					"testLocation", unsyncByteArrayInputStream);
 
 				bundle.start();
+
+				return bundle;
 			}
 		}
 	}

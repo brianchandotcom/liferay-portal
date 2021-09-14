@@ -17,6 +17,7 @@ package com.liferay.segments.experiment.web.internal.events;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.segments.experiment.web.internal.processor.SegmentsExperimentSegmentsExperienceRequestProcessor;
 import com.liferay.segments.experiment.web.internal.product.navigation.control.menu.SegmentsExperimentProductNavigationControlMenuEntry;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,10 +43,17 @@ public class LogoutPreAction extends Action {
 
 		_segmentsExperimentProductNavigationControlMenuEntry.setPanelState(
 			httpServletRequest, "closed");
+
+		_segmentsExperimentSegmentsExperienceRequestProcessor.
+			cleanCookieLogoutAction(httpServletRequest, httpServletResponse);
 	}
 
 	@Reference
 	private SegmentsExperimentProductNavigationControlMenuEntry
 		_segmentsExperimentProductNavigationControlMenuEntry;
+
+	@Reference
+	private SegmentsExperimentSegmentsExperienceRequestProcessor
+		_segmentsExperimentSegmentsExperienceRequestProcessor;
 
 }

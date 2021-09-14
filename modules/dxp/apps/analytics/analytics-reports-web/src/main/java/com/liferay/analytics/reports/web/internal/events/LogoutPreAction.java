@@ -34,6 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class LogoutPreAction extends Action {
 
+	@Override
 	public void run(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

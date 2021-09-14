@@ -57,10 +57,26 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = "segments.experience.request.processor.priority:Integer=50",
-	service = SegmentsExperienceRequestProcessor.class
+	service = {
+		SegmentsExperienceRequestProcessor.class,
+		SegmentsExperimentSegmentsExperienceRequestProcessor.class
+	}
 )
 public class SegmentsExperimentSegmentsExperienceRequestProcessor
 	implements SegmentsExperienceRequestProcessor {
+
+	public void cleanCookieLogoutAction(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		_unsetCookie(
+			httpServletRequest, httpServletResponse,
+			themeDisplay.getURLCurrent());
+	}
 
 	@Override
 	public long[] getSegmentsExperienceIds(

@@ -1000,7 +1000,7 @@
   dependencies:
     classnames "^2.2.6"
 
-"@clayui/form@3.35.3", "@clayui/form@^3.35.2", "@clayui/form@^3.35.3":
+"@clayui/form@3.35.3", "@clayui/form@^3.35.3":
   version "3.35.3"
   resolved "https://registry.yarnpkg.com/@clayui/form/-/form-3.35.3.tgz#58cba0a0d117904365f84fdaa1abdb5fd5f1954b"
   integrity sha512-g7r3XciD1BjBELkpeCcSfwEtu/1wsSdNKL4gucUVxj7BzU1+LPfumMg5WN8Ixzb145K0BXO3BD9c9LkIt7M/1g==
@@ -2396,10 +2396,10 @@ alloy-ui@^3.1.0-deprecated.40:
   resolved "https://registry.yarnpkg.com/alloy-ui/-/alloy-ui-3.1.0.tgz#95842e4c793abbfe84aa8abfc5a637cd36dda823"
   integrity sha1-lYQuTHk6u/6Eqoq/xaY3zTbdqCM=
 
-alloyeditor@2.14.3:
-  version "2.14.3"
-  resolved "https://registry.yarnpkg.com/alloyeditor/-/alloyeditor-2.14.3.tgz#d6eb075bf22b73b697146b6ea8fcb7e2d96f1914"
-  integrity sha512-Muf2rK7OMmH8Kiyovg/F5ma4srUOY8D7tli7eFE0VxtzqcXjmPBHWCJEi2YAlZE8uaRqpN3GIDnV/74dQFtApw==
+alloyeditor@2.14.4:
+  version "2.14.4"
+  resolved "https://registry.yarnpkg.com/alloyeditor/-/alloyeditor-2.14.4.tgz#c27e973c241a329f1692dee52d00a01d61a4722d"
+  integrity sha512-WpL0XPZM/lDC2dm+m6w0OFLxjXTFtTsv5+qtdsWopVuQG546cBfRmPpOowbnvFat+5H52wvGKwZ97JjNv0xfng==
   dependencies:
     clay-css "^2.11.1"
     prop-types "^15.6.2"

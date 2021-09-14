@@ -32,6 +32,13 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 %>
 
 <div class="container-fluid container-fluid-max-xl container-view">
+	<div class="float-right">
+		<liferay-learn:message
+			key="general"
+			resource="plugins-admin-web"
+		/>
+	</div>
+
 	<liferay-ui:search-container
 		iteratorURL="<%= portletURL %>"
 		total="<%= portlets.size() %>"

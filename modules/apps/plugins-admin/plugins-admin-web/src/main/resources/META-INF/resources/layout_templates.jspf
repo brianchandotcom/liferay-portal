@@ -30,6 +30,13 @@ List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutT
 %>
 
 <div class="container-fluid container-fluid-max-xl container-view">
+	<div class="float-right">
+		<liferay-learn:message
+			key="general"
+			resource="plugins-admin-web"
+		/>
+	</div>
+
 	<liferay-ui:search-container
 		iteratorURL="<%= portletURL %>"
 		total="<%= layoutTemplates.size() %>"

@@ -207,45 +207,6 @@ definition {
 		DMFolder.viewCP(dmFolderName = "DM Folder Name Edit");
 	}
 
-	@description = "This ensures that a LAR file consisting of a DL document and image can be imported in a depot."
-	@priority = "4"
-	@refactorneeded
-	test ImportFile {
-		JSONDocument.addFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.jpg",
-			groupName = "Guest");
-
-		JSONDocument.addFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.doc",
-			groupName = "Guest");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		LAR.exportPortlet(larFileName = "DM_Test.lar");
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		LAR.importPortlet(larFileName = "DM_Test.lar");
-
-		DepotNavigator.openToDMEntryInDepot(
-			depotName = "Test Depot Name",
-			dmDocumentTitle = "Document_1.doc");
-
-		DMDocument.viewCP(dmDocumentTitle = "Document_1.doc");
-
-		DepotNavigator.openToDMEntryInDepot(
-			depotName = "Test Depot Name",
-			dmDocumentTitle = "Document_1.jpg");
-
-		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
-	}
-
 	@description = "This ensures that a document can be moved to a folder in a depot."
 	@priority = "5"
 	@refactorneeded

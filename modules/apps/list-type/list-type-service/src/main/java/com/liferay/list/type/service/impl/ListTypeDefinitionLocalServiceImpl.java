@@ -21,6 +21,7 @@ import com.liferay.list.type.service.persistence.ListTypeEntryPersistence;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 
@@ -57,7 +58,15 @@ public class ListTypeDefinitionLocalServiceImpl
 
 		listTypeDefinition.setNameMap(nameMap);
 
-		return listTypeDefinitionPersistence.update(listTypeDefinition);
+		listTypeDefinition = listTypeDefinitionPersistence.update(
+			listTypeDefinition);
+
+		resourceLocalService.addResources(
+			listTypeDefinition.getCompanyId(), 0,
+			listTypeDefinition.getUserId(), ListTypeDefinition.class.getName(),
+			listTypeDefinition.getListTypeDefinitionId(), false, true, true);
+
+		return listTypeDefinition;
 	}
 
 	@Override
@@ -91,7 +100,15 @@ public class ListTypeDefinitionLocalServiceImpl
 			listTypeDefinitionPersistence.findByPrimaryKey(
 				listTypeDefinitionId);
 
-		return deleteListTypeDefinition(listTypeDefinition);
+		listTypeDefinition = deleteListTypeDefinition(listTypeDefinition);
+
+		resourceLocalService.deleteResource(
+			listTypeDefinition.getCompanyId(),
+			ListTypeDefinition.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			listTypeDefinition.getListTypeDefinitionId());
+
+		return listTypeDefinition;
 	}
 
 	@Override

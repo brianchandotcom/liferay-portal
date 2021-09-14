@@ -6,13 +6,13 @@ task copyClassicTheme(type: Copy)
 
 copyClassicTheme {
 	from("../frontend-theme-classic/src/") {
-		exclude "**/css/clay.scss"
 		exclude "**/WEB-INF/**"
 	}
 
 	includeEmptyDirs = false
 	into file("src")
 
+	rename '^_clay_variables.scss$', '_classic_clay_variables.scss'
 	rename '^_custom.scss$', '_classic_custom.scss'
 }
 

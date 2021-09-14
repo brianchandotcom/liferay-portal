@@ -1,6 +1,6 @@
 !/src/WEB-INF
+!/src/css/_clay_variables.scss
 !/src/css/_custom.scss
-!/src/css/clay.scss
 !/src/css/dialect
 *.lar
 /.web_bundle_build

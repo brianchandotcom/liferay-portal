@@ -736,7 +736,7 @@ public class MessageBoardMessageResourceImpl
 
 		Boolean showAsAnswer = messageBoardMessage.getShowAsAnswer();
 
-		if (showAsAnswer != null) {
+		if ((showAsAnswer != null) && (showAsAnswer != mbMessage.isAnswer())) {
 			_mbMessageService.updateAnswer(
 				mbMessage.getMessageId(), showAsAnswer, false);
 
@@ -772,9 +772,7 @@ public class MessageBoardMessageResourceImpl
 			messageBoardMessage.getArticleBody(),
 			_createServiceContext(mbMessage.getGroupId(), messageBoardMessage));
 
-		if (messageBoardMessage.getShowAsAnswer() != mbMessage.isAnswer()) {
-			_updateAnswer(mbMessage, messageBoardMessage);
-		}
+		_updateAnswer(mbMessage, messageBoardMessage);
 
 		return _toMessageBoardMessage(mbMessage);
 	}

@@ -237,9 +237,9 @@ definition {
 			entryComment = "WC WebContent Content Comment",
 			userFullName = "Test Test (You)");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "properties-configuration-overrides -Darticle.comments.enabled=false");
+		OSGiConfig.deployOSGiConfigs(
+			OSGiConfigFileName = "com.liferay.journal.configuration.JournalServiceConfiguration.config",
+			OSGiConfigs = "articleCommentsEnabled=B&quot;false&quot;",);
 
 		Pause(locator1 = "10000");
 
@@ -270,9 +270,19 @@ definition {
 			entryComment = "WC WebContent Content Comment",
 			userFullName = "Test Test (You)");
 
-		ContentConfiguration.getConfigFileContent(
-			configFileName = "com.liferay.journal.configuration.JournalServiceConfiguration.config",
-			expectedText = "articleCommentsEnabled = B&quot;true&quot;");
+		SystemSettings.getConfigFileContent(
+			configFileName = "com.liferay.journal.configuration.JournalServiceConfiguration.config");
+
+		var expectedText = "articleCommentsEnabled = B&quot;true&quot;";
+
+		if (contains("${fileContent}", "${expectedText}")) {
+			echo("Config file shows updated value: ${expectedText}");
+		}
+		else {
+			echo("Config file content: ${fileContent}");
+
+			fail("Unable to find expected config value: ${expectedText}");
+		}
 	}
 
 }

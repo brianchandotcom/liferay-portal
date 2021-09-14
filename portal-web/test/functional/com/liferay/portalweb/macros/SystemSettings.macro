@@ -132,6 +132,13 @@ definition {
 		DownloadTempFile();
 	}
 
+	macro getConfigFileContent {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var fileContent = FileUtil.read("${liferayHome}/osgi/configs/${configFileName}");
+
+		return "${fileContent}";
+	}
+
 	macro gotoConfiguration {
 		Click(
 			key_itemName = "${configurationCategory}",

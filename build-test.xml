@@ -11631,10 +11631,6 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 		<echo />
 	</target>
 
-	<target name="properties-configuration-overrides">
-		<echo file="${liferay.home}/osgi/configs/com.liferay.journal.configuration.JournalServiceConfiguration.config">articleCommentsEnabled=B"${article.comments.enabled}"</echo>
-	</target>
-
 	<target depends="build-sql-file" name="rebuild-database">
 		<if>
 			<not>

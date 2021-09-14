@@ -288,6 +288,15 @@ public class ObjectDefinitionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_A_S() throws Exception {
+		_persistence.countByC_A_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_A_S(0L, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ObjectDefinition newObjectDefinition = addObjectDefinition();
 

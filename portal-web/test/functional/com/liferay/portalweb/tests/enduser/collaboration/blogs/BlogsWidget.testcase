@@ -102,7 +102,7 @@ definition {
 
 	@description = "This checks that a guest cannot view a blog entry in the AP when permissions are removed."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CannotViewAsGuestInAPWhenPermissionsAreRemoved {
 		property test.name.skip.portal.instance = "BlogsWidget#CannotViewAsGuestInAPWhenPermissionsAreRemoved";
 
@@ -141,7 +141,7 @@ definition {
 
 	@description = "This test covers LPS-102199. This ensures that the user can search for a pending blog entry."
 	@priority = "3"
-	@refactorneeded
+	@refactordone
 	test CanSearchForPendingEntry {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -171,7 +171,7 @@ definition {
 
 	@description = "This checks that an entry with an abstract template can be displayed."
 	@priority = "3"
-	@refactorneeded
+	@refactordone
 	test CanViewBlogWithAbstractDisplay {
 		property test.name.skip.portal.instance = "BlogsWidget#CanViewBlogWithAbstractDisplay";
 

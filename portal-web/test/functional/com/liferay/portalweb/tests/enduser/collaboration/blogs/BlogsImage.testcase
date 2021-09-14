@@ -234,7 +234,7 @@ definition {
 
 	@description = "This ensures that the small image can be replaced."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanReplaceSmallImage {
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
@@ -372,7 +372,7 @@ definition {
 
 	@description = "This test covers LPS-130735. It ensures that the caption of cover image can be viewed in blogs when the small image is removed."
 	@priority = "3"
-	@refactorneeded
+	@refactordone
 	test CanViewCaptionFieldAfterRemovingSmallImage {
 		Navigator.gotoPage(pageName = "Blogs Page");
 

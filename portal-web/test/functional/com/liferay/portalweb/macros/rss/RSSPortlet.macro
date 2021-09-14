@@ -1,6 +1,10 @@
 definition {
 
 	macro addFeed {
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration");
+
 		var key_buttonRowIndexNumber = "${buttonRowIndexNumber}";
 		var key_feedRowIndexNumber = "${feedRowIndexNumber}";
 		var key_feedTitle = "${feedTitle}";
@@ -29,6 +33,19 @@ definition {
 				locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
 				value1 = "${feedUrlLink}");
 		}
+
+		if (isSet(viewWarningMessage)) {
+			Button.clickSave();
+
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_1",
+				value1 = "${viewWarningMessage}");
+		}
+		else {
+			PortletEntry.save();
+		}
 	}
 
 	macro changeFeedsOrder {
@@ -41,42 +58,58 @@ definition {
 			position = "${offset}");
 	}
 
-	macro changeNumberOfEntriesPerFeed {
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+	macro configureDisplaySettings {
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration");
 
-		Navigator.gotoNavTab(navTab = "Display Settings");
-
-		Type(
-			key_fieldLabel = "# of Entries Per Feed",
-			locator1 = "FormFields#NUMBER_FIELD",
-			value1 = "${numberOfEntries}");
-	}
-
-	macro configureFeedDisplayStyle {
 		SelectFrame(value1 = "relative=top");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Navigator.gotoNavTab(navTab = "Display Settings");
 
-		Select(
-			locator1 = "Select#DISPLAY_TEMPLATE",
-			value1 = "${feedDisplayStyle}");
+		if (isSet(numberOfEntriesPerFeed)) {
+			Type(
+				key_fieldLabel = "# of Entries Per Feed",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "${numberOfEntriesPerFeed}");
+		}
+
+		if (isSet(feedDisplayStyle)) {
+			Select(
+				locator1 = "Select#DISPLAY_TEMPLATE",
+				value1 = "${feedDisplayStyle}");
+		}
+
+		if (isSet(saveDisplaySetting)) {
+			PortletEntry.save();
+		}
 	}
 
 	macro deleteFeed {
-		var key_buttonRowIndexNumber = "${buttonRowIndexNumber}";
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Click(locator1 = "RSSFeed#FEEDS_DELETE_ROW_BUTTON");
+		for (var key_buttonRowIndexNumber : list "${buttonRowIndexNumberList}") {
+			Click(locator1 = "RSSFeed#FEEDS_DELETE_ROW_BUTTON");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "RSSFeed#UNDO_LINK",
-			value1 = "Undo");
+			AssertTextEquals.assertPartialText(
+				locator1 = "RSSFeed#UNDO_LINK",
+				value1 = "Undo");
+		}
+
+		PortletEntry.save();
 	}
 
 	macro disableShowFeedTitle {
+		Portlet.gotoPortletOptions(
+			portletName = "RSS Publisher",
+			portletOption = "Configuration");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Navigator.gotoNavTab(navTab = "Display Settings");
@@ -88,6 +121,8 @@ definition {
 		Uncheck.uncheckToggleSwitch(
 			locator1 = "RSSFeed#DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION",
 			value1 = "Show Feed Description");
+
+		PortletEntry.save();
 	}
 
 	macro openFeed {
@@ -197,16 +232,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "RSSFeed#FEED_PANEL_HEADING",
 			value1 = "${feedHeading}");
-	}
-
-	macro viewWarningMessageDisplay {
-		Button.clickSave();
-
-		Alert.viewRequestFailedToComplete();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR_1",
-			value1 = "${errorMessage}");
 	}
 
 	macro waitForRSSLoad {

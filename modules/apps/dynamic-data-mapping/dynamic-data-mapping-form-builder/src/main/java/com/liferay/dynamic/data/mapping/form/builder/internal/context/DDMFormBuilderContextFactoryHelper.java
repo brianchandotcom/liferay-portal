@@ -291,9 +291,15 @@ public class DDMFormBuilderContextFactoryHelper {
 			return doCreateDDMFormFieldValue(
 				(DDMFormFieldOptions)propertyValue, availableLocales);
 		}
-		else if (Objects.equals(
-					ddmFormFieldTypeSetting.getType(), "validation")) {
 
+		if (Objects.equals(
+				ddmFormFieldTypeSetting.getName(), "requiredDescription") &&
+			(propertyValue == null)) {
+
+			return new UnlocalizedValue(Boolean.TRUE.toString());
+		}
+
+		if (Objects.equals(ddmFormFieldTypeSetting.getType(), "validation")) {
 			return doCreateDDMFormFieldValue(
 				availableLocales, (DDMFormFieldValidation)propertyValue);
 		}

@@ -101,13 +101,28 @@ public class DateDDMFormFieldTypeSettingsTest
 
 		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
 
-		Assert.assertEquals(ddmFormRules.toString(), 1, ddmFormRules.size());
+		Assert.assertEquals(ddmFormRules.toString(), 2, ddmFormRules.size());
 
-		DDMFormRule ddmFormRule = ddmFormRules.get(0);
+		DDMFormRule ddmFormRule0 = ddmFormRules.get(0);
 
-		Assert.assertEquals("TRUE", ddmFormRule.getCondition());
+		Assert.assertEquals(
+			"not(isEmpty(getValue('objectFieldName')))",
+			ddmFormRule0.getCondition());
 
-		List<String> actions = ddmFormRule.getActions();
+		List<String> actions = ddmFormRule0.getActions();
+
+		Assert.assertEquals(actions.toString(), 2, actions.size());
+		Assert.assertEquals("setEnabled('required', FALSE)", actions.get(0));
+		Assert.assertEquals(
+			"setValue('required', IsRequiredObjectField(getValue(" +
+				"'objectFieldName')))",
+			actions.get(1));
+
+		DDMFormRule ddmFormRule1 = ddmFormRules.get(1);
+
+		Assert.assertEquals("TRUE", ddmFormRule1.getCondition());
+
+		actions = ddmFormRule1.getActions();
 
 		Assert.assertEquals(actions.toString(), 2, actions.size());
 

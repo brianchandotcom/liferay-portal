@@ -16,7 +16,7 @@ import {SettingsContext} from 'dynamic-data-mapping-form-builder';
 
 import * as FormSupport from '../../utils/FormSupport.es';
 import {
-	addField,
+	addFieldToPage,
 	createField,
 	getField,
 	localizeField,
@@ -167,7 +167,7 @@ export default (state, action, config) => {
 				},
 			};
 
-			return addField({
+			const updatedPages = addFieldToPage({
 				defaultLanguageId,
 				editingLanguageId,
 				fieldNameGenerator,
@@ -177,6 +177,12 @@ export default (state, action, config) => {
 				pages,
 				parentFieldName,
 			});
+
+			return {
+				activePage: indexes.pageIndex,
+				focusedField: newField,
+				pages: updatedPages,
+			};
 		}
 		case EVENT_TYPES.FIELD.BLUR: {
 			const {propertyName, propertyValue} = action.payload;

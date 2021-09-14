@@ -164,7 +164,7 @@ export default (state, action, config) => {
 				fieldSetDDMForm.localizedTitle
 			);
 
-			return FieldSupport.addField({
+			const updatedPages = FieldSupport.addFieldToPage({
 				defaultLanguageId,
 				editingLanguageId,
 				fieldNameGenerator,
@@ -174,6 +174,12 @@ export default (state, action, config) => {
 				pages,
 				parentFieldName,
 			});
+
+			return {
+				activePage: indexes.pageIndex,
+				focusedField: newField,
+				pages: updatedPages,
+			};
 		}
 		case EVENT_TYPES.FIELD_SET.UPDATE: {
 			const {fieldTypes} = config;

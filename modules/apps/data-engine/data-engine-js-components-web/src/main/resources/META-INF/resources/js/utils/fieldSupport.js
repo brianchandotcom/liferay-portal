@@ -23,7 +23,7 @@ import {normalizeFieldName} from './fields.es';
 import {generateName, getRepeatedIndex, parseName} from './repeatable.es';
 import {PagesVisitor} from './visitors.es';
 
-export const addField = ({
+export const addFieldToPage = ({
 	defaultLanguageId,
 	editingLanguageId,
 	fieldNameGenerator,
@@ -35,67 +35,8 @@ export const addField = ({
 }) => {
 	const {columnIndex, pageIndex, rowIndex} = indexes;
 
-	let newPages;
-
-	if (parentFieldName) {
-		const visitor = new PagesVisitor(pages);
-
-		newPages = visitor.mapFields(
-			(field) => {
-				if (field.fieldName === parentFieldName) {
-					const nestedFields = field.nestedFields
-						? [...field.nestedFields, newField]
-						: [newField];
-
-					field = updateField(
-						{
-							defaultLanguageId,
-							editingLanguageId,
-							fieldNameGenerator,
-							generateFieldNameUsingFieldLabel,
-						},
-						field,
-						'nestedFields',
-						nestedFields
-					);
-
-					const {rows} = field;
-					const pages = addFieldToColumn(
-						[
-							{
-								rows:
-									typeof rows === 'string'
-										? JSON.parse(rows)
-										: rows,
-							},
-						], // TODO: Check if row can be a string
-						0,
-						rowIndex,
-						columnIndex,
-						newField.fieldName
-					);
-
-					return updateField(
-						{
-							defaultLanguageId,
-							editingLanguageId,
-							fieldNameGenerator,
-							generateFieldNameUsingFieldLabel,
-						},
-						field,
-						'rows',
-						pages[0].rows
-					);
-				}
-
-				return field;
-			},
-			true,
-			true
-		);
-	}
-	else {
-		newPages = addFieldToColumn(
+	if (!parentFieldName) {
+		return addFieldToColumn(
 			pages,
 			pageIndex,
 			rowIndex,
@@ -104,11 +45,61 @@ export const addField = ({
 		);
 	}
 
-	return {
-		activePage: pageIndex,
-		focusedField: newField,
-		pages: newPages,
-	};
+	const visitor = new PagesVisitor(pages);
+
+	return visitor.mapFields(
+		(field) => {
+			if (field.fieldName === parentFieldName) {
+				const nestedFields = field.nestedFields
+					? [...field.nestedFields, newField]
+					: [newField];
+
+				field = updateField(
+					{
+						defaultLanguageId,
+						editingLanguageId,
+						fieldNameGenerator,
+						generateFieldNameUsingFieldLabel,
+					},
+					field,
+					'nestedFields',
+					nestedFields
+				);
+
+				const {rows} = field;
+				const pages = addFieldToColumn(
+					[
+						{
+							rows:
+								typeof rows === 'string'
+									? JSON.parse(rows)
+									: rows,
+						},
+					], // TODO: Check if row can be a string
+					0,
+					rowIndex,
+					columnIndex,
+					newField.fieldName
+				);
+
+				return updateField(
+					{
+						defaultLanguageId,
+						editingLanguageId,
+						fieldNameGenerator,
+						generateFieldNameUsingFieldLabel,
+					},
+					field,
+					'rows',
+					pages[0].rows
+				);
+			}
+
+			return field;
+		},
+		true,
+		true
+	);
 };
 
 export const generateInstanceId = (isNumbersOnly) =>

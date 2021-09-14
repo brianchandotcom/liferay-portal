@@ -19,7 +19,7 @@ import {
 	removeEmptyRows,
 } from '../../utils/FormSupport.es';
 import {FIELD_TYPE_FIELDSET} from '../../utils/constants';
-import {addField, getParentField} from '../../utils/fieldSupport';
+import {addFieldToPage, getParentField} from '../../utils/fieldSupport';
 import {PagesVisitor} from '../../utils/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 import {
@@ -75,7 +75,7 @@ export default (state, action, config) => {
 				return state;
 			}
 
-			let newPages = deleteField({
+			let updatedPages = deleteField({
 				defaultLanguageId,
 				editingLanguageId,
 				fieldName: sourceFieldName,
@@ -114,7 +114,7 @@ export default (state, action, config) => {
 					sourceParentFieldName &&
 					sourceParentFieldName !== targetParentFieldName
 				) {
-					newPages = deleteField({
+					updatedPages = deleteField({
 						defaultLanguageId,
 						editingLanguageId,
 						fieldName: sourceParentFieldName,
@@ -127,7 +127,7 @@ export default (state, action, config) => {
 			}
 
 			if (targetFieldName) {
-				newPages = deleteField({
+				updatedPages = deleteField({
 					clean: true,
 					defaultLanguageId,
 					editingLanguageId,
@@ -149,7 +149,7 @@ export default (state, action, config) => {
 					},
 					{
 						activePage,
-						pages: newPages,
+						pages: updatedPages,
 						rules,
 					},
 					{
@@ -163,20 +163,20 @@ export default (state, action, config) => {
 				);
 			}
 
-			const {pages: updatedPages} = addField({
+			updatedPages = addFieldToPage({
 				defaultLanguageId,
 				editingLanguageId,
 				fieldNameGenerator,
 				generateFieldNameUsingFieldLabel,
 				indexes: targetIndexes,
 				newField: sourceField,
-				pages: newPages,
+				pages: updatedPages,
 				parentFieldName: targetParentFieldName,
 			});
 
 			const visitor = new PagesVisitor(updatedPages);
 
-			newPages = visitor.mapFields((field) => {
+			updatedPages = visitor.mapFields((field) => {
 				if (field.type != 'grid' && field.rows) {
 					return SettingsContext.updateField(
 						{
@@ -194,18 +194,12 @@ export default (state, action, config) => {
 				return field;
 			});
 
-			return {
-				pages: newPages.map((page, pageIndex) => {
-					if (sourceFieldPage === pageIndex) {
-						return {
-							...page,
-							rows: removeEmptyRows(newPages, pageIndex),
-						};
-					}
+			updatedPages[sourceFieldPage].rows = removeEmptyRows(
+				updatedPages,
+				sourceFieldPage
+			);
 
-					return page;
-				}),
-			};
+			return {pages: updatedPages};
 		}
 		case EVENT_TYPES.DND.RESIZE: {
 			const {column, direction, loc} = action.payload;

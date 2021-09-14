@@ -20,7 +20,7 @@ import {
 } from '../../utils/FormSupport.es';
 import {FIELD_TYPE_FIELDSET} from '../../utils/constants';
 import {createFieldSet} from '../../utils/fieldSets';
-import {addField, createField} from '../../utils/fieldSupport';
+import {addFieldToPage, createField} from '../../utils/fieldSupport';
 import {PagesVisitor} from '../../utils/visitors.es';
 import handleFieldDeleted from './fieldDeletedHandler';
 
@@ -97,13 +97,13 @@ const handleSectionAdded = (props, state, event) => {
 		);
 	}
 	else if (existingField.type === FIELD_TYPE_FIELDSET) {
-		newPages = addField({
+		newPages = addFieldToPage({
 			...props,
 			indexes,
 			newField,
 			pages,
 			parentFieldName: existingField.fieldName,
-		}).pages;
+		});
 	}
 	else {
 		newPages = visitor.mapFields((field) => {
@@ -116,9 +116,7 @@ const handleSectionAdded = (props, state, event) => {
 	}
 
 	return {
-		focusedField: {
-			...newField,
-		},
+		focusedField: newField,
 		pages: newPages,
 	};
 };

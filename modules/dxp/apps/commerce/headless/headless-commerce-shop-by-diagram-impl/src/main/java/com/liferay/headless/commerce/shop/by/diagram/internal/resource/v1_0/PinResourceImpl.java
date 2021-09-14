@@ -16,10 +16,13 @@ package com.liferay.headless.commerce.shop.by.diagram.internal.resource.v1_0;
 
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramPin;
-import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramEntryService;
-import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramPinService;
+import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
+import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinService;
 import com.liferay.headless.commerce.shop.by.diagram.dto.v1_0.DiagramEntry;
 import com.liferay.headless.commerce.shop.by.diagram.dto.v1_0.Pin;
 import com.liferay.headless.commerce.shop.by.diagram.internal.dto.v1_0.converter.PinDTOConverter;
@@ -49,7 +52,7 @@ public class PinResourceImpl extends BasePinResourceImpl {
 
 	@Override
 	public void deletePin(Long pinId) throws Exception {
-		_cpDefinitionDiagramPinService.deleteCPDefinitionDiagramPin(pinId);
+		_csDiagramPinService.deleteCSDiagramPin(pinId);
 	}
 
 	@Override
@@ -71,12 +74,12 @@ public class PinResourceImpl extends BasePinResourceImpl {
 
 		return Page.of(
 			_toPins(
-				_cpDefinitionDiagramPinService.getCPDefinitionDiagramPins(
+				_csDiagramPinService.getCSDiagramPins(
 					cpDefinition.getCPDefinitionId(),
 					pagination.getStartPosition(),
 					pagination.getEndPosition())),
 			pagination,
-			_cpDefinitionDiagramPinService.getCPDefinitionDiagramPinsCount(
+			_csDiagramPinService.getCSDiagramPinsCount(
 				cpDefinition.getCPDefinitionId()));
 	}
 
@@ -95,30 +98,26 @@ public class PinResourceImpl extends BasePinResourceImpl {
 
 		return Page.of(
 			_toPins(
-				_cpDefinitionDiagramPinService.getCPDefinitionDiagramPins(
+				_csDiagramPinService.getCSDiagramPins(
 					cpDefinition.getCPDefinitionId(),
 					pagination.getStartPosition(),
 					pagination.getEndPosition())),
 			pagination,
-			_cpDefinitionDiagramPinService.getCPDefinitionDiagramPinsCount(
+			_csDiagramPinService.getCSDiagramPinsCount(
 				cpDefinition.getCPDefinitionId()));
 	}
 
 	@Override
 	public Pin patchPin(Long pinId, Pin pin) throws Exception {
-		CPDefinitionDiagramPin cpDefinitionDiagramPin =
-			_cpDefinitionDiagramPinService.getCPDefinitionDiagramPin(pinId);
+		CSDiagramPin csDiagramPin = _csDiagramPinService.getCSDiagramPin(pinId);
 
-		_cpDefinitionDiagramPinService.updateCPDefinitionDiagramPin(
-			cpDefinitionDiagramPin.getCPDefinitionDiagramPinId(),
-			GetterUtil.get(
-				pin.getPositionX(), cpDefinitionDiagramPin.getPositionX()),
-			GetterUtil.get(
-				pin.getPositionY(), cpDefinitionDiagramPin.getPositionY()),
-			GetterUtil.get(
-				pin.getSequence(), cpDefinitionDiagramPin.getSequence()));
+		_csDiagramPinService.updateCSDiagramPin(
+			csDiagramPin.getCSDiagramPinId(),
+			GetterUtil.get(pin.getPositionX(), csDiagramPin.getPositionX()),
+			GetterUtil.get(pin.getPositionY(), csDiagramPin.getPositionY()),
+			GetterUtil.get(pin.getSequence(), csDiagramPin.getSequence()));
 
-		return _toPin(cpDefinitionDiagramPin.getCPDefinitionDiagramPinId());
+		return _toPin(csDiagramPin.getCSDiagramPinId());
 	}
 
 	@Override
@@ -154,53 +153,87 @@ public class PinResourceImpl extends BasePinResourceImpl {
 	}
 
 	private Pin _addPin(long cpDefinitionId, Pin pin) throws Exception {
-		CPDefinitionDiagramPin cpDefinitionDiagramPin =
-			_cpDefinitionDiagramPinService.addCPDefinitionDiagramPin(
-				cpDefinitionId, GetterUtil.getDouble(pin.getPositionX()),
-				GetterUtil.getDouble(pin.getPositionY()),
-				GetterUtil.getString(pin.getSequence()));
+		CSDiagramPin csDiagramPin = _csDiagramPinService.addCSDiagramPin(
+			cpDefinitionId, GetterUtil.getDouble(pin.getPositionX()),
+			GetterUtil.getDouble(pin.getPositionY()),
+			GetterUtil.getString(pin.getSequence()));
 
 		DiagramEntry diagramEntry = pin.getDiagramEntry();
 
-		if (diagramEntry == null) {
-			diagramEntry = new DiagramEntry();
+		if (diagramEntry != null) {
+			long skuId = GetterUtil.getLong(diagramEntry.getSkuUuid());
+
+			CPInstance cpInstance =
+				_cpInstanceService.fetchByExternalReferenceCode(
+					diagramEntry.getSkuExternalReferenceCode(),
+					contextCompany.getCompanyId());
+
+			if (cpInstance != null) {
+				skuId = cpInstance.getCPInstanceId();
+			}
+
+			long productId = GetterUtil.getLong(diagramEntry.getProductId());
+
+			CPDefinition cpDefinition =
+				_cpDefinitionService.
+					fetchCPDefinitionByCProductExternalReferenceCode(
+						diagramEntry.getProductExternalReferenceCode(),
+						contextCompany.getCompanyId());
+
+			if (cpDefinition != null) {
+				productId = cpDefinition.getCProductId();
+			}
+
+			CSDiagramEntry csDiagramEntry =
+				_csDiagramEntryService.fetchCSDiagramEntry(
+					cpDefinitionId, GetterUtil.getString(pin.getSequence()));
+
+			if (csDiagramEntry == null) {
+				_csDiagramEntryService.addCSDiagramEntry(
+					cpDefinitionId, skuId, productId,
+					GetterUtil.getBoolean(diagramEntry.getDiagram()),
+					GetterUtil.getInteger(diagramEntry.getQuantity()),
+					GetterUtil.getString(diagramEntry.getSequence()),
+					GetterUtil.getString(diagramEntry.getSku()),
+					new ServiceContext());
+			}
+			else {
+				_csDiagramEntryService.updateCSDiagramEntry(
+					csDiagramEntry.getCSDiagramEntryId(), skuId, productId,
+					GetterUtil.getBoolean(diagramEntry.getDiagram()),
+					GetterUtil.getInteger(diagramEntry.getQuantity()),
+					GetterUtil.getString(diagramEntry.getSequence()),
+					GetterUtil.getString(diagramEntry.getSku()),
+					new ServiceContext());
+			}
 		}
 
-		_cpDefinitionDiagramEntryService.addCPDefinitionDiagramEntry(
-			cpDefinitionId, GetterUtil.getString(diagramEntry.getSkuUuid()),
-			GetterUtil.getLong(diagramEntry.getProductId()),
-			GetterUtil.getBoolean(diagramEntry.getDiagram()),
-			GetterUtil.getInteger(diagramEntry.getQuantity()),
-			GetterUtil.getString(pin.getSequence()),
-			GetterUtil.getString(diagramEntry.getSku()), new ServiceContext());
-
-		return _toPin(cpDefinitionDiagramPin.getCPDefinitionDiagramPinId());
+		return _toPin(csDiagramPin.getCSDiagramPinId());
 	}
 
-	private Pin _toPin(long cpDefinitionDiagramPinId) throws Exception {
+	private Pin _toPin(long csDiagramPinId) throws Exception {
 		return _pinDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				cpDefinitionDiagramPinId,
-				contextAcceptLanguage.getPreferredLocale()));
+				csDiagramPinId, contextAcceptLanguage.getPreferredLocale()));
 	}
 
-	private List<Pin> _toPins(
-		List<CPDefinitionDiagramPin> cpDefinitionDiagramPins) {
-
+	private List<Pin> _toPins(List<CSDiagramPin> csDiagramPins) {
 		return TransformUtil.transform(
-			cpDefinitionDiagramPins,
-			cpDefinitionDiagramPin -> _toPin(
-				cpDefinitionDiagramPin.getCPDefinitionDiagramPinId()));
+			csDiagramPins,
+			csDiagramPin -> _toPin(csDiagramPin.getCSDiagramPinId()));
 	}
-
-	@Reference
-	private CPDefinitionDiagramEntryService _cpDefinitionDiagramEntryService;
-
-	@Reference
-	private CPDefinitionDiagramPinService _cpDefinitionDiagramPinService;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private CPInstanceService _cpInstanceService;
+
+	@Reference
+	private CSDiagramEntryService _csDiagramEntryService;
+
+	@Reference
+	private CSDiagramPinService _csDiagramPinService;
 
 	@Reference
 	private PinDTOConverter _pinDTOConverter;

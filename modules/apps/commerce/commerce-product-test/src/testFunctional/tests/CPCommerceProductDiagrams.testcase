@@ -206,7 +206,7 @@ definition {
 	@priority = "3"
 	test UseZoomAndDragBackground {
 		property portal.acceptance = "false";
-		
+
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");

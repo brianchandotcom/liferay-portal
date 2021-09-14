@@ -351,7 +351,7 @@ definition {
 
 	@description = "This is a use case for LPS-78833. It ensures that a small image deletion can be published."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanPublishSmallImageDeletion {
 		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
@@ -396,10 +396,6 @@ definition {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name-staging");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
-
-		AssertElementPresent(
-			key_entryTitle = "Blogs Entry Title",
-			locator1 = "Blogs#ICON_VIEW_ENTRY_TITLE");
 
 		Navigator.gotoNavItem(navItem = "Images");
 

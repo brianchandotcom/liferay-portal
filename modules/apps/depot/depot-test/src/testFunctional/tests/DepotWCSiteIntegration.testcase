@@ -34,7 +34,7 @@ definition {
 
 	@description = "This ensures that a user can select depot web content from different repositories through WCD on a connected site."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanChangeWCDSelection {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -92,7 +92,7 @@ definition {
 
 	@description = "This ensures that web content using a structure stored in AL can be removed on a connected site."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanRemoveCustomizedWC {
 		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
 
@@ -153,7 +153,7 @@ definition {
 
 	@description = "This test covers LPS-117063 and LPS-117068. It ensures that web content using a structure stored in AL can be selected without NPE throwing and removed from the disconnected site."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanRemoveCustomizedWCFromDisconnectedSite {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -238,7 +238,7 @@ definition {
 
 	@description = "This test covers LPS-118395. It ensures that a web content in a depot can be selected through the page template."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanSelectDepotContentViaPageTemplate {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -289,7 +289,7 @@ definition {
 
 	@description = "This test covers LPS-105119. It ensures that a web content in a depot can be selected through the field."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanSelectDepotContentViaWebContentField {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -363,7 +363,7 @@ definition {
 
 	@description = "This ensures that a depot web content can be selected through the fragment in a content page on a connected site."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanSelectFromFragmentInContentPage {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -405,7 +405,7 @@ definition {
 
 	@description = "This ensures that a depot web content can be selected through the fragment in a display page template on a connected site."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanSelectFromFragmentInDisplayPageTemplate {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
@@ -460,7 +460,7 @@ definition {
 
 	@description = "This ensures that a depot web content can be selected through WCD on a connected site."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanSelectFromWCD {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
@@ -498,7 +498,7 @@ definition {
 
 	@description = "This ensures that a depot web content can be selected through WCD in a content page on a connected site."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanSelectFromWidgetInContentPage {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
@@ -530,7 +530,7 @@ definition {
 
 	@description = "This ensures that a depot web content can be selected through WCD in a display page template on a connected site."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanSelectFromWidgetInDisplayPageTemplate {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
@@ -563,7 +563,7 @@ definition {
 
 	@description = "This ensures that a user can use a structure stored in AL to create a template on a connected site."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanSelectStructureInDepotViaTemplateOnSite {
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
@@ -598,7 +598,7 @@ definition {
 
 	@description = "This ensures that a user can use structures stored in AL to create articles and display them in AP on a connected site."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanViewCustomizedWCInAP {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -680,7 +680,7 @@ definition {
 
 	@description = "This ensures that a user can use a structure stored in AL to create an article and display it in WCD on a connected site."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanViewCustomizedWCInWCD {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -755,7 +755,7 @@ definition {
 
 	@description = "This ensures that a user can see information of WC structure from more iframe about which AL owns it."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanViewStructuresScopeList {
 		for (var i : list "1,2,3") {
 			JSONDepot.addDepot(

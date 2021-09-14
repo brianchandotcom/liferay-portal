@@ -1,0 +1,139 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+		}
+
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "ac@liferay.com");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			JSONUser.tearDownNonAdminUsers();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9273 | Test Summary: Create a Segment of Individuals Interested And Another One Not Interest In a Topic"
+	@priority = "5"
+	test CanCreateIndividualsSegmentInterestAndAnotherOneNotInterestInTopic {
+		task ("Create user") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+		}
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
+		task ("View the page as the new added user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Pause for 30 seconds") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Add a new dynamic segment using Individual Property User") {
+			for (var segments : list "AC Dynamic segment 1,AC Dynamic segment 2") {
+				ACNavigation.goToSegments();
+
+				ACSegments.createDynamicSegment();
+
+				ACSegments.nameSegment(segmentName = "${segments}");
+
+				ACSegments.goToSidebarAttributes(criterion = "Interests");
+
+				ACSegments.addSegmentField(segmentField = "home");
+
+				if ("${segments}" == "AC Dynamic segment 1") {
+					ACSegments.selectOperator(operator = "is not");
+				}
+				else {
+					ACSegments.selectOperator(operator = "is");
+				}
+
+				ACSegments.saveSegment();
+
+				ACNavigation.assertPageHeader(headerTitle = "${segments}");
+
+				if ("${segments}" == "AC Dynamic segment 1") {
+					ACSegments.assertCriteriaTable(criteriaName = "is notinterested");
+
+					ACNavigation.switchTab(tabName = "Membership");
+
+					ACSegments.assertMember(memberName = "ac ac");
+				}
+				else {
+					ACSegments.assertCriteriaTable(criteriaName = "isinterested");
+
+					ACNavigation.switchTab(tabName = "Membership");
+
+					ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
+				}
+			}
+		}
+	}
+
+}

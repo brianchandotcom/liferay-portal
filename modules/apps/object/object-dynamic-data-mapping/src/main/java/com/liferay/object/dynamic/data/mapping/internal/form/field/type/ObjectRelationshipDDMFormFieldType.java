@@ -27,10 +27,11 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"ddm.form.field.type.data.domain=list",
-		"ddm.form.field.type.description=object-relationship",
-		"ddm.form.field.type.display.order:Integer=2",
-		"ddm.form.field.type.group=basic", "ddm.form.field.type.icon=list",
-		"ddm.form.field.type.label=object-relationship",
+		"ddm.form.field.type.description=object-relationship-field-type-description",
+		"ddm.form.field.type.display.order:Integer=13",
+		"ddm.form.field.type.group=basic",
+		"ddm.form.field.type.icon=relationship",
+		"ddm.form.field.type.label=object-relationship-field-type-label",
 		"ddm.form.field.type.name=object-relationship",
 		"ddm.form.field.type.scope="
 	},

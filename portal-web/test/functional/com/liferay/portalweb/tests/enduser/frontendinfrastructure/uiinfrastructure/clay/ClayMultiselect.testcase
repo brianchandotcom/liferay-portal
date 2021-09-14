@@ -3,7 +3,7 @@ definition {
 
 	property osgi.modules.includes = "frontend-taglib-clay-sample-web";
 	property portal.release = "true";
-	property portal.upstream = "quarantine";
+	property portal.upstream = "true";
 	property testray.component.names = "Clay";
 	property testray.main.component.name = "User Interface";
 
@@ -21,9 +21,12 @@ definition {
 			layoutName = "Clay Sample Test Page",
 			layoutTemplate = "1 Column");
 
-		Navigator.gotoPage(pageName = "Clay Sample Test Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Clay Sample Test Page",
+			widgetName = "Clay Sample");
 
-		Portlet.addPG(portletName = "Clay Sample");
+		Navigator.gotoPage(pageName = "Clay Sample Test Page");
 	}
 
 	tearDown {
@@ -38,8 +41,8 @@ definition {
 	}
 
 	@priority = "3"
-	@refactorneeded
-	test SmokeAPI {
+	@refactordone
+	test CanSelectFromAutoComplete {
 		Navigator.gotoNavTab(navTab = "Form Elements");
 
 		Type(

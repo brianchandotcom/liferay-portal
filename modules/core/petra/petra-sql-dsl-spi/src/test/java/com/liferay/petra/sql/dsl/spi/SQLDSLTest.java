@@ -74,6 +74,7 @@ import java.sql.Types;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -107,6 +108,11 @@ public class SQLDSLTest {
 					assertClasses.add(DefaultColumnAlias.class);
 					assertClasses.add(DefaultOrderByExpression.class);
 					assertClasses.add(DefaultPredicate.class);
+
+					Collections.addAll(
+						assertClasses,
+						DefaultPredicate.class.getDeclaredClasses());
+
 					assertClasses.add(DSLFunction.class);
 					assertClasses.add(DSLFunctionType.class);
 					assertClasses.add(DSLFunctionFactoryUtil.class);
@@ -677,6 +683,41 @@ public class SQLDSLTest {
 				"ReferenceExample.mainExampleId = MainExample.mainExampleId ",
 				"where MainExample.name != ?"),
 			dslQuery.toString());
+	}
+
+	@Test
+	public void testLargePredicate() {
+		int count = 10000;
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+		).from(
+			MainExampleTable.INSTANCE
+		).where(
+			() -> {
+				Predicate predicate =
+					MainExampleTable.INSTANCE.mainExampleId.eq(0L);
+
+				for (long i = 1; i < count; i++) {
+					predicate = predicate.or(
+						MainExampleTable.INSTANCE.mainExampleId.eq(i));
+				}
+
+				return predicate;
+			}
+		);
+
+		StringBundler sb = new StringBundler((2 * count) + 1);
+
+		sb.append("select * from MainExample where ");
+
+		for (int i = 0; i < count; i++) {
+			sb.append("MainExample.mainExampleId = ?");
+			sb.append(" or ");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		Assert.assertEquals(sb.toString(), dslQuery.toString());
 	}
 
 	@Test

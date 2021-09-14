@@ -26,6 +26,9 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
 
 		ACUtils.tearDownAC();
 	}
@@ -70,6 +73,8 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "${pageName}",
 					siteName = "Site Name");
+
+				Pause(locator1 = "3000");
 			}
 		}
 

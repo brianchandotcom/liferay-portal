@@ -192,6 +192,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEGMENT_COMPOSITION_PERCENT</td>
+	<td>//span[text()='${individualsType}']/parent::div/following-sibling::div/following-sibling::div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEGMENT_CREATION_PAGE</td>
 	<td>//h1/following-sibling::div</td>
 	<td></td>

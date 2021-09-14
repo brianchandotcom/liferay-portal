@@ -23,7 +23,7 @@ definition {
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
-		}
+	}
 
 		ACUtils.tearDownAC();
 	}
@@ -40,6 +40,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8493 | Test Summary: Segment Composition shows Active and Known individuals"
 	@priority = "3"
 	test SegmentCompositionShowsActiveAndKnownIndividuals {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Test blocked by LRAC-9056
+		// AC Refactor Ticket:
+
 		task ("Create a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "testac@liferay.com",
@@ -70,11 +75,13 @@ definition {
 			ACSegments.accessSegment(segmentName = "Test Segment");
 
 			ACSegments.viewSegmentComposition(
-				individualsNumber = "0",
+				individualsNumber = "1",
+				individualsPercent = "100%",
 				individualsType = "Active");
 
 			ACSegments.viewSegmentComposition(
 				individualsNumber = "1",
+				individualsPercent = "100%",
 				individualsType = "Known");
 		}
 	}

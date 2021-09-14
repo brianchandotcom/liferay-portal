@@ -659,11 +659,19 @@ definition {
 			AssertTextEquals(
 				locator1 = "ACSegments#SEGMENT_COMPOSITION_COUNT",
 				value1 = "${individualsNumber}");
+
+			AssertTextEquals(
+				locator1 = "ACSegments#SEGMENT_COMPOSITION_PERCENT",
+				value1 = "${individualsPercent}");
 		}
 		else if ("${individualsType}" == "Known") {
 			AssertTextEquals(
 				locator1 = "ACSegments#SEGMENT_COMPOSITION_COUNT",
 				value1 = "${individualsNumber}");
+
+			AssertTextEquals(
+				locator1 = "ACSegments#SEGMENT_COMPOSITION_PERCENT",
+				value1 = "${individualsPercent}");
 		}
 	}
 

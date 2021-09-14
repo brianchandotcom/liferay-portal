@@ -129,7 +129,7 @@ definition {
 
 				FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
 
-				Pause(locator1 = "5000");
+				Pause(locator1 = "10000");
 			}
 		}
 
@@ -201,7 +201,7 @@ definition {
 
 				FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
 
-				Pause(locator1 = "5000");
+				Pause(locator1 = "10000");
 			}
 		}
 
@@ -236,7 +236,7 @@ definition {
 
 			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
 
-			Pause(locator1 = "5000");
+			Pause(locator1 = "10000");
 		}
 
 		task ("Close all sessions and go to AC") {

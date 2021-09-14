@@ -488,6 +488,35 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This checks that the default abstract (appends to 400 characters) can display properly in the UI."
+	@priority = "4"
+	@refactordone
+	test CanViewAbstractDisplayingFirst400Characters {
+		property test.name.skip.portal.instance = "BlogsPage#CanViewAbstractDisplayingFirst400Characters";
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addWithDefaultAbstract(
+			entryAbstractDescription = "Blogs Entry Custom Abstract",
+			entryContent = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent a definition of a standard web application while the darker blue squares show the addition of social aspects.",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewAbstractDisplay(
+			entryAbstractDescription = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent...",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.gotoEntryWithAbstractPG(
+			entryAbstractDescription = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent...",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications. The definition is simple: a social application is a web application that additionally leverages social identity, data, and features or services. In the left figure, the light blue squares represent a definition of a standard web application while the darker blue squares show the addition of social aspects.",
+			entryTitle = "Blogs Entry Title");
+	}
+
 	@priority = "4"
 	@refactorneeded
 	test CanViewEntriesOnMultiplePagesWithDifferentScopes {
@@ -574,6 +603,31 @@ definition {
 		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This test checks that blog entry can be added with special charaters."
+	@priority = "5"
+	@refactordone
+	test CanViewEntryWithSpecialCharacters {
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.addEntryContent(
+			entryContent = '''Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|''',
+			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|''');
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = '''Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|''',
+			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|''');
+
+		BlogsEntry.viewPG(
+			entryContent = '''Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|''',
+			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|''');
 	}
 
 	@description = "Basic test that ensures reading time displays when enabled."

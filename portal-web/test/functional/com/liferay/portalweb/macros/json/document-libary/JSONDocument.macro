@@ -319,6 +319,30 @@ definition {
 		return "${fileEntryUUID}";
 	}
 
+	@summary = "This calls the JSON WS API to move a document to a folder"
+	macro moveFileEntryToFolder {
+		var fileEntryId = JSONDocument.getFileEntryId(
+			dmDocumentTitle = "${dmDocumentTitle}",
+			folderId = "${folderId}",
+			groupName = "${groupName}",
+			portalURL = "${baseURL}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var newFolderId = JSONDocumentAPI._getFolderIdByFolderName(
+			name = "${folderName}",
+			groupName = "${groupName}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlapp/move-file-entry \
+			-u test@liferay.com:test \
+			-d fileEntryId=${fileEntryId} \
+			-d newFolderId=${newFolderId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "This calls the JSON WS API to subscribe to a folder"
 	macro subscribeToFolder {
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(

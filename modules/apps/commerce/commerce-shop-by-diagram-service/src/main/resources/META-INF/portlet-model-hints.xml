@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry">
+		<field name="CSDiagramEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPDefinitionId" type="long" />
+		<field name="CPInstanceId" type="long" />
+		<field name="CProductId" type="long" />
+		<field name="diagram" type="boolean" />
+		<field name="quantity" type="int" />
+		<field name="sequence" type="String" />
+		<field name="sku" type="String" />
+	</model>
+	<model name="com.liferay.commerce.shop.by.diagram.model.CSDiagramPin">
+		<field name="CSDiagramPinId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPDefinitionId" type="long" />
+		<field name="positionX" type="double" />
+		<field name="positionY" type="double" />
+		<field name="sequence" type="String" />
+	</model>
+	<model name="com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting">
+		<field name="uuid" type="String" />
+		<field name="CSDiagramSettingId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPAttachmentFileEntryId" type="long" />
+		<field name="CPDefinitionId" type="long" />
+		<field name="color" type="String" />
+		<field name="radius" type="double" />
+		<field name="type" type="String" />
+	</model>
+</model-hints>

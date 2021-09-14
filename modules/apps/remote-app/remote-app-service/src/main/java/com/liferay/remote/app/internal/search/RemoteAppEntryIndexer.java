@@ -14,6 +14,7 @@
 
 package com.liferay.remote.app.internal.search;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 
@@ -103,7 +105,17 @@ public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
 				name);
 		}
 
-		document.addText(Field.URL, remoteAppEntry.getUrl());
+		String type = remoteAppEntry.getType();
+
+		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+			String customElementURLS = remoteAppEntry.getCustomElementURLs();
+
+			document.addText(
+				Field.URL, customElementURLS.split(StringPool.NEW_LINE)[0]);
+		}
+		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
+			document.addText(Field.URL, remoteAppEntry.getIframeURL());
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + remoteAppEntry + " indexed successfully");

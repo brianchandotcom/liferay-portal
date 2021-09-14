@@ -94,8 +94,7 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Custom Field",
-			fieldType = "Date",
-			isMandatory = "false");
+			fieldType = "Date");
 
 		Refresh();
 
@@ -140,8 +139,7 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Custom Field",
-			fieldType = "Long",
-			isMandatory = "false");
+			fieldType = "Long");
 
 		ObjectAdmin.assertObjectField(
 			fieldName = "customField",
@@ -166,8 +164,7 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Custom Field",
-			fieldType = "String",
-			isMandatory = "false");
+			fieldType = "String");
 
 		Refresh();
 
@@ -195,12 +192,27 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Label field blank"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotLeaveLabelFieldBlank {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-138827 CannotLeaveLabelFieldBlank pending implementation
+		Navigator.openURL();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "",
+			fieldName = "customField",
+			fieldType = "String");
+
+		ObjectAdmin.viewFieldErrorMessage(message = "Label is null for locale English (United States)");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Object Label field blank"
@@ -258,8 +270,7 @@ definition {
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Custom Field",
 			fieldName = "customField#$%",
-			fieldType = "Long",
-			isMandatory = "false");
+			fieldType = "Long");
 
 		ObjectAdmin.viewFieldErrorMessage(message = "Name must only contain letters and digits");
 	}

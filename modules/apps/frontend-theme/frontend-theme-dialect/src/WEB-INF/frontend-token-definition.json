@@ -2070,32 +2070,6 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-2)",
-							"editorType": "ColorPicker",
-							"label": "condensed-form-input-filled-label-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "condensed-form-input-filled-label-color"
-								}
-							],
-							"name": "condensedFormInputFilledLabelColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--color-neutral-6)",
-							"editorType": "ColorPicker",
-							"label": "condensed-form-input-disabled-label-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "condensed-form-input-disabled-label-color"
-								}
-							],
-							"name": "condensedFormInputDisabledLabelColor",
-							"type": "String"
-						},
-						{
 							"defaultValue": "var(--text-paragraph-font-size)",
 							"label": "condensed-form-input-label-font-size",
 							"mappings": [
@@ -2108,18 +2082,6 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--text-paragraph-sm-font-size)",
-							"label": "condensed-form-input-filled-label-font-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "condensed-form-input-filled-label-font-size"
-								}
-							],
-							"name": "condensedFormInputFilledLabelFontSize",
-							"type": "String"
-						},
-						{
 							"defaultValue": "var(--text-paragraph-font-weight-heavy)",
 							"label": "condensed-form-input-label-font-weight",
 							"mappings": [
@@ -2129,18 +2091,6 @@
 								}
 							],
 							"name": "condensedFormInputLabelFontWeight",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--text-paragraph-font-weight-heavy)",
-							"label": "condensed-form-input-filled-label-font-weight",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "condensed-form-input-filled-label-font-weight"
-								}
-							],
-							"name": "condensedFormInputFilledLabelFontWeight",
 							"type": "String"
 						},
 						{
@@ -2181,32 +2131,6 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-9)",
-							"editorType": "ColorPicker",
-							"label": "condensed-form-input-disabled-background-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "condensed-form-input-disabled-background-color"
-								}
-							],
-							"name": "condensedFormInputDisabledBackgroundColor",
-							"type": "String"
-						},
-						{
-							"defaultValue": "var(--color-neutral-5)",
-							"editorType": "ColorPicker",
-							"label": "condensed-form-input-filled-border-color",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "condensed-form-input-filled-border-color"
-								}
-							],
-							"name": "condensedFormInputFilledBorderColor",
-							"type": "String"
-						},
-						{
 							"defaultValue": "0",
 							"label": "condensed-form-feedback-item-margin",
 							"mappings": [
@@ -2240,6 +2164,82 @@
 								}
 							],
 							"name": "condensedFormTextFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-2)",
+							"editorType": "ColorPicker",
+							"label": "condensed-form-input-filled-label-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "condensed-form-input-filled-label-color"
+								}
+							],
+							"name": "condensedFormInputFilledLabelColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-sm-font-size)",
+							"label": "condensed-form-input-filled-label-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "condensed-form-input-filled-label-font-size"
+								}
+							],
+							"name": "condensedFormInputFilledLabelFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-font-weight-heavy)",
+							"label": "condensed-form-input-filled-label-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "condensed-form-input-filled-label-font-weight"
+								}
+							],
+							"name": "condensedFormInputFilledLabelFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-5)",
+							"editorType": "ColorPicker",
+							"label": "condensed-form-input-filled-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "condensed-form-input-filled-border-color"
+								}
+							],
+							"name": "condensedFormInputFilledBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-6)",
+							"editorType": "ColorPicker",
+							"label": "condensed-form-input-disabled-label-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "condensed-form-input-disabled-label-color"
+								}
+							],
+							"name": "condensedFormInputDisabledLabelColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-9)",
+							"editorType": "ColorPicker",
+							"label": "condensed-form-input-disabled-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "condensed-form-input-disabled-background-color"
+								}
+							],
+							"name": "condensedFormInputDisabledBackgroundColor",
 							"type": "String"
 						}
 					],

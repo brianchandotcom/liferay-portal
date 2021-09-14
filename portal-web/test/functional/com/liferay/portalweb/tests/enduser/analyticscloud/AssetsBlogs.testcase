@@ -176,6 +176,8 @@ definition {
 
 		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 
+		Pause(locator1 = "5000");
+
 		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
@@ -204,6 +206,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8375 | Test Summary: Blogs audience card shows expected amount of segmented and unsegmented individuals"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInBlogs {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
 		for (var name : list "ac,liferay") {
 			JSONUser.addUser(
 				userEmailAddress = "${name}@liferay.com",
@@ -212,13 +216,7 @@ definition {
 				userScreenName = "${name}");
 		}
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+		ACDXPSettings.syncNewContactData();
 
 		for (var name : list "ac,liferay") {
 			User.logoutAndLoginPG(
@@ -233,6 +231,16 @@ definition {
 
 			Pause(locator1 = "5000");
 		}
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+		Pause(locator1 = "5000");
 
 		ACUtils.closeAllSessionsAndWait();
 

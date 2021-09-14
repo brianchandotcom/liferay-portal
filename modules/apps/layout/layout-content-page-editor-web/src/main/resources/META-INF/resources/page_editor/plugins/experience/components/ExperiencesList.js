@@ -36,13 +36,25 @@ const ExperiencesList = ({
 
 	const handleExperienceSelection = (id) => dispatch(selectExperience({id}));
 
+	/* We cannot increase priority if the experiencie above has an experimente running and it's 
+	   for the same audience or the audience of experience is anyone */
+	const calculateIfLockedIncreasePriority = (experience, i) => {
+		return (
+			experiences[i - 1].hasLockedSegmentsExperiment &&
+			(experience.segmentsEntryId ===
+				experiences[i - 1].segmentsEntryId ||
+				experience.segmentsEntryId === '0')
+		);
+	};
+
 	return (
 		<ClayList className="mt-3">
 			{experiences.map((experience, i) => {
 				const active =
 					experience.segmentsExperienceId === activeExperienceId;
 				const lockedDecreasePriority = experiences.length - 1 === i;
-				const lockedIncreasePriority = i === 0;
+				const lockedIncreasePriority =
+					i === 0 || calculateIfLockedIncreasePriority(experience, i);
 
 				const editable =
 					canUpdateExperiences &&

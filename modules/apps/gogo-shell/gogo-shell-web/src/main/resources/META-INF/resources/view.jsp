@@ -43,6 +43,13 @@ String commandOutput = (String)SessionMessages.get(renderRequest, "commandOutput
 
 		<aui:button-row>
 			<aui:button primary="<%= true %>" type="submit" value="execute" />
+
+			<div class="btn float-right">
+				<liferay-learn:message
+					key="general"
+					resource="gogo-shell-web"
+				/>
+			</div>
 		</aui:button-row>
 
 		<c:if test="<%= Validator.isNotNull(commandOutput) %>">

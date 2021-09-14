@@ -41,7 +41,13 @@ export default function WorkflowInstanceTracker({workflowInstanceId}) {
 		callback: (responses, client) => {
 			client
 				.get(
-					`/workflow-definitions/by-name/${responses[0].data.workflowDefinitionName}`
+					`/workflow-definitions/by-name/${responses[0].data.workflowDefinitionName}`,
+					{
+						params: {
+							version:
+								responses[0].data.workflowDefinitionVersion,
+						},
+					}
 				)
 				.then((response) => {
 					setDefinitionElements({

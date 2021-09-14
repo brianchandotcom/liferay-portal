@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.web.internal.object.definitions.display.context;
+package com.liferay.object.web.internal.object.list.type.display.context;
 
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;

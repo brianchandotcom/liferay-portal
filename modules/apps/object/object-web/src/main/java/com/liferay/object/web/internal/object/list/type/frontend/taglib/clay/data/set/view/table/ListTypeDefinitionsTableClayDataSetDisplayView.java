@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.web.internal.object.definitions.frontend.taglib.clay.data.set.view.table;
+package com.liferay.object.web.internal.object.list.type.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
@@ -20,7 +20,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
-import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsClayDataSetDisplayNames;
+import com.liferay.object.web.internal.object.list.type.constants.ListTypeDefinitionsClayDataSetDisplayNames;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gabriel Albuquerque
  */
 @Component(
-	property = "clay.data.set.display.name=" + ObjectDefinitionsClayDataSetDisplayNames.LIST_TYPE_DEFINITIONS,
+	property = "clay.data.set.display.name=" + ListTypeDefinitionsClayDataSetDisplayNames.LIST_TYPE_DEFINITIONS,
 	service = ClayDataSetDisplayView.class
 )
 public class ListTypeDefinitionsTableClayDataSetDisplayView

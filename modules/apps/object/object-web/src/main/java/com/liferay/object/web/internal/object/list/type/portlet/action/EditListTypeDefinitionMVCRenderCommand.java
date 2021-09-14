@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.object.web.internal.object.definitions.portlet.action;
+package com.liferay.object.web.internal.object.list.type.portlet.action;
 
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
-import com.liferay.object.web.internal.object.definitions.display.context.ViewListTypeEntriesDisplayContext;
+import com.liferay.object.web.internal.object.list.type.display.context.ViewListTypeEntriesDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -37,8 +37,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + ObjectPortletKeys.OBJECT_DEFINITIONS,
-		"mvc.command.name=/object_definitions/edit_list_type_definition"
+		"javax.portlet.name=" + ObjectPortletKeys.LIST_TYPE_DEFINITIONS,
+		"mvc.command.name=/list_type_definitions/edit_list_type_definition"
 	},
 	service = MVCRenderCommand.class
 )
@@ -65,7 +65,7 @@ public class EditListTypeDefinitionMVCRenderCommand
 			new ViewListTypeEntriesDisplayContext(
 				_portal.getHttpServletRequest(renderRequest)));
 
-		return "/object_definitions/edit_list_type_definition.jsp";
+		return "/list_type_definitions/edit_list_type_definition.jsp";
 	}
 
 	@Reference

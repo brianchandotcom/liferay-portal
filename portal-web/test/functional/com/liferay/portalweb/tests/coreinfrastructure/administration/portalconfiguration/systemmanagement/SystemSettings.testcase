@@ -201,7 +201,7 @@ definition {
 			entryComment = "WC WebContent Content Comment",
 			userFullName = "Test Test (You)");
 
-		SystemSettings.getConfigFileContent(configFileName = "com.liferay.journal.configuration.JournalServiceConfiguration.config");
+		var fileContent = SystemSettings.getConfigFileContent(configFileName = "com.liferay.journal.configuration.JournalServiceConfiguration.config");
 
 		var expectedText = "articleCommentsEnabled = B&quot;true&quot;";
 

@@ -155,6 +155,9 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
+                productExternalReferenceCode:
+                    example: exampleERC
+                    type: string
                 productId:
                     example: 33131
                     format: int64
@@ -170,6 +173,9 @@ components:
                     type: string
                 sku:
                     example: SKU01
+                    type: string
+                skuExternalReferenceCode:
+                    example: SKU0111
                     type: string
                 skuUuid:
                     example: 123e4567-e89b-12d3-a456-426655440001

@@ -48,6 +48,12 @@ export const CollectionFilterGeneralPanel = ({item}) => {
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
+		if (isEmptyArray(collections)) {
+			setFilterableCollections({});
+
+			return;
+		}
+
 		setLoading(true);
 
 		CollectionService.getCollectionSupportedFilters(

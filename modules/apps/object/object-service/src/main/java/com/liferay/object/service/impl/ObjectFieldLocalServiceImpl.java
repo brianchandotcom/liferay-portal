@@ -189,6 +189,14 @@ public class ObjectFieldLocalServiceImpl
 			objectDefinitionId);
 	}
 
+	@Override
+	public int getObjectFieldsCountByListTypeDefinitionId(
+		long listTypeDefinitionId) {
+
+		return objectFieldPersistence.countByListTypeDefinitionId(
+			listTypeDefinitionId);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectField updateCustomObjectField(

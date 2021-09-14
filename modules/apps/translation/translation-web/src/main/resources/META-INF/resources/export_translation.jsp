@@ -70,22 +70,40 @@ renderResponse.setTitle(exportTranslationDisplayContext.getTitle());
 					<div class="form-group">
 						<label class="mb-2"><liferay-ui:message key="select-experiences" /></label>
 
-						<ul class="list-group">
+						<ul class="list-group translation-experiences-wrapper">
 
 							<%
 							for (Map<String, String> experience : experiences) {
 							%>
 
-								<li class="list-group-item">
-									<div class="custom-checkbox custom-control">
-										<label>
-											<input class="custom-control-input" name="targetLanguageIds" type="checkbox" />
+								<li class="list-group-item list-group-item-flex">
+									<clay:content-col>
+										<div class="custom-checkbox custom-control">
+											<label>
+												<input checked class="custom-control-input" id="<%= "experience_" + experience.get("value") %>" type="checkbox" />
 
-											<span class="custom-control-label">
-												<span class="custom-control-label-text"><%= experience.get("label") %></span>
-											</span>
-										</label>
-									</div>
+												<span class="custom-control-label"></span>
+											</label>
+										</div>
+									</clay:content-col>
+
+									<clay:content-col
+										expand="<%= true %>"
+									>
+										<clay:content-row
+											containerElement="label"
+											cssClass="list-group-label"
+											for='<%= "experience_" + experience.get("value") %>'
+										>
+											<clay:content-col><%= experience.get("label") %></clay:content-col>
+											<clay:content-col
+												cssClass="text-right"
+												expand="<%= true %>"
+											>
+												<span class="small text-secondary"><%= experience.get("segment") %></span>
+											</clay:content-col>
+										</clay:content-row>
+									</clay:content-col>
 								</li>
 
 							<%

@@ -1,0 +1,40 @@
+task copyGradleDependencies(type: Copy)
+task jarPatched(type: Zip)
+
+copyGradleDependencies {
+	from configurations.compile
+	into "classes/lib"
+}
+
+dependencies {
+	compile group: "com.amazonaws", name: "aws-lambda-java-core", version: "1.2.1"
+	compile group: "com.amazonaws", name: "aws-lambda-java-events", version: "3.9.0"
+	compile group: "com.google.code.gson", name: "gson", version: "2.8.6"
+	compile group: "org.apache.logging.log4j", name: "log4j-api", version: "2.13.0"
+	compile group: "org.apache.logging.log4j", name: "log4j-core", version: "2.13.0"
+	compile group: "org.apache.logging.log4j", name: "log4j-slf4j18-impl", version: "2.13.0"
+	compile project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-order-client")
+}
+
+jar {
+	setActions([])
+
+	dependsOn jarPatched
+}
+
+jarPatched {
+	archiveName = jar.archiveName
+	destinationDir = jar.destinationDir
+	duplicatesStrategy = "exclude"
+
+	exclude "META-INF/versions/9/module-info.class"
+	exclude "META-INF/versions/9/org/apache/logging/log4j/util/StackLocator.class"
+	exclude "META-INF/versions/9/org/apache/logging/log4j/util/StackLocator\$FqcnCallerLocator*"
+	exclude "META-INF/versions/9/org/apache/logging/log4j/util/ProcessIdUtil.class"
+	exclude "META-INF/versions/9/org/apache/logging/log4j/util/Base64Util.class"
+	exclude "META-INF/versions/9/org/apache/logging/log4j/util/internal/DefaultObjectInputFilter.class"
+
+	from sourceSets.main.output
+
+	dependsOn copyGradleDependencies
+}

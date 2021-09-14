@@ -32,14 +32,6 @@ definition {
 	}
 
 	tearDown {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoPortlet(portlet = "Staging");
-
-		Depot.deactivateStaging(siteName = "Test Depot Name");
-
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		Navigator.gotoStagedView();
@@ -50,15 +42,23 @@ definition {
 
 		Staging.deactivateStagingCP(siteName = "Site Name");
 
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoPortlet(portlet = "Staging");
+
+		Depot.deactivateStaging(siteName = "Test Depot Name");
+
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONDepot.deleteDepot(depotName = "Test Depot Name");
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
 
-			Site.tearDownCP();
+			JSONDepot.deleteDepot(depotName = "Test Depot Name");
 
 			User.logoutPG();
 		}

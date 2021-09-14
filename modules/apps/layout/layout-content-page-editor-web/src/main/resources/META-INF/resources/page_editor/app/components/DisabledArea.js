@@ -15,20 +15,12 @@
 import ClayPopover from '@clayui/popover';
 import {ReactPortal, useEventListener} from '@liferay/frontend-js-react-web';
 import {ALIGN_POSITIONS, align, suggestAlignBestRegion} from 'frontend-js-web';
-import React, {
-	useCallback,
-	useEffect,
-	useLayoutEffect,
-	useRef,
-	useState,
-} from 'react';
+import React, {useCallback, useLayoutEffect, useRef, useState} from 'react';
 
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useGlobalContext} from '../contexts/GlobalContext';
-import {useSelector} from '../contexts/StoreContext';
 
 const DEFAULT_DISABLED_AREA_CLASS = 'page-editor__disabled-area';
-const DEFAULT_DISABLED_AREA_PADDED_CLASS = `${DEFAULT_DISABLED_AREA_CLASS}--padded`;
 const DEFAULT_ORIGIN = '#content';
 
 const DEFAULT_WHITELIST = [
@@ -57,10 +49,7 @@ const DisabledArea = () => {
 	const globalContext = useGlobalContext();
 	const [show, setShow] = useState(false);
 	const [position, setPosition] = useState('bottom');
-	const sidebarOpen = useSelector((state) => state.sidebar.open);
 	const selectItem = useSelectItem();
-
-	const withinIframe = globalContext.window !== window;
 
 	const isDisabled = useCallback(
 		(element) => {
@@ -84,21 +73,6 @@ const DisabledArea = () => {
 		},
 		[globalContext]
 	);
-
-	useEffect(() => {
-		const element = globalContext.document.querySelector(
-			`.${DEFAULT_DISABLED_AREA_CLASS}`
-		);
-
-		if (element) {
-			if (sidebarOpen && !withinIframe) {
-				element.classList.add('collapsed');
-			}
-			else {
-				element.classList.remove('collapsed');
-			}
-		}
-	}, [globalContext, sidebarOpen, withinIframe]);
 
 	useEventListener(
 		'scroll',
@@ -168,10 +142,6 @@ const DisabledArea = () => {
 			Array.from(element.parentElement.children).forEach((child) => {
 				if (isDisabled(child)) {
 					child.classList.add(DEFAULT_DISABLED_AREA_CLASS);
-
-					if (!withinIframe) {
-						child.classList.add(DEFAULT_DISABLED_AREA_PADDED_CLASS);
-					}
 				}
 			});
 
@@ -184,13 +154,10 @@ const DisabledArea = () => {
 			);
 
 			elements.forEach((element) =>
-				element.classList.remove(
-					DEFAULT_DISABLED_AREA_CLASS,
-					DEFAULT_DISABLED_AREA_PADDED_CLASS
-				)
+				element.classList.remove(DEFAULT_DISABLED_AREA_CLASS)
 			);
 		};
-	}, [globalContext, isDisabled, withinIframe]);
+	}, [globalContext, isDisabled]);
 
 	return (
 		show && (

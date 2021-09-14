@@ -133,6 +133,20 @@ html#{$cadmin-selector} {
 		}
 	}
 
+	.page-editor__wrapper {
+		padding-right: $sidebarButtonWidth;
+		position: relative;
+		transition: padding-left ease $defaultTransitionDuration,
+			padding-right ease $defaultTransitionDuration;
+		will-change: padding-left, padding-right;
+
+		&--padded {
+			@include media-breakpoint-up(sm) {
+				padding-right: $sidebarButtonWidth + $sidebarContentWidth;
+			}
+		}
+	}
+
 	body.has-control-menu .cadmin.page-editor__sidebar {
 		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
 		top: $controlMenuHeight + $toolbarHeight;

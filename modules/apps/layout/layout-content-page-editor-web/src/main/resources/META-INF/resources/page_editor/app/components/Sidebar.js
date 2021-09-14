@@ -169,6 +169,22 @@ export default function Sidebar() {
 		}
 	}, []);
 
+	useEffect(() => {
+		const wrapper = document.getElementById('wrapper');
+
+		if (!wrapper) {
+			return;
+		}
+
+		wrapper.classList.add('page-editor__wrapper');
+		wrapper.classList.toggle('page-editor__wrapper--padded', sidebarOpen);
+
+		return () => {
+			wrapper.classList.remove('page-editor__wrapper');
+			wrapper.classList.remove('page-editor__wrapper--padded');
+		};
+	}, [sidebarOpen]);
+
 	const SidebarPanel = useLazy(
 		useCallback(({instance}) => {
 			if (typeof instance.renderSidebar === 'function') {

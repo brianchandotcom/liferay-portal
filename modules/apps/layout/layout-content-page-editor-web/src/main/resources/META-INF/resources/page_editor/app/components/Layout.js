@@ -14,7 +14,6 @@
 
 import ClayAlert from '@clayui/alert';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef} from 'react';
 
@@ -59,13 +58,10 @@ const LAYOUT_DATA_ITEMS = {
 
 export default function Layout({mainItemId}) {
 	const layoutData = useSelector((state) => state.layoutData);
-	const mainItem = layoutData.items[mainItemId];
 	const layoutRef = useRef(null);
-
 	const selectItem = useSelectItem();
-	const sidebarOpen = useSelector(
-		(state) => state.sidebar.panelId && state.sidebar.open
-	);
+
+	const mainItem = layoutData.items[mainItemId];
 
 	const onClick = (event) => {
 		if (event.target === event.currentTarget) {
@@ -107,11 +103,7 @@ export default function Layout({mainItemId}) {
 	return (
 		<>
 			{isPageConversion && (
-				<div
-					className={classNames('page-editor__conversion-messages', {
-						'page-editor__conversion-messages--with-sidebar-open': sidebarOpen,
-					})}
-				>
+				<div className="page-editor__conversion-messages">
 					<ClayAlert
 						displayType="info"
 						title={Liferay.Language.get(

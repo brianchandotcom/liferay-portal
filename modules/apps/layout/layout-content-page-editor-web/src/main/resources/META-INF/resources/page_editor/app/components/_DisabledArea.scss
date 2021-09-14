@@ -4,13 +4,6 @@ html#{$cadmin-selector} {
 	.page-editor__disabled-area {
 		cursor: not-allowed;
 		position: relative;
-		transition: padding-left ease $defaultTransitionDuration,
-			padding-right ease $defaultTransitionDuration;
-		will-change: padding-left, padding-right;
-
-		&--padded {
-			padding-right: $sidebarButtonWidth;
-		}
 
 		&::after {
 			background-color: rgba(255, 255, 255, 0);
@@ -27,12 +20,6 @@ html#{$cadmin-selector} {
 
 		&:hover:after {
 			background-color: rgba(255, 255, 255, 0.4);
-		}
-
-		&.collapsed {
-			@include media-breakpoint-up(sm) {
-				padding-right: $sidebarButtonWidth + $sidebarContentWidth;
-			}
 		}
 	}
 }

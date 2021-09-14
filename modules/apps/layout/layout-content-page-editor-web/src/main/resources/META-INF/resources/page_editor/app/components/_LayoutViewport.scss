@@ -7,19 +7,12 @@ html#{$cadmin-selector} {
 		display: flex;
 		justify-content: center;
 		position: relative;
-		transition: padding-left ease $defaultTransitionDuration,
-			padding-right ease $defaultTransitionDuration;
-		will-change: padding-left, padding-right;
 
 		&__resizer {
 			background-color: var(--body-bg);
 		}
 
 		&--size {
-			&-desktop {
-				padding-right: $sidebarButtonWidth;
-			}
-
 			&-tablet,
 			&-landscapeMobile,
 			&-portraitMobile {
@@ -27,8 +20,26 @@ html#{$cadmin-selector} {
 				left: 0;
 				position: absolute;
 				top: 0;
+				transition: padding-left ease $defaultTransitionDuration,
+					padding-right ease $defaultTransitionDuration;
 				width: 100%;
+				will-change: padding-left, padding-right;
 				z-index: 1;
+
+				&.page-editor__layout-viewport--with-sidebar {
+					padding-right: $sidebarButtonWidth;
+				}
+
+				&.page-editor__layout-viewport--with-sidebar-open {
+					.page-editor__layout-viewport__label-width {
+						right: $sidebarButtonWidth + $sidebarContentWidth;
+					}
+
+					@include media-breakpoint-up(sm) {
+						padding-right: $sidebarButtonWidth +
+							$sidebarContentWidth;
+					}
+				}
 			}
 
 			&-desktop .page-editor__layout-viewport__resizer {
@@ -68,20 +79,6 @@ html#{$cadmin-selector} {
 				font-weight: 600;
 				margin-right: 16px;
 				padding: 6px 12px;
-			}
-		}
-
-		&--with-sidebar {
-			padding-right: $sidebarButtonWidth;
-		}
-
-		&--with-sidebar-open {
-			.page-editor__layout-viewport__label-width {
-				right: $sidebarButtonWidth + $sidebarContentWidth;
-			}
-
-			@include media-breakpoint-up(sm) {
-				padding-right: $sidebarButtonWidth + $sidebarContentWidth;
 			}
 		}
 

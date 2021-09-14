@@ -18,7 +18,8 @@ import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.exception.TemplateNameException;
 import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,7 +29,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -43,6 +44,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.template.constants.TemplatePortletKeys;
+import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.service.TemplateEntryLocalService;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -62,21 +65,22 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + TemplatePortletKeys.TEMPLATE,
-		"mvc.command.name=/template/add_ddm_template"
+		"mvc.command.name=/template/add_template_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class AddTemplateEntryMVCActionCommand extends BaseMVCActionCommand {
+public class AddTemplateEntryMVCActionCommand
+	extends BaseTransactionalMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
+	protected void doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
-		long resourceClassNameId = ParamUtil.getLong(
-			actionRequest, "resourceClassNameId");
+		String infoItemClassName = ParamUtil.getString(
+			actionRequest, "infoItemClassName");
+		String infoItemFormVariationKey = ParamUtil.getString(
+			actionRequest, "infoItemFormVariationKey");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -92,12 +96,22 @@ public class AddTemplateEntryMVCActionCommand extends BaseMVCActionCommand {
 		serviceContext.setAddGuestPermissions(true);
 
 		try {
-			DDMTemplate ddmTemplate = _ddmTemplateService.addTemplate(
-				themeDisplay.getScopeGroupId(), classNameId, classPK,
-				resourceClassNameId, nameMap, Collections.emptyMap(),
+			DDMTemplate ddmTemplate = _ddmTemplateLocalService.addTemplate(
+				themeDisplay.getUserId(), serviceContext.getScopeGroupId(),
+				_portal.getClassNameId(InfoItemFormProvider.class), 0,
+				_portal.getClassNameId(InfoItemFormProvider.class), nameMap,
+				Collections.emptyMap(),
 				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, StringPool.BLANK,
-				TemplateConstants.LANG_TYPE_FTL,
-				_getScript(classNameId, resourceClassNameId), serviceContext);
+				TemplateConstants.LANG_TYPE_FTL, _getScript(), serviceContext);
+
+			serviceContext = ServiceContextFactory.getInstance(
+				TemplateEntry.class.getName(), actionRequest);
+
+			TemplateEntry templateEntry =
+				_templateEntryLocalService.addTemplateEntry(
+					themeDisplay.getUserId(), serviceContext.getScopeGroupId(),
+					ddmTemplate.getTemplateId(), infoItemClassName,
+					infoItemFormVariationKey);
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,
@@ -112,7 +126,9 @@ public class AddTemplateEntryMVCActionCommand extends BaseMVCActionCommand {
 					).setTabs1(
 						"information-templates"
 					).setParameter(
-						"ddmTemplateId", ddmTemplate.getTemplateId()
+						"ddmTemplateId", templateEntry.getDDMTemplateId()
+					).setParameter(
+						"templateEntryId", templateEntry.getTemplateEntryId()
 					).buildString()));
 		}
 		catch (PortalException portalException) {
@@ -151,14 +167,10 @@ public class AddTemplateEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private String _getScript(long classNameId, long resourceClassNameId) {
+	private String _getScript() {
 		TemplateHandler templateHandler =
-			TemplateHandlerRegistryUtil.getTemplateHandler(resourceClassNameId);
-
-		if (templateHandler == null) {
-			templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(
-				classNameId);
-		}
+			TemplateHandlerRegistryUtil.getTemplateHandler(
+				_portal.getClassNameId(InfoItemFormProvider.class));
 
 		if (templateHandler != null) {
 			return templateHandler.getTemplatesHelpContent(
@@ -172,9 +184,12 @@ public class AddTemplateEntryMVCActionCommand extends BaseMVCActionCommand {
 		AddTemplateEntryMVCActionCommand.class);
 
 	@Reference
-	private DDMTemplateService _ddmTemplateService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TemplateEntryLocalService _templateEntryLocalService;
 
 }

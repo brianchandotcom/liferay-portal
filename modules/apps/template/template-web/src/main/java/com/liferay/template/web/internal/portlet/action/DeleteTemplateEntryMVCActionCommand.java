@@ -14,11 +14,13 @@
 
 package com.liferay.template.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.template.constants.TemplatePortletKeys;
+import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.service.TemplateEntryLocalService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -27,41 +29,50 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Lourdes Fernández Besada
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + TemplatePortletKeys.TEMPLATE,
-		"mvc.command.name=/template/delete_ddm_template"
+		"mvc.command.name=/template/delete_template_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteTemplateEntryMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteTemplateEntryMVCActionCommand
+	extends BaseTransactionalMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
+	protected void doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] deleteDDMTemplateIds = null;
+		long[] templateEntryIds = null;
 
-		long ddmTemplateId = ParamUtil.getLong(actionRequest, "ddmTemplateId");
+		long templateEntryId = ParamUtil.getLong(
+			actionRequest, "templateEntryId");
 
-		if (ddmTemplateId > 0) {
-			deleteDDMTemplateIds = new long[] {ddmTemplateId};
+		if (templateEntryId > 0) {
+			templateEntryIds = new long[] {templateEntryId};
 		}
 		else {
-			deleteDDMTemplateIds = ParamUtil.getLongValues(
-				actionRequest, "rowIds");
+			templateEntryIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 		}
 
-		for (long deleteDDMTemplateId : deleteDDMTemplateIds) {
-			_ddmTemplateService.deleteTemplate(deleteDDMTemplateId);
+		for (long deleteTemplateEntryId : templateEntryIds) {
+			TemplateEntry templateEntry =
+				_templateEntryLocalService.deleteTemplateEntry(
+					deleteTemplateEntryId);
+
+			_ddmTemplateLocalService.deleteDDMTemplate(
+				templateEntry.getDDMTemplateId());
 		}
 	}
 
 	@Reference
-	private DDMTemplateService _ddmTemplateService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
+	private TemplateEntryLocalService _templateEntryLocalService;
 
 }

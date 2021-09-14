@@ -16,7 +16,7 @@ package com.liferay.template.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.template.constants.TemplatePortletKeys;
+import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.service.TemplateEntryLocalService;
 
 import java.io.File;
 
@@ -44,13 +46,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Lourdes Fernández Besada
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + TemplatePortletKeys.TEMPLATE,
-		"mvc.command.name=/template/update_ddm_template"
+		"mvc.command.name=/template/update_template_entry"
 	},
 	service = MVCActionCommand.class
 )
@@ -73,8 +75,6 @@ public class UpdateTemplateEntryMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(
 				uploadPortletRequest, "description");
-		String language = ParamUtil.getString(
-			uploadPortletRequest, "language", TemplateConstants.LANG_TYPE_VM);
 		String script = ParamUtil.getString(
 			uploadPortletRequest, "scriptContent");
 		boolean cacheable = ParamUtil.getBoolean(
@@ -99,31 +99,18 @@ public class UpdateTemplateEntryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMTemplate.class.getName(), uploadPortletRequest);
 
-		DDMTemplate ddmTemplate = null;
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.updateTemplate(
+			serviceContext.getUserId(), ddmTemplateId, classPK, nameMap,
+			descriptionMap, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
+			StringPool.BLANK, TemplateConstants.LANG_TYPE_FTL, script,
+			cacheable, smallImage, smallImageURL, smallImageFile,
+			serviceContext);
 
-		if (ddmTemplateId <= 0) {
-			long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
-			long classNameId = ParamUtil.getLong(
-				uploadPortletRequest, "classNameId");
-			long resourceClassNameId = ParamUtil.getLong(
-				uploadPortletRequest, "resourceClassNameId");
-			String templateKey = ParamUtil.getString(
-				uploadPortletRequest, "templateKey");
+		long templateEntryId = ParamUtil.getLong(
+			uploadPortletRequest, "templateEntryId");
 
-			ddmTemplate = _ddmTemplateService.addTemplate(
-				groupId, classNameId, classPK, resourceClassNameId, templateKey,
-				nameMap, descriptionMap,
-				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, StringPool.BLANK,
-				language, script, cacheable, smallImage, smallImageURL,
-				smallImageFile, serviceContext);
-		}
-		else {
-			ddmTemplate = _ddmTemplateService.updateTemplate(
-				ddmTemplateId, classPK, nameMap, descriptionMap,
-				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, StringPool.BLANK,
-				language, script, cacheable, smallImage, smallImageURL,
-				smallImageFile, serviceContext);
-		}
+		TemplateEntry templateEntry =
+			_templateEntryLocalService.updateTemplateEntry(templateEntryId);
 
 		boolean saveAndContinue = ParamUtil.getBoolean(
 			uploadPortletRequest, "saveAndContinue");
@@ -139,17 +126,22 @@ public class UpdateTemplateEntryMVCActionCommand extends BaseMVCActionCommand {
 					ParamUtil.getString(uploadPortletRequest, "redirect")
 				).setTabs1(
 					ParamUtil.getString(
-						uploadPortletRequest, "tabs1", "widget-templates")
+						uploadPortletRequest, "tabs1", "information-templates")
 				).setParameter(
 					"ddmTemplateId", ddmTemplate.getTemplateId()
+				).setParameter(
+					"templateEntryId", templateEntry.getTemplateEntryId()
 				).buildString());
 		}
 	}
 
 	@Reference
-	private DDMTemplateService _ddmTemplateService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TemplateEntryLocalService _templateEntryLocalService;
 
 }

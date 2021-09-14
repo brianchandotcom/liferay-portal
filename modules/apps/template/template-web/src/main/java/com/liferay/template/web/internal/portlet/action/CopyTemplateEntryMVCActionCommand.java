@@ -16,13 +16,17 @@ package com.liferay.template.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.template.constants.TemplatePortletKeys;
+import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.service.TemplateEntryLocalService;
 
 import java.util.Locale;
 import java.util.Map;
@@ -34,24 +38,26 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Lourdes Fernández Besada
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + TemplatePortletKeys.TEMPLATE,
-		"mvc.command.name=/template/copy_ddm_template"
+		"mvc.command.name=/template/copy_template_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class CopyTemplateEntryMVCActionCommand extends BaseMVCActionCommand {
+public class CopyTemplateEntryMVCActionCommand
+	extends BaseTransactionalMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
+	protected void doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long ddmTemplateId = ParamUtil.getLong(actionRequest, "ddmTemplateId");
+		long templateEntryId = ParamUtil.getLong(
+			actionRequest, "templateEntryId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
@@ -61,11 +67,26 @@ public class CopyTemplateEntryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMTemplate.class.getName(), actionRequest);
 
-		_ddmTemplateService.copyTemplate(
-			ddmTemplateId, nameMap, descriptionMap, serviceContext);
+		TemplateEntry templateEntry =
+			_templateEntryLocalService.fetchTemplateEntry(templateEntryId);
+
+		DDMTemplate ddmTemplate = _ddmTemplateService.copyTemplate(
+			templateEntry.getDDMTemplateId(), nameMap, descriptionMap,
+			serviceContext);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_templateEntryLocalService.addTemplateEntry(
+			themeDisplay.getUserId(), templateEntry.getGroupId(),
+			ddmTemplate.getTemplateId(), templateEntry.getInfoItemClassName(),
+			templateEntry.getInfoItemFormVariationKey());
 	}
 
 	@Reference
 	private DDMTemplateService _ddmTemplateService;
+
+	@Reference
+	private TemplateEntryLocalService _templateEntryLocalService;
 
 }

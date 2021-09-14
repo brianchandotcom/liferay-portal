@@ -80,9 +80,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test DeleteTemplateAndStructure {
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		NavItem.gotoStructures();
+		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
@@ -114,9 +112,7 @@ definition {
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no templates.");
 
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		NavItem.gotoStructures();
+		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
 
 		WebContentStructures.deleteCP(structureName = "WC Structure Name");
 
@@ -157,9 +153,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test EditTemplateAndStructure {
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		NavItem.gotoStructures();
+		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
@@ -198,9 +192,7 @@ definition {
 
 		PortletEntry.save();
 
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		NavItem.gotoStructures();
+		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
 
 		WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
 
@@ -338,9 +330,7 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Restore WC In Depot");
 
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Restore WC In Depot");
-
-		NavItem.gotoStructures();
+		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Restore WC In Depot");
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",

@@ -94,9 +94,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test RemoveCustomizedWC {
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		NavItem.gotoStructures();
+		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
@@ -167,9 +165,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Page Name");
 
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Remove Customized WC Depot Name");
-
-		NavItem.gotoStructures();
+		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Remove Customized WC Depot Name");
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
@@ -313,9 +309,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		NavItem.gotoStructures();
+		WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
@@ -582,9 +576,7 @@ definition {
 			siteName = "Site Name",
 			tableEntryText = "Yes");
 
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		NavItem.gotoStructures();
+		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
@@ -621,9 +613,7 @@ definition {
 		}
 
 		for (var count : list "1,2") {
-			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name${count}");
-
-			NavItem.gotoStructures();
+			DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name${count}");
 
 			WebContentStructures.addCP(
 				structureDescription = "WC Structure Description",
@@ -700,9 +690,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Page Name");
 
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		NavItem.gotoStructures();
+		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
@@ -735,9 +723,7 @@ definition {
 			siteName = "Site Name",
 			tableEntryText = "Yes");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		NavItem.gotoStructures();
+		WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
 
 		AssertElementNotPresent(
 			key_tableEntry = "WC Structure Name",
@@ -784,9 +770,7 @@ definition {
 		}
 
 		for (var i : list "1,2,3") {
-			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name${i}");
-
-			NavItem.gotoStructures();
+			DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name${i}");
 
 			WebContentStructures.addCP(
 				structureDescription = "WC Structure Description",
@@ -825,9 +809,7 @@ definition {
 		}
 
 		for (var i : list "4,5,6,7,8") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-			NavItem.gotoStructures();
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
 
 			WebContentStructures.addCP(
 				structureDescription = "WC Structure Description",

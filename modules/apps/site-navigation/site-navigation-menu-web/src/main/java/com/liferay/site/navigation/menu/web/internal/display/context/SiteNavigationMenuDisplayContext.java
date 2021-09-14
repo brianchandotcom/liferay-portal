@@ -308,7 +308,7 @@ public class SiteNavigationMenuDisplayContext {
 					siteNavigationMenu.getSiteNavigationMenuId();
 			}
 			else {
-				_siteNavigationMenuId = 0;
+				_siteNavigationMenuId = 0L;
 			}
 		}
 

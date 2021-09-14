@@ -83,15 +83,41 @@ definition {
 
 			FragmentsEditor.gotoConfigurationTab();
 
-			Pause(locator1 = "3000");
+			var jsonSnippet = '''
+{
+	"fieldSets": [
+		{
+			"label": "Button",
+				"fields": [
+				{
+					"name": "buttonText",
+					"label": "Button Text",
+					"description": "button-text",
+					"type": "text",
+					"dataType": "string",
+					"defaultValue": "Go Somewhere"
+				}
+			]
+		}
+	]
+}
+			''';
 
-			FragmentsEditor.typeFileContent(fileName = "fragment_button_configuration.json");
+			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
 
 			FragmentsEditor.gotoCodeTab();
 
-			Pause(locator1 = "3000");
+			var htmlSnippet = '''
+<div class="fragment-configuration">
+	<button type="button" class="btn btn-primary">Go Somewhere</button>
+</div>
+			''';
 
-			FragmentsEditor.typeFileContent(fileName = "fragment_button_configuration.html");
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
 
 			FragmentsEditor.publish();
 		}

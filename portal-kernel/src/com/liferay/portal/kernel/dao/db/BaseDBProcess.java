@@ -30,14 +30,21 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.naming.NamingException;
 
@@ -168,73 +175,6 @@ public abstract class BaseDBProcess implements DBProcess {
 		runSQLTemplateString(template, failOnError);
 	}
 
-	protected static <T> void processConcurrently(
-			UnsafeSupplier<T, Exception> unsafeSupplier,
-			UnsafeConsumer<T, Exception> unsafeConsumer)
-		throws Exception {
-
-		processConcurrently(unsafeSupplier, unsafeConsumer, null);
-	}
-
-	protected static <T> void processConcurrently(
-			UnsafeSupplier<T, Exception> unsafeSupplier,
-			UnsafeConsumer<T, Exception> unsafeConsumer,
-			String exceptionMessage)
-		throws Exception {
-
-		Objects.requireNonNull(unsafeSupplier);
-		Objects.requireNonNull(unsafeConsumer);
-
-		ExecutorService executorService = Executors.newWorkStealingPool();
-
-		ThrowableCollector throwableCollector = new ThrowableCollector();
-
-		List<Future<Void>> futures = new ArrayList<>();
-
-		try {
-			long companyId = CompanyThreadLocal.getCompanyId();
-
-			T next = null;
-
-			while ((next = unsafeSupplier.get()) != null) {
-				T current = next;
-
-				Future<Void> future = executorService.submit(
-					() -> {
-						try (SafeCloseable safeCloseable =
-								CompanyThreadLocal.lock(companyId)) {
-
-							unsafeConsumer.accept(current);
-						}
-						catch (Exception exception) {
-							throwableCollector.collect(exception);
-						}
-
-						return null;
-					});
-
-				futures.add(future);
-			}
-		}
-		finally {
-			executorService.shutdown();
-
-			for (Future<Void> future : futures) {
-				future.get();
-			}
-		}
-
-		Throwable throwable = throwableCollector.getThrowable();
-
-		if (throwable != null) {
-			if (exceptionMessage != null) {
-				throw new Exception(exceptionMessage);
-			}
-
-			ReflectionUtil.throwException(throwable);
-		}
-	}
-
 	protected boolean doHasTable(String tableName) throws Exception {
 		DBInspector dbInspector = new DBInspector(connection);
 
@@ -304,7 +244,170 @@ public abstract class BaseDBProcess implements DBProcess {
 		db.process(unsafeConsumer);
 	}
 
+	protected void processConcurrently(
+			PreparedStatement preparedStatement,
+			UnsafeConsumer<ResultRow, Exception> unsafeConsumer,
+			String exceptionMessage)
+		throws Exception {
+
+		try (ResultSet resultSet = preparedStatement.executeQuery()) {
+			_processConcurrently(
+				() -> {
+					if (resultSet.next()) {
+						return new ResultRow(resultSet);
+					}
+
+					return null;
+				},
+				unsafeConsumer, exceptionMessage);
+		}
+	}
+
+	protected void processConcurrently(
+			String sqlQuery,
+			UnsafeConsumer<ResultRow, Exception> unsafeConsumer,
+			String exceptionMessage)
+		throws Exception {
+
+		try (Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(sqlQuery)) {
+
+			_processConcurrently(
+				() -> {
+					if (resultSet.next()) {
+						return new ResultRow(resultSet);
+					}
+
+					return null;
+				},
+				unsafeConsumer, exceptionMessage);
+		}
+	}
+
+	protected <T> void processConcurrently(
+			T[] array, UnsafeConsumer<T, Exception> unsafeConsumer,
+			String exceptionMessage)
+		throws Exception {
+
+		AtomicInteger atomicInteger = new AtomicInteger();
+
+		_processConcurrently(
+			() -> {
+				int index = atomicInteger.getAndIncrement();
+
+				if (index < array.length) {
+					return array[index];
+				}
+
+				return null;
+			},
+			unsafeConsumer, exceptionMessage);
+	}
+
 	protected Connection connection;
+
+	protected class ResultRow {
+
+		public ResultRow(ResultSet resultSet) throws SQLException {
+			ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
+			int columnCount = resultSetMetaData.getColumnCount();
+
+			_columns = new LinkedHashMap<>(columnCount);
+
+			for (int i = 1; i <= columnCount; i++) {
+				_columns.put(
+					StringUtil.toLowerCase(resultSetMetaData.getColumnLabel(i)),
+					resultSet.getObject(i));
+			}
+		}
+
+		@SuppressWarnings("unchecked")
+		public <T> T get(int columnIndex) throws SQLException {
+			int i = 1;
+
+			for (Map.Entry<Object, Object> entry : _columns.entrySet()) {
+				if (i++ == columnIndex) {
+					return (T)entry.getValue();
+				}
+			}
+
+			throw new SQLException("Invalid column index");
+		}
+
+		@SuppressWarnings("unchecked")
+		public <T> T get(String columnLabel) throws SQLException {
+			T value = (T)_columns.get(StringUtil.toLowerCase(columnLabel));
+
+			if (value == null) {
+				throw new SQLException("Invalid column name");
+			}
+
+			return value;
+		}
+
+		private final Map<Object, Object> _columns;
+
+	}
+
+	private <T> void _processConcurrently(
+			UnsafeSupplier<T, Exception> unsafeSupplier,
+			UnsafeConsumer<T, Exception> unsafeConsumer,
+			String exceptionMessage)
+		throws Exception {
+
+		Objects.requireNonNull(unsafeSupplier);
+		Objects.requireNonNull(unsafeConsumer);
+
+		ExecutorService executorService = Executors.newWorkStealingPool();
+
+		ThrowableCollector throwableCollector = new ThrowableCollector();
+
+		List<Future<Void>> futures = new ArrayList<>();
+
+		try {
+			long companyId = CompanyThreadLocal.getCompanyId();
+
+			T next = null;
+
+			while ((next = unsafeSupplier.get()) != null) {
+				T current = next;
+
+				Future<Void> future = executorService.submit(
+					() -> {
+						try (SafeCloseable safeCloseable =
+								CompanyThreadLocal.lock(companyId)) {
+
+							unsafeConsumer.accept(current);
+						}
+						catch (Exception exception) {
+							throwableCollector.collect(exception);
+						}
+
+						return null;
+					});
+
+				futures.add(future);
+			}
+		}
+		finally {
+			executorService.shutdown();
+
+			for (Future<Void> future : futures) {
+				future.get();
+			}
+		}
+
+		Throwable throwable = throwableCollector.getThrowable();
+
+		if (throwable != null) {
+			if (exceptionMessage != null) {
+				throw new Exception(exceptionMessage, throwable);
+			}
+
+			ReflectionUtil.throwException(throwable);
+		}
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseDBProcess.class);
 

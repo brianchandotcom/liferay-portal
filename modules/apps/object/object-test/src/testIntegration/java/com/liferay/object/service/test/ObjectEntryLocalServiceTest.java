@@ -820,7 +820,7 @@ public class ObjectEntryLocalServiceTest {
 
 		// With keywords
 
-		_assertKeywords("@ liferay.com", 0);
+		_assertKeywords("@ liferay.com", 3);
 		_assertKeywords("@-liferay.com", 0);
 		_assertKeywords("@life", 3);
 		_assertKeywords("@liferay", 3);

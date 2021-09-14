@@ -75,9 +75,11 @@ definition {
 			portletName = "Web Content Display",
 			portletOption = "Configuration");
 
-		WebContentDisplayPortlet.viewNotPresent(metadataNameList = "Comments");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		IFrame.closeFrame();
+		AssertElementNotPresent(
+			key_fieldName = "Comments",
+			locator1 = "Portlet#CONFIGURATION_CHECKBOX");
 	}
 
 	@priority = "4"

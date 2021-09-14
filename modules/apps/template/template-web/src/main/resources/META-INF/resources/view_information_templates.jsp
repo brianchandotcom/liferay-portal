@@ -30,7 +30,7 @@ InformationTemplatesManagementToolbarDisplayContext informationTemplatesManageme
 <clay:management-toolbar
 	additionalProps="<%= informationTemplatesManagementToolbarDisplayContext.getAdditionalProps() %>"
 	managementToolbarDisplayContext="<%= informationTemplatesManagementToolbarDisplayContext %>"
-	propsTransformer="js/TemplateManagementToolbarPropsTransformer"
+	propsTransformer="js/InformationTemplatesManagementToolbarPropsTransformer"
 />
 
 <portlet:actionURL name="/template/delete_ddm_template" var="deleteDDMTemplateURL">
@@ -78,7 +78,7 @@ InformationTemplatesManagementToolbarDisplayContext informationTemplatesManageme
 				<liferay-ui:search-container-column-text>
 					<clay:dropdown-actions
 						dropdownItems="<%= informationTemplatesTemplateDisplayContext.getDDMTemplateActionDropdownItems(ddmTemplate) %>"
-						propsTransformer="js/TemplateDropdownPropsTransformer"
+						propsTransformer="js/InformationTemplatesDropdownPropsTransformer"
 					/>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>

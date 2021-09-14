@@ -241,6 +241,9 @@ public class CommerceSubscriptionEntryTest {
 		long cpDefinitionMaxSubscriptionCycles = RandomTestUtil.randomLong();
 
 		if (cpDefinitionSubscriptionEnabled) {
+			cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+				cpDefinition.getCPDefinitionId());
+
 			cpDefinition.setSubscriptionEnabled(true);
 			cpDefinition.setSubscriptionLength(cpDefinitionSubscriptionLength);
 			cpDefinition.setSubscriptionType(cpDefinitionSubscriptionType);

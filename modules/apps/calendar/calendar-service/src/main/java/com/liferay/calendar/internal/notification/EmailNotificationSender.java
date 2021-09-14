@@ -15,6 +15,7 @@
 package com.liferay.calendar.internal.notification;
 
 import com.liferay.calendar.constants.CalendarNotificationTemplateConstants;
+import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.notification.NotificationField;
 import com.liferay.calendar.notification.NotificationRecipient;
@@ -22,15 +23,20 @@ import com.liferay.calendar.notification.NotificationSender;
 import com.liferay.calendar.notification.NotificationSenderException;
 import com.liferay.calendar.notification.NotificationTemplateContext;
 import com.liferay.calendar.notification.NotificationUtil;
-import com.liferay.mail.kernel.model.MailMessage;
-import com.liferay.mail.kernel.service.MailService;
+import com.liferay.calendar.service.impl.CalendarBookingLocalServiceImpl;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.SubscriptionSender;
 
 import java.io.File;
+import java.io.Serializable;
 
-import javax.mail.internet.InternetAddress;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Lundgren
@@ -69,13 +75,12 @@ public class EmailNotificationSender implements NotificationSender {
 				notificationRecipient.getName());
 
 			_sendNotification(
-				notificationTemplateContext.getFromAddress(),
-				notificationTemplateContext.getFromName(),
 				(File)notificationTemplateContext.getAttribute("icsFile"),
+				notificationRecipient, notificationTemplateContext,
 				NotificationTemplateRenderer.render(
 					notificationTemplateContext, NotificationField.BODY,
 					NotificationTemplateRenderer.MODE_HTML),
-				notificationRecipient,
+				fromAddressValue, fromNameValue,
 				NotificationTemplateRenderer.render(
 					notificationTemplateContext, NotificationField.SUBJECT,
 					NotificationTemplateRenderer.MODE_PLAIN));
@@ -86,38 +91,102 @@ public class EmailNotificationSender implements NotificationSender {
 	}
 
 	private void _sendNotification(
-			String fromAddress, String fromName, File icsFile,
-			String notificationMessage,
-			NotificationRecipient notificationRecipient, String subject)
+			File icsFile, NotificationRecipient notificationRecipient,
+			NotificationTemplateContext notificationTemplateContext,
+			String body, String fromEmail, String fromName, String subject)
 		throws NotificationSenderException {
 
 		try {
-			InternetAddress fromInternetAddress = new InternetAddress(
-				fromAddress, fromName);
+			SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-			MailMessage mailMessage = new MailMessage(
-				fromInternetAddress, subject, notificationMessage, true);
+			subscriptionSender.setClassName(
+				CalendarBookingLocalServiceImpl.class.getName());
+			subscriptionSender.setClassPK(
+				notificationTemplateContext.getCalendarId());
+			subscriptionSender.setCompanyId(
+				notificationTemplateContext.getCompanyId());
 
-			mailMessage.setHTMLFormat(notificationRecipient.isHTMLFormat());
+			Map<String, Serializable> attributes =
+				notificationTemplateContext.getAttributes();
 
-			InternetAddress toInternetAddress = new InternetAddress(
-				notificationRecipient.getEmailAddress());
+			subscriptionSender.setContextAttributes(
+				"[$COMPANY_ID$]",
+				GetterUtil.getString(
+					notificationTemplateContext.getCompanyId()),
+				"[$CALENDAR_NAME$]",
+				GetterUtil.getString(attributes.get("calendarName")),
+				"[$EVENT_END_DATE$]",
+				GetterUtil.getString(attributes.get("endTime")),
+				"[$EVENT_LOCATION$]",
+				GetterUtil.getString(attributes.get("location")),
+				"[$EVENT_START_DATE$]",
+				GetterUtil.getString(attributes.get("startTime")),
+				"[$EVENT_TITLE$]",
+				GetterUtil.getString(attributes.get("title")), "[$EVENT_URL$]",
+				GetterUtil.getString(attributes.get("url")),
+				"[$INSTANCE_START_TIME$]",
+				GetterUtil.getString(attributes.get("instanceStartTime")),
+				"[$PORTAL_URL$]",
+				GetterUtil.getString(attributes.get("portalURL")),
+				"[$PORTLET_NAME$]",
+				GetterUtil.getString(attributes.get("portletName")),
+				"[$SITE_NAME$]",
+				GetterUtil.getString(attributes.get("siteName")));
 
-			mailMessage.setTo(toInternetAddress);
+			CalendarNotificationTemplate calendarNotificationTemplate =
+				notificationTemplateContext.getCalendarNotificationTemplate();
 
-			if (icsFile != null) {
-				mailMessage.addFileAttachment(icsFile, "invite.ics");
+			subscriptionSender.setContextCreatorUserPrefix("EVENT");
+			subscriptionSender.setFrom(fromEmail, fromName);
+			subscriptionSender.setHtmlFormat(
+				notificationRecipient.isHTMLFormat());
+
+			if (calendarNotificationTemplate != null) {
+				subscriptionSender.setCreatorUserId(
+					calendarNotificationTemplate.getUserId());
+
+				Map<Locale, String> localizedSubjectMap =
+					LocalizationUtil.getLocalizationMap(
+						calendarNotificationTemplate.getSubject());
+
+				Map<Locale, String> localizedBodyMap =
+					LocalizationUtil.getLocalizationMap(
+						calendarNotificationTemplate.getBody());
+
+				subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
+
+				subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
+			}
+			else {
+				subscriptionSender.setBody(body);
+				subscriptionSender.setSubject(subject);
 			}
 
-			_mailService.sendEmail(mailMessage);
+			if (icsFile != null) {
+				subscriptionSender.addFileAttachment(icsFile);
+			}
+
+			subscriptionSender.setMailId(
+				"event", notificationTemplateContext.getCalendarId());
+
+			String portletId = PortletProviderUtil.getPortletId(
+				CalendarBooking.class.getName(), PortletProvider.Action.EDIT);
+
+			subscriptionSender.setPortletId(portletId);
+
+			subscriptionSender.setScopeGroupId(
+				notificationTemplateContext.getGroupId());
+
+			subscriptionSender.addRuntimeSubscribers(
+				notificationRecipient.getEmailAddress(),
+				notificationRecipient.getName());
+
+			subscriptionSender.flushNotificationsAsync();
 		}
 		catch (Exception exception) {
 			throw new NotificationSenderException(
 				"Unable to send mail message", exception);
 		}
 	}
-
-	@Reference
-	private MailService _mailService;
 
 }

@@ -69,6 +69,7 @@ const chartFactory = ({
 			);
 		}
 
+		case 'object-relationship':
 		case 'checkbox':
 		case 'radio':
 		case 'select': {

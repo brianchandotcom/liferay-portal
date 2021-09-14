@@ -50,6 +50,10 @@ export default {
 		icon: 'integer',
 		title: Liferay.Language.get('numeric-field-type-label'),
 	},
+	['object-relationship']: {
+		icon: 'relationship',
+		title: Liferay.Language.get('object-relationship-field-type-label'),
+	},
 	place: {
 		icon: 'geolocation',
 		title: Liferay.Language.get('search-location-field-type-label'),

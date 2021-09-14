@@ -258,28 +258,6 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	@description = "This ensures that a LAR file consisting of web content can be imported in a depot."
-	@priority = "4"
-	@refactorneeded
-	test ImportWebContent {
-		JSONWebcontent.addWebContent(
-			content = "Web Content Content",
-			groupName = "Guest",
-			title = "Web Content Title");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		LAR.exportPortlet(larFileName = "ExportWebContent.lar");
-
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		LAR.importPortlet(larFileName = "ExportWebContent.lar");
-
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		WebContent.viewTitle(webContentTitle = "Web Content Title");
-	}
-
 	@description = "This ensures that web content can be moved to a folder in a depot."
 	@priority = "3"
 	@refactorneeded

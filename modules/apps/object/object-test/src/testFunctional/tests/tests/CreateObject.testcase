@@ -136,11 +136,28 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a Double field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCreateDoubleField {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-138820 CanCreateDoubleField pending implementation
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Field",
+			fieldType = "Double");
+
+		Refresh();
+
+		ObjectAdmin.assertObjectField(
+			fieldName = "customField",
+			fieldType = "Double");
 
 	}
 

@@ -51,6 +51,11 @@
 			<finder-column name="system" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="C_A_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="active" />
+			<finder-column name="status" />
+		</finder>
 
 		<!-- Order -->
 

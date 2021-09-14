@@ -344,6 +344,14 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public List<ObjectDefinition> getObjectDefinitions(
+		long companyId, boolean active, int status) {
+
+		return objectDefinitionPersistence.findByC_A_S(
+			companyId, active, status);
+	}
+
+	@Override
 	public int getObjectDefinitionsCount(long companyId)
 		throws PortalException {
 

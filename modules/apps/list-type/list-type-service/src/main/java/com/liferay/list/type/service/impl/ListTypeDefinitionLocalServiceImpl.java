@@ -14,9 +14,11 @@
 
 package com.liferay.list.type.service.impl;
 
+import com.liferay.list.type.exception.RequiredListTypeDefinitionException;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.base.ListTypeDefinitionLocalServiceBaseImpl;
 import com.liferay.list.type.service.persistence.ListTypeEntryPersistence;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -60,7 +62,16 @@ public class ListTypeDefinitionLocalServiceImpl
 
 	@Override
 	public ListTypeDefinition deleteListTypeDefinition(
-		ListTypeDefinition listTypeDefinition) {
+			ListTypeDefinition listTypeDefinition)
+		throws PortalException {
+
+		int count =
+			_objectFieldLocalService.getObjectFieldsCountByListTypeDefinitionId(
+				listTypeDefinition.getListTypeDefinitionId());
+
+		if (count > 0) {
+			throw new RequiredListTypeDefinitionException();
+		}
 
 		listTypeDefinition = listTypeDefinitionPersistence.remove(
 			listTypeDefinition);
@@ -99,6 +110,9 @@ public class ListTypeDefinitionLocalServiceImpl
 
 	@Reference
 	private ListTypeEntryPersistence _listTypeEntryPersistence;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -108,10 +108,10 @@ public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
 		String type = remoteAppEntry.getType();
 
 		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
-			String customElementURLS = remoteAppEntry.getCustomElementURLs();
+			String customElementURLs = remoteAppEntry.getCustomElementURLs();
 
 			document.addText(
-				Field.URL, customElementURLS.split(StringPool.NEW_LINE)[0]);
+				Field.URL, customElementURLs.split(StringPool.NEW_LINE)[0]);
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
 			document.addText(Field.URL, remoteAppEntry.getIframeURL());

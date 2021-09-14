@@ -32,51 +32,47 @@ const Experiences = ({
 				<label className="mb-2">
 					{Liferay.Language.get('select-experiences')}
 				</label>
-				<div className="translation-experiences-wrapper">
-					<ClayList>
-						{experiences.map(({label, segment, value}) => {
-							const checked =
-								selectedExperiencesIds.indexOf(value) != -1;
+				<ClayList className="translation-experiences-wrapper">
+					{experiences.map(({label, segment, value}) => {
+						const checked =
+							selectedExperiencesIds.indexOf(value) != -1;
+						const inputId = `experience_${value}`;
 
-							return (
-								<ClayList.Item flex key={value}>
-									<ClayList.ItemField>
-										<ClayCheckbox
-											checked={checked}
-											id={value}
-											onChange={() => {
-												onChangeExperience(
-													!checked,
-													value
-												);
-											}}
-											value={value}
-										/>
-									</ClayList.ItemField>
-									<ClayList.ItemField expand>
-										<ClayLayout.ContentRow
-											className="list-group-label"
-											containerElement="label"
-											htmlFor={value}
+						return (
+							<ClayList.Item flex key={value}>
+								<ClayList.ItemField>
+									<ClayCheckbox
+										checked={checked}
+										id={inputId}
+										onChange={() => {
+											onChangeExperience(!checked, value);
+										}}
+										value={value}
+									/>
+								</ClayList.ItemField>
+								<ClayList.ItemField expand>
+									<ClayLayout.ContentRow
+										className="list-group-label"
+										containerElement="label"
+										htmlFor={inputId}
+									>
+										<ClayLayout.ContentCol>
+											{label}
+										</ClayLayout.ContentCol>
+										<ClayLayout.ContentCol
+											className="text-right"
+											expand
 										>
-											<ClayLayout.ContentCol>
-												{label}
-											</ClayLayout.ContentCol>
-											<ClayLayout.ContentCol
-												className="text-right"
-												expand
-											>
-												<span className="small text-secondary">
-													{segment}
-												</span>
-											</ClayLayout.ContentCol>
-										</ClayLayout.ContentRow>
-									</ClayList.ItemField>
-								</ClayList.Item>
-							);
-						})}
-					</ClayList>
-				</div>
+											<span className="small text-secondary">
+												{segment}
+											</span>
+										</ClayLayout.ContentCol>
+									</ClayLayout.ContentRow>
+								</ClayList.ItemField>
+							</ClayList.Item>
+						);
+					})}
+				</ClayList>
 			</>
 		);
 	}
@@ -229,7 +225,6 @@ const ExportTranslation = ({
 
 	return (
 		<ClayForm
-			className="export-modal-content"
 			onSubmit={(event) => {
 				event.preventDefault();
 

@@ -103,8 +103,8 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 
 		const response = await Liferay.Util.fetch(apiURL, {
 			body: JSON.stringify({
-				indexed: type !== 'Blob',
-				indexedAsKeyword: type !== 'Blob',
+				indexed: true,
+				indexedAsKeyword: false,
 				indexedLanguageId: null,
 				label,
 				listTypeDefinitionId,

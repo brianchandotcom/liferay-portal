@@ -161,10 +161,6 @@ definition {
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-		BlogsEntry.viewWithWorkflowCP(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		BlogsEntry.searchCP(

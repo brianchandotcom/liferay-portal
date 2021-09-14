@@ -39,9 +39,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Page.tearDownCP(site = "Liferay");
-
-			JSONGroup.deleteGroupByName(groupName = "Site Name");
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 

@@ -219,17 +219,11 @@ definition {
 				pageName = "ADT Test Page",
 				siteName = "Test Site Name");
 
-			Portlet.gotoPortletOptions(
-				portletName = "RSS Publisher",
-				portletOption = "Configuration");
-
 			RSSPortlet.addFeed(
 				feedRowIndexNumber = "0",
 				feedTitle = "Latimes &gt; Technology News",
 				feedType = "file",
 				feedUrlLink = "rss2.0.xml");
-
-			PortletEntry.save();
 		}
 
 		task ("Add a widget template for RSS Publisher") {
@@ -483,17 +477,11 @@ definition {
 				pageName = "ADT Test Page",
 				siteName = "Test Site Name");
 
-			Portlet.gotoPortletOptions(
-				portletName = "RSS Publisher",
-				portletOption = "Configuration");
-
 			RSSPortlet.addFeed(
 				feedRowIndexNumber = "0",
 				feedTitle = "Technology",
 				feedType = "file",
 				feedUrlLink = "Technology.xml");
-
-			PortletEntry.save();
 		}
 
 		task ("Add a widget template based on script file for RSS Publisher") {
@@ -607,17 +595,11 @@ definition {
 				pageName = "ADT Test Page",
 				siteName = "Test Site Name");
 
-			Portlet.gotoPortletOptions(
-				portletName = "RSS Publisher",
-				portletOption = "Configuration");
-
 			RSSPortlet.addFeed(
 				feedRowIndexNumber = "0",
 				feedTitle = "Latimes &gt; Technology News",
 				feedType = "file",
 				feedUrlLink = "rss2.0.xml");
-
-			PortletEntry.save();
 		}
 
 		task ("Add a widget template for RSS Publisher") {

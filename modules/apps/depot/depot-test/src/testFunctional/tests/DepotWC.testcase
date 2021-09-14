@@ -59,13 +59,7 @@ definition {
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		for (var rowEntry : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
-			Check(
-				key_rowEntry = "${rowEntry}",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
-		}
+		PortletEntry.selectAll();
 
 		ClickNoError(locator1 = "Icon#DELETE");
 

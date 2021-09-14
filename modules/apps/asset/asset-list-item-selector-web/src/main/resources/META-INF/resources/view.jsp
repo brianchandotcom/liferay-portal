@@ -108,6 +108,10 @@ SearchContainer<AssetListEntry> searchContainer = assetListEntryItemSelectorDisp
 								- <%= subtype %>
 							</c:if>
 						</p>
+
+						<p class="h6 text-default">
+							<liferay-ui:message key="supports-filters" />
+						</p>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
@@ -150,6 +154,13 @@ SearchContainer<AssetListEntry> searchContainer = assetListEntryItemSelectorDisp
 						<span class="text-default">
 							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true) %>" key="modified-x-ago" />
 						</span>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand table-cell-smallest table-column-text-center"
+						name="supports-filters"
+					>
+						<liferay-ui:message key="yes" />
 					</liferay-ui:search-container-column-text>
 				</c:otherwise>
 			</c:choose>

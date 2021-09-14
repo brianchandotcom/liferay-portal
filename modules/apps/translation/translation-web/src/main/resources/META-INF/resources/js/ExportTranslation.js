@@ -56,14 +56,19 @@ const Experiences = ({
 										containerElement="label"
 										htmlFor={inputId}
 									>
-										<ClayLayout.ContentCol>
-											{label}
+										<ClayLayout.ContentCol className="translation-experience-name">
+											<div
+												className="text-truncate"
+												title={label}
+											>
+												{label}
+											</div>
 										</ClayLayout.ContentCol>
 										<ClayLayout.ContentCol
 											className="text-right"
 											expand
 										>
-											<span className="small text-secondary">
+											<span className="small text-secondary text-truncate">
 												{segment}
 											</span>
 										</ClayLayout.ContentCol>

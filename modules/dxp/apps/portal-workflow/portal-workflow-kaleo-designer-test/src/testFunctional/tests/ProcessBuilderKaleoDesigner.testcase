@@ -535,7 +535,6 @@ definition {
 	@description = "Verify that newly created transition has default name -connector#-"
 	@priority = "3"
 	test ConnectorHasDefaultName {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#ConnectorHasDefaultName";
 
 		ApplicationsMenu.gotoPortlet(
@@ -544,14 +543,6 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow");
-
-		KaleoDesigner.addConnectorAndNodeViaViewTab(
-			connectorName = "Connector1",
-			newNode = "Fork",
-			newNodeDescription = "Fork Node Description",
-			newNodeName = "Fork",
-			newNodeType = "fork",
-			nodeType = "start");
 
 		AssertElementPresent(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR_DEFAULT");
 	}

@@ -48,11 +48,12 @@ public interface WorkflowDefinitionResource {
 			Boolean active, Pagination pagination, String sortString)
 		throws Exception;
 
-	public WorkflowDefinition getWorkflowDefinitionByName(String name)
+	public WorkflowDefinition getWorkflowDefinitionByName(
+			String name, Integer version)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getWorkflowDefinitionByNameHttpResponse(
-			String name)
+			String name, Integer version)
 		throws Exception;
 
 	public WorkflowDefinition postWorkflowDefinitionDeploy(
@@ -256,11 +257,12 @@ public interface WorkflowDefinitionResource {
 			return httpInvoker.invoke();
 		}
 
-		public WorkflowDefinition getWorkflowDefinitionByName(String name)
+		public WorkflowDefinition getWorkflowDefinitionByName(
+				String name, Integer version)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getWorkflowDefinitionByNameHttpResponse(name);
+				getWorkflowDefinitionByNameHttpResponse(name, version);
 
 			String content = httpResponse.getContent();
 
@@ -300,7 +302,7 @@ public interface WorkflowDefinitionResource {
 		}
 
 		public HttpInvoker.HttpResponse getWorkflowDefinitionByNameHttpResponse(
-				String name)
+				String name, Integer version)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -323,6 +325,10 @@ public interface WorkflowDefinitionResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (version != null) {
+				httpInvoker.parameter("version", String.valueOf(version));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

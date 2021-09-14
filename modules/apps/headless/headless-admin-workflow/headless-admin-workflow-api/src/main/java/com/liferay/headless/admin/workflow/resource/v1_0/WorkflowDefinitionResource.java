@@ -61,7 +61,8 @@ public interface WorkflowDefinitionResource {
 			Boolean active, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public WorkflowDefinition getWorkflowDefinitionByName(String name)
+	public WorkflowDefinition getWorkflowDefinitionByName(
+			String name, Integer version)
 		throws Exception;
 
 	public WorkflowDefinition postWorkflowDefinitionDeploy(

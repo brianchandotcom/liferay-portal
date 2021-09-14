@@ -104,12 +104,18 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 	 */
 	@GET
 	@Override
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "name")})
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "name"),
+			@Parameter(in = ParameterIn.QUERY, name = "version")
+		}
+	)
 	@Path("/workflow-definitions/by-name/{name}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WorkflowDefinition")})
 	public WorkflowDefinition getWorkflowDefinitionByName(
-			@NotNull @Parameter(hidden = true) @PathParam("name") String name)
+			@NotNull @Parameter(hidden = true) @PathParam("name") String name,
+			@Parameter(hidden = true) @QueryParam("version") Integer version)
 		throws Exception {
 
 		return new WorkflowDefinition();

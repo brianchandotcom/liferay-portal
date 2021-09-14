@@ -60,12 +60,28 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a Boolean field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCreateBooleanField {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-138818 CanCreateBooleanField pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Field",
+			fieldType = "Boolean");
+
+		Refresh();
+
+		ObjectAdmin.assertObjectField(
+			fieldName = "customField",
+			fieldType = "Boolean");
 	}
 
 	@description = "LPS-135549 - Verify if it is possible to create a Custom Object"

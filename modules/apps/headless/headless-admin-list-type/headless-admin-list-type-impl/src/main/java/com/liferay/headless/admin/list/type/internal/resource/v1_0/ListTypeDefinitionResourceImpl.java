@@ -18,7 +18,7 @@ import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.internal.dto.v1_0.util.ListTypeEntryUtil;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
-import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -46,7 +46,7 @@ public class ListTypeDefinitionResourceImpl
 	public void deleteListTypeDefinition(Long listTypeDefinitionId)
 		throws Exception {
 
-		_listTypeDefinitionLocalService.deleteListTypeDefinition(
+		_listTypeDefinitionService.deleteListTypeDefinition(
 			listTypeDefinitionId);
 	}
 
@@ -55,7 +55,7 @@ public class ListTypeDefinitionResourceImpl
 		throws Exception {
 
 		return _toListTypeDefinition(
-			_listTypeDefinitionLocalService.getListTypeDefinition(
+			_listTypeDefinitionService.getListTypeDefinition(
 				listTypeDefinitionId));
 	}
 
@@ -65,11 +65,11 @@ public class ListTypeDefinitionResourceImpl
 
 		return Page.of(
 			transform(
-				_listTypeDefinitionLocalService.getListTypeDefinitions(
+				_listTypeDefinitionService.getListTypeDefinitions(
 					pagination.getStartPosition(), pagination.getEndPosition()),
 				this::_toListTypeDefinition),
 			pagination,
-			_listTypeDefinitionLocalService.getListTypeDefinitionsCount());
+			_listTypeDefinitionService.getListTypeDefinitionsCount());
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class ListTypeDefinitionResourceImpl
 		throws Exception {
 
 		return _toListTypeDefinition(
-			_listTypeDefinitionLocalService.addListTypeDefinition(
+			_listTypeDefinitionService.addListTypeDefinition(
 				contextUser.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(
 					listTypeDefinition.getName_i18n())));
@@ -90,7 +90,7 @@ public class ListTypeDefinitionResourceImpl
 		throws Exception {
 
 		return _toListTypeDefinition(
-			_listTypeDefinitionLocalService.updateListTypeDefinition(
+			_listTypeDefinitionService.updateListTypeDefinition(
 				listTypeDefinitionId,
 				LocalizedMapUtil.getLocalizedMap(
 					listTypeDefinition.getName_i18n())));
@@ -145,7 +145,7 @@ public class ListTypeDefinitionResourceImpl
 	}
 
 	@Reference
-	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+	private ListTypeDefinitionService _listTypeDefinitionService;
 
 	@Reference
 	private ListTypeEntryLocalService _listTypeEntryLocalService;

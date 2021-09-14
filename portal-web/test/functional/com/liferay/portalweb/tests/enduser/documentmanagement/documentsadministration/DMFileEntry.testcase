@@ -1,8 +1,6 @@
 @component-name = "portal-document-management"
 definition {
 
-	property osgi.module.configuration.file.names = "com.liferay.document.library.web.internal.configuration.FFExpirationDateReviewDateConfiguration.config";
-	property osgi.module.configurations = "reviewDateEnabled=B&quot;true&quot;${line.separator}expirationDateEnabled=B&quot;true&quot;";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Document Management";

@@ -16,18 +16,15 @@ package com.liferay.frontend.editor.ckeditor.web.internal.editor.configuration;
 
 import com.liferay.document.library.kernel.util.AudioProcessorUtil;
 import com.liferay.frontend.editor.ckeditor.web.internal.constants.CKEditorConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
 
@@ -55,18 +52,8 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			jsonObject, inputEditorTaglibAttributes, themeDisplay,
 			requestBackedPortletURLFactory);
 
-		jsonObject.put("autoSaveTimeout", 3000);
-
-		ColorScheme colorScheme = themeDisplay.getColorScheme();
-
-		String cssClasses = (String)inputEditorTaglibAttributes.get(
-			CKEditorConstants.ATTRIBUTE_NAMESPACE + ":cssClasses");
-
 		jsonObject.put(
-			"bodyClass",
-			StringBundler.concat(
-				"html-editor ", HtmlUtil.escape(colorScheme.getCssClass()), " ",
-				HtmlUtil.escape(cssClasses))
+			"autoSaveTimeout", 3000
 		).put(
 			"closeNoticeTimeout", 8000
 		).put(

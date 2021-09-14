@@ -524,11 +524,9 @@ definition {
 		task ("Change to the Portrait Phone viewport") {
 			SelectFrameTop();
 
-			Click(
-				key_deviceType = "Portrait Phone",
-				locator1 = "Modal#DEVICE_TYPE");
-
-			Pause(locator1 = "3000");
+			PageEditor.switchViewport(
+				deviceType = "Portrait Phone",
+				modal = "true");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 		}
@@ -714,11 +712,9 @@ definition {
 		task ("Change to the Tablet viewport") {
 			SelectFrameTop();
 
-			Click(
-				key_deviceType = "Tablet",
-				locator1 = "Modal#DEVICE_TYPE");
-
-			Pause(locator1 = "3000");
+			PageEditor.switchViewport(
+				deviceType = "Tablet",
+				modal = "true");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 		}

@@ -348,7 +348,9 @@ definition {
 		}
 
 		task ("Assert that Heading from 1 to 4 are shown for desktop view on preview") {
-			PageEditor.switchViewport(deviceType = "Desktop");
+			PageEditor.switchViewport(
+				deviceType = "Desktop",
+				modal = "true");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -369,7 +371,9 @@ definition {
 		task ("Assert that Heading from 1 to 3 are shown for tablet view on preview") {
 			SelectFrameTop();
 
-			PageEditor.switchViewport(deviceType = "Tablet");
+			PageEditor.switchViewport(
+				deviceType = "Tablet",
+				modal = "true");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -392,7 +396,9 @@ definition {
 		task ("Assert that Heading from 1 to 2 are shown for landscape phone view on preview") {
 			SelectFrameTop();
 
-			PageEditor.switchViewport(deviceType = "Landscape Phone");
+			PageEditor.switchViewport(
+				deviceType = "Landscape Phone",
+				modal = "true");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -415,7 +421,9 @@ definition {
 		task ("Assert that only Heading 1 is shown for portail phone view on preview") {
 			SelectFrameTop();
 
-			PageEditor.switchViewport(deviceType = "Portrait Phone");
+			PageEditor.switchViewport(
+				deviceType = "Portrait Phone",
+				modal = "true");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

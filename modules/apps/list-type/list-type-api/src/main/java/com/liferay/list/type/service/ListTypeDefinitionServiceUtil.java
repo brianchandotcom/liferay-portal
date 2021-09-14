@@ -14,6 +14,12 @@
 
 package com.liferay.list.type.service;
 
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+import java.util.Map;
+
 /**
  * Provides the remote service utility for ListTypeDefinition. This utility wraps
  * <code>com.liferay.list.type.service.impl.ListTypeDefinitionServiceImpl</code> and is an
@@ -33,14 +39,59 @@ public class ListTypeDefinitionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.list.type.service.impl.ListTypeDefinitionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ListTypeDefinition addListTypeDefinition(
+			long userId, Map<java.util.Locale, String> nameMap)
+		throws PortalException {
+
+		return getService().addListTypeDefinition(userId, nameMap);
+	}
+
+	public static ListTypeDefinition deleteListTypeDefinition(
+			ListTypeDefinition listTypeDefinition)
+		throws PortalException {
+
+		return getService().deleteListTypeDefinition(listTypeDefinition);
+	}
+
+	public static ListTypeDefinition deleteListTypeDefinition(
+			long listTypeDefinitionId)
+		throws PortalException {
+
+		return getService().deleteListTypeDefinition(listTypeDefinitionId);
+	}
+
+	public static ListTypeDefinition getListTypeDefinition(
+			long listTypeDefinitionId)
+		throws PortalException {
+
+		return getService().getListTypeDefinition(listTypeDefinitionId);
+	}
+
+	public static List<ListTypeDefinition> getListTypeDefinitions(
+		int start, int end) {
+
+		return getService().getListTypeDefinitions(start, end);
+	}
+
+	public static int getListTypeDefinitionsCount() {
+		return getService().getListTypeDefinitionsCount();
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static ListTypeDefinition updateListTypeDefinition(
+			long listTypeDefinitionId, Map<java.util.Locale, String> nameMap)
+		throws PortalException {
+
+		return getService().updateListTypeDefinition(
+			listTypeDefinitionId, nameMap);
 	}
 
 	public static ListTypeDefinitionService getService() {

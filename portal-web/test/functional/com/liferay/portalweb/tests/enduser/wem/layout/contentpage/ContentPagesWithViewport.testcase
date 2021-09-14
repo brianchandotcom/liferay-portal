@@ -345,13 +345,9 @@ definition {
 
 		task ("Open the Preview modal") {
 			PageEditor.openPreviewMode();
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 		}
 
 		task ("Assert that Heading from 1 to 4 are shown for desktop view on preview") {
-			SelectFrameTop();
-
 			PageEditor.switchViewport(deviceType = "Desktop");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");

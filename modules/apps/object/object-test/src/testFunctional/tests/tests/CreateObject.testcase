@@ -634,11 +634,27 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object scope before it is published"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanUpdateObjectScopeBeforePublished {
 
-		// TODO LPS-138839 CanUpdateObjectScopeBeforePublished pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.selectObjectScope(fieldOption = "Site");
+
+		Button.clickSave();
+
+		Navigator.gotoBack();
+
+		ObjectPortlet.viewEntry(entry = "site");
 
 	}
 

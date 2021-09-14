@@ -44,6 +44,8 @@ definition {
 	@priority = "3"
 	test AddPropertyBasedOnMultiplePropertiesType {
 		task ("Connect the DXP to Analytics Cloud") {
+			ACUtils.addSiteAndPage(siteName = "AC Site");
+
 			ACDXPSettings.goToInstanceSettingsAC();
 
 			ACDXPSettings.connectAnalyticsCloud();
@@ -56,7 +58,7 @@ definition {
 		}
 
 		task ("Add a new property based on Multiple Properties type") {
-			ACDXPSettings.createMultipleProperties(siteNameList = "Liferay DXP,Site Name");
+			ACDXPSettings.createMultipleProperties(siteNameList = "AC Site,Site Name");
 		}
 
 		task ("Sign in AC") {
@@ -68,7 +70,7 @@ definition {
 
 			ACSettings.goToProperties();
 
-			for (var propertyName : list "Liferay DXP (1),Site Name") {
+			for (var propertyName : list "AC Site,Site Name") {
 				ACAssets.viewAssets(assetName = "${propertyName}");
 			}
 		}

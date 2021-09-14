@@ -1,14 +1,18 @@
 definition {
 
 	macro addSiteAndPage {
-		JSONGroup.addGroup(groupName = "Site Name");
+		if (!(isSet(siteName))) {
+			siteName = "Site Name";
+		}
+
+		JSONGroup.addGroup(groupName = "${siteName}");
 
 		if (!(isSet(layoutName))) {
 			layoutName = "AC Page";
 		}
 
 		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
+			groupName = "${siteName}",
 			layoutName = "${layoutName}");
 	}
 

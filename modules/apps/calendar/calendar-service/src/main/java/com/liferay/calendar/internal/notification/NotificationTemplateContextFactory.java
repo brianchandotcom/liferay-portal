@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -148,8 +147,7 @@ public class NotificationTemplateContextFactory {
 			).put(
 				"portletName",
 				LanguageUtil.get(
-					ResourceBundleUtil.getBundle(
-						user.getLocale(), "com.liferay.calendar.web"),
+					user.getLocale(),
 					"javax.portlet.title.".concat(CalendarPortletKeys.CALENDAR))
 			).put(
 				"siteName",

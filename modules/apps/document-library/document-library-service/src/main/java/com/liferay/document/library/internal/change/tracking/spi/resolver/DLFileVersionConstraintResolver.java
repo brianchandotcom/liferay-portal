@@ -29,8 +29,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.language.LanguageResources;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -71,8 +71,7 @@ public class DLFileVersionConstraintResolver
 
 	@Override
 	public ResourceBundle getResourceBundle(Locale locale) {
-		return ResourceBundleUtil.getBundle(
-			locale, "com.liferay.document.library.service");
+		return LanguageResources.getResourceBundle(locale);
 	}
 
 	@Override

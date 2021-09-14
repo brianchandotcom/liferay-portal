@@ -29,9 +29,9 @@ import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.taglib.util.IncludeTag;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
@@ -259,9 +259,8 @@ public class FlagsTag extends IncludeTag {
 	private String _getMessage() {
 		ResourceBundle resourceBundle = new AggregateResourceBundle(
 			TagResourceBundleUtil.getResourceBundle(pageContext),
-			ResourceBundleUtil.getBundle(
-				PortalUtil.getLocale(getRequest()),
-				"com.liferay.flags.taglib"));
+			LanguageResources.getResourceBundle(
+				PortalUtil.getLocale(getRequest())));
 
 		if (Validator.isNotNull(_message)) {
 			return LanguageUtil.get(resourceBundle, _message);

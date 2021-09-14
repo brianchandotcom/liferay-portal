@@ -17,13 +17,12 @@ package com.liferay.info.localized.bundle;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
-import java.util.MissingResourceException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -86,24 +85,20 @@ public class ResourceBundleInfoLocalizedValue
 	public String getValue(Locale locale) {
 		ResourceBundle resourceBundle = null;
 
-		try {
-			if (_clazz != null) {
-				resourceBundle = ResourceBundleUtil.getBundle(locale, _clazz);
-			}
-			else {
-				resourceBundle = ResourceBundleUtil.getBundle(
-					locale, _symbolicName);
-			}
+		if (_clazz != null) {
+			resourceBundle = ResourceBundleUtil.getBundle(locale, _clazz);
 		}
-		catch (MissingResourceException missingResourceException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Reverting to default resource bundle because no " +
-						"resource bundle could be found with " + locale,
-					missingResourceException);
+		else {
+			ResourceBundleLoader resourceBundleLoader =
+				ResourceBundleLoaderUtil.
+					getResourceBundleLoaderByBundleSymbolicName(_symbolicName);
+
+			if (resourceBundleLoader == null) {
+				resourceBundleLoader =
+					ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 			}
 
-			return LanguageUtil.get(locale, _valueKey);
+			resourceBundle = resourceBundleLoader.loadResourceBundle(locale);
 		}
 
 		return LanguageUtil.get(resourceBundle, _valueKey);
@@ -113,9 +108,6 @@ public class ResourceBundleInfoLocalizedValue
 	public int hashCode() {
 		return HashUtil.hash(0, _valueKey);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ResourceBundleInfoLocalizedValue.class);
 
 	private final Class<?> _clazz;
 	private final String _symbolicName;

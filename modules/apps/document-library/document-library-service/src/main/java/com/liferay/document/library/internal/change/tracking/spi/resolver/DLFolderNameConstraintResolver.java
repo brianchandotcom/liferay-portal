@@ -17,7 +17,7 @@ package com.liferay.document.library.internal.change.tracking.spi.resolver;
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.language.LanguageResources;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -48,8 +48,7 @@ public class DLFolderNameConstraintResolver
 
 	@Override
 	public ResourceBundle getResourceBundle(Locale locale) {
-		return ResourceBundleUtil.getBundle(
-			locale, "com.liferay.document.library.service");
+		return LanguageResources.getResourceBundle(locale);
 	}
 
 	@Override

@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -53,7 +52,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -138,12 +136,10 @@ public class AssetListEntryItemSelectorDisplayContext {
 			(PortletRequest)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			themeDisplay.getLocale(), "com.liferay.asset.list.web");
-
 		SearchContainer<AssetListEntry> searchContainer = new SearchContainer<>(
 			portletRequest, _portletURL, null,
-			_language.get(resourceBundle, "there-are-no-collections"));
+			_language.get(
+				themeDisplay.getLocale(), "there-are-no-collections"));
 
 		String orderByCol = ParamUtil.getString(
 			_httpServletRequest, "orderByCol", "create-date");

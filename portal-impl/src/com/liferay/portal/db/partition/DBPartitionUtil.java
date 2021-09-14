@@ -526,7 +526,22 @@ public class DBPartitionUtil {
 					return 0;
 				}
 
-				return super.executeUpdate(sql);
+				int returnValue = super.executeUpdate(sql);
+
+				if ((StringUtil.startsWith(lowerCaseSQL, "alter table"))) {
+					long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+
+					String tableName = query[2];
+
+					for (long companyId: companyIds) {
+						if (companyId != _defaultCompanyId) {
+							super.execute(
+								_getCreateViewSQL(companyId, tableName));
+						}
+					}
+				}
+
+				return  returnValue;
 			}
 
 		};

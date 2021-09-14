@@ -745,7 +745,6 @@ definition {
 	@description = "LPS-135549 - Verify that the field with String type has the options Keyword and Text under the Searchable section"
 	@priority = "4"
 	test KeywordAndTextDisplayedForStringTypeField {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -769,9 +768,6 @@ definition {
 		ObjectAdmin.goToFieldsDetails(fieldName = "customField");
 
 		ObjectAdmin.assertKeywordAndText();
-
-		
-
 	}
 
 	@description = "LPS-135549 - Verify that the field with String type has the option Language when the Text option is selected under the Searchable section"

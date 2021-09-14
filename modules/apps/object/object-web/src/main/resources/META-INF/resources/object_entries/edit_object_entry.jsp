@@ -16,14 +16,30 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-frontend:screen-navigation
-	context="<%= (ObjectEntry)request.getAttribute(ObjectWebKeys.OBJECT_ENTRY) %>"
-	key="<%= ObjectDefinitionsScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_OBJECT_ENTRY %>"
-	portletURL='<%=
-		PortletURLBuilder.createRenderURL(
-			renderResponse
-		).setMVCRenderCommandName(
-			"/object_entries/edit_object_entry"
-		).build()
-	%>'
+<%
+ObjectEntryDisplayContext objectEntryDisplayContext = (ObjectEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+ObjectLayoutTab objectLayoutTab = objectEntryDisplayContext.getObjectLayoutTab();
+
+long objectEntryId = ParamUtil.getLong(request, "objectEntryId");
+%>
+
+<clay:navigation-bar
+	inverted="<%= false %>"
+	navigationItems="<%= objectEntryDisplayContext.getNavigationItems() %>"
 />
+
+<c:choose>
+	<c:when test="<%= objectLayoutTab.getObjectRelationshipId() > 0 %>">
+		<liferay-util:include page="/object_entries/object_entry/relationship.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="objectEntryId" value="<%= String.valueOf(objectEntryId) %>" />
+			<liferay-util:param name="objectLayoutTabId" value="<%= String.valueOf(objectLayoutTab.getObjectLayoutTabId()) %>" />
+		</liferay-util:include>
+	</c:when>
+	<c:otherwise>
+		<liferay-util:include page="/object_entries/object_entry/form.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="objectEntryId" value="<%= String.valueOf(objectEntryId) %>" />
+			<liferay-util:param name="objectLayoutTabId" value="<%= String.valueOf(objectLayoutTab.getObjectLayoutTabId()) %>" />
+		</liferay-util:include>
+	</c:otherwise>
+</c:choose>

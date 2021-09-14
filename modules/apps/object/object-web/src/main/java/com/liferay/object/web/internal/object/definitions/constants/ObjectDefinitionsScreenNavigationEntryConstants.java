@@ -47,9 +47,6 @@ public class ObjectDefinitionsScreenNavigationEntryConstants {
 	public static final String SCREEN_NAVIGATION_KEY_OBJECT_DEFINITION =
 		"edit.object.definition.form";
 
-	public static final String SCREEN_NAVIGATION_KEY_OBJECT_ENTRY =
-		"edit.object.entry.form";
-
 	public static final String SCREEN_NAVIGATION_KEY_OBJECTS = "objects.form";
 
 }

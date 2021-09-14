@@ -867,7 +867,6 @@ definition {
 	@description = "LPS-89082 - Verify that the SLA list should group SLAs into Blocked and Running sections when there is at least 1 blocked SLA"
 	@priority = "4"
 	test SLAListIsGroupedWhenSLABlocked {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#SLAListIsGroupedWhenSLABlocked";
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
@@ -911,11 +910,11 @@ definition {
 
 		Button.click(button = "Update");
 
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.assertWarningBlockedSlaPresent(warningMessage = "1 SLA is blocked.");
+
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
-
-		Pause(locator1 = "10000");
-
-		Refresh();
 
 		AssertElementPresent(
 			key_columnName = "Status",

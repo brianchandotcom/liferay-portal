@@ -72,16 +72,6 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Blogs");
-
-		BlogsEntry.viewWithWorkflowCP(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
 		Navigator.gotoSitePage(
 			pageName = "Staging Blogs Page",
 			siteName = "Site Name");

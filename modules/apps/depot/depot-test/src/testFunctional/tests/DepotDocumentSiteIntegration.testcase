@@ -183,10 +183,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test RemoveDMWithDocumentType {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentType();

@@ -360,8 +360,9 @@ definition {
 	test CanCreateSegmentUsingOrganizationPropertyOrganization {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Team not sure of which steps should be done to assert property Type, please check steps and update if necessary. This ticket is blocked by a bug, please check refactor comment section
+		// AC Refactor: Team not sure of which steps should be done to assert property Type, please check steps and update if necessary.
 		// AC Refactor ticket: LRAC-9324
+		// AC Bug ticket: LRAC-9263
 
 		task ("Add users") {
 			JSONUser.addUser(
@@ -464,8 +465,9 @@ definition {
 	test CanCreateSegmentUsingOrganizationPropertyParentOrganization {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Team not sure of which steps should be done to assert property Type, please check steps and update if necessary. This ticket is blocked by a bug, please check refactor comment section
+		// AC Refactor: Team not sure of which steps should be done to assert property Type, please check steps and update if necessary.
 		// AC Refactor ticket: LRAC-9323
+		// AC Bug ticket: LRAC-9263
 
 		task ("Add users") {
 			JSONUser.addUser(

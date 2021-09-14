@@ -43,7 +43,9 @@ definition {
 		}
 	}
 
+	@description = "The user can add a RSS Feed between other feeds on RSS Publisher widget."
 	@priority = "3"
+	@uitest
 	test AddFeedBetweenFeeds {
 		property testray.component.names = "RSS";
 
@@ -111,8 +113,8 @@ definition {
 		}
 	}
 
-	@priority = "4"
-	test AddFeedWithWrongUrl {
+	@description = "The user can add a RSS Feed on RSS Publisher widget."
+	@uitest
 		property testray.component.names = "RSS";
 
 		JSONLayout.addWidgetToPublicLayout(
@@ -141,9 +143,8 @@ definition {
 
 		RSSPortlet.viewDeleteFeed(feedTitle = "General Announcement");
 
-		Portlet.gotoPortletOptions(
-			portletName = "RSS Publisher",
-			portletOption = "Configuration");
+	@description = "The input field of URL cannot accept a Feed with wrong URL."
+	@uitest
 
 		RSSPortlet.addFeed(
 			feedRowIndexNumber = "0",
@@ -195,8 +196,9 @@ definition {
 		RSSPortlet.viewDisplayFeedTitle(feedTitle = "Latimes : Technology News");
 	}
 
-	@description = "This is a use case for LPS-107942. The input field of Entries Per Feed shouldn't allow 0 value, negative value, decimal value, letters and symbols."
+	@description = "This is a test for LPS-107942. The input field of Entries Per Feed shouldn't allow 0 value, negative value, decimal value, letters and symbols."
 	@priority = "4"
+	@uitest
 	test CannotChangeNumberOfEntriesPerFeedToInvalidValue {
 		property testray.component.names = "RSS";
 
@@ -304,9 +306,8 @@ definition {
 		}
 	}
 
-	@priority = "3"
-	test ChangeDefaultToNavigationDisplay {
-		property testray.component.names = "RSS";
+	@description = "The usar can update the RSS Feed via Asset Publisher widget when the feed time is set to one on system settings."
+	@uitest
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -341,6 +342,8 @@ definition {
 
 		PortletEntry.save();
 
+	@description = "Can change the default Display Template on RSS Publisher widget."
+	@uitest
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
 			siteName = "Site Name");
@@ -348,8 +351,9 @@ definition {
 		RSSPortlet.viewNavigationDisplayFeedTitle(feedTitle = "Technology");
 	}
 
-	@description = "This is a use case for LPS-107942.The input field of Entries Per Feed allows integer numbers greater than 10."
+	@description = "This is a test for LPS-107942.The input field of Entries Per Feed allows integer numbers greater than 10."
 	@priority = "5"
+	@uitest
 	test ChangeNumberOfEntriesPerFeedToEleven {
 		property portal.acceptance = "true";
 		property testray.component.names = "RSS";
@@ -377,7 +381,9 @@ definition {
 		PortletEntry.save();
 	}
 
+	@description = "The order of RSS Feeds can be changed on RSS Publisher widget."
 	@priority = "3"
+	@uitest
 	test ChangeOrderOfRSSFeeds {
 		property testray.component.names = "RSS";
 
@@ -463,7 +469,9 @@ definition {
 			rowIndexNumber = "2");
 	}
 
+	@description = "Can delete a RSS Feed via RSS Publisher configuration."
 	@priority = "4"
+	@uitest
 	test DeleteFeedFromRSS {
 		property testray.component.names = "RSS";
 
@@ -507,7 +515,9 @@ definition {
 		RSSPortlet.viewDeleteFeed(feedTitle = "Latimes : Technology News");
 	}
 
+	@description = "The title of a RSS Feed can be disabled on RSS Publisher configuration."
 	@priority = "3"
+	@uitest
 	test DisabledFeedTitle {
 		property testray.component.names = "RSS";
 
@@ -555,8 +565,9 @@ definition {
 		RSSPortlet.viewNoFeedTitle(feedTitle = "Technology");
 	}
 
+	@description = "Can delete a RSS Publisher widget via portlet settings."
 	@priority = "4"
-	test RemoveRSSPortlet {
+	@uitest
 		property testray.component.names = "RSS";
 
 		JSONLayout.addPublicLayout(

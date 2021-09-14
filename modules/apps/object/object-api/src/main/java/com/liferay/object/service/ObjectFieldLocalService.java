@@ -305,6 +305,10 @@ public interface ObjectFieldLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getObjectFieldsCount(long objectDefinitionId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getObjectFieldsCountByListTypeDefinitionId(
+		long listTypeDefinitionId);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

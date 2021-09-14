@@ -396,6 +396,14 @@ public class ObjectFieldLocalServiceWrapper
 			objectDefinitionId);
 	}
 
+	@Override
+	public int getObjectFieldsCountByListTypeDefinitionId(
+		long listTypeDefinitionId) {
+
+		return _objectFieldLocalService.
+			getObjectFieldsCountByListTypeDefinitionId(listTypeDefinitionId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -228,7 +228,7 @@ definition {
 
 		Type(
 			locator1 = "ObjectAdmin#NAME_CUSTOM_OBJECT",
-			value1 = "Custom Object");
+			value1 = "CustomObject");
 
 		ObjectAdmin.saveCustomObject();
 

@@ -43,7 +43,6 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.metrics.model.Assignment;
 import com.liferay.portal.workflow.metrics.model.RoleAssignment;
@@ -77,7 +76,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -579,22 +577,13 @@ public class WorkflowMetricsRESTTestHelper {
 			instance.getId(), "processId", task.getProcessId(), "nodeId",
 			task.getNodeId(), "name", task.getName(), "taskId", task.getId());
 
-		IdempotentRetryAssert.retryAssert(
-			10, TimeUnit.SECONDS,
-			() -> {
-				_assertCount(
-					booleanQuery -> booleanQuery.addMustQueryClauses(
-						_queries.nested(
-							"tasks",
-							_queries.term("tasks.taskId", task.getId()))),
-					1,
-					_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
-						companyId),
-					"companyId", companyId, "deleted", false, "instanceId",
-					instance.getId(), "processId", task.getProcessId());
-
-				return null;
-			});
+		_assertCount(
+			booleanQuery -> booleanQuery.addMustQueryClauses(
+				_queries.nested(
+					"tasks", _queries.term("tasks.taskId", task.getId()))),
+			1, _instanceWorkflowMetricsIndexNameBuilder.getIndexName(companyId),
+			"companyId", companyId, "deleted", false, "instanceId",
+			instance.getId(), "processId", task.getProcessId());
 
 		if (!assignments.isEmpty()) {
 			_taskWorkflowMetricsIndexer.updateTask(
@@ -664,22 +653,13 @@ public class WorkflowMetricsRESTTestHelper {
 			instance.getId(), "processId", task.getProcessId(), "nodeId",
 			task.getNodeId(), "name", task.getName(), "taskId", task.getId());
 
-		IdempotentRetryAssert.retryAssert(
-			10, TimeUnit.SECONDS,
-			() -> {
-				_assertCount(
-					booleanQuery -> booleanQuery.addMustQueryClauses(
-						_queries.nested(
-							"tasks",
-							_queries.term("tasks.taskId", task.getId()))),
-					1,
-					_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
-						companyId),
-					"companyId", companyId, "deleted", false, "instanceId",
-					instance.getId(), "processId", task.getProcessId());
-
-				return null;
-			});
+		_assertCount(
+			booleanQuery -> booleanQuery.addMustQueryClauses(
+				_queries.nested(
+					"tasks", _queries.term("tasks.taskId", task.getId()))),
+			1, _instanceWorkflowMetricsIndexNameBuilder.getIndexName(companyId),
+			"companyId", companyId, "deleted", false, "instanceId",
+			instance.getId(), "processId", task.getProcessId());
 
 		if (!assignments.isEmpty()) {
 			_taskWorkflowMetricsIndexer.updateTask(
@@ -1232,32 +1212,27 @@ public class WorkflowMetricsRESTTestHelper {
 			_digest("WorkflowMetricsInstance", companyId, instance.getId())
 		).build();
 
-		_searchEngineAdapter.execute(
-			new UpdateDocumentRequest(
-				_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
-					companyId),
-				document.getString("uid"), document));
+		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
+			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(companyId),
+			document.getString("uid"), document);
+
+		updateDocumentRequest.setRefresh(true);
+
+		_searchEngineAdapter.execute(updateDocumentRequest);
 
 		for (SLAResult slaResult : slaResults) {
-			IdempotentRetryAssert.retryAssert(
-				10, TimeUnit.SECONDS,
-				() -> {
-					_assertCount(
-						booleanQuery -> booleanQuery.addMustQueryClauses(
-							_queries.nested(
-								"slaResults",
-								_queries.term(
-									"slaResults.overdueDate",
-									_getDateString(
-										slaResult.getDateOverdue())))),
-						1,
-						_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
-							companyId),
-						"companyId", companyId, "deleted", false, "instanceId",
-						instance.getId(), "processId", instance.getProcessId());
-
-					return null;
-				});
+			_assertCount(
+				booleanQuery -> booleanQuery.addMustQueryClauses(
+					_queries.nested(
+						"slaResults",
+						_queries.term(
+							"slaResults.overdueDate",
+							_getDateString(slaResult.getDateOverdue())))),
+				1,
+				_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
+					companyId),
+				"companyId", companyId, "deleted", false, "instanceId",
+				instance.getId(), "processId", instance.getProcessId());
 		}
 	}
 

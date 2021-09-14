@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
@@ -183,6 +184,10 @@ public class TaskWorkflowMetricsIndexerImpl
 						).build());
 
 				updateDocumentRequest.setScriptedUpsert(true);
+
+				if (PortalRunMode.isTestMode()) {
+					updateDocumentRequest.setRefresh(true);
+				}
 
 				searchEngineAdapter.execute(updateDocumentRequest);
 			});

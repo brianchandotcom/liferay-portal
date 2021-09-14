@@ -250,7 +250,7 @@
 		</ignore-error>
 		<ignore-error description="LPS-136151 - temporarily ignore until fixed">
 			<contains></contains>
-			<matches>bundle com.liferay.portal.properties.swapper .* The activate method has thrown an exception</matches>
+			<matches>bundle com.liferay.portal.properties.swapper.*The activate method has thrown an exception</matches>
 		</ignore-error>
 		<ignore-error description="LPS-136151 - temporarily ignore until fixed">
 			<contains>Store is not available</contains>

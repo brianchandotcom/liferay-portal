@@ -3375,9 +3375,17 @@ definition {
 	}
 
 	macro switchViewport {
-		Click(
-			key_deviceType = "${deviceType}",
-			locator1 = "PageEditor#DEVICE_TYPE");
+		if (isSet(modal)) {
+			Click(
+				key_deviceType = "${deviceType}",
+				locator1 = "Modal#DEVICE_TYPE");
+		}
+
+		else {
+			Click(
+				key_deviceType = "${deviceType}",
+				locator1 = "PageEditor#DEVICE_TYPE");
+		}
 
 		if ("${deviceType}" == "Desktop") {
 			var viewport = "desktop";
@@ -3395,9 +3403,11 @@ definition {
 			var viewport = "portraitMobile";
 		}
 
-		WaitForVisible(
-			key_deviceType = "${viewport}",
-			locator1 = "PageEditor#VIEWPORT");
+		if (!(isSet(modal))) {
+			WaitForVisible(
+				key_deviceType = "${viewport}",
+				locator1 = "PageEditor#VIEWPORT");
+		}
 	}
 
 	macro viewCannotAddFragmentToOutsideOfDropZone {

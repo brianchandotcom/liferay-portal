@@ -1777,7 +1777,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--text-paragraph-font-weight-heavy)",
+							"defaultValue": "var(--text-paragraph-font-weight-regular)",
 							"label": "form-input-font-weight",
 							"mappings": [
 								{
@@ -1813,7 +1813,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "0.75rem",
+							"defaultValue": "0.6875rem",
 							"label": "form-input-padding-y",
 							"mappings": [
 								{
@@ -1882,7 +1882,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--text-paragraph-font-weight-heavy)",
+							"defaultValue": "var(--text-paragraph-font-weight-regular)",
 							"label": "form-input-placeholder-font-weight",
 							"mappings": [
 								{

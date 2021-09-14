@@ -259,6 +259,9 @@ public abstract class BaseDBPartitionTestCase {
 
 	protected static final String TEST_CONTROL_TABLE_NAME = "TestControlTable";
 
+	protected static final String TEST_CONTROL_TABLE_NEW_COLUMN =
+		"testControlTableNewColumn";
+
 	protected static final String TEST_INDEX_NAME = "IX_Test";
 
 	protected static final String TEST_TABLE_NAME = "TestTable";

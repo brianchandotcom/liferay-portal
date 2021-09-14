@@ -95,11 +95,11 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 			companyId -> db.runSQL(
 				StringBundler.concat(
 					"alter table ", TEST_CONTROL_TABLE_NAME, " add column ",
-					"testAlterControlTableColumn bigint")));
+					TEST_CONTROL_TABLE_NEW_COLUMN, " bigint")));
 
 		Assert.assertTrue(
 			dbInspector.hasColumn(
-				TEST_CONTROL_TABLE_NAME, "testAlterControlTableColumn"));
+				TEST_CONTROL_TABLE_NAME, TEST_CONTROL_TABLE_NEW_COLUMN));
 	}
 
 	@Test
@@ -111,6 +111,40 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		Assert.assertTrue(
 			!dbInspector.hasIndex(TEST_CONTROL_TABLE_NAME, TEST_INDEX_NAME));
+	}
+
+	@Test
+	public void testRegenerateViews() throws Exception {
+		try {
+			DBPartitionUtil.forEachCompanyId(
+				companyId ->
+					db.runSQL(
+						StringBundler.concat(
+							"alter table ", TEST_CONTROL_TABLE_NAME,
+							" add column ", TEST_CONTROL_TABLE_NEW_COLUMN,
+							" bigint")));
+
+			DBPartitionUtil.forEachCompanyId(
+				companyId ->
+					Assert.assertTrue(
+						dbInspector.hasColumn(
+							TEST_CONTROL_TABLE_NAME,
+							TEST_CONTROL_TABLE_NEW_COLUMN)));
+		}
+		finally {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> {
+					if (dbInspector.hasColumn(
+							TEST_CONTROL_TABLE_NAME,
+							TEST_CONTROL_TABLE_NEW_COLUMN)) {
+
+						db.runSQL(
+							StringBundler.concat(
+								"alter table ", TEST_CONTROL_TABLE_NAME,
+								" drop column ", TEST_CONTROL_TABLE_NEW_COLUMN));
+					}
+				});
+		}
 	}
 
 	@Test

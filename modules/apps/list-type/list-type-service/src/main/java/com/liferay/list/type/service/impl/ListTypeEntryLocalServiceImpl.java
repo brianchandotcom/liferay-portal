@@ -86,6 +86,19 @@ public class ListTypeEntryLocalServiceImpl
 			listTypeDefinitionId);
 	}
 
+	@Override
+	public ListTypeEntry updateListTypeEntry(
+			long listTypeEntryId, Map<Locale, String> nameMap)
+		throws PortalException {
+
+		ListTypeEntry listTypeEntry = listTypeEntryPersistence.findByPrimaryKey(
+			listTypeEntryId);
+
+		listTypeEntry.setNameMap(nameMap);
+
+		return listTypeEntryPersistence.update(listTypeEntry);
+	}
+
 	private void _validate(long listTypeDefinitionId, String key)
 		throws PortalException {
 

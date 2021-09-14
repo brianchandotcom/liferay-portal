@@ -42,7 +42,7 @@ definition {
 			var pageFriendlyUrl = ContentPagesNavigator._convertNameToKey(name = "${pageName}");
 		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "/${locale}/web/${siteURLKey}/${pageFriendlyUrl}");
+		Navigator.openWithAppendToBaseURL(urlAppend = "${locale}/web/${siteURLKey}/${pageFriendlyUrl}");
 	}
 
 }

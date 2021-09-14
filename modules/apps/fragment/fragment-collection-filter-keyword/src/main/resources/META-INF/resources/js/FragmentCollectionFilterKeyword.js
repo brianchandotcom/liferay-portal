@@ -36,6 +36,14 @@ export default function FragmentCollectionFilterKeyword({
 
 		if (isDisabled) {
 			keywordsInput.disabled = true;
+
+			if (keywordsInput.parentElement && Liferay.Browser.isFirefox()) {
+				import('../css/main.scss');
+
+				keywordsInput.parentElement.classList.add(
+					'input-group-item--disabled'
+				);
+			}
 		}
 	}
 

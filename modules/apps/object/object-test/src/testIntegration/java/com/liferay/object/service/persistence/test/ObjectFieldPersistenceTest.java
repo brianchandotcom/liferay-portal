@@ -239,6 +239,13 @@ public class ObjectFieldPersistenceTest {
 	}
 
 	@Test
+	public void testCountByListTypeDefinitionId() throws Exception {
+		_persistence.countByListTypeDefinitionId(RandomTestUtil.nextLong());
+
+		_persistence.countByListTypeDefinitionId(0L);
+	}
+
+	@Test
 	public void testCountByObjectDefinitionId() throws Exception {
 		_persistence.countByObjectDefinitionId(RandomTestUtil.nextLong());
 

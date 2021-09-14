@@ -472,6 +472,185 @@ public class ObjectFieldUtil {
 	}
 
 	/**
+	 * Returns all the object fields where listTypeDefinitionId = &#63;.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @return the matching object fields
+	 */
+	public static List<ObjectField> findByListTypeDefinitionId(
+		long listTypeDefinitionId) {
+
+		return getPersistence().findByListTypeDefinitionId(
+			listTypeDefinitionId);
+	}
+
+	/**
+	 * Returns a range of all the object fields where listTypeDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @return the range of matching object fields
+	 */
+	public static List<ObjectField> findByListTypeDefinitionId(
+		long listTypeDefinitionId, int start, int end) {
+
+		return getPersistence().findByListTypeDefinitionId(
+			listTypeDefinitionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object fields where listTypeDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object fields
+	 */
+	public static List<ObjectField> findByListTypeDefinitionId(
+		long listTypeDefinitionId, int start, int end,
+		OrderByComparator<ObjectField> orderByComparator) {
+
+		return getPersistence().findByListTypeDefinitionId(
+			listTypeDefinitionId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the object fields where listTypeDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object fields
+	 */
+	public static List<ObjectField> findByListTypeDefinitionId(
+		long listTypeDefinitionId, int start, int end,
+		OrderByComparator<ObjectField> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByListTypeDefinitionId(
+			listTypeDefinitionId, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first object field in the ordered set where listTypeDefinitionId = &#63;.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object field
+	 * @throws NoSuchObjectFieldException if a matching object field could not be found
+	 */
+	public static ObjectField findByListTypeDefinitionId_First(
+			long listTypeDefinitionId,
+			OrderByComparator<ObjectField> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectFieldException {
+
+		return getPersistence().findByListTypeDefinitionId_First(
+			listTypeDefinitionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first object field in the ordered set where listTypeDefinitionId = &#63;.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object field, or <code>null</code> if a matching object field could not be found
+	 */
+	public static ObjectField fetchByListTypeDefinitionId_First(
+		long listTypeDefinitionId,
+		OrderByComparator<ObjectField> orderByComparator) {
+
+		return getPersistence().fetchByListTypeDefinitionId_First(
+			listTypeDefinitionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object field in the ordered set where listTypeDefinitionId = &#63;.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object field
+	 * @throws NoSuchObjectFieldException if a matching object field could not be found
+	 */
+	public static ObjectField findByListTypeDefinitionId_Last(
+			long listTypeDefinitionId,
+			OrderByComparator<ObjectField> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectFieldException {
+
+		return getPersistence().findByListTypeDefinitionId_Last(
+			listTypeDefinitionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object field in the ordered set where listTypeDefinitionId = &#63;.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
+	 */
+	public static ObjectField fetchByListTypeDefinitionId_Last(
+		long listTypeDefinitionId,
+		OrderByComparator<ObjectField> orderByComparator) {
+
+		return getPersistence().fetchByListTypeDefinitionId_Last(
+			listTypeDefinitionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the object fields before and after the current object field in the ordered set where listTypeDefinitionId = &#63;.
+	 *
+	 * @param objectFieldId the primary key of the current object field
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object field
+	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
+	 */
+	public static ObjectField[] findByListTypeDefinitionId_PrevAndNext(
+			long objectFieldId, long listTypeDefinitionId,
+			OrderByComparator<ObjectField> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectFieldException {
+
+		return getPersistence().findByListTypeDefinitionId_PrevAndNext(
+			objectFieldId, listTypeDefinitionId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the object fields where listTypeDefinitionId = &#63; from the database.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 */
+	public static void removeByListTypeDefinitionId(long listTypeDefinitionId) {
+		getPersistence().removeByListTypeDefinitionId(listTypeDefinitionId);
+	}
+
+	/**
+	 * Returns the number of object fields where listTypeDefinitionId = &#63;.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @return the number of matching object fields
+	 */
+	public static int countByListTypeDefinitionId(long listTypeDefinitionId) {
+		return getPersistence().countByListTypeDefinitionId(
+			listTypeDefinitionId);
+	}
+
+	/**
 	 * Returns all the object fields where objectDefinitionId = &#63;.
 	 *
 	 * @param objectDefinitionId the object definition ID

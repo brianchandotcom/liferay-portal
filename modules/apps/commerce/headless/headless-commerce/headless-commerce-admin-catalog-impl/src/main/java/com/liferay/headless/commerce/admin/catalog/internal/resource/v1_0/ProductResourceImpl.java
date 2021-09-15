@@ -40,9 +40,18 @@ import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
+import com.liferay.commerce.shop.by.diagram.constants.CSDiagramCPTypeConstants;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinService;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Diagram;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Pin;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductAccountGroup;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductChannel;
@@ -60,6 +69,9 @@ import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.Custom
 import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.ProductHelper;
 import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.ProductEntityModel;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.AttachmentUtil;
+import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.DiagramUtil;
+import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.MappedProductUtil;
+import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.PinUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductConfigurationUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductOptionUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductOptionValueUtil;
@@ -904,6 +916,51 @@ public class ProductResourceImpl
 			}
 		}
 
+		// Diagram
+
+		CPType cpType = _cpTypeServicesTracker.getCPType(
+			cpDefinition.getProductTypeName());
+
+		if ((cpType != null) &&
+			CSDiagramCPTypeConstants.NAME.equals(cpType.getName())) {
+
+			Diagram diagram = product.getDiagram();
+
+			if (diagram != null) {
+				DiagramUtil.addOrUpdateCSDiagramSetting(
+					cpDefinition.getCPDefinitionId(), _csDiagramSettingService,
+					diagram);
+			}
+
+			MappedProduct[] mappedProducts = product.getMappedProducts();
+
+			if (mappedProducts != null) {
+				_csDiagramEntryService.deleteCSDiagramEntries(
+					cpDefinition.getCPDefinitionId());
+
+				for (MappedProduct mappedProduct : mappedProducts) {
+					MappedProductUtil.addOrUpdateCSDiagramEntry(
+						contextCompany.getCompanyId(),
+						cpDefinition.getCPDefinitionId(), _cpDefinitionService,
+						_cpInstanceService, _csDiagramEntryService,
+						mappedProduct);
+				}
+			}
+
+			Pin[] pins = product.getPins();
+
+			if (pins != null) {
+				_csDiagramPinService.deleteCSDiagramPins(
+					cpDefinition.getCPDefinitionId());
+
+				for (Pin pin : pins) {
+					PinUtil.addOrUpdateCSDiagramPin(
+						cpDefinition.getCPDefinitionId(), _csDiagramPinService,
+						pin);
+				}
+			}
+		}
+
 		return cpDefinition;
 	}
 
@@ -1085,6 +1142,18 @@ public class ProductResourceImpl
 
 	@Reference
 	private CPSpecificationOptionService _cpSpecificationOptionService;
+
+	@Reference
+	private CPTypeServicesTracker _cpTypeServicesTracker;
+
+	@Reference
+	private CSDiagramEntryService _csDiagramEntryService;
+
+	@Reference
+	private CSDiagramPinService _csDiagramPinService;
+
+	@Reference
+	private CSDiagramSettingService _csDiagramSettingService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

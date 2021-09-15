@@ -92,8 +92,10 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		for (var key_buttonRowIndexNumber : list "${buttonRowIndexNumberList}") {
-			Click(locator1 = "RSSFeed#FEEDS_DELETE_ROW_BUTTON");
+		for (var buttonRowIndexNumber : list "${buttonRowIndexNumberList}") {
+			Click(
+				key_buttonRowIndexNumber = "${buttonRowIndexNumber}",
+				locator1 = "RSSFeed#FEEDS_DELETE_ROW_BUTTON");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "RSSFeed#UNDO_LINK",

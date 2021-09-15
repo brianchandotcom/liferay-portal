@@ -26,15 +26,10 @@ import com.liferay.calendar.notification.NotificationUtil;
 import com.liferay.calendar.service.impl.CalendarBookingLocalServiceImpl;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 
 import java.io.File;
-import java.io.Serializable;
-
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -75,7 +70,6 @@ public class EmailNotificationSender implements NotificationSender {
 				notificationRecipient.getName());
 
 			_sendNotification(
-				(File)notificationTemplateContext.getAttribute("icsFile"),
 				notificationRecipient, notificationTemplateContext,
 				NotificationTemplateRenderer.render(
 					notificationTemplateContext, NotificationField.BODY,
@@ -91,7 +85,7 @@ public class EmailNotificationSender implements NotificationSender {
 	}
 
 	private void _sendNotification(
-			File icsFile, NotificationRecipient notificationRecipient,
+			NotificationRecipient notificationRecipient,
 			NotificationTemplateContext notificationTemplateContext,
 			String body, String fromEmail, String fromName, String subject)
 		throws NotificationSenderException {
@@ -99,84 +93,67 @@ public class EmailNotificationSender implements NotificationSender {
 		try {
 			SubscriptionSender subscriptionSender = new SubscriptionSender();
 
+			subscriptionSender.addFileAttachment(
+				(File)notificationTemplateContext.getAttribute("icsFile"));
 			subscriptionSender.setClassName(
 				CalendarBookingLocalServiceImpl.class.getName());
 			subscriptionSender.setClassPK(
 				notificationTemplateContext.getCalendarId());
 			subscriptionSender.setCompanyId(
 				notificationTemplateContext.getCompanyId());
-
-			Map<String, Serializable> attributes =
-				notificationTemplateContext.getAttributes();
-
 			subscriptionSender.setContextAttributes(
-				"[$COMPANY_ID$]",
-				GetterUtil.getString(
-					notificationTemplateContext.getCompanyId()),
+				"[$COMPANY_ID$]", notificationTemplateContext.getCompanyId(),
 				"[$CALENDAR_NAME$]",
-				GetterUtil.getString(attributes.get("calendarName")),
+				notificationTemplateContext.getAttribute("calendarName"),
 				"[$EVENT_END_DATE$]",
-				GetterUtil.getString(attributes.get("endTime")),
+				notificationTemplateContext.getAttribute("endTime"),
 				"[$EVENT_LOCATION$]",
-				GetterUtil.getString(attributes.get("location")),
+				notificationTemplateContext.getAttribute("location"),
 				"[$EVENT_START_DATE$]",
-				GetterUtil.getString(attributes.get("startTime")),
+				notificationTemplateContext.getAttribute("startTime"),
 				"[$EVENT_TITLE$]",
-				GetterUtil.getString(attributes.get("title")), "[$EVENT_URL$]",
-				GetterUtil.getString(attributes.get("url")),
+				notificationTemplateContext.getAttribute("title"),
+				"[$EVENT_URL$]",
+				notificationTemplateContext.getAttribute("url"),
 				"[$INSTANCE_START_TIME$]",
-				GetterUtil.getString(attributes.get("instanceStartTime")),
+				notificationTemplateContext.getAttribute("instanceStartTime"),
 				"[$PORTAL_URL$]",
-				GetterUtil.getString(attributes.get("portalURL")),
+				notificationTemplateContext.getAttribute("portalURL"),
 				"[$PORTLET_NAME$]",
-				GetterUtil.getString(attributes.get("portletName")),
+				notificationTemplateContext.getAttribute("portletName"),
 				"[$SITE_NAME$]",
-				GetterUtil.getString(attributes.get("siteName")));
-
-			CalendarNotificationTemplate calendarNotificationTemplate =
-				notificationTemplateContext.getCalendarNotificationTemplate();
-
+				notificationTemplateContext.getAttribute("siteName"));
 			subscriptionSender.setContextCreatorUserPrefix("EVENT");
 			subscriptionSender.setFrom(fromEmail, fromName);
 			subscriptionSender.setHtmlFormat(
 				notificationRecipient.isHTMLFormat());
 
+			CalendarNotificationTemplate calendarNotificationTemplate =
+				notificationTemplateContext.getCalendarNotificationTemplate();
+
 			if (calendarNotificationTemplate != null) {
 				subscriptionSender.setCreatorUserId(
 					calendarNotificationTemplate.getUserId());
-
-				Map<Locale, String> localizedSubjectMap =
+				subscriptionSender.setLocalizedBodyMap(
 					LocalizationUtil.getLocalizationMap(
-						calendarNotificationTemplate.getSubject());
-
-				Map<Locale, String> localizedBodyMap =
+						calendarNotificationTemplate.getBody()));
+				subscriptionSender.setLocalizedSubjectMap(
 					LocalizationUtil.getLocalizationMap(
-						calendarNotificationTemplate.getBody());
-
-				subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
-
-				subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
+						calendarNotificationTemplate.getSubject()));
 			}
 			else {
 				subscriptionSender.setBody(body);
 				subscriptionSender.setSubject(subject);
 			}
 
-			if (icsFile != null) {
-				subscriptionSender.addFileAttachment(icsFile);
-			}
-
 			subscriptionSender.setMailId(
 				"event", notificationTemplateContext.getCalendarId());
-
-			String portletId = PortletProviderUtil.getPortletId(
-				CalendarBooking.class.getName(), PortletProvider.Action.EDIT);
-
-			subscriptionSender.setPortletId(portletId);
-
+			subscriptionSender.setPortletId(
+				PortletProviderUtil.getPortletId(
+					CalendarBooking.class.getName(),
+					PortletProvider.Action.EDIT));
 			subscriptionSender.setScopeGroupId(
 				notificationTemplateContext.getGroupId());
-
 			subscriptionSender.addRuntimeSubscribers(
 				notificationRecipient.getEmailAddress(),
 				notificationRecipient.getName());

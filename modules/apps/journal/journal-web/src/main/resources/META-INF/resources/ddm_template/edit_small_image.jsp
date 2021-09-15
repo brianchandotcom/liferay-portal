@@ -57,17 +57,27 @@ String smallImageSource = journalEditDDMTemplateDisplayContext.getSmallImageSour
 </div>
 
 <div class="<%= Objects.equals(smallImageSource, "file") ? "" : "hide" %>" id="<portlet:namespace />smallImageFileContainer">
-	<aui:input label="" name="smallImageFile" type="file" wrapperCssClass="mb-3" />
+	<div>
 
-	<c:if test="<%= journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null) && (ddmTemplate.getSmallImageId() > 0) %>">
-		<p class="control-label font-weight-semi-bold">
-			<liferay-ui:message key="preview" />
-		</p>
+		<%
+		String previewURL = StringPool.BLANK;
 
-		<div class="aspect-ratio aspect-ratio-16-to-9">
-			<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="aspect-ratio-item-fluid" src="<%= HtmlUtil.escapeAttribute(ddmTemplate.getTemplateImageURL(themeDisplay)) %>" />
-		</div>
-	</c:if>
+		if (journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null) && (ddmTemplate.getSmallImageId() > 0)) {
+			previewURL = ddmTemplate.getTemplateImageURL(themeDisplay);
+		}
+		%>
+
+		<react:component
+			module="js/ImageInput.es"
+			props='<%=
+				HashMapBuilder.<String, Object>put(
+					"name", "smallImageFile"
+				).put(
+					"previewURL", previewURL
+				).build()
+			%>'
+		/>
+	</div>
 </div>
 
 <aui:script>

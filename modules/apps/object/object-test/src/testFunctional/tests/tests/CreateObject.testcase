@@ -337,10 +337,13 @@ definition {
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.addNewObject(
-			fieldLabelName = "Custom Field",
-			pluralLabelName = "Custom Fields");
+			fieldLabelName = "Custom Object",
+			fieldName = "customObject",
+			pluralLabelName = "Custom Objects");
 
-		CreateObject.assertCannotSaveLowerCaseObjectName();
+		ObjectAdmin.saveCustomObject();
+
+		ObjectAdmin.viewFieldErrorMessage(message = "The first character of a name must be an upper case letter");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Field Name"

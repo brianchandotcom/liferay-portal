@@ -1,9 +1,6 @@
 definition {
 
 	macro addNewObject {
-		var fieldLabelName = "${fieldLabelName}";
-		var pluralLabelName = "${pluralLabelName}";
-
 		Click(locator1 = "ObjectAdmin#ADD_CUSTOM_OBJECT");
 
 		Type(
@@ -13,6 +10,12 @@ definition {
 		Type(
 			locator1 = "ObjectAdmin#PLURAL_LABEL_CUSTOM_OBJECT",
 			value1 = "${pluralLabelName}");
+
+		if (isSet(fieldName)) {
+			Type(
+				locator1 = "ObjectAdmin#NAME_CUSTOM_OBJECT",
+				value1 = "${fieldName}");
+		}
 	}
 
 	macro addObjectFieldViaAPI {

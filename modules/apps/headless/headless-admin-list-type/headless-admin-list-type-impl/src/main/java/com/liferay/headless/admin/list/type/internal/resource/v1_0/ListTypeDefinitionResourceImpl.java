@@ -22,11 +22,16 @@ import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.util.Collections;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,15 +66,26 @@ public class ListTypeDefinitionResourceImpl
 
 	@Override
 	public Page<ListTypeDefinition> getListTypeDefinitionsPage(
-		Pagination pagination) {
+			String search, Pagination pagination)
+		throws Exception {
 
-		return Page.of(
-			transform(
-				_listTypeDefinitionService.getListTypeDefinitions(
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				this::_toListTypeDefinition),
-			pagination,
-			_listTypeDefinitionService.getListTypeDefinitionsCount());
+		return SearchUtil.search(
+			Collections.emptyMap(),
+			booleanQuery -> {
+			},
+			null,
+			com.liferay.list.type.model.ListTypeDefinition.class.getName(),
+			search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(Field.NAME, search);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			null,
+			document -> _toListTypeDefinition(
+				_listTypeDefinitionService.getListTypeDefinition(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override

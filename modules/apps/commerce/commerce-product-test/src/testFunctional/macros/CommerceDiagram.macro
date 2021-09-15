@@ -24,7 +24,8 @@ definition {
 		}
 	}
 
-	macro useDragOnPin{
+	macro useDragOnPin {
+
 		// Verify the postion after mouse drag on pin
 
 		first_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='circle']/../../*[name()='g']@transform");

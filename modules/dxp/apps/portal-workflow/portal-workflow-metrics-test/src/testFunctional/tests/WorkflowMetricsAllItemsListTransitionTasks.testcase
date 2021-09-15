@@ -126,8 +126,6 @@ definition {
 	@description = "LPS-108138 - Verify that tasks that are not assigned to the current users can't be transitioned via bulk transition action"
 	@priority = "4"
 	test CanNotBulkTransitionTasksNotAssignedToCurrentUser {
-		
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONUser.addUser(
@@ -173,7 +171,7 @@ definition {
 		Click(
 			key_orderBy = "Creation Date",
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ORDER_BY");
-		
+
 		Click(
 			key_orderBy = "Creation Date",
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ORDER_BY");
@@ -191,10 +189,9 @@ definition {
 			taskList = "Blogs Entry: Blog Entry 2");
 
 		AssertElementPresent(
-		key_itemTitle = "Blogs Entry: Blog Entry 1",
-		locator1 = "WorkflowAllItems#REASSIGN_CHECKBOX_DISABLED");
+			key_itemTitle = "Blogs Entry: Blog Entry 1",
+			locator1 = "WorkflowAllItems#REASSIGN_CHECKBOX_DISABLED");
 
-		
 		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT")) {
 			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
 		}

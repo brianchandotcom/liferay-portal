@@ -86,84 +86,6 @@ definition {
 	}
 
 	@priority = "4"
-	test ConflictingPublicationsNeedManualResolution {
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
-			mimeType = "text/plain",
-			sourceFileName = "Document_1.txt");
-
-		JSONPublications.addPublication(publicationName = "Publication Name");
-
-		JSONPublications.selectPublication(publicationName = "Publication Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.editCP(
-			dmDocumentDescription = "DM Document Description1",
-			dmDocumentDescriptionEdit = "DM Document Description Edit",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edit");
-
-		DMDocument.viewEditCP(
-			dmDocumentTitleEdit = "DM Document Title Edit",
-			dmDocumentVersionNumber = "1.1");
-
-		JSONPublications.addPublication(publicationName = "Publication Name 2");
-
-		JSONPublications.selectPublication(publicationName = "Publication Name 2");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.editCP(
-			dmDocumentDescription = "DM Document Description1",
-			dmDocumentDescriptionEdit = "DM Document 2 Description Edit",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document 2 Title Edit");
-
-		DMDocument.viewEditCP(
-			dmDocumentTitleEdit = "DM Document 2 Title Edit",
-			dmDocumentVersionNumber = "1.1");
-
-		JSONPublications.publishPublication(publicationName = "Publication Name 2");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
-
-		Publications.gotoPublish(
-			gotoManagePublications = "true",
-			publicationName = "Publication Name");
-
-		Publications.viewNeedsManualResolution(
-			entryTitle = "DM Document Title Edit",
-			warningMessage = "The conflict cannot be automatically resolved.");
-
-		Publications.gotoViewChangeDiffInConflictingPublications(entryTitle = "DM Document Title Edit");
-
-		Publications.viewChangeDiff(
-			columnName = "Title",
-			columnValueInProduction = "DM Document 2 Title Edit",
-			columnValueInPublication = "DM Document Title Edit",
-			diffRemovedValue = "2",
-			publicationName = "Publication Name");
-
-		IFrame.closeFrame();
-
-		Pause(locator1 = "3000");
-
-		Publications.discardChanges(
-			changeCategory = "Asset",
-			changeTitle = "DM Document Title Edit",
-			conflictingChanges = "true",
-			entryTitle = "DM Document Title Edit");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.viewEditCP(
-			dmDocumentTitleEdit = "DM Document 2 Title Edit",
-			dmDocumentVersionNumber = "1.1");
-	}
-
-	@priority = "4"
 	test DeleteDMFolderWithMultipleFiles {
 		property test.assert.warning.exceptions = "true";
 
@@ -449,6 +371,84 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
 
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
+	}
+
+	@priority = "4"
+	test ResolveConflictingPublicationsByDiscarding {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DM Document Description1",
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit");
+
+		DMDocument.viewEditCP(
+			dmDocumentTitleEdit = "DM Document Title Edit",
+			dmDocumentVersionNumber = "1.1");
+
+		JSONPublications.addPublication(publicationName = "Publication Name 2");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 2");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DM Document Description1",
+			dmDocumentDescriptionEdit = "DM Document 2 Description Edit",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document 2 Title Edit");
+
+		DMDocument.viewEditCP(
+			dmDocumentTitleEdit = "DM Document 2 Title Edit",
+			dmDocumentVersionNumber = "1.1");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name 2");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
+
+		Publications.gotoPublish(
+			gotoManagePublications = "true",
+			publicationName = "Publication Name");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "DM Document Title Edit",
+			warningMessage = "The conflict cannot be automatically resolved.");
+
+		Publications.gotoViewChangeDiffInConflictingPublications(entryTitle = "DM Document Title Edit");
+
+		Publications.viewChangeDiff(
+			columnName = "Title",
+			columnValueInProduction = "DM Document 2 Title Edit",
+			columnValueInPublication = "DM Document Title Edit",
+			diffRemovedValue = "2",
+			publicationName = "Publication Name");
+
+		IFrame.closeFrame();
+
+		Pause(locator1 = "3000");
+
+		Publications.discardChanges(
+			changeCategory = "Asset",
+			changeTitle = "DM Document Title Edit",
+			conflictingChanges = "true",
+			entryTitle = "DM Document Title Edit");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.viewEditCP(
+			dmDocumentTitleEdit = "DM Document 2 Title Edit",
+			dmDocumentVersionNumber = "1.1");
 	}
 
 }

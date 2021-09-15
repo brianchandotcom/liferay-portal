@@ -30,130 +30,6 @@ definition {
 	}
 
 	@priority = "4"
-	test ConflictingPublicationsNeedManualResolution {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Dynamic Data Lists");
-
-		DDLDataDefinition.addCP(
-			ddlDataDefinitionDescription = "Data Definition Description",
-			ddlDataDefinitionName = "Data Definition");
-
-		DynamicDataMapping.addField(
-			field = "Text",
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		DDLDataDefinition.save();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Dynamic Data Lists");
-
-		DDLList.addCP(
-			ddlListDescription = "List Description",
-			ddlListName = "List Name");
-
-		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Data Definition");
-
-		DDLDataDefinition.save();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Dynamic Data Lists");
-
-		DDLRecord.addCP(
-			ddlDataDefinitionName = "Data Definition",
-			ddlListName = "List Name");
-
-		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Record Text",
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		PortletEntry.publish();
-
-		JSONPublications.addPublication(publicationName = "Publication Name 1");
-
-		JSONPublications.selectPublication(publicationName = "Publication Name 1");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Dynamic Data Lists");
-
-		DDLRecord.editCP(
-			ddlListName = "List Name",
-			ddlRecordFieldData = "Record Text");
-
-		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Record Text 1 Edited",
-			fieldName = "Text");
-
-		PortletEntry.publish();
-
-		JSONPublications.addPublication(publicationName = "Publication Name 2");
-
-		JSONPublications.selectPublication(publicationName = "Publication Name 2");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Dynamic Data Lists");
-
-		DDLRecord.editCP(
-			ddlListName = "List Name",
-			ddlRecordFieldData = "Record Text");
-
-		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Record Text 2 Edited",
-			fieldName = "Text");
-
-		PortletEntry.publish();
-
-		JSONPublications.publishPublication(publicationName = "Publication Name 2");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
-
-		Publications.gotoPublish(
-			gotoManagePublications = "true",
-			publicationName = "Publication Name 1");
-
-		var changeTitle = JSONDDL.getRecordId(
-			ddlListName = "List Name",
-			groupName = "Guest");
-
-		Publications.discardChanges(
-			changeCategory = "Dynamic Data Lists Record",
-			changeTitle = "${changeTitle}",
-			conflictingChanges = "true",
-			entryTitle = "Dynamic Data Lists Record");
-
-		JSONPublications.publishPublication(publicationName = "Publication Name 1");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name 1");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Dynamic Data Lists");
-
-		DDLNavigator.gotoListRecords(ddlListName = "List Name");
-
-		DDLRecord.viewFieldCP(
-			ddlRecordFieldData = "Record Text 2 Edited",
-			field = "Text",
-			fieldFieldLabel = "Text");
-	}
-
-	@priority = "4"
 	test PublishPublicationWithDeletedListAndRecord {
 		Navigator.openURL();
 
@@ -792,6 +668,130 @@ definition {
 			ddlRecordFieldData = "Document_1.png",
 			field = "Documents and Media",
 			fieldFieldLabel = "Documents and Media");
+	}
+
+	@priority = "4"
+	test ResolveConflictingPublicationsByDiscarding {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLDataDefinition.addCP(
+			ddlDataDefinitionDescription = "Data Definition Description",
+			ddlDataDefinitionName = "Data Definition");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLList.addCP(
+			ddlListDescription = "List Description",
+			ddlListName = "List Name");
+
+		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Data Definition");
+
+		DDLDataDefinition.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLRecord.addCP(
+			ddlDataDefinitionName = "Data Definition",
+			ddlListName = "List Name");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Record Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		PortletEntry.publish();
+
+		JSONPublications.addPublication(publicationName = "Publication Name 1");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 1");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLRecord.editCP(
+			ddlListName = "List Name",
+			ddlRecordFieldData = "Record Text");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Record Text 1 Edited",
+			fieldName = "Text");
+
+		PortletEntry.publish();
+
+		JSONPublications.addPublication(publicationName = "Publication Name 2");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 2");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLRecord.editCP(
+			ddlListName = "List Name",
+			ddlRecordFieldData = "Record Text");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Record Text 2 Edited",
+			fieldName = "Text");
+
+		PortletEntry.publish();
+
+		JSONPublications.publishPublication(publicationName = "Publication Name 2");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
+
+		Publications.gotoPublish(
+			gotoManagePublications = "true",
+			publicationName = "Publication Name 1");
+
+		var changeTitle = JSONDDL.getRecordId(
+			ddlListName = "List Name",
+			groupName = "Guest");
+
+		Publications.discardChanges(
+			changeCategory = "Dynamic Data Lists Record",
+			changeTitle = "${changeTitle}",
+			conflictingChanges = "true",
+			entryTitle = "Dynamic Data Lists Record");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name 1");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name 1");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLNavigator.gotoListRecords(ddlListName = "List Name");
+
+		DDLRecord.viewFieldCP(
+			ddlRecordFieldData = "Record Text 2 Edited",
+			field = "Text",
+			fieldFieldLabel = "Text");
 	}
 
 }

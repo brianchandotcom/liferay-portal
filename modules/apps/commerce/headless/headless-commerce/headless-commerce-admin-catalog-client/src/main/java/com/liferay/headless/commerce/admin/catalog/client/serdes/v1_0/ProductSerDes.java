@@ -17,6 +17,8 @@ package com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Category;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.CustomField;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.MappedProduct;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Pin;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductAccountGroup;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductChannel;
@@ -217,6 +219,16 @@ public class ProductSerDes {
 			sb.append(_toJSON(product.getDescription()));
 		}
 
+		if (product.getDiagram() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"diagram\": ");
+
+			sb.append(String.valueOf(product.getDiagram()));
+		}
+
 		if (product.getDisplayDate() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -300,6 +312,26 @@ public class ProductSerDes {
 			sb.append("]");
 		}
 
+		if (product.getMappedProducts() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"mappedProducts\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < product.getMappedProducts().length; i++) {
+				sb.append(String.valueOf(product.getMappedProducts()[i]));
+
+				if ((i + 1) < product.getMappedProducts().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (product.getMetaDescription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -363,6 +395,26 @@ public class ProductSerDes {
 			sb.append("\"neverExpire\": ");
 
 			sb.append(product.getNeverExpire());
+		}
+
+		if (product.getPins() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pins\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < product.getPins().length; i++) {
+				sb.append(String.valueOf(product.getPins()[i]));
+
+				if ((i + 1) < product.getPins().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (product.getProductAccountGroupFilter() != null) {
@@ -769,6 +821,13 @@ public class ProductSerDes {
 			map.put("description", String.valueOf(product.getDescription()));
 		}
 
+		if (product.getDiagram() == null) {
+			map.put("diagram", null);
+		}
+		else {
+			map.put("diagram", String.valueOf(product.getDiagram()));
+		}
+
 		if (product.getDisplayDate() == null) {
 			map.put("displayDate", null);
 		}
@@ -817,6 +876,14 @@ public class ProductSerDes {
 			map.put("images", String.valueOf(product.getImages()));
 		}
 
+		if (product.getMappedProducts() == null) {
+			map.put("mappedProducts", null);
+		}
+		else {
+			map.put(
+				"mappedProducts", String.valueOf(product.getMappedProducts()));
+		}
+
 		if (product.getMetaDescription() == null) {
 			map.put("metaDescription", null);
 		}
@@ -861,6 +928,13 @@ public class ProductSerDes {
 		}
 		else {
 			map.put("neverExpire", String.valueOf(product.getNeverExpire()));
+		}
+
+		if (product.getPins() == null) {
+			map.put("pins", null);
+		}
+		else {
+			map.put("pins", String.valueOf(product.getPins()));
 		}
 
 		if (product.getProductAccountGroupFilter() == null) {
@@ -1138,6 +1212,12 @@ public class ProductSerDes {
 						(Map)ProductSerDes.toMap((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "diagram")) {
+				if (jsonParserFieldValue != null) {
+					product.setDiagram(
+						DiagramSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "displayDate")) {
 				if (jsonParserFieldValue != null) {
 					product.setDisplayDate(
@@ -1181,6 +1261,18 @@ public class ProductSerDes {
 						));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "mappedProducts")) {
+				if (jsonParserFieldValue != null) {
+					product.setMappedProducts(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> MappedProductSerDes.toDTO((String)object)
+						).toArray(
+							size -> new MappedProduct[size]
+						));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "metaDescription")) {
 				if (jsonParserFieldValue != null) {
 					product.setMetaDescription(
@@ -1214,6 +1306,18 @@ public class ProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "neverExpire")) {
 				if (jsonParserFieldValue != null) {
 					product.setNeverExpire((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "pins")) {
+				if (jsonParserFieldValue != null) {
+					product.setPins(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> PinSerDes.toDTO((String)object)
+						).toArray(
+							size -> new Pin[size]
+						));
 				}
 			}
 			else if (Objects.equals(

@@ -14,9 +14,8 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
-import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
-import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductResource;
-import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Pin;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.PinResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -82,236 +81,41 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseProductResourceImpl
-	implements EntityModelResource, ProductResource,
-			   VulcanBatchEngineTaskItemDelegate<Product> {
+public abstract class BasePinResourceImpl
+	implements EntityModelResource, PinResource,
+			   VulcanBatchEngineTaskItemDelegate<Pin> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/pins/{pinId}'  -u 'test@liferay.com:test'
 	 */
-	@GET
+	@DELETE
 	@Override
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "search"),
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sort")
-		}
-	)
-	@Path("/products")
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "pinId")})
+	@Path("/pins/{pinId}")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Product")})
-	public Page<Product> getProductsPage(
-			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context Filter filter, @Context Pagination pagination,
-			@Context Sort[] sorts)
+	@Tags(value = {@Tag(name = "Pin")})
+	public void deletePin(
+			@NotNull @Parameter(hidden = true) @PathParam("pinId") Long pinId)
 		throws Exception {
-
-		return Page.of(Collections.emptyList());
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products' -d $'{"active": ___, "attachments": ___, "catalogId": ___, "categories": ___, "configuration": ___, "createDate": ___, "customFields": ___, "defaultSku": ___, "description": ___, "diagram": ___, "displayDate": ___, "expando": ___, "expirationDate": ___, "externalReferenceCode": ___, "images": ___, "mappedProducts": ___, "metaDescription": ___, "metaKeyword": ___, "metaTitle": ___, "modifiedDate": ___, "name": ___, "neverExpire": ___, "pins": ___, "productAccountGroupFilter": ___, "productAccountGroups": ___, "productChannelFilter": ___, "productChannels": ___, "productOptions": ___, "productSpecifications": ___, "productType": ___, "relatedProducts": ___, "shippingConfiguration": ___, "shortDescription": ___, "skus": ___, "subscriptionConfiguration": ___, "tags": ___, "taxConfiguration": ___, "urls": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@Consumes({"application/json", "application/xml"})
-	@Override
-	@Path("/products")
-	@POST
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Product")})
-	public Product postProduct(Product product) throws Exception {
-		return new Product();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/pins/batch'  -u 'test@liferay.com:test'
 	 */
 	@Consumes("application/json")
+	@DELETE
 	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
-	@Path("/products/batch")
-	@POST
+	@Path("/pins/batch")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Product")})
-	public Response postProductBatch(
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.postImportTask(
-				Product.class.getName(), callbackURL, null, object)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
-	 */
-	@DELETE
-	@Override
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
-		}
-	)
-	@Path("/products/by-externalReferenceCode/{externalReferenceCode}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Product")})
-	public Response deleteProductByExternalReferenceCode(
-			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode")
-			String externalReferenceCode)
-		throws Exception {
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
-	 */
-	@GET
-	@Override
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
-		}
-	)
-	@Path("/products/by-externalReferenceCode/{externalReferenceCode}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Product")})
-	public Product getProductByExternalReferenceCode(
-			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode")
-			String externalReferenceCode)
-		throws Exception {
-
-		return new Product();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}' -d $'{"active": ___, "attachments": ___, "catalogId": ___, "categories": ___, "configuration": ___, "createDate": ___, "customFields": ___, "defaultSku": ___, "description": ___, "diagram": ___, "displayDate": ___, "expando": ___, "expirationDate": ___, "externalReferenceCode": ___, "images": ___, "mappedProducts": ___, "metaDescription": ___, "metaKeyword": ___, "metaTitle": ___, "modifiedDate": ___, "name": ___, "neverExpire": ___, "pins": ___, "productAccountGroupFilter": ___, "productAccountGroups": ___, "productChannelFilter": ___, "productChannels": ___, "productOptions": ___, "productSpecifications": ___, "productType": ___, "relatedProducts": ___, "shippingConfiguration": ___, "shortDescription": ___, "skus": ___, "subscriptionConfiguration": ___, "tags": ___, "taxConfiguration": ___, "urls": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@Consumes({"application/json", "application/xml"})
-	@Override
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
-		}
-	)
-	@PATCH
-	@Path("/products/by-externalReferenceCode/{externalReferenceCode}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Product")})
-	public Response patchProductByExternalReferenceCode(
-			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode")
-			String externalReferenceCode,
-			Product product)
-		throws Exception {
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/clone'  -u 'test@liferay.com:test'
-	 */
-	@Override
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
-			@Parameter(
-				in = ParameterIn.QUERY, name = "catalogExternalReferenceCode"
-			)
-		}
-	)
-	@Path("/products/by-externalReferenceCode/{externalReferenceCode}/clone")
-	@POST
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Product")})
-	public Product postProductByExternalReferenceCodeClone(
-			@NotNull @Parameter(hidden = true)
-			@PathParam("externalReferenceCode")
-			String externalReferenceCode,
-			@NotNull @Parameter(hidden = true)
-			@QueryParam("catalogExternalReferenceCode")
-			String catalogExternalReferenceCode)
-		throws Exception {
-
-		return new Product();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}'  -u 'test@liferay.com:test'
-	 */
-	@DELETE
-	@Override
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/products/{id}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Product")})
-	public Response deleteProduct(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
-		throws Exception {
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/batch'  -u 'test@liferay.com:test'
-	 */
-	@Consumes("application/json")
-	@DELETE
-	@Override
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "id"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
-		}
-	)
-	@Path("/products/{id}/batch")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Product")})
-	public Response deleteProductBatch(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
+	@Tags(value = {@Tag(name = "Pin")})
+	public Response deletePinBatch(
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
 			Object object)
@@ -329,97 +133,152 @@ public abstract class BaseProductResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.deleteImportTask(
-				Product.class.getName(), callbackURL, object)
+				Pin.class.getName(), callbackURL, object)
 		).build();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}'  -u 'test@liferay.com:test'
-	 */
-	@GET
-	@Override
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/products/{id}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Product")})
-	public Product getProduct(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
-		throws Exception {
-
-		return new Product();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}' -d $'{"active": ___, "attachments": ___, "catalogId": ___, "categories": ___, "configuration": ___, "createDate": ___, "customFields": ___, "defaultSku": ___, "description": ___, "diagram": ___, "displayDate": ___, "expando": ___, "expirationDate": ___, "externalReferenceCode": ___, "images": ___, "mappedProducts": ___, "metaDescription": ___, "metaKeyword": ___, "metaTitle": ___, "modifiedDate": ___, "name": ___, "neverExpire": ___, "pins": ___, "productAccountGroupFilter": ___, "productAccountGroups": ___, "productChannelFilter": ___, "productChannels": ___, "productOptions": ___, "productSpecifications": ___, "productType": ___, "relatedProducts": ___, "shippingConfiguration": ___, "shortDescription": ___, "skus": ___, "subscriptionConfiguration": ___, "tags": ___, "taxConfiguration": ___, "urls": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/pins/{pinId}' -d $'{"id": ___, "mappedProduct": ___, "positionX": ___, "positionY": ___, "sequence": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Override
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "pinId")})
 	@PATCH
-	@Path("/products/{id}")
+	@Path("/pins/{pinId}")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Product")})
-	public Response patchProduct(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			Product product)
+	@Tags(value = {@Tag(name = "Pin")})
+	public Pin patchPin(
+			@NotNull @Parameter(hidden = true) @PathParam("pinId") Long pinId,
+			Pin pin)
 		throws Exception {
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return new Pin();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/clone'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/pins'  -u 'test@liferay.com:test'
 	 */
+	@GET
 	@Override
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "id"),
-			@Parameter(in = ParameterIn.QUERY, name = "catalogId")
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
-	@Path("/products/{id}/clone")
-	@POST
+	@Path("/products/by-externalReferenceCode/{externalReferenceCode}/pins")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Product")})
-	public Product postProductClone(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
-			@Parameter(hidden = true) @QueryParam("catalogId") Long catalogId)
+	@Tags(value = {@Tag(name = "Pin")})
+	public Page<Pin> getProductByExternalReferenceCodePinsPage(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
-		return new Product();
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/pins' -d $'{"id": ___, "mappedProduct": ___, "positionX": ___, "positionY": ___, "sequence": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path("/products/by-externalReferenceCode/{externalReferenceCode}/pins")
+	@POST
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Pin")})
+	public Pin postProductByExternalReferenceCodePin(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			Pin pin)
+		throws Exception {
+
+		return new Pin();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{productId}/pins'  -u 'test@liferay.com:test'
+	 */
+	@GET
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "productId"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
+		}
+	)
+	@Path("/products/{productId}/pins")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Pin")})
+	public Page<Pin> getProductIdPinsPage(
+			@NotNull @Parameter(hidden = true) @PathParam("productId") Long
+				productId,
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Pagination pagination, @Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{productId}/pins' -d $'{"id": ___, "mappedProduct": ___, "positionX": ___, "positionY": ___, "sequence": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Override
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "productId")})
+	@Path("/products/{productId}/pins")
+	@POST
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Pin")})
+	public Pin postProductIdPin(
+			@NotNull @Parameter(hidden = true) @PathParam("productId") Long
+				productId,
+			Pin pin)
+		throws Exception {
+
+		return new Pin();
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			java.util.Collection<Product> products,
+			java.util.Collection<Pin> pins,
 			Map<String, Serializable> parameters)
 		throws Exception {
-
-		UnsafeConsumer<Product, Exception> productUnsafeConsumer =
-			product -> postProduct(product);
-
-		for (Product product : products) {
-			productUnsafeConsumer.accept(product);
-		}
 	}
 
 	@Override
 	public void delete(
-			java.util.Collection<Product> products,
+			java.util.Collection<Pin> pins,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Product product : products) {
-			deleteProduct(product.getId());
+		for (Pin pin : pins) {
+			deletePin(pin.getId());
 		}
 	}
 
@@ -439,12 +298,12 @@ public abstract class BaseProductResourceImpl
 	}
 
 	@Override
-	public Page<Product> read(
+	public Page<Pin> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getProductsPage(search, filter, pagination, sorts);
+		return null;
 	}
 
 	@Override
@@ -471,7 +330,7 @@ public abstract class BaseProductResourceImpl
 
 	@Override
 	public void update(
-			java.util.Collection<Product> products,
+			java.util.Collection<Pin> pins,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
@@ -646,6 +505,6 @@ public abstract class BaseProductResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseProductResourceImpl.class);
+		LogFactoryUtil.getLog(BasePinResourceImpl.class);
 
 }

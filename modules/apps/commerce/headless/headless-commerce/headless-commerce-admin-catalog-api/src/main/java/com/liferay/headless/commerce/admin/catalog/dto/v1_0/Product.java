@@ -383,6 +383,35 @@ public class Product implements Serializable {
 	protected Map<String, String> description;
 
 	@Schema
+	@Valid
+	public Diagram getDiagram() {
+		return diagram;
+	}
+
+	public void setDiagram(Diagram diagram) {
+		this.diagram = diagram;
+	}
+
+	@JsonIgnore
+	public void setDiagram(
+		UnsafeSupplier<Diagram, Exception> diagramUnsafeSupplier) {
+
+		try {
+			diagram = diagramUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Diagram diagram;
+
+	@Schema
 	public Date getDisplayDate() {
 		return displayDate;
 	}
@@ -550,6 +579,36 @@ public class Product implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Attachment[] images;
+
+	@Schema
+	@Valid
+	public MappedProduct[] getMappedProducts() {
+		return mappedProducts;
+	}
+
+	public void setMappedProducts(MappedProduct[] mappedProducts) {
+		this.mappedProducts = mappedProducts;
+	}
+
+	@JsonIgnore
+	public void setMappedProducts(
+		UnsafeSupplier<MappedProduct[], Exception>
+			mappedProductsUnsafeSupplier) {
+
+		try {
+			mappedProducts = mappedProductsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected MappedProduct[] mappedProducts;
 
 	@Schema
 	@Valid
@@ -726,6 +785,33 @@ public class Product implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean neverExpire;
+
+	@Schema
+	@Valid
+	public Pin[] getPins() {
+		return pins;
+	}
+
+	public void setPins(Pin[] pins) {
+		this.pins = pins;
+	}
+
+	@JsonIgnore
+	public void setPins(UnsafeSupplier<Pin[], Exception> pinsUnsafeSupplier) {
+		try {
+			pins = pinsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Pin[] pins;
 
 	@Schema
 	public Boolean getProductAccountGroupFilter() {
@@ -1526,6 +1612,16 @@ public class Product implements Serializable {
 			sb.append(_toJSON(description));
 		}
 
+		if (diagram != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"diagram\": ");
+
+			sb.append(String.valueOf(diagram));
+		}
+
 		if (displayDate != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1608,6 +1704,26 @@ public class Product implements Serializable {
 			sb.append("]");
 		}
 
+		if (mappedProducts != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"mappedProducts\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < mappedProducts.length; i++) {
+				sb.append(String.valueOf(mappedProducts[i]));
+
+				if ((i + 1) < mappedProducts.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (metaDescription != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1670,6 +1786,26 @@ public class Product implements Serializable {
 			sb.append("\"neverExpire\": ");
 
 			sb.append(neverExpire);
+		}
+
+		if (pins != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pins\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < pins.length; i++) {
+				sb.append(String.valueOf(pins[i]));
+
+				if ((i + 1) < pins.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (productAccountGroupFilter != null) {

@@ -19,9 +19,12 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.AttachmentBase64;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.AttachmentUrl;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Diagram;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionCategory;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionValue;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Pin;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductGroup;
@@ -38,9 +41,12 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CategoryResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.DiagramResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.MappedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionCategoryResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionValueResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.PinResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductAccountGroupResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductChannelResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationResource;
@@ -109,6 +115,22 @@ public class Mutation {
 			categoryResourceComponentServiceObjects;
 	}
 
+	public static void setDiagramResourceComponentServiceObjects(
+		ComponentServiceObjects<DiagramResource>
+			diagramResourceComponentServiceObjects) {
+
+		_diagramResourceComponentServiceObjects =
+			diagramResourceComponentServiceObjects;
+	}
+
+	public static void setMappedProductResourceComponentServiceObjects(
+		ComponentServiceObjects<MappedProductResource>
+			mappedProductResourceComponentServiceObjects) {
+
+		_mappedProductResourceComponentServiceObjects =
+			mappedProductResourceComponentServiceObjects;
+	}
+
 	public static void setOptionResourceComponentServiceObjects(
 		ComponentServiceObjects<OptionResource>
 			optionResourceComponentServiceObjects) {
@@ -131,6 +153,14 @@ public class Mutation {
 
 		_optionValueResourceComponentServiceObjects =
 			optionValueResourceComponentServiceObjects;
+	}
+
+	public static void setPinResourceComponentServiceObjects(
+		ComponentServiceObjects<PinResource>
+			pinResourceComponentServiceObjects) {
+
+		_pinResourceComponentServiceObjects =
+			pinResourceComponentServiceObjects;
 	}
 
 	public static void setProductResourceComponentServiceObjects(
@@ -549,6 +579,116 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Diagram patchDiagram(
+			@GraphQLName("diagramId") Long diagramId,
+			@GraphQLName("diagram") Diagram diagram)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_diagramResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			diagramResource -> diagramResource.patchDiagram(
+				diagramId, diagram));
+	}
+
+	@GraphQLField
+	public Diagram updateProductByExternalReferenceCodeDiagram(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("diagram") Diagram diagram)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_diagramResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			diagramResource ->
+				diagramResource.putProductByExternalReferenceCodeDiagram(
+					externalReferenceCode, diagram));
+	}
+
+	@GraphQLField
+	public Diagram updateProductIdDiagram(
+			@GraphQLName("productId") Long productId,
+			@GraphQLName("diagram") Diagram diagram)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_diagramResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			diagramResource -> diagramResource.putProductIdDiagram(
+				productId, diagram));
+	}
+
+	@GraphQLField
+	public boolean deleteMappedProduct(
+			@GraphQLName("mappedProductId") Long mappedProductId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_mappedProductResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			mappedProductResource -> mappedProductResource.deleteMappedProduct(
+				mappedProductId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteMappedProductBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_mappedProductResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			mappedProductResource ->
+				mappedProductResource.deleteMappedProductBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
+	public MappedProduct patchMappedProduct(
+			@GraphQLName("mappedProductId") Long mappedProductId,
+			@GraphQLName("mappedProduct") MappedProduct mappedProduct)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_mappedProductResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			mappedProductResource -> mappedProductResource.patchMappedProduct(
+				mappedProductId, mappedProduct));
+	}
+
+	@GraphQLField
+	public MappedProduct createProductByExternalReferenceCodeMappedProduct(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("mappedProduct") MappedProduct mappedProduct)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_mappedProductResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			mappedProductResource ->
+				mappedProductResource.
+					postProductByExternalReferenceCodeMappedProduct(
+						externalReferenceCode, mappedProduct));
+	}
+
+	@GraphQLField
+	public MappedProduct createProductIdMappedProduct(
+			@GraphQLName("productId") Long productId,
+			@GraphQLName("mappedProduct") MappedProduct mappedProduct)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_mappedProductResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			mappedProductResource ->
+				mappedProductResource.postProductIdMappedProduct(
+					productId, mappedProduct));
+	}
+
+	@GraphQLField
 	public Option createOption(@GraphQLName("option") Option option)
 		throws Exception {
 
@@ -800,6 +940,61 @@ public class Mutation {
 			optionValueResource ->
 				optionValueResource.postOptionIdOptionValueBatch(
 					id, callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean deletePin(@GraphQLName("pinId") Long pinId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_pinResourceComponentServiceObjects, this::_populateResourceContext,
+			pinResource -> pinResource.deletePin(pinId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deletePinBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pinResourceComponentServiceObjects, this::_populateResourceContext,
+			pinResource -> pinResource.deletePinBatch(callbackURL, object));
+	}
+
+	@GraphQLField
+	public Pin patchPin(
+			@GraphQLName("pinId") Long pinId, @GraphQLName("pin") Pin pin)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pinResourceComponentServiceObjects, this::_populateResourceContext,
+			pinResource -> pinResource.patchPin(pinId, pin));
+	}
+
+	@GraphQLField
+	public Pin createProductByExternalReferenceCodePin(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("pin") Pin pin)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pinResourceComponentServiceObjects, this::_populateResourceContext,
+			pinResource -> pinResource.postProductByExternalReferenceCodePin(
+				externalReferenceCode, pin));
+	}
+
+	@GraphQLField
+	public Pin createProductIdPin(
+			@GraphQLName("productId") Long productId,
+			@GraphQLName("pin") Pin pin)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_pinResourceComponentServiceObjects, this::_populateResourceContext,
+			pinResource -> pinResource.postProductIdPin(productId, pin));
 	}
 
 	@GraphQLField
@@ -1713,6 +1908,34 @@ public class Mutation {
 		categoryResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(DiagramResource diagramResource)
+		throws Exception {
+
+		diagramResource.setContextAcceptLanguage(_acceptLanguage);
+		diagramResource.setContextCompany(_company);
+		diagramResource.setContextHttpServletRequest(_httpServletRequest);
+		diagramResource.setContextHttpServletResponse(_httpServletResponse);
+		diagramResource.setContextUriInfo(_uriInfo);
+		diagramResource.setContextUser(_user);
+		diagramResource.setGroupLocalService(_groupLocalService);
+		diagramResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
+			MappedProductResource mappedProductResource)
+		throws Exception {
+
+		mappedProductResource.setContextAcceptLanguage(_acceptLanguage);
+		mappedProductResource.setContextCompany(_company);
+		mappedProductResource.setContextHttpServletRequest(_httpServletRequest);
+		mappedProductResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		mappedProductResource.setContextUriInfo(_uriInfo);
+		mappedProductResource.setContextUser(_user);
+		mappedProductResource.setGroupLocalService(_groupLocalService);
+		mappedProductResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(OptionResource optionResource)
 		throws Exception {
 
@@ -1754,6 +1977,19 @@ public class Mutation {
 		optionValueResource.setContextUser(_user);
 		optionValueResource.setGroupLocalService(_groupLocalService);
 		optionValueResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(PinResource pinResource)
+		throws Exception {
+
+		pinResource.setContextAcceptLanguage(_acceptLanguage);
+		pinResource.setContextCompany(_company);
+		pinResource.setContextHttpServletRequest(_httpServletRequest);
+		pinResource.setContextHttpServletResponse(_httpServletResponse);
+		pinResource.setContextUriInfo(_uriInfo);
+		pinResource.setContextUser(_user);
+		pinResource.setGroupLocalService(_groupLocalService);
+		pinResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(ProductResource productResource)
@@ -2003,12 +2239,18 @@ public class Mutation {
 		_catalogResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CategoryResource>
 		_categoryResourceComponentServiceObjects;
+	private static ComponentServiceObjects<DiagramResource>
+		_diagramResourceComponentServiceObjects;
+	private static ComponentServiceObjects<MappedProductResource>
+		_mappedProductResourceComponentServiceObjects;
 	private static ComponentServiceObjects<OptionResource>
 		_optionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<OptionCategoryResource>
 		_optionCategoryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<OptionValueResource>
 		_optionValueResourceComponentServiceObjects;
+	private static ComponentServiceObjects<PinResource>
+		_pinResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProductResource>
 		_productResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProductAccountGroupResource>

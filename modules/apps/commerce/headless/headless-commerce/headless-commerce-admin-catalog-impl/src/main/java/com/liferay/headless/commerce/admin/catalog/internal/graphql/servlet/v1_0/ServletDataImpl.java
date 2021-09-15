@@ -19,9 +19,12 @@ import com.liferay.headless.commerce.admin.catalog.internal.graphql.query.v1_0.Q
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CategoryResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.DiagramResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.MappedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionCategoryResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionValueResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.PinResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductAccountGroupResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductChannelResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationResource;
@@ -64,12 +67,18 @@ public class ServletDataImpl implements ServletData {
 			_catalogResourceComponentServiceObjects);
 		Mutation.setCategoryResourceComponentServiceObjects(
 			_categoryResourceComponentServiceObjects);
+		Mutation.setDiagramResourceComponentServiceObjects(
+			_diagramResourceComponentServiceObjects);
+		Mutation.setMappedProductResourceComponentServiceObjects(
+			_mappedProductResourceComponentServiceObjects);
 		Mutation.setOptionResourceComponentServiceObjects(
 			_optionResourceComponentServiceObjects);
 		Mutation.setOptionCategoryResourceComponentServiceObjects(
 			_optionCategoryResourceComponentServiceObjects);
 		Mutation.setOptionValueResourceComponentServiceObjects(
 			_optionValueResourceComponentServiceObjects);
+		Mutation.setPinResourceComponentServiceObjects(
+			_pinResourceComponentServiceObjects);
 		Mutation.setProductResourceComponentServiceObjects(
 			_productResourceComponentServiceObjects);
 		Mutation.setProductAccountGroupResourceComponentServiceObjects(
@@ -108,12 +117,18 @@ public class ServletDataImpl implements ServletData {
 			_catalogResourceComponentServiceObjects);
 		Query.setCategoryResourceComponentServiceObjects(
 			_categoryResourceComponentServiceObjects);
+		Query.setDiagramResourceComponentServiceObjects(
+			_diagramResourceComponentServiceObjects);
+		Query.setMappedProductResourceComponentServiceObjects(
+			_mappedProductResourceComponentServiceObjects);
 		Query.setOptionResourceComponentServiceObjects(
 			_optionResourceComponentServiceObjects);
 		Query.setOptionCategoryResourceComponentServiceObjects(
 			_optionCategoryResourceComponentServiceObjects);
 		Query.setOptionValueResourceComponentServiceObjects(
 			_optionValueResourceComponentServiceObjects);
+		Query.setPinResourceComponentServiceObjects(
+			_pinResourceComponentServiceObjects);
 		Query.setProductResourceComponentServiceObjects(
 			_productResourceComponentServiceObjects);
 		Query.setProductAccountGroupResourceComponentServiceObjects(
@@ -175,6 +190,14 @@ public class ServletDataImpl implements ServletData {
 		_categoryResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<DiagramResource>
+		_diagramResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<MappedProductResource>
+		_mappedProductResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<OptionResource>
 		_optionResourceComponentServiceObjects;
 
@@ -185,6 +208,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<OptionValueResource>
 		_optionValueResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<PinResource>
+		_pinResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProductResource>

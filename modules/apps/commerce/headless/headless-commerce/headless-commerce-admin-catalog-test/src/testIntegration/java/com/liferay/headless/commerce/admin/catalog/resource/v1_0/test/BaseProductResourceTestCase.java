@@ -921,6 +921,14 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("diagram", additionalAssertFieldName)) {
+				if (product.getDiagram() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("displayDate", additionalAssertFieldName)) {
 				if (product.getDisplayDate() == null) {
 					valid = false;
@@ -957,6 +965,14 @@ public abstract class BaseProductResourceTestCase {
 
 			if (Objects.equals("images", additionalAssertFieldName)) {
 				if (product.getImages() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("mappedProducts", additionalAssertFieldName)) {
+				if (product.getMappedProducts() == null) {
 					valid = false;
 				}
 
@@ -1005,6 +1021,14 @@ public abstract class BaseProductResourceTestCase {
 
 			if (Objects.equals("neverExpire", additionalAssertFieldName)) {
 				if (product.getNeverExpire() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("pins", additionalAssertFieldName)) {
+				if (product.getPins() == null) {
 					valid = false;
 				}
 
@@ -1397,6 +1421,16 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("diagram", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						product1.getDiagram(), product2.getDiagram())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("displayDate", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						product1.getDisplayDate(), product2.getDisplayDate())) {
@@ -1460,6 +1494,17 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("mappedProducts", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						product1.getMappedProducts(),
+						product2.getMappedProducts())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("metaDescription", additionalAssertFieldName)) {
 				if (!equals(
 						(Map)product1.getMetaDescription(),
@@ -1515,6 +1560,16 @@ public abstract class BaseProductResourceTestCase {
 			if (Objects.equals("neverExpire", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						product1.getNeverExpire(), product2.getNeverExpire())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("pins", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						product1.getPins(), product2.getPins())) {
 
 					return false;
 				}
@@ -1938,6 +1993,11 @@ public abstract class BaseProductResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("diagram")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("displayDate")) {
 			if (operator.equals("between")) {
 				sb = new StringBundler();
@@ -2023,6 +2083,11 @@ public abstract class BaseProductResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("mappedProducts")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("metaDescription")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2075,6 +2140,11 @@ public abstract class BaseProductResourceTestCase {
 		}
 
 		if (entityFieldName.equals("neverExpire")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("pins")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

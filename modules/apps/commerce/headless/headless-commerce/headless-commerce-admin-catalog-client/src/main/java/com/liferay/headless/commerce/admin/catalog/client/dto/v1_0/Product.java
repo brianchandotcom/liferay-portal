@@ -270,6 +270,27 @@ public class Product implements Cloneable, Serializable {
 
 	protected Map<String, String> description;
 
+	public Diagram getDiagram() {
+		return diagram;
+	}
+
+	public void setDiagram(Diagram diagram) {
+		this.diagram = diagram;
+	}
+
+	public void setDiagram(
+		UnsafeSupplier<Diagram, Exception> diagramUnsafeSupplier) {
+
+		try {
+			diagram = diagramUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Diagram diagram;
+
 	public Date getDisplayDate() {
 		return displayDate;
 	}
@@ -393,6 +414,28 @@ public class Product implements Cloneable, Serializable {
 	}
 
 	protected Attachment[] images;
+
+	public MappedProduct[] getMappedProducts() {
+		return mappedProducts;
+	}
+
+	public void setMappedProducts(MappedProduct[] mappedProducts) {
+		this.mappedProducts = mappedProducts;
+	}
+
+	public void setMappedProducts(
+		UnsafeSupplier<MappedProduct[], Exception>
+			mappedProductsUnsafeSupplier) {
+
+		try {
+			mappedProducts = mappedProductsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected MappedProduct[] mappedProducts;
 
 	public Map<String, String> getMetaDescription() {
 		return metaDescription;
@@ -522,6 +565,25 @@ public class Product implements Cloneable, Serializable {
 	}
 
 	protected Boolean neverExpire;
+
+	public Pin[] getPins() {
+		return pins;
+	}
+
+	public void setPins(Pin[] pins) {
+		this.pins = pins;
+	}
+
+	public void setPins(UnsafeSupplier<Pin[], Exception> pinsUnsafeSupplier) {
+		try {
+			pins = pinsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Pin[] pins;
 
 	public Boolean getProductAccountGroupFilter() {
 		return productAccountGroupFilter;

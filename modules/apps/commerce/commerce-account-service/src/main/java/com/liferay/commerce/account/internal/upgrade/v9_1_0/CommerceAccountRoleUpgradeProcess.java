@@ -18,14 +18,13 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -43,13 +42,13 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 	public CommerceAccountRoleUpgradeProcess(
 		AccountRoleLocalService accountRoleLocalService,
 		ClassNameLocalService classNameLocalService,
-		ResourceActionLocalService resourceActionLocalService,
+		CounterLocalService counterLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService) {
 
 		_accountRoleLocalService = accountRoleLocalService;
 		_classNameLocalService = classNameLocalService;
-		_resourceActionLocalService = resourceActionLocalService;
+		_counterLocalService = counterLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
 	}
@@ -115,17 +114,27 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 				role.getRoleId());
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
-			List<ResourceAction> resourceActions =
-				_resourceActionLocalService.getResourceActions(
-					resourcePermission.getName());
+			ResourcePermission newResourcePermission =
+				_resourcePermissionLocalService.createResourcePermission(
+					_counterLocalService.increment(
+						ResourcePermission.class.getName()));
 
-			for (ResourceAction resourceAction : resourceActions) {
-				_resourcePermissionLocalService.addResourcePermission(
-					resourcePermission.getCompanyId(),
-					resourcePermission.getName(), resourcePermission.getScope(),
-					resourcePermission.getPrimKey(), accountRole.getRoleId(),
-					resourceAction.getActionId());
-			}
+			newResourcePermission.setCompanyId(
+				resourcePermission.getCompanyId());
+			newResourcePermission.setName(resourcePermission.getName());
+			newResourcePermission.setScope(resourcePermission.getScope());
+			newResourcePermission.setPrimKey(resourcePermission.getPrimKey());
+			newResourcePermission.setPrimKeyId(
+				resourcePermission.getPrimKeyId());
+			newResourcePermission.setRoleId(accountRole.getRoleId());
+			newResourcePermission.setOwnerId(resourcePermission.getOwnerId());
+			newResourcePermission.setActionIds(
+				resourcePermission.getActionIds());
+			newResourcePermission.setViewActionId(
+				resourcePermission.getViewActionId());
+
+			_resourcePermissionLocalService.addResourcePermission(
+				newResourcePermission);
 		}
 
 		return accountRole;
@@ -181,7 +190,7 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 
 	private final AccountRoleLocalService _accountRoleLocalService;
 	private final ClassNameLocalService _classNameLocalService;
-	private final ResourceActionLocalService _resourceActionLocalService;
+	private final CounterLocalService _counterLocalService;
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;
 	private final RoleLocalService _roleLocalService;

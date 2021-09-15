@@ -236,8 +236,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addAssetListEntries(serviceContext);
 			_addCommerceCatalogs(serviceContext);
 
-			List<Channel> commerceChannels = _addCommerceChannels(
-				groupId, serviceContext);
+			List<String> commerceChannelIds = _addCommerceChannels(
+				serviceContext);
 
 			_addDDMTemplates(serviceContext);
 			_addFragmentEntries(serviceContext);
@@ -254,7 +254,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext);
 
 			_addCommerceModelResourcePermissions(
-				CommerceChannel.class.getName(), commerceChannels,
+				CommerceChannel.class.getName(), commerceChannelIds,
 				"/site-initializer/model-resource-permissions" +
 					"/model-resource-permissions.json",
 				serviceContext);
@@ -395,17 +395,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private List<Channel> _addCommerceChannels(
-			long groupId, ServiceContext serviceContext)
+	private List<String> _addCommerceChannels(ServiceContext serviceContext)
 		throws Exception {
 
 		return _addCommerceChannels(
-			groupId, "/site-initializer/commerce-channels", serviceContext);
+			"/site-initializer/commerce-channels", serviceContext);
 	}
 
-	private List<Channel> _addCommerceChannels(
-			long groupId, String parentResourcePath,
-			ServiceContext serviceContext)
+	private List<String> _addCommerceChannels(
+			String parentResourcePath, ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
@@ -422,19 +420,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext.fetchUser()
 		).build();
 
-		List<Channel> commerceChannels = new ArrayList<>();
+		List<String> commerceChannelIds = new ArrayList<>();
 
 		for (String resourcePath : resourcePaths) {
 			String json = _read(resourcePath);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
-			jsonObject.put("siteGroupId", groupId);
+			jsonObject.put("siteGroupId", serviceContext.getScopeGroupId());
 
-			int commerceSiteType = jsonObject.getInt("commerceSiteType");
+			String commerceSiteType = jsonObject.getString("commerceSiteType");
 
 			jsonObject.remove("commerceSiteType");
-			
+
 			json = jsonObject.toString();
 
 			Channel channel = Channel.toDTO(json);
@@ -448,29 +446,29 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			channel = channelResource.postChannel(channel);
 
-			commerceChannels.add(channel);
+			commerceChannelIds.add(String.valueOf(channel.getId()));
 
 			_addCommerceSiteType(
-				channel.getSiteGroupId(), commerceSiteType, serviceContext);
+				serviceContext.getScopeGroupId(), commerceSiteType,
+				serviceContext);
 		}
 
-		return commerceChannels;
+		return commerceChannelIds;
 	}
 
 	private void _addCommerceModelResourcePermissions(
-			String className, List<Channel> commerceChannels, String path,
+			String className, List<String> commerceChannelIds, String path,
 			ServiceContext serviceContext)
 		throws Exception {
 
-		for (Channel commerceChannel : commerceChannels) {
+		for (String commerceChannelId : commerceChannelIds) {
 			_addModelResourcePermissions(
-				className, String.valueOf(commerceChannel.getId()), path,
-				serviceContext);
+				className, commerceChannelId, path, serviceContext);
 		}
 	}
 
 	private void _addCommerceSiteType(
-			long channelGroupId, int commerceSiteType,
+			long channelGroupId, String commerceSiteType,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -495,8 +493,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
 
-		modifiableSettings.setValue(
-			"commerceSiteType", String.valueOf(commerceSiteType));
+		modifiableSettings.setValue("commerceSiteType", commerceSiteType);
 
 		modifiableSettings.store();
 	}

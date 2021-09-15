@@ -802,9 +802,12 @@ definition {
 	@description = "Create a Web Behavior using 'has not' segment"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentUsingHasNot {
-		ACUtils.createBlogsAndAddToPage();
+		property portal.upstream = "quarantine";
 
-		Navigator.openURL();
+		// AC Refactor: data doesn't appear on time
+		// AC Refactor ticket: LRAC-9362
+
+		ACUtils.createBlogsAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -848,6 +851,10 @@ definition {
 
 		ACSegments.saveSegment();
 
+		ACNavigation.goToSegments();
+
+		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+
 		ACNavigation.switchTab(tabName = "Membership");
 
 		AssertElementPresent(
@@ -862,6 +869,8 @@ definition {
 				siteName = "Site Name");
 
 			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+			Pause(locator1 = "5000");
 		}
 
 		ACUtils.closeAllSessionsAndWait();

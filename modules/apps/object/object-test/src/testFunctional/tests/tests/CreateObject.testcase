@@ -44,7 +44,6 @@ definition {
 	@description = "LPS-135549 - Verify it is possible to cancel the creation of a Field"
 	@priority = "4"
 	test CanCancelCreationField {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -71,7 +70,6 @@ definition {
 		Button.clickCancel();
 
 		ObjectAdmin.assertObjectFieldNotPresent(fieldName = "customField");
-
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a BigDecimal field"

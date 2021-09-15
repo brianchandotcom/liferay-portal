@@ -49,7 +49,16 @@ definition {
 				locator1 = "ItemSelector#SITE_SELECTOR",
 				value1 = "${siteName}");
 
-			Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+			if (isSet(folderName)) {
+				LexiconCard.clickCard(card = "${folderName}");
+			}
+
+			if (isSet(pendingEntry)) {
+				AssertElementNotPresent(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+			}
+			else {
+				Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+			}
 		}
 
 		if (isSet(embedVideo)) {

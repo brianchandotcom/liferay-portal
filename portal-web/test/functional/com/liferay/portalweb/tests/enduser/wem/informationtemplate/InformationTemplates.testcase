@@ -212,10 +212,10 @@ definition {
 	@priority = "4"
 	@uitest
 	test DefinePermissionsOfInformationTemplate {
-		task ("Add an information template for Object and CommerceOrder") {
+		task ("Add an information template for Object and User") {
 			JSONDDMtemplate.addInformationTemplate(
 				groupName = "Test Site Name",
-				itemSubtype = "CommerceOrder",
+				itemSubtype = "User",
 				itemType = "Object",
 				name = "Test Information Template");
 		}
@@ -228,14 +228,14 @@ definition {
 				item = "Edit");
 		}
 
-		task ("Add the User Name and Order Status field") {
+		task ("Add the User Name and Email Address field") {
 			InformationTemplates.addField(
 				fieldName = "User Name",
 				panelTitle = "Basic Information");
 
 			InformationTemplates.addField(
-				fieldName = "Order Status",
-				panelTitle = "Commerce Order");
+				fieldName = "Email Address",
+				panelTitle = "User");
 		}
 
 		task ("Save the information template") {
@@ -245,7 +245,7 @@ definition {
 		task ("View the information template entry") {
 			InformationTemplates.viewTemplate(
 				informationTemplateName = "Test Information Template",
-				itemSubtype = "Commerce Order",
+				itemSubtype = "User",
 				itemType = "Object");
 		}
 

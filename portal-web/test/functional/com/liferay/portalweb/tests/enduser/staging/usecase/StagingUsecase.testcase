@@ -1462,6 +1462,8 @@ definition {
 	@priority = "4"
 	@uitest
 	test StagingPublishChildSiteWithReference {
+		property portal.upstream = "quarantine";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddCP();

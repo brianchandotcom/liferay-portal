@@ -27,13 +27,52 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136855. It checks that a pending file cannot be added to another asset."
-	@ignore = "true"
 	@priority = "4"
 	test CannotAddPendingFileToAsset {
-		property portal.acceptance = "false";
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		// TODO LPS-136855 CannotAddPendingFileToAsset pending implementation
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			widgetName = "Web Content Display");
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMFolder.configureWorkflowCP(
+			dmFolderName = "DM Folder Name",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Default Workflow");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.addWithWorkflowCP(
+			dmDocumentFile = "Document_1.png",
+			dmDocumentTitle = "Document_1.png");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		WebContentDisplayPortletNavigator.gotoAdd();
+
+		WebContent.addCP(
+			embedImage = "true",
+			folderName = "DM Folder Name",
+			imageFileName = "Document_1.png",
+			pendingEntry = "true",
+			siteName = "Site Name");
 	}
 
 	@description = "This is a test for LPS-136854. It checks that the single approver workflow can be removed from a folder."

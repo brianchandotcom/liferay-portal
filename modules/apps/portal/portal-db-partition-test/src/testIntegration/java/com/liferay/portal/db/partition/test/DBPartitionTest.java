@@ -106,8 +106,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 			DBPartitionUtil.forEachCompanyId(
 				companyId -> {
 					if (dbInspector.hasColumn(
-						TEST_CONTROL_TABLE_NAME,
-						TEST_CONTROL_TABLE_NEW_COLUMN)) {
+							TEST_CONTROL_TABLE_NAME,
+							TEST_CONTROL_TABLE_NEW_COLUMN)) {
 
 						db.runSQL(
 							StringBundler.concat(

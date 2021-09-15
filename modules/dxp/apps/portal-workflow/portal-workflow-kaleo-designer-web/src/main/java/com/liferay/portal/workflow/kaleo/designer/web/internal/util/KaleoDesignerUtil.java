@@ -21,7 +21,7 @@ import com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFK
  */
 public class KaleoDesignerUtil {
 
-	public static String getJspPath() {
+	public static String getEditJspPath() {
 		if (FFKaleoDesignerConfigurationUtil.newKaleoDesignerEnabled()) {
 			return "/designer/edit_workflow_definition.jsp";
 		}

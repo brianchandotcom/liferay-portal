@@ -27,7 +27,7 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getO
 %>
 
 <portlet:renderURL var="viewURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="<%= KaleoDesignerUtil.getJspPath() %>" />
+	<portlet:param name="mvcPath" value="<%= KaleoDesignerUtil.getEditJspPath() %>" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
 	<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />

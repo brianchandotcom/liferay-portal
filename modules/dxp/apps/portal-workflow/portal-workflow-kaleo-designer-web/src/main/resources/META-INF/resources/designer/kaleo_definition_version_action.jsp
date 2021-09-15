@@ -31,7 +31,7 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 %>
 
 <liferay-portlet:actionURL name="/kaleo_designer/duplicate_workflow_definition" portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="duplicateWorkflowDefinition">
-	<portlet:param name="mvcPath" value="<%= KaleoDesignerUtil.getJspPath() %>" />
+	<portlet:param name="mvcPath" value="<%= KaleoDesignerUtil.getEditJspPath() %>" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </liferay-portlet:actionURL>
 
@@ -43,7 +43,7 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 	showWhenSingleIcon="<%= true %>"
 >
 	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="viewURL">
-		<portlet:param name="mvcPath" value="<%= KaleoDesignerUtil.getJspPath() %>" />
+		<portlet:param name="mvcPath" value="<%= KaleoDesignerUtil.getEditJspPath() %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
 		<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
@@ -57,7 +57,7 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 
 	<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
 		<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editURL">
-			<portlet:param name="mvcPath" value="<%= KaleoDesignerUtil.getJspPath() %>" />
+			<portlet:param name="mvcPath" value="<%= KaleoDesignerUtil.getEditJspPath() %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
 			<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />

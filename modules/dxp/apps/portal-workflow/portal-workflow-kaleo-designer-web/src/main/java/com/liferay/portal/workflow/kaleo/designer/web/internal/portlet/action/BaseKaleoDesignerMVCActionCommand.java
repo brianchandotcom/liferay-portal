@@ -189,7 +189,7 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
 			actionRequest, themeDisplay.getPpid(), PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("mvcPath", KaleoDesignerUtil.getJspPath());
+		portletURL.setParameter("mvcPath", KaleoDesignerUtil.getEditJspPath());
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 

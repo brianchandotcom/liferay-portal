@@ -9,9 +9,5 @@
 <#-- Util -->
 
 <#function getVariableReferenceCode variableName>
-	<#if stringUtil.equals(language, "ftl")>
 		<#return "${" + variableName + "}">
-	<#else>
-		<#return "$" + variableName>
-	</#if>
 </#function>

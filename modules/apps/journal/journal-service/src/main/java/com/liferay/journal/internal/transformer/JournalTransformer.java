@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -93,7 +92,7 @@ public class JournalTransformer {
 			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
 			Map<String, String> tokens, String viewMode, String languageId,
 			Document document, PortletRequestModel portletRequestModel,
-			String script, String langType, boolean propagateException)
+			String script, boolean propagateException)
 		throws Exception {
 
 		// Setup listeners
@@ -154,195 +153,179 @@ public class JournalTransformer {
 
 		// Transform
 
-		String output = null;
+		long companyId = 0;
+		long companyGroupId = 0;
+		long articleGroupId = 0;
+		long classNameId = 0;
 
-		if (Validator.isNull(langType)) {
-			output = LocalizationUtil.getLocalization(
-				document.asXML(), languageId);
+		if (tokens != null) {
+			companyId = GetterUtil.getLong(tokens.get("company_id"));
+			companyGroupId = GetterUtil.getLong(tokens.get("company_group_id"));
+			articleGroupId = GetterUtil.getLong(tokens.get("article_group_id"));
+			classNameId = GetterUtil.getLong(
+				tokens.get(TemplateConstants.CLASS_NAME_ID));
 		}
-		else {
-			long companyId = 0;
-			long companyGroupId = 0;
-			long articleGroupId = 0;
-			long classNameId = 0;
 
-			if (tokens != null) {
-				companyId = GetterUtil.getLong(tokens.get("company_id"));
-				companyGroupId = GetterUtil.getLong(
-					tokens.get("company_group_id"));
-				articleGroupId = GetterUtil.getLong(
-					tokens.get("article_group_id"));
-				classNameId = GetterUtil.getLong(
-					tokens.get(TemplateConstants.CLASS_NAME_ID));
+		long scopeGroupId = 0;
+		long siteGroupId = 0;
+
+		if (themeDisplay != null) {
+			companyId = themeDisplay.getCompanyId();
+			companyGroupId = themeDisplay.getCompanyGroupId();
+			scopeGroupId = themeDisplay.getScopeGroupId();
+			siteGroupId = themeDisplay.getSiteGroupId();
+		}
+
+		String templateId = tokens.get("ddm_template_id");
+
+		templateId = getTemplateId(
+			templateId, companyId, companyGroupId, articleGroupId);
+
+		Template template = getTemplate(templateId, script);
+
+		PortletRequest originalPortletRequest = null;
+		PortletResponse originalPortletResponse = null;
+
+		HttpServletRequest httpServletRequest = null;
+
+		if ((themeDisplay != null) && (themeDisplay.getRequest() != null)) {
+			httpServletRequest = themeDisplay.getRequest();
+
+			if (portletRequestModel != null) {
+				originalPortletRequest =
+					(PortletRequest)httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_REQUEST);
+				originalPortletResponse =
+					(PortletResponse)httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+				httpServletRequest.setAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST,
+					portletRequestModel.getPortletRequest());
+				httpServletRequest.setAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE,
+					portletRequestModel.getPortletResponse());
+				httpServletRequest.setAttribute(
+					PortletRequest.LIFECYCLE_PHASE,
+					portletRequestModel.getLifecycle());
 			}
 
-			long scopeGroupId = 0;
-			long siteGroupId = 0;
+			template.prepare(httpServletRequest);
+		}
 
-			if (themeDisplay != null) {
-				companyId = themeDisplay.getCompanyId();
-				companyGroupId = themeDisplay.getCompanyGroupId();
-				scopeGroupId = themeDisplay.getScopeGroupId();
-				siteGroupId = themeDisplay.getSiteGroupId();
-			}
+		if (contextObjects != null) {
+			template.putAll(contextObjects);
+		}
 
-			String templateId = tokens.get("ddm_template_id");
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-			templateId = getTemplateId(
-				templateId, companyId, companyGroupId, articleGroupId);
+		try {
+			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-			Template template = getTemplate(templateId, script, langType);
+			if (document != null) {
+				Element rootElement = document.getRootElement();
 
-			PortletRequest originalPortletRequest = null;
-			PortletResponse originalPortletResponse = null;
+				long ddmStructureId = GetterUtil.getLong(
+					tokens.get("ddm_structure_id"));
 
-			HttpServletRequest httpServletRequest = null;
+				DDMStructure ddmStructure =
+					DDMStructureLocalServiceUtil.getStructure(ddmStructureId);
 
-			if ((themeDisplay != null) && (themeDisplay.getRequest() != null)) {
-				httpServletRequest = themeDisplay.getRequest();
+				DDMForm ddmForm = ddmStructure.getDDMForm();
+
+				List<TemplateNode> templateNodes = getTemplateNodes(
+					themeDisplay, rootElement,
+					ddmForm.getDDMFormFieldsMap(true), locale);
+
+				templateNodes.addAll(
+					includeBackwardsCompatibilityTemplateNodes(
+						templateNodes, -1));
+
+				for (TemplateNode templateNode : templateNodes) {
+					template.put(templateNode.getName(), templateNode);
+				}
 
 				if (portletRequestModel != null) {
-					originalPortletRequest =
-						(PortletRequest)httpServletRequest.getAttribute(
-							JavaConstants.JAVAX_PORTLET_REQUEST);
-					originalPortletResponse =
-						(PortletResponse)httpServletRequest.getAttribute(
-							JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-					httpServletRequest.setAttribute(
-						JavaConstants.JAVAX_PORTLET_REQUEST,
-						portletRequestModel.getPortletRequest());
-					httpServletRequest.setAttribute(
-						JavaConstants.JAVAX_PORTLET_RESPONSE,
-						portletRequestModel.getPortletResponse());
-					httpServletRequest.setAttribute(
-						PortletRequest.LIFECYCLE_PHASE,
-						portletRequestModel.getLifecycle());
-				}
-
-				template.prepare(httpServletRequest);
-			}
-
-			if (contextObjects != null) {
-				template.putAll(contextObjects);
-			}
-
-			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-			try {
-				Locale locale = LocaleUtil.fromLanguageId(languageId);
-
-				if (document != null) {
-					Element rootElement = document.getRootElement();
-
-					long ddmStructureId = GetterUtil.getLong(
-						tokens.get("ddm_structure_id"));
-
-					DDMStructure ddmStructure =
-						DDMStructureLocalServiceUtil.getStructure(
-							ddmStructureId);
-
-					DDMForm ddmForm = ddmStructure.getDDMForm();
-
-					List<TemplateNode> templateNodes = getTemplateNodes(
-						themeDisplay, rootElement,
-						ddmForm.getDDMFormFieldsMap(true), locale);
-
-					templateNodes.addAll(
-						includeBackwardsCompatibilityTemplateNodes(
-							templateNodes, -1));
-
-					for (TemplateNode templateNode : templateNodes) {
-						template.put(templateNode.getName(), templateNode);
-					}
-
-					if (portletRequestModel != null) {
-						template.put("requestMap", portletRequestModel.toMap());
-					}
-					else {
-						Element requestElement = rootElement.element("request");
-
-						template.put(
-							"requestMap",
-							insertRequestVariables(requestElement));
-					}
-				}
-
-				template.put("articleGroupId", articleGroupId);
-				template.put("articleLocale", locale);
-				template.put("company", getCompany(themeDisplay, companyId));
-				template.put("companyId", companyId);
-				template.put("device", getDevice(themeDisplay));
-				template.put("locale", getLocale(themeDisplay, locale));
-				template.put(
-					"permissionChecker",
-					PermissionThreadLocal.getPermissionChecker());
-				template.put(
-					"randomNamespace",
-					StringUtil.randomId() + StringPool.UNDERLINE);
-				template.put("scopeGroupId", scopeGroupId);
-				template.put("siteGroupId", siteGroupId);
-
-				String templatesPath = getTemplatesPath(
-					companyId, articleGroupId, classNameId);
-
-				template.put("templatesPath", templatesPath);
-
-				template.put("viewMode", viewMode);
-
-				if (themeDisplay != null) {
-					template.prepareTaglib(
-						themeDisplay.getRequest(),
-						new PipingServletResponse(
-							themeDisplay.getResponse(), unsyncStringWriter));
-				}
-
-				// Deprecated variables
-
-				template.put("groupId", articleGroupId);
-				template.put("journalTemplatesPath", templatesPath);
-
-				if (propagateException) {
-					template.processTemplate(unsyncStringWriter);
+					template.put("requestMap", portletRequestModel.toMap());
 				}
 				else {
-					template.processTemplate(
-						unsyncStringWriter,
-						() -> getErrorTemplateResource(langType));
-				}
-			}
-			catch (Exception exception) {
-				if (exception instanceof DocumentException) {
-					throw new TransformException(
-						"Unable to read XML document", exception);
-				}
-				else if (exception instanceof IOException) {
-					throw new TransformException(
-						"Error reading template", exception);
-				}
-				else if (exception instanceof TransformException) {
-					throw (TransformException)exception;
-				}
-				else {
-					throw new TransformException(
-						"Unhandled exception", exception);
-				}
-			}
-			finally {
-				if ((httpServletRequest != null) &&
-					(portletRequestModel != null)) {
+					Element requestElement = rootElement.element("request");
 
-					httpServletRequest.setAttribute(
-						JavaConstants.JAVAX_PORTLET_REQUEST,
-						originalPortletRequest);
-					httpServletRequest.setAttribute(
-						JavaConstants.JAVAX_PORTLET_RESPONSE,
-						originalPortletResponse);
+					template.put(
+						"requestMap", insertRequestVariables(requestElement));
 				}
 			}
 
-			output = unsyncStringWriter.toString();
+			template.put("articleGroupId", articleGroupId);
+			template.put("articleLocale", locale);
+			template.put("company", getCompany(themeDisplay, companyId));
+			template.put("companyId", companyId);
+			template.put("device", getDevice(themeDisplay));
+			template.put("locale", getLocale(themeDisplay, locale));
+			template.put(
+				"permissionChecker",
+				PermissionThreadLocal.getPermissionChecker());
+			template.put(
+				"randomNamespace",
+				StringUtil.randomId() + StringPool.UNDERLINE);
+			template.put("scopeGroupId", scopeGroupId);
+			template.put("siteGroupId", siteGroupId);
+
+			String templatesPath = getTemplatesPath(
+				companyId, articleGroupId, classNameId);
+
+			template.put("templatesPath", templatesPath);
+
+			template.put("viewMode", viewMode);
+
+			if (themeDisplay != null) {
+				template.prepareTaglib(
+					themeDisplay.getRequest(),
+					new PipingServletResponse(
+						themeDisplay.getResponse(), unsyncStringWriter));
+			}
+
+			// Deprecated variables
+
+			template.put("groupId", articleGroupId);
+			template.put("journalTemplatesPath", templatesPath);
+
+			if (propagateException) {
+				template.processTemplate(unsyncStringWriter);
+			}
+			else {
+				template.processTemplate(
+					unsyncStringWriter, this::getErrorTemplateResource);
+			}
 		}
+		catch (Exception exception) {
+			if (exception instanceof DocumentException) {
+				throw new TransformException(
+					"Unable to read XML document", exception);
+			}
+			else if (exception instanceof IOException) {
+				throw new TransformException(
+					"Error reading template", exception);
+			}
+			else if (exception instanceof TransformException) {
+				throw (TransformException)exception;
+			}
+			else {
+				throw new TransformException("Unhandled exception", exception);
+			}
+		}
+		finally {
+			if ((httpServletRequest != null) && (portletRequestModel != null)) {
+				httpServletRequest.setAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST,
+					originalPortletRequest);
+				httpServletRequest.setAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE,
+					originalPortletResponse);
+			}
+		}
+
+		String output = unsyncStringWriter.toString();
 
 		// Postprocess output
 
@@ -392,26 +375,16 @@ public class JournalTransformer {
 		return UnknownDevice.getInstance();
 	}
 
-	protected TemplateResource getErrorTemplateResource(String langType) {
+	protected TemplateResource getErrorTemplateResource() {
 		try {
 			JournalServiceConfiguration journalServiceConfiguration =
 				ConfigurationProviderUtil.getCompanyConfiguration(
 					JournalServiceConfiguration.class,
 					CompanyThreadLocal.getCompanyId());
 
-			String template = StringPool.BLANK;
-
-			if (langType.equals(TemplateConstants.LANG_TYPE_FTL)) {
-				template = journalServiceConfiguration.errorTemplateFTL();
-			}
-			else if (langType.equals(TemplateConstants.LANG_TYPE_VM)) {
-				template = journalServiceConfiguration.errorTemplateVM();
-			}
-			else {
-				return null;
-			}
-
-			return new StringTemplateResource(langType, template);
+			return new StringTemplateResource(
+				TemplateConstants.LANG_TYPE_FTL,
+				journalServiceConfiguration.errorTemplateFTL());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -432,15 +405,14 @@ public class JournalTransformer {
 		return locale;
 	}
 
-	protected Template getTemplate(
-			String templateId, String script, String langType)
+	protected Template getTemplate(String templateId, String script)
 		throws Exception {
 
 		TemplateResource templateResource = new StringTemplateResource(
 			templateId, script);
 
 		return TemplateManagerUtil.getTemplate(
-			langType, templateResource, true);
+			TemplateConstants.LANG_TYPE_FTL, templateResource, true);
 	}
 
 	protected String getTemplateId(

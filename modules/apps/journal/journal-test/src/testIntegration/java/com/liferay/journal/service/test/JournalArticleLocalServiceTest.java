@@ -493,7 +493,7 @@ public class JournalArticleLocalServiceTest {
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
-			TemplateConstants.LANG_TYPE_VM,
+			TemplateConstants.LANG_TYPE_FTL,
 			JournalTestUtil.getSampleTemplateXSL(), LocaleUtil.US);
 
 		String content = DDMStructureTestUtil.getSampleStructuredContent(

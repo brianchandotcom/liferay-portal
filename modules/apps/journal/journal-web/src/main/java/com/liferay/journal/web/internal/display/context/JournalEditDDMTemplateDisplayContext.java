@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.template.TemplateVariableDefinition;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -52,7 +51,6 @@ import com.liferay.portal.template.TemplateContextHelper;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.RenderResponse;
@@ -90,7 +88,7 @@ public class JournalEditDDMTemplateDisplayContext {
 	public JSONObject getAutocompleteJSONObject() throws Exception {
 		return JSONFactoryUtil.createJSONObject(
 			_ddmTemplateHelper.getAutocompleteJSON(
-				_httpServletRequest, getLanguage()));
+				_httpServletRequest, TemplateConstants.LANG_TYPE_FTL));
 	}
 
 	public long getClassPK() {
@@ -143,8 +141,6 @@ public class JournalEditDDMTemplateDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"editorAutocompleteData", getAutocompleteJSONObject()
 		).put(
-			"editorMode", getEditorMode()
-		).put(
 			"propertiesViewURL",
 			() -> PortletURLBuilder.createRenderURL(
 				_renderResponse
@@ -154,8 +150,6 @@ public class JournalEditDDMTemplateDisplayContext {
 				"classPK", getClassPK()
 			).setParameter(
 				"ddmTemplateId", getDDMTemplateId()
-			).setParameter(
-				"language", getLanguage()
 			).setWindowState(
 				LiferayWindowState.EXCLUSIVE
 			).buildString()
@@ -163,8 +157,6 @@ public class JournalEditDDMTemplateDisplayContext {
 			"script", getScript()
 		).put(
 			"showCacheableWarning", isCacheable()
-		).put(
-			"showLanguageChangeWarning", getShowLanguageChangeWarning()
 		).put(
 			"showPropertiesPanel",
 			() -> {
@@ -192,30 +184,6 @@ public class JournalEditDDMTemplateDisplayContext {
 		return _ddmTemplateId;
 	}
 
-	public String getEditorMode() {
-		if (Objects.equals(getLanguage(), "ftl")) {
-			return "ftl";
-		}
-
-		return "velocity";
-	}
-
-	public String[] getExtendedTemplateLanguageTypes() {
-		DDMTemplate ddmTemplate = getDDMTemplate();
-
-		String[] extendedTemplateLanguageTypes = getTemplateLanguageTypes();
-
-		if ((ddmTemplate != null) &&
-			!ArrayUtil.contains(
-				extendedTemplateLanguageTypes, ddmTemplate.getLanguage())) {
-
-			extendedTemplateLanguageTypes = ArrayUtil.append(
-				extendedTemplateLanguageTypes, ddmTemplate.getLanguage());
-		}
-
-		return extendedTemplateLanguageTypes;
-	}
-
 	public long getGroupId() {
 		if (_groupId != null) {
 			return _groupId;
@@ -230,18 +198,6 @@ public class JournalEditDDMTemplateDisplayContext {
 			themeDisplay.getScopeGroupId());
 
 		return _groupId;
-	}
-
-	public String getLanguage() {
-		if (_language != null) {
-			return _language;
-		}
-
-		_language = BeanParamUtil.getString(
-			getDDMTemplate(), _httpServletRequest, "language",
-			TemplateConstants.LANG_TYPE_FTL);
-
-		return _language;
 	}
 
 	public String getRedirect() {
@@ -259,10 +215,6 @@ public class JournalEditDDMTemplateDisplayContext {
 			return _script;
 		}
 
-		_language = BeanParamUtil.getString(
-			getDDMTemplate(), _httpServletRequest, "language",
-			TemplateConstants.LANG_TYPE_FTL);
-
 		_script = BeanParamUtil.getString(
 			getDDMTemplate(), _httpServletRequest, "script");
 
@@ -271,7 +223,8 @@ public class JournalEditDDMTemplateDisplayContext {
 				TemplateHandlerRegistryUtil.getTemplateHandler(
 					PortalUtil.getClassNameId(JournalArticle.class));
 
-			_script = templateHandler.getTemplatesHelpContent(_language);
+			_script = templateHandler.getTemplatesHelpContent(
+				TemplateConstants.LANG_TYPE_FTL);
 		}
 
 		String scriptContent = ParamUtil.getString(
@@ -282,18 +235,6 @@ public class JournalEditDDMTemplateDisplayContext {
 		}
 
 		return _script;
-	}
-
-	public boolean getShowLanguageChangeWarning() {
-		DDMTemplate ddmTemplate = getDDMTemplate();
-
-		if ((ddmTemplate != null) && (getTemplateLanguageTypes().length > 1) &&
-			!Objects.equals(ddmTemplate.getLanguage(), getLanguage())) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	public String getSmallImageSource() {
@@ -357,10 +298,6 @@ public class JournalEditDDMTemplateDisplayContext {
 			templateLanguageType, StringPool.CLOSE_PARENTHESIS);
 	}
 
-	public String[] getTemplateLanguageTypes() {
-		return _journalWebConfiguration.journalDDMTemplateLanguageTypes();
-	}
-
 	public JSONArray getTemplateVariableGroupJSONArray() throws Exception {
 		JournalDDMTemplateHelper journalDDMTemplateHelper =
 			(JournalDDMTemplateHelper)_httpServletRequest.getAttribute(
@@ -386,7 +323,7 @@ public class JournalEditDDMTemplateDisplayContext {
 					JSONUtil.put(
 						"content",
 						journalDDMTemplateHelper.getDataContent(
-							templateVariableDefinition, getLanguage())
+							templateVariableDefinition)
 					).put(
 						"label",
 						LanguageUtil.get(
@@ -428,7 +365,7 @@ public class JournalEditDDMTemplateDisplayContext {
 		Map<String, TemplateVariableGroup> templateVariableGroups =
 			TemplateContextHelper.getTemplateVariableGroups(
 				PortalUtil.getClassNameId(JournalArticle.class), getClassPK(),
-				getLanguage(), themeDisplay.getLocale());
+				TemplateConstants.LANG_TYPE_FTL, themeDisplay.getLocale());
 
 		return templateVariableGroups.values();
 	}
@@ -466,7 +403,8 @@ public class JournalEditDDMTemplateDisplayContext {
 	}
 
 	public boolean isAutocompleteEnabled() {
-		return _ddmTemplateHelper.isAutocompleteEnabled(getLanguage());
+		return _ddmTemplateHelper.isAutocompleteEnabled(
+			TemplateConstants.LANG_TYPE_FTL);
 	}
 
 	public boolean isCacheable() {
@@ -480,22 +418,6 @@ public class JournalEditDDMTemplateDisplayContext {
 		return _cacheable;
 	}
 
-	public boolean isShowSpecificLanguageType() {
-		DDMTemplate ddmTemplate = getDDMTemplate();
-
-		String[] templateLanguageTypes = getTemplateLanguageTypes();
-
-		if ((templateLanguageTypes.length == 1) &&
-			((ddmTemplate == null) ||
-			 Objects.equals(
-				 templateLanguageTypes[0], ddmTemplate.getLanguage()))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isSmallImage() {
 		if (_smallImage != null) {
 			return _smallImage;
@@ -505,10 +427,6 @@ public class JournalEditDDMTemplateDisplayContext {
 			getDDMTemplate(), _httpServletRequest, "smallImage");
 
 		return _smallImage;
-	}
-
-	public void setLanguage(String language) {
-		_language = language;
 	}
 
 	public long smallImageMaxSize() {
@@ -526,7 +444,6 @@ public class JournalEditDDMTemplateDisplayContext {
 	private final JournalFileUploadsConfiguration
 		_journalFileUploadsConfiguration;
 	private final JournalWebConfiguration _journalWebConfiguration;
-	private String _language;
 	private String _redirect;
 	private final RenderResponse _renderResponse;
 	private String _script;

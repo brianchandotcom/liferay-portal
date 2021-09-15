@@ -92,7 +92,7 @@ public class JournalTestUtilTest {
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
-			TemplateConstants.LANG_TYPE_VM,
+			TemplateConstants.LANG_TYPE_FTL,
 			JournalTestUtil.getSampleTemplateXSL());
 
 		Assert.assertNotNull(
@@ -188,7 +188,7 @@ public class JournalTestUtilTest {
 			DDMTemplateTestUtil.addTemplate(
 				ddmStructure.getStructureId(),
 				PortalUtil.getClassNameId(JournalArticle.class),
-				TemplateConstants.LANG_TYPE_VM,
+				TemplateConstants.LANG_TYPE_FTL,
 				JournalTestUtil.getSampleTemplateXSL()));
 	}
 
@@ -206,7 +206,7 @@ public class JournalTestUtilTest {
 			null, null, getTokens(), Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null,
 			JournalTestUtil.getSampleTemplateXSL(),
-			TemplateConstants.LANG_TYPE_VM, false, new HashMap<>());
+			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}
@@ -265,7 +265,7 @@ public class JournalTestUtilTest {
 			null, null, getTokens(), Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null,
 			JournalTestUtil.getSampleTemplateXSL(),
-			TemplateConstants.LANG_TYPE_VM, false, new HashMap<>());
+			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}

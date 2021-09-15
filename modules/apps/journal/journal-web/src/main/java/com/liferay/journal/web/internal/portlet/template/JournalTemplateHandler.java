@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -101,7 +100,8 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 
 	@Override
 	public String getTemplatesHelpPath(String language) {
-		return _templatesHelpPaths.get(language);
+		return "com/liferay/journal/web/portlet/template/dependencies" +
+			"/template.ftl";
 	}
 
 	@Override
@@ -232,18 +232,6 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalTemplateHandler.class);
-
-	private static final Map<String, String> _templatesHelpPaths =
-		HashMapBuilder.put(
-			"css",
-			"com/liferay/journal/web/portlet/template/dependencies/template.css"
-		).put(
-			"ftl",
-			"com/liferay/journal/web/portlet/template/dependencies/template.ftl"
-		).put(
-			"vm",
-			"com/liferay/journal/web/portlet/template/dependencies/template.vm"
-		).build();
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

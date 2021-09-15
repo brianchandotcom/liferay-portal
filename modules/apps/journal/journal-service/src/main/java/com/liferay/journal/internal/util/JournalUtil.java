@@ -427,8 +427,7 @@ public class JournalUtil {
 			ThemeDisplay themeDisplay, Map<String, String> tokens,
 			String viewMode, String languageId, Document document,
 			PortletRequestModel portletRequestModel, String script,
-			String langType, boolean propagateException,
-			Map<String, Object> contextObjects)
+			boolean propagateException, Map<String, Object> contextObjects)
 		throws Exception {
 
 		TemplateHandler templateHandler =
@@ -439,8 +438,7 @@ public class JournalUtil {
 
 		return _journalTransformer.transform(
 			themeDisplay, contextObjects, tokens, viewMode, languageId,
-			document, portletRequestModel, script, langType,
-			propagateException);
+			document, portletRequestModel, script, propagateException);
 	}
 
 	private static void _addReservedEl(

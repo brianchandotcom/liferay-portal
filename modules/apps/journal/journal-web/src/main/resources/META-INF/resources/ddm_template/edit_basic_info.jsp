@@ -26,31 +26,6 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 
 <aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 
-<c:choose>
-	<c:when test="<%= journalEditDDMTemplateDisplayContext.isShowSpecificLanguageType() %>">
-		<p class="article-structure">
-			<b><liferay-ui:message key="language" /></b>: <%= journalEditDDMTemplateDisplayContext.getTemplateLanguageTypeLabel(journalEditDDMTemplateDisplayContext.getTemplateLanguageTypes()[0]) %>
-		</p>
-
-		<aui:input name="language" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getLanguage() %>" />
-	</c:when>
-	<c:otherwise>
-		<aui:select changesContext="<%= true %>" label="language" name="language">
-
-			<%
-			for (String languageType : journalEditDDMTemplateDisplayContext.getExtendedTemplateLanguageTypes()) {
-			%>
-
-				<aui:option label="<%= journalEditDDMTemplateDisplayContext.getTemplateLanguageTypeLabel(languageType) %>" selected="<%= Objects.equals(journalEditDDMTemplateDisplayContext.getLanguage(), languageType) %>" value="<%= languageType %>" />
-
-			<%
-			}
-			%>
-
-		</aui:select>
-	</c:otherwise>
-</c:choose>
-
 <div class="form-group">
 	<label class="control-label" for="<%= liferayPortletResponse.getNamespace() + "ddmStructure" %>">
 		<liferay-ui:message key="structure" />
@@ -136,23 +111,6 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 
 		if (ddmStructure) {
 			ddmStructure.addEventListener('click', onClick);
-		}
-
-		const languageSelect = document.getElementById('<portlet:namespace />language');
-
-		const onChange = (event) => {
-			const portletURL = new Liferay.Util.PortletURL.createPortletURL(
-				window.location.href,
-				{
-					language: event.target.value,
-				}
-			);
-
-			Liferay.Util.navigate(portletURL.toString());
-		};
-
-		if (languageSelect) {
-			languageSelect.addEventListener('change', onChange);
 		}
 	</aui:script>
 </c:if>

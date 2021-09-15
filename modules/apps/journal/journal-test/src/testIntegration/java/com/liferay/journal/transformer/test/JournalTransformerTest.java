@@ -16,9 +16,7 @@ package com.liferay.journal.transformer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
-import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalTransformerListenerRegistry;
@@ -36,7 +34,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
@@ -113,21 +110,21 @@ public class JournalTransformerTest {
 		String content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_VM, false, new HashMap<>());
+			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
 
 		Assert.assertEquals("Joe Bloggs", content);
 
 		content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "pt_BR",
 			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_VM, false, new HashMap<>());
+			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
 
 		Assert.assertEquals("Joao da Silva", content);
 
 		content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "fr_CA",
 			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_VM, false, new HashMap<>());
+			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}
@@ -162,13 +159,13 @@ public class JournalTransformerTest {
 
 		String content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "en_US", document, null, script,
-			TemplateConstants.LANG_TYPE_VM, false, new HashMap<>());
+			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
 
 		Assert.assertEquals("Joe Bloggs", content);
 
 		content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "pt_BR", document, null, script,
-			TemplateConstants.LANG_TYPE_VM, false, new HashMap<>());
+			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}
@@ -187,7 +184,7 @@ public class JournalTransformerTest {
 		String content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_VM, false, new HashMap<>());
+			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
 
 		Assert.assertEquals(
 			"Hello Joe Bloggs, Welcome to production.sample.com.", content);
@@ -204,7 +201,7 @@ public class JournalTransformerTest {
 		String content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_VM, false, new HashMap<>());
+			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
 
 		Assert.assertEquals(
 			String.valueOf(TestPropsValues.getCompanyId()), content);
@@ -214,7 +211,7 @@ public class JournalTransformerTest {
 		content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_VM, false, new HashMap<>());
+			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
 
 		Assert.assertEquals(
 			String.valueOf(TestPropsValues.getCompanyId()), content);
@@ -233,7 +230,7 @@ public class JournalTransformerTest {
 		String content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_VM, false, new HashMap<>());
+			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -243,38 +240,6 @@ public class JournalTransformerTest {
 				"com.liferay.journal.model.JournalArticle', classPK:1});",
 				"</script>"),
 			content);
-	}
-
-	@Test
-	public void testVMTransformation() throws Exception {
-		Map<String, String> tokens = getTokens();
-
-		_ddmStructure = DDMStructureTestUtil.addStructure(
-			TestPropsValues.getGroupId(), JournalArticle.class.getName());
-
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			_ddmStructure.getStructureId(),
-			PortalUtil.getClassNameId(JournalArticle.class),
-			TemplateConstants.LANG_TYPE_VM, "$name.getData()");
-
-		String xml = DDMStructureTestUtil.getSampleStructuredContent(
-			"name", "Joe Bloggs");
-
-		String content = (String)_transformMethod.invoke(
-			null, null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null,
-			"#parse(\"$templatesPath/" + ddmTemplate.getTemplateKey() + "\")",
-			TemplateConstants.LANG_TYPE_VM, false, new HashMap<>());
-
-		Assert.assertEquals("Joe Bloggs", content);
-
-		content = (String)_transformMethod.invoke(
-			null, null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null,
-			"#parse(\"$templatesPath/" + ddmTemplate.getTemplateKey() + "\")",
-			TemplateConstants.LANG_TYPE_VM, false, new HashMap<>());
-
-		Assert.assertEquals("Joe Bloggs", content);
 	}
 
 	protected Map<String, String> getTokens() throws Exception {

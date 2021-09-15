@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.staging.StagingGroupHelper;
@@ -120,42 +119,34 @@ public class JournalDDMTemplateManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		if (ArrayUtil.isEmpty(_getTemplateLanguageTypes())) {
-			return null;
-		}
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		return new CreationMenu() {
 			{
-				for (String templateLanguageType :
-						_getTemplateLanguageTypes()) {
-
-					addPrimaryDropdownItem(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								liferayPortletResponse.createRenderURL(),
-								"mvcPath", "/edit_ddm_template.jsp", "redirect",
-								themeDisplay.getURLCurrent(), "classPK",
-								_journalDDMTemplateDisplayContext.getClassPK(),
-								"language", templateLanguageType);
-							dropdownItem.setLabel(
-								LanguageUtil.format(
-									httpServletRequest, "add-x",
-									StringBundler.concat(
-										LanguageUtil.get(
-											httpServletRequest,
-											templateLanguageType +
-												"[stands-for]"),
-										StringPool.SPACE,
-										StringPool.OPEN_PARENTHESIS,
-										StringPool.PERIOD, templateLanguageType,
-										StringPool.CLOSE_PARENTHESIS),
-									false));
-						});
-				}
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							liferayPortletResponse.createRenderURL(), "mvcPath",
+							"/edit_ddm_template.jsp", "redirect",
+							themeDisplay.getURLCurrent(), "classPK",
+							_journalDDMTemplateDisplayContext.getClassPK());
+						dropdownItem.setLabel(
+							LanguageUtil.format(
+								httpServletRequest, "add-x",
+								StringBundler.concat(
+									LanguageUtil.get(
+										httpServletRequest,
+										TemplateConstants.LANG_TYPE_FTL +
+											"[stands-for]"),
+									StringPool.SPACE,
+									StringPool.OPEN_PARENTHESIS,
+									StringPool.PERIOD,
+									TemplateConstants.LANG_TYPE_FTL,
+									StringPool.CLOSE_PARENTHESIS),
+								false));
+					});
 			}
 		};
 	}
@@ -185,10 +176,6 @@ public class JournalDDMTemplateManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		if (ArrayUtil.isEmpty(_getTemplateLanguageTypes())) {
-			return false;
-		}
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -249,18 +236,6 @@ public class JournalDDMTemplateManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"modified-date", "id"};
-	}
-
-	private String[] _getTemplateLanguageTypes() {
-		String[] allowedTemplateLanguageTypes = {
-			TemplateConstants.LANG_TYPE_FTL, TemplateConstants.LANG_TYPE_VM,
-			TemplateConstants.LANG_TYPE_XSL
-		};
-
-		return ArrayUtil.filter(
-			_journalDDMTemplateDisplayContext.getTemplateLanguageTypes(),
-			templateLanguageType -> ArrayUtil.contains(
-				allowedTemplateLanguageTypes, templateLanguageType));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

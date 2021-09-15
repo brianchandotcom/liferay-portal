@@ -73,8 +73,6 @@ public class UpdateDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(
 				uploadPortletRequest, "description");
-		String language = ParamUtil.getString(
-			uploadPortletRequest, "language", TemplateConstants.LANG_TYPE_VM);
 		String script = ActionUtil.getScript(uploadPortletRequest);
 		boolean cacheable = ParamUtil.getBoolean(
 			uploadPortletRequest, "cacheable");
@@ -101,8 +99,8 @@ public class UpdateDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 		DDMTemplate ddmTemplate = _ddmTemplateService.updateTemplate(
 			ddmTemplateId, classPK, nameMap, descriptionMap,
 			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, StringPool.BLANK,
-			language, script, cacheable, smallImage, smallImageURL,
-			smallImageFile, serviceContext);
+			TemplateConstants.LANG_TYPE_FTL, script, cacheable, smallImage,
+			smallImageURL, smallImageFile, serviceContext);
 
 		boolean saveAndContinue = ParamUtil.getBoolean(
 			uploadPortletRequest, "saveAndContinue");

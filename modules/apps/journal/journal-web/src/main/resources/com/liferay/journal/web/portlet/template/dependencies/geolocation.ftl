@@ -6,7 +6,6 @@
 	<#assign encodedName = stringUtil.replace(name, ".", "_") />
 </#if>
 
-<#if stringUtil.equals(language, "ftl")>
 	${r"<#assign"} latitude = 0>
 	${r"<#assign"} longitude = 0>
 
@@ -23,6 +22,3 @@
 			name="${encodedName}${r"${random.nextInt()}"}"
 		/>
 	${r"</#if>"}
-<#else>
-	${getVariableReferenceCode(variableName)}
-</#if>

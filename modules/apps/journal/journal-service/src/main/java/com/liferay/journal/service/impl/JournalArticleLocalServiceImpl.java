@@ -7632,11 +7632,9 @@ public class JournalArticleLocalServiceImpl
 				rootElement, tokens, article, languageId, themeDisplay);
 
 			String script = StringPool.BLANK;
-			String langType = StringPool.BLANK;
 
 			if (ddmTemplate != null) {
 				script = ddmTemplate.getScript();
-				langType = ddmTemplate.getLanguage();
 				cacheable = ddmTemplate.isCacheable();
 			}
 			else {
@@ -7645,13 +7643,12 @@ public class JournalArticleLocalServiceImpl
 				script = _journalDefaultTemplateProvider.getScript(
 					ddmStructure.getStructureId());
 
-				langType = _journalDefaultTemplateProvider.getLanguage();
 				cacheable = _journalDefaultTemplateProvider.isCacheable();
 			}
 
 			content = JournalUtil.transform(
 				themeDisplay, tokens, viewMode, languageId, document,
-				portletRequestModel, script, langType, propagateException,
+				portletRequestModel, script, propagateException,
 				HashMapBuilder.<String, Object>put(
 					"friendlyURLs", _getFriendlyURLMap(article, themeDisplay)
 				).build());

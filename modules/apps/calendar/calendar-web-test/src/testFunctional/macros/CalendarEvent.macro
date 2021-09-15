@@ -893,6 +893,14 @@ definition {
 		PortletEntry.inputTitle(title = "${eventTitle}");
 	}
 
+	macro expandResourcesAvailabilityPanel {
+		ScrollWebElementIntoView(locator1 = "CalendarEditEvent#RESOURCES_AVAILABILITY_PANEL_COLLAPSED");
+
+		Click(locator1 = "CalendarEditEvent#RESOURCES_AVAILABILITY_PANEL_COLLAPSED");
+
+		Pause(locator1 = "1000");
+	}
+
 	macro gotoConfigureInvitations {
 		CalendarEvent._expandPanel(panelName = "Invitations");
 	}
@@ -1707,7 +1715,7 @@ definition {
 	}
 
 	macro viewResourcesAvailability {
-		CalendarEvent._expandPanel(panelName = "Resources Availability");
+		CalendarEvent.expandResourcesAvailabilityPanel();
 
 		AssertElementPresent(locator1 = "CalendarEditEvent#RESOURCES_AVAILABILITY_SCHEDULER_EVENT_GENERIC");
 	}

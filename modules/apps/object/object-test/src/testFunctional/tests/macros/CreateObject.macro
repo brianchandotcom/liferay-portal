@@ -23,7 +23,7 @@ definition {
 			locator1 = "CreateObject#FIELD_TYPE",
 			value1 = "${fieldType}");
 	}
-	
+
 	macro assertObjectPluralLabel {
 		AssertTextEquals(
 			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
@@ -40,6 +40,18 @@ definition {
 		Type(
 			locator1 = "CreateObject#OBJECT_LABEL",
 			value1 = "${labelName}");
+	}
+
+	macro editName {
+		Type(
+			locator1 = "CreateObject#FIELD_NAME",
+			value1 = "${fieldName}");
+	}
+
+	macro assertFieldName {
+		AssertTextEquals(
+			locator1 = "CreateObject#FIELD_NAME",
+			value1 = "${fieldName}");
 	}
 
 	macro editPluralLabel {

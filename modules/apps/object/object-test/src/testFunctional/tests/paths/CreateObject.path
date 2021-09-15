@@ -50,6 +50,11 @@
 		<td>//select[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_type']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>FIELD_NAME</td>
+		<td>//input[@name='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_name']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

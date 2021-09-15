@@ -551,7 +551,7 @@ definition {
 		CreateObject.editLabel(labelName = "Text Update");
 
 		CreateObject.saveObject();
-		
+
 		Refresh();
 
 		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
@@ -578,12 +578,37 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Searchable section before the Object is published"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanUpdateFieldSearchableSectionBeforePublished {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+		
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Text",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
-		// TODO LPS-138850 CanUpdateFieldSearchableSectionBeforePublished pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+
+        ObjectAdmin.clickFieldsSearchableSectionRadioOption(radioOption = "Text");
+
+		CreateObject.saveObject();
+		
+		Refresh();
+
+		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+
+		ObjectAdmin.viewFieldSearchableSectionLanguage();
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Type of a Field before the Object is published"

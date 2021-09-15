@@ -33,7 +33,7 @@ public interface OpenIdConnectProvider<S, T> {
 	public T getOIDCProviderMetadata()
 		throws OpenIdConnectServiceException.ProviderException;
 
-	public default int geTokenConnectionTimeout() {
+	public default int getTokenConnectionTimeout() {
 		return 500;
 	}
 

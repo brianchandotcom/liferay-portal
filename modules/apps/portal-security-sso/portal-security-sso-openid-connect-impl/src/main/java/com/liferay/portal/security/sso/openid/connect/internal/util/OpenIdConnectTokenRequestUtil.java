@@ -135,7 +135,7 @@ public class OpenIdConnectTokenRequestUtil {
 			_validate(
 				clientID, nonce, openIdConnectProvider.getOIDCClientMetadata(),
 				oidcProviderMetadata, oidcTokens,
-				openIdConnectProvider.geTokenConnectionTimeout());
+				openIdConnectProvider.getTokenConnectionTimeout());
 
 			return oidcTokens;
 		}

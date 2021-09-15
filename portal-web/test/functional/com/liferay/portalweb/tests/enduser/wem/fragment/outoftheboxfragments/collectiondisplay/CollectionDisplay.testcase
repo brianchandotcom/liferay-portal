@@ -3072,8 +3072,10 @@ definition {
 	}
 
 	@description = "This is a test for LPS-112093. The documents of collection are displayed using Abstract when add a Content Display to Collection Display."
-	@priority = "4"
+	@priority = "5"
 	test ViewDocumentInContentDisplay {
+		property portal.acceptance = "true";
+
 		for (var i : list "1,2,3") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",

@@ -106,7 +106,7 @@ public abstract class BaseDBPartitionTestCase {
 	protected static void createUniqueIndex(String tableName) throws Exception {
 		db.runSQL(
 			StringBundler.concat(
-				"create unique index", TEST_INDEX_NAME, "on ", tableName,
+				"create unique index ", TEST_INDEX_NAME, " on ", tableName,
 				" (testColumn)"));
 	}
 
@@ -135,7 +135,7 @@ public abstract class BaseDBPartitionTestCase {
 	protected static void dropIndex(String tableName) throws Exception {
 		db.runSQL(
 			StringBundler.concat(
-				"drop index", TEST_INDEX_NAME, "on ", tableName));
+				"drop index ", TEST_INDEX_NAME, " on ", tableName));
 	}
 
 	protected static void dropSchema() throws Exception {
@@ -187,7 +187,8 @@ public abstract class BaseDBPartitionTestCase {
 
 	protected static String getCreateIndexSQL(String tableName) {
 		return StringBundler.concat(
-			"create index", TEST_INDEX_NAME, "on ", tableName, " (testColumn)");
+			"create index ", TEST_INDEX_NAME, " on ", tableName,
+			" (testColumn)");
 	}
 
 	protected static String getCreateTableSQL(String tableName) {

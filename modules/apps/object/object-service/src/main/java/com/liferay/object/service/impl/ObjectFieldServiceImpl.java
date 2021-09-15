@@ -17,9 +17,14 @@ package com.liferay.object.service.impl;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.base.ObjectFieldServiceBaseImpl;
+import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,15 +42,70 @@ import org.osgi.service.component.annotations.Reference;
 public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 
 	@Override
-	public void deleteObjectField(long objectFieldId) throws Exception {
+	public ObjectField addCustomObjectField(
+			long userId, long listTypeDefinitionId, long objectDefinitionId,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			Map<Locale, String> labelMap, String name, boolean required,
+			String type)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectDefinition.getObjectDefinitionId(),
+			ActionKeys.UPDATE);
+
+		return objectFieldLocalService.addCustomObjectField(
+			userId, listTypeDefinitionId, objectDefinitionId, indexed,
+			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+			type);
+	}
+
+	@Override
+	public ObjectField deleteObjectField(long objectFieldId) throws Exception {
 		ObjectField objectField = objectFieldPersistence.findByPrimaryKey(
 			objectFieldId);
 
 		_objectDefinitionModelResourcePermission.check(
 			getPermissionChecker(), objectField.getObjectDefinitionId(),
-			ActionKeys.DELETE);
+			ActionKeys.UPDATE);
 
-		objectFieldLocalService.deleteObjectField(objectFieldId);
+		return objectFieldLocalService.deleteObjectField(objectFieldId);
+	}
+
+	@Override
+	public ObjectField getObjectField(long objectFieldId)
+		throws PortalException {
+
+		ObjectField objectField = objectFieldPersistence.findByPrimaryKey(
+			objectFieldId);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectField.getObjectDefinitionId(),
+			ActionKeys.VIEW);
+
+		return objectFieldLocalService.getObjectField(objectFieldId);
+	}
+
+	@Override
+	public ObjectField updateCustomObjectField(
+			long objectFieldId, long listTypeDefinitionId, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId,
+			Map<Locale, String> labelMap, String name, boolean required,
+			String type)
+		throws PortalException {
+
+		ObjectField objectField = objectFieldPersistence.findByPrimaryKey(
+			objectFieldId);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectField.getObjectDefinitionId(),
+			ActionKeys.UPDATE);
+
+		return objectFieldLocalService.updateCustomObjectField(
+			objectFieldId, listTypeDefinitionId, indexed, indexedAsKeyword,
+			indexedLanguageId, labelMap, name, required, type);
 	}
 
 	@Reference(
@@ -53,5 +113,8 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 	)
 	private ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
+
+	@Reference
+	private ObjectDefinitionPersistence _objectDefinitionPersistence;
 
 }

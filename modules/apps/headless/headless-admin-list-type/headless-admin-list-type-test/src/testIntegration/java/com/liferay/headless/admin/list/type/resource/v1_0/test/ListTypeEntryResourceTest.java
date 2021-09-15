@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import java.util.Collections;
 
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -44,6 +46,18 @@ public class ListTypeEntryResourceTest
 				Collections.singletonMap(LocaleUtil.getDefault(), "test"));
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetListTypeEntry() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetListTypeEntryNotFound() throws Exception {
+	}
+
 	protected ListTypeEntry testDeleteListTypeEntry_addListTypeEntry()
 		throws Exception {
 
@@ -58,7 +72,21 @@ public class ListTypeEntryResourceTest
 	}
 
 	@Override
+	protected ListTypeEntry testGetListTypeEntry_addListTypeEntry()
+		throws Exception {
+
+		return _addListTypeEntry();
+	}
+
+	@Override
 	protected ListTypeEntry testGraphQLListTypeEntry_addListTypeEntry()
+		throws Exception {
+
+		return _addListTypeEntry();
+	}
+
+	@Override
+	protected ListTypeEntry testPutListTypeEntry_addListTypeEntry()
 		throws Exception {
 
 		return _addListTypeEntry();

@@ -88,7 +88,7 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 
 			<react:component
 				componentId="ddmTemplateEditor"
-				module="ddm_template_editor/components/App"
+				module="ddm_template_editor/components/TemplateEditor"
 				props="<%= journalEditDDMTemplateDisplayContext.getDDMTemplateEditorContext() %>"
 			/>
 		</div>

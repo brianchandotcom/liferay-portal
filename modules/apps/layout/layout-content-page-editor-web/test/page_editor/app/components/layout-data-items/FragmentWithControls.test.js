@@ -115,34 +115,33 @@ describe('FragmentWithControls', () => {
 	});
 
 	it('does not show the fragment if it has been hidden by the user', async () => {
-		const {baseElement} = renderFragment({
-			fragmentConfig: {
-				styles: {
-					display: 'none',
+		await act(async () => {
+			renderFragment({
+				fragmentConfig: {
+					styles: {
+						display: 'none',
+					},
 				},
-			},
+			});
 		});
 
-		const fragment = baseElement.querySelector(
-			'.page-editor__fragment-content'
-		);
-
-		expect(fragment).not.toBeVisible();
+		expect(
+			document.body.querySelector('.page-editor__fragment-content')
+		).not.toBeVisible();
 	});
 
 	it('shows the fragment if it has not been hidden by the user', async () => {
-		const {baseElement} = renderFragment({
-			fragmentConfig: {
-				styles: {
-					display: 'block',
+		await act(async () => {
+			renderFragment({
+				fragmentConfig: {
+					styles: {
+						display: 'block',
+					},
 				},
-			},
+			});
 		});
-
-		const fragment = baseElement.querySelector(
-			'.page-editor__fragment-content'
-		);
-
-		expect(fragment).toBeVisible();
+		expect(
+			document.body.querySelector('.page-editor__fragment-content')
+		).toBeVisible();
 	});
 });

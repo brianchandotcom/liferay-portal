@@ -112,8 +112,9 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 				Address defaultBillingAddress =
 					accountEntry.getDefaultBillingAddress();
 
-				if (defaultBillingAddress.getAddressId() ==
-						address.getAddressId()) {
+				if ((defaultBillingAddress != null) &&
+					(defaultBillingAddress.getAddressId() ==
+						address.getAddressId())) {
 
 					return true;
 				}
@@ -133,8 +134,9 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 				Address defaultShippingAddress =
 					accountEntry.getDefaultShippingAddress();
 
-				if (defaultShippingAddress.getAddressId() ==
-						address.getAddressId()) {
+				if ((defaultShippingAddress != null) &&
+					(defaultShippingAddress.getAddressId() ==
+						address.getAddressId())) {
 
 					return true;
 				}

@@ -126,23 +126,11 @@ public class ResponsiveLayoutStructureUtil {
 				continue;
 			}
 
-			JSONObject viewportItemConfigJSONObject =
-				_getViewportItemConfigJSONObject(
-					itemConfigJSONObject, viewportSize);
-
-			if (viewportItemConfigJSONObject == null) {
-				continue;
-			}
-
-			JSONObject viewportStylesJSONObject =
-				viewportItemConfigJSONObject.getJSONObject("styles");
-
-			if (viewportStylesJSONObject == null) {
-				continue;
-			}
+			JSONObject stylesJSONObject = _getStylesJSONObject(
+				itemConfigJSONObject, viewportSize);
 
 			for (String key : CommonStylesUtil.getResponsiveStyleNames()) {
-				String value = viewportStylesJSONObject.getString(key);
+				String value = stylesJSONObject.getString(key);
 
 				if (Validator.isNull(value)) {
 					if (!propertiesWithResponsiveValues.contains(key)) {
@@ -331,6 +319,55 @@ public class ResponsiveLayoutStructureUtil {
 		return sb.toString();
 	}
 
+	private static JSONObject _getStylesJSONObject(
+		JSONObject itemConfigJSONObject, ViewportSize currentViewportSize) {
+
+		JSONObject stylesJSONObject = JSONFactoryUtil.createJSONObject();
+
+		ViewportSize[] viewportSizes = ViewportSize.values();
+
+		Comparator<ViewportSize> comparator = Comparator.comparingInt(
+			ViewportSize::getOrder);
+
+		Arrays.sort(viewportSizes, comparator.reversed());
+
+		for (ViewportSize viewportSize : viewportSizes) {
+			if (viewportSize.getOrder() > currentViewportSize.getOrder()) {
+				continue;
+			}
+
+			JSONObject jsonObject = null;
+
+			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
+				jsonObject = itemConfigJSONObject.getJSONObject("styles");
+			}
+			else {
+				JSONObject viewportJSONObject =
+					itemConfigJSONObject.getJSONObject(
+						viewportSize.getViewportSizeId());
+
+				if (viewportJSONObject == null) {
+					continue;
+				}
+
+				jsonObject = viewportJSONObject.getJSONObject("styles");
+			}
+
+			Set<String> keys = jsonObject.keySet();
+
+			for (String key : keys) {
+				if (!jsonObject.isNull(key) &&
+					Validator.isNotNull(jsonObject.get(key)) &&
+					Validator.isNull(stylesJSONObject.get(key))) {
+
+					stylesJSONObject.put(key, jsonObject.get(key));
+				}
+			}
+		}
+
+		return stylesJSONObject;
+	}
+
 	private static String _getVerticalAlignmentCssClass(
 		String verticalAlignment) {
 
@@ -342,53 +379,6 @@ public class ResponsiveLayoutStructureUtil {
 		}
 
 		return "start";
-	}
-
-	private static JSONObject _getViewportItemConfigJSONObject(
-		JSONObject itemConfigJSONObject, ViewportSize currentViewportSize) {
-
-		if (itemConfigJSONObject.has(currentViewportSize.getViewportSizeId())) {
-			JSONObject viewportItemConfigJSONObject =
-				itemConfigJSONObject.getJSONObject(
-					currentViewportSize.getViewportSizeId());
-
-			JSONObject stylesJSONObject =
-				viewportItemConfigJSONObject.getJSONObject("styles");
-
-			if ((stylesJSONObject != null) && (stylesJSONObject.length() > 0)) {
-				return viewportItemConfigJSONObject;
-			}
-		}
-
-		ViewportSize[] viewportSizes = ViewportSize.values();
-
-		Comparator<ViewportSize> comparator = Comparator.comparingInt(
-			ViewportSize::getOrder);
-
-		Arrays.sort(viewportSizes, comparator.reversed());
-
-		for (ViewportSize viewportSize : viewportSizes) {
-			if (viewportSize.getOrder() >= currentViewportSize.getOrder()) {
-				continue;
-			}
-
-			if (itemConfigJSONObject.has(viewportSize.getViewportSizeId())) {
-				JSONObject viewportItemConfigJSONObject =
-					itemConfigJSONObject.getJSONObject(
-						viewportSize.getViewportSizeId());
-
-				JSONObject stylesJSONObject =
-					viewportItemConfigJSONObject.getJSONObject("styles");
-
-				if ((stylesJSONObject != null) &&
-					(stylesJSONObject.length() > 0)) {
-
-					return viewportItemConfigJSONObject;
-				}
-			}
-		}
-
-		return itemConfigJSONObject;
 	}
 
 }

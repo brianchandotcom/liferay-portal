@@ -23,6 +23,7 @@ import com.liferay.frontend.taglib.clay.internal.util.ServicesProvider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
@@ -34,7 +35,10 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.PortletResponse;
+
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
@@ -135,6 +139,24 @@ public class BaseContainerTag extends AttributesTagSupport {
 		return _id;
 	}
 
+	public String getNamespace() {
+		if (_namespace != null) {
+			return _namespace;
+		}
+
+		HttpServletRequest httpServletRequest = getRequest();
+
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		if (portletResponse != null) {
+			_namespace = portletResponse.getNamespace();
+		}
+
+		return _namespace;
+	}
+
 	public String getPropsTransformer() {
 		return _propsTransformer;
 	}
@@ -209,6 +231,10 @@ public class BaseContainerTag extends AttributesTagSupport {
 		_id = id;
 	}
 
+	public void setNamespace(String namespace) {
+		_namespace = namespace;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -237,6 +263,7 @@ public class BaseContainerTag extends AttributesTagSupport {
 		_elementClasses = null;
 		_hydratedContainerElement = "div";
 		_id = null;
+		_namespace = null;
 		_propsTransformer = null;
 		_propsTransformerServletContext = null;
 	}
@@ -426,6 +453,7 @@ public class BaseContainerTag extends AttributesTagSupport {
 	private String _elementClasses;
 	private String _hydratedContainerElement = "div";
 	private String _id;
+	private String _namespace;
 	private String _propsTransformer;
 	private ServletContext _propsTransformerServletContext;
 

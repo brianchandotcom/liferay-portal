@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.jsp.JspException;
@@ -53,6 +54,10 @@ public class SelectTag extends BaseContainerTag {
 	}
 
 	public String getName() {
+		if (isUseNamespace()) {
+			return getNamespace() + _name;
+		}
+
 		return _name;
 	}
 
@@ -66,6 +71,10 @@ public class SelectTag extends BaseContainerTag {
 
 	public boolean isMultiple() {
 		return _multiple;
+	}
+
+	public boolean isUseNamespace() {
+		return _useNamespace;
 	}
 
 	public void setContainerCssClass(String containerCssClass) {
@@ -92,6 +101,10 @@ public class SelectTag extends BaseContainerTag {
 		_options = options;
 	}
 
+	public void setUseNamespace(boolean useNamespace) {
+		_useNamespace = useNamespace;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -102,6 +115,34 @@ public class SelectTag extends BaseContainerTag {
 		_multiple = false;
 		_name = null;
 		_options = null;
+		_useNamespace = true;
+	}
+
+	@Override
+	protected String getHydratedModuleName() {
+		if ((!_disabled && (getAdditionalProps() != null)) ||
+			(getPropsTransformer() != null)) {
+
+			return "frontend-taglib-clay/Select";
+		}
+
+		return null;
+	}
+
+	@Override
+	protected Map<String, Object> prepareProps(Map<String, Object> props) {
+		props.put("containerCssClass", _containerCssClass);
+		props.put("disabled", _disabled);
+
+		if (Validator.isNotNull(_label)) {
+			props.put("label", getLabel());
+		}
+
+		props.put("multiple", _multiple);
+		props.put("name", getName());
+		props.put("options", _options);
+
+		return super.prepareProps(props);
 	}
 
 	@Override
@@ -119,7 +160,7 @@ public class SelectTag extends BaseContainerTag {
 
 		if (Validator.isNotNull(_label)) {
 			jspWriter.write("<label>");
-			jspWriter.write(_label);
+			jspWriter.write(getLabel());
 			jspWriter.write("</label>");
 		}
 
@@ -143,7 +184,7 @@ public class SelectTag extends BaseContainerTag {
 
 		if (Validator.isNotNull(_name)) {
 			jspWriter.write(" name=\"");
-			jspWriter.write(_name);
+			jspWriter.write(getName());
 			jspWriter.write("\"");
 		}
 
@@ -197,5 +238,6 @@ public class SelectTag extends BaseContainerTag {
 	private boolean _multiple;
 	private String _name;
 	private List<SelectOption> _options;
+	private boolean _useNamespace = true;
 
 }

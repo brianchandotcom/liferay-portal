@@ -82,7 +82,7 @@ definition {
 				value1 = "${feedDisplayStyle}");
 		}
 
-		if (isSet(saveDisplaySetting)) {
+		if (!(isSet(configureWithoutSave))) {
 			PortletEntry.save();
 		}
 	}

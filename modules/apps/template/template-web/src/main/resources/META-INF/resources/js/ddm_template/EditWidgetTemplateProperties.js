@@ -19,7 +19,7 @@ export default function ({namespace}) {
 
 	const onChange = (event) => {
 		const portletURL = new createPortletURL(window.location.href, {
-			language: event.target.value,
+			languageType: event.target.value,
 		});
 
 		navigate(portletURL.toString());

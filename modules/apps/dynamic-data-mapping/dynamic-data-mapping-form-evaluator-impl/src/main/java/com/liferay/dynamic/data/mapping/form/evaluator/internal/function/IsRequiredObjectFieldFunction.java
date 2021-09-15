@@ -17,51 +17,38 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessor;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessorAware;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.util.Objects;
 
 /**
  * @author Mateus Santana
  */
 public class IsRequiredObjectFieldFunction
-	implements DDMExpressionFunction.Function1<Object, Boolean>,
+	implements DDMExpressionFunction.Function1<String, Boolean>,
 			   DDMExpressionParameterAccessorAware {
 
-	public static final String NAME = "IsRequiredObjectField";
+	public static final String NAME = "isRequiredObjectField";
 
 	public IsRequiredObjectFieldFunction(JSONFactory jsonFactory) {
 		this.jsonFactory = jsonFactory;
 	}
 
 	@Override
-	public Boolean apply(Object fieldValue) {
-		try {
-			JSONArray fieldJSONArray = jsonFactory.createJSONArray(
-				String.valueOf(fieldValue));
+	public Boolean apply(String fieldName) {
+		fieldName = fieldName.replaceAll("\\[|\\]|\"", StringPool.BLANK);
 
-			JSONArray objectFieldsJSONArray =
-				_ddmExpressionParameterAccessor.getObjectFields();
+		JSONArray objectFieldsJSONArray =
+			_ddmExpressionParameterAccessor.getObjectFields();
 
-			for (int i = 0; i < objectFieldsJSONArray.length(); i++) {
-				JSONObject jsonObject = objectFieldsJSONArray.getJSONObject(i);
+		for (int i = 0; i < objectFieldsJSONArray.length(); i++) {
+			JSONObject jsonObject = objectFieldsJSONArray.getJSONObject(i);
 
-				if (jsonObject.getString(
-						"name"
-					).equals(
-						fieldJSONArray.get(0)
-					)) {
-
-					return jsonObject.getBoolean("required");
-				}
-			}
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException, jsonException);
+			if (Objects.equals(jsonObject.getString("name"), fieldName)) {
+				return jsonObject.getBoolean("required");
 			}
 		}
 
@@ -81,9 +68,6 @@ public class IsRequiredObjectFieldFunction
 	}
 
 	protected JSONFactory jsonFactory;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		IsRequiredObjectFieldFunction.class);
 
 	private DDMExpressionParameterAccessor _ddmExpressionParameterAccessor;
 

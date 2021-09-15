@@ -244,7 +244,7 @@ public class NumericDDMFormFieldTypeSettingsTest
 		Assert.assertEquals(actions.toString(), 2, actions.size());
 		Assert.assertEquals("setEnabled('required', FALSE)", actions.get(0));
 		Assert.assertEquals(
-			"setValue('required', IsRequiredObjectField(getValue(" +
+			"setValue('required', isRequiredObjectField(getValue(" +
 				"'objectFieldName')))",
 			actions.get(1));
 

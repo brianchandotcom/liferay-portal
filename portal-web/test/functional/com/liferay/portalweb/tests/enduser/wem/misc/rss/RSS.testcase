@@ -95,7 +95,7 @@ definition {
 	@description = "The user can add a RSS Feed on RSS Publisher widget."
 	@priority = "5"
 	@uitest
-	test AddRSSFeed {
+	test AddFeed {
 		property portal.acceptance = "true";
 		property testray.component.names = "RSS";
 
@@ -259,8 +259,8 @@ definition {
 	@description = "The usar can update the RSS Feed via Asset Publisher widget when the feed time is set to one on system settings."
 	@priority = "4"
 	@uitest
-	test CanUpdateRSSFeedViaAssetpublisherWhenFeedTimeIsSetToOne {
-		property test.name.skip.portal.instance = "RSS#CanUpdateRSSFeedViaAssetpublisherWhenFeedTimeIsSetToOne";
+	test EditRSSFeedViaAssetpublisherWhenSetFeedTimeToOne {
+		property test.name.skip.portal.instance = "RSS#EditRSSFeedViaAssetpublisherWhenSetFeedTimeToOne";
 		property testray.component.names = "Asset Publisher,RSS";
 
 		task ("Change the RSS Feed Time on System Settings") {
@@ -558,10 +558,10 @@ definition {
 		}
 	}
 
-	@description = "Can delete a RSS Publisher widget via portlet settings."
+	@description = "Can delete a RSS Publisher widget from page."
 	@priority = "4"
 	@uitest
-	test RemoveViaPortletSettings {
+	test RemoveRSSPublisher {
 		property testray.component.names = "RSS";
 
 		task ("View default RSS Publisher widget on page") {
@@ -576,7 +576,7 @@ definition {
 			RSSPortlet.viewPortletConfigurationInfo();
 		}
 
-		task ("Delete the RSS Publisher via portlet settings") {
+		task ("Delete the RSS Publisher from page") {
 			Portlet.deletePG(portletName = "RSS Publisher");
 		}
 

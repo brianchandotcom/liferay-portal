@@ -117,19 +117,16 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	public void testRegenerateViews() throws Exception {
 		try {
 			DBPartitionUtil.forEachCompanyId(
-				companyId ->
-					db.runSQL(
-						StringBundler.concat(
-							"alter table ", TEST_CONTROL_TABLE_NAME,
-							" add column ", TEST_CONTROL_TABLE_NEW_COLUMN,
-							" bigint")));
+				companyId -> db.runSQL(
+					StringBundler.concat(
+						"alter table ", TEST_CONTROL_TABLE_NAME, " add column ",
+						TEST_CONTROL_TABLE_NEW_COLUMN, " bigint")));
 
 			DBPartitionUtil.forEachCompanyId(
-				companyId ->
-					Assert.assertTrue(
-						dbInspector.hasColumn(
-							TEST_CONTROL_TABLE_NAME,
-							TEST_CONTROL_TABLE_NEW_COLUMN)));
+				companyId -> Assert.assertTrue(
+					dbInspector.hasColumn(
+						TEST_CONTROL_TABLE_NAME,
+						TEST_CONTROL_TABLE_NEW_COLUMN)));
 		}
 		finally {
 			DBPartitionUtil.forEachCompanyId(
@@ -141,7 +138,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 						db.runSQL(
 							StringBundler.concat(
 								"alter table ", TEST_CONTROL_TABLE_NAME,
-								" drop column ", TEST_CONTROL_TABLE_NEW_COLUMN));
+								" drop column ",
+								TEST_CONTROL_TABLE_NEW_COLUMN));
 					}
 				});
 		}

@@ -41,8 +41,8 @@ public class ListUtil {
 		return new ArrayList<>(master);
 	}
 
-	public static String get(List<String> list, int index) {
-		return list.get(index);
+	public static String get(List<String> list, String index) {
+		return list.get(GetterUtil.getInteger(index));
 	}
 
 	public static boolean isEmpty(List<?> list) {

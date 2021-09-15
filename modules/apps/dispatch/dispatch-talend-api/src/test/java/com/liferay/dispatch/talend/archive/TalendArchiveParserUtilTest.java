@@ -66,8 +66,11 @@ public class TalendArchiveParserUtilTest {
 
 		StringBundler sb = new StringBundler();
 
-		for (String classPathEntry : _CLASS_PATH_ENTRIES) {
+		for (String classPathEntry : _LIB_JARS) {
 			sb.append(jobDirectory);
+			sb.append(File.separator);
+			sb.append("lib");
+			sb.append(File.separator);
 			sb.append(classPathEntry);
 			sb.append(File.pathSeparator);
 		}
@@ -129,15 +132,15 @@ public class TalendArchiveParserUtilTest {
 			unicodeProperties.getProperty("JAVA_OPTS"));
 	}
 
-	private static final String[] _CLASS_PATH_ENTRIES = {
-		"/lib/dom4j-1.6.1.jar", "/lib/log4j-1.2.17.jar", "/lib/routines.jar",
-		"/lib/talend_file_enhanced_20070724.jar"
-	};
-
-	private static final String _JOB_JAR_PATH =
-		"/etl_talend_context_printer_sample" +
-			"/etl_talend_context_printer_sample_1_0.jar";
+	private static final String _JOB_JAR_PATH = StringBundler.concat(
+		File.separator, "etl_talend_context_printer_sample", File.separator,
+		"etl_talend_context_printer_sample_1_0.jar");
 
 	private static final String _JOB_NAME = "context_printer_sample";
+
+	private static final String[] _LIB_JARS = {
+		"dom4j-1.6.1.jar", "log4j-1.2.17.jar", "routines.jar",
+		"talend_file_enhanced_20070724.jar"
+	};
 
 }

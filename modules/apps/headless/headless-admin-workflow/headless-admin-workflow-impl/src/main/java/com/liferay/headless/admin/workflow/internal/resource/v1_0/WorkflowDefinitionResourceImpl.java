@@ -77,20 +77,15 @@ public class WorkflowDefinitionResourceImpl
 			String name, Integer version)
 		throws Exception {
 
-		WorkflowDefinition workflowDefinition;
-
-		if (version != null) {
-			workflowDefinition = _toWorkflowDefinition(
-				_workflowDefinitionManager.getWorkflowDefinition(
-					contextCompany.getCompanyId(), name, version));
-		}
-		else {
-			workflowDefinition = _toWorkflowDefinition(
+		if (version == null) {
+			return _toWorkflowDefinition(
 				_workflowDefinitionManager.getLatestWorkflowDefinition(
 					contextCompany.getCompanyId(), name));
 		}
 
-		return workflowDefinition;
+		return _toWorkflowDefinition(
+			_workflowDefinitionManager.getWorkflowDefinition(
+				contextCompany.getCompanyId(), name, version));
 	}
 
 	@Override

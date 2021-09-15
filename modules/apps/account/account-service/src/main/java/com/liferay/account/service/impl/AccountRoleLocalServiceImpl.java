@@ -282,23 +282,8 @@ public class AccountRoleLocalServiceImpl
 		long companyId, long[] accountEntryIds, String keywords, int start,
 		int end, OrderByComparator<?> orderByComparator) {
 
-		DynamicQuery roleDynamicQuery = _getRoleDynamicQuery(
-			companyId, accountEntryIds, keywords, orderByComparator);
-
-		if (roleDynamicQuery == null) {
-			return new BaseModelSearchResult<>(
-				Collections.<AccountRole>emptyList(), 0);
-		}
-
-		List<AccountRole> accountRoles = TransformUtil.transform(
-			_roleLocalService.<Role>dynamicQuery(roleDynamicQuery, start, end),
-			userGroupRole -> getAccountRoleByRoleId(userGroupRole.getRoleId()));
-
-		return new BaseModelSearchResult<>(
-			accountRoles,
-			(int)_roleLocalService.dynamicQueryCount(
-				_getRoleDynamicQuery(
-					companyId, accountEntryIds, keywords, null)));
+		return searchAccountRoles(
+			companyId, accountEntryIds, keywords, null, start, end, orderByComparator);
 	}
 
 	@Override

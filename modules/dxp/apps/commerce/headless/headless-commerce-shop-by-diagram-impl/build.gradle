@@ -12,12 +12,12 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:batch-engine:batch-engine-api")
 	compileOnly project(":apps:commerce:commerce-product-api")
+	compileOnly project(":apps:commerce:commerce-shop-by-diagram-api")
 	compileOnly project(":apps:commerce:headless:headless-commerce-core-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
-	compileOnly project(":dxp:apps:commerce:commerce-shop-by-diagram:commerce-shop-by-diagram-api")
 	compileOnly project(":dxp:apps:commerce:headless:headless-commerce-shop-by-diagram-api")
 }

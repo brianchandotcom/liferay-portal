@@ -25,10 +25,14 @@ import com.liferay.object.service.persistence.ObjectLayoutBoxPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutRowPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.util.Collections;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,17 +49,27 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 
 	@Override
 	public Page<ObjectLayout> getObjectDefinitionObjectLayoutsPage(
-		Long objectDefinitionId, Pagination pagination) {
+			Long objectDefinitionId, String search, Pagination pagination)
+		throws Exception {
 
-		return Page.of(
-			transform(
-				_objectLayoutLocalService.getObjectLayouts(
-					objectDefinitionId, pagination.getStartPosition(),
-					pagination.getEndPosition()),
-				this::_toObjectLayout),
+		return SearchUtil.search(
+			Collections.emptyMap(),
+			booleanQuery -> {
+			},
+			null, com.liferay.object.model.ObjectLayout.class.getName(), search,
 			pagination,
-			_objectLayoutLocalService.getObjectLayoutsCount(
-				objectDefinitionId));
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(Field.NAME, search);
+				searchContext.setAttribute(
+					"objectDefinitionId", objectDefinitionId);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			null,
+			document -> _toObjectLayout(
+				_objectLayoutLocalService.getObjectLayout(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override

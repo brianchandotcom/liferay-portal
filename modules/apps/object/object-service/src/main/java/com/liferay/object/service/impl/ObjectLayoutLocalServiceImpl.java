@@ -33,6 +33,8 @@ import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -55,6 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ObjectLayoutLocalServiceImpl
 	extends ObjectLayoutLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectLayout addObjectLayout(
 			long userId, long objectDefinitionId, boolean defaultObjectLayout,
@@ -152,6 +155,7 @@ public class ObjectLayoutLocalServiceImpl
 			objectDefinitionId);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectLayout updateObjectLayout(
 			long objectLayoutId, boolean defaultObjectLayout,

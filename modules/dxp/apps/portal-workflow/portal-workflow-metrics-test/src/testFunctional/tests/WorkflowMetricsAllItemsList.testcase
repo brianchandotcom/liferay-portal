@@ -1817,7 +1817,7 @@ definition {
 	@description = "LPS-130167 - Verify that the user is able to reorder entries by clicking the Due Date column title"
 	@priority = "3"
 	test ReorderEntriesClickingDueDateColumn {
-		property portal.upstream = "quarantine";
+		
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -1848,11 +1848,11 @@ definition {
 			entryContent = "Blogs Entry  Content",
 			entryTitle = "Blogs Entry Title 1");
 
-		Pause(locator1 = "60000");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry  Content",
 			entryTitle = "Blogs Entry Title 2");
+
+		Pause(locator1 = "60000");
 
 		WorkflowMetrics.goToDashboardAllItemsWithFilter(
 			workflowFilterOption = "PENDING",
@@ -1868,6 +1868,8 @@ definition {
 			itemTitle = "Blogs Entry: Blogs Entry Title 2",
 			keyCompare = "Blogs Entry: Blogs Entry Title 1",
 			rowNumber = "2");
+
+		Pause(locator1 = "60000");
 
 		Click(
 			key_orderBy = "Due Date",

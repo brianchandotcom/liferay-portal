@@ -529,15 +529,25 @@ public class DBPartitionUtil {
 				int returnValue = super.executeUpdate(sql);
 
 				if (StringUtil.startsWith(lowerCaseSQL, "alter table")) {
-					long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+					try (Connection connection = DataAccess.getConnection()) {
+						DBInspector dbInspector = new DBInspector(connection);
+						String tableName = query[2];
 
-					String tableName = query[2];
+						if (_isControlTable(dbInspector, tableName)) {
+							long[] companyIds =
+								PortalInstances.getCompanyIdsBySQL();
 
-					for (long companyId : companyIds) {
-						if (companyId != _defaultCompanyId) {
-							super.execute(
-								_getCreateViewSQL(companyId, tableName));
+							for (long companyId : companyIds) {
+								if (companyId != _defaultCompanyId) {
+									super.execute(
+										_getCreateViewSQL(
+											companyId, tableName));
+								}
+							}
 						}
+					}
+					catch (Exception exception) {
+						throw new SQLException(exception);
 					}
 				}
 

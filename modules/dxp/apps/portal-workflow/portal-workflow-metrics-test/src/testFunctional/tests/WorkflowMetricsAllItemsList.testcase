@@ -1817,8 +1817,6 @@ definition {
 	@description = "LPS-130167 - Verify that the user is able to reorder entries by clicking the Due Date column title"
 	@priority = "3"
 	test ReorderEntriesClickingDueDateColumn {
-		
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(

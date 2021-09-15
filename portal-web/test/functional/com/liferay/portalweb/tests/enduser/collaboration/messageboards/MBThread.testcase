@@ -324,13 +324,36 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136914. It checks that an attachment can be downloaded."
-	@ignore = "true"
 	@priority = "4"
 	test CanDownloadAttachment {
-		property portal.acceptance = "false";
+		MessageboardsThread.addPG(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			mbAttachmentFileList = "marketplace_icon.png,Commerce_Black.jpg,Document_2.jpeg",
+			siteURLKey = "guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
 
-		// TODO LPS-136913 CanDownloadAttachment pending implementation
+		AssertTextEquals.assertPartialText(
+			index = "1",
+			locator1 = "MessageBoardsThread#MESSAGE_BODY_ATTACHMENT_LIST",
+			value1 = "Commerce_Black.jpg");
 
+		AssertTextEquals.assertPartialText(
+			index = "2",
+			locator1 = "MessageBoardsThread#MESSAGE_BODY_ATTACHMENT_LIST",
+			value1 = "Document_2.jpeg");
+
+		AssertTextEquals.assertPartialText(
+			index = "3",
+			locator1 = "MessageBoardsThread#MESSAGE_BODY_ATTACHMENT_LIST",
+			value1 = "marketplace_icon.png");
+
+		MessageboardsThread.downloadAttachmentPG(
+			attachmentsList = "true",
+			index = "1");
+
+		MessageboardsThread.assertDownloadedFileNameFromTempFolder(attachmentFileName = "Commerce_Black");
 	}
 
 	@description = "This is a test for LPS-136920. It checks that a thread can be exported."

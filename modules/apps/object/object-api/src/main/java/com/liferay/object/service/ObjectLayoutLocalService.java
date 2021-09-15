@@ -66,6 +66,7 @@ public interface ObjectLayoutLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectLayoutLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object layout local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectLayoutLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public ObjectLayout addObjectLayout(
 			long userId, long objectDefinitionId, boolean defaultObjectLayout,
 			Map<Locale, String> nameMap, List<ObjectLayoutTab> objectLayoutTabs)
@@ -302,6 +303,7 @@ public interface ObjectLayoutLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public ObjectLayout updateObjectLayout(
 			long objectLayoutId, boolean defaultObjectLayout,
 			Map<Locale, String> nameMap, List<ObjectLayoutTab> objectLayoutTabs)

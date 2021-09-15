@@ -1,13 +1,23 @@
 <?xml version="1.0"?>
+
 <workflow-definition
 	xmlns="urn:liferay.com:liferay-workflow_6.2.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd"
+>
 	<name>Quarterly Reports Review Process</name>
 	<version>1</version>
 	<fork>
 		<name>Governor's Review</name>
 		<metadata>
-			<![CDATA[{"xy":[189,194]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						189,
+						194
+					]
+				}
+			]]>
 		</metadata>
 		<transitions>
 			<transition>
@@ -45,7 +55,14 @@
 	<join>
 		<name>Governor's Approval</name>
 		<metadata>
-			<![CDATA[{"xy":[629,193]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						629,
+						193
+					]
+				}
+			]]>
 		</metadata>
 		<actions>
 			<notification>
@@ -75,7 +92,14 @@
 	<state>
 		<name>Submitted</name>
 		<metadata>
-			<![CDATA[{"xy":[21,205]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						21,
+						205
+					]
+				}
+			]]>
 		</metadata>
 		<initial>true</initial>
 		<transitions>
@@ -89,7 +113,15 @@
 	<state>
 		<name>Published</name>
 		<metadata>
-			<![CDATA[{"terminal":true,"xy":[833,202]}]]>
+			<![CDATA[
+				{
+					"terminal": true,
+					"xy": [
+						833,
+						202
+					]
+				}
+			]]>
 		</metadata>
 		<actions>
 			<action>
@@ -109,7 +141,14 @@
 	<task>
 		<name>Board Member Review 1</name>
 		<metadata>
-			<![CDATA[{"xy":[381,13]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						381,
+						13
+					]
+				}
+			]]>
 		</metadata>
 		<actions>
 			<notification>
@@ -171,7 +210,14 @@
 	<task>
 		<name>Board Member Review 2</name>
 		<metadata>
-			<![CDATA[{"xy":[380,143]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						380,
+						143
+					]
+				}
+			]]>
 		</metadata>
 		<actions>
 			<notification>
@@ -233,7 +279,14 @@
 	<task>
 		<name>Board Member Review 3</name>
 		<metadata>
-			<![CDATA[{"xy":[380,282]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						380,
+						282
+					]
+				}
+			]]>
 		</metadata>
 		<actions>
 			<notification>
@@ -295,7 +348,14 @@
 	<task>
 		<name>Board Member Review 4</name>
 		<metadata>
-			<![CDATA[{"xy":[381,420]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						381,
+						420
+					]
+				}
+			]]>
 		</metadata>
 		<actions>
 			<notification>
@@ -357,7 +417,14 @@
 	<task>
 		<name>Board Member Review 5</name>
 		<metadata>
-			<![CDATA[{"xy":[379,463]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						379,
+						463
+					]
+				}
+			]]>
 		</metadata>
 		<assignments>
 			<user/>
@@ -373,7 +440,14 @@
 	<task>
 		<name>Board Member Review 6</name>
 		<metadata>
-			<![CDATA[{"xy":[375,423]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						375,
+						423
+					]
+				}
+			]]>
 		</metadata>
 		<assignments>
 			<user/>

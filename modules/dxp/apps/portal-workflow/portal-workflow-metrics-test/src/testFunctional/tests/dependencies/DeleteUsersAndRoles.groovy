@@ -14,15 +14,14 @@ List<Role> roles = com.liferay.portal.kernel.service.RoleLocalServiceUtil.getRol
 
 //Delete Users
 for (User user : users){
-    if (user.getEmailAddress().contains("user")) {
-        com.liferay.portal.kernel.service.UserLocalServiceUtil.deleteUser(user.getUserId())        
-    }
+	if (user.getEmailAddress().contains("user")) {
+		com.liferay.portal.kernel.service.UserLocalServiceUtil.deleteUser(user.getUserId())
+	}
 }
 
 //Delete Roles
 for (Role role : roles){
-    if (role.getName().contains("Role")) {
-        com.liferay.portal.kernel.service.RoleLocalServiceUtil.deleteRole(role.getRoleId())
-    }
+	if (role.getName().contains("Role")) {
+		com.liferay.portal.kernel.service.RoleLocalServiceUtil.deleteRole(role.getRoleId())
+	}
 }
-

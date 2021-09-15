@@ -19,12 +19,11 @@ try {
 		user.getComments(), "", user.getMiddleName(), "",
 		0L, 0L,user.getMale(),
 		10, 10, 2019, "",
-		"", "", 
-		"", "", 
+		"", "",
+		"", "",
 		"", null, null, null, null, null,
 		new ServiceContext()
 	)
-
 
 }
 catch (Exception e) {

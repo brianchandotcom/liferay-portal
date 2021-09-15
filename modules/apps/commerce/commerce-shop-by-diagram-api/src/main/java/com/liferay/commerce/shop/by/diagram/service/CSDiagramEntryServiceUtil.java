@@ -49,6 +49,12 @@ public class CSDiagramEntryServiceUtil {
 			sequence, sku, serviceContext);
 	}
 
+	public static void deleteCSDiagramEntries(long cpDefinitionId)
+		throws PortalException {
+
+		getService().deleteCSDiagramEntries(cpDefinitionId);
+	}
+
 	public static void deleteCSDiagramEntry(long csDiagramEntryId)
 		throws PortalException {
 

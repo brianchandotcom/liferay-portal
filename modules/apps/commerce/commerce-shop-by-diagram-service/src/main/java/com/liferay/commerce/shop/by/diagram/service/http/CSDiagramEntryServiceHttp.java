@@ -97,6 +97,42 @@ public class CSDiagramEntryServiceHttp {
 		}
 	}
 
+	public static void deleteCSDiagramEntries(
+			HttpPrincipal httpPrincipal, long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CSDiagramEntryServiceUtil.class, "deleteCSDiagramEntries",
+				_deleteCSDiagramEntriesParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpDefinitionId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static void deleteCSDiagramEntry(
 			HttpPrincipal httpPrincipal, long csDiagramEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -104,7 +140,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "deleteCSDiagramEntry",
-				_deleteCSDiagramEntryParameterTypes1);
+				_deleteCSDiagramEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, csDiagramEntryId);
@@ -142,7 +178,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "fetchCSDiagramEntry",
-				_fetchCSDiagramEntryParameterTypes2);
+				_fetchCSDiagramEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId, sequence);
@@ -186,7 +222,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "getCSDiagramEntries",
-				_getCSDiagramEntriesParameterTypes3);
+				_getCSDiagramEntriesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId, start, end);
@@ -228,7 +264,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "getCSDiagramEntriesCount",
-				_getCSDiagramEntriesCountParameterTypes4);
+				_getCSDiagramEntriesCountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId);
@@ -269,7 +305,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "getCSDiagramEntry",
-				_getCSDiagramEntryParameterTypes5);
+				_getCSDiagramEntryParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, csDiagramEntryId);
@@ -312,7 +348,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "getCSDiagramEntry",
-				_getCSDiagramEntryParameterTypes6);
+				_getCSDiagramEntryParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId, sequence);
@@ -357,7 +393,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "updateCSDiagramEntry",
-				_updateCSDiagramEntryParameterTypes7);
+				_updateCSDiagramEntryParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, csDiagramEntryId, cpInstanceId, cProductId, diagram,
@@ -401,19 +437,21 @@ public class CSDiagramEntryServiceHttp {
 			String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteCSDiagramEntryParameterTypes1 =
+	private static final Class<?>[] _deleteCSDiagramEntriesParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _fetchCSDiagramEntryParameterTypes2 =
+	private static final Class<?>[] _deleteCSDiagramEntryParameterTypes2 =
+		new Class[] {long.class};
+	private static final Class<?>[] _fetchCSDiagramEntryParameterTypes3 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _getCSDiagramEntriesParameterTypes3 =
+	private static final Class<?>[] _getCSDiagramEntriesParameterTypes4 =
 		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getCSDiagramEntriesCountParameterTypes4 =
-		new Class[] {long.class};
-	private static final Class<?>[] _getCSDiagramEntryParameterTypes5 =
+	private static final Class<?>[] _getCSDiagramEntriesCountParameterTypes5 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getCSDiagramEntryParameterTypes6 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getCSDiagramEntryParameterTypes7 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _updateCSDiagramEntryParameterTypes7 =
+	private static final Class<?>[] _updateCSDiagramEntryParameterTypes8 =
 		new Class[] {
 			long.class, long.class, long.class, boolean.class, int.class,
 			String.class, String.class,

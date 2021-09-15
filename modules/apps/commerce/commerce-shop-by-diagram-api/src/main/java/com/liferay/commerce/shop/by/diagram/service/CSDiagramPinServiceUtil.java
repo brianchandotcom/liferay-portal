@@ -53,6 +53,16 @@ public class CSDiagramPinServiceUtil {
 		getService().deleteCSDiagramPin(csDiagramPinId);
 	}
 
+	public static void deleteCSDiagramPins(long cpDefinitionId)
+		throws PortalException {
+
+		getService().deleteCSDiagramPins(cpDefinitionId);
+	}
+
+	public static CSDiagramPin fetchCSDiagramPin(long csDiagramPinId) {
+		return getService().fetchCSDiagramPin(csDiagramPinId);
+	}
+
 	public static CSDiagramPin getCSDiagramPin(long csDiagramPinId)
 		throws PortalException {
 

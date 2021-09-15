@@ -97,6 +97,38 @@ public class CSDiagramPinServiceSoap {
 		}
 	}
 
+	public static void deleteCSDiagramPins(long cpDefinitionId)
+		throws RemoteException {
+
+		try {
+			CSDiagramPinServiceUtil.deleteCSDiagramPins(cpDefinitionId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.shop.by.diagram.model.CSDiagramPinSoap
+			fetchCSDiagramPin(long csDiagramPinId)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
+				returnValue = CSDiagramPinServiceUtil.fetchCSDiagramPin(
+					csDiagramPinId);
+
+			return com.liferay.commerce.shop.by.diagram.model.CSDiagramPinSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.shop.by.diagram.model.CSDiagramPinSoap
 			getCSDiagramPin(long csDiagramPinId)
 		throws RemoteException {

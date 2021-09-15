@@ -46,6 +46,13 @@ public class CSDiagramEntryServiceWrapper
 	}
 
 	@Override
+	public void deleteCSDiagramEntries(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_csDiagramEntryService.deleteCSDiagramEntries(cpDefinitionId);
+	}
+
+	@Override
 	public void deleteCSDiagramEntry(long csDiagramEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

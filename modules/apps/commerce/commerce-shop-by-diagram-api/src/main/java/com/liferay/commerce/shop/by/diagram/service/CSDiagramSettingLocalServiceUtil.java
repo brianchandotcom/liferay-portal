@@ -128,8 +128,7 @@ public class CSDiagramSettingLocalServiceUtil {
 	}
 
 	public static CSDiagramSetting deleteCSDiagramSettingByCPDefinitionId(
-			long cpDefinitionId)
-		throws PortalException {
+		long cpDefinitionId) {
 
 		return getService().deleteCSDiagramSettingByCPDefinitionId(
 			cpDefinitionId);

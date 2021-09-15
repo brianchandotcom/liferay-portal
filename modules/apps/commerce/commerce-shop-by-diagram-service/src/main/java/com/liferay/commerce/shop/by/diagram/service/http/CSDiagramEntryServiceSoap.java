@@ -86,6 +86,19 @@ public class CSDiagramEntryServiceSoap {
 		}
 	}
 
+	public static void deleteCSDiagramEntries(long cpDefinitionId)
+		throws RemoteException {
+
+		try {
+			CSDiagramEntryServiceUtil.deleteCSDiagramEntries(cpDefinitionId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static void deleteCSDiagramEntry(long csDiagramEntryId)
 		throws RemoteException {
 

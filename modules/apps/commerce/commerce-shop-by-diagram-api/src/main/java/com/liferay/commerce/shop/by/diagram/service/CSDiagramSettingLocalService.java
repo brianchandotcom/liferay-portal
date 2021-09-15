@@ -131,8 +131,7 @@ public interface CSDiagramSettingLocalService
 		throws PortalException;
 
 	public CSDiagramSetting deleteCSDiagramSettingByCPDefinitionId(
-			long cpDefinitionId)
-		throws PortalException;
+		long cpDefinitionId);
 
 	/**
 	 * @throws PortalException

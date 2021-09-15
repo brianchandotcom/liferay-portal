@@ -58,6 +58,11 @@ public interface CSDiagramPinService extends BaseService {
 
 	public void deleteCSDiagramPin(long csDiagramPinId) throws PortalException;
 
+	public void deleteCSDiagramPins(long cpDefinitionId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CSDiagramPin fetchCSDiagramPin(long csDiagramPinId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CSDiagramPin getCSDiagramPin(long csDiagramPinId)
 		throws PortalException;

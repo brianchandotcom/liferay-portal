@@ -130,6 +130,75 @@ public class CSDiagramPinServiceHttp {
 		}
 	}
 
+	public static void deleteCSDiagramPins(
+			HttpPrincipal httpPrincipal, long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CSDiagramPinServiceUtil.class, "deleteCSDiagramPins",
+				_deleteCSDiagramPinsParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpDefinitionId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
+		fetchCSDiagramPin(HttpPrincipal httpPrincipal, long csDiagramPinId) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CSDiagramPinServiceUtil.class, "fetchCSDiagramPin",
+				_fetchCSDiagramPinParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, csDiagramPinId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.shop.by.diagram.model.CSDiagramPin)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
 			getCSDiagramPin(HttpPrincipal httpPrincipal, long csDiagramPinId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -137,7 +206,7 @@ public class CSDiagramPinServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramPinServiceUtil.class, "getCSDiagramPin",
-				_getCSDiagramPinParameterTypes2);
+				_getCSDiagramPinParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, csDiagramPinId);
@@ -181,7 +250,7 @@ public class CSDiagramPinServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramPinServiceUtil.class, "getCSDiagramPins",
-				_getCSDiagramPinsParameterTypes3);
+				_getCSDiagramPinsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId, start, end);
@@ -223,7 +292,7 @@ public class CSDiagramPinServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramPinServiceUtil.class, "getCSDiagramPinsCount",
-				_getCSDiagramPinsCountParameterTypes4);
+				_getCSDiagramPinsCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId);
@@ -265,7 +334,7 @@ public class CSDiagramPinServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramPinServiceUtil.class, "updateCSDiagramPin",
-				_updateCSDiagramPinParameterTypes5);
+				_updateCSDiagramPinParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, csDiagramPinId, positionX, positionY, sequence);
@@ -306,13 +375,17 @@ public class CSDiagramPinServiceHttp {
 		new Class[] {long.class, double.class, double.class, String.class};
 	private static final Class<?>[] _deleteCSDiagramPinParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getCSDiagramPinParameterTypes2 =
+	private static final Class<?>[] _deleteCSDiagramPinsParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getCSDiagramPinsParameterTypes3 =
+	private static final Class<?>[] _fetchCSDiagramPinParameterTypes3 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getCSDiagramPinParameterTypes4 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getCSDiagramPinsParameterTypes5 =
 		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getCSDiagramPinsCountParameterTypes4 =
+	private static final Class<?>[] _getCSDiagramPinsCountParameterTypes6 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateCSDiagramPinParameterTypes5 =
+	private static final Class<?>[] _updateCSDiagramPinParameterTypes7 =
 		new Class[] {long.class, double.class, double.class, String.class};
 
 }

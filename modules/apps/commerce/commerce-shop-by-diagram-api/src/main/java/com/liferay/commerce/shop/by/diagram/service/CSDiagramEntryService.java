@@ -58,6 +58,9 @@ public interface CSDiagramEntryService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public void deleteCSDiagramEntries(long cpDefinitionId)
+		throws PortalException;
+
 	public void deleteCSDiagramEntry(long csDiagramEntryId)
 		throws PortalException;
 

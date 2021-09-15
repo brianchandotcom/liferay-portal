@@ -133,8 +133,7 @@ public class CSDiagramSettingLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting
-			deleteCSDiagramSettingByCPDefinitionId(long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		deleteCSDiagramSettingByCPDefinitionId(long cpDefinitionId) {
 
 		return _csDiagramSettingLocalService.
 			deleteCSDiagramSettingByCPDefinitionId(cpDefinitionId);

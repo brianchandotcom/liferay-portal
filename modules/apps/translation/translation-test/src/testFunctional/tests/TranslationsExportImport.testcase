@@ -84,8 +84,8 @@ definition {
 			languageList = "Spanish (Spain)");
 
 		Translations.translateFile(
-			contentTranslateion = "Contenidoweb",
-			descriptionTranslateion = "Descripcion",
+			contentTranslation = "Contenidoweb",
+			descriptionTranslation = "Descripcion",
 			encoding = "false",
 			titleTranslation = "Titulodelcontenidoweb",
 			translationFileName = "WebContentTitle-en_US-es_ES",
@@ -129,8 +129,8 @@ definition {
 			languageList = "Spanish (Spain)");
 
 		Translations.translateFile(
-			contentTranslateion = "Contenidoweb",
-			descriptionTranslateion = "Descripcion",
+			contentTranslation = "Contenidoweb",
+			descriptionTranslation = "Descripcion",
 			encoding = "false",
 			titleTranslation = "Titulodelcontenidoweb",
 			translationFileName = "WebContentTitle-en_US-es_ES",
@@ -172,8 +172,8 @@ definition {
 			languageList = "Japanese (Japan)");
 
 		Translations.translateFile(
-			contentTranslateion = "Webコンテンツ",
-			descriptionTranslateion = "説明",
+			contentTranslation = "Webコンテンツ",
+			descriptionTranslation = "説明",
 			encoding = "utf8",
 			titleTranslation = "Webコンテンツのタイトル",
 			translationFileName = "WebContentTitle-en_US-ja_JP",
@@ -217,8 +217,8 @@ definition {
 			languageList = "German (Germany)");
 
 		Translations.translateFile(
-			contentTranslateion = "Internetinhalt",
-			descriptionTranslateion = "Beschreibung",
+			contentTranslation = "Internetinhalt",
+			descriptionTranslation = "Beschreibung",
 			encoding = "false",
 			titleTranslation = "TiteldesWebinhalts",
 			translationFileName = "WebContentTitle-en_US-de_DE",

@@ -58,7 +58,7 @@ PortletURL portletURL = PortletURLBuilder.create(
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="important table-cell-expand"
+						cssClass="font-weight-bold table-cell-expand"
 						href='<%=
 							PortletURLBuilder.createRenderURL(
 								renderResponse
@@ -104,7 +104,7 @@ PortletURL portletURL = PortletURLBuilder.create(
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="important table-cell-ws-nowrap"
+						cssClass="font-weight-bold table-cell-ws-nowrap"
 						name="status"
 					>
 
@@ -126,7 +126,7 @@ PortletURL portletURL = PortletURLBuilder.create(
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:search-container-column-text
-								cssClass="important table-cell-ws-nowrap"
+								cssClass="font-weight-bold table-cell-ws-nowrap"
 							>
 								<h6 class="background-task-status-row text-warning">
 									<liferay-ui:message key="incomplete" />

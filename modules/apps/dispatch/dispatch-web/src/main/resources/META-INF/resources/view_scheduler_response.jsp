@@ -40,7 +40,7 @@ SchedulerResponseDisplayContext schedulerResponseDisplayContext = (SchedulerResp
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="important table-cell-expand"
+					cssClass="font-weight-bold table-cell-expand"
 					name="name"
 				>
 					<liferay-ui:message key="<%= schedulerResponseDisplayContext.getSimpleName(schedulerResponse.getJobName()) %>" />
@@ -59,7 +59,7 @@ SchedulerResponseDisplayContext schedulerResponseDisplayContext = (SchedulerResp
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="important table-cell-ws-nowrap"
+					cssClass="font-weight-bold table-cell-ws-nowrap"
 					name="status"
 				>
 

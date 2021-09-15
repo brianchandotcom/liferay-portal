@@ -84,7 +84,7 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text
-								cssClass="entry-action-column important"
+								cssClass="entry-action-column font-weight-bold"
 							>
 
 								<%

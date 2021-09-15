@@ -146,7 +146,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 								%>
 
 								<liferay-ui:search-container-column-text
-									cssClass="important table-cell-expand"
+									cssClass="font-weight-bold table-cell-expand"
 									href="<%= rowURL %>"
 									name="group"
 									value="<%= HtmlUtil.escape(cpOptionCategory.getTitle(locale)) %>"

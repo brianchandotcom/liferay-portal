@@ -38,7 +38,7 @@ CommerceOrder commerceOrder = (CommerceOrder)request.getAttribute(CommerceOrderC
 			modelVar="commerceOrderItem"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="important table-cell-expand"
+				cssClass="font-weight-bold table-cell-expand"
 				property="sku"
 			/>
 

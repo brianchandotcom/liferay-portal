@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
@@ -72,7 +74,14 @@ public class AccountRoleDisplaySearchContainerFactory {
 				new long[] {
 					accountEntryId, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT
 				},
-				keywords, searchContainer.getStart(), searchContainer.getEnd(),
+				keywords,
+				LinkedHashMapBuilder.<String, Object>put(
+					"excludedRoleNames",
+					new String[] {
+						AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER
+					}
+				).build(),
+				searchContainer.getStart(), searchContainer.getEnd(),
 				new RoleNameComparator(orderByType.equals("asc")));
 
 		List<AccountRoleDisplay> accountRoleDisplays = TransformUtil.transform(

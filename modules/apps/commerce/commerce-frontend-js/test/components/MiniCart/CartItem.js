@@ -47,6 +47,7 @@ describe('MiniCart Item', () => {
 
 	const BASE_PROPS = {
 		item: {
+			adaptiveMediaImageHTMLTag: '<picture></picture>',
 			cartItems: [],
 			id: 202,
 			name: 'An Item',

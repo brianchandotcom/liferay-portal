@@ -18,10 +18,17 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
+import com.liferay.account.model.AccountRoleTable;
 import com.liferay.account.service.base.AccountRoleLocalServiceBaseImpl;
 import com.liferay.account.service.persistence.AccountEntryPersistence;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
@@ -32,6 +39,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleTable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -40,6 +48,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -50,6 +59,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -291,6 +301,35 @@ public class AccountRoleLocalServiceImpl
 					companyId, accountEntryIds, keywords, null)));
 	}
 
+	@Override
+	public BaseModelSearchResult<AccountRole> searchAccountRoles(
+		long companyId, long[] accountEntryIds, String keywords,
+		LinkedHashMap<String, Object> params, int start,
+		int end, OrderByComparator<?> orderByComparator) {
+
+		if (params == null) {
+			params = new LinkedHashMap<>();
+		}
+
+		return new BaseModelSearchResult<>(
+			accountRoleLocalService.dslQuery(
+				_getGroupByStep(
+					accountEntryIds, companyId,
+					DSLQueryFactoryUtil.select(AccountRoleTable.INSTANCE),
+					keywords, params
+				).orderBy(
+					RoleTable.INSTANCE, orderByComparator
+				).limit(
+					start, end
+				)),
+			accountRoleLocalService.dslQueryCount(
+				_getGroupByStep(
+					accountEntryIds, companyId,
+					DSLQueryFactoryUtil.countDistinct(
+						AccountRoleTable.INSTANCE.roleId),
+					keywords, params)));
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x)
 	 */
@@ -356,6 +395,71 @@ public class AccountRoleLocalServiceImpl
 		addAccountRole(
 			defaultUser.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			roleName, null, _roleDescriptionsMaps.get(roleName));
+	}
+
+	private GroupByStep _getGroupByStep(
+		long[] accountEntryIds, long companyId, FromStep fromStep,
+		String keywords, LinkedHashMap<String, Object> params) {
+
+		return fromStep.from(
+			AccountRoleTable.INSTANCE
+		).innerJoinON(
+			RoleTable.INSTANCE,
+			RoleTable.INSTANCE.roleId.eq(AccountRoleTable.INSTANCE.roleId)
+		).where(
+			() -> {
+				Predicate predicate = AccountRoleTable.INSTANCE.companyId.eq(
+					companyId);
+
+				if (ArrayUtil.isNotEmpty(accountEntryIds)) {
+					predicate = predicate.and(
+						AccountRoleTable.INSTANCE.accountEntryId.in(
+							ArrayUtil.toLongArray(accountEntryIds)));
+				}
+
+				String[] excludedRoleNames = (String[])params.get(
+					"excludedRoleNames");
+
+				if (ArrayUtil.isNotEmpty(excludedRoleNames)) {
+					predicate = predicate.and(
+						RoleTable.INSTANCE.name.notIn(excludedRoleNames));
+				}
+
+				Long[] excludedRoleIds = (Long[])params.get("excludedRoleIds");
+
+				if (ArrayUtil.isNotEmpty(excludedRoleIds)) {
+					predicate = predicate.and(
+						RoleTable.INSTANCE.roleId.notIn(excludedRoleIds));
+				}
+
+				if (Validator.isNotNull(keywords)) {
+					Predicate keywordsPredicate =
+						_customSQL.getKeywordsPredicate(
+							DSLFunctionFactoryUtil.lower(
+								RoleTable.INSTANCE.name),
+							_customSQL.keywords(keywords, true));
+
+					keywordsPredicate = Predicate.or(
+						_customSQL.getKeywordsPredicate(
+							DSLFunctionFactoryUtil.lower(
+								RoleTable.INSTANCE.title),
+							_customSQL.keywords(keywords)),
+						keywordsPredicate);
+
+					keywordsPredicate = Predicate.or(
+						_customSQL.getKeywordsPredicate(
+							DSLFunctionFactoryUtil.lower(
+								RoleTable.INSTANCE.description),
+							_customSQL.keywords(keywords)),
+						keywordsPredicate);
+
+					predicate = predicate.and(
+						Predicate.withParentheses(keywordsPredicate));
+				}
+
+				return predicate;
+			}
+		);
 	}
 
 	private DynamicQuery _getRoleDynamicQuery(
@@ -435,6 +539,9 @@ public class AccountRoleLocalServiceImpl
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private CustomSQL _customSQL;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

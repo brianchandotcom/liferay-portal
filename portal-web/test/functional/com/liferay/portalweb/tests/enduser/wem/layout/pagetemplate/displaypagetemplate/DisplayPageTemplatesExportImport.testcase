@@ -185,26 +185,18 @@ definition {
 		}
 
 		task ("Assert the title of three Web Content Articles are respectively shown in each cell") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Third Web Content",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			var n = "1";
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Second Web Content",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			for (var title : list "Third,Second,First") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title} Web Content",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "First Web Content",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "3",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				var n = ${n} + 1;
+			}
 
 			PageEditor.clickPublish();
 		}
@@ -236,26 +228,18 @@ definition {
 				key_fragmentName = "Collection Display",
 				locator1 = "Fragment#FRAGMENT_HEADER");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Third Web Content",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			var n = "1";
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Second Web Content",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			for (var title : list "Third,Second,First") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title} Web Content",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "First Web Content",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "3",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				var n = ${n} + 1;
+			}
 		}
 	}
 

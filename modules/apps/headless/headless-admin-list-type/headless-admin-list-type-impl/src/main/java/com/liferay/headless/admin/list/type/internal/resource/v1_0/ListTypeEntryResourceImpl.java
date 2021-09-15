@@ -19,14 +19,18 @@ import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.internal.dto.v1_0.util.ListTypeEntryUtil;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeEntryResource;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -54,19 +58,34 @@ public class ListTypeEntryResourceImpl
 	)
 	@Override
 	public Page<ListTypeEntry> getListTypeDefinitionListTypeEntriesPage(
-		Long listTypeDefinitionId, Pagination pagination) {
+			Long listTypeDefinitionId, String search, Pagination pagination)
+		throws Exception {
 
-		return Page.of(
-			transform(
-				_listTypeEntryLocalService.getListTypeEntries(
-					listTypeDefinitionId, pagination.getStartPosition(),
-					pagination.getEndPosition()),
-				listTypeEntry -> ListTypeEntryUtil.toListTypeEntry(
+		return SearchUtil.search(
+			Collections.emptyMap(),
+			booleanQuery -> {
+			},
+			null, com.liferay.list.type.model.ListTypeEntry.class.getName(),
+			search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(Field.NAME, search);
+				searchContext.setAttribute("key", search);
+				searchContext.setAttribute(
+					"listTypeDefinitionId", listTypeDefinitionId);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			null,
+			document -> {
+				com.liferay.list.type.model.ListTypeEntry listTypeEntry =
+					_listTypeEntryLocalService.getListTypeEntry(
+						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
+
+				return ListTypeEntryUtil.toListTypeEntry(
 					_getActions(listTypeEntry),
-					contextAcceptLanguage.getPreferredLocale(), listTypeEntry)),
-			pagination,
-			_listTypeEntryLocalService.getListTypeEntriesCount(
-				listTypeDefinitionId));
+					contextAcceptLanguage.getPreferredLocale(), listTypeEntry);
+			});
 	}
 
 	@Override

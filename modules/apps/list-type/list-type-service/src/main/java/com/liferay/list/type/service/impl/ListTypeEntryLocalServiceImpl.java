@@ -22,6 +22,8 @@ import com.liferay.list.type.service.persistence.ListTypeDefinitionPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -42,6 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ListTypeEntryLocalServiceImpl
 	extends ListTypeEntryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ListTypeEntry addListTypeEntry(
 			long userId, long listTypeDefinitionId, String key,
@@ -86,6 +89,7 @@ public class ListTypeEntryLocalServiceImpl
 			listTypeDefinitionId);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ListTypeEntry updateListTypeEntry(
 			long listTypeEntryId, Map<Locale, String> nameMap)

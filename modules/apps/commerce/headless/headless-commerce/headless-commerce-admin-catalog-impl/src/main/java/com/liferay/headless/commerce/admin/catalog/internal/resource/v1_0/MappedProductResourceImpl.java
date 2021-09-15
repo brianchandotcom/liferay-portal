@@ -35,8 +35,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
-import javax.validation.constraints.NotNull;
-
 /**
  * @author Alessio Antonio Rendina
  */
@@ -50,8 +48,14 @@ public class MappedProductResourceImpl
 	extends BaseMappedProductResourceImpl implements NestedFieldSupport {
 
 	@Override
-	public MappedProduct getProductByExternalReferenceCodeMappedProductBySequence(
-			String externalReferenceCode, String sequence)
+	public void deleteMappedProduct(Long mappedProductId) throws Exception {
+		_csDiagramEntryService.deleteCSDiagramEntry(mappedProductId);
+	}
+
+	@Override
+	public MappedProduct
+			getProductByExternalReferenceCodeMappedProductBySequence(
+				String externalReferenceCode, String sequence)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -62,7 +66,7 @@ public class MappedProductResourceImpl
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
 				"Unable to find product with external reference code " +
-				externalReferenceCode);
+					externalReferenceCode);
 		}
 
 		CSDiagramEntry csDiagramEntry =
@@ -70,31 +74,6 @@ public class MappedProductResourceImpl
 				cpDefinition.getCPDefinitionId(), sequence);
 
 		return _toMappedProduct(csDiagramEntry.getCSDiagramEntryId());
-	}
-
-	@Override
-	public MappedProduct getProductMappedProductBySequence(
-			Long productId, String sequence)
-		throws Exception {
-
-		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(productId);
-
-		if (cpDefinition == null) {
-			throw new NoSuchCPDefinitionException(
-				"Unable to find product with ID " + productId);
-		}
-
-		CSDiagramEntry csDiagramEntry =
-			_csDiagramEntryService.fetchCSDiagramEntry(
-				cpDefinition.getCPDefinitionId(), sequence);
-
-		return _toMappedProduct(csDiagramEntry.getCSDiagramEntryId());
-	}
-
-	@Override
-	public void deleteMappedProduct(Long mappedProductId) throws Exception {
-		_csDiagramEntryService.deleteCSDiagramEntry(mappedProductId);
 	}
 
 	@Override
@@ -134,6 +113,26 @@ public class MappedProductResourceImpl
 
 		return _getMappedProductsPage(
 			cpDefinition.getCPDefinitionId(), pagination);
+	}
+
+	@Override
+	public MappedProduct getProductMappedProductBySequence(
+			Long productId, String sequence)
+		throws Exception {
+
+		CPDefinition cpDefinition =
+			_cpDefinitionService.fetchCPDefinitionByCProductId(productId);
+
+		if (cpDefinition == null) {
+			throw new NoSuchCPDefinitionException(
+				"Unable to find product with ID " + productId);
+		}
+
+		CSDiagramEntry csDiagramEntry =
+			_csDiagramEntryService.fetchCSDiagramEntry(
+				cpDefinition.getCPDefinitionId(), sequence);
+
+		return _toMappedProduct(csDiagramEntry.getCSDiagramEntryId());
 	}
 
 	@Override

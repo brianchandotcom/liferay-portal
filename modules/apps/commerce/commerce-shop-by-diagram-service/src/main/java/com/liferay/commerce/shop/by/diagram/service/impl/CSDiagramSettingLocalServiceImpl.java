@@ -84,7 +84,7 @@ public class CSDiagramSettingLocalServiceImpl
 
 	@Override
 	public CSDiagramSetting deleteCSDiagramSettingByCPDefinitionId(
-		long cpDefinitionId){
+		long cpDefinitionId) {
 
 		CSDiagramSetting csDiagramSetting =
 			csDiagramSettingPersistence.fetchByCPDefinitionId(cpDefinitionId);

@@ -17,6 +17,7 @@ package com.liferay.search.experiences.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -42,8 +43,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SXPBlueprintModel
-	extends BaseModel<SXPBlueprint>, LocalizedModel, MVCCModel, ShardedModel,
-			StagedAuditedModel, WorkflowedModel {
+	extends BaseModel<SXPBlueprint>, GroupedModel, LocalizedModel, MVCCModel,
+			ShardedModel, StagedAuditedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -111,6 +112,22 @@ public interface SXPBlueprintModel
 	 * @param sxpBlueprintId the sxp blueprint ID of this sxp blueprint
 	 */
 	public void setSXPBlueprintId(long sxpBlueprintId);
+
+	/**
+	 * Returns the group ID of this sxp blueprint.
+	 *
+	 * @return the group ID of this sxp blueprint
+	 */
+	@Override
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this sxp blueprint.
+	 *
+	 * @param groupId the group ID of this sxp blueprint
+	 */
+	@Override
+	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the company ID of this sxp blueprint.
@@ -208,6 +225,186 @@ public interface SXPBlueprintModel
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
+
+	/**
+	 * Returns the status of this sxp blueprint.
+	 *
+	 * @return the status of this sxp blueprint
+	 */
+	@Override
+	public int getStatus();
+
+	/**
+	 * Sets the status of this sxp blueprint.
+	 *
+	 * @param status the status of this sxp blueprint
+	 */
+	@Override
+	public void setStatus(int status);
+
+	/**
+	 * Returns the status by user ID of this sxp blueprint.
+	 *
+	 * @return the status by user ID of this sxp blueprint
+	 */
+	@Override
+	public long getStatusByUserId();
+
+	/**
+	 * Sets the status by user ID of this sxp blueprint.
+	 *
+	 * @param statusByUserId the status by user ID of this sxp blueprint
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this sxp blueprint.
+	 *
+	 * @return the status by user uuid of this sxp blueprint
+	 */
+	@Override
+	public String getStatusByUserUuid();
+
+	/**
+	 * Sets the status by user uuid of this sxp blueprint.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this sxp blueprint
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this sxp blueprint.
+	 *
+	 * @return the status by user name of this sxp blueprint
+	 */
+	@AutoEscape
+	@Override
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this sxp blueprint.
+	 *
+	 * @param statusByUserName the status by user name of this sxp blueprint
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName);
+
+	/**
+	 * Returns the status date of this sxp blueprint.
+	 *
+	 * @return the status date of this sxp blueprint
+	 */
+	@Override
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this sxp blueprint.
+	 *
+	 * @param statusDate the status date of this sxp blueprint
+	 */
+	@Override
+	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns the title of this sxp blueprint.
+	 *
+	 * @return the title of this sxp blueprint
+	 */
+	public String getTitle();
+
+	/**
+	 * Returns the localized title of this sxp blueprint in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized title of this sxp blueprint
+	 */
+	@AutoEscape
+	public String getTitle(Locale locale);
+
+	/**
+	 * Returns the localized title of this sxp blueprint in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized title of this sxp blueprint. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getTitle(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized title of this sxp blueprint in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized title of this sxp blueprint
+	 */
+	@AutoEscape
+	public String getTitle(String languageId);
+
+	/**
+	 * Returns the localized title of this sxp blueprint in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized title of this sxp blueprint
+	 */
+	@AutoEscape
+	public String getTitle(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getTitleCurrentLanguageId();
+
+	@AutoEscape
+	public String getTitleCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized titles of this sxp blueprint.
+	 *
+	 * @return the locales and localized titles of this sxp blueprint
+	 */
+	public Map<Locale, String> getTitleMap();
+
+	/**
+	 * Sets the title of this sxp blueprint.
+	 *
+	 * @param title the title of this sxp blueprint
+	 */
+	public void setTitle(String title);
+
+	/**
+	 * Sets the localized title of this sxp blueprint in the language.
+	 *
+	 * @param title the localized title of this sxp blueprint
+	 * @param locale the locale of the language
+	 */
+	public void setTitle(String title, Locale locale);
+
+	/**
+	 * Sets the localized title of this sxp blueprint in the language, and sets the default locale.
+	 *
+	 * @param title the localized title of this sxp blueprint
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setTitle(String title, Locale locale, Locale defaultLocale);
+
+	public void setTitleCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized titles of this sxp blueprint from the map of locales and localized titles.
+	 *
+	 * @param titleMap the locales and localized titles of this sxp blueprint
+	 */
+	public void setTitleMap(Map<Locale, String> titleMap);
+
+	/**
+	 * Sets the localized titles of this sxp blueprint from the map of locales and localized titles, and sets the default locale.
+	 *
+	 * @param titleMap the locales and localized titles of this sxp blueprint
+	 * @param defaultLocale the default locale
+	 */
+	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale);
 
 	/**
 	 * Returns the description of this sxp blueprint.
@@ -311,184 +508,34 @@ public interface SXPBlueprintModel
 		Map<Locale, String> descriptionMap, Locale defaultLocale);
 
 	/**
-	 * Returns the title of this sxp blueprint.
+	 * Returns the configuration json of this sxp blueprint.
 	 *
-	 * @return the title of this sxp blueprint
-	 */
-	public String getTitle();
-
-	/**
-	 * Returns the localized title of this sxp blueprint in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized title of this sxp blueprint
+	 * @return the configuration json of this sxp blueprint
 	 */
 	@AutoEscape
-	public String getTitle(Locale locale);
+	public String getConfigurationJSON();
 
 	/**
-	 * Returns the localized title of this sxp blueprint in the language, optionally using the default language if no localization exists for the requested language.
+	 * Sets the configuration json of this sxp blueprint.
 	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized title of this sxp blueprint. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 * @param configurationJSON the configuration json of this sxp blueprint
+	 */
+	public void setConfigurationJSON(String configurationJSON);
+
+	/**
+	 * Returns the selected elements json of this sxp blueprint.
+	 *
+	 * @return the selected elements json of this sxp blueprint
 	 */
 	@AutoEscape
-	public String getTitle(Locale locale, boolean useDefault);
+	public String getSelectedElementsJSON();
 
 	/**
-	 * Returns the localized title of this sxp blueprint in the language. Uses the default language if no localization exists for the requested language.
+	 * Sets the selected elements json of this sxp blueprint.
 	 *
-	 * @param languageId the ID of the language
-	 * @return the localized title of this sxp blueprint
+	 * @param selectedElementsJSON the selected elements json of this sxp blueprint
 	 */
-	@AutoEscape
-	public String getTitle(String languageId);
-
-	/**
-	 * Returns the localized title of this sxp blueprint in the language, optionally using the default language if no localization exists for the requested language.
-	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized title of this sxp blueprint
-	 */
-	@AutoEscape
-	public String getTitle(String languageId, boolean useDefault);
-
-	@AutoEscape
-	public String getTitleCurrentLanguageId();
-
-	@AutoEscape
-	public String getTitleCurrentValue();
-
-	/**
-	 * Returns a map of the locales and localized titles of this sxp blueprint.
-	 *
-	 * @return the locales and localized titles of this sxp blueprint
-	 */
-	public Map<Locale, String> getTitleMap();
-
-	/**
-	 * Sets the title of this sxp blueprint.
-	 *
-	 * @param title the title of this sxp blueprint
-	 */
-	public void setTitle(String title);
-
-	/**
-	 * Sets the localized title of this sxp blueprint in the language.
-	 *
-	 * @param title the localized title of this sxp blueprint
-	 * @param locale the locale of the language
-	 */
-	public void setTitle(String title, Locale locale);
-
-	/**
-	 * Sets the localized title of this sxp blueprint in the language, and sets the default locale.
-	 *
-	 * @param title the localized title of this sxp blueprint
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
-	 */
-	public void setTitle(String title, Locale locale, Locale defaultLocale);
-
-	public void setTitleCurrentLanguageId(String languageId);
-
-	/**
-	 * Sets the localized titles of this sxp blueprint from the map of locales and localized titles.
-	 *
-	 * @param titleMap the locales and localized titles of this sxp blueprint
-	 */
-	public void setTitleMap(Map<Locale, String> titleMap);
-
-	/**
-	 * Sets the localized titles of this sxp blueprint from the map of locales and localized titles, and sets the default locale.
-	 *
-	 * @param titleMap the locales and localized titles of this sxp blueprint
-	 * @param defaultLocale the default locale
-	 */
-	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale);
-
-	/**
-	 * Returns the status of this sxp blueprint.
-	 *
-	 * @return the status of this sxp blueprint
-	 */
-	@Override
-	public int getStatus();
-
-	/**
-	 * Sets the status of this sxp blueprint.
-	 *
-	 * @param status the status of this sxp blueprint
-	 */
-	@Override
-	public void setStatus(int status);
-
-	/**
-	 * Returns the status by user ID of this sxp blueprint.
-	 *
-	 * @return the status by user ID of this sxp blueprint
-	 */
-	@Override
-	public long getStatusByUserId();
-
-	/**
-	 * Sets the status by user ID of this sxp blueprint.
-	 *
-	 * @param statusByUserId the status by user ID of this sxp blueprint
-	 */
-	@Override
-	public void setStatusByUserId(long statusByUserId);
-
-	/**
-	 * Returns the status by user uuid of this sxp blueprint.
-	 *
-	 * @return the status by user uuid of this sxp blueprint
-	 */
-	@Override
-	public String getStatusByUserUuid();
-
-	/**
-	 * Sets the status by user uuid of this sxp blueprint.
-	 *
-	 * @param statusByUserUuid the status by user uuid of this sxp blueprint
-	 */
-	@Override
-	public void setStatusByUserUuid(String statusByUserUuid);
-
-	/**
-	 * Returns the status by user name of this sxp blueprint.
-	 *
-	 * @return the status by user name of this sxp blueprint
-	 */
-	@AutoEscape
-	@Override
-	public String getStatusByUserName();
-
-	/**
-	 * Sets the status by user name of this sxp blueprint.
-	 *
-	 * @param statusByUserName the status by user name of this sxp blueprint
-	 */
-	@Override
-	public void setStatusByUserName(String statusByUserName);
-
-	/**
-	 * Returns the status date of this sxp blueprint.
-	 *
-	 * @return the status date of this sxp blueprint
-	 */
-	@Override
-	public Date getStatusDate();
-
-	/**
-	 * Sets the status date of this sxp blueprint.
-	 *
-	 * @param statusDate the status date of this sxp blueprint
-	 */
-	@Override
-	public void setStatusDate(Date statusDate);
+	public void setSelectedElementsJSON(String selectedElementsJSON);
 
 	/**
 	 * Returns <code>true</code> if this sxp blueprint is approved.

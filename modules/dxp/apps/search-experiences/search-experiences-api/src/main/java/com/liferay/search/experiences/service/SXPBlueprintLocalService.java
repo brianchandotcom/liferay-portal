@@ -203,15 +203,15 @@ public interface SXPBlueprintLocalService
 	public SXPBlueprint fetchSXPBlueprint(long sxpBlueprintId);
 
 	/**
-	 * Returns the sxp blueprint with the matching UUID and company.
+	 * Returns the sxp blueprint matching the UUID and group.
 	 *
 	 * @param uuid the sxp blueprint's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SXPBlueprint fetchSXPBlueprintByUuidAndCompanyId(
-		String uuid, long companyId);
+	public SXPBlueprint fetchSXPBlueprintByUuidAndGroupId(
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -250,16 +250,16 @@ public interface SXPBlueprintLocalService
 		throws PortalException;
 
 	/**
-	 * Returns the sxp blueprint with the matching UUID and company.
+	 * Returns the sxp blueprint matching the UUID and group.
 	 *
 	 * @param uuid the sxp blueprint's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching sxp blueprint
 	 * @throws PortalException if a matching sxp blueprint could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SXPBlueprint getSXPBlueprintByUuidAndCompanyId(
-			String uuid, long companyId)
+	public SXPBlueprint getSXPBlueprintByUuidAndGroupId(
+			String uuid, long groupId)
 		throws PortalException;
 
 	/**
@@ -275,6 +275,32 @@ public interface SXPBlueprintLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SXPBlueprint> getSXPBlueprints(int start, int end);
+
+	/**
+	 * Returns all the sxp blueprints matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the sxp blueprints
+	 * @param companyId the primary key of the company
+	 * @return the matching sxp blueprints, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SXPBlueprint> getSXPBlueprintsByUuidAndCompanyId(
+		String uuid, long companyId);
+
+	/**
+	 * Returns a range of sxp blueprints matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the sxp blueprints
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of sxp blueprints
+	 * @param end the upper bound of the range of sxp blueprints (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching sxp blueprints, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SXPBlueprint> getSXPBlueprintsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<SXPBlueprint> orderByComparator);
 
 	/**
 	 * Returns the number of sxp blueprints.

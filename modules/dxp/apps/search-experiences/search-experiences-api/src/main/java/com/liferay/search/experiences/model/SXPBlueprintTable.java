@@ -38,6 +38,8 @@ public class SXPBlueprintTable extends BaseTable<SXPBlueprintTable> {
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SXPBlueprintTable, Long> sxpBlueprintId = createColumn(
 		"sxpBlueprintId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<SXPBlueprintTable, Long> groupId = createColumn(
+		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<SXPBlueprintTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<SXPBlueprintTable, Long> userId = createColumn(
@@ -48,10 +50,6 @@ public class SXPBlueprintTable extends BaseTable<SXPBlueprintTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<SXPBlueprintTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<SXPBlueprintTable, String> description = createColumn(
-		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<SXPBlueprintTable, String> title = createColumn(
-		"title", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SXPBlueprintTable, Integer> status = createColumn(
 		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<SXPBlueprintTable, Long> statusByUserId = createColumn(
@@ -62,6 +60,18 @@ public class SXPBlueprintTable extends BaseTable<SXPBlueprintTable> {
 			Column.FLAG_DEFAULT);
 	public final Column<SXPBlueprintTable, Date> statusDate = createColumn(
 		"statusDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<SXPBlueprintTable, String> title = createColumn(
+		"title", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<SXPBlueprintTable, String> description = createColumn(
+		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<SXPBlueprintTable, String> configurationJSON =
+		createColumn(
+			"configurationJSON", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<SXPBlueprintTable, String> selectedElementsJSON =
+		createColumn(
+			"selectedElementsJSON", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 
 	private SXPBlueprintTable() {
 		super("SXPBlueprint", SXPBlueprintTable::new);

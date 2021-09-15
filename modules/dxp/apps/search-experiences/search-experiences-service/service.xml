@@ -9,6 +9,10 @@
 
 		<column method-name="SXPBlueprintId" name="sxpBlueprintId" primary="true" type="long" />
 
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
@@ -16,15 +20,41 @@
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column localized="true" name="description" type="String" />
-		<column localized="true" name="title" type="String" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="title" type="String" />
+		<column localized="true" name="description" type="String" />
+		<column name="configurationJSON" type="String" />
+
+		<!-- Definitions of element instances in the configuration JSON -->
+
+		<column name="selectedElementsJSON" type="String" />
+
+		<!-- Finder methods -->
+
+		<order by="asc">
+			<order-column name="createDate"></order-column>
+			<order-column name="sxpBlueprintId"></order-column>
+		</order>
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="G_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_S_T" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="SXPElement" remote-service="true" uuid="true">
 
@@ -32,6 +62,10 @@
 
 		<column method-name="SXPElementId" name="sxpElementId" primary="true" type="long" />
 
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
@@ -39,11 +73,49 @@
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
+		<column name="status" type="int" />
 
 		<!-- Other fields -->
 
-		<column localized="true" name="description" type="String" />
 		<column localized="true" name="title" type="String" />
-		<column name="status" type="int" />
+		<column localized="true" name="description" type="String" />
+		<column name="configurationJSON" type="String" />
+		<column name="hidden" type="boolean" />
+		<column name="readOnly" type="boolean" />
+		<column name="type" type="int" />
+
+		<!-- Finder methods -->
+
+		<order by="asc">
+			<order-column name="createDate"></order-column>
+			<order-column name="sxpElementId"></order-column>
+		</order>
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="G_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_T" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="type" />
+		</finder>
+		<finder name="C_T" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="type" />
+		</finder>
+		<finder name="G_S_T" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" />
+			<finder-column name="type" />
+		</finder>
 	</entity>
+	<exceptions>
+		<exception>SXPBlueprintValidation</exception>
+		<exception>SXPElementValidation</exception>
+	</exceptions>
 </service-builder>

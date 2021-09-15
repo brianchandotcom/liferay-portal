@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -86,12 +87,14 @@ public class SXPBlueprintModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"sxpBlueprintId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"description", Types.VARCHAR}, {"title", Types.VARCHAR},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
+		{"sxpBlueprintId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}, {"title", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"configurationJSON", Types.VARCHAR},
+		{"selectedElementsJSON", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -101,29 +104,32 @@ public class SXPBlueprintModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("sxpBlueprintId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("configurationJSON", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("selectedElementsJSON", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SXPBlueprint (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,sxpBlueprintId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description STRING null,title STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table SXPBlueprint (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,sxpBlueprintId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,title STRING null,description STRING null,configurationJSON VARCHAR(75) null,selectedElementsJSON VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table SXPBlueprint";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY sxpBlueprint.sxpBlueprintId ASC";
+		" ORDER BY sxpBlueprint.createDate ASC, sxpBlueprint.sxpBlueprintId ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY SXPBlueprint.sxpBlueprintId ASC";
+		" ORDER BY SXPBlueprint.createDate ASC, SXPBlueprint.sxpBlueprintId ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -141,14 +147,33 @@ public class SXPBlueprintModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 2L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long STATUS_COLUMN_BITMASK = 4L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SXPBLUEPRINTID_COLUMN_BITMASK = 4L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long SXPBLUEPRINTID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -182,17 +207,20 @@ public class SXPBlueprintModelImpl
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setSXPBlueprintId(soapModel.getSXPBlueprintId());
+		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setDescription(soapModel.getDescription());
-		model.setTitle(soapModel.getTitle());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
 		model.setStatusDate(soapModel.getStatusDate());
+		model.setTitle(soapModel.getTitle());
+		model.setDescription(soapModel.getDescription());
+		model.setConfigurationJSON(soapModel.getConfigurationJSON());
+		model.setSelectedElementsJSON(soapModel.getSelectedElementsJSON());
 
 		return model;
 	}
@@ -357,6 +385,10 @@ public class SXPBlueprintModelImpl
 		attributeSetterBiConsumers.put(
 			"sxpBlueprintId",
 			(BiConsumer<SXPBlueprint, Long>)SXPBlueprint::setSXPBlueprintId);
+		attributeGetterFunctions.put("groupId", SXPBlueprint::getGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<SXPBlueprint, Long>)SXPBlueprint::setGroupId);
 		attributeGetterFunctions.put("companyId", SXPBlueprint::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
@@ -377,14 +409,6 @@ public class SXPBlueprintModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<SXPBlueprint, Date>)SXPBlueprint::setModifiedDate);
-		attributeGetterFunctions.put(
-			"description", SXPBlueprint::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<SXPBlueprint, String>)SXPBlueprint::setDescription);
-		attributeGetterFunctions.put("title", SXPBlueprint::getTitle);
-		attributeSetterBiConsumers.put(
-			"title", (BiConsumer<SXPBlueprint, String>)SXPBlueprint::setTitle);
 		attributeGetterFunctions.put("status", SXPBlueprint::getStatus);
 		attributeSetterBiConsumers.put(
 			"status",
@@ -404,6 +428,26 @@ public class SXPBlueprintModelImpl
 		attributeSetterBiConsumers.put(
 			"statusDate",
 			(BiConsumer<SXPBlueprint, Date>)SXPBlueprint::setStatusDate);
+		attributeGetterFunctions.put("title", SXPBlueprint::getTitle);
+		attributeSetterBiConsumers.put(
+			"title", (BiConsumer<SXPBlueprint, String>)SXPBlueprint::setTitle);
+		attributeGetterFunctions.put(
+			"description", SXPBlueprint::getDescription);
+		attributeSetterBiConsumers.put(
+			"description",
+			(BiConsumer<SXPBlueprint, String>)SXPBlueprint::setDescription);
+		attributeGetterFunctions.put(
+			"configurationJSON", SXPBlueprint::getConfigurationJSON);
+		attributeSetterBiConsumers.put(
+			"configurationJSON",
+			(BiConsumer<SXPBlueprint, String>)
+				SXPBlueprint::setConfigurationJSON);
+		attributeGetterFunctions.put(
+			"selectedElementsJSON", SXPBlueprint::getSelectedElementsJSON);
+		attributeSetterBiConsumers.put(
+			"selectedElementsJSON",
+			(BiConsumer<SXPBlueprint, String>)
+				SXPBlueprint::setSelectedElementsJSON);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -468,6 +512,30 @@ public class SXPBlueprintModelImpl
 		}
 
 		_sxpBlueprintId = sxpBlueprintId;
+	}
+
+	@JSON
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_groupId = groupId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalGroupId() {
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -584,114 +652,93 @@ public class SXPBlueprintModelImpl
 
 	@JSON
 	@Override
-	public String getDescription() {
-		if (_description == null) {
-			return "";
-		}
-		else {
-			return _description;
-		}
+	public int getStatus() {
+		return _status;
 	}
 
 	@Override
-	public String getDescription(Locale locale) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return getDescription(languageId);
-	}
-
-	@Override
-	public String getDescription(Locale locale, boolean useDefault) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return getDescription(languageId, useDefault);
-	}
-
-	@Override
-	public String getDescription(String languageId) {
-		return LocalizationUtil.getLocalization(getDescription(), languageId);
-	}
-
-	@Override
-	public String getDescription(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getDescription(), languageId, useDefault);
-	}
-
-	@Override
-	public String getDescriptionCurrentLanguageId() {
-		return _descriptionCurrentLanguageId;
-	}
-
-	@JSON
-	@Override
-	public String getDescriptionCurrentValue() {
-		Locale locale = getLocale(_descriptionCurrentLanguageId);
-
-		return getDescription(locale);
-	}
-
-	@Override
-	public Map<Locale, String> getDescriptionMap() {
-		return LocalizationUtil.getLocalizationMap(getDescription());
-	}
-
-	@Override
-	public void setDescription(String description) {
+	public void setStatus(int status) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_description = description;
+		_status = status;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public int getOriginalStatus() {
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
+	}
+
+	@JSON
+	@Override
+	public long getStatusByUserId() {
+		return _statusByUserId;
 	}
 
 	@Override
-	public void setDescription(String description, Locale locale) {
-		setDescription(description, locale, LocaleUtil.getDefault());
+	public void setStatusByUserId(long statusByUserId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusByUserId = statusByUserId;
 	}
 
 	@Override
-	public void setDescription(
-		String description, Locale locale, Locale defaultLocale) {
+	public String getStatusByUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getStatusByUserId());
 
-		String languageId = LocaleUtil.toLanguageId(locale);
-		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
 
-		if (Validator.isNotNull(description)) {
-			setDescription(
-				LocalizationUtil.updateLocalization(
-					getDescription(), "Description", description, languageId,
-					defaultLanguageId));
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+	}
+
+	@JSON
+	@Override
+	public String getStatusByUserName() {
+		if (_statusByUserName == null) {
+			return "";
 		}
 		else {
-			setDescription(
-				LocalizationUtil.removeLocalization(
-					getDescription(), "Description", languageId));
+			return _statusByUserName;
 		}
 	}
 
 	@Override
-	public void setDescriptionCurrentLanguageId(String languageId) {
-		_descriptionCurrentLanguageId = languageId;
-	}
-
-	@Override
-	public void setDescriptionMap(Map<Locale, String> descriptionMap) {
-		setDescriptionMap(descriptionMap, LocaleUtil.getDefault());
-	}
-
-	@Override
-	public void setDescriptionMap(
-		Map<Locale, String> descriptionMap, Locale defaultLocale) {
-
-		if (descriptionMap == null) {
-			return;
+	public void setStatusByUserName(String statusByUserName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
-		setDescription(
-			LocalizationUtil.updateLocalization(
-				descriptionMap, getDescription(), "Description",
-				LocaleUtil.toLanguageId(defaultLocale)));
+		_statusByUserName = statusByUserName;
+	}
+
+	@JSON
+	@Override
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	@Override
+	public void setStatusDate(Date statusDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusDate = statusDate;
 	}
 
 	@JSON
@@ -759,7 +806,7 @@ public class SXPBlueprintModelImpl
 
 	@Override
 	public void setTitle(String title, Locale locale) {
-		setTitle(title, locale, LocaleUtil.getDefault());
+		setTitle(title, locale, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -786,7 +833,7 @@ public class SXPBlueprintModelImpl
 
 	@Override
 	public void setTitleMap(Map<Locale, String> titleMap) {
-		setTitleMap(titleMap, LocaleUtil.getDefault());
+		setTitleMap(titleMap, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -805,83 +852,154 @@ public class SXPBlueprintModelImpl
 
 	@JSON
 	@Override
-	public int getStatus() {
-		return _status;
-	}
-
-	@Override
-	public void setStatus(int status) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_status = status;
-	}
-
-	@JSON
-	@Override
-	public long getStatusByUserId() {
-		return _statusByUserId;
-	}
-
-	@Override
-	public void setStatusByUserId(long statusByUserId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_statusByUserId = statusByUserId;
-	}
-
-	@Override
-	public String getStatusByUserUuid() {
-		try {
-			User user = UserLocalServiceUtil.getUserById(getStatusByUserId());
-
-			return user.getUuid();
-		}
-		catch (PortalException portalException) {
-			return "";
-		}
-	}
-
-	@Override
-	public void setStatusByUserUuid(String statusByUserUuid) {
-	}
-
-	@JSON
-	@Override
-	public String getStatusByUserName() {
-		if (_statusByUserName == null) {
+	public String getDescription() {
+		if (_description == null) {
 			return "";
 		}
 		else {
-			return _statusByUserName;
+			return _description;
 		}
 	}
 
 	@Override
-	public void setStatusByUserName(String statusByUserName) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
+	public String getDescription(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
 
-		_statusByUserName = statusByUserName;
+		return getDescription(languageId);
+	}
+
+	@Override
+	public String getDescription(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getDescription(languageId, useDefault);
+	}
+
+	@Override
+	public String getDescription(String languageId) {
+		return LocalizationUtil.getLocalization(getDescription(), languageId);
+	}
+
+	@Override
+	public String getDescription(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(
+			getDescription(), languageId, useDefault);
+	}
+
+	@Override
+	public String getDescriptionCurrentLanguageId() {
+		return _descriptionCurrentLanguageId;
 	}
 
 	@JSON
 	@Override
-	public Date getStatusDate() {
-		return _statusDate;
+	public String getDescriptionCurrentValue() {
+		Locale locale = getLocale(_descriptionCurrentLanguageId);
+
+		return getDescription(locale);
 	}
 
 	@Override
-	public void setStatusDate(Date statusDate) {
+	public Map<Locale, String> getDescriptionMap() {
+		return LocalizationUtil.getLocalizationMap(getDescription());
+	}
+
+	@Override
+	public void setDescription(String description) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_statusDate = statusDate;
+		_description = description;
+	}
+
+	@Override
+	public void setDescription(String description, Locale locale) {
+		setDescription(description, locale, LocaleUtil.getSiteDefault());
+	}
+
+	@Override
+	public void setDescription(
+		String description, Locale locale, Locale defaultLocale) {
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(description)) {
+			setDescription(
+				LocalizationUtil.updateLocalization(
+					getDescription(), "Description", description, languageId,
+					defaultLanguageId));
+		}
+		else {
+			setDescription(
+				LocalizationUtil.removeLocalization(
+					getDescription(), "Description", languageId));
+		}
+	}
+
+	@Override
+	public void setDescriptionCurrentLanguageId(String languageId) {
+		_descriptionCurrentLanguageId = languageId;
+	}
+
+	@Override
+	public void setDescriptionMap(Map<Locale, String> descriptionMap) {
+		setDescriptionMap(descriptionMap, LocaleUtil.getSiteDefault());
+	}
+
+	@Override
+	public void setDescriptionMap(
+		Map<Locale, String> descriptionMap, Locale defaultLocale) {
+
+		if (descriptionMap == null) {
+			return;
+		}
+
+		setDescription(
+			LocalizationUtil.updateLocalization(
+				descriptionMap, getDescription(), "Description",
+				LocaleUtil.toLanguageId(defaultLocale)));
+	}
+
+	@JSON
+	@Override
+	public String getConfigurationJSON() {
+		if (_configurationJSON == null) {
+			return "";
+		}
+		else {
+			return _configurationJSON;
+		}
+	}
+
+	@Override
+	public void setConfigurationJSON(String configurationJSON) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_configurationJSON = configurationJSON;
+	}
+
+	@JSON
+	@Override
+	public String getSelectedElementsJSON() {
+		if (_selectedElementsJSON == null) {
+			return "";
+		}
+		else {
+			return _selectedElementsJSON;
+		}
+	}
+
+	@Override
+	public void setSelectedElementsJSON(String selectedElementsJSON) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_selectedElementsJSON = selectedElementsJSON;
 	}
 
 	@Override
@@ -1011,9 +1129,9 @@ public class SXPBlueprintModelImpl
 	public String[] getAvailableLanguageIds() {
 		Set<String> availableLanguageIds = new TreeSet<String>();
 
-		Map<Locale, String> descriptionMap = getDescriptionMap();
+		Map<Locale, String> titleMap = getTitleMap();
 
-		for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
+		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
 			Locale locale = entry.getKey();
 			String value = entry.getValue();
 
@@ -1022,9 +1140,9 @@ public class SXPBlueprintModelImpl
 			}
 		}
 
-		Map<Locale, String> titleMap = getTitleMap();
+		Map<Locale, String> descriptionMap = getDescriptionMap();
 
-		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
+		for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
 			Locale locale = entry.getKey();
 			String value = entry.getValue();
 
@@ -1039,13 +1157,13 @@ public class SXPBlueprintModelImpl
 
 	@Override
 	public String getDefaultLanguageId() {
-		String xml = getDescription();
+		String xml = getTitle();
 
 		if (xml == null) {
 			return "";
 		}
 
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
 	}
@@ -1070,9 +1188,18 @@ public class SXPBlueprintModelImpl
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {
 
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
+
+		String title = getTitle(defaultLocale);
+
+		if (Validator.isNull(title)) {
+			setTitle(getTitle(modelDefaultLanguageId), defaultLocale);
+		}
+		else {
+			setTitle(getTitle(defaultLocale), defaultLocale, defaultLocale);
+		}
 
 		String description = getDescription(defaultLocale);
 
@@ -1083,15 +1210,6 @@ public class SXPBlueprintModelImpl
 		else {
 			setDescription(
 				getDescription(defaultLocale), defaultLocale, defaultLocale);
-		}
-
-		String title = getTitle(defaultLocale);
-
-		if (Validator.isNull(title)) {
-			setTitle(getTitle(modelDefaultLanguageId), defaultLocale);
-		}
-		else {
-			setTitle(getTitle(defaultLocale), defaultLocale, defaultLocale);
 		}
 	}
 
@@ -1117,17 +1235,20 @@ public class SXPBlueprintModelImpl
 		sxpBlueprintImpl.setMvccVersion(getMvccVersion());
 		sxpBlueprintImpl.setUuid(getUuid());
 		sxpBlueprintImpl.setSXPBlueprintId(getSXPBlueprintId());
+		sxpBlueprintImpl.setGroupId(getGroupId());
 		sxpBlueprintImpl.setCompanyId(getCompanyId());
 		sxpBlueprintImpl.setUserId(getUserId());
 		sxpBlueprintImpl.setUserName(getUserName());
 		sxpBlueprintImpl.setCreateDate(getCreateDate());
 		sxpBlueprintImpl.setModifiedDate(getModifiedDate());
-		sxpBlueprintImpl.setDescription(getDescription());
-		sxpBlueprintImpl.setTitle(getTitle());
 		sxpBlueprintImpl.setStatus(getStatus());
 		sxpBlueprintImpl.setStatusByUserId(getStatusByUserId());
 		sxpBlueprintImpl.setStatusByUserName(getStatusByUserName());
 		sxpBlueprintImpl.setStatusDate(getStatusDate());
+		sxpBlueprintImpl.setTitle(getTitle());
+		sxpBlueprintImpl.setDescription(getDescription());
+		sxpBlueprintImpl.setConfigurationJSON(getConfigurationJSON());
+		sxpBlueprintImpl.setSelectedElementsJSON(getSelectedElementsJSON());
 
 		sxpBlueprintImpl.resetOriginalValues();
 
@@ -1143,6 +1264,8 @@ public class SXPBlueprintModelImpl
 		sxpBlueprintImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		sxpBlueprintImpl.setSXPBlueprintId(
 			this.<Long>getColumnOriginalValue("sxpBlueprintId"));
+		sxpBlueprintImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
 		sxpBlueprintImpl.setCompanyId(
 			this.<Long>getColumnOriginalValue("companyId"));
 		sxpBlueprintImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
@@ -1152,9 +1275,6 @@ public class SXPBlueprintModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		sxpBlueprintImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
-		sxpBlueprintImpl.setDescription(
-			this.<String>getColumnOriginalValue("description"));
-		sxpBlueprintImpl.setTitle(this.<String>getColumnOriginalValue("title"));
 		sxpBlueprintImpl.setStatus(
 			this.<Integer>getColumnOriginalValue("status"));
 		sxpBlueprintImpl.setStatusByUserId(
@@ -1163,23 +1283,43 @@ public class SXPBlueprintModelImpl
 			this.<String>getColumnOriginalValue("statusByUserName"));
 		sxpBlueprintImpl.setStatusDate(
 			this.<Date>getColumnOriginalValue("statusDate"));
+		sxpBlueprintImpl.setTitle(this.<String>getColumnOriginalValue("title"));
+		sxpBlueprintImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		sxpBlueprintImpl.setConfigurationJSON(
+			this.<String>getColumnOriginalValue("configurationJSON"));
+		sxpBlueprintImpl.setSelectedElementsJSON(
+			this.<String>getColumnOriginalValue("selectedElementsJSON"));
 
 		return sxpBlueprintImpl;
 	}
 
 	@Override
 	public int compareTo(SXPBlueprint sxpBlueprint) {
-		long primaryKey = sxpBlueprint.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = DateUtil.compareTo(
+			getCreateDate(), sxpBlueprint.getCreateDate());
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+
+		if (getSXPBlueprintId() < sxpBlueprint.getSXPBlueprintId()) {
+			value = -1;
+		}
+		else if (getSXPBlueprintId() > sxpBlueprint.getSXPBlueprintId()) {
+			value = 1;
 		}
 		else {
-			return 0;
+			value = 0;
 		}
+
+		if (value != 0) {
+			return value;
+		}
+
+		return 0;
 	}
 
 	@Override
@@ -1253,6 +1393,8 @@ public class SXPBlueprintModelImpl
 
 		sxpBlueprintCacheModel.sxpBlueprintId = getSXPBlueprintId();
 
+		sxpBlueprintCacheModel.groupId = getGroupId();
+
 		sxpBlueprintCacheModel.companyId = getCompanyId();
 
 		sxpBlueprintCacheModel.userId = getUserId();
@@ -1283,22 +1425,6 @@ public class SXPBlueprintModelImpl
 			sxpBlueprintCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		sxpBlueprintCacheModel.description = getDescription();
-
-		String description = sxpBlueprintCacheModel.description;
-
-		if ((description != null) && (description.length() == 0)) {
-			sxpBlueprintCacheModel.description = null;
-		}
-
-		sxpBlueprintCacheModel.title = getTitle();
-
-		String title = sxpBlueprintCacheModel.title;
-
-		if ((title != null) && (title.length() == 0)) {
-			sxpBlueprintCacheModel.title = null;
-		}
-
 		sxpBlueprintCacheModel.status = getStatus();
 
 		sxpBlueprintCacheModel.statusByUserId = getStatusByUserId();
@@ -1318,6 +1444,41 @@ public class SXPBlueprintModelImpl
 		}
 		else {
 			sxpBlueprintCacheModel.statusDate = Long.MIN_VALUE;
+		}
+
+		sxpBlueprintCacheModel.title = getTitle();
+
+		String title = sxpBlueprintCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			sxpBlueprintCacheModel.title = null;
+		}
+
+		sxpBlueprintCacheModel.description = getDescription();
+
+		String description = sxpBlueprintCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			sxpBlueprintCacheModel.description = null;
+		}
+
+		sxpBlueprintCacheModel.configurationJSON = getConfigurationJSON();
+
+		String configurationJSON = sxpBlueprintCacheModel.configurationJSON;
+
+		if ((configurationJSON != null) && (configurationJSON.length() == 0)) {
+			sxpBlueprintCacheModel.configurationJSON = null;
+		}
+
+		sxpBlueprintCacheModel.selectedElementsJSON = getSelectedElementsJSON();
+
+		String selectedElementsJSON =
+			sxpBlueprintCacheModel.selectedElementsJSON;
+
+		if ((selectedElementsJSON != null) &&
+			(selectedElementsJSON.length() == 0)) {
+
+			sxpBlueprintCacheModel.selectedElementsJSON = null;
 		}
 
 		return sxpBlueprintCacheModel;
@@ -1413,20 +1574,23 @@ public class SXPBlueprintModelImpl
 	private long _mvccVersion;
 	private String _uuid;
 	private long _sxpBlueprintId;
+	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private String _description;
-	private String _descriptionCurrentLanguageId;
-	private String _title;
-	private String _titleCurrentLanguageId;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private String _title;
+	private String _titleCurrentLanguageId;
+	private String _description;
+	private String _descriptionCurrentLanguageId;
+	private String _configurationJSON;
+	private String _selectedElementsJSON;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1460,17 +1624,21 @@ public class SXPBlueprintModelImpl
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("sxpBlueprintId", _sxpBlueprintId);
+		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("description", _description);
-		_columnOriginalValues.put("title", _title);
 		_columnOriginalValues.put("status", _status);
 		_columnOriginalValues.put("statusByUserId", _statusByUserId);
 		_columnOriginalValues.put("statusByUserName", _statusByUserName);
 		_columnOriginalValues.put("statusDate", _statusDate);
+		_columnOriginalValues.put("title", _title);
+		_columnOriginalValues.put("description", _description);
+		_columnOriginalValues.put("configurationJSON", _configurationJSON);
+		_columnOriginalValues.put(
+			"selectedElementsJSON", _selectedElementsJSON);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1500,27 +1668,33 @@ public class SXPBlueprintModelImpl
 
 		columnBitmasks.put("sxpBlueprintId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("description", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("title", 512L);
+		columnBitmasks.put("status", 512L);
 
-		columnBitmasks.put("status", 1024L);
+		columnBitmasks.put("statusByUserId", 1024L);
 
-		columnBitmasks.put("statusByUserId", 2048L);
+		columnBitmasks.put("statusByUserName", 2048L);
 
-		columnBitmasks.put("statusByUserName", 4096L);
+		columnBitmasks.put("statusDate", 4096L);
 
-		columnBitmasks.put("statusDate", 8192L);
+		columnBitmasks.put("title", 8192L);
+
+		columnBitmasks.put("description", 16384L);
+
+		columnBitmasks.put("configurationJSON", 32768L);
+
+		columnBitmasks.put("selectedElementsJSON", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -36,14 +36,19 @@ public class SXPElementSoap implements Serializable {
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setSXPElementId(model.getSXPElementId());
+		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setDescription(model.getDescription());
-		soapModel.setTitle(model.getTitle());
 		soapModel.setStatus(model.getStatus());
+		soapModel.setTitle(model.getTitle());
+		soapModel.setDescription(model.getDescription());
+		soapModel.setConfigurationJSON(model.getConfigurationJSON());
+		soapModel.setHidden(model.isHidden());
+		soapModel.setReadOnly(model.isReadOnly());
+		soapModel.setType(model.getType());
 
 		return soapModel;
 	}
@@ -121,6 +126,14 @@ public class SXPElementSoap implements Serializable {
 		_sxpElementId = sxpElementId;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -161,12 +174,12 @@ public class SXPElementSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getDescription() {
-		return _description;
+	public int getStatus() {
+		return _status;
 	}
 
-	public void setDescription(String description) {
-		_description = description;
+	public void setStatus(int status) {
+		_status = status;
 	}
 
 	public String getTitle() {
@@ -177,24 +190,69 @@ public class SXPElementSoap implements Serializable {
 		_title = title;
 	}
 
-	public int getStatus() {
-		return _status;
+	public String getDescription() {
+		return _description;
 	}
 
-	public void setStatus(int status) {
-		_status = status;
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	public String getConfigurationJSON() {
+		return _configurationJSON;
+	}
+
+	public void setConfigurationJSON(String configurationJSON) {
+		_configurationJSON = configurationJSON;
+	}
+
+	public boolean getHidden() {
+		return _hidden;
+	}
+
+	public boolean isHidden() {
+		return _hidden;
+	}
+
+	public void setHidden(boolean hidden) {
+		_hidden = hidden;
+	}
+
+	public boolean getReadOnly() {
+		return _readOnly;
+	}
+
+	public boolean isReadOnly() {
+		return _readOnly;
+	}
+
+	public void setReadOnly(boolean readOnly) {
+		_readOnly = readOnly;
+	}
+
+	public int getType() {
+		return _type;
+	}
+
+	public void setType(int type) {
+		_type = type;
 	}
 
 	private long _mvccVersion;
 	private String _uuid;
 	private long _sxpElementId;
+	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _description;
-	private String _title;
 	private int _status;
+	private String _title;
+	private String _description;
+	private String _configurationJSON;
+	private boolean _hidden;
+	private boolean _readOnly;
+	private int _type;
 
 }

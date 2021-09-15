@@ -230,18 +230,18 @@ public class SXPElementLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the sxp element with the matching UUID and company.
+	 * Returns the sxp element matching the UUID and group.
 	 *
 	 * @param uuid the sxp element's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching sxp element, or <code>null</code> if a matching sxp element could not be found
 	 */
 	@Override
 	public com.liferay.search.experiences.model.SXPElement
-		fetchSXPElementByUuidAndCompanyId(String uuid, long companyId) {
+		fetchSXPElementByUuidAndGroupId(String uuid, long groupId) {
 
-		return _sxpElementLocalService.fetchSXPElementByUuidAndCompanyId(
-			uuid, companyId);
+		return _sxpElementLocalService.fetchSXPElementByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	@Override
@@ -305,20 +305,20 @@ public class SXPElementLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the sxp element with the matching UUID and company.
+	 * Returns the sxp element matching the UUID and group.
 	 *
 	 * @param uuid the sxp element's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching sxp element
 	 * @throws PortalException if a matching sxp element could not be found
 	 */
 	@Override
 	public com.liferay.search.experiences.model.SXPElement
-			getSXPElementByUuidAndCompanyId(String uuid, long companyId)
+			getSXPElementByUuidAndGroupId(String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _sxpElementLocalService.getSXPElementByUuidAndCompanyId(
-			uuid, companyId);
+		return _sxpElementLocalService.getSXPElementByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	/**
@@ -337,6 +337,43 @@ public class SXPElementLocalServiceWrapper
 		getSXPElements(int start, int end) {
 
 		return _sxpElementLocalService.getSXPElements(start, end);
+	}
+
+	/**
+	 * Returns all the sxp elements matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the sxp elements
+	 * @param companyId the primary key of the company
+	 * @return the matching sxp elements, or an empty list if no matches were found
+	 */
+	@Override
+	public java.util.List<com.liferay.search.experiences.model.SXPElement>
+		getSXPElementsByUuidAndCompanyId(String uuid, long companyId) {
+
+		return _sxpElementLocalService.getSXPElementsByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of sxp elements matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the sxp elements
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of sxp elements
+	 * @param end the upper bound of the range of sxp elements (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching sxp elements, or an empty list if no matches were found
+	 */
+	@Override
+	public java.util.List<com.liferay.search.experiences.model.SXPElement>
+		getSXPElementsByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.search.experiences.model.SXPElement>
+					orderByComparator) {
+
+		return _sxpElementLocalService.getSXPElementsByUuidAndCompanyId(
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**

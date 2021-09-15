@@ -46,17 +46,20 @@ public class SXPBlueprintWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("sxpBlueprintId", getSXPBlueprintId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("description", getDescription());
-		attributes.put("title", getTitle());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("title", getTitle());
+		attributes.put("description", getDescription());
+		attributes.put("configurationJSON", getConfigurationJSON());
+		attributes.put("selectedElementsJSON", getSelectedElementsJSON());
 
 		return attributes;
 	}
@@ -79,6 +82,12 @@ public class SXPBlueprintWrapper
 
 		if (sxpBlueprintId != null) {
 			setSXPBlueprintId(sxpBlueprintId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -111,18 +120,6 @@ public class SXPBlueprintWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
 		Integer status = (Integer)attributes.get("status");
 
 		if (status != null) {
@@ -146,6 +143,31 @@ public class SXPBlueprintWrapper
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+
+		String title = (String)attributes.get("title");
+
+		if (title != null) {
+			setTitle(title);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
+		}
+
+		String configurationJSON = (String)attributes.get("configurationJSON");
+
+		if (configurationJSON != null) {
+			setConfigurationJSON(configurationJSON);
+		}
+
+		String selectedElementsJSON = (String)attributes.get(
+			"selectedElementsJSON");
+
+		if (selectedElementsJSON != null) {
+			setSelectedElementsJSON(selectedElementsJSON);
+		}
 	}
 
 	@Override
@@ -166,6 +188,16 @@ public class SXPBlueprintWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	/**
+	 * Returns the configuration json of this sxp blueprint.
+	 *
+	 * @return the configuration json of this sxp blueprint
+	 */
+	@Override
+	public String getConfigurationJSON() {
+		return model.getConfigurationJSON();
 	}
 
 	/**
@@ -260,6 +292,16 @@ public class SXPBlueprintWrapper
 	}
 
 	/**
+	 * Returns the group ID of this sxp blueprint.
+	 *
+	 * @return the group ID of this sxp blueprint
+	 */
+	@Override
+	public long getGroupId() {
+		return model.getGroupId();
+	}
+
+	/**
 	 * Returns the modified date of this sxp blueprint.
 	 *
 	 * @return the modified date of this sxp blueprint
@@ -287,6 +329,16 @@ public class SXPBlueprintWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the selected elements json of this sxp blueprint.
+	 *
+	 * @return the selected elements json of this sxp blueprint
+	 */
+	@Override
+	public String getSelectedElementsJSON() {
+		return model.getSelectedElementsJSON();
 	}
 
 	/**
@@ -576,6 +628,16 @@ public class SXPBlueprintWrapper
 	}
 
 	/**
+	 * Sets the configuration json of this sxp blueprint.
+	 *
+	 * @param configurationJSON the configuration json of this sxp blueprint
+	 */
+	@Override
+	public void setConfigurationJSON(String configurationJSON) {
+		model.setConfigurationJSON(configurationJSON);
+	}
+
+	/**
 	 * Sets the create date of this sxp blueprint.
 	 *
 	 * @param createDate the create date of this sxp blueprint
@@ -653,6 +715,16 @@ public class SXPBlueprintWrapper
 	}
 
 	/**
+	 * Sets the group ID of this sxp blueprint.
+	 *
+	 * @param groupId the group ID of this sxp blueprint
+	 */
+	@Override
+	public void setGroupId(long groupId) {
+		model.setGroupId(groupId);
+	}
+
+	/**
 	 * Sets the modified date of this sxp blueprint.
 	 *
 	 * @param modifiedDate the modified date of this sxp blueprint
@@ -680,6 +752,16 @@ public class SXPBlueprintWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the selected elements json of this sxp blueprint.
+	 *
+	 * @param selectedElementsJSON the selected elements json of this sxp blueprint
+	 */
+	@Override
+	public void setSelectedElementsJSON(String selectedElementsJSON) {
+		model.setSelectedElementsJSON(selectedElementsJSON);
 	}
 
 	/**

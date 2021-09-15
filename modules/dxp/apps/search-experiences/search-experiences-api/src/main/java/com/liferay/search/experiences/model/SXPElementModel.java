@@ -17,6 +17,7 @@ package com.liferay.search.experiences.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -41,8 +42,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SXPElementModel
-	extends BaseModel<SXPElement>, LocalizedModel, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends BaseModel<SXPElement>, GroupedModel, LocalizedModel, MVCCModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -110,6 +111,22 @@ public interface SXPElementModel
 	 * @param sxpElementId the sxp element ID of this sxp element
 	 */
 	public void setSXPElementId(long sxpElementId);
+
+	/**
+	 * Returns the group ID of this sxp element.
+	 *
+	 * @return the group ID of this sxp element
+	 */
+	@Override
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this sxp element.
+	 *
+	 * @param groupId the group ID of this sxp element
+	 */
+	@Override
+	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the company ID of this sxp element.
@@ -207,6 +224,119 @@ public interface SXPElementModel
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
+
+	/**
+	 * Returns the status of this sxp element.
+	 *
+	 * @return the status of this sxp element
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this sxp element.
+	 *
+	 * @param status the status of this sxp element
+	 */
+	public void setStatus(int status);
+
+	/**
+	 * Returns the title of this sxp element.
+	 *
+	 * @return the title of this sxp element
+	 */
+	public String getTitle();
+
+	/**
+	 * Returns the localized title of this sxp element in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized title of this sxp element
+	 */
+	@AutoEscape
+	public String getTitle(Locale locale);
+
+	/**
+	 * Returns the localized title of this sxp element in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized title of this sxp element. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getTitle(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized title of this sxp element in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized title of this sxp element
+	 */
+	@AutoEscape
+	public String getTitle(String languageId);
+
+	/**
+	 * Returns the localized title of this sxp element in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized title of this sxp element
+	 */
+	@AutoEscape
+	public String getTitle(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getTitleCurrentLanguageId();
+
+	@AutoEscape
+	public String getTitleCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized titles of this sxp element.
+	 *
+	 * @return the locales and localized titles of this sxp element
+	 */
+	public Map<Locale, String> getTitleMap();
+
+	/**
+	 * Sets the title of this sxp element.
+	 *
+	 * @param title the title of this sxp element
+	 */
+	public void setTitle(String title);
+
+	/**
+	 * Sets the localized title of this sxp element in the language.
+	 *
+	 * @param title the localized title of this sxp element
+	 * @param locale the locale of the language
+	 */
+	public void setTitle(String title, Locale locale);
+
+	/**
+	 * Sets the localized title of this sxp element in the language, and sets the default locale.
+	 *
+	 * @param title the localized title of this sxp element
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setTitle(String title, Locale locale, Locale defaultLocale);
+
+	public void setTitleCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized titles of this sxp element from the map of locales and localized titles.
+	 *
+	 * @param titleMap the locales and localized titles of this sxp element
+	 */
+	public void setTitleMap(Map<Locale, String> titleMap);
+
+	/**
+	 * Sets the localized titles of this sxp element from the map of locales and localized titles, and sets the default locale.
+	 *
+	 * @param titleMap the locales and localized titles of this sxp element
+	 * @param defaultLocale the default locale
+	 */
+	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale);
 
 	/**
 	 * Returns the description of this sxp element.
@@ -310,117 +440,75 @@ public interface SXPElementModel
 		Map<Locale, String> descriptionMap, Locale defaultLocale);
 
 	/**
-	 * Returns the title of this sxp element.
+	 * Returns the configuration json of this sxp element.
 	 *
-	 * @return the title of this sxp element
-	 */
-	public String getTitle();
-
-	/**
-	 * Returns the localized title of this sxp element in the language. Uses the default language if no localization exists for the requested language.
-	 *
-	 * @param locale the locale of the language
-	 * @return the localized title of this sxp element
+	 * @return the configuration json of this sxp element
 	 */
 	@AutoEscape
-	public String getTitle(Locale locale);
+	public String getConfigurationJSON();
 
 	/**
-	 * Returns the localized title of this sxp element in the language, optionally using the default language if no localization exists for the requested language.
+	 * Sets the configuration json of this sxp element.
 	 *
-	 * @param locale the local of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized title of this sxp element. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 * @param configurationJSON the configuration json of this sxp element
 	 */
-	@AutoEscape
-	public String getTitle(Locale locale, boolean useDefault);
+	public void setConfigurationJSON(String configurationJSON);
 
 	/**
-	 * Returns the localized title of this sxp element in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the hidden of this sxp element.
 	 *
-	 * @param languageId the ID of the language
-	 * @return the localized title of this sxp element
+	 * @return the hidden of this sxp element
 	 */
-	@AutoEscape
-	public String getTitle(String languageId);
+	public boolean getHidden();
 
 	/**
-	 * Returns the localized title of this sxp element in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns <code>true</code> if this sxp element is hidden.
 	 *
-	 * @param languageId the ID of the language
-	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized title of this sxp element
+	 * @return <code>true</code> if this sxp element is hidden; <code>false</code> otherwise
 	 */
-	@AutoEscape
-	public String getTitle(String languageId, boolean useDefault);
-
-	@AutoEscape
-	public String getTitleCurrentLanguageId();
-
-	@AutoEscape
-	public String getTitleCurrentValue();
+	public boolean isHidden();
 
 	/**
-	 * Returns a map of the locales and localized titles of this sxp element.
+	 * Sets whether this sxp element is hidden.
 	 *
-	 * @return the locales and localized titles of this sxp element
+	 * @param hidden the hidden of this sxp element
 	 */
-	public Map<Locale, String> getTitleMap();
+	public void setHidden(boolean hidden);
 
 	/**
-	 * Sets the title of this sxp element.
+	 * Returns the read only of this sxp element.
 	 *
-	 * @param title the title of this sxp element
+	 * @return the read only of this sxp element
 	 */
-	public void setTitle(String title);
+	public boolean getReadOnly();
 
 	/**
-	 * Sets the localized title of this sxp element in the language.
+	 * Returns <code>true</code> if this sxp element is read only.
 	 *
-	 * @param title the localized title of this sxp element
-	 * @param locale the locale of the language
+	 * @return <code>true</code> if this sxp element is read only; <code>false</code> otherwise
 	 */
-	public void setTitle(String title, Locale locale);
+	public boolean isReadOnly();
 
 	/**
-	 * Sets the localized title of this sxp element in the language, and sets the default locale.
+	 * Sets whether this sxp element is read only.
 	 *
-	 * @param title the localized title of this sxp element
-	 * @param locale the locale of the language
-	 * @param defaultLocale the default locale
+	 * @param readOnly the read only of this sxp element
 	 */
-	public void setTitle(String title, Locale locale, Locale defaultLocale);
-
-	public void setTitleCurrentLanguageId(String languageId);
+	public void setReadOnly(boolean readOnly);
 
 	/**
-	 * Sets the localized titles of this sxp element from the map of locales and localized titles.
+	 * Returns the type of this sxp element.
 	 *
-	 * @param titleMap the locales and localized titles of this sxp element
+	 * @return the type of this sxp element
 	 */
-	public void setTitleMap(Map<Locale, String> titleMap);
+	public int getType();
 
 	/**
-	 * Sets the localized titles of this sxp element from the map of locales and localized titles, and sets the default locale.
+	 * Sets the type of this sxp element.
 	 *
-	 * @param titleMap the locales and localized titles of this sxp element
-	 * @param defaultLocale the default locale
+	 * @param type the type of this sxp element
 	 */
-	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale);
-
-	/**
-	 * Returns the status of this sxp element.
-	 *
-	 * @return the status of this sxp element
-	 */
-	public int getStatus();
-
-	/**
-	 * Sets the status of this sxp element.
-	 *
-	 * @param status the status of this sxp element
-	 */
-	public void setStatus(int status);
+	public void setType(int type);
 
 	@Override
 	public String[] getAvailableLanguageIds();

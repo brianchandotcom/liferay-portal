@@ -259,18 +259,17 @@ public abstract class SXPBlueprintLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the sxp blueprint with the matching UUID and company.
+	 * Returns the sxp blueprint matching the UUID and group.
 	 *
 	 * @param uuid the sxp blueprint's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
 	 */
 	@Override
-	public SXPBlueprint fetchSXPBlueprintByUuidAndCompanyId(
-		String uuid, long companyId) {
+	public SXPBlueprint fetchSXPBlueprintByUuidAndGroupId(
+		String uuid, long groupId) {
 
-		return sxpBlueprintPersistence.fetchByUuid_C_First(
-			uuid, companyId, null);
+		return sxpBlueprintPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -468,20 +467,52 @@ public abstract class SXPBlueprintLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the sxp blueprint with the matching UUID and company.
+	 * Returns all the sxp blueprints matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the sxp blueprints
+	 * @param companyId the primary key of the company
+	 * @return the matching sxp blueprints, or an empty list if no matches were found
+	 */
+	@Override
+	public List<SXPBlueprint> getSXPBlueprintsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return sxpBlueprintPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of sxp blueprints matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the sxp blueprints
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of sxp blueprints
+	 * @param end the upper bound of the range of sxp blueprints (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching sxp blueprints, or an empty list if no matches were found
+	 */
+	@Override
+	public List<SXPBlueprint> getSXPBlueprintsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<SXPBlueprint> orderByComparator) {
+
+		return sxpBlueprintPersistence.findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the sxp blueprint matching the UUID and group.
 	 *
 	 * @param uuid the sxp blueprint's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching sxp blueprint
 	 * @throws PortalException if a matching sxp blueprint could not be found
 	 */
 	@Override
-	public SXPBlueprint getSXPBlueprintByUuidAndCompanyId(
-			String uuid, long companyId)
+	public SXPBlueprint getSXPBlueprintByUuidAndGroupId(
+			String uuid, long groupId)
 		throws PortalException {
 
-		return sxpBlueprintPersistence.findByUuid_C_First(
-			uuid, companyId, null);
+		return sxpBlueprintPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**

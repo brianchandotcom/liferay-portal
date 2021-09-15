@@ -36,17 +36,20 @@ public class SXPBlueprintSoap implements Serializable {
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setSXPBlueprintId(model.getSXPBlueprintId());
+		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setDescription(model.getDescription());
-		soapModel.setTitle(model.getTitle());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
 		soapModel.setStatusDate(model.getStatusDate());
+		soapModel.setTitle(model.getTitle());
+		soapModel.setDescription(model.getDescription());
+		soapModel.setConfigurationJSON(model.getConfigurationJSON());
+		soapModel.setSelectedElementsJSON(model.getSelectedElementsJSON());
 
 		return soapModel;
 	}
@@ -124,6 +127,14 @@ public class SXPBlueprintSoap implements Serializable {
 		_sxpBlueprintId = sxpBlueprintId;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -164,22 +175,6 @@ public class SXPBlueprintSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getDescription() {
-		return _description;
-	}
-
-	public void setDescription(String description) {
-		_description = description;
-	}
-
-	public String getTitle() {
-		return _title;
-	}
-
-	public void setTitle(String title) {
-		_title = title;
-	}
-
 	public int getStatus() {
 		return _status;
 	}
@@ -212,19 +207,54 @@ public class SXPBlueprintSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	public String getTitle() {
+		return _title;
+	}
+
+	public void setTitle(String title) {
+		_title = title;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	public String getConfigurationJSON() {
+		return _configurationJSON;
+	}
+
+	public void setConfigurationJSON(String configurationJSON) {
+		_configurationJSON = configurationJSON;
+	}
+
+	public String getSelectedElementsJSON() {
+		return _selectedElementsJSON;
+	}
+
+	public void setSelectedElementsJSON(String selectedElementsJSON) {
+		_selectedElementsJSON = selectedElementsJSON;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _sxpBlueprintId;
+	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _description;
-	private String _title;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private String _title;
+	private String _description;
+	private String _configurationJSON;
+	private String _selectedElementsJSON;
 
 }

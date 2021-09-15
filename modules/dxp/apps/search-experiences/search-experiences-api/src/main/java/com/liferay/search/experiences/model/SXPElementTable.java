@@ -38,6 +38,8 @@ public class SXPElementTable extends BaseTable<SXPElementTable> {
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SXPElementTable, Long> sxpElementId = createColumn(
 		"sxpElementId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<SXPElementTable, Long> groupId = createColumn(
+		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<SXPElementTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<SXPElementTable, Long> userId = createColumn(
@@ -48,12 +50,22 @@ public class SXPElementTable extends BaseTable<SXPElementTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<SXPElementTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<SXPElementTable, String> description = createColumn(
-		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<SXPElementTable, String> title = createColumn(
-		"title", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SXPElementTable, Integer> status = createColumn(
 		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<SXPElementTable, String> title = createColumn(
+		"title", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<SXPElementTable, String> description = createColumn(
+		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<SXPElementTable, String> configurationJSON =
+		createColumn(
+			"configurationJSON", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<SXPElementTable, Boolean> hidden = createColumn(
+		"hidden_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<SXPElementTable, Boolean> readOnly = createColumn(
+		"readOnly", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<SXPElementTable, Integer> type = createColumn(
+		"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private SXPElementTable() {
 		super("SXPElement", SXPElementTable::new);

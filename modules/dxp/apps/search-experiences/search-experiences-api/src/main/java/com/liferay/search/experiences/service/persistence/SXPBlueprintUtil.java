@@ -291,6 +291,71 @@ public class SXPBlueprintUtil {
 	}
 
 	/**
+	 * Returns the sxp blueprint where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchSXPBlueprintException</code> if it could not be found.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching sxp blueprint
+	 * @throws NoSuchSXPBlueprintException if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint findByUUID_G(String uuid, long groupId)
+		throws com.liferay.search.experiences.exception.
+			NoSuchSXPBlueprintException {
+
+		return getPersistence().findByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the sxp blueprint where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the sxp blueprint where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
+	}
+
+	/**
+	 * Removes the sxp blueprint where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the sxp blueprint that was removed
+	 */
+	public static SXPBlueprint removeByUUID_G(String uuid, long groupId)
+		throws com.liferay.search.experiences.exception.
+			NoSuchSXPBlueprintException {
+
+		return getPersistence().removeByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the number of sxp blueprints where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching sxp blueprints
+	 */
+	public static int countByUUID_G(String uuid, long groupId) {
+		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns all the sxp blueprints where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
@@ -475,6 +540,721 @@ public class SXPBlueprintUtil {
 	 */
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns all the sxp blueprints where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching sxp blueprints
+	 */
+	public static List<SXPBlueprint> findByGroupId(long groupId) {
+		return getPersistence().findByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the sxp blueprints where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SXPBlueprintModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of sxp blueprints
+	 * @param end the upper bound of the range of sxp blueprints (not inclusive)
+	 * @return the range of matching sxp blueprints
+	 */
+	public static List<SXPBlueprint> findByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().findByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the sxp blueprints where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SXPBlueprintModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of sxp blueprints
+	 * @param end the upper bound of the range of sxp blueprints (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching sxp blueprints
+	 */
+	public static List<SXPBlueprint> findByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<SXPBlueprint> orderByComparator) {
+
+		return getPersistence().findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the sxp blueprints where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SXPBlueprintModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of sxp blueprints
+	 * @param end the upper bound of the range of sxp blueprints (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching sxp blueprints
+	 */
+	public static List<SXPBlueprint> findByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<SXPBlueprint> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByGroupId(
+			groupId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first sxp blueprint in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching sxp blueprint
+	 * @throws NoSuchSXPBlueprintException if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint findByGroupId_First(
+			long groupId, OrderByComparator<SXPBlueprint> orderByComparator)
+		throws com.liferay.search.experiences.exception.
+			NoSuchSXPBlueprintException {
+
+		return getPersistence().findByGroupId_First(groupId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first sxp blueprint in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint fetchByGroupId_First(
+		long groupId, OrderByComparator<SXPBlueprint> orderByComparator) {
+
+		return getPersistence().fetchByGroupId_First(
+			groupId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last sxp blueprint in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching sxp blueprint
+	 * @throws NoSuchSXPBlueprintException if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint findByGroupId_Last(
+			long groupId, OrderByComparator<SXPBlueprint> orderByComparator)
+		throws com.liferay.search.experiences.exception.
+			NoSuchSXPBlueprintException {
+
+		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last sxp blueprint in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint fetchByGroupId_Last(
+		long groupId, OrderByComparator<SXPBlueprint> orderByComparator) {
+
+		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
+	}
+
+	/**
+	 * Returns the sxp blueprints before and after the current sxp blueprint in the ordered set where groupId = &#63;.
+	 *
+	 * @param sxpBlueprintId the primary key of the current sxp blueprint
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next sxp blueprint
+	 * @throws NoSuchSXPBlueprintException if a sxp blueprint with the primary key could not be found
+	 */
+	public static SXPBlueprint[] findByGroupId_PrevAndNext(
+			long sxpBlueprintId, long groupId,
+			OrderByComparator<SXPBlueprint> orderByComparator)
+		throws com.liferay.search.experiences.exception.
+			NoSuchSXPBlueprintException {
+
+		return getPersistence().findByGroupId_PrevAndNext(
+			sxpBlueprintId, groupId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the sxp blueprints where groupId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 */
+	public static void removeByGroupId(long groupId) {
+		getPersistence().removeByGroupId(groupId);
+	}
+
+	/**
+	 * Returns the number of sxp blueprints where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the number of matching sxp blueprints
+	 */
+	public static int countByGroupId(long groupId) {
+		return getPersistence().countByGroupId(groupId);
+	}
+
+	/**
+	 * Returns all the sxp blueprints where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching sxp blueprints
+	 */
+	public static List<SXPBlueprint> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the sxp blueprints where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SXPBlueprintModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of sxp blueprints
+	 * @param end the upper bound of the range of sxp blueprints (not inclusive)
+	 * @return the range of matching sxp blueprints
+	 */
+	public static List<SXPBlueprint> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the sxp blueprints where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SXPBlueprintModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of sxp blueprints
+	 * @param end the upper bound of the range of sxp blueprints (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching sxp blueprints
+	 */
+	public static List<SXPBlueprint> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<SXPBlueprint> orderByComparator) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the sxp blueprints where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SXPBlueprintModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of sxp blueprints
+	 * @param end the upper bound of the range of sxp blueprints (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching sxp blueprints
+	 */
+	public static List<SXPBlueprint> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<SXPBlueprint> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first sxp blueprint in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching sxp blueprint
+	 * @throws NoSuchSXPBlueprintException if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint findByCompanyId_First(
+			long companyId, OrderByComparator<SXPBlueprint> orderByComparator)
+		throws com.liferay.search.experiences.exception.
+			NoSuchSXPBlueprintException {
+
+		return getPersistence().findByCompanyId_First(
+			companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first sxp blueprint in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint fetchByCompanyId_First(
+		long companyId, OrderByComparator<SXPBlueprint> orderByComparator) {
+
+		return getPersistence().fetchByCompanyId_First(
+			companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last sxp blueprint in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching sxp blueprint
+	 * @throws NoSuchSXPBlueprintException if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint findByCompanyId_Last(
+			long companyId, OrderByComparator<SXPBlueprint> orderByComparator)
+		throws com.liferay.search.experiences.exception.
+			NoSuchSXPBlueprintException {
+
+		return getPersistence().findByCompanyId_Last(
+			companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last sxp blueprint in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint fetchByCompanyId_Last(
+		long companyId, OrderByComparator<SXPBlueprint> orderByComparator) {
+
+		return getPersistence().fetchByCompanyId_Last(
+			companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the sxp blueprints before and after the current sxp blueprint in the ordered set where companyId = &#63;.
+	 *
+	 * @param sxpBlueprintId the primary key of the current sxp blueprint
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next sxp blueprint
+	 * @throws NoSuchSXPBlueprintException if a sxp blueprint with the primary key could not be found
+	 */
+	public static SXPBlueprint[] findByCompanyId_PrevAndNext(
+			long sxpBlueprintId, long companyId,
+			OrderByComparator<SXPBlueprint> orderByComparator)
+		throws com.liferay.search.experiences.exception.
+			NoSuchSXPBlueprintException {
+
+		return getPersistence().findByCompanyId_PrevAndNext(
+			sxpBlueprintId, companyId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the sxp blueprints where companyId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 */
+	public static void removeByCompanyId(long companyId) {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns the number of sxp blueprints where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching sxp blueprints
+	 */
+	public static int countByCompanyId(long companyId) {
+		return getPersistence().countByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns all the sxp blueprints where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the matching sxp blueprints
+	 */
+	public static List<SXPBlueprint> findByG_S(long groupId, int status) {
+		return getPersistence().findByG_S(groupId, status);
+	}
+
+	/**
+	 * Returns a range of all the sxp blueprints where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SXPBlueprintModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of sxp blueprints
+	 * @param end the upper bound of the range of sxp blueprints (not inclusive)
+	 * @return the range of matching sxp blueprints
+	 */
+	public static List<SXPBlueprint> findByG_S(
+		long groupId, int status, int start, int end) {
+
+		return getPersistence().findByG_S(groupId, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the sxp blueprints where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SXPBlueprintModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of sxp blueprints
+	 * @param end the upper bound of the range of sxp blueprints (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching sxp blueprints
+	 */
+	public static List<SXPBlueprint> findByG_S(
+		long groupId, int status, int start, int end,
+		OrderByComparator<SXPBlueprint> orderByComparator) {
+
+		return getPersistence().findByG_S(
+			groupId, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the sxp blueprints where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SXPBlueprintModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of sxp blueprints
+	 * @param end the upper bound of the range of sxp blueprints (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching sxp blueprints
+	 */
+	public static List<SXPBlueprint> findByG_S(
+		long groupId, int status, int start, int end,
+		OrderByComparator<SXPBlueprint> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByG_S(
+			groupId, status, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first sxp blueprint in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching sxp blueprint
+	 * @throws NoSuchSXPBlueprintException if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint findByG_S_First(
+			long groupId, int status,
+			OrderByComparator<SXPBlueprint> orderByComparator)
+		throws com.liferay.search.experiences.exception.
+			NoSuchSXPBlueprintException {
+
+		return getPersistence().findByG_S_First(
+			groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the first sxp blueprint in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint fetchByG_S_First(
+		long groupId, int status,
+		OrderByComparator<SXPBlueprint> orderByComparator) {
+
+		return getPersistence().fetchByG_S_First(
+			groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last sxp blueprint in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching sxp blueprint
+	 * @throws NoSuchSXPBlueprintException if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint findByG_S_Last(
+			long groupId, int status,
+			OrderByComparator<SXPBlueprint> orderByComparator)
+		throws com.liferay.search.experiences.exception.
+			NoSuchSXPBlueprintException {
+
+		return getPersistence().findByG_S_Last(
+			groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last sxp blueprint in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint fetchByG_S_Last(
+		long groupId, int status,
+		OrderByComparator<SXPBlueprint> orderByComparator) {
+
+		return getPersistence().fetchByG_S_Last(
+			groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the sxp blueprints before and after the current sxp blueprint in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param sxpBlueprintId the primary key of the current sxp blueprint
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next sxp blueprint
+	 * @throws NoSuchSXPBlueprintException if a sxp blueprint with the primary key could not be found
+	 */
+	public static SXPBlueprint[] findByG_S_PrevAndNext(
+			long sxpBlueprintId, long groupId, int status,
+			OrderByComparator<SXPBlueprint> orderByComparator)
+		throws com.liferay.search.experiences.exception.
+			NoSuchSXPBlueprintException {
+
+		return getPersistence().findByG_S_PrevAndNext(
+			sxpBlueprintId, groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Removes all the sxp blueprints where groupId = &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 */
+	public static void removeByG_S(long groupId, int status) {
+		getPersistence().removeByG_S(groupId, status);
+	}
+
+	/**
+	 * Returns the number of sxp blueprints where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the number of matching sxp blueprints
+	 */
+	public static int countByG_S(long groupId, int status) {
+		return getPersistence().countByG_S(groupId, status);
+	}
+
+	/**
+	 * Returns all the sxp blueprints where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the matching sxp blueprints
+	 */
+	public static List<SXPBlueprint> findByG_S_T(long groupId, int status) {
+		return getPersistence().findByG_S_T(groupId, status);
+	}
+
+	/**
+	 * Returns a range of all the sxp blueprints where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SXPBlueprintModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of sxp blueprints
+	 * @param end the upper bound of the range of sxp blueprints (not inclusive)
+	 * @return the range of matching sxp blueprints
+	 */
+	public static List<SXPBlueprint> findByG_S_T(
+		long groupId, int status, int start, int end) {
+
+		return getPersistence().findByG_S_T(groupId, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the sxp blueprints where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SXPBlueprintModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of sxp blueprints
+	 * @param end the upper bound of the range of sxp blueprints (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching sxp blueprints
+	 */
+	public static List<SXPBlueprint> findByG_S_T(
+		long groupId, int status, int start, int end,
+		OrderByComparator<SXPBlueprint> orderByComparator) {
+
+		return getPersistence().findByG_S_T(
+			groupId, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the sxp blueprints where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SXPBlueprintModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of sxp blueprints
+	 * @param end the upper bound of the range of sxp blueprints (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching sxp blueprints
+	 */
+	public static List<SXPBlueprint> findByG_S_T(
+		long groupId, int status, int start, int end,
+		OrderByComparator<SXPBlueprint> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByG_S_T(
+			groupId, status, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first sxp blueprint in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching sxp blueprint
+	 * @throws NoSuchSXPBlueprintException if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint findByG_S_T_First(
+			long groupId, int status,
+			OrderByComparator<SXPBlueprint> orderByComparator)
+		throws com.liferay.search.experiences.exception.
+			NoSuchSXPBlueprintException {
+
+		return getPersistence().findByG_S_T_First(
+			groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the first sxp blueprint in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint fetchByG_S_T_First(
+		long groupId, int status,
+		OrderByComparator<SXPBlueprint> orderByComparator) {
+
+		return getPersistence().fetchByG_S_T_First(
+			groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last sxp blueprint in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching sxp blueprint
+	 * @throws NoSuchSXPBlueprintException if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint findByG_S_T_Last(
+			long groupId, int status,
+			OrderByComparator<SXPBlueprint> orderByComparator)
+		throws com.liferay.search.experiences.exception.
+			NoSuchSXPBlueprintException {
+
+		return getPersistence().findByG_S_T_Last(
+			groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last sxp blueprint in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
+	 */
+	public static SXPBlueprint fetchByG_S_T_Last(
+		long groupId, int status,
+		OrderByComparator<SXPBlueprint> orderByComparator) {
+
+		return getPersistence().fetchByG_S_T_Last(
+			groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the sxp blueprints before and after the current sxp blueprint in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param sxpBlueprintId the primary key of the current sxp blueprint
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next sxp blueprint
+	 * @throws NoSuchSXPBlueprintException if a sxp blueprint with the primary key could not be found
+	 */
+	public static SXPBlueprint[] findByG_S_T_PrevAndNext(
+			long sxpBlueprintId, long groupId, int status,
+			OrderByComparator<SXPBlueprint> orderByComparator)
+		throws com.liferay.search.experiences.exception.
+			NoSuchSXPBlueprintException {
+
+		return getPersistence().findByG_S_T_PrevAndNext(
+			sxpBlueprintId, groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Removes all the sxp blueprints where groupId = &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 */
+	public static void removeByG_S_T(long groupId, int status) {
+		getPersistence().removeByG_S_T(groupId, status);
+	}
+
+	/**
+	 * Returns the number of sxp blueprints where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the number of matching sxp blueprints
+	 */
+	public static int countByG_S_T(long groupId, int status) {
+		return getPersistence().countByG_S_T(groupId, status);
 	}
 
 	/**

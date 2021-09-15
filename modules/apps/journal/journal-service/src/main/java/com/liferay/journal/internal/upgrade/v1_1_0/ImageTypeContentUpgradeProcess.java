@@ -30,9 +30,6 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.sql.ResultSet;
-import java.sql.Statement;
-
 /**
  * @author Eudaldo Alonso
  */
@@ -51,9 +48,8 @@ public class ImageTypeContentUpgradeProcess extends UpgradeProcess {
 	protected void copyJournalArticleImagesToJournalRepository()
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			processConcurrently(
 				StringBundler.concat(
 					"select JournalArticleImage.articleImageId, ",
 					"JournalArticleImage.groupId, ",
@@ -63,28 +59,15 @@ public class ImageTypeContentUpgradeProcess extends UpgradeProcess {
 					"(JournalArticle.groupId = JournalArticleImage.groupId ",
 					"and JournalArticle.articleId = ",
 					"JournalArticleImage.articleId and JournalArticle.version ",
-					"= JournalArticleImage.version)"))) {
-
-			processConcurrently(
-				() -> {
-					if (resultSet.next()) {
-						return new Object[] {
-							resultSet.getLong(1), resultSet.getLong(2),
-							resultSet.getLong(3), resultSet.getLong(4),
-							resultSet.getLong(5)
-						};
-					}
-
-					return null;
-				},
-				values -> {
-					long articleImageId = (Long)values[0];
-					long groupId = (Long)values[1];
-					long companyId = (Long)values[2];
-					long resourcePrimKey = (Long)values[3];
+					"= JournalArticleImage.version)"),
+				resultRow -> {
+					long articleImageId = resultRow.get(1);
+					long groupId = resultRow.get(2);
+					long companyId = resultRow.get(3);
+					long resourcePrimKey = resultRow.get(4);
 
 					long userId = PortalUtil.getValidUserId(
-						companyId, (Long)values[4]);
+						companyId, resultRow.get(5));
 
 					long folderId =
 						_journalArticleImageUpgradeHelper.getFolderId(

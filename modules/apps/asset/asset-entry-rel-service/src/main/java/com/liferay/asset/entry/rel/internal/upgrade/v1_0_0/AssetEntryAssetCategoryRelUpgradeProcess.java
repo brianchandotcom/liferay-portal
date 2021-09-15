@@ -20,56 +20,39 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 /**
  * @author Eudaldo Alonso
  */
 public class AssetEntryAssetCategoryRelUpgradeProcess extends UpgradeProcess {
 
 	protected void addAssetEntryAssetCategoryRels() throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select entryId, categoryId from AssetEntries_AssetCategories");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+		processConcurrently(
+			"select entryId, categoryId from AssetEntries_AssetCategories",
+			resultRow -> {
+				long assetEntryId = resultRow.get("entryId");
+				long assetCategoryId = resultRow.get("categoryId");
 
-			processConcurrently(
-				() -> {
-					if (resultSet.next()) {
-						return new Object[] {
-							resultSet.getLong("entryId"),
-							resultSet.getLong("categoryId")
-						};
-					}
+				try {
+					runSQL(
+						StringBundler.concat(
+							"insert into AssetEntryAssetCategoryRel (",
+							"assetEntryAssetCategoryRelId, assetEntryId, ",
+							"assetCategoryId) values (", increment(), ", ",
+							assetEntryId, ", ", assetCategoryId, ")"));
+				}
+				catch (Exception exception) {
+					_log.error(
+						StringBundler.concat(
+							"Unable to add relationship for asset entry ",
+							assetEntryId, " and asset category ",
+							assetCategoryId),
+						exception);
 
-					return null;
-				},
-				values -> {
-					long assetEntryId = (Long)values[0];
-					long assetCategoryId = (Long)values[1];
-
-					try {
-						runSQL(
-							StringBundler.concat(
-								"insert into AssetEntryAssetCategoryRel (",
-								"assetEntryAssetCategoryRelId, assetEntryId, ",
-								"assetCategoryId) values (", increment(), ", ",
-								assetEntryId, ", ", assetCategoryId, ")"));
-					}
-					catch (Exception exception) {
-						_log.error(
-							StringBundler.concat(
-								"Unable to add relationship for asset entry ",
-								assetEntryId, " and asset category ",
-								assetCategoryId),
-							exception);
-
-						throw exception;
-					}
-				},
-				"Unable to add relationships between asset entries and asset " +
-					"categories");
-		}
+					throw exception;
+				}
+			},
+			"Unable to add relationships between asset entries and asset " +
+				"categories");
 	}
 
 	@Override

@@ -26,9 +26,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 /**
  * @author Preston Crary
  */
@@ -54,47 +51,31 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 		long classNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class);
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select id_, groupId, content, DDMStructureKey from " +
-					"JournalArticle where ctCollectionId = 0");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+		processConcurrently(
+			"select id_, groupId, content, DDMStructureKey from " +
+				"JournalArticle where ctCollectionId = 0",
+			resultRow -> {
+				long id = resultRow.get("id_");
+				long groupId = resultRow.get("groupId");
 
-			processConcurrently(
-				() -> {
-					if (resultSet.next()) {
-						return new Object[] {
-							resultSet.getLong("id_"),
-							resultSet.getLong("groupId"),
-							resultSet.getString("content"),
-							resultSet.getString("DDMStructureKey")
-						};
-					}
+				String content = resultRow.get("content");
 
-					return null;
-				},
-				values -> {
-					long id = (Long)values[0];
-					long groupId = (Long)values[1];
+				String ddmStructureKey = resultRow.get("DDMStructureKey");
 
-					String content = (String)values[2];
+				DDMStructure ddmStructure =
+					_ddmStructureLocalService.getStructure(
+						_portal.getSiteGroupId(groupId), classNameId,
+						ddmStructureKey, true);
 
-					String ddmStructureKey = (String)values[3];
+				DDMFormValues ddmFormValues =
+					_fieldsToDDMFormValuesConverter.convert(
+						ddmStructure,
+						_journalConverter.getDDMFields(ddmStructure, content));
 
-					DDMStructure ddmStructure =
-						_ddmStructureLocalService.getStructure(
-							_portal.getSiteGroupId(groupId), classNameId,
-							ddmStructureKey, true);
-
-					DDMFormValues ddmFormValues =
-						_fieldsToDDMFormValuesConverter.convert(
-							ddmStructure,
-							_journalConverter.getDDMFields(
-								ddmStructure, content));
-
-					_ddmFieldLocalService.updateDDMFormValues(
-						ddmStructure.getStructureId(), id, ddmFormValues);
-				});
-		}
+				_ddmFieldLocalService.updateDDMFormValues(
+					ddmStructure.getStructureId(), id, ddmFormValues);
+			},
+			null);
 
 		alter(JournalArticleTable.class, new AlterTableDropColumn("content"));
 	}

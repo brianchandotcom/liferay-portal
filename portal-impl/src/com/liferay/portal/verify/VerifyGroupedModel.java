@@ -50,38 +50,34 @@ public class VerifyGroupedModel extends VerifyProcess {
 			unverifiedTableNames.add(verifiableGroupedModel.getTableName());
 		}
 
+		if (unverifiedTableNames.isEmpty()) {
+			return;
+		}
+
+		int count = unverifiedTableNames.size();
+
 		processConcurrently(
-			() -> {
-				if (!unverifiedTableNames.isEmpty()) {
-					int count = unverifiedTableNames.size();
+			verifiableGroupedModels,
+			verifiableGroupedModel -> {
+				if (unverifiedTableNames.contains(
+						verifiableGroupedModel.getRelatedTableName()) ||
+					!unverifiedTableNames.contains(
+						verifiableGroupedModel.getTableName())) {
 
-					for (VerifiableGroupedModel verifiableGroupedModel :
-							verifiableGroupedModels) {
-
-						if (unverifiedTableNames.contains(
-								verifiableGroupedModel.getRelatedTableName()) ||
-							!unverifiedTableNames.contains(
-								verifiableGroupedModel.getTableName())) {
-
-							continue;
-						}
-
-						unverifiedTableNames.remove(
-							verifiableGroupedModel.getTableName());
-
-						if (unverifiedTableNames.size() == count) {
-							throw new VerifyException(
-								"Circular dependency detected " +
-									unverifiedTableNames);
-						}
-
-						return verifiableGroupedModel;
-					}
+					return;
 				}
 
-				return null;
+				unverifiedTableNames.remove(
+					verifiableGroupedModel.getTableName());
+
+				if (unverifiedTableNames.size() == count) {
+					throw new VerifyException(
+						"Circular dependency detected " + unverifiedTableNames);
+				}
+
+				verifyGroupedModel(verifiableGroupedModel);
 			},
-			this::verifyGroupedModel);
+			null);
 	}
 
 	@Override

@@ -67,7 +67,7 @@ public class AssetDisplayPageEntryUpgradeProcess extends UpgradeProcess {
 		User user = company.getDefaultUser();
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement preparedStatement1 = connection.prepareStatement(
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				SQLTransformer.transform(
 					StringBundler.concat(
 						"select JournalArticle.groupId, ",
@@ -90,56 +90,42 @@ public class AssetDisplayPageEntryUpgradeProcess extends UpgradeProcess {
 						"JournalArticle.resourcePrimKey, ",
 						"AssetEntry.classUuid")))) {
 
-			preparedStatement1.setLong(1, journalArticleClassNameId);
-			preparedStatement1.setLong(2, company.getCompanyId());
-			preparedStatement1.setLong(3, journalArticleClassNameId);
+			preparedStatement.setLong(1, journalArticleClassNameId);
+			preparedStatement.setLong(2, company.getCompanyId());
+			preparedStatement.setLong(3, journalArticleClassNameId);
 
-			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
-				processConcurrently(
-					() -> {
-						if (resultSet.next()) {
-							return new Object[] {
-								resultSet.getLong("groupId"),
-								resultSet.getLong("resourcePrimKey"),
-								resultSet.getString("classUuid")
-							};
-						}
+			processConcurrently(
+				preparedStatement,
+				resultRow -> {
+					long groupId = resultRow.get("groupId");
+					long resourcePrimKey = resultRow.get("resourcePrimKey");
 
-						return null;
-					},
-					values -> {
-						long groupId = (Long)values[0];
-						long resourcePrimKey = (Long)values[1];
+					String journalArticleUuid = resultRow.get("classUuid");
 
-						String journalArticleUuid = (String)values[2];
+					try {
+						ServiceContext serviceContext = new ServiceContext();
 
-						try {
-							ServiceContext serviceContext =
-								new ServiceContext();
+						serviceContext.setUuid(
+							_generateLocalStagingAwareUUID(
+								groupId, journalArticleUuid));
 
-							serviceContext.setUuid(
-								_generateLocalStagingAwareUUID(
-									groupId, journalArticleUuid));
+						_assetDisplayPageEntryLocalService.
+							addAssetDisplayPageEntry(
+								user.getUserId(), groupId,
+								journalArticleClassNameId, resourcePrimKey, 0,
+								AssetDisplayPageConstants.TYPE_SPECIFIC,
+								serviceContext);
+					}
+					catch (Exception exception) {
+						_log.error(
+							"Unable to add asset display page entry for " +
+								"article " + resourcePrimKey,
+							exception);
 
-							_assetDisplayPageEntryLocalService.
-								addAssetDisplayPageEntry(
-									user.getUserId(), groupId,
-									journalArticleClassNameId, resourcePrimKey,
-									0, AssetDisplayPageConstants.TYPE_SPECIFIC,
-									serviceContext);
-						}
-						catch (Exception exception) {
-							_log.error(
-								"Unable to add asset display page entry for " +
-									"article " + resourcePrimKey,
-								exception);
-
-							throw exception;
-						}
-					},
-					"Unable to add asset display pages for the journal " +
-						"articles");
-			}
+						throw exception;
+					}
+				},
+				"Unable to add asset display pages for the journal articles");
 		}
 	}
 

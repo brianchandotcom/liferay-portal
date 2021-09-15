@@ -51,20 +51,11 @@ public class VerifyResourcePermissions extends VerifyProcess {
 				Role role = RoleLocalServiceUtil.getRole(
 					companyId, RoleConstants.OWNER);
 
-				AtomicInteger atomicInteger = new AtomicInteger();
-
 				processConcurrently(
-					() -> {
-						int index = atomicInteger.getAndIncrement();
-
-						if (index < verifiableResourcedModels.length) {
-							return verifiableResourcedModels[index];
-						}
-
-						return null;
-					},
+					verifiableResourcedModels,
 					verifiableResourcedModel -> _verifyResourcedModel(
-						role, verifiableResourcedModel));
+						role, verifiableResourcedModel),
+					null);
 			});
 	}
 
@@ -129,7 +120,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			Role role, VerifiableResourcedModel verifiableResourcedModel)
 		throws Exception {
 
-		int total = 0;
+		int total;
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				verifiableResourcedModel.getTableName());
@@ -141,37 +132,24 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			if (resultSet.next()) {
 				total = resultSet.getInt(1);
 			}
-		}
-
-		if (total == 0) {
-			return;
+			else {
+				return;
+			}
 		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(
-				verifiableResourcedModel.getTableName());
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				_getVerifyResourcedModelSQL(
-					false, verifiableResourcedModel, role));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+				verifiableResourcedModel.getTableName())) {
 
 			AtomicInteger atomicInteger = new AtomicInteger();
 
-			final int finalTotal = total;
-
 			processConcurrently(
-				() -> {
-					if (resultSet.next()) {
-						return new Object[] {
-							verifiableResourcedModel.getPrimaryKeyColumnName(),
-							verifiableResourcedModel.getUserIdColumnName()
-						};
-					}
-
-					return null;
-				},
-				values -> {
-					long primKey = (Long)values[0];
-					long ownerId = (Long)values[1];
+				_getVerifyResourcedModelSQL(
+					false, verifiableResourcedModel, role),
+				resultRow -> {
+					long primKey = resultRow.get(
+						verifiableResourcedModel.getPrimaryKeyColumnName());
+					long ownerId = resultRow.get(
+						verifiableResourcedModel.getUserIdColumnName());
 
 					long companyId = role.getCompanyId();
 					long roleId = role.getRoleId();
@@ -183,7 +161,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 					if (_log.isInfoEnabled() && ((count % 100) == 0)) {
 						_log.info(
 							StringBundler.concat(
-								"Processed ", count, " of ", finalTotal,
+								"Processed ", count, " of ", total,
 								" resource permissions for company ", companyId,
 								" and model ", modelName));
 					}
@@ -211,7 +189,8 @@ public class VerifyResourcePermissions extends VerifyProcess {
 								primKey, ", ", roleId, "}"),
 							exception);
 					}
-				});
+				},
+				null);
 		}
 	}
 

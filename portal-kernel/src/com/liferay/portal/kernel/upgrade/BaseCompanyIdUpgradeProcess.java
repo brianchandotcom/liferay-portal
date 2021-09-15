@@ -28,7 +28,6 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Brian Wing Shun Chan
@@ -37,20 +36,8 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		TableUpdater[] tableUpdaters = getTableUpdaters();
-
-		AtomicInteger atomicInteger = new AtomicInteger();
-
 		processConcurrently(
-			() -> {
-				int index = atomicInteger.getAndIncrement();
-
-				if (index < tableUpdaters.length) {
-					return tableUpdaters[index];
-				}
-
-				return null;
-			},
+			getTableUpdaters(),
 			tableUpdater -> {
 				String tableName = tableUpdater.getTableName();
 
@@ -76,7 +63,8 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 
 					tableUpdater.update(connection);
 				}
-			});
+			},
+			null);
 	}
 
 	protected abstract TableUpdater[] getTableUpdaters();

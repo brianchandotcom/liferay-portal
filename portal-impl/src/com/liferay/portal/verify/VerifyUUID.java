@@ -30,7 +30,6 @@ import java.sql.ResultSet;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Brian Wing Shun Chan
@@ -59,19 +58,7 @@ public class VerifyUUID extends VerifyProcess {
 	protected void doVerify(VerifiableUUIDModel... verifiableUUIDModels)
 		throws Exception {
 
-		AtomicInteger atomicInteger = new AtomicInteger();
-
-		processConcurrently(
-			() -> {
-				int index = atomicInteger.getAndIncrement();
-
-				if (index < verifiableUUIDModels.length) {
-					return verifiableUUIDModels[index];
-				}
-
-				return null;
-			},
-			this::verifyUUID);
+		processConcurrently(verifiableUUIDModels, this::verifyUUID, null);
 	}
 
 	protected void verifyUUID(VerifiableUUIDModel verifiableUUIDModel)

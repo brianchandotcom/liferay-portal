@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.HashMap;
@@ -109,32 +108,17 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 				"companyId, articlePK, title, description, languageId) " +
 					"values(?, ?, ?, ?, ?, ?)";
 
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement selectPreparedStatement =
-				connection.prepareStatement(
-					"select id_, companyId, title, description, " +
-						"defaultLanguageId from JournalArticle");
-			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
-
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			processConcurrently(
-				() -> {
-					if (resultSet.next()) {
-						return new Object[] {
-							resultSet.getLong(1), resultSet.getLong(2),
-							resultSet.getString(3), resultSet.getString(4),
-							resultSet.getString(5)
-						};
-					}
+				"select id_, companyId, title, description, " +
+					"defaultLanguageId from JournalArticle",
+				resultRow -> {
+					long id = resultRow.get(1);
+					long companyId = resultRow.get(2);
 
-					return null;
-				},
-				values -> {
-					long id = (Long)values[0];
-					long companyId = (Long)values[1];
-
-					String title = (String)values[2];
-					String description = (String)values[3];
-					String defaultLanguageId = (String)values[4];
+					String title = resultRow.get(3);
+					String description = resultRow.get(4);
+					String defaultLanguageId = resultRow.get(5);
 
 					Map<Locale, String> titleMap = _getLocalizationMap(
 						title, defaultLanguageId);
@@ -263,69 +247,52 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 	private void _updateDefaultLanguage(String columnName, boolean strictUpdate)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select id_, groupId, ", columnName,
-					" from JournalArticle where defaultLanguageId is null or ",
-					"defaultLanguageId = ''"));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			Map<Long, Locale> defaultSiteLocales = new HashMap<>();
 
 			processConcurrently(
-				() -> {
-					if (resultSet.next()) {
-						String columnValue = resultSet.getString(3);
+				StringBundler.concat(
+					"select id_, groupId, ", columnName,
+					" from JournalArticle where defaultLanguageId is null or ",
+					"defaultLanguageId = ''"),
+				resultRow -> {
+					String columnValue = resultRow.get(3);
 
-						if (Validator.isXml(columnValue) || strictUpdate) {
-							long groupId = resultSet.getLong(2);
+					if (Validator.isXml(columnValue) || strictUpdate) {
+						long groupId = resultRow.get(2);
 
-							Locale defaultSiteLocale = defaultSiteLocales.get(
+						Locale defaultSiteLocale = defaultSiteLocales.get(
+							groupId);
+
+						if (defaultSiteLocale == null) {
+							defaultSiteLocale = PortalUtil.getSiteDefaultLocale(
 								groupId);
 
-							if (defaultSiteLocale == null) {
-								defaultSiteLocale =
-									PortalUtil.getSiteDefaultLocale(groupId);
-
-								defaultSiteLocales.put(
-									groupId, defaultSiteLocale);
-							}
-
-							return new Object[] {
-								resultSet.getLong(1), columnValue,
-								defaultSiteLocale
-							};
+							defaultSiteLocales.put(groupId, defaultSiteLocale);
 						}
-					}
 
-					return null;
-				},
-				values -> {
-					long id = (Long)values[0];
+						long id = resultRow.get(1);
 
-					String xml = (String)values[1];
-					Locale defaultSiteLocale = (Locale)values[2];
+						String defaultLanguageId =
+							LocalizationUtil.getDefaultLanguageId(
+								columnValue, defaultSiteLocale);
 
-					String defaultLanguageId =
-						LocalizationUtil.getDefaultLanguageId(
-							xml, defaultSiteLocale);
+						try {
+							runSQL(
+								connection,
+								StringBundler.concat(
+									"update JournalArticle set ",
+									"defaultLanguageId = '", defaultLanguageId,
+									"' where id_ = ", id));
+						}
+						catch (Exception exception) {
+							_log.error(
+								"Unable to update default language ID for " +
+									"article " + id,
+								exception);
 
-					try {
-						runSQL(
-							connection,
-							StringBundler.concat(
-								"update JournalArticle set defaultLanguageId ",
-								"= '", defaultLanguageId, "' where id_ = ",
-								id));
-					}
-					catch (Exception exception) {
-						_log.error(
-							"Unable to update default language ID for " +
-								"article " + id,
-							exception);
-
-						throw exception;
+							throw exception;
+						}
 					}
 				},
 				"Unable to update journal article default language IDs");

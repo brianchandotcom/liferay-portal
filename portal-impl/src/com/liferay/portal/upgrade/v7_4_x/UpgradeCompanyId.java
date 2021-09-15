@@ -39,9 +39,9 @@ public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 			if (!hasColumn(tableUpdater.getTableName(), "companyId")) {
 				tableUpdater.setCreateCompanyIdColumn(true);
 			}
-
-			tableUpdater.call();
 		}
+
+		super.doUpgrade();
 	}
 
 	@Override

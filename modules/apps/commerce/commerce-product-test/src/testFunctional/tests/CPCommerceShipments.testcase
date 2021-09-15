@@ -750,9 +750,9 @@ definition {
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 
 		CommerceOrders.createShipment(
+			complement = "Deliver",
 			productSKUList = "MIN55861",
-			warehouseName = "Italy",
-			complement = "Deliver");
+			warehouseName = "Italy");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Order Management",

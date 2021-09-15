@@ -394,6 +394,31 @@ definition {
 		}
 	}
 
+	@description = "Can delete a RSS Publisher widget from page."
+	@priority = "4"
+	@uitest
+	test DeleteRSSPublisher {
+		task ("View default RSS Publisher widget on page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.viewSpecificPG(portletName = "RSS Publisher");
+		}
+
+		task ("View empty message on RSS Publisher") {
+			RSSPortlet.viewPortletConfigurationInfo();
+		}
+
+		task ("Delete the RSS Publisher from page") {
+			Portlet.deletePG(portletName = "RSS Publisher");
+		}
+
+		task ("View the RSS Publisher is not shown") {
+			Portlet.viewNoSpecificPG(portletName = "RSS Publisher");
+		}
+	}
+
 	@description = "The title of a RSS Feed can be disabled on RSS Publisher configuration."
 	@priority = "3"
 	test DisabledFeedTitle {
@@ -530,31 +555,6 @@ definition {
 				updateFeed = "true");
 
 			RSSPortlet.viewDisplayFeedTitle(feedTitle = "Web Asset Publisher");
-		}
-	}
-
-	@description = "Can delete a RSS Publisher widget from page."
-	@priority = "4"
-	@uitest
-	test DeleteRSSPublisher {
-		task ("View default RSS Publisher widget on page") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			Portlet.viewSpecificPG(portletName = "RSS Publisher");
-		}
-
-		task ("View empty message on RSS Publisher") {
-			RSSPortlet.viewPortletConfigurationInfo();
-		}
-
-		task ("Delete the RSS Publisher from page") {
-			Portlet.deletePG(portletName = "RSS Publisher");
-		}
-
-		task ("View the RSS Publisher is not shown") {
-			Portlet.viewNoSpecificPG(portletName = "RSS Publisher");
 		}
 	}
 

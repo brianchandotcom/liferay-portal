@@ -35,7 +35,6 @@ definition {
 	@description = "LPS-135549 - Verify it is possible to cancel the creation of a Custom Object"
 	@priority = "4"
 	test CanCancelCreationCustomObject {
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.addNewObject(
@@ -48,7 +47,6 @@ definition {
 			key_name = "CustomObject",
 			key_system = "No",
 			locator1 = "ObjectAdmin#VIEW_OBJECT");
-
 	}
 
 	@description = "LPS-135549 - Verify it is possible to cancel the creation of a Field"

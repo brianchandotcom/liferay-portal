@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.model.TemplateEntry;
@@ -50,7 +50,6 @@ import com.liferay.template.service.TemplateEntryLocalService;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -134,27 +133,25 @@ public class AddTemplateEntryMVCActionCommand
 		catch (PortalException portalException) {
 			JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
 
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				themeDisplay.getLocale(),
-				AddTemplateEntryMVCActionCommand.class);
-
 			if (portalException instanceof TemplateNameException) {
 				errorJSONObject.put(
 					"name",
-					ResourceBundleUtil.getString(
-						resourceBundle, "please-enter-a-valid-name"));
+					LanguageUtil.get(
+						themeDisplay.getLocale(), "please-enter-a-valid-name"));
 			}
 			else if (portalException instanceof TemplateScriptException) {
 				errorJSONObject.put(
 					"other",
-					ResourceBundleUtil.getString(
-						resourceBundle, "please-enter-a-valid-script"));
+					LanguageUtil.get(
+						themeDisplay.getLocale(),
+						"please-enter-a-valid-script"));
 			}
 			else {
 				errorJSONObject.put(
 					"other",
-					ResourceBundleUtil.getString(
-						resourceBundle, "an-unexpected-error-occurred"));
+					LanguageUtil.get(
+						themeDisplay.getLocale(),
+						"an-unexpected-error-occurred"));
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(portalException.getMessage(), portalException);

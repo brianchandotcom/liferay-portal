@@ -651,13 +651,9 @@ definition {
 	}
 
 	macro enableSwitch {
-		Pause(locator1 = "2000");
-
-		Click(
+		Check.checkToggleSwitch(
 			key_fieldName = "${fieldName}",
 			locator1 = "FormFields#SWITCH");
-
-		Pause(locator1 = "2000");
 	}
 
 	macro getFieldName {

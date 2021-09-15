@@ -32,15 +32,18 @@ import org.dom4j.Node;
 public class PortalRelease {
 
 	public PortalRelease(String portalVersion) {
-		String bundlesBaseURLContent = null;
-		String bundlesBaseURLString = null;
+		URL bundlesBaseURL = null;
 
 		for (String baseURLString : _BASE_URL_STRINGS) {
-			bundlesBaseURLString = baseURLString + "/" + portalVersion;
+			String bundlesBaseURLString = baseURLString + "/" + portalVersion;
+
+			String bundlesBaseURLContent = null;
 
 			try {
 				bundlesBaseURLContent = JenkinsResultsParserUtil.toString(
 					bundlesBaseURLString + "/", true, 0, 5, 0);
+
+				bundlesBaseURL = new URL(bundlesBaseURLString);
 
 				break;
 			}
@@ -85,6 +88,8 @@ public class PortalRelease {
 				}
 
 				if (bundlesBaseURLContent != null) {
+					bundlesBaseURL = new URL(bundlesBaseURLString);
+
 					break;
 				}
 			}
@@ -93,34 +98,16 @@ public class PortalRelease {
 			}
 		}
 
-		_portalVersion = portalVersion;
-
-		if ((bundlesBaseURLString == null) || (bundlesBaseURLContent == null)) {
+		if (bundlesBaseURL == null) {
 			throw new RuntimeException(
 				"Invalid portal version " + portalVersion);
 		}
 
-		URL bundlesBaseURL = _getLocalURL(bundlesBaseURLString);
+		_portalVersion = portalVersion;
 
-		_dependenciesURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent,
-			_dependenciesFileNamePattern);
-		_glassFishURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _glassFishFileNamePattern);
-		_jbossURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _jbossFileNamePattern);
-		_osgiURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _osgiFileNamePattern);
-		_portalWarURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _portalWarFileNamePattern);
-		_sqlURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _sqlFileNamePattern);
-		_tomcatURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _tomcatFileNamePattern);
-		_toolsURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _toolsFileNamePattern);
-		_wildFlyURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _wildFlyFileNamePattern);
+		_bundlesBaseURL = _getLocalURL(bundlesBaseURL.toString());
+
+		_initializeURLs();
 	}
 
 	public PortalRelease(URL bundleURL) {
@@ -156,52 +143,10 @@ public class PortalRelease {
 			portalVersion = bundlesBaseURLMatcher.group("portalVersion");
 		}
 
+		_bundlesBaseURL = _getLocalURL(bundlesBaseURLString);
 		_portalVersion = portalVersion;
 
-		String bundlesBaseURLContent = null;
-
-		String[] bundlesBaseURLStrings = {
-			bundlesBaseURLString,
-			JenkinsResultsParserUtil.getLocalURL(bundlesBaseURLString)
-		};
-
-		for (String bundlesBaseURLStringCandidate : bundlesBaseURLStrings) {
-			try {
-				bundlesBaseURLContent = JenkinsResultsParserUtil.toString(
-					bundlesBaseURLStringCandidate + "/", true, 0, 5, 0);
-			}
-			catch (IOException ioException) {
-				continue;
-			}
-
-			break;
-		}
-
-		if (bundlesBaseURLContent == null) {
-			throw new RuntimeException("Invalid URL " + bundlesBaseURLString);
-		}
-
-		URL bundlesBaseURL = _getLocalURL(bundlesBaseURLString);
-
-		_dependenciesURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent,
-			_dependenciesFileNamePattern);
-		_glassFishURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _glassFishFileNamePattern);
-		_jbossURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _jbossFileNamePattern);
-		_osgiURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _osgiFileNamePattern);
-		_portalWarURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _portalWarFileNamePattern);
-		_sqlURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _sqlFileNamePattern);
-		_tomcatURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _tomcatFileNamePattern);
-		_toolsURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _toolsFileNamePattern);
-		_wildFlyURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _wildFlyFileNamePattern);
+		_initializeURLs();
 	}
 
 	public PortalRelease(URL bundlesBaseURL, String portalVersion) {
@@ -216,50 +161,23 @@ public class PortalRelease {
 		_portalVersion = portalVersion;
 
 		String bundlesBaseURLString = bundlesBaseURL.toString();
-		String bundlesBaseURLContent = null;
 
-		String[] bundlesBaseURLStrings = {
-			bundlesBaseURLString,
-			JenkinsResultsParserUtil.getLocalURL(bundlesBaseURLString)
-		};
-
-		for (String bundlesBaseURLStringCandidate : bundlesBaseURLStrings) {
-			try {
-				bundlesBaseURLContent = JenkinsResultsParserUtil.toString(
-					bundlesBaseURLStringCandidate + "/", true, 0, 5, 0);
-			}
-			catch (IOException ioException) {
-				continue;
-			}
-
-			break;
+		if (bundlesBaseURLString.endsWith("/")) {
+			bundlesBaseURLString = bundlesBaseURLString.substring(
+				0, bundlesBaseURLString.length() - 1);
 		}
 
-		if (bundlesBaseURLContent == null) {
-			throw new RuntimeException("Invalid URL " + bundlesBaseURLString);
-		}
+		_bundlesBaseURL = _getLocalURL(bundlesBaseURLString);
 
-		bundlesBaseURL = _getLocalURL(bundlesBaseURLString);
+		_initializeURLs();
+	}
 
-		_dependenciesURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent,
-			_dependenciesFileNamePattern);
-		_glassFishURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _glassFishFileNamePattern);
-		_jbossURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _jbossFileNamePattern);
-		_osgiURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _osgiFileNamePattern);
-		_portalWarURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _portalWarFileNamePattern);
-		_sqlURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _sqlFileNamePattern);
-		_tomcatURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _tomcatFileNamePattern);
-		_toolsURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _toolsFileNamePattern);
-		_wildFlyURLString = _getURLString(
-			bundlesBaseURL, bundlesBaseURLContent, _wildFlyFileNamePattern);
+	public URL getBundlesBaseLocalURL() {
+		return _getLocalURL(_bundlesBaseURL.toString());
+	}
+
+	public URL getBundlesBaseURL() {
+		return _getRemoteURL(_bundlesBaseURL.toString());
 	}
 
 	public URL getDependenciesLocalURL() {
@@ -472,7 +390,9 @@ public class PortalRelease {
 		}
 
 		try {
-			return new URL(JenkinsResultsParserUtil.getLocalURL(urlString));
+			return new URL(
+				JenkinsResultsParserUtil.getLocalURL(
+					urlString.replaceAll("[^:]//", "/")));
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);
@@ -485,7 +405,9 @@ public class PortalRelease {
 		}
 
 		try {
-			return new URL(JenkinsResultsParserUtil.getRemoteURL(urlString));
+			return new URL(
+				JenkinsResultsParserUtil.getRemoteURL(
+					urlString.replaceAll("[^:]//", "/")));
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);
@@ -493,11 +415,7 @@ public class PortalRelease {
 	}
 
 	private String _getURLString(
-		URL bundlesBaseURL, String bundlesBaseURLContent, Pattern pattern) {
-
-		if (bundlesBaseURL == null) {
-			return null;
-		}
+		String bundlesBaseURLContent, Pattern pattern) {
 
 		Matcher matcher = pattern.matcher(bundlesBaseURLContent);
 
@@ -505,7 +423,42 @@ public class PortalRelease {
 			return null;
 		}
 
-		return bundlesBaseURL + "/" + matcher.group("fileName");
+		return getBundlesBaseLocalURL() + "/" + matcher.group("fileName");
+	}
+
+	private void _initializeURLs() {
+		String bundlesBaseURLContent = null;
+
+		try {
+			bundlesBaseURLContent = JenkinsResultsParserUtil.toString(
+				getBundlesBaseLocalURL() + "/", false, 0, 5, 0);
+		}
+		catch (IOException ioException) {
+			return;
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(bundlesBaseURLContent)) {
+			return;
+		}
+
+		_dependenciesURLString = _getURLString(
+			bundlesBaseURLContent, _dependenciesFileNamePattern);
+		_glassFishURLString = _getURLString(
+			bundlesBaseURLContent, _glassFishFileNamePattern);
+		_jbossURLString = _getURLString(
+			bundlesBaseURLContent, _jbossFileNamePattern);
+		_osgiURLString = _getURLString(
+			bundlesBaseURLContent, _osgiFileNamePattern);
+		_portalWarURLString = _getURLString(
+			bundlesBaseURLContent, _portalWarFileNamePattern);
+		_sqlURLString = _getURLString(
+			bundlesBaseURLContent, _sqlFileNamePattern);
+		_tomcatURLString = _getURLString(
+			bundlesBaseURLContent, _tomcatFileNamePattern);
+		_toolsURLString = _getURLString(
+			bundlesBaseURLContent, _toolsFileNamePattern);
+		_wildFlyURLString = _getURLString(
+			bundlesBaseURLContent, _wildFlyFileNamePattern);
 	}
 
 	private static final String[] _BASE_URL_STRINGS = {
@@ -549,6 +502,7 @@ public class PortalRelease {
 		"href=\\\"(?<fileName>liferay-[^\\\"]+-wildfly-[^\\\"]+" +
 			"\\.(7z|tar.gz|zip))\\\"");
 
+	private final URL _bundlesBaseURL;
 	private String _dependenciesURLString;
 	private String _glassFishURLString;
 	private String _jbossURLString;

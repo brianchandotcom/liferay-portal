@@ -1591,10 +1591,12 @@ public class PortletTracker
 
 			_serviceRegistrations.remove(_bundle.getBundleId());
 
-			BundleContext bundleContext = _bundle.getBundleContext();
+			if (_bundle.getState() != Bundle.STOPPING) {
+				BundleContext bundleContext = _bundle.getBundleContext();
 
-			bundleContext.ungetService(
-				_servletContextHelperRegistrationServiceReference);
+				bundleContext.ungetService(
+					_servletContextHelperRegistrationServiceReference);
+			}
 		}
 
 		public synchronized void setPortletApp(PortletApp portletApp) {

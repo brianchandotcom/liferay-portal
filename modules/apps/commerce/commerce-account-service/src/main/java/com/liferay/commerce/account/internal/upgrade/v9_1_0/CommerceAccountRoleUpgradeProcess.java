@@ -14,29 +14,26 @@
 
 package com.liferay.commerce.account.internal.upgrade.v9_1_0;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountRole;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
-import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Riccardo Alberti
@@ -44,11 +41,13 @@ import java.util.stream.Stream;
 public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 
 	public CommerceAccountRoleUpgradeProcess(
+		AccountRoleLocalService accountRoleLocalService,
 		ClassNameLocalService classNameLocalService,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService) {
 
+		_accountRoleLocalService = accountRoleLocalService;
 		_classNameLocalService = classNameLocalService;
 		_resourceActionLocalService = resourceActionLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
@@ -57,103 +56,134 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		// Get all site roles that are used both as site roles and account roles
-		String query = StringBundler.concat(
-			"with x as (select usergrouprole.roleid from usergrouprole inner ",
-			"join group_ on group_.groupid = usergrouprole.groupid inner join ",
-			"classname_ on group_.classnameid= classname_.classnameid where ",
-			"classname_.classnameid = ",
-			_classNameLocalService.getClassNameId(AccountEntry.class),
-			") select distinct usergrouprole.roleid from usergrouprole inner ",
-			"join x on usergrouprole.roleid = x.roleid inner join group_ on ",
-			"group_.groupid = usergrouprole.groupid inner join classname_ on ",
-			"group_.classnameid = classname_.classnameid where ",
-			"classname_.classnameid != ",
-			_classNameLocalService.getClassNameId(AccountEntry.class));
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				StringBundler.concat(
+					"select distinct UserGroupRole.roleId from UserGroupRole ",
+					"inner join Role_ on UserGroupRole.roleId = Role_.roleId ",
+					"where Role_.type_ =", RoleConstants.TYPE_SITE));
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection.prepareStatement(
+						"update Role_ set type_ = " +
+							RoleConstants.TYPE_ACCOUNT + " where roleId = ?"));
+			PreparedStatement preparedStatement3 =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection.prepareStatement(
+						"update UserGroupRole set roleId =  ?" +
+							" where roleId = ?"))) {
 
-		Map<Long, Long> roleIdMap = new HashMap<>();
+			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+				while (resultSet.next()) {
+					long roleId = resultSet.getLong(1);
 
-		try (Statement selectStatement = connection.createStatement()) {
-			ResultSet resultSet = selectStatement.executeQuery(query);
+					if (!_hasAccountEntryGroup(roleId)) {
+						continue;
+					}
 
-			while (resultSet.next()) {
-				// Duplicate roles that are site and account roles
+					if (_hasNonaccountEntryGroup(roleId)) {
+						AccountRole accountRole = _copyToAccountRole(roleId);
 
-				long roleId = resultSet.getLong(1);
+						preparedStatement3.setLong(1, accountRole.getRoleId());
 
-				Role siteRole = _roleLocalService.getRole(roleId);
+						preparedStatement3.setLong(2, roleId);
 
-				Role accountRole = _roleLocalService.addRole(
-					siteRole.getUserId(), siteRole.getClassName(),
-					siteRole.getClassPK(), siteRole.getName() + " Account",
-					siteRole.getTitleMap(), siteRole.getDescriptionMap(),
-					RoleConstants.TYPE_ACCOUNT, siteRole.getSubtype(),
-					new ServiceContext());
+						preparedStatement3.addBatch();
+					}
+					else {
+						preparedStatement2.setLong(1, roleId);
 
-				List<ResourcePermission> resourcePermissions =
-					_resourcePermissionLocalService.getRoleResourcePermissions(
-						siteRole.getRoleId());
-
-				for (ResourcePermission resourcePermission : resourcePermissions) {
-					List<ResourceAction> resourceActions =
-						_resourceActionLocalService.getResourceActions(
-							resourcePermission.getName());
-
-					for (ResourceAction resourceAction : resourceActions) {
-						_resourcePermissionLocalService.addResourcePermission(
-							resourcePermission.getCompanyId(),
-							resourcePermission.getName(),
-							resourcePermission.getScope(),
-							resourcePermission.getPrimKey(),
-							accountRole.getRoleId(),
-							resourceAction.getActionId());
+						preparedStatement2.addBatch();
 					}
 				}
 
-				roleIdMap.put(siteRole.getRoleId(), accountRole.getRoleId());
+				preparedStatement2.executeBatch();
+				preparedStatement3.executeBatch();
 			}
-		}
-
-		if (roleIdMap.isEmpty()) {
-			return;
-		}
-
-		Set<Long> siteRoleIds = roleIdMap.keySet();
-
-		Stream<Long> stream = siteRoleIds.stream();
-
-		// Update site roles to make them account roles if they're just account roles
-
-		runSQL(
-			StringBundler.concat(
-				"update role_ set type_ = ", RoleConstants.TYPE_ACCOUNT,
-				"where roleId in (select distinct ",
-				"usergrouprole.roleid from usergrouprole inner join group_ on ",
-				"group_.groupid = usergrouprole.groupid inner join classname_ ",
-				"on group_.classnameid = classname_.classnameid where ",
-				"classname_.classnameid = ",
-				_classNameLocalService.getClassNameId(AccountEntry.class),
-				" and usergrouprole.roleid not in (",
-				stream.map(
-					roleId -> String.valueOf(roleIdMap.get(roleId))
-				).collect(
-					Collectors.joining(", ")
-				),
-				"))"));
-
-		// Update usergrouproles and set the new role (account role) instead of the old one (site role)
-
-		for (Map.Entry<Long, Long> entry : roleIdMap.entrySet()) {
-			runSQL(
-				StringBundler.concat(
-					"update usergrouprole set roleid = ", entry.getValue(),
-					" where roleId = ", entry.getKey()));
 		}
 	}
 
+	private AccountRole _copyToAccountRole(long roleId) throws Exception {
+		Role role = _roleLocalService.getRole(roleId);
+
+		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
+			role.getUserId(), AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+			role.getName() + "_Account", role.getTitleMap(),
+			role.getDescriptionMap());
+
+		List<ResourcePermission> resourcePermissions =
+			_resourcePermissionLocalService.getRoleResourcePermissions(
+				role.getRoleId());
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			List<ResourceAction> resourceActions =
+				_resourceActionLocalService.getResourceActions(
+					resourcePermission.getName());
+
+			for (ResourceAction resourceAction : resourceActions) {
+				_resourcePermissionLocalService.addResourcePermission(
+					resourcePermission.getCompanyId(),
+					resourcePermission.getName(), resourcePermission.getScope(),
+					resourcePermission.getPrimKey(), accountRole.getRoleId(),
+					resourceAction.getActionId());
+			}
+		}
+
+		return accountRole;
+	}
+
+	private boolean _hasAccountEntryGroup(long roleId) throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select count(distinct UserGroupRole.groupId)",
+					"from UserGroupRole inner join Group_ on ",
+					"UserGroupRole.groupId = Group_.groupId and ",
+					"Group.classNameId =",
+					_classNameLocalService.getClassNameId(AccountEntry.class),
+					" where UserGroupRole.roleId = ", roleId))) {
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					int count = resultSet.getInt(1);
+
+					if (count > 0) {
+						return true;
+					}
+				}
+
+				return false;
+			}
+		}
+	}
+
+	private boolean _hasNonaccountEntryGroup(long roleId) throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select count(distinct UserGroupRole.groupId)",
+					"from UserGroupRole inner join Group_ on ",
+					"UserGroupRole.groupId = Group_.groupId and ",
+					"Group.classNameId !=",
+					_classNameLocalService.getClassNameId(AccountEntry.class),
+					" where UserGroupRole.roleId = ", roleId))) {
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					int count = resultSet.getInt(1);
+
+					if (count > 0) {
+						return true;
+					}
+				}
+
+				return false;
+			}
+		}
+	}
+
+	private final AccountRoleLocalService _accountRoleLocalService;
 	private final ClassNameLocalService _classNameLocalService;
 	private final ResourceActionLocalService _resourceActionLocalService;
-	private final ResourcePermissionLocalService _resourcePermissionLocalService;
+	private final ResourcePermissionLocalService
+		_resourcePermissionLocalService;
 	private final RoleLocalService _roleLocalService;
 
 }

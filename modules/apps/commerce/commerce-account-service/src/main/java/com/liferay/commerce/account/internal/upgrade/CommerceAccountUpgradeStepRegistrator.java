@@ -19,6 +19,7 @@ import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.commerce.account.internal.upgrade.v1_1_0.CommerceAccountUpgradeProcess;
 import com.liferay.commerce.account.internal.upgrade.v1_2_0.CommerceAccountGroupCommerceAccountRelUpgradeProcess;
 import com.liferay.commerce.account.internal.upgrade.v1_2_0.CommerceAccountGroupRelUpgradeProcess;
@@ -129,7 +130,9 @@ public class CommerceAccountUpgradeStepRegistrator
 			"9.0.0", "9.1.0",
 			new com.liferay.commerce.account.internal.upgrade.v9_1_0.
 				CommerceAccountRoleUpgradeProcess(
-					_classNameLocalService, _resourceActionLocalService, _resourcePermissionLocalService, _roleLocalService));
+					_accountRoleLocalService, _classNameLocalService,
+					_resourceActionLocalService,
+					_resourcePermissionLocalService, _roleLocalService));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce account upgrade step registrator finished");
@@ -143,12 +146,6 @@ public class CommerceAccountUpgradeStepRegistrator
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
-	private ResourceActionLocalService _resourceActionLocalService;
-
-	@Reference
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Reference
 	private AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
 
@@ -160,6 +157,9 @@ public class CommerceAccountUpgradeStepRegistrator
 
 	@Reference
 	private AccountGroupRelLocalService _accountGroupRelLocalService;
+
+	@Reference
+	private AccountRoleLocalService _accountRoleLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
@@ -179,7 +179,13 @@ public class CommerceAccountUpgradeStepRegistrator
 	private Release _release;
 
 	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
 	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

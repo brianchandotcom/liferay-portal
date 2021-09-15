@@ -51,7 +51,6 @@ export default function App({
 				>
 					<ClosableAlert
 						id={`${portletNamespace}-cacheableWarningMessage`}
-						linkedCheckboxId={`${portletNamespace}cacheable`}
 						message={Liferay.Language.get(
 							'this-template-is-marked-as-cacheable.-avoid-using-code-that-uses-request-handling,-the-cms-query-api,-taglibs,-or-other-dynamic-features.-uncheck-the-cacheable-property-if-dynamic-behavior-is-needed'
 						)}

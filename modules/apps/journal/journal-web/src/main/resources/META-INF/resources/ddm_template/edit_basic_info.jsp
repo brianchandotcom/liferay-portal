@@ -100,6 +100,13 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 
 <aui:input helpMessage="journal-template-cacheable-help" labelCssClass="control-label" name="cacheable" value="<%= journalEditDDMTemplateDisplayContext.isCacheable() %>" />
 
+<aui:script>
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />cacheable',
+		'<portlet:namespace />-cacheableWarningMessage'
+	);
+</aui:script>
+
 <c:if test="<%= (ddmTemplate == null) || (ddmTemplate.getClassPK() == 0) %>">
 	<aui:script sandbox="<%= true %>">
 		const selectDDMStructure = document.getElementById(

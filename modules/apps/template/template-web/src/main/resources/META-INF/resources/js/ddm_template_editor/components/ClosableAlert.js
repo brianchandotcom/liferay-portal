@@ -14,30 +14,10 @@
 
 import ClayAlert from '@clayui/alert';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
-export const ClosableAlert = ({
-	id,
-	linkedCheckboxId,
-	message,
-	visible: initialVisible,
-}) => {
+export const ClosableAlert = ({id, message, visible: initialVisible}) => {
 	const [visible, setVisible] = useState(!!initialVisible);
-
-	useEffect(() => {
-		const toggleBoxes = () => {
-			const checkbox = document.getElementById(linkedCheckboxId);
-
-			if (checkbox) {
-				Liferay.Util.toggleBoxes(linkedCheckboxId, id);
-			}
-			else {
-				setTimeout(toggleBoxes, 1000);
-			}
-		};
-
-		toggleBoxes();
-	}, [id, linkedCheckboxId]);
 
 	return (
 		visible && (
@@ -56,7 +36,6 @@ export const ClosableAlert = ({
 
 ClosableAlert.propTypes = {
 	id: PropTypes.string,
-	linkedCheckboxId: PropTypes.string,
 	message: PropTypes.string.isRequired,
 	visible: PropTypes.bool.isRequired,
 };

@@ -18,6 +18,12 @@ definition {
 			value1 = "${labelName}");
 	}
 
+	macro assertFieldType {
+		AssertSelectedLabel(
+			locator1 = "CreateObject#FIELD_TYPE",
+			value1 = "${fieldType}");
+	}
+	
 	macro assertObjectPluralLabel {
 		AssertTextEquals(
 			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
@@ -41,6 +47,12 @@ definition {
 			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
 			value1 = "${pluralLabelName}");
 	}
+
+	macro editType {
+		Select(
+			locator1 = "CreateObject#FIELD_TYPE",
+			value1 = "${fieldType}");
+	}	
 
 	macro saveObject {
 		Click(locator1 = "CreateObject#SAVE_BUTTON");

@@ -45,6 +45,11 @@
 		<td>//input[contains(@id,'objectFieldName') and contains(@value,'${key_fieldName}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>FIELD_TYPE</td>
+		<td>//select[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_type']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

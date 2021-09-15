@@ -80,6 +80,7 @@ public interface ListTypeDefinitionLocalService
 	public ListTypeDefinition addListTypeDefinition(
 		ListTypeDefinition listTypeDefinition);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public ListTypeDefinition addListTypeDefinition(
 			long userId, Map<Locale, String> nameMap)
 		throws PortalException;
@@ -311,6 +312,7 @@ public interface ListTypeDefinitionLocalService
 	public ListTypeDefinition updateListTypeDefinition(
 		ListTypeDefinition listTypeDefinition);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public ListTypeDefinition updateListTypeDefinition(
 			long listTypeDefinitionId, Map<Locale, String> nameMap)
 		throws PortalException;

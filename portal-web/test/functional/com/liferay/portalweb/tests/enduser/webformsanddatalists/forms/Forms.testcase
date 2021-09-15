@@ -913,6 +913,56 @@ definition {
 			fieldValue = "1/1/16");
 	}
 
+	@description = "This is a use case for LPS-81578."
+	@priority = "4"
+	test CanNotSeeFormForGuestUserWhenPermissionRemove {
+		property forms.functional = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.save();
+
+		Form.publishForm();
+
+		Navigator.gotoBack();
+
+		FormsAdminNavigator.gotoPermissions(
+			entryTitle = "Created Form Name",
+			menuItem = "Permissions");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_ADD_FORM_INSTANCE_RECORD_CHECKBOX",
+			roleTitle = "Guest");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
+		FormsAdminNavigator.gotoPublishCopyURLLink();
+
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(
+			publishedFormPublicURL = "${publishedFormPublicURL}"
+		);
+
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+
+		Alert.viewWarningSpecific(warningMessage = "You do not have the permission to view this form.");
+	}
+
 	@description = "LPS-69214 - Verify that a confirmation appears when attempting to leave a Form without saving."
 	@priority = "3"
 	test ConfirmationAppearsWhenLeavingFormWithoutSaving {

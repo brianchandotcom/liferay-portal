@@ -46,10 +46,12 @@ definition {
 
 			ACSettings.takeTokenFromAnalyticsCloud();
 
-			ACUtils.launchDXP();
+			TestCase.setUpPortalInstance();
 		}
 
 		task ("Connect DXP to AC") {
+			ACUtils.launchDXP();
+
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
@@ -131,44 +133,28 @@ definition {
 			ACLogin.loginAs(
 				emailAddress = "michelle.hoshi@faro.io",
 				password = "test");
-
-			ACWorkspace.openWorkspace();
 		}
 
-		task ("Go to settings, data source and take token") {
+		task ("Go to settings, data source, take token and launch dxp") {
+			ACWorkspace.openWorkspace();
+
 			ACNavigation.goToSettings();
 
 			ACSettings.goToDataSources();
 
 			ACSettings.takeTokenFromAnalyticsCloud();
-		}
 
-		task ("Set up instance and sign in DXP") {
 			TestCase.setUpPortalInstance();
-
-			ACUtils.launchDXP();
 		}
 
 		task ("Connect DXP to AC") {
+			ACUtils.launchDXP();
+
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
 
 			ACUtils.launchAC();
-		}
-
-		task ("Login in AC, go to settings then go to data sources") {
-			ACWorkspace.signOut();
-
-			ACLogin.loginAs(
-				emailAddress = "michelle.hoshi@faro.io",
-				password = "test");
-
-			ACWorkspace.openWorkspace();
-
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDataSources();
 		}
 
 		task ("Assert that a data source is searchable and found") {
@@ -538,14 +524,18 @@ definition {
 <<<<<<< HEAD
 		property portal.upstream = "nilo";
 
+<<<<<<< HEAD
 		task ("Logout and login as an owner user") {
 =======
 		task ("Logout AC and login as an owner user") {
 >>>>>>> 279d33802 (sf)
+=======
+		task ("Logout AC and login as an owner user") {
+>>>>>>> b643bba (LRAC-9298 Fix companyId error)
 			ACWorkspace.signOut();
 
 			ACLogin.loginAs(
-				emailAddress = "bryan.cheung@faro.io",
+				emailAddress = "michelle.hoshi@faro.io",
 				password = "test");
 		}
 
@@ -558,10 +548,12 @@ definition {
 
 			ACSettings.takeTokenFromAnalyticsCloud();
 
-			ACUtils.launchDXP();
+			TestCase.setUpPortalInstance();
 		}
 
 		task ("Connect DXP to AC") {
+			ACUtils.launchDXP();
+
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");

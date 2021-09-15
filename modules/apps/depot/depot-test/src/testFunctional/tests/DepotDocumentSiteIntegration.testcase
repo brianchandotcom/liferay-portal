@@ -166,7 +166,7 @@ definition {
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
-			layoutName = "Site Page",
+			layoutName = "Test Page",
 			widgetName = "Web Content Display");
 
 		Navigator.openSitePage(

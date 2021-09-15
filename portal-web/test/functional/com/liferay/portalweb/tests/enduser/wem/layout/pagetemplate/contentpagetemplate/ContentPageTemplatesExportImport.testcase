@@ -435,23 +435,13 @@ definition {
 
 			Theme.configureLookAndFeelShowFooter(showFooter = "false");
 
-			Pause(locator1 = "3000");
-
 			Theme.configureLookAndFeelShowHeader(showHeader = "false");
-
-			Pause(locator1 = "3000");
 
 			Theme.configureLookAndFeelShowHeaderSearch(showHeaderSearch = "false");
 
-			Pause(locator1 = "3000");
-
 			Theme.configureLookAndFeelShowMaxMinAppLinks(showMaxMinAppLinks = "true");
 
-			Pause(locator1 = "3000");
-
 			Theme.configureLookAndFeelWrapWidgetPageContent(wrapWidgetPageContent = "false");
-
-			Pause(locator1 = "3000");
 
 			PortletEntry.save();
 

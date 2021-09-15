@@ -282,23 +282,13 @@ definition {
 
 			Theme.configureLookAndFeelShowFooter(showFooter = "true");
 
-			Pause(locator1 = "3000");
-
 			Theme.configureLookAndFeelShowHeader(showHeader = "true");
-
-			Pause(locator1 = "3000");
 
 			Theme.configureLookAndFeelShowHeaderSearch(showHeaderSearch = "true");
 
-			Pause(locator1 = "3000");
-
 			Theme.configureLookAndFeelShowMaxMinAppLinks(showMaxMinAppLinks = "true");
 
-			Pause(locator1 = "3000");
-
 			Theme.configureLookAndFeelWrapWidgetPageContent(wrapWidgetPageContent = "true");
-
-			Pause(locator1 = "3000");
 
 			PortletEntry.save();
 

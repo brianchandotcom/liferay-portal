@@ -179,7 +179,13 @@ definition {
 
 			DMDocumentType.gotoEditField(fieldName = "${dmDocumentTypeFieldRequiredEdit}");
 
-			FormFields.enableSwitch(fieldName = "Required Field");
+			WaitForElementPresent(
+				key_fieldName = "Required Field",
+				locator1 = "FormFields#SWITCH");
+
+			Click.clickNoWaitForVisible(
+				key_fieldName = "Required Field",
+				locator1 = "FormFields#SWITCH");
 		}
 
 		if (isSet(dmDocumentTypeFieldNames)) {

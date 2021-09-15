@@ -177,6 +177,16 @@ definition {
 		ACSegments.selectSegmentType(segmentType = "DYNAMIC");
 	}
 
+	macro createDynamicSegmentAndFillFields {
+		ACSegments.createDynamicSegment();
+
+		ACSegments.nameSegment(segmentName = "${segments}");
+
+		ACSegments.goToSidebarAttributes(criterion = "${criterion}");
+
+		ACSegments.addSegmentField(segmentField = "${segmentField}");
+	}
+
 	macro createStaticSegment {
 		Click(locator1 = "ACSegments#CREATE_SEGMENT_BUTTON");
 
@@ -877,13 +887,4 @@ definition {
 			value1 = "Top Interests");
 	}
 
-	macro createDynamicSegmentAndFillFields {
-		ACSegments.createDynamicSegment();
-
-		ACSegments.nameSegment(segmentName = "${segments}");
-
-		ACSegments.goToSidebarAttributes(criterion = "${criterion}");
-
-		ACSegments.addSegmentField(segmentField = "${segmentField}");
-	}
 }

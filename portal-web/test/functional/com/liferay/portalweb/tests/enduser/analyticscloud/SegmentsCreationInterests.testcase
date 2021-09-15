@@ -63,19 +63,13 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9273 | Test Summary: Create a Segment of Individuals Interested And Another One Not Interest In a Topic"
 	@priority = "5"
 	test CanCreateIndividualsSegmentInterestAndAnotherOneNotInterestInTopic {
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
-		}
+		ACUtils.createBlogsAndAddToPage();
 
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
-		task ("View the page as the new added user") {
+		task ("View the page and blog with the new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "ac@liferay.com",
 				userLoginFullName = "ac ac");
@@ -83,6 +77,8 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 		}
 
 		task ("Pause for 30 seconds") {
@@ -95,44 +91,50 @@ definition {
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 		}
 
-		task ("Add a new dynamic segment using Individual Property User") {
-			for (var segments : list "AC Dynamic segment 1,AC Dynamic segment 2") {
-				ACNavigation.goToSegments();
+		task ("Add a new dynamic segment using Interests") {
+			ACNavigation.goToSegments();
 
-				ACSegments.createDynamicSegment();
+			ACSegments.createDynamicSegmentAndFillFields(
+				criterion = "Interests",
+				segmentField = "ac",
+				segments = "AC Dynamic segment 1");
 
-				ACSegments.nameSegment(segmentName = "${segments}");
+			ACSegments.selectOperator(operator = "is not");
 
-				ACSegments.goToSidebarAttributes(criterion = "Interests");
+			ACSegments.saveSegment();
+		}
 
-				ACSegments.addSegmentField(segmentField = "home");
+		task ("Assert the dynamic segment and Known Member") {
+			ACNavigation.assertPageHeader(headerTitle = "AC Dynamic segment 1");
 
-				if ("${segments}" == "AC Dynamic segment 1") {
-					ACSegments.selectOperator(operator = "is not");
-				}
-				else {
-					ACSegments.selectOperator(operator = "is");
-				}
+			ACSegments.assertCriteriaTable(criteriaName = "is notinterested");
 
-				ACSegments.saveSegment();
+			ACNavigation.switchTab(tabName = "Membership");
 
-				ACNavigation.assertPageHeader(headerTitle = "${segments}");
+			ACSegments.assertMember(memberName = "ac ac");
+		}
 
-				if ("${segments}" == "AC Dynamic segment 1") {
-					ACSegments.assertCriteriaTable(criteriaName = "is notinterested");
+		task ("Add a new dynamic segment using Interests") {
+			ACNavigation.goToSegments();
 
-					ACNavigation.switchTab(tabName = "Membership");
+			ACSegments.createDynamicSegmentAndFillFields(
+				criterion = "Interests",
+				segmentField = "ac",
+				segments = "AC Dynamic segment 2");
 
-					ACSegments.assertMember(memberName = "ac ac");
-				}
-				else {
-					ACSegments.assertCriteriaTable(criteriaName = "isinterested");
+			ACSegments.selectOperator(operator = "is");
 
-					ACNavigation.switchTab(tabName = "Membership");
+			ACSegments.saveSegment();
+		}
 
-					ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
-				}
-			}
+		task ("Assert the dynamic segment and Known Member") {
+			ACNavigation.assertPageHeader(headerTitle = "AC Dynamic segment 2");
+
+			ACSegments.assertCriteriaTable(criteriaName = "isinterested");
+
+			ACNavigation.switchTab(tabName = "Membership");
+
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
 		}
 	}
 

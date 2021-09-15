@@ -38,6 +38,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8387 | Test Summary: Blogs asset appears on list shows pages that the blog exists on"
 	@priority = "5"
 	test AssertAppearsOnListShowsPagesBlogExists {
+		property portal.acceptance = "quarantine";
+
+		// AC Refactor: It is not possible to perform the assert because this test presents timing problems.
+		// AC Refactor ticket: LRAC-9341
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("View the blog") {
@@ -78,6 +83,9 @@ definition {
 				canonicalURL = "${portalURL}/web/site-name/ac-page/-/blogs/blogs-ac-title",
 				cardTitle = "Asset Appears On",
 				pageNmae = "AC Page - Site Name - ${siteName}");
+
+			// This data takes too long to appear
+
 		}
 	}
 

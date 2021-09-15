@@ -340,6 +340,8 @@ definition {
 				pageName = "AC Page",
 				siteName = "Site Name");
 
+			Pause(locator1 = "5000");
+
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "maria.rau@liferay.com",
 				userLoginFullName = "Maria Rau");
@@ -347,6 +349,8 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
 		}
 
 		task ("Switch to new property in AC") {
@@ -408,6 +412,8 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
 			}
 		}
 
@@ -580,6 +586,8 @@ definition {
 				pageName = "AC Page",
 				siteName = "Site Name");
 
+			Pause(locator1 = "5000");
+
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "maria.rau@liferay.com",
 				userLoginFullName = "Maria Rau");
@@ -587,6 +595,8 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
 		}
 
 		task ("Switch to new property in AC") {
@@ -620,8 +630,8 @@ definition {
 		task ("Search for an Individual using a Full Name") {
 			ACUtils.searchBar(searchItem = "Randy Smith");
 
-			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Maria Rau");
-			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "Randy Smith");
+			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Randy Smith");
+			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "Maria Rau");
 		}
 
 		task ("Search for an Individual using an Email") {
@@ -949,6 +959,8 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
 			}
 		}
 

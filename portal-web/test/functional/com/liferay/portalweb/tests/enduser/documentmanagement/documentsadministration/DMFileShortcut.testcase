@@ -9,6 +9,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Site Name");
 	}
 
 	tearDown {
@@ -31,8 +33,6 @@ definition {
 	@refactorneeded
 	test AddShortcutToSiteDocument {
 		property testray.component.names = "Training";
-
-		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -76,8 +76,6 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_4.jpg");
 
-		JSONGroup.addGroup(groupName = "Site Name");
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.addDMShortcutCP(
@@ -100,8 +98,6 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test EditShortcutDestination {
-		JSONGroup.addGroup(groupName = "Site Name");
-
 		for (var entryCount : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
@@ -145,8 +141,6 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewShortcutAfterDeletingTarget {
-		JSONGroup.addGroup(groupName = "Site Name");
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.jpg",
@@ -183,8 +177,6 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewTargetAfterDeletingShortcut {
-		JSONGroup.addGroup(groupName = "Site Name");
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.jpg",

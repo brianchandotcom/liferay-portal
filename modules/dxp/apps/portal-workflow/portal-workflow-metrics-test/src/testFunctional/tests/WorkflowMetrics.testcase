@@ -579,7 +579,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "workflow_quarterly_reports_review_process.xml",
+			workflowDefinitionFile = "quarterly-reports-review-process-workflow-definition.xml",
 			workflowDefinitionTitle = "Fork Reviews Workflow");
 
 		ProductMenu.gotoPortlet(

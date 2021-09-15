@@ -65,11 +65,22 @@ public class PortalReleasePortalTopLevelBuild extends PortalTopLevelBuild {
 			return _portalRelease;
 		}
 
-		try {
-			URL portalReleaseTomcatURL = new URL(
-				getParameterValue("TEST_PORTAL_RELEASE_TOMCAT_URL"));
+		String tomcatURLString = getParameterValue(
+			"TEST_PORTAL_RELEASE_TOMCAT_URL");
 
-			_portalRelease = new PortalRelease(portalReleaseTomcatURL);
+		try {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(tomcatURLString)) {
+				_portalRelease = new PortalRelease(
+					new URL(
+						JenkinsResultsParserUtil.combine(
+							String.valueOf(getUserContentURL()), "/bundles")),
+					getParameterValue("TEST_PORTAL_RELEASE_VERSION"));
+			}
+			else {
+				URL portalReleaseTomcatURL = new URL(tomcatURLString);
+
+				_portalRelease = new PortalRelease(portalReleaseTomcatURL);
+			}
 
 			String dependenciesURLString = getParameterValue(
 				"TEST_PORTAL_RELEASE_DEPENDENCIES_URL");

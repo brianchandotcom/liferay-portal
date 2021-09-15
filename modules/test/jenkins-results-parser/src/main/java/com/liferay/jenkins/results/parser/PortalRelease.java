@@ -204,6 +204,64 @@ public class PortalRelease {
 			bundlesBaseURL, bundlesBaseURLContent, _wildFlyFileNamePattern);
 	}
 
+	public PortalRelease(URL bundlesBaseURL, String portalVersion) {
+		if (bundlesBaseURL == null) {
+			throw new RuntimeException("Please set bundlesBaseURL");
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalVersion)) {
+			throw new RuntimeException("Please set a portalVersion");
+		}
+
+		_portalVersion = portalVersion;
+
+		String bundlesBaseURLString = bundlesBaseURL.toString();
+		String bundlesBaseURLContent = null;
+
+		String[] bundlesBaseURLStrings = {
+			bundlesBaseURLString,
+			JenkinsResultsParserUtil.getLocalURL(bundlesBaseURLString)
+		};
+
+		for (String bundlesBaseURLStringCandidate : bundlesBaseURLStrings) {
+			try {
+				bundlesBaseURLContent = JenkinsResultsParserUtil.toString(
+					bundlesBaseURLStringCandidate + "/", true, 0, 5, 0);
+			}
+			catch (IOException ioException) {
+				continue;
+			}
+
+			break;
+		}
+
+		if (bundlesBaseURLContent == null) {
+			throw new RuntimeException("Invalid URL " + bundlesBaseURLString);
+		}
+
+		bundlesBaseURL = _getLocalURL(bundlesBaseURLString);
+
+		_dependenciesURLString = _getURLString(
+			bundlesBaseURL, bundlesBaseURLContent,
+			_dependenciesFileNamePattern);
+		_glassFishURLString = _getURLString(
+			bundlesBaseURL, bundlesBaseURLContent, _glassFishFileNamePattern);
+		_jbossURLString = _getURLString(
+			bundlesBaseURL, bundlesBaseURLContent, _jbossFileNamePattern);
+		_osgiURLString = _getURLString(
+			bundlesBaseURL, bundlesBaseURLContent, _osgiFileNamePattern);
+		_portalWarURLString = _getURLString(
+			bundlesBaseURL, bundlesBaseURLContent, _portalWarFileNamePattern);
+		_sqlURLString = _getURLString(
+			bundlesBaseURL, bundlesBaseURLContent, _sqlFileNamePattern);
+		_tomcatURLString = _getURLString(
+			bundlesBaseURL, bundlesBaseURLContent, _tomcatFileNamePattern);
+		_toolsURLString = _getURLString(
+			bundlesBaseURL, bundlesBaseURLContent, _toolsFileNamePattern);
+		_wildFlyURLString = _getURLString(
+			bundlesBaseURL, bundlesBaseURLContent, _wildFlyFileNamePattern);
+	}
+
 	public URL getDependenciesLocalURL() {
 		return _getLocalURL(_dependenciesURLString);
 	}

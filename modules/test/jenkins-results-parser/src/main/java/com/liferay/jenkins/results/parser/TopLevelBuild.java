@@ -586,6 +586,21 @@ public abstract class TopLevelBuild extends BaseBuild {
 		return new BaseBuild.TimelineData(500, this);
 	}
 
+	public URL getUserContentURL() {
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
+
+		try {
+			return new URL(
+				JenkinsResultsParserUtil.combine(
+					"https://", jenkinsMaster.getName(),
+					".liferay.com/userContent/jobs/", getJobName(), "/builds/",
+					String.valueOf(getBuildNumber())));
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
+	}
+
 	public Element getValidationGitHubMessageElement() {
 		ValidationBuild validationBuild = null;
 

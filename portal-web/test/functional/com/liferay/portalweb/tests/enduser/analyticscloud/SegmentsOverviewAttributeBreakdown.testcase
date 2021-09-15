@@ -303,7 +303,7 @@ definition {
 
 		task ("View Chart Entry") {
 
-			// Grafic don't show up on screen.
+			// Grafic does not show up on screen.
 
 			for (var user : list "${users}") {
 				ACIndividualsDashboard.viewBreakdownRecharts(

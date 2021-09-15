@@ -236,6 +236,10 @@
 			<contains>IX_EE41CBEB</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-119128">
+			<contains>already is datetime</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LPS-123610">
 			<contains>No default user was found for company</contains>
 			<matches></matches>

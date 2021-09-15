@@ -57,6 +57,7 @@ const ObjectLayoutField: React.FC<IObjectLayoutFieldProps> = ({
 									payload: {
 										boxIndex,
 										columnIndex,
+										objectFieldId,
 										rowIndex,
 										tabIndex,
 									},

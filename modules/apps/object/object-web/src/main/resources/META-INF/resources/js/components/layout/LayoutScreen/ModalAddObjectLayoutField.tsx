@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 
 import {normalizeLanguageId} from '../../../utils/string';
 import CustomSelect from '../../CustomSelect/CustomSelect';
@@ -48,6 +48,12 @@ const ModalAddObjectLayoutField: React.FC<IModalAddObjectLayoutFieldProps> = ({
 	const [selectedObjectField, setSelectedObjectField] = useState<
 		TObjectField
 	>();
+
+	const filteredObjectFields = useMemo(() => {
+		return objectFields.filter(({inLayout, label}) => {
+			return label[defaultLanguageId].match(query) && !inLayout;
+		});
+	}, [objectFields, query]);
 
 	return (
 		<ClayModal observer={observer}>
@@ -96,18 +102,15 @@ const ModalAddObjectLayoutField: React.FC<IModalAddObjectLayoutFieldProps> = ({
 							value={query}
 						/>
 
-						{objectFields.length ? (
+						{filteredObjectFields.length ? (
 							<ClayDropDown.ItemList>
-								{objectFields
-									.filter(({label}) =>
-										label[defaultLanguageId].match(query)
-									)
-									.map((objectField, index) => {
+								{filteredObjectFields.map(
+									(objectField, objectFieldIndex) => {
 										const {label, required} = objectField;
 
 										return (
 											<ClayDropDown.Item
-												key={index}
+												key={objectFieldIndex}
 												onClick={() => {
 													setSelectedObjectField(
 														objectField
@@ -131,13 +134,16 @@ const ModalAddObjectLayoutField: React.FC<IModalAddObjectLayoutFieldProps> = ({
 												</div>
 											</ClayDropDown.Item>
 										);
-									})}
+									}
+								)}
 							</ClayDropDown.ItemList>
 						) : (
 							<ClayDropDown.ItemList>
-								{Liferay.Language.get(
-									'there-are-no-fields-for-this-object'
-								)}
+								<ClayDropDown.Item>
+									{Liferay.Language.get(
+										'there-are-no-fields-for-this-object'
+									)}
+								</ClayDropDown.Item>
 							</ClayDropDown.ItemList>
 						)}
 					</ClayDropDown>

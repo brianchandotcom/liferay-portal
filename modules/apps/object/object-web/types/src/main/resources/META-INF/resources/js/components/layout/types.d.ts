@@ -44,6 +44,7 @@ export declare type TObjectField = {
 	indexed: boolean;
 	indexedAsKeyword: boolean;
 	indexedLanguageId: string;
+	inLayout?: boolean;
 	label: TName;
 	listTypeDefinitionId: boolean;
 	name: string;

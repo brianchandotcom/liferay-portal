@@ -51,6 +51,36 @@ const initialState = {
 	objectLayout: {} as TObjectLayout,
 } as TState;
 
+type TResetObjectFieldProperties = (
+	objectFields: TObjectField[]
+) => TObjectField[];
+
+const resetObjectFieldProperties: TResetObjectFieldProperties = (
+	objectFields
+) => {
+	return objectFields.map((objectField) => {
+		return {
+			...objectField,
+			inLayout: false,
+		};
+	});
+};
+
+type TGetObjectFieldIndex = (
+	objectFields: TObjectField[],
+	objectFieldId: number
+) => number;
+
+const getObjectFieldIndex: TGetObjectFieldIndex = (
+	objectFields,
+	objectFieldId
+) => {
+	const objectFieldIds = objectFields.map(({id}) => id);
+	const objectFieldIndex = objectFieldIds.indexOf(objectFieldId);
+
+	return objectFieldIndex;
+};
+
 const layoutReducer = (state: TState, action: TAction) => {
 	switch (action.type) {
 		case TYPES.ADD_OBJECT_LAYOUT: {
@@ -108,6 +138,15 @@ const layoutReducer = (state: TState, action: TAction) => {
 
 			return newState;
 		}
+		case TYPES.ADD_OBJECT_FIELDS: {
+			const {objectFields} = action.payload;
+
+			return {
+				...state,
+				currentObjectFields: [...objectFields],
+				objectFields,
+			};
+		}
 		case TYPES.ADD_OBJECT_LAYOUT_FIELD: {
 			const {boxIndex, objectFieldId, tabIndex} = action.payload;
 
@@ -125,15 +164,11 @@ const layoutReducer = (state: TState, action: TAction) => {
 				priority: 0,
 			});
 
-			return newState;
-		}
-		case TYPES.ADD_OBJECT_FIELDS: {
-			const {objectFields} = action.payload;
+			newState.objectFields[
+				getObjectFieldIndex(newState.objectFields, objectFieldId)
+			].inLayout = true;
 
-			return {
-				...state,
-				objectFields,
-			};
+			return newState;
 		}
 		case TYPES.CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE: {
 			const {boxIndex, collapsable, tabIndex} = action.payload;
@@ -155,10 +190,19 @@ const layoutReducer = (state: TState, action: TAction) => {
 				tabIndex
 			].objectLayoutBoxes.splice(boxIndex, 1);
 
+			newState.objectFields = resetObjectFieldProperties(
+				newState.objectFields
+			);
+
 			return newState;
 		}
 		case TYPES.DELETE_OBJECT_LAYOUT_FIELD: {
-			const {boxIndex, rowIndex, tabIndex} = action.payload;
+			const {
+				boxIndex,
+				objectFieldId,
+				rowIndex,
+				tabIndex,
+			} = action.payload;
 
 			const newState = {...state};
 
@@ -170,6 +214,13 @@ const layoutReducer = (state: TState, action: TAction) => {
 				boxIndex
 			].objectLayoutRows.splice(rowIndex, 1);
 
+			const objectFieldIndex = getObjectFieldIndex(
+				newState.objectFields,
+				objectFieldId
+			);
+
+			newState.objectFields[objectFieldIndex].inLayout = false;
+
 			return newState;
 		}
 		case TYPES.DELETE_OBJECT_LAYOUT_TAB: {
@@ -178,6 +229,10 @@ const layoutReducer = (state: TState, action: TAction) => {
 			const newState = {...state};
 
 			newState.objectLayout.objectLayoutTabs.splice(tabIndex, 1);
+
+			newState.objectFields = resetObjectFieldProperties(
+				newState.objectFields
+			);
 
 			return newState;
 		}

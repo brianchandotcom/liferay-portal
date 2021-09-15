@@ -514,13 +514,41 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Label of a Field after the Object is published"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanUpdateFieldLabelAfterPublished {
 		property portal.acceptance = "true";
 
-		// TODO LPS-138854 CanUpdateFieldLabelAfterPublished pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+		
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Text",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+
+		CreateObject.editLabel(labelName = "Text Update");
+
+		CreateObject.saveObject();
+
+		Refresh();
+
+		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+
+		CreateObject.assertObjectLabel(labelName = "Text Update");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Label of a Field before the Object is published"

@@ -330,7 +330,7 @@ definition {
 	@description = "This is a use case for LPS-51127."
 	@priority = "5"
 	test ViewWeekStartMonday {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		CalendarNavigator.gotoConfiguration();
 
@@ -360,8 +360,6 @@ definition {
 	@description = "This is a use case for 51127."
 	@priority = "3"
 	test ViewWeekStartSaturday {
-		property portal.upstream = "quarantine";
-
 		CalendarNavigator.gotoConfiguration();
 
 		CalendarConfiguration.selectWeekStartsOn(weekStartDay = "Saturday");

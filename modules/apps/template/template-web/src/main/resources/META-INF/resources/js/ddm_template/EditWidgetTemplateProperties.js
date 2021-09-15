@@ -12,21 +12,7 @@
  * details.
  */
 
-import {createPortletURL, navigate} from 'frontend-js-web';
-
 export default function ({namespace}) {
-	const languageSelect = document.getElementById(`${namespace}language`);
-
-	const onChange = (event) => {
-		const portletURL = new createPortletURL(window.location.href, {
-			languageType: event.target.value,
-		});
-
-		navigate(portletURL.toString());
-	};
-
-	languageSelect.addEventListener('change', onChange);
-
 	Liferay.Util.toggleSelectBox(
 		`${namespace}smallImageSource`,
 		'url',
@@ -37,10 +23,4 @@ export default function ({namespace}) {
 		'file',
 		`${namespace}smallImageFileContainer`
 	);
-
-	return {
-		dispose() {
-			languageSelect.removeEventListener('change', onChange);
-		},
-	};
 }

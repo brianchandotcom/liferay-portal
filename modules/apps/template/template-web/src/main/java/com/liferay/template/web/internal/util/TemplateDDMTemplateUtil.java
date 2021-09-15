@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,8 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 public class TemplateDDMTemplateUtil {
 
 	public static String getDataContent(
-		TemplateVariableDefinition templateVariableDefinition,
-		String language) {
+		TemplateVariableDefinition templateVariableDefinition) {
 
 		String dataContent = StringPool.BLANK;
 
@@ -52,12 +50,12 @@ public class TemplateDDMTemplateUtil {
 			dataContent = _getListCode(
 				templateVariableDefinition.getName(),
 				itemTemplateVariableDefinition.getName(),
-				itemTemplateVariableDefinition.getAccessor(), language);
+				itemTemplateVariableDefinition.getAccessor());
 		}
 		else if (Validator.isNull(dataType)) {
 			dataContent = _getVariableReferenceCode(
 				templateVariableDefinition.getName(),
-				templateVariableDefinition.getAccessor(), language);
+				templateVariableDefinition.getAccessor());
 		}
 		else if (dataType.equals("service-locator")) {
 			Class<?> templateVariableDefinitionClass =
@@ -70,15 +68,13 @@ public class TemplateDDMTemplateUtil {
 				_getVariableAssignmentCode(
 					variableName,
 					"serviceLocator.findService(\"" +
-						templateVariableDefinition.getName() + "\")",
-					language),
-				"[$CURSOR$]",
-				_getVariableReferenceCode(variableName, null, language));
+						templateVariableDefinition.getName() + "\")"),
+				"[$CURSOR$]", _getVariableReferenceCode(variableName, null));
 		}
 		else {
 			try {
 				String[] generateCode = templateVariableDefinition.generateCode(
-					language);
+					TemplateConstants.LANG_TYPE_FTL);
 
 				dataContent = generateCode[0];
 			}
@@ -149,56 +145,14 @@ public class TemplateDDMTemplateUtil {
 		return sb.toString();
 	}
 
-	private static String _getAccessor(String accessor, String language) {
-		if (StringUtil.equalsIgnoreCase(
-				language, TemplateConstants.LANG_TYPE_VM)) {
-
-			if (!accessor.contains(StringPool.OPEN_PARENTHESIS)) {
-				return accessor;
-			}
-
-			StringTokenizer st = new StringTokenizer(accessor, "(,");
-
-			StringBundler sb = new StringBundler(st.countTokens() * 2);
-
-			sb.append(st.nextToken());
-			sb.append(StringPool.OPEN_PARENTHESIS);
-
-			while (st.hasMoreTokens()) {
-				sb.append(StringPool.DOLLAR);
-				sb.append(st.nextToken());
-			}
-
-			accessor = sb.toString();
-		}
-
-		return accessor;
-	}
-
 	private static String _getListCode(
-		String variableName, String itemName, String accessor,
-		String language) {
+		String variableName, String itemName, String accessor) {
 
-		if (StringUtil.equalsIgnoreCase(
-				language, TemplateConstants.LANG_TYPE_FTL)) {
-
-			return StringBundler.concat(
-				"<#if ", variableName, "?has_content>\n\t<#list ", variableName,
-				" as ", itemName, ">\n\t\t",
-				_getVariableReferenceCode(itemName, accessor, language),
-				"[$CURSOR$]\n\t</#list>\n</#if>");
-		}
-		else if (StringUtil.equalsIgnoreCase(
-					language, TemplateConstants.LANG_TYPE_VM)) {
-
-			return StringBundler.concat(
-				"#if (!$", variableName, ".isEmpty())\n\t#foreach ($", itemName,
-				" in $", variableName, ")\n\t\t",
-				_getVariableReferenceCode(itemName, accessor, language),
-				"[$CURSOR$]#end\n#end");
-		}
-
-		return StringPool.BLANK;
+		return StringBundler.concat(
+			"<#if ", variableName, "?has_content>\n\t<#list ", variableName,
+			" as ", itemName, ">\n\t\t",
+			_getVariableReferenceCode(itemName, accessor),
+			"[$CURSOR$]\n\t</#list>\n</#if>");
 	}
 
 	private static String _getPaletteItemTitle(
@@ -242,56 +196,22 @@ public class TemplateDDMTemplateUtil {
 	}
 
 	private static String _getVariableAssignmentCode(
-		String variableName, String variableValue, String language) {
+		String variableName, String variableValue) {
 
-		if (StringUtil.equalsIgnoreCase(
-				language, TemplateConstants.LANG_TYPE_FTL)) {
-
-			return StringBundler.concat(
-				"<#assign ", variableName, " = ", variableValue, ">");
-		}
-		else if (StringUtil.equalsIgnoreCase(
-					language, TemplateConstants.LANG_TYPE_VM)) {
-
-			if (!variableValue.startsWith(StringPool.DOUBLE_QUOTE) &&
-				!variableValue.startsWith(StringPool.OPEN_BRACKET) &&
-				!variableValue.startsWith(StringPool.OPEN_CURLY_BRACE) &&
-				!variableValue.startsWith(StringPool.QUOTE) &&
-				!Validator.isNumber(variableValue)) {
-
-				variableValue = StringPool.DOLLAR + variableValue;
-			}
-
-			return StringBundler.concat(
-				"#set ($", variableName, " = ", variableValue, ")");
-		}
-
-		return variableName;
+		return StringBundler.concat(
+			"<#assign ", variableName, " = ", variableValue, ">");
 	}
 
 	private static String _getVariableReferenceCode(
-		String variableName, String accessor, String language) {
+		String variableName, String accessor) {
 
 		String methodInvocation = StringPool.BLANK;
 
 		if (Validator.isNotNull(accessor)) {
-			methodInvocation =
-				StringPool.PERIOD + _getAccessor(accessor, language);
+			methodInvocation = StringPool.PERIOD + accessor;
 		}
 
-		if (StringUtil.equalsIgnoreCase(
-				language, TemplateConstants.LANG_TYPE_FTL)) {
-
-			return StringBundler.concat(
-				"${", variableName, methodInvocation, "}");
-		}
-		else if (StringUtil.equalsIgnoreCase(
-					language, TemplateConstants.LANG_TYPE_VM)) {
-
-			return StringPool.DOLLAR + variableName + methodInvocation;
-		}
-
-		return variableName;
+		return StringBundler.concat("${", variableName, methodInvocation, "}");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

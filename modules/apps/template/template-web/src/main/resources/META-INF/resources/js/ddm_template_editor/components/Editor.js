@@ -20,7 +20,7 @@ import {AppContext} from './AppContext';
 import {CodeMirrorEditor} from './CodeMirrorEditor';
 
 export const Editor = ({autocompleteData, initialScript}) => {
-	const {editorMode, inputChannel, portletNamespace} = useContext(AppContext);
+	const {inputChannel, portletNamespace} = useContext(AppContext);
 
 	const [script, setScript] = useState(initialScript);
 
@@ -83,14 +83,14 @@ export const Editor = ({autocompleteData, initialScript}) => {
 		const exportScriptHandler = Liferay.on(
 			`${portletNamespace}exportScript`,
 			() => {
-				exportScript(scriptRef.current, editorMode);
+				exportScript(scriptRef.current, 'ftl');
 			}
 		);
 
 		return () => {
 			exportScriptHandler.detach();
 		};
-	}, [initialScript, portletNamespace, editorMode]);
+	}, [initialScript, portletNamespace]);
 
 	return (
 		<>
@@ -98,7 +98,7 @@ export const Editor = ({autocompleteData, initialScript}) => {
 				autocompleteData={autocompleteData}
 				content={script}
 				inputChannel={inputChannel}
-				mode={editorMode}
+				mode="ftl"
 				onChange={setScript}
 			/>
 
@@ -117,14 +117,14 @@ Editor.propTypes = {
 	initialScript: PropTypes.string.isRequired,
 };
 
-const exportScript = (script, editorMode) => {
+const exportScript = (script) => {
 	const link = document.createElement('a');
 	const blob = new Blob([script]);
 
 	const fileURL = URL.createObjectURL(blob);
 
 	link.href = fileURL;
-	link.download = `script.${editorMode}`;
+	link.download = 'script.ftl';
 
 	link.click();
 

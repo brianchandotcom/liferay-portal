@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.template.constants.TemplatePortletKeys;
-import com.liferay.template.web.internal.configuration.TemplateConfiguration;
 import com.liferay.template.web.internal.display.context.InformationTemplatesEditDDMTemplateDisplayContext;
 import com.liferay.template.web.internal.display.context.WidgetTemplatesEditDDMTemplateDisplayContext;
 
@@ -49,10 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	configurationPid = {
-		"com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration",
-		"com.liferay.template.web.internal.configuration.TemplateConfiguration"
-	},
+	configurationPid = "com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"javax.portlet.name=" + TemplatePortletKeys.TEMPLATE,
@@ -93,8 +89,7 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 				new WidgetTemplatesEditDDMTemplateDisplayContext(
 					_ddmWebConfiguration,
 					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse),
-					_templateConfiguration));
+					_portal.getLiferayPortletResponse(renderResponse)));
 		}
 
 		return "/edit_ddm_template.jsp";
@@ -105,8 +100,6 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 	protected void activate(Map<String, Object> properties) {
 		_ddmWebConfiguration = ConfigurableUtil.createConfigurable(
 			DDMWebConfiguration.class, properties);
-		_templateConfiguration = ConfigurableUtil.createConfigurable(
-			TemplateConfiguration.class, properties);
 	}
 
 	private DDMGroupServiceConfiguration _getDDMGroupServiceConfiguration(
@@ -136,7 +129,5 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
-
-	private volatile TemplateConfiguration _templateConfiguration;
 
 }

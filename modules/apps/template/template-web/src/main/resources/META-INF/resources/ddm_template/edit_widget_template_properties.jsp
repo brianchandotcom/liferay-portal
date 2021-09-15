@@ -25,28 +25,6 @@ DDMTemplate ddmTemplate = editDDMTemplateDisplayContext.getDDMTemplate();
 <aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 
 <div class="form-group-sm template-properties">
-	<aui:select changesContext="<%= true %>" cssClass="form-control-sm" helpMessage='<%= (ddmTemplate == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
-
-		<%
-		for (String languageType : editDDMTemplateDisplayContext.getLanguageTypes()) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(LanguageUtil.get(request, languageType + "[stands-for]"));
-			sb.append(StringPool.SPACE);
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(StringPool.PERIOD);
-			sb.append(languageType);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-		%>
-
-			<aui:option label="<%= sb.toString() %>" selected="<%= Objects.equals(editDDMTemplateDisplayContext.getLanguageType(), languageType) %>" value="<%= languageType %>" />
-
-		<%
-		}
-		%>
-
-	</aui:select>
-
 	<c:if test="<%= (ddmTemplate == null) && !editDDMTemplateDisplayContext.autogenerateTemplateKey() %>">
 		<aui:input name="templateKey" />
 	</c:if>

@@ -26,12 +26,10 @@ import './App.scss';
 
 export default function App({
 	editorAutocompleteData = {variables: {}},
-	editorMode: initialEditorMode = 'ftl',
 	portletNamespace,
 	propertiesViewURL,
 	script: initialScript = '',
 	showCacheableWarning = false,
-	showLanguageChangeWarning = false,
 	showPropertiesPanel = false,
 	templateVariableGroups = [],
 }) {
@@ -41,7 +39,6 @@ export default function App({
 
 	return (
 		<AppContextProvider
-			editorMode={initialEditorMode}
 			portletNamespace={portletNamespace}
 			propertiesViewURL={propertiesViewURL}
 			templateVariableGroups={templateVariableGroups}
@@ -52,13 +49,6 @@ export default function App({
 						'ddm_template_editor__App-content--sidebar-open': selectedSidebarPanelId,
 					})}
 				>
-					<ClosableAlert
-						message={Liferay.Language.get(
-							'changing-the-language-does-not-automatically-translate-the-existing-template-script'
-						)}
-						visible={showLanguageChangeWarning}
-					/>
-
 					<ClosableAlert
 						id={`${portletNamespace}-cacheableWarningMessage`}
 						linkedCheckboxId={`${portletNamespace}cacheable`}
@@ -85,10 +75,8 @@ export default function App({
 
 App.propTypes = {
 	editorAutocompleteData: PropTypes.object.isRequired,
-	editorMode: PropTypes.string.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 	script: PropTypes.string.isRequired,
 	showCacheableWarning: PropTypes.bool.isRequired,
-	showLanguageChangeWarning: PropTypes.bool.isRequired,
 	templateVariableGroups: PropTypes.any.isRequired,
 };

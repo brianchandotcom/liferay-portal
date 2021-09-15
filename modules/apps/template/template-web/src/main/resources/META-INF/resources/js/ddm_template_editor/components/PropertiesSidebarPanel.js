@@ -26,34 +26,7 @@ export default function PropertiesSidebarPanel({className}) {
 	const [content, setContent] = useState('');
 	const isMounted = useIsMounted();
 
-	const {portletNamespace, propertiesViewURL, setEditorMode} = useContext(
-		AppContext
-	);
-
-	useEffect(() => {
-		if (!loading) {
-			const modeSelect = document.getElementById(
-				`${portletNamespace}language`
-			);
-
-			const onModeChange = (event) => {
-				setEditorMode(
-					{
-						ftl: 'ftl',
-						vm: 'velocity',
-					}[event.target.value]
-				);
-			};
-
-			if (modeSelect) {
-				modeSelect.addEventListener('change', onModeChange);
-
-				return () => {
-					modeSelect.removeEventListener('change', onModeChange);
-				};
-			}
-		}
-	}, [loading, setEditorMode, portletNamespace]);
+	const {propertiesViewURL} = useContext(AppContext);
 
 	useEffect(() => {
 		if (!propertiesViewURL) {

@@ -63,8 +63,6 @@ definition {
 			portletName = "RSS Publisher",
 			portletOption = "Configuration");
 
-		SelectFrame(value1 = "relative=top");
-
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Navigator.gotoNavTab(navTab = "Display Settings");

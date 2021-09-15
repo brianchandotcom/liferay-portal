@@ -308,14 +308,8 @@ public class CalendarBookingLocalServiceTest {
 			firstChildCalendarBooking.getStartTime(),
 			firstChildCalendarBooking.getEndTime(), createServiceContext());
 
-		assertSentEmail(
-			StringBundler.concat(
-				_user.getFullName(), " <", _user.getEmailAddress(), ">"));
-
-		assertSentEmail(
-			StringBundler.concat(
-				invitingUser.getFullName(), " <",
-				invitingUser.getEmailAddress(), ">"));
+		assertSentEmail(_user);
+		assertSentEmail(invitingUser);
 	}
 
 	@Test
@@ -3295,9 +3289,12 @@ public class CalendarBookingLocalServiceTest {
 			actualJCalendar.get(java.util.Calendar.MINUTE));
 	}
 
-	protected void assertSentEmail(String to) {
+	protected void assertSentEmail(User toUser) {
 		List<MailMessage> mailMessages = MailServiceTestUtil.getMailMessages(
-			"To", to);
+			"To",
+			StringBundler.concat(
+				toUser.getFullName(), StringPool.SPACE, StringPool.LESS_THAN,
+				toUser.getEmailAddress(), StringPool.GREATER_THAN));
 
 		Assert.assertFalse(mailMessages.toString(), mailMessages.isEmpty());
 	}

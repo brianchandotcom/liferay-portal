@@ -1021,6 +1021,20 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro searchAccountsViaId {
+		var key_tableEntry = "${accountName}";
+		var key_columnName = "lfr-id";
+		var accountId = selenium.getText("LexiconTable#TABLE_ENTRY_INFO");
+
+		Search.searchPG(
+			portletName = "Account Management",
+			searchTerm = "${accountId}");
+
+		AssertTextEquals(
+			locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+			value1 = "${accountId}");
+	}
+
 	macro setDefaultBillingAddress {
 		AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_HEADING");
 

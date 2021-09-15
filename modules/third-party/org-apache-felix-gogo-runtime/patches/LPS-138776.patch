@@ -1,0 +1,180 @@
+diff --git a/org/apache/felix/gogo/runtime/threadio/ThreadIOImpl.java b/org/apache/felix/gogo/runtime/threadio/ThreadIOImpl.java
+index 60d4ddfdba61..595c400a77c4 100644
+--- a/org/apache/felix/gogo/runtime/threadio/ThreadIOImpl.java
++++ b/org/apache/felix/gogo/runtime/threadio/ThreadIOImpl.java
+@@ -21,7 +21,8 @@ package org.apache.felix.gogo.runtime.threadio;
+ 
+ import java.io.InputStream;
+ import java.io.PrintStream;
+-import java.util.logging.Logger;
++import java.util.Deque;
++import java.util.LinkedList;
+ 
+ import org.apache.felix.service.threadio.ThreadIO;
+ import org.osgi.annotation.bundle.Capability;
+@@ -33,86 +34,68 @@ import org.osgi.namespace.service.ServiceNamespace;
+ )
+ public class ThreadIOImpl implements ThreadIO
+ {
+-    static private final Logger log = Logger.getLogger(ThreadIOImpl.class.getName());
+-
+     final Marker defaultMarker = new Marker(System.in, System.out, System.err, null);
+     final ThreadPrintStream err = new ThreadPrintStream(this, System.err, true);
+     final ThreadPrintStream out = new ThreadPrintStream(this, System.out, false);
+     final ThreadInputStream in = new ThreadInputStream(this, System.in);
+-    final ThreadLocal<Marker> current = new InheritableThreadLocal<Marker>()
++    final ThreadLocal<Deque<Marker>> current = new InheritableThreadLocal<Deque<Marker>>()
+     {
+         @Override
+-        protected Marker initialValue()
++        protected Deque<Marker> childValue(Deque<Marker> markers) {
++            return new LinkedList<Marker>(markers);
++        }
++
++        @Override
++        protected Deque<Marker> initialValue()
+         {
+-            return defaultMarker;
++            return new LinkedList<Marker>();
+         }
+     };
+ 
+     public void start()
+     {
+-        if (System.out instanceof ThreadPrintStream)
+-        {
+-            throw new IllegalStateException("Thread Print Stream already set");
+-        }
+-        System.setOut(out);
+-        System.setIn(in);
+-        System.setErr(err);
+     }
+ 
+     public void stop()
+     {
+-        System.setErr(defaultMarker.err);
+-        System.setOut(defaultMarker.out);
+-        System.setIn(defaultMarker.in);
+     }
+ 
+-    private void checkIO()
+-    { // derek
+-        if (System.in != in)
+-        {
+-            log.fine("ThreadIO: eek! who's set System.in=" + System.in);
+-            System.setIn(in);
+-        }
++    Marker current()
++    {
++        Deque<Marker> markers = current.get();
+ 
+-        if (System.out != out)
+-        {
+-            log.fine("ThreadIO: eek! who's set System.out=" + System.out);
+-            System.setOut(out);
+-        }
++        while (true) {
++            Marker marker = markers.peek();
+ 
+-        if (System.err != err)
+-        {
+-            log.fine("ThreadIO: eek! who's set System.err=" + System.err);
+-            System.setErr(err);
+-        }
+-    }
++            if (marker == null) {
++                current.remove();
+ 
+-    Marker current()
+-    {
+-        Marker m = current.get();
+-        if (m.deactivated)
+-        {
+-            while (m.deactivated)
+-            {
+-                m = m.previous;
++                return defaultMarker;
++            }
++
++            if (marker.deactivated) {
++                markers.pop();
++            }
++            else {
++                return marker;
+             }
+-            current.set(m);
+         }
+-        return m;
+     }
+ 
+     public void close()
+     {
+-        checkIO(); // derek
+-        Marker top = this.current.get();
+-        if (top == null)
+-        {
+-            throw new IllegalStateException("No thread io active");
+-        }
+-        if (top != defaultMarker)
+-        {
+-            top.deactivate();
+-            this.current.set(top.previous);
++        Deque<Marker> markers = current.get();
++
++        Marker marker = markers.pop();
++
++        marker.deactivate();
++
++        if (markers.isEmpty()) {
++            current.remove();
++
++            System.setOut(this.out);
++            System.setIn(this.in);
++            System.setErr(this.err);
+         }
+     }
+ 
+@@ -121,18 +104,35 @@ public class ThreadIOImpl implements ThreadIO
+         assert in != null;
+         assert out != null;
+         assert err != null;
+-        checkIO(); // derek
+-        Marker prev = current();
++
++        Deque<Marker> markers = current.get();
++
++        Marker previousMarker = null;
++
++        if (markers.isEmpty()) {
++            previousMarker = defaultMarker;
++
++            System.setErr(this.err);
++            System.setIn(this.in);
++            System.setOut(this.out);
++        }
++        else {
++            previousMarker = markers.peek();
++        }
++
+         if (in == this.in) {
+-            in = prev.getIn();
++            in = previousMarker.in;
+         }
++
+         if (out == this.out) {
+-            out = prev.getOut();
++            out = previousMarker.out;
+         }
++
+         if (err == this.err) {
+-            err = prev.getErr();
++            err = previousMarker.err;
+         }
+-        Marker marker = new Marker(in, out, err, prev);
+-        this.current.set(marker);
++
++        markers.push(new Marker(in, out, err, null));
+     }
+ }
++/* @generated */
+\ No newline at end of file

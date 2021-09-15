@@ -24,6 +24,27 @@ definition {
 		}
 	}
 
+	macro useDragOnPin{
+		// Verify the postion after mouse drag on pin
+
+		first_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='circle']/../../*[name()='g']@transform");
+
+		DragAndDrop.dragAndDropReorganizeObjects(
+			key_image = "${image_name}",
+			locator1 = "CommerceEntry#VERIFY_IMAGE",
+			locator2 = "CommerceEntry#VERIFY_IMAGE",
+			position = "${position}");
+
+		second_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='circle']/../../*[name()='g']@transform");
+
+		if ("${first_position}" != "${second_position}") {
+			echo("The pin position after the drag is correct");
+		}
+		else {
+			fail("The pin position after the drag is not correct: ${second_position}, the expected position it must be different from ${first_position}");
+		}
+	}
+
 	macro usePreDefinedZoom {
 
 		// Use Pre-defined zoom values

@@ -93,6 +93,7 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if it's not possible to publish the Form when a required Object field is not mapped to a Form field"
+	@ignore = "true"
 	@priority = "5"
 	test CannotPublishWhenRequiredFieldNotMapped {
 		property portal.acceptance = "true";
@@ -148,6 +149,7 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if is not possible to publish the Form when required Object field is not mapped to a Form Field in a Field Group"
+	@ignore = "true"
 	@priority = "5"
 	test CannotPublishWhenRequiredFieldNotMappedForFieldGroup {
 		property portal.acceptance = "true";

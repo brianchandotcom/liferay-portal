@@ -43,6 +43,36 @@ definition {
 		}
 	}
 
+	@description = "The user can add a RSS Feed on RSS Publisher widget."
+	@priority = "5"
+	@uitest
+	test AddFeed {
+		property portal.acceptance = "true";
+		property testray.component.names = "RSS";
+
+		task ("View the default message on RSS Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			RSSPortlet.viewPortletConfigurationInfo();
+		}
+
+		task ("Add a Latimes : Technology News RSS Feed") {
+			RSSPortlet.addFeed(
+				feedRowIndexNumber = "0",
+				feedTitle = "Latimes : Technology News",
+				feedType = "file",
+				feedUrlLink = "rss2.0.xml");
+
+			IFrame.closeFrame();
+		}
+
+		task ("View displayed title on RSS Publisher") {
+			RSSPortlet.viewDisplayFeedTitle(feedTitle = "Latimes : Technology News");
+		}
+	}
+
 	@description = "The user can add a RSS Feed between other feeds on RSS Publisher widget."
 	@priority = "3"
 	@uitest
@@ -89,36 +119,6 @@ definition {
 			for (var feedTitle : list "Technology,Reuters : Sports News,Latimes : Technology News") {
 				RSSPortlet.viewDisplayFeedTitle(feedTitle = "${feedTitle}");
 			}
-		}
-	}
-
-	@description = "The user can add a RSS Feed on RSS Publisher widget."
-	@priority = "5"
-	@uitest
-	test AddFeed {
-		property portal.acceptance = "true";
-		property testray.component.names = "RSS";
-
-		task ("View the default message on RSS Publisher") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			RSSPortlet.viewPortletConfigurationInfo();
-		}
-
-		task ("Add a Latimes : Technology News RSS Feed") {
-			RSSPortlet.addFeed(
-				feedRowIndexNumber = "0",
-				feedTitle = "Latimes : Technology News",
-				feedType = "file",
-				feedUrlLink = "rss2.0.xml");
-
-			IFrame.closeFrame();
-		}
-
-		task ("View displayed title on RSS Publisher") {
-			RSSPortlet.viewDisplayFeedTitle(feedTitle = "Latimes : Technology News");
 		}
 	}
 
@@ -253,109 +253,6 @@ definition {
 				key_fieldLabel = "# of Entries Per Feed",
 				locator1 = "FormFields#NUMBER_FIELD",
 				value1 = "");
-		}
-	}
-
-	@description = "The usar can update the RSS Feed via Asset Publisher widget when the feed time is set to one on system settings."
-	@priority = "4"
-	@uitest
-	test EditRSSFeedViaAssetpublisherWhenSetFeedTimeToOne {
-		property test.name.skip.portal.instance = "RSS#EditRSSFeedViaAssetpublisherWhenSetFeedTimeToOne";
-		property testray.component.names = "Asset Publisher,RSS";
-
-		task ("Change the RSS Feed Time on System Settings") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "RSS",
-				configurationName = "Cache",
-				configurationScope = "System Scope");
-
-			RSSPortlet.updateFeedTime(feedTime = "1");
-		}
-
-		task ("Add a widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Asset Publisher Page");
-		}
-
-		task ("Add an Asset Publisher to page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Asset Publisher Page",
-				widgetName = "Asset Publisher");
-		}
-
-		task ("Add a Web Content via Asset Publisher") {
-			Navigator.gotoSitePage(
-				pageName = "Asset Publisher Page",
-				siteName = "Test Site Name");
-
-			WebContent.addPGViaAPWithoutAsserts(
-				webContentContent = "This is the web content test for rss feed",
-				webContentTitle = "Web Content Title");
-		}
-
-		task ("Check Subscribe and enable RSS Subscriptions on Asset Publisher configuration") {
-			Navigator.gotoSitePage(
-				pageName = "Asset Publisher Page",
-				siteName = "Test Site Name");
-
-			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Subscribe");
-
-			AssetPublisherPortlet.enableRSSSubscription();
-
-			IFrame.closeFrame();
-		}
-
-		task ("Get the RSS Feed url") {
-			var rssFeedUrl = selenium.getAttribute("//div[contains(@class,'subscribe-action')]//a[contains(@href,'asset-publisher') and contains(.,'RSS')]@href");
-		}
-
-		task ("Add a RSS Feed based on AP RSS Url") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			RSSPortlet.addFeed(
-				feedRowIndexNumber = "0",
-				feedTitle = "Web Asset Publisher",
-				feedUrlLink = "${rssFeedUrl}");
-
-			IFrame.closeFrame();
-		}
-
-		task ("View the Feed Heading and Title on RSS Publisher") {
-			RSSPortlet.viewDisplayFeedTitle(feedTitle = "Web Asset Publisher");
-
-			RSSPortlet.viewUpdateFeedTitle(feedHeading = "Web Content Title");
-		}
-
-		task ("Edit the Web Content via Asset Publisher") {
-			Navigator.gotoSitePage(
-				pageName = "Asset Publisher Page",
-				siteName = "Test Site Name");
-
-			AssetPublisherPortlet.gotoEditAssetPG(assetTitle = "Web Content Title");
-
-			WebContent.addCP(
-				webContentContent = "This is the updated version of web content test for rss feed",
-				webContentTitle = "Web Content Title Updated Feed");
-
-			Button.clickPublish();
-		}
-
-		task ("View the Updated Feed Heading and Title on RSS Publisher") {
-			RSSPortlet.viewUpdateFeedTitle(
-				feedHeading = "Web Content Title Updated Feed",
-				pageName = "Test Page Name",
-				updateFeed = "true");
-
-			RSSPortlet.viewDisplayFeedTitle(feedTitle = "Web Asset Publisher");
 		}
 	}
 
@@ -555,6 +452,109 @@ definition {
 
 		task ("View the Feed title is not shown") {
 			RSSPortlet.viewNoFeedTitle(feedTitle = "Technology");
+		}
+	}
+
+	@description = "The usar can update the RSS Feed via Asset Publisher widget when the feed time is set to one on system settings."
+	@priority = "4"
+	@uitest
+	test EditRSSFeedViaAssetpublisherWhenSetFeedTimeToOne {
+		property test.name.skip.portal.instance = "RSS#EditRSSFeedViaAssetpublisherWhenSetFeedTimeToOne";
+		property testray.component.names = "Asset Publisher,RSS";
+
+		task ("Change the RSS Feed Time on System Settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "RSS",
+				configurationName = "Cache",
+				configurationScope = "System Scope");
+
+			RSSPortlet.updateFeedTime(feedTime = "1");
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page");
+		}
+
+		task ("Add an Asset Publisher to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Add a Web Content via Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			WebContent.addPGViaAPWithoutAsserts(
+				webContentContent = "This is the web content test for rss feed",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("Check Subscribe and enable RSS Subscriptions on Asset Publisher configuration") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Subscribe");
+
+			AssetPublisherPortlet.enableRSSSubscription();
+
+			IFrame.closeFrame();
+		}
+
+		task ("Get the RSS Feed url") {
+			var rssFeedUrl = selenium.getAttribute("//div[contains(@class,'subscribe-action')]//a[contains(@href,'asset-publisher') and contains(.,'RSS')]@href");
+		}
+
+		task ("Add a RSS Feed based on AP RSS Url") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			RSSPortlet.addFeed(
+				feedRowIndexNumber = "0",
+				feedTitle = "Web Asset Publisher",
+				feedUrlLink = "${rssFeedUrl}");
+
+			IFrame.closeFrame();
+		}
+
+		task ("View the Feed Heading and Title on RSS Publisher") {
+			RSSPortlet.viewDisplayFeedTitle(feedTitle = "Web Asset Publisher");
+
+			RSSPortlet.viewUpdateFeedTitle(feedHeading = "Web Content Title");
+		}
+
+		task ("Edit the Web Content via Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.gotoEditAssetPG(assetTitle = "Web Content Title");
+
+			WebContent.addCP(
+				webContentContent = "This is the updated version of web content test for rss feed",
+				webContentTitle = "Web Content Title Updated Feed");
+
+			Button.clickPublish();
+		}
+
+		task ("View the Updated Feed Heading and Title on RSS Publisher") {
+			RSSPortlet.viewUpdateFeedTitle(
+				feedHeading = "Web Content Title Updated Feed",
+				pageName = "Test Page Name",
+				updateFeed = "true");
+
+			RSSPortlet.viewDisplayFeedTitle(feedTitle = "Web Asset Publisher");
 		}
 	}
 

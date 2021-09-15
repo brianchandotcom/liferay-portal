@@ -110,7 +110,7 @@ public class CSDiagramSettingDisplayContext
 		CPDefinition cpDefinition = getCPDefinition();
 
 		return "/o/headless-commerce-admin-catalog/v1.0/products/" +
-			cpDefinition.getCProductId() + "/diagramEntries";
+			cpDefinition.getCProductId() + "/mapped-products";
 	}
 
 	public CSDiagramType getCSDiagramType(String type) {

@@ -168,7 +168,7 @@ definition {
 	}
 
 	@priority = "3"
-	test PublishPublicationWithDispalyTemplate {
+	test PublishPublicationWithDisplayTemplate {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");

@@ -278,4 +278,37 @@ definition {
 			position = "300,0");
 	}
 
+	@description = "This is a test for COMMERCE-7036. UseDragForPin"
+	@priority = "3"
+	test UseDragForPin {
+		property portal.acceptance = "false";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Diagram T-Shirt",
+			productType = "Diagram");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+		CommerceProductImages.addDiagramImages(
+			imageTitles = "Black",
+			productType = "Diagram");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+
+		DoubleClick(
+			key_image = "Commerce_Black",
+			locator1 = "CommerceEntry#VERIFY_IMAGE");
+
+		CommerceDiagram.useDragOnPin(
+			image_name = "Commerce_Black",
+			position = "300,0");
+	}
+
 }

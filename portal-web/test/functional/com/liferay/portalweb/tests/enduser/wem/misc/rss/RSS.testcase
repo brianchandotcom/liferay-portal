@@ -48,7 +48,6 @@ definition {
 	@uitest
 	test AddFeed {
 		property portal.acceptance = "true";
-		property testray.component.names = "RSS";
 
 		task ("View the default message on RSS Publisher") {
 			Navigator.gotoSitePage(
@@ -77,8 +76,6 @@ definition {
 	@priority = "3"
 	@uitest
 	test AddFeedBetweenFeeds {
-		property testray.component.names = "RSS";
-
 		task ("Add a Technology RSS Feed") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
@@ -126,8 +123,6 @@ definition {
 	@priority = "4"
 	@uitest
 	test CannotAddFeedWithWrongUrl {
-		property testray.component.names = "RSS";
-
 		task ("View the warning message when adding a RSS Feed with a wrong URL") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
@@ -165,8 +160,6 @@ definition {
 	@priority = "4"
 	@uitest
 	test CannotChangeNumberOfEntriesPerFeedToInvalidValue {
-		property testray.component.names = "RSS";
-
 		task ("Assert the input field of Entries Per Feed shouldn't allow 0 value and negative value") {
 			for (var numberOfEntries : list "0,-1") {
 				Navigator.gotoSitePage(
@@ -260,8 +253,6 @@ definition {
 	@priority = "3"
 	@uitest
 	test ChangeDefaultDisplayTemplateToNavigation {
-		property testray.component.names = "RSS";
-
 		task ("Add a Technology RSS Feed") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
@@ -292,7 +283,6 @@ definition {
 	@uitest
 	test ChangeNumberOfEntriesPerFeedToEleven {
 		property portal.acceptance = "true";
-		property testray.component.names = "RSS";
 
 		task ("Change the entries per feed to eleven") {
 			Navigator.gotoSitePage(
@@ -316,8 +306,6 @@ definition {
 	@priority = "3"
 	@uitest
 	test ChangeOrderOfRSSFeeds {
-		property testray.component.names = "RSS";
-
 		task ("Add a Technology RSS Feed") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
@@ -385,8 +373,6 @@ definition {
 	@priority = "4"
 	@uitest
 	test DeleteFeed {
-		property testray.component.names = "RSS";
-
 		task ("Add a Latimes : Technology News RSS Feed") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
@@ -420,8 +406,6 @@ definition {
 	@priority = "3"
 	@uitest
 	test DisabledFeedTitle {
-		property testray.component.names = "RSS";
-
 		task ("View default RSS Publisher widget on page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
@@ -562,8 +546,6 @@ definition {
 	@priority = "4"
 	@uitest
 	test RemoveRSSPublisher {
-		property testray.component.names = "RSS";
-
 		task ("View default RSS Publisher widget on page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",

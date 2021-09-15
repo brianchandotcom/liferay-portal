@@ -829,66 +829,102 @@ definition {
 		}
 	}
 
-	@description = "Create a segment that contains anonymous individuals"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-7962 | Test Summary: Create a segment that contains anonymous individuals"
 	@priority = "5"
 	test CanCreateSegmentWithAnonymousIndividuals {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: data doesn't appear on time
+		// AC Refactor ticket: LRAC-9363
+
+		var usernameList = "ac,liferay,dxp";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
-		JSONUser.addUser(
-			userEmailAddress = "liferay@liferay.com",
-			userFirstName = "liferay",
-			userLastName = "liferay",
-			userScreenName = "liferay");
+		task ("Add new users") {
+			for (var username : list "${usernameList}") {
+				JSONUser.addUser(
+					userEmailAddress = "${username}@liferay.com",
+					userFirstName = "${username}",
+					userLastName = "${username}",
+					userScreenName = "${username}");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "liferay@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "liferay@liferay.com",
-			userLoginFullName = "liferay liferay");
-
-		task ("View the site page") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "${username}@liferay.com");
+			}
 		}
 
-		ACUtils.launchAC();
+		task ("Login with users and view the site page") {
+			for (var username : list "${usernameList}") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${username} ${username}");
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
 
-		ACNavigation.goToSegments();
+				Pause(locator1 = "5000");
+			}
+		}
 
-		ACSegments.createDynamicSegment();
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
 
-		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
 
-		ACSegments.includeAnonymous();
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
 
-		ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+			ACSegments.createDynamicSegment();
 
-		ACSegments.addSegmentField(segmentField = "fullName");
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+		}
 
-		ACSegments.editFormControlCriterion(
-			criterionName = "fullName",
-			option = "is unknown");
+		task ("Mark anonymous toggle") {
+			ACSegments.includeAnonymous();
+		}
 
-		ACSegments.saveSegment();
+		task ("Add an fullName criteria from Individual Attributes") {
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
-		ACNavigation.goToSegments();
+			ACSegments.addSegmentField(segmentField = "fullName");
 
-		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+			ACSegments.editFormControlCriterion(
+				criterionName = "fullName",
+				option = "is unknown");
+		}
 
-		ACSegments.viewSegmentMembershipLegendNumbers(
-			anonymousNumber = "1",
-			knownNumber = "1",
-			totalNumber = "2");
+		task ("Save the segment") {
+			ACSegments.saveSegment();
+		}
 
-		ACSegments.viewIncludeAnonymousLabel();
+		task ("Navigate to Segments admin") {
+			ACNavigation.goToSegments();
+		}
+
+		task ("Access the new segment") {
+			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+		}
+
+		task ("View segment membership numbers") {
+
+			// AC Refactor: data doesn't appear on time
+
+			ACSegments.viewSegmentMembershipLegendNumbers(
+				anonymousNumber = "3",
+				knownNumber = "0",
+				totalNumber = "3");
+		}
+
+		task ("View include anonymous label") {
+			ACSegments.viewIncludeAnonymousLabel();
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8479 | Test Summary: Create a Segment with a Number Property"

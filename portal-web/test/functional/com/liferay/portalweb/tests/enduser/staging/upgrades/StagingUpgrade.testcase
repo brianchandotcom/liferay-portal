@@ -200,6 +200,7 @@ definition {
 	@priority = "5"
 	test PublishPageVersioningAfterUpgrade701016 {
 		property data.archive.type = "data-archive-local-staging-with-page-versioning";
+		property portal.upstream = "quarantine";
 		property portal.version = "7.0.10.16";
 
 		Navigator.gotoStagedSitePage(

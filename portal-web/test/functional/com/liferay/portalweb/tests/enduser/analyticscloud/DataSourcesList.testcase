@@ -28,6 +28,8 @@ definition {
 		for (var n : list "1,2,3") {
 			ACSettings.takeTokenFromAnalyticsCloud();
 
+			TestCase.setUpPortalInstance();
+
 			ACUtils.launchDXP();
 
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();

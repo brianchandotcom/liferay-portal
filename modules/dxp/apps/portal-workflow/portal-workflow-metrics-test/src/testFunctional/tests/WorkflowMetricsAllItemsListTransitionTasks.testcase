@@ -126,7 +126,7 @@ definition {
 	@description = "LPS-108138 - Verify that tasks that are not assigned to the current users can't be transitioned via bulk transition action"
 	@priority = "4"
 	test CanNotBulkTransitionTasksNotAssignedToCurrentUser {
-		property portal.upstream = "quarantine";
+		
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -170,6 +170,14 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
+		Click(
+			key_orderBy = "Creation Date",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ORDER_BY");
+		
+		Click(
+			key_orderBy = "Creation Date",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ORDER_BY");
+
 		WorkflowMetrics.selectTransitionTask(task = "1");
 
 		WorkflowMetrics.selectNewAssignee(
@@ -183,10 +191,18 @@ definition {
 			taskList = "Blogs Entry: Blog Entry 2");
 
 		AssertElementPresent(
-			key_itemTitle = "Blogs Entry: Blog Entry 1",
-			locator1 = "WorkflowAllItems#REASSIGN_CHECKBOX_DISABLED");
+		key_itemTitle = "Blogs Entry: Blog Entry 1",
+		locator1 = "WorkflowAllItems#REASSIGN_CHECKBOX_DISABLED");
 
-		WorkflowMetrics.goToTransitionTasks();
+		
+		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT")) {
+			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
+		}
+
+		Click(
+			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
+			task = "1");
+		MenuItem.clickNoError(menuItem = "Transition");
 
 		Click(
 			key_task = "1",

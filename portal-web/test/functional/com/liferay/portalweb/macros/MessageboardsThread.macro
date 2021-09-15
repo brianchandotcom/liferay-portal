@@ -133,6 +133,16 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
+		if (isSet(threadBodyImageName)) {
+			var key_imageFileName = "${threadBodyImageName}";
+
+			ItemSelector.gotoItemSelectorViaCKEditor();
+
+			SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+			Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+		}
+
 		if (isSet(tagName)) {
 			Panel.expandPanel(panel = "Categorization");
 
@@ -1401,6 +1411,13 @@ definition {
 			AssertTextEquals(
 				locator1 = "MessageBoardsThread#THREAD_BODY",
 				value1 = "${threadBody}");
+		}
+
+		if (isSet(threadBodyImageName)) {
+			AssertVisible(
+				key_imageFileName = "${threadBodyImageName}",
+				key_threadBody = "${threadBody}",
+				locator1 = "MessageBoardsThread#THREAD_BODY_IMAGE");
 		}
 
 		if (isSet(fontSize)) {

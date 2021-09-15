@@ -271,7 +271,14 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.assertCannotCreateDuplicatedObjectName();
+		ObjectAdmin.addNewObject(
+			fieldLabelName = "Custom Object",
+			fieldName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.saveCustomObject();
+
+		ObjectAdmin.viewFieldErrorMessage(message = "Duplicate name C_CustomObject");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Field Name field blank"

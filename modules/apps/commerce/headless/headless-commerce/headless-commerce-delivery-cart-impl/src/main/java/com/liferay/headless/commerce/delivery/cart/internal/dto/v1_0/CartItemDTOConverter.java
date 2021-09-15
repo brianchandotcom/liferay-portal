@@ -78,6 +78,10 @@ public class CartItemDTOConverter
 
 		return new CartItem() {
 			{
+				adaptiveMediaImageHTMLTag =
+					_cpInstanceHelper.getCPInstanceAdaptiveMediaImageHTMLTag(
+						commerceOrderItem.getCompanyId(),
+						commerceOrderItem.getCPInstanceId());
 				customFields = expandoBridge.getAttributes();
 				errorMessages = _getErrorMessages(commerceOrderItem, locale);
 				id = commerceOrderItem.getCommerceOrderItemId();
@@ -92,10 +96,8 @@ public class CartItemDTOConverter
 				sku = commerceOrderItem.getSku();
 				skuId = commerceOrderItem.getCPInstanceId();
 				subscription = commerceOrderItem.isSubscription();
-				thumbnail =
-					_cpInstanceHelper.getCPInstanceAdaptiveMediaImageHTMLTag(
-						commerceOrderItem.getCompanyId(),
-						commerceOrderItem.getCPInstanceId());
+				thumbnail = _cpInstanceHelper.getCPInstanceThumbnailSrc(
+					commerceOrderItem.getCPInstanceId());
 			}
 		};
 	}

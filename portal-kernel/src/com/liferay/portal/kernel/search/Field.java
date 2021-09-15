@@ -539,11 +539,6 @@ public class Field implements Serializable {
 				"Name must not contain ,: " + name);
 		}
 
-		if (name.contains(StringPool.PERIOD)) {
-			throw new IllegalArgumentException(
-				"Name must not contain .: " + name);
-		}
-
 		if (name.contains(StringPool.POUND)) {
 			throw new IllegalArgumentException(
 				"Name must not contain #: " + name);

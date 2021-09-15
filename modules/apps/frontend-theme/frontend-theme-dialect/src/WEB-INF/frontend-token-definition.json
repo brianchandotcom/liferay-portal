@@ -1002,24 +1002,6 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "1.5",
-							"label": "text-line-height-base",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "text-line-height-base"
-								}
-							],
-							"name": "textLineHeightBase",
-							"type": "String"
-						}
-					],
-					"label": "general",
-					"name": "general"
-				},
-				{
-					"frontendTokens": [
-						{
 							"defaultValue": "800",
 							"label": "text-link-font-weight",
 							"mappings": [
@@ -1674,6 +1656,18 @@
 							],
 							"name": "formInputLabelMarginLeft",
 							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-state-error)",
+							"label": "form-input-label-reference-mark-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "form-input-label-reference-mark-color"
+								}
+							],
+							"name": "formInputLabelReferenceMarkColor",
+							"type": "String"
 						}
 					],
 					"label": "form-input-label",
@@ -1730,6 +1724,18 @@
 								}
 							],
 							"name": "formInputBorderRadius",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.0625rem",
+							"label": "form-input-border-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "form-input-border-width"
+								}
+							],
+							"name": "formInputBorderWidth",
 							"type": "String"
 						},
 						{

@@ -33,11 +33,21 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to cancel the creation of a Custom Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCancelCreationCustomObject {
 
-		// TODO LPS-138811 CanCancelCreationCustomObject pending implementation
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.addNewObject(
+			fieldLabelName = "Custom Object",
+			pluralLabelName = "Custom Objects");
+
+		Button.clickCancel();
+
+		AssertElementNotPresent(
+			key_name = "CustomObject",
+			key_system = "No",
+			locator1 = "ObjectAdmin#VIEW_OBJECT");
 
 	}
 

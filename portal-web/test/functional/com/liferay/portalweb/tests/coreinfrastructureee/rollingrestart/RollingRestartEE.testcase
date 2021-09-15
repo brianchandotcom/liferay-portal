@@ -989,6 +989,8 @@ definition {
 
 		Portlet.addPG(portletName = "Documents and Media");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
 		User.logoutPG();
 
 		User.firstLoginUI(

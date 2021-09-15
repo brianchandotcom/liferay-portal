@@ -15,5 +15,5 @@ if (keys.isEmpty()) {
 }
 
 for (String key : keys) {
-	out.println(key  + "=" + testPortalCache.get(key));
+	out.println(key + "=" + testPortalCache.get(key));
 }

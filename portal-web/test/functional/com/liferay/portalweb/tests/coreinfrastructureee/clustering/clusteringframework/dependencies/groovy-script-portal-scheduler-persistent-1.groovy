@@ -5,9 +5,8 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 
-
 Trigger trigger = TriggerFactoryUtil.createTrigger(
-	"test.job.name.1.persistent", "test.job.group.1.persistent", 10, 
+	"test.job.name.1.persistent", "test.job.group.1.persistent", 10,
 	TimeUnit.SECOND);
 
 String script = "System.out.println(\"Persistent job 1 is triggered at \" + System.currentTimeMillis());";

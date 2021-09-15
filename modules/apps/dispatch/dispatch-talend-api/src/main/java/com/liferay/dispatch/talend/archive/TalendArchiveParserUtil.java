@@ -38,6 +38,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
@@ -237,7 +238,8 @@ public class TalendArchiveParserUtil {
 			"Unable to determine job JAR directory for " + jobName);
 	}
 
-	private static List<String> _getJobLibEntries(Path jobDirectoryPath)
+	private static List<String> _getJobLibEntries(
+			Path jobDirectoryPath, Path jobJarPath)
 		throws IOException {
 
 		List<String> pathStrings = new ArrayList<>();
@@ -255,6 +257,28 @@ public class TalendArchiveParserUtil {
 
 					if (pathString.endsWith(".jar")) {
 						pathStrings.add(pathString);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		Files.walkFileTree(
+			jobJarPath.getParent(), Collections.emptySet(), 1,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					if (!filePath.equals(jobJarPath)) {
+						String pathString = filePath.toString();
+
+						if (pathString.endsWith(".jar")) {
+							pathStrings.add(pathString);
+						}
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -383,16 +407,16 @@ public class TalendArchiveParserUtil {
 		TalendArchive.Builder talendArchiveBuilder =
 			new TalendArchive.Builder();
 
+		String jobName = (String)jobProperties.get("job");
+
+		Path jobJarPath = _getJobJarPath(jobName, jobDirectoryPath);
+
 		talendArchiveBuilder.classPathEntries(
-			_getJobLibEntries(jobDirectoryPath));
+			_getJobLibEntries(jobDirectoryPath, jobJarPath));
 
 		String contextName = (String)jobProperties.get("contextName");
 
 		talendArchiveBuilder.contextName(contextName);
-
-		String jobName = (String)jobProperties.get("job");
-
-		Path jobJarPath = _getJobJarPath(jobName, jobDirectoryPath);
 
 		talendArchiveBuilder.contextProperties(
 			_getContextProperties(contextName, jobJarPath.toString()));

@@ -15,6 +15,8 @@
 package com.liferay.search.experiences.internal.problems;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.search.experiences.problems.Problem;
+import com.liferay.search.experiences.problems.Severity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -12,11 +12,14 @@
  *
  */
 
-package com.liferay.search.experiences.internal.problems;
+package com.liferay.search.experiences.problems;
 
 /**
  * @author Petteri Karttunen
  * @author Brian Wing Shun Chan
  */
-public class Severity {
+public enum Severity {
+
+	ERROR, INFO, WARN
+
 }

@@ -68,8 +68,6 @@ definition {
 	@description = "Search for specific segment"
 	@priority = "5"
 	test CanSearchForSegment {
-		property portal.upstream = "afonso";
-
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -150,9 +148,11 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.openURL();
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
 
-		Pause(locator1 = "5000");
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -228,7 +228,7 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
-					
+
 				Pause(locator1 = "5000");
 			}
 

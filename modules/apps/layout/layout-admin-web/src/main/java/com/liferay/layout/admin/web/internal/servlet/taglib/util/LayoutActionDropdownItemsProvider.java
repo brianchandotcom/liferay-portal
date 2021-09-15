@@ -214,9 +214,22 @@ public class LayoutActionDropdownItemsProvider {
 									"discard-conversion-draft"));
 						}
 					).add(
-						() ->
-							_layoutsAdminDisplayContext.
-								isShowDiscardDraftAction(layout),
+						() -> _layoutsAdminDisplayContext.isShowDraftActions(
+							layout),
+						dropdownItem -> {
+							dropdownItem.put("symbolRight", "shortcut");
+
+							dropdownItem.setHref(
+								_layoutsAdminDisplayContext.getPreviewDraftURL(
+									layout));
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "preview-draft"));
+							dropdownItem.setTarget("_blank");
+						}
+					).add(
+						() -> _layoutsAdminDisplayContext.isShowDraftActions(
+							layout),
 						dropdownItem -> {
 							dropdownItem.putData("action", "discardDraft");
 							dropdownItem.putData(

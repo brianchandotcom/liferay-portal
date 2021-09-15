@@ -838,6 +838,11 @@ public class LayoutsAdminDisplayContext {
 		).buildPortletURL();
 	}
 
+	public String getPreviewDraftURL(Layout layout) throws PortalException {
+		return PortalUtil.getLayoutFriendlyURL(
+			layout.fetchDraftLayout(), themeDisplay);
+	}
+
 	public String getRedirect() {
 		if (_redirect != null) {
 			return _redirect;
@@ -1497,7 +1502,7 @@ public class LayoutsAdminDisplayContext {
 		return true;
 	}
 
-	public boolean isShowDiscardDraftAction(Layout layout) {
+	public boolean isShowDraftActions(Layout layout) {
 		if (!layout.isTypeContent()) {
 			return false;
 		}

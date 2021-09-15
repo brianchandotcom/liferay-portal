@@ -522,7 +522,7 @@ definition {
 			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
-		
+
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Text",
 			fieldName = "customObjectField",
@@ -560,7 +560,7 @@ definition {
 			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
-		
+
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Text",
 			fieldName = "customObjectField",
@@ -594,7 +594,7 @@ definition {
 			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
-		
+
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Text",
 			fieldName = "customObjectField",
@@ -613,7 +613,7 @@ definition {
 		CreateObject.toggleMandatory();
 
 		CreateObject.saveObject();
-		
+
 		Refresh();
 
 		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
@@ -628,7 +628,7 @@ definition {
 			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
-		
+
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Text",
 			fieldName = "customObjectField",
@@ -647,7 +647,7 @@ definition {
 		CreateObject.editName(fieldName = "customObjectFieldUpdate");
 
 		CreateObject.saveObject();
-		
+
 		Refresh();
 
 		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectFieldUpdate");
@@ -662,7 +662,7 @@ definition {
 			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
-		
+
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Text",
 			fieldName = "customObjectField",
@@ -678,10 +678,10 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
 
-        ObjectAdmin.clickFieldsSearchableSectionRadioOption(radioOption = "Text");
+		ObjectAdmin.clickFieldsSearchableSectionRadioOption(radioOption = "Text");
 
 		CreateObject.saveObject();
-		
+
 		Refresh();
 
 		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
@@ -692,12 +692,11 @@ definition {
 	@description = "LPS-135635 - Verify it is possible to update the Type of a Field before the Object is published"
 	@priority = "4"
 	test CanUpdateFieldTypeBeforePublished {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
-		
+
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Text",
 			fieldName = "customObjectField",
@@ -716,7 +715,7 @@ definition {
 		CreateObject.editType(fieldType = "Date");
 
 		CreateObject.saveObject();
-		
+
 		Refresh();
 
 		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");

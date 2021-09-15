@@ -1,5 +1,17 @@
 definition {
 
+	macro assertFieldName {
+		AssertTextEquals(
+			locator1 = "CreateObject#FIELD_NAME",
+			value1 = "${fieldName}");
+	}
+
+	macro assertFieldType {
+		AssertSelectedLabel(
+			locator1 = "CreateObject#FIELD_TYPE",
+			value1 = "${fieldType}");
+	}
+
 	macro assertObjectFieldNameIsAutofilled {
 		LexiconEntry.gotoAdd();
 
@@ -18,12 +30,6 @@ definition {
 			value1 = "${labelName}");
 	}
 
-	macro assertFieldType {
-		AssertSelectedLabel(
-			locator1 = "CreateObject#FIELD_TYPE",
-			value1 = "${fieldType}");
-	}
-
 	macro assertObjectPluralLabel {
 		AssertTextEquals(
 			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
@@ -34,6 +40,10 @@ definition {
 		AssertElementPresent(
 			key_panelCategoryKey = "${panelCategoryKey}",
 			locator1 = "CreateObject#PANEL_CATEGORY_KEY_SELECTED");
+	}
+
+	macro checkToggleMandatory {
+		Check.checkToggleSwitch(locator1 = "CreateObject#TOGGLE_MANDATORY");
 	}
 
 	macro editLabel {
@@ -48,23 +58,6 @@ definition {
 			value1 = "${fieldName}");
 	}
 
-	macro assertFieldName {
-		AssertTextEquals(
-			locator1 = "CreateObject#FIELD_NAME",
-			value1 = "${fieldName}");
-	}
-
-	macro toggleMandatory {
-		Check.toggleSwitch(
-				locator1 = "CreateObject#TOGGLE_MANDATORY");
-
-	}
-
-	macro checkToggleMandatory {
-Check.checkToggleSwitch(locator1 = "CreateObject#TOGGLE_MANDATORY");
-
-	}
-
 	macro editPluralLabel {
 		Type(
 			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
@@ -75,7 +68,7 @@ Check.checkToggleSwitch(locator1 = "CreateObject#TOGGLE_MANDATORY");
 		Select(
 			locator1 = "CreateObject#FIELD_TYPE",
 			value1 = "${fieldType}");
-	}	
+	}
 
 	macro saveObject {
 		Click(locator1 = "CreateObject#SAVE_BUTTON");
@@ -85,6 +78,10 @@ Check.checkToggleSwitch(locator1 = "CreateObject#TOGGLE_MANDATORY");
 		Select(
 			locator1 = "CreateObject#PANEL_CATEGORY_KEY",
 			value1 = "${panelCategoryKey}");
+	}
+
+	macro toggleMandatory {
+		Check.toggleSwitch(locator1 = "CreateObject#TOGGLE_MANDATORY");
 	}
 
 	macro viewObject {

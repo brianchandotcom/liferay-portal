@@ -611,7 +611,7 @@ definition {
 	@description = "LPS-108138 - Verify that the tasks on -Choose Transition Per Step- are grouped by versioned tasks -when there are changes in the workflow process-"
 	@priority = "4"
 	test TasksAreGroupedByVersionedTasks {
-		property portal.upstream = "quarantine";
+
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -659,7 +659,17 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.goToBulkTransitionSelectTasks();
+
+
+		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT")) {
+			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
+		}
+
+		Click(
+			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
+			task = "1");
+
+		Click(locator1 = "WorkflowAllItems#TRANSITION_DROPDOWN");
 
 		WorkflowMetrics.selectAllTransitionTasks();
 

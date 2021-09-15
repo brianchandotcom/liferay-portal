@@ -959,12 +959,20 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to view the Details of an Object by clicking on its name"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewObjectsDetailsByClickingName {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-138812 CanViewObjectsDetailsByClickingName pending implementation
+		Navigator.openURL();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.assertObjectDetailsPage();
 	}
 
 	@description = "LPS-135549 - Verify that the columns Name and Type are displayed for the Fields table"

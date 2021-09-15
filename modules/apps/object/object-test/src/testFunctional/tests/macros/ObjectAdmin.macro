@@ -92,6 +92,12 @@ definition {
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_STATUS_COLUMN");
 	}
 
+	macro assertObjectDetailsPage {
+		Click(locator1 = "ObjectAdmin#OBJECT_DETAILS_TAB");
+
+		AssertElementPresent(locator1 = "ObjectAdmin#DETAILS_PAGE_TITLE");
+	}
+
 	macro assertObjectField {
 		var key_fieldName = "${fieldName}";
 		var key_fieldType = "${fieldType}";

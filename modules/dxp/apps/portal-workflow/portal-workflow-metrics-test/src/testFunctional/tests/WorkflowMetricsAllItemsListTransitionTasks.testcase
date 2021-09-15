@@ -611,8 +611,6 @@ definition {
 	@description = "LPS-108138 - Verify that the tasks on -Choose Transition Per Step- are grouped by versioned tasks -when there are changes in the workflow process-"
 	@priority = "4"
 	test TasksAreGroupedByVersionedTasks {
-
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -658,8 +656,6 @@ definition {
 			workflowTask = "Review");
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
-
-
 
 		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT")) {
 			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");

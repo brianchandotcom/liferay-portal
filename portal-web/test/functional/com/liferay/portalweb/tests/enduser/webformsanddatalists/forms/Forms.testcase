@@ -325,7 +325,7 @@ definition {
 	}
 
 	@description = "LPS-72048 - Verify that belong rule can be worked for guest role"
-	@priority = "3"
+	@priority = "4"
 	test BelongRoleCanBeWorkedForGuestUser {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";

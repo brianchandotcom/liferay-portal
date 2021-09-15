@@ -41,6 +41,10 @@ public class ListUtil {
 		return new ArrayList<>(master);
 	}
 
+	public static String get(List<String> list, int index) {
+		return list.get(index);
+	}
+
 	public static boolean isEmpty(List<?> list) {
 		if ((list == null) || list.isEmpty()) {
 			return true;

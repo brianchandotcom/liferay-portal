@@ -45,11 +45,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 				md="6"
 			>
 				<clay:select
-					containerCssClass="custom-container-css-class"
-					cssClass="custom-css-class"
 					id='<%= liferayPortletResponse.getNamespace() + "headlessEndpoint" %>'
 					label="headless-endpoint"
-					name='<%= liferayPortletResponse.getNamespace() + "headlessEndpoint" %>'
+					name="headlessEndpoint"
 					options="<%= editBatchPlannerPlanDisplayContext.getSelectOptions() %>"
 				/>
 			</clay:col>
@@ -58,12 +56,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 				md="6"
 			>
 				<clay:select
-					containerCssClass="custom-container-css-class"
-					cssClass="custom-css-class"
 					disabled="<%= true %>"
 					id='<%= liferayPortletResponse.getNamespace() + "internalClassName" %>'
 					label="entity-type"
-					name='<%= liferayPortletResponse.getNamespace() + "internalClassName" %>'
+					name="internalClassName"
 					options="<%= editBatchPlannerPlanDisplayContext.getSelectOptions() %>"
 				/>
 			</clay:col>
@@ -73,9 +69,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 			<clay:row>
 				<clay:col>
 					<clay:select
-						id='<%= liferayPortletResponse.getNamespace() + "externalType" %>'
 						label="external-type"
-						name='<%= liferayPortletResponse.getNamespace() + "externalType" %>'
+						name="externalType"
 						options='<%=
 							Arrays.asList(new SelectOption("CSV", "CSV"), new SelectOption("TXT", "TXT"), new SelectOption("XLS", "XLS"), new SelectOption("XML", "XML"))
 						%>'

@@ -58,11 +58,9 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 				md="6"
 			>
 				<clay:select
-					containerCssClass="custom-container-css-class"
-					cssClass="custom-css-class"
 					id='<%= liferayPortletResponse.getNamespace() + "headlessEndpoint" %>'
 					label="headless-endpoint"
-					name='<%= liferayPortletResponse.getNamespace() + "headlessEndpoint" %>'
+					name="headlessEndpoint"
 					options="<%= editBatchPlannerPlanDisplayContext.getSelectOptions() %>"
 				/>
 			</clay:col>
@@ -71,12 +69,10 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 				md="6"
 			>
 				<clay:select
-					containerCssClass="custom-container-css-class"
-					cssClass="custom-css-class"
 					disabled="<%= true %>"
 					id='<%= liferayPortletResponse.getNamespace() + "internalClassName" %>'
 					label="internal-class-name"
-					name='<%= liferayPortletResponse.getNamespace() + "internalClassName" %>'
+					name="internalClassName"
 					options="<%= editBatchPlannerPlanDisplayContext.getSelectOptions() %>"
 				/>
 			</clay:col>

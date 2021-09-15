@@ -1424,10 +1424,10 @@ definition {
 				fragmentName = "Collection Display");
 		}
 
-		task ("Select the Basic Document related items collection provider") {
+		task ("Select the DM Document Type Name related items collection provider") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				infoItemRelatedListProviderName = "Basic Document");
+				infoItemRelatedListProviderName = "DM Document Type Name");
 		}
 
 		task ("Add a Heading fragment into the Collection Display") {

@@ -346,6 +346,50 @@ definition {
 		JSONCurlUtil.post("${curl}");
 	}
 
+	macro updateEntryCoverImage {
+		Variables.assertDefined(parameterList = "${entryTitle},${entryContent},${groupName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var entryId = JSONBlog.getBlogEntryId(
+			friendlyURL = "${friendlyURL}",
+			entryTitle = "${entryTitle}",
+			groupName = "${groupName}",
+			site = "${site}");
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+				${portalURL}/o/headless-delivery/v1.0/blog-postings/${entryId} \
+				-H accept: application/json \
+				-H Content-Type: application/json \
+				-u ${userEmailAddress}:${userPassword} \
+				-d {
+					"articleBody": "${entryContent}",
+					"creator": {},
+					"headline": "${entryTitle}",
+					"image": {
+					"caption": "",
+					"imageId": ${coverImageId}
+					},
+				}
+		''';
+
+		JSONCurlUtil.put("${curl}");
+	}
+
 	macro uploadBlogImage {
 		Variables.assertDefined(parameterList = "${groupName},${sourceFileName}");
 

@@ -877,4 +877,13 @@ definition {
 			value1 = "Top Interests");
 	}
 
+	macro createDynamicSegmentAndFillFields {
+		ACSegments.createDynamicSegment();
+
+		ACSegments.nameSegment(segmentName = "${segments}");
+
+		ACSegments.goToSidebarAttributes(criterion = "${criterion}");
+
+		ACSegments.addSegmentField(segmentField = "${segmentField}");
+	}
 }

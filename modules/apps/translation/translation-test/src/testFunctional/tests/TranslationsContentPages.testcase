@@ -75,7 +75,7 @@ definition {
 
 		WaitForPageLoad();
 
-		ContentPagesNavigator.goToTranslation(pageName = "Test Site Name");
+		ContentPagesNavigator.goToTranslation(pageName = "Test Content Page Name");
 
 		Translations.viewTargetLocales(
 			currentTargetLocale = "zh-CN",
@@ -108,7 +108,7 @@ definition {
 
 		WaitForPageLoad();
 
-		ContentPagesNavigator.goToTranslation(pageName = "Test Site Name");
+		ContentPagesNavigator.goToTranslation(pageName = "Test Content Page Name");
 
 		Translations.changeTargetLocale(
 			currentTargetLocale = "ar-SA",
@@ -180,7 +180,7 @@ definition {
 
 		WaitForPageLoad();
 
-		ContentPagesNavigator.goToTranslation(pageName = "Test Site Name");
+		ContentPagesNavigator.goToTranslation(pageName = "Test Content Page Name");
 
 		Translations.changeTargetLocale(
 			currentTargetLocale = "ar-SA",
@@ -229,7 +229,7 @@ definition {
 
 		WaitForPageLoad();
 
-		ContentPagesNavigator.goToTranslation(pageName = "Test Site Name");
+		ContentPagesNavigator.goToTranslation(pageName = "Test Content Page Name");
 
 		Translations.changeTargetLocale(
 			currentTargetLocale = "ar-SA",

@@ -54,6 +54,17 @@ definition {
 			value1 = "${fieldName}");
 	}
 
+	macro toggleMandatory {
+		Check.toggleSwitch(
+				locator1 = "CreateObject#TOGGLE_MANDATORY");
+
+	}
+
+	macro checkToggleMandatory {
+Check.checkToggleSwitch(locator1 = "CreateObject#TOGGLE_MANDATORY");
+
+	}
+
 	macro editPluralLabel {
 		Type(
 			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",

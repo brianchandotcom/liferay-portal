@@ -58,7 +58,7 @@ public interface ObjectLayoutResource {
 	}
 
 	public Page<ObjectLayout> getObjectDefinitionObjectLayoutsPage(
-			Long objectDefinitionId, Pagination pagination)
+			Long objectDefinitionId, String search, Pagination pagination)
 		throws Exception;
 
 	public ObjectLayout postObjectDefinitionObjectLayout(

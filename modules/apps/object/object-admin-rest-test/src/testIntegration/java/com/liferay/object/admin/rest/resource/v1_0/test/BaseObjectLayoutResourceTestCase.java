@@ -195,7 +195,8 @@ public abstract class BaseObjectLayoutResourceTestCase {
 
 		Page<ObjectLayout> page =
 			objectLayoutResource.getObjectDefinitionObjectLayoutsPage(
-				objectDefinitionId, Pagination.of(1, 10));
+				objectDefinitionId, RandomTestUtil.randomString(),
+				Pagination.of(1, 10));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -206,7 +207,7 @@ public abstract class BaseObjectLayoutResourceTestCase {
 					randomIrrelevantObjectLayout());
 
 			page = objectLayoutResource.getObjectDefinitionObjectLayoutsPage(
-				irrelevantObjectDefinitionId, Pagination.of(1, 2));
+				irrelevantObjectDefinitionId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -225,7 +226,7 @@ public abstract class BaseObjectLayoutResourceTestCase {
 				objectDefinitionId, randomObjectLayout());
 
 		page = objectLayoutResource.getObjectDefinitionObjectLayoutsPage(
-			objectDefinitionId, Pagination.of(1, 10));
+			objectDefinitionId, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -256,7 +257,7 @@ public abstract class BaseObjectLayoutResourceTestCase {
 
 		Page<ObjectLayout> page1 =
 			objectLayoutResource.getObjectDefinitionObjectLayoutsPage(
-				objectDefinitionId, Pagination.of(1, 2));
+				objectDefinitionId, null, Pagination.of(1, 2));
 
 		List<ObjectLayout> objectLayouts1 =
 			(List<ObjectLayout>)page1.getItems();
@@ -266,7 +267,7 @@ public abstract class BaseObjectLayoutResourceTestCase {
 
 		Page<ObjectLayout> page2 =
 			objectLayoutResource.getObjectDefinitionObjectLayoutsPage(
-				objectDefinitionId, Pagination.of(2, 2));
+				objectDefinitionId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -278,7 +279,7 @@ public abstract class BaseObjectLayoutResourceTestCase {
 
 		Page<ObjectLayout> page3 =
 			objectLayoutResource.getObjectDefinitionObjectLayoutsPage(
-				objectDefinitionId, Pagination.of(1, 3));
+				objectDefinitionId, null, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(objectLayout1, objectLayout2, objectLayout3),

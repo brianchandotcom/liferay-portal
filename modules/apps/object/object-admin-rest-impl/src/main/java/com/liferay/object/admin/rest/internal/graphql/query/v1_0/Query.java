@@ -167,11 +167,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitionObjectLayouts(objectDefinitionId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitionObjectLayouts(objectDefinitionId: ___, page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectLayoutPage objectDefinitionObjectLayouts(
 			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("search") String search,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -181,7 +182,8 @@ public class Query {
 			this::_populateResourceContext,
 			objectLayoutResource -> new ObjectLayoutPage(
 				objectLayoutResource.getObjectDefinitionObjectLayoutsPage(
-					objectDefinitionId, Pagination.of(page, pageSize))));
+					objectDefinitionId, search,
+					Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -254,6 +256,7 @@ public class Query {
 
 		@GraphQLField
 		public ObjectLayoutPage objectLayouts(
+				@GraphQLName("search") String search,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 			throws Exception {
@@ -263,7 +266,7 @@ public class Query {
 				Query.this::_populateResourceContext,
 				objectLayoutResource -> new ObjectLayoutPage(
 					objectLayoutResource.getObjectDefinitionObjectLayoutsPage(
-						_objectDefinition.getId(),
+						_objectDefinition.getId(), search,
 						Pagination.of(page, pageSize))));
 		}
 

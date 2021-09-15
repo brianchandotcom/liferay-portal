@@ -95,6 +95,7 @@ public abstract class BaseObjectLayoutResourceImpl
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "objectDefinitionId"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -105,6 +106,7 @@ public abstract class BaseObjectLayoutResourceImpl
 	public Page<ObjectLayout> getObjectDefinitionObjectLayoutsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("objectDefinitionId")
 				Long objectDefinitionId,
+			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -302,7 +304,7 @@ public abstract class BaseObjectLayoutResourceImpl
 
 		return getObjectDefinitionObjectLayoutsPage(
 			Long.parseLong((String)parameters.get("objectDefinitionId")),
-			pagination);
+			search, pagination);
 	}
 
 	@Override

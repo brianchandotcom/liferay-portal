@@ -41,12 +41,12 @@ public interface ObjectLayoutResource {
 	}
 
 	public Page<ObjectLayout> getObjectDefinitionObjectLayoutsPage(
-			Long objectDefinitionId, Pagination pagination)
+			Long objectDefinitionId, String search, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getObjectDefinitionObjectLayoutsPageHttpResponse(
-				Long objectDefinitionId, Pagination pagination)
+				Long objectDefinitionId, String search, Pagination pagination)
 		throws Exception;
 
 	public ObjectLayout postObjectDefinitionObjectLayout(
@@ -161,12 +161,12 @@ public interface ObjectLayoutResource {
 		implements ObjectLayoutResource {
 
 		public Page<ObjectLayout> getObjectDefinitionObjectLayoutsPage(
-				Long objectDefinitionId, Pagination pagination)
+				Long objectDefinitionId, String search, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getObjectDefinitionObjectLayoutsPageHttpResponse(
-					objectDefinitionId, pagination);
+					objectDefinitionId, search, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -207,7 +207,8 @@ public interface ObjectLayoutResource {
 
 		public HttpInvoker.HttpResponse
 				getObjectDefinitionObjectLayoutsPageHttpResponse(
-					Long objectDefinitionId, Pagination pagination)
+					Long objectDefinitionId, String search,
+					Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -230,6 +231,10 @@ public interface ObjectLayoutResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
 
 			if (pagination != null) {
 				httpInvoker.parameter(

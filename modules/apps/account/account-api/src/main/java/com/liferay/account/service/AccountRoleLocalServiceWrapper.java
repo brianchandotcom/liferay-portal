@@ -416,6 +416,19 @@ public class AccountRoleLocalServiceWrapper
 			orderByComparator);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.account.model.AccountRole> searchAccountRoles(
+			long companyId, long[] accountEntryIds, String keywords,
+			java.util.LinkedHashMap<String, Object> params, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<?>
+				orderByComparator) {
+
+		return _accountRoleLocalService.searchAccountRoles(
+			companyId, accountEntryIds, keywords, params, start, end,
+			orderByComparator);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x)
 	 */

@@ -52,7 +52,7 @@
 								<strong><%= HtmlUtil.escape(entry.getUserName()) %></strong>
 
 								<span> - </span>
-								<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
+								<span class="sr-only"><liferay-ui:message key="published-date" /></span>
 								<%= dateFormatDate.format(entry.getDisplayDate()) %>
 							</small>
 						</div>
@@ -63,7 +63,7 @@
 								<strong><%= HtmlUtil.escape(entry.getUserName()) %></strong>
 
 								<span> - </span>
-								<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
+								<span class="sr-only"><liferay-ui:message key="published-date" /></span>
 								<%= dateFormatDate.format(entry.getDisplayDate()) %>
 							</small>
 						</div>

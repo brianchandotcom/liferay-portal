@@ -100,7 +100,7 @@ AUI.add(
 		var TPL_REQUIRED_MARK =
 			'<span class="reference-mark">' +
 			Liferay.Util.getLexiconIconTpl('asterisk') +
-			'<span class="hide-accessible">' +
+			'<span class="sr-only">' +
 			Liferay.Language.get('required') +
 			'</span></span>';
 

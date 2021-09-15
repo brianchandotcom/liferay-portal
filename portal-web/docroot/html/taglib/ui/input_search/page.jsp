@@ -37,7 +37,7 @@ String value = ParamUtil.getString(request, name);
 
 <div class="<%= cssClass %> input-group taglib-input-search">
 	<div class="input-group-item input-group-prepend">
-		<label class="hide-accessible" for="<%= namespace + id %>"><%= title %></label>
+		<label class="sr-only" for="<%= namespace + id %>"><%= title %></label>
 
 		<input class="form-control search-query" id="<%= namespace + id %>" name="<%= namespace + name %>" placeholder="<%= placeholder %>" title="<%= title %>" type="text" value="<%= HtmlUtil.escapeAttribute(value) %>" />
 	</div>

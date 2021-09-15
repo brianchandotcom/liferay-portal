@@ -48,7 +48,7 @@
 	</c:when>
 	<c:otherwise>
 		<c:if test="<%= Validator.isNotNull(message) %>">
-			<span class="taglib-text <%= label ? StringPool.BLANK : "hide-accessible" %>"><%= localizeMessage ? LanguageUtil.get(resourceBundle, message) : message %></span>
+			<span class="taglib-text <%= label ? StringPool.BLANK : "sr-only" %>"><%= localizeMessage ? LanguageUtil.get(resourceBundle, message) : message %></span>
 		</c:if>
 	</c:otherwise>
 </c:choose>

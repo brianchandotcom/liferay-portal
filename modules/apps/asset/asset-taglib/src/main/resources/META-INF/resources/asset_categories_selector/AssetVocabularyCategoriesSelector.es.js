@@ -198,7 +198,7 @@ function AssetVocabulariesCategoriesSelector({
 							<span className="inline-item inline-item-after reference-mark">
 								<ClayIcon symbol="asterisk" />
 
-								<span className="hide-accessible">
+								<span className="sr-only">
 									{Liferay.Language.get('required')}
 								</span>
 							</span>

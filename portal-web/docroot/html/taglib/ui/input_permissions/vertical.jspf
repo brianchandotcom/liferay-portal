@@ -103,7 +103,7 @@ ServiceContext#deriveDefaultPermissions(long, String).
 						<label class="sr-only" for="<%= checkboxFieldId %>"><liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())} %>" key="give-x-permission-to-users-with-role-x" translateArguments="<%= false %>" /></label>
 
 						<c:if test="<%= action.equals(ActionKeys.VIEW) %>">
-							<input <%= checked ? "checked" : "" %> class="hide-accessible" id="<%= checkboxFieldId %>" name="<%= checkboxFieldName %>" type="checkbox" value="<%= action %>" />
+							<input <%= checked ? "checked" : "" %> class="sr-only" id="<%= checkboxFieldId %>" name="<%= checkboxFieldName %>" type="checkbox" value="<%= action %>" />
 
 							<%
 							disabled = true;

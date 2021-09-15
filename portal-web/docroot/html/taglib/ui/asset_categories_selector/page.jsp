@@ -94,7 +94,7 @@ vocabularies.sort(new AssetVocabularyGroupLocalizedTitleComparator(scopeGroupId,
 
 					<c:if test="<%= vocabulary.isRequired(classNameId, classTypePK) && showRequiredLabel %>">
 						<span class="icon-asterisk text-warning">
-							<span class="hide-accessible"><liferay-ui:message key="required" /></span>
+							<span class="sr-only"><liferay-ui:message key="required" /></span>
 						</span>
 					</c:if>
 				</label>

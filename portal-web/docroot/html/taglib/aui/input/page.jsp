@@ -100,7 +100,7 @@
 		</c:if>
 
 		<c:if test="<%= changesContext %>">
-			<span class="hide-accessible">(<liferay-ui:message key="changing-the-value-of-this-field-reloads-the-page" />)</span>
+			<span class="sr-only">(<liferay-ui:message key="changing-the-value-of-this-field-reloads-the-page" />)</span>
 		</c:if>
 	</label>
 </liferay-util:buffer>
@@ -115,7 +115,7 @@
 			<c:if test='<%= required && showRequiredLabel && !type.equals("radio") %>'>
 				<aui:icon cssClass="reference-mark text-warning" image="asterisk" markupView="lexicon" />
 
-				<span class="hide-accessible"><liferay-ui:message key="required" /></span>
+				<span class="sr-only"><liferay-ui:message key="required" /></span>
 			</c:if>
 
 			<c:if test="<%= Validator.isNotNull(helpMessage) %>">
@@ -124,7 +124,7 @@
 		</c:if>
 
 		<c:if test="<%= changesContext %>">
-			<span class="hide-accessible">(<liferay-ui:message key="changing-the-value-of-this-field-reloads-the-page" />)</span>
+			<span class="sr-only">(<liferay-ui:message key="changing-the-value-of-this-field-reloads-the-page" />)</span>
 		</c:if>
 	</c:if>
 

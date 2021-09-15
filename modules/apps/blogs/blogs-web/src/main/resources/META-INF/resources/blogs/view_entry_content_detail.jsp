@@ -104,7 +104,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 											).buildString()
 										%>"
 									>
-										<span class="hide-accessible"><liferay-ui:message key="edit-entry" /></span>
+										<span class="sr-only"><liferay-ui:message key="edit-entry" /></span>
 
 										<clay:icon
 											symbol="pencil"
@@ -150,7 +150,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 									</div>
 
 									<div>
-										<span class="hide-accessible"><liferay-ui:message key="published-date" /></span><liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+										<span class="sr-only"><liferay-ui:message key="published-date" /></span><liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 
 										<c:if test="<%= blogsPortletInstanceConfiguration.enableReadingTime() %>">
 											- <liferay-reading-time:reading-time displayStyle="descriptive" model="<%= entry %>" />

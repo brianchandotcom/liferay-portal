@@ -23,7 +23,7 @@
 		<c:if test="<%= required %>">
 			<aui:icon cssClass="reference-mark text-warning" image="asterisk" markupView="lexicon" />
 
-			<span class="hide-accessible"><liferay-ui:message key="required" /></span>
+			<span class="sr-only"><liferay-ui:message key="required" /></span>
 		</c:if>
 
 		<c:if test="<%= Validator.isNotNull(helpMessage) %>">

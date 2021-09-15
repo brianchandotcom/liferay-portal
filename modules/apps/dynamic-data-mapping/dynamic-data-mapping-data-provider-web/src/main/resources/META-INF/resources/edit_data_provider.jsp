@@ -57,7 +57,7 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 				<liferay-util:buffer
 					var="requiredMark"
 				>
-					<span class="hide-accessible"><liferay-ui:message key="required" />&nbsp;</span>
+					<span class="sr-only"><liferay-ui:message key="required" />&nbsp;</span>
 
 					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
 						<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#asterisk" />

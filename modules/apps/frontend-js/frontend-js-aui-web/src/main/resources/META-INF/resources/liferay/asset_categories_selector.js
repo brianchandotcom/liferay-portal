@@ -770,7 +770,7 @@ AUI.add(
 
 					instance._renderIcons();
 
-					instance.inputContainer.addClass('hide-accessible');
+					instance.inputContainer.addClass('sr-only');
 
 					instance._applyARIARoles();
 				},

@@ -49,11 +49,6 @@ import CodeMirror from 'codemirror';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
-const VARIABLE_MARKERS = {
-	variableEnd: '}',
-	variableStart: '${',
-};
-
 export const CodeMirrorEditor = ({
 	autocompleteData,
 	content,
@@ -92,7 +87,8 @@ export const CodeMirrorEditor = ({
 
 	useEffect(() => {
 		if (editor) {
-			const {variableEnd, variableStart} = VARIABLE_MARKERS || {};
+			const variableStart = '${';
+			const variableEnd = '}';
 
 			let wordList = [];
 

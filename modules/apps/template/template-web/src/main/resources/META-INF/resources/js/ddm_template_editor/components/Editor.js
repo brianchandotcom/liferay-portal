@@ -98,7 +98,6 @@ export const Editor = ({autocompleteData, initialScript}) => {
 				autocompleteData={autocompleteData}
 				content={script}
 				inputChannel={inputChannel}
-				mode="ftl"
 				onChange={setScript}
 			/>
 

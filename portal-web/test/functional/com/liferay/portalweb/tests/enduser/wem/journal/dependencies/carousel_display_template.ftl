@@ -7,10 +7,10 @@
 	-->
 
 	<section class="main-carousel-wrapper">
-		<div class="carousel slide" data-ride="carousel" id='main-carousel-${.vars["reserved-article-id"].data}'>
+		<div class="carousel slide" data-ride="carousel" id="main-carousel-${.vars["reserved-article-id"].data}">
 			<ol class="carousel-indicators hidden-sm hidden-xs">
 				<#list contents.getSiblings() as cur_contents>
-					<li class="${(cur_contents?counter == 1)?then('active', '')}" data-slide-to="${(cur_contents?counter == 1)?then(0, (cur_contents?counter - 1))}" data-target='main-carousel-${.vars["reserved-article-id"].data}'></li>
+					<li class="${(cur_contents?counter == 1)?then('active', '')}" data-slide-to="${(cur_contents?counter == 1)?then(0, (cur_contents?counter - 1))}" data-target="main-carousel-${.vars["reserved-article-id"].data}"></li>
 				</#list>
 			</ol>
 
@@ -20,24 +20,24 @@
 						<#assign article = cur_contents.getData()?eval />
 
 						<#-- Here is our taglib call -->
+
 						<@liferay_asset["asset-display"]
 							className=article.className
 							classPK=getterUtil.getLong(article.classPK, 0)
 							template="full_content"
 						/>
-
 					</div>
 				</#list>
 			</div>
 
-			<a class="left carousel-control" href='#main-carousel-${.vars["reserved-article-id"].data}' role="button" data-slide="prev">
-				<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+			<a class="carousel-control left" data-slide="prev" href="#main-carousel-${.vars["reserved-article-id"].data}" role="button">
+				<span aria-hidden="true" class="glyphicon glyphicon-chevron-left"></span>
 
 				<span class="sr-only">Previous</span>
 			</a>
 
-			<a class="right carousel-control" href='#main-carousel-${.vars["reserved-article-id"].data}' role="button" data-slide="next">
-				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+			<a class="carousel-control right" data-slide="next" href="#main-carousel-${.vars["reserved-article-id"].data}" role="button">
+				<span aria-hidden="true" class="glyphicon glyphicon-chevron-right"></span>
 
 				<span class="sr-only">Next</span>
 			</a>

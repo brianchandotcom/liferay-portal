@@ -300,11 +300,20 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Object Name field blank"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotLeaveObjectNameFieldBlank {
 
-		// TODO LPS-138810 CannotLeaveObjectNameFieldBlank pending implementation
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.addNewObject(
+			fieldLabelName = "Custom Field",
+			pluralLabelName = "Custom Fields"
+		);
+
+		CreateObject.asssertCannotLeaveObjectNameFieldBlank();
+
+
+
 
 	}
 

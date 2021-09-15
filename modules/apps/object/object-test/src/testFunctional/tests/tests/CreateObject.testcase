@@ -262,7 +262,6 @@ definition {
 	@description = "LPS-135549 - Verify that it is not possible to create a Object with a duplicated Object Name"
 	@priority = "4"
 	test CannotCreateDuplicatedObjectName {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -273,10 +272,6 @@ definition {
 		ObjectAdmin.openObjectAdmin();
 
 		CreateObject.assertCannotCreateDuplicatedObjectName();
-
-
-		
-
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Field Name field blank"

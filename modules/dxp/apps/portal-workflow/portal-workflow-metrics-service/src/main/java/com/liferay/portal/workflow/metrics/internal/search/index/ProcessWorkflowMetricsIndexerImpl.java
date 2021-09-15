@@ -222,7 +222,7 @@ public class ProcessWorkflowMetricsIndexerImpl
 
 				ScriptBuilder scriptBuilder = scripts.builder();
 
-				searchEngineAdapter.execute(
+				UpdateDocumentRequest updateDocumentRequest =
 					new UpdateDocumentRequest(
 						getIndexName(companyId),
 						WorkflowMetricsIndexerUtil.digest(
@@ -239,7 +239,13 @@ public class ProcessWorkflowMetricsIndexerImpl
 							"version", version
 						).scriptType(
 							ScriptType.INLINE
-						).build()));
+						).build());
+
+				if (PortalRunMode.isTestMode()) {
+					updateDocumentRequest.setRefresh(true);
+				}
+
+				searchEngineAdapter.execute(updateDocumentRequest);
 			});
 
 		return document;

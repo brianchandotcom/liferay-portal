@@ -1,3 +1,7 @@
+if (!ctx._source.containsKey("versions")) {
+	ctx._source["versions"] = [];
+}
+
 if (ctx._source.versions instanceof String) {
 	if (!params.version.equals(ctx._source.versions)) {
 		ctx._source.versions = new String[] {

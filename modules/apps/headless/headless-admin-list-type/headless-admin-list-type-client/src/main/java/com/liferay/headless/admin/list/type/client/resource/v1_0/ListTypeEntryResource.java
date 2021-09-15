@@ -41,12 +41,12 @@ public interface ListTypeEntryResource {
 	}
 
 	public Page<ListTypeEntry> getListTypeDefinitionListTypeEntriesPage(
-			Long listTypeDefinitionId, Pagination pagination)
+			Long listTypeDefinitionId, String search, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getListTypeDefinitionListTypeEntriesPageHttpResponse(
-				Long listTypeDefinitionId, Pagination pagination)
+				Long listTypeDefinitionId, String search, Pagination pagination)
 		throws Exception;
 
 	public ListTypeEntry postListTypeDefinitionListTypeEntry(
@@ -175,12 +175,12 @@ public interface ListTypeEntryResource {
 		implements ListTypeEntryResource {
 
 		public Page<ListTypeEntry> getListTypeDefinitionListTypeEntriesPage(
-				Long listTypeDefinitionId, Pagination pagination)
+				Long listTypeDefinitionId, String search, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getListTypeDefinitionListTypeEntriesPageHttpResponse(
-					listTypeDefinitionId, pagination);
+					listTypeDefinitionId, search, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -221,7 +221,8 @@ public interface ListTypeEntryResource {
 
 		public HttpInvoker.HttpResponse
 				getListTypeDefinitionListTypeEntriesPageHttpResponse(
-					Long listTypeDefinitionId, Pagination pagination)
+					Long listTypeDefinitionId, String search,
+					Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -244,6 +245,10 @@ public interface ListTypeEntryResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
 
 			if (pagination != null) {
 				httpInvoker.parameter(

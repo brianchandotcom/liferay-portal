@@ -207,7 +207,8 @@ public abstract class BaseListTypeEntryResourceTestCase {
 
 		Page<ListTypeEntry> page =
 			listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
-				listTypeDefinitionId, Pagination.of(1, 10));
+				listTypeDefinitionId, RandomTestUtil.randomString(),
+				Pagination.of(1, 10));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -219,7 +220,7 @@ public abstract class BaseListTypeEntryResourceTestCase {
 
 			page =
 				listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
-					irrelevantListTypeDefinitionId, Pagination.of(1, 2));
+					irrelevantListTypeDefinitionId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -238,7 +239,7 @@ public abstract class BaseListTypeEntryResourceTestCase {
 				listTypeDefinitionId, randomListTypeEntry());
 
 		page = listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
-			listTypeDefinitionId, Pagination.of(1, 10));
+			listTypeDefinitionId, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -273,7 +274,7 @@ public abstract class BaseListTypeEntryResourceTestCase {
 
 		Page<ListTypeEntry> page1 =
 			listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
-				listTypeDefinitionId, Pagination.of(1, 2));
+				listTypeDefinitionId, null, Pagination.of(1, 2));
 
 		List<ListTypeEntry> listTypeEntries1 =
 			(List<ListTypeEntry>)page1.getItems();
@@ -283,7 +284,7 @@ public abstract class BaseListTypeEntryResourceTestCase {
 
 		Page<ListTypeEntry> page2 =
 			listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
-				listTypeDefinitionId, Pagination.of(2, 2));
+				listTypeDefinitionId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -295,7 +296,7 @@ public abstract class BaseListTypeEntryResourceTestCase {
 
 		Page<ListTypeEntry> page3 =
 			listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
-				listTypeDefinitionId, Pagination.of(1, 3));
+				listTypeDefinitionId, null, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(listTypeEntry1, listTypeEntry2, listTypeEntry3),

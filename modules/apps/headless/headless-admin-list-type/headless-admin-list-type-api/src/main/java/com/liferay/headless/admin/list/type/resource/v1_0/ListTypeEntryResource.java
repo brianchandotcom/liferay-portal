@@ -58,7 +58,7 @@ public interface ListTypeEntryResource {
 	}
 
 	public Page<ListTypeEntry> getListTypeDefinitionListTypeEntriesPage(
-			Long listTypeDefinitionId, Pagination pagination)
+			Long listTypeDefinitionId, String search, Pagination pagination)
 		throws Exception;
 
 	public ListTypeEntry postListTypeDefinitionListTypeEntry(

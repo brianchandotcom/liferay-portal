@@ -96,6 +96,7 @@ public abstract class BaseListTypeEntryResourceImpl
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "listTypeDefinitionId"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -107,6 +108,7 @@ public abstract class BaseListTypeEntryResourceImpl
 			@NotNull @Parameter(hidden = true)
 			@PathParam("listTypeDefinitionId")
 			Long listTypeDefinitionId,
+			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Pagination pagination)
 		throws Exception {
 

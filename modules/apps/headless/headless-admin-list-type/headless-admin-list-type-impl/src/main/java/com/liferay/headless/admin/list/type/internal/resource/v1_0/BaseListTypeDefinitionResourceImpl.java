@@ -95,6 +95,7 @@ public abstract class BaseListTypeDefinitionResourceImpl
 	@Override
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -103,6 +104,7 @@ public abstract class BaseListTypeDefinitionResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ListTypeDefinition")})
 	public Page<ListTypeDefinition> getListTypeDefinitionsPage(
+			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -356,7 +358,7 @@ public abstract class BaseListTypeDefinitionResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getListTypeDefinitionsPage(pagination);
+		return getListTypeDefinitionsPage(search, pagination);
 	}
 
 	@Override

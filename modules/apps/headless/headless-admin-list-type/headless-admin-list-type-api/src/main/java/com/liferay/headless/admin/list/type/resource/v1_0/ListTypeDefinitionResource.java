@@ -58,7 +58,7 @@ public interface ListTypeDefinitionResource {
 	}
 
 	public Page<ListTypeDefinition> getListTypeDefinitionsPage(
-			Pagination pagination)
+			String search, Pagination pagination)
 		throws Exception;
 
 	public ListTypeDefinition postListTypeDefinition(

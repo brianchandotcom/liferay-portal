@@ -199,7 +199,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 	public void testGetListTypeDefinitionsPage() throws Exception {
 		Page<ListTypeDefinition> page =
 			listTypeDefinitionResource.getListTypeDefinitionsPage(
-				Pagination.of(1, 10));
+				RandomTestUtil.randomString(), Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
@@ -212,7 +212,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 				randomListTypeDefinition());
 
 		page = listTypeDefinitionResource.getListTypeDefinitionsPage(
-			Pagination.of(1, 10));
+			null, Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -234,7 +234,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		throws Exception {
 
 		Page<ListTypeDefinition> totalPage =
-			listTypeDefinitionResource.getListTypeDefinitionsPage(null);
+			listTypeDefinitionResource.getListTypeDefinitionsPage(null, null);
 
 		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
 
@@ -252,7 +252,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 
 		Page<ListTypeDefinition> page1 =
 			listTypeDefinitionResource.getListTypeDefinitionsPage(
-				Pagination.of(1, totalCount + 2));
+				null, Pagination.of(1, totalCount + 2));
 
 		List<ListTypeDefinition> listTypeDefinitions1 =
 			(List<ListTypeDefinition>)page1.getItems();
@@ -263,7 +263,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 
 		Page<ListTypeDefinition> page2 =
 			listTypeDefinitionResource.getListTypeDefinitionsPage(
-				Pagination.of(2, totalCount + 2));
+				null, Pagination.of(2, totalCount + 2));
 
 		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -275,7 +275,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 
 		Page<ListTypeDefinition> page3 =
 			listTypeDefinitionResource.getListTypeDefinitionsPage(
-				Pagination.of(1, totalCount + 3));
+				null, Pagination.of(1, totalCount + 3));
 
 		assertContains(
 			listTypeDefinition1, (List<ListTypeDefinition>)page3.getItems());

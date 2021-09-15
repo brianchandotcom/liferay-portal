@@ -332,11 +332,21 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with the first character of the Object Name in lower case"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotSaveLowerCaseObjectName {
 
-		// TODO LPS-138807 CannotSaveLowerCaseObjectName pending implementation
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.addNewObject(
+			fieldLabelName = "Custom Field",
+			pluralLabelName = "Custom Fields"
+		);
+
+		CreateObject.assertCannotSaveLowerCaseObjectName();
+
+
+		
+
 
 	}
 

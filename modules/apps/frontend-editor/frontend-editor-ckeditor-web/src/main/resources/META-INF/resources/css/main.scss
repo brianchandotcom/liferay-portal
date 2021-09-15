@@ -141,24 +141,46 @@
 	position: inherit !important;
 }
 
-.cke_toolbar {
-	&.cke_toolbar__a11yhelpbtn {
-		float: right;
+.cke_toolbar.cke_toolbar__a11yhelpbtn {
+	float: right;
 
-		.cke_toolgroup,
-		.cke_toolgroup:hover {
+	.cke_toolgroup {
+		&,
+		&:hover {
+			background: transparent;
 			border-width: 0;
 			margin-bottom: 0;
 			margin-top: 5px;
 		}
+	}
 
-		.cke_button {
-			.cke_button_icon {
-				display: none;
+	.cke_button {
+		&:hover {
+			background: transparent;
+		}
+
+		.cke_button_icon {
+			display: none;
+		}
+
+		.cke_button__a11ybtn_label {
+			display: inline;
+		}
+
+		.cke_button_label {
+			display: inline;
+
+			&:after {
+				border: 1px solid #a6a6a6;
+				content: 'Alt+0';
+				font-family: 'Courier New', Courier,
+					'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
+				margin-left: 5px;
+				padding: 3px;
 			}
 
-			.cke_button__a11ybtn_label {
-				display: inline;
+			&.mac:after {
+				content: 'Option+0';
 			}
 		}
 	}

@@ -235,6 +235,9 @@ components:
             type: object
         CartItem:
             properties:
+                adaptiveMediaImageHTMLTag:
+                    readOnly: true
+                    type: string
                 cartItems:
                     items:
                         $ref: "#/components/schemas/CartItem"

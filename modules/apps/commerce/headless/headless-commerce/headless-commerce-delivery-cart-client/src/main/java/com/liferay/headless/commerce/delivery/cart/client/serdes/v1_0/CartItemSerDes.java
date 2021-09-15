@@ -54,6 +54,20 @@ public class CartItemSerDes {
 
 		sb.append("{");
 
+		if (cartItem.getAdaptiveMediaImageHTMLTag() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"adaptiveMediaImageHTMLTag\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(cartItem.getAdaptiveMediaImageHTMLTag()));
+
+			sb.append("\"");
+		}
+
 		if (cartItem.getCartItems() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -272,6 +286,15 @@ public class CartItemSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (cartItem.getAdaptiveMediaImageHTMLTag() == null) {
+			map.put("adaptiveMediaImageHTMLTag", null);
+		}
+		else {
+			map.put(
+				"adaptiveMediaImageHTMLTag",
+				String.valueOf(cartItem.getAdaptiveMediaImageHTMLTag()));
+		}
+
 		if (cartItem.getCartItems() == null) {
 			map.put("cartItems", null);
 		}
@@ -407,7 +430,15 @@ public class CartItemSerDes {
 			CartItem cartItem, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "cartItems")) {
+			if (Objects.equals(
+					jsonParserFieldName, "adaptiveMediaImageHTMLTag")) {
+
+				if (jsonParserFieldValue != null) {
+					cartItem.setAdaptiveMediaImageHTMLTag(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "cartItems")) {
 				if (jsonParserFieldValue != null) {
 					cartItem.setCartItems(
 						Stream.of(

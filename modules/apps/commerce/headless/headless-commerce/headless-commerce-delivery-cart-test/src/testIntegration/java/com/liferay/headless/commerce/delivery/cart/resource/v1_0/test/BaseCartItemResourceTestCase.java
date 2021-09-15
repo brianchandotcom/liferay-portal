@@ -180,6 +180,7 @@ public abstract class BaseCartItemResourceTestCase {
 
 		CartItem cartItem = randomCartItem();
 
+		cartItem.setAdaptiveMediaImageHTMLTag(regex);
 		cartItem.setName(regex);
 		cartItem.setOptions(regex);
 		cartItem.setSku(regex);
@@ -191,6 +192,7 @@ public abstract class BaseCartItemResourceTestCase {
 
 		cartItem = CartItemSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, cartItem.getAdaptiveMediaImageHTMLTag());
 		Assert.assertEquals(regex, cartItem.getName());
 		Assert.assertEquals(regex, cartItem.getOptions());
 		Assert.assertEquals(regex, cartItem.getSku());
@@ -588,6 +590,16 @@ public abstract class BaseCartItemResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals(
+					"adaptiveMediaImageHTMLTag", additionalAssertFieldName)) {
+
+				if (cartItem.getAdaptiveMediaImageHTMLTag() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("cartItems", additionalAssertFieldName)) {
 				if (cartItem.getCartItems() == null) {
 					valid = false;
@@ -797,6 +809,19 @@ public abstract class BaseCartItemResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"adaptiveMediaImageHTMLTag", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						cartItem1.getAdaptiveMediaImageHTMLTag(),
+						cartItem2.getAdaptiveMediaImageHTMLTag())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("cartItems", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -1055,6 +1080,14 @@ public abstract class BaseCartItemResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("adaptiveMediaImageHTMLTag")) {
+			sb.append("'");
+			sb.append(String.valueOf(cartItem.getAdaptiveMediaImageHTMLTag()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("cartItems")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1191,6 +1224,8 @@ public abstract class BaseCartItemResourceTestCase {
 	protected CartItem randomCartItem() throws Exception {
 		return new CartItem() {
 			{
+				adaptiveMediaImageHTMLTag = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				options = StringUtil.toLowerCase(RandomTestUtil.randomString());

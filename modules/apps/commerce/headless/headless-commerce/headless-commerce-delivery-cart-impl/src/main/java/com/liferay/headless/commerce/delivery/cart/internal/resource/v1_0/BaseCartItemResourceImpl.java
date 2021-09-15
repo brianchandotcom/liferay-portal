@@ -192,6 +192,11 @@ public abstract class BaseCartItemResourceImpl
 
 		CartItem existingCartItem = getCartItem(cartItemId);
 
+		if (cartItem.getAdaptiveMediaImageHTMLTag() != null) {
+			existingCartItem.setAdaptiveMediaImageHTMLTag(
+				cartItem.getAdaptiveMediaImageHTMLTag());
+		}
+
 		if (cartItem.getCustomFields() != null) {
 			existingCartItem.setCustomFields(cartItem.getCustomFields());
 		}

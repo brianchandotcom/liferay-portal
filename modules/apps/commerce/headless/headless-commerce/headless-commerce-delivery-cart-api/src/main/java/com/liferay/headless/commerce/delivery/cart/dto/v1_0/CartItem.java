@@ -54,6 +54,36 @@ public class CartItem implements Serializable {
 	}
 
 	@Schema
+	public String getAdaptiveMediaImageHTMLTag() {
+		return adaptiveMediaImageHTMLTag;
+	}
+
+	public void setAdaptiveMediaImageHTMLTag(String adaptiveMediaImageHTMLTag) {
+		this.adaptiveMediaImageHTMLTag = adaptiveMediaImageHTMLTag;
+	}
+
+	@JsonIgnore
+	public void setAdaptiveMediaImageHTMLTag(
+		UnsafeSupplier<String, Exception>
+			adaptiveMediaImageHTMLTagUnsafeSupplier) {
+
+		try {
+			adaptiveMediaImageHTMLTag =
+				adaptiveMediaImageHTMLTagUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String adaptiveMediaImageHTMLTag;
+
+	@Schema
 	@Valid
 	public CartItem[] getCartItems() {
 		return cartItems;
@@ -521,6 +551,20 @@ public class CartItem implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (adaptiveMediaImageHTMLTag != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"adaptiveMediaImageHTMLTag\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(adaptiveMediaImageHTMLTag));
+
+			sb.append("\"");
+		}
 
 		if (cartItems != null) {
 			if (sb.length() > 1) {

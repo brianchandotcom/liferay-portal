@@ -188,8 +188,6 @@ definition {
 
 	@priority = "3"
 	test ViewInvitedResourceAvailability {
-		property portal.upstream = "quarantine";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

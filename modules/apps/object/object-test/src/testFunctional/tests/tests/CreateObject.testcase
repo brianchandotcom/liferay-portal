@@ -305,10 +305,10 @@ definition {
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.addNewObject(
-			fieldLabelName = "Custom Field",
+			fieldLabelName = "",
 			pluralLabelName = "Custom Fields");
 
-		CreateObject.asssertCannotLeaveObjectNameFieldBlank();
+		ObjectAdmin.viewFieldErrorMessage(message = "Name is null");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Type field blank"

@@ -43,7 +43,9 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 					{
 						@DDMFormLayoutColumn(
 							size = 12,
-							value = {"label", "objectDefinitionId", "required"}
+							value = {
+								"label", "tip", "objectDefinitionId", "required"
+							}
 						)
 					}
 				)
@@ -56,7 +58,10 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 					{
 						@DDMFormLayoutColumn(
 							size = 12,
-							value = {"name", "objectFieldName", "dataType"}
+							value = {
+								"fieldReference", "name", "objectFieldName",
+								"dataType", "nativeField", "showLabel"
+							}
 						)
 					}
 				)

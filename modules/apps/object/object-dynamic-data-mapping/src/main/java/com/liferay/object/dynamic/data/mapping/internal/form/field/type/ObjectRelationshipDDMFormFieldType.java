@@ -48,7 +48,8 @@ public class ObjectRelationshipDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getModuleName() {
-		return "commerce-frontend-js/components/autocomplete/Autocomplete";
+		return "dynamic-data-mapping-form-field-type/ObjectRelationship" +
+			"/ObjectRelationship";
 	}
 
 	@Override

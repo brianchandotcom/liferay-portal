@@ -15,7 +15,10 @@
 package com.liferay.site.initializer.extender.internal;
 
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.product.importer.CPFileImporter;
+import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -35,6 +38,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.initializer.SiteInitializer;
@@ -56,7 +60,10 @@ public class SiteInitializerRegistrar {
 		BundleContext bundleContext,
 		CatalogResource.Factory catalogResourceFactory,
 		ChannelResource.Factory channelResourceFactory,
+		CommerceAccountRoleHelper commerceAccountRoleHelper,
+		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CPFileImporter cpFileImporter,
+		CPMeasurementUnitLocalService cpMeasurementUnitLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -70,7 +77,7 @@ public class SiteInitializerRegistrar {
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		Portal portal,
 		ResourcePermissionLocalService resourcePermissionLocalService,
-		RoleLocalService roleLocalService,
+		RoleLocalService roleLocalService, SettingsFactory settingsFactory,
 		StructuredContentFolderResource.Factory
 			structuredContentFolderResourceFactory,
 		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
@@ -83,7 +90,10 @@ public class SiteInitializerRegistrar {
 		_bundleContext = bundleContext;
 		_catalogResourceFactory = catalogResourceFactory;
 		_channelResourceFactory = channelResourceFactory;
+		_commerceAccountRoleHelper = commerceAccountRoleHelper;
+		_commerceCurrencyLocalService = commerceCurrencyLocalService;
 		_cpFileImporter = cpFileImporter;
+		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
@@ -98,6 +108,7 @@ public class SiteInitializerRegistrar {
 		_portal = portal;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
+		_settingsFactory = settingsFactory;
 		_structuredContentFolderResourceFactory =
 			structuredContentFolderResourceFactory;
 		_styleBookEntryZipProcessor = styleBookEntryZipProcessor;
@@ -115,15 +126,17 @@ public class SiteInitializerRegistrar {
 			SiteInitializer.class,
 			new BundleSiteInitializer(
 				_assetListEntryLocalService, _bundle, _catalogResourceFactory,
-				_channelResourceFactory, _cpFileImporter,
-				_ddmStructureLocalService, _ddmTemplateLocalService,
-				_defaultDDMStructureHelper, _dlURLHelper,
-				_documentFolderResourceFactory, _documentResourceFactory,
-				_fragmentsImporter, _groupLocalService,
-				_journalArticleLocalService, _jsonFactory,
+				_channelResourceFactory, _commerceAccountRoleHelper,
+				_commerceCurrencyLocalService, _cpFileImporter,
+				_cpMeasurementUnitLocalService, _ddmStructureLocalService,
+				_ddmTemplateLocalService, _defaultDDMStructureHelper,
+				_dlURLHelper, _documentFolderResourceFactory,
+				_documentResourceFactory, _fragmentsImporter,
+				_groupLocalService, _journalArticleLocalService, _jsonFactory,
 				_objectDefinitionResourceFactory, _portal,
 				_resourcePermissionLocalService, _roleLocalService,
-				_servletContext, _structuredContentFolderResourceFactory,
+				_servletContext, _settingsFactory,
+				_structuredContentFolderResourceFactory,
 				_styleBookEntryZipProcessor, _taxonomyCategoryResourceFactory,
 				_taxonomyVocabularyResourceFactory, _userLocalService),
 			MapUtil.singletonDictionary(
@@ -139,7 +152,10 @@ public class SiteInitializerRegistrar {
 	private final BundleContext _bundleContext;
 	private final CatalogResource.Factory _catalogResourceFactory;
 	private final ChannelResource.Factory _channelResourceFactory;
+	private final CommerceAccountRoleHelper _commerceAccountRoleHelper;
+	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
 	private final CPFileImporter _cpFileImporter;
+	private final CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
@@ -158,6 +174,7 @@ public class SiteInitializerRegistrar {
 	private final RoleLocalService _roleLocalService;
 	private ServiceRegistration<?> _serviceRegistration;
 	private ServletContext _servletContext;
+	private final SettingsFactory _settingsFactory;
 	private final StructuredContentFolderResource.Factory
 		_structuredContentFolderResourceFactory;
 	private final StyleBookEntryZipProcessor _styleBookEntryZipProcessor;

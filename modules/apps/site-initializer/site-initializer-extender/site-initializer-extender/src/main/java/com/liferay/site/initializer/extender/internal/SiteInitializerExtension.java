@@ -15,7 +15,10 @@
 package com.liferay.site.initializer.extender.internal;
 
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.product.importer.CPFileImporter;
+import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -35,6 +38,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
@@ -57,7 +61,10 @@ public class SiteInitializerExtension {
 		BundleContext bundleContext,
 		CatalogResource.Factory catalogResourceFactory,
 		ChannelResource.Factory channelResourceFactory,
+		CommerceAccountRoleHelper commerceAccountRoleHelper,
+		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CPFileImporter cpFileImporter,
+		CPMeasurementUnitLocalService cpMeasurementUnitLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -71,7 +78,7 @@ public class SiteInitializerExtension {
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		Portal portal,
 		ResourcePermissionLocalService resourcePermissionLocalService,
-		RoleLocalService roleLocalService,
+		RoleLocalService roleLocalService, SettingsFactory settingsFactory,
 		StructuredContentFolderResource.Factory
 			structuredContentFolderResourceFactory,
 		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
@@ -86,7 +93,9 @@ public class SiteInitializerExtension {
 		_component.setImplementation(
 			new SiteInitializerRegistrar(
 				assetListEntryLocalService, bundle, bundleContext,
-				catalogResourceFactory, channelResourceFactory, cpFileImporter,
+				catalogResourceFactory, channelResourceFactory,
+				commerceAccountRoleHelper, commerceCurrencyLocalService,
+				cpFileImporter, cpMeasurementUnitLocalService,
 				ddmStructureLocalService, ddmTemplateLocalService,
 				defaultDDMStructureHelper, dlURLHelper,
 				documentFolderResourceFactory, documentResourceFactory,
@@ -94,7 +103,7 @@ public class SiteInitializerExtension {
 				journalArticleLocalService, jsonFactory,
 				objectDefinitionResourceFactory, portal,
 				resourcePermissionLocalService, roleLocalService,
-				structuredContentFolderResourceFactory,
+				settingsFactory, structuredContentFolderResourceFactory,
 				styleBookEntryZipProcessor, taxonomyCategoryResourceFactory,
 				taxonomyVocabularyResourceFactory, userLocalService));
 

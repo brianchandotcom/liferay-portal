@@ -85,9 +85,9 @@ definition {
 	macro assertObjectColumnsAreDisplayed {
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_NAME_COLUMN");
 
-		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_NAME_COLUMN");
+		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_SYSTEM_COLUMN");
 
-		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_NAME_COLUMN");
+		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_STATUS_COLUMN");
 	}
 
 	macro assertObjectField {

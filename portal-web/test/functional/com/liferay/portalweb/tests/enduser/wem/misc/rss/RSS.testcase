@@ -72,7 +72,6 @@ definition {
 
 	@description = "The user can add a RSS Feed between other feeds on RSS Publisher widget."
 	@priority = "3"
-	@uitest
 	test AddFeedBetweenFeeds {
 		task ("Add a Technology RSS Feed") {
 			Navigator.gotoSitePage(
@@ -119,7 +118,6 @@ definition {
 
 	@description = "The input field of URL cannot accept a Feed with wrong URL."
 	@priority = "4"
-	@uitest
 	test CannotAddFeedWithWrongUrl {
 		task ("View the warning message when adding a RSS Feed with a wrong URL") {
 			Navigator.gotoSitePage(
@@ -156,7 +154,6 @@ definition {
 
 	@description = "This is a test for LPS-107942. The input field of Entries Per Feed shouldn't allow 0 value, negative value, decimal value, letters and symbols."
 	@priority = "4"
-	@uitest
 	test CannotChangeNumberOfEntriesPerFeedToInvalidValue {
 		task ("Assert the input field of Entries Per Feed shouldn't allow 0 value and negative value") {
 			for (var numberOfEntries : list "0,-1") {
@@ -249,7 +246,6 @@ definition {
 
 	@description = "Can change the default Display Template on RSS Publisher widget."
 	@priority = "3"
-	@uitest
 	test ChangeDefaultDisplayTemplateToNavigation {
 		task ("Add a Technology RSS Feed") {
 			Navigator.gotoSitePage(
@@ -278,7 +274,6 @@ definition {
 
 	@description = "This is a test for LPS-107942.The input field of Entries Per Feed allows integer numbers greater than 10."
 	@priority = "5"
-	@uitest
 	test ChangeNumberOfEntriesPerFeedToEleven {
 		property portal.acceptance = "true";
 
@@ -302,7 +297,6 @@ definition {
 
 	@description = "The order of RSS Feeds can be changed on RSS Publisher widget."
 	@priority = "3"
-	@uitest
 	test ChangeOrderOfRSSFeeds {
 		task ("Add a Technology RSS Feed") {
 			Navigator.gotoSitePage(
@@ -402,7 +396,6 @@ definition {
 
 	@description = "The title of a RSS Feed can be disabled on RSS Publisher configuration."
 	@priority = "3"
-	@uitest
 	test DisabledFeedTitle {
 		task ("View default RSS Publisher widget on page") {
 			Navigator.gotoSitePage(

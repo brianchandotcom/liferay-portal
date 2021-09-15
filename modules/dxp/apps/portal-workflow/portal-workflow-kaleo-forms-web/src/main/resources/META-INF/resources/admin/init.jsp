@@ -52,7 +52,6 @@ page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil" %
 page import="com.liferay.portal.kernel.workflow.WorkflowTask" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil" %><%@
 page import="com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys" %><%@
-page import="com.liferay.portal.workflow.kaleo.designer.web.internal.util.KaleoDesignerUtil" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.exception.KaleoProcessDDMTemplateIdException" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPair" %><%@

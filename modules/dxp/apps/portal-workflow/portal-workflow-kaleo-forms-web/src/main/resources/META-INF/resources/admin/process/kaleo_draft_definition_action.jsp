@@ -31,7 +31,7 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getO
 >
 	<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
 		<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcPath" value="<%= KaleoDesignerUtil.getJspPath() %>" />
+			<portlet:param name="mvcPath" value="/designer/edit_kaleo_definition_version.jsp" />
 			<portlet:param name="tabs1" value="unpublished" />
 			<portlet:param name="closeRedirect" value='<%= (String)row.getParameter("backURL") %>' />
 			<portlet:param name="historyKey" value="workflow" />

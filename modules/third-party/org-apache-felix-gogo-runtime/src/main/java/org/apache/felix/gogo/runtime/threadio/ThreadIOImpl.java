@@ -21,76 +21,99 @@ package org.apache.felix.gogo.runtime.threadio;
 
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.logging.Logger;
 
 import org.apache.felix.service.threadio.ThreadIO;
+import org.osgi.annotation.bundle.Capability;
+import org.osgi.namespace.service.ServiceNamespace;
 
+@Capability(
+    namespace = ServiceNamespace.SERVICE_NAMESPACE,
+    attribute = "objectClass='org.apache.felix.service.threadio.ThreadIO'"
+)
 public class ThreadIOImpl implements ThreadIO
 {
-	final Marker defaultMarker = new Marker(System.in, System.out, System.err, null);
+    static private final Logger log = Logger.getLogger(ThreadIOImpl.class.getName());
+
+    final Marker defaultMarker = new Marker(System.in, System.out, System.err, null);
     final ThreadPrintStream err = new ThreadPrintStream(this, System.err, true);
     final ThreadPrintStream out = new ThreadPrintStream(this, System.out, false);
     final ThreadInputStream in = new ThreadInputStream(this, System.in);
-    final ThreadLocal<Deque<Marker>> current = new InheritableThreadLocal<Deque<Marker>>()
+    final ThreadLocal<Marker> current = new InheritableThreadLocal<Marker>()
     {
-		@Override
-		protected Deque<Marker> childValue(Deque<Marker> markers) {
-			return new LinkedList<Marker>(markers);
-		}
-
         @Override
-        protected Deque<Marker> initialValue()
+        protected Marker initialValue()
         {
-            return new LinkedList<Marker>();
+            return defaultMarker;
         }
     };
 
     public void start()
     {
+        if (System.out instanceof ThreadPrintStream)
+        {
+            throw new IllegalStateException("Thread Print Stream already set");
+        }
+        System.setOut(out);
+        System.setIn(in);
+        System.setErr(err);
     }
 
     public void stop()
     {
+        System.setErr(defaultMarker.err);
+        System.setOut(defaultMarker.out);
+        System.setIn(defaultMarker.in);
+    }
+
+    private void checkIO()
+    { // derek
+        if (System.in != in)
+        {
+            log.fine("ThreadIO: eek! who's set System.in=" + System.in);
+            System.setIn(in);
+        }
+
+        if (System.out != out)
+        {
+            log.fine("ThreadIO: eek! who's set System.out=" + System.out);
+            System.setOut(out);
+        }
+
+        if (System.err != err)
+        {
+            log.fine("ThreadIO: eek! who's set System.err=" + System.err);
+            System.setErr(err);
+        }
     }
 
     Marker current()
     {
-        Deque<Marker> markers = current.get();
-
-		while (true) {
-			Marker marker = markers.peek();
-
-			if (marker == null) {
-				current.remove();
-
-				return defaultMarker;
-			}
-
-			if (marker.deactivated) {
-				markers.pop();
-			}
-			else {
-				return marker;
-			}
-		}
+        Marker m = current.get();
+        if (m.deactivated)
+        {
+            while (m.deactivated)
+            {
+                m = m.previous;
+            }
+            current.set(m);
+        }
+        return m;
     }
 
     public void close()
     {
-        Deque<Marker> markers = current.get();
-
-		Marker marker = markers.pop();
-
-		marker.deactivate();
-
-		if (markers.isEmpty()) {
-			current.remove();
-
-			System.setOut(this.out);
-			System.setIn(this.in);
-			System.setErr(this.err);
-		}
+        checkIO(); // derek
+        Marker top = this.current.get();
+        if (top == null)
+        {
+            throw new IllegalStateException("No thread io active");
+        }
+        if (top != defaultMarker)
+        {
+            top.deactivate();
+            this.current.set(top.previous);
+        }
     }
 
     public void setStreams(InputStream in, PrintStream out, PrintStream err)
@@ -98,35 +121,18 @@ public class ThreadIOImpl implements ThreadIO
         assert in != null;
         assert out != null;
         assert err != null;
-
-		Deque<Marker> markers = current.get();
-
-		Marker previousMarker = null;
-
-		if (markers.isEmpty()) {
-			previousMarker = defaultMarker;
-
-			System.setErr(this.err);
-			System.setIn(this.in);
-			System.setOut(this.out);
-		}
-		else {
-			previousMarker = markers.peek();
-		}
-
-		if (in == this.in) {
-			in = previousMarker.in;
-		}
-
-		if (out == this.out) {
-			out = previousMarker.out;
-		}
-
-		if (err == this.err) {
-			err = previousMarker.err;
-		}
-
-		markers.push(new Marker(in, out, err, null));
+        checkIO(); // derek
+        Marker prev = current();
+        if (in == this.in) {
+            in = prev.getIn();
+        }
+        if (out == this.out) {
+            out = prev.getOut();
+        }
+        if (err == this.err) {
+            err = prev.getErr();
+        }
+        Marker marker = new Marker(in, out, err, prev);
+        this.current.set(marker);
     }
 }
-/* @generated */

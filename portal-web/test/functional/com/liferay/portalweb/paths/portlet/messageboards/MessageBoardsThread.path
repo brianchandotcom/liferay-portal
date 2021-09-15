@@ -157,6 +157,11 @@
 	<td>//li[@class='message-attachment']/span/a</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MESSAGE_BODY_ATTACHMENT_LIST</td>
+	<td>//li[@class='message-attachment'][${index}]/span/a</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

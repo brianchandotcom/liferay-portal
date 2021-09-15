@@ -40,17 +40,17 @@ definition {
 
 		WebContentTemplates.addCP(
 			templateDescription = "Content List Display Description",
-			templateFile = "content-list-display-template.txt",
+			templateFile = "content_list_display_template.ftl",
 			templateName = "Content List Display");
 
 		WebContentTemplates.addCP(
 			templateDescription = "Thumbnail Display Description",
-			templateFile = "thumbnail-display-template.txt",
+			templateFile = "thumbnail_display_template.ftl",
 			templateName = "Thumbnail Display");
 
 		WebContentTemplates.addCP(
 			templateDescription = "Carousel Display Description",
-			templateFile = "carousel-display-template.txt",
+			templateFile = "carousel_display_template.ftl",
 			templateName = "Carousel Display");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
@@ -268,7 +268,7 @@ definition {
 			siteURLKey = "test-site-name",
 			structureName = "3 Column with Images",
 			templateDescription = "Frontpage 3 Column with Images Template Description",
-			templateFile = "Frontpage 3 Column with Images Template.txt",
+			templateFile = "frontpage_3_column_with_images_template.ftl",
 			templateName = "Frontpage 3 Column with Images Template");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");

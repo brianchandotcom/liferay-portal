@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.layoutsadmin.util.LayoutsTree;
 import com.liferay.sites.kernel.util.SitesUtil;
@@ -539,6 +540,22 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			).put(
 				"uuid", layout.getUuid()
 			);
+
+			if (layout.isTypeContent()) {
+				Layout draftLayout = layout.fetchDraftLayout();
+
+				if ((draftLayout != null) &&
+					(draftLayout.getStatus() ==
+						WorkflowConstants.STATUS_DRAFT)) {
+
+					jsonObject.put("draftStatus", "draft");
+
+					String draftLayoutURL = _portal.getLayoutFriendlyURL(
+						draftLayout, themeDisplay);
+
+					jsonObject.put("draftURL", draftLayoutURL);
+				}
+			}
 
 			LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
 				layout);

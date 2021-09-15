@@ -328,6 +328,12 @@ public class LayoutsTreeDisplayContext {
 		).build();
 	}
 
+	public String getPreviewDraftURL()
+		throws PortalException, WindowStateException {
+
+		return StringPool.BLANK;
+	}
+
 	public String getProductMenuPortletURL() throws WindowStateException {
 		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(

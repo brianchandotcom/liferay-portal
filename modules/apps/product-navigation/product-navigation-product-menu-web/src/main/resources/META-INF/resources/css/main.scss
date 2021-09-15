@@ -288,6 +288,14 @@ html#{$cadmin-selector} {
 			.view-collection-items-action-option.collection {
 				display: block;
 			}
+
+			.preview-draft-action-option {
+				display: none;
+			}
+
+			.preview-draft-action-option.draft {
+				display: block;
+			}
 		}
 
 		.page-type-selector-option {

@@ -173,7 +173,9 @@ definition {
 					pageName = "Test Page Name",
 					siteName = "Test Site Name");
 
-				RSSPortlet.configureDisplaySettings(numberOfEntriesPerFeed = "${numberOfEntries}");
+				RSSPortlet.configureDisplaySettings(
+					configureWithoutSave = "true",
+					numberOfEntriesPerFeed = "${numberOfEntries}");
 
 				Click(
 					key_fieldLabel = "# of Entries Per Feed",
@@ -200,7 +202,9 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			RSSPortlet.configureDisplaySettings(numberOfEntriesPerFeed = "2.5");
+			RSSPortlet.configureDisplaySettings(
+				configureWithoutSave = "true",
+				numberOfEntriesPerFeed = "2.5");
 
 			Click(
 				key_fieldLabel = "# of Entries Per Feed",
@@ -226,7 +230,9 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			RSSPortlet.configureDisplaySettings(numberOfEntriesPerFeed = "test@liferay.com");
+			RSSPortlet.configureDisplaySettings(
+				configureWithoutSave = "true",
+				numberOfEntriesPerFeed = "test@liferay.com");
 
 			Click(
 				key_fieldLabel = "# of Entries Per Feed",
@@ -374,9 +380,7 @@ definition {
 		}
 
 		task ("Change the default Display Template to Navigation") {
-			RSSPortlet.configureDisplaySettings(
-				feedDisplayStyle = "Navigation",
-				saveDisplaySetting = "true");
+			RSSPortlet.configureDisplaySettings(feedDisplayStyle = "Navigation");
 
 			IFrame.closeFrame();
 		}
@@ -398,9 +402,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			RSSPortlet.configureDisplaySettings(
-				numberOfEntriesPerFeed = "11",
-				saveDisplaySetting = "true");
+			RSSPortlet.configureDisplaySettings(numberOfEntriesPerFeed = "11");
 		}
 
 		task ("View the new entries is shown") {

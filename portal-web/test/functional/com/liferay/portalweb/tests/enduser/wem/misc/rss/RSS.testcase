@@ -536,7 +536,7 @@ definition {
 	@description = "Can delete a RSS Publisher widget from page."
 	@priority = "4"
 	@uitest
-	test RemoveRSSPublisher {
+	test DeleteRSSPublisher {
 		task ("View default RSS Publisher widget on page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",

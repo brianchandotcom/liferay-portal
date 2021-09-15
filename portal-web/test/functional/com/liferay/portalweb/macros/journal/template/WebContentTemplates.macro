@@ -77,10 +77,15 @@ definition {
 		if (isSet(templateFile)) {
 			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
-			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			var testBaseDirName = PropsUtil.get("test.base.dir.name");
+			var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
+			var filePath = "${testBaseDirName}tests/enduser/wem/journal/${testDependenciesDirName}/${templateFile}";
+			var filePath = FileUtil.fixFilePath("${filePath}");
+
+			UploadFile(
 				inputFieldId = "importScript",
 				locator1 = "TextInput#INPUT_ID",
-				value1 = "${templateFile}");
+				value1 = "${filePath}");
 		}
 	}
 

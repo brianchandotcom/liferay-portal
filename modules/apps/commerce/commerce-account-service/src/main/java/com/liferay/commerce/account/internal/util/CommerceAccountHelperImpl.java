@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
+import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -180,6 +181,11 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 
 		if (commerceAccountId > 0) {
 			_checkAccountType(commerceChannelGroupId, commerceAccountId);
+		}
+
+		if (PortalSessionThreadLocal.getHttpSession() == null) {
+			PortalSessionThreadLocal.setHttpSession(
+				httpServletRequest.getSession());
 		}
 
 		_currentAccountEntryManager.setCurrentAccountEntry(

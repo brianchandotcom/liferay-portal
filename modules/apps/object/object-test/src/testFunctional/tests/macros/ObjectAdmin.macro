@@ -95,6 +95,14 @@ definition {
 			value1 = "${fieldType}");
 	}
 
+	macro assertObjectFieldNotPresent {
+		ObjectAdmin.goToFieldsTab();
+
+		AssertElementNotPresent(
+			locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_NAME",
+			value1 = "${fieldName}");
+	}
+
 	macro clickFieldsSearchableSectionRadioOption {
 		Click.javaScriptClick(
 			key_radioOption = "${radioOption}",

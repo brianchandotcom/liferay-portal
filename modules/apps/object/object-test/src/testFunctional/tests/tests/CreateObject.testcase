@@ -42,11 +42,35 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to cancel the creation of a Field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCancelCreationField {
 
-		// TODO LPS-138831 CanCancelCreationField pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		LexiconEntry.gotoAdd();
+
+		Type(
+			locator1 = "ObjectAdmin#OBJECT_FIELDS_LABEL_INPUT",
+			value1 = "Custom Field");
+
+		Select(
+			locator1 = "ObjectAdmin#OBJECT_FIELDS_TYPE",
+			value1 = "String");
+
+		Button.clickCancel();
+
+		ObjectAdmin.assertObjectFieldNotPresent(fieldName = "customField");
 
 	}
 

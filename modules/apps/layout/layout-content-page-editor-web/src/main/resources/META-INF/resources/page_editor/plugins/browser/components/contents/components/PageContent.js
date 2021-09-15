@@ -78,13 +78,20 @@ export default function PageContent({
 
 			return pageContentDropdownItems?.map((item) => {
 				if (item.label === Liferay.Language.get('edit-image')) {
+					const {
+						editImageURL,
+						fileEntryId,
+						previewURL,
+						...editImageItem
+					} = item;
+
 					return {
-						...item,
+						...editImageItem,
 						onClick: () => {
 							setImageEditorParams({
-								editImageURL: item.editImageURL,
-								fileEntryId: item.fileEntryId,
-								previewURL: item.previewURL,
+								editImageURL,
+								fileEntryId,
+								previewURL,
 							});
 						},
 					};

@@ -82,11 +82,50 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 				cssClass='<%= ((remoteAppEntry != null) && RemoteAppConstants.TYPE_CUSTOM_ELEMENT.equals(remoteAppEntry.getType())) ? StringPool.BLANK : "d-none" %>'
 				id='<%= liferayPortletResponse.getNamespace() + "_type_customElement" %>'
 			>
-				<aui:input helpMessage="custom-element-urls-help" label="custom-element-urls" name="customElementURLs" type="textarea" />
-
 				<aui:input label="html-element-name" name="customElementHTMLElementName" />
 
-				<aui:input helpMessage="css-urls-help" label="css-urls" name="customElementCSSURLs" type="textarea" />
+				<%
+				String[] customElementURLs = new String[0];
+
+				if (remoteAppEntry != null) {
+					String customElementURLsString = remoteAppEntry.getCustomElementURLs();
+
+					customElementURLs = customElementURLsString.split(StringPool.NEW_LINE);
+				}
+
+				for (String customElementURL : customElementURLs) {
+				%>
+
+					<div class="repeatable">
+						<aui:input ignoreRequestValue="<%= true %>" label="url" name="customElementURLs" type="text" value="<%= customElementURL %>">
+							<aui:validator name="url" />
+						</aui:input>
+					</div>
+
+				<%
+				}
+
+				String[] customElementCSSURLs = new String[0];
+
+				if (remoteAppEntry != null) {
+					String customElementURLsCSSString = remoteAppEntry.getCustomElementCSSURLs();
+
+					customElementCSSURLs = customElementURLsCSSString.split(StringPool.NEW_LINE);
+				}
+
+				for (String customElementCSSURL : customElementCSSURLs) {
+				%>
+
+					<div class="repeatable">
+						<aui:input ignoreRequestValue="<%= true %>" label="css-url" name="customElementCSSURLs" type="text" value="<%= customElementCSSURL %>">
+							<aui:validator name="url" />
+						</aui:input>
+					</div>
+
+				<%
+				}
+				%>
+
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
@@ -105,3 +144,11 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
+
+<aui:script use="liferay-auto-fields">
+	new Liferay.AutoFields({
+		baseRows: '.repeatable',
+		contentBox: '#<portlet:namespace />_type_customElement',
+		namespace: '<portlet:namespace />',
+	}).render();
+</aui:script>

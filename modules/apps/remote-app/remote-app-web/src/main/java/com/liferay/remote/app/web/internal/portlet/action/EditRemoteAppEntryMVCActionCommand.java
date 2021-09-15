@@ -14,6 +14,7 @@
 
 package com.liferay.remote.app.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.exception.DuplicateRemoteAppEntryException;
@@ -131,12 +133,18 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "name");
 
 		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+			String[] customElementCSSURLs = ParamUtil.getStringValues(
+				actionRequest, "customElementCSSURLs");
+
+			String[] customElementURLs = ParamUtil.getStringValues(
+				actionRequest, "customElementURLs");
+
 			_remoteAppEntryLocalService.updateCustomElementRemoteAppEntry(
 				remoteAppEntryId, nameMap,
-				ParamUtil.getString(actionRequest, "customElementCSSURLs"),
+				StringUtil.merge(customElementCSSURLs, StringPool.NEW_LINE),
 				ParamUtil.getString(
 					actionRequest, "customElementHTMLElementName"),
-				ParamUtil.getString(actionRequest, "customElementURLs"));
+				StringUtil.merge(customElementURLs, StringPool.NEW_LINE));
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
 			_remoteAppEntryLocalService.updateIframeRemoteAppEntry(

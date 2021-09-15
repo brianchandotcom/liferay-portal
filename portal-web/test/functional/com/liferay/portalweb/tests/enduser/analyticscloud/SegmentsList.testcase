@@ -68,6 +68,8 @@ definition {
 	@description = "Search for specific segment"
 	@priority = "5"
 	test CanSearchForSegment {
+		property portal.upstream = "afonso";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -130,6 +132,8 @@ definition {
 	@description = "Search for specific segment"
 	@priority = "5"
 	test CanShowSegmentList {
+		property portal.upstream = "afonso";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -188,6 +192,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8578 | Test Summary: Order the Segment List By Membership"
 	@priority = "4"
 	test OrderSegmentListByMembership {
+		property portal.upstream = "afonso";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -222,11 +228,11 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+					
+				Pause(locator1 = "5000");
 			}
 
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "5000");
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {

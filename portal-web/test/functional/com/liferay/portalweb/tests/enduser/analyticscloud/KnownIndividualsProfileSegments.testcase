@@ -60,6 +60,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8992 | Test Summary: Clicking an associated segment navigates to segment profile"
 	@priority = "3"
 	test AssertIndividualOverviewAssociatedSegmentProfile {
+		property portal.upstream = "afonso";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -133,6 +135,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8993 | Test Summary: Selecting a Segment in Individuals"
 	@priority = "3"
 	test AssertIndividualsSegmentSelected {
+		property portal.upstream = "afonso";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -206,6 +210,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8991 | Test Summary: Order an Individual's Associated Segments List"
 	@priority = "3"
 	test OrderIndividualsAssociatedSegments {
+		property portal.upstream = "afonso";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -450,6 +456,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8948 | Test Summary: Segments the individual Belongs To appear in the list"
 	@priority = "5"
 	test SegmentsIndividualBelongsToAppearInList {
+		property portal.upstream = "afonso";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -465,6 +473,8 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
 			}
 
 			ACUtils.closeAllSessionsAndWait();

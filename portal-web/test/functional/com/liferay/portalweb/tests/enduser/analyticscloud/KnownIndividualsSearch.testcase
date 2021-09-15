@@ -114,6 +114,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9020 | Test Summary: Search associated segment will not return results in the individual List"
 	@priority = "3"
 	test AssertNoIndividualsAssociatedSegmentsResults {
+		property portal.upstream = "afonso";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -138,6 +140,8 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
 		}
 
 		task ("Switch to new property in AC") {
@@ -248,6 +252,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9021 | Test Summary: Search associated segment will not return results in the individual overview List"
 	@priority = "3"
 	test AssertNoResultsInIndividualsOverviewAssociatedSegment {
+		property portal.upstream = "afonso";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -272,6 +278,8 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
 		}
 
 		task ("Switch to new property in AC") {

@@ -230,6 +230,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8477 | Test Summary: Cancel creating a static segment"
 	@priority = "3"
 	test CanCancelCreatingStaticSegment {
+		property portal.upstream = "afonso";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -244,6 +246,8 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -1136,6 +1140,8 @@ definition {
 	@description = "Create a static segment with individual"
 	@priority = "5"
 	test CanCreateStaticSegmentWithIndividuals {
+		property portal.upstream = "afonso";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -1151,6 +1157,8 @@ definition {
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
+
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 

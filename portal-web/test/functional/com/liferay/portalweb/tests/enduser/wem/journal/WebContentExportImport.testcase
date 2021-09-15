@@ -265,7 +265,6 @@ definition {
 		NavItem.gotoTemplates();
 
 		WebContentTemplates.addCP(
-			siteURLKey = "test-site-name",
 			structureName = "3 Column with Images",
 			templateDescription = "Frontpage 3 Column with Images Template Description",
 			templateFile = "frontpage_3_column_with_images_template.ftl",

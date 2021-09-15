@@ -149,6 +149,18 @@ definition {
 			AssetCategorization.addTag(tagName = "${tagName}");
 		}
 
+		if (isSet(mbAttachmentFileList)) {
+			Panel.expandPanel(panel = "Attachments");
+
+			AssertElementPresent(locator1 = "Button#SELECT_FILES");
+
+			for (var mbAttachmentFile : list "${mbAttachmentFileList}") {
+				UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+					locator1 = "TextInput#FILE",
+					value1 = "${mbAttachmentFile}");
+			}
+		}
+
 		Button.clickPublish();
 
 		if ("${invalidCharacters}" == "true") {
@@ -323,6 +335,19 @@ definition {
 		AssertAlertNotPresent();
 	}
 
+	macro assertDownloadedFileNameFromTempFolder {
+		var downloadedFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "${attachmentFileName}.jpg");
+
+		echo("## downloadedFileName: ${downloadedFileName}");
+
+		if (contains("${downloadedFileName}", "${attachmentFileName}")) {
+			echo("This is a correct file.");
+		}
+		else {
+			fail("FAIL!");
+		}
+	}
+
 	macro banUser {
 		Click.waitForMenuToggleJSClick(
 			key_threadReplyBody = "${threadReplyBody}",
@@ -396,7 +421,14 @@ definition {
 	}
 
 	macro downloadAttachmentPG {
-		Click(locator1 = "MessageBoardsThread#MESSAGE_BODY_ATTACHMENT_1");
+		if (isSet(attachmentsList)) {
+			Click(
+				index = "${index}",
+				locator1 = "MessageBoardsThread#MESSAGE_BODY_ATTACHMENT_LIST");
+		}
+		else {
+			Click(locator1 = "MessageBoardsThread#MESSAGE_BODY_ATTACHMENT_1");
+		}
 
 		DownloadTempFile();
 	}

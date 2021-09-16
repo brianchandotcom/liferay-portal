@@ -14,13 +14,21 @@
 
 package com.liferay.object.service.http;
 
+import com.liferay.object.service.ObjectLayoutServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 /**
  * Provides the HTTP utility for the
- * <code>com.liferay.object.service.ObjectLayoutServiceUtil</code> service
+ * <code>ObjectLayoutServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * <code>com.liferay.portal.kernel.security.auth.HttpPrincipal</code> parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -42,4 +50,150 @@ package com.liferay.object.service.http;
  * @generated
  */
 public class ObjectLayoutServiceHttp {
+
+	public static com.liferay.object.model.ObjectLayout addObjectLayout(
+			HttpPrincipal httpPrincipal, long userId, long objectDefinitionId,
+			boolean defaultObjectLayout,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.List<com.liferay.object.model.ObjectLayoutTab>
+				objectLayoutTabs)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectLayoutServiceUtil.class, "addObjectLayout",
+				_addObjectLayoutParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, objectDefinitionId, defaultObjectLayout,
+				nameMap, objectLayoutTabs);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectLayout)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.object.model.ObjectLayout getObjectLayout(
+			HttpPrincipal httpPrincipal, long objectLayoutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectLayoutServiceUtil.class, "getObjectLayout",
+				_getObjectLayoutParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, objectLayoutId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectLayout)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.object.model.ObjectLayout updateObjectLayout(
+			HttpPrincipal httpPrincipal, long objectLayoutId,
+			boolean defaultObjectLayout,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.List<com.liferay.object.model.ObjectLayoutTab>
+				objectLayoutTabs)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectLayoutServiceUtil.class, "updateObjectLayout",
+				_updateObjectLayoutParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, objectLayoutId, defaultObjectLayout, nameMap,
+				objectLayoutTabs);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectLayout)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ObjectLayoutServiceHttp.class);
+
+	private static final Class<?>[] _addObjectLayoutParameterTypes0 =
+		new Class[] {
+			long.class, long.class, boolean.class, java.util.Map.class,
+			java.util.List.class
+		};
+	private static final Class<?>[] _getObjectLayoutParameterTypes1 =
+		new Class[] {long.class};
+	private static final Class<?>[] _updateObjectLayoutParameterTypes2 =
+		new Class[] {
+			long.class, boolean.class, java.util.Map.class, java.util.List.class
+		};
+
 }

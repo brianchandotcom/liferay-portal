@@ -14,9 +14,19 @@
 
 package com.liferay.object.service.http;
 
+import com.liferay.object.service.ObjectLayoutServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+
+import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.object.service.ObjectLayoutServiceUtil</code> service
+ * <code>ObjectLayoutServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +66,78 @@ package com.liferay.object.service.http;
  */
 @Deprecated
 public class ObjectLayoutServiceSoap {
+
+	public static com.liferay.object.model.ObjectLayoutSoap addObjectLayout(
+			long userId, long objectDefinitionId, boolean defaultObjectLayout,
+			String[] nameMapLanguageIds, String[] nameMapValues,
+			com.liferay.object.model.ObjectLayoutTabSoap[] objectLayoutTabs)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				nameMapLanguageIds, nameMapValues);
+
+			com.liferay.object.model.ObjectLayout returnValue =
+				ObjectLayoutServiceUtil.addObjectLayout(
+					userId, objectDefinitionId, defaultObjectLayout, nameMap,
+					com.liferay.object.model.impl.ObjectLayoutTabModelImpl.
+						toModels(objectLayoutTabs));
+
+			return com.liferay.object.model.ObjectLayoutSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.object.model.ObjectLayoutSoap getObjectLayout(
+			long objectLayoutId)
+		throws RemoteException {
+
+		try {
+			com.liferay.object.model.ObjectLayout returnValue =
+				ObjectLayoutServiceUtil.getObjectLayout(objectLayoutId);
+
+			return com.liferay.object.model.ObjectLayoutSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.object.model.ObjectLayoutSoap updateObjectLayout(
+			long objectLayoutId, boolean defaultObjectLayout,
+			String[] nameMapLanguageIds, String[] nameMapValues,
+			com.liferay.object.model.ObjectLayoutTabSoap[] objectLayoutTabs)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				nameMapLanguageIds, nameMapValues);
+
+			com.liferay.object.model.ObjectLayout returnValue =
+				ObjectLayoutServiceUtil.updateObjectLayout(
+					objectLayoutId, defaultObjectLayout, nameMap,
+					com.liferay.object.model.impl.ObjectLayoutTabModelImpl.
+						toModels(objectLayoutTabs));
+
+			return com.liferay.object.model.ObjectLayoutSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ObjectLayoutServiceSoap.class);
+
 }

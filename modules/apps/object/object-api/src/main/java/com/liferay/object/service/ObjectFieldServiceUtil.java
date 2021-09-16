@@ -14,6 +14,11 @@
 
 package com.liferay.object.service;
 
+import com.liferay.object.model.ObjectField;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Map;
+
 /**
  * Provides the remote service utility for ObjectField. This utility wraps
  * <code>com.liferay.object.service.impl.ObjectFieldServiceImpl</code> and is an
@@ -33,10 +38,29 @@ public class ObjectFieldServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectFieldServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static void deleteObjectField(long objectFieldId)
-		throws java.lang.Exception {
+	public static ObjectField addCustomObjectField(
+			long userId, long listTypeDefinitionId, long objectDefinitionId,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			Map<java.util.Locale, String> labelMap, String name,
+			boolean required, String type)
+		throws PortalException {
 
-		getService().deleteObjectField(objectFieldId);
+		return getService().addCustomObjectField(
+			userId, listTypeDefinitionId, objectDefinitionId, indexed,
+			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+			type);
+	}
+
+	public static ObjectField deleteObjectField(long objectFieldId)
+		throws Exception {
+
+		return getService().deleteObjectField(objectFieldId);
+	}
+
+	public static ObjectField getObjectField(long objectFieldId)
+		throws PortalException {
+
+		return getService().getObjectField(objectFieldId);
 	}
 
 	/**
@@ -44,8 +68,20 @@ public class ObjectFieldServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static ObjectField updateCustomObjectField(
+			long objectFieldId, long listTypeDefinitionId, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId,
+			Map<java.util.Locale, String> labelMap, String name,
+			boolean required, String type)
+		throws PortalException {
+
+		return getService().updateCustomObjectField(
+			objectFieldId, listTypeDefinitionId, indexed, indexedAsKeyword,
+			indexedLanguageId, labelMap, name, required, type);
 	}
 
 	public static ObjectFieldService getService() {

@@ -17,8 +17,12 @@ package com.liferay.object.service.http;
 import com.liferay.object.service.ObjectFieldServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the SOAP utility for the
@@ -63,11 +67,89 @@ import java.rmi.RemoteException;
 @Deprecated
 public class ObjectFieldServiceSoap {
 
-	public static void deleteObjectField(long objectFieldId)
+	public static com.liferay.object.model.ObjectFieldSoap addCustomObjectField(
+			long userId, long listTypeDefinitionId, long objectDefinitionId,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			String[] labelMapLanguageIds, String[] labelMapValues, String name,
+			boolean required, String type)
 		throws RemoteException {
 
 		try {
-			ObjectFieldServiceUtil.deleteObjectField(objectFieldId);
+			Map<Locale, String> labelMap = LocalizationUtil.getLocalizationMap(
+				labelMapLanguageIds, labelMapValues);
+
+			com.liferay.object.model.ObjectField returnValue =
+				ObjectFieldServiceUtil.addCustomObjectField(
+					userId, listTypeDefinitionId, objectDefinitionId, indexed,
+					indexedAsKeyword, indexedLanguageId, labelMap, name,
+					required, type);
+
+			return com.liferay.object.model.ObjectFieldSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.object.model.ObjectFieldSoap deleteObjectField(
+			long objectFieldId)
+		throws RemoteException {
+
+		try {
+			com.liferay.object.model.ObjectField returnValue =
+				ObjectFieldServiceUtil.deleteObjectField(objectFieldId);
+
+			return com.liferay.object.model.ObjectFieldSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.object.model.ObjectFieldSoap getObjectField(
+			long objectFieldId)
+		throws RemoteException {
+
+		try {
+			com.liferay.object.model.ObjectField returnValue =
+				ObjectFieldServiceUtil.getObjectField(objectFieldId);
+
+			return com.liferay.object.model.ObjectFieldSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.object.model.ObjectFieldSoap
+			updateCustomObjectField(
+				long objectFieldId, long listTypeDefinitionId, boolean indexed,
+				boolean indexedAsKeyword, String indexedLanguageId,
+				String[] labelMapLanguageIds, String[] labelMapValues,
+				String name, boolean required, String type)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> labelMap = LocalizationUtil.getLocalizationMap(
+				labelMapLanguageIds, labelMapValues);
+
+			com.liferay.object.model.ObjectField returnValue =
+				ObjectFieldServiceUtil.updateCustomObjectField(
+					objectFieldId, listTypeDefinitionId, indexed,
+					indexedAsKeyword, indexedLanguageId, labelMap, name,
+					required, type);
+
+			return com.liferay.object.model.ObjectFieldSoap.toSoapModel(
+				returnValue);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

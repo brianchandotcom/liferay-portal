@@ -51,20 +51,68 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 public class ObjectFieldServiceHttp {
 
-	public static void deleteObjectField(
+	public static com.liferay.object.model.ObjectField addCustomObjectField(
+			HttpPrincipal httpPrincipal, long userId, long listTypeDefinitionId,
+			long objectDefinitionId, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId,
+			java.util.Map<java.util.Locale, String> labelMap, String name,
+			boolean required, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectFieldServiceUtil.class, "addCustomObjectField",
+				_addCustomObjectFieldParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, listTypeDefinitionId, objectDefinitionId,
+				indexed, indexedAsKeyword, indexedLanguageId, labelMap, name,
+				required, type);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectField)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.object.model.ObjectField deleteObjectField(
 			HttpPrincipal httpPrincipal, long objectFieldId)
 		throws Exception {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectFieldServiceUtil.class, "deleteObjectField",
-				_deleteObjectFieldParameterTypes0);
+				_deleteObjectFieldParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectFieldId);
 
+			Object returnObj = null;
+
 			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
 				if (exception instanceof Exception) {
@@ -74,6 +122,94 @@ public class ObjectFieldServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
+
+			return (com.liferay.object.model.ObjectField)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.object.model.ObjectField getObjectField(
+			HttpPrincipal httpPrincipal, long objectFieldId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectFieldServiceUtil.class, "getObjectField",
+				_getObjectFieldParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, objectFieldId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectField)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.object.model.ObjectField updateCustomObjectField(
+			HttpPrincipal httpPrincipal, long objectFieldId,
+			long listTypeDefinitionId, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId,
+			java.util.Map<java.util.Locale, String> labelMap, String name,
+			boolean required, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectFieldServiceUtil.class, "updateCustomObjectField",
+				_updateCustomObjectFieldParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, objectFieldId, listTypeDefinitionId, indexed,
+				indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+				type);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectField)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -87,7 +223,20 @@ public class ObjectFieldServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(
 		ObjectFieldServiceHttp.class);
 
-	private static final Class<?>[] _deleteObjectFieldParameterTypes0 =
+	private static final Class<?>[] _addCustomObjectFieldParameterTypes0 =
+		new Class[] {
+			long.class, long.class, long.class, boolean.class, boolean.class,
+			String.class, java.util.Map.class, String.class, boolean.class,
+			String.class
+		};
+	private static final Class<?>[] _deleteObjectFieldParameterTypes1 =
 		new Class[] {long.class};
+	private static final Class<?>[] _getObjectFieldParameterTypes2 =
+		new Class[] {long.class};
+	private static final Class<?>[] _updateCustomObjectFieldParameterTypes3 =
+		new Class[] {
+			long.class, long.class, boolean.class, boolean.class, String.class,
+			java.util.Map.class, String.class, boolean.class, String.class
+		};
 
 }

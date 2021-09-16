@@ -14,28 +14,23 @@
 
 package com.liferay.object.service;
 
-import com.liferay.object.model.ObjectField;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
-import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Provides the remote service interface for ObjectField. Methods of this
+ * Provides the remote service interface for ObjectLayoutTab. Methods of this
  * service are expected to have security checks based on the propagated JAAS
  * credentials because this service can be accessed remotely.
  *
  * @author Marco Leo
- * @see ObjectFieldServiceUtil
+ * @see ObjectLayoutTabServiceUtil
  * @generated
  */
 @AccessControlled
@@ -45,25 +40,13 @@ import org.osgi.annotation.versioning.ProviderType;
 	isolation = Isolation.PORTAL,
 	rollbackFor = {PortalException.class, SystemException.class}
 )
-public interface ObjectFieldService extends BaseService {
+public interface ObjectLayoutTabService extends BaseService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectFieldServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object field remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectFieldServiceUtil} if injection and service tracking are not available.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectLayoutTabServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object layout tab remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectLayoutTabServiceUtil} if injection and service tracking are not available.
 	 */
-	public ObjectField addCustomObjectField(
-			long userId, long listTypeDefinitionId, long objectDefinitionId,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			Map<Locale, String> labelMap, String name, boolean required,
-			String type)
-		throws PortalException;
-
-	public ObjectField deleteObjectField(long objectFieldId) throws Exception;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ObjectField getObjectField(long objectFieldId)
-		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -71,12 +54,5 @@ public interface ObjectFieldService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
-
-	public ObjectField updateCustomObjectField(
-			long objectFieldId, long listTypeDefinitionId, boolean indexed,
-			boolean indexedAsKeyword, String indexedLanguageId,
-			Map<Locale, String> labelMap, String name, boolean required,
-			String type)
-		throws PortalException;
 
 }

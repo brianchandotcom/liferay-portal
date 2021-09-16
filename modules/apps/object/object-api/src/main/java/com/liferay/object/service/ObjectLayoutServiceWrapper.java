@@ -30,6 +30,27 @@ public class ObjectLayoutServiceWrapper
 		_objectLayoutService = objectLayoutService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectLayout addObjectLayout(
+			long userId, long objectDefinitionId, boolean defaultObjectLayout,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.List<com.liferay.object.model.ObjectLayoutTab>
+				objectLayoutTabs)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectLayoutService.addObjectLayout(
+			userId, objectDefinitionId, defaultObjectLayout, nameMap,
+			objectLayoutTabs);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectLayout getObjectLayout(
+			long objectLayoutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectLayoutService.getObjectLayout(objectLayoutId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -38,6 +59,18 @@ public class ObjectLayoutServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _objectLayoutService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectLayout updateObjectLayout(
+			long objectLayoutId, boolean defaultObjectLayout,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.List<com.liferay.object.model.ObjectLayoutTab>
+				objectLayoutTabs)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectLayoutService.updateObjectLayout(
+			objectLayoutId, defaultObjectLayout, nameMap, objectLayoutTabs);
 	}
 
 	@Override

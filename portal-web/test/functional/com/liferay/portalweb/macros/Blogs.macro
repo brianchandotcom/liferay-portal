@@ -591,18 +591,22 @@ definition {
 			Blogs.clickEllipsisItemPG(
 				entryTitle = "${entryTitle}",
 				item = "Publish to Live");
+
+			AssertConfirm(value1 = "${confirmMessage}");
+
+			Alert.viewSuccessMessage();
 		}
 		else {
 			Blogs.clickEllipsisItemCP(
 				entryTitle = "${entryTitle}",
 				item = "Publish to Live");
+
+			AssertConfirm(value1 = "${confirmMessage}");
+
+			AssertTextEquals(
+				locator1 = "Staging#PROCESS_SUCCESSFUL",
+				value1 = "Successful");
 		}
-
-		AssertConfirm(value1 = "${confirmMessage}");
-
-		AssertTextEquals(
-			locator1 = "Staging#PROCESS_SUCCESSFUL",
-			value1 = "Successful");
 	}
 
 	macro subscribePG {

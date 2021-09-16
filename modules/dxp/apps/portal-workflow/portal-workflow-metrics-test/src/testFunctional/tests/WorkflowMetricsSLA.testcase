@@ -1002,7 +1002,6 @@ definition {
 	@description = "LPS-94760 - Verify that the time format is following the system language (Example: 03:34 PM for en_US and 15:34 for pt)"
 	@priority = "3"
 	test SLAProcessingTimeFormatIsFollowingSystemLanguage {
-		property portal.upstream = "quarantine";
 
 		var slaName = "SLAName";
 
@@ -1083,9 +1082,6 @@ definition {
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
-		AssertElementNotPresent(
-			key_slaName = "${slaName}",
-			locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_ENGLISH_HOUR_FORMAT");
 	}
 
 	@description = "LPS-89014 - Verify that the table view of SLAs are ordered by last modified (Desc)"

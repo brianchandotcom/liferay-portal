@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
 import com.liferay.remote.app.model.RemoteAppEntry;
@@ -56,6 +57,16 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 		_bundleContext = bundleContext;
 	}
 
+	private String _getPortletCategoryName(RemoteAppEntry remoteAppEntry) {
+		String portletCategoryName = remoteAppEntry.getPortletCategoryName();
+
+		if (Validator.isBlank(portletCategoryName)) {
+			return "category.remote-apps";
+		}
+
+		return portletCategoryName;
+	}
+
 	private String _getPortletId(RemoteAppEntry remoteAppEntry) {
 		return "com_liferay_remote_app_web_internal_portlet_" +
 			"RemoteAppEntryPortlet_" + remoteAppEntry.getRemoteAppEntryId();
@@ -80,7 +91,8 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 			).put(
 				"com.liferay.portlet.css-class-wrapper", "portlet-remote-app"
 			).put(
-				"com.liferay.portlet.display-category", "category.sample"
+				"com.liferay.portlet.display-category",
+				_getPortletCategoryName(remoteAppEntry)
 			).put(
 				"com.liferay.portlet.instanceable", true
 			).put(

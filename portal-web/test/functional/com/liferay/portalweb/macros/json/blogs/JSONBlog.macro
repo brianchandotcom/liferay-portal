@@ -107,7 +107,7 @@ definition {
 			-d allowPingbacks=true \
 			-d allowTrackbacks=true \
 			-d trackbacks= \
-			-d coverImageCaption='' \
+			-d coverImageCaption= \
 			-d -coverImageImageSelector= \
 			-d -smallImageImageSelector= \
 			-d serviceContext=${serviceContext}

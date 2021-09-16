@@ -479,7 +479,7 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
 
-		CreateObject.assertDisableNameType();
+		CreateObject.assertDisabledFieldName();
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Type of a Field after the Object is published"
@@ -507,7 +507,7 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
 
-		CreateObject.assertDisableFieldType();
+		CreateObject.assertDisabledFieldType();
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Object name after it is published"
@@ -526,7 +526,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(name = "CustomObject");
 
-		CreateObject.assertDisableObjectName();
+		CreateObject.assertDisabledObjectName();
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Object scope after it is published"

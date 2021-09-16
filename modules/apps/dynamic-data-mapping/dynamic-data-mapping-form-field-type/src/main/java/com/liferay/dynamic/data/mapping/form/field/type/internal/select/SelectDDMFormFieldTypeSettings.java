@@ -55,6 +55,14 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 				"setValue('ddmDataProviderInstanceOutput', '')"
 			},
 			condition = "not(equals(getValue('dataSourceType'), \"data-provider\"))"
+		),
+		@DDMFormRule(
+			actions = {
+				"setValue('options', isPicklistObjectField(getValue('objectFieldName')))",
+				"setVisible('options', isEmpty(getValue('objectFieldName')))",
+				"setEnabled('dataSourceType', isEmpty(getValue('objectFieldName')))"
+			},
+			condition = "TRUE"
 		)
 	}
 )

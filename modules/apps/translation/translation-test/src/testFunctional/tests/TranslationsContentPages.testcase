@@ -82,7 +82,7 @@ definition {
 		ContentPagesNavigator.goToTranslation(pageName = "Test Content Page Name");
 
 		Translations.viewTargetLocales(
-			currentTargetLocale = "zh-CN",
+			currentTargetLocale = "es-ES",
 			noTargetLocale = "zh-CN",
 			targetLocale = "es-ES");
 	}

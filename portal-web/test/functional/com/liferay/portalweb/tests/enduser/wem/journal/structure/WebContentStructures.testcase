@@ -96,10 +96,6 @@ definition {
 			structureName = "WC Structure Name",
 			webContentHasReference = "true");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR",
-			value1 = "Error:The structure cannot be deleted because it is required by one or more structure links.");
-
 		WebContentStructures.viewCP(
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");

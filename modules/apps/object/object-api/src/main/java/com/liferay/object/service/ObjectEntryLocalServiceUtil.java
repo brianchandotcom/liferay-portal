@@ -80,6 +80,22 @@ public class ObjectEntryLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static int countManyToManyRelatedObjectEntries(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws PortalException {
+
+		return getService().countManyToManyRelatedObjectEntries(
+			groupId, objectRelationshipId, primaryKey);
+	}
+
+	public static int countOneToManyRelatedObjectEntries(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws PortalException {
+
+		return getService().countOneToManyRelatedObjectEntries(
+			groupId, objectRelationshipId, primaryKey);
+	}
+
 	/**
 	 * Creates a new object entry with the primary key. Does not add the object entry to the database.
 	 *

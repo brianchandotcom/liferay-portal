@@ -92,6 +92,14 @@ public interface ObjectEntryLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public int countManyToManyRelatedObjectEntries(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws PortalException;
+
+	public int countOneToManyRelatedObjectEntries(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws PortalException;
+
 	/**
 	 * Creates a new object entry with the primary key. Does not add the object entry to the database.
 	 *

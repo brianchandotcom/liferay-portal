@@ -74,6 +74,24 @@ public class ObjectEntryLocalServiceWrapper
 			serviceContext);
 	}
 
+	@Override
+	public int countManyToManyRelatedObjectEntries(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.countManyToManyRelatedObjectEntries(
+			groupId, objectRelationshipId, primaryKey);
+	}
+
+	@Override
+	public int countOneToManyRelatedObjectEntries(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.countOneToManyRelatedObjectEntries(
+			groupId, objectRelationshipId, primaryKey);
+	}
+
 	/**
 	 * Creates a new object entry with the primary key. Does not add the object entry to the database.
 	 *

@@ -107,7 +107,7 @@ definition {
 		}
 
 		task ("Assert there are no activities found") {
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no Activities found.");
+			AssertElementPresent(locator1 = "ACIndividualsDashboard#NO_EVENTS_FOUND");
 		}
 	}
 
@@ -452,6 +452,8 @@ definition {
 	test SearchIndividualDetails {
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+			var dataSource = StringUtil.extractFirst("${propertyName}"," ");
 		}
 
 		task ("Add new users in DXP and sync the Contact Data") {
@@ -534,7 +536,7 @@ definition {
 		}
 
 		task ("Search for data source") {
-			ACUtils.searchBar(searchItem = "Liferay DXP");
+			ACUtils.searchBar(searchItem = "${dataSource}");
 
 			for (var individualAttribute : list "birthDate,classPK,contactId,createDate,email,familyName,givenName,jobTitle,modifiedDate") {
 				ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "${individualAttribute}");

@@ -1,0 +1,25 @@
+.lfr-asset-category-list-container {
+	cursor: pointer;
+}
+
+.lfr-asset-category-list {
+	ul {
+		list-style: none;
+		margin-top: 4px;
+		padding: 0;
+	}
+
+	li {
+		list-style-type: none;
+		margin: 0;
+		padding: 0 0 3px 16px;
+	}
+
+	span {
+		padding-left: 3px;
+	}
+
+	a.selected {
+		background-color: #eee;
+	}
+}

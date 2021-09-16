@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.4.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_4_0.dtd">
+
+<resource-action-mapping>
+	<model-resource>
+		<model-name>com.liferay.search.experiences</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_search_experiences_web_internal_portlet_SXPBlueprintsAdminPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>ADD_BLUEPRINT</action-key>
+				<action-key>ADD_ELEMENT</action-key>
+				<action-key>PERMISSIONS</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>ADD_BLUEPRINT</action-key>
+				<action-key>ADD_ELEMENT</action-key>
+				<action-key>PERMISSIONS</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.search.experiences.model.SXPBlueprint</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_search_experiences_web_internal_portlet_SXPBlueprintsAdminPortlet</portlet-name>
+		</portlet-ref>
+		<weight>2</weight>
+		<permissions>
+			<supports>
+				<action-key>APPLY_BLUEPRINT</action-key>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults>
+				<action-key>APPLY_BLUEPRINT</action-key>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.search.experiences.model.SXPElement</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_search_experiences_web_internal_portlet_SXPBlueprintsAdminPortlet</portlet-name>
+		</portlet-ref>
+		<weight>3</weight>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+</resource-action-mapping>

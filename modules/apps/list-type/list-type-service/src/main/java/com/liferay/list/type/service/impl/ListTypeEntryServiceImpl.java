@@ -14,10 +14,22 @@
 
 package com.liferay.list.type.service.impl;
 
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.list.type.service.base.ListTypeEntryServiceBaseImpl;
+import com.liferay.list.type.service.persistence.ListTypeDefinitionPersistence;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gabriel Albuquerque
@@ -30,4 +42,102 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class ListTypeEntryServiceImpl extends ListTypeEntryServiceBaseImpl {
+
+	@Override
+	public ListTypeEntry addListTypeEntry(
+			long userId, long listTypeDefinitionId, String key,
+			Map<Locale, String> nameMap)
+		throws PortalException {
+
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionPersistence.findByPrimaryKey(
+				listTypeDefinitionId);
+
+		_listTypeDefinitionModelResourcePermission.check(
+			getPermissionChecker(),
+			listTypeDefinition.getListTypeDefinitionId(), ActionKeys.UPDATE);
+
+		return _listTypeEntryLocalService.addListTypeEntry(
+			userId, listTypeDefinitionId, key, nameMap);
+	}
+
+	@Override
+	public ListTypeEntry deleteListTypeEntry(long listTypeEntryId)
+		throws PortalException {
+
+		ListTypeEntry listTypeEntry = listTypeEntryPersistence.findByPrimaryKey(
+			listTypeEntryId);
+
+		_listTypeDefinitionModelResourcePermission.check(
+			getPermissionChecker(), listTypeEntry.getListTypeDefinitionId(),
+			ActionKeys.UPDATE);
+
+		return _listTypeEntryLocalService.deleteListTypeEntry(listTypeEntryId);
+	}
+
+	@Override
+	public List<ListTypeEntry> getListTypeEntries(
+			long listTypeDefinitionId, int start, int end)
+		throws PortalException {
+
+		_listTypeDefinitionModelResourcePermission.check(
+			getPermissionChecker(), listTypeDefinitionId, ActionKeys.VIEW);
+
+		return _listTypeEntryLocalService.getListTypeEntries(
+			listTypeDefinitionId, start, end);
+	}
+
+	@Override
+	public int getListTypeEntriesCount(long listTypeDefinitionId)
+		throws PortalException {
+
+		_listTypeDefinitionModelResourcePermission.check(
+			getPermissionChecker(), listTypeDefinitionId, ActionKeys.VIEW);
+
+		return _listTypeEntryLocalService.getListTypeEntriesCount(
+			listTypeDefinitionId);
+	}
+
+	@Override
+	public ListTypeEntry getListTypeEntry(long listTypeEntryId)
+		throws PortalException {
+
+		ListTypeEntry listTypeEntry = listTypeEntryPersistence.findByPrimaryKey(
+			listTypeEntryId);
+
+		_listTypeDefinitionModelResourcePermission.check(
+			getPermissionChecker(), listTypeEntry.getListTypeDefinitionId(),
+			ActionKeys.VIEW);
+
+		return _listTypeEntryLocalService.getListTypeEntry(listTypeEntryId);
+	}
+
+	@Override
+	public ListTypeEntry updateListTypeEntry(
+			long listTypeEntryId, Map<Locale, String> nameMap)
+		throws PortalException {
+
+		ListTypeEntry listTypeEntry = listTypeEntryPersistence.findByPrimaryKey(
+			listTypeEntryId);
+
+		_listTypeDefinitionModelResourcePermission.check(
+			getPermissionChecker(), listTypeEntry.getListTypeDefinitionId(),
+			ActionKeys.UPDATE);
+
+		return _listTypeEntryLocalService.updateListTypeEntry(
+			listTypeEntryId, nameMap);
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.list.type.model.ListTypeDefinition)"
+	)
+	private ModelResourcePermission<ListTypeDefinition>
+		_listTypeDefinitionModelResourcePermission;
+
+	@Reference
+	private ListTypeDefinitionPersistence _listTypeDefinitionPersistence;
+
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
 }

@@ -14,12 +14,14 @@
 
 package com.liferay.object.web.internal.list.type.portlet.action;
 
+import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.list.type.display.context.ViewListTypeEntriesDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -63,13 +65,20 @@ public class EditListTypeDefinitionMVCRenderCommand
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ViewListTypeEntriesDisplayContext(
-				_portal.getHttpServletRequest(renderRequest)));
+				_portal.getHttpServletRequest(renderRequest),
+				_listTypeDefinitionModelResourcePermission));
 
 		return "/list_type_definitions/edit_list_type_definition.jsp";
 	}
 
 	@Reference
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.list.type.model.ListTypeDefinition)"
+	)
+	private ModelResourcePermission<ListTypeDefinition>
+		_listTypeDefinitionModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

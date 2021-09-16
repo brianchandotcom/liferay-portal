@@ -16,10 +16,13 @@ package com.liferay.object.web.internal.list.type.display.context;
 
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.list.type.constants.ListTypeActionKeys;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,7 +35,12 @@ import javax.servlet.http.HttpServletRequest;
 public class ViewListTypeEntriesDisplayContext {
 
 	public ViewListTypeEntriesDisplayContext(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		ModelResourcePermission<ListTypeDefinition>
+			listTypeDefinitionModelResourcePermission) {
+
+		_listTypeDefinitionModelResourcePermission =
+			listTypeDefinitionModelResourcePermission;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
@@ -57,6 +65,10 @@ public class ViewListTypeEntriesDisplayContext {
 	public CreationMenu getCreationMenu() {
 		CreationMenu creationMenu = new CreationMenu();
 
+		if (!hasAddListTypeEntryPermission()) {
+			return creationMenu;
+		}
+
 		creationMenu.addDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref("addListTypeEntry");
@@ -67,6 +79,16 @@ public class ViewListTypeEntriesDisplayContext {
 			});
 
 		return creationMenu;
+	}
+
+	public boolean hasAddListTypeEntryPermission() {
+		PortletResourcePermission portletResourcePermission =
+			_listTypeDefinitionModelResourcePermission.
+				getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
+			_objectRequestHelper.getPermissionChecker(), null,
+			ListTypeActionKeys.ADD_LIST_TYPE_DEFINITION);
 	}
 
 	private long _getListTypeDefinitionId() {
@@ -80,6 +102,8 @@ public class ViewListTypeEntriesDisplayContext {
 		return listTypeDefinition.getListTypeDefinitionId();
 	}
 
+	private final ModelResourcePermission<ListTypeDefinition>
+		_listTypeDefinitionModelResourcePermission;
 	private final ObjectRequestHelper _objectRequestHelper;
 
 }

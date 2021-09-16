@@ -1,3 +1,11 @@
+.modal-dialog {
+	width: 576px;
+
+	.modal-content {
+		height: 350px;
+	}
+}
+
 .side-panel-iframe {
 	& &-content {
 		padding: 0 !important;

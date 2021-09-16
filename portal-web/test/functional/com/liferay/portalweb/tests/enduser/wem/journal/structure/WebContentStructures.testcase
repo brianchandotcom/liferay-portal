@@ -66,6 +66,45 @@ definition {
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_2");
 	}
 
+	@description = "This is a use case for LPS-82208."
+	@priority = "5"
+	test CannotDeleteStructureWithUsage {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.addDisplayPage(
+			contentType = "Web Content Article",
+			displayPageName = "Display Page Name",
+			subType = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentStructures.deleteCP(
+			structureName = "WC Structure Name",
+			webContentHasReference = "true");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "Error:The structure cannot be deleted because it is required by one or more structure links.");
+
+		WebContentStructures.viewCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+	}
+
 	@description = "This is a use case for LPS-126248. Edit field reference of field options in structure editor."
 	@priority = "4"
 	test EditFieldReferenceOfFieldOption {

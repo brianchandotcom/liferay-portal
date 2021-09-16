@@ -11,10 +11,20 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="configurationsJSON" type="String" />
-		<field localized="true" name="description" type="String" />
-		<field name="elementInstancesJSON" type="String" />
-		<field localized="true" name="title" type="String" />
+		<field name="configurationsJSON" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field localized="true" name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="elementInstancesJSON" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field localized="true" name="title" type="String">
+			<hint name="max-length">500</hint>
+			<sanitize content-type="text/plain" modes="ALL" />
+			<validator name="required" />
+		</field>
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
@@ -30,11 +40,19 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field localized="true" name="description" type="String" />
-		<field name="elementDefinitionJSON" type="String" />
+		<field localized="true" name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="elementDefinitionJSON" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="hidden" type="boolean" />
 		<field name="readOnly" type="boolean" />
-		<field localized="true" name="title" type="String" />
+		<field localized="true" name="title" type="String">
+			<hint name="max-length">500</hint>
+			<sanitize content-type="text/plain" modes="ALL" />
+			<validator name="required" />
+		</field>
 		<field name="type" type="int" />
 		<field name="status" type="int" />
 	</model>

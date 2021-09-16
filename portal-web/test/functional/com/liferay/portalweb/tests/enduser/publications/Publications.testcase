@@ -419,6 +419,74 @@ definition {
 			warningMessage = "Duplicate Folder Name: Rename the folder in the publication.");
 	}
 
+	@description = "Assert modification conflict displays when modify the same document in two Publications"
+	@priority = "5"
+	test AssertModificationConflictDisplays {
+		property portal.acceptance = "true";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		JSONPublications.addPublication(publicationName = "Publication 1 Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentDescriptionEdit = "DM Document Description Edit 1",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit 1");
+
+		JSONPublications.addPublication(publicationName = "Publication 2 Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication 2 Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentDescriptionEdit = "DM Document Description Edit 2",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit 2");
+
+		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
+
+		JSONPublications.publishPublication(publicationName = "Publication 1 Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication 1 Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Edit 1");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title Edit 1");
+
+		JSONPublications.selectPublication(publicationName = "Publication 2 Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Edit 2");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title Edit 2");
+
+		Publications.gotoReviewChanges(publicationName = "Publication 2 Name");
+
+		Publications.gotoPublish(publicationName = "Publication 2 Name");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "DM Document Title Edit 2",
+			warningMessage = "Modification Conflict: The conflict cannot be automatically resolved.");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "DM Document Title Edit 2",
+			warningMessage = "Duplicate Document Version: The document version was updated to latest.");
+	}
+
 	@description = "Assert the conflict changes disply when modifying and deleting the same document in two Publications"
 	@priority = "4"
 	test AssertModificationDeletionConflictDisplays {

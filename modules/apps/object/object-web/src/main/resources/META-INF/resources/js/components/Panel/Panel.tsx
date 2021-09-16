@@ -79,6 +79,7 @@ const PanelHeader: React.FC<IPanelHeaderProps> = ({
 		>
 			<div className="object-admin-panel__header__content-left">
 				<ClayButtonWithIcon displayType="unstyled" symbol="drag" />
+
 				<h3 className="object-admin-panel__title">{title}</h3>
 
 				{contentLeft && (

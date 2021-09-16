@@ -16,13 +16,14 @@ import React from 'react';
 interface IAutoCompleteProps extends React.HTMLAttributes<HTMLElement> {
 	children: (item: any) => React.ReactNode;
 	contentRight?: React.ReactNode;
+	emptyStateMessage: string;
 	items: any[];
 	onChangeQuery: (value: string) => void;
 	onSelectItem: (item: any) => void;
 	query: string;
-	value?: string;
-	emptyStateMessage: string;
 	required?: boolean;
+	title: string;
+	value?: string;
 }
 declare const AutoComplete: React.FC<IAutoCompleteProps>;
 export default AutoComplete;

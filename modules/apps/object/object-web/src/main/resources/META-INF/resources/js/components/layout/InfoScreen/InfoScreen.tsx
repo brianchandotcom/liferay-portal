@@ -12,10 +12,64 @@
  * details.
  */
 
-import React from 'react';
+import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
+import React, {useContext} from 'react';
+
+import {normalizeLanguageId} from '../../../utils/string';
+import Card from '../../Card/Card';
+import RequiredMask from '../../RequiredMask';
+import LayoutContext, {TYPES} from '../context';
+
+const defaultLanguageId = normalizeLanguageId(
+	Liferay.ThemeDisplay.getDefaultLanguageId()
+);
 
 const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
-	return <div>Info</div>;
+	const [{objectLayout}, dispatch] = useContext(LayoutContext);
+
+	return (
+		<Card>
+			<Card.Header title={Liferay.Language.get('basic-info')} />
+			<Card.Body>
+				<ClayForm.Group>
+					<label htmlFor="objectLayoutName">
+						{Liferay.Language.get('name')}
+
+						<RequiredMask />
+					</label>
+
+					<ClayInput
+						id="objectLayoutName"
+						onChange={({target: {value}}) => {
+							dispatch({
+								payload: {
+									name: {
+										[defaultLanguageId]: value,
+									},
+								},
+								type: TYPES.CHANGE_OBJECT_LAYOUT_NAME,
+							});
+						}}
+						type="text"
+						value={objectLayout.name[defaultLanguageId]}
+					/>
+				</ClayForm.Group>
+
+				<ClayForm.Group className="mb-0">
+					<ClayCheckbox
+						checked={objectLayout.defaultObjectLayout}
+						label={Liferay.Language.get('mark-as-default')}
+						onChange={({target: {checked}}) => {
+							dispatch({
+								payload: {checked},
+								type: TYPES.SET_OBJECT_LAYOUT_AS_DEFAULT,
+							});
+						}}
+					/>
+				</ClayForm.Group>
+			</Card.Body>
+		</Card>
+	);
 };
 
 export default InfoScreen;

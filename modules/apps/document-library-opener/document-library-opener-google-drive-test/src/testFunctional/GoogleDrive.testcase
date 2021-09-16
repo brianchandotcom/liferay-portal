@@ -650,6 +650,10 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowRestriction = "Default Workflow");
 
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Guest");
+
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");

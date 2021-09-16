@@ -3,12 +3,12 @@
 
 <routes>
 	<route>
-		<pattern>/{userIdAndInstanceId}/{type}/{urlTitle:(?!id/)[^/]+}/{groupId:\d+}</pattern>
+		<pattern>/{userIdAndInstanceId}/{type}/{%urlTitle:(?!id/)[^/]+}/{groupId:\d+}</pattern>
 		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/{userIdAndInstanceId}/{type}/{urlTitle:(?!id$)[^/]+}</pattern>
+		<pattern>/{userIdAndInstanceId}/{type}/{%urlTitle:(?!id$)[^/]+}</pattern>
 		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 	</route>
@@ -18,11 +18,11 @@
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/{userIdAndInstanceId}/{type}/{urlTitle:(?!id/)[^/]+}/{groupId:\d+}/{p_p_state}</pattern>
+		<pattern>/{userIdAndInstanceId}/{type}/{%urlTitle:(?!id/)[^/]+}/{groupId:\d+}/{p_p_state}</pattern>
 		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/{userIdAndInstanceId}/{type}/{urlTitle:(?!id/)[^/]+}/{p_p_state}</pattern>
+		<pattern>/{userIdAndInstanceId}/{type}/{%urlTitle:(?!id/)[^/]+}/{p_p_state}</pattern>
 		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
 	</route>
 	<route>

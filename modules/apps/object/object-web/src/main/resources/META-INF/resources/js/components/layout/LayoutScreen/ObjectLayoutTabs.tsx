@@ -24,6 +24,7 @@ import LayoutContext, {TYPES} from '../context';
 import DropdownWithDeleteButton from './DropdownWithDeleteButton';
 import ModalAddObjectLayoutBox from './ModalAddObjectLayoutBox';
 import ObjectLayoutBox from './ObjectLayoutBox';
+import ObjectLayoutRelationship from './ObjectLayoutRelationship';
 
 const defaultLanguageId = normalizeLanguageId(
 	Liferay.ThemeDisplay.getDefaultLanguageId()
@@ -37,10 +38,17 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 		onClose: () => setVisibleModal(false),
 	});
 
+	// TODO: obter o id do objectrelationship para renderizar ele no layout
+
 	return (
 		<>
 			{objectLayout?.objectLayoutTabs?.map(
-				({name, objectLayoutBoxes}, tabIndex) => {
+				({name, objectLayoutBoxes, objectRelationshipId}, tabIndex) => {
+					const isRelationshipType = objectRelationshipId !== 0;
+					const labelDisplayType = isRelationshipType
+						? 'warning'
+						: 'info';
+
 					return (
 						<Panel
 							className="layout-tab__tab"
@@ -48,28 +56,36 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 						>
 							<Panel.Header
 								contentLeft={
-									<ClayLabel displayType="info">
-										fields
+									<ClayLabel displayType={labelDisplayType}>
+										{isRelationshipType
+											? Liferay.Language.get(
+													'relationships'
+											  )
+											: Liferay.Language.get('fields')}
 									</ClayLabel>
 								}
 								contentRight={
 									<>
-										<ClayButton
-											displayType="secondary"
-											onClick={() => {
-												setVisibleModal(true);
-												setSelectedTabIndex(tabIndex);
-											}}
-											small
-										>
-											<ClayIcon symbol="plus" />
+										{!isRelationshipType && (
+											<ClayButton
+												displayType="secondary"
+												onClick={() => {
+													setVisibleModal(true);
+													setSelectedTabIndex(
+														tabIndex
+													);
+												}}
+												small
+											>
+												<ClayIcon symbol="plus" />
 
-											<span className="ml-2">
-												{Liferay.Language.get(
-													'add-block'
-												)}
-											</span>
-										</ClayButton>
+												<span className="ml-2">
+													{Liferay.Language.get(
+														'add-block'
+													)}
+												</span>
+											</ClayButton>
+										)}
 
 										<DropdownWithDeleteButton
 											onClick={() => {
@@ -87,29 +103,42 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 								title={name[defaultLanguageId]}
 							/>
 
-							{!!objectLayoutBoxes?.length && (
+							{!!objectLayoutBoxes?.length &&
+								!isRelationshipType && (
+									<Panel.Body>
+										{objectLayoutBoxes.map(
+											(
+												{
+													collapsable,
+													name,
+													objectLayoutRows,
+												},
+												boxIndex
+											) => (
+												<ObjectLayoutBox
+													boxIndex={boxIndex}
+													collapsable={collapsable}
+													key={`box_${boxIndex}`}
+													label={
+														name[defaultLanguageId]
+													}
+													objectLayoutRows={
+														objectLayoutRows
+													}
+													tabIndex={tabIndex}
+												/>
+											)
+										)}
+									</Panel.Body>
+								)}
+
+							{isRelationshipType && (
 								<Panel.Body>
-									{objectLayoutBoxes.map(
-										(
-											{
-												collapsable,
-												name,
-												objectLayoutRows,
-											},
-											boxIndex
-										) => (
-											<ObjectLayoutBox
-												boxIndex={boxIndex}
-												collapsable={collapsable}
-												key={`box_${boxIndex}`}
-												label={name[defaultLanguageId]}
-												objectLayoutRows={
-													objectLayoutRows
-												}
-												tabIndex={tabIndex}
-											/>
-										)
-									)}
+									<ObjectLayoutRelationship
+										objectRelationshipId={
+											objectRelationshipId
+										}
+									/>
 								</Panel.Body>
 							)}
 						</Panel>

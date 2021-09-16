@@ -17,9 +17,16 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
 import React, {useContext, useEffect, useState} from 'react';
 
+import {TabsVisitor} from '../../utils/visitor';
 import SidePanelContent from '../SidePanelContent';
 import LayoutScreen from './LayoutScreen/LayoutScreen';
 import LayoutContext, {LayoutContextProvider, TYPES} from './context';
+import {
+	TObjectField,
+	TObjectLayoutColumn,
+	TObjectLayoutTab,
+	TObjectRelationship,
+} from './types';
 
 const TABS = [
 	{
@@ -32,6 +39,63 @@ const HEADERS = new Headers({
 	Accept: 'application/json',
 	'Content-Type': 'application/json',
 });
+
+type TNormalizeObjectFields = ({
+	objectFields,
+	objectLayoutTabs,
+}: {
+	objectFields: TObjectField[];
+	objectLayoutTabs: TObjectLayoutTab[];
+}) => TObjectField[];
+
+const normalizeObjectFields: TNormalizeObjectFields = ({
+	objectFields,
+	objectLayoutTabs,
+}) => {
+	const visitor = new TabsVisitor(objectLayoutTabs);
+	const objectFieldIds = objectFields.map(({id}) => id);
+
+	const normalizedObjectFields = [...objectFields];
+
+	visitor.mapTabs(({objectFieldId}: TObjectLayoutColumn) => {
+		const objectFieldIndex = objectFieldIds.indexOf(objectFieldId);
+
+		normalizedObjectFields[objectFieldIndex].inLayout = true;
+	});
+
+	return normalizedObjectFields;
+};
+
+type TNormalizeObjectRelationships = ({
+	objectLayoutTabs,
+	objectRelationships,
+}: {
+	objectLayoutTabs: TObjectLayoutTab[];
+	objectRelationships: TObjectRelationship[];
+}) => TObjectRelationship[];
+
+const normalizeObjectRelationships: TNormalizeObjectRelationships = ({
+	objectLayoutTabs,
+	objectRelationships,
+}) => {
+	const objectRelationshipIds = objectRelationships.map(({id}) => id);
+
+	const normalizedObjectRelationships = [...objectRelationships];
+
+	objectLayoutTabs.forEach(({objectRelationshipId}) => {
+		if (objectRelationshipId) {
+			const objectRelationshipIndex = objectRelationshipIds.indexOf(
+				objectRelationshipId
+			);
+
+			normalizedObjectRelationships[
+				objectRelationshipIndex
+			].inLayout = true;
+		}
+	});
+
+	return normalizedObjectRelationships;
+};
 
 const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const [{objectLayout, objectLayoutId}, dispatch] = useContext(
@@ -64,9 +128,13 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				}
 			);
 
-			const {
-				items: objectFields = [],
-			} = await objectFieldsResponse.json();
+			const objectRelationshipsResponse = await Liferay.Util.fetch(
+				`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-relationships`,
+				{
+					headers: HEADERS,
+					method: 'GET',
+				}
+			);
 
 			dispatch({
 				payload: {
@@ -79,9 +147,34 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				type: TYPES.ADD_OBJECT_LAYOUT,
 			});
 
+			const {
+				items: objectFields,
+			}: {items: TObjectField[]} = await objectFieldsResponse.json();
+
 			dispatch({
-				payload: {objectFields},
+				payload: {
+					objectFields: normalizeObjectFields({
+						objectFields,
+						objectLayoutTabs,
+					}),
+				},
 				type: TYPES.ADD_OBJECT_FIELDS,
+			});
+
+			const {
+				items: objectRelationships,
+			}: {
+				items: TObjectRelationship[];
+			} = await objectRelationshipsResponse.json();
+
+			dispatch({
+				payload: {
+					objectRelationships: normalizeObjectRelationships({
+						objectLayoutTabs,
+						objectRelationships,
+					}),
+				},
+				type: TYPES.ADD_OBJECT_RELATIONSHIPS,
 			});
 		};
 

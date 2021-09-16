@@ -13,23 +13,81 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm, {ClayInput, ClayRadio, ClayRadioGroup} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
+import ClayLabel from '@clayui/label';
 import ClayModal from '@clayui/modal';
-import React, {useContext, useState} from 'react';
+import classNames from 'classnames';
+import React, {useContext, useMemo, useState} from 'react';
 
 import {normalizeLanguageId} from '../../../utils/string';
 import RequiredMask from '../../RequiredMask';
-import LayoutContext, {TYPES} from '../context';
+import LayoutContext, {TYPES as EVENT_TYPES} from '../context';
+import {TObjectRelationship} from '../types';
+import AutoComplete from './AutoComplete';
 
-const tabType = [
-	{
+type TTabTypes = {
+	[key: string]: {
+		active: boolean;
+		description: string;
+		label: string;
+	};
+};
+
+interface ITabTypesProps extends React.HTMLAttributes<HTMLElement> {
+	onChangeType: (type: string) => void;
+}
+
+const TYPES = {
+	FIELDS: 'fields',
+	RELATIONSHIPS: 'relationships',
+};
+
+const types: TTabTypes = {
+	[TYPES.FIELDS]: {
+		active: true,
 		description: Liferay.Language.get(
 			'to-display-fields-and-one-to-one-relationships'
 		),
 		label: Liferay.Language.get('fields'),
-		value: 'fields',
 	},
-];
+	[TYPES.RELATIONSHIPS]: {
+		active: false,
+		description: Liferay.Language.get('to-display-multiple-relationships'),
+		label: Liferay.Language.get('relationships'),
+	},
+};
+
+const TabTypes: React.FC<ITabTypesProps> = ({onChangeType}) => {
+	const [selectedType, setSelectedType] = useState<string>(TYPES.FIELDS);
+
+	return (
+		<>
+			{Object.keys(types).map((key) => {
+				const {description, label} = types[key];
+
+				return (
+					<div
+						className={classNames('layout-tab__tab-types', {
+							active: selectedType === key,
+						})}
+						key={key}
+						onClick={() => {
+							onChangeType(key);
+							setSelectedType(key);
+						}}
+					>
+						<h4 className="layout-tab__tab-types__title">
+							{label}
+						</h4>
+						<span className="tab__tab-types__description">
+							{description}
+						</span>
+					</div>
+				);
+			})}
+		</>
+	);
+};
 
 const defaultLanguageId = normalizeLanguageId(
 	Liferay.ThemeDisplay.getDefaultLanguageId()
@@ -46,8 +104,18 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 	onClose,
 }) => {
 	const [name, setName] = useState<string>('');
-	const [selectedType, setSelectedType] = useState<string>('fields');
-	const [, dispatch] = useContext(LayoutContext);
+	const [{objectRelationships}, dispatch] = useContext(LayoutContext);
+	const [selectedType, setSelectedType] = useState('');
+	const [query, setQuery] = useState<string>('');
+	const [selectedRelationship, setSelectedRelationship] = useState<
+		TObjectRelationship
+	>();
+
+	const filteredRelationships = useMemo(() => {
+		return objectRelationships.filter(({inLayout, label}) => {
+			return label[defaultLanguageId].match(query) && !inLayout;
+		});
+	}, [objectRelationships, query]);
 
 	return (
 		<ClayModal observer={observer}>
@@ -71,26 +139,50 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 				</ClayForm.Group>
 
 				<ClayForm.Group>
-					<label htmlFor="inputType">
+					<label className="mb-2">
 						{Liferay.Language.get('type')}
 					</label>
 
-					<ClayRadioGroup
-						id="inputType"
-						onSelectedValueChange={(value) =>
-							setSelectedType(value as string)
-						}
-						selectedValue={selectedType}
-					>
-						{tabType.map(({label, value}) => (
-							<ClayRadio
-								key={value}
-								label={label}
-								value={value}
-							/>
-						))}
-					</ClayRadioGroup>
+					<TabTypes onChangeType={setSelectedType} />
 				</ClayForm.Group>
+
+				{selectedType === TYPES.RELATIONSHIPS && (
+					<ClayForm.Group>
+						<AutoComplete
+							contentRight={
+								<ClayLabel
+									className="label-inside-custom-select"
+									displayType="secondary"
+								>
+									{selectedRelationship?.type}
+								</ClayLabel>
+							}
+							emptyStateMessage={Liferay.Language.get(
+								'there-are-no-relationship-for-this-object'
+							)}
+							items={filteredRelationships}
+							onChangeQuery={setQuery}
+							onSelectItem={setSelectedRelationship}
+							query={query}
+							required
+							title={Liferay.Language.get('relationship')}
+							value={
+								selectedRelationship?.label[defaultLanguageId]
+							}
+						>
+							{({label, type}) => (
+								<div className="d-flex justify-content-between">
+									<div>{label[defaultLanguageId]}</div>
+									<div>
+										<ClayLabel displayType="secondary">
+											{type}
+										</ClayLabel>
+									</div>
+								</div>
+							)}
+						</AutoComplete>
+					</ClayForm.Group>
+				)}
 			</ClayModal.Body>
 			<ClayModal.Footer
 				last={
@@ -105,9 +197,10 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 										name: {
 											[defaultLanguageId]: name,
 										},
-										type: selectedType,
+										objectRelationshipId:
+											selectedRelationship?.id ?? 0,
 									},
-									type: TYPES.ADD_OBJECT_LAYOUT_TAB,
+									type: EVENT_TYPES.ADD_OBJECT_LAYOUT_TAB,
 								});
 
 								onClose();

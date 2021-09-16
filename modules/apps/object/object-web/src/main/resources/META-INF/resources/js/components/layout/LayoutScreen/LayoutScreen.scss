@@ -39,4 +39,22 @@ $bgColor: #f7f8f9;
 	&__tab {
 		background-color: $bgColor;
 	}
+
+	&__tab-types {
+		border: 1px solid #cdced9;
+		padding: 1rem;
+		margin-bottom: 1rem;
+		border-radius: 4px;
+		color: #6b6c7e;
+		cursor: pointer;
+
+		&__title {
+			margin: 0;
+		}
+
+		&.active {
+			border: 2px solid #0b5fff;
+			color: initial;
+		}
+	}
 }

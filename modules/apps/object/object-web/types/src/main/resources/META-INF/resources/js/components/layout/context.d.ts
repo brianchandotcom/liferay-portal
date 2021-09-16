@@ -13,11 +13,12 @@
  */
 
 import React from 'react';
-import {TObjectField, TObjectLayout} from './types';
+import {TObjectField, TObjectLayout, TObjectRelationship} from './types';
 declare type TState = {
-	objectLayout: TObjectLayout;
 	objectFields: TObjectField[];
+	objectLayout: TObjectLayout;
 	objectLayoutId: string;
+	objectRelationships: TObjectRelationship[];
 };
 declare type TAction = {
 	payload: {
@@ -36,6 +37,7 @@ export declare const TYPES: {
 	readonly ADD_OBJECT_LAYOUT_BOX: 'ADD_OBJECT_LAYOUT_BOX';
 	readonly ADD_OBJECT_LAYOUT_FIELD: 'ADD_OBJECT_LAYOUT_FIELD';
 	readonly ADD_OBJECT_LAYOUT_TAB: 'ADD_OBJECT_LAYOUT_TAB';
+	readonly ADD_OBJECT_RELATIONSHIPS: 'ADD_OBJECT_RELATIONSHIPS';
 	readonly CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE: 'CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE';
 	readonly DELETE_OBJECT_LAYOUT_BOX: 'DELETE_OBJECT_LAYOUT_BOX';
 	readonly DELETE_OBJECT_LAYOUT_FIELD: 'DELETE_OBJECT_LAYOUT_FIELD';

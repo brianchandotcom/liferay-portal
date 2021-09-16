@@ -13,15 +13,14 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import React, {useContext, useMemo, useState} from 'react';
 
 import {normalizeLanguageId} from '../../../utils/string';
-import CustomSelect from '../../CustomSelect/CustomSelect';
 import LayoutContext, {TYPES} from '../context';
 import {TObjectField} from '../types';
+import AutoComplete from './AutoComplete';
 import RequiredLabel from './RequiredLabel';
 
 const defaultLanguageId = normalizeLanguageId(
@@ -43,7 +42,6 @@ const ModalAddObjectLayoutField: React.FC<IModalAddObjectLayoutFieldProps> = ({
 	tabIndex,
 }) => {
 	const [{objectFields}, dispatch] = useContext(LayoutContext);
-	const [active, setActive] = useState<boolean>(false);
 	const [query, setQuery] = useState<string>('');
 	const [selectedObjectField, setSelectedObjectField] = useState<
 		TObjectField
@@ -62,91 +60,32 @@ const ModalAddObjectLayoutField: React.FC<IModalAddObjectLayoutFieldProps> = ({
 			</ClayModal.Header>
 			<ClayModal.Body>
 				<ClayForm.Group>
-					<label htmlFor="inputField">
-						{Liferay.Language.get('field')}
-					</label>
-
-					<ClayDropDown
-						active={active}
-						onActiveChange={(value) => setActive(value)}
-						trigger={
-							<CustomSelect
-								contentRight={
-									<>
-										{selectedObjectField?.label[
-											defaultLanguageId
-										] && (
-											<RequiredLabel
-												className="label-inside-custom-select"
-												required={
-													selectedObjectField.required
-												}
-											/>
-										)}
-									</>
-								}
-								placeholder={Liferay.Language.get(
-									'choose-an-option'
-								)}
-								value={
-									selectedObjectField?.label[
-										defaultLanguageId
-									]
-								}
+					<AutoComplete
+						contentRight={
+							<RequiredLabel
+								className="label-inside-custom-select"
+								required={selectedObjectField?.required}
 							/>
 						}
-					>
-						<ClayDropDown.Search
-							onChange={(event) => setQuery(event.target.value)}
-							placeholder={Liferay.Language.get('search')}
-							value={query}
-						/>
-
-						{filteredObjectFields.length ? (
-							<ClayDropDown.ItemList>
-								{filteredObjectFields.map(
-									(objectField, objectFieldIndex) => {
-										const {label, required} = objectField;
-
-										return (
-											<ClayDropDown.Item
-												key={objectFieldIndex}
-												onClick={() => {
-													setSelectedObjectField(
-														objectField
-													);
-													setActive(false);
-												}}
-											>
-												<div className="d-flex justify-content-between">
-													<div>
-														{
-															label[
-																defaultLanguageId
-															]
-														}
-													</div>
-													<div>
-														<RequiredLabel
-															required={required}
-														/>
-													</div>
-												</div>
-											</ClayDropDown.Item>
-										);
-									}
-								)}
-							</ClayDropDown.ItemList>
-						) : (
-							<ClayDropDown.ItemList>
-								<ClayDropDown.Item>
-									{Liferay.Language.get(
-										'there-are-no-fields-for-this-object'
-									)}
-								</ClayDropDown.Item>
-							</ClayDropDown.ItemList>
+						emptyStateMessage={Liferay.Language.get(
+							'there-are-no-fields-for-this-object'
 						)}
-					</ClayDropDown>
+						items={filteredObjectFields}
+						onChangeQuery={setQuery}
+						onSelectItem={setSelectedObjectField}
+						query={query}
+						title={Liferay.Language.get('fields')}
+						value={selectedObjectField?.label[defaultLanguageId]}
+					>
+						{({label, required}) => (
+							<div className="d-flex justify-content-between">
+								<div>{label[defaultLanguageId]}</div>
+								<div>
+									<RequiredLabel required={required} />
+								</div>
+							</div>
+						)}
+					</AutoComplete>
 				</ClayForm.Group>
 			</ClayModal.Body>
 			<ClayModal.Footer

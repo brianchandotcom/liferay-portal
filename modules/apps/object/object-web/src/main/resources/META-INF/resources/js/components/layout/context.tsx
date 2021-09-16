@@ -14,12 +14,19 @@
 
 import React, {createContext, useReducer} from 'react';
 
-import {TObjectField, TObjectLayout} from './types';
+import {BoxesVisitor, TabsVisitor} from '../../utils/visitor';
+import {
+	TObjectField,
+	TObjectLayout,
+	TObjectLayoutColumn,
+	TObjectRelationship,
+} from './types';
 
 type TState = {
-	objectLayout: TObjectLayout;
 	objectFields: TObjectField[];
+	objectLayout: TObjectLayout;
 	objectLayoutId: string;
+	objectRelationships: TObjectRelationship[];
 };
 
 type TAction = {
@@ -40,6 +47,7 @@ export const TYPES = {
 	ADD_OBJECT_LAYOUT_BOX: 'ADD_OBJECT_LAYOUT_BOX',
 	ADD_OBJECT_LAYOUT_FIELD: 'ADD_OBJECT_LAYOUT_FIELD',
 	ADD_OBJECT_LAYOUT_TAB: 'ADD_OBJECT_LAYOUT_TAB',
+	ADD_OBJECT_RELATIONSHIPS: 'ADD_OBJECT_RELATIONSHIPS',
 	CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE: 'CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE',
 	DELETE_OBJECT_LAYOUT_BOX: 'DELETE_OBJECT_LAYOUT_BOX',
 	DELETE_OBJECT_LAYOUT_FIELD: 'DELETE_OBJECT_LAYOUT_FIELD',
@@ -49,36 +57,16 @@ export const TYPES = {
 const initialState = {
 	objectFields: [] as TObjectField[],
 	objectLayout: {} as TObjectLayout,
+	objectRelationships: [] as TObjectRelationship[],
 } as TState;
 
-type TResetObjectFieldProperties = (
-	objectFields: TObjectField[]
-) => TObjectField[];
+type TGetObjectIndex = (object: any[], objectId: number) => number;
 
-const resetObjectFieldProperties: TResetObjectFieldProperties = (
-	objectFields
-) => {
-	return objectFields.map((objectField) => {
-		return {
-			...objectField,
-			inLayout: false,
-		};
-	});
-};
+const getObjectIndex: TGetObjectIndex = (object, objectId) => {
+	const objIds = object.map(({id}) => id);
+	const objectIndex = objIds.indexOf(objectId);
 
-type TGetObjectFieldIndex = (
-	objectFields: TObjectField[],
-	objectFieldId: number
-) => number;
-
-const getObjectFieldIndex: TGetObjectFieldIndex = (
-	objectFields,
-	objectFieldId
-) => {
-	const objectFieldIds = objectFields.map(({id}) => id);
-	const objectFieldIndex = objectFieldIds.indexOf(objectFieldId);
-
-	return objectFieldIndex;
+	return objectIndex;
 };
 
 const layoutReducer = (state: TState, action: TAction) => {
@@ -91,23 +79,42 @@ const layoutReducer = (state: TState, action: TAction) => {
 				objectLayout,
 			};
 		}
+		case TYPES.ADD_OBJECT_RELATIONSHIPS: {
+			const {objectRelationships} = action.payload;
+
+			return {
+				...state,
+				objectRelationships,
+			};
+		}
 		case TYPES.ADD_OBJECT_LAYOUT_TAB: {
-			const {name} = action.payload;
+			const {name, objectRelationshipId} = action.payload;
+
+			const newState = {...state};
 
 			const newObjectLayoutTab = {
 				name,
 				objectLayoutBoxes: [],
-				objectRelationshipId: 0,
-				priority: state.objectLayout.objectLayoutTabs.length,
+				objectRelationshipId,
+				priority: 0,
 			};
+
+			if (objectRelationshipId) {
+				newState.objectRelationships[
+					getObjectIndex(
+						newState.objectRelationships,
+						objectRelationshipId
+					)
+				].inLayout = true;
+			}
 
 			if (state.objectLayout.objectLayoutTabs.length) {
 				return {
-					...state,
+					...newState,
 					objectLayout: {
-						...state.objectLayout,
+						...newState.objectLayout,
 						objectLayoutTabs: [
-							...state.objectLayout.objectLayoutTabs,
+							...newState.objectLayout.objectLayoutTabs,
 							newObjectLayoutTab,
 						],
 					},
@@ -115,9 +122,9 @@ const layoutReducer = (state: TState, action: TAction) => {
 			}
 
 			return {
-				...state,
+				...newState,
 				objectLayout: {
-					...state.objectLayout,
+					...newState.objectLayout,
 					objectLayoutTabs: [newObjectLayoutTab],
 				},
 			};
@@ -165,7 +172,7 @@ const layoutReducer = (state: TState, action: TAction) => {
 			});
 
 			newState.objectFields[
-				getObjectFieldIndex(newState.objectFields, objectFieldId)
+				getObjectIndex(newState.objectFields, objectFieldId)
 			].inLayout = true;
 
 			return newState;
@@ -186,13 +193,25 @@ const layoutReducer = (state: TState, action: TAction) => {
 
 			const newState = {...state};
 
+			// Change object field inLayout attribute to false to be visible when add field again.
+
+			const objectFieldIds = newState.objectFields.map(({id}) => id);
+			const visitor = new BoxesVisitor([
+				newState.objectLayout.objectLayoutTabs[tabIndex]
+					.objectLayoutBoxes[boxIndex],
+			]);
+
+			visitor.mapBoxes(({objectFieldId}: TObjectLayoutColumn) => {
+				const objectIndex = objectFieldIds.indexOf(objectFieldId);
+
+				newState.objectFields[objectIndex].inLayout = false;
+			});
+
+			// Delete object layout box
+
 			newState.objectLayout.objectLayoutTabs[
 				tabIndex
 			].objectLayoutBoxes.splice(boxIndex, 1);
-
-			newState.objectFields = resetObjectFieldProperties(
-				newState.objectFields
-			);
 
 			return newState;
 		}
@@ -206,20 +225,20 @@ const layoutReducer = (state: TState, action: TAction) => {
 
 			const newState = {...state};
 
-			// Delete a line because we only have one field per line.
+			const objectFieldIndex = getObjectIndex(
+				newState.objectFields,
+				objectFieldId
+			);
+
+			newState.objectFields[objectFieldIndex].inLayout = false;
+
+			// Delete a row because we only have one field by row.
 			// In the future, we'll have drag and drop, so we'll just
 			// need to implement field removal
 
 			newState.objectLayout.objectLayoutTabs[tabIndex].objectLayoutBoxes[
 				boxIndex
 			].objectLayoutRows.splice(rowIndex, 1);
-
-			const objectFieldIndex = getObjectFieldIndex(
-				newState.objectFields,
-				objectFieldId
-			);
-
-			newState.objectFields[objectFieldIndex].inLayout = false;
 
 			return newState;
 		}
@@ -228,11 +247,41 @@ const layoutReducer = (state: TState, action: TAction) => {
 
 			const newState = {...state};
 
-			newState.objectLayout.objectLayoutTabs.splice(tabIndex, 1);
+			// Change object relationship inLayout attribute to false to be visible when add field again.
 
-			newState.objectFields = resetObjectFieldProperties(
-				newState.objectFields
-			);
+			const objectRelationshipId =
+				newState.objectLayout.objectLayoutTabs[tabIndex]
+					.objectRelationshipId;
+
+			if (objectRelationshipId) {
+				const objectRelationshipIds = newState.objectRelationships.map(
+					({id}) => id
+				);
+				const objectRelationshipIndex = objectRelationshipIds.indexOf(
+					objectRelationshipId
+				);
+
+				newState.objectRelationships[
+					objectRelationshipIndex
+				].inLayout = false;
+			}
+
+			// Change object field inLayout attribute to false to be visible when add field again.
+
+			const objectFieldIds = newState.objectFields.map(({id}) => id);
+			const visitor = new TabsVisitor([
+				newState.objectLayout.objectLayoutTabs[tabIndex],
+			]);
+
+			visitor.mapTabs(({objectFieldId}: TObjectLayoutColumn) => {
+				const objectFieldIndex = objectFieldIds.indexOf(objectFieldId);
+
+				newState.objectFields[objectFieldIndex].inLayout = false;
+			});
+
+			// Delete object layout tab
+
+			newState.objectLayout.objectLayoutTabs.splice(tabIndex, 1);
 
 			return newState;
 		}

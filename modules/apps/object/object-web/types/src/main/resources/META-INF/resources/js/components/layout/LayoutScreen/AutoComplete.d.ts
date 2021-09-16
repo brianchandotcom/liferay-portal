@@ -12,30 +12,17 @@
  * details.
  */
 
-import ClayLabel from '@clayui/label';
 import React from 'react';
-
-interface IRequiredLabelProps extends React.HTMLAttributes<HTMLElement> {
+interface IAutoCompleteProps extends React.HTMLAttributes<HTMLElement> {
+	children: (item: any) => React.ReactNode;
+	contentRight?: React.ReactNode;
+	items: any[];
+	onChangeQuery: (value: string) => void;
+	onSelectItem: (item: any) => void;
+	query: string;
+	value?: string;
+	emptyStateMessage: string;
 	required?: boolean;
 }
-
-const RequiredLabel: React.FC<IRequiredLabelProps> = ({
-	className,
-	required = false,
-}) => {
-	return (
-		<>
-			{required ? (
-				<ClayLabel className={className} displayType="warning">
-					{Liferay.Language.get('mandatory')}
-				</ClayLabel>
-			) : (
-				<ClayLabel className={className} displayType="success">
-					{Liferay.Language.get('optional')}
-				</ClayLabel>
-			)}
-		</>
-	);
-};
-
-export default RequiredLabel;
+declare const AutoComplete: React.FC<IAutoCompleteProps>;
+export default AutoComplete;

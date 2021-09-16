@@ -12,30 +12,23 @@
  * details.
  */
 
-import ClayLabel from '@clayui/label';
-import React from 'react';
-
-interface IRequiredLabelProps extends React.HTMLAttributes<HTMLElement> {
-	required?: boolean;
+import {
+	TObjectLayoutBox,
+	TObjectLayoutColumn,
+	TObjectLayoutTab,
+} from '../components/layout/types';
+declare class TabsVisitor {
+	private _tabs;
+	constructor(tabs: TObjectLayoutTab[]);
+	dispose(): void;
+	setTabs(tabs: TObjectLayoutTab[]): void;
+	mapTabs(mapper: (column: TObjectLayoutColumn) => void): any;
 }
-
-const RequiredLabel: React.FC<IRequiredLabelProps> = ({
-	className,
-	required = false,
-}) => {
-	return (
-		<>
-			{required ? (
-				<ClayLabel className={className} displayType="warning">
-					{Liferay.Language.get('mandatory')}
-				</ClayLabel>
-			) : (
-				<ClayLabel className={className} displayType="success">
-					{Liferay.Language.get('optional')}
-				</ClayLabel>
-			)}
-		</>
-	);
-};
-
-export default RequiredLabel;
+declare class BoxesVisitor {
+	private _boxes;
+	constructor(boxes: TObjectLayoutBox[]);
+	dispose(): void;
+	setBoxes(boxes: TObjectLayoutBox[]): void;
+	mapBoxes(mapper: (column: TObjectLayoutColumn) => void): any;
+}
+export {BoxesVisitor, TabsVisitor};

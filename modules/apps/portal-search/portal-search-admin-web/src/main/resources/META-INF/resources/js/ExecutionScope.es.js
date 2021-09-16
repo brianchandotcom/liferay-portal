@@ -24,70 +24,20 @@ import ClayToolbar from '@clayui/toolbar';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useEffect, useState} from 'react';
 
-function ExecutionScope({portletNamespace, virtualInstances = []}) {
-	const [selected, setSelected] = useState([]);
-	const [value, setValue] = useState('all');
+const DEFAULT_DELTA = 10;
 
-	return (
-		<div className="execution-scope-sheet sheet sheet-lg">
-			<h2 className="sheet-title">
-				<span>{Liferay.Language.get('execution-scope')}</span>
-				<ClayTooltipProvider>
-					<ClaySticker
-						data-tooltip-align="bottom-left"
-						displayType="secondary"
-						size="md"
-						title={Liferay.Language.get('execution-scope-help')}
-					>
-						<ClayIcon symbol="question-circle-full" />
-					</ClaySticker>
-				</ClayTooltipProvider>
-			</h2>
+const SCOPES = {
+	ALL: 'all',
+	SELECTED: 'selected',
+};
 
-			<ClayRadioGroup
-				onSelectedValueChange={(val) => setValue(val)}
-				selectedValue={value}
-			>
-				<ClayRadio
-					label={Liferay.Language.get('all-instances')}
-					value="all"
-				/>
-				<ClayRadio
-					label={Liferay.Language.get('selected-instances')}
-					value="selected"
-				/>
-			</ClayRadioGroup>
-
-			{value === 'selected' && (
-				<SelectInstance
-					selected={selected}
-					setSelected={setSelected}
-					virtualInstances={virtualInstances}
-				/>
-			)}
-
-			<input
-				className="field form-control"
-				id={`${portletNamespace}companyIds`}
-				name={`${portletNamespace}companyIds`}
-				type="hidden"
-				value={
-					value === 'all'
-						? virtualInstances.map(({id}) => id).toString()
-						: selected.toString()
-				}
-			/>
-		</div>
-	);
-}
-
-function SelectInstance({selected, setSelected, virtualInstances}) {
+function InstanceSelector({selected, setSelected, virtualInstances}) {
 	const [activePage, setActivePage] = useState(1);
-	const [delta, setDelta] = useState(10);
-	const [value, setValue] = useState('');
 	const [currentVirtualInstances, setCurrentVirtualInstances] = useState(
 		virtualInstances
 	);
+	const [delta, setDelta] = useState(DEFAULT_DELTA);
+	const [searchValue, setSearchValue] = useState('');
 
 	const instanceMap = virtualInstances.reduce(
 		(acc, curr) => ({
@@ -130,12 +80,14 @@ function SelectInstance({selected, setSelected, virtualInstances}) {
 			.every(({id}) => selected.includes(id));
 
 	useEffect(() => {
-		if (value) {
-			const values = value.toLowerCase().split(/[\s,]+/);
+		if (searchValue) {
+			const searchValueWordsArray = searchValue
+				.toLowerCase()
+				.split(/[\s,]+/);
 
 			setCurrentVirtualInstances(
 				virtualInstances.filter(({id, name}) =>
-					values.some(
+					searchValueWordsArray.some(
 						(word) =>
 							String(id).includes(word) ||
 							name.toLowerCase().includes(word)
@@ -146,7 +98,7 @@ function SelectInstance({selected, setSelected, virtualInstances}) {
 		else {
 			setCurrentVirtualInstances(virtualInstances);
 		}
-	}, [virtualInstances, value]);
+	}, [virtualInstances, searchValue]);
 
 	return (
 		<>
@@ -168,7 +120,7 @@ function SelectInstance({selected, setSelected, virtualInstances}) {
 								aria-label={Liferay.Language.get('search')}
 								className="form-control input-group-inset input-group-inset-after"
 								onChange={(event) =>
-									setValue(event.target.value)
+									setSearchValue(event.target.value)
 								}
 								onKeyDown={(event) => {
 									if (event.key === 'Enter') {
@@ -177,16 +129,17 @@ function SelectInstance({selected, setSelected, virtualInstances}) {
 								}}
 								placeholder={Liferay.Language.get('search')}
 								type="text"
-								value={value}
+								value={searchValue}
 							/>
+
 							<ClayInput.GroupInsetItem after tag="span">
-								{value ? (
+								{searchValue ? (
 									<ClayButtonWithIcon
 										aria-label={Liferay.Language.get(
 											'clear'
 										)}
 										displayType="unstyled"
-										onClick={() => setValue('')}
+										onClick={() => setSearchValue('')}
 										symbol="times-circle"
 									/>
 								) : (
@@ -280,6 +233,7 @@ function SelectInstance({selected, setSelected, virtualInstances}) {
 										<ClayList.ItemTitle>
 											{name}
 										</ClayList.ItemTitle>
+
 										<ClayList.ItemText>
 											{Liferay.Util.sub(
 												Liferay.Language.get(
@@ -323,6 +277,65 @@ function SelectInstance({selected, setSelected, virtualInstances}) {
 				</ClayList>
 			)}
 		</>
+	);
+}
+
+function ExecutionScope({portletNamespace, virtualInstances = []}) {
+	const [selected, setSelected] = useState([]);
+	const [scope, setScope] = useState(SCOPES.ALL);
+
+	return (
+		<div className="execution-scope-sheet sheet sheet-lg">
+			<h2 className="sheet-title">
+				<span>{Liferay.Language.get('execution-scope')}</span>
+
+				<ClayTooltipProvider>
+					<ClaySticker
+						data-tooltip-align="bottom-left"
+						displayType="secondary"
+						size="md"
+						title={Liferay.Language.get('execution-scope-help')}
+					>
+						<ClayIcon symbol="question-circle-full" />
+					</ClaySticker>
+				</ClayTooltipProvider>
+			</h2>
+
+			<ClayRadioGroup
+				onSelectedValueChange={(newScope) => setScope(newScope)}
+				selectedValue={scope}
+			>
+				<ClayRadio
+					label={Liferay.Language.get('all-instances')}
+					value={SCOPES.ALL}
+				/>
+
+				<ClayRadio
+					label={Liferay.Language.get('selected-instances')}
+					value={SCOPES.SELECTED}
+				/>
+			</ClayRadioGroup>
+
+			{scope === SCOPES.SELECTED && (
+				<InstanceSelector
+					selected={selected}
+					setSelected={setSelected}
+					virtualInstances={virtualInstances}
+				/>
+			)}
+
+			<input
+				className="field form-control"
+				id={`${portletNamespace}companyIds`}
+				name={`${portletNamespace}companyIds`}
+				type="hidden"
+				value={
+					scope === SCOPES.ALL
+						? virtualInstances.map(({id}) => id).toString()
+						: selected.toString()
+				}
+			/>
+		</div>
 	);
 }
 

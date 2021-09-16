@@ -21,6 +21,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ViewObjectDefinitionsDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -83,7 +84,8 @@ public class ObjectDefinitionsObjectsScreenNavigationCategory
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new ViewObjectDefinitionsDisplayContext(httpServletRequest));
+			new ViewObjectDefinitionsDisplayContext(
+				httpServletRequest, _objectDefinitionModelResourcePermission));
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
@@ -92,5 +94,11 @@ public class ObjectDefinitionsObjectsScreenNavigationCategory
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"
+	)
+	private ModelResourcePermission<ObjectDefinition>
+		_objectDefinitionModelResourcePermission;
 
 }

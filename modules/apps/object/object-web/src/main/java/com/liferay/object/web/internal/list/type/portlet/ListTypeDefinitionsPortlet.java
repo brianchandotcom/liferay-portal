@@ -14,9 +14,11 @@
 
 package com.liferay.object.web.internal.list.type.portlet;
 
+import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.web.internal.list.type.display.context.ViewListTypeDefinitionsDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -68,10 +70,17 @@ public class ListTypeDefinitionsPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ViewListTypeDefinitionsDisplayContext(
-				_portal.getHttpServletRequest(renderRequest)));
+				_portal.getHttpServletRequest(renderRequest),
+				_listTypeDefinitionModelResourcePermission));
 
 		super.render(renderRequest, renderResponse);
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.list.type.model.ListTypeDefinition)"
+	)
+	private ModelResourcePermission<ListTypeDefinition>
+		_listTypeDefinitionModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

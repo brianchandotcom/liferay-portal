@@ -16,6 +16,7 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
@@ -23,6 +24,8 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +41,12 @@ import javax.servlet.http.HttpServletRequest;
 public class ObjectDefinitionsLayoutsDisplayContext {
 
 	public ObjectDefinitionsLayoutsDisplayContext(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		ModelResourcePermission<ObjectDefinition>
+			objectDefinitionModelResourcePermission) {
+
+		_objectDefinitionModelResourcePermission =
+			objectDefinitionModelResourcePermission;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
@@ -71,7 +79,9 @@ public class ObjectDefinitionsLayoutsDisplayContext {
 	public CreationMenu getCreationMenu() throws Exception {
 		CreationMenu creationMenu = new CreationMenu();
 
-		// TODO Check permissions
+		if (!hasAddObjectLayoutPermission()) {
+			return creationMenu;
+		}
 
 		creationMenu.addDropdownItem(
 			dropdownItem -> {
@@ -105,6 +115,18 @@ public class ObjectDefinitionsLayoutsDisplayContext {
 			_objectRequestHelper.getLiferayPortletResponse());
 	}
 
+	public boolean hasAddObjectLayoutPermission() {
+		PortletResourcePermission portletResourcePermission =
+			_objectDefinitionModelResourcePermission.
+				getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
+			_objectRequestHelper.getPermissionChecker(), null,
+			ObjectActionKeys.ADD_OBJECT_DEFINITION);
+	}
+
+	private final ModelResourcePermission<ObjectDefinition>
+		_objectDefinitionModelResourcePermission;
 	private final ObjectRequestHelper _objectRequestHelper;
 
 }

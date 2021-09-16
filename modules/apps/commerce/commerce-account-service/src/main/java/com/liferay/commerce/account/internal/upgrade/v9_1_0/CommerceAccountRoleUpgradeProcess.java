@@ -21,10 +21,13 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -43,12 +46,14 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 		AccountRoleLocalService accountRoleLocalService,
 		ClassNameLocalService classNameLocalService,
 		CounterLocalService counterLocalService,
+		GroupLocalService groupLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService) {
 
 		_accountRoleLocalService = accountRoleLocalService;
 		_classNameLocalService = classNameLocalService;
 		_counterLocalService = counterLocalService;
+		_groupLocalService = groupLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
 	}
@@ -104,6 +109,29 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
+	private void _copyResourcePermission(
+		ResourcePermission resourcePermission, long roleId) {
+
+		ResourcePermission newResourcePermission =
+			_resourcePermissionLocalService.createResourcePermission(
+				_counterLocalService.increment(
+					ResourcePermission.class.getName()));
+
+		newResourcePermission.setCompanyId(resourcePermission.getCompanyId());
+		newResourcePermission.setName(resourcePermission.getName());
+		newResourcePermission.setScope(resourcePermission.getScope());
+		newResourcePermission.setPrimKey(resourcePermission.getPrimKey());
+		newResourcePermission.setPrimKeyId(resourcePermission.getPrimKeyId());
+		newResourcePermission.setRoleId(roleId);
+		newResourcePermission.setOwnerId(resourcePermission.getOwnerId());
+		newResourcePermission.setActionIds(resourcePermission.getActionIds());
+		newResourcePermission.setViewActionId(
+			resourcePermission.isViewActionId());
+
+		_resourcePermissionLocalService.addResourcePermission(
+			newResourcePermission);
+	}
+
 	private AccountRole _copyToAccountRole(long roleId) throws Exception {
 		Role role = _roleLocalService.getRole(roleId);
 
@@ -117,27 +145,30 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 				role.getRoleId());
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
-			ResourcePermission newResourcePermission =
-				_resourcePermissionLocalService.createResourcePermission(
-					_counterLocalService.increment(
-						ResourcePermission.class.getName()));
+			if (resourcePermission.getScope() ==
+					ResourceConstants.SCOPE_GROUP) {
 
-			newResourcePermission.setCompanyId(
-				resourcePermission.getCompanyId());
-			newResourcePermission.setName(resourcePermission.getName());
-			newResourcePermission.setScope(resourcePermission.getScope());
-			newResourcePermission.setPrimKey(resourcePermission.getPrimKey());
-			newResourcePermission.setPrimKeyId(
-				resourcePermission.getPrimKeyId());
-			newResourcePermission.setRoleId(accountRole.getRoleId());
-			newResourcePermission.setOwnerId(resourcePermission.getOwnerId());
-			newResourcePermission.setActionIds(
-				resourcePermission.getActionIds());
-			newResourcePermission.setViewActionId(
-				resourcePermission.getViewActionId());
+				Group group = _groupLocalService.getGroup(
+					Long.valueOf(resourcePermission.getPrimKey()));
 
-			_resourcePermissionLocalService.addResourcePermission(
-				newResourcePermission);
+				if (group.getClassNameId() ==
+						_classNameLocalService.getClassNameId(
+							AccountEntry.class)) {
+
+					resourcePermission.setRoleId(accountRole.getRoleId());
+
+					_resourcePermissionLocalService.updateResourcePermission(
+						resourcePermission);
+				}
+			}
+			else if ((resourcePermission.getScope() ==
+						ResourceConstants.SCOPE_GROUP_TEMPLATE) ||
+					 (resourcePermission.getScope() ==
+						 ResourceConstants.SCOPE_INDIVIDUAL)) {
+
+				_copyResourcePermission(
+					resourcePermission, accountRole.getRoleId());
+			}
 		}
 
 		return accountRole;
@@ -170,6 +201,7 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 	private final AccountRoleLocalService _accountRoleLocalService;
 	private final ClassNameLocalService _classNameLocalService;
 	private final CounterLocalService _counterLocalService;
+	private final GroupLocalService _groupLocalService;
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;
 	private final RoleLocalService _roleLocalService;

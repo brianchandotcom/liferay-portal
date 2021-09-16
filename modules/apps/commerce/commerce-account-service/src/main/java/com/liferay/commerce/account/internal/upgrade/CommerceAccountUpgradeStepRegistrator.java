@@ -131,8 +131,8 @@ public class CommerceAccountUpgradeStepRegistrator
 			new com.liferay.commerce.account.internal.upgrade.v9_1_0.
 				CommerceAccountRoleUpgradeProcess(
 					_accountRoleLocalService, _classNameLocalService,
-					_counterLocalService, _resourcePermissionLocalService,
-					_roleLocalService));
+					_counterLocalService, _groupLocalService,
+					_resourcePermissionLocalService, _roleLocalService));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce account upgrade step registrator finished");

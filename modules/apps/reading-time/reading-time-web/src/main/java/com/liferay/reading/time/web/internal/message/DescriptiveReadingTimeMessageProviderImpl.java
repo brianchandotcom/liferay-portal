@@ -51,7 +51,7 @@ public class DescriptiveReadingTimeMessageProviderImpl
 		}
 
 		return LanguageUtil.format(
-			resourceBundle, "x-minutes-read", readingTimeInMinutes);
+			resourceBundle, "x-minute-read", readingTimeInMinutes);
 	}
 
 	@Override

@@ -54,11 +54,3 @@ renderResponse.setTitle(objectDefinition.getShortName());
 		%>'
 	/>
 </div>
-
-<script>
-	function <portlet:namespace />handleDestroyPortlet() {
-		Liferay.detach('destroyPortlet', <portlet:namespace />handleDestroyPortlet);
-	}
-
-	Liferay.on('destroyPortlet', <portlet:namespace />handleDestroyPortlet);
-</script>

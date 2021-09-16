@@ -1,0 +1,32 @@
+$borderColor: #e7e7ed;
+$bgColor: #fff;
+
+.object-admin-card {
+	background-color: $bgColor;
+	border: 1px solid $borderColor;
+	border-radius: 4px;
+	margin-bottom: 1.5rem;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	& &__body {
+		padding: 1.5rem;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	& &__header {
+		border-bottom: 1px solid $borderColor;
+		display: flex;
+		justify-content: space-between;
+		padding: 1.5em;
+	}
+
+	& &__title {
+		margin: 0;
+	}
+}

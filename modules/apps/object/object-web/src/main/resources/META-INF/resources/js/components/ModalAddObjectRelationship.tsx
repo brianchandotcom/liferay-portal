@@ -28,7 +28,6 @@ import RequiredMask from './RequiredMask';
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
 	objectDefinitions: TObjectDefinition[];
-	spritemap: string;
 }
 
 type TObjectDefinition = {
@@ -70,7 +69,6 @@ const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const ModalAddObjectRelationship: React.FC<IProps> = ({
 	apiURL,
 	objectDefinitions,
-	spritemap,
 }) => {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 	const [formState, setFormState] = useState<TFormState>({
@@ -142,12 +140,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 
 					<ClayModal.Body>
 						{error && (
-							<ClayAlert
-								displayType="danger"
-								spritemap={spritemap}
-							>
-								{error}
-							</ClayAlert>
+							<ClayAlert displayType="danger">{error}</ClayAlert>
 						)}
 
 						<ClayForm.Group>
@@ -300,7 +293,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 	);
 };
 
-const ModalWithProvider: React.FC<IProps> = ({apiURL, spritemap}) => {
+const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {
 	const [objectDefinitions, setObjectDefinitions] = useState<
 		TObjectDefinition[]
 	>([]);
@@ -335,7 +328,6 @@ const ModalWithProvider: React.FC<IProps> = ({apiURL, spritemap}) => {
 			<ModalAddObjectRelationship
 				apiURL={apiURL}
 				objectDefinitions={objectDefinitions}
-				spritemap={spritemap}
 			/>
 		</ClayModalProvider>
 	);

@@ -48,8 +48,6 @@ renderResponse.setTitle(objectDefinition.getShortName());
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", objectDefinitionsLayoutsDisplayContext.getAPIURL()
-			).put(
-				"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 			).build()
 		%>'
 	/>

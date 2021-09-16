@@ -18,7 +18,6 @@ declare global {
 }
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
-	spritemap: string;
 }
 declare const ModalWithProvider: React.FC<IProps>;
 export default ModalWithProvider;

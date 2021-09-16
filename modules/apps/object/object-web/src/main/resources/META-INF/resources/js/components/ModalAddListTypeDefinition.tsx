@@ -22,7 +22,6 @@ import RequiredMask from './RequiredMask';
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
-	spritemap: string;
 }
 
 type TFormState = {
@@ -33,7 +32,7 @@ type TFormState = {
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
-const ModalAddListTypeDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
+const ModalAddListTypeDefinition: React.FC<IProps> = ({apiURL}) => {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 	const [formState, setFormState] = useState<TFormState>({
 		name_i18n: {
@@ -99,12 +98,7 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 					</ClayModal.Header>
 					<ClayModal.Body>
 						{error && (
-							<ClayAlert
-								displayType="danger"
-								spritemap={spritemap}
-							>
-								{error}
-							</ClayAlert>
+							<ClayAlert displayType="danger">{error}</ClayAlert>
 						)}
 
 						<ClayForm.Group>
@@ -158,10 +152,10 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 	);
 };
 
-const ModalWithProvider: React.FC<IProps> = ({apiURL, spritemap}) => {
+const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {
 	return (
 		<ClayModalProvider>
-			<ModalAddListTypeDefinition apiURL={apiURL} spritemap={spritemap} />
+			<ModalAddListTypeDefinition apiURL={apiURL} />
 		</ClayModalProvider>
 	);
 };

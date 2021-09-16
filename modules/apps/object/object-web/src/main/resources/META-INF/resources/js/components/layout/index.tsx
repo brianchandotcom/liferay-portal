@@ -13,7 +13,6 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayIconSpriteContext} from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
 import React, {useContext, useEffect, useState} from 'react';
 
@@ -264,19 +263,13 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 interface ILayoutWrapperProps extends React.HTMLAttributes<HTMLElement> {
 	objectLayoutId: string;
-	spritemap: string;
 }
 
-const LayoutWrapper: React.FC<ILayoutWrapperProps> = ({
-	objectLayoutId,
-	spritemap,
-}) => {
+const LayoutWrapper: React.FC<ILayoutWrapperProps> = ({objectLayoutId}) => {
 	return (
-		<ClayIconSpriteContext.Provider value={spritemap}>
-			<LayoutContextProvider value={{objectLayoutId}}>
-				<Layout />
-			</LayoutContextProvider>
-		</ClayIconSpriteContext.Provider>
+		<LayoutContextProvider value={{objectLayoutId}}>
+			<Layout />
+		</LayoutContextProvider>
 	);
 };
 

@@ -27,7 +27,6 @@ import RequiredMask from './RequiredMask';
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
-	spritemap: string;
 }
 
 type TLocalizableLable = {
@@ -79,7 +78,7 @@ const formatName: TFormatName = (str) => {
 	return firstLetterLowercase(removeAllSpecialCharacters(join));
 };
 
-const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
+const ModalAddObjectField: React.FC<IProps> = ({apiURL}) => {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 	const [formState, setFormState] = useState<TFormState>({
 		generateAutoName: true,
@@ -153,12 +152,7 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 
 					<ClayModal.Body>
 						{error && (
-							<ClayAlert
-								displayType="danger"
-								spritemap={spritemap}
-							>
-								{error}
-							</ClayAlert>
+							<ClayAlert displayType="danger">{error}</ClayAlert>
 						)}
 
 						<ClayForm.Group>
@@ -354,10 +348,10 @@ const ModalAddObjectField: React.FC<IProps> = ({apiURL, spritemap}) => {
 	);
 };
 
-const ModalWithProvider: React.FC<IProps> = ({apiURL, spritemap}) => {
+const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {
 	return (
 		<ClayModalProvider>
-			<ModalAddObjectField apiURL={apiURL} spritemap={spritemap} />
+			<ModalAddObjectField apiURL={apiURL} />
 		</ClayModalProvider>
 	);
 };

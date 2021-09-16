@@ -39,8 +39,6 @@ ViewListTypeDefinitionsDisplayContext viewListTypeDefinitionsDisplayContext = (V
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", viewListTypeDefinitionsDisplayContext.getAPIURL()
-			).put(
-				"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 			).build()
 		%>'
 	/>

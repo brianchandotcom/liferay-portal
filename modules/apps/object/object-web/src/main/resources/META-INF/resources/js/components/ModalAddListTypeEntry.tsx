@@ -23,7 +23,6 @@ import RequiredMask from './RequiredMask';
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
-	spritemap: string;
 }
 
 type TFormState = {
@@ -51,7 +50,7 @@ const availableLocales: TLocale[] = Object.keys(Liferay.Language.available).map(
 	}
 );
 
-const ModalAddListTypeEntry: React.FC<IProps> = ({apiURL, spritemap}) => {
+const ModalAddListTypeEntry: React.FC<IProps> = ({apiURL}) => {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 	const [formState, setFormState] = useState<TFormState>({
 		key: '',
@@ -119,12 +118,7 @@ const ModalAddListTypeEntry: React.FC<IProps> = ({apiURL, spritemap}) => {
 					</ClayModal.Header>
 					<ClayModal.Body>
 						{error && (
-							<ClayAlert
-								displayType="danger"
-								spritemap={spritemap}
-							>
-								{error}
-							</ClayAlert>
+							<ClayAlert displayType="danger">{error}</ClayAlert>
 						)}
 
 						<ClayLocalizedInput
@@ -142,7 +136,6 @@ const ModalAddListTypeEntry: React.FC<IProps> = ({apiURL, spritemap}) => {
 							}}
 							required
 							selectedLocale={selectedLocale}
-							spritemap={spritemap}
 							translations={formState.name_i18n}
 						/>
 
@@ -193,10 +186,10 @@ const ModalAddListTypeEntry: React.FC<IProps> = ({apiURL, spritemap}) => {
 	);
 };
 
-const ModalWithProvider: React.FC<IProps> = ({apiURL, spritemap}) => {
+const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {
 	return (
 		<ClayModalProvider>
-			<ModalAddListTypeEntry apiURL={apiURL} spritemap={spritemap} />
+			<ModalAddListTypeEntry apiURL={apiURL} />
 		</ClayModalProvider>
 	);
 };

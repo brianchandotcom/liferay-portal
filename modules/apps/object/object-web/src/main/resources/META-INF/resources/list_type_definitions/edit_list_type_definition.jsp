@@ -80,8 +80,6 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", viewListTypeEntriesDisplayContext.getAPIURL()
-			).put(
-				"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 			).build()
 		%>'
 	/>

@@ -421,8 +421,16 @@ definition {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
-			groupName = "Site Name",
-			site = "true");
+			groupName = "Site Name (Staging)",
+			site = "false");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Blogs Page",

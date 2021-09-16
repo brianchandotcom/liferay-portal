@@ -15,11 +15,14 @@
 package com.liferay.journal.internal.search.spi.model.index.contributor;
 
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
+import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lourdes Fernández Besada
@@ -36,16 +39,31 @@ public class JournalFolderModelIndexerWriterContributor
 	public void customize(
 		BatchIndexingActionable batchIndexingActionable,
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
+
+		batchIndexingActionable.setPerformActionMethod(
+			(JournalFolder journalFolder) ->
+				batchIndexingActionable.addDocuments(
+					modelIndexerWriterDocumentHelper.getDocument(
+						journalFolder)));
 	}
 
 	@Override
 	public BatchIndexingActionable getBatchIndexingActionable() {
-		return null;
+		return dynamicQueryBatchIndexingActionableFactory.
+			getBatchIndexingActionable(
+				journalFolderLocalService.getIndexableActionableDynamicQuery());
 	}
 
 	@Override
 	public long getCompanyId(JournalFolder journalFolder) {
 		return journalFolder.getCompanyId();
 	}
+
+	@Reference
+	protected DynamicQueryBatchIndexingActionableFactory
+		dynamicQueryBatchIndexingActionableFactory;
+
+	@Reference
+	protected JournalFolderLocalService journalFolderLocalService;
 
 }

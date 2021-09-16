@@ -19,7 +19,7 @@
 		<field name="customElementURLs" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="iFrameURL" type="String">
+		<field name="IFrameURL" type="String">
 			<hint name="max-length">1024</hint>
 		</field>
 		<field localized="true" name="name" type="String" />

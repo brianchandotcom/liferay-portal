@@ -99,7 +99,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
 			_remoteAppEntryService.addIFrameRemoteAppEntry(
-				ParamUtil.getString(actionRequest, "iFrameURL"), nameMap);
+				ParamUtil.getString(actionRequest, "IFrameURL"), nameMap);
 		}
 	}
 

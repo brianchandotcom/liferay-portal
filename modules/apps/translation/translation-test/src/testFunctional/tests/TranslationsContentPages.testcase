@@ -86,8 +86,6 @@ definition {
 	@description = "This ensures that a button on a content page can be translated and published properly."
 	@priority = "5"
 	test CanPublishTranslatedHeadingAfterReview {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
@@ -98,7 +96,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+		Workflow.openWorkflowAdmin(siteURLKey = "test-site-name");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -115,22 +113,29 @@ definition {
 			newTargetLocale = "ja-JP");
 
 		Translations.translateFragmentField(
-			fieldName = "link",
+			fieldName = "element-text",
 			fragmentText = "これは見出しです");
 
 		Button.clickSubmitForPublication();
 
 		Alert.viewSuccessMessage();
 
-		ContentPagesNavigator.openViewContentPage(
-			locale = "ja",
+		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
-		AssertTextEquals(
-			key_fragmentName = "heading",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "Heading Example");
+		PageEditor.changeLocale(
+			currentLocale = "en-US",
+			locale = "ja-JP");
+
+		PageEditor.viewFragmentEditableText(
+			editableText = "Heading Example",
+			fragmentName = "Heading",
+			id = "element-text");
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

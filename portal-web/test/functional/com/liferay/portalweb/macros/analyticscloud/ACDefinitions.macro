@@ -67,6 +67,24 @@ definition {
 		}
 	}
 
+	macro deleteAllSearchQuery {
+		ACUtils.launchAC();
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToDefinitions();
+
+		ACDefinitions.goToDefinitionType(definitionType = "Search");
+
+		while (IsElementPresent(key_query = "", locator1 = "ACDefinitions#SEARCH_QUERY_DELETE_BUTTON")) {
+			Click(
+				key_query = "",
+				locator1 = "ACDefinitions#SEARCH_QUERY_DELETE_BUTTON");
+		}
+
+		Button.clickSave();
+	}
+
 	macro deleteSearchQuerySuccessfully {
 		Click(
 			key_query = "${query}",

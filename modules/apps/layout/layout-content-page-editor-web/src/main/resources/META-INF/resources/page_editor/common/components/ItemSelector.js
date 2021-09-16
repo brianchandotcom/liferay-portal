@@ -217,6 +217,11 @@ export default function ItemSelector({
 						<ClayInput.GroupItem shrink>
 							<ClayDropDownWithItems
 								items={mappedItemsMenu}
+								menuElementAttrs={{
+									containerProps: {
+										className: 'cadmin',
+									},
+								}}
 								trigger={
 									<ClayButtonWithIcon
 										aria-label={selectContentButtonLabel}
@@ -247,6 +252,11 @@ export default function ItemSelector({
 					<ClayInput.GroupItem shrink>
 						<ClayDropDownWithItems
 							items={optionsMenu}
+							menuElementAttrs={{
+								containerProps: {
+									className: 'cadmin',
+								},
+							}}
 							trigger={
 								<ClayButtonWithIcon
 									aria-label={Liferay.Util.sub(

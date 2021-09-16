@@ -36,6 +36,11 @@ export default function ContentFilter({
 				active={active}
 				alignmentPosition={Align.BottomLeft}
 				className="mb-2"
+				menuElementAttrs={{
+					containerProps: {
+						className: 'cadmin',
+					},
+				}}
 				onActiveChange={setActive}
 				role="listbox"
 				trigger={

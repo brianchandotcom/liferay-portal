@@ -139,6 +139,11 @@ export default function ViewportSizeSelector({onSizeSelected, selectedSize}) {
 				className="d-lg-none"
 				hasLeftSymbols
 				hasRightSymbols
+				menuElementAttrs={{
+					containerProps: {
+						className: 'cadmin',
+					},
+				}}
 				onActiveChange={setActive}
 				trigger={
 					<ClayButton

@@ -55,6 +55,11 @@ export const DisplayPagePreviewItemSelector = ({dark = false}) => {
 			active={active}
 			alignmentPosition={Align.BottomRight}
 			aria-labelledby={selectLabelId}
+			menuElementAttrs={{
+				containerProps: {
+					className: 'cadmin',
+				},
+			}}
 			onActiveChange={setActive}
 			role="listbox"
 			trigger={

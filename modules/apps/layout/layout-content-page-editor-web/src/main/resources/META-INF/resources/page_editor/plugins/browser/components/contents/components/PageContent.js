@@ -226,6 +226,11 @@ export default function PageContent({
 				{dropdownItems?.length ? (
 					<ClayDropDownWithItems
 						items={dropdownItems}
+						menuElementAttrs={{
+							containerProps: {
+								className: 'cadmin',
+							},
+						}}
 						trigger={
 							<ClayButton
 								className="btn-monospaced btn-sm text-secondary"

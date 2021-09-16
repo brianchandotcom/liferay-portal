@@ -7,9 +7,9 @@
 					"name": "itemSelectorName",
 					"type": "itemSelector",
 					"typeOptions": {
-						"enableSelectTemplate" : true,
+						"enableSelectTemplate": true,
 						"itemSubtype": "STRUCTURE-TEXT",
-						"itemType" : "com.liferay.journal.model.JournalArticle"
+						"itemType": "com.liferay.journal.model.JournalArticle"
 					}
 				}
 			]

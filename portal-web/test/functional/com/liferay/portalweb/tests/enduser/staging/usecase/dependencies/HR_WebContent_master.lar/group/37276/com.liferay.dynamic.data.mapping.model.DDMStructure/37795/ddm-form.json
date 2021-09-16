@@ -1,1 +1,82 @@
-{"definitionSchemaVersion":"2.0","availableLanguageIds":["en_US"],"successPage":{"body":{},"title":{},"enabled":false},"defaultLanguageId":"en_US","fields":[{"autocomplete":false,"ddmDataProviderInstanceId":"[]","dataType":"string","predefinedValue":{"en_US":""},"tooltip":{"en_US":""},"readOnly":false,"label":{"en_US":"Headline"},"type":"text","required":false,"showLabel":true,"displayStyle":"singleline","indexType":"keyword","fieldNamespace":"","visibilityExpression":"","ddmDataProviderInstanceOutput":"[]","repeatable":false,"name":"Headline","options":[{"reference":"","label":{"en_US":"Option"},"value":"Option"}],"localizable":true,"fieldReference":"Headline","tip":{"en_US":""},"placeholder":{"en_US":""},"dataSourceType":"manual"},{"dataType":"image","predefinedValue":{"en_US":""},"readOnly":false,"label":{"en_US":"Image"},"type":"image","required":false,"showLabel":true,"indexType":"keyword","fieldNamespace":"","visibilityExpression":"","repeatable":false,"name":"Image","localizable":true,"fieldReference":"Image","tip":{"en_US":""}}]}
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"definitionSchemaVersion": "2.0",
+	"fields": [
+		{
+			"autocomplete": false,
+			"dataSourceType": "manual",
+			"dataType": "string",
+			"ddmDataProviderInstanceId": "[]",
+			"ddmDataProviderInstanceOutput": "[]",
+			"displayStyle": "singleline",
+			"fieldNamespace": "",
+			"fieldReference": "Headline",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Headline"
+			},
+			"localizable": true,
+			"name": "Headline",
+			"options": [
+				{
+					"label": {
+						"en_US": "Option"
+					},
+					"reference": "",
+					"value": "Option"
+				}
+			],
+			"placeholder": {
+				"en_US": ""
+			},
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"tooltip": {
+				"en_US": ""
+			},
+			"type": "text",
+			"visibilityExpression": ""
+		},
+		{
+			"dataType": "image",
+			"fieldNamespace": "",
+			"fieldReference": "Image",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Image"
+			},
+			"localizable": true,
+			"name": "Image",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "image",
+			"visibilityExpression": ""
+		}
+	],
+	"successPage": {
+		"body": {
+		},
+		"enabled": false,
+		"title": {
+		}
+	}
+}

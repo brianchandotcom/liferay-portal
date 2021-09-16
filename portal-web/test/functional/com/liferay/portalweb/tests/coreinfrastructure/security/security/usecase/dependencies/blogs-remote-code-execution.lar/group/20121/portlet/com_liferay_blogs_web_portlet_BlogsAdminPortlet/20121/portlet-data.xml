@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 
-<BlogsAdminPortletDataHandler self-path="/group/20121/portlet/com_liferay_blogs_web_portlet_BlogsAdminPortlet/20121/portlet-data.xml" group-id="20121">
+<BlogsAdminPortletDataHandler group-id="20121" self-path="/group/20121/portlet/com_liferay_blogs_web_portlet_BlogsAdminPortlet/20121/portlet-data.xml">
 	<BlogsEntry>
-		<staged-model group-id="20121" uuid="5a851de2-04b3-df9b-d1e6-a4f12fe7dbd6" path="/group/20121/com.liferay.blogs.model.BlogsEntry/41040.xml" user-uuid="cf3c369d-8647-72bd-4eaf-f17746a10ac3" asset-entry-priority="0.0"/>
+		<staged-model asset-entry-priority="0.0" group-id="20121" path="/group/20121/com.liferay.blogs.model.BlogsEntry/41040.xml" user-uuid="cf3c369d-8647-72bd-4eaf-f17746a10ac3" uuid="5a851de2-04b3-df9b-d1e6-a4f12fe7dbd6" />
 	</BlogsEntry>
 	<FriendlyURLEntry>
-		<staged-model uuid="93988246-e964-9774-fd46-26d3c558f0f7" resource-class-name="com.liferay.blogs.model.BlogsEntry" mainEntry="true" path="/company/20097/com.liferay.friendly.url.model.FriendlyURLEntry/41042.xml" attached-class-name="com.liferay.blogs.model.BlogsEntry" asset-entry-priority="0.0">
+		<staged-model asset-entry-priority="0.0" attached-class-name="com.liferay.blogs.model.BlogsEntry" mainEntry="true" path="/company/20097/com.liferay.friendly.url.model.FriendlyURLEntry/41042.xml" resource-class-name="com.liferay.blogs.model.BlogsEntry" uuid="93988246-e964-9774-fd46-26d3c558f0f7">
 			<references>
-				<reference class-name="com.liferay.blogs.model.BlogsEntry" class-pk="41040" group-id="20121" group-key="Guest" live-group-id="20121" type="dependency" uuid="5a851de2-04b3-df9b-d1e6-a4f12fe7dbd6" company-id="20097" missing="false"/>
+				<reference class-name="com.liferay.blogs.model.BlogsEntry" class-pk="41040" company-id="20097" group-id="20121" group-key="Guest" live-group-id="20121" missing="false" type="dependency" uuid="5a851de2-04b3-df9b-d1e6-a4f12fe7dbd6" />
 			</references>
 		</staged-model>
 	</FriendlyURLEntry>

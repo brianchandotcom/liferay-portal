@@ -63,18 +63,18 @@ serviceContext.setScopeGroupId(groupId);
 
 for (int i = startCount; i < numCount; i++) {
 
-    Map<Locale, String> titleMap = new HashMap<Locale, String>();
-    titleMap.put(locale, "Article_" + i);
+	Map<Locale, String> titleMap = new HashMap<Locale, String>();
+	titleMap.put(locale, "Article_" + i);
 
 try {
- JournalArticleLocalServiceUtil.addArticle(userId, groupId, folderId,
-                titleMap, descriptionMap,
-                content,  "BASIC-WEB-CONTENT", "BASIC-WEB-CONTENT",
-                serviceContext)
- } catch (PortalException e) {
-        e.printStackTrace();
-    } catch (SystemException e) {
-        e.printStackTrace();
-    }
+JournalArticleLocalServiceUtil.addArticle(userId, groupId, folderId,
+				titleMap, descriptionMap,
+				content, "BASIC-WEB-CONTENT", "BASIC-WEB-CONTENT",
+				serviceContext)
+} catch (PortalException e) {
+		e.printStackTrace();
+	} catch (SystemException e) {
+		e.printStackTrace();
+	}
 System.out.println(i + " article(s) created");
 }

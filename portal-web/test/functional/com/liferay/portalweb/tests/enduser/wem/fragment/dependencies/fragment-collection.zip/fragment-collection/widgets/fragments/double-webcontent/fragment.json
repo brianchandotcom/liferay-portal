@@ -1,1 +1,9 @@
-{"configurationPath":"index.json","jsPath":"index.js","htmlPath":"index.html","cssPath":"index.css","name":"Double Webcontent","thumbnailPath":"thumbnail.png","type":"section"}
+{
+	"configurationPath": "index.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Double Webcontent",
+	"thumbnailPath": "thumbnail.png",
+	"type": "section"
+}

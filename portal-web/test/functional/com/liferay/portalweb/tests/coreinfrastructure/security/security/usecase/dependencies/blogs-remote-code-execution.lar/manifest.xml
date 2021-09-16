@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 
 <root>
-	<header available-locales="en_US,ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE" build-number="7410" export-date="Thu, 05 Nov 2020 02:42:00 +0000" type="portlet" company-id="20097" company-group-id="20123" group-id="20121" user-personal-site-group-id="20122" private-layout="true" root-portlet-id="com_liferay_blogs_web_portlet_BlogsAdminPortlet" schema-version="4.0.0"/>
+	<header available-locales="en_US,ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE" build-number="7410" company-group-id="20123" company-id="20097" export-date="Thu, 05 Nov 2020 02:42:00 +0000" group-id="20121" private-layout="true" root-portlet-id="com_liferay_blogs_web_portlet_BlogsAdminPortlet" schema-version="4.0.0" type="portlet" user-personal-site-group-id="20122" />
 	<missing-references/>
-	<portlet portlet-id="com_liferay_blogs_web_portlet_BlogsAdminPortlet" layout-id="1" path="/group/20121/portlet/com_liferay_blogs_web_portlet_BlogsAdminPortlet/1/portlet.xml" portlet-data="true" schema-version="4.0.0" portlet-configuration="setup"/>
+	<portlet layout-id="1" path="/group/20121/portlet/com_liferay_blogs_web_portlet_BlogsAdminPortlet/1/portlet.xml" portlet-configuration="setup" portlet-data="true" portlet-id="com_liferay_blogs_web_portlet_BlogsAdminPortlet" schema-version="4.0.0" />
 	<manifest-summary>
-		<staged-model manifest-summary-key="com.liferay.friendly.url.model.FriendlyURLEntry#com.liferay.blogs.model.BlogsEntry" addition-count="1"/>
-		<staged-model manifest-summary-key="com.liferay.blogs.model.BlogsEntry" addition-count="1"/>
+		<staged-model addition-count="1" manifest-summary-key="com.liferay.friendly.url.model.FriendlyURLEntry#com.liferay.blogs.model.BlogsEntry" />
+		<staged-model addition-count="1" manifest-summary-key="com.liferay.blogs.model.BlogsEntry" />
 	</manifest-summary>
 </root>

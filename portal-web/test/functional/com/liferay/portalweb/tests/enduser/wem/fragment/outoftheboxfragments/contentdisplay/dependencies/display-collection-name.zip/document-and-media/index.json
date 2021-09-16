@@ -7,7 +7,7 @@
 					"name": "itemSelectorName",
 					"type": "itemSelector",
 					"typeOptions": {
-						"itemType" : "com.liferay.portal.kernel.repository.model.FileEntry"
+						"itemType": "com.liferay.portal.kernel.repository.model.FileEntry"
 					}
 				}
 			]

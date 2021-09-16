@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 
 <scr:component name="com.liferay.oauth2.provider.scope.sample.qa.SampleQAApp" xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0">
 	<implementation class="com.liferay.oauth2.provider.scope.sample.qa.SampleQAApp" />

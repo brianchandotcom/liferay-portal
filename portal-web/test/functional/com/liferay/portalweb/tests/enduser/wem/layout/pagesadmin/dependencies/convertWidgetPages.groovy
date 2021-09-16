@@ -14,7 +14,6 @@ ServiceReference serviceReference = bundleContext.getServiceReference(BulkLayout
 
 BulkLayoutConverter bulkLayoutConverter = bundleContext.getService(serviceReference);
 
-
 long[] plids = bulkLayoutConverter.getConvertibleLayoutPlids(groupId)
 
 out.println("Convertible layouts before conversion:" + ArrayUtil.toStringArray(plids))

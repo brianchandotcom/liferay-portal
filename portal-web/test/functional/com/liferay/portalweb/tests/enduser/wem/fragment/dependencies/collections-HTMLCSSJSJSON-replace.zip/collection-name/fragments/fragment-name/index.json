@@ -1,17 +1,17 @@
-	{
-	  "fieldSets": [
-	     {
-	     "label": "Button",
-	     "fields": [
-	       {
-	         "name": "buttonText",
-	         "label": "Button Text",
-	         "description": "button-text",
-	         "type": "text",
-	         "dataType": "string",
-	         "defaultValue": "Description"
-	       }
-	     ]
-	   }
-	 ]
-	}
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "Description",
+					"description": "button-text",
+					"label": "Button Text",
+					"name": "buttonText",
+					"type": "text"
+				}
+			],
+			"label": "Button"
+		}
+	]
+}

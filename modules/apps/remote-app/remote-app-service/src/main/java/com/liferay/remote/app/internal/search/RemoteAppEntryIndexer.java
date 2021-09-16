@@ -14,7 +14,6 @@
 
 package com.liferay.remote.app.internal.search;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 
@@ -64,7 +62,6 @@ public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
 
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchTerm(searchQuery, searchContext, Field.NAME, true);
-		addSearchTerm(searchQuery, searchContext, Field.URL, true);
 	}
 
 	@Override
@@ -105,18 +102,6 @@ public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
 				name);
 		}
 
-		String type = remoteAppEntry.getType();
-
-		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
-			String customElementURLs = remoteAppEntry.getCustomElementURLs();
-
-			document.addText(
-				Field.URL, customElementURLs.split(StringPool.NEW_LINE)[0]);
-		}
-		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
-			document.addText(Field.URL, remoteAppEntry.getIFrameURL());
-		}
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + remoteAppEntry + " indexed successfully");
 		}
@@ -129,7 +114,7 @@ public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		Summary summary = createSummary(document, Field.NAME, Field.URL);
+		Summary summary = createSummary(document);
 
 		summary.setMaxContentLength(200);
 

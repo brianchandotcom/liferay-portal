@@ -17,6 +17,7 @@ package com.liferay.site.initializer.extender.internal;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.initializer.util.CommerceInventoryWarehousesImporter;
 import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.document.library.util.DLURLHelper;
@@ -74,6 +75,7 @@ public class SiteInitializerRegistrar {
 		ChannelResource.Factory channelResourceFactory,
 		CommerceAccountRoleHelper commerceAccountRoleHelper,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
+		CommerceInventoryWarehousesImporter commerceInventoryWarehousesImporter,
 		CPFileImporter cpFileImporter,
 		CPMeasurementUnitLocalService cpMeasurementUnitLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
@@ -116,6 +118,8 @@ public class SiteInitializerRegistrar {
 		_channelResourceFactory = channelResourceFactory;
 		_commerceAccountRoleHelper = commerceAccountRoleHelper;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
+		_commerceInventoryWarehousesImporter =
+			commerceInventoryWarehousesImporter;
 		_cpFileImporter = cpFileImporter;
 		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
@@ -167,7 +171,8 @@ public class SiteInitializerRegistrar {
 			new BundleSiteInitializer(
 				_assetListEntryLocalService, _bundle, _catalogResourceFactory,
 				_channelResourceFactory, _commerceAccountRoleHelper,
-				_commerceCurrencyLocalService, _cpFileImporter,
+				_commerceCurrencyLocalService,
+				_commerceInventoryWarehousesImporter, _cpFileImporter,
 				_cpMeasurementUnitLocalService, _ddmStructureLocalService,
 				_ddmTemplateLocalService, _defaultDDMStructureHelper,
 				_dlURLHelper, _documentFolderResourceFactory,
@@ -203,6 +208,8 @@ public class SiteInitializerRegistrar {
 	private final ChannelResource.Factory _channelResourceFactory;
 	private final CommerceAccountRoleHelper _commerceAccountRoleHelper;
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
+	private final CommerceInventoryWarehousesImporter
+		_commerceInventoryWarehousesImporter;
 	private final CPFileImporter _cpFileImporter;
 	private final CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;

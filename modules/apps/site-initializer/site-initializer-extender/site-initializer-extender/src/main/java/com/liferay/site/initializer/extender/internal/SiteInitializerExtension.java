@@ -17,6 +17,7 @@ package com.liferay.site.initializer.extender.internal;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.initializer.util.CommerceInventoryWarehousesImporter;
 import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.document.library.util.DLURLHelper;
@@ -75,6 +76,7 @@ public class SiteInitializerExtension {
 		ChannelResource.Factory channelResourceFactory,
 		CommerceAccountRoleHelper commerceAccountRoleHelper,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
+		CommerceInventoryWarehousesImporter commerceInventoryWarehousesImporter,
 		CPFileImporter cpFileImporter,
 		CPMeasurementUnitLocalService cpMeasurementUnitLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
@@ -119,9 +121,9 @@ public class SiteInitializerExtension {
 				assetListEntryLocalService, bundle, bundleContext,
 				catalogResourceFactory, channelResourceFactory,
 				commerceAccountRoleHelper, commerceCurrencyLocalService,
-				cpFileImporter, cpMeasurementUnitLocalService,
-				ddmStructureLocalService, ddmTemplateLocalService,
-				defaultDDMStructureHelper, dlURLHelper,
+				commerceInventoryWarehousesImporter, cpFileImporter,
+				cpMeasurementUnitLocalService, ddmStructureLocalService,
+				ddmTemplateLocalService, defaultDDMStructureHelper, dlURLHelper,
 				documentFolderResourceFactory, documentResourceFactory,
 				fragmentsImporter, groupLocalService,
 				journalArticleLocalService, jsonFactory, layoutCopyHelper,

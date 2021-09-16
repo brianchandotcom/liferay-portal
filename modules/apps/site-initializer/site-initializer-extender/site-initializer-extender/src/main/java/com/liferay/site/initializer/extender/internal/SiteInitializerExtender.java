@@ -17,6 +17,7 @@ package com.liferay.site.initializer.extender.internal;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.initializer.util.CommerceInventoryWarehousesImporter;
 import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.document.library.util.DLURLHelper;
@@ -94,13 +95,14 @@ public class SiteInitializerExtender
 				_assetListEntryLocalService, bundle, _bundleContext,
 				_catalogResourceFactory, _channelResourceFactory,
 				_commerceAccountRoleHelper, _commerceCurrencyLocalService,
-				_cpFileImporter, _cpMeasurementUnitLocalService,
-				_ddmStructureLocalService, _ddmTemplateLocalService,
-				_defaultDDMStructureHelper, _dlURLHelper,
-				_documentFolderResourceFactory, _documentResourceFactory,
-				_fragmentsImporter, _groupLocalService,
-				_journalArticleLocalService, _jsonFactory, _layoutCopyHelper,
-				_layoutLocalService, _layoutPageTemplateEntryLocalService,
+				_commerceInventoryWarehousesImporter, _cpFileImporter,
+				_cpMeasurementUnitLocalService, _ddmStructureLocalService,
+				_ddmTemplateLocalService, _defaultDDMStructureHelper,
+				_dlURLHelper, _documentFolderResourceFactory,
+				_documentResourceFactory, _fragmentsImporter,
+				_groupLocalService, _journalArticleLocalService, _jsonFactory,
+				_layoutCopyHelper, _layoutLocalService,
+				_layoutPageTemplateEntryLocalService,
 				_layoutPageTemplatesImporter,
 				_layoutPageTemplateStructureLocalService,
 				_layoutSetLocalService, _objectDefinitionResourceFactory,
@@ -166,6 +168,10 @@ public class SiteInitializerExtender
 
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	@Reference
+	private CommerceInventoryWarehousesImporter
+		_commerceInventoryWarehousesImporter;
 
 	@Reference
 	private CPFileImporter _cpFileImporter;

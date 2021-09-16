@@ -25,12 +25,11 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Riccardo Alberti
@@ -68,14 +67,8 @@ public class CommercePermissionUpgradeProcess
 						_PORTLET_NAME_COMMERCE_DISCOUNT)) {
 
 					_setResourcePermissions(
-						resourcePermission.getCompanyId(),
 						_PORTLET_NAME_COMMERCE_DISCOUNT_PRICING,
-						_PORTLET_NAME_COMMERCE_DISCOUNT,
-						resourcePermission.getPrimKey(),
-						resourcePermission.getRoleId(),
-						_resourceActionLocalService.getResourceActions(
-							resourcePermission.getName()),
-						resourcePermission.getScope());
+						_PORTLET_NAME_COMMERCE_DISCOUNT, resourcePermission);
 
 					_resourcePermissionLocalService.deleteResourcePermission(
 						resourcePermission);
@@ -84,25 +77,13 @@ public class CommercePermissionUpgradeProcess
 							resourcePermission.getName(),
 							_PORTLET_NAME_COMMERCE_PRICE_LIST)) {
 
-					List<ResourceAction> resourceActions =
-						_resourceActionLocalService.getResourceActions(
-							resourcePermission.getName());
-
 					_setResourcePermissions(
-						resourcePermission.getCompanyId(),
 						_PORTLET_NAME_COMMERCE_PRICE_LIST_PRICING,
-						_PORTLET_NAME_COMMERCE_PRICE_LIST,
-						resourcePermission.getPrimKey(),
-						resourcePermission.getRoleId(), resourceActions,
-						resourcePermission.getScope());
+						_PORTLET_NAME_COMMERCE_PRICE_LIST, resourcePermission);
 
 					_setResourcePermissions(
-						resourcePermission.getCompanyId(),
 						_PORTLET_NAME_COMMERCE_PROMOTION_PRICING,
-						_PORTLET_NAME_COMMERCE_PRICE_LIST,
-						resourcePermission.getPrimKey(),
-						resourcePermission.getRoleId(), resourceActions,
-						resourcePermission.getScope());
+						_PORTLET_NAME_COMMERCE_PRICE_LIST, resourcePermission);
 
 					_resourcePermissionLocalService.deleteResourcePermission(
 						resourcePermission);
@@ -141,6 +122,27 @@ public class CommercePermissionUpgradeProcess
 		}
 	}
 
+	private List<String> _getResourceActionIds(
+		long actionIds, String resourcePermissionName) {
+
+		List<String> resourceActionIds = new ArrayList<>();
+
+		for (ResourceAction resourceAction :
+				_resourceActionLocalService.getResourceActions(
+					resourcePermissionName)) {
+
+			long bitwiseValue = resourceAction.getBitwiseValue();
+
+			if ((actionIds & bitwiseValue) != bitwiseValue) {
+				continue;
+			}
+
+			resourceActionIds.add(resourceAction.getActionId());
+		}
+
+		return resourceActionIds;
+	}
+
 	private Map<String, String> _getResourceActionNames() throws Exception {
 		Map<String, String> resourceActionNames = new HashMap<>();
 
@@ -176,31 +178,6 @@ public class CommercePermissionUpgradeProcess
 	}
 
 	private void _setResourcePermissions(
-			long companyId, String newName, String oldName, String primKey,
-			long roleId, List<ResourceAction> resourceActions, int scope)
-		throws Exception {
-
-		if (primKey.equals(oldName)) {
-			primKey = newName;
-		}
-
-		Stream<ResourceAction> stream = resourceActions.stream();
-
-		List<String> resourceActionIds = stream.map(
-			ResourceAction::getActionId
-		).collect(
-			Collectors.toList()
-		);
-
-		_resourceActionLocalService.checkResourceActions(
-			newName, resourceActionIds);
-
-		_resourcePermissionLocalService.setResourcePermissions(
-			companyId, newName, scope, primKey, roleId,
-			resourceActionIds.toArray(new String[0]));
-	}
-
-	private void _setResourcePermissions(
 			Map<String, String> resourceActionNames,
 			ResourcePermission resourcePermission)
 		throws Exception {
@@ -223,6 +200,30 @@ public class CommercePermissionUpgradeProcess
 				resourcePermission.getScope(), resourcePermission.getPrimKey(),
 				resourcePermission.getRoleId(), new String[] {actionId});
 		}
+	}
+
+	private void _setResourcePermissions(
+			String newName, String oldName,
+			ResourcePermission resourcePermission)
+		throws Exception {
+
+		String primKey = resourcePermission.getPrimKey();
+
+		if (primKey.equals(oldName)) {
+			primKey = newName;
+		}
+
+		List<String> resourceActionIds = _getResourceActionIds(
+			resourcePermission.getActionIds(), oldName);
+
+		_resourceActionLocalService.checkResourceActions(
+			newName, resourceActionIds);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			resourcePermission.getCompanyId(), newName,
+			resourcePermission.getScope(), primKey,
+			resourcePermission.getRoleId(),
+			resourceActionIds.toArray(new String[0]));
 	}
 
 	private static final String[] _ACTION_IDS = {

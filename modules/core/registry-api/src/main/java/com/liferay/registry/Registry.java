@@ -29,10 +29,6 @@ public interface Registry {
 			String className, String filterString)
 		throws Exception;
 
-	public Filter getFilter(String filterString) throws RuntimeException;
-
-	public Registry getRegistry() throws SecurityException;
-
 	public <T> T getService(ServiceReference<T> serviceReference);
 
 	public <T> ServiceReference<T> getServiceReference(Class<T> clazz);
@@ -72,23 +68,6 @@ public interface Registry {
 
 	public <T> ServiceRegistration<T> registerService(
 		String[] classNames, T service, Map<String, Object> properties);
-
-	public <S, T> ServiceTracker<S, T> trackServices(Class<S> clazz);
-
-	public <S, T> ServiceTracker<S, T> trackServices(
-		Class<S> clazz,
-		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer);
-
-	public <S, T> ServiceTracker<S, T> trackServices(Filter filter);
-
-	public <S, T> ServiceTracker<S, T> trackServices(
-		Filter filter, ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer);
-
-	public <S, T> ServiceTracker<S, T> trackServices(String className);
-
-	public <S, T> ServiceTracker<S, T> trackServices(
-		String className,
-		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer);
 
 	public <T> boolean ungetService(ServiceReference<T> serviceReference);
 

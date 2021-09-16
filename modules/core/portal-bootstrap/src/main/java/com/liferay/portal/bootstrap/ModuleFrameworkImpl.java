@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.module.framework.ModuleFramework;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.internal.RegistryImpl;
 
@@ -297,14 +296,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		if (frameworkEvent.getType() != FrameworkEvent.STARTLEVEL_CHANGED) {
 			ReflectionUtil.throwException(frameworkEvent.getThrowable());
-		}
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		if (registry instanceof RegistryImpl) {
-			RegistryImpl registryImpl = (RegistryImpl)registry;
-
-			registryImpl.closeServiceTrackers();
 		}
 
 		_framework.stop();

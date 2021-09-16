@@ -14,16 +14,10 @@
 
 package com.liferay.registry.internal;
 
-import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
-import java.lang.ref.Reference;
-import java.lang.ref.ReferenceQueue;
-import java.lang.ref.WeakReference;
 import java.lang.reflect.Array;
 
 import java.util.ArrayList;
@@ -32,13 +26,10 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleReference;
-import org.osgi.framework.InvalidSyntaxException;
 
 /**
  * @author Raymond Augé
@@ -47,34 +38,6 @@ public class RegistryImpl implements Registry {
 
 	public RegistryImpl(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
-	}
-
-	public void closeServiceTrackers() {
-		Iterator<Reference<org.osgi.util.tracker.ServiceTracker<?, ?>>>
-			iterator = _serviceTrackerReferences.iterator();
-
-		while (iterator.hasNext()) {
-			Reference<org.osgi.util.tracker.ServiceTracker<?, ?>>
-				serviceTrackerReference = iterator.next();
-
-			iterator.remove();
-
-			org.osgi.util.tracker.ServiceTracker<?, ?> serviceTracker =
-				serviceTrackerReference.get();
-
-			if (serviceTracker != null) {
-				try {
-					serviceTracker.close();
-				}
-				catch (Throwable throwable) {
-				}
-			}
-		}
-
-		// Drain the reference queue since there are no more service tracker
-		// references
-
-		while (_referenceQueue.poll() != null);
 	}
 
 	@Override
@@ -91,21 +54,6 @@ public class RegistryImpl implements Registry {
 		}
 
 		return _toServiceReferences(osgiServiceReferences);
-	}
-
-	@Override
-	public Filter getFilter(String filterString) throws RuntimeException {
-		try {
-			return new FilterWrapper(_bundleContext.createFilter(filterString));
-		}
-		catch (InvalidSyntaxException invalidSyntaxException) {
-			throw new RuntimeException(invalidSyntaxException);
-		}
-	}
-
-	@Override
-	public Registry getRegistry() throws SecurityException {
-		return this;
 	}
 
 	@Override
@@ -326,99 +274,6 @@ public class RegistryImpl implements Registry {
 	}
 
 	@Override
-	public <S, T> ServiceTracker<S, T> trackServices(Class<S> clazz) {
-		org.osgi.util.tracker.ServiceTracker<S, T> serviceTracker =
-			new org.osgi.util.tracker.ServiceTracker<S, T>(
-				_bundleContext, clazz, null);
-
-		addServiceTracker(serviceTracker);
-
-		return new ServiceTrackerWrapper<>(serviceTracker);
-	}
-
-	@Override
-	public <S, T> ServiceTracker<S, T> trackServices(
-		Class<S> clazz,
-		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer) {
-
-		org.osgi.util.tracker.ServiceTracker<S, T> serviceTracker =
-			new org.osgi.util.tracker.ServiceTracker<S, T>(
-				_bundleContext, clazz,
-				new ServiceTrackerCustomizerAdapter<S, T>(
-					serviceTrackerCustomizer));
-
-		addServiceTracker(serviceTracker);
-
-		return new ServiceTrackerWrapper<>(serviceTracker);
-	}
-
-	@Override
-	public <S, T> ServiceTracker<S, T> trackServices(Filter filter) {
-		if (!(filter instanceof FilterWrapper)) {
-			throw new IllegalArgumentException();
-		}
-
-		FilterWrapper filterWrapper = (FilterWrapper)filter;
-
-		org.osgi.util.tracker.ServiceTracker<S, T> serviceTracker =
-			new org.osgi.util.tracker.ServiceTracker<S, T>(
-				_bundleContext, filterWrapper.getFilter(), null);
-
-		addServiceTracker(serviceTracker);
-
-		return new ServiceTrackerWrapper<>(serviceTracker);
-	}
-
-	@Override
-	public <S, T> ServiceTracker<S, T> trackServices(
-		Filter filter,
-		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer) {
-
-		if (!(filter instanceof FilterWrapper)) {
-			throw new IllegalArgumentException();
-		}
-
-		FilterWrapper filterWrapper = (FilterWrapper)filter;
-
-		org.osgi.util.tracker.ServiceTracker<S, T> serviceTracker =
-			new org.osgi.util.tracker.ServiceTracker<S, T>(
-				_bundleContext, filterWrapper.getFilter(),
-				new ServiceTrackerCustomizerAdapter<S, T>(
-					serviceTrackerCustomizer));
-
-		addServiceTracker(serviceTracker);
-
-		return new ServiceTrackerWrapper<>(serviceTracker);
-	}
-
-	@Override
-	public <S, T> ServiceTracker<S, T> trackServices(String className) {
-		org.osgi.util.tracker.ServiceTracker<S, T> serviceTracker =
-			new org.osgi.util.tracker.ServiceTracker<S, T>(
-				_bundleContext, className, null);
-
-		addServiceTracker(serviceTracker);
-
-		return new ServiceTrackerWrapper<>(serviceTracker);
-	}
-
-	@Override
-	public <S, T> ServiceTracker<S, T> trackServices(
-		String className,
-		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer) {
-
-		org.osgi.util.tracker.ServiceTracker<S, T> serviceTracker =
-			new org.osgi.util.tracker.ServiceTracker<S, T>(
-				_bundleContext, className,
-				new ServiceTrackerCustomizerAdapter<S, T>(
-					serviceTrackerCustomizer));
-
-		addServiceTracker(serviceTracker);
-
-		return new ServiceTrackerWrapper<>(serviceTracker);
-	}
-
-	@Override
 	public <T> boolean ungetService(ServiceReference<T> serviceReference) {
 		if (!(serviceReference instanceof ServiceReferenceWrapper)) {
 			throw new IllegalArgumentException();
@@ -429,28 +284,6 @@ public class RegistryImpl implements Registry {
 
 		return _bundleContext.ungetService(
 			serviceReferenceWrapper.getServiceReference());
-	}
-
-	protected void addServiceTracker(
-		org.osgi.util.tracker.ServiceTracker<?, ?> serviceTracker) {
-
-		Reference<org.osgi.util.tracker.ServiceTracker<?, ?>> reference =
-			new WeakReference<org.osgi.util.tracker.ServiceTracker<?, ?>>(
-				serviceTracker, _referenceQueue);
-
-		_serviceTrackerReferences.add(reference);
-
-		while (true) {
-			reference =
-				(Reference<org.osgi.util.tracker.ServiceTracker<?, ?>>)
-					_referenceQueue.poll();
-
-			if (reference == null) {
-				return;
-			}
-
-			_serviceTrackerReferences.remove(reference);
-		}
 	}
 
 	private <T> ServiceReference<T>[] _toServiceReferences(
@@ -471,12 +304,5 @@ public class RegistryImpl implements Registry {
 	}
 
 	private final BundleContext _bundleContext;
-	private final ReferenceQueue<org.osgi.util.tracker.ServiceTracker<?, ?>>
-		_referenceQueue = new ReferenceQueue<>();
-	private final Set<Reference<org.osgi.util.tracker.ServiceTracker<?, ?>>>
-		_serviceTrackerReferences = Collections.newSetFromMap(
-			new ConcurrentHashMap
-				<Reference<org.osgi.util.tracker.ServiceTracker<?, ?>>,
-				 Boolean>());
 
 }

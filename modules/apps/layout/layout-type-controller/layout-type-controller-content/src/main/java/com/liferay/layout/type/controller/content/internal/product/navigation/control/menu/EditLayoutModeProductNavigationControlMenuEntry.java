@@ -141,8 +141,7 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 			redirect = _http.setParameter(
 				redirect, "p_l_back_url",
 				_portal.getLayoutFullURL(
-					_layoutLocalService.getLayout(publishedLayoutPlid),
-					themeDisplay));
+					themeDisplay.getLayout(), themeDisplay));
 
 			return _http.setParameter(redirect, "p_l_mode", Constants.EDIT);
 		}

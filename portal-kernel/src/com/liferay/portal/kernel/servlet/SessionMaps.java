@@ -113,13 +113,15 @@ public class SessionMaps {
 		return map.size();
 	}
 
-	private Map<String, Object> _getMap(HttpSession session, String mapKey) {
-		if (session == null) {
+	private Map<String, Object> _getMap(
+		HttpSession httpSession, String mapKey) {
+
+		if (httpSession == null) {
 			return null;
 		}
 
 		try {
-			return (Map<String, Object>)session.getAttribute(mapKey);
+			return (Map<String, Object>)httpSession.getAttribute(mapKey);
 		}
 		catch (IllegalStateException illegalStateException) {
 			if (_log.isDebugEnabled()) {
@@ -133,14 +135,14 @@ public class SessionMaps {
 	}
 
 	private void _updateMap(
-		HttpSession session, String mapKey, boolean createIfAbsent,
+		HttpSession httpSession, String mapKey, boolean createIfAbsent,
 		Consumer<Map<String, Object>> consumer) {
 
-		if (session == null) {
+		if (httpSession == null) {
 			return;
 		}
 
-		Map<String, Object> map = _getMap(session, mapKey);
+		Map<String, Object> map = _getMap(httpSession, mapKey);
 
 		if (map == null) {
 			if (!createIfAbsent) {
@@ -152,7 +154,7 @@ public class SessionMaps {
 
 		consumer.accept(map);
 
-		session.setAttribute(mapKey, map);
+		httpSession.setAttribute(mapKey, map);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(SessionMaps.class);

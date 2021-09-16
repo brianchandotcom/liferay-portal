@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.content.web.internal.util;
 
 import com.liferay.commerce.media.CommerceMediaResolverUtil;
-import com.liferay.commerce.product.catalog.CPMedia;
+import com.liferay.commerce.product.content.util.CPMedia;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.StringPool;

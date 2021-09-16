@@ -15,8 +15,8 @@
 package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.commerce.product.catalog.CPMedia;
 import com.liferay.commerce.product.content.util.CPContentHelper;
+import com.liferay.commerce.product.content.util.CPMedia;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

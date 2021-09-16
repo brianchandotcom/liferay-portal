@@ -17,7 +17,6 @@ package com.liferay.commerce.product.content.util;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
-import com.liferay.commerce.product.catalog.CPMedia;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.content.render.CPContentRenderer;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;

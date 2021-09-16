@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.catalog;
+package com.liferay.commerce.product.content.util;
 
 /**
  * @author Marco Leo

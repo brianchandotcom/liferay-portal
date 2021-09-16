@@ -37,17 +37,30 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 		_objectEntryLocalService = objectEntryLocalService;
 
 		_className = objectDefinition.getClassName();
-		_objectDefinitionId = objectDefinition.getObjectDefinitionId();
 	}
 
+	@Override
+	public int countRelatedModels(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws PortalException {
+
+		List<ObjectEntry> relatedModels = getRelatedModels(
+			groupId, objectRelationshipId, primaryKey, 0, 1);
+
+		return relatedModels.size();
+	}
+
+	@Override
 	public String getClassName() {
 		return _className;
 	}
 
+	@Override
 	public String getObjectRelationshipType() {
 		return ObjectRelationshipConstants.TYPE_ONE_TO_ONE;
 	}
 
+	@Override
 	public List<ObjectEntry> getRelatedModels(
 			long groupId, long objectRelationshipId, long primaryKey, int start,
 			int end)
@@ -58,7 +71,6 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 	}
 
 	private final String _className;
-	private final long _objectDefinitionId;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 
 }

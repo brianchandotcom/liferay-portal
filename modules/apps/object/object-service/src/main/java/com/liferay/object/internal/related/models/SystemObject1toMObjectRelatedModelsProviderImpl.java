@@ -26,6 +26,9 @@ import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
@@ -64,14 +67,33 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		_table = systemObjectDefinitionMetadata.getTable();
 	}
 
+	@Override
+	public int countRelatedModels(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws PortalException {
+
+		PersistedModelLocalService persistedModelLocalService =
+			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
+				_systemObjectDefinitionMetadata.getClassName());
+
+		DSLQuery dslQuery = _getRelatedModelsGroupByStep(
+			groupId, objectRelationshipId, primaryKey,
+			DSLQueryFactoryUtil.selectDistinct(_table));
+
+		return persistedModelLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public String getClassName() {
 		return _systemObjectDefinitionMetadata.getClassName();
 	}
 
+	@Override
 	public String getObjectRelationshipType() {
 		return ObjectRelationshipConstants.TYPE_ONE_TO_MANY;
 	}
 
+	@Override
 	public List<T> getRelatedModels(
 			long groupId, long objectRelationshipId, long primaryKey, int start,
 			int end)
@@ -80,6 +102,21 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		PersistedModelLocalService persistedModelLocalService =
 			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
 				_systemObjectDefinitionMetadata.getClassName());
+
+		DSLQuery dslQuery = _getRelatedModelsGroupByStep(
+			groupId, objectRelationshipId, primaryKey,
+			DSLQueryFactoryUtil.selectDistinct(_table)
+		).limit(
+			start, end
+		);
+
+		return persistedModelLocalService.dslQuery(dslQuery);
+	}
+
+	private GroupByStep _getRelatedModelsGroupByStep(
+			long groupId, long objectRelationshipId, long primaryKey,
+			FromStep fromStep)
+		throws PortalException {
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.getObjectRelationship(
@@ -101,46 +138,40 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 						objectField.getDBColumnName());
 		}
 
-		return persistedModelLocalService.dslQuery(
-			DSLQueryFactoryUtil.selectDistinct(
-				_table
-			).from(
-				_table
-			).innerJoinON(
-				_dynamicObjectDefinitionTable,
-				_dynamicObjectDefinitionTable.getPrimaryKeyColumn(
-				).eq(
-					_systemObjectDefinitionMetadata.getPrimaryKeyColumn()
-				)
-			).where(
-				primaryKeyColumn.eq(
-					primaryKey
-				).and(
-					() -> {
-						Column<?, Long> groupIdColumn = _table.getColumn(
-							"groupId");
+		return fromStep.from(
+			_table
+		).innerJoinON(
+			_dynamicObjectDefinitionTable,
+			_dynamicObjectDefinitionTable.getPrimaryKeyColumn(
+			).eq(
+				_systemObjectDefinitionMetadata.getPrimaryKeyColumn()
+			)
+		).where(
+			primaryKeyColumn.eq(
+				primaryKey
+			).and(
+				() -> {
+					Column<?, Long> groupIdColumn = _table.getColumn("groupId");
 
-						if (groupIdColumn == null) {
-							return null;
-						}
-
-						return groupIdColumn.eq(groupId);
+					if (groupIdColumn == null) {
+						return null;
 					}
-				).and(
-					() -> {
-						Column<?, Long> companyIdColumn = _table.getColumn(
-							"companyId");
 
-						if (companyIdColumn == null) {
-							return null;
-						}
+					return groupIdColumn.eq(groupId);
+				}
+			).and(
+				() -> {
+					Column<?, Long> companyIdColumn = _table.getColumn(
+						"companyId");
 
-						return companyIdColumn.eq(objectField.getCompanyId());
+					if (companyIdColumn == null) {
+						return null;
 					}
-				)
-			).limit(
-				start, end
-			));
+
+					return companyIdColumn.eq(objectField.getCompanyId());
+				}
+			)
+		);
 	}
 
 	private final DynamicObjectDefinitionTable _dynamicObjectDefinitionTable;

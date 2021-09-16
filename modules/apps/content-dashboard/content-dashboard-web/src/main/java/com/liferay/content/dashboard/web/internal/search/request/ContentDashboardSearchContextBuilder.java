@@ -78,6 +78,7 @@ public class ContentDashboardSearchContextBuilder {
 		}
 
 		searchContext.setAttribute("status", status);
+		searchContext.setIncludeStagingGroups(Boolean.FALSE);
 
 		searchContext.setBooleanClauses(
 			_getBooleanClauses(

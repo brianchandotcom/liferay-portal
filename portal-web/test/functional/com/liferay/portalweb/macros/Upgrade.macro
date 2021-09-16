@@ -2530,7 +2530,7 @@ definition {
 		Navigator.gotoNavTab(navTab = "SEO");
 
 		Page.viewPreview(
-			description = "Page Description",
+			description = "Description",
 			htmlTitle = "Page HTML Title - ${siteName}",
 			pageName = "Test Page",
 			portalURL = "${portalURL}");

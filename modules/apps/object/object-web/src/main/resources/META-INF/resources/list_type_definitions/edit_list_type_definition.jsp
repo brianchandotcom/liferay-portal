@@ -43,6 +43,13 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 						<liferay-ui:message key="items" />
 					</h2>
 
+					<clay:container-fluid>
+						<clay:alert
+							displayType="info"
+							message="updating-or-deleting-a-picklist-item-will-automatically-update-every-entry-that-is-using-the-specific-item-value"
+						/>
+					</clay:container-fluid>
+
 					<clay:headless-data-set-display
 						apiURL="<%= viewListTypeEntriesDisplayContext.getAPIURL() %>"
 						clayDataSetActionDropdownItems="<%= viewListTypeEntriesDisplayContext.getClayDataSetActionDropdownItems() %>"

@@ -14,9 +14,9 @@ definition {
 			locator1 = "TextInput#ANY",
 			value1 = "${dataSourceName}");
 
-		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			locator1 = "TextInput#FILE",
-			value1 = "${sourceFileName}");
+		UploadFileWithCustomPath.uploadFile(
+			fileName = "${sourceFileName}",
+			filePath = "enduser/analyticscloud");
 
 		WaitForVisible(locator1 = "ACSettings#FILE_UPLOAD_SUCCESS_ICON");
 

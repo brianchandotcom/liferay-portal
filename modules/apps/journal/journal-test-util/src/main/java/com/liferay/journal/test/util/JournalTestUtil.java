@@ -824,8 +824,11 @@ public class JournalTestUtil {
 		return ReflectionTestUtil.getMethod(
 			_JOURNAL_UTIL_CLASS, "transform", ThemeDisplay.class, Map.class,
 			String.class, String.class, Document.class,
-			PortletRequestModel.class, String.class, String.class,
-			boolean.class, Map.class);
+			PortletRequestModel.class, String.class, boolean.class, Map.class);
+	}
+
+	public static String getSampleTemplateFTL() {
+		return "${name.getData()}";
 	}
 
 	public static String getSampleTemplateXSL() {

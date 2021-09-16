@@ -20,7 +20,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutColumn;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutRow;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutTab;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
-import com.liferay.object.service.ObjectLayoutLocalService;
+import com.liferay.object.service.ObjectLayoutService;
 import com.liferay.object.service.persistence.ObjectLayoutBoxPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutRowPersistence;
@@ -68,14 +68,14 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 			},
 			null,
 			document -> _toObjectLayout(
-				_objectLayoutLocalService.getObjectLayout(
+				_objectLayoutService.getObjectLayout(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override
 	public ObjectLayout getObjectLayout(Long objectLayoutId) throws Exception {
 		return _toObjectLayout(
-			_objectLayoutLocalService.getObjectLayout(objectLayoutId));
+			_objectLayoutService.getObjectLayout(objectLayoutId));
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 		throws Exception {
 
 		return _toObjectLayout(
-			_objectLayoutLocalService.addObjectLayout(
+			_objectLayoutService.addObjectLayout(
 				contextUser.getUserId(), objectDefinitionId,
 				GetterUtil.getBoolean(objectLayout.getDefaultObjectLayout()),
 				LocalizedMapUtil.getLocalizedMap(objectLayout.getName()),
@@ -99,7 +99,7 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 		throws Exception {
 
 		return _toObjectLayout(
-			_objectLayoutLocalService.updateObjectLayout(
+			_objectLayoutService.updateObjectLayout(
 				objectLayoutId, objectLayout.getDefaultObjectLayout(),
 				LocalizedMapUtil.getLocalizedMap(objectLayout.getName()),
 				transformToList(
@@ -277,10 +277,10 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 	private ObjectLayoutColumnPersistence _objectLayoutColumnPersistence;
 
 	@Reference
-	private ObjectLayoutLocalService _objectLayoutLocalService;
+	private ObjectLayoutRowPersistence _objectLayoutRowPersistence;
 
 	@Reference
-	private ObjectLayoutRowPersistence _objectLayoutRowPersistence;
+	private ObjectLayoutService _objectLayoutService;
 
 	@Reference
 	private ObjectLayoutTabPersistence _objectLayoutTabPersistence;

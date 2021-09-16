@@ -19,7 +19,6 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
@@ -94,14 +93,14 @@ public class ObjectFieldResourceImpl
 			null,
 			document -> _toObjectField(
 				objectDefinition,
-				_objectFieldLocalService.getObjectField(
+				_objectFieldService.getObjectField(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override
 	public ObjectField getObjectField(Long objectFieldId) throws Exception {
 		return _toObjectField(
-			_objectFieldLocalService.getObjectField(objectFieldId));
+			_objectFieldService.getObjectField(objectFieldId));
 	}
 
 	@Override
@@ -110,7 +109,7 @@ public class ObjectFieldResourceImpl
 		throws Exception {
 
 		return _toObjectField(
-			_objectFieldLocalService.addCustomObjectField(
+			_objectFieldService.addCustomObjectField(
 				contextUser.getUserId(), objectField.getListTypeDefinitionId(),
 				objectDefinitionId, objectField.getIndexed(),
 				objectField.getIndexedAsKeyword(),
@@ -126,7 +125,7 @@ public class ObjectFieldResourceImpl
 		throws Exception {
 
 		return _toObjectField(
-			_objectFieldLocalService.updateCustomObjectField(
+			_objectFieldService.updateCustomObjectField(
 				objectFieldId, objectField.getListTypeDefinitionId(),
 				objectField.getIndexed(), objectField.getIndexedAsKeyword(),
 				objectField.getIndexedLanguageId(),
@@ -194,9 +193,6 @@ public class ObjectFieldResourceImpl
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private ObjectFieldService _objectFieldService;

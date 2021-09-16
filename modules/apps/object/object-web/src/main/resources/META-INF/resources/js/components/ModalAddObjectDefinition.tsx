@@ -30,7 +30,6 @@ declare global {
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
-	spritemap: string;
 }
 
 type TFormState = {
@@ -60,7 +59,7 @@ const formatString: TFormatString = (str) => {
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
-const ModalAddObjectDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
+const ModalAddObjectDefinition: React.FC<IProps> = ({apiURL}) => {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 	const [formState, setFormState] = useState<TFormState>({
 		generateAutoName: true,
@@ -137,12 +136,7 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 					</ClayModal.Header>
 					<ClayModal.Body>
 						{error && (
-							<ClayAlert
-								displayType="danger"
-								spritemap={spritemap}
-							>
-								{error}
-							</ClayAlert>
+							<ClayAlert displayType="danger">{error}</ClayAlert>
 						)}
 
 						<ClayForm.Group>
@@ -250,10 +244,10 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({apiURL, spritemap}) => {
 	);
 };
 
-const ModalWithProvider: React.FC<IProps> = ({apiURL, spritemap}) => {
+const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {
 	return (
 		<ClayModalProvider>
-			<ModalAddObjectDefinition apiURL={apiURL} spritemap={spritemap} />
+			<ModalAddObjectDefinition apiURL={apiURL} />
 		</ClayModalProvider>
 	);
 };

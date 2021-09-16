@@ -28,8 +28,6 @@ ObjectLayout objectLayout = (ObjectLayout)request.getAttribute(ObjectWebKeys.OBJ
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"objectLayoutId", objectLayout.getObjectLayoutId()
-			).put(
-				"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 			).build()
 		%>'
 	/>

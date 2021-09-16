@@ -82,8 +82,6 @@ public class JournalFolderIndexer
 	public void postProcessContextBooleanFilter(
 			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
-
-		addStatus(contextBooleanFilter, searchContext);
 	}
 
 	@Override

@@ -68,13 +68,13 @@ public class OpenIdConnectProviderImpl
 	}
 
 	@Override
-	public int getTokenConnectionTimeout() {
-		return _tokenConnectionTimeout;
+	public String getScopes() {
+		return _scopes;
 	}
 
 	@Override
-	public String getScopes() {
-		return _scopes;
+	public int getTokenConnectionTimeout() {
+		return _tokenConnectionTimeout;
 	}
 
 	private final String _clientId;

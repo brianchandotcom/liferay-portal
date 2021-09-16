@@ -20,10 +20,13 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
+import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.SelectInfoFieldType;
+import com.liferay.info.filter.CategoriesInfoFilter;
+import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.pagination.InfoPage;
@@ -54,6 +57,7 @@ import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -72,6 +76,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class BasicDocumentSingleFormVariationInfoCollectionProvider
 	implements ConfigurableInfoCollectionProvider<FileEntry>,
+			   FilteredInfoCollectionProvider<FileEntry>,
 			   SingleFormVariationInfoCollectionProvider<FileEntry> {
 
 	@Override
@@ -100,6 +105,11 @@ public class BasicDocumentSingleFormVariationInfoCollectionProvider
 			locale, getClass());
 
 		return LanguageUtil.get(resourceBundle, "basic-document");
+	}
+
+	@Override
+	public List<InfoFilter> getSupportedInfoFilters() {
+		return Arrays.asList(new CategoriesInfoFilter());
 	}
 
 	private SearchContext _buildSearchContext(CollectionQuery collectionQuery) {
@@ -147,6 +157,21 @@ public class BasicDocumentSingleFormVariationInfoCollectionProvider
 			new String[] {DLFileEntryConstants.getClassName()});
 		searchContext.setGroupIds(
 			new long[] {serviceContext.getScopeGroupId()});
+
+		Optional<CategoriesInfoFilter> categoriesInfoFilterOptional =
+			collectionQuery.getInfoFilterOptional(CategoriesInfoFilter.class);
+
+		if (categoriesInfoFilterOptional.isPresent()) {
+			CategoriesInfoFilter categoriesInfoFilter =
+				categoriesInfoFilterOptional.get();
+
+			long[] categoryIds = ArrayUtil.append(
+				categoriesInfoFilter.getCategoryIds());
+
+			categoryIds = ArrayUtil.unique(categoryIds);
+
+			searchContext.setAssetCategoryIds(categoryIds);
+		}
 
 		Optional<Sort> sortOptional = collectionQuery.getSortOptional();
 

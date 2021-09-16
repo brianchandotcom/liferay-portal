@@ -71,8 +71,12 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection.prepareStatement(
-						"update UserGroupRole set roleId =  ?" +
-							" where roleId = ?"))) {
+						StringBundler.concat(
+							"update UserGroupRole inner join Group_ on ",
+							"UserGroupRole.groupId = Group_.groupId and ",
+							"Group_.classNameId = ",
+							AccountEntry.class.getName(), " set roleId =  ?",
+							" where roleId = ?")))) {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {

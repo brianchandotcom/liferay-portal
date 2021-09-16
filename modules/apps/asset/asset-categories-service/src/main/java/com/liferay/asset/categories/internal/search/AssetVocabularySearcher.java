@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.asset.kernel.model.AssetCategory",
+	property = "model.class.name=com.liferay.asset.kernel.model.AssetVocabulary",
 	service = BaseSearcher.class
 )
 public class AssetVocabularySearcher extends BaseSearcher {

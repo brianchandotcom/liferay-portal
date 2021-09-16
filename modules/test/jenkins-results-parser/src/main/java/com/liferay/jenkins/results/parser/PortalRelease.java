@@ -392,7 +392,7 @@ public class PortalRelease {
 		try {
 			return new URL(
 				JenkinsResultsParserUtil.getLocalURL(
-					urlString.replaceAll("[^:]//", "/")));
+					urlString.replaceAll("([^:])//", "$1/")));
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);
@@ -407,7 +407,7 @@ public class PortalRelease {
 		try {
 			return new URL(
 				JenkinsResultsParserUtil.getRemoteURL(
-					urlString.replaceAll("[^:]//", "/")));
+					urlString.replaceAll("([^:])//", "$1/")));
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);
@@ -479,27 +479,30 @@ public class PortalRelease {
 		"(?<bundlesBaseURL>https?://.+)/(?<bundleFileName>[^\\/]+" +
 			"\\.(7z|tar.gz|zip))");
 	private static final Pattern _dependenciesFileNamePattern = Pattern.compile(
-		"href=\\\"(?<fileName>liferay-[^\\\"]+-dependencies-[^\\\"]+" +
+		"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-dependencies-[^\\\"]+" +
 			"\\.zip)\\\"");
 	private static final Pattern _glassFishFileNamePattern = Pattern.compile(
-		"href=\\\"(?<fileName>liferay-[^\\\"]+-glassfish-[^\\\"]+" +
+		"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-glassfish-[^\\\"]+" +
 			"\\.(7z|tar.gz|zip))\\\"");
 	private static final Pattern _jbossFileNamePattern = Pattern.compile(
-		"href=\\\"(?<fileName>liferay-[^\\\"]+-jboss-[^\\\"]+" +
+		"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-jboss-[^\\\"]+" +
 			"\\.(7z|tar.gz|zip))\\\"");
 	private static final Pattern _osgiFileNamePattern = Pattern.compile(
-		"href=\\\"(?<fileName>liferay-[^\\\"]+-osgi-[^\\\"]+\\.zip)\\\"");
+		"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-osgi-[^\\\"]+\\.zip)" +
+			"\\\"");
 	private static final Pattern _portalWarFileNamePattern = Pattern.compile(
-		"href=\\\"(?<fileName>liferay-[^\\\"]+\\.war)\\\"");
+		"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+\\.war)\\\"");
 	private static final Pattern _sqlFileNamePattern = Pattern.compile(
-		"href=\\\"(?<fileName>liferay-[^\\\"]+-sql-[^\\\"]+\\.zip)\\\"");
+		"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-sql-[^\\\"]+" +
+			"\\.zip)\\\"");
 	private static final Pattern _tomcatFileNamePattern = Pattern.compile(
-		"href=\\\"(?<fileName>liferay-[^\\\"]+-tomcat-[^\\\"]+" +
+		"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-tomcat-[^\\\"]+" +
 			"\\.(7z|tar.gz|zip))\\\"");
 	private static final Pattern _toolsFileNamePattern = Pattern.compile(
-		"href=\\\"(?<fileName>liferay-[^\\\"]+-tools-[^\\\"]+\\.zip)\\\"");
+		"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-tools-[^\\\"]+" +
+			"\\.zip)\\\"");
 	private static final Pattern _wildFlyFileNamePattern = Pattern.compile(
-		"href=\\\"(?<fileName>liferay-[^\\\"]+-wildfly-[^\\\"]+" +
+		"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+-wildfly-[^\\\"]+" +
 			"\\.(7z|tar.gz|zip))\\\"");
 
 	private final URL _bundlesBaseURL;

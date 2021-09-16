@@ -90,7 +90,7 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 	protected ObjectLayout randomObjectLayout() throws Exception {
 		ObjectLayout objectLayout = super.randomObjectLayout();
 
-		objectLayout.setDefaultObjectLayout(true);
+		objectLayout.setDefaultObjectLayout(false);
 		objectLayout.setName(
 			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
 		objectLayout.setObjectDefinitionId(

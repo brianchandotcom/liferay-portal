@@ -112,8 +112,12 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 	>();
 
 	const filteredRelationships = useMemo(() => {
-		return objectRelationships.filter(({inLayout, label}) => {
-			return label[defaultLanguageId].match(query) && !inLayout;
+		return objectRelationships.filter(({inLayout, label, name}) => {
+			return (
+				(label[defaultLanguageId]?.match(query) ??
+					name?.match(query)) &&
+				!inLayout
+			);
 		});
 	}, [objectRelationships, query]);
 
@@ -167,12 +171,16 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 							required
 							title={Liferay.Language.get('relationship')}
 							value={
-								selectedRelationship?.label[defaultLanguageId]
+								selectedRelationship?.label[
+									defaultLanguageId
+								] ?? selectedRelationship?.name
 							}
 						>
-							{({label, type}) => (
+							{({label, name, type}) => (
 								<div className="d-flex justify-content-between">
-									<div>{label[defaultLanguageId]}</div>
+									<div>
+										{label[defaultLanguageId] ?? name}
+									</div>
 									<div>
 										<ClayLabel displayType="secondary">
 											{type}

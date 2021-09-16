@@ -608,7 +608,7 @@ public class Sidecar {
 	}
 
 	private static final String[] _SUPPORTED_ELASTICSEARCH_SIDECAR_VERSIONS = {
-		"7.14.0", "7.14.1"
+		"7.10.2"
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(Sidecar.class);

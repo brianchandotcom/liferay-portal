@@ -30,6 +30,14 @@ public class ElasticsearchDistribution implements Distribution {
 
 	@Override
 	public Distributable getElasticsearchDistributable() {
+		if (_version.startsWith("7.10")) {
+			return new DistributableImpl(
+				StringBundler.concat(
+					"https://artifacts.elastic.co/downloads/elasticsearch",
+					"/elasticsearch-oss-", _version,
+					"-no-jdk-linux-x86_64.tar.gz"));
+		}
+
 		return new DistributableImpl(
 			StringBundler.concat(
 				"https://artifacts.elastic.co/downloads/elasticsearch",

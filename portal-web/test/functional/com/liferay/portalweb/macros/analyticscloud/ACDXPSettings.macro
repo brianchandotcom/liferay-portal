@@ -33,10 +33,6 @@ definition {
 	}
 
 	macro connectDXPtoAnalyticsCloud {
-		if (!(isSet(siteName))) {
-			siteName = "Liferay DXP";
-		}
-
 		ACDXPSettings.goToInstanceSettingsAC();
 
 		ACDXPSettings.connectAnalyticsCloud();
@@ -44,6 +40,14 @@ definition {
 		ACDXPSettings.assertSuccessfulConnection();
 
 		ACDXPSettings.navToSyncedSitesMenu();
+
+		if (!(isSet(siteName))) {
+			LexiconEntry.gotoAdd();
+
+			siteName = selenium.getText(locator1 = "ACDXPSettings#SITE_NAME");
+
+			Navigator.gotoBack();
+		}
 
 		ACDXPSettings.createCombinedProperties(siteName = "${siteName}");
 

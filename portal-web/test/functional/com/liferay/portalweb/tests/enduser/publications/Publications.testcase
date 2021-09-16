@@ -219,6 +219,58 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
+	@description = "Assert the conflict changes disply when adding the same folder Name in two Publications"
+	@priority = "5"
+	test AssertDuplicateNameConflictChangesDisplay {
+		JSONPublications.addPublication(publicationName = "Publication Name 1");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 1");
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name ",
+			groupName = "Guest");
+
+		JSONPublications.addPublication(publicationName = "Publication Name 2");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 2");
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 1");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name 1");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name 1");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMFolder.viewCP(dmFolderName = "DM Folder Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 2");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMFolder.viewCP(dmFolderName = "DM Folder Name");
+
+		Publications.gotoPublish(publicationName = "Publication Name 2");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "DM Folder Name",
+			warningMessage = "Duplicate Folder Name: Rename the folder in the publication.");
+	}
+
 	@description = "Assert Non-privileged user cannot see Publications bar."
 	@priority = "5"
 	test AssertNonPrivilegedUserCannotSeePublicationsBar {

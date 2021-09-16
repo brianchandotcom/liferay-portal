@@ -68,7 +68,7 @@ definition {
 	macro viewChangesViaChangesStyle {
 		if ("${publishedPublication}" == "true") {
 			Click(
-				key_publicationName = "Publication Name",
+				key_publicationName = "${publicationName}",
 				locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 		}
 		else {

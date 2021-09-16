@@ -60,12 +60,21 @@ public class GetCollectionSupportedFiltersMVCResourceCommand
 		String collections = ParamUtil.getString(
 			resourceRequest, "collections");
 
+		JSONPortletResponseUtil.writeJSON(
+			resourceRequest, resourceResponse,
+			_getSupportedFiltersJSONObject(
+				JSONFactoryUtil.createJSONArray(collections)));
+	}
+
+	private JSONObject _getSupportedFiltersJSONObject(
+			JSONArray collectionsJSONArray)
+		throws Exception {
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(collections);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject collectionJSONObject = jsonArray.getJSONObject(i);
+		for (int i = 0; i < collectionsJSONArray.length(); i++) {
+			JSONObject collectionJSONObject =
+				collectionsJSONArray.getJSONObject(i);
 
 			JSONObject layoutObjectReferenceJSONObject =
 				collectionJSONObject.getJSONObject("layoutObjectReference");
@@ -98,8 +107,7 @@ public class GetCollectionSupportedFiltersMVCResourceCommand
 					supportedInfoFilters, InfoFilter::getFilterTypeName));
 		}
 
-		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, jsonObject);
+		return jsonObject;
 	}
 
 	@Reference

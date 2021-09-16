@@ -43,12 +43,12 @@ AUI.add(
 		var TPL_CHECKED = ' checked="checked" ';
 
 		var TPL_INPUT =
-			'<label title="{titleCurrentValue}">' +
-			'<span class="lfr-categories-selector-category-name text-truncate" title="{titleCurrentValue}">' +
+			'<label class="d-flex" title="{titleCurrentValue}">' +
+			'<span class="flex-fill lfr-categories-selector-category-name text-truncate" title="{titleCurrentValue}">' +
 			'<input data-categoryId="{categoryId}" data-vocabularyid="{vocabularyId}" name="{inputName}" type="{type}" value="{titleCurrentValue}" {checked} />' +
 			'{titleCurrentValue}' +
 			'</span>' +
-			'<span class="lfr-categories-selector-search-results-path text-truncate" title="{path}">{path}</span>' +
+			'<span class="flex-fill lfr-categories-selector-search-results-path small text-right text-secondary text-truncate" title="{path}">{path}</span>' +
 			'</label>';
 
 		var TPL_MESSAGE = '<div class="lfr-categories-message">{0}</div>';

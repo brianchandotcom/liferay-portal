@@ -30,7 +30,7 @@ ObjectLayoutTab objectLayoutTab = objectEntryDisplayContext.getObjectLayoutTab()
 />
 
 <c:choose>
-	<c:when test="<%= objectLayoutTab.getObjectRelationshipId() > 0 %>">
+	<c:when test="<%= (objectLayoutTab != null) && (objectLayoutTab.getObjectRelationshipId() > 0) %>">
 		<liferay-util:include page="/object_entries/object_entry/relationship.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="objectEntryId" value="<%= String.valueOf(objectEntryId) %>" />
 			<liferay-util:param name="objectLayoutTabId" value="<%= String.valueOf(objectLayoutTab.getObjectLayoutTabId()) %>" />
@@ -39,7 +39,6 @@ ObjectLayoutTab objectLayoutTab = objectEntryDisplayContext.getObjectLayoutTab()
 	<c:otherwise>
 		<liferay-util:include page="/object_entries/object_entry/form.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="objectEntryId" value="<%= String.valueOf(objectEntryId) %>" />
-			<liferay-util:param name="objectLayoutTabId" value="<%= String.valueOf(objectLayoutTab.getObjectLayoutTabId()) %>" />
 		</liferay-util:include>
 	</c:otherwise>
 </c:choose>

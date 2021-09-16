@@ -33,6 +33,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.exception.NoSuchObjectLayoutException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -49,6 +50,8 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -60,6 +63,7 @@ import com.liferay.taglib.servlet.PipingServletResponseFactory;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -92,9 +96,14 @@ public class ObjectEntryDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() throws PortalException {
+		ObjectLayout objectLayout = getObjectLayout();
+
+		if (objectLayout == null) {
+			return Collections.emptyList();
+		}
+
 		NavigationItemList navigationItemList = new NavigationItemList();
 
-		ObjectLayout objectLayout = getObjectLayout();
 		ObjectLayoutTab currentObjectLayoutTab = getObjectLayoutTab();
 		LiferayPortletResponse liferayPortletResponse =
 			_objectRequestHelper.getLiferayPortletResponse();
@@ -144,12 +153,26 @@ public class ObjectEntryDisplayContext {
 	public ObjectLayout getObjectLayout() throws PortalException {
 		ObjectDefinition objectDefinition = getObjectDefinition();
 
-		return _objectLayoutLocalService.getDefaultObjectLayout(
-			objectDefinition.getObjectDefinitionId());
+		try {
+			return _objectLayoutLocalService.getDefaultObjectLayout(
+				objectDefinition.getObjectDefinitionId());
+		}
+		catch (NoSuchObjectLayoutException noSuchObjectLayoutException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					noSuchObjectLayoutException, noSuchObjectLayoutException);
+			}
+
+			return null;
+		}
 	}
 
 	public ObjectLayoutTab getObjectLayoutTab() throws PortalException {
 		ObjectLayout objectLayout = getObjectLayout();
+
+		if (objectLayout == null) {
+			return null;
+		}
 
 		List<ObjectLayoutTab> objectLayoutTabs =
 			objectLayout.getObjectLayoutTabs();
@@ -207,8 +230,15 @@ public class ObjectEntryDisplayContext {
 
 		ddmFormRenderingContext.setShowRequiredFieldsWarning(true);
 
+		ObjectLayoutTab objectLayoutTab = getObjectLayoutTab();
+
+		if (objectLayoutTab == null) {
+			return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
+		}
+
 		return _ddmFormRenderer.render(
-			ddmForm, _getDDMFormLayout(), ddmFormRenderingContext);
+			ddmForm, _getDDMFormLayout(objectLayoutTab),
+			ddmFormRenderingContext);
 	}
 
 	private DDMFormFieldOptions _getDDMFieldOptions(long listTypeDefinitionId) {
@@ -292,12 +322,12 @@ public class ObjectEntryDisplayContext {
 		return ddmFormField;
 	}
 
-	private DDMFormLayout _getDDMFormLayout() throws PortalException {
+	private DDMFormLayout _getDDMFormLayout(ObjectLayoutTab objectLayoutTab)
+		throws PortalException {
+
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
 
 		DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
-
-		ObjectLayoutTab objectLayoutTab = getObjectLayoutTab();
 
 		for (ObjectLayoutBox objectLayoutBox :
 				objectLayoutTab.getObjectLayoutBoxes()) {
@@ -420,6 +450,9 @@ public class ObjectEntryDisplayContext {
 			ddmFormField.setType(DDMFormFieldTypeConstants.SELECT);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntryDisplayContext.class);
 
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;

@@ -61,6 +61,33 @@ definition {
 			value1 = "${commentValueEdit}");
 	}
 
+	macro gotoEditChanges {
+		if (isSet(changeOrder)) {
+			var changeOrder = "${changeOrder}";
+		}
+		else {
+			var changeOrder = "1";
+		}
+
+		if ("${conflictingChanges}" == "true") {
+			Click(
+				key_entryTitle = "${entryTitle}",
+				locator1 = "Publications#CONFLICTING_CHANGES_DISCARD_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Edit Item");
+		}
+		else {
+			var key_changeCategory = "${changeCategory}";
+			var key_changeTitle = "${changeTitle}";
+
+			Click(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE");
+
+			Click(locator1 = "PublicationsChanges#PUBLICATIONS_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+	}
+
 	macro openCommentsSidebar {
 		Click.javaScriptClick(locator1 = "PublicationsChanges#COMMENT_BUTTON");
 	}

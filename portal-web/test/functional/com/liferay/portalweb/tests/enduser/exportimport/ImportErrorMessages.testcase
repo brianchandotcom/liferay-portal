@@ -26,6 +26,8 @@ definition {
 	test Import6210buildNumber {
 		LAR.importSiteCP(
 			cannotImport = "true",
+			compressedFile = "true",
+			filePath = "enduser/exportimport",
 			import6210buildNumber = "true",
 			importFail = "true",
 			larFileName = "6210buildNumber.lar",

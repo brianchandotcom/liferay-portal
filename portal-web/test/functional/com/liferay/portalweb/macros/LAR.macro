@@ -181,9 +181,17 @@ definition {
 		AssertElementPresent(locator1 = "Button#SELECT_FILE");
 
 		if ("${uploadFrom}" == "dependencies") {
-			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-				locator1 = "TextInput#FILE",
-				value1 = "${larFileName}");
+			if (isSet(filePath)) {
+				UploadFileWithCustomPath.uploadArchiveFile(
+					compressedFile = "${compressedFile}",
+					fileName = "${larFileName}",
+					filePath = "${filePath}");
+			}
+			else {
+				UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+					locator1 = "TextInput#FILE",
+					value1 = "${larFileName}");
+			}
 		}
 		else {
 			UploadTempFile.uploadTempFileHiddenNoMouseOver(
@@ -288,9 +296,17 @@ definition {
 		AssertElementPresent(locator1 = "Button#SELECT_FILE");
 
 		if ("${uploadFrom}" == "dependencies") {
-			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-				locator1 = "TextInput#FILE",
-				value1 = "${larFileName}");
+			if (isSet(filePath)) {
+				UploadFileWithCustomPath.uploadArchiveFile(
+					compressedFile = "${compressedFile}",
+					fileName = "${larFileName}",
+					filePath = "${filePath}");
+			}
+			else {
+				UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+					locator1 = "TextInput#FILE",
+					value1 = "${larFileName}");
+			}
 		}
 		else {
 			UploadTempFile.uploadTempFileHiddenNoMouseOver(
@@ -564,7 +580,9 @@ definition {
 
 		LAR._selectImportFile(
 			cannotImport = "${cannotImport}",
+			compressedFile = "${compressedFile}",
 			failureExpected = "${failureExpected}",
+			filePath = "${filePath}",
 			importDeletions = "${importDeletions}",
 			importPermissions = "${importPermissions}",
 			importSchemaVersionMismatching = "${importSchemaVersionMismatching}",
@@ -595,6 +613,8 @@ definition {
 		}
 
 		LAR._selectImportFileSite(
+			compressedFile = "${compressedFile}",
+			filePath = "${filePath}",
 			importCampaignValidationError = "${importCampaignValidationError}",
 			importValidationMissingItem = "${importValidationMissingItem}",
 			larFileName = "${larFileName}",

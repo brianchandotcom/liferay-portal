@@ -64,6 +64,7 @@ definition {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "source-site-name");
 
 		LAR.importPortlet(
+			filePath = "enduser/collaboration/blogs",
 			larFileName = "Blogs.portlet.lar",
 			uploadFrom = "dependencies");
 
@@ -86,6 +87,7 @@ definition {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		LAR.importPortlet(
+			filePath = "enduser/collaboration/blogs",
 			larFileName = "BlogWithComment.lar",
 			uploadFrom = "dependencies");
 

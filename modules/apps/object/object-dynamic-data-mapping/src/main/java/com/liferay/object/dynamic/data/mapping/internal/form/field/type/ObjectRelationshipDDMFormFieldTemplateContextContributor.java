@@ -60,7 +60,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 
 		try {
 			return HashMapBuilder.<String, Object>put(
-				"apiUrl", _getAPIURL(ddmFormField, ddmFormFieldRenderingContext)
+				"apiURL", _getAPIURL(ddmFormField, ddmFormFieldRenderingContext)
 			).put(
 				"initialLabel", ddmFormFieldRenderingContext.getValue()
 			).put(

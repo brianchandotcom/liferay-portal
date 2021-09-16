@@ -21,6 +21,8 @@ import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.initializer.util.CommerceInventoryWarehousesImporter;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
@@ -158,6 +160,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ChannelResource.Factory channelResourceFactory,
 		CommerceAccountRoleHelper commerceAccountRoleHelper,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
+		CommerceInventoryWarehousesImporter commerceInventoryWarehousesImporter,
 		CPFileImporter cpFileImporter,
 		CPMeasurementUnitLocalService cpMeasurementUnitLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
@@ -198,6 +201,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_channelResourceFactory = channelResourceFactory;
 		_commerceAccountRoleHelper = commerceAccountRoleHelper;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
+		_commerceInventoryWarehousesImporter =
+			commerceInventoryWarehousesImporter;
 		_cpFileImporter = cpFileImporter;
 		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
@@ -287,6 +292,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_addCommerceCatalogs(serviceContext);
 			_addCommerceChannels(serviceContext);
+			_addCommerceInventoryWarehouses(serviceContext);
 			_addDDMStructures(serviceContext);
 			_addFragmentEntries(serviceContext);
 			_addLayoutPageTemplates(serviceContext);
@@ -524,6 +530,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_commerceCurrencyLocalService.importDefaultValues(serviceContext);
 			_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
 		}
+	}
+
+	private List<CommerceInventoryWarehouse> _addCommerceInventoryWarehouses(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return _commerceInventoryWarehousesImporter.
+			importCommerceInventoryWarehouses(
+				JSONFactoryUtil.createJSONArray(
+					_read(
+						"/site-initializer/commerce-warehouses" +
+							"/warehouses.json")),
+				serviceContext.getScopeGroupId(), serviceContext.getUserId());
 	}
 
 	private void _addDDMStructures(ServiceContext serviceContext)
@@ -1717,6 +1736,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ClassLoader _classLoader;
 	private final CommerceAccountRoleHelper _commerceAccountRoleHelper;
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
+	private final CommerceInventoryWarehousesImporter
+		_commerceInventoryWarehousesImporter;
 	private final CPFileImporter _cpFileImporter;
 	private final CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;

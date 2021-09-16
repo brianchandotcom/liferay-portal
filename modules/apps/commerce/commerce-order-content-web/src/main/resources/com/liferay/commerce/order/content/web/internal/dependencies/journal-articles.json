@@ -1,6 +1,7 @@
 [
 	{
 		"articleId": "GUEST_CHECKOUT_AUTHENTICATION",
+		"cacheable": false,
 		"ddmStructureKey": "guest-checkout-authentication-structure",
 		"ddmTemplateKey": "GUEST_CHECKOUT_AUTHENTICATION",
 		"permissions": [

@@ -443,7 +443,7 @@ export const CollectionGeneralPanel = ({item}) => {
 								})
 							}
 							options={PAGINATION_TYPE_OPTIONS}
-							value={item.config.paginationType}
+							value={item.config.paginationType || ''}
 						/>
 					</ClayForm.Group>
 

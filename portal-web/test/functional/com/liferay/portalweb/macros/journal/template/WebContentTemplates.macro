@@ -102,7 +102,6 @@ definition {
 			templateDescription = "${templateDescription}",
 			templateFieldNames = "${templateFieldNames}",
 			templateFile = "${templateFile}",
-			templateLanguage = "${templateLanguage}",
 			templateName = "${templateName}",
 			templateScript = "${templateScript}");
 
@@ -223,16 +222,11 @@ definition {
 
 		WebContentTemplates.inputScript(templateScript = "${templateScript}");
 
-		if ("${templateLanguage}" == "xsl") {
-			WebContentTemplates._inputTemplateFile(templateFile = "${templateFile}");
-		}
-		else {
-			WebContentTemplates._addFields(templateFieldNames = "${templateFieldNames}");
+		WebContentTemplates._addFields(templateFieldNames = "${templateFieldNames}");
 
-			WebContentTemplates._addGeneralVariables(generalVariables = "${generalVariables}");
+		WebContentTemplates._addGeneralVariables(generalVariables = "${generalVariables}");
 
-			WebContentTemplates._inputTemplateFile(templateFile = "${templateFile}");
-		}
+		WebContentTemplates._inputTemplateFile(templateFile = "${templateFile}");
 	}
 
 	@summary = "Add localization for the template name"
@@ -277,7 +271,6 @@ definition {
 			templateDescription = "${templateDescription}",
 			templateFieldNames = "${templateFieldNames}",
 			templateFile = "${templateFile}",
-			templateLanguage = "${templateLanguage}",
 			templateName = "${templateName}",
 			templateScript = "${templateScript}");
 
@@ -361,22 +354,6 @@ definition {
 				value1 = "${structureName}");
 		}
 
-		if ("${templateLanguage}" == "vm") {
-			AssertTextEquals(
-				locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_LANGUAGE",
-				value1 = "Velocity");
-		}
-		else if ("${templateLanguage}" == "xsl") {
-			AssertTextEquals(
-				locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_LANGUAGE",
-				value1 = "Extensible Stylesheet Language");
-		}
-		else {
-			AssertTextEquals(
-				locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_LANGUAGE",
-				value1 = "FreeMarker");
-		}
-
 		if ("${userEditPermission}" != "noEditPermission") {
 			WebContentNavigator.gotoViewTemplate(templateName = "${templateName}");
 
@@ -397,22 +374,6 @@ definition {
 					key_text = "Structure",
 					locator1 = "TextInput#ANY",
 					value1 = "${structureName}");
-			}
-
-			if ("${templateLanguage}" == "vm") {
-				AssertTextEquals.assertPartialText(
-					locator1 = "DDMEditTemplate#DETAILS_LANGUAGE",
-					value1 = "Velocity (.vm)");
-			}
-			else if ("${templateLanguage}" == "xsl") {
-				AssertTextEquals.assertPartialText(
-					locator1 = "DDMEditTemplate#DETAILS_LANGUAGE",
-					value1 = "Extensible Stylesheet Language (.xsl)");
-			}
-			else {
-				AssertTextEquals.assertPartialText(
-					locator1 = "DDMEditTemplate#DETAILS_LANGUAGE",
-					value1 = "FreeMarker (.ftl)");
 			}
 
 			if (isSet(templateScript)) {

@@ -40,24 +40,4 @@
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
-	<model-resource>
-		<model-name>com.liferay.object.model.ObjectField</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet</portlet-name>
-		</portlet-ref>
-		<weight>1</weight>
-		<permissions>
-			<supports>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<guest-unsupported>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
 </resource-action-mapping>

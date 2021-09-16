@@ -73,7 +73,7 @@ SearchEngineDisplayContext searchEngineDisplayContext = (SearchEngineDisplayCont
 					List<ConnectionInformation> connectionInformationList = searchEngineDisplayContext.getConnectionInformationList();
 					%>
 
-					<h3 class="search-engine-page-title">
+					<h3 class="search-engine-page-title sheet-lg">
 						<liferay-ui:message key="active-connections" />
 
 						<clay:badge

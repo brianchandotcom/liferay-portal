@@ -1214,8 +1214,8 @@ definition {
 			languageList = "Japanese (Japan)");
 
 		Translations.translateFile(
-			contentTranslateion = "Webコンテンツ",
-			descriptionTranslateion = "",
+			contentTranslation = "Webコンテンツ",
+			descriptionTranslation = "",
 			encoding = "utf8",
 			titleTranslation = "Webコンテンツのタイトル",
 			translationFileName = "WebContentTitle-en_US-ja_JP",

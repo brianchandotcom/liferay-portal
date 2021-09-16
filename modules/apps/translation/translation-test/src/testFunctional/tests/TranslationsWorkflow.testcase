@@ -156,8 +156,8 @@ definition {
 			languageList = "Spanish (Spain)");
 
 		Translations.translateFile(
-			contentTranslateion = "Contenidoweb",
-			descriptionTranslateion = "Descripcion",
+			contentTranslation = "Contenidoweb",
+			descriptionTranslation = "Descripcion",
 			encoding = "utf8",
 			titleTranslation = "Titulodelcontenidoweb",
 			translationFileName = "WebContentTitle-en_US-es_ES",
@@ -414,8 +414,8 @@ definition {
 			languageList = "French (France)");
 
 		Translations.translateFile(
-			contentTranslateion = "ContenuWeb",
-			descriptionTranslateion = "Ladescription",
+			contentTranslation = "ContenuWeb",
+			descriptionTranslation = "Ladescription",
 			encoding = "utf8",
 			titleTranslation = "TitreducontenuWeb",
 			translationFileName = "WebContentTitle-en_US-fr_FR",

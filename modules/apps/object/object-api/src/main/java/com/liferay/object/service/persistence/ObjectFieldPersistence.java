@@ -169,6 +169,62 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 		throws NoSuchObjectFieldException;
 
 	/**
+	 * Returns all the object fields that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching object fields that the user has permission to view
+	 */
+	public java.util.List<ObjectField> filterFindByUuid(String uuid);
+
+	/**
+	 * Returns a range of all the object fields that the user has permission to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @return the range of matching object fields that the user has permission to view
+	 */
+	public java.util.List<ObjectField> filterFindByUuid(
+		String uuid, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the object fields that the user has permissions to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object fields that the user has permission to view
+	 */
+	public java.util.List<ObjectField> filterFindByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
+			orderByComparator);
+
+	/**
+	 * Returns the object fields before and after the current object field in the ordered set of object fields that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param objectFieldId the primary key of the current object field
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object field
+	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
+	 */
+	public ObjectField[] filterFindByUuid_PrevAndNext(
+			long objectFieldId, String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
+				orderByComparator)
+		throws NoSuchObjectFieldException;
+
+	/**
 	 * Removes all the object fields where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -182,6 +238,14 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 	 * @return the number of matching object fields
 	 */
 	public int countByUuid(String uuid);
+
+	/**
+	 * Returns the number of object fields that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching object fields that the user has permission to view
+	 */
+	public int filterCountByUuid(String uuid);
 
 	/**
 	 * Returns all the object fields where uuid = &#63; and companyId = &#63;.
@@ -322,6 +386,67 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 		throws NoSuchObjectFieldException;
 
 	/**
+	 * Returns all the object fields that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching object fields that the user has permission to view
+	 */
+	public java.util.List<ObjectField> filterFindByUuid_C(
+		String uuid, long companyId);
+
+	/**
+	 * Returns a range of all the object fields that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @return the range of matching object fields that the user has permission to view
+	 */
+	public java.util.List<ObjectField> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the object fields that the user has permissions to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object fields that the user has permission to view
+	 */
+	public java.util.List<ObjectField> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
+			orderByComparator);
+
+	/**
+	 * Returns the object fields before and after the current object field in the ordered set of object fields that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param objectFieldId the primary key of the current object field
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object field
+	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
+	 */
+	public ObjectField[] filterFindByUuid_C_PrevAndNext(
+			long objectFieldId, String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
+				orderByComparator)
+		throws NoSuchObjectFieldException;
+
+	/**
 	 * Removes all the object fields where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -337,6 +462,15 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 	 * @return the number of matching object fields
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	/**
+	 * Returns the number of object fields that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching object fields that the user has permission to view
+	 */
+	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
 	 * Returns all the object fields where listTypeDefinitionId = &#63;.
@@ -468,6 +602,63 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 		throws NoSuchObjectFieldException;
 
 	/**
+	 * Returns all the object fields that the user has permission to view where listTypeDefinitionId = &#63;.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @return the matching object fields that the user has permission to view
+	 */
+	public java.util.List<ObjectField> filterFindByListTypeDefinitionId(
+		long listTypeDefinitionId);
+
+	/**
+	 * Returns a range of all the object fields that the user has permission to view where listTypeDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @return the range of matching object fields that the user has permission to view
+	 */
+	public java.util.List<ObjectField> filterFindByListTypeDefinitionId(
+		long listTypeDefinitionId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the object fields that the user has permissions to view where listTypeDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object fields that the user has permission to view
+	 */
+	public java.util.List<ObjectField> filterFindByListTypeDefinitionId(
+		long listTypeDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
+			orderByComparator);
+
+	/**
+	 * Returns the object fields before and after the current object field in the ordered set of object fields that the user has permission to view where listTypeDefinitionId = &#63;.
+	 *
+	 * @param objectFieldId the primary key of the current object field
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object field
+	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
+	 */
+	public ObjectField[] filterFindByListTypeDefinitionId_PrevAndNext(
+			long objectFieldId, long listTypeDefinitionId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
+				orderByComparator)
+		throws NoSuchObjectFieldException;
+
+	/**
 	 * Removes all the object fields where listTypeDefinitionId = &#63; from the database.
 	 *
 	 * @param listTypeDefinitionId the list type definition ID
@@ -481,6 +672,14 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 	 * @return the number of matching object fields
 	 */
 	public int countByListTypeDefinitionId(long listTypeDefinitionId);
+
+	/**
+	 * Returns the number of object fields that the user has permission to view where listTypeDefinitionId = &#63;.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @return the number of matching object fields that the user has permission to view
+	 */
+	public int filterCountByListTypeDefinitionId(long listTypeDefinitionId);
 
 	/**
 	 * Returns all the object fields where objectDefinitionId = &#63;.
@@ -612,6 +811,63 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 		throws NoSuchObjectFieldException;
 
 	/**
+	 * Returns all the object fields that the user has permission to view where objectDefinitionId = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object fields that the user has permission to view
+	 */
+	public java.util.List<ObjectField> filterFindByObjectDefinitionId(
+		long objectDefinitionId);
+
+	/**
+	 * Returns a range of all the object fields that the user has permission to view where objectDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @return the range of matching object fields that the user has permission to view
+	 */
+	public java.util.List<ObjectField> filterFindByObjectDefinitionId(
+		long objectDefinitionId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the object fields that the user has permissions to view where objectDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object fields that the user has permission to view
+	 */
+	public java.util.List<ObjectField> filterFindByObjectDefinitionId(
+		long objectDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
+			orderByComparator);
+
+	/**
+	 * Returns the object fields before and after the current object field in the ordered set of object fields that the user has permission to view where objectDefinitionId = &#63;.
+	 *
+	 * @param objectFieldId the primary key of the current object field
+	 * @param objectDefinitionId the object definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object field
+	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
+	 */
+	public ObjectField[] filterFindByObjectDefinitionId_PrevAndNext(
+			long objectFieldId, long objectDefinitionId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
+				orderByComparator)
+		throws NoSuchObjectFieldException;
+
+	/**
 	 * Removes all the object fields where objectDefinitionId = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -625,6 +881,14 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 	 * @return the number of matching object fields
 	 */
 	public int countByObjectDefinitionId(long objectDefinitionId);
+
+	/**
+	 * Returns the number of object fields that the user has permission to view where objectDefinitionId = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @return the number of matching object fields that the user has permission to view
+	 */
+	public int filterCountByObjectDefinitionId(long objectDefinitionId);
 
 	/**
 	 * Returns all the object fields where objectDefinitionId = &#63; and dbTableName = &#63;.
@@ -765,6 +1029,67 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 		throws NoSuchObjectFieldException;
 
 	/**
+	 * Returns all the object fields that the user has permission to view where objectDefinitionId = &#63; and dbTableName = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param dbTableName the db table name
+	 * @return the matching object fields that the user has permission to view
+	 */
+	public java.util.List<ObjectField> filterFindByODI_DTN(
+		long objectDefinitionId, String dbTableName);
+
+	/**
+	 * Returns a range of all the object fields that the user has permission to view where objectDefinitionId = &#63; and dbTableName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param dbTableName the db table name
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @return the range of matching object fields that the user has permission to view
+	 */
+	public java.util.List<ObjectField> filterFindByODI_DTN(
+		long objectDefinitionId, String dbTableName, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the object fields that the user has permissions to view where objectDefinitionId = &#63; and dbTableName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param dbTableName the db table name
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object fields that the user has permission to view
+	 */
+	public java.util.List<ObjectField> filterFindByODI_DTN(
+		long objectDefinitionId, String dbTableName, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
+			orderByComparator);
+
+	/**
+	 * Returns the object fields before and after the current object field in the ordered set of object fields that the user has permission to view where objectDefinitionId = &#63; and dbTableName = &#63;.
+	 *
+	 * @param objectFieldId the primary key of the current object field
+	 * @param objectDefinitionId the object definition ID
+	 * @param dbTableName the db table name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object field
+	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
+	 */
+	public ObjectField[] filterFindByODI_DTN_PrevAndNext(
+			long objectFieldId, long objectDefinitionId, String dbTableName,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
+				orderByComparator)
+		throws NoSuchObjectFieldException;
+
+	/**
 	 * Removes all the object fields where objectDefinitionId = &#63; and dbTableName = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -780,6 +1105,16 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 	 * @return the number of matching object fields
 	 */
 	public int countByODI_DTN(long objectDefinitionId, String dbTableName);
+
+	/**
+	 * Returns the number of object fields that the user has permission to view where objectDefinitionId = &#63; and dbTableName = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param dbTableName the db table name
+	 * @return the number of matching object fields that the user has permission to view
+	 */
+	public int filterCountByODI_DTN(
+		long objectDefinitionId, String dbTableName);
 
 	/**
 	 * Returns the object field where objectDefinitionId = &#63; and name = &#63; or throws a <code>NoSuchObjectFieldException</code> if it could not be found.

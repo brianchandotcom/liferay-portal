@@ -40,7 +40,7 @@ else {
 	actions="<%= commerceCatalogDisplayContext.getHeaderActionModels() %>"
 	bean="<%= commerceCatalog %>"
 	beanIdLabel="id"
-	externalReferenceCode="<%= commerceCatalog.getExternalReferenceCode() %>"
+	externalReferenceCode="<%= HtmlUtil.escape(commerceCatalog.getExternalReferenceCode()) %>"
 	externalReferenceCodeEditUrl="<%= editCommerceCatalogExternalReferenceCodeURL %>"
 	model="<%= CommerceCatalog.class %>"
 	title="<%= commerceCatalog.getName() %>"

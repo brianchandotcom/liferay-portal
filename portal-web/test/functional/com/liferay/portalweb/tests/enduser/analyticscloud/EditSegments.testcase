@@ -456,9 +456,13 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8587 | Test Summary: Paginate list of members to be added to the segment"
 	@priority = "3"
 	test PaginateListOfMembersToBeAddedToTheSegment {
-		var users = "ac1,ac2,ac3,ac4,ac5,ac6,ac7";
+		task ("Conect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
 		task ("Add new users") {
+			var users = "ac1,ac2,ac3,ac4,ac5,ac6,ac7";
+
 			for (var name : list "${users}") {
 				JSONUser.addUser(
 					userEmailAddress = "${name}@liferay.com",

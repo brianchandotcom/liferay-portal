@@ -214,7 +214,7 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "Web Content Page",
 				siteName = "Site Name");
-			
+
 			Pause(locator1 = "5000");
 		}
 

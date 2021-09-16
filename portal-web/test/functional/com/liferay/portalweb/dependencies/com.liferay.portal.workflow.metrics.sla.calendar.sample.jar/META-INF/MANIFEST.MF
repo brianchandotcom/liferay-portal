@@ -1,0 +1,61 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1594397843463
+Bundle-ManifestVersion: 2
+Bundle-Name: Liferay Portal Workflow Metrics Calendar Sample
+Bundle-SymbolicName: com.liferay.portal.workflow.metrics.calendar.samp
+ le
+Bundle-Vendor: Liferay, Inc.
+Bundle-Version: 1.0.0
+Created-By: 1.8.0_231 (Oracle Corporation)
+Import-Package: com.liferay.portal.workflow.metrics.sla.calendar;versi
+ on="[1.0,2)"
+Javac-Debug: on
+Javac-Deprecation: off
+Javac-Encoding: UTF-8
+Liferay-Releng-App-Title: Liferay Portal Workflow
+Liferay-Releng-Bundle: true
+Liferay-Releng-Category: Productivity
+Liferay-Releng-Deprecated: false
+Liferay-Releng-Fix-Delivery-Method: core
+Liferay-Releng-Labs: false
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Portal-Required: true
+Liferay-Releng-Public: false
+Liferay-Releng-Restart-Required: true
+Liferay-Releng-Suite: forms-and-workflow
+Liferay-Releng-Suite-Description: Apps and Features: Calendar, Dynamic
+  Data Lists, Dynamic Data Mapping, Forms, Polls, Workflow<br /><br />
+ An increase in productivity means you're saving time and effort; youâ
+ €™re becoming more efficient. The Forms and Workflow apps help you do
+  that by giving you built-in calendars and the ability to create your
+  own forms and list applications. These are powerful, flexible apps t
+ hat can be quickly leveraged for basic tasks, or carefully configured
+  and mastered to perfect business processes.<br /><br />Need a quick 
+ survey or complex Sign Up form? Use the Liferay Forms app and make an
+ y forms you want. If there's a forms feature you need, this app proba
+ bly has it.<br /><br />Maybe you need an entire list application, and
+  you need it today. Dynamic Data Lists lets you do it without any dev
+ eloper expertise.<br /><br />Do you need personal calendars for your 
+ users, and/or site calendars? Do you need the calendar to be highly c
+ onfigurable? Use the Calendar app.<br /><br />Would you like to initi
+ ate a review process when new content, or any new asset, is created? 
+ The Kaleo Workflow Engine lets you send any asset through review befo
+ re it gets published.<br /><br />Want to quickly get the opinion of y
+ our users on something? The Polls app is extremely easy to use.<br />
+ <br />This suite may contain modules that depend on Foundation suite 
+ modules. This suite is available in the Liferay bundle.
+Liferay-Releng-Suite-Title: Liferay Forms and Workflow
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: true
+Private-Package: com.liferay.portal.workflow.metrics.sla.calendar.samp
+ le
+Provide-Capability: osgi.service;objectClass:List<String>="com.liferay
+ .portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendar";use
+ s:="com.liferay.portal.workflow.metrics.sla.calendar"
+Require-Capability: osgi.extender;filter:="(&(osgi.extender=osgi.compo
+ nent)(version>=1.3.0)(!(version>=2.0.0)))",osgi.ee;filter:="(&(osgi.e
+ e=JavaSE)(version=1.8))"
+Service-Component: OSGI-INF/com.liferay.portal.workflow.metrics.sla.ca
+ lendar.sample.SampleWorkflowMetricsSLACalendar.xml
+Tool: Bnd-4.3.0.201909301554
+

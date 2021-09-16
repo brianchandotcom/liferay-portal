@@ -22,8 +22,9 @@ import com.liferay.portal.kernel.test.rule.AbstractTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 import org.junit.runner.Description;
 
@@ -37,16 +38,16 @@ public class PersistenceTestRule extends AbstractTestRule<Object, Object> {
 
 	@Override
 	public void afterMethod(
-		Description description, Object modelListeners, Object target) {
-
-		Object instance = ReflectionTestUtil.getFieldValue(
-			ModelListenerRegistrationUtil.class,
-			"_modelListenerRegistrationUtil");
+		Description description, Object copyModelListeners, Object target) {
 
 		CacheRegistryUtil.setActive(true);
 
-		ReflectionTestUtil.setFieldValue(
-			instance, "_modelListeners", modelListeners);
+		Map<Class<?>, List<ModelListener<?>>> modelListeners =
+			ReflectionTestUtil.getFieldValue(
+				ModelListenerRegistrationUtil.class, "_modelListeners");
+
+		modelListeners.putAll(
+			(Map<Class<?>, List<ModelListener<?>>>)copyModelListeners);
 	}
 
 	@Override
@@ -58,22 +59,20 @@ public class PersistenceTestRule extends AbstractTestRule<Object, Object> {
 	public Object beforeMethod(Description description, Object target)
 		throws Exception {
 
-		Object instance = ReflectionTestUtil.getFieldValue(
-			ModelListenerRegistrationUtil.class,
-			"_modelListenerRegistrationUtil");
+		Map<Class<?>, List<ModelListener<?>>> modelListeners =
+			ReflectionTestUtil.getFieldValue(
+				ModelListenerRegistrationUtil.class, "_modelListeners");
 
-		Object modelListeners = ReflectionTestUtil.getFieldValue(
-			instance, "_modelListeners");
+		Map<Class<?>, List<ModelListener<?>>> copyModelListeners =
+			new HashMap<>(modelListeners);
 
-		ReflectionTestUtil.setFieldValue(
-			instance, "_modelListeners",
-			new ConcurrentHashMap<Class<?>, List<ModelListener<?>>>());
+		modelListeners.clear();
 
 		CacheRegistryUtil.setActive(false);
 
 		UserTestUtil.setUser(TestPropsValues.getUser());
 
-		return modelListeners;
+		return copyModelListeners;
 	}
 
 	@Override

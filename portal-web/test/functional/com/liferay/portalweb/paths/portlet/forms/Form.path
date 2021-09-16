@@ -545,23 +545,13 @@
 </tr>
 <!--DATA_PROVIDER_OUTPUT_PARAMETER-->
 <tr>
-	<td>DATA_PROVIDER_OUTPUT_PARAMETER_PATH_FIELD</td>
-	<td>//div[contains(@data-field-name,'outputParameters')]//input[@type='text' and contains(@name,'outputParameters') and contains(@placeholder,'path')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_PATH_FIELD_2</td>
-	<td>//div[contains(@data-field-name,'outputParameters')]/following-sibling::div/div//input[@type='text' and contains(@name,'outputParameters') and contains(@placeholder,'path')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DATA_PROVIDER_OUTPUT_PARAMETER_LABEL_FIELD</td>
-	<td>//div[contains(@data-field-name,'outputParameters')]//input[@type='text' and contains(@name,'outputParameters') and contains(@placeholder,'label')]</td>
+	<td>xpath=(//input[contains(@class,'ddm-field-text') and contains(@id,'outputParameterPath')])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_LABEL_FIELD_2</td>
-	<td>//div[contains(@data-field-name,'outputParameters')]/following-sibling::div/div//input[@type='text' and contains(@name,'outputParameters') and contains(@placeholder,'label')]</td>
+	<td>xpath=(//input[contains(@class,'ddm-field-text') and contains(@id,'outputParameterName')])[2]</td>
 	<td></td>
 </tr>
 <tr>

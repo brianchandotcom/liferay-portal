@@ -138,13 +138,13 @@ definition {
 	}
 
 	macro editDataProviderOutputParameter {
-		Type(
-			locator1 = "Form#DATA_PROVIDER_OUTPUT_PARAMETER_PATH_FIELD",
-			value1 = "${outputParameterPath}");
+		FormFields.editText(
+			fieldName = "outputParameterName",
+			fieldValue = "${outputParameterLabel}");
 
-		Type(
-			locator1 = "Form#DATA_PROVIDER_OUTPUT_PARAMETER_LABEL_FIELD",
-			value1 = "${outputParameterLabel}");
+		FormFields.editText(
+			fieldName = "outputParameterPath",
+			fieldValue = "${outputParameterPath}");
 
 		FormFields.selectDataProviderOutputType(outputParameterType = "${outputParameterType}");
 

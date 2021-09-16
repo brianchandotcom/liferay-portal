@@ -476,10 +476,24 @@ definition {
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-			Pause(locator1 = "10000");
+			Pause(locator1 = "5000");
 		}
 
-		FormPortlet.clickSubmit();
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test Assets");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+
+		Pause(locator1 = "5000");
+
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 

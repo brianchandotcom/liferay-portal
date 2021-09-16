@@ -3,8 +3,8 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Page Templates";
-	property testray.main.component.name = "Page Templates";
+	property testray.component.names = "Master Page Templates";
+	property testray.main.component.name = "Master Page Templates";
 
 	setUp {
 		task ("Set up instance and sign in") {

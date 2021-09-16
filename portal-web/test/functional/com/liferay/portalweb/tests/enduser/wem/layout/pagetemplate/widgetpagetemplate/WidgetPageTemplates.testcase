@@ -3,8 +3,8 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Page Templates";
-	property testray.main.component.name = "Page Templates";
+	property testray.component.names = "Widget Page Templates";
+	property testray.main.component.name = "Widget Page Templates";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -589,8 +589,6 @@ definition {
 	@description = "Rename page template in global site."
 	@priority = "4"
 	test RenameGlobalPageTemplate {
-		property testray.component.names = "Page Templates";
-
 		task ("Add an active page template") {
 			JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
 				pageTemplateEntryActive = "true",

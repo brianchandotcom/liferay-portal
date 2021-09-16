@@ -5,10 +5,6 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		if (!(isSet(language))) {
-			var language = "ftl";
-		}
-
 		if (!(isSet(script))) {
 			var script = "%3C%23--%0AAdd elements from the sidebar to define your template. Type %22%24%7B%22 to use the%0Aautocomplete feature.%0A--%3E";
 		}
@@ -26,7 +22,7 @@ definition {
 				-d descriptionMap=${descriptionMap} \
 				-d type=display \
 				-d mode= \
-				-d language=${language} \
+				-d language=ftl \
 				-d script=${script}
 		''';
 

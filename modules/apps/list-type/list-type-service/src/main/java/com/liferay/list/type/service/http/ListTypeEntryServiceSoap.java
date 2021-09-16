@@ -14,9 +14,19 @@
 
 package com.liferay.list.type.service.http;
 
+import com.liferay.list.type.service.ListTypeEntryServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+
+import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.list.type.service.ListTypeEntryServiceUtil</code> service
+ * <code>ListTypeEntryServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +66,127 @@ package com.liferay.list.type.service.http;
  */
 @Deprecated
 public class ListTypeEntryServiceSoap {
+
+	public static com.liferay.list.type.model.ListTypeEntrySoap
+			addListTypeEntry(
+				long userId, long listTypeDefinitionId, String key,
+				String[] nameMapLanguageIds, String[] nameMapValues)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				nameMapLanguageIds, nameMapValues);
+
+			com.liferay.list.type.model.ListTypeEntry returnValue =
+				ListTypeEntryServiceUtil.addListTypeEntry(
+					userId, listTypeDefinitionId, key, nameMap);
+
+			return com.liferay.list.type.model.ListTypeEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.list.type.model.ListTypeEntrySoap
+			deleteListTypeEntry(long listTypeEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.list.type.model.ListTypeEntry returnValue =
+				ListTypeEntryServiceUtil.deleteListTypeEntry(listTypeEntryId);
+
+			return com.liferay.list.type.model.ListTypeEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.list.type.model.ListTypeEntrySoap[]
+			getListTypeEntries(long listTypeDefinitionId, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.list.type.model.ListTypeEntry>
+				returnValue = ListTypeEntryServiceUtil.getListTypeEntries(
+					listTypeDefinitionId, start, end);
+
+			return com.liferay.list.type.model.ListTypeEntrySoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getListTypeEntriesCount(long listTypeDefinitionId)
+		throws RemoteException {
+
+		try {
+			int returnValue = ListTypeEntryServiceUtil.getListTypeEntriesCount(
+				listTypeDefinitionId);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.list.type.model.ListTypeEntrySoap
+			getListTypeEntry(long listTypeEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.list.type.model.ListTypeEntry returnValue =
+				ListTypeEntryServiceUtil.getListTypeEntry(listTypeEntryId);
+
+			return com.liferay.list.type.model.ListTypeEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.list.type.model.ListTypeEntrySoap
+			updateListTypeEntry(
+				long listTypeEntryId, String[] nameMapLanguageIds,
+				String[] nameMapValues)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				nameMapLanguageIds, nameMapValues);
+
+			com.liferay.list.type.model.ListTypeEntry returnValue =
+				ListTypeEntryServiceUtil.updateListTypeEntry(
+					listTypeEntryId, nameMap);
+
+			return com.liferay.list.type.model.ListTypeEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ListTypeEntryServiceSoap.class);
+
 }

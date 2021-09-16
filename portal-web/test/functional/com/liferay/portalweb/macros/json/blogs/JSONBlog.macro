@@ -105,7 +105,7 @@ definition {
 			-d displayDateHour=${displayDateHour} \
 			-d displayDateMinute=${displayDateMinute} \
 			-d allowPingbacks=true \
-			-d allowTrackbacks=true \
+			-d allowTrackbacks=false \
 			-d trackbacks= \
 			-d coverImageCaption= \
 			-d -coverImageImageSelector= \

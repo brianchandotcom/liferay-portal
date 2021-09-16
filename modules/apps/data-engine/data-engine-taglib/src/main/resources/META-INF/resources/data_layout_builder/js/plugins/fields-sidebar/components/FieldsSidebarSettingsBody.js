@@ -21,7 +21,7 @@ import {
 	useFormState,
 } from 'data-engine-js-components-web';
 import {EVENT_TYPES as CORE_EVENT_TYPES} from 'data-engine-js-components-web/js/core/actions/eventTypes.es';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo} from 'react';
 
 import {getFilteredSettingsContext} from '../../../utils/settingsForm.es';
 
@@ -54,7 +54,6 @@ const getColumn = ({objectFields}) => ({children, column, index}) => {
 };
 
 export default function FieldsSidebarSettingsBody() {
-	const [activePage, setActivePage] = useState(0);
 	const {
 		defaultLanguageId,
 		editingLanguageId,
@@ -81,17 +80,10 @@ export default function FieldsSidebarSettingsBody() {
 		[config, defaultLanguageId, editingLanguageId, settingsContext]
 	);
 
-	useEffect(() => {
-		if (activePage > filteredSettingsContext.pages.length - 1) {
-			setActivePage(0);
-		}
-	}, [filteredSettingsContext, activePage, setActivePage]);
-
 	return (
 		<form onSubmit={(event) => event.preventDefault()}>
 			<FormFieldSettings
 				{...filteredSettingsContext}
-				activePage={activePage}
 				builderPages={pages}
 				builderRules={rules}
 				defaultLanguageId={defaultLanguageId}
@@ -102,9 +94,6 @@ export default function FieldsSidebarSettingsBody() {
 				objectFields={objectFields}
 				onAction={({payload, type}) => {
 					switch (type) {
-						case CORE_EVENT_TYPES.PAGE.CHANGE:
-							setActivePage(payload.activePage);
-							break;
 						case CORE_EVENT_TYPES.FIELD.BLUR:
 						case CORE_EVENT_TYPES.FIELD.CHANGE: {
 							dispatch({

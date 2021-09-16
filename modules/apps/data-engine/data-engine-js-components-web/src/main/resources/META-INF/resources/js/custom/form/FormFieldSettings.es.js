@@ -40,7 +40,6 @@ import {
  * from layers above changes.
  */
 const StateSync = ({
-	activePage,
 	builderPages,
 	defaultLanguageId,
 	editingLanguageId,
@@ -64,20 +63,6 @@ const StateSync = ({
 			type: CORE_EVENT_TYPES.PAGE.UPDATE,
 		});
 	}, [dispatch, pages]);
-
-	useEffect(() => {
-		dispatch({payload: {activePage}, type: CORE_EVENT_TYPES.PAGE.CHANGE});
-	}, [dispatch, activePage]);
-
-	useEffect(() => {
-		dispatch({
-			payload: {
-				activePage: focusedField?.settingsContext.currentPage,
-				field: focusedField,
-			},
-			type: CORE_EVENT_TYPES.FIELD.CLICK,
-		});
-	}, [dispatch, focusedField]);
 
 	useEffect(() => {
 		dispatch({

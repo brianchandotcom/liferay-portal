@@ -271,6 +271,72 @@ definition {
 			warningMessage = "Duplicate Folder Name: Rename the folder in the publication.");
 	}
 
+	@description = "Assert the conflict changes disply when modifying and deleting the same document in two Publications"
+	@priority = "4"
+	test AssertModificationDeletionConflictDisplays {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		JSONPublications.addPublication(publicationName = "Publication Name 1");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 1");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit");
+
+		JSONPublications.addPublication(publicationName = "Publication Name 2");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 2");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			portlet = "Recycle Bin");
+
+		RecycleBin.emptyCP();
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 1");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name 1");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name 1");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Edit");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title Edit");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 2");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.viewDefault();
+
+		Publications.gotoPublish(publicationName = "Publication Name 2");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "Asset",
+			warningMessage = "Modification Deletion Conflict: Deletion conflicts with a modification.");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "Document Version",
+			warningMessage = "Modification Deletion Conflict: Deletion conflicts with a modification.");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "Document",
+			warningMessage = "Modification Deletion Conflict: Deletion conflicts with a modification.");
+	}
+
 	@description = "Assert Non-privileged user cannot see Publications bar."
 	@priority = "5"
 	test AssertNonPrivilegedUserCannotSeePublicationsBar {

@@ -16,6 +16,7 @@ package com.liferay.journal.internal.search;
 
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.portal.kernel.search.BaseSearcher;
+import com.liferay.portal.kernel.search.Field;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,6 +31,16 @@ import org.osgi.service.component.annotations.Component;
 public class JournalFolderSearcher extends BaseSearcher {
 
 	public static final String CLASS_NAME = JournalFolder.class.getName();
+
+	public JournalFolderSearcher() {
+		setDefaultSelectedFieldNames(
+			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+			Field.UID);
+		setDefaultSelectedLocalizedFieldNames(Field.DESCRIPTION, Field.TITLE);
+		setFilterSearch(true);
+		setPermissionAware(true);
+		setSelectAllLocales(true);
+	}
 
 	@Override
 	public String getClassName() {

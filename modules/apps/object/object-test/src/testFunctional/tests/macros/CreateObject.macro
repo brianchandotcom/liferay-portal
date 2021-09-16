@@ -10,6 +10,11 @@ definition {
 			locator1 = "CreateObject#DISABLE_FIELD_TYPE");
 	}
 
+	macro assertDisableNameType {
+		AssertElementPresent(
+			locator1 = "CreateObject#DISABLE_FIELD_NAME");
+	}
+
 	macro assertFieldName {
 		AssertTextEquals(
 			locator1 = "CreateObject#FIELD_NAME",

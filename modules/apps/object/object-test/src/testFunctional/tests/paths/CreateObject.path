@@ -70,6 +70,11 @@
 		<td>//select[(@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_type') and (@class='form-control disabled')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>DISABLE_FIELD_NAME</td>
+		<td>//input[@class='field disabled form-control lfr-input-text']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

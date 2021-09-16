@@ -181,7 +181,9 @@
 </tr>
 <tr>
 	<td>CHART_POPOVER_ACTIVITIES_DATE</td>
-	<td>xpath=(//tr[contains(@class,'analytics-tooltip-chart-row')])[1]//td[2]//div[contains(@class,'analytics-tooltip-chart-content')]</td>
+	<td>xpath=(//tr[contains(@class,'analytics-tooltip-chart-row')])[1]//td[1]//div[contains(@class,'analytics-tooltip-chart-content')]</td>
+	<td></td>
+</tr>
 	<td></td>
 </tr>
 </tbody>

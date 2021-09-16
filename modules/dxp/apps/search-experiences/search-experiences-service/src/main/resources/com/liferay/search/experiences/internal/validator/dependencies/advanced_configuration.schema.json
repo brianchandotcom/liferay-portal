@@ -1,0 +1,12 @@
+{
+	"$id": "advanced_configuration.schema.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"description": "Schema for Blueprint advanced configuration",
+	"properties": {
+		"source": {
+			"$ref": "shared.schema.json#/definitions/source"
+		}
+	},
+	"title": "Blueprint Advanced Configuration",
+	"type": "object"
+}

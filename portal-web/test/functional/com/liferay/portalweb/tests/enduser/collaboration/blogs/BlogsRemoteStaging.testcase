@@ -198,6 +198,8 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
 		BlogsEntry.viewEntryCP(

@@ -220,6 +220,11 @@ public class ObjectEntryWrapper
 		return model.getLastPublishDate();
 	}
 
+	@Override
+	public String getModelClassName() {
+		return model.getModelClassName();
+	}
+
 	/**
 	 * Returns the modified date of this object entry.
 	 *

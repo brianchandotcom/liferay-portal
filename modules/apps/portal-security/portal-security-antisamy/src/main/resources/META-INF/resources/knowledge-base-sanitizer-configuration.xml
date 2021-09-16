@@ -538,6 +538,7 @@ http://www.w3.org/TR/html401/struct/global.html
 		<tag name="rp" action="validate" />
 		<tag name="rt" action="validate" />
 		<tag name="ruby" action="validate" />
+		<tag name="s" action="validate" />
 		<tag name="section" action="validate" />
 		<tag name="source" action="validate">
 			<attribute name="srcset">

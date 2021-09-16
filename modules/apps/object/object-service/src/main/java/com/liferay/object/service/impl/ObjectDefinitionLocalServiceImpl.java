@@ -17,6 +17,7 @@ package com.liferay.object.service.impl;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
+import com.liferay.object.exception.ObjectDefinitionCannotDeleteException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -224,6 +226,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 		long objectDefinitionId = objectDefinition.getObjectDefinitionId();
 
+		_validateObjectDefinitionDeletion(objectDefinition);
+
 		if (!objectDefinition.isSystem()) {
 			List<ObjectEntry> objectEntries =
 				_objectEntryPersistence.findByObjectDefinitionId(
@@ -246,7 +250,7 @@ public class ObjectDefinitionLocalServiceImpl
 		if (objectDefinition.isSystem()) {
 			_dropTable(objectDefinition.getExtensionDBTableName());
 		}
-		else if (objectDefinition.isApproved()) {
+		else if (PortalRunMode.isTestMode() && objectDefinition.isApproved()) {
 			for (ResourceAction resourceAction :
 					_resourceActionLocalService.getResourceActions(
 						objectDefinition.getClassName())) {
@@ -832,6 +836,16 @@ public class ObjectDefinitionLocalServiceImpl
 
 			throw new DuplicateObjectDefinitionException(
 				"Duplicate name " + name);
+		}
+	}
+
+	private void _validateObjectDefinitionDeletion(
+			ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		if (!PortalRunMode.isTestMode() && objectDefinition.isApproved()) {
+			throw new ObjectDefinitionCannotDeleteException(
+				"Published object cannot be deleted");
 		}
 	}
 

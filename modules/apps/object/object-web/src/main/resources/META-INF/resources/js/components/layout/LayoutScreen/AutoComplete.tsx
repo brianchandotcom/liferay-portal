@@ -21,13 +21,14 @@ import RequiredMask from '../../RequiredMask';
 interface IAutoCompleteProps extends React.HTMLAttributes<HTMLElement> {
 	children: (item: any) => React.ReactNode;
 	contentRight?: React.ReactNode;
+	emptyStateMessage: string;
 	items: any[];
 	onChangeQuery: (value: string) => void;
 	onSelectItem: (item: any) => void;
 	query: string;
-	value?: string;
-	emptyStateMessage: string;
 	required?: boolean;
+	title: string;
+	value?: string;
 }
 
 const AutoComplete: React.FC<IAutoCompleteProps> = ({

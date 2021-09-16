@@ -49,9 +49,11 @@ export const TYPES = {
 	ADD_OBJECT_LAYOUT_TAB: 'ADD_OBJECT_LAYOUT_TAB',
 	ADD_OBJECT_RELATIONSHIPS: 'ADD_OBJECT_RELATIONSHIPS',
 	CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE: 'CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE',
+	CHANGE_OBJECT_LAYOUT_NAME: 'CHANGE_OBJECT_LAYOUT_NAME',
 	DELETE_OBJECT_LAYOUT_BOX: 'DELETE_OBJECT_LAYOUT_BOX',
 	DELETE_OBJECT_LAYOUT_FIELD: 'DELETE_OBJECT_LAYOUT_FIELD',
 	DELETE_OBJECT_LAYOUT_TAB: 'DELETE_OBJECT_LAYOUT_TAB',
+	SET_OBJECT_LAYOUT_AS_DEFAULT: 'SET_OBJECT_LAYOUT_AS_DEFAULT',
 } as const;
 
 const initialState = {
@@ -176,6 +178,28 @@ const layoutReducer = (state: TState, action: TAction) => {
 			].inLayout = true;
 
 			return newState;
+		}
+		case TYPES.CHANGE_OBJECT_LAYOUT_NAME: {
+			const {name} = action.payload;
+
+			return {
+				...state,
+				objectLayout: {
+					...state.objectLayout,
+					name,
+				},
+			};
+		}
+		case TYPES.SET_OBJECT_LAYOUT_AS_DEFAULT: {
+			const {checked} = action.payload;
+
+			return {
+				...state,
+				objectLayout: {
+					...state.objectLayout,
+					defaultObjectLayout: checked,
+				},
+			};
 		}
 		case TYPES.CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE: {
 			const {boxIndex, collapsable, tabIndex} = action.payload;

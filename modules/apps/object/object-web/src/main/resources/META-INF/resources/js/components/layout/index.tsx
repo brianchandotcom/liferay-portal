@@ -19,6 +19,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import {TabsVisitor} from '../../utils/visitor';
 import SidePanelContent from '../SidePanelContent';
+import InfoScreen from './InfoScreen/InfoScreen';
 import LayoutScreen from './LayoutScreen/LayoutScreen';
 import LayoutContext, {LayoutContextProvider, TYPES} from './context';
 import {
@@ -29,6 +30,10 @@ import {
 } from './types';
 
 const TABS = [
+	{
+		Component: InfoScreen,
+		label: Liferay.Language.get('info'),
+	},
 	{
 		Component: LayoutScreen,
 		label: Liferay.Language.get('layout'),
@@ -102,6 +107,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 		LayoutContext
 	);
 	const [activeIndex, setActiveIndex] = useState<number>(0);
+	const [loading, setLoading] = useState<boolean>(true);
 
 	useEffect(() => {
 		const makeFetch = async () => {
@@ -176,6 +182,8 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				},
 				type: TYPES.ADD_OBJECT_RELATIONSHIPS,
 			});
+
+			setLoading(false);
 		};
 
 		makeFetch();
@@ -238,25 +246,27 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 					<ClayTabs.Content activeIndex={activeIndex} fade>
 						{TABS.map(({Component}, index) => (
 							<ClayTabs.TabPane key={index}>
-								<Component />
+								{!loading && <Component />}
 							</ClayTabs.TabPane>
 						))}
 					</ClayTabs.Content>
 				</SidePanelContent.Body>
 
-				<SidePanelContent.Footer>
-					<ClayButton.Group spaced>
-						<ClayButton
-							className="btn-cancel"
-							displayType="secondary"
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-						<ClayButton onClick={() => saveObjectLayout()}>
-							{Liferay.Language.get('save')}
-						</ClayButton>
-					</ClayButton.Group>
-				</SidePanelContent.Footer>
+				{!loading && (
+					<SidePanelContent.Footer>
+						<ClayButton.Group spaced>
+							<ClayButton
+								className="btn-cancel"
+								displayType="secondary"
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
+							<ClayButton onClick={() => saveObjectLayout()}>
+								{Liferay.Language.get('save')}
+							</ClayButton>
+						</ClayButton.Group>
+					</SidePanelContent.Footer>
+				)}
 			</SidePanelContent>
 		</>
 	);

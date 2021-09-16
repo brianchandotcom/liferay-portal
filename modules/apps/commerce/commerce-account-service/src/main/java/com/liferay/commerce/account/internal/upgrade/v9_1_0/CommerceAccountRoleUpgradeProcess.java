@@ -59,7 +59,10 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 				StringBundler.concat(
 					"select distinct UserGroupRole.roleId from UserGroupRole ",
 					"inner join Role_ on UserGroupRole.roleId = Role_.roleId ",
-					"where Role_.type_ =", RoleConstants.TYPE_SITE));
+					"inner join Group_ on UserGroupRole.groupId = ",
+					"Group_.groupId and Group_.classNameId = ",
+					AccountEntry.class.getName(), " where Role_.type_ =",
+					RoleConstants.TYPE_SITE));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection.prepareStatement(
@@ -74,10 +77,6 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
 					long roleId = resultSet.getLong(1);
-
-					if (!_hasAccountEntryGroup(roleId)) {
-						continue;
-					}
 
 					if (_hasNonaccountEntryGroup(roleId)) {
 						AccountRole accountRole = _copyToAccountRole(roleId);
@@ -138,30 +137,6 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 		}
 
 		return accountRole;
-	}
-
-	private boolean _hasAccountEntryGroup(long roleId) throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select count(distinct UserGroupRole.groupId)",
-					"from UserGroupRole inner join Group_ on ",
-					"UserGroupRole.groupId = Group_.groupId and ",
-					"Group.classNameId =",
-					_classNameLocalService.getClassNameId(AccountEntry.class),
-					" where UserGroupRole.roleId = ", roleId))) {
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					int count = resultSet.getInt(1);
-
-					if (count > 0) {
-						return true;
-					}
-				}
-
-				return false;
-			}
-		}
 	}
 
 	private boolean _hasNonaccountEntryGroup(long roleId) throws Exception {

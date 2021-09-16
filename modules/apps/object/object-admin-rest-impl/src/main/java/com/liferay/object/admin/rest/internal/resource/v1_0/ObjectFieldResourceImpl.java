@@ -161,7 +161,7 @@ public class ObjectFieldResourceImpl
 			).put(
 				"get",
 				addAction(
-					ActionKeys.UPDATE, "getObjectField",
+					ActionKeys.VIEW, "getObjectField",
 					com.liferay.object.model.ObjectDefinition.class.getName(),
 					objectField.getObjectDefinitionId())
 			).put(

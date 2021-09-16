@@ -43,7 +43,7 @@ function CartItem({item: cartItem}) {
 		quantity,
 		settings,
 		sku,
-		skuId
+		skuId,
 	} = cartItem;
 
 	const {

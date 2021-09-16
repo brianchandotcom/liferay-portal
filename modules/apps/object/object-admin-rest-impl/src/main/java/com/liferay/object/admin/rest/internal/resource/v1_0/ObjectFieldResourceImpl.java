@@ -154,16 +154,17 @@ public class ObjectFieldResourceImpl
 					}
 
 					return addAction(
-						ActionKeys.DELETE, "deleteObjectField",
-						com.liferay.object.model.ObjectField.class.getName(),
-						objectField.getObjectFieldId());
+						ActionKeys.UPDATE, "deleteObjectField",
+						com.liferay.object.model.ObjectDefinition.class.
+							getName(),
+						objectField.getObjectDefinitionId());
 				}
 			).put(
 				"get",
 				addAction(
-					ActionKeys.VIEW, "getObjectField",
-					com.liferay.object.model.ObjectField.class.getName(),
-					objectField.getObjectFieldId())
+					ActionKeys.UPDATE, "getObjectField",
+					com.liferay.object.model.ObjectDefinition.class.getName(),
+					objectField.getObjectDefinitionId())
 			).put(
 				"update",
 				() -> {
@@ -173,8 +174,9 @@ public class ObjectFieldResourceImpl
 
 					return addAction(
 						ActionKeys.UPDATE, "putObjectField",
-						com.liferay.object.model.ObjectField.class.getName(),
-						objectField.getObjectFieldId());
+						com.liferay.object.model.ObjectDefinition.class.
+							getName(),
+						objectField.getObjectDefinitionId());
 				}
 			).build(),
 			objectField);

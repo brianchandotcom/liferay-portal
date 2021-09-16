@@ -14,6 +14,7 @@
 
 package com.liferay.remote.app.web.internal.portlet;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -36,10 +37,10 @@ import javax.portlet.RenderResponse;
 public class RemoteAppEntryPortlet extends MVCPortlet {
 
 	public RemoteAppEntryPortlet(
-		RemoteAppEntry remoteAppEntry, String remoteProtocolBridgeModuleName) {
+		RemoteAppEntry remoteAppEntry, NPMResolver npmResolver) {
 
 		_remoteAppEntry = remoteAppEntry;
-		_remoteProtocolBridgeModuleName = remoteProtocolBridgeModuleName;
+		_npmResolver = npmResolver;
 	}
 
 	@Override
@@ -96,9 +97,12 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 
 		ScriptData scriptData = new ScriptData();
 
+		String moduleName = _npmResolver.resolveModuleName(
+			"@liferay/remote-app-web/remote_protocol/bridge");
+
 		scriptData.append(
 			null, "RemoteProtocolBridge.default()",
-			_remoteProtocolBridgeModuleName + " as RemoteProtocolBridge",
+			moduleName + " as RemoteProtocolBridge",
 			ScriptData.ModulesType.ES6);
 
 		StringWriter stringWriter = new StringWriter();
@@ -121,7 +125,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		printWriter.flush();
 	}
 
+	private final NPMResolver _npmResolver;
 	private final RemoteAppEntry _remoteAppEntry;
-	private final String _remoteProtocolBridgeModuleName;
 
 }

@@ -39,7 +39,10 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -8686,6 +8689,8 @@ public class BackgroundTaskPersistenceImpl
 			backgroundTask);
 	}
 
+	private int _valueObjectFinderCacheListThreshold;
+
 	/**
 	 * Caches the background tasks in the entity cache if it is enabled.
 	 *
@@ -8693,6 +8698,13 @@ public class BackgroundTaskPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(List<BackgroundTask> backgroundTasks) {
+		if ((_valueObjectFinderCacheListThreshold == 0) ||
+			((_valueObjectFinderCacheListThreshold > 0) &&
+			 (backgroundTasks.size() > _valueObjectFinderCacheListThreshold))) {
+
+			return;
+		}
+
 		for (BackgroundTask backgroundTask : backgroundTasks) {
 			if (entityCache.getResult(
 					BackgroundTaskImpl.class, backgroundTask.getPrimaryKey()) ==
@@ -9184,6 +9196,9 @@ public class BackgroundTaskPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
+		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
+
 		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);

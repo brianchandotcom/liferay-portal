@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -3404,6 +3406,8 @@ public class SXPElementPersistenceImpl
 			sxpElement);
 	}
 
+	private int _valueObjectFinderCacheListThreshold;
+
 	/**
 	 * Caches the sxp elements in the entity cache if it is enabled.
 	 *
@@ -3411,6 +3415,13 @@ public class SXPElementPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(List<SXPElement> sxpElements) {
+		if ((_valueObjectFinderCacheListThreshold == 0) ||
+			((_valueObjectFinderCacheListThreshold > 0) &&
+			 (sxpElements.size() > _valueObjectFinderCacheListThreshold))) {
+
+			return;
+		}
+
 		for (SXPElement sxpElement : sxpElements) {
 			if (entityCache.getResult(
 					SXPElementImpl.class, sxpElement.getPrimaryKey()) == null) {
@@ -3951,6 +3962,9 @@ public class SXPElementPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
+		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
+
 		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);

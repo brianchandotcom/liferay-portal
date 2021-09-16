@@ -31,7 +31,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException;
 import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
@@ -889,6 +892,8 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 			sharepointOAuth2TokenEntry);
 	}
 
+	private int _valueObjectFinderCacheListThreshold;
+
 	/**
 	 * Caches the sharepoint o auth2 token entries in the entity cache if it is enabled.
 	 *
@@ -897,6 +902,14 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	@Override
 	public void cacheResult(
 		List<SharepointOAuth2TokenEntry> sharepointOAuth2TokenEntries) {
+
+		if ((_valueObjectFinderCacheListThreshold == 0) ||
+			((_valueObjectFinderCacheListThreshold > 0) &&
+			 (sharepointOAuth2TokenEntries.size() >
+				 _valueObjectFinderCacheListThreshold))) {
+
+			return;
+		}
 
 		for (SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry :
 				sharepointOAuth2TokenEntries) {
@@ -1432,6 +1445,9 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
+		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
+
 		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);

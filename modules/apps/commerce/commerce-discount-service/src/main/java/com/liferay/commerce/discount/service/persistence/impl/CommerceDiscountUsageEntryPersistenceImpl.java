@@ -34,7 +34,10 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -2359,6 +2362,8 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			commerceDiscountUsageEntry);
 	}
 
+	private int _valueObjectFinderCacheListThreshold;
+
 	/**
 	 * Caches the commerce discount usage entries in the entity cache if it is enabled.
 	 *
@@ -2367,6 +2372,14 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	@Override
 	public void cacheResult(
 		List<CommerceDiscountUsageEntry> commerceDiscountUsageEntries) {
+
+		if ((_valueObjectFinderCacheListThreshold == 0) ||
+			((_valueObjectFinderCacheListThreshold > 0) &&
+			 (commerceDiscountUsageEntries.size() >
+				 _valueObjectFinderCacheListThreshold))) {
+
+			return;
+		}
 
 		for (CommerceDiscountUsageEntry commerceDiscountUsageEntry :
 				commerceDiscountUsageEntries) {
@@ -2895,6 +2908,9 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 * Initializes the commerce discount usage entry persistence.
 	 */
 	public void afterPropertiesSet() {
+		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
+
 		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);

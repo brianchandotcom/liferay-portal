@@ -34,7 +34,10 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2022,6 +2025,8 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 			commercePriceListOrderTypeRel);
 	}
 
+	private int _valueObjectFinderCacheListThreshold;
+
 	/**
 	 * Caches the commerce price list order type rels in the entity cache if it is enabled.
 	 *
@@ -2030,6 +2035,14 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 	@Override
 	public void cacheResult(
 		List<CommercePriceListOrderTypeRel> commercePriceListOrderTypeRels) {
+
+		if ((_valueObjectFinderCacheListThreshold == 0) ||
+			((_valueObjectFinderCacheListThreshold > 0) &&
+			 (commercePriceListOrderTypeRels.size() >
+				 _valueObjectFinderCacheListThreshold))) {
+
+			return;
+		}
 
 		for (CommercePriceListOrderTypeRel commercePriceListOrderTypeRel :
 				commercePriceListOrderTypeRels) {
@@ -2598,6 +2611,9 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 	 * Initializes the commerce price list order type rel persistence.
 	 */
 	public void afterPropertiesSet() {
+		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
+
 		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);

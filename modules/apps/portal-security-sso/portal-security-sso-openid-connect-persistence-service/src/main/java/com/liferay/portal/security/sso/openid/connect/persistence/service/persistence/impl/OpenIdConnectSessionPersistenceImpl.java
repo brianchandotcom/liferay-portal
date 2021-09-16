@@ -30,7 +30,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.security.sso.openid.connect.persistence.exception.NoSuchSessionException;
 import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectSession;
@@ -112,6 +115,8 @@ public class OpenIdConnectSessionPersistenceImpl
 			openIdConnectSession.getPrimaryKey(), openIdConnectSession);
 	}
 
+	private int _valueObjectFinderCacheListThreshold;
+
 	/**
 	 * Caches the open ID connect sessions in the entity cache if it is enabled.
 	 *
@@ -119,6 +124,14 @@ public class OpenIdConnectSessionPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(List<OpenIdConnectSession> openIdConnectSessions) {
+		if ((_valueObjectFinderCacheListThreshold == 0) ||
+			((_valueObjectFinderCacheListThreshold > 0) &&
+			 (openIdConnectSessions.size() >
+				 _valueObjectFinderCacheListThreshold))) {
+
+			return;
+		}
+
 		for (OpenIdConnectSession openIdConnectSession :
 				openIdConnectSessions) {
 
@@ -617,6 +630,9 @@ public class OpenIdConnectSessionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
+		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
+
 		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);

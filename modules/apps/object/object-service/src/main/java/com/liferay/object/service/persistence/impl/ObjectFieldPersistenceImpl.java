@@ -40,7 +40,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -5176,6 +5179,8 @@ public class ObjectFieldPersistenceImpl
 			objectField);
 	}
 
+	private int _valueObjectFinderCacheListThreshold;
+
 	/**
 	 * Caches the object fields in the entity cache if it is enabled.
 	 *
@@ -5183,6 +5188,13 @@ public class ObjectFieldPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(List<ObjectField> objectFields) {
+		if ((_valueObjectFinderCacheListThreshold == 0) ||
+			((_valueObjectFinderCacheListThreshold > 0) &&
+			 (objectFields.size() > _valueObjectFinderCacheListThreshold))) {
+
+			return;
+		}
+
 		for (ObjectField objectField : objectFields) {
 			if (entityCache.getResult(
 					ObjectFieldImpl.class, objectField.getPrimaryKey()) ==
@@ -5700,6 +5712,9 @@ public class ObjectFieldPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
+		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
+
 		_finderPathWithPaginationFindAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);

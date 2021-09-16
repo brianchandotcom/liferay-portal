@@ -61,28 +61,27 @@ JournalFileUploadsConfiguration journalFileUploadsConfiguration = (JournalFileUp
 
 <div class="<%= Objects.equals(smallImageSource, "file") ? "" : "hide" %>" id="<portlet:namespace />smallFileContainer">
 	<div>
-
-		<%
-		String name = StringPool.BLANK;
-
-		if (!journalEditArticleDisplayContext.isChangeStructure()) {
-			name = "smallFile";
-		}
-
-		String previewURL = StringPool.BLANK;
-
-		if ((article != null) && Validator.isNotNull(article.getArticleImageURL(themeDisplay))) {
-			previewURL = article.getArticleImageURL(themeDisplay);
-		}
-		%>
-
 		<react:component
 			module="js/ImageInput.es"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
-					"name", name
+					"name",
+					() -> {
+						if (!journalEditArticleDisplayContext.isChangeStructure()) {
+							return "smallFile";
+						}
+
+						return StringPool.BLANK;
+					}
 				).put(
-					"previewURL", previewURL
+					"previewURL",
+					() -> {
+						if ((article != null) && Validator.isNotNull(article.getArticleImageURL(themeDisplay))) {
+							return article.getArticleImageURL(themeDisplay);
+						}
+
+						return StringPool.BLANK;
+					}
 				).build()
 			%>'
 		/>

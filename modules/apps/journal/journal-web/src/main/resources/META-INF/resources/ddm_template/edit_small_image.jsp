@@ -58,22 +58,20 @@ String smallImageSource = journalEditDDMTemplateDisplayContext.getSmallImageSour
 
 <div class="<%= Objects.equals(smallImageSource, "file") ? "" : "hide" %>" id="<portlet:namespace />smallImageFileContainer">
 	<div>
-
-		<%
-		String previewURL = StringPool.BLANK;
-
-		if (journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null) && (ddmTemplate.getSmallImageId() > 0)) {
-			previewURL = ddmTemplate.getTemplateImageURL(themeDisplay);
-		}
-		%>
-
 		<react:component
 			module="js/ImageInput.es"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"name", "smallImageFile"
 				).put(
-					"previewURL", previewURL
+					"previewURL",
+					() -> {
+						if (journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null) && (ddmTemplate.getSmallImageId() > 0)) {
+							return ddmTemplate.getTemplateImageURL(themeDisplay);
+						}
+
+						return StringPool.BLANK;
+					}
 				).build()
 			%>'
 		/>

@@ -59,12 +59,7 @@ definition {
 			InformationTemplates.addDescription(informationTemplateDescription = "This is a description");
 		}
 
-		task ("View the language, Item Type, Item Subtype, Template Key, URL, WebDAV URL fields") {
-			AssertSelectedLabel(
-				key_fieldLabel = "Language",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "FreeMarker (.ftl)");
-
+		task ("View the Item Type, Item Subtype, Template Key, URL, WebDAV URL fields") {
 			AssertVisible(
 				label = "Item Type",
 				locator1 = "InformationTemplates#TEMPLATE_TYPE",

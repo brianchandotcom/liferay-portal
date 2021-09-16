@@ -93,13 +93,8 @@ definition {
 			}
 		}
 
-		task ("View Properties panel and assert Language is Freemarker") {
+		task ("View Properties panel") {
 			Navigator.gotoSidebarTab(tabName = "Properties");
-
-			AssertSelectedLabel(
-				key_fieldLabel = "Language",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "FreeMarker (.ftl)");
 
 			for (var fieldName : list "Template Key,URL,WebDAV URL") {
 				AssertVisible(

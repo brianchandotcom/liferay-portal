@@ -21,10 +21,14 @@ import {
 	wait,
 	waitForElement,
 } from '@testing-library/react';
-import React from 'react';
+import React, {useEffect} from 'react';
 
+import {COLLECTION_FILTER_FRAGMENT_ENTRY_KEY} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/collectionFilterFragmentEntryKey';
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/freemarkerFragmentEntryProcessor';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import updateItemConfig from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
+import CollectionSelector from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/CollectionSelector';
 import {CollectionGeneralPanel} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page-structure/components/item-configuration-panels/CollectionGeneralPanel';
 
 jest.mock(
@@ -48,6 +52,11 @@ jest.mock(
 );
 
 jest.mock(
+	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/CollectionSelector',
+	() => jest.fn(() => null)
+);
+
+jest.mock(
 	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig',
 	() => jest.fn()
 );
@@ -64,7 +73,13 @@ const ITEM_CONFIG = {
 	showAllItems: false,
 };
 
-const renderComponent = ({config = ITEM_CONFIG, dispatch = () => {}}) => {
+const renderComponent = ({
+	config = ITEM_CONFIG,
+	dispatch = () => {},
+	fragmentEntryLinks = {},
+	itemId = '0',
+	layoutData = {},
+}) => {
 	Liferay.Util.sub.mockImplementation((langKey, args) =>
 		[langKey, args].join('-')
 	);
@@ -72,15 +87,19 @@ const renderComponent = ({config = ITEM_CONFIG, dispatch = () => {}}) => {
 	return render(
 		<StoreAPIContextProvider
 			dispatch={dispatch}
-			getState={() => ({segmentsExperienceId: '0'})}
+			getState={() => ({
+				fragmentEntryLinks,
+				layoutData,
+				segmentsExperienceId: '0',
+			})}
 		>
 			<CollectionGeneralPanel
 				item={{
 					children: [],
 					config,
-					itemId: '0',
+					itemId,
 					parentId: '',
-					type: 'collection',
+					type: LAYOUT_DATA_ITEM_TYPES.collection,
 				}}
 			/>
 		</StoreAPIContextProvider>
@@ -90,6 +109,7 @@ const renderComponent = ({config = ITEM_CONFIG, dispatch = () => {}}) => {
 describe('CollectionGeneralPanel', () => {
 	afterEach(() => {
 		cleanup();
+		CollectionSelector.mockClear();
 		updateItemConfig.mockClear();
 	});
 
@@ -254,6 +274,72 @@ describe('CollectionGeneralPanel', () => {
 					)
 				)
 			).toBeInTheDocument();
+		});
+	});
+
+	describe('Collection Display with filtering', () => {
+		let globalConfirm;
+
+		beforeEach(() => {
+			globalConfirm = window.confirm;
+			window.confirm = jest.fn();
+		});
+
+		afterEach(() => {
+			window.confirm = globalConfirm;
+		});
+
+		it('shows a confirmation when updating a collection linked to a filter', async () => {
+			CollectionSelector.mockImplementation(
+				({shouldPreventCollectionSelect}) => {
+					useEffect(
+						() => {
+							shouldPreventCollectionSelect();
+						},
+						// eslint-disable-next-line react-hooks/exhaustive-deps
+						[]
+					);
+
+					return <h1>Collection Selector</h1>;
+				}
+			);
+
+			const {findByText} = renderComponent({
+				fragmentEntryLinks: {
+					'collection-filter-fragment-a': {
+						editableValues: {
+							[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
+								targetCollections: ['collection-display-a'],
+							},
+						},
+						fragmentEntryKey: COLLECTION_FILTER_FRAGMENT_ENTRY_KEY,
+					},
+				},
+
+				itemId: 'collection-display-a',
+				layoutData: {
+					items: {
+						'collection-display-a': {
+							itemId: 'collection-display-a',
+							type: LAYOUT_DATA_ITEM_TYPES.collection,
+						},
+						'collection-filter-a': {
+							config: {
+								fragmentEntryLinkId:
+									'collection-filter-fragment-a',
+							},
+							itemId: 'collection-filter-a',
+							type: LAYOUT_DATA_ITEM_TYPES.fragment,
+						},
+					},
+				},
+			});
+
+			await findByText('Collection Selector');
+
+			expect(confirm).toHaveBeenCalledWith(
+				'if-you-change-the-collection-you-unlink-the-collection-filter\n\ndo-you-want-to-continue'
+			);
 		});
 	});
 });

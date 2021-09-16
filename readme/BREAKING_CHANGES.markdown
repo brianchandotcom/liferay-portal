@@ -298,6 +298,28 @@ A further exploration and analysis of the different front-end options available 
 
 ---------------------------------------
 
+### Removed PortletPreferences' Preferences Field
+- **Date:** 2020-Dec-20
+- **JIRA Ticket:** [LPS-122562](https://issues.liferay.com/browse/LPS-122562)
+
+#### What changed?
+
+`PortletPreferences` preferences are now stored in the PortletPreferenceValue table.
+
+#### Who is affected?
+
+This affects you if you are directly getting or setting the `PortletPreferences` preferences field.
+
+#### How should I update my code?
+
+Use `PortletPreferencesLocalService` to access the `javax.portlet.PortletPreferences` API which can be used for getting and setting the preferences.
+
+#### Why was this change made?
+
+This will make it so that queries can be run against preference keys and values without using `like` queries, simplifies future upgrades, and reduces storage requirements.
+
+---------------------------------------
+
 ### Removed Server-side Closure Templates (Soy) Support
 - **Date:** 2020-Dec-14
 - **JIRA Ticket:** [LPS-122956](https://issues.liferay.com/browse/LPS-122956)
@@ -444,6 +466,28 @@ Make sure to pass a `true` value to boolean attributes you want present in the D
 #### Why was this change made?
 
 This change was made for better compliance with [the HTML Standard](https://html.spec.whatwg.org/#boolean-attribute), which says that "The presence of a boolean attribute on an element represents the true value, and the absence of the attribute represents the false value. If the attribute is present, its value must either be the empty string or a value that is an ASCII case-insensitive match for the attribute's canonical name."
+
+---------------------------------------
+
+### Removed PortalPreferences' Preferences Field
+- **Date:** 2020-Mar-31
+- **JIRA Ticket:** [LPS-124338](https://issues.liferay.com/browse/LPS-124338)
+
+#### What changed?
+
+`PortalPreferences` preferences are now stored in the PortalPreferenceValue table.
+
+#### Who is affected?
+
+This affects you if you are directly getting or setting the `PortalPreferences` preferences field.
+
+#### How should I update my code?
+
+Use `PortalPreferencesLocalService` to access the `javax.portlet.PortletPreferences` API which can be used for getting and setting the preferences.
+
+#### Why was this change made?
+
+This will make it so that queries can be run against preference keys and values without using `like` queries, simplifies future upgrades, and reduces storage requirements.
 
 ---------------------------------------
 

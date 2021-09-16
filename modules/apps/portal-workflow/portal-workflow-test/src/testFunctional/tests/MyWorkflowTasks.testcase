@@ -52,7 +52,6 @@ definition {
 	@description = "LPS-135888 - Verify that the user with Account role type can Approve the task"
 	@priority = "5"
 	test AccountUserCanApproveTask {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "MyWorkflowTasks#AccountUserCanApproveTask";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -132,7 +131,7 @@ definition {
 
 		Button.click(button = "Review Order");
 
-		Button.click(button = "Submit");
+		Click(locator1 = "CommerceAccelerators#ORDERS_SUBMIT_BUTTON");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -460,7 +459,6 @@ definition {
 	@description = "LPS-135888 - Verify that the task is assigned to the user with Account role type"
 	@priority = "4"
 	test CanAssignTaskToUserWithAccountRole {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "MyWorkflowTasks#CanAssignTaskToUserWithAccountRole";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -544,8 +542,8 @@ definition {
 			key_status = "Draft",
 			locator1 = "CommerceEntry#WORKFLOW_STATUS");
 
-		Button.click(button = "Submit");
-
+		Click(locator1 = "CommerceAccelerators#ORDERS_SUBMIT_BUTTON");
+		
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		AssertElementPresent(

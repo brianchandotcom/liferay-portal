@@ -87,8 +87,8 @@ public class JournalTransformerTest {
 
 		String content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.PRINT, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
+			UnsecureSAXReaderUtil.read(xml), null, script, false,
+			new HashMap<>());
 
 		Assert.assertEquals("Joe Bloggs - print", content);
 	}
@@ -105,26 +105,26 @@ public class JournalTransformerTest {
 			).build(),
 			LanguageUtil.getLanguageId(LocaleUtil.US));
 
-		String script = "$name.getData()";
+		String script = "${name.getData()}";
 
 		String content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
+			UnsecureSAXReaderUtil.read(xml), null, script, false,
+			new HashMap<>());
 
 		Assert.assertEquals("Joe Bloggs", content);
 
 		content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "pt_BR",
-			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
+			UnsecureSAXReaderUtil.read(xml), null, script, false,
+			new HashMap<>());
 
 		Assert.assertEquals("Joao da Silva", content);
 
 		content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "fr_CA",
-			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
+			UnsecureSAXReaderUtil.read(xml), null, script, false,
+			new HashMap<>());
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}
@@ -155,17 +155,17 @@ public class JournalTransformerTest {
 
 		dynamicElement.addElement("nestedElement");
 
-		String script = "$name.getData()";
+		String script = "${name.getData()}";
 
 		String content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "en_US", document, null, script,
-			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
+			false, new HashMap<>());
 
 		Assert.assertEquals("Joe Bloggs", content);
 
 		content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "pt_BR", document, null, script,
-			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
+			false, new HashMap<>());
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}
@@ -179,12 +179,12 @@ public class JournalTransformerTest {
 		String xml = DDMStructureTestUtil.getSampleStructuredContent(
 			"name", "Joe Bloggs");
 
-		String script = "Hello $name.getData(), Welcome to beta.sample.com.";
+		String script = "Hello ${name.getData()}, Welcome to beta.sample.com.";
 
 		String content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
+			UnsecureSAXReaderUtil.read(xml), null, script, false,
+			new HashMap<>());
 
 		Assert.assertEquals(
 			"Hello Joe Bloggs, Welcome to production.sample.com.", content);
@@ -200,8 +200,8 @@ public class JournalTransformerTest {
 
 		String content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
+			UnsecureSAXReaderUtil.read(xml), null, script, false,
+			new HashMap<>());
 
 		Assert.assertEquals(
 			String.valueOf(TestPropsValues.getCompanyId()), content);
@@ -210,8 +210,8 @@ public class JournalTransformerTest {
 
 		content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
+			UnsecureSAXReaderUtil.read(xml), null, script, false,
+			new HashMap<>());
 
 		Assert.assertEquals(
 			String.valueOf(TestPropsValues.getCompanyId()), content);
@@ -229,8 +229,8 @@ public class JournalTransformerTest {
 
 		String content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
+			UnsecureSAXReaderUtil.read(xml), null, script, false,
+			new HashMap<>());
 
 		Assert.assertEquals(
 			StringBundler.concat(

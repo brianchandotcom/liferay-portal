@@ -205,8 +205,7 @@ public class JournalTestUtilTest {
 		String content = (String)_transformMethod.invoke(
 			null, null, getTokens(), Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null,
-			JournalTestUtil.getSampleTemplateXSL(),
-			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
+			JournalTestUtil.getSampleTemplateFTL(), false, new HashMap<>());
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}
@@ -264,8 +263,7 @@ public class JournalTestUtilTest {
 		String content = (String)_transformMethod.invoke(
 			null, null, getTokens(), Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null,
-			JournalTestUtil.getSampleTemplateXSL(),
-			TemplateConstants.LANG_TYPE_FTL, false, new HashMap<>());
+			JournalTestUtil.getSampleTemplateFTL(), false, new HashMap<>());
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}

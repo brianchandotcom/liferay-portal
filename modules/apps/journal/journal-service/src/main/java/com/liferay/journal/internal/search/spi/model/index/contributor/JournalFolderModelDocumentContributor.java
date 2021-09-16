@@ -15,10 +15,22 @@
 package com.liferay.journal.internal.search.spi.model.index.contributor;
 
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+import com.liferay.trash.TrashHelper;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lourdes Fernández Besada
@@ -33,6 +45,45 @@ public class JournalFolderModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, JournalFolder journalFolder) {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Contributing folder " + journalFolder);
+		}
+
+		String title = journalFolder.getName();
+
+		if (journalFolder.isInTrash()) {
+			title = _trashHelper.getOriginalTitle(title);
+		}
+
+		for (Locale locale :
+				LanguageUtil.getAvailableLocales(journalFolder.getGroupId())) {
+
+			String languageId = LocaleUtil.toLanguageId(locale);
+
+			document.addText(
+				LocalizationUtil.getLocalizedName(
+					Field.DESCRIPTION, languageId),
+				journalFolder.getDescription());
+			document.addText(
+				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
+				title);
+		}
+
+		document.addKeyword(Field.FOLDER_ID, journalFolder.getParentFolderId());
+		document.addKeyword(
+			Field.TREE_PATH,
+			StringUtil.split(journalFolder.getTreePath(), CharPool.SLASH));
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Document " + journalFolder + " contributed successfully");
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalFolderModelDocumentContributor.class);
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

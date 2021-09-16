@@ -14,13 +14,19 @@
 
 package com.liferay.list.type.service;
 
+import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -47,6 +53,26 @@ public interface ListTypeEntryService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.list.type.service.impl.ListTypeEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the list type entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ListTypeEntryServiceUtil} if injection and service tracking are not available.
 	 */
+	public ListTypeEntry addListTypeEntry(
+			long userId, long listTypeDefinitionId, String key,
+			Map<Locale, String> nameMap)
+		throws PortalException;
+
+	public ListTypeEntry deleteListTypeEntry(long listTypeEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ListTypeEntry> getListTypeEntries(
+			long listTypeDefinitionId, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getListTypeEntriesCount(long listTypeDefinitionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ListTypeEntry getListTypeEntry(long listTypeEntryId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -54,5 +80,9 @@ public interface ListTypeEntryService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public ListTypeEntry updateListTypeEntry(
+			long listTypeEntryId, Map<Locale, String> nameMap)
+		throws PortalException;
 
 }

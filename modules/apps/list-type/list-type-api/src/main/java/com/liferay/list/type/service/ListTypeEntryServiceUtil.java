@@ -14,6 +14,12 @@
 
 package com.liferay.list.type.service;
 
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+import java.util.Map;
+
 /**
  * Provides the remote service utility for ListTypeEntry. This utility wraps
  * <code>com.liferay.list.type.service.impl.ListTypeEntryServiceImpl</code> and is an
@@ -33,14 +39,55 @@ public class ListTypeEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.list.type.service.impl.ListTypeEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ListTypeEntry addListTypeEntry(
+			long userId, long listTypeDefinitionId, String key,
+			Map<java.util.Locale, String> nameMap)
+		throws PortalException {
+
+		return getService().addListTypeEntry(
+			userId, listTypeDefinitionId, key, nameMap);
+	}
+
+	public static ListTypeEntry deleteListTypeEntry(long listTypeEntryId)
+		throws PortalException {
+
+		return getService().deleteListTypeEntry(listTypeEntryId);
+	}
+
+	public static List<ListTypeEntry> getListTypeEntries(
+			long listTypeDefinitionId, int start, int end)
+		throws PortalException {
+
+		return getService().getListTypeEntries(
+			listTypeDefinitionId, start, end);
+	}
+
+	public static int getListTypeEntriesCount(long listTypeDefinitionId)
+		throws PortalException {
+
+		return getService().getListTypeEntriesCount(listTypeDefinitionId);
+	}
+
+	public static ListTypeEntry getListTypeEntry(long listTypeEntryId)
+		throws PortalException {
+
+		return getService().getListTypeEntry(listTypeEntryId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static ListTypeEntry updateListTypeEntry(
+			long listTypeEntryId, Map<java.util.Locale, String> nameMap)
+		throws PortalException {
+
+		return getService().updateListTypeEntry(listTypeEntryId, nameMap);
 	}
 
 	public static ListTypeEntryService getService() {

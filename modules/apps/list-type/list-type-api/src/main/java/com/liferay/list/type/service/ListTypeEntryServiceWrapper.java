@@ -32,6 +32,49 @@ public class ListTypeEntryServiceWrapper
 		_listTypeEntryService = listTypeEntryService;
 	}
 
+	@Override
+	public com.liferay.list.type.model.ListTypeEntry addListTypeEntry(
+			long userId, long listTypeDefinitionId, String key,
+			java.util.Map<java.util.Locale, String> nameMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _listTypeEntryService.addListTypeEntry(
+			userId, listTypeDefinitionId, key, nameMap);
+	}
+
+	@Override
+	public com.liferay.list.type.model.ListTypeEntry deleteListTypeEntry(
+			long listTypeEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _listTypeEntryService.deleteListTypeEntry(listTypeEntryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.list.type.model.ListTypeEntry>
+			getListTypeEntries(long listTypeDefinitionId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _listTypeEntryService.getListTypeEntries(
+			listTypeDefinitionId, start, end);
+	}
+
+	@Override
+	public int getListTypeEntriesCount(long listTypeDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _listTypeEntryService.getListTypeEntriesCount(
+			listTypeDefinitionId);
+	}
+
+	@Override
+	public com.liferay.list.type.model.ListTypeEntry getListTypeEntry(
+			long listTypeEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _listTypeEntryService.getListTypeEntry(listTypeEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -40,6 +83,16 @@ public class ListTypeEntryServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _listTypeEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.list.type.model.ListTypeEntry updateListTypeEntry(
+			long listTypeEntryId,
+			java.util.Map<java.util.Locale, String> nameMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _listTypeEntryService.updateListTypeEntry(
+			listTypeEntryId, nameMap);
 	}
 
 	@Override

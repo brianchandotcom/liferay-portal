@@ -50,6 +50,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 
 	const selectCategory = (itemData) => {
 		openSelectionModal({
+			iframeBodyCssClass: '',
 			onSelect(selectedItem) {
 				const category = selectedItem
 					? selectedItem[Object.keys(selectedItem)[0]]

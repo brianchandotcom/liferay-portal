@@ -32,6 +32,7 @@ const ACTIONS = {
 		portletNamespace
 	) {
 		openSelectionModal({
+			iframeBodyCssClass: '',
 			multiple: true,
 			onSelect: (selectedItems) => {
 				if (!selectedItems) {

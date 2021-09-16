@@ -24,6 +24,7 @@
 		<column name="customElementURLs" type="String" uad-nonanonymizable="true" />
 		<column method-name="IFrameURL" name="iFrameURL" type="String" uad-nonanonymizable="true" />
 		<column localized="true" name="name" type="String" uad-nonanonymizable="true" />
+		<column name="portletCategoryName" type="String" uad-nonanonymizable="true" />
 		<column name="type" type="String" uad-nonanonymizable="true" />
 	</entity>
 	<exceptions>

@@ -75,13 +75,17 @@ public class RemoteAppEntryLocalServiceImpl
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			long userId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			Map<Locale, String> nameMap)
+			Map<Locale, String> nameMap, String portletCategoryName)
 		throws PortalException {
 
 		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
 		customElementHTMLElementName = StringUtil.trim(
 			customElementHTMLElementName);
 		customElementURLs = StringUtil.trim(customElementURLs);
+
+		if (Validator.isBlank(portletCategoryName)) {
+			portletCategoryName = "category.sample";
+		}
 
 		_validateCustomElement(
 			customElementCSSURLs, customElementHTMLElementName,
@@ -101,6 +105,7 @@ public class RemoteAppEntryLocalServiceImpl
 			customElementHTMLElementName);
 		remoteAppEntry.setCustomElementURLs(customElementURLs);
 		remoteAppEntry.setNameMap(nameMap);
+		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 		remoteAppEntry.setType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
@@ -113,10 +118,15 @@ public class RemoteAppEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry addIFrameRemoteAppEntry(
-			long userId, String iFrameURL, Map<Locale, String> nameMap)
+			long userId, String iFrameURL, Map<Locale, String> nameMap,
+			String portletCategoryName)
 		throws PortalException {
 
 		iFrameURL = StringUtil.trim(iFrameURL);
+
+		if (Validator.isBlank(portletCategoryName)) {
+			portletCategoryName = "category.sample";
+		}
 
 		_validateIFrameURL(iFrameURL);
 
@@ -131,6 +141,7 @@ public class RemoteAppEntryLocalServiceImpl
 
 		remoteAppEntry.setIFrameURL(iFrameURL);
 		remoteAppEntry.setNameMap(nameMap);
+		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 		remoteAppEntry.setType(RemoteAppConstants.TYPE_IFRAME);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
@@ -239,17 +250,20 @@ public class RemoteAppEntryLocalServiceImpl
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
-	@Override
 	public RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			Map<Locale, String> nameMap)
+			Map<Locale, String> nameMap, String portletCategoryName)
 		throws PortalException {
 
 		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
 		customElementHTMLElementName = StringUtil.trim(
 			customElementHTMLElementName);
 		customElementURLs = StringUtil.trim(customElementURLs);
+
+		if (Validator.isBlank(portletCategoryName)) {
+			portletCategoryName = "category.sample";
+		}
 
 		_validateCustomElement(
 			customElementCSSURLs, customElementHTMLElementName,
@@ -263,6 +277,7 @@ public class RemoteAppEntryLocalServiceImpl
 			customElementHTMLElementName);
 		remoteAppEntry.setCustomElementURLs(customElementURLs);
 		remoteAppEntry.setNameMap(nameMap);
+		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
@@ -275,10 +290,14 @@ public class RemoteAppEntryLocalServiceImpl
 	@Override
 	public RemoteAppEntry updateIFrameRemoteAppEntry(
 			long remoteAppEntryId, String iFrameURL,
-			Map<Locale, String> nameMap)
+			Map<Locale, String> nameMap, String portletCategoryName)
 		throws PortalException {
 
 		iFrameURL = StringUtil.trim(iFrameURL);
+
+		if (Validator.isBlank(portletCategoryName)) {
+			portletCategoryName = "category.sample";
+		}
 
 		_validateIFrameURL(iFrameURL);
 
@@ -287,6 +306,7 @@ public class RemoteAppEntryLocalServiceImpl
 
 		remoteAppEntry.setIFrameURL(iFrameURL);
 		remoteAppEntry.setNameMap(nameMap);
+		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 

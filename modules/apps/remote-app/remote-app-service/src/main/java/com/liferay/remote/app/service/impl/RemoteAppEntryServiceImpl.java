@@ -39,21 +39,23 @@ public class RemoteAppEntryServiceImpl extends RemoteAppEntryServiceBaseImpl {
 	@Override
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			String customElementCSSURLs, String customElementHTMLElementName,
-			String customElementURLs, Map<Locale, String> nameMap)
+			String customElementURLs, Map<Locale, String> nameMap,
+			String portletCategoryName)
 		throws PortalException {
 
 		return remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
 			getUserId(), customElementCSSURLs, customElementHTMLElementName,
-			customElementURLs, nameMap);
+			customElementURLs, nameMap, portletCategoryName);
 	}
 
 	@Override
 	public RemoteAppEntry addIFrameRemoteAppEntry(
-			String iFrameURL, Map<Locale, String> nameMap)
+			String iFrameURL, Map<Locale, String> nameMap,
+			String portletCategoryName)
 		throws PortalException {
 
 		return remoteAppEntryLocalService.addIFrameRemoteAppEntry(
-			getUserId(), iFrameURL, nameMap);
+			getUserId(), iFrameURL, nameMap, portletCategoryName);
 	}
 
 	@Override
@@ -67,22 +69,23 @@ public class RemoteAppEntryServiceImpl extends RemoteAppEntryServiceBaseImpl {
 	public RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			Map<Locale, String> nameMap)
+			Map<Locale, String> nameMap, String portletCategoryName)
 		throws PortalException {
 
 		return remoteAppEntryLocalService.updateCustomElementRemoteAppEntry(
 			remoteAppEntryId, customElementCSSURLs,
-			customElementHTMLElementName, customElementURLs, nameMap);
+			customElementHTMLElementName, customElementURLs, nameMap,
+			portletCategoryName);
 	}
 
 	@Override
 	public RemoteAppEntry updateIFrameRemoteAppEntry(
 			long remoteAppEntryId, String iFrameURL,
-			Map<Locale, String> nameMap)
+			Map<Locale, String> nameMap, String portletCategoryName)
 		throws PortalException {
 
 		return remoteAppEntryLocalService.updateIFrameRemoteAppEntry(
-			remoteAppEntryId, iFrameURL, nameMap);
+			remoteAppEntryId, iFrameURL, nameMap, portletCategoryName);
 	}
 
 }

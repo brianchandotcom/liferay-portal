@@ -6,4 +6,5 @@ Export-Package:\
 	com.liferay.search.experiences.model,\
 	com.liferay.search.experiences.problem,\
 	com.liferay.search.experiences.service,\
-	com.liferay.search.experiences.service.persistence
+	com.liferay.search.experiences.service.persistence,\
+	com.liferay.search.experiences.util.comparator

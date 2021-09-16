@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
@@ -120,6 +121,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -866,8 +870,32 @@ public class StructuredContentResourceImpl
 			}
 		}
 
+		DDMFormValues ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
+			contentFields, ddmStructure.getDDMForm(), _dlAppService,
+			journalArticle.getGroupId(), _journalArticleService,
+			_layoutLocalService, contextAcceptLanguage.getPreferredLocale(),
+			_getRootDDMFormFields(ddmStructure));
+
+		List<DDMFormFieldValue> ddmFormFieldValues =
+			ddmFormValues.getDDMFormFieldValues();
+
+		Stream<DDMFormFieldValue> ddmFormFieldValuesStream =
+			ddmFormFieldValues.stream();
+
+		Map<String, DDMFormFieldValue> ddmFormFieldValueMap =
+			ddmFormFieldValuesStream.collect(
+				Collectors.toMap(
+					DDMFormFieldValue::getFieldReference, Function.identity()));
+
 		for (ContentField contentField : contentFields) {
-			Field field = fields.get(contentField.getName());
+			DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValueMap.get(
+				contentField.getName());
+
+			if (ddmFormFieldValue == null) {
+				continue;
+			}
+
+			Field field = fields.get(ddmFormFieldValue.getName());
 
 			Value value = DDMValueUtil.toDDMValue(
 				contentField,
@@ -889,7 +917,7 @@ public class StructuredContentResourceImpl
 			}
 		}
 
-		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
+		ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
 			ddmStructure, fields);
 
 		_ddmFormValuesValidator.validate(ddmFormValues);

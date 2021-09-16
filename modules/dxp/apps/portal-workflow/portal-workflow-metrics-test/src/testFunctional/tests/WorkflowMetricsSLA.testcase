@@ -1002,7 +1002,6 @@ definition {
 	@description = "LPS-94760 - Verify that the time format is following the system language (Example: 03:34 PM for en_US and 15:34 for pt)"
 	@priority = "3"
 	test SLAProcessingTimeFormatIsFollowingSystemLanguage {
-
 		var slaName = "SLAName";
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
@@ -1081,7 +1080,6 @@ definition {
 		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
-
 	}
 
 	@description = "LPS-89014 - Verify that the table view of SLAs are ordered by last modified (Desc)"

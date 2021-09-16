@@ -15,9 +15,7 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Brian Wing Shun Chan
@@ -27,20 +25,15 @@ import com.liferay.registry.ServiceTracker;
 public class ScreenNameGeneratorFactory {
 
 	public static ScreenNameGenerator getInstance() {
-		return _screenNameGeneratorFactory._serviceTracker.getService();
+		return _screenNameGenerator;
 	}
 
 	private ScreenNameGeneratorFactory() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(ScreenNameGenerator.class);
-
-		_serviceTracker.open();
 	}
 
-	private static final ScreenNameGeneratorFactory
-		_screenNameGeneratorFactory = new ScreenNameGeneratorFactory();
-
-	private final ServiceTracker<?, ScreenNameGenerator> _serviceTracker;
+	private static volatile ScreenNameGenerator _screenNameGenerator =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			ScreenNameGenerator.class, ScreenNameGeneratorFactory.class,
+			"_screenNameGenerator", false, true);
 
 }

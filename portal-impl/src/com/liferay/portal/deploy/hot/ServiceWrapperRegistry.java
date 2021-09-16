@@ -18,16 +18,17 @@ import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.lang.reflect.Method;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Raymond Augé
@@ -35,10 +36,8 @@ import java.lang.reflect.Method;
 public class ServiceWrapperRegistry {
 
 	public ServiceWrapperRegistry() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			ServiceWrapper.class.getName(),
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, ServiceWrapper.class.getName(),
 			new ServiceWrapperServiceTrackerCustomizer());
 
 		_serviceTracker.open();
@@ -51,19 +50,19 @@ public class ServiceWrapperRegistry {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceWrapperRegistry.class);
 
+	private final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private final ServiceTracker<ServiceWrapper<?>, ServiceBag<?>>
 		_serviceTracker;
 
-	private static class ServiceWrapperServiceTrackerCustomizer
+	private class ServiceWrapperServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<ServiceWrapper<?>, ServiceBag<?>> {
 
 		@Override
 		public ServiceBag<?> addingService(
 			ServiceReference<ServiceWrapper<?>> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			ServiceWrapper<?> serviceWrapper = registry.getService(
+			ServiceWrapper<?> serviceWrapper = _bundleContext.getService(
 				serviceReference);
 
 			try {
@@ -90,9 +89,7 @@ public class ServiceWrapperRegistry {
 			ServiceReference<ServiceWrapper<?>> serviceReference,
 			ServiceBag<?> serviceBag) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 
 			try {
 				serviceBag.replace();
@@ -116,8 +113,6 @@ public class ServiceWrapperRegistry {
 			Object service = null;
 			ServiceReference<?> serviceReference = null;
 
-			Registry registry = RegistryUtil.getRegistry();
-
 			try {
 				service = PortalBeanLocatorUtil.locate(
 					serviceTypeClass.getName());
@@ -127,10 +122,10 @@ public class ServiceWrapperRegistry {
 					_log.debug(beanLocatorException, beanLocatorException);
 				}
 
-				serviceReference = registry.getServiceReference(
+				serviceReference = _bundleContext.getServiceReference(
 					serviceTypeClass);
 
-				service = registry.getService(serviceReference);
+				service = _bundleContext.getService(serviceReference);
 			}
 
 			Object serviceProxy = service;
@@ -141,7 +136,7 @@ public class ServiceWrapperRegistry {
 						"JdkDynamicProxy and will not work with CGLIB");
 
 				if (serviceReference != null) {
-					registry.ungetService(serviceReference);
+					_bundleContext.ungetService(serviceReference);
 				}
 
 				return null;
@@ -163,7 +158,7 @@ public class ServiceWrapperRegistry {
 			}
 			finally {
 				if (serviceReference != null) {
-					registry.ungetService(serviceReference);
+					_bundleContext.ungetService(serviceReference);
 				}
 			}
 		}

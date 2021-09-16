@@ -19,9 +19,7 @@ import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil;
 import com.liferay.portal.kernel.security.pwd.Toolkit;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Brian Wing Shun Chan
@@ -29,13 +27,11 @@ import com.liferay.registry.ServiceTracker;
 public class PwdToolkitUtil {
 
 	public static String generate(PasswordPolicy passwordPolicy) {
-		Toolkit toolkit = getToolkit();
-
-		return toolkit.generate(passwordPolicy);
+		return _toolkit.generate(passwordPolicy);
 	}
 
 	public static Toolkit getToolkit() {
-		return _pwdToolkitUtil._serviceTracker.getService();
+		return _toolkit;
 	}
 
 	public static void validate(
@@ -50,22 +46,15 @@ public class PwdToolkitUtil {
 		if (!LDAPSettingsUtil.isPasswordPolicyEnabled(companyId) &&
 			PwdToolkitUtilThreadLocal.isValidate()) {
 
-			Toolkit toolkit = getToolkit();
-
-			toolkit.validate(userId, password1, password2, passwordPolicy);
+			_toolkit.validate(userId, password1, password2, passwordPolicy);
 		}
 	}
 
 	private PwdToolkitUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(Toolkit.class);
-
-		_serviceTracker.open();
 	}
 
-	private static final PwdToolkitUtil _pwdToolkitUtil = new PwdToolkitUtil();
-
-	private final ServiceTracker<Toolkit, Toolkit> _serviceTracker;
+	private static volatile Toolkit _toolkit =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			Toolkit.class, PwdToolkitUtil.class, "_toolkit", false, true);
 
 }

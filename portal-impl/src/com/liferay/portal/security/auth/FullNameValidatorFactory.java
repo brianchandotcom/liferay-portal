@@ -15,9 +15,7 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.security.auth.FullNameValidator;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Amos Fong
@@ -27,21 +25,15 @@ import com.liferay.registry.ServiceTracker;
 public class FullNameValidatorFactory {
 
 	public static FullNameValidator getInstance() {
-		return _fullNameValidatorFactory._serviceTracker.getService();
+		return _fullNameValidator;
 	}
 
 	private FullNameValidatorFactory() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(FullNameValidator.class);
-
-		_serviceTracker.open();
 	}
 
-	private static final FullNameValidatorFactory _fullNameValidatorFactory =
-		new FullNameValidatorFactory();
-
-	private final ServiceTracker<FullNameValidator, FullNameValidator>
-		_serviceTracker;
+	private static volatile FullNameValidator _fullNameValidator =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			FullNameValidator.class, FullNameValidatorFactory.class,
+			"_fullNameValidator", false, true);
 
 }

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierConfiguration;
@@ -31,11 +32,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.registry.AuthVerifierRegistry;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,6 +44,11 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Tomas Polesovsky
@@ -386,11 +387,11 @@ public class AuthVerifierPipeline {
 				new AuthVerifierPipeline(
 					Collections.emptyList(), PortalUtil.getPathContext());
 
-			Registry registry = RegistryUtil.getRegistry();
+			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 			ServiceTracker<AuthVerifierConfiguration, AuthVerifierConfiguration>
-				serviceTracker = registry.trackServices(
-					AuthVerifierConfiguration.class,
+				serviceTracker = new ServiceTracker<>(
+					bundleContext, AuthVerifierConfiguration.class,
 					new ServiceTrackerCustomizer
 						<AuthVerifierConfiguration,
 						 AuthVerifierConfiguration>() {
@@ -401,8 +402,8 @@ public class AuthVerifierPipeline {
 								serviceReference) {
 
 							AuthVerifierConfiguration
-								authVerifierConfiguration = registry.getService(
-									serviceReference);
+								authVerifierConfiguration =
+									bundleContext.getService(serviceReference);
 
 							if (authVerifierConfiguration != null) {
 								portalAuthVerifierPipeline.
@@ -431,6 +432,8 @@ public class AuthVerifierPipeline {
 							portalAuthVerifierPipeline.
 								_removeAuthVerifierConfiguration(
 									authVerifierConfiguration);
+
+							bundleContext.ungetService(serviceReference);
 						}
 
 					});

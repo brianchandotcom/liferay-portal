@@ -14,22 +14,17 @@
 
 package com.liferay.portal.security.access.control;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlPolicy;
 import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.lang.reflect.Method;
-
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Tomas Polesovsky
@@ -79,56 +74,9 @@ public class AccessControlAdvisorImpl implements AccessControlAdvisor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccessControlAdvisorImpl.class.getName());
 
-	private static final List<AccessControlPolicy> _accessControlPolicies =
-		new CopyOnWriteArrayList<>();
-	private static final ServiceTracker<?, ?> _serviceTracker;
-
-	private static class AccessControlPolicyTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<AccessControlPolicy, AccessControlPolicy> {
-
-		@Override
-		public AccessControlPolicy addingService(
-			ServiceReference<AccessControlPolicy> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			AccessControlPolicy accessControlPolicy = registry.getService(
-				serviceReference);
-
-			_accessControlPolicies.add(accessControlPolicy);
-
-			return accessControlPolicy;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<AccessControlPolicy> serviceReference,
-			AccessControlPolicy accessControlPolicy) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<AccessControlPolicy> serviceReference,
-			AccessControlPolicy accessControlPolicy) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			_accessControlPolicies.remove(accessControlPolicy);
-		}
-
-	}
-
-	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			AccessControlPolicy.class,
-			new AccessControlPolicyTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
+	private static final ServiceTrackerList
+		<AccessControlPolicy, AccessControlPolicy> _accessControlPolicies =
+			ServiceTrackerListFactory.open(
+				SystemBundleUtil.getBundleContext(), AccessControlPolicy.class);
 
 }

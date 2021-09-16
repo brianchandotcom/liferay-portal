@@ -40,22 +40,18 @@ import com.liferay.portal.kernel.security.permission.propagator.PermissionPropag
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialRequestInterpreter;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -66,6 +62,10 @@ import javax.portlet.PreferencesValidator;
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Brian Wing Shun Chan
@@ -594,14 +594,15 @@ public class PortletBagImpl implements PortletBag {
 		return Collections.unmodifiableList(list);
 	}
 
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+
 	private volatile ServiceTrackerList
 		<AssetRendererFactory<?>, AssetRendererFactory<?>>
 			_assetRendererFactoryInstances;
 	private volatile ServiceTrackerList
 		<AtomCollectionAdapter<?>, AtomCollectionAdapter<?>>
 			_atomCollectionAdapterInstances;
-	private final BundleContext _bundleContext =
-		SystemBundleUtil.getBundleContext();
 	private volatile ServiceTrackerList
 		<ConfigurationAction, ConfigurationAction>
 			_configurationActionInstances;
@@ -679,12 +680,10 @@ public class PortletBagImpl implements PortletBag {
 				<com.liferay.portal.kernel.security.permission.
 					PermissionPropagator> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			return registry.registerService(
+			return _bundleContext.registerService(
 				PermissionPropagator.class,
-				registry.getService(serviceReference),
-				serviceReference.getProperties());
+				_bundleContext.getService(serviceReference),
+				_toProperties(serviceReference));
 		}
 
 		@Override
@@ -694,7 +693,7 @@ public class PortletBagImpl implements PortletBag {
 					PermissionPropagator> serviceReference,
 			ServiceRegistration<PermissionPropagator> serviceRegistration) {
 
-			serviceRegistration.setProperties(serviceReference.getProperties());
+			serviceRegistration.setProperties(_toProperties(serviceReference));
 		}
 
 		@Override
@@ -706,17 +705,28 @@ public class PortletBagImpl implements PortletBag {
 
 			serviceRegistration.unregister();
 
-			Registry registry = RegistryUtil.getRegistry();
+			_bundleContext.ungetService(serviceReference);
+		}
 
-			registry.ungetService(serviceReference);
+		private Dictionary<String, Object> _toProperties(
+			ServiceReference<?> serviceReference) {
+
+			Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+			for (String key : serviceReference.getPropertyKeys()) {
+				Object value = serviceReference.getProperty(key);
+
+				properties.put(key, value);
+			}
+
+			return properties;
 		}
 
 	}
 
 	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceTracker<?, ?> serviceTracker = registry.trackServices(
+		ServiceTracker<?, ?> serviceTracker = new ServiceTracker<>(
+			_bundleContext,
 			com.liferay.portal.kernel.security.permission.PermissionPropagator.
 				class,
 			new PermissionPropagatorServiceTrackerCustomizer());

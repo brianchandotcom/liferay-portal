@@ -15,9 +15,7 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.openid.OpenId;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Jorge Ferrer
@@ -25,23 +23,18 @@ import com.liferay.registry.ServiceTracker;
 public class OpenIdUtil {
 
 	public static boolean isEnabled(long companyId) {
-		return getOpenId().isEnabled(companyId);
+		return _openId.isEnabled(companyId);
 	}
 
 	protected static OpenId getOpenId() {
-		return _openIdUtil._serviceTracker.getService();
+		return _openId;
 	}
 
 	private OpenIdUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(OpenId.class);
-
-		_serviceTracker.open();
 	}
 
-	private static final OpenIdUtil _openIdUtil = new OpenIdUtil();
-
-	private final ServiceTracker<OpenId, OpenId> _serviceTracker;
+	private static volatile OpenId _openId =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			OpenId.class, OpenIdUtil.class, "_openId", false, true);
 
 }

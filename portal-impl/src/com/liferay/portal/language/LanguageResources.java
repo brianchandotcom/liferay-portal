@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.language.LanguageBuilderUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -29,12 +30,6 @@ import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.io.InputStream;
 
@@ -51,6 +46,12 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Shuyang Zhou
@@ -151,14 +152,12 @@ public class LanguageResources {
 	}
 
 	public void afterPropertiesSet() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Filter languageResourceFilter = registry.getFilter(
+		Filter languageResourceFilter = SystemBundleUtil.createFilter(
 			"(&(!(javax.portlet.name=*))(language.id=*)(objectClass=" +
 				ResourceBundle.class.getName() + "))");
 
-		_serviceTracker = registry.trackServices(
-			languageResourceFilter,
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, languageResourceFilter,
 			new LanguageResourceServiceTrackerCustomizer());
 
 		_serviceTracker.open();
@@ -304,7 +303,7 @@ public class LanguageResources {
 		return properties;
 	}
 
-	private static Map<String, String> _putLanguageMap(
+	private Map<String, String> _putLanguageMap(
 		Locale locale, Map<String, String> languageMap) {
 
 		Map<String, String> oldLanguageMap = _languageMaps.get(locale);
@@ -355,6 +354,8 @@ public class LanguageResources {
 	private static final Map<Locale, Locale> _superLocales =
 		new ConcurrentHashMap<>();
 
+	private final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private ServiceTracker<?, ?> _serviceTracker;
 
 	private static class LanguageResourcesBundle extends ResourceBundle {
@@ -415,7 +416,32 @@ public class LanguageResources {
 
 	}
 
-	private static class LanguageResourceServiceTrackerCustomizer
+	private static class ResourceBundleInfo
+		implements Comparable<ResourceBundleInfo> {
+
+		@Override
+		public int compareTo(ResourceBundleInfo resourceBundleInfo) {
+			return _serviceReference.compareTo(
+				resourceBundleInfo._serviceReference);
+		}
+
+		private ResourceBundleInfo(
+			String languageId, Locale locale,
+			ServiceReference<?> serviceReference) {
+
+			_languageId = languageId;
+			_locale = locale;
+			_serviceReference = serviceReference;
+		}
+
+		private Map<String, String> _diffLanguageMap;
+		private final String _languageId;
+		private final Locale _locale;
+		private final ServiceReference<?> _serviceReference;
+
+	}
+
+	private class LanguageResourceServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<ResourceBundle, ResourceBundleInfo> {
 
@@ -423,9 +449,7 @@ public class LanguageResources {
 		public ResourceBundleInfo addingService(
 			ServiceReference<ResourceBundle> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			ResourceBundle resourceBundle = registry.getService(
+			ResourceBundle resourceBundle = _bundleContext.getService(
 				serviceReference);
 
 			String languageId = GetterUtil.getString(
@@ -505,9 +529,7 @@ public class LanguageResources {
 			ServiceReference<ResourceBundle> serviceReference,
 			ResourceBundleInfo resourceBundleInfo) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 
 			String languageId = resourceBundleInfo._languageId;
 
@@ -565,31 +587,6 @@ public class LanguageResources {
 
 		private final Map<String, List<ResourceBundleInfo>>
 			_languageResourceExtensions = new HashMap<>();
-
-	}
-
-	private static class ResourceBundleInfo
-		implements Comparable<ResourceBundleInfo> {
-
-		@Override
-		public int compareTo(ResourceBundleInfo resourceBundleInfo) {
-			return _serviceReference.compareTo(
-				resourceBundleInfo._serviceReference);
-		}
-
-		private ResourceBundleInfo(
-			String languageId, Locale locale,
-			ServiceReference<?> serviceReference) {
-
-			_languageId = languageId;
-			_locale = locale;
-			_serviceReference = serviceReference;
-		}
-
-		private Map<String, String> _diffLanguageMap;
-		private final String _languageId;
-		private final Locale _locale;
-		private final ServiceReference<?> _serviceReference;
 
 	}
 

@@ -15,9 +15,7 @@
 package com.liferay.mail.util;
 
 import com.liferay.mail.kernel.util.Hook;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Brian Wing Shun Chan
@@ -27,19 +25,14 @@ import com.liferay.registry.ServiceTracker;
 public class HookFactory {
 
 	public static Hook getInstance() {
-		return _hookFactory._serviceTracker.getService();
+		return _hook;
 	}
 
 	private HookFactory() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(Hook.class);
-
-		_serviceTracker.open();
 	}
 
-	private static final HookFactory _hookFactory = new HookFactory();
-
-	private final ServiceTracker<Hook, Hook> _serviceTracker;
+	private static volatile Hook _hook =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			Hook.class, HookFactory.class, "_hook", false, true);
 
 }

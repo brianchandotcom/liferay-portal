@@ -14,12 +14,8 @@
 
 package com.liferay.portal.editor.configuration;
 
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.util.StringPlus;
 
 import java.util.ArrayList;
@@ -31,6 +27,11 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
+
 /**
  * @author Sergio González
  * @author Preston Crary
@@ -38,10 +39,8 @@ import java.util.function.Consumer;
 public abstract class BaseEditorProvider<T> {
 
 	public BaseEditorProvider(Class<T> editorContributorClass) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			editorContributorClass,
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, editorContributorClass,
 			new EditorContributorServiceTrackerCustomizer());
 
 		_serviceTracker.open();
@@ -69,6 +68,8 @@ public abstract class BaseEditorProvider<T> {
 		}
 	}
 
+	private final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private final AtomicReference<List<EditorContributorProvider<T>>>
 		_editorContributorsProviders = new AtomicReference<>();
 	private final ServiceTracker<T, ?> _serviceTracker;
@@ -181,9 +182,8 @@ public abstract class BaseEditorProvider<T> {
 
 		@Override
 		public T addingService(ServiceReference<T> serviceReference) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			T editorOptionsContributor = registry.getService(serviceReference);
+			T editorOptionsContributor = _bundleContext.getService(
+				serviceReference);
 
 			List<String> portletNames = StringPlus.asList(
 				serviceReference.getProperty("javax.portlet.name"));
@@ -240,9 +240,7 @@ public abstract class BaseEditorProvider<T> {
 		public void removedService(
 			ServiceReference<T> serviceReference, T editorContributor) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 
 			_editorContributorsProviders.updateAndGet(
 				editorContributorProviders -> {

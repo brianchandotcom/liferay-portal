@@ -14,20 +14,14 @@
 
 package com.liferay.portal.security.sso;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.sso.SSO;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
-
-import java.util.Collections;
-import java.util.Map;
-import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * @author Raymond Augé
@@ -38,9 +32,9 @@ public class SSOUtil {
 		long companyId, String sessionExpirationRedirectURL) {
 
 		String ssoSessionExpirationRedirectURL =
-			_ssoUtil._getSessionExpirationRedirectURL(companyId);
+			_getSessionExpirationRedirectURL(companyId);
 
-		if (_ssoUtil._ssoMap.isEmpty() ||
+		if ((_ssos.size() == 0) ||
 			Validator.isNull(ssoSessionExpirationRedirectURL)) {
 
 			return sessionExpirationRedirectURL;
@@ -50,11 +44,11 @@ public class SSOUtil {
 	}
 
 	public static String getSignInURL(long companyId, String signInURL) {
-		if (_ssoUtil._ssoMap.isEmpty()) {
+		if (_ssos.size() == 0) {
 			return null;
 		}
 
-		return _ssoUtil._getSignInURL(companyId, signInURL);
+		return _getSignInURL(companyId, signInURL);
 	}
 
 	public static boolean isLoginRedirectRequired(long companyId) {
@@ -65,43 +59,34 @@ public class SSOUtil {
 			return true;
 		}
 
-		if (_ssoUtil._ssoMap.isEmpty()) {
+		if (_ssos.size() == 0) {
 			return false;
 		}
 
-		return _ssoUtil._isLoginRedirectRequired(companyId);
+		return _isLoginRedirectRequired(companyId);
 	}
 
 	public static boolean isRedirectRequired(long companyId) {
-		if (_ssoUtil._ssoMap.isEmpty()) {
+		if (_ssos.size() == 0) {
 			return false;
 		}
 
-		return _ssoUtil._isRedirectRequired(companyId);
+		return _isRedirectRequired(companyId);
 	}
 
 	public static boolean isSessionRedirectOnExpire(long companyId) {
 		boolean sessionRedirectOnExpire =
 			PropsValues.SESSION_TIMEOUT_REDIRECT_ON_EXPIRE;
 
-		if (_ssoUtil._ssoMap.isEmpty() || sessionRedirectOnExpire) {
+		if ((_ssos.size() == 0) || sessionRedirectOnExpire) {
 			return sessionRedirectOnExpire;
 		}
 
-		return _ssoUtil._isSessionRedirectOnExpire(companyId);
+		return _isSessionRedirectOnExpire(companyId);
 	}
 
-	private SSOUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			SSO.class, new SSOServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
-
-	private String _getSessionExpirationRedirectURL(long companyId) {
-		for (SSO sso : _ssoMap.values()) {
+	private static String _getSessionExpirationRedirectURL(long companyId) {
+		for (SSO sso : _ssos) {
 			String sessionExpirationRedirectURL =
 				sso.getSessionExpirationRedirectUrl(companyId);
 
@@ -113,8 +98,10 @@ public class SSOUtil {
 		return null;
 	}
 
-	private String _getSignInURL(long companyId, String defaultSignInURL) {
-		for (SSO sso : _ssoMap.values()) {
+	private static String _getSignInURL(
+		long companyId, String defaultSignInURL) {
+
+		for (SSO sso : _ssos) {
 			String signInURL = sso.getSignInURL(companyId, defaultSignInURL);
 
 			if (signInURL != null) {
@@ -125,8 +112,8 @@ public class SSOUtil {
 		return null;
 	}
 
-	private boolean _isLoginRedirectRequired(long companyId) {
-		for (SSO sso : _ssoMap.values()) {
+	private static boolean _isLoginRedirectRequired(long companyId) {
+		for (SSO sso : _ssos) {
 			if (sso.isLoginRedirectRequired(companyId)) {
 				return true;
 			}
@@ -135,8 +122,8 @@ public class SSOUtil {
 		return false;
 	}
 
-	private boolean _isRedirectRequired(long companyId) {
-		for (SSO sso : _ssoMap.values()) {
+	private static boolean _isRedirectRequired(long companyId) {
+		for (SSO sso : _ssos) {
 			if (sso.isRedirectRequired(companyId)) {
 				return true;
 			}
@@ -145,8 +132,8 @@ public class SSOUtil {
 		return false;
 	}
 
-	private boolean _isSessionRedirectOnExpire(long companyId) {
-		for (SSO sso : _ssoMap.values()) {
+	private static boolean _isSessionRedirectOnExpire(long companyId) {
+		for (SSO sso : _ssos) {
 			if (sso.isSessionRedirectOnExpire(companyId)) {
 				return true;
 			}
@@ -155,42 +142,11 @@ public class SSOUtil {
 		return false;
 	}
 
-	private static final SSOUtil _ssoUtil = new SSOUtil();
-
-	private final ServiceTracker<SSO, SSO> _serviceTracker;
-	private final Map<ServiceReference<SSO>, SSO> _ssoMap =
-		new ConcurrentSkipListMap<>(Collections.reverseOrder());
-
-	private class SSOServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<SSO, SSO> {
-
-		@Override
-		public SSO addingService(ServiceReference<SSO> serviceReference) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			SSO sso = registry.getService(serviceReference);
-
-			_ssoMap.put(serviceReference, sso);
-
-			return sso;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<SSO> serviceReference, SSO sso) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<SSO> serviceReference, SSO sso) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			_ssoMap.remove(serviceReference);
-		}
-
+	private SSOUtil() {
 	}
+
+	private static final ServiceTrackerList<SSO, SSO> _ssos =
+		ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(), SSO.class);
 
 }

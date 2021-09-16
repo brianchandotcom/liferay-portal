@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ServiceComponent;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.kernel.service.configuration.servlet.ServletServiceContextComponentConfiguration;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
@@ -46,12 +47,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.service.base.ServiceComponentLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -64,6 +59,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -71,16 +72,14 @@ public class ServiceComponentLocalServiceImpl
 	extends ServiceComponentLocalServiceBaseImpl {
 
 	public ServiceComponentLocalServiceImpl() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Filter filter = registry.getFilter(
+		Filter filter = SystemBundleUtil.createFilter(
 			StringBundler.concat(
 				"(&(objectClass=", UpgradeStep.class.getName(),
 				")(upgrade.from.schema.version=0.0.0)(upgrade.initial.",
 				"database.creation=true))"));
 
-		_upgradeStepServiceTracker = registry.trackServices(
-			filter, new UpgradeStepServiceTrackerCustomizer());
+		_upgradeStepServiceTracker = new ServiceTracker<>(
+			_bundleContext, filter, new UpgradeStepServiceTrackerCustomizer());
 
 		_upgradeStepServiceTracker.open();
 	}
@@ -605,6 +604,8 @@ public class ServiceComponentLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceComponentLocalServiceImpl.class);
 
+	private final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private volatile Map<String, ServiceComponent> _serviceComponents;
 	private final ServiceTracker<UpgradeStep, UpgradeStepHolder>
 		_upgradeStepServiceTracker;
@@ -626,7 +627,7 @@ public class ServiceComponentLocalServiceImpl
 
 	}
 
-	private static class UpgradeStepServiceTrackerCustomizer
+	private class UpgradeStepServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<UpgradeStep, UpgradeStepHolder> {
 
 		@Override
@@ -638,9 +639,8 @@ public class ServiceComponentLocalServiceImpl
 			int buildNumber = GetterUtil.getInteger(
 				serviceReference.getProperty("build.number"));
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			UpgradeStep upgradeStep = registry.getService(serviceReference);
+			UpgradeStep upgradeStep = _bundleContext.getService(
+				serviceReference);
 
 			return new UpgradeStepHolder(
 				servletContextName, buildNumber, upgradeStep);
@@ -658,6 +658,8 @@ public class ServiceComponentLocalServiceImpl
 		public void removedService(
 			ServiceReference<UpgradeStep> serviceReference,
 			UpgradeStepHolder upgradeStepHolder) {
+
+			_bundleContext.ungetService(serviceReference);
 		}
 
 	}

@@ -16,26 +16,27 @@ package com.liferay.portal.repository.registry;
 
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.repository.external.LegacyExternalRepositoryDefiner;
 import com.liferay.portal.repository.util.ExternalRepositoryFactory;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryImpl;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Adolfo Pérez
@@ -44,10 +45,8 @@ public class RepositoryClassDefinitionCatalogImpl
 	implements CacheRegistryItem, RepositoryClassDefinitionCatalog {
 
 	public void afterPropertiesSet() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			RepositoryDefiner.class,
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, RepositoryDefiner.class,
 			new RepositoryDefinerServiceTrackerCustomizer());
 
 		_serviceTracker.open();
@@ -144,10 +143,8 @@ public class RepositoryClassDefinitionCatalogImpl
 	protected ServiceRegistration<RepositoryDefiner> registerRepositoryDefiner(
 		RepositoryDefiner repositoryDefiner) {
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		return registry.registerService(
-			RepositoryDefiner.class, repositoryDefiner);
+		return _bundleContext.registerService(
+			RepositoryDefiner.class, repositoryDefiner, null);
 	}
 
 	protected void unregisterRepositoryDefiner(String className) {
@@ -156,6 +153,8 @@ public class RepositoryClassDefinitionCatalogImpl
 		_repositoryClassDefinitions.remove(className);
 	}
 
+	private final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private final Map<String, RepositoryClassDefinition>
 		_externalRepositoryClassDefinitions = new ConcurrentHashMap<>();
 	private RepositoryFactory _legacyExternalRepositoryFactory;
@@ -175,9 +174,7 @@ public class RepositoryClassDefinitionCatalogImpl
 		public ServiceRegistration<RepositoryFactory> addingService(
 			ServiceReference<RepositoryDefiner> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			RepositoryDefiner repositoryDefiner = registry.getService(
+			RepositoryDefiner repositoryDefiner = _bundleContext.getService(
 				serviceReference);
 
 			String className = repositoryDefiner.getClassName();
@@ -193,11 +190,9 @@ public class RepositoryClassDefinitionCatalogImpl
 			_repositoryClassDefinitions.put(
 				className, repositoryClassDefinition);
 
-			return registry.registerService(
+			return _bundleContext.registerService(
 				RepositoryFactory.class, repositoryClassDefinition,
-				HashMapBuilder.<String, Object>put(
-					"class.name", className
-				).build());
+				MapUtil.singletonDictionary("class.name", className));
 		}
 
 		@Override
@@ -211,13 +206,11 @@ public class RepositoryClassDefinitionCatalogImpl
 			ServiceReference<RepositoryDefiner> serviceReference,
 			ServiceRegistration<RepositoryFactory> serviceRegistration) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 
 			ServiceReference<RepositoryFactory>
 				repositoryFactoryServiceReference =
-					serviceRegistration.getServiceReference();
+					serviceRegistration.getReference();
 
 			String className =
 				(String)repositoryFactoryServiceReference.getProperty(

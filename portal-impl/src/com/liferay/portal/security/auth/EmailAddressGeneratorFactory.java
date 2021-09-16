@@ -15,9 +15,7 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.security.auth.EmailAddressGenerator;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Amos Fong
@@ -27,20 +25,12 @@ import com.liferay.registry.ServiceTracker;
 public class EmailAddressGeneratorFactory {
 
 	public static EmailAddressGenerator getInstance() {
-		return _emailAddressGeneratorFactory._serviceTracker.getService();
+		return _emailAddressGenerator;
 	}
 
-	private EmailAddressGeneratorFactory() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(EmailAddressGenerator.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final EmailAddressGeneratorFactory
-		_emailAddressGeneratorFactory = new EmailAddressGeneratorFactory();
-
-	private final ServiceTracker<?, EmailAddressGenerator> _serviceTracker;
+	private static volatile EmailAddressGenerator _emailAddressGenerator =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			EmailAddressGenerator.class, EmailAddressGeneratorFactory.class,
+			"_emailAddressGenerator", false, true);
 
 }

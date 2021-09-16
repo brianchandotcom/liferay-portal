@@ -17,19 +17,20 @@ package com.liferay.portal.service;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Brian Wing Shun Chan
@@ -39,10 +40,9 @@ public class PersistedModelLocalServiceRegistryImpl
 	implements PersistedModelLocalServiceRegistry {
 
 	public PersistedModelLocalServiceRegistryImpl() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			registry.getFilter(
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext,
+			SystemBundleUtil.createFilter(
 				StringBundler.concat(
 					"(&(model.class.name=*)(objectClass=",
 					PersistedModelLocalService.class.getName(), "))")),
@@ -89,6 +89,8 @@ public class PersistedModelLocalServiceRegistryImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		PersistedModelLocalServiceRegistryImpl.class);
 
+	private final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private final Map<String, PersistedModelLocalService>
 		_persistedModelLocalServices = new ConcurrentHashMap<>();
 	private final ServiceTracker<?, ?> _serviceTracker;
@@ -104,10 +106,8 @@ public class PersistedModelLocalServiceRegistryImpl
 			String className = (String)serviceReference.getProperty(
 				"model.class.name");
 
-			Registry registry = RegistryUtil.getRegistry();
-
 			PersistedModelLocalService persistedModelLocalService =
-				registry.getService(serviceReference);
+				_bundleContext.getService(serviceReference);
 
 			PersistedModelLocalServiceRegistryImpl.this.register(
 				className, persistedModelLocalService);
@@ -137,9 +137,7 @@ public class PersistedModelLocalServiceRegistryImpl
 
 			PersistedModelLocalServiceRegistryImpl.this.unregister(className);
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 		}
 
 	}

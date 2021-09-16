@@ -15,9 +15,7 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Brian Wing Shun Chan
@@ -27,20 +25,15 @@ import com.liferay.registry.ServiceTracker;
 public class EmailAddressValidatorFactory {
 
 	public static EmailAddressValidator getInstance() {
-		return _emailAddressValidatorFactory._serviceTracker.getService();
+		return _emailAddressValidator;
 	}
 
 	private EmailAddressValidatorFactory() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(EmailAddressValidator.class);
-
-		_serviceTracker.open();
 	}
 
-	private static final EmailAddressValidatorFactory
-		_emailAddressValidatorFactory = new EmailAddressValidatorFactory();
-
-	private final ServiceTracker<?, EmailAddressValidator> _serviceTracker;
+	private static volatile EmailAddressValidator _emailAddressValidator =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			EmailAddressValidator.class, EmailAddressValidatorFactory.class,
+			"_emailAddressValidator", false, true);
 
 }

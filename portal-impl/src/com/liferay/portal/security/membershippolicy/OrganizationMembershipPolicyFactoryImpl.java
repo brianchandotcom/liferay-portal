@@ -16,9 +16,7 @@ package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyFactory;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Sergio González
@@ -30,24 +28,17 @@ public class OrganizationMembershipPolicyFactoryImpl
 
 	@Override
 	public OrganizationMembershipPolicy getOrganizationMembershipPolicy() {
-		return _organizationMembershipPolicyFactoryImpl._serviceTracker.
-			getService();
+		return _organizationMembershipPolicy;
 	}
 
 	private OrganizationMembershipPolicyFactoryImpl() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			OrganizationMembershipPolicy.class);
-
-		_serviceTracker.open();
 	}
 
-	private static final OrganizationMembershipPolicyFactoryImpl
-		_organizationMembershipPolicyFactoryImpl =
-			new OrganizationMembershipPolicyFactoryImpl();
-
-	private final ServiceTracker<?, OrganizationMembershipPolicy>
-		_serviceTracker;
+	private static volatile OrganizationMembershipPolicy
+		_organizationMembershipPolicy =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				OrganizationMembershipPolicy.class,
+				OrganizationMembershipPolicyFactoryImpl.class,
+				"_organizationMembershipPolicy", false, true);
 
 }

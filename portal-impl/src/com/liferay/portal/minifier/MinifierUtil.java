@@ -20,10 +20,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.internal.minifier.MinifierThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -96,8 +94,7 @@ public class MinifierUtil {
 	private static String _minifyJavaScript(
 		String resourceName, String content) {
 
-		JavaScriptMinifier javaScriptMinifier =
-			_javaScriptMinifierServiceTracker.getService();
+		JavaScriptMinifier javaScriptMinifier = _javaScriptMinifier;
 
 		if (javaScriptMinifier == null) {
 			return content;
@@ -134,16 +131,9 @@ public class MinifierUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(MinifierUtil.class);
 
-	private static final ServiceTracker<JavaScriptMinifier, JavaScriptMinifier>
-		_javaScriptMinifierServiceTracker;
-
-	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_javaScriptMinifierServiceTracker = registry.trackServices(
-			JavaScriptMinifier.class);
-
-		_javaScriptMinifierServiceTracker.open();
-	}
+	private static volatile JavaScriptMinifier _javaScriptMinifier =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			JavaScriptMinifier.class, MinifierUtil.class, "_javaScriptMinifier",
+			false, true);
 
 }

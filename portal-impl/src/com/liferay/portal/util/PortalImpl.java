@@ -86,6 +86,7 @@ import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapperThreadLocal;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
@@ -219,11 +220,6 @@ import com.liferay.portlet.LiferayPortletUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.PortletPreferencesWrapper;
 import com.liferay.portlet.admin.util.OmniadminUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.sites.kernel.util.Sites;
 import com.liferay.sites.kernel.util.SitesUtil;
 import com.liferay.social.kernel.model.SocialRelationConstants;
@@ -298,6 +294,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Brian Wing Shun Chan
@@ -540,11 +541,9 @@ public class PortalImpl implements Portal {
 		// Always allow do as user service tracker
 
 		try {
-			Registry registry = RegistryUtil.getRegistry();
-
 			ServiceTracker<AlwaysAllowDoAsUser, AlwaysAllowDoAsUser>
-				alwaysAllowDoAsUserServiceTracker = registry.trackServices(
-					AlwaysAllowDoAsUser.class,
+				alwaysAllowDoAsUserServiceTracker = new ServiceTracker<>(
+					_bundleContext, AlwaysAllowDoAsUser.class,
 					new AlwaysAllowDoAsUserServiceTrackerCustomizer());
 
 			alwaysAllowDoAsUserServiceTracker.open();
@@ -553,15 +552,16 @@ public class PortalImpl implements Portal {
 				<PortalInetSocketAddressEventListener,
 				 PortalInetSocketAddressEventListener>
 					portalInetSocketAddressEventListenerServiceTracker =
-						registry.trackServices(
+						new ServiceTracker<>(
+							_bundleContext,
 							PortalInetSocketAddressEventListener.class,
 							new PortalInetSocketAddressEventListenerServiceTrackerCustomizer());
 
 			portalInetSocketAddressEventListenerServiceTracker.open();
 
 			ServiceTracker<StrutsAction, StrutsAction>
-				commentsStrutsActionServiceTracker = registry.trackServices(
-					StrutsAction.class,
+				commentsStrutsActionServiceTracker = new ServiceTracker<>(
+					_bundleContext, StrutsAction.class,
 					new CommentsStrutsActionServiceTrackerCustomizer());
 
 			commentsStrutsActionServiceTracker.open();
@@ -8830,6 +8830,8 @@ public class PortalImpl implements Portal {
 	private final String[] _allSystemSiteRoles;
 	private final List<AlwaysAllowDoAsUser> _alwaysAllowDoAsUsers =
 		new ArrayList<>();
+	private final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private final Set<String> _computerAddresses = new HashSet<>();
 	private final String _computerName;
 	private String[] _customSqlKeys;
@@ -8872,9 +8874,7 @@ public class PortalImpl implements Portal {
 		public AlwaysAllowDoAsUser addingService(
 			ServiceReference<AlwaysAllowDoAsUser> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			AlwaysAllowDoAsUser alwaysAllowDoAsUser = registry.getService(
+			AlwaysAllowDoAsUser alwaysAllowDoAsUser = _bundleContext.getService(
 				serviceReference);
 
 			if (_log.isDebugEnabled()) {
@@ -8905,9 +8905,7 @@ public class PortalImpl implements Portal {
 			ServiceReference<AlwaysAllowDoAsUser> serviceReference,
 			AlwaysAllowDoAsUser alwaysAllowDoAsUser) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -8933,12 +8931,11 @@ public class PortalImpl implements Portal {
 		public StrutsAction addingService(
 			ServiceReference<StrutsAction> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
 			String path = GetterUtil.getString(
 				serviceReference.getProperty("path"));
 
-			StrutsAction strutsAction = registry.getService(serviceReference);
+			StrutsAction strutsAction = _bundleContext.getService(
+				serviceReference);
 
 			if (Objects.equals(path, "/portal/comment/discussion/edit")) {
 				_editDiscussionStrutsAction = strutsAction;
@@ -8967,8 +8964,6 @@ public class PortalImpl implements Portal {
 			ServiceReference<StrutsAction> serviceReference,
 			StrutsAction strutsAction) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
 			String path = GetterUtil.getString(
 				serviceReference.getProperty("path"));
 
@@ -8981,7 +8976,7 @@ public class PortalImpl implements Portal {
 				_getCommentsStrutsAction = null;
 			}
 
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 		}
 
 	}
@@ -8996,11 +8991,9 @@ public class PortalImpl implements Portal {
 			ServiceReference<PortalInetSocketAddressEventListener>
 				serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
 			PortalInetSocketAddressEventListener
-				portalInetSocketAddressEventListener = registry.getService(
-					serviceReference);
+				portalInetSocketAddressEventListener =
+					_bundleContext.getService(serviceReference);
 
 			addPortalInetSocketAddressEventListener(
 				portalInetSocketAddressEventListener);
@@ -9023,9 +9016,7 @@ public class PortalImpl implements Portal {
 			PortalInetSocketAddressEventListener
 				portalInetSocketAddressEventListener) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 
 			removePortalInetSocketAddressEventListener(
 				portalInetSocketAddressEventListener);

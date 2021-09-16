@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
@@ -98,11 +99,6 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.io.File;
 import java.io.IOException;
@@ -128,6 +124,11 @@ import java.util.concurrent.Callable;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
+
 /**
  * Provides the local service for adding, checking, and updating companies. Each
  * company refers to a separate portal instance.
@@ -138,10 +139,8 @@ import javax.portlet.PortletPreferences;
 public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	public CompanyLocalServiceImpl() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			PortalInstanceLifecycleManager.class,
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, PortalInstanceLifecycleManager.class,
 			new PortalInstanceLifecycleManagerServiceTrackerCustomizer());
 
 		_serviceTracker.open();
@@ -2149,6 +2148,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyLocalServiceImpl.class);
 
+	private final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private final Set<Company> _pendingCompanies = new HashSet<>();
 	private final ServiceTracker
 		<PortalInstanceLifecycleManager, PortalInstanceLifecycleManager>
@@ -2162,10 +2163,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		public PortalInstanceLifecycleManager addingService(
 			ServiceReference<PortalInstanceLifecycleManager> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
 			PortalInstanceLifecycleManager portalInstanceLifecycleManager =
-				registry.getService(serviceReference);
+				_bundleContext.getService(serviceReference);
 
 			synchronized (_pendingCompanies) {
 				forEachCompany(
@@ -2193,6 +2192,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		public void removedService(
 			ServiceReference<PortalInstanceLifecycleManager> serviceReference,
 			PortalInstanceLifecycleManager portalInstanceLifecycleManager) {
+
+			_bundleContext.ungetService(serviceReference);
 		}
 
 	}

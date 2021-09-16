@@ -23,23 +23,21 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.Collections;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Brian Wing Shun Chan
@@ -152,9 +150,7 @@ public class StoreFactory {
 		public ServiceTrackerMap<String, Store> addingService(
 			ServiceReference<CTStoreFactory> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			CTStoreFactory ctStoreFactory = registry.getService(
+			CTStoreFactory ctStoreFactory = _bundleContext.getService(
 				serviceReference);
 
 			return ServiceTrackerMapFactory.openSingleValueMap(
@@ -175,9 +171,7 @@ public class StoreFactory {
 
 			serviceTrackerMap.close();
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 		}
 
 	}
@@ -185,10 +179,8 @@ public class StoreFactory {
 	private static class StoreServiceTrackerMapHolder {
 
 		public StoreServiceTrackerMapHolder() {
-			Registry registry = RegistryUtil.getRegistry();
-
-			_serviceTracker = registry.trackServices(
-				CTStoreFactory.class,
+			_serviceTracker = new ServiceTracker<>(
+				_bundleContext, CTStoreFactory.class,
 				new CTStoreFactoryServiceTrackerCustomizer());
 
 			_serviceTracker.open();
@@ -222,8 +214,7 @@ public class StoreFactory {
 	}
 
 	private static class StoreTypeServiceTrackerCustomizer
-		implements org.osgi.util.tracker.ServiceTrackerCustomizer
-			<Store, Store> {
+		implements ServiceTrackerCustomizer<Store, Store> {
 
 		public StoreTypeServiceTrackerCustomizer(
 			CTStoreFactory ctStoreFactory) {
@@ -232,18 +223,14 @@ public class StoreFactory {
 		}
 
 		@Override
-		public Store addingService(
-			org.osgi.framework.ServiceReference<Store> serviceReference) {
-
+		public Store addingService(ServiceReference<Store> serviceReference) {
 			String storeType = GetterUtil.getString(
 				serviceReference.getProperty("store.type"));
 
 			Store store = _getStore(serviceReference, storeType);
 
 			if (StringUtil.equals(storeType, PropsValues.DL_STORE_IMPL)) {
-				Registry registry = RegistryUtil.getRegistry();
-
-				_serviceRegistration = registry.registerService(
+				_serviceRegistration = _bundleContext.registerService(
 					StoreFactory.class,
 					new StoreFactory() {
 
@@ -253,9 +240,8 @@ public class StoreFactory {
 						}
 
 					},
-					HashMapBuilder.<String, Object>put(
-						"dl.store.impl.enabled", GetterUtil.getObject("true")
-					).build());
+					MapUtil.singletonDictionary(
+						"dl.store.impl.enabled", GetterUtil.getObject("true")));
 			}
 
 			return store;
@@ -263,14 +249,12 @@ public class StoreFactory {
 
 		@Override
 		public void modifiedService(
-			org.osgi.framework.ServiceReference<Store> serviceReference,
-			Store service) {
+			ServiceReference<Store> serviceReference, Store service) {
 		}
 
 		@Override
 		public void removedService(
-			org.osgi.framework.ServiceReference<Store> serviceReference,
-			Store service) {
+			ServiceReference<Store> serviceReference, Store service) {
 
 			String storeType = GetterUtil.getString(
 				serviceReference.getProperty("store.type"));
@@ -283,8 +267,7 @@ public class StoreFactory {
 		}
 
 		private Store _getStore(
-			org.osgi.framework.ServiceReference<Store> serviceReference,
-			String storeType) {
+			ServiceReference<Store> serviceReference, String storeType) {
 
 			Store store = _bundleContext.getService(serviceReference);
 

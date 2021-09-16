@@ -20,16 +20,11 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.social.service.base.SocialRequestInterpreterLocalServiceBaseImpl;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.social.kernel.model.SocialRequest;
 import com.liferay.social.kernel.model.SocialRequestFeedEntry;
 import com.liferay.social.kernel.model.SocialRequestInterpreter;
@@ -37,6 +32,11 @@ import com.liferay.social.kernel.model.impl.SocialRequestInterpreterImpl;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * The social request interpreter local service. Social request interpreters are
@@ -63,14 +63,12 @@ public class SocialRequestInterpreterLocalServiceImpl
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		Filter filter = registry.getFilter(
-			"(&(javax.portlet.name=*)(objectClass=" +
-				SocialRequestInterpreter.class.getName() + "))");
-
-		_serviceTracker = registry.trackServices(
-			filter, new SocialRequestInterpreterServiceTrackerCustomizer());
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext,
+			SystemBundleUtil.createFilter(
+				"(&(javax.portlet.name=*)(objectClass=" +
+					SocialRequestInterpreter.class.getName() + "))"),
+			new SocialRequestInterpreterServiceTrackerCustomizer());
 
 		_serviceTracker.open();
 	}
@@ -235,6 +233,8 @@ public class SocialRequestInterpreterLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		SocialRequestInterpreterLocalServiceImpl.class);
 
+	private final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private final List<SocialRequestInterpreter> _requestInterpreters =
 		new CopyOnWriteArrayList<>();
 	private ServiceTracker<SocialRequestInterpreter, SocialRequestInterpreter>
@@ -248,10 +248,8 @@ public class SocialRequestInterpreterLocalServiceImpl
 		public SocialRequestInterpreter addingService(
 			ServiceReference<SocialRequestInterpreter> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			SocialRequestInterpreter requestInterpreter = registry.getService(
-				serviceReference);
+			SocialRequestInterpreter requestInterpreter =
+				_bundleContext.getService(serviceReference);
 
 			if (!(requestInterpreter instanceof SocialRequestInterpreterImpl)) {
 				String portletId = (String)serviceReference.getProperty(
@@ -277,9 +275,7 @@ public class SocialRequestInterpreterLocalServiceImpl
 			ServiceReference<SocialRequestInterpreter> serviceReference,
 			SocialRequestInterpreter requestInterpreter) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 
 			_requestInterpreters.remove(requestInterpreter);
 		}

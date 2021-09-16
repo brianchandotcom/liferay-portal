@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.portlet.PortletDependencyFactoryUtil;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
@@ -104,12 +105,6 @@ import com.liferay.portlet.PortletBagFactory;
 import com.liferay.portlet.UndeployedPortlet;
 import com.liferay.portlet.extra.config.ExtraPortletAppConfig;
 import com.liferay.portlet.extra.config.ExtraPortletAppConfigRegistry;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.util.JS;
 
 import java.net.URL;
@@ -136,6 +131,11 @@ import javax.portlet.PreferencesValidator;
 import javax.portlet.WindowState;
 
 import javax.servlet.ServletContext;
+
+import org.osgi.framework.Filter;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Brian Wing Shun Chan
@@ -176,13 +176,12 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		Filter filter = registry.getFilter(
+		Filter filter = SystemBundleUtil.createFilter(
 			"(objectClass=" + FriendlyURLMapper.class.getName() + ")");
 
-		_serviceTracker = registry.trackServices(
-			filter, new FriendlyURLMapperServiceTrackerCustomizer());
+		_serviceTracker = new ServiceTracker<>(
+			SystemBundleUtil.getBundleContext(), filter,
+			new FriendlyURLMapperServiceTrackerCustomizer());
 
 		_serviceTracker.open();
 	}

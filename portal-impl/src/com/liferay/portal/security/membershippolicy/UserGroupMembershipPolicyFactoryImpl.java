@@ -17,14 +17,15 @@ package com.liferay.portal.security.membershippolicy;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactory;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Sergio González
@@ -36,28 +37,19 @@ public class UserGroupMembershipPolicyFactoryImpl
 
 	@Override
 	public UserGroupMembershipPolicy getUserGroupMembershipPolicy() {
-		return _userGroupMembershipPolicyFactoryImpl._serviceTracker.
-			getService();
+		return _serviceTracker.getService();
 	}
 
 	private UserGroupMembershipPolicyFactoryImpl() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			UserGroupMembershipPolicy.class,
-			new UserGroupMembershipPolicyTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserGroupMembershipPolicyFactoryImpl.class);
 
-	private static final UserGroupMembershipPolicyFactoryImpl
-		_userGroupMembershipPolicyFactoryImpl =
-			new UserGroupMembershipPolicyFactoryImpl();
-
-	private final ServiceTracker<?, UserGroupMembershipPolicy> _serviceTracker;
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+	private static final ServiceTracker<?, UserGroupMembershipPolicy>
+		_serviceTracker;
 
 	private static class UserGroupMembershipPolicyTrackerCustomizer
 		implements ServiceTrackerCustomizer
@@ -67,10 +59,8 @@ public class UserGroupMembershipPolicyFactoryImpl
 		public UserGroupMembershipPolicy addingService(
 			ServiceReference<UserGroupMembershipPolicy> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
 			UserGroupMembershipPolicy userGroupMembershipPolicy =
-				registry.getService(serviceReference);
+				_bundleContext.getService(serviceReference);
 
 			if (PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY) {
 				try {
@@ -95,11 +85,17 @@ public class UserGroupMembershipPolicyFactoryImpl
 			ServiceReference<UserGroupMembershipPolicy> serviceReference,
 			UserGroupMembershipPolicy userGroupMembershipPolicy) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 		}
 
+	}
+
+	static {
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, UserGroupMembershipPolicy.class,
+			new UserGroupMembershipPolicyTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 }

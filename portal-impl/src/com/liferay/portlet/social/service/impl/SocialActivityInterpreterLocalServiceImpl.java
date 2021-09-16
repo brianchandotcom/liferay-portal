@@ -17,18 +17,13 @@ package com.liferay.portlet.social.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.social.service.base.SocialActivityInterpreterLocalServiceBaseImpl;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityFeedEntry;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
@@ -42,6 +37,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * The social activity interpreter local service. Activity interpreters are
@@ -67,14 +67,12 @@ public class SocialActivityInterpreterLocalServiceImpl
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		Filter filter = registry.getFilter(
-			"(&(javax.portlet.name=*)(objectClass=" +
-				SocialActivityInterpreter.class.getName() + "))");
-
-		_serviceTracker = registry.trackServices(
-			filter, new SocialActivityInterpreterServiceTrackerCustomizer());
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext,
+			SystemBundleUtil.createFilter(
+				"(&(javax.portlet.name=*)(objectClass=" +
+					SocialActivityInterpreter.class.getName() + "))"),
+			new SocialActivityInterpreterServiceTrackerCustomizer());
 
 		_serviceTracker.open();
 	}
@@ -280,6 +278,8 @@ public class SocialActivityInterpreterLocalServiceImpl
 
 	private final Map<String, List<SocialActivityInterpreter>>
 		_activityInterpreters = new HashMap<>();
+	private final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private ServiceTracker<SocialActivityInterpreter, SocialActivityInterpreter>
 		_serviceTracker;
 
@@ -291,10 +291,8 @@ public class SocialActivityInterpreterLocalServiceImpl
 		public SocialActivityInterpreter addingService(
 			ServiceReference<SocialActivityInterpreter> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			SocialActivityInterpreter activityInterpreter = registry.getService(
-				serviceReference);
+			SocialActivityInterpreter activityInterpreter =
+				_bundleContext.getService(serviceReference);
 
 			if (!(activityInterpreter instanceof
 					SocialRequestInterpreterImpl)) {
@@ -332,9 +330,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 			ServiceReference<SocialActivityInterpreter> serviceReference,
 			SocialActivityInterpreter activityInterpreter) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 
 			List<SocialActivityInterpreter> activityInterpreters =
 				_activityInterpreters.get(activityInterpreter.getSelector());

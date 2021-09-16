@@ -45,11 +45,3 @@ ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewO
 		%>'
 	/>
 </div>
-
-<script>
-	function handleDestroyPortlet() {
-		Liferay.detach('destroyPortlet', handleDestroyPortlet);
-	}
-
-	Liferay.on('destroyPortlet', handleDestroyPortlet);
-</script>

@@ -4,6 +4,7 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.search.experiences.constants,\
 	com.liferay.search.experiences.exception,\
+	com.liferay.search.experiences.importer,\
 	com.liferay.search.experiences.model,\
 	com.liferay.search.experiences.problem,\
 	com.liferay.search.experiences.service,\

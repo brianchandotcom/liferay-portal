@@ -39,6 +39,10 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
 		ACUtils.tearDownAC();
 	}
 
@@ -97,9 +101,8 @@ definition {
 		task ("Sync the Contact Data") {
 			ACDXPSettings.syncNewContactData();
 		}
-		task ("Sign in as the created user") {
-			ACUtils.launchDXP();
 
+		task ("Sign in as the created user") {
 			ACUtils.launchDXP(userEmailAddress = "userea@liferay.com");
 		}
 

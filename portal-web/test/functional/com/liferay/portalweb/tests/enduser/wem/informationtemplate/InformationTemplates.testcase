@@ -175,7 +175,7 @@ definition {
 		task ("Add the Test Information Template field") {
 			InformationTemplates.addField(
 				fieldName = "Test Information Template",
-				panelTitle = "Information Templates");
+				panelTitle = "Templates");
 		}
 
 		task ("Save the information template") {

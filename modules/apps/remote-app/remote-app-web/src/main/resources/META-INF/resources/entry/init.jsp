@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,16 +12,8 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.remote.app.deployer;
+<%@ include file="/init.jsp" %>
 
-import com.liferay.remote.app.model.RemoteAppEntry;
-
-/**
- * @author Brian Wing Shun Chan
- */
-public interface RemoteAppEntryDeployer {
-
-	public RemoteAppEntryDeployment deploy(RemoteAppEntry remoteAppEntry);
-
-}
+<%@ page import="com.liferay.petra.string.StringPool" %>

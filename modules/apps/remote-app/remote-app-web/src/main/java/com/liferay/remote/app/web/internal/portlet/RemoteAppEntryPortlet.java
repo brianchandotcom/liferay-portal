@@ -24,10 +24,17 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.model.RemoteAppEntry;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import java.nio.charset.StandardCharsets;
+
+import java.util.Map;
+import java.util.Properties;
+
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -51,7 +58,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		String type = _remoteAppEntry.getType();
 
 		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
-			_renderCustomElement(renderResponse);
+			_renderCustomElement(renderRequest, renderResponse);
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
 			_renderIFrame(renderRequest, renderResponse);
@@ -74,17 +81,49 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		return outputData;
 	}
 
-	private void _renderCustomElement(RenderResponse renderResponse)
+	private Properties _getProperties(RenderRequest renderRequest)
+		throws IOException {
+
+		Properties properties = new Properties();
+
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
+
+		String propertiesString = portletPreferences.getValue(
+			RemoteAppConstants.PROPERTIES, StringPool.BLANK);
+
+		properties.load(
+			new ByteArrayInputStream(
+				propertiesString.getBytes(StandardCharsets.UTF_8)));
+
+		return properties;
+	}
+
+	private void _renderCustomElement(
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
 
 		PrintWriter printWriter = renderResponse.getWriter();
 
-		printWriter.print(
-			StringBundler.concat(
-				StringPool.LESS_THAN,
-				_remoteAppEntry.getCustomElementHTMLElementName(), "></",
-				_remoteAppEntry.getCustomElementHTMLElementName(),
-				StringPool.GREATER_THAN));
+		printWriter.print(StringPool.LESS_THAN);
+		printWriter.print(_remoteAppEntry.getCustomElementHTMLElementName());
+
+		Properties properties = _getProperties(renderRequest);
+
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+			printWriter.print(StringPool.SPACE);
+			printWriter.print(entry.getKey());
+			printWriter.print("=\"");
+
+			String value = (String)entry.getValue();
+
+			printWriter.print(value.replaceAll(StringPool.QUOTE, "&quot;"));
+
+			printWriter.print(StringPool.QUOTE);
+		}
+
+		printWriter.print("></");
+		printWriter.print(_remoteAppEntry.getCustomElementHTMLElementName());
+		printWriter.print(StringPool.GREATER_THAN);
 
 		printWriter.flush();
 	}

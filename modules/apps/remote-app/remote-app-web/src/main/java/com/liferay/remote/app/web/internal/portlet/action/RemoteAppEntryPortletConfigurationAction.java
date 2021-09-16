@@ -12,15 +12,21 @@
  * details.
  */
 
-package com.liferay.remote.app.deployer;
+package com.liferay.remote.app.web.internal.portlet.action;
 
-import com.liferay.remote.app.model.RemoteAppEntry;
+import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Iván Zaera Avellón
  */
-public interface RemoteAppEntryDeployer {
+public class RemoteAppEntryPortletConfigurationAction
+	extends DefaultConfigurationAction {
 
-	public RemoteAppEntryDeployment deploy(RemoteAppEntry remoteAppEntry);
+	@Override
+	public String getJspPath(HttpServletRequest httpServletRequest) {
+		return "/entry/configuration.jsp";
+	}
 
 }

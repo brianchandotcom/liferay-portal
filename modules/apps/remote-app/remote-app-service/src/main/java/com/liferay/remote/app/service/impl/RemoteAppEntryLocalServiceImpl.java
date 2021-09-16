@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
+import com.liferay.remote.app.deployer.RemoteAppEntryDeployment;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementCSSURLsException;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementHTMLElementNameException;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementURLsException;
@@ -53,10 +54,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.portlet.Portlet;
-
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -167,7 +165,7 @@ public class RemoteAppEntryLocalServiceImpl
 	public void deployRemoteAppEntry(RemoteAppEntry remoteAppEntry) {
 		undeployRemoteAppEntry(remoteAppEntry);
 
-		_serviceRegistrations.put(
+		_remoteAppEntryDeployments.put(
 			remoteAppEntry.getRemoteAppEntryId(),
 			_remoteAppEntryDeployer.deploy(remoteAppEntry));
 	}
@@ -226,11 +224,12 @@ public class RemoteAppEntryLocalServiceImpl
 	@Clusterable
 	@Override
 	public void undeployRemoteAppEntry(RemoteAppEntry remoteAppEntry) {
-		ServiceRegistration<Portlet> serviceRegistration =
-			_serviceRegistrations.remove(remoteAppEntry.getRemoteAppEntryId());
+		RemoteAppEntryDeployment remoteAppEntryDeployment =
+			_remoteAppEntryDeployments.remove(
+				remoteAppEntry.getRemoteAppEntryId());
 
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
+		if (remoteAppEntryDeployment != null) {
+			remoteAppEntryDeployment.undeploy();
 		}
 	}
 
@@ -432,8 +431,8 @@ public class RemoteAppEntryLocalServiceImpl
 	@Reference
 	private RemoteAppEntryDeployer _remoteAppEntryDeployer;
 
-	private final Map<Long, ServiceRegistration<Portlet>>
-		_serviceRegistrations = new ConcurrentHashMap<>();
+	private final Map<Long, RemoteAppEntryDeployment>
+		_remoteAppEntryDeployments = new ConcurrentHashMap<>();
 
 	@Reference
 	private UserLocalService _userLocalService;

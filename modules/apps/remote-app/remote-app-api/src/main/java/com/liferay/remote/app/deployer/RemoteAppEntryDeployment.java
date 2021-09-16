@@ -14,13 +14,11 @@
 
 package com.liferay.remote.app.deployer;
 
-import com.liferay.remote.app.model.RemoteAppEntry;
-
 /**
- * @author Brian Wing Shun Chan
+ * @author Iván Zaera Avellón
  */
-public interface RemoteAppEntryDeployer {
+public interface RemoteAppEntryDeployment {
 
-	public RemoteAppEntryDeployment deploy(RemoteAppEntry remoteAppEntry);
+	public void undeploy();
 
 }

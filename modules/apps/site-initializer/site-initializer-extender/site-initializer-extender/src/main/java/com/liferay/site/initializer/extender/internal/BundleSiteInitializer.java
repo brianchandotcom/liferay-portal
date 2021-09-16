@@ -429,13 +429,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			jsonObject.put("siteGroupId", serviceContext.getScopeGroupId());
 
-			String commerceSiteType = jsonObject.getString("commerceSiteType");
-
-			jsonObject.remove("commerceSiteType");
-
-			json = jsonObject.toString();
-
-			Channel channel = Channel.toDTO(json);
+			Channel channel = Channel.toDTO(jsonObject.toString());
 
 			if (channel == null) {
 				_log.error(
@@ -449,7 +443,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			commerceChannelIds.add(String.valueOf(channel.getId()));
 
 			_addCommerceSiteType(
-				serviceContext.getScopeGroupId(), commerceSiteType,
+				serviceContext.getScopeGroupId(),
+				String.valueOf(CommerceAccountConstants.SITE_TYPE_B2C),
 				serviceContext);
 		}
 

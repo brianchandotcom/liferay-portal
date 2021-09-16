@@ -15,10 +15,10 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.RenderRequest;
@@ -47,17 +47,28 @@ public class EditFragmentEntryMVCRenderCommand implements MVCRenderCommand {
 		long fragmentEntryId = ParamUtil.getLong(
 			renderRequest, "fragmentEntryId");
 
-		try {
-			_fragmentEntryLocalService.getFragmentEntry(fragmentEntryId);
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
 
+		if (fragmentEntry == null) {
+			String fragmentEntryKey = ParamUtil.getString(
+				renderRequest, "fragmentEntryKey");
+
+			fragmentEntry =
+				_fragmentCollectionContributorTracker.getFragmentEntry(
+					fragmentEntryKey);
+		}
+
+		if (fragmentEntry != null) {
 			return "/edit_fragment_entry.jsp";
 		}
-		catch (PortalException portalException) {
-			SessionErrors.add(renderRequest, portalException.getClass());
 
-			return "/error.jsp";
-		}
+		return "/error.jsp";
 	}
+
+	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;

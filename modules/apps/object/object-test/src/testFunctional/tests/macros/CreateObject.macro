@@ -1,18 +1,15 @@
 definition {
 
-	macro assertDisableObjectName {
-		AssertElementPresent(
-			locator1 = "CreateObject#DISABLE_OBJECT_NAME");
-	}
-
 	macro assertDisableFieldType {
-		AssertElementPresent(
-			locator1 = "CreateObject#DISABLE_FIELD_TYPE");
+		AssertElementPresent(locator1 = "CreateObject#DISABLE_FIELD_TYPE");
 	}
 
 	macro assertDisableNameType {
-		AssertElementPresent(
-			locator1 = "CreateObject#DISABLE_FIELD_NAME");
+		AssertElementPresent(locator1 = "CreateObject#DISABLE_FIELD_NAME");
+	}
+
+	macro assertDisableObjectName {
+		AssertElementPresent(locator1 = "CreateObject#DISABLE_OBJECT_NAME");
 	}
 
 	macro assertFieldName {

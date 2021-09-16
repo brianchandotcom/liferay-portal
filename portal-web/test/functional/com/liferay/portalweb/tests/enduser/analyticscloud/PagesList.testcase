@@ -44,6 +44,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8336 | Test Summary: Search for a Page in Pages list"
 	@priority = "5"
 	test CanSearchPageInPagesList {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: It is not possible to view the data because of timing problems
+		// AC Refactor ticket: LRAC-9342
+
 		task ("Add pages") {
 			for (var layoutName : list "AC Page 2,AC Page 3") {
 				ACUtils.addSiteAndPage(layoutName = "${layoutName}");
@@ -104,6 +109,8 @@ definition {
 			for (var assetName : list "AC Page - Site Name - Liferay DXP,AC Page 2 - Site Name - Liferay DXP,AC Page 3 - Site Name - Liferay DXP") {
 				ACAssets.viewAssets(assetName = "${assetName}");
 			}
+
+			// It is not possible to view the data because of timing problems
 
 			ACUtils.searchBar(searchItem = "2");
 

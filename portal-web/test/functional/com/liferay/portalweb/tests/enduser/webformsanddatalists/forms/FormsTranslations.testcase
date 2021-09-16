@@ -560,7 +560,7 @@ definition {
 
 		Form.editElementSetFieldLabel(fieldValue = "Text Field Required");
 
-		FormFields.enableSwitch(fieldName = "required");
+		FormFields.enableSwitch(fieldName = "Required");
 
 		Form.closeSidebar();
 
@@ -579,7 +579,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitch(fieldName = "repeatable");
+		FormFields.enableSwitch(fieldName = "Repeatable");
 
 		Form.closeSidebar();
 
@@ -661,7 +661,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.viewSwitchChecked(fieldName = "repeatable");
+		FormFields.viewSwitchChecked(fieldName = "Repeatable");
 
 		Form.closeSidebar();
 
@@ -793,7 +793,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.viewSwitchChecked(fieldName = "repeatable");
+		FormFields.viewSwitchChecked(fieldName = "Repeatable");
 
 		Form.closeSidebar();
 

@@ -622,9 +622,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		Click(
-			key_fieldName = "Inline",
-			locator1 = "FormFields#SWITCH");
+		FormFields.disableSwitch(fieldName = "Inline");
 
 		AssertElementNotPresent(locator1 = "FormFields#SELECT_OPTIONS_INLINE_IDENTIFIER");
 

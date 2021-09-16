@@ -46,7 +46,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitch(fieldName = "repeatable");
+		FormFields.enableSwitch(fieldName = "Repeatable");
 
 		FormFields.viewRepeatableFieldDuplicateVisible();
 
@@ -771,7 +771,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Guest Upload");
 
-		FormFields.enableSwitch(fieldName = "allowGuestUsers");
+		FormFields.enableSwitch(fieldName = "Allow Guest Users to Send Files");
 
 		FormViewBuilder.closeSidebar();
 

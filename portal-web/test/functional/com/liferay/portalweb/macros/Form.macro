@@ -165,7 +165,7 @@ definition {
 			locator1 = "Form#SETTINGS_TAB_EMAIL_NOTIFICATIONS",
 			value1 = "Notifications");
 
-		FormFields.enableSwitch(fieldName = "sendEmailNotification");
+		FormFields.enableSwitch(fieldName = "Send an Email Notification for Each Entry");
 
 		FormFields.editText(
 			fieldName = "emailFromName",
@@ -197,13 +197,13 @@ definition {
 	}
 
 	macro configureRequireAuthentication {
-		FormFields.enableSwitch(fieldName = "requireAuthentication");
+		FormFields.enableSwitch(fieldName = "Require User Authentication");
 
 		Button.clickDone();
 	}
 
 	macro configureRequireCaptcha {
-		FormFields.enableSwitch(fieldName = "requireCaptcha");
+		FormFields.enableSwitch(fieldName = "Require CAPTCHA");
 
 		Button.clickDone();
 	}

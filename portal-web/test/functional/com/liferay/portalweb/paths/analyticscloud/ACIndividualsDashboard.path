@@ -184,6 +184,10 @@
 	<td>xpath=(//tr[contains(@class,'analytics-tooltip-chart-row')])[1]//td[1]//div[contains(@class,'analytics-tooltip-chart-content')]</td>
 	<td></td>
 </tr>
+<!-- OVERVIEW -->
+<tr>
+	<td>NO_EVENTS_FOUND</td>
+	<td>//span[contains(text(),'No Events Found')]</td>
 	<td></td>
 </tr>
 </tbody>

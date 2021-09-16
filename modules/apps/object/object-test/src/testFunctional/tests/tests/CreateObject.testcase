@@ -438,14 +438,12 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
-		
+
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(name = "CustomObject");
 
 		AssertElementPresent(locator1 = "CreateObject#VIEW_OBJECT_SCOPE_DISABLED");
-
-		
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Searchable section after the Object is published"

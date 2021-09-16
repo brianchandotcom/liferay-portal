@@ -15,9 +15,7 @@
 package com.liferay.portal.kernel.security.permission;
 
 import com.liferay.portal.kernel.model.User;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Charles May
@@ -26,25 +24,19 @@ import com.liferay.registry.ServiceTracker;
 public class PermissionCheckerFactoryUtil {
 
 	public static PermissionChecker create(User user) {
-		return getPermissionCheckerFactory().create(user);
+		return _permissionCheckerFactory.create(user);
 	}
 
 	public static PermissionCheckerFactory getPermissionCheckerFactory() {
-		return _permissionCheckerFactoryUtil._serviceTracker.getService();
+		return _permissionCheckerFactory;
 	}
 
 	private PermissionCheckerFactoryUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			PermissionCheckerFactory.class);
-
-		_serviceTracker.open();
 	}
 
-	private static final PermissionCheckerFactoryUtil
-		_permissionCheckerFactoryUtil = new PermissionCheckerFactoryUtil();
-
-	private final ServiceTracker<?, PermissionCheckerFactory> _serviceTracker;
+	private static volatile PermissionCheckerFactory _permissionCheckerFactory =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			PermissionCheckerFactory.class, PermissionCheckerFactoryUtil.class,
+			"_permissionCheckerFactory", false, true);
 
 }

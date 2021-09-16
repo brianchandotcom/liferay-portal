@@ -14,9 +14,7 @@
 
 package com.liferay.portal.kernel.format;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Brian Wing Shun Chan
@@ -26,33 +24,27 @@ import com.liferay.registry.ServiceTracker;
 public class PhoneNumberFormatUtil {
 
 	public static String format(String phoneNumber) {
-		return getPhoneNumberFormat().format(phoneNumber);
+		return _phoneNumberFormat.format(phoneNumber);
 	}
 
 	public static PhoneNumberFormat getPhoneNumberFormat() {
-		return _phoneNumberFormatUtil._serviceTracker.getService();
+		return _phoneNumberFormat;
 	}
 
 	public static String strip(String phoneNumber) {
-		return getPhoneNumberFormat().strip(phoneNumber);
+		return _phoneNumberFormat.strip(phoneNumber);
 	}
 
 	public static boolean validate(String phoneNumber) {
-		return getPhoneNumberFormat().validate(phoneNumber);
+		return _phoneNumberFormat.validate(phoneNumber);
 	}
 
 	private PhoneNumberFormatUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(PhoneNumberFormat.class);
-
-		_serviceTracker.open();
 	}
 
-	private static final PhoneNumberFormatUtil _phoneNumberFormatUtil =
-		new PhoneNumberFormatUtil();
-
-	private final ServiceTracker<PhoneNumberFormat, PhoneNumberFormat>
-		_serviceTracker;
+	private static volatile PhoneNumberFormat _phoneNumberFormat =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			PhoneNumberFormat.class, PhoneNumberFormatUtil.class,
+			"_phoneNumberFormat", false, true);
 
 }

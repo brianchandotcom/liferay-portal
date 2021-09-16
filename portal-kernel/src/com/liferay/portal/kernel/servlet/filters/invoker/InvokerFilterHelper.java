@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
@@ -32,11 +33,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.util.StringPlus;
 
 import java.io.InputStream;
@@ -58,6 +54,11 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Mika Koivisto
@@ -93,8 +94,6 @@ public class InvokerFilterHelper {
 
 			readLiferayFilterWebXML(servletContext, "/WEB-INF/liferay-web.xml");
 
-			Registry registry = RegistryUtil.getRegistry();
-
 			String servletContextName = GetterUtil.getString(
 				servletContext.getServletContextName());
 
@@ -105,14 +104,14 @@ public class InvokerFilterHelper {
 				servletContextName = StringPool.BLANK;
 			}
 
-			com.liferay.registry.Filter filter = registry.getFilter(
-				StringBundler.concat(
-					"(&(objectClass=", Filter.class.getName(),
-					")(servlet-context-name=", servletContextName,
-					")(servlet-filter-name=*))"));
-
-			_serviceTracker = registry.trackServices(
-				filter, new FilterServiceTrackerCustomizer());
+			_serviceTracker = new ServiceTracker<>(
+				_bundleContext,
+				SystemBundleUtil.createFilter(
+					StringBundler.concat(
+						"(&(objectClass=", Filter.class.getName(),
+						")(servlet-context-name=", servletContextName,
+						")(servlet-filter-name=*))")),
+				new FilterServiceTrackerCustomizer());
 
 			_serviceTracker.open();
 		}
@@ -432,6 +431,8 @@ public class InvokerFilterHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		InvokerFilterHelper.class);
 
+	private final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private final ConcurrentMap<String, FilterMapping[]> _filterMappingsMap =
 		new ConcurrentHashMap<>();
 	private final List<String> _filterNames = new CopyOnWriteArrayList<>();
@@ -445,9 +446,7 @@ public class InvokerFilterHelper {
 		public FilterMapping addingService(
 			ServiceReference<Filter> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			Filter filter = registry.getService(serviceReference);
+			Filter filter = _bundleContext.getService(serviceReference);
 
 			String servletContextName = GetterUtil.getString(
 				serviceReference.getProperty("servlet-context-name"));
@@ -474,9 +473,7 @@ public class InvokerFilterHelper {
 
 			Map<String, String> initParameterMap = new HashMap<>();
 
-			Map<String, Object> properties = serviceReference.getProperties();
-
-			for (String key : properties.keySet()) {
+			for (String key : serviceReference.getPropertyKeys()) {
 				if (!key.startsWith("init.param.")) {
 					continue;
 				}
@@ -502,7 +499,7 @@ public class InvokerFilterHelper {
 			catch (ServletException servletException) {
 				_log.error(servletException, servletException);
 
-				registry.ungetService(serviceReference);
+				_bundleContext.ungetService(serviceReference);
 
 				return null;
 			}
@@ -545,9 +542,7 @@ public class InvokerFilterHelper {
 			ServiceReference<Filter> serviceReference,
 			FilterMapping filterMapping) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 
 			unregisterFilterMappings(
 				GetterUtil.getString(

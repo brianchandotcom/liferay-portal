@@ -14,9 +14,7 @@
 
 package com.liferay.portal.kernel.parsers.bbcode;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Iliyan Peychev
@@ -25,49 +23,39 @@ import com.liferay.registry.ServiceTracker;
 public class BBCodeTranslatorUtil {
 
 	public static BBCodeTranslator getBBCodeTranslator() {
-		return _bbCodeTranslatorUtil._getBBCodeTranslator();
+		return _bbCodeTranslator;
 	}
 
 	public static String[] getEmoticonDescriptions() {
-		return getBBCodeTranslator().getEmoticonDescriptions();
+		return _bbCodeTranslator.getEmoticonDescriptions();
 	}
 
 	public static String[] getEmoticonFiles() {
-		return getBBCodeTranslator().getEmoticonFiles();
+		return _bbCodeTranslator.getEmoticonFiles();
 	}
 
 	public static String[][] getEmoticons() {
-		return getBBCodeTranslator().getEmoticons();
+		return _bbCodeTranslator.getEmoticons();
 	}
 
 	public static String[] getEmoticonSymbols() {
-		return getBBCodeTranslator().getEmoticonSymbols();
+		return _bbCodeTranslator.getEmoticonSymbols();
 	}
 
 	public static String getHTML(String bbcode) {
-		return getBBCodeTranslator().getHTML(bbcode);
+		return _bbCodeTranslator.getHTML(bbcode);
 	}
 
 	public static String parse(String message) {
-		return getBBCodeTranslator().parse(message);
+		return _bbCodeTranslator.parse(message);
 	}
 
 	private BBCodeTranslatorUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(BBCodeTranslator.class);
-
-		_serviceTracker.open();
 	}
 
-	private BBCodeTranslator _getBBCodeTranslator() {
-		return _serviceTracker.getService();
-	}
-
-	private static final BBCodeTranslatorUtil _bbCodeTranslatorUtil =
-		new BBCodeTranslatorUtil();
-
-	private final ServiceTracker<BBCodeTranslator, BBCodeTranslator>
-		_serviceTracker;
+	private static volatile BBCodeTranslator _bbCodeTranslator =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			BBCodeTranslator.class, BBCodeTranslatorUtil.class,
+			"_bbCodeTranslator", false, true);
 
 }

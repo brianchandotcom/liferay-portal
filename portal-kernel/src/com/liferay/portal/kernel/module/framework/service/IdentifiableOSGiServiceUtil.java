@@ -14,14 +14,11 @@
 
 package com.liferay.portal.kernel.module.framework.service;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Tina Tian
@@ -31,70 +28,26 @@ public class IdentifiableOSGiServiceUtil {
 	public static IdentifiableOSGiService getIdentifiableOSGiService(
 		String osgiServiceIdentifier) {
 
-		return _identifiableOSGiServices.get(osgiServiceIdentifier);
+		return _identifiableOSGiServices.getService(osgiServiceIdentifier);
 	}
 
 	private IdentifiableOSGiServiceUtil() {
 	}
 
-	private static final Map<String, IdentifiableOSGiService>
-		_identifiableOSGiServices = new ConcurrentHashMap<>();
-	private static final ServiceTracker
-		<IdentifiableOSGiService, IdentifiableOSGiService> _serviceTracker;
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 
-	private static class IdentifiableOSGiServiceServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<IdentifiableOSGiService, IdentifiableOSGiService> {
+	private static final ServiceTrackerMap<String, IdentifiableOSGiService>
+		_identifiableOSGiServices = ServiceTrackerMapFactory.openSingleValueMap(
+			_bundleContext, IdentifiableOSGiService.class, null,
+			(serviceReference, emitter) -> {
+				IdentifiableOSGiService identifiableOSGiService =
+					_bundleContext.getService(serviceReference);
 
-		@Override
-		public IdentifiableOSGiService addingService(
-			ServiceReference<IdentifiableOSGiService> serviceReference) {
+				emitter.emit(
+					identifiableOSGiService.getOSGiServiceIdentifier());
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			IdentifiableOSGiService identifiableOSGiService =
-				registry.getService(serviceReference);
-
-			_identifiableOSGiServices.put(
-				identifiableOSGiService.getOSGiServiceIdentifier(),
-				identifiableOSGiService);
-
-			return identifiableOSGiService;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<IdentifiableOSGiService> serviceReference,
-			IdentifiableOSGiService identifiableOSGiService) {
-
-			_identifiableOSGiServices.put(
-				identifiableOSGiService.getOSGiServiceIdentifier(),
-				identifiableOSGiService);
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<IdentifiableOSGiService> serviceReference,
-			IdentifiableOSGiService identifiableOSGiService) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			_identifiableOSGiServices.remove(
-				identifiableOSGiService.getOSGiServiceIdentifier());
-		}
-
-	}
-
-	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			IdentifiableOSGiService.class,
-			new IdentifiableOSGiServiceServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
+				_bundleContext.ungetService(serviceReference);
+			});
 
 }

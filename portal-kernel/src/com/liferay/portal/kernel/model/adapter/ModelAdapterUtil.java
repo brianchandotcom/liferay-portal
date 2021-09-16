@@ -16,9 +16,7 @@ package com.liferay.portal.kernel.model.adapter;
 
 import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilder;
 import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilderLocator;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +70,7 @@ public class ModelAdapterUtil {
 		Class<V> adaptedModelClass) {
 
 		ModelAdapterBuilderLocator modelAdapterBuilderLocator =
-			_modelAdapterBuilderLocatorServiceTracker.getService();
+			_modelAdapterBuilderLocator;
 
 		if (modelAdapterBuilderLocator == null) {
 			return null;
@@ -85,17 +83,10 @@ public class ModelAdapterUtil {
 		return modelAdapterBuilder.build(adapteeModel);
 	}
 
-	private static final ServiceTracker
-		<ModelAdapterBuilderLocator, ModelAdapterBuilderLocator>
-			_modelAdapterBuilderLocatorServiceTracker;
-
-	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_modelAdapterBuilderLocatorServiceTracker = registry.trackServices(
-			ModelAdapterBuilderLocator.class);
-
-		_modelAdapterBuilderLocatorServiceTracker.open();
-	}
+	private static volatile ModelAdapterBuilderLocator
+		_modelAdapterBuilderLocator =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				ModelAdapterBuilderLocator.class, ModelAdapterUtil.class,
+				"_modelAdapterBuilderLocator", false, true);
 
 }

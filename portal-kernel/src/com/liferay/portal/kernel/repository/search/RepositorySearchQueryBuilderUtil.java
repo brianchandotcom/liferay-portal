@@ -17,9 +17,7 @@ package com.liferay.portal.kernel.repository.search;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Mika Koivisto
@@ -29,30 +27,20 @@ public class RepositorySearchQueryBuilderUtil {
 	public static BooleanQuery getFullQuery(SearchContext searchContext)
 		throws SearchException {
 
-		return getRepositorySearchQueryBuilder().getFullQuery(searchContext);
+		return _repositorySearchQueryBuilder.getFullQuery(searchContext);
 	}
 
 	public static RepositorySearchQueryBuilder
 		getRepositorySearchQueryBuilder() {
 
-		return _repositorySearchQueryBuilderUtil._serviceTracker.getService();
+		return _repositorySearchQueryBuilder;
 	}
 
-	public RepositorySearchQueryBuilderUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			RepositorySearchQueryBuilder.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final RepositorySearchQueryBuilderUtil
-		_repositorySearchQueryBuilderUtil =
-			new RepositorySearchQueryBuilderUtil();
-
-	private final ServiceTracker
-		<RepositorySearchQueryBuilder, RepositorySearchQueryBuilder>
-			_serviceTracker;
+	private static volatile RepositorySearchQueryBuilder
+		_repositorySearchQueryBuilder =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				RepositorySearchQueryBuilder.class,
+				RepositorySearchQueryBuilderUtil.class,
+				"_repositorySearchQueryBuilder", null, false, true);
 
 }

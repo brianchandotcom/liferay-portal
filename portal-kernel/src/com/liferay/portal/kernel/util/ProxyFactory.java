@@ -14,17 +14,9 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -60,8 +52,6 @@ public class ProxyFactory {
 			new ClassLoaderBeanHandler(instance, classLoader));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ProxyFactory.class);
-
 	private static class DummyInvocationHandler<T>
 		implements InvocationHandler {
 
@@ -95,103 +85,6 @@ public class ProxyFactory {
 
 			return method.getDefaultValue();
 		}
-
-	}
-
-	private static class ServiceTrackedInvocationHandler<T>
-		implements InvocationHandler {
-
-		@Override
-		public Object invoke(Object proxy, Method method, Object[] arguments)
-			throws Throwable {
-
-			T service = _serviceTracker.getService();
-
-			if (service != null) {
-				try {
-					return method.invoke(service, arguments);
-				}
-				catch (InvocationTargetException invocationTargetException) {
-					throw invocationTargetException.getTargetException();
-				}
-			}
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Skipping ", method.getName(), " because ",
-						_interfaceClassName, " is not registered"));
-			}
-
-			Class<?> returnType = method.getReturnType();
-
-			if (returnType.equals(boolean.class)) {
-				return GetterUtil.DEFAULT_BOOLEAN;
-			}
-			else if (returnType.equals(byte.class)) {
-				return GetterUtil.DEFAULT_BYTE;
-			}
-			else if (returnType.equals(double.class)) {
-				return GetterUtil.DEFAULT_DOUBLE;
-			}
-			else if (returnType.equals(float.class)) {
-				return GetterUtil.DEFAULT_FLOAT;
-			}
-			else if (returnType.equals(int.class)) {
-				return GetterUtil.DEFAULT_INTEGER;
-			}
-			else if (returnType.equals(long.class)) {
-				return GetterUtil.DEFAULT_LONG;
-			}
-			else if (returnType.equals(short.class)) {
-				return GetterUtil.DEFAULT_SHORT;
-			}
-
-			return method.getDefaultValue();
-		}
-
-		private ServiceTrackedInvocationHandler(Class<T> interfaceClass) {
-			this(interfaceClass, null);
-		}
-
-		private ServiceTrackedInvocationHandler(
-			Class<T> interfaceClass, String filterString) {
-
-			_interfaceClassName = interfaceClass.getName();
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			if (Validator.isNull(filterString)) {
-				_serviceTracker = registry.trackServices(interfaceClass);
-			}
-			else {
-				StringBundler sb = new StringBundler(7);
-
-				sb.append("(&(objectClass=");
-				sb.append(_interfaceClassName);
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-
-				if (!filterString.startsWith(StringPool.OPEN_PARENTHESIS)) {
-					sb.append(StringPool.OPEN_PARENTHESIS);
-				}
-
-				sb.append(filterString);
-
-				if (!filterString.endsWith(StringPool.CLOSE_PARENTHESIS)) {
-					sb.append(StringPool.CLOSE_PARENTHESIS);
-				}
-
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-
-				_serviceTracker = registry.trackServices(
-					registry.getFilter(sb.toString()));
-			}
-
-			_serviceTracker.open();
-		}
-
-		private final String _interfaceClassName;
-		private final ServiceTracker<T, T> _serviceTracker;
 
 	}
 

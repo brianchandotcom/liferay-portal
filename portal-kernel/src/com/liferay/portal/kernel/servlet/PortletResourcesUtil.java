@@ -18,11 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -32,15 +28,18 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
+
 /**
  * @author Michael Bradford
  */
 public class PortletResourcesUtil {
 
 	public static ServletContext getPathServletContext(String path) {
-		for (ServletContext servletContext :
-				_portletResourcesUtil._servletContexts.values()) {
-
+		for (ServletContext servletContext : _servletContexts.values()) {
 			if (path.startsWith(servletContext.getContextPath())) {
 				return servletContext;
 			}
@@ -83,34 +82,25 @@ public class PortletResourcesUtil {
 	}
 
 	private PortletResourcesUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			Portlet.class, new PortletResourcesServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletResourcesUtil.class);
 
-	private static final PortletResourcesUtil _portletResourcesUtil =
-		new PortletResourcesUtil();
-
-	private final ServiceTracker<Portlet, Portlet> _serviceTracker;
-	private final Map<ServiceReference<Portlet>, ServletContext>
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+	private static final ServiceTracker<Portlet, Portlet> _serviceTracker;
+	private static final Map<ServiceReference<Portlet>, ServletContext>
 		_servletContexts = new ConcurrentHashMap<>();
 
-	private class PortletResourcesServiceTrackerCustomizer
+	private static class PortletResourcesServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Portlet, Portlet> {
 
 		@Override
 		public Portlet addingService(
 			ServiceReference<Portlet> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			Portlet portlet = registry.getService(serviceReference);
+			Portlet portlet = _bundleContext.getService(serviceReference);
 
 			PortletApp portletApp = portlet.getPortletApp();
 
@@ -131,13 +121,19 @@ public class PortletResourcesUtil {
 		public void removedService(
 			ServiceReference<Portlet> serviceReference, Portlet portlet) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 
 			_servletContexts.remove(serviceReference);
 		}
 
+	}
+
+	static {
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, Portlet.class,
+			new PortletResourcesServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 }

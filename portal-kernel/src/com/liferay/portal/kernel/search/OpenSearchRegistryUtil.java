@@ -14,17 +14,15 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Eudaldo Alonso
@@ -32,71 +30,36 @@ import java.util.concurrent.ConcurrentHashMap;
 public class OpenSearchRegistryUtil {
 
 	public static OpenSearch getOpenSearch(Class<?> clazz) {
-		return _openSearchRegistryUtil._openSearchInstances.get(
-			clazz.getName());
+		return getOpenSearch(clazz.getName());
 	}
 
 	public static OpenSearch getOpenSearch(String className) {
-		return _openSearchRegistryUtil._openSearchInstances.get(className);
+		return _openSearchs.getService(className);
 	}
 
 	public static List<OpenSearch> getOpenSearchInstances() {
 		List<OpenSearch> openSearchInstances = new ArrayList<>(
-			_openSearchRegistryUtil._openSearchInstances.values());
+			_openSearchs.values());
 
 		return Collections.unmodifiableList(openSearchInstances);
 	}
 
 	private OpenSearchRegistryUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			OpenSearch.class, new OpenSearchServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
-	private static final OpenSearchRegistryUtil _openSearchRegistryUtil =
-		new OpenSearchRegistryUtil();
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 
-	private final Map<String, OpenSearch> _openSearchInstances =
-		new ConcurrentHashMap<>();
-	private final ServiceTracker<OpenSearch, OpenSearch> _serviceTracker;
+	private static final ServiceTrackerMap<String, OpenSearch> _openSearchs =
+		ServiceTrackerMapFactory.openSingleValueMap(
+			_bundleContext, OpenSearch.class, null,
+			(serviceReference, emitter) -> {
+				OpenSearch openSearch = _bundleContext.getService(
+					serviceReference);
 
-	private class OpenSearchServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<OpenSearch, OpenSearch> {
+				emitter.emit(openSearch.getClassName());
 
-		@Override
-		public OpenSearch addingService(
-			ServiceReference<OpenSearch> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			OpenSearch openSearch = registry.getService(serviceReference);
-
-			_openSearchInstances.put(openSearch.getClassName(), openSearch);
-
-			return openSearch;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<OpenSearch> serviceReference,
-			OpenSearch openSearch) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<OpenSearch> serviceReference,
-			OpenSearch openSearch) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			_openSearchInstances.remove(openSearch.getClassName());
-		}
-
-	}
+				_bundleContext.ungetService(serviceReference);
+			});
 
 }

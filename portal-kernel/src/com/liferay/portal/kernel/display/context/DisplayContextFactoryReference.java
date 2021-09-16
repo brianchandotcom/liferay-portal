@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.display.context;
 
-import com.liferay.registry.ServiceReference;
-
 import java.util.Objects;
+
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Iván Zaera

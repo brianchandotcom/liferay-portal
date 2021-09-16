@@ -14,11 +14,7 @@
 
 package com.liferay.portal.kernel.cache;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 import java.io.Serializable;
 
@@ -26,6 +22,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Tina Tian
@@ -47,6 +48,8 @@ public class PortalCacheManagerProvider {
 			_dynamicPortalCacheManagers.values());
 	}
 
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private static final Map
 		<String, DynamicPortalCacheManager<? extends Serializable, ?>>
 			_dynamicPortalCacheManagers = new ConcurrentHashMap<>();
@@ -55,9 +58,8 @@ public class PortalCacheManagerProvider {
 		 DynamicPortalCacheManager<? extends Serializable, ?>> _serviceTracker;
 
 	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext,
 			(Class<PortalCacheManager<? extends Serializable, ?>>)
 				(Class<?>)PortalCacheManager.class,
 			new PortalCacheProviderServiceTrackerCustomizer());
@@ -76,10 +78,8 @@ public class PortalCacheManagerProvider {
 				ServiceReference<PortalCacheManager<? extends Serializable, ?>>
 					serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
 			PortalCacheManager<? extends Serializable, ?> portalCacheManager =
-				registry.getService(serviceReference);
+				_bundleContext.getService(serviceReference);
 
 			DynamicPortalCacheManager<? extends Serializable, ?>
 				dynamicPortalCacheManager =
@@ -107,9 +107,7 @@ public class PortalCacheManagerProvider {
 			DynamicPortalCacheManager<? extends Serializable, ?>
 				dynamicPortalCacheManager) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 
 			dynamicPortalCacheManager.setPortalCacheManager(null);
 		}

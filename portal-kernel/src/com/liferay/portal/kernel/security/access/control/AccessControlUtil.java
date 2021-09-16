@@ -22,9 +22,7 @@ import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.Map;
 import java.util.Set;
@@ -40,7 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AccessControlUtil {
 
 	public static AccessControl getAccessControl() {
-		return _accessControlUtil._serviceTracker.getService();
+		return _accessControl;
 	}
 
 	public static AccessControlContext getAccessControlContext() {
@@ -51,12 +49,12 @@ public class AccessControlUtil {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, Map<String, Object> settings) {
 
-		getAccessControl().initAccessControlContext(
+		_accessControl.initAccessControlContext(
 			httpServletRequest, httpServletResponse, settings);
 	}
 
 	public static void initContextUser(long userId) throws AuthException {
-		getAccessControl().initContextUser(userId);
+		_accessControl.initContextUser(userId);
 	}
 
 	public static boolean isAccessAllowed(
@@ -97,25 +95,20 @@ public class AccessControlUtil {
 	public static AuthVerifierResult.State verifyRequest()
 		throws PortalException {
 
-		return getAccessControl().verifyRequest();
+		return _accessControl.verifyRequest();
 	}
 
 	private AccessControlUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(AccessControl.class);
-
-		_serviceTracker.open();
 	}
 
 	private static final String _SERVER_IP = "SERVER_IP";
 
+	private static volatile AccessControl _accessControl =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			AccessControl.class, AccessControlUtil.class, "_accessControl",
+			false, true);
 	private static final ThreadLocal<AccessControlContext>
 		_accessControlContext = new CentralizedThreadLocal<>(
 			AccessControlUtil.class + "._accessControlContext");
-	private static final AccessControlUtil _accessControlUtil =
-		new AccessControlUtil();
-
-	private final ServiceTracker<?, AccessControl> _serviceTracker;
 
 }

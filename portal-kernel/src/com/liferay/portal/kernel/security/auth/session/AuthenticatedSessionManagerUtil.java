@@ -15,9 +15,7 @@
 package com.liferay.portal.kernel.security.auth.session;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,7 +27,7 @@ import javax.servlet.http.HttpSession;
 public class AuthenticatedSessionManagerUtil {
 
 	public static AuthenticatedSessionManager getAuthenticatedSessionManager() {
-		return _authenticatedSessionManagerUtil._serviceTracker.getService();
+		return _authenticatedSessionManager;
 	}
 
 	public static long getAuthenticatedUserId(
@@ -37,7 +35,7 @@ public class AuthenticatedSessionManagerUtil {
 			String password, String authType)
 		throws PortalException {
 
-		return getAuthenticatedSessionManager().getAuthenticatedUserId(
+		return _authenticatedSessionManager.getAuthenticatedUserId(
 			httpServletRequest, login, password, authType);
 	}
 
@@ -47,7 +45,7 @@ public class AuthenticatedSessionManagerUtil {
 			String password, boolean rememberMe, String authType)
 		throws Exception {
 
-		getAuthenticatedSessionManager().login(
+		_authenticatedSessionManager.login(
 			httpServletRequest, httpServletResponse, login, password,
 			rememberMe, authType);
 	}
@@ -57,7 +55,7 @@ public class AuthenticatedSessionManagerUtil {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		getAuthenticatedSessionManager().logout(
+		_authenticatedSessionManager.logout(
 			httpServletRequest, httpServletResponse);
 	}
 
@@ -65,28 +63,22 @@ public class AuthenticatedSessionManagerUtil {
 			HttpServletRequest httpServletRequest, HttpSession httpSession)
 		throws Exception {
 
-		return getAuthenticatedSessionManager().renewSession(
+		return _authenticatedSessionManager.renewSession(
 			httpServletRequest, httpSession);
 	}
 
 	public static void signOutSimultaneousLogins(long userId) throws Exception {
-		getAuthenticatedSessionManager().signOutSimultaneousLogins(userId);
+		_authenticatedSessionManager.signOutSimultaneousLogins(userId);
 	}
 
 	private AuthenticatedSessionManagerUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			AuthenticatedSessionManager.class);
-
-		_serviceTracker.open();
 	}
 
-	private static final AuthenticatedSessionManagerUtil
-		_authenticatedSessionManagerUtil =
-			new AuthenticatedSessionManagerUtil();
-
-	private final ServiceTracker<?, AuthenticatedSessionManager>
-		_serviceTracker;
+	private static volatile AuthenticatedSessionManager
+		_authenticatedSessionManager =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				AuthenticatedSessionManager.class,
+				AuthenticatedSessionManagerUtil.class,
+				"_authenticatedSessionManager", false, true);
 
 }

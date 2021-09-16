@@ -14,9 +14,7 @@
 
 package com.liferay.portal.kernel.security.service.access.policy;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.List;
 
@@ -28,50 +26,46 @@ public class ServiceAccessPolicyManagerUtil {
 	public static String getDefaultApplicationServiceAccessPolicyName(
 		long companyId) {
 
-		return getServiceAccessPolicyManager().
+		return _serviceAccessPolicyManager.
 			getDefaultApplicationServiceAccessPolicyName(companyId);
 	}
 
 	public static String getDefaultUserServiceAccessPolicyName(long companyId) {
-		return getServiceAccessPolicyManager().
+		return _serviceAccessPolicyManager.
 			getDefaultUserServiceAccessPolicyName(companyId);
 	}
 
 	public static List<ServiceAccessPolicy> getServiceAccessPolicies(
 		long companyId, int start, int end) {
 
-		return getServiceAccessPolicyManager().getServiceAccessPolicies(
+		return _serviceAccessPolicyManager.getServiceAccessPolicies(
 			companyId, start, end);
 	}
 
 	public static int getServiceAccessPoliciesCount(long companyId) {
-		return getServiceAccessPolicyManager().getServiceAccessPoliciesCount(
+		return _serviceAccessPolicyManager.getServiceAccessPoliciesCount(
 			companyId);
 	}
 
 	public static ServiceAccessPolicy getServiceAccessPolicy(
 		long companyId, String name) {
 
-		return getServiceAccessPolicyManager().getServiceAccessPolicy(
+		return _serviceAccessPolicyManager.getServiceAccessPolicy(
 			companyId, name);
 	}
 
 	public static ServiceAccessPolicyManager getServiceAccessPolicyManager() {
-		return _serviceAccessPolicyManagerUtil._serviceTracker.getService();
+		return _serviceAccessPolicyManager;
 	}
 
 	private ServiceAccessPolicyManagerUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			ServiceAccessPolicyManager.class);
-
-		_serviceTracker.open();
 	}
 
-	private static final ServiceAccessPolicyManagerUtil
-		_serviceAccessPolicyManagerUtil = new ServiceAccessPolicyManagerUtil();
-
-	private final ServiceTracker<?, ServiceAccessPolicyManager> _serviceTracker;
+	private static volatile ServiceAccessPolicyManager
+		_serviceAccessPolicyManager =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				ServiceAccessPolicyManager.class,
+				ServiceAccessPolicyManagerUtil.class,
+				"_serviceAccessPolicyManager", false, true);
 
 }

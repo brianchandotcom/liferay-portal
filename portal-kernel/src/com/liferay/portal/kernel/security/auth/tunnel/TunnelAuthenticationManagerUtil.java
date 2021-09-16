@@ -15,9 +15,7 @@
 package com.liferay.portal.kernel.security.auth.tunnel;
 
 import com.liferay.portal.kernel.security.auth.AuthException;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.net.HttpURLConnection;
 
@@ -31,34 +29,24 @@ public class TunnelAuthenticationManagerUtil {
 	public static long getUserId(HttpServletRequest httpServletRequest)
 		throws AuthException {
 
-		return _getTunnelManagerUtil().getUserId(httpServletRequest);
+		return _tunnelAuthenticationManager.getUserId(httpServletRequest);
 	}
 
 	public static void setCredentials(
 			String login, HttpURLConnection httpURLConnection)
 		throws Exception {
 
-		_getTunnelManagerUtil().setCredentials(login, httpURLConnection);
-	}
-
-	private static TunnelAuthenticationManager _getTunnelManagerUtil() {
-		return _tunnelAuthenticationManagerUtil._serviceTracker.getService();
+		_tunnelAuthenticationManager.setCredentials(login, httpURLConnection);
 	}
 
 	private TunnelAuthenticationManagerUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			TunnelAuthenticationManager.class);
-
-		_serviceTracker.open();
 	}
 
-	private static final TunnelAuthenticationManagerUtil
-		_tunnelAuthenticationManagerUtil =
-			new TunnelAuthenticationManagerUtil();
-
-	private final ServiceTracker<?, TunnelAuthenticationManager>
-		_serviceTracker;
+	private static volatile TunnelAuthenticationManager
+		_tunnelAuthenticationManager =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				TunnelAuthenticationManager.class,
+				TunnelAuthenticationManagerUtil.class,
+				"_tunnelAuthenticationManager", false, true);
 
 }

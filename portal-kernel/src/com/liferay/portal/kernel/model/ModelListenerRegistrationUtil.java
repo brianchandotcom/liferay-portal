@@ -15,14 +15,8 @@
 package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.ParameterizedType;
@@ -34,41 +28,18 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
+
 /**
  * @author Peter Fellwock
  */
 public class ModelListenerRegistrationUtil {
 
 	public static <T> ModelListener<T>[] getModelListeners(Class<T> clazz) {
-		return _modelListenerRegistrationUtil._getModelListeners(clazz);
-	}
-
-	public static void register(ModelListener<?> modelListener) {
-		Class<?> clazz = modelListener.getClass();
-
-		_modelListenerRegistrationUtil._register(
-			clazz.getName(), modelListener);
-	}
-
-	public static void unregister(ModelListener<?> modelListener) {
-		Class<?> clazz = modelListener.getClass();
-
-		_modelListenerRegistrationUtil._unregister(clazz.getName());
-	}
-
-	private ModelListenerRegistrationUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Filter filter = registry.getFilter(
-			"(objectClass=" + ModelListener.class.getName() + ")");
-
-		_serviceTracker = registry.trackServices(
-			filter, new ModelListenerTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
-
-	private <T> ModelListener<T>[] _getModelListeners(Class<T> clazz) {
 		List<ModelListener<?>> modelListeners = _modelListeners.get(clazz);
 
 		if (modelListeners == null) {
@@ -78,37 +49,37 @@ public class ModelListenerRegistrationUtil {
 		return modelListeners.toArray(new ModelListener[0]);
 	}
 
-	private <T> void _register(
-		String className, ModelListener<T> modelListener) {
+	public static void register(ModelListener<?> modelListener) {
+		Class<?> clazz = modelListener.getClass();
 
-		Registry registry = RegistryUtil.getRegistry();
+		ServiceRegistration<?> serviceRegistration =
+			_bundleContext.registerService(
+				ModelListener.class.getName(), modelListener, null);
 
-		ServiceRegistration<?> serviceRegistration = registry.registerService(
-			ModelListener.class.getName(), modelListener);
-
-		_serviceRegistrations.put(className, serviceRegistration);
+		_serviceRegistrations.put(clazz.getName(), serviceRegistration);
 	}
 
-	private void _unregister(String className) {
+	public static void unregister(ModelListener<?> modelListener) {
+		Class<?> clazz = modelListener.getClass();
+
 		ServiceRegistration<?> serviceRegistration =
-			_serviceRegistrations.remove(className);
+			_serviceRegistrations.remove(clazz.getName());
 
 		if (serviceRegistration != null) {
 			serviceRegistration.unregister();
 		}
 	}
 
-	private static final ModelListenerRegistrationUtil
-		_modelListenerRegistrationUtil = new ModelListenerRegistrationUtil();
-
-	private final ConcurrentMap<Class<?>, List<ModelListener<?>>>
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+	private static final ConcurrentMap<Class<?>, List<ModelListener<?>>>
 		_modelListeners = new ConcurrentHashMap<>();
-	private final Map<String, ServiceRegistration<?>> _serviceRegistrations =
-		new ConcurrentHashMap<>();
-	private final ServiceTracker<ModelListener<?>, ModelListener<?>>
+	private static final Map<String, ServiceRegistration<?>>
+		_serviceRegistrations = new ConcurrentHashMap<>();
+	private static final ServiceTracker<ModelListener<?>, ModelListener<?>>
 		_serviceTracker;
 
-	private class ModelListenerTrackerCustomizer
+	private static class ModelListenerTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<ModelListener<?>, ModelListener<?>> {
 
@@ -116,9 +87,7 @@ public class ModelListenerRegistrationUtil {
 		public ModelListener<?> addingService(
 			ServiceReference<ModelListener<?>> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			ModelListener<?> modelListener = registry.getService(
+			ModelListener<?> modelListener = _bundleContext.getService(
 				serviceReference);
 
 			Class<?> modelClass = _getModelClass(modelListener);
@@ -157,9 +126,7 @@ public class ModelListenerRegistrationUtil {
 			ServiceReference<ModelListener<?>> serviceReference,
 			ModelListener<?> modelListener) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 
 			Class<?> modelClass = _getModelClass(modelListener);
 
@@ -212,6 +179,16 @@ public class ModelListenerRegistrationUtil {
 			return _getGenericSuperType(clazz);
 		}
 
+	}
+
+	static {
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext,
+			SystemBundleUtil.createFilter(
+				"(objectClass=" + ModelListener.class.getName() + ")"),
+			new ModelListenerTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 }

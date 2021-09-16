@@ -15,19 +15,20 @@
 package com.liferay.portal.kernel.internal.security.permission.resource;
 
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.definition.ModelResourcePermissionDefinition;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Preston Crary
@@ -35,9 +36,8 @@ import java.util.List;
 public class ModelResourcePermissionDefinitionTracker {
 
 	public void afterPropertiesSet() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext,
 			(Class<ModelResourcePermissionDefinition<?>>)
 				(Class<?>)ModelResourcePermissionDefinition.class,
 			new ModelResourcePermissionDefinitionServiceTrackerCustomizer());
@@ -49,7 +49,7 @@ public class ModelResourcePermissionDefinitionTracker {
 		_serviceTracker.close();
 	}
 
-	private static <T extends GroupedModel> ModelResourcePermission<T> _create(
+	private <T extends GroupedModel> ModelResourcePermission<T> _create(
 		ModelResourcePermissionDefinition<T>
 			modelResourcePermissionDefinition) {
 
@@ -67,32 +67,31 @@ public class ModelResourcePermissionDefinitionTracker {
 		return modelResourcePermission;
 	}
 
+	private final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private ServiceTracker
 		<ModelResourcePermissionDefinition<?>, ServiceRegistration<?>>
 			_serviceTracker;
 
-	private static class
-		ModelResourcePermissionDefinitionServiceTrackerCustomizer
-			implements ServiceTrackerCustomizer
-				<ModelResourcePermissionDefinition<?>, ServiceRegistration<?>> {
+	private class ModelResourcePermissionDefinitionServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<ModelResourcePermissionDefinition<?>, ServiceRegistration<?>> {
 
 		@Override
 		public ServiceRegistration<?> addingService(
 			ServiceReference<ModelResourcePermissionDefinition<?>>
 				serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
 			ModelResourcePermissionDefinition<?>
-				modelResourcePermissionDefinition = registry.getService(
+				modelResourcePermissionDefinition = _bundleContext.getService(
 					serviceReference);
 
 			ModelResourcePermission<?> modelResourcePermission = _create(
 				modelResourcePermissionDefinition);
 
-			return registry.registerService(
+			return _bundleContext.registerService(
 				ModelResourcePermission.class, modelResourcePermission,
-				HashMapBuilder.<String, Object>put(
+				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name",
 					() -> {
 						Class<?> modelClass =
@@ -121,9 +120,7 @@ public class ModelResourcePermissionDefinitionTracker {
 
 			serviceRegistration.unregister();
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 		}
 
 	}

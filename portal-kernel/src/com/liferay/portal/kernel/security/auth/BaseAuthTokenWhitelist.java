@@ -19,11 +19,6 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.util.StringPlus;
 
 import java.util.ArrayList;
@@ -34,7 +29,10 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Tomas Polesovsky
@@ -98,20 +96,17 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 		}
 	}
 
-	protected ServiceTracker<Object, Object> trackWhitelistServices(
+	protected void trackWhitelistServices(
 		String whitelistName, Set<String> whiteList) {
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceTracker<Object, Object> serviceTracker = registry.trackServices(
-			registry.getFilter("(" + whitelistName + "=*)"),
+		ServiceTracker<Object, Object> serviceTracker = new ServiceTracker<>(
+			SystemBundleUtil.getBundleContext(),
+			SystemBundleUtil.createFilter("(" + whitelistName + "=*)"),
 			new TokenWhitelistTrackerCustomizer(whitelistName, whiteList));
 
 		serviceTracker.open();
 
 		serviceTrackers.add(serviceTracker);
-
-		return serviceTracker;
 	}
 
 	protected final List<ServiceRegistration<?>> serviceRegistrations =

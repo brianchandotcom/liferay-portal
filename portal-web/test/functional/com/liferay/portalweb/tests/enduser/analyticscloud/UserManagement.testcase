@@ -135,12 +135,16 @@ definition {
 			ACWorkspace.openWorkspace();
 		}
 
-		task ("Go to settings, data source, take token and launch dxp") {
+		task ("Go to settings, data source and take token") {
 			ACNavigation.goToSettings();
 
 			ACSettings.goToDataSources();
 
 			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
 			ACUtils.launchDXP();
 		}
@@ -531,7 +535,13 @@ definition {
 	@description = "Automation ID: LRAC-9090 | Test Summary: Owner can add data sources"
 	@priority = "5"
 	test OwnerCanAddDataSources {
+<<<<<<< HEAD
+		property portal.upstream = "nilo";
+
 		task ("Logout and login as an owner user") {
+=======
+		task ("Logout AC and login as an owner user") {
+>>>>>>> 279d33802 (sf)
 			ACWorkspace.signOut();
 
 			ACLogin.loginAs(

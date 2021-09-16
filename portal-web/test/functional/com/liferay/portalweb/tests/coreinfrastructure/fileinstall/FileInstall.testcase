@@ -47,7 +47,7 @@ definition {
 		var testBaseDirName = PropsUtil.get("test.base.dir.name");
 		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
 
-		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
+		ArchiveUtil.archive("${testBaseDirName}tests/coreinfrastructureee/clustering/clusteringframework/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
 
 		Pause(locator1 = "10000");
 
@@ -70,7 +70,7 @@ definition {
 		var testBaseDirName = PropsUtil.get("test.base.dir.name");
 		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
 
-		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
+		ArchiveUtil.archive("${testBaseDirName}tests/coreinfrastructureee/clustering/clusteringframework/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
 
 		Pause(locator1 = "10000");
 
@@ -95,7 +95,7 @@ definition {
 		var testBaseDirName = PropsUtil.get("test.base.dir.name");
 		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
 
-		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
+		ArchiveUtil.archive("${testBaseDirName}tests/coreinfrastructureee/clustering/clusteringframework/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
 
 		Pause(locator1 = "10000");
 
@@ -132,7 +132,9 @@ definition {
 	test UninstallJarOffline {
 		property test.name.skip.portal.instance = "FileInstall#UninstallJarOffline";
 
-		FileInstall.deployFileOnServer(liferayDependencyJars = "com.liferay.cluster.test.module.jar");
+		FileInstall.deployFileOnServer(
+			filePath = "coreinfrastructureee/clustering/clusteringframework",
+			liferayDependencyJars = "com.liferay.cluster.test.module.jar");
 
 		GogoShell.openGogoShellAdmin();
 

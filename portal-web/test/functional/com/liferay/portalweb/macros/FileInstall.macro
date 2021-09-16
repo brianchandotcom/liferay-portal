@@ -32,7 +32,12 @@ definition {
 			var deployDir = "${liferayHome}-${bundleIndex}/deploy";
 		}
 
-		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/${liferayDependencyJars}", "${deployDir}/${liferayDependencyJars}");
+		if (isSet(filePath)) {
+			ArchiveUtil.archive("${testBaseDirName}tests/${filePath}/${testDependenciesDirName}/${liferayDependencyJars}", "${deployDir}/${liferayDependencyJars}");
+		}
+		else {
+			ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/${liferayDependencyJars}", "${deployDir}/${liferayDependencyJars}");
+		}
 
 		Pause(locator1 = "10000");
 	}

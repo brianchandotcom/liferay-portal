@@ -20,6 +20,7 @@ definition {
 
 		FileInstall.deployFileOnServer(
 			bundleIndex = "${bundleIndex}",
+			filePath = "coreinfrastructureee/clustering/clusteringframework",
 			liferayDependencyJars = "${liferayDependencyJars}");
 	}
 

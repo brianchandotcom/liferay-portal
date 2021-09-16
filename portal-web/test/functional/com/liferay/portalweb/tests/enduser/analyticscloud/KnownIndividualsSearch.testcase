@@ -182,9 +182,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9019 | Test Summary: Search an Individual's Interest List with a query that won't return results"
 	@priority = "3"
 	test AssertNoIndividualsInterestsResults {
-		task ("Add specific pages and web contents to Site as interest topics") {
-			Navigator.openSiteURL(siteName = "Site Name");
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
+		task ("Add specific pages and web contents to Site as interest topics") {
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
 				layoutName = "Web Content Page");
@@ -212,6 +214,8 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "Web Content Page",
 				siteName = "Site Name");
+			
+			Pause(locator1 = "5000");
 		}
 
 		task ("Switch to new property in AC") {

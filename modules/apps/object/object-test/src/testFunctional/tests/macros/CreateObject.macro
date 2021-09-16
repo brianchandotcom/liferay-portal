@@ -1,5 +1,10 @@
 definition {
 
+	macro assertDisableObjectName {
+		AssertElementPresent(
+			locator1 = "CreateObject#DISABLE_OBJECT_NAME");
+	}
+
 	macro assertFieldName {
 		AssertTextEquals(
 			locator1 = "CreateObject#FIELD_NAME",

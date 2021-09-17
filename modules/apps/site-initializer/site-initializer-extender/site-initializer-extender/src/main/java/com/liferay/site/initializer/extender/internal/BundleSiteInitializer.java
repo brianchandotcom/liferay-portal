@@ -398,16 +398,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private List<String> _addCommerceChannels(ServiceContext serviceContext)
 		throws Exception {
 
-		return _addCommerceChannels(
-			"/site-initializer/commerce-channels", serviceContext);
-	}
-
-	private List<String> _addCommerceChannels(
-			String parentResourcePath, ServiceContext serviceContext)
-		throws Exception {
-
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			parentResourcePath);
+			"/site-initializer/commerce-channels");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
 			return new ArrayList<>();

@@ -873,10 +873,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addResourcePermissions(
-			String path, ServiceContext serviceContext)
+			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
-		String json = _read(path);
+		String json = _read(resourcePath);
 
 		if (json == null) {
 			return;
@@ -903,10 +903,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addRoles("/site-initializer/roles.json", serviceContext);
 	}
 
-	private void _addRoles(String path, ServiceContext serviceContext)
+	private void _addRoles(String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
-		String json = _read(path);
+		String json = _read(resourcePath);
 
 		if (json == null) {
 			return;

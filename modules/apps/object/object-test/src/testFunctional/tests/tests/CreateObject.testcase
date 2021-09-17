@@ -643,7 +643,6 @@ definition {
 	@description = "LPS-135549 - Verify it is possible to set a field as Mandatory"
 	@priority = "4"
 	test CanSetFieldMandatory {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -659,7 +658,7 @@ definition {
 			fieldLabel = "Custom Field",
 			fieldType = "String",
 			isMandatory = "true");
-			
+
 		ObjectAdmin.goToFieldsDetails(fieldName = "customField");
 
 		CreateObject.assertToggleMandatory();

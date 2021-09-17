@@ -381,7 +381,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addCommerceChannel(
-			Channel channel, ServiceContext serviceContext)
+			Channel channel, String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
 		Group group = _groupLocalService.getGroup(
@@ -415,8 +415,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_addModelResourcePermissions(
 			CommerceChannel.class.getName(), String.valueOf(channel.getId()),
-			"/site-initializer/commerce-channels/x-resource-permissions.json",
-			serviceContext);
+			resourcePath, serviceContext);
 	}
 
 	private void _addCommerceChannels(ServiceContext serviceContext)
@@ -437,6 +436,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).build();
 
 		for (String resourcePath : resourcePaths) {
+			if(resourcePath.endsWith( "-resource-permissions.json")) {
+				continue;
+			}
+			
 			String json = _read(resourcePath);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
@@ -453,7 +456,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			_addCommerceChannel(
-				channelResource.postChannel(channel), serviceContext);
+				channelResource.postChannel(channel),
+				StringUtil.replaceLast(
+					resourcePath, ".json", "-resource-permissions.json"),
+				serviceContext);
 		}
 	}
 

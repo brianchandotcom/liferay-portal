@@ -79,7 +79,7 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 				<aui:input label="html-element-name" name="customElementHTMLElementName" />
 
 				<%
-				String[] customElementURLsArray = new String[0];
+				String[] customElementURLsArray = new String[1];
 
 				if (remoteAppEntry != null) {
 					String customElementURLs = remoteAppEntry.getCustomElementURLs();
@@ -99,7 +99,7 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 				<%
 				}
 
-				String[] customElementCSSURLsArray = new String[0];
+				String[] customElementCSSURLsArray = new String[1];
 
 				if (remoteAppEntry != null) {
 					String customElementCSSURLs = remoteAppEntry.getCustomElementCSSURLs();

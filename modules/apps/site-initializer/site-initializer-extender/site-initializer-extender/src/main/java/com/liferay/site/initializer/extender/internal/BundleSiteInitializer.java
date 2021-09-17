@@ -900,13 +900,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addRoles(ServiceContext serviceContext) throws Exception {
-		_addRoles("/site-initializer/roles.json", serviceContext);
-	}
-
-	private void _addRoles(String resourcePath, ServiceContext serviceContext)
-		throws Exception {
-
-		String json = _read(resourcePath);
+		String json = _read("/site-initializer/roles.json");
 
 		if (json == null) {
 			return;

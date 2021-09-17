@@ -1267,12 +1267,15 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify that the Object Name is autofilled when Label is filled"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ObjectNameIsAutofilled {
+		ObjectAdmin.openObjectAdmin();
 
-		// TODO LPS-138806 ObjectNameIsAutofilled pending implementation
+		ObjectAdmin.addNewObject(
+			fieldLabelName = "Custom Object",
+			pluralLabelName = "");
 
+		CreateObject.assertObjectDefinitionName(objectName = "CustomObject");
 	}
 
 	@description = "LPS-135549 - Verify that the columns Name, System and Status displays the correct value on the Objects table when a Custom Object is created"

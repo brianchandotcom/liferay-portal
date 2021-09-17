@@ -14,7 +14,6 @@
 
 package com.liferay.portal.test.rule.callback;
 
-import com.liferay.portal.asm.ASMWrapperUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.ConsoleTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -24,12 +23,10 @@ import com.liferay.portal.test.rule.InjectTestRule;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistration;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -152,29 +149,9 @@ public class InjectTestRuleTest {
 
 		Assert.assertSame(service1, TestCase2._service1);
 
-		AtomicBoolean ungetServiceCalled = new AtomicBoolean();
-
-		RegistryUtil.setRegistry(
-			ASMWrapperUtil.createASMWrapper(
-				InjectTestRuleTest.class.getClassLoader(), Registry.class,
-				new Object() {
-
-					public <T> boolean ungetService(
-						ServiceReference<T> serviceReference) {
-
-						ungetServiceCalled.set(true);
-
-						return false;
-					}
-
-				},
-				RegistryUtil.getRegistry()));
-
 		InjectTestRule.INSTANCE.afterClass(description, injectTestBag);
 
 		Assert.assertNull(TestCase2._service1);
-
-		Assert.assertTrue(ungetServiceCalled.get());
 	}
 
 	@Test

@@ -237,8 +237,6 @@ definition {
 	@description = "Verify that a calendar event on draft can be approved"
 	@priority = "4"
 	test CalendarWithDraftStatusCanBecomeApproved {
-		property portal.upstream = "quarantine";
-
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarNavigator.gotoAddEvent();
@@ -283,12 +281,16 @@ definition {
 		}
 
 		if ("${workflow}" == "true") {
-			Button.click(button = "Save as Draft");
+			AssertClick(
+				locator1 = "Button#SAVE_AS_DRAFT",
+				value1 = "Save as Draft");
 
 			Alert.viewSuccessMessage();
 		}
 		else {
-			Button.click(button = "Save as Draft");
+			AssertClick(
+				locator1 = "Button#SAVE_AS_DRAFT",
+				value1 = "Save as Draft");
 		}
 
 		CalendarScheduler.selectSpecificEvent(eventTitle = "Test Event");

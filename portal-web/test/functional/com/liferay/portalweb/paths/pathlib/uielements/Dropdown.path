@@ -51,6 +51,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO</td>
+	<td>//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//div[contains(@class,'alert-info')][normalize-space(text())='${infoMessage}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECTED_VALUE</td>
 	<td>//div[@class='option-selected']</td>
 	<td></td>

@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>CHECKBOX_DISABLED</td>
-	<td>//label[contains(.,'${key_checkboxName}')]/input[@type='checkbox' and contains(@class,'disabled')]</td>
+	<td>//label[contains(.,'${key_checkboxName}')]/input[@type='checkbox' and contains(@class,'disabled')] | //label[contains(@class,'disabled')][contains(.,'${key_checkboxName}')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

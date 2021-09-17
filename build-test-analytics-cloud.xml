@@ -87,6 +87,112 @@ networks:
 		</sequential>
 	</macrodef>
 
+	<macrodef name="print-analytics-cloud-logs">
+		<sequential>
+			<property location="${analytics.cloud.asah.dir}/docker-compose.test.yml" name="analytics.cloud.docker.test.yaml" />
+
+			<local name="container.names" />
+
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+					import java.util.regex.Matcher;
+					import java.util.regex.Pattern;
+
+					public static List getContainerNames() {
+						File dockerComposeFile = new File(project.getProperty("analytics.cloud.docker.test.yaml"));
+
+						if (!dockerComposeFile.exists()) {
+							return new ArrayList();
+						}
+
+						List containerNames = new ArrayList();
+
+						String content = JenkinsResultsParserUtil.read(dockerComposeFile);
+
+						Pattern pattern = Pattern.compile("container_name: (.*)");
+
+						Matcher matcher = pattern.matcher(content);
+
+						while (matcher.find()) {
+							containerNames.add(matcher.group(1));
+						}
+
+						return containerNames;
+					}
+
+					project.setProperty("container.names", JenkinsResultsParserUtil.join(",", getContainerNames()))
+				]]>
+			</beanshell>
+
+			<local name="docker.logs.dir" />
+
+			<condition else="/tmp/docker-logs" property="docker.logs.dir" value="${env.BUILD_DIR}/docker-logs">
+				<and>
+					<isset property="env.BUILD_DIR" />
+					<isset property="env.BUILD_USER_CONTENT_URL" />
+				</and>
+			</condition>
+
+			<mkdir dir="${docker.logs.dir}" />
+
+			<for list="${container.names}" param="container.name">
+				<sequential>
+					<local name="container.file.name" />
+
+					<beanshell>
+						<![CDATA[
+							public int getRetryCount() {
+								String retryCount = project.getProperty("analytics.cloud.retry.count");
+
+								if (retryCount.matches("\\d+")) {
+									return Integer.valueOf(retryCount);
+								}
+
+								return 3;
+							}
+
+							for (int i = 0; i < getRetryCount(); i++) {
+								String containerFileName = "@{container.name}.log";
+
+								if (i > 0) {
+									containerFileName = "@{container.name}." + i + ".log";
+								}
+
+								File containerFile = new File(project.getProperty("docker.logs.dir"), containerFileName);
+
+								if (containerFile.exists()) {
+									continue;
+								}
+
+								project.setProperty("container.file.name", containerFileName);
+
+								break;
+							}
+						]]>
+					</beanshell>
+
+					<execute failonerror="false">
+						<![CDATA[
+							docker logs @{container.name} > ${docker.logs.dir}/${container.file.name}
+						]]>
+					</execute>
+
+					<if>
+						<isset property="env.BUILD_USER_CONTENT_URL" />
+						<then>
+							<echo>${env.BUILD_USER_CONTENT_URL}/docker-logs/${container.file.name}</echo>
+						</then>
+						<else>
+							<print-file file.name="${docker.logs.dir}/${container.file.name}" />
+						</else>
+					</if>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="pull-docker-image-dependencies">
 		<attribute name="analytics.cloud.repository.dir" />
 
@@ -205,24 +311,33 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 				docker volume prune -f
 			</echo>
 
-			<retry retrycount="3" retrydelay="30000">
+			<retry retrycount="${analytics.cloud.retry.count}" retrydelay="30000">
 				<sequential>
-					<local name="analytics.cloud.start.result" />
+					<trycatch property="analytics.cloud.error">
+						<try>
+							<local name="analytics.cloud.start.result" />
 
-					<exec dir="${analytics.cloud.asah.dir}" executable="/bin/bash" resultproperty="analytics.cloud.start.result" timeout="${analytics.cloud.start.timeout}">
-						<arg value="${analytics.cloud.start.sh}" />
-					</exec>
+							<exec dir="${analytics.cloud.asah.dir}" executable="/bin/bash" resultproperty="analytics.cloud.start.result" timeout="${analytics.cloud.start.timeout}">
+								<arg value="${analytics.cloud.start.sh}" />
+							</exec>
 
-					<if>
-						<not>
-							<equals arg1="${analytics.cloud.start.result}" arg2="0" />
-						</not>
-						<then>
-							<fail message="Failed to start analytics cloud with error code ${analytics.cloud.start.result}" />
+							<if>
+								<not>
+									<equals arg1="${analytics.cloud.start.result}" arg2="0" />
+								</not>
+								<then>
+									<fail message="Failed to start analytics cloud with error code ${analytics.cloud.start.result}" />
+								</then>
+							</if>
+						</try>
+						<catch>
+							<print-analytics-cloud-logs />
 
 							<stop-analytics-cloud />
-						</then>
-					</if>
+
+							<fail message="${analytics.cloud.error}" />
+						</catch>
+					</trycatch>
 				</sequential>
 			</retry>
 
@@ -239,6 +354,8 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 			<property location="${analytics.cloud.asah.dir}/docker-compose.test.yml" name="analytics.cloud.docker.test.yaml" />
 
 			<execute dir="${analytics.cloud.asah.dir}">
+				docker ps -a
+
 				touch local.env
 
 				docker-compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} down --volumes
@@ -257,6 +374,8 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 	</target>
 
 	<target name="stop-analytics-cloud">
+		<print-analytics-cloud-logs />
+
 		<stop-analytics-cloud />
 	</target>
 </project>

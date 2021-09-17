@@ -100,16 +100,16 @@ definition {
 
 	macro assertObjectColumnValue {
 		AssertTextEquals(
-			value1 = "${name}",
-			locator1 = "ObjectAdmin#OBJECT_NAME");
+			locator1 = "ObjectAdmin#OBJECT_NAME",
+			value1 = "${name}");
 
 		AssertTextEquals(
-			value1 = "${system}",
-			locator1 = "ObjectAdmin#OBJECT_SYSTEM");
+			locator1 = "ObjectAdmin#OBJECT_SYSTEM",
+			value1 = "${system}");
 
 		AssertTextEquals(
-			value1 = "${status}",
-			locator1 = "ObjectAdmin#OBJECT_STATUS");
+			locator1 = "ObjectAdmin#OBJECT_STATUS",
+			value1 = "${status}");
 	}
 
 	macro assertObjectDetailsPage {

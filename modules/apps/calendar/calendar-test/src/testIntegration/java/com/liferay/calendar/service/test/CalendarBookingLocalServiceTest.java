@@ -15,6 +15,7 @@
 package com.liferay.calendar.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.calendar.constants.CalendarBookingConstants;
 import com.liferay.calendar.exception.CalendarBookingRecurrenceException;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
@@ -23,6 +24,7 @@ import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.RecurrenceSerializer;
 import com.liferay.calendar.service.CalendarBookingLocalService;
+import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.calendar.test.util.CalendarBookingTestUtil;
@@ -829,6 +831,54 @@ public class CalendarBookingLocalServiceTest {
 		assertCalendarBookingsCount(liveCalendar, 0);
 
 		assertCalendarBookingsCount(stagingCalendar, 0);
+	}
+
+	@Test
+	public void testEscapeEventNotificationVariables() throws Exception {
+		ServiceContext serviceContext = createServiceContext();
+
+		User invitingUser = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), "firstN@m&",
+			"#124 & 423", new long[] {TestPropsValues.getGroupId()});
+
+		Calendar calendar = CalendarTestUtil.addCalendar(
+			invitingUser, serviceContext);
+
+		Calendar invitedCalendar = CalendarTestUtil.addCalendar(
+			_user, serviceContext);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		String mailBody =
+			"[$EVENT_TITLE|uri$], [$TO_NAME|html$], [$EVENT_LOCATION|attr$]";
+		String mailSubject = RandomTestUtil.randomString();
+
+		CalendarNotificationTemplateTestUtil.addCalendarNotificationTemplate(
+			calendar, NotificationTemplateType.INVITE, "test@liferay.com",
+			"Test Test", mailSubject, mailBody);
+
+		long startTime = System.currentTimeMillis() + (Time.MINUTE * 2);
+
+		CalendarBookingLocalServiceUtil.addCalendarBooking(
+			invitingUser.getUserId(), calendar.getCalendarId(),
+			new long[] {invitedCalendar.getCalendarId()},
+			CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+			CalendarBookingConstants.RECURRING_CALENDAR_BOOKING_ID_DEFAULT,
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "mySubject #123 & 412"
+			).build(),
+			RandomTestUtil.randomLocaleStringMap(), "myLocation #123 & 321",
+			startTime, startTime + Time.HOUR, false,
+			RecurrenceSerializer.serialize(null), Time.MINUTE,
+			NotificationType.EMAIL.getValue(), 0,
+			NotificationType.EMAIL.getValue(), serviceContext);
+
+		_calendarBookingLocalService.checkCalendarBookings();
+
+		assertMailBody(
+			mailSubject,
+			"mySubject #123 &amp; 412, firstN@m&amp; #124 &amp;" +
+				" 423, myLocation #123 &amp; 321");
 	}
 
 	@Test

@@ -5,7 +5,7 @@ definition {
 
 		var fileContent = FileUtil.read("${projectDir}/modules/apps/portal-search-elasticsearch7/portal-search-elasticsearch7-impl/build.gradle");
 
-		var clientVersion = RegexUtil.replace("${fileContent}", "elasticsearchVersion = &quot;(\d+\.\d+\.\d+)", "1");
+		var clientVersion = RegexUtil.replace("${fileContent}", "elasticsearchClientVersion = &quot;(\d+\.\d+\.\d+)", "1");
 
 		echo("Elasticsearch client version: ${clientVersion}");
 

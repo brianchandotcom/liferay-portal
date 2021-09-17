@@ -68,7 +68,7 @@ definition {
 
 	@description = "This is a use case for LPS-82208."
 	@priority = "5"
-	test CannotDeleteStructureWithUsage {
+	test CannotDeleteStructureReferencedByDisplayPage {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();

@@ -76,8 +76,6 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 				int categoryIndex = _getCategoryIndex(category);
 
 				if (categoryIndex == -1) {
-					addMessage(fileName, "UNKNOWN: " + category);
-
 					continue;
 				}
 

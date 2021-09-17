@@ -247,9 +247,7 @@ public class DLFileEntryModelDocumentContributor
 			_dlFileEntryMetadataLocalService.getFileVersionFileEntryMetadatas(
 				dlFileVersion.getFileVersionId());
 
-		StringBundler sb = new StringBundler(dlFileEntryMetadatas.size());
-
-		boolean firstField = true;
+		StringBundler sb = new StringBundler(dlFileEntryMetadatas.size() * 2);
 
 		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
 			try {
@@ -257,18 +255,13 @@ public class DLFileEntryModelDocumentContributor
 					_storageEngineManager.getDDMFormValues(
 						dlFileEntryMetadata.getDDMStorageId());
 
-				if (!firstField) {
-					sb.append(StringPool.SPACE);
-				}
-				else {
-					firstField = false;
-				}
-
 				if (ddmFormValues != null) {
 					sb.append(
 						_ddmStructureManager.extractAttributes(
 							dlFileEntryMetadata.getDDMStructureId(),
 							ddmFormValues, locale));
+
+					sb.append(StringPool.SPACE);
 				}
 			}
 			catch (Exception exception) {
@@ -276,6 +269,10 @@ public class DLFileEntryModelDocumentContributor
 					_log.debug("Unable to retrieve metadata values", exception);
 				}
 			}
+		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		return sb.toString();

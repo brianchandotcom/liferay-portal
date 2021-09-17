@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
@@ -1435,8 +1436,20 @@ public class ObjectEntryLocalServiceImpl
 		throws PortalException {
 
 		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
-			ObjectField objectField = _objectFieldLocalService.getObjectField(
-				objectDefinitionId, entry.getKey());
+			ObjectField objectField;
+
+			try {
+				objectField = _objectFieldLocalService.getObjectField(
+					objectDefinitionId, entry.getKey());
+			}
+			catch (NoSuchObjectFieldException noSuchObjectFieldException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						noSuchObjectFieldException, noSuchObjectFieldException);
+				}
+
+				continue;
+			}
 
 			if (objectField.getListTypeDefinitionId() == 0) {
 				continue;

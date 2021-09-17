@@ -80,6 +80,15 @@ definition {
 			fieldName = "Web Content");
 	}
 
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "5"
+	test CanClearInput {
+
+		// TODO LRQA-70033	Refactor of Renderer Web Content Field
+
+	}
+
 	@description = "This is a test for LRQA-68658. This test verifies that Label and Help text can be edited."
 	@priority = "5"
 	test CanEditLabelAndHelpText {
@@ -115,6 +124,42 @@ definition {
 			fieldFieldLabel = "Web Content Edited",
 			fieldHelp = "Help Text Edited",
 			fieldName = "Web Content");
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "5"
+	test CanInputDataOnDuplicatedField {
+
+		// TODO LRQA-70033	Refactor of Renderer Web Content Field
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "5"
+	test CanInputLink {
+
+		// TODO LRQA-70033	Refactor of Renderer Web Content Field
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "4"
+	test CanNotPublishBlankRequiredField {
+
+		// TODO LRQA-70033	Refactor of Renderer Web Content Field
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "4"
+	test CanRemoveDuplicatedField {
+
+		// TODO LRQA-70033	Refactor of Renderer Web Content Field
+
 	}
 
 	@description = "This is a test for LRQA-68658. This test verifies that Default Searchable property is Disable when System Setting is left unchecked."

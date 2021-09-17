@@ -34,30 +34,29 @@ public class SXPBlueprintConfiguration implements Cloneable, Serializable {
 		return SXPBlueprintConfigurationSerDes.toDTO(json);
 	}
 
-	public Framework_configuration getFramework_configuration() {
-		return framework_configuration;
+	public FrameworkConfiguration getFrameworkConfiguration() {
+		return frameworkConfiguration;
 	}
 
-	public void setFramework_configuration(
-		Framework_configuration framework_configuration) {
+	public void setFrameworkConfiguration(
+		FrameworkConfiguration frameworkConfiguration) {
 
-		this.framework_configuration = framework_configuration;
+		this.frameworkConfiguration = frameworkConfiguration;
 	}
 
-	public void setFramework_configuration(
-		UnsafeSupplier<Framework_configuration, Exception>
-			framework_configurationUnsafeSupplier) {
+	public void setFrameworkConfiguration(
+		UnsafeSupplier<FrameworkConfiguration, Exception>
+			frameworkConfigurationUnsafeSupplier) {
 
 		try {
-			framework_configuration =
-				framework_configurationUnsafeSupplier.get();
+			frameworkConfiguration = frameworkConfigurationUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Framework_configuration framework_configuration;
+	protected FrameworkConfiguration frameworkConfiguration;
 
 	@Override
 	public SXPBlueprintConfiguration clone() throws CloneNotSupportedException {

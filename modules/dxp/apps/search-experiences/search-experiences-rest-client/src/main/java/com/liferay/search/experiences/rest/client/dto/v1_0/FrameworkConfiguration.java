@@ -15,7 +15,7 @@
 package com.liferay.search.experiences.rest.client.dto.v1_0;
 
 import com.liferay.search.experiences.rest.client.function.UnsafeSupplier;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.Framework_configurationSerDes;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.FrameworkConfigurationSerDes;
 
 import java.io.Serializable;
 
@@ -28,37 +28,36 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Framework_configuration implements Cloneable, Serializable {
+public class FrameworkConfiguration implements Cloneable, Serializable {
 
-	public static Framework_configuration toDTO(String json) {
-		return Framework_configurationSerDes.toDTO(json);
+	public static FrameworkConfiguration toDTO(String json) {
+		return FrameworkConfigurationSerDes.toDTO(json);
 	}
 
-	public Boolean getApply_indexer_clauses() {
-		return apply_indexer_clauses;
+	public Boolean getApplyIndexerClauses() {
+		return applyIndexerClauses;
 	}
 
-	public void setApply_indexer_clauses(Boolean apply_indexer_clauses) {
-		this.apply_indexer_clauses = apply_indexer_clauses;
+	public void setApplyIndexerClauses(Boolean applyIndexerClauses) {
+		this.applyIndexerClauses = applyIndexerClauses;
 	}
 
-	public void setApply_indexer_clauses(
-		UnsafeSupplier<Boolean, Exception>
-			apply_indexer_clausesUnsafeSupplier) {
+	public void setApplyIndexerClauses(
+		UnsafeSupplier<Boolean, Exception> applyIndexerClausesUnsafeSupplier) {
 
 		try {
-			apply_indexer_clauses = apply_indexer_clausesUnsafeSupplier.get();
+			applyIndexerClauses = applyIndexerClausesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Boolean apply_indexer_clauses;
+	protected Boolean applyIndexerClauses;
 
 	@Override
-	public Framework_configuration clone() throws CloneNotSupportedException {
-		return (Framework_configuration)super.clone();
+	public FrameworkConfiguration clone() throws CloneNotSupportedException {
+		return (FrameworkConfiguration)super.clone();
 	}
 
 	@Override
@@ -67,14 +66,14 @@ public class Framework_configuration implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Framework_configuration)) {
+		if (!(object instanceof FrameworkConfiguration)) {
 			return false;
 		}
 
-		Framework_configuration framework_configuration =
-			(Framework_configuration)object;
+		FrameworkConfiguration frameworkConfiguration =
+			(FrameworkConfiguration)object;
 
-		return Objects.equals(toString(), framework_configuration.toString());
+		return Objects.equals(toString(), frameworkConfiguration.toString());
 	}
 
 	@Override
@@ -85,7 +84,7 @@ public class Framework_configuration implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return Framework_configurationSerDes.toJSON(this);
+		return FrameworkConfigurationSerDes.toJSON(this);
 	}
 
 }

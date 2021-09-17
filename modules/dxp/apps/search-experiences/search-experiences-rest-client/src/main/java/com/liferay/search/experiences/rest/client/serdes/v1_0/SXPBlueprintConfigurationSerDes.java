@@ -59,16 +59,16 @@ public class SXPBlueprintConfigurationSerDes {
 
 		sb.append("{");
 
-		if (sxpBlueprintConfiguration.getFramework_configuration() != null) {
+		if (sxpBlueprintConfiguration.getFrameworkConfiguration() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"framework_configuration\": ");
+			sb.append("\"frameworkConfiguration\": ");
 
 			sb.append(
 				String.valueOf(
-					sxpBlueprintConfiguration.getFramework_configuration()));
+					sxpBlueprintConfiguration.getFrameworkConfiguration()));
 		}
 
 		sb.append("}");
@@ -93,14 +93,14 @@ public class SXPBlueprintConfigurationSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (sxpBlueprintConfiguration.getFramework_configuration() == null) {
-			map.put("framework_configuration", null);
+		if (sxpBlueprintConfiguration.getFrameworkConfiguration() == null) {
+			map.put("frameworkConfiguration", null);
 		}
 		else {
 			map.put(
-				"framework_configuration",
+				"frameworkConfiguration",
 				String.valueOf(
-					sxpBlueprintConfiguration.getFramework_configuration()));
+					sxpBlueprintConfiguration.getFrameworkConfiguration()));
 		}
 
 		return map;
@@ -124,12 +124,10 @@ public class SXPBlueprintConfigurationSerDes {
 			SXPBlueprintConfiguration sxpBlueprintConfiguration,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(
-					jsonParserFieldName, "framework_configuration")) {
-
+			if (Objects.equals(jsonParserFieldName, "frameworkConfiguration")) {
 				if (jsonParserFieldValue != null) {
-					sxpBlueprintConfiguration.setFramework_configuration(
-						Framework_configurationSerDes.toDTO(
+					sxpBlueprintConfiguration.setFrameworkConfiguration(
+						FrameworkConfigurationSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}

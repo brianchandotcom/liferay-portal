@@ -12,9 +12,9 @@ components:
             type: object
         SXPBlueprintConfiguration:
             properties:
-                framework_configuration:
+                frameworkConfiguration:
                     properties:
-                        apply_indexer_clauses:
+                        applyIndexerClauses:
                             type: boolean
                     type: object
             type: object

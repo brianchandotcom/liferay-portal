@@ -42,31 +42,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Framework_configuration")
+@GraphQLName("FrameworkConfiguration")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Framework_configuration")
-public class Framework_configuration implements Serializable {
+@XmlRootElement(name = "FrameworkConfiguration")
+public class FrameworkConfiguration implements Serializable {
 
-	public static Framework_configuration toDTO(String json) {
-		return ObjectMapperUtil.readValue(Framework_configuration.class, json);
+	public static FrameworkConfiguration toDTO(String json) {
+		return ObjectMapperUtil.readValue(FrameworkConfiguration.class, json);
 	}
 
 	@Schema
-	public Boolean getApply_indexer_clauses() {
-		return apply_indexer_clauses;
+	public Boolean getApplyIndexerClauses() {
+		return applyIndexerClauses;
 	}
 
-	public void setApply_indexer_clauses(Boolean apply_indexer_clauses) {
-		this.apply_indexer_clauses = apply_indexer_clauses;
+	public void setApplyIndexerClauses(Boolean applyIndexerClauses) {
+		this.applyIndexerClauses = applyIndexerClauses;
 	}
 
 	@JsonIgnore
-	public void setApply_indexer_clauses(
-		UnsafeSupplier<Boolean, Exception>
-			apply_indexer_clausesUnsafeSupplier) {
+	public void setApplyIndexerClauses(
+		UnsafeSupplier<Boolean, Exception> applyIndexerClausesUnsafeSupplier) {
 
 		try {
-			apply_indexer_clauses = apply_indexer_clausesUnsafeSupplier.get();
+			applyIndexerClauses = applyIndexerClausesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -78,7 +77,7 @@ public class Framework_configuration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean apply_indexer_clauses;
+	protected Boolean applyIndexerClauses;
 
 	@Override
 	public boolean equals(Object object) {
@@ -86,14 +85,14 @@ public class Framework_configuration implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Framework_configuration)) {
+		if (!(object instanceof FrameworkConfiguration)) {
 			return false;
 		}
 
-		Framework_configuration framework_configuration =
-			(Framework_configuration)object;
+		FrameworkConfiguration frameworkConfiguration =
+			(FrameworkConfiguration)object;
 
-		return Objects.equals(toString(), framework_configuration.toString());
+		return Objects.equals(toString(), frameworkConfiguration.toString());
 	}
 
 	@Override
@@ -108,14 +107,14 @@ public class Framework_configuration implements Serializable {
 
 		sb.append("{");
 
-		if (apply_indexer_clauses != null) {
+		if (applyIndexerClauses != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"apply_indexer_clauses\": ");
+			sb.append("\"applyIndexerClauses\": ");
 
-			sb.append(apply_indexer_clauses);
+			sb.append(applyIndexerClauses);
 		}
 
 		sb.append("}");
@@ -125,7 +124,7 @@ public class Framework_configuration implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Framework_configuration",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.FrameworkConfiguration",
 		name = "x-class-name"
 	)
 	public String xClassName;

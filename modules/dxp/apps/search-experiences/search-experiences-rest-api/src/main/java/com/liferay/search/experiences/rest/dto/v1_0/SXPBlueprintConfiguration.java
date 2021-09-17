@@ -56,24 +56,23 @@ public class SXPBlueprintConfiguration implements Serializable {
 
 	@Schema
 	@Valid
-	public Framework_configuration getFramework_configuration() {
-		return framework_configuration;
+	public FrameworkConfiguration getFrameworkConfiguration() {
+		return frameworkConfiguration;
 	}
 
-	public void setFramework_configuration(
-		Framework_configuration framework_configuration) {
+	public void setFrameworkConfiguration(
+		FrameworkConfiguration frameworkConfiguration) {
 
-		this.framework_configuration = framework_configuration;
+		this.frameworkConfiguration = frameworkConfiguration;
 	}
 
 	@JsonIgnore
-	public void setFramework_configuration(
-		UnsafeSupplier<Framework_configuration, Exception>
-			framework_configurationUnsafeSupplier) {
+	public void setFrameworkConfiguration(
+		UnsafeSupplier<FrameworkConfiguration, Exception>
+			frameworkConfigurationUnsafeSupplier) {
 
 		try {
-			framework_configuration =
-				framework_configurationUnsafeSupplier.get();
+			frameworkConfiguration = frameworkConfigurationUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -85,7 +84,7 @@ public class SXPBlueprintConfiguration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Framework_configuration framework_configuration;
+	protected FrameworkConfiguration frameworkConfiguration;
 
 	@Override
 	public boolean equals(Object object) {
@@ -115,14 +114,14 @@ public class SXPBlueprintConfiguration implements Serializable {
 
 		sb.append("{");
 
-		if (framework_configuration != null) {
+		if (frameworkConfiguration != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"framework_configuration\": ");
+			sb.append("\"frameworkConfiguration\": ");
 
-			sb.append(String.valueOf(framework_configuration));
+			sb.append(String.valueOf(frameworkConfiguration));
 		}
 
 		sb.append("}");

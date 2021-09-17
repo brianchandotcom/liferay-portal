@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.Framework_configuration;
+import com.liferay.search.experiences.rest.client.dto.v1_0.FrameworkConfiguration;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,26 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Framework_configurationSerDes {
+public class FrameworkConfigurationSerDes {
 
-	public static Framework_configuration toDTO(String json) {
-		Framework_configurationJSONParser framework_configurationJSONParser =
-			new Framework_configurationJSONParser();
+	public static FrameworkConfiguration toDTO(String json) {
+		FrameworkConfigurationJSONParser frameworkConfigurationJSONParser =
+			new FrameworkConfigurationJSONParser();
 
-		return framework_configurationJSONParser.parseToDTO(json);
+		return frameworkConfigurationJSONParser.parseToDTO(json);
 	}
 
-	public static Framework_configuration[] toDTOs(String json) {
-		Framework_configurationJSONParser framework_configurationJSONParser =
-			new Framework_configurationJSONParser();
+	public static FrameworkConfiguration[] toDTOs(String json) {
+		FrameworkConfigurationJSONParser frameworkConfigurationJSONParser =
+			new FrameworkConfigurationJSONParser();
 
-		return framework_configurationJSONParser.parseToDTOs(json);
+		return frameworkConfigurationJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(
-		Framework_configuration framework_configuration) {
-
-		if (framework_configuration == null) {
+	public static String toJSON(FrameworkConfiguration frameworkConfiguration) {
+		if (frameworkConfiguration == null) {
 			return "null";
 		}
 
@@ -57,14 +55,14 @@ public class Framework_configurationSerDes {
 
 		sb.append("{");
 
-		if (framework_configuration.getApply_indexer_clauses() != null) {
+		if (frameworkConfiguration.getApplyIndexerClauses() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"apply_indexer_clauses\": ");
+			sb.append("\"applyIndexerClauses\": ");
 
-			sb.append(framework_configuration.getApply_indexer_clauses());
+			sb.append(frameworkConfiguration.getApplyIndexerClauses());
 		}
 
 		sb.append("}");
@@ -73,55 +71,55 @@ public class Framework_configurationSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		Framework_configurationJSONParser framework_configurationJSONParser =
-			new Framework_configurationJSONParser();
+		FrameworkConfigurationJSONParser frameworkConfigurationJSONParser =
+			new FrameworkConfigurationJSONParser();
 
-		return framework_configurationJSONParser.parseToMap(json);
+		return frameworkConfigurationJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		Framework_configuration framework_configuration) {
+		FrameworkConfiguration frameworkConfiguration) {
 
-		if (framework_configuration == null) {
+		if (frameworkConfiguration == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (framework_configuration.getApply_indexer_clauses() == null) {
-			map.put("apply_indexer_clauses", null);
+		if (frameworkConfiguration.getApplyIndexerClauses() == null) {
+			map.put("applyIndexerClauses", null);
 		}
 		else {
 			map.put(
-				"apply_indexer_clauses",
+				"applyIndexerClauses",
 				String.valueOf(
-					framework_configuration.getApply_indexer_clauses()));
+					frameworkConfiguration.getApplyIndexerClauses()));
 		}
 
 		return map;
 	}
 
-	public static class Framework_configurationJSONParser
-		extends BaseJSONParser<Framework_configuration> {
+	public static class FrameworkConfigurationJSONParser
+		extends BaseJSONParser<FrameworkConfiguration> {
 
 		@Override
-		protected Framework_configuration createDTO() {
-			return new Framework_configuration();
+		protected FrameworkConfiguration createDTO() {
+			return new FrameworkConfiguration();
 		}
 
 		@Override
-		protected Framework_configuration[] createDTOArray(int size) {
-			return new Framework_configuration[size];
+		protected FrameworkConfiguration[] createDTOArray(int size) {
+			return new FrameworkConfiguration[size];
 		}
 
 		@Override
 		protected void setField(
-			Framework_configuration framework_configuration,
+			FrameworkConfiguration frameworkConfiguration,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "apply_indexer_clauses")) {
+			if (Objects.equals(jsonParserFieldName, "applyIndexerClauses")) {
 				if (jsonParserFieldValue != null) {
-					framework_configuration.setApply_indexer_clauses(
+					frameworkConfiguration.setApplyIndexerClauses(
 						(Boolean)jsonParserFieldValue);
 				}
 			}

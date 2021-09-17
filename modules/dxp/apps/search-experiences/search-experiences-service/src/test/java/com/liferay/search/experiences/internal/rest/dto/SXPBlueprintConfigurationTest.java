@@ -15,7 +15,7 @@
 package com.liferay.search.experiences.internal.rest.dto;
 
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.search.experiences.rest.dto.v1_0.Framework_configuration;
+import com.liferay.search.experiences.rest.dto.v1_0.FrameworkConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprintConfiguration;
 
 import org.junit.Before;
@@ -43,13 +43,13 @@ public class SXPBlueprintConfigurationTest {
 		SXPBlueprintConfiguration sxpBlueprintConfiguration =
 			new SXPBlueprintConfiguration();
 
-		Framework_configuration framework_configuration =
-			new Framework_configuration();
+		FrameworkConfiguration frameworkConfiguration =
+			new FrameworkConfiguration();
 
-		framework_configuration.setApply_indexer_clauses(true);
+		frameworkConfiguration.setApplyIndexerClauses(true);
 
-		sxpBlueprintConfiguration.setFramework_configuration(
-			framework_configuration);
+		sxpBlueprintConfiguration.setFrameworkConfiguration(
+			frameworkConfiguration);
 
 		_restDTOTestHelper.assertJSONString(sxpBlueprintConfiguration);
 	}

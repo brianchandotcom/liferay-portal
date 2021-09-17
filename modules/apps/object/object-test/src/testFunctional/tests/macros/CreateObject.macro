@@ -1,4 +1,10 @@
 definition {
+	
+    	macro assertCustomObject {
+		AssertElementPresent(
+			key_labelName = "${labelName}",
+			locator1 = "CreateObject#OBJECT_NAME");
+	}
 
     macro assertObjectDefinitionName {
 		AssertTextEquals(

@@ -131,13 +131,18 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify if it is possible to create a Custom Object"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanCreateCustomObject {
 		property portal.acceptance = "true";
+		ObjectAdmin.openObjectAdmin();
 
-		// TODO LPS-138803 CanCreateCustomObject pending implementation
+		ObjectAdmin.addNewObject(
+			fieldLabelName = "Custom Object",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.saveCustomObject();
+
+		CreateObject.assertCustomObject(labelName = "CustomObject");
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a Date field"

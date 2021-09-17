@@ -85,6 +85,11 @@
 		<td>//input[@class='field disabled form-control lfr-input-text']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>OBJECT_NAME</td>
+		<td>//div[(@class='table-list-title') and contains(.,'${key_labelName}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

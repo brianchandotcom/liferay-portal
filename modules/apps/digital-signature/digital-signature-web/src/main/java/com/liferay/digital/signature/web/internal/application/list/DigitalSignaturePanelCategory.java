@@ -50,7 +50,7 @@ public class DigitalSignaturePanelCategory extends BasePanelCategory {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "category.digital.signature");
+		return LanguageUtil.get(resourceBundle, "category.digital-signature");
 	}
 
 }

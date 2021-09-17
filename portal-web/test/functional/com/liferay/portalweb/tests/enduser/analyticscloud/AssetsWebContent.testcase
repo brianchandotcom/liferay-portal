@@ -45,6 +45,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8456 | Test Summary: Web content appears on card shows the pages that the web content appears on"
 	@priority = "5"
 	test AssertAppearsOnListShowsPagesWebContentExists {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: It's not possible to get some information due to timing problems
+		// AC Refactor ticket: LRAC-9358
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Go to the site page") {

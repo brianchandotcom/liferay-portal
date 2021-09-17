@@ -21,13 +21,13 @@
 <%@ page import="com.liferay.portal.kernel.security.auth.PrincipalException" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %>
 
-<liferay-ui:header
-	showBackURL="<%= false %>"
-	title="error"
-/>
-
-<c:if test="<%= SessionErrors.contains(request, PrincipalException.getNestedClasses()) %>">
-	<liferay-ui:message key="you-do-not-have-permission-to-view-this-page" />
-</c:if>
-
-<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-permission-to-view-this-page" />
+<div class="container-fluid container-fluid-max-xl container-form-lg">
+	<c:choose>
+		<c:when test="<%= SessionErrors.contains(request, PrincipalException.getNestedClasses()) %>">
+			<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-permission-to-view-this-page" />
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:message key="an-unexpected-error-occurred" />
+		</c:otherwise>
+	</c:choose>
+</div>

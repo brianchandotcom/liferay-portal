@@ -296,6 +296,12 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_depot_web_portlet_DepotSettingsPortlet&_com_liferay_depot_web_portlet_DepotSettingsPortlet_screenNavigationEntryKey=sites");
 	}
 
+	macro openDepotStagingConfiguration {
+		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}-staging/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet");
+	}
+
 	macro openDepotWebContentAdmin {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
 

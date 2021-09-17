@@ -77,6 +77,8 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
 			}
 
 			ACUtils.closeAllSessionsAndWait();
@@ -121,7 +123,7 @@ definition {
 				cardTitle = "Associated Segments",
 				searchItem = "Test1");
 
-			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Static Segment Test1");
+			ACIndividualsDashboard.assertSegmentInAssociatedSegmentsCard(itemName = "Static Segment Test1");
 
 			ACNavigation.openItem(itemName = "Static Segment Test1");
 
@@ -152,6 +154,8 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
 			}
 
 			ACUtils.closeAllSessionsAndWait();
@@ -196,7 +200,7 @@ definition {
 		task ("Assert can select a Segment in Individuals Associated Segments card") {
 			ACUtils.searchBar(searchItem = "Test2");
 
-			ACIndividualsDashboard.assertSegmentInAssociatedSegmentsCard(itemName = "Static Segment Test2");
+			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Static Segment Test2");
 
 			ACNavigation.openItem(itemName = "Static Segment Test2");
 

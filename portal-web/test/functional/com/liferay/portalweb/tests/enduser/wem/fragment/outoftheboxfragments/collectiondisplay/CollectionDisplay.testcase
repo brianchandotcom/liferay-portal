@@ -507,7 +507,7 @@ definition {
 				fragmentName = "Collection Display");
 		}
 
-		task ("Select the Highest Rated Assets") {
+		task ("Select the Manual Collection") {
 			PageEditor.editCollectionDisplay(
 				assetListName = "Manual Collection",
 				fragmentName = "Collection Display");

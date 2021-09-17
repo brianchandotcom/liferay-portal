@@ -1122,7 +1122,6 @@ definition {
 		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
 
 		ObjectAdmin.assertObjectDetailsPage();
-		
 	}
 
 	@description = "LPS-135549 - Verify it is possible to view the Details of an Object by clicking on its name"

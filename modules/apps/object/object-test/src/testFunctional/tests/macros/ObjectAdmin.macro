@@ -221,7 +221,7 @@ definition {
 		Click(locator1 = "ObjectAdmin#SAVE_CUSTOM_OBJECT");
 	}
 
-	macro selectCustomObjectFieldKebabMenuOption {
+	macro selectKebabMenuOption {
 		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
 		Click(

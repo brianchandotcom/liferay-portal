@@ -1078,7 +1078,7 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.selectCustomObjectFieldKebabMenuOption(kebabOption = "View");
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
 
 		ObjectAdmin.viewFieldDetails();
 	}
@@ -1110,12 +1110,19 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to view the Details of an Object by clicking on the eye icon"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewObjectsDetailsByClickingEyeIcon {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-138813 CanViewObjectsDetailsByClickingEyeIcon pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.assertObjectDetailsPage();
+		
 	}
 
 	@description = "LPS-135549 - Verify it is possible to view the Details of an Object by clicking on its name"

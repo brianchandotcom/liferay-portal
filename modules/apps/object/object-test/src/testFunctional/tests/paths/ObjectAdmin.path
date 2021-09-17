@@ -192,7 +192,7 @@
 	</tr>
 	<tr>
 		<td>KEBAB_MENU_OPTION</td>
-		<td>//button[contains(text(), '${key_kebabOption}')]</td>
+		<td>//*[@class = 'dropdown-item' and contains(text(), '${key_kebabOption}')]</td>
 		<td></td>
 	</tr>
 </tbody>

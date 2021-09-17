@@ -111,6 +111,21 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>OBJECT_NAME</td>
+		<td>//a[contains(text(),'${name}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OBJECT_STATUS</td>
+		<td>//strong[contains(@class, 'workflow-value') and contains(text(),'${status}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OBJECT_SYSTEM</td>
+		<td>//div[contains(text(),'${system}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>OBJECT_NAME_COLUMN</td>
 		<td>//div[contains(@class,'dnd-th') and contains(text(),'Name')]</td>
 		<td></td>

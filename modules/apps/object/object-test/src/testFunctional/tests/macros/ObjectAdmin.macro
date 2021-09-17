@@ -98,6 +98,20 @@ definition {
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_STATUS_COLUMN");
 	}
 
+	macro assertObjectColumnValue {
+		AssertTextEquals(
+			value1 = "${name}",
+			locator1 = "ObjectAdmin#OBJECT_NAME");
+
+		AssertTextEquals(
+			value1 = "${system}",
+			locator1 = "ObjectAdmin#OBJECT_SYSTEM");
+
+		AssertTextEquals(
+			value1 = "${status}",
+			locator1 = "ObjectAdmin#OBJECT_STATUS");
+	}
+
 	macro assertObjectDetailsPage {
 		Click(locator1 = "ObjectAdmin#OBJECT_DETAILS_TAB");
 

@@ -1280,7 +1280,17 @@ definition {
 	@priority = "4"
 	test TableDisplayCorrectValueWhenObjectCreated {
 
-		// TODO LPS-138805 TableDisplayCorrectValueWhenObjectCreated pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.assertObjectColumnValue(
+			name = "CustomObject",
+			status = "Draft",
+			system = "No");
 
 	}
 

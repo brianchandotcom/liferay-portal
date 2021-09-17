@@ -11,12 +11,20 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/mb.mbmessage/add-message \
-				-u test@liferay.com:test \
+				-u ${userEmailAddress}:${userPassword} \
 				-d parentMessageId=${messageId} \
 				-d subject=RE: ${threadSubject} \
-				-d body=${replyBody} \
+				-d body=<p>${replyBody}</p> \
 				-d format='bbcode' \
 				-d inputStreamOVPs= \
 				-d anonymous=false \
@@ -46,7 +54,9 @@ definition {
 		JSONQuestionsAPI._addQuestion(
 			bodyField = "${bodyField}",
 			categoryId = "${categoryId}",
-			titleField = "${titleField}");
+			titleField = "${titleField}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
 	}
 
 	@summary = "Add a question with a tag."

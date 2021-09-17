@@ -16,16 +16,16 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.util.Arrays;
 import java.util.List;
@@ -81,10 +81,10 @@ public class ObjectDefinitionsFieldsDisplayContext {
 				"delete", "delete", "async"));
 	}
 
-	public CreationMenu getCreationMenu() throws Exception {
+	public CreationMenu getCreationMenu() throws PortalException {
 		CreationMenu creationMenu = new CreationMenu();
 
-		if (!hasAddObjectFieldPermission()) {
+		if (!_hasAddObjectFieldPermission()) {
 			return creationMenu;
 		}
 
@@ -119,14 +119,10 @@ public class ObjectDefinitionsFieldsDisplayContext {
 			_objectRequestHelper.getLiferayPortletResponse());
 	}
 
-	public boolean hasAddObjectFieldPermission() {
-		PortletResourcePermission portletResourcePermission =
-			_objectDefinitionModelResourcePermission.
-				getPortletResourcePermission();
-
-		return portletResourcePermission.contains(
-			_objectRequestHelper.getPermissionChecker(), null,
-			ObjectActionKeys.ADD_OBJECT_DEFINITION);
+	private boolean _hasAddObjectFieldPermission() throws PortalException {
+		return _objectDefinitionModelResourcePermission.contains(
+			_objectRequestHelper.getPermissionChecker(),
+			getObjectDefinitionId(), ActionKeys.UPDATE);
 	}
 
 	private final ModelResourcePermission<ObjectDefinition>

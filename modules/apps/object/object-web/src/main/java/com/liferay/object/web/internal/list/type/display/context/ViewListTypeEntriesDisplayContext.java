@@ -16,16 +16,16 @@ package com.liferay.object.web.internal.list.type.display.context;
 
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.list.type.constants.ListTypeActionKeys;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.util.Arrays;
 import java.util.List;
@@ -82,10 +82,10 @@ public class ViewListTypeEntriesDisplayContext {
 				"delete", "delete", "async"));
 	}
 
-	public CreationMenu getCreationMenu() {
+	public CreationMenu getCreationMenu() throws PortalException {
 		CreationMenu creationMenu = new CreationMenu();
 
-		if (!hasAddListTypeEntryPermission()) {
+		if (!_hasAddListTypeEntryPermission()) {
 			return creationMenu;
 		}
 
@@ -101,16 +101,6 @@ public class ViewListTypeEntriesDisplayContext {
 		return creationMenu;
 	}
 
-	public boolean hasAddListTypeEntryPermission() {
-		PortletResourcePermission portletResourcePermission =
-			_listTypeDefinitionModelResourcePermission.
-				getPortletResourcePermission();
-
-		return portletResourcePermission.contains(
-			_objectRequestHelper.getPermissionChecker(), null,
-			ListTypeActionKeys.ADD_LIST_TYPE_DEFINITION);
-	}
-
 	private long _getListTypeDefinitionId() {
 		HttpServletRequest httpServletRequest =
 			_objectRequestHelper.getRequest();
@@ -120,6 +110,12 @@ public class ViewListTypeEntriesDisplayContext {
 				ObjectWebKeys.LIST_TYPE_DEFINITION);
 
 		return listTypeDefinition.getListTypeDefinitionId();
+	}
+
+	private boolean _hasAddListTypeEntryPermission() throws PortalException {
+		return _listTypeDefinitionModelResourcePermission.contains(
+			_objectRequestHelper.getPermissionChecker(),
+			_getListTypeDefinitionId(), ActionKeys.UPDATE);
 	}
 
 	private final ModelResourcePermission<ListTypeDefinition>

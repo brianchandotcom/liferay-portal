@@ -81,7 +81,7 @@ public class ViewListTypeDefinitionsDisplayContext {
 	public CreationMenu getCreationMenu() {
 		CreationMenu creationMenu = new CreationMenu();
 
-		if (!hasAddListTypeDefinitionPermission()) {
+		if (!_hasAddListTypeDefinitionPermission()) {
 			return creationMenu;
 		}
 
@@ -105,7 +105,7 @@ public class ViewListTypeDefinitionsDisplayContext {
 			_objectRequestHelper.getLiferayPortletResponse());
 	}
 
-	public boolean hasAddListTypeDefinitionPermission() {
+	private boolean _hasAddListTypeDefinitionPermission() {
 		PortletResourcePermission portletResourcePermission =
 			_listTypeDefinitionModelResourcePermission.
 				getPortletResourcePermission();

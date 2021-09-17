@@ -79,7 +79,7 @@ public class ViewObjectDefinitionsDisplayContext {
 	public CreationMenu getCreationMenu() throws Exception {
 		CreationMenu creationMenu = new CreationMenu();
 
-		if (!hasAddObjectDefinitionPermission()) {
+		if (!_hasAddObjectDefinitionPermission()) {
 			return creationMenu;
 		}
 
@@ -103,7 +103,7 @@ public class ViewObjectDefinitionsDisplayContext {
 			_objectRequestHelper.getLiferayPortletResponse());
 	}
 
-	public boolean hasAddObjectDefinitionPermission() {
+	private boolean _hasAddObjectDefinitionPermission() {
 		PortletResourcePermission portletResourcePermission =
 			_objectDefinitionModelResourcePermission.
 				getPortletResourcePermission();

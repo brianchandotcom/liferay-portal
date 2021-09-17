@@ -101,13 +101,11 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -246,8 +244,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_addRoles(serviceContext);
 			_addResourcePermissions(
-				"/site-initializer/resource-permissions.json",
-				serviceContext);
+				"/site-initializer/resource-permissions.json", serviceContext);
 		}
 		catch (Exception exception) {
 			throw new InitializationException(exception);
@@ -385,6 +382,45 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addCommerceChannel(
+			Channel channel, ServiceContext serviceContext)
+		throws Exception {
+
+		Group group = _groupLocalService.getGroup(
+			serviceContext.getScopeGroupId());
+
+		group.setType(GroupConstants.TYPE_SITE_PRIVATE);
+		group.setManualMembership(true);
+		group.setMembershipRestriction(
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION);
+
+		_groupLocalService.updateGroup(group);
+
+		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
+		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
+
+		_commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
+
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				serviceContext.getScopeGroupId(),
+				CommerceAccountConstants.SERVICE_NAME));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		modifiableSettings.setValue(
+			"commerceSiteType",
+			String.valueOf(CommerceAccountConstants.SITE_TYPE_B2C));
+
+		modifiableSettings.store();
+
+		_addModelResourcePermissions(
+			CommerceChannel.class.getName(), String.valueOf(channel.getId()),
+			"/site-initializer/commerce-channels/raylife-resource-permissions.json",
+			serviceContext);
+	}
+
 	private void _addCommerceChannels(ServiceContext serviceContext)
 		throws Exception {
 
@@ -418,37 +454,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			channel = channelResource.postChannel(channel);
-
-			Group group = _groupLocalService.getGroup(serviceContext.getScopeGroupId());
-
-			group.setType(GroupConstants.TYPE_SITE_PRIVATE);
-			group.setManualMembership(true);
-			group.setMembershipRestriction(
-				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION);
-
-			_groupLocalService.updateGroup(group);
-
-			_commerceCurrencyLocalService.importDefaultValues(serviceContext);
-			_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
-
-			_commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
-
-			Settings settings = _settingsFactory.getSettings(
-				new GroupServiceSettingsLocator(
-					serviceContext.getScopeGroupId(), CommerceAccountConstants.SERVICE_NAME));
-
-			ModifiableSettings modifiableSettings =
-				settings.getModifiableSettings();
-
-			modifiableSettings.setValue("commerceSiteType", String.valueOf(CommerceAccountConstants.SITE_TYPE_B2C));
-
-			modifiableSettings.store();
-
-			_addModelResourcePermissions(
-				CommerceChannel.class.getName(), String.valueOf(channel.getId()),
-				"/site-initializer/model-resource-permissions.json",
-				serviceContext);
+			_addCommerceChannel(
+				channelResource.postChannel(channel), serviceContext);
 		}
 	}
 

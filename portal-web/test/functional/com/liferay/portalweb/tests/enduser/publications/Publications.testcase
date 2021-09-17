@@ -290,6 +290,8 @@ definition {
 	@description = "Assert the conflict changes disply when modifying and deleting the same document in two Publications"
 	@priority = "4"
 	test AssertModificationDeletionConflictDisplays {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Guest",
@@ -356,6 +358,8 @@ definition {
 	@description = "Assert there are no conflict changes when deleting the same document in two Publications"
 	@priority = "4"
 	test AssertNoConflictForDeletionsCombinationPublications {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -926,6 +930,8 @@ definition {
 	@description = "Assert the conflict changes disply when adding the same folder Name in two Publications and resolve by editing"
 	@priority = "5"
 	test ResolveDuplicateNameConflictPublicationsByEdting {
+		property portal.acceptance = "true";
+
 		JSONPublications.addPublication(publicationName = "Publication Name 1");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 1");

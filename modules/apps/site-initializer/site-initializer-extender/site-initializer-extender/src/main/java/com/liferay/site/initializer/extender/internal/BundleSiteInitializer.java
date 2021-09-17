@@ -235,10 +235,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_addAssetListEntries(serviceContext);
 			_addCommerceCatalogs(serviceContext);
-
-			List<String> commerceChannelIds = _addCommerceChannels(
-				serviceContext);
-
+			_addCommerceChannels(serviceContext);
 			_addDDMTemplates(serviceContext);
 			_addFragmentEntries(serviceContext);
 			_addJournalArticles(
@@ -251,13 +248,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addResourcePermissions(
 				"/site-initializer/resource-permissions.json",
 				serviceContext);
-
-			for (String commerceChannelId : commerceChannelIds) {
-				_addModelResourcePermissions(
-					CommerceChannel.class.getName(), commerceChannelId,
-					"/site-initializer/model-resource-permissions.json",
-					serviceContext);
-			}
 		}
 		catch (Exception exception) {
 			throw new InitializationException(exception);
@@ -395,14 +385,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private List<String> _addCommerceChannels(ServiceContext serviceContext)
+	private void _addCommerceChannels(ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/commerce-channels");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
-			return new ArrayList<>();
+			return;
 		}
 
 		ChannelResource.Builder channelResourceBuilder =
@@ -411,8 +401,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ChannelResource channelResource = channelResourceBuilder.user(
 			serviceContext.fetchUser()
 		).build();
-
-		List<String> commerceChannelIds = new ArrayList<>();
 
 		for (String resourcePath : resourcePaths) {
 			String json = _read(resourcePath);
@@ -431,8 +419,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			channel = channelResource.postChannel(channel);
-
-			commerceChannelIds.add(String.valueOf(channel.getId()));
 
 			Group group = _groupLocalService.getGroup(serviceContext.getScopeGroupId());
 
@@ -458,9 +444,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			modifiableSettings.setValue("commerceSiteType", String.valueOf(CommerceAccountConstants.SITE_TYPE_B2C));
 
 			modifiableSettings.store();
-		}
 
-		return commerceChannelIds;
+			_addModelResourcePermissions(
+				CommerceChannel.class.getName(), String.valueOf(channel.getId()),
+				"/site-initializer/model-resource-permissions.json",
+				serviceContext);
+		}
 	}
 
 	private void _addDDMStructures(ServiceContext serviceContext)

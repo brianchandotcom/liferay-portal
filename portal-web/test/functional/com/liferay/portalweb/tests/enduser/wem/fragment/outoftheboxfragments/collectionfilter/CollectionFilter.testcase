@@ -3751,47 +3751,75 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-113926. The user should view no results in Collection Dipslay when search non collection item by keywords."
+	@description = "This is a test for LPS-113926 and LPS-137722. View no results found when no matched collection items in Collection Display."
 	@priority = "4"
-	test ViewNoResultsInCollectionDisplayWhenSearchNonCollectionItemByKeywords {
-		task ("Add a web content") {
-			JSONWebcontent.addWebContent(
-				content = "Levis 501",
+	test ViewNoResultsFoundInCollectionDisplayWhenNoMatchedCollectionItems {
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
-				title = "Levis 501");
+				title = "Type");
 		}
 
-		task ("Add a blog") {
-			JSONBlog.addEntry(
-				entryContent = "LeBron VIII",
-				entryTitle = "LeBron VIII",
-				groupName = "Test Site Name");
+		task ("Add 4 categories in Type vocabulary") {
+			var suvId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "SUV",
+				vocabularyName = "Type");
+
+			var carId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Car",
+				vocabularyName = "Type");
+
+			for (var title : list "Trunk,Hatchback") {
+				JSONCategory.addCategory(
+					groupName = "Test Site Name",
+					title = "${title}",
+					vocabularyName = "Type");
+			}
 		}
 
-		task ("Add a document") {
-			JSONDocument.addFile(
-				dmDocumentTitle = "AirPods",
-				groupName = "Test Site Name");
+		task ("Add the first web content with Car") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${carId}",
+				content = "Tesla Model X",
+				groupName = "Test Site Name",
+				title = "Tesla Model X");
 		}
 
-		task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
+		task ("Add the second web content with SUV") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${suvId}",
+				content = "Tesla Model Y",
+				groupName = "Test Site Name",
+				title = "Tesla Model Y");
+		}
+
+		task ("Add the third web content with Car") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${carId}",
+				content = "Tesla Model 3",
+				groupName = "Test Site Name",
+				title = "Tesla Model 3");
+		}
+
+		task ("Add a dynamic collection for All Types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = "Test Site Name",
-				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article",
+				itemType = "All Types",
 				title = "Dynamic Collection");
 		}
 
-		task ("Add a content page") {
+		task ("Add the first content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
+				layoutName = "Test Page Name 1",
 				type = "content");
 		}
 
 		task ("Add a Collection Display fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
+				pageName = "Test Page Name 1",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
@@ -3805,11 +3833,18 @@ definition {
 				fragmentName = "Collection Display");
 		}
 
-		task ("Add a Content Display to Collection Display") {
+		task ("Add a Heading fragment into the Collection Display") {
 			PageEditor.addFragmentToCollectionDisplay(
-				collectionName = "Content Display",
-				entryTitle = "Levis 501",
-				fragmentName = "Content Display");
+				collectionName = "Basic Components",
+				entryTitle = "Tesla Model 3",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the Title of collection items to editable field") {
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
 		}
 
 		task ("Add a Collection Filter above the Collection Display") {
@@ -3827,60 +3862,183 @@ definition {
 				targetCollection = "Dynamic Collection");
 		}
 
-		task ("View no results in Collection Dipslay when search non collection item by keywords at Preview mode") {
+		task ("View No Results Found in Collection Dipslay when search Toyota at Preview mode") {
 			PageEditor.openPreviewMode();
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "Levis 501",
-				key_rowPosition = "1",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+			var n = "1";
 
-			Page.searchInCollectionFilter(searchTerm = "LeBron");
+			for (var title : list "Tesla Model 3,Tesla Model Y,Tesla Model X") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
 
-			AssertElementNotPresent(
-				key_colPosition = "1",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM");
+				var n = ${n} + 1;
+			}
 
-			Page.searchInCollectionFilter(searchTerm = "AirPods");
+			Page.searchInCollectionFilter(searchTerm = "Toyota");
 
-			AssertElementNotPresent(
-				key_colPosition = "1",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM");
+			AssertTextEquals.assertPartialText(
+				index = "2",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
+				value1 = "No Results Found");
+
+			AssertTextEquals.assertPartialText(
+				index = "2",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
+				value1 = "Sorry, no results were found.");
 
 			IFrame.closeFrame();
 
 			PageEditor.clickPublish();
 		}
 
-		task ("View no results in Collection Dipslay when search non collection item by keywords at View mode") {
+		task ("View No Results Found in Collection Dipslay when search BMW at View mode") {
 			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name",
+				pageName = "Test Page Name 1",
 				siteName = "Test Site Name");
 
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryContent = "Levis 501",
-				key_rowPosition = "1",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
+			var n = "1";
 
-			Page.searchInCollectionFilter(searchTerm = "LeBron");
+			for (var title : list "Tesla Model 3,Tesla Model Y,Tesla Model X") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_fragmentName = "heading",
+					key_rowPosition = "${n}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
 
-			AssertElementNotPresent(
-				key_colPosition = "1",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM");
+				var n = ${n} + 1;
+			}
 
-			Page.searchInCollectionFilter(searchTerm = "AirPods");
+			Page.searchInCollectionFilter(searchTerm = "BMW");
 
-			AssertElementNotPresent(
-				key_colPosition = "1",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM");
+			AssertTextEquals.assertPartialText(
+				index = "2",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
+				value1 = "No Results Found");
+
+			AssertTextEquals.assertPartialText(
+				index = "2",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
+				value1 = "Sorry, no results were found.");
+		}
+
+		task ("Add the second content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 2",
+				type = "content");
+		}
+
+		task ("Add a Collection Display fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 2",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection and Bordered List in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display",
+				listStyle = "Bordered List");
+		}
+
+		task ("Add a Collection Filter above the Collection Display") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				dropTarget = "Header",
+				fragmentName = "Collection Filter",
+				targetFragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection as Target Collection and select the Category as Filter and Type as Source") {
+			PageEditor.editCollectionFilter(
+				categoryNameList = "SUV,Car,Trunk,Hatchback",
+				filter = "Category",
+				fragmentName = "Collection Filter",
+				targetCollection = "Dynamic Collection",
+				vocabularyName = "Type");
+		}
+
+		task ("View No Results Found in Collection Dipslay when select Trunk at Preview mode") {
+			PageEditor.openPreviewMode();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			var n = "1";
+
+			for (var title : list "Tesla Model 3,Tesla Model Y,Tesla Model X") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Trunk",
+				multipleSelection = "true",
+				selectedName = "Trunk",
+				title = "Type");
+
+			AssertTextEquals.assertPartialText(
+				index = "2",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
+				value1 = "No Results Found");
+
+			AssertTextEquals.assertPartialText(
+				index = "2",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
+				value1 = "Sorry, no results were found.");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View No Results Found in Collection Dipslay when select Hatchback at View mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name 2",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var title : list "Tesla Model 3,Tesla Model Y,Tesla Model X") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			Page.selectFilterInCollectionFilter(
+				categoryNameList = "Hatchback",
+				multipleSelection = "true",
+				selectedName = "Hatchback",
+				title = "Type");
+
+			AssertTextEquals.assertPartialText(
+				index = "2",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
+				value1 = "No Results Found");
+
+			AssertTextEquals.assertPartialText(
+				index = "2",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
+				value1 = "Sorry, no results were found.");
 		}
 	}
 

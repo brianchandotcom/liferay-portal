@@ -10,7 +10,7 @@
 </thead>
 
 <tbody>
-    	<tr>
+		<tr>
 		<td>OBJECT_DEFINITION_NAME</td>
 		<td>//input[@id='objectDefinitionName']</td>
 		<td></td>

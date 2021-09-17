@@ -1,15 +1,9 @@
 definition {
-	
-    	macro assertCustomObject {
+
+	macro assertCustomObject {
 		AssertElementPresent(
 			key_labelName = "${labelName}",
 			locator1 = "CreateObject#OBJECT_NAME");
-	}
-
-    macro assertObjectDefinitionName {
-		AssertTextEquals(
-			locator1 = "CreateObject#OBJECT_DEFINITION_NAME",
-			value1 = "${objectName}");
 	}
 
 	macro assertDisabledFieldName {
@@ -34,6 +28,12 @@ definition {
 		AssertSelectedLabel(
 			locator1 = "CreateObject#FIELD_TYPE",
 			value1 = "${fieldType}");
+	}
+
+	macro assertObjectDefinitionName {
+		AssertTextEquals(
+			locator1 = "CreateObject#OBJECT_DEFINITION_NAME",
+			value1 = "${objectName}");
 	}
 
 	macro assertObjectFieldNameIsAutofilled {

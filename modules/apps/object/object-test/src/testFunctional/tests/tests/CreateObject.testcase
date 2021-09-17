@@ -134,6 +134,7 @@ definition {
 	@priority = "5"
 	test CanCreateCustomObject {
 		property portal.acceptance = "true";
+
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.addNewObject(

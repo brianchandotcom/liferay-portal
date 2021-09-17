@@ -26,6 +26,7 @@ export default function updateCollectionDisplayCollection({
 				collection,
 				listItemStyle: null,
 				listStyle,
+				showAllItems: false,
 				templateKey: null,
 			},
 			itemId,

@@ -301,21 +301,10 @@ export const CollectionGeneralPanel = ({item}) => {
 			}).then(({totalNumberOfItems}) => {
 				if (isMounted()) {
 					setTotalNumberOfItems(totalNumberOfItems);
-
-					if (showAllItems) {
-						handleConfigurationChanged({
-							numberOfItems: totalNumberOfItems,
-						});
-					}
 				}
 			});
 		}
-	}, [
-		item.config.collection,
-		isMounted,
-		showAllItems,
-		handleConfigurationChanged,
-	]);
+	}, [item.config.collection, isMounted]);
 
 	useEffect(() => {
 		if (

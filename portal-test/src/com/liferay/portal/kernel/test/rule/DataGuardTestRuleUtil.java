@@ -77,6 +77,13 @@ public class DataGuardTestRuleUtil {
 	public static void afterClass(DataBag dataBag, String testClassName)
 		throws Throwable {
 
+		afterClass(dataBag, testClassName, true);
+	}
+
+	public static void afterClass(
+			DataBag dataBag, String testClassName, boolean autoDelete)
+		throws Throwable {
+
 		ServiceRegistration<SessionCustomizer> serviceRegistration =
 			dataBag._serviceRegistration;
 
@@ -86,15 +93,22 @@ public class DataGuardTestRuleUtil {
 
 		_autoDeleteAndAssert(
 			testClassName, dataBag._dataMap, dataBag._portlets,
-			dataBag._records);
+			dataBag._records, autoDelete);
 	}
 
 	public static void afterMethod(DataBag dataBag, String testClassName)
 		throws Throwable {
 
+		afterMethod(dataBag, testClassName, true);
+	}
+
+	public static void afterMethod(
+			DataBag dataBag, String testClassName, boolean autoDelete)
+		throws Throwable {
+
 		_autoDeleteAndAssert(
 			testClassName, dataBag._dataMap, dataBag._portlets,
-			dataBag._records);
+			dataBag._records, autoDelete);
 	}
 
 	public static DataBag beforeClass() {
@@ -146,7 +160,7 @@ public class DataGuardTestRuleUtil {
 			String testClassName,
 			Map<String, List<BaseModel<?>>> previousDataMap,
 			List<Portlet> previousPortlets,
-			Map<String, Map<Serializable, String>> records)
+			Map<String, Map<Serializable, String>> records, boolean autoDelete)
 		throws Throwable {
 
 		for (Portlet portlet : PortletLocalServiceUtil.getPortlets()) {
@@ -155,7 +169,9 @@ public class DataGuardTestRuleUtil {
 			}
 		}
 
-		_autoDeleteLeftovers(previousDataMap);
+		if (autoDelete) {
+			_autoDeleteLeftovers(previousDataMap);
+		}
 
 		StringBundler sb = new StringBundler();
 

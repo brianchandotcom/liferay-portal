@@ -34,7 +34,8 @@ public class DataGuardTestRule
 			return;
 		}
 
-		DataGuardTestRuleUtil.afterClass(dataBag, description.getClassName());
+		DataGuardTestRuleUtil.afterClass(
+			dataBag, description.getClassName(), _autoDelete(description));
 	}
 
 	@Override
@@ -47,7 +48,8 @@ public class DataGuardTestRule
 			return;
 		}
 
-		DataGuardTestRuleUtil.afterMethod(dataBag, description.getClassName());
+		DataGuardTestRuleUtil.afterMethod(
+			dataBag, description.getClassName(), _autoDelete(description));
 	}
 
 	@Override
@@ -83,6 +85,18 @@ public class DataGuardTestRule
 	}
 
 	private DataGuardTestRule() {
+	}
+
+	private boolean _autoDelete(Description description) {
+		Class<?> testClass = description.getTestClass();
+
+		DataGuard dataGuard = testClass.getAnnotation(DataGuard.class);
+
+		if (dataGuard == null) {
+			return true;
+		}
+
+		return dataGuard.autoDelete();
 	}
 
 }

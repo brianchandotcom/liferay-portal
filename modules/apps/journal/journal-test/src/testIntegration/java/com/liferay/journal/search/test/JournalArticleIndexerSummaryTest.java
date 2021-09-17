@@ -120,6 +120,45 @@ public class JournalArticleIndexerSummaryTest {
 			highlightedTitle, highlightedContent, document);
 	}
 
+	@Test
+	public void testStaleTitleFreshContent() throws Exception {
+		String content = "test content";
+		String title = "test title";
+
+		Document document = getDocument(title, content);
+
+		String staleContent = "stale content";
+		String staleTitle = "stale title";
+
+		setFields(staleTitle, staleContent, document);
+
+		_summaryFixture.assertSummary(staleTitle, content, document);
+	}
+
+	@Test
+	public void testStaleTitleFreshContentHighlighted() throws Exception {
+		String content = "test content";
+		String title = "test title";
+
+		Document document = getDocument(title, content);
+
+		String staleHighlightedContent = StringBundler.concat(
+			HighlightUtil.HIGHLIGHT_TAG_OPEN, "test",
+			HighlightUtil.HIGHLIGHT_TAG_CLOSE, " stale content");
+		String staleHighlightedTitle = StringBundler.concat(
+			HighlightUtil.HIGHLIGHT_TAG_OPEN, "test",
+			HighlightUtil.HIGHLIGHT_TAG_CLOSE, " stale title");
+
+		setSnippets(staleHighlightedTitle, staleHighlightedContent, document);
+
+		String highlightedContent = StringBundler.concat(
+			HighlightUtil.HIGHLIGHT_TAG_OPEN, "test",
+			HighlightUtil.HIGHLIGHT_TAG_CLOSE, " content");
+
+		_summaryFixture.assertSummary(
+			staleHighlightedTitle, highlightedContent, document);
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 

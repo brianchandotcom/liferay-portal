@@ -8799,7 +8799,7 @@ web.server.display.node=true</echo>
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 
-cluster.link.channel.properties.control=${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/clustering_jdbc_ping.xml</echo>
+cluster.link.channel.properties.control=${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/clustering/clusteringframework/dependencies/clustering_jdbc_ping.xml</echo>
 			</then>
 		</if>
 

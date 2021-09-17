@@ -134,7 +134,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Server Administration");
 
-		var script = TestCase.getFileContent(fileName = "${scriptFile}");
+		var script = TestCase.getFileContent(
+			fileName = "${scriptFile}",
+			filePath = "coreinfrastructureee/clustering/clusteringframework");
 
 		ServerAdministration.executeScript(
 			language = "Groovy",

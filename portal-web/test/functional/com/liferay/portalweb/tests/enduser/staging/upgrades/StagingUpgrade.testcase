@@ -226,6 +226,111 @@ definition {
 			sitePagesVariationName = "Site Pages Variation Name");
 	}
 
+	@description = "This is a use case for LPS-132491."
+	@priority = "5"
+	test PublishPageVersioningViaRemoteStagingAfterUpgrade71103 {
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property data.archive.type = "data-archive-remote-staging-with-page-versioning";
+		property portal.version = "7.1.10.3";
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Remote Site");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Variation Page",
+			siteName = "Remote Site");
+
+		Staging.viewPortletDefaultMessageInRemoteLive();
+	}
+
+	@description = "This is a use case for LPS-132491."
+	@priority = "5"
+	test PublishPageVersioningViaRemoteStagingAfterUpgrade72101 {
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property data.archive.type = "data-archive-remote-staging-with-page-versioning";
+		property portal.version = "7.2.10.1";
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Remote Site");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Variation Page",
+			siteName = "Remote Site");
+
+		Staging.viewPortletDefaultMessageInRemoteLive();
+	}
+
+	@description = "This is a use case for LPS-132491."
+	@priority = "5"
+	test PublishPageVersioningViaRemoteStagingAfterUpgrade73101 {
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property data.archive.type = "data-archive-remote-staging-with-page-versioning";
+		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "7.3.10.1";
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Remote Site");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Variation Page",
+			siteName = "Remote Site");
+
+		Staging.viewPortletDefaultMessageInRemoteLive();
+	}
+
+	@description = "This is a use case for LPS-132491."
+	@priority = "5"
+	test PublishPageVersioningViaRemoteStagingAfterUpgrade701016 {
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property data.archive.type = "data-archive-remote-staging-with-page-versioning";
+		property portal.version = "7.0.10.16";
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Remote Site");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Variation Page",
+			siteName = "Remote Site");
+
+		Staging.viewPortletDefaultMessageInRemoteLive();
+	}
+
 	@description = "This is a use case for LPS-87237 and LPS-126769."
 	@priority = "5"
 	test ViewStagingDefaultSettingAfterUpgrade704 {

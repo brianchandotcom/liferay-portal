@@ -1326,6 +1326,10 @@ definition {
 			value1 = "${pageVariationName}");
 	}
 
+	macro viewPortletDefaultMessageInRemoteLive {
+		Alert.viewInfoMessageSpecific(infoMessage = "This application is not visible to users yet");
+	}
+
 	macro viewProcessResult {
 		while (IsElementNotPresent(locator1 = "Staging#PROCESS_RESULT")) {
 			Pause(locator1 = "1000");

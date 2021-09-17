@@ -641,12 +641,28 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to set a field as Mandatory"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSetFieldMandatory {
 
-		// TODO LPS-138830 CanSetFieldMandatory pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Field",
+			fieldType = "String",
+			isMandatory = "true");
+			
+		ObjectAdmin.goToFieldsDetails(fieldName = "customField");
+
+		CreateObject.assertToggleMandatory();
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Label of a Field after the Object is published"

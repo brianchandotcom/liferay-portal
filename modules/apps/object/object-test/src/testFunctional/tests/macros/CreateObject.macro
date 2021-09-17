@@ -1,5 +1,10 @@
 definition {
 
+	macro assertToggleMandatory {
+		AssertChecked.assertCheckedNotVisible(
+			locator1 = "ObjectAdmin#OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH");
+	}
+
 	macro assertDisabledFieldName {
 		AssertElementPresent(locator1 = "CreateObject#DISABLED_FIELD_NAME");
 	}

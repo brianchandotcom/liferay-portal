@@ -67,11 +67,10 @@ definition {
 			videoShortcutTitle = "Test YouTube Video",
 			viewVideoHelpMessage = "true");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "video",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Page Name",
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",

@@ -173,13 +173,10 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "site-name");
 
 		AssertVisible(
 			key_uploadFileName = "Document_2.jpg",
@@ -201,13 +198,10 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "site-name-staging");
 
 		AssertVisible(
 			key_uploadFileName = "Document_2.jpg",
@@ -217,13 +211,10 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "site-name");
 
 		AssertVisible(
 			key_uploadFileName = "Document_2.jpg",
@@ -613,13 +604,10 @@ definition {
 			navTab = "Documents and Media",
 			videoShortcutTitle = "Test YouTube Video");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "video",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "site-name-staging");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",
@@ -630,13 +618,10 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "video",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",
@@ -657,13 +642,10 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "video",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "site-name-staging");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",
@@ -674,13 +656,10 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "video",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",
@@ -912,13 +891,10 @@ definition {
 
 		PortletEntry.publish();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "site-name-staging");
 
 		AssertVisible(
 			key_uploadFileName = "Document_2.jpg",
@@ -928,13 +904,10 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "site-name");
 
 		AssertVisible(
 			key_uploadFileName = "Document_2.jpg",
@@ -959,13 +932,10 @@ definition {
 
 		Button.clickPublish();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "site-name-staging");
 
 		AssertVisible(
 			key_uploadFileName = "Document_1.jpg",
@@ -975,13 +945,10 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "site-name");
 
 		AssertVisible(
 			key_uploadFileName = "Document_1.jpg",

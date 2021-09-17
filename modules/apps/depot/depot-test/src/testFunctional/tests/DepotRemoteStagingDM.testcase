@@ -212,14 +212,11 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.openSitePage(
+		BlogsNavigator.openToBlogEntry(
 			baseURL = "http://localhost:9080",
-			pageName = "Test Page",
-			siteName = "Remote Site");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "remote-site");
 
 		AssertVisible(
 			key_uploadFileName = "Document_2.jpg",
@@ -246,15 +243,10 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		Pause(locator1 = "3000");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "site-name");
 
 		AssertVisible(
 			key_uploadFileName = "Document_2.jpg",
@@ -271,14 +263,11 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.openSitePage(
+		BlogsNavigator.openToBlogEntry(
 			baseURL = "http://localhost:9080",
-			pageName = "Test Page",
-			siteName = "Remote Site");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "remote-site");
 
 		AssertVisible(
 			key_uploadFileName = "Document_2.jpg",
@@ -805,13 +794,10 @@ definition {
 			navTab = "Documents and Media",
 			videoShortcutTitle = "Test YouTube Video");
 
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "video",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",
@@ -829,14 +815,11 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.openSitePage(
+		BlogsNavigator.openToBlogEntry(
 			baseURL = "http://localhost:9080",
-			pageName = "Test Page",
-			siteName = "Remote Site");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "video",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "remote-site");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",
@@ -862,13 +845,10 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "video",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "site-name");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",
@@ -886,14 +866,11 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.openSitePage(
+		BlogsNavigator.openToBlogEntry(
 			baseURL = "http://localhost:9080",
-			pageName = "Test Page",
-			siteName = "Remote Site");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "video",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "remote-site");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",
@@ -1173,13 +1150,10 @@ definition {
 
 		PortletEntry.publish();
 
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "site-name");
 
 		AssertVisible(
 			key_uploadFileName = "Document_2.jpg",
@@ -1196,16 +1170,11 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.openSitePage(
+		BlogsNavigator.openToBlogEntry(
 			baseURL = "http://localhost:9080",
-			pageName = "Test Page",
-			siteName = "Remote Site");
-
-		Pause(locator1 = "3000");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "remote-site");
 
 		AssertVisible(
 			key_uploadFileName = "Document_2.jpg",
@@ -1235,13 +1204,10 @@ definition {
 
 		Button.clickPublish();
 
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "site-name");
 
 		AssertVisible(
 			key_uploadFileName = "Document_1.jpg",
@@ -1258,14 +1224,11 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.openSitePage(
+		BlogsNavigator.openToBlogEntry(
 			baseURL = "http://localhost:9080",
-			pageName = "Test Page",
-			siteName = "Remote Site");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Test Page",
+			siteURLKey = "remote-site");
 
 		AssertVisible(
 			key_uploadFileName = "Document_1.jpg",

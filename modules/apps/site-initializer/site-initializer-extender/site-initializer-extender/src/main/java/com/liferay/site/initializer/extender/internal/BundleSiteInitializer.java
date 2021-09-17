@@ -442,44 +442,33 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			commerceChannelIds.add(String.valueOf(channel.getId()));
 
-			_addCommerceSiteType(
-				serviceContext.getScopeGroupId(),
-				String.valueOf(CommerceAccountConstants.SITE_TYPE_B2C),
-				serviceContext);
+			Group group = _groupLocalService.getGroup(serviceContext.getScopeGroupId());
+
+			group.setType(GroupConstants.TYPE_SITE_PRIVATE);
+			group.setManualMembership(true);
+			group.setMembershipRestriction(
+				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION);
+
+			_groupLocalService.updateGroup(group);
+
+			_commerceCurrencyLocalService.importDefaultValues(serviceContext);
+			_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
+
+			_commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
+
+			Settings settings = _settingsFactory.getSettings(
+				new GroupServiceSettingsLocator(
+					serviceContext.getScopeGroupId(), CommerceAccountConstants.SERVICE_NAME));
+
+			ModifiableSettings modifiableSettings =
+				settings.getModifiableSettings();
+
+			modifiableSettings.setValue("commerceSiteType", String.valueOf(CommerceAccountConstants.SITE_TYPE_B2C));
+
+			modifiableSettings.store();
 		}
 
 		return commerceChannelIds;
-	}
-
-	private void _addCommerceSiteType(
-			long channelGroupId, String commerceSiteType,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		Group group = _groupLocalService.getGroup(channelGroupId);
-
-		group.setType(GroupConstants.TYPE_SITE_PRIVATE);
-		group.setManualMembership(true);
-		group.setMembershipRestriction(
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION);
-
-		_groupLocalService.updateGroup(group);
-
-		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
-		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
-
-		_commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
-
-		Settings settings = _settingsFactory.getSettings(
-			new GroupServiceSettingsLocator(
-				channelGroupId, CommerceAccountConstants.SERVICE_NAME));
-
-		ModifiableSettings modifiableSettings =
-			settings.getModifiableSettings();
-
-		modifiableSettings.setValue("commerceSiteType", commerceSiteType);
-
-		modifiableSettings.store();
 	}
 
 	private void _addDDMStructures(ServiceContext serviceContext)

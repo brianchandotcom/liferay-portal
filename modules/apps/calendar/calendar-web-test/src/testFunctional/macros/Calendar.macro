@@ -450,9 +450,12 @@ definition {
 
 		MenuItem.click(menuItem = "Import");
 
-		UploadCommonFile(
-			locator1 = "CalendarImport#FILE_FIELD",
-			value1 = "${calendarFile}");
+		var projectDir = PropsUtil.get("project.dir");
+		var filePath = "${projectDir}/modules/apps/calendar/calendar-web-test/src/testFunctional/tests/dependencies/${calendarFile}";
+
+		UploadFile(
+			locator1 = "TextInput#FILE",
+			value1 = "${filePath}");
 
 		ScrollWebElementIntoView(locator1 = "CalendarImport#IMPORT_BUTTON");
 

@@ -49,7 +49,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
@@ -59,7 +61,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -495,6 +499,31 @@ public class AccountRoleLocalServiceTest {
 			expectedAccountRoles, baseModelSearchResult.getBaseModels());
 	}
 
+	@Test
+	public void testSearchAccountRolesWithParams() throws Exception {
+		AccountRole accountRole1 = _accountRoleLocalService.addAccountRole(
+			TestPropsValues.getUserId(), _accountEntry1.getAccountEntryId(),
+			RandomTestUtil.randomString(), null, null);
+		AccountRole accountRole2 = _accountRoleLocalService.addAccountRole(
+			TestPropsValues.getUserId(), _accountEntry1.getAccountEntryId(),
+			RandomTestUtil.randomString(), null, null);
+
+		_assertSearchAccountRolesWithParams(
+			accountRole1.getCompanyId(),
+			new long[] {accountRole1.getAccountEntryId()},
+			LinkedHashMapBuilder.<String, Object>put(
+				"excludedRoleNames", new String[] {accountRole1.getRoleName()}
+			).build(),
+			Collections.singletonList(accountRole2));
+		_assertSearchAccountRolesWithParams(
+			accountRole1.getCompanyId(),
+			new long[] {accountRole1.getAccountEntryId()},
+			LinkedHashMapBuilder.<String, Object>put(
+				"excludedRoleIds", new Long[] {accountRole1.getRoleId()}
+			).build(),
+			Collections.singletonList(accountRole2));
+	}
+
 	private AccountRole _addAccountRole(long accountEntryId, String name)
 		throws Exception {
 
@@ -514,6 +543,21 @@ public class AccountRoleLocalServiceTest {
 				_accountEntry1.getAccountEntryGroup(),
 				AccountEntry.class.getName(),
 				_accountEntry1.getAccountEntryId(), actionKey));
+	}
+
+	private void _assertSearchAccountRolesWithParams(
+		long companyId, long[] accountEntryIds,
+		LinkedHashMap<String, Object> params,
+		List<AccountRole> expectedAccountRoles) {
+
+		BaseModelSearchResult<AccountRole> accountRoleBaseModelSearchResult =
+			_accountRoleLocalService.searchAccountRoles(
+				companyId, accountEntryIds, null, params, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(
+			expectedAccountRoles,
+			accountRoleBaseModelSearchResult.getBaseModels());
 	}
 
 	private long[] _getRoleIds(User user) throws Exception {

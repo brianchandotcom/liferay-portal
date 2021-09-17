@@ -379,7 +379,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all spell check indexes.");
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex spell-check dictionaries.");
 
 		AssertConsoleTextPresent(value1 = "Finished indexing dictionary for spellchecker/dictionary_de_DE.txt");
 
@@ -2303,7 +2303,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
 
 		Navigator.openURL();
 
@@ -2451,7 +2451,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
 
 		Navigator.openURL();
 
@@ -2769,7 +2769,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
 
 		Navigator.openURL();
 

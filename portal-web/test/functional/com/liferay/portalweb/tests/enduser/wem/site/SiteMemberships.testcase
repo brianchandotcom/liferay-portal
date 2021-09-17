@@ -122,7 +122,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Search");
 
-			SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+			SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
 		}
 
 		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
@@ -277,7 +277,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
 
 		JSONOrganization.addOrganization(
 			organizationName = "Organization Name 1",

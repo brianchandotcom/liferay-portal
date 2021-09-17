@@ -547,7 +547,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
 
 		WebContentTemplates.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
 

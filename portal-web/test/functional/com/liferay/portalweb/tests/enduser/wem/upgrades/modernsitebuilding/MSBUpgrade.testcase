@@ -17,7 +17,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
 	}
 
 	@description = "This is a basic test for modern site building components such as Content Pages, Page Templates, Fragments, Display Page Templates, and Navigation Menus. After the upgrade is complete, all of those elements should still be present, and a user should still be able to perform basic modern site building functions."

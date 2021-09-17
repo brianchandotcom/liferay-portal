@@ -541,7 +541,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -629,7 +629,7 @@ definition {
 			locator1 = "SearchAdmin#CONNECTION_ID",
 			value1 = "__SIDECAR__");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
 
 		Navigator.openURL();
 

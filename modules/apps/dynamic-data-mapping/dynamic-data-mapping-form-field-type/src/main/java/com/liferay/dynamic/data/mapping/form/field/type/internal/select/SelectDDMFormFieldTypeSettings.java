@@ -58,7 +58,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		),
 		@DDMFormRule(
 			actions = {
-				"setValue('options', isPicklistObjectField(getValue('objectFieldName')))",
+				"setValue('options', getPicklistItems(getValue('objectFieldName')))",
 				"setVisible('options', isEmpty(getValue('objectFieldName')))",
 				"setEnabled('dataSourceType', isEmpty(getValue('objectFieldName')))"
 			},

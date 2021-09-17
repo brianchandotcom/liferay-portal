@@ -31,13 +31,13 @@ import java.util.Objects;
 /**
  * @author Mateus Santana
  */
-public class IsPicklistObjectFieldFunction
+public class GetPicklistItemsFunction
 	implements DDMExpressionFunction.Function1<String, List<Object>>,
 			   DDMExpressionParameterAccessorAware {
 
-	public static final String NAME = "isPicklistObjectField";
+	public static final String NAME = "getPicklistItems";
 
-	public IsPicklistObjectFieldFunction(
+	public GetPicklistItemsFunction(
 		JSONFactory jsonFactory,
 		ListTypeEntryLocalService listTypeEntryLocalService) {
 

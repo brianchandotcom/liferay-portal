@@ -67,7 +67,8 @@ public class SXPBlueprintSearchRequestContributor
 			return searchRequest;
 		}
 
-		_sxpBlueprintSearchRequestEnhancer.enhance(searchRequest, sxpBlueprint);
+		_sxpBlueprintSearchRequestEnhancer.enhance(
+			searchRequestBuilder, sxpBlueprint);
 
 		return searchRequestBuilder.build();
 	}

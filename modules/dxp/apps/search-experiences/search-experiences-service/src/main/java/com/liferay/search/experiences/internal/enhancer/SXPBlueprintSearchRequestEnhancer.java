@@ -14,8 +14,10 @@
 
 package com.liferay.search.experiences.internal.enhancer;
 
-import com.liferay.portal.search.searcher.SearchRequest;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.search.experiences.model.SXPBlueprint;
+import com.liferay.search.experiences.rest.dto.v1_0.FrameworkConfiguration;
+import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprintConfiguration;
 
 /**
  * @author Petteri Karttunen
@@ -23,7 +25,27 @@ import com.liferay.search.experiences.model.SXPBlueprint;
 public class SXPBlueprintSearchRequestEnhancer {
 
 	public void enhance(
-		SearchRequest searchRequest, SXPBlueprint sxpBlueprint) {
+		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint) {
+
+		SXPBlueprintConfiguration sxpBlueprintConfiguration =
+			SXPBlueprintConfiguration.toDTO(
+				sxpBlueprint.getConfigurationsJSON());
+
+		processFrameworkConfiguration(
+			searchRequestBuilder,
+			sxpBlueprintConfiguration.getFrameworkConfiguration());
+	}
+
+	protected void processFrameworkConfiguration(
+		SearchRequestBuilder searchRequestBuilder,
+		FrameworkConfiguration frameworkConfiguration) {
+
+		if (frameworkConfiguration.getApplyIndexerClauses() != null) {
+			searchRequestBuilder.withSearchContext(
+				searchContext -> searchContext.setAttribute(
+					"search.full.query.suppress.indexer.provided.clauses",
+					!frameworkConfiguration.getApplyIndexerClauses()));
+		}
 	}
 
 }

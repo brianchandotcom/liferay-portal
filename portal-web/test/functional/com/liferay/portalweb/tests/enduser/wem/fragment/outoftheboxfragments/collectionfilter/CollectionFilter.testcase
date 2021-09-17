@@ -28,6 +28,239 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-137722. View alert info shown in dropdown menu when select multiple target collections without filters in common."
+	@priority = "4"
+	test CannotSelectMultipleCollectionsWithoutFiltersInCommon {
+		property test.name.skip.portal.instance = "CollectionFilter#CannotSelectMultipleCollectionsWithoutFiltersInCommon";
+
+		task ("Enable Basic Web Content and Basic Document collection providers in Gogo Shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.journal.web.internal.info.collection.provider.BasicWebContentSingleFormVariationInfoCollectionProvider");
+
+			GogoShell.viewOutput(outputContent = "true");
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.document.library.web.internal.info.collection.provider.BasicDocumentSingleFormVariationInfoCollectionProvider");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Type");
+		}
+
+		task ("Add 2 categories in Type vocabulary") {
+			var suvId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "SUV",
+				vocabularyName = "Type");
+
+			var carId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Car",
+				vocabularyName = "Type");
+		}
+
+		task ("Add three web contents") {
+			for (var style : list "X,Y,3") {
+				JSONWebcontent.addWebContent(
+					content = "Tesla Model ${style}",
+					groupName = "Test Site Name",
+					title = "Tesla Model ${style}");
+			}
+		}
+
+		task ("Add three documents with SUV category") {
+			for (var style : list "X1,X3,X5") {
+				JSONDocument.addFile(
+					assetCategoryIds = "${suvId}",
+					dmDocumentTitle = "BMW ${style}",
+					groupName = "Test Site Name");
+			}
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a Grid to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Change Number of Modules to 2") {
+			PageEditor.editLayoutGrid(
+				columnCount = "2",
+				panel = "General");
+		}
+
+		task ("Add one Collection Display to each module of Grid") {
+			for (var columnNumber : list "1,2") {
+				PageEditor.addElementToColumn(
+					collectionName = "Content Display",
+					columnNumber = "${columnNumber}",
+					fragmentName = "Collection Display",
+					navTab = "Fragments");
+			}
+		}
+
+		task ("Select the Basic Web Content collection provider and Bordered List in the first Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Basic Web Content",
+				listStyle = "Bordered List");
+		}
+
+		task ("View the title of three web contents shown in the first Collection Display") {
+			var n = "1";
+
+			for (var style : list "3,Y,X") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='Tesla Model ${style}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Select the Basic Document collection provider and Bulleted List in the second Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				index = "2",
+				infoListProviderName = "Basic Document",
+				listStyle = "Bulleted List");
+		}
+
+		task ("View the title of documents shown in the second Collection Display") {
+			var n = "1";
+
+			for (var style : list "X1,X3,X5") {
+				AssertVisible(
+					key_entryContent = "[normalize-space()='BMW ${style}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Add a Collection Filter above the Collection Display") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				dropTarget = "Header",
+				fragmentName = "Collection Filter",
+				targetFragmentName = "Grid");
+		}
+
+		task ("View the alert info shown in dropdown menu of Target Collection field") {
+			PageEditor.gotoConfiguration(fragmentName = "Collection Filter");
+
+			Click(
+				key_fieldLabel = "Target Collection",
+				key_text = "Select",
+				locator1 = "Button#ANY_WITH_LABEL");
+
+			AssertVisible(
+				infoMessage = "Multiple selection must have at least one filter in common.",
+				locator1 = "Dropdown#INFO");
+		}
+
+		task ("Cannot select the Basic Document after select the Basic Web Content") {
+			Check.checkNotVisible(
+				key_checkboxName = "Basic Web Content",
+				locator1 = "MenuItem#ANY_CHECKBOX");
+
+			AssertElementPresent(
+				key_checkboxName = "Basic Document",
+				locator1 = "Checkbox#CHECKBOX_DISABLED");
+
+			Click(
+				key_fieldLabel = "Target Collection",
+				key_text = "Basic Web Content",
+				locator1 = "Button#ANY_WITH_LABEL");
+		}
+
+		task ("Select the Keywords as Filter") {
+			PageEditor.editCollectionFilter(
+				filter = "Keywords",
+				fragmentName = "Collection Filter");
+		}
+
+		task ("View the Search is shown in Collection Filter") {
+			AssertAttributeValue(
+				attribute1 = "placeholder",
+				index = "1",
+				locator1 = "PageEditor#COLLECTION_FILTER_SEARCH_FIELD",
+				value1 = "Search");
+		}
+
+		task ("Cannot select the Basic Web Content after select the Basic Document") {
+			PageEditor.gotoConfiguration(fragmentName = "Collection Filter");
+
+			Click(
+				key_fieldLabel = "Target Collection",
+				key_text = "Basic Web Content",
+				locator1 = "Button#ANY_WITH_LABEL");
+
+			Uncheck.uncheckToggleSwitch(
+				key_checkboxName = "Basic Web Content",
+				locator1 = "MenuItem#ANY_CHECKBOX");
+
+			Check.checkNotVisible(
+				key_checkboxName = "Basic Document",
+				locator1 = "MenuItem#ANY_CHECKBOX");
+
+			AssertElementPresent(
+				key_checkboxName = "Basic Web Content",
+				locator1 = "Checkbox#CHECKBOX_DISABLED");
+
+			Click(
+				key_fieldLabel = "Target Collection",
+				key_text = "Basic Document",
+				locator1 = "Button#ANY_WITH_LABEL");
+		}
+
+		task ("Select the Category as Filter and Type vocabulary as Source") {
+			PageEditor.editCollectionFilter(
+				categoryNameList = "SUV,Car",
+				filter = "Category",
+				fragmentName = "Collection Filter",
+				vocabularyName = "Type");
+		}
+
+		task ("View the Select is shown in Collection Filter") {
+			AssertTextEquals(
+				key_title = "Type",
+				locator1 = "PageEditor#COLLECTION_FILTER_DROPDOWN_TOGGLE",
+				value1 = "Select");
+		}
+
+		task ("Disable Basic Web Content and Basic Document collection providers in Gogo Shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:disable com.liferay.journal.web.internal.info.collection.provider.BasicWebContentSingleFormVariationInfoCollectionProvider");
+
+			GogoShell.viewOutput(outputContent = "true");
+
+			GogoShell.executeCommand(commandName = "scr:disable com.liferay.document.library.web.internal.info.collection.provider.BasicDocumentSingleFormVariationInfoCollectionProvider");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+	}
+
 	@description = "This is a test for LPS-111807. The user could enable search field in dropdown list of Collection Filter."
 	@priority = "5"
 	test EnableSearchFieldInDropdownList {

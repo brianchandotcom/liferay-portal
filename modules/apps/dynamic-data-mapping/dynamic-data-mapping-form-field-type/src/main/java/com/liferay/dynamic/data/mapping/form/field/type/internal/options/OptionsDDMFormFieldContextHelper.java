@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -58,17 +59,24 @@ public class OptionsDDMFormFieldContextHelper {
 	}
 
 	public Map<String, Object> getValue() {
+		Map<String, Object> changedProperties =
+			(Map<String, Object>)_ddmFormFieldRenderingContext.getProperty(
+				"changedProperties");
+
+		if (MapUtil.isNotEmpty(changedProperties)) {
+			List<Object> options = (List<Object>)changedProperties.get("value");
+
+			if (ListUtil.isNotEmpty(options)) {
+				return HashMapBuilder.<String, Object>put(
+					_getLanguageId(), options
+				).build();
+			}
+		}
+
 		Map<String, Object> localizedValue = new HashMap<>();
 
 		if (Validator.isNull(_value)) {
-			Locale locale = _ddmFormFieldRenderingContext.getLocale();
-
-			if (locale == null) {
-				locale = LocaleUtil.getSiteDefault();
-			}
-
-			localizedValue.put(
-				LocaleUtil.toLanguageId(locale), createDefaultOptions());
+			localizedValue.put(_getLanguageId(), createDefaultOptions());
 
 			return localizedValue;
 		}
@@ -148,6 +156,16 @@ public class OptionsDDMFormFieldContextHelper {
 
 		return ResourceBundleUtil.getBundle(
 			"content.Language", locale, clazz.getClassLoader());
+	}
+
+	private String _getLanguageId() {
+		Locale locale = _ddmFormFieldRenderingContext.getLocale();
+
+		if (locale == null) {
+			locale = LocaleUtil.getSiteDefault();
+		}
+
+		return LocaleUtil.toLanguageId(locale);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

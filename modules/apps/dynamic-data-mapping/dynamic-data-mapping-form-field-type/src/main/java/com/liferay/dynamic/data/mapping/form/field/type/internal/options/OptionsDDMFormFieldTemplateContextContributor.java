@@ -22,12 +22,8 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -63,42 +59,22 @@ public class OptionsDDMFormFieldTemplateContextContributor
 				return LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
 			}
 		).put(
-			"value", getValue(ddmFormField, ddmFormFieldRenderingContext)
+			"value", _getValue(ddmFormField, ddmFormFieldRenderingContext)
 		).build();
 	}
 
-	protected Map<String, Object> getValue(
+	private Map<String, Object> _getValue(
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		Map<String, Object> changedProperties =
-			(Map<String, Object>)ddmFormFieldRenderingContext.getProperty(
-				"changedProperties");
-
-		if (MapUtil.isNotEmpty(changedProperties)) {
-			List<Object> value = (List<Object>)changedProperties.get("value");
-
-			if (ListUtil.isNotEmpty(value)) {
-				Locale locale = ddmFormFieldRenderingContext.getLocale();
-
-				if (locale == null) {
-					locale = LocaleUtil.getSiteDefault();
-				}
-
-				return HashMapBuilder.<String, Object>put(
-					LocaleUtil.toLanguageId(locale), value
-				).build();
-			}
-		}
-
 		OptionsDDMFormFieldContextHelper optionsDDMFormFieldContextHelper =
 			new OptionsDDMFormFieldContextHelper(
-				jsonFactory, ddmFormField, ddmFormFieldRenderingContext);
+				_jsonFactory, ddmFormField, ddmFormFieldRenderingContext);
 
 		return optionsDDMFormFieldContextHelper.getValue();
 	}
 
 	@Reference
-	protected JSONFactory jsonFactory;
+	private JSONFactory _jsonFactory;
 
 }

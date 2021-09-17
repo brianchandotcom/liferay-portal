@@ -19,10 +19,12 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccesso
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessorAware;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,42 +43,43 @@ public class GetPicklistItemsFunction
 		JSONFactory jsonFactory,
 		ListTypeEntryLocalService listTypeEntryLocalService) {
 
-		this.jsonFactory = jsonFactory;
-		this.listTypeEntryLocalService = listTypeEntryLocalService;
+		_jsonFactory = jsonFactory;
+		_listTypeEntryLocalService = listTypeEntryLocalService;
 	}
 
 	@Override
-	public List<Object> apply(String fieldValue) {
-		String fieldValueName = fieldValue.replaceAll("\\[|\\]|\"", "");
-
+	public List<Object> apply(String field) {
 		JSONObject jsonObject = _getJSONObject(
-			fieldValueName,
+			field.replaceAll("\\[|\\]|\"", StringPool.BLANK),
 			_ddmExpressionParameterAccessor.getObjectFieldsJSONArray());
 
-		if (jsonObject != null) {
-			List<ListTypeEntry> listTypeEntries =
-				listTypeEntryLocalService.getListTypeEntries(
-					(Integer)jsonObject.get("listTypeDefinitionId"));
-
-			List<Object> objectList = new ArrayList<>();
-
-			for (ListTypeEntry listTypeEntry : listTypeEntries) {
-				objectList.add(
-					HashMapBuilder.put(
-						"label",
-						listTypeEntry.getName(
-							listTypeEntry.getDefaultLanguageId())
-					).put(
-						"reference", listTypeEntry.getKey()
-					).put(
-						"value", listTypeEntry.getKey()
-					).build());
-			}
-
-			return objectList;
+		if (jsonObject == null) {
+			return null;
 		}
 
-		return null;
+		List<ListTypeEntry> listTypeEntries =
+			_listTypeEntryLocalService.getListTypeEntries(
+				(Integer)jsonObject.get("listTypeDefinitionId"));
+
+		if (ListUtil.isEmpty(listTypeEntries)) {
+			return null;
+		}
+
+		List<Object> picklistItems = new ArrayList<>();
+
+		for (ListTypeEntry listTypeEntry : listTypeEntries) {
+			picklistItems.add(
+				HashMapBuilder.put(
+					"label",
+					listTypeEntry.getName(listTypeEntry.getDefaultLanguageId())
+				).put(
+					"reference", listTypeEntry.getKey()
+				).put(
+					"value", listTypeEntry.getKey()
+				).build());
+		}
+
+		return picklistItems;
 	}
 
 	@Override
@@ -91,18 +94,11 @@ public class GetPicklistItemsFunction
 		_ddmExpressionParameterAccessor = ddmExpressionParameterAccessor;
 	}
 
-	protected JSONFactory jsonFactory;
-	protected ListTypeEntryLocalService listTypeEntryLocalService;
+	private JSONObject _getJSONObject(String field, JSONArray jsonArray) {
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-	private JSONObject _getJSONObject(
-		String fieldValueName, JSONArray objectFieldsJSONArray) {
-
-		for (int i = 0; i < objectFieldsJSONArray.length(); i++) {
-			JSONObject jsonObject = objectFieldsJSONArray.getJSONObject(i);
-
-			String jsonObjectName = jsonObject.getString("name");
-
-			if (Objects.equals(jsonObjectName, fieldValueName)) {
+			if (Objects.equals(jsonObject.getString("name"), field)) {
 				return jsonObject;
 			}
 		}
@@ -111,5 +107,7 @@ public class GetPicklistItemsFunction
 	}
 
 	private DDMExpressionParameterAccessor _ddmExpressionParameterAccessor;
+	private final JSONFactory _jsonFactory;
+	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 
 }

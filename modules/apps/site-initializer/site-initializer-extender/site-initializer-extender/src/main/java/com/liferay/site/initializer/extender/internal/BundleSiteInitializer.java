@@ -226,6 +226,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 			};
 
+			_addPermissions(serviceContext);
+
 			_addDDMStructures(serviceContext);
 
 			Map<String, String> documentsStringUtilReplaceValues =
@@ -241,10 +243,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addObjectDefinitions(serviceContext);
 			_addStyleBookEntries(serviceContext);
 			_addTaxonomyVocabularies(serviceContext);
-
-			_addRoles(serviceContext);
-			_addResourcePermissions(
-				"/site-initializer/resource-permissions.json", serviceContext);
 		}
 		catch (Exception exception) {
 			throw new InitializationException(exception);
@@ -417,7 +415,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_addModelResourcePermissions(
 			CommerceChannel.class.getName(), String.valueOf(channel.getId()),
-			"/site-initializer/commerce-channels/raylife-resource-permissions.json",
+			"/site-initializer/commerce-channels/x-resource-permissions.json",
 			serviceContext);
 	}
 
@@ -838,6 +836,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			}
 		}
+	}
+
+	private void _addPermissions(ServiceContext serviceContext)
+		throws Exception {
+
+		_addRoles(serviceContext);
+
+		_addResourcePermissions(
+			"/site-initializer/resource-permissions.json", serviceContext);
 	}
 
 	private void _addResourcePermissions(

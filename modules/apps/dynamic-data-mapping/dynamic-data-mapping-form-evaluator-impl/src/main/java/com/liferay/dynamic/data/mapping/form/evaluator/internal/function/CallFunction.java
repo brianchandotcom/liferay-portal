@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.math.BigDecimal;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -241,7 +243,7 @@ public class CallFunction
 		_ddmExpressionObserver.updateFieldProperty(builder.build());
 	}
 
-	protected void setDDMFormFieldValue(String field, String value) {
+	protected void setDDMFormFieldValue(String field, Object value) {
 		UpdateFieldPropertyRequest.Builder builder =
 			UpdateFieldPropertyRequest.Builder.newBuilder(
 				field, "value", value);
@@ -270,9 +272,17 @@ public class CallFunction
 				setDDMFormFieldOptions(ddmFormFieldName, optionsOptional.get());
 			}
 			else {
-				Optional<String> valueOptional =
+				Optional<Object> valueOptional =
 					ddmDataProviderResponse.getOutputOptional(
 						outputName, String.class);
+
+				if (!valueOptional.isPresent()) {
+					valueOptional = ddmDataProviderResponse.getOutputOptional(
+						outputName, Number.class);
+
+					valueOptional = valueOptional.map(
+						value -> new BigDecimal(value.toString()));
+				}
 
 				setDDMFormFieldValue(ddmFormFieldName, valueOptional.get());
 			}

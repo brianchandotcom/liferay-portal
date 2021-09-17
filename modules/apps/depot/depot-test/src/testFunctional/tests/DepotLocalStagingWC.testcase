@@ -32,23 +32,9 @@ definition {
 	}
 
 	tearDown {
-		DepotNavigator.openDepotAdmin();
+		Staging.disableStagingSite(siteName = "Site Name");
 
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoPortlet(portlet = "Staging");
-
-		Depot.deactivateStaging(siteName = "Test Depot Name");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Navigator.gotoStagedView();
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			portlet = "Staging");
-
-		Staging.deactivateStagingCP(siteName = "Site Name");
+		Depot.disableStagingDepot(depotName = "Test Depot Name");
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 

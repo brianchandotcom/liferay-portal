@@ -252,6 +252,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8592 | Test Summary: Deleting a custom field that is used by a segment should reset the data"
 	@priority = "4"
 	test DeleteCustomFieldUsedSegmentResetData {
+		property portal.acceptance = "quarantine";
+
+		// AC Refactor: This testcase fails due to a bug. Known User numbers do not appear.
+		// AC Refactor ticket: LRAC-9300
+		// Blocked by bug: LRAC-9350
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -323,7 +329,7 @@ definition {
 		task ("Add a Hobby Custom Fields field") {
 			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
-			ACSegments.addSegmentField(segmentField = "Hobby");
+			ACSegments.addSegmentField(segmentField = "hobby");
 
 			ACSegments.selectOperator(operator = "contains");
 

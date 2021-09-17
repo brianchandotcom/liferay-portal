@@ -66,11 +66,11 @@ definition {
 			-u test@liferay.com:test \
 			-d repositoryId=${repositoryId} \
 			-d folderId=${folderId} \
-			-d sourceFileName='' \
-			-d mimeType='' \
+			-d sourceFileName= \
+			-d mimeType= \
 			-d title=${dmDocumentTitle} \
 		 	-d description=${dmDocumentDescription} \
-			-d changeLog='' \
+			-d changeLog= \
 			-d file=@path_to_file \
 			-d serviceContext=${serviceContext}
 		''';
@@ -158,14 +158,14 @@ definition {
 			var curl = '''
 				${portalURL}/api/jsonws/dlapp/add-file-entry \
 				-u test@liferay.com:test \
-				-F externalReferenceCode='' \
+				-F externalReferenceCode= \
 				-F repositoryId=${repositoryId} \
 				-F folderId=${folderId} \
 				-F sourceFileName=${sourceFileName} \
 				-F mimeType=${mimeType} \
 				-F title=${dmDocumentTitle} \
 			 	-F description=${description} \
-				-F changeLog='' \
+				-F changeLog= \
 				-F <CURL_DATA[expirationDate=${expirationDate}]CURL_DATA> \
 				-F <CURL_DATA[reviewDate=${reviewDate}]CURL_DATA> \
 				-F file=@${filePath} \
@@ -182,7 +182,7 @@ definition {
 				-F mimeType=${mimeType} \
 				-F title=${dmDocumentTitle} \
 			 	-F description=${description} \
-				-F changeLog='' \
+				-F changeLog= \
 				-F file=@${filePath} \
 				-F serviceContext=${serviceContext}
 			''';

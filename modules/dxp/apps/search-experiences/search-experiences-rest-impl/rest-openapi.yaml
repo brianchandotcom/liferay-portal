@@ -10,6 +10,14 @@ components:
                 title:
                     type: string
             type: object
+        SXPBlueprintConfiguration:
+            properties:
+                framework_configuration:
+                    properties:
+                        apply_indexer_clauses:
+                            type: boolean
+                    type: object
+            type: object
         SXPElement:
             properties:
                 description:

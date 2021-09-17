@@ -70,6 +70,8 @@ public class CPAttachmentFileEntryCreator {
 
 		ServiceContext serviceContext = new ServiceContext();
 
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setCompanyId(user.getCompanyId());
 		serviceContext.setScopeGroupId(scopeGroupId);
 		serviceContext.setUserId(userId);

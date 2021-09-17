@@ -75,7 +75,6 @@ import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
-import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
@@ -710,6 +709,13 @@ public abstract class BaseJSONWebServiceClientImpl
 		_proxyWorkstation = proxyWorkstation;
 	}
 
+	@Override
+	public void setTrustSelfSignedCertificates(
+		boolean trustSelfSignedCertificates) {
+
+		_trustSelfSignedCertificates = trustSelfSignedCertificates;
+	}
+
 	protected BaseJSONWebServiceClientImpl() {
 		_objectMapper.configure(
 			DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -898,13 +904,15 @@ public abstract class BaseJSONWebServiceClientImpl
 		SSLContext sslContext = null;
 
 		try {
-			sslContextBuilder.loadTrustMaterial(
-				_keyStore, new TrustSelfSignedStrategy());
-
 			sslContext = sslContextBuilder.build();
 
 			sslContext.init(
-				null, new TrustManager[] {new X509TrustManagerImpl()}, null);
+				null,
+				new TrustManager[] {
+					new X509TrustManagerImpl(
+						_keyStore, _trustSelfSignedCertificates)
+				},
+				null);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -1213,5 +1221,6 @@ public abstract class BaseJSONWebServiceClientImpl
 	private String _proxyLogin;
 	private String _proxyPassword;
 	private String _proxyWorkstation;
+	private boolean _trustSelfSignedCertificates = true;
 
 }

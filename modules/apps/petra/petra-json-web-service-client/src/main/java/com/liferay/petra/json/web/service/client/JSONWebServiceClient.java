@@ -183,4 +183,8 @@ public interface JSONWebServiceClient {
 
 	public void setProtocol(String protocol);
 
+	public default void setTrustSelfSignedCertificates(
+		boolean trustSelfSignedCertificates) {
+	}
+
 }

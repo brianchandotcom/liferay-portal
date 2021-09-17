@@ -1244,9 +1244,13 @@ definition {
 			userLoginEmailAddress = "ac@liferay.com",
 			userLoginFullName = "ac ac");
 
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
+		for (var n : list "1,2") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
+		}
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -1278,12 +1282,12 @@ definition {
 
 		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
-		for (var n : list "1,2,3") {
+		for (var n : list "1,2,3,4") {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-			Pause(locator1 = "100");
+			Pause(locator1 = "5000");
 		}
 
 		ACUtils.closeAllSessionsAndWait();
@@ -1292,7 +1296,13 @@ definition {
 
 		ACNavigation.goToSegments();
 
-		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+		ACSegments.editSegment(searchTerm = "Dynamic Segment Test");
+
+		ACSegments.editWebBehaviorCriterion(
+			indexField = "1",
+			timeOption = "ever");
+
+		ACSegments.saveSegment();
 
 		ACNavigation.switchTab(tabName = "Membership");
 
@@ -1324,6 +1334,8 @@ definition {
 			pageName = "AC Page",
 			siteName = "Site Name");
 
+		Pause(locator1 = "3000");
+
 		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
@@ -1353,10 +1365,12 @@ definition {
 
 		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
-		for (var n : list "1,2,3") {
+		for (var n : list "1,2,3,4") {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
 		}
 
 		ACUtils.closeAllSessionsAndWait();
@@ -1365,7 +1379,13 @@ definition {
 
 		ACNavigation.goToSegments();
 
-		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+		ACSegments.editSegment(searchTerm = "Dynamic Segment Test");
+
+		ACSegments.editWebBehaviorCriterion(
+			indexField = "1",
+			timeOption = "ever");
+
+		ACSegments.saveSegment();
 
 		ACNavigation.switchTab(tabName = "Membership");
 

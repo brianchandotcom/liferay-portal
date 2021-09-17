@@ -12,14 +12,16 @@
  *
  */
 
-package com.liferay.search.experiences.blueprints.engine.internal.parameter.builder;
+package com.liferay.search.experiences.internal.parameter.builder;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.search.experiences.blueprints.engine.internal.util.BlueprintJSONUtil;
-import com.liferay.search.experiences.blueprints.engine.parameter.IntegerArrayParameter;
-import com.liferay.search.experiences.problems.ProblemsHolderBuilder;
+import com.liferay.search.experiences.attributes.SXPAttributes;
+import com.liferay.search.experiences.internal.attributes.util.SXPAttributeValueHelper;
+import com.liferay.search.experiences.internal.util.SXPJSONUtil;
+import com.liferay.search.experiences.parameter.IntegerArrayParameter;
+import com.liferay.search.experiences.parameter.SXPParameter;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -33,19 +35,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = "name=integer_array",
-	service = ParameterBuilder.class
+	service = SXPParameterBuilder.class
 )
 public class IntegerArrayParameterBuilder implements SXPParameterBuilder {
 
 	@Override
 	public Optional<SXPParameter> build(
-		SXPAttributes sxpAttributes, JSONObject jsonObject,
-		ProblemsHolderBuilder problemsHolderBuilder) {
+		SXPAttributes sxpAttributes, JSONObject jsonObject) {
 
 		String parameterName = jsonObject.getString("parameter_name");
 
 		Optional<Integer[]> integerArrayOptional =
-			_sxpAttributeValuesHelper.getIntegerArrayOptional(
+			_sxpAttributeValueHelper.getIntegerArrayOptional(
 				sxpAttributes, parameterName);
 
 		if (integerArrayOptional.isPresent()) {
@@ -53,7 +54,7 @@ public class IntegerArrayParameterBuilder implements SXPParameterBuilder {
 		}
 
 		Optional<String[]> stringArrayOptional =
-			_sxpAttributeValuesHelper.getStringArrayOptional(
+			_sxpAttributeValueHelper.getStringArrayOptional(
 				sxpAttributes, parameterName);
 
 		if (stringArrayOptional.isPresent()) {
@@ -65,8 +66,7 @@ public class IntegerArrayParameterBuilder implements SXPParameterBuilder {
 		}
 
 		Optional<Integer[]> defaultValueOptional =
-			BlueprintJSONUtil.getIntegerArrayOptional(
-				jsonObject, parameterName);
+			SXPJSONUtil.getIntegerArrayOptional(jsonObject, parameterName);
 
 		if (defaultValueOptional.isPresent()) {
 			return _toParameter(defaultValueOptional.get(), parameterName);
@@ -107,6 +107,6 @@ public class IntegerArrayParameterBuilder implements SXPParameterBuilder {
 		IntegerArrayParameterBuilder.class);
 
 	@Reference
-	private SXPAttributeValueHelper _sxpAttributeValuesHelper;
+	private SXPAttributeValueHelper _sxpAttributeValueHelper;
 
 }

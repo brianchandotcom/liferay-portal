@@ -12,14 +12,16 @@
  *
  */
 
-package com.liferay.search.experiences.blueprints.engine.internal.parameter.builder;
+package com.liferay.search.experiences.internal.parameter.builder;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.search.experiences.blueprints.engine.internal.util.BlueprintJSONUtil;
-import com.liferay.search.experiences.blueprints.engine.parameter.LongArrayParameter;
-import com.liferay.search.experiences.problems.ProblemsHolderBuilder;
+import com.liferay.search.experiences.attributes.SXPAttributes;
+import com.liferay.search.experiences.internal.attributes.util.SXPAttributeValueHelper;
+import com.liferay.search.experiences.internal.util.SXPJSONUtil;
+import com.liferay.search.experiences.parameter.LongArrayParameter;
+import com.liferay.search.experiences.parameter.SXPParameter;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -33,19 +35,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = "name=long_array",
-	service = ParameterBuilder.class
+	service = SXPParameterBuilder.class
 )
 public class LongArrayParameterBuilder implements SXPParameterBuilder {
 
 	@Override
 	public Optional<SXPParameter> build(
-		SXPAttributes sxpAttributes, JSONObject jsonObject,
-		ProblemsHolderBuilder problemsHolderBuilder) {
+		SXPAttributes sxpAttributes, JSONObject jsonObject) {
 
 		String parameterName = jsonObject.getString("parameter_name");
 
 		Optional<Long[]> longArrayOptional =
-			_sxpAttributeValuesHelper.getLongArrayOptional(
+			_sxpAttributeValueHelper.getLongArrayOptional(
 				sxpAttributes, parameterName);
 
 		if (longArrayOptional.isPresent()) {
@@ -53,7 +54,7 @@ public class LongArrayParameterBuilder implements SXPParameterBuilder {
 		}
 
 		Optional<String[]> stringArrayOptional =
-			_sxpAttributeValuesHelper.getStringArrayOptional(
+			_sxpAttributeValueHelper.getStringArrayOptional(
 				sxpAttributes, parameterName);
 
 		if (stringArrayOptional.isPresent()) {
@@ -65,7 +66,7 @@ public class LongArrayParameterBuilder implements SXPParameterBuilder {
 		}
 
 		Optional<Long[]> defaultValueOptional =
-			BlueprintJSONUtil.getLongArrayOptional(jsonObject, parameterName);
+			SXPJSONUtil.getLongArrayOptional(jsonObject, parameterName);
 
 		if (defaultValueOptional.isPresent()) {
 			return _toParameter(defaultValueOptional.get(), parameterName);
@@ -106,6 +107,6 @@ public class LongArrayParameterBuilder implements SXPParameterBuilder {
 		LongArrayParameterBuilder.class);
 
 	@Reference
-	private SXPAttributeValueHelper _sxpAttributeValuesHelper;
+	private SXPAttributeValueHelper _sxpAttributeValueHelper;
 
 }

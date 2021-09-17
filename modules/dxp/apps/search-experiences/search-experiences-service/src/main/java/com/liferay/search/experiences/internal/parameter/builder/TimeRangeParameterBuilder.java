@@ -42,7 +42,7 @@ public class TimeRangeParameterBuilder implements SXPParameterBuilder {
 
 		String parameterName = jsonObject.getString("parameter_name");
 
-		Optional<String> optional = _sxpAttributeValuesHelper.getStringOptional(
+		Optional<String> optional = _sxpAttributeValueHelper.getStringOptional(
 			sxpAttributes, parameterName);
 
 		if (!optional.isPresent()) {
@@ -95,6 +95,6 @@ public class TimeRangeParameterBuilder implements SXPParameterBuilder {
 	}
 
 	@Reference
-	private SXPAttributeValueHelper _sxpAttributeValuesHelper;
+	private SXPAttributeValueHelper _sxpAttributeValueHelper;
 
 }

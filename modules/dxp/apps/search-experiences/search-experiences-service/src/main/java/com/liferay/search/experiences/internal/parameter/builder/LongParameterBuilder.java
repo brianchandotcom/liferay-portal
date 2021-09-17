@@ -12,15 +12,17 @@
  *
  */
 
-package com.liferay.search.experiences.blueprints.engine.internal.parameter.builder;
+package com.liferay.search.experiences.internal.parameter.builder;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.search.experiences.blueprints.engine.internal.util.BlueprintJSONUtil;
-import com.liferay.search.experiences.blueprints.engine.internal.util.BlueprintValueUtil;
-import com.liferay.search.experiences.blueprints.engine.parameter.LongParameter;
-import com.liferay.search.experiences.problems.ProblemsHolderBuilder;
+import com.liferay.search.experiences.attributes.SXPAttributes;
+import com.liferay.search.experiences.internal.attributes.util.SXPAttributeValueHelper;
+import com.liferay.search.experiences.internal.util.SXPJSONUtil;
+import com.liferay.search.experiences.internal.util.SXPValueUtil;
+import com.liferay.search.experiences.parameter.LongParameter;
+import com.liferay.search.experiences.parameter.SXPParameter;
 
 import java.util.Optional;
 
@@ -31,14 +33,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "name=long", service = ParameterBuilder.class
+	immediate = true, property = "name=long",
+	service = SXPParameterBuilder.class
 )
 public class LongParameterBuilder implements SXPParameterBuilder {
 
 	@Override
 	public Optional<SXPParameter> build(
-		SXPAttributes sxpAttributes, JSONObject configurationJSONObject,
-		ProblemsHolderBuilder problemsHolderBuilder) {
+		SXPAttributes sxpAttributes, JSONObject configurationJSONObject) {
 
 		String parameterName = configurationJSONObject.getString(
 			"parameter_name");
@@ -60,7 +62,7 @@ public class LongParameterBuilder implements SXPParameterBuilder {
 	private long _getAdjustedValue(
 		long value, JSONObject configurationJSONObject) {
 
-		Optional<Long> minValue = BlueprintValueUtil.stringToLongOptional(
+		Optional<Long> minValue = SXPValueUtil.stringToLongOptional(
 			configurationJSONObject.getString("min_value"));
 
 		if (minValue.isPresent() && (Long.compare(value, minValue.get()) < 0)) {
@@ -71,7 +73,7 @@ public class LongParameterBuilder implements SXPParameterBuilder {
 			value = minValue.get();
 		}
 
-		Optional<Long> maxValue = BlueprintValueUtil.stringToLongOptional(
+		Optional<Long> maxValue = SXPValueUtil.stringToLongOptional(
 			configurationJSONObject.getString("max_value"));
 
 		if (maxValue.isPresent() && (Long.compare(value, maxValue.get()) > 0)) {
@@ -89,11 +91,11 @@ public class LongParameterBuilder implements SXPParameterBuilder {
 		SXPAttributes sxpAttributes, JSONObject configurationJSONObject,
 		String parameterName) {
 
-		Optional<Long> optional = _sxpAttributeValuesHelper.getLongOptional(
+		Optional<Long> optional = _sxpAttributeValueHelper.getLongOptional(
 			sxpAttributes, parameterName);
 
 		if (!optional.isPresent()) {
-			optional = BlueprintJSONUtil.getLongOptional(
+			optional = SXPJSONUtil.getLongOptional(
 				configurationJSONObject, "Object/default");
 		}
 
@@ -108,6 +110,6 @@ public class LongParameterBuilder implements SXPParameterBuilder {
 		LongParameterBuilder.class);
 
 	@Reference
-	private SXPAttributeValueHelper _sxpAttributeValuesHelper;
+	private SXPAttributeValueHelper _sxpAttributeValueHelper;
 
 }

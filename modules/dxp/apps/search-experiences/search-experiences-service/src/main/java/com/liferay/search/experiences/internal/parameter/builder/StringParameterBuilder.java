@@ -12,12 +12,14 @@
  *
  */
 
-package com.liferay.search.experiences.blueprints.engine.internal.parameter.builder;
+package com.liferay.search.experiences.internal.parameter.builder;
 
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.search.experiences.blueprints.engine.internal.util.BlueprintValueUtil;
-import com.liferay.search.experiences.blueprints.engine.parameter.StringParameter;
-import com.liferay.search.experiences.problems.ProblemsHolderBuilder;
+import com.liferay.search.experiences.attributes.SXPAttributes;
+import com.liferay.search.experiences.internal.attributes.util.SXPAttributeValueHelper;
+import com.liferay.search.experiences.internal.util.SXPValueUtil;
+import com.liferay.search.experiences.parameter.SXPParameter;
+import com.liferay.search.experiences.parameter.StringParameter;
 
 import java.util.Optional;
 
@@ -28,14 +30,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "name=string", service = ParameterBuilder.class
+	immediate = true, property = "name=string",
+	service = SXPParameterBuilder.class
 )
 public class StringParameterBuilder implements SXPParameterBuilder {
 
 	@Override
 	public Optional<SXPParameter> build(
-		SXPAttributes sxpAttributes, JSONObject jsonObject,
-		ProblemsHolderBuilder problemsHolderBuilder) {
+		SXPAttributes sxpAttributes, JSONObject jsonObject) {
 
 		String parameterName = jsonObject.getString("parameter_name");
 
@@ -56,11 +58,11 @@ public class StringParameterBuilder implements SXPParameterBuilder {
 		SXPAttributes sxpAttributes, JSONObject jsonObject,
 		String parameterName) {
 
-		Optional<String> optional = _sxpAttributeValuesHelper.getStringOptional(
+		Optional<String> optional = _sxpAttributeValueHelper.getStringOptional(
 			sxpAttributes, parameterName);
 
 		if (!optional.isPresent()) {
-			optional = BlueprintValueUtil.toStringOptional(
+			optional = SXPValueUtil.toStringOptional(
 				jsonObject.getString("default"));
 		}
 
@@ -68,6 +70,6 @@ public class StringParameterBuilder implements SXPParameterBuilder {
 	}
 
 	@Reference
-	private SXPAttributeValueHelper _sxpAttributeValuesHelper;
+	private SXPAttributeValueHelper _sxpAttributeValueHelper;
 
 }

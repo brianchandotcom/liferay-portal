@@ -12,12 +12,14 @@
  *
  */
 
-package com.liferay.search.experiences.blueprints.engine.internal.parameter.builder;
+package com.liferay.search.experiences.internal.parameter.builder;
 
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.search.experiences.blueprints.engine.internal.util.BlueprintJSONUtil;
-import com.liferay.search.experiences.blueprints.engine.parameter.StringArrayParameter;
-import com.liferay.search.experiences.problems.ProblemsHolderBuilder;
+import com.liferay.search.experiences.attributes.SXPAttributes;
+import com.liferay.search.experiences.internal.attributes.util.SXPAttributeValueHelper;
+import com.liferay.search.experiences.internal.util.SXPJSONUtil;
+import com.liferay.search.experiences.parameter.SXPParameter;
+import com.liferay.search.experiences.parameter.StringArrayParameter;
 
 import java.util.Optional;
 
@@ -29,14 +31,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = "name=string_array",
-	service = ParameterBuilder.class
+	service = SXPParameterBuilder.class
 )
 public class StringArrayParameterBuilder implements SXPParameterBuilder {
 
 	@Override
 	public Optional<SXPParameter> build(
-		SXPAttributes sxpAttributes, JSONObject jsonObject,
-		ProblemsHolderBuilder problemsHolderBuilder) {
+		SXPAttributes sxpAttributes, JSONObject jsonObject) {
 
 		String parameterName = jsonObject.getString("parameter_name");
 
@@ -58,17 +59,17 @@ public class StringArrayParameterBuilder implements SXPParameterBuilder {
 		String parameterName) {
 
 		Optional<String[]> optional =
-			_sxpAttributeValuesHelper.getStringArrayOptional(
+			_sxpAttributeValueHelper.getStringArrayOptional(
 				sxpAttributes, parameterName);
 
 		if (!optional.isPresent()) {
-			optional = BlueprintJSONUtil.getStringArray(jsonObject, "default");
+			optional = SXPJSONUtil.getStringArray(jsonObject, "default");
 		}
 
 		return optional;
 	}
 
 	@Reference
-	private SXPAttributeValueHelper _sxpAttributeValuesHelper;
+	private SXPAttributeValueHelper _sxpAttributeValueHelper;
 
 }

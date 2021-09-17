@@ -12,15 +12,17 @@
  *
  */
 
-package com.liferay.search.experiences.blueprints.engine.internal.parameter.builder;
+package com.liferay.search.experiences.internal.parameter.builder;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.search.experiences.blueprints.engine.internal.util.BlueprintJSONUtil;
-import com.liferay.search.experiences.blueprints.engine.internal.util.BlueprintValueUtil;
-import com.liferay.search.experiences.blueprints.engine.parameter.IntegerParameter;
-import com.liferay.search.experiences.problems.ProblemsHolderBuilder;
+import com.liferay.search.experiences.attributes.SXPAttributes;
+import com.liferay.search.experiences.internal.attributes.util.SXPAttributeValueHelper;
+import com.liferay.search.experiences.internal.util.SXPJSONUtil;
+import com.liferay.search.experiences.internal.util.SXPValueUtil;
+import com.liferay.search.experiences.parameter.IntegerParameter;
+import com.liferay.search.experiences.parameter.SXPParameter;
 
 import java.util.Optional;
 
@@ -32,14 +34,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = "name=integer",
-	service = ParameterBuilder.class
+	service = SXPParameterBuilder.class
 )
 public class IntegerParameterBuilder implements SXPParameterBuilder {
 
 	@Override
 	public Optional<SXPParameter> build(
-		SXPAttributes sxpAttributes, JSONObject jsonObject,
-		ProblemsHolderBuilder problemsHolderBuilder) {
+		SXPAttributes sxpAttributes, JSONObject jsonObject) {
 
 		String parameterName = jsonObject.getString("parameter_name");
 
@@ -57,7 +58,7 @@ public class IntegerParameterBuilder implements SXPParameterBuilder {
 	}
 
 	private int _getAdjustedValue(int value, JSONObject jsonObject) {
-		Optional<Integer> minValue = BlueprintValueUtil.stringToIntegerOptional(
+		Optional<Integer> minValue = SXPValueUtil.stringToIntegerOptional(
 			jsonObject.getString("min_value"));
 
 		if (minValue.isPresent() &&
@@ -70,7 +71,7 @@ public class IntegerParameterBuilder implements SXPParameterBuilder {
 			value = minValue.get();
 		}
 
-		Optional<Integer> maxValue = BlueprintValueUtil.stringToIntegerOptional(
+		Optional<Integer> maxValue = SXPValueUtil.stringToIntegerOptional(
 			jsonObject.getString("max_value"));
 
 		if (maxValue.isPresent() &&
@@ -91,11 +92,11 @@ public class IntegerParameterBuilder implements SXPParameterBuilder {
 		String parameterName) {
 
 		Optional<Integer> optional =
-			_sxpAttributeValuesHelper.getIntegerOptional(
+			_sxpAttributeValueHelper.getIntegerOptional(
 				sxpAttributes, parameterName);
 
 		if (!optional.isPresent()) {
-			optional = BlueprintJSONUtil.getIntegerOptional(
+			optional = SXPJSONUtil.getIntegerOptional(
 				configurationJSONObject, "Object/default");
 		}
 
@@ -110,6 +111,6 @@ public class IntegerParameterBuilder implements SXPParameterBuilder {
 		IntegerParameterBuilder.class);
 
 	@Reference
-	private SXPAttributeValueHelper _sxpAttributeValuesHelper;
+	private SXPAttributeValueHelper _sxpAttributeValueHelper;
 
 }

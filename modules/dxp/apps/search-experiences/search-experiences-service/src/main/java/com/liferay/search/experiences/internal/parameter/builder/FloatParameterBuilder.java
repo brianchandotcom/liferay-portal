@@ -12,15 +12,17 @@
  *
  */
 
-package com.liferay.search.experiences.blueprints.engine.internal.parameter.builder;
+package com.liferay.search.experiences.internal.parameter.builder;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.search.experiences.blueprints.engine.internal.util.BlueprintJSONUtil;
-import com.liferay.search.experiences.blueprints.engine.internal.util.BlueprintValueUtil;
-import com.liferay.search.experiences.blueprints.engine.parameter.FloatParameter;
-import com.liferay.search.experiences.problems.ProblemsHolderBuilder;
+import com.liferay.search.experiences.attributes.SXPAttributes;
+import com.liferay.search.experiences.internal.attributes.util.SXPAttributeValueHelper;
+import com.liferay.search.experiences.internal.util.SXPJSONUtil;
+import com.liferay.search.experiences.internal.util.SXPValueUtil;
+import com.liferay.search.experiences.parameter.FloatParameter;
+import com.liferay.search.experiences.parameter.SXPParameter;
 
 import java.util.Optional;
 
@@ -31,14 +33,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true, property = "name=float", service = ParameterBuilder.class
+	immediate = true, property = "name=float",
+	service = SXPParameterBuilder.class
 )
 public class FloatParameterBuilder implements SXPParameterBuilder {
 
 	@Override
 	public Optional<SXPParameter> build(
-		SXPAttributes sxpAttributes, JSONObject jsonObject,
-		ProblemsHolderBuilder problemsHolderBuilder) {
+		SXPAttributes sxpAttributes, JSONObject jsonObject) {
 
 		String parameterName = jsonObject.getString("parameter_name");
 
@@ -56,7 +58,7 @@ public class FloatParameterBuilder implements SXPParameterBuilder {
 	}
 
 	private float _getAdjustedValue(float value, JSONObject jsonObject) {
-		Optional<Float> minValue = BlueprintValueUtil.stringToFloatOptional(
+		Optional<Float> minValue = SXPValueUtil.stringToFloatOptional(
 			jsonObject.getString("min_value"));
 
 		if (minValue.isPresent() &&
@@ -69,7 +71,7 @@ public class FloatParameterBuilder implements SXPParameterBuilder {
 			value = minValue.get();
 		}
 
-		Optional<Float> maxValue = BlueprintValueUtil.stringToFloatOptional(
+		Optional<Float> maxValue = SXPValueUtil.stringToFloatOptional(
 			jsonObject.getString("max_value"));
 
 		if (maxValue.isPresent() &&
@@ -89,11 +91,11 @@ public class FloatParameterBuilder implements SXPParameterBuilder {
 		SXPAttributes sxpAttributes, JSONObject configurationJSONObject,
 		String parameterName) {
 
-		Optional<Float> optional = _sxpAttributeValuesHelper.getFloatOptional(
+		Optional<Float> optional = _sxpAttributeValueHelper.getFloatOptional(
 			sxpAttributes, parameterName);
 
 		if (!optional.isPresent()) {
-			optional = BlueprintJSONUtil.getFloatOptional(
+			optional = SXPJSONUtil.getFloatOptional(
 				configurationJSONObject, "Object/default");
 		}
 
@@ -108,6 +110,6 @@ public class FloatParameterBuilder implements SXPParameterBuilder {
 		FloatParameterBuilder.class);
 
 	@Reference
-	private SXPAttributeValueHelper _sxpAttributeValuesHelper;
+	private SXPAttributeValueHelper _sxpAttributeValueHelper;
 
 }

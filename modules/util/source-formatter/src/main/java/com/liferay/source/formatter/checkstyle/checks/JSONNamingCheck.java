@@ -100,6 +100,10 @@ public class JSONNamingCheck extends BaseCheck {
 		}
 
 		if (!typeName.equals(type) && !typeName.endsWith("." + type)) {
+			if (tokenTypeName.equals("Method") && !name.startsWith("get")) {
+				return;
+			}
+
 			String lowerCaseTypeName = StringUtil.toLowerCase(typeName);
 
 			if (!lowerCaseTypeName.endsWith(StringUtil.toLowerCase(type))) {

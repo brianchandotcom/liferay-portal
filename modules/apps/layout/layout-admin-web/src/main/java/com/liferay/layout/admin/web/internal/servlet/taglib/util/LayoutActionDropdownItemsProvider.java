@@ -375,7 +375,7 @@ public class LayoutActionDropdownItemsProvider {
 								"are-you-sure-you-want-to-delete-this-page";
 
 							if (layout.hasChildren() &&
-								layout.hasScopeGroup()) {
+								_hasScopeGroup(layout)) {
 
 								messageKey = StringBundler.concat(
 									"this-page-is-being-used-as-a-scope-for-",
@@ -385,7 +385,7 @@ public class LayoutActionDropdownItemsProvider {
 									"pages-are-you-sure-you-want-to-delete-",
 									"this-page");
 							}
-							else if (layout.hasScopeGroup()) {
+							else if (_hasScopeGroup(layout)) {
 								messageKey = StringBundler.concat(
 									"this-page-is-being-used-as-a-scope-for-",
 									"content-any-content-that-is-scoped-to-",
@@ -411,6 +411,20 @@ public class LayoutActionDropdownItemsProvider {
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
+	}
+
+	private boolean _hasScopeGroup(Layout layout) throws Exception {
+		if (layout.hasScopeGroup()) {
+			return true;
+		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (draftLayout == null) {
+			return false;
+		}
+
+		return draftLayout.hasScopeGroup();
 	}
 
 	private boolean _hasTranslatePermission() {

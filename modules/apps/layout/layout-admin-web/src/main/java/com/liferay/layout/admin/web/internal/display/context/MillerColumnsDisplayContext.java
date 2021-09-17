@@ -286,7 +286,7 @@ public class MillerColumnsDisplayContext {
 			layoutJSONObject.put(
 				"hasChild", childLayoutsCount > 0
 			).put(
-				"hasScopeGroup", layout.hasScopeGroup()
+				"hasScopeGroup", _hasScopeGroup(layout)
 			).put(
 				"id", layout.getPlid()
 			).put(
@@ -669,6 +669,20 @@ public class MillerColumnsDisplayContext {
 		}
 
 		return jsonArray;
+	}
+
+	private boolean _hasScopeGroup(Layout layout) throws Exception {
+		if (layout.hasScopeGroup()) {
+			return true;
+		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (draftLayout == null) {
+			return false;
+		}
+
+		return draftLayout.hasScopeGroup();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

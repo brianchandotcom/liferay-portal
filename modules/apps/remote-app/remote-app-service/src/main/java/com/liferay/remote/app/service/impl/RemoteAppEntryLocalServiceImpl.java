@@ -15,6 +15,7 @@
 package com.liferay.remote.app.service.impl;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -363,12 +364,14 @@ public class RemoteAppEntryLocalServiceImpl
 			String customElementURLs)
 		throws PortalException {
 
-		if (Validator.isNull(customElementCSSURLs)) {
+		if (Validator.isNotNull(customElementCSSURLs)) {
+			for (String customElementCSSURL :
+					customElementCSSURLs.split(StringPool.NEW_LINE)) {
 
-			// TODO Allow this to be empty. But if it is not empty, make sure
-			// each line is a valid URL.
-
-			throw new RemoteAppEntryCustomElementCSSURLsException();
+				if (!Validator.isUrl(customElementCSSURL)) {
+					throw new RemoteAppEntryCustomElementCSSURLsException();
+				}
+			}
 		}
 
 		if (Validator.isNull(customElementHTMLElementName)) {
@@ -411,11 +414,15 @@ public class RemoteAppEntryLocalServiceImpl
 		}
 
 		if (Validator.isNull(customElementURLs)) {
-
-			// TODO Make sure each line is a valid URL and that there is at
-			// least one URL
-
 			throw new RemoteAppEntryCustomElementURLsException();
+		}
+
+		for (String customElementURL :
+				customElementURLs.split(StringPool.NEW_LINE)) {
+
+			if (!Validator.isUrl(customElementURL)) {
+				throw new RemoteAppEntryCustomElementURLsException();
+			}
 		}
 	}
 

@@ -36,6 +36,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		),
 		@DDMFormRule(
 			actions = {
+				"setEnabled('dataSourceType', not(hasObjectField(getValue('objectFieldName'))))",
 				"setMultiple('predefinedValue', getValue('multiple'))",
 				"setOptions('predefinedValue', getValue('options'))",
 				"setRequired('ddmDataProviderInstanceId', contains(getValue('dataSourceType'), \"data-provider\"))",
@@ -43,7 +44,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 				"setRequired('options', contains(getValue('dataSourceType'), \"manual\") OR isEmpty(getValue('dataSourceType')))",
 				"setVisible('ddmDataProviderInstanceId', contains(getValue('dataSourceType'), \"data-provider\"))",
 				"setVisible('ddmDataProviderInstanceOutput', contains(getValue('dataSourceType'), \"data-provider\"))",
-				"setVisible('options', contains(getValue('dataSourceType'), \"manual\") OR isEmpty(getValue('dataSourceType')))",
+				"setVisible('options', (contains(getValue('dataSourceType'), \"manual\") OR isEmpty(getValue('dataSourceType'))) AND not(hasObjectField(getValue('objectFieldName'))))",
 				"setVisible('predefinedValue', contains(getValue('dataSourceType'), \"manual\"))",
 				"setVisible('requiredErrorMessage', getValue('required'))"
 			},
@@ -57,12 +58,8 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 			condition = "not(equals(getValue('dataSourceType'), \"data-provider\"))"
 		),
 		@DDMFormRule(
-			actions = {
-				"setValue('options', getPicklistItems(getValue('objectFieldName')))",
-				"setVisible('options', isEmpty(getValue('objectFieldName')))",
-				"setEnabled('dataSourceType', isEmpty(getValue('objectFieldName')))"
-			},
-			condition = "TRUE"
+			actions = "setValue('options', getPicklistItems(getValue('objectFieldName')))",
+			condition = "hasObjectField(getValue('objectFieldName'))"
 		)
 	}
 )

@@ -122,7 +122,8 @@ public class EmailNotificationSender implements NotificationSender {
 				"[$PORTLET_NAME$]",
 				notificationTemplateContext.getAttribute("portletName"),
 				"[$SITE_NAME$]",
-				notificationTemplateContext.getAttribute("siteName"));
+				notificationTemplateContext.getAttribute("siteName"),
+				"[$TO_NAME$]", notificationRecipient.getName());
 			subscriptionSender.setContextCreatorUserPrefix("EVENT");
 			subscriptionSender.setFrom(fromEmail, fromName);
 			subscriptionSender.setHtmlFormat(

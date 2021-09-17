@@ -65,8 +65,8 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 					"select distinct UserGroupRole.roleId from UserGroupRole ",
 					"inner join Role_ on UserGroupRole.roleId = Role_.roleId ",
 					"inner join Group_ on UserGroupRole.groupId = ",
-					"Group_.groupId and Group_.classNameId = ",
-					AccountEntry.class.getName(), " where Role_.type_ =",
+					"Group_.groupId and Group_.classNameId = '",
+					AccountEntry.class.getName(), "' where Role_.type_ =",
 					RoleConstants.TYPE_SITE));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
@@ -79,8 +79,8 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 						StringBundler.concat(
 							"update UserGroupRole inner join Group_ on ",
 							"UserGroupRole.groupId = Group_.groupId and ",
-							"Group_.classNameId = ",
-							AccountEntry.class.getName(), " set roleId =  ?",
+							"Group_.classNameId = '",
+							AccountEntry.class.getName(), "' set roleId =  ?",
 							" where roleId = ?")))) {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
@@ -180,9 +180,9 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 					"select count(distinct UserGroupRole.groupId)",
 					"from UserGroupRole inner join Group_ on ",
 					"UserGroupRole.groupId = Group_.groupId and ",
-					"Group.classNameId !=",
+					"Group.classNameId != '",
 					_classNameLocalService.getClassNameId(AccountEntry.class),
-					" where UserGroupRole.roleId = ", roleId))) {
+					"' where UserGroupRole.roleId = ", roleId))) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {

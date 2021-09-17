@@ -1,5 +1,6 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":dxp:apps:search-experiences:search-experiences-api")
+	testIntegrationCompile project(":dxp:apps:search-experiences:search-experiences-rest-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

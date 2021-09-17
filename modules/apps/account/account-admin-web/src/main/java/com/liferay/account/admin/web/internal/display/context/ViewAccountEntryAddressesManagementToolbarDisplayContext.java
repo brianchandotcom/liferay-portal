@@ -135,6 +135,11 @@ public class ViewAccountEntryAddressesManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected String getFilterNavigationDropdownItemsLabel() {
+		return LanguageUtil.get(httpServletRequest, "filter-by-type");
+	}
+
+	@Override
 	protected String getNavigation() {
 		return ParamUtil.getString(
 			liferayPortletRequest, getNavigationParam(), "all");
@@ -142,7 +147,12 @@ public class ViewAccountEntryAddressesManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getNavigationKeys() {
-		return new String[] {"all"};
+		return new String[] {"all", "billing", "shipping"};
+	}
+
+	@Override
+	protected String getNavigationParam() {
+		return "type";
 	}
 
 	@Override

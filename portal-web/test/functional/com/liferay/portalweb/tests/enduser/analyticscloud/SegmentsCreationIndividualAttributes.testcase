@@ -417,6 +417,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8569 | Test Summary: Add segment with custom field for individuals"
 	@priority = "4"
 	test CanAddSegmentWithCustomFieldsForIndividuals {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: DXP User never appears
+		// AC Refactor ticket: LRAC-9351
+		// AC Bug ticket: LRAC-9350
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}

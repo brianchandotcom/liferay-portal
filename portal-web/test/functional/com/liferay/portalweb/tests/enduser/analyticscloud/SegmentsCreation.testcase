@@ -1456,7 +1456,7 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
-				
+
 				Pause(locator1 = "5000");
 			}
 		}

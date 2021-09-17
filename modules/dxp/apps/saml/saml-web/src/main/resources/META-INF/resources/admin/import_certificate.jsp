@@ -32,7 +32,7 @@ if (Validator.isNotNull(tempFileName)) {
 <c:choose>
 	<c:when test="<%= keyStore == null %>">
 		<div class="lfr-form-content lfr-dynamic-uploader <%= (fileEntry == null) ? "hide-dialog-footer" : StringPool.BLANK %>">
-			<liferay-ui:error key="certificateException" message="problem-reading-one-or-more-certificates-in-the-keystore" />
+			<liferay-ui:error key="certificateException" message="there-was-a-problem-reading-one-or-more-certificates-in-the-keystore" />
 			<liferay-ui:error key="incorrectKeyStorePassword" message="incorrect-keystore-password" />
 			<liferay-ui:error key="keyStoreIntegrityCheckingAlgorithmNotSupported" message="the-keystore-uses-an-integrity-checking-algorithm-which-is-not-supported" />
 

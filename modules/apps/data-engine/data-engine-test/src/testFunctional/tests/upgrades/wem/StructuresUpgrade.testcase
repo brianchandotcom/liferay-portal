@@ -19,7 +19,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."

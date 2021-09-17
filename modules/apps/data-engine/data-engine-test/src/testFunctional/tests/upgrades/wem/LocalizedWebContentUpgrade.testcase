@@ -19,7 +19,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
 	}
 
 	@description = "This is a use case for LPS-123541. Upgrade in creating a new Web Content with translations."

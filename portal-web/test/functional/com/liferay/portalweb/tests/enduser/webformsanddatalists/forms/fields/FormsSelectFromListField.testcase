@@ -59,7 +59,9 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitch(fieldName = "Multiple");
+		FormFields.enableSwitch(fieldName = "multiple");
+
+		Pause(locator1 = "1000");
 
 		Form.closeSidebar();
 

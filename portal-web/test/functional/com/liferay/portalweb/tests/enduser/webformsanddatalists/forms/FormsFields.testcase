@@ -421,9 +421,9 @@ definition {
 
 		var fieldTextField2 = FormFields.getFieldName();
 
-		Form.editFieldLabelMetal(fieldValue = "Text Field Page 2");
+		FormFields.enableSwitch(fieldName = "required");
 
-		FormFields.enableSwitch(fieldName = "Required");
+		Form.editFieldLabelMetal(fieldValue = "Text Field Page 2");
 
 		Form.closeSidebar();
 

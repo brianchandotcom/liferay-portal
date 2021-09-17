@@ -192,9 +192,9 @@ definition {
 
 		var fieldDateField = FormFields.getFieldName();
 
-		Form.editFieldLabelMetal(fieldValue = "Date Field");
+		FormFields.enableSwitch(fieldName = "required");
 
-		FormFields.enableSwitch(fieldName = "Required");
+		Form.editFieldLabelMetal(fieldValue = "Date Field");
 
 		Form.closeSidebar();
 

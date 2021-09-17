@@ -68,8 +68,6 @@ definition {
 			selenium.clickAt();
 		}
 
-		AssertChecked.assertCheckedNotVisible();
-
 		selenium.assertJavaScriptErrors();
 
 		selenium.assertLiferayErrors();

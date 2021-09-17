@@ -182,7 +182,7 @@ definition {
 			fieldPositionNumber = "0",
 			fieldType = "Image");
 
-		FormFields.enableSwitch(fieldName = "Required Field");
+		FormFields.enableSwitch(fieldName = "required");
 
 		Form.save();
 

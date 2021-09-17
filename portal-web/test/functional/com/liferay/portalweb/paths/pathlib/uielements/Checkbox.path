@@ -461,6 +461,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SWITCH</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//span[@class='toggle-switch-bar'] | //span[contains(text(),'${key_fieldName}')]/preceding-sibling::span[@class='toggle-switch-handle'] | //span[contains(text(),'${key_fieldName}')] | //label[contains(@class,'toggle-switch')]//input[contains(@type,'checkbox')]/following-sibling::span[contains(@class,'toggle-switch-bar')]//span[contains(text(),'${key_fieldName}')]/..//preceding-sibling::input[contains(@type,'checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THIS_IS_A_MINOR_EDIT</td>
 	<td>//label[contains(.,'This is a minor edit.')]/input[@type='checkbox']</td>
 	<td></td>

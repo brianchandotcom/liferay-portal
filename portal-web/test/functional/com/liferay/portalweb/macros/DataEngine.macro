@@ -1325,8 +1325,8 @@ definition {
 		Navigator.gotoNavTab(navTab = "${tab}");
 
 		Check.checkToggleSwitch(
-			checkboxName = "Repeatable",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+			key_fieldName = "repeatable",
+			locator1 = "Checkbox#SWITCH");
 
 		Click(locator1 = "Sidebar#BACK");
 	}

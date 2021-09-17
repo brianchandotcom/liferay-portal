@@ -225,7 +225,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Checkbox Field");
 
-		FormFields.enableSwitch(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "required");
 
 		FormFields.editOptionsRow(
 			optionName = "Checkbox1",
@@ -346,7 +346,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Checkbox Field");
 
-		FormFields.enableSwitch(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "required");
 
 		FormFields.editOptionsRow(
 			optionName = "Checkbox1",

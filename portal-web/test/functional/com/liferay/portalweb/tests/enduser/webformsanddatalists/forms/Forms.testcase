@@ -64,7 +64,7 @@ definition {
 			fieldHelpText = "Help Text",
 			fieldName = "tip");
 
-		FormFields.enableSwitch(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "required");
 
 		Form.closeSidebar();
 
@@ -2339,7 +2339,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Radio Field");
 
-		FormFields.enableSwitch(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "required");
 
 		FormFields.editOptionsRow(
 			optionName = "Option1",
@@ -2426,7 +2426,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Checkbox Field");
 
-		FormFields.enableSwitch(fieldName = "Show as a Switch");
+		FormFields.enableSwitch(fieldName = "showAsSwitcher");
 
 		FormFields.editOptionsRow(
 			optionName = "Switch1",

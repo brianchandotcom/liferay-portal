@@ -341,7 +341,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
-		FormFields.enableSwitch(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "required");
 
 		Form.save();
 
@@ -399,11 +399,11 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
-		FormFields.enableSwitch(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "required");
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitch(fieldName = "Repeatable");
+		FormFields.enableSwitch(fieldName = "repeatable");
 
 		Form.save();
 
@@ -458,7 +458,7 @@ definition {
 
 		FormFields.selectTextFieldLineOption(textFieldLineOption = "Multiple Lines");
 
-		FormFields.enableSwitch(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "required");
 
 		Form.save();
 
@@ -796,7 +796,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitch(fieldName = "Require Confirmation");
+		FormFields.enableSwitch(fieldName = "requireConfirmation");
 
 		Form.save();
 
@@ -854,9 +854,9 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitch(fieldName = "Require Confirmation");
+		FormFields.enableSwitch(fieldName = "requireConfirmation");
 
-		FormFields.enableSwitch(fieldName = "Validation");
+		FormFields.enableSwitch(fieldName = "validation");
 
 		FormFields.editValidation(
 			validationArgument = "Contains",

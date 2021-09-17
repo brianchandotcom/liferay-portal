@@ -16,9 +16,28 @@ import Autocomplete from 'commerce-frontend-js/components/autocomplete/Autocompl
 import {FieldBase} from 'dynamic-data-mapping-form-field-type/FieldBase/ReactFieldBase.es';
 import React from 'react';
 
-const ObjectRelationship = ({apiURL, name, ...otherProps}) => (
+const ObjectRelationship = ({
+	apiURL,
+	initialLabel,
+	initialValue,
+	inputName,
+	itemsKey,
+	itemsLabel,
+	name,
+	value,
+	...otherProps
+}) => (
 	<FieldBase name={name} {...otherProps}>
-		<Autocomplete {...otherProps} apiUrl={apiURL} name={name} />
+		<Autocomplete
+			apiUrl={apiURL}
+			initialLabel={initialLabel}
+			initialValue={initialValue}
+			inputName={inputName}
+			itemsKey={itemsKey}
+			itemsLabel={itemsLabel}
+			name={name}
+			value={value}
+		/>
 	</FieldBase>
 );
 

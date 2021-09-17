@@ -12,7 +12,7 @@ Here are some of the types of changes documented in this file:
 * Execution requirements: Java version, J2EE Version, browser versions, etc.
 * Deprecations or end of support: For example, warning that a certain feature or API will be dropped in an upcoming version.
 
-*This document has been reviewed through the breaking change entry at commit `6bd6a44f32b3`.*
+*This document has been reviewed through the breaking change entry at commit `defe666e35a2`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -298,28 +298,6 @@ A further exploration and analysis of the different front-end options available 
 
 ---------------------------------------
 
-### Removed PortletPreferences' Preferences Field
-- **Date:** 2020-Dec-20
-- **JIRA Ticket:** [LPS-122562](https://issues.liferay.com/browse/LPS-122562)
-
-#### What changed?
-
-`PortletPreferences` preferences are now stored in the PortletPreferenceValue table.
-
-#### Who is affected?
-
-This affects you if you are directly getting or setting the `PortletPreferences` preferences field.
-
-#### How should I update my code?
-
-Use `PortletPreferencesLocalService` to access the `javax.portlet.PortletPreferences` API which can be used for getting and setting the preferences.
-
-#### Why was this change made?
-
-This will make it so that queries can be run against preference keys and values without using `like` queries, simplifies future upgrades, and reduces storage requirements.
-
----------------------------------------
-
 ### Removed Server-side Closure Templates (Soy) Support
 - **Date:** 2020-Dec-14
 - **JIRA Ticket:** [LPS-122956](https://issues.liferay.com/browse/LPS-122956)
@@ -354,6 +332,28 @@ This is done as a way to simplify our frontend technical offering and better foc
 A further exploration and analysis of the different front-end options available can be found in [The State of Frontend Infrastructure](https://liferay.dev/blogs/-/blogs/the-state-of-frontend-infrastructure) including a rationale on why we are moving away from Soy:
 
 > Liferay invested several years into Soy believing it was "the Holy Grail". We believed the ability to compile Closure Templates would provide us with performance comparable to JSP and accommodate reusable components from other JavaScript frameworks. While Soy came close to achieving some of our goals, we never hit the performance we wanted and more importantly, we felt like we were the only people using this technology.
+
+---------------------------------------
+
+### Removed com.liferay.portal.kernel.model.PortletPreferences Methods getPreferences and setPreferences
+- **Date:** 2020-Dec-20
+- **JIRA Ticket:** [LPS-122562](https://issues.liferay.com/browse/LPS-122562)
+
+#### What changed?
+
+Portlet preferences are no longer stored and retrieved as XML. They are now stored in a table called `PortletPreferenceValue` that has separate columns for preference names and preference values.
+
+#### Who is affected?
+
+This affects you if you are directly getting or setting portlet preferences via `com.liferay.portal.kernel.model.PortletPreferences` methods `getPreferences` or `setPreferences`.
+
+#### How should I update my code?
+
+Access `javax.portlet.PortletPreferences` instances via `PortletPreferencesLocalService`. Get and set preferences using the `javax.portlet.PortletPreferences` API.
+
+#### Why was this change made?
+
+This change simplifies upgrades, reduces storage requirements, and supports querying preferences without using the `like` operator.
 
 ---------------------------------------
 
@@ -469,25 +469,25 @@ This change was made for better compliance with [the HTML Standard](https://html
 
 ---------------------------------------
 
-### Removed PortalPreferences' Preferences Field
+### Removed com.liferay.portal.kernel.model.PortalPreferences Methods getPreferences and setPreferences
 - **Date:** 2020-Mar-31
 - **JIRA Ticket:** [LPS-124338](https://issues.liferay.com/browse/LPS-124338)
 
 #### What changed?
 
-`PortalPreferences` preferences are now stored in the PortalPreferenceValue table.
+`PortalPreferences` preferences are now stored in the `PortalPreferenceValue` table.
 
 #### Who is affected?
 
-This affects you if you are directly getting or setting the `PortalPreferences` preferences field.
+This affects you if you are directly getting or setting portal preferences via `com.liferay.portal.kernel.model.PortalPreferences` methods `getPreferences` or `setPreferences`.
 
 #### How should I update my code?
 
-Use `PortalPreferencesLocalService` to access the `javax.portlet.PortletPreferences` API which can be used for getting and setting the preferences.
+Access `javax.portlet.PortalPreferences` instances via `PortalPreferencesLocalService`. Get and set preferences using the `javax.portlet.PortalPreferences` API.
 
 #### Why was this change made?
 
-This will make it so that queries can be run against preference keys and values without using `like` queries, simplifies future upgrades, and reduces storage requirements.
+This change simplifies upgrades, reduces storage requirements, and supports querying preferences without using the `like` operator.
 
 ---------------------------------------
 

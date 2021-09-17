@@ -53,6 +53,9 @@ import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -929,6 +932,21 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
+	private String _getValue(String valueString) {
+		try {
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(valueString);
+
+			return GetterUtil.getString(jsonArray.get(0));
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException, jsonException);
+			}
+		}
+
+		return valueString;
+	}
+
 	private Map<String, Serializable> _getValues(
 		Object[] objects, Expression<?>[] selectExpressions) {
 
@@ -1464,7 +1482,8 @@ public class ObjectEntryLocalServiceImpl
 			if (!stream.anyMatch(
 					listTypeEntry -> Objects.equals(
 						listTypeEntry.getKey(),
-						(String)values.get(entry.getKey())))) {
+						_getValue(
+							String.valueOf(values.get(entry.getKey())))))) {
 
 				throw new ObjectEntryValuesException(
 					"Object field name " + entry.getKey() +

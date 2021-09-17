@@ -286,6 +286,8 @@ public class MillerColumnsDisplayContext {
 			layoutJSONObject.put(
 				"hasChild", childLayoutsCount > 0
 			).put(
+				"hasScopeGroup", layout.hasScopeGroup()
+			).put(
 				"id", layout.getPlid()
 			).put(
 				"key", String.valueOf(layout.getPlid())
@@ -489,6 +491,8 @@ public class MillerColumnsDisplayContext {
 		).put(
 			"hasChild", true
 		).put(
+			"hasScopeGroup", true
+		).put(
 			"id", LayoutConstants.DEFAULT_PLID
 		).put(
 			"key", key
@@ -560,6 +564,8 @@ public class MillerColumnsDisplayContext {
 						_layoutsAdminDisplayContext.getActiveLayoutSetBranchId()
 				).put(
 					"hasChild", true
+				).put(
+					"hasScopeGroup", true
 				).put(
 					"id", LayoutConstants.DEFAULT_PLID
 				).put(

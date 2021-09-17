@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.layout.admin.web.internal.util.FFLayoutPreviewDraftConfigurationUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -373,7 +374,25 @@ public class LayoutActionDropdownItemsProvider {
 							String messageKey =
 								"are-you-sure-you-want-to-delete-this-page";
 
-							if (layout.hasChildren()) {
+							if (layout.hasChildren() &&
+								layout.hasScopeGroup()) {
+
+								messageKey = StringBundler.concat(
+									"this-page-is-being-used-as-a-scope-for-",
+									"content-and-also-has-child-pages-any-",
+									"content-that-is-scoped-to-this-page-will-",
+									"also-be-removed-along-with-any-child-",
+									"pages-are-you-sure-you-want-to-delete-",
+									"this-page");
+							}
+							else if (layout.hasScopeGroup()) {
+								messageKey = StringBundler.concat(
+									"this-page-is-being-used-as-a-scope-for-",
+									"content-any-content-that-is-scoped-to-",
+									"this-page-will-also-be-removed-are-you-",
+									"sure-you-want-to-delete-this-page");
+							}
+							else if (layout.hasChildren()) {
 								messageKey =
 									"this-page-has-child-pages-that-will-" +
 										"also-be-removed-are-you-sure-you-" +

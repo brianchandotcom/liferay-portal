@@ -283,19 +283,13 @@ public class ObjectEntryDisplayContext {
 
 		// TODO Store the type and the object field type in the database
 
-		String type = DDMFormFieldTypeConstants.TEXT;
-
-		if (Validator.isNotNull(objectField.getRelationshipType())) {
-			type = "object-relationship";
-		}
-
 		DDMFormField ddmFormField = new DDMFormField(
-			objectField.getName(), type);
+			objectField.getName(), DDMFormFieldTypeConstants.TEXT);
 
 		_setDDMFormFieldProperties(
 			ddmFormField,
 			GetterUtil.getLong(objectField.getListTypeDefinitionId()),
-			objectField.getType());
+			objectField.getRelationshipType(), objectField.getType());
 
 		LocalizedValue ddmFormFieldLabelLocalizedValue = new LocalizedValue(
 			_objectRequestHelper.getLocale());
@@ -316,7 +310,7 @@ public class ObjectEntryDisplayContext {
 
 			ddmFormField.setProperty(
 				"objectDefinitionId",
-				objectRelationship.getObjectDefinitionId1());
+				String.valueOf(objectRelationship.getObjectDefinitionId1()));
 		}
 
 		return ddmFormField;
@@ -420,10 +414,14 @@ public class ObjectEntryDisplayContext {
 	}
 
 	private void _setDDMFormFieldProperties(
-		DDMFormField ddmFormField, long listTypeDefinitionId, String type) {
+		DDMFormField ddmFormField, long listTypeDefinitionId,
+		String relationshipType, String type) {
 
-		if (StringUtil.equals(type, "BigDecimal") ||
-			StringUtil.equals(type, "Double")) {
+		if (Validator.isNotNull(relationshipType)) {
+			ddmFormField.setType("object-relationship");
+		}
+		else if (StringUtil.equals(type, "BigDecimal") ||
+				 StringUtil.equals(type, "Double")) {
 
 			ddmFormField.setProperty(
 				FieldConstants.DATA_TYPE, FieldConstants.DOUBLE);

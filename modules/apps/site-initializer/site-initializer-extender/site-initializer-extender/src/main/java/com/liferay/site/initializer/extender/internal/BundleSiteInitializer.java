@@ -252,10 +252,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 				"/site-initializer/resource-permissions.json",
 				serviceContext);
 
-			_addCommerceModelResourcePermissions(
-				CommerceChannel.class.getName(), commerceChannelIds,
-				"/site-initializer/model-resource-permissions.json",
-				serviceContext);
+			for (String commerceChannelId : commerceChannelIds) {
+				_addModelResourcePermissions(
+					CommerceChannel.class.getName(), commerceChannelId,
+					"/site-initializer/model-resource-permissions.json",
+					serviceContext);
+			}
 		}
 		catch (Exception exception) {
 			throw new InitializationException(exception);
@@ -447,17 +449,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return commerceChannelIds;
-	}
-
-	private void _addCommerceModelResourcePermissions(
-			String className, List<String> commerceChannelIds, String path,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		for (String commerceChannelId : commerceChannelIds) {
-			_addModelResourcePermissions(
-				className, commerceChannelId, path, serviceContext);
-		}
 	}
 
 	private void _addCommerceSiteType(

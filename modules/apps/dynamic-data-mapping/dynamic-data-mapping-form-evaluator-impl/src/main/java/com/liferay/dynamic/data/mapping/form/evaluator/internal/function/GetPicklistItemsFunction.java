@@ -25,16 +25,20 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 /**
  * @author Mateus Santana
  */
 public class GetPicklistItemsFunction
-	implements DDMExpressionFunction.Function1<String, List<Object>>,
+	implements DDMExpressionFunction.Function1<String, Map<String, Object>>,
 			   DDMExpressionParameterAccessorAware {
 
 	public static final String NAME = "getPicklistItems";
@@ -48,7 +52,7 @@ public class GetPicklistItemsFunction
 	}
 
 	@Override
-	public List<Object> apply(String field) {
+	public Map<String, Object> apply(String field) {
 		JSONObject jsonObject = _getJSONObject(
 			field.replaceAll("\\[|\\]|\"", StringPool.BLANK),
 			_ddmExpressionParameterAccessor.getObjectFieldsJSONArray());
@@ -65,21 +69,35 @@ public class GetPicklistItemsFunction
 			return null;
 		}
 
-		List<Object> picklistItems = new ArrayList<>();
+		Map<String, Object> localizedValues = new HashMap<>();
 
 		for (ListTypeEntry listTypeEntry : listTypeEntries) {
-			picklistItems.add(
-				HashMapBuilder.put(
-					"label",
-					listTypeEntry.getName(listTypeEntry.getDefaultLanguageId())
-				).put(
-					"reference", listTypeEntry.getKey()
-				).put(
-					"value", listTypeEntry.getKey()
-				).build());
+			Map<Locale, String> nameMap = listTypeEntry.getNameMap();
+
+			for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
+				String languageId = LocaleUtil.toLanguageId(entry.getKey());
+
+				List<Object> options = (List<Object>)localizedValues.get(
+					languageId);
+
+				if (options == null) {
+					options = new ArrayList<>();
+				}
+
+				options.add(
+					HashMapBuilder.put(
+						"label", entry.getValue()
+					).put(
+						"reference", listTypeEntry.getKey()
+					).put(
+						"value", listTypeEntry.getKey()
+					).build());
+
+				localizedValues.put(languageId, options);
+			}
 		}
 
-		return picklistItems;
+		return localizedValues;
 	}
 
 	@Override

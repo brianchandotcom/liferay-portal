@@ -64,21 +64,20 @@ public class OptionsDDMFormFieldContextHelper {
 				"changedProperties");
 
 		if (MapUtil.isNotEmpty(changedProperties)) {
-			List<Object> options = (List<Object>)changedProperties.get("value");
+			Map<String, Object> changedLocalizedValues =
+				(Map<String, Object>)changedProperties.get("value");
 
-			if (ListUtil.isNotEmpty(options)) {
-				return HashMapBuilder.<String, Object>put(
-					_getLanguageId(), options
-				).build();
+			if (MapUtil.isNotEmpty(changedLocalizedValues)) {
+				return changedLocalizedValues;
 			}
 		}
 
-		Map<String, Object> localizedValue = new HashMap<>();
+		Map<String, Object> localizedValues = new HashMap<>();
 
 		if (Validator.isNull(_value)) {
-			localizedValue.put(_getLanguageId(), createDefaultOptions());
+			localizedValues.put(_getLanguageId(), createDefaultOptions());
 
-			return localizedValue;
+			return localizedValues;
 		}
 
 		try {
@@ -92,15 +91,15 @@ public class OptionsDDMFormFieldContextHelper {
 				List<Object> options = createOptions(
 					jsonObject.getJSONArray(languageId));
 
-				localizedValue.put(languageId, options);
+				localizedValues.put(languageId, options);
 			}
 
-			return localizedValue;
+			return localizedValues;
 		}
 		catch (JSONException jsonException) {
 			_log.error("Unable to parse JSON array", jsonException);
 
-			return localizedValue;
+			return localizedValues;
 		}
 	}
 

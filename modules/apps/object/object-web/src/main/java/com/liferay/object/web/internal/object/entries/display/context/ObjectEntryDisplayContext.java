@@ -410,28 +410,34 @@ public class ObjectEntryDisplayContext {
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
 		ddmFormValues.addAvailableLocale(_objectRequestHelper.getLocale());
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(false);
+
 		ddmFormValues.setDDMFormFieldValues(
 			TransformUtil.transform(
-				values.entrySet(),
-				entry -> {
+				ddmFormFieldsMap.values(),
+				ddmFormField -> {
 					DDMFormFieldValue ddmFormFieldValue =
 						new DDMFormFieldValue();
 
-					ddmFormFieldValue.setName(entry.getKey());
+					ddmFormFieldValue.setName(ddmFormField.getName());
 
-					Serializable serializable = entry.getValue();
+					ddmFormFieldValue.setNestedDDMFormFields(
+						_getNestedDDMFormFieldValues(
+							ddmFormField.getNestedDDMFormFields(), values));
 
-					if (serializable == null) {
-						ddmFormFieldValue.setValue(
-							new UnlocalizedValue(GetterUtil.DEFAULT_STRING));
-					}
-					else {
-						ddmFormFieldValue.setValue(
-							new UnlocalizedValue(String.valueOf(serializable)));
+					if (!StringUtil.equals(
+							ddmFormField.getType(),
+							DDMFormFieldTypeConstants.FIELDSET)) {
+
+						_setDDMFormFieldValueValue(
+							ddmFormField.getName(), ddmFormFieldValue, values);
 					}
 
 					return ddmFormFieldValue;
 				}));
+
 		ddmFormValues.setDefaultLocale(_objectRequestHelper.getLocale());
 
 		return ddmFormValues;
@@ -463,6 +469,23 @@ public class ObjectEntryDisplayContext {
 		}
 
 		return nestedDDMFormFields;
+	}
+
+	private List<DDMFormFieldValue> _getNestedDDMFormFieldValues(
+		List<DDMFormField> ddmFormFields, Map<String, Serializable> values) {
+
+		return TransformUtil.transform(
+			ddmFormFields,
+			ddmFormField -> {
+				DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+				ddmFormFieldValue.setName(ddmFormField.getName());
+
+				_setDDMFormFieldValueValue(
+					ddmFormField.getName(), ddmFormFieldValue, values);
+
+				return ddmFormFieldValue;
+			});
 	}
 
 	private String _getRows(List<DDMFormField> ddmFormFields) {
@@ -512,6 +535,22 @@ public class ObjectEntryDisplayContext {
 			ddmFormField.setDDMFormFieldOptions(
 				_getDDMFieldOptions(listTypeDefinitionId));
 			ddmFormField.setType(DDMFormFieldTypeConstants.SELECT);
+		}
+	}
+
+	private void _setDDMFormFieldValueValue(
+		String ddmFormFieldName, DDMFormFieldValue ddmFormFieldValue,
+		Map<String, Serializable> values) {
+
+		Serializable serializable = values.get(ddmFormFieldName);
+
+		if (serializable == null) {
+			ddmFormFieldValue.setValue(
+				new UnlocalizedValue(GetterUtil.DEFAULT_STRING));
+		}
+		else {
+			ddmFormFieldValue.setValue(
+				new UnlocalizedValue(String.valueOf(serializable)));
 		}
 	}
 

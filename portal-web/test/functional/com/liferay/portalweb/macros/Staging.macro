@@ -588,6 +588,12 @@ definition {
 		IFrame.closeFrame();
 	}
 
+	macro disableStagingSite {
+		Navigator.openSiteStagingConfiguration(siteName = "${siteName}");
+
+		Staging.deactivateStagingCP(siteName = "${siteName}");
+	}
+
 	macro editPublishTemplate {
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 

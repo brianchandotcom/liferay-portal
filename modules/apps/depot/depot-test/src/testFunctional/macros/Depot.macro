@@ -432,7 +432,7 @@ definition {
 				locator1 = "Button#SAVE",
 				value1 = "Save");
 
-			AssertConfirm(value1 = "Are you sure you want to deactivate staging for ${siteName}?");
+			AssertConfirm(value1 = "Are you sure you want to deactivate staging for ${depotName}?");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#SUCCESS",
@@ -475,6 +475,12 @@ definition {
 		AssertConfirm(value1 = "Removing an asset library can affect sites that use the contents stored in it. Are you sure you want to continue removing this asset library?");
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro disableStagingDepot {
+		DepotNavigator.openDepotStagingConfiguration(depotName = "${depotName}");
+
+		Depot.deactivateStaging(depotName = "${depotName}");
 	}
 
 	macro disconnectSite {

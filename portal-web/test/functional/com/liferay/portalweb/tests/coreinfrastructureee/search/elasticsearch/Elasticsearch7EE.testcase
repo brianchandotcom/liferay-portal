@@ -93,7 +93,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Server Administration");
 
-		var script = TestCase.getFileContent(fileName = "blogs-ltr-subset.groovy");
+		var script = TestCase.getFileContent(
+			fileName = "blogs-ltr-subset.groovy",
+			filePath = "coreinfrastructureee/search/elasticsearch");
 
 		ServerAdministration.executeScript(
 			language = "Groovy",

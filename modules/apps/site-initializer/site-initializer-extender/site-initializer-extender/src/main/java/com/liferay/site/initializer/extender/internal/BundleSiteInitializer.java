@@ -796,11 +796,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addModelResourcePermissions(
-			String className, String instacePrimKey, String path,
+			String className, String primKey, String resourcePath,
 			ServiceContext serviceContext)
 		throws Exception {
 
-		String json = _read(path);
+		String json = _read(resourcePath);
 
 		if (json == null) {
 			return;
@@ -821,7 +821,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_resourcePermissionLocalService.addModelResourcePermissions(
 				serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
-				serviceContext.getUserId(), className, instacePrimKey,
+				serviceContext.getUserId(), className, primKey,
 				modelPermissions);
 		}
 	}

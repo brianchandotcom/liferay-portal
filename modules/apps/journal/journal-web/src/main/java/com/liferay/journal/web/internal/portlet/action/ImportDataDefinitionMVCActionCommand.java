@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.upload.UploadPortletRequestImpl;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -115,8 +116,14 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _generateFieldName(String fieldName) {
-		return DDMFormFieldUtil.getDDMFormFieldName(
+		String newFieldName = DDMFormFieldUtil.getDDMFormFieldName(
 			fieldName.substring(0, fieldName.length() - 8));
+
+		while (_fieldNameMap.containsKey(newFieldName)) {
+			_generateFieldName(fieldName);
+		}
+
+		return newFieldName;
 	}
 
 	private UploadPortletRequest _getUploadPortletRequest(
@@ -133,7 +140,27 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				liferayPortletRequest.getPortletName()));
 	}
 
+	private void _populateFieldNameBlacklist(DataDefinition dataDefinition) {
+		for (DataDefinitionField dataDefinitionField :
+				dataDefinition.getDataDefinitionFields()) {
+
+			_fieldNameMap.put(dataDefinitionField.getName(), true);
+		}
+	}
+
+	private void _populateFieldNameBlacklist(
+		DataDefinitionField dataDefinitionField) {
+
+		for (DataDefinitionField nestedDataDefinitionField :
+				dataDefinitionField.getNestedDataDefinitionFields()) {
+
+			_fieldNameMap.put(nestedDataDefinitionField.getName(), true);
+		}
+	}
+
 	private void _uniquifyDataDefinitionFields(DataDefinition dataDefinition) {
+		_populateFieldNameBlacklist(dataDefinition);
+
 		for (DataDefinitionField dataDefinitionField :
 				dataDefinition.getDataDefinitionFields()) {
 
@@ -149,37 +176,18 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			dataDefinitionField.setName((String)newFieldName);
 
+			_fieldNameMap.put(newFieldName, true);
+
 			DataLayout dataLayout = dataDefinition.getDefaultDataLayout();
 
-			for (DataLayoutPage dataLayoutPage :
-					dataLayout.getDataLayoutPages()) {
-
-				for (DataLayoutRow dataLayoutRow :
-						dataLayoutPage.getDataLayoutRows()) {
-
-					for (DataLayoutColumn dataLayoutColumn :
-							dataLayoutRow.getDataLayoutColumns()) {
-
-						String[] dataLayoutColumnFieldNames =
-							dataLayoutColumn.getFieldNames();
-
-						for (int i = 0; i < dataLayoutColumnFieldNames.length;
-							 i++) {
-
-							if (dataLayoutColumnFieldNames[i].equals(
-									oldFieldName)) {
-
-								dataLayoutColumnFieldNames[i] = newFieldName;
-							}
-						}
-					}
-				}
-			}
+			_updateDataLayout(dataLayout, newFieldName, oldFieldName);
 		}
 	}
 
 	private void _uniquifyDataDefinitionFieldset(
 		DataDefinitionField dataDefinitionField) {
+
+		_populateFieldNameBlacklist(dataDefinitionField);
 
 		for (DataDefinitionField nestedDataDefinitionField :
 				dataDefinitionField.getNestedDataDefinitionFields()) {
@@ -196,25 +204,66 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			nestedDataDefinitionField.setName((String)newFieldName);
 
-			Map<String, Object> customProperties =
-				dataDefinitionField.getCustomProperties();
+			_fieldNameMap.put(newFieldName, true);
 
-			Object[] rows = (Object[])customProperties.get("rows");
+			_updateDataLayoutFieldset(
+				dataDefinitionField, newFieldName, oldFieldName);
+		}
+	}
 
-			for (Object row : rows) {
-				Map<String, Object> rowMap = (Map<String, Object>)row;
+	private void _updateDataLayout(
+		DataLayout dataLayout, String newFieldName, String oldFieldName) {
 
-				Object[] columns = (Object[])rowMap.get("columns");
+		for (DataLayoutPage dataLayoutPage : dataLayout.getDataLayoutPages()) {
+			for (DataLayoutRow dataLayoutRow :
+					dataLayoutPage.getDataLayoutRows()) {
 
-				for (Object column : columns) {
-					Map<String, Object> columnMap = (Map<String, Object>)column;
+				for (DataLayoutColumn dataLayoutColumn :
+						dataLayoutRow.getDataLayoutColumns()) {
 
-					Object[] fields = (Object[])columnMap.get("fields");
+					String[] dataLayoutColumnFieldNames =
+						dataLayoutColumn.getFieldNames();
 
-					for (int i = 0; i < fields.length; i++) {
-						if (Objects.equals(fields[i], oldFieldName)) {
-							fields[i] = newFieldName;
+					for (int i = 0; i < dataLayoutColumnFieldNames.length;
+						 i++) {
+
+						if (dataLayoutColumnFieldNames[i].equals(
+								oldFieldName)) {
+
+							dataLayoutColumnFieldNames[i] = newFieldName;
+
+							return;
 						}
+					}
+				}
+			}
+		}
+	}
+
+	private void _updateDataLayoutFieldset(
+		DataDefinitionField dataDefinitionField, String newFieldName,
+		String oldFieldName) {
+
+		Map<String, Object> customProperties =
+			dataDefinitionField.getCustomProperties();
+
+		Object[] rows = (Object[])customProperties.get("rows");
+
+		for (Object row : rows) {
+			Map<String, Object> rowMap = (Map<String, Object>)row;
+
+			Object[] columns = (Object[])rowMap.get("columns");
+
+			for (Object column : columns) {
+				Map<String, Object> columnMap = (Map<String, Object>)column;
+
+				Object[] fields = (Object[])columnMap.get("fields");
+
+				for (int i = 0; i < fields.length; i++) {
+					if (Objects.equals(fields[i], oldFieldName)) {
+						fields[i] = newFieldName;
+
+						return;
 					}
 				}
 			}
@@ -226,6 +275,8 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
+
+	private final Map<String, Boolean> _fieldNameMap = new HashMap<>();
 
 	@Reference
 	private Portal _portal;

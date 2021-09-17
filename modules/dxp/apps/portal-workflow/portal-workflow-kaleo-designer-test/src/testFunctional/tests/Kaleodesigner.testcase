@@ -801,38 +801,17 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
-		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
+		KaleoDesigner.viewSourceXMLTab();
 
-		KaleoDesigner.deleteNode(nodeNodeLabel = "StartNode");
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
+			value1 = "condition_workflow_invalid.xml");
 
-		KaleoDesigner.selectNode(nodeNodeLabel = "EndNode");
-
-		KaleoDesigner.deleteNode(nodeNodeLabel = "EndNode");
-
-		KaleoDesigner.addAndFillNodesByDragAndDrop(
-			nodeDescription = "Start Node Description",
-			nodeName = "Start",
-			nodeNodeLabel = "Start",
-			nodeTitleAndPositionList = "Start;360.70",
-			nodeType = "start");
-
-		KaleoDesigner.addConnectorAndNodeViaViewTab(
-			connectorName = "Submit",
-			newNode = "Condition",
-			newNodeDescription = "Condition Node Description",
-			newNodeName = "Condition",
-			newNodeType = "condition",
-			nodeType = "start");
-
-		KaleoDesigner.addConnectorAndNodeViaViewTab(
-			connectorName = "Approve",
-			newNode = "End",
-			newNodeDescription = "End Node Description",
-			newNodeName = "End",
-			newNodeType = "end",
-			nodeType = "condition");
+		KaleoDesigner.viewViewTab();
 
 		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The Condition node must have at least two outgoing transitions.");
+
+
 	}
 
 	@priority = "3"
@@ -882,41 +861,18 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
-		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");
+		KaleoDesigner.viewSourceXMLTab();
 
-		KaleoDesigner.deleteNode(nodeNodeLabel = "StartNode");
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
+			value1 = "condition_workflow_invalid.xml");
 
-		KaleoDesigner.selectNode(nodeNodeLabel = "EndNode");
-
-		KaleoDesigner.deleteNode(nodeNodeLabel = "EndNode");
-
-		KaleoDesigner.addAndFillNodesByDragAndDrop(
-			nodeDescription = "Start Node Description",
-			nodeName = "Start",
-			nodeNodeLabel = "Start",
-			nodeTitleAndPositionList = "Start;360.70",
-			nodeType = "start");
-
-		KaleoDesigner.addConnectorAndNodeViaViewTab(
-			connectorName = "Submit",
-			newNode = "Condition",
-			newNodeDescription = "Condition Node Description",
-			newNodeName = "Condition",
-			newNodeType = "condition",
-			nodeType = "start");
+		KaleoDesigner.viewViewTab();
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "Condition");
-
+		
 		KaleoDesigner.editNodeScript(nodeScript = "${nodeScript}");
-
-		KaleoDesigner.addConnectorAndNodeViaViewTab(
-			connectorName = "Approve",
-			newNode = "End",
-			newNodeDescription = "End Node Description",
-			newNodeName = "End",
-			newNodeType = "end",
-			nodeType = "condition");
-
+		
 		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The Condition node must have at least two outgoing transitions.");
 	}
 

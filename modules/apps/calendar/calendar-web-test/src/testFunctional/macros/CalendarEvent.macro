@@ -897,8 +897,6 @@ definition {
 		ScrollWebElementIntoView(locator1 = "CalendarEditEvent#RESOURCES_AVAILABILITY_PANEL_COLLAPSED");
 
 		Click(locator1 = "CalendarEditEvent#RESOURCES_AVAILABILITY_PANEL_COLLAPSED");
-
-		Pause(locator1 = "1000");
 	}
 
 	macro gotoConfigureInvitations {

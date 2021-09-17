@@ -1,0 +1,70 @@
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+	<name>New Workflow Definition Title</name>
+	<version>1</version>
+	<condition>
+		<name>Condition</name>
+		<description>Condition Node Description</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						248.03125,
+						198.85227966308594
+					]
+				}
+			]]>
+		</metadata>
+		<script>
+			<![CDATA[returnValue = "Transition Name";]]>
+		</script>
+		<script-language>groovy</script-language>
+		<transitions>
+			<transition>
+				<name>Approve</name>
+				<target>End</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</condition>
+	<state>
+		<name>Start</name>
+		<description>Start Node Description</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						98.0113525390625,
+						165.36932373046875
+					]
+				}
+			]]>
+		</metadata>
+		<initial>true</initial>
+		<transitions>
+			<transition>
+				<name>Submit</name>
+				<target>Condition</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>End</name>
+		<description>End Node Description</description>
+		<metadata>
+			<![CDATA[
+				{
+					"terminal": true,
+					"xy": [
+						420.57672119140625,
+						240.85227966308594
+					]
+				}
+			]]>
+		</metadata>
+	</state>
+</workflow-definition>

@@ -1,5 +1,7 @@
 .office-365-redirect-modal {
 	font-size: 0.875rem;
+	// LPS-136290
+	position: fixed !important;
 	text-align: center;
 }
 

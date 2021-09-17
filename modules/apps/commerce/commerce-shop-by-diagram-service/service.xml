@@ -34,7 +34,7 @@
 			<order-column name="sequence" />
 		</order>
 
-		<!-- Finders -->
+		<!-- Finder methods -->
 
 		<finder name="CPDefinitionId" return-type="Collection">
 			<finder-column name="CPDefinitionId" />
@@ -75,7 +75,7 @@
 			<order-column name="sequence" />
 		</order>
 
-		<!-- Finders -->
+		<!-- Finder methods -->
 
 		<finder name="CPDefinitionId" return-type="Collection">
 			<finder-column name="CPDefinitionId" />

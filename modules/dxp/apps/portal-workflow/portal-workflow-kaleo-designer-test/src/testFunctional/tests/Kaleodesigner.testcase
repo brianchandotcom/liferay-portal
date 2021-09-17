@@ -810,8 +810,6 @@ definition {
 		KaleoDesigner.viewViewTab();
 
 		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The Condition node must have at least two outgoing transitions.");
-
-
 	}
 
 	@priority = "3"
@@ -870,9 +868,9 @@ definition {
 		KaleoDesigner.viewViewTab();
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "Condition");
-		
+
 		KaleoDesigner.editNodeScript(nodeScript = "${nodeScript}");
-		
+
 		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The Condition node must have at least two outgoing transitions.");
 	}
 

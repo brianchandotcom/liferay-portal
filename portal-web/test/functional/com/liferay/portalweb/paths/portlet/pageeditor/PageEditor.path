@@ -44,6 +44,11 @@
 </tr>
 <!--COLLECTION_DISPLAY-->
 <tr>
+	<td>COLLECTION_DISPLAY_EMPTY_STATE</td>
+	<td>xpath=(//div[contains(@class,'block')])[${index}]//div[contains(@class,'empty-state')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COLLECTION_CELL</td>
 	<td>//div[contains(@class,'collection-item') and contains(.,'${key_entryTitle}')] | //div[contains(@class,'collection__block') and contains(.,'${key_content}')]</td>
 	<td></td>

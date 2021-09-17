@@ -115,7 +115,13 @@ definition {
 
 		var baseDir = PropsUtil.get("test.base.dir.name");
 		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
-		var filePath = "${baseDir}${dependenciesDir}/${sourceFileName}";
+
+		if (isSet(dmDocumentFilePath)) {
+			var filePath = "${baseDir}tests/${dmDocumentFilePath}/${dependenciesDir}/${sourceFileName}";
+		}
+		else {
+			var filePath = "${baseDir}${dependenciesDir}/${sourceFileName}";
+		}
 
 		if (isSet(dmDocumentDescription)) {
 			var description = "${dmDocumentDescription}";

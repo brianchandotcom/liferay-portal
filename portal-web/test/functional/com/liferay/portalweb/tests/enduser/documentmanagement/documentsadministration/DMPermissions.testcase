@@ -903,6 +903,7 @@ definition {
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Dr. Winters Introductory Audio Lecture.ogg",
+			dmDocumentFilePath = "enduser\documentmanagement\documentsadministration",
 			dmDocumentTitle = "Dr. Winters Introductory Audio Lecture.ogg");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "moon-rocks-101");
@@ -937,6 +938,7 @@ definition {
 			portlet = "Documents and Media");
 
 		LAR.importPortlet(
+			filePath = "enduser/documentmanagement/documentsadministration",
 			larFileName = "moon-rocks-101-materials-structure.lar",
 			uploadFrom = "dependencies");
 	}

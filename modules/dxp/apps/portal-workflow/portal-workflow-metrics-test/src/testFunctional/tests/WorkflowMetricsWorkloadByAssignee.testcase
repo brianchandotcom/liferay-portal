@@ -88,9 +88,9 @@ definition {
 
 		AssertElementPresent(locator1 = "UsersAndOrganizationsEditUser#UPLOAD_IMAGE_SELECT");
 
-		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			locator1 = "TextInput#UPLOAD_FILE",
-			value1 = "これは写真です.jpg");
+		UploadFileWithCustomPath.uploadFile(
+			fileName = "これは写真です.jpg",
+			filePath = "enduser\documentmanagement\documentsadministration");
 
 		Pause(locator1 = "3000");
 

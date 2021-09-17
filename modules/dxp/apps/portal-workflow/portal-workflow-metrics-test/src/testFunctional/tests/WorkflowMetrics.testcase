@@ -2031,7 +2031,6 @@ definition {
 	@description = "LRQA-60717 - Automate LPS-105497: As a Operation Manager, I want to update the due date a workflow instance while analyzing my process metrics"
 	@priority = "4"
 	test UpdateDueDateUnassignedUser {
-		property portal.upstream = "quarantine";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -2090,7 +2089,9 @@ definition {
 
 		AssertElementPresent(locator1 = "WorkflowAllItems#KEBAB_DROPDOWN_DISABLED");
 
-		PortletEntry.selectAll();
+		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT")) {
+			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
+		}
 
 		AssertElementNotPresent(locator1 = "WorkflowAllItems#DUE_DATE_ICON");
 	}

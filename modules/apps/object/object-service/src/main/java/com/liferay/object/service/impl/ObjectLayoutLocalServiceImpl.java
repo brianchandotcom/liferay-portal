@@ -128,8 +128,12 @@ public class ObjectLayoutLocalServiceImpl
 	public ObjectLayout getDefaultObjectLayout(long objectDefinitionId)
 		throws PortalException {
 
-		return objectLayoutPersistence.findByODI_DOL_First(
+		ObjectLayout objectLayout = objectLayoutPersistence.findByODI_DOL_First(
 			objectDefinitionId, true, null);
+
+		objectLayout.setObjectLayoutTabs(_getObjectLayoutTabs(objectLayout));
+
+		return objectLayout;
 	}
 
 	@Override
@@ -139,15 +143,7 @@ public class ObjectLayoutLocalServiceImpl
 		ObjectLayout objectLayout = objectLayoutPersistence.findByPrimaryKey(
 			objectLayoutId);
 
-		List<ObjectLayoutTab> objectLayoutTabs =
-			_objectLayoutTabPersistence.findByObjectLayoutId(objectLayoutId);
-
-		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
-			objectLayoutTab.setObjectLayoutBoxes(
-				_getObjectLayoutBoxes(objectLayoutTab));
-		}
-
-		objectLayout.setObjectLayoutTabs(objectLayoutTabs);
+		objectLayout.setObjectLayoutTabs(_getObjectLayoutTabs(objectLayout));
 
 		return objectLayout;
 	}
@@ -434,6 +430,21 @@ public class ObjectLayoutLocalServiceImpl
 		}
 
 		return objectLayoutRows;
+	}
+
+	private List<ObjectLayoutTab> _getObjectLayoutTabs(
+		ObjectLayout objectLayout) {
+
+		List<ObjectLayoutTab> objectLayoutTabs =
+			_objectLayoutTabPersistence.findByObjectLayoutId(
+				objectLayout.getObjectLayoutId());
+
+		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
+			objectLayoutTab.setObjectLayoutBoxes(
+				_getObjectLayoutBoxes(objectLayoutTab));
+		}
+
+		return objectLayoutTabs;
 	}
 
 	private void _validate(

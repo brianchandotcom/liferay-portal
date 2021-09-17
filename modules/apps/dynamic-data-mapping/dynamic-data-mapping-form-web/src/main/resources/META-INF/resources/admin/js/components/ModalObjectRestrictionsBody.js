@@ -81,8 +81,16 @@ const UnmappedRequiredObjectFields = ({fields}) => {
 						)}
 
 						<ol>
-							{fields.map(({name}) => (
-								<li key={name}>{name}</li>
+							{fields.map(({label, name}) => (
+								<li key={name}>
+									{
+										label[
+											themeDisplay
+												.getDefaultLanguageId()
+												.replace('_', '-')
+										]
+									}
+								</li>
 							))}
 						</ol>
 					</div>

@@ -136,12 +136,35 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "5"
 	test CanInputLink {
+		NavItem.gotoStructures();
 
-		// TODO LRQA-70033	Refactor of Renderer Web Content Field
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DEBuilder.addField(
+			fieldLabel = "Web Content",
+			fieldName = "Web Content");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInWebContentField(
+			fieldLabel = "Web Content",
+			contentName = "Web Content Title 1");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInWebContentField(
+			fieldLabel = "Web Content",
+			contentName = "Web Content Title 1");
 	}
 
 	@description = "This is a stubbed description"

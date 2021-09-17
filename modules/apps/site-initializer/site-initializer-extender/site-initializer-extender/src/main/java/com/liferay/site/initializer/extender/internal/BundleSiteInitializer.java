@@ -249,14 +249,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_addRoles(serviceContext);
 			_addResourcePermissions(
-				"/site-initializer/resource-permissions" +
-					"/resource-permissions.json",
+				"/site-initializer/resource-permissions.json",
 				serviceContext);
 
 			_addCommerceModelResourcePermissions(
 				CommerceChannel.class.getName(), commerceChannelIds,
-				"/site-initializer/model-resource-permissions" +
-					"/model-resource-permissions.json",
+				"/site-initializer/model-resource-permissions.json",
 				serviceContext);
 		}
 		catch (Exception exception) {
@@ -902,7 +900,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addRoles(ServiceContext serviceContext) throws Exception {
-		_addRoles("/site-initializer/roles/roles.json", serviceContext);
+		_addRoles("/site-initializer/roles.json", serviceContext);
 	}
 
 	private void _addRoles(String path, ServiceContext serviceContext)

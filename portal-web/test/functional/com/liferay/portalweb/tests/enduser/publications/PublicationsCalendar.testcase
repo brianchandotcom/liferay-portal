@@ -99,4 +99,104 @@ definition {
 		CalendarEvent.view(eventTitle = "Publication Calendar Event Title");
 	}
 
+	@description = "Assert the conflict can be manually resovled on Calendar by discarding within Publications."
+	@priority = "4"
+	test ResolveConflictingPublicationsByDiscarding {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Calendar Page");
+
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Calendar Page",
+			layoutTemplate = "1 Column");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		Portlet.addPG(portletName = "Calendar");
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			eventTitle = "Publication Calendar Event Title",
+			eventType = "All Day",
+			pageName = "Calendar Page");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		CalendarNavigator.gotoEditEvent(eventTitle = "Publication Calendar Event Title");
+
+		CalendarEvent.editTitle(eventTitle = "Publication Calendar Event Title Edit");
+
+		CalendarEvent.publish();
+
+		IFrame.closeFrame();
+
+		Publications.gotoReviewChanges(publicationName = "Publication Name");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Calendar Event",
+			changeSite = "Guest",
+			changeTitle = "Publication Calendar Event Title Edit",
+			changeType = "Modified",
+			changeUser = "Test Test");
+
+		JSONPublications.addPublication(publicationName = "Publication Name 2");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 2");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarEvent.delete();
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.deleteCP(
+			assetName = "Publication Calendar Event Title",
+			assetType = "Calendar Event");
+
+		Publications.gotoReviewChanges(publicationName = "Publication Name 2");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Calendar Event",
+			changeSite = "Guest",
+			changeTitle = "Publication Calendar Event Title",
+			changeType = "Deleted",
+			changeUser = "Test Test");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name 2");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
+
+		Publications.gotoPublish(
+			gotoManagePublications = "true",
+			publicationName = "Publication Name");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "Publication Calendar Event Title Edit",
+			warningMessage = "Deletion Modification Conflict: Modification conflicts with a deletion.");
+
+		Publications.gotoViewChangeDiffInConflictingPublications(entryTitle = "Publication Calendar Event Title Edit");
+
+		Publications.viewChangeDiff(
+			columnName = "Title",
+			columnValueInPublication = "Publication Calendar Event Title Edit",
+			entryDeletedInProduction = "true",
+			publicationName = "Publication Name");
+
+		IFrame.closeFrame();
+
+		Pause(locator1 = "3000");
+
+		Publications.discardChanges(
+			changeCategory = "Asset",
+			changeTitle = "Publication Calendar Event Title Edit",
+			conflictingChanges = "true",
+			entryTitle = "Publication Calendar Event Title Edit");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+	}
+
 }

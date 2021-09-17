@@ -15,7 +15,7 @@
 package com.liferay.frontend.token.definition.internal;
 
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -57,8 +57,6 @@ public class FrontendTokenDefinitionRegistryImplTest {
 				new FrontendTokenDefinitionRegistryImpl();
 
 		frontendTokenDefinitionRegistryImpl.jsonFactory = new JSONFactoryImpl();
-		frontendTokenDefinitionRegistryImpl.resourceBundleLoaders =
-			Mockito.mock(ServiceTrackerMap.class);
 
 		Bundle bundle = Mockito.mock(Bundle.class);
 
@@ -72,6 +70,12 @@ public class FrontendTokenDefinitionRegistryImplTest {
 			bundle.getHeaders(Mockito.anyString())
 		).thenReturn(
 			new HashMapDictionary<>()
+		);
+
+		Mockito.when(
+			bundle.getSymbolicName()
+		).thenReturn(
+			StringPool.BLANK
 		);
 
 		FrontendTokenDefinition frontendTokenDefinition =

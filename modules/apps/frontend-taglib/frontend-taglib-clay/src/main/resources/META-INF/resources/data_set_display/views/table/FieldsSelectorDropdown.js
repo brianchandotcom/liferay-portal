@@ -67,6 +67,7 @@ const FieldsSelectorDropdown = ({fields}) => {
 			}
 		>
 			<ClayDropDown.Search
+				formProps={{onSubmit: (event) => event.preventDefault()}}
 				onChange={(event) => setQuery(event.target.value)}
 				value={query}
 			/>

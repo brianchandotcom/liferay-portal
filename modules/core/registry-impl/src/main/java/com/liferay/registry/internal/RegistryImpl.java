@@ -16,7 +16,6 @@ package com.liferay.registry.internal;
 
 import com.liferay.registry.Registry;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
 
 import java.lang.reflect.Array;
 
@@ -25,7 +24,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -215,62 +213,6 @@ public class RegistryImpl implements Registry {
 		}
 
 		return null;
-	}
-
-	@Override
-	public <T> ServiceRegistration<T> registerService(
-		Class<T> clazz, T service) {
-
-		return registerService(clazz, service, null);
-	}
-
-	@Override
-	public <T> ServiceRegistration<T> registerService(
-		Class<T> clazz, T service, Map<String, Object> properties) {
-
-		org.osgi.framework.ServiceRegistration<T> serviceRegistration =
-			_bundleContext.registerService(
-				clazz, service, new MapWrapper(properties));
-
-		return new ServiceRegistrationWrapper<>(serviceRegistration);
-	}
-
-	@Override
-	public <T> ServiceRegistration<T> registerService(
-		String className, T service) {
-
-		return registerService(className, service, null);
-	}
-
-	@Override
-	@SuppressWarnings("rawtypes")
-	public <T> ServiceRegistration<T> registerService(
-		String className, T service, Map<String, Object> properties) {
-
-		org.osgi.framework.ServiceRegistration<?> serviceRegistration =
-			_bundleContext.registerService(
-				className, service, new MapWrapper(properties));
-
-		return new ServiceRegistrationWrapper(serviceRegistration);
-	}
-
-	@Override
-	public <T> ServiceRegistration<T> registerService(
-		String[] classNames, T service) {
-
-		return registerService(classNames, service, null);
-	}
-
-	@Override
-	@SuppressWarnings("rawtypes")
-	public <T> ServiceRegistration<T> registerService(
-		String[] classNames, T service, Map<String, Object> properties) {
-
-		org.osgi.framework.ServiceRegistration<?> serviceRegistration =
-			_bundleContext.registerService(
-				classNames, service, new MapWrapper(properties));
-
-		return new ServiceRegistrationWrapper(serviceRegistration);
 	}
 
 	@Override

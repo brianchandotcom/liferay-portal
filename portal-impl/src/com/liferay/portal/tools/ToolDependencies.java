@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.DefaultFullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -56,8 +57,6 @@ import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
@@ -71,6 +70,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.osgi.framework.BundleContext;
+
 /**
  * @author Raymond Augé
  */
@@ -81,10 +82,10 @@ public class ToolDependencies {
 
 		wireCaches();
 
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		registry.registerService(
-			FullNameGenerator.class, new DefaultFullNameGenerator());
+		bundleContext.registerService(
+			FullNameGenerator.class, new DefaultFullNameGenerator(), null);
 
 		CacheKeyGeneratorUtil cacheKeyGeneratorUtil =
 			new CacheKeyGeneratorUtil();
@@ -161,17 +162,21 @@ public class ToolDependencies {
 	}
 
 	public static void wireCaches() {
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		registry.registerService(
+		bundleContext.registerService(
 			PortalCacheManager.class,
-			new TestPortalCacheManager<>(PortalCacheManagerNames.MULTI_VM));
-		registry.registerService(
+			new TestPortalCacheManager<>(PortalCacheManagerNames.MULTI_VM),
+			null);
+		bundleContext.registerService(
 			PortalCacheManager.class,
-			new TestPortalCacheManager<>(PortalCacheManagerNames.SINGLE_VM));
+			new TestPortalCacheManager<>(PortalCacheManagerNames.SINGLE_VM),
+			null);
 
-		registry.registerService(MultiVMPool.class, new TestMultiVMPool());
-		registry.registerService(SingleVMPool.class, new TestSingleVMPool());
+		bundleContext.registerService(
+			MultiVMPool.class, new TestMultiVMPool(), null);
+		bundleContext.registerService(
+			SingleVMPool.class, new TestSingleVMPool(), null);
 	}
 
 	public static void wireDeployers() {

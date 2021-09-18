@@ -59,7 +59,7 @@ import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -100,9 +100,6 @@ import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.portlet.PortletBagFactory;
 import com.liferay.portlet.PortletFilterFactory;
 import com.liferay.portlet.PortletURLListenerFactory;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 import com.liferay.social.kernel.util.SocialConfigurationUtil;
 
 import java.io.IOException;
@@ -125,6 +122,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Brian Wing Shun Chan
@@ -1209,14 +1209,14 @@ public class MainServlet extends HttpServlet {
 	}
 
 	private void _registerPortalInitialized() {
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		_portalInitializedModuleServiceLifecycleServiceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				ModuleServiceLifecycle.class,
 				new ModuleServiceLifecycle() {
 				},
-				HashMapBuilder.<String, Object>put(
+				HashMapDictionaryBuilder.<String, Object>put(
 					"module.service.lifecycle", "portal.initialized"
 				).put(
 					"service.vendor", ReleaseInfo.getVendor()
@@ -1225,11 +1225,11 @@ public class MainServlet extends HttpServlet {
 				).build());
 
 		_portalPortletsInitializedModuleServiceLifecycleServiceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				ModuleServiceLifecycle.class,
 				new ModuleServiceLifecycle() {
 				},
-				HashMapBuilder.<String, Object>put(
+				HashMapDictionaryBuilder.<String, Object>put(
 					"module.service.lifecycle", "portlets.initialized"
 				).put(
 					"service.vendor", ReleaseInfo.getVendor()
@@ -1237,9 +1237,9 @@ public class MainServlet extends HttpServlet {
 					"service.version", ReleaseInfo.getVersion()
 				).build());
 
-		_servletContextServiceRegistration = registry.registerService(
+		_servletContextServiceRegistration = bundleContext.registerService(
 			ServletContext.class, getServletContext(),
-			HashMapBuilder.<String, Object>put(
+			HashMapDictionaryBuilder.<String, Object>put(
 				"bean.id", ServletContext.class.getName()
 			).put(
 				"original.bean", Boolean.TRUE
@@ -1248,11 +1248,11 @@ public class MainServlet extends HttpServlet {
 			).build());
 
 		_systemCheckModuleServiceLifecycleServiceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				ModuleServiceLifecycle.class,
 				new ModuleServiceLifecycle() {
 				},
-				HashMapBuilder.<String, Object>put(
+				HashMapDictionaryBuilder.<String, Object>put(
 					"module.service.lifecycle", "system.check"
 				).put(
 					"service.vendor", ReleaseInfo.getVendor()
@@ -1261,11 +1261,11 @@ public class MainServlet extends HttpServlet {
 				).build());
 
 		_licenseInstallModuleServiceLifecycleServiceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				ModuleServiceLifecycle.class,
 				new ModuleServiceLifecycle() {
 				},
-				HashMapBuilder.<String, Object>put(
+				HashMapDictionaryBuilder.<String, Object>put(
 					"module.service.lifecycle", "license.install"
 				).put(
 					"service.vendor", ReleaseInfo.getVendor()

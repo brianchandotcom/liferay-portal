@@ -38,8 +38,6 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 		onClose: () => setVisibleModal(false),
 	});
 
-	// TODO: obter o id do objectrelationship para renderizar ele no layout
-
 	return (
 		<>
 			{objectLayout?.objectLayoutTabs?.map(

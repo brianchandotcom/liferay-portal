@@ -22,7 +22,7 @@ import {
 	firstLetterUppercase,
 	removeAllSpecialCharacters,
 } from '../utils/string';
-import RequiredMask from './RequiredMask';
+import RequiredMask from './form/RequiredMask';
 
 declare global {
 	const Liferay: any;

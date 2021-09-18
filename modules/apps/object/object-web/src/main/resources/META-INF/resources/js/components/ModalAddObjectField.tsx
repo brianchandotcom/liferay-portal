@@ -23,7 +23,7 @@ import {
 	firstLetterUppercase,
 	removeAllSpecialCharacters,
 } from '../utils/string';
-import RequiredMask from './RequiredMask';
+import RequiredMask from './form/RequiredMask';
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;

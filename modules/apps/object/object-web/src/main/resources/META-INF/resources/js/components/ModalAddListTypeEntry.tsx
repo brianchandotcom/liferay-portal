@@ -19,7 +19,7 @@ import ClayLocalizedInput from '@clayui/localized-input';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
-import RequiredMask from './RequiredMask';
+import RequiredMask from './form/RequiredMask';
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;

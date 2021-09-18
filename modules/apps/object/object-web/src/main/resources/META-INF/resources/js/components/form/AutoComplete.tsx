@@ -13,42 +13,55 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
+import ClayForm from '@clayui/form';
+import classNames from 'classnames';
 import React, {useState} from 'react';
 
-import CustomSelect from '../../CustomSelect/CustomSelect';
-import RequiredMask from '../../RequiredMask';
+import CustomSelect from '../custom-select/CustomSelect';
+import ErrorFeedback from './ErrorFeedback';
+import FeedbackMessage from './FeedbackMessage';
+import RequiredMask from './RequiredMask';
 
 interface IAutoCompleteProps extends React.HTMLAttributes<HTMLElement> {
 	children: (item: any) => React.ReactNode;
 	contentRight?: React.ReactNode;
 	emptyStateMessage: string;
+	error?: string;
+	feedbackMessage?: string;
 	items: any[];
+	label: string;
 	onChangeQuery: (value: string) => void;
 	onSelectItem: (item: any) => void;
 	query: string;
 	required?: boolean;
-	title: string;
 	value?: string;
 }
 
 const AutoComplete: React.FC<IAutoCompleteProps> = ({
 	children,
+	className,
 	contentRight,
 	emptyStateMessage,
+	error,
+	feedbackMessage,
 	items,
+	label,
 	onChangeQuery,
 	onSelectItem,
 	query,
 	required = false,
-	title,
 	value,
 }) => {
 	const [active, setActive] = useState<boolean>(false);
 
 	return (
-		<>
+		<ClayForm.Group
+			className={classNames(className, {
+				'has-error': error,
+			})}
+		>
 			<label>
-				{title}
+				{label}
 
 				{required && <RequiredMask />}
 			</label>
@@ -94,7 +107,13 @@ const AutoComplete: React.FC<IAutoCompleteProps> = ({
 					</ClayDropDown.ItemList>
 				)}
 			</ClayDropDown>
-		</>
+
+			{error && <ErrorFeedback error={error} />}
+
+			{feedbackMessage && (
+				<FeedbackMessage feedbackMessage={feedbackMessage} />
+			)}
+		</ClayForm.Group>
 	);
 };
 

@@ -1,0 +1,261 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+import ClayButton from '@clayui/button';
+import ClayForm from '@clayui/form';
+import ClayLabel from '@clayui/label';
+import ClayModal from '@clayui/modal';
+import classNames from 'classnames';
+import React, {useContext, useMemo, useState} from 'react';
+
+import useForm from '../../../hooks/useForm';
+import {normalizeLanguageId} from '../../../utils/string';
+import AutoComplete from '../../form/AutoComplete';
+import Input from '../../form/Input';
+import LayoutContext, {TYPES as EVENT_TYPES} from '../context';
+import {TObjectRelationship} from '../types';
+
+type TTabTypes = {
+	[key: string]: {
+		active: boolean;
+		description: string;
+		label: string;
+	};
+};
+
+interface ITabTypesProps extends React.HTMLAttributes<HTMLElement> {
+	selectedType: string;
+	onChangeType: (type: string) => void;
+}
+
+const TYPES = {
+	FIELDS: 'fields',
+	RELATIONSHIPS: 'relationships',
+};
+
+const types: TTabTypes = {
+	[TYPES.FIELDS]: {
+		active: true,
+		description: Liferay.Language.get(
+			'display-fields-and-one-to-one-relationships'
+		),
+		label: Liferay.Language.get('fields'),
+	},
+	[TYPES.RELATIONSHIPS]: {
+		active: false,
+		description: Liferay.Language.get('display-multiple-relationships'),
+		label: Liferay.Language.get('relationships'),
+	},
+};
+
+const TabTypes: React.FC<ITabTypesProps> = ({onChangeType, selectedType}) => {
+	return (
+		<>
+			{Object.keys(types).map((key) => {
+				const {description, label} = types[key];
+
+				return (
+					<div
+						className={classNames('layout-tab__tab-types', {
+							active: selectedType === key,
+						})}
+						key={key}
+						onClick={() => onChangeType(key)}
+					>
+						<h4 className="layout-tab__tab-types__title">
+							{label}
+						</h4>
+						<span className="tab__tab-types__description">
+							{description}
+						</span>
+					</div>
+				);
+			})}
+		</>
+	);
+};
+
+const defaultLanguageId = normalizeLanguageId(
+	Liferay.ThemeDisplay.getDefaultLanguageId()
+);
+
+interface IModalAddObjectLayoutTabProps
+	extends React.HTMLAttributes<HTMLElement> {
+	observer: any;
+	onClose: () => void;
+}
+
+const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
+	observer,
+	onClose,
+}) => {
+	const [{objectRelationships}, dispatch] = useContext(LayoutContext);
+	const [selectedType, setSelectedType] = useState(TYPES.FIELDS);
+	const [query, setQuery] = useState<string>('');
+	const [selectedRelationship, setSelectedRelationship] = useState<
+		TObjectRelationship
+	>();
+
+	const filteredRelationships = useMemo(() => {
+		return objectRelationships.filter(({inLayout, label, name}) => {
+			return (
+				(label[defaultLanguageId]?.match(query) ??
+					name?.match(query)) &&
+				!inLayout
+			);
+		});
+	}, [objectRelationships, query]);
+
+	const onSubmit = (values: any) => {
+		dispatch({
+			payload: {
+				name: {
+					[defaultLanguageId]: values.name,
+				},
+				objectRelationshipId: values.objectRelationshipId,
+			},
+			type: EVENT_TYPES.ADD_OBJECT_LAYOUT_TAB,
+		});
+
+		onClose();
+	};
+
+	const onValidate = (values: any) => {
+		const errors: any = {};
+
+		if (!values.name) {
+			errors.name = Liferay.Language.get('required');
+		}
+
+		if (
+			!values.objectRelationshipId &&
+			selectedType === TYPES.RELATIONSHIPS
+		) {
+			errors.objectRelationshipId = Liferay.Language.get('required');
+		}
+
+		return errors;
+	};
+
+	const {errors, handleChange, handleSubmit, values} = useForm({
+		initialValues: {
+			name: '',
+			objectRelationshipId: 0,
+		},
+		onSubmit,
+		validate: onValidate,
+	});
+
+	return (
+		<ClayModal observer={observer}>
+			<ClayForm onSubmit={handleSubmit}>
+				<ClayModal.Header>
+					{Liferay.Language.get('add-tab')}
+				</ClayModal.Header>
+				<ClayModal.Body>
+					<Input
+						error={errors.name}
+						id="inputName"
+						label={Liferay.Language.get('label')}
+						name="name"
+						onChange={handleChange}
+						required
+						value={values.name}
+					/>
+
+					<ClayForm.Group>
+						<label className="mb-2">
+							{Liferay.Language.get('type')}
+						</label>
+
+						<TabTypes
+							onChangeType={setSelectedType}
+							selectedType={selectedType}
+						/>
+					</ClayForm.Group>
+
+					{selectedType === TYPES.RELATIONSHIPS && (
+						<ClayForm.Group>
+							<AutoComplete
+								contentRight={
+									<ClayLabel
+										className="label-inside-custom-select"
+										displayType="secondary"
+									>
+										{selectedRelationship?.type}
+									</ClayLabel>
+								}
+								emptyStateMessage={Liferay.Language.get(
+									'there-are-no-relationship-for-this-object'
+								)}
+								error={errors.objectRelationshipId}
+								items={filteredRelationships}
+								label={Liferay.Language.get('relationship')}
+								onChangeQuery={setQuery}
+								onSelectItem={(item) => {
+									const syntheticEvent: any = {
+										target: {
+											name: 'objectRelationshipId',
+											value: item.id,
+										},
+									};
+
+									setSelectedRelationship(item);
+									handleChange(syntheticEvent);
+								}}
+								query={query}
+								required
+								value={
+									selectedRelationship?.label[
+										defaultLanguageId
+									] ?? selectedRelationship?.name
+								}
+							>
+								{({label, name, type}) => (
+									<div className="d-flex justify-content-between">
+										<div>
+											{label[defaultLanguageId] ?? name}
+										</div>
+										<div>
+											<ClayLabel displayType="secondary">
+												{type}
+											</ClayLabel>
+										</div>
+									</div>
+								)}
+							</AutoComplete>
+						</ClayForm.Group>
+					)}
+				</ClayModal.Body>
+				<ClayModal.Footer
+					last={
+						<ClayButton.Group spaced>
+							<ClayButton
+								displayType="secondary"
+								onClick={onClose}
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
+							<ClayButton type="submit">
+								{Liferay.Language.get('save')}
+							</ClayButton>
+						</ClayButton.Group>
+					}
+				/>
+			</ClayForm>
+		</ClayModal>
+	);
+};
+
+export default ModalAddObjectLayoutTab;

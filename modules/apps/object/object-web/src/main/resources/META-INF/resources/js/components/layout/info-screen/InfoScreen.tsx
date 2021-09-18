@@ -12,12 +12,12 @@
  * details.
  */
 
-import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
+import ClayForm, {ClayCheckbox} from '@clayui/form';
 import React, {useContext} from 'react';
 
 import {normalizeLanguageId} from '../../../utils/string';
 import Card from '../../Card/Card';
-import RequiredMask from '../../RequiredMask';
+import Input from '../../form/Input';
 import LayoutContext, {TYPES} from '../context';
 
 const defaultLanguageId = normalizeLanguageId(
@@ -32,15 +32,11 @@ const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			<Card.Header title={Liferay.Language.get('basic-info')} />
 			<Card.Body>
 				<ClayForm.Group>
-					<label htmlFor="objectLayoutName">
-						{Liferay.Language.get('name')}
-
-						<RequiredMask />
-					</label>
-
-					<ClayInput
+					<Input
 						id="objectLayoutName"
-						onChange={({target: {value}}) => {
+						label={Liferay.Language.get('name')}
+						name="name"
+						onChange={({target: {value}}: any) => {
 							dispatch({
 								payload: {
 									name: {
@@ -50,7 +46,7 @@ const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 								type: TYPES.CHANGE_OBJECT_LAYOUT_NAME,
 							});
 						}}
-						type="text"
+						required
 						value={objectLayout.name[defaultLanguageId]}
 					/>
 				</ClayForm.Group>

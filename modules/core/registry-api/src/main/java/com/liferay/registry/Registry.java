@@ -15,7 +15,6 @@
 package com.liferay.registry;
 
 import java.util.Collection;
-import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -50,24 +49,6 @@ public interface Registry {
 		throws Exception;
 
 	public String getSymbolicName(ClassLoader classLoader);
-
-	public <T> ServiceRegistration<T> registerService(
-		Class<T> clazz, T service);
-
-	public <T> ServiceRegistration<T> registerService(
-		Class<T> clazz, T service, Map<String, Object> properties);
-
-	public <T> ServiceRegistration<T> registerService(
-		String className, T service);
-
-	public <T> ServiceRegistration<T> registerService(
-		String className, T service, Map<String, Object> properties);
-
-	public <T> ServiceRegistration<T> registerService(
-		String[] classNames, T service);
-
-	public <T> ServiceRegistration<T> registerService(
-		String[] classNames, T service, Map<String, Object> properties);
 
 	public <T> boolean ungetService(ServiceReference<T> serviceReference);
 

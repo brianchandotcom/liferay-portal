@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
@@ -46,7 +47,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
 
 import java.io.Closeable;
 import java.io.Serializable;
@@ -65,6 +65,9 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.junit.Assert;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Matthew Tambara
@@ -95,7 +98,7 @@ public class DataGuardTestRuleUtil {
 	}
 
 	public static DataBag beforeClass() {
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		Map<String, Map<Serializable, String>> records =
 			new ConcurrentHashMap<>();
@@ -103,9 +106,9 @@ public class DataGuardTestRuleUtil {
 		_recordsThreadLocal.set(records);
 
 		ServiceRegistration<SessionCustomizer> serviceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				SessionCustomizer.class,
-				new RecordingSessionCustomizer(records));
+				new RecordingSessionCustomizer(records), null);
 
 		return new DataBag(
 			_captureDataMap(), PortletLocalServiceUtil.getPortlets(), records,

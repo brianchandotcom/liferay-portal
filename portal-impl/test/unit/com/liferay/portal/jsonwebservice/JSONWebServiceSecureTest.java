@@ -17,13 +17,10 @@ package com.liferay.portal.jsonwebservice;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
-
-import java.util.Collections;
 
 import jodd.typeconverter.TypeConversionException;
 
@@ -33,6 +30,9 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -171,12 +171,12 @@ public class JSONWebServiceSecureTest extends BaseJSONWebServiceTestCase {
 		catch (Exception exception) {
 		}
 
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		ServiceRegistration<Object> serviceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				Object.class, new Object(),
-				Collections.singletonMap(
+				MapUtil.singletonDictionary(
 					PropsKeys.
 						JSONWS_WEB_SERVICE_PARAMETER_TYPE_WHITELIST_CLASS_NAMES,
 					new String[] {"java.util.Random", "some.other.Class"}));

@@ -25,22 +25,23 @@ import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Brian Wing Shun Chan
@@ -104,15 +105,15 @@ public class StartupAction extends SimpleAction {
 
 		DBUpgrader.checkReleaseState();
 
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		final ServiceRegistration<ModuleServiceLifecycle>
 			moduleServiceLifecycleServiceRegistration =
-				registry.registerService(
+				bundleContext.registerService(
 					ModuleServiceLifecycle.class,
 					new ModuleServiceLifecycle() {
 					},
-					HashMapBuilder.<String, Object>put(
+					HashMapDictionaryBuilder.<String, Object>put(
 						"module.service.lifecycle", "database.initialized"
 					).put(
 						"service.vendor", ReleaseInfo.getVendor()

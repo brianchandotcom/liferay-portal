@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.module.util.ServiceLatch;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.version.Version;
@@ -48,9 +48,6 @@ import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyGroup;
 import com.liferay.portal.verify.VerifyProperties;
 import com.liferay.portal.verify.VerifyResourcePermissions;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Connection;
@@ -60,6 +57,9 @@ import java.sql.ResultSet;
 
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.logging.log4j.core.Appender;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 import org.springframework.context.ApplicationContext;
 
@@ -240,13 +240,13 @@ public class DBUpgrader {
 	private static void _registerModuleServiceLifecycle(
 		String moduleServiceLifecycle) {
 
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		registry.registerService(
+		bundleContext.registerService(
 			ModuleServiceLifecycle.class,
 			new ModuleServiceLifecycle() {
 			},
-			HashMapBuilder.<String, Object>put(
+			HashMapDictionaryBuilder.<String, Object>put(
 				"module.service.lifecycle", moduleServiceLifecycle
 			).put(
 				"service.vendor", ReleaseInfo.getVendor()
@@ -278,9 +278,9 @@ public class DBUpgrader {
 		}
 
 		if (_appenderServiceReference != null) {
-			Registry registry = RegistryUtil.getRegistry();
+			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-			registry.ungetService(_appenderServiceReference);
+			bundleContext.ungetService(_appenderServiceReference);
 		}
 	}
 

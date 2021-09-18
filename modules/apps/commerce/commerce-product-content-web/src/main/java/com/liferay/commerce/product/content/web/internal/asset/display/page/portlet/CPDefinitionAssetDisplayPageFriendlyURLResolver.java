@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -81,7 +80,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ivica Cardic
  */
 @Component(enabled = false, service = FriendlyURLResolver.class)
-public class CProductAssetDisplayPageFriendlyURLResolver
+public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 	extends BaseAssetDisplayPageFriendlyURLResolver {
 
 	@Override
@@ -110,13 +109,26 @@ public class CProductAssetDisplayPageFriendlyURLResolver
 		CProduct cProduct = _cProductLocalService.getCProduct(
 			friendlyURLEntry.getClassPK());
 
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			cProduct.getPublishedCPDefinitionId());
+
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)requestContext.get("request");
+
+		CPCatalogEntry cpCatalogEntry = _cpDefinitionHelper.getCPCatalogEntry(
+			_getCommerceAccountId(groupId, httpServletRequest), groupId,
+			cpDefinition.getCPDefinitionId(),
+			_portal.getLocale(httpServletRequest));
+
+		httpServletRequest.setAttribute(
+			CPWebKeys.CP_CATALOG_ENTRY, cpCatalogEntry);
+
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			_getLayoutDisplayPageObjectProvider(cProduct);
+			_getLayoutDisplayPageObjectProvider(cpDefinition);
 
 		CPDisplayLayout cpDisplayLayout =
 			_cpDisplayLayoutLocalService.fetchCPDisplayLayout(
-				groupId, CPDefinition.class,
-				cProduct.getPublishedCPDefinitionId());
+				groupId, CPDefinition.class, cpDefinition.getCPDefinitionId());
 
 		if ((cpDisplayLayout == null) &&
 			(layoutDisplayPageObjectProvider != null) &&
@@ -125,31 +137,14 @@ public class CProductAssetDisplayPageFriendlyURLResolver
 				layoutDisplayPageObjectProvider.getClassPK(),
 				layoutDisplayPageObjectProvider.getClassTypeId())) {
 
-			ThemeDisplay themeDisplay = new ThemeDisplay();
-
-			themeDisplay.setScopeGroupId(groupId);
-			themeDisplay.setSiteGroupId(groupId);
-
-			String assetFriendlyURL =
-				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					_portal.getClassName(
-						layoutDisplayPageObjectProvider.getClassNameId()),
-					layoutDisplayPageObjectProvider.getClassPK(),
-					_portal.getLocale(
-						(HttpServletRequest)requestContext.get("request")),
-					themeDisplay);
-
-			if (Validator.isNotNull(assetFriendlyURL)) {
-				return assetFriendlyURL;
-			}
-
 			return super.getActualURL(
 				companyId, groupId, privateLayout, mainPath, friendlyURL,
 				params, requestContext);
 		}
 
 		return _getBasicLayoutURL(
-			groupId, privateLayout, mainPath, params, requestContext, cProduct);
+			groupId, privateLayout, mainPath, params, requestContext,
+			cpDefinition);
 	}
 
 	@Override
@@ -194,13 +189,15 @@ public class CProductAssetDisplayPageFriendlyURLResolver
 		CProduct cProduct = _cProductLocalService.getCProduct(
 			friendlyURLEntry.getClassPK());
 
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			cProduct.getPublishedCPDefinitionId());
+
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			_getLayoutDisplayPageObjectProvider(cProduct);
+			_getLayoutDisplayPageObjectProvider(cpDefinition);
 
 		CPDisplayLayout cpDisplayLayout =
 			_cpDisplayLayoutLocalService.fetchCPDisplayLayout(
-				groupId, CPDefinition.class,
-				cProduct.getPublishedCPDefinitionId());
+				groupId, CPDefinition.class, cpDefinition.getCPDefinitionId());
 
 		if ((cpDisplayLayout == null) &&
 			(layoutDisplayPageObjectProvider != null) &&
@@ -215,7 +212,7 @@ public class CProductAssetDisplayPageFriendlyURLResolver
 		}
 
 		Layout layout = _getProductLayout(
-			groupId, privateLayout, cProduct.getPublishedCPDefinitionId());
+			groupId, privateLayout, cpDefinition.getCPDefinitionId());
 
 		return new LayoutFriendlyURLComposite(
 			layout,
@@ -231,7 +228,7 @@ public class CProductAssetDisplayPageFriendlyURLResolver
 	private String _getBasicLayoutURL(
 			long groupId, boolean privateLayout, String mainPath,
 			Map<String, String[]> params, Map<String, Object> requestContext,
-			CProduct cProduct)
+			CPDefinition cpDefinition)
 		throws PortalException {
 
 		HttpServletRequest httpServletRequest =
@@ -241,7 +238,7 @@ public class CProductAssetDisplayPageFriendlyURLResolver
 
 		CPCatalogEntry cpCatalogEntry = _cpDefinitionHelper.getCPCatalogEntry(
 			_getCommerceAccountId(groupId, httpServletRequest), groupId,
-			cProduct.getPublishedCPDefinitionId(), locale);
+			cpDefinition.getCPDefinitionId(), locale);
 
 		Layout layout = _getProductLayout(
 			groupId, privateLayout, cpCatalogEntry.getCPDefinitionId());
@@ -256,9 +253,6 @@ public class CProductAssetDisplayPageFriendlyURLResolver
 
 		actualParams.put("p_p_lifecycle", new String[] {"0"});
 		actualParams.put("p_p_mode", new String[] {"view"});
-
-		httpServletRequest.setAttribute(
-			CPWebKeys.CP_CATALOG_ENTRY, cpCatalogEntry);
 
 		String queryString = _http.parameterMapToString(actualParams, false);
 
@@ -330,15 +324,15 @@ public class CProductAssetDisplayPageFriendlyURLResolver
 	}
 
 	private LayoutDisplayPageObjectProvider<?>
-		_getLayoutDisplayPageObjectProvider(CProduct cProduct) {
+		_getLayoutDisplayPageObjectProvider(CPDefinition cpDefinition) {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			layoutDisplayPageProviderTracker.
 				getLayoutDisplayPageProviderByClassName(
-					CProduct.class.getName());
+					CPDefinition.class.getName());
 
 		InfoItemReference infoItemReference = new InfoItemReference(
-			CProduct.class.getName(), cProduct.getCProductId());
+			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 
 		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 			infoItemReference);
@@ -400,7 +394,7 @@ public class CProductAssetDisplayPageFriendlyURLResolver
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CProductAssetDisplayPageFriendlyURLResolver.class);
+		CPDefinitionAssetDisplayPageFriendlyURLResolver.class);
 
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider

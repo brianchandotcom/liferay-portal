@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -55,8 +56,6 @@ import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
@@ -79,6 +78,7 @@ import java.util.logging.Level;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -88,6 +88,9 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Tina Tian
@@ -107,6 +110,11 @@ public class ClusterSchedulerEngineTest {
 		setUpSchedulerEngineHelperUtil();
 		setUpClusterSchedulerEngine();
 		setUpClusterInvokeAcceptor();
+	}
+
+	@After
+	public void tearDown() {
+		_serviceRegistration.unregister();
 	}
 
 	@AdviseWith(adviceClasses = ClusterableContextThreadLocalAdvice.class)
@@ -1901,10 +1909,10 @@ public class ClusterSchedulerEngineTest {
 			}
 		);
 
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		registry.registerService(
-			SchedulerEngineHelper.class, schedulerEngineHelper);
+		_serviceRegistration = bundleContext.registerService(
+			SchedulerEngineHelper.class, schedulerEngineHelper, null);
 	}
 
 	private static final int _DEFAULT_INTERVAL = 20;
@@ -1938,6 +1946,7 @@ public class ClusterSchedulerEngineTest {
 		new MockClusterMasterExecutor();
 	private MockSchedulerEngine _mockSchedulerEngine;
 	private Props _props;
+	private ServiceRegistration<?> _serviceRegistration;
 
 	private static class MockClusterExecutor implements ClusterExecutor {
 

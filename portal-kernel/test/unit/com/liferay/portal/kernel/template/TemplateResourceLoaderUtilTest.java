@@ -14,11 +14,9 @@
 
 package com.liferay.portal.kernel.template;
 
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.Objects;
 import java.util.Set;
@@ -27,6 +25,9 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Dante Wang
@@ -62,10 +63,10 @@ public class TemplateResourceLoaderUtilTest {
 					return null;
 				});
 
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		_serviceRegistration = registry.registerService(
-			TemplateResourceLoader.class, _templateResourceLoader);
+		_serviceRegistration = bundleContext.registerService(
+			TemplateResourceLoader.class, _templateResourceLoader, null);
 	}
 
 	@AfterClass

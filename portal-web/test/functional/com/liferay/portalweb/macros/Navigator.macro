@@ -318,7 +318,8 @@ definition {
 	macro openToGroupPagesPortlet {
 		var plid = JSONLayout.getPlid(
 			groupName = "${groupName}",
-			layoutName = "${layoutName}");
+			layoutName = "${layoutName}",
+			site = "${site}");
 
 		if ("${portlet}" == "General") {
 			var screenNavigationEntryKey = "general";

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.nio.intraband;
 
 import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -22,17 +23,19 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.List;
 import java.util.logging.Level;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Shuyang Zhou
@@ -47,14 +50,20 @@ public class BaseAsyncDatagramReceiveHandlerTest {
 
 	@Before
 	public void setUp() {
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		registry.registerService(
+		_serviceRegistration = bundleContext.registerService(
 			PortalExecutorManager.class,
 			(PortalExecutorManager)ProxyUtil.newProxyInstance(
 				BaseAsyncDatagramReceiveHandlerTest.class.getClassLoader(),
 				new Class<?>[] {PortalExecutorManager.class},
-				new PortalExecutorManagerInvocationHandler()));
+				new PortalExecutorManagerInvocationHandler()),
+			null);
+	}
+
+	@After
+	public void tearDown() {
+		_serviceRegistration.unregister();
 	}
 
 	@Test
@@ -91,6 +100,8 @@ public class BaseAsyncDatagramReceiveHandlerTest {
 
 		Assert.assertTrue(dummyAsyncDatagramReceiveHandler._received);
 	}
+
+	private ServiceRegistration<?> _serviceRegistration;
 
 	private static class DummyAsyncDatagramReceiveHandler
 		extends BaseAsyncDatagramReceiveHandler {

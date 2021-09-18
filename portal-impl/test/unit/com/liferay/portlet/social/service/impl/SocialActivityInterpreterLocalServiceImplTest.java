@@ -14,14 +14,12 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -32,6 +30,9 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Leon Chi
@@ -45,14 +46,14 @@ public class SocialActivityInterpreterLocalServiceImplTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		_socialActivityInterpreterLocalServiceImpl =
 			new SocialActivityInterpreterLocalServiceImpl();
 
 		_socialActivityInterpreterLocalServiceImpl.afterPropertiesSet();
 
-		_serviceRegistration = registry.registerService(
+		_serviceRegistration = bundleContext.registerService(
 			SocialActivityInterpreter.class,
 			(SocialActivityInterpreter)ProxyUtil.newProxyInstance(
 				SocialActivityInterpreter.class.getClassLoader(),
@@ -68,7 +69,7 @@ public class SocialActivityInterpreterLocalServiceImplTest {
 
 					return null;
 				}),
-			Collections.singletonMap(
+			MapUtil.singletonDictionary(
 				"javax.portlet.name",
 				"SocialActivityInterpreterLocalServiceImplTest"));
 	}

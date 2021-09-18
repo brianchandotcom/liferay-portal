@@ -15,15 +15,13 @@
 package com.liferay.portal.servlet.filters.autologin;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PortalImpl;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.io.IOException;
 
@@ -38,6 +36,9 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Leon Chi
@@ -55,12 +56,12 @@ public class AutoLoginFilterTest {
 
 		portalUtil.setPortal(new PortalImpl());
 
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		boolean[] calledLogin = {false};
 
 		ServiceRegistration<AutoLogin> serviceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				AutoLogin.class,
 				new BaseAutoLogin() {
 
@@ -74,7 +75,8 @@ public class AutoLoginFilterTest {
 						return null;
 					}
 
-				});
+				},
+				null);
 
 		AutoLoginFilter autoLoginFilter = new AutoLoginFilter();
 

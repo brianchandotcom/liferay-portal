@@ -14,17 +14,17 @@
 
 package com.liferay.portal.struts;
 
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
-
-import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Leon Chi
@@ -38,12 +38,12 @@ public class AuthPublicPathRegistryTest {
 
 	@Test
 	public void testContains() {
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		ServiceRegistration<Object> serviceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				Object.class, new Object(),
-				Collections.singletonMap(
+				MapUtil.singletonDictionary(
 					"auth.public.path", _TEST_AUTH_PUBLIC_PATH));
 
 		try {

@@ -15,15 +15,13 @@
 package com.liferay.portal.test.rule.callback;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ConsoleTestUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.InjectTestBag;
 import com.liferay.portal.test.rule.InjectTestRule;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +32,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.Description;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Preston Crary
@@ -54,17 +55,17 @@ public class InjectTestRuleTest {
 
 	@Test
 	public void testInjectBaseTestCase() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		Service1 service1 = new Service1();
 
 		_serviceRegistrations.add(
-			registry.registerService(Service1.class, service1));
+			bundleContext.registerService(Service1.class, service1, null));
 
 		Service2 service2 = new Service2();
 
 		_serviceRegistrations.add(
-			registry.registerService(Service2.class, service2));
+			bundleContext.registerService(Service2.class, service2, null));
 
 		TestCase1 testCase1 = new TestCase1();
 
@@ -127,10 +128,12 @@ public class InjectTestRuleTest {
 
 						Assert.assertNull(TestCase2._service1);
 
-						Registry registry = RegistryUtil.getRegistry();
+						BundleContext bundleContext =
+							SystemBundleUtil.getBundleContext();
 
 						_serviceRegistrations.add(
-							registry.registerService(Service1.class, service1));
+							bundleContext.registerService(
+								Service1.class, service1, null));
 
 						return;
 					}
@@ -165,17 +168,19 @@ public class InjectTestRuleTest {
 
 		Assert.assertNull(testCase2._service2);
 
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		_serviceRegistrations.add(
-			registry.registerService(Service2.class, new Service2()));
+			bundleContext.registerService(
+				Service2.class, new Service2(), null));
 
 		injectTestBag.injectFields();
 
 		Assert.assertNull(testCase2._service2);
 
 		_serviceRegistrations.add(
-			registry.registerService(Service3.class, new Service3()));
+			bundleContext.registerService(
+				Service3.class, new Service3(), null));
 
 		injectTestBag.injectFields();
 
@@ -184,9 +189,9 @@ public class InjectTestRuleTest {
 		Service3 service3b = new Service3();
 
 		_serviceRegistrations.add(
-			registry.registerService(
+			bundleContext.registerService(
 				Service3.class, service3b,
-				HashMapBuilder.<String, Object>put(
+				HashMapDictionaryBuilder.<String, Object>put(
 					"inject.test.rule.test", true
 				).build()));
 

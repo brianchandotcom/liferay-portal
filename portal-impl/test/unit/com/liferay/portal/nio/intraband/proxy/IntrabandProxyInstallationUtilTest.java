@@ -17,6 +17,7 @@ package com.liferay.portal.nio.intraband.proxy;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.io.Serializer;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.PortalExecutorManagerInvocationHandler;
 import com.liferay.portal.kernel.nio.intraband.proxy.AsyncIntrabandProxySkeleton;
@@ -34,19 +35,21 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Shuyang Zhou
@@ -97,14 +100,20 @@ public class IntrabandProxyInstallationUtilTest {
 			IntrabandProxyUtil.getProxyMethodSignatures(
 				IntrabandProxyUtil.getStubClass(TestClass.class, "skeletonId"));
 
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		registry.registerService(
+		_serviceRegistration = bundleContext.registerService(
 			PortalExecutorManager.class,
 			(PortalExecutorManager)ProxyUtil.newProxyInstance(
 				IntrabandProxyInstallationUtilTest.class.getClassLoader(),
 				new Class<?>[] {PortalExecutorManager.class},
-				new PortalExecutorManagerInvocationHandler()));
+				new PortalExecutorManagerInvocationHandler()),
+			null);
+	}
+
+	@After
+	public void tearDown() {
+		_serviceRegistration.unregister();
 	}
 
 	@Test
@@ -244,6 +253,7 @@ public class IntrabandProxyInstallationUtilTest {
 		IntrabandProxyInstallationUtilTest.class.getClassLoader();
 
 	private MockRegistrationReference _mockRegistrationReference;
+	private ServiceRegistration<?> _serviceRegistration;
 	private String[] _stubProxyMethodSignatures;
 	private final TargetLocator _targetLocator = new TestGenerateTargetLocator(
 		TestClass.class);

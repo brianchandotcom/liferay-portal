@@ -141,11 +141,6 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>OBJECT_STATUS</td>
-		<td>//span[@class='workflow-status']//*[contains(.,'${key_status}')]</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>DELETE_CUSTOM_OBJECT</td>
 		<td>//button[(@class='dropdown-item') and contains(text(),'Delete')]</td>
 		<td></td>

@@ -196,4 +196,8 @@ public interface CTDisplayRenderer<T> {
 			displayContext.getModel());
 	}
 
+	public default boolean showPreviewDiff() {
+		return false;
+	}
+
 }

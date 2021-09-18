@@ -546,7 +546,9 @@ public class GetEntryRenderDataMVCResourceCommand
 			jsonObject.put("rightTitle", rightTitle);
 		}
 
-		if ((leftContent != null) && (rightContent != null)) {
+		if (ctDisplayRenderer.showPreviewDiff() && (leftContent != null) &&
+			(rightContent != null)) {
+
 			jsonObject.put(
 				"unifiedContent",
 				DiffHtmlUtil.diff(
@@ -554,7 +556,8 @@ public class GetEntryRenderDataMVCResourceCommand
 					new UnsyncStringReader(rightContent)));
 		}
 
-		if ((leftLocalizedContentJSONObject != null) &&
+		if (ctDisplayRenderer.showPreviewDiff() &&
+			(leftLocalizedContentJSONObject != null) &&
 			(rightLocalizedContentJSONObject != null)) {
 
 			JSONObject unifiedLocalizedContentJSONObject =

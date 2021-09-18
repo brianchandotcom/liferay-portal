@@ -210,16 +210,27 @@ export default ({
 			) {
 				newState.view = VIEW_LEFT;
 			}
-			else if (
-				cachedData.changeType === CHANGE_TYPE_MODIFIED &&
-				!Object.prototype.hasOwnProperty.call(
-					cachedData,
-					'leftRender'
-				) &&
-				!Object.prototype.hasOwnProperty.call(
-					cachedData,
-					'leftLocalizedRender'
-				)
+
+			if (
+				newState.view === VIEW_UNIFIED &&
+				((newState.contentType === CONTENT_TYPE_DATA &&
+					!Object.prototype.hasOwnProperty.call(
+						cachedData,
+						'unifiedRender'
+					) &&
+					!Object.prototype.hasOwnProperty.call(
+						cachedData,
+						'unifiedLocalizedRender'
+					)) ||
+					(newState.contentType === CONTENT_TYPE_DISPLAY &&
+						!Object.prototype.hasOwnProperty.call(
+							cachedData,
+							'unifiedContent'
+						) &&
+						!Object.prototype.hasOwnProperty.call(
+							cachedData,
+							'unifiedLocalizedContent'
+						)))
 			) {
 				newState.view = VIEW_SPLIT;
 			}
@@ -288,13 +299,27 @@ export default ({
 				) {
 					newState.view = VIEW_LEFT;
 				}
-				else if (
-					json.changeType === CHANGE_TYPE_MODIFIED &&
-					!Object.prototype.hasOwnProperty.call(json, 'leftRender') &&
-					!Object.prototype.hasOwnProperty.call(
-						json,
-						'leftLocalizedRender'
-					)
+
+				if (
+					newState.view === VIEW_UNIFIED &&
+					((newState.contentType === CONTENT_TYPE_DATA &&
+						!Object.prototype.hasOwnProperty.call(
+							json,
+							'unifiedRender'
+						) &&
+						!Object.prototype.hasOwnProperty.call(
+							json,
+							'unifiedLocalizedRender'
+						)) ||
+						(newState.contentType === CONTENT_TYPE_DISPLAY &&
+							!Object.prototype.hasOwnProperty.call(
+								json,
+								'unifiedContent'
+							) &&
+							!Object.prototype.hasOwnProperty.call(
+								json,
+								'unifiedLocalizedContent'
+							)))
 				) {
 					newState.view = VIEW_SPLIT;
 				}
@@ -862,15 +887,24 @@ export default ({
 		const items = [];
 
 		if (
-			state.renderData.changeType !== CHANGE_TYPE_MODIFIED ||
-			Object.prototype.hasOwnProperty.call(
-				state.renderData,
-				'leftRender'
-			) ||
-			Object.prototype.hasOwnProperty.call(
-				state.renderData,
-				'leftLocalizedRender'
-			)
+			(state.contentType === CONTENT_TYPE_DATA &&
+				(Object.prototype.hasOwnProperty.call(
+					state.renderData,
+					'unifiedRender'
+				) ||
+					Object.prototype.hasOwnProperty.call(
+						state.renderData,
+						'unifiedLocalizedRender'
+					))) ||
+			(state.contentType === CONTENT_TYPE_DISPLAY &&
+				(Object.prototype.hasOwnProperty.call(
+					state.renderData,
+					'unifiedContent'
+				) ||
+					Object.prototype.hasOwnProperty.call(
+						state.renderData,
+						'unifiedLocalizedContent'
+					)))
 		) {
 			pushItem(items, VIEW_UNIFIED);
 
@@ -1057,9 +1091,34 @@ export default ({
 												: 'nav-link'
 										}
 										displayType="unstyled"
-										onClick={() =>
-											setContentType(CONTENT_TYPE_DISPLAY)
-										}
+										onClick={() => {
+											if (
+												state &&
+												state.view === VIEW_UNIFIED &&
+												state.renderData &&
+												!Object.prototype.hasOwnProperty.call(
+													state.renderData,
+													'unifiedContent'
+												) &&
+												!Object.prototype.hasOwnProperty.call(
+													state.renderData,
+													'unifiedLocalizedContent'
+												)
+											) {
+												setState({
+													contentType: CONTENT_TYPE_DISPLAY,
+													renderData:
+														state.renderData,
+													view: VIEW_SPLIT,
+												});
+
+												return;
+											}
+
+											setContentType(
+												CONTENT_TYPE_DISPLAY
+											);
+										}}
 										title={
 											!Object.prototype.hasOwnProperty.call(
 												state.renderData,

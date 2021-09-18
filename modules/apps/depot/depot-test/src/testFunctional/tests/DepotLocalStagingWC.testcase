@@ -734,7 +734,7 @@ definition {
 
 		DepotNavigator.gotoPortlet(portlet = "Staging");
 
-		Depot.deactivateStaging(siteName = "Test Depot Name");
+		Depot.deactivateStaging(depotName = "Test Depot Name");
 	}
 
 }

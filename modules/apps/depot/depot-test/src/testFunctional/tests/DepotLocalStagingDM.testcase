@@ -488,13 +488,12 @@ definition {
 
 		Staging.publishToLive();
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name-staging");
-
-		Click(
-			key_itemName = "Pages",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			portlet = "Open Graph",
+			site = "false",
+			siteURLKey = "site-name-staging");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -515,13 +514,11 @@ definition {
 
 		Staging.publishToLive();
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
-
-		Click(
-			key_itemName = "Pages",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			portlet = "Open Graph",
+			siteURLKey = "site-name");
 
 		AssertVisible(
 			key_imageName = "Document_2.jpg",
@@ -543,13 +540,12 @@ definition {
 
 		Staging.publishToLive();
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name-staging");
-
-		Click(
-			key_itemName = "Pages",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			portlet = "Open Graph",
+			site = "false",
+			siteURLKey = "site-name-staging");
 
 		AssertElementNotPresent(
 			key_imageName = "Document_2.jpg",
@@ -563,13 +559,11 @@ definition {
 
 		Staging.publishToLive();
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
-
-		Click(
-			key_itemName = "Pages",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			portlet = "Open Graph",
+			siteURLKey = "site-name");
 
 		AssertElementNotPresent(
 			key_imageName = "Document_2.jpg",
@@ -1441,13 +1435,12 @@ definition {
 
 		Staging.publishToLive();
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name-staging");
-
-		Click(
-			key_itemName = "Pages",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			portlet = "Open Graph",
+			site = "false",
+			siteURLKey = "site-name-staging");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -1468,25 +1461,22 @@ definition {
 
 		Staging.publishToLive();
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
-
-		Click(
-			key_itemName = "Pages",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			portlet = "Open Graph",
+			siteURLKey = "site-name");
 
 		AssertVisible(
 			key_imageName = "Document_1.jpg",
 			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name-staging");
-
-		Click(
-			key_itemName = "Pages",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			portlet = "Open Graph",
+			site = "false",
+			siteURLKey = "site-name-staging");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -1508,13 +1498,11 @@ definition {
 
 		Staging.publishToLive();
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
-
-		Click(
-			key_itemName = "Pages",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			portlet = "Open Graph",
+			siteURLKey = "site-name");
 
 		AssertVisible(
 			key_imageName = "Document_2.jpg",

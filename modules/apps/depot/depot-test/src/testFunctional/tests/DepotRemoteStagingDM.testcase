@@ -643,13 +643,11 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
-
-		Click(
-			key_itemName = "Pages",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			portlet = "Open Graph",
+			siteURLKey = "site-name");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -677,20 +675,11 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.openSitePage(
+		Navigator.openToGroupPagesPortlet(
 			baseURL = "http://localhost:9080",
-			pageName = "Test Page",
-			siteName = "Remote Site");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
-
-		Click(
-			key_itemName = "Pages",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
+			portlet = "Open Graph",
+			remoteStaging = "true",
+			siteURLKey = "remote-site");
 
 		AssertVisible(
 			key_imageName = "Document_2.jpg",
@@ -717,13 +706,11 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
-
-		Click(
-			key_itemName = "Pages",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			portlet = "Open Graph",
+			siteURLKey = "site-name");
 
 		AssertElementNotPresent(
 			key_imageName = "Document_2.jpg",
@@ -744,20 +731,11 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.openSitePage(
+		Navigator.openToGroupPagesPortlet(
 			baseURL = "http://localhost:9080",
-			pageName = "Test Page",
-			siteName = "Remote Site");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
-
-		Click(
-			key_itemName = "Pages",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
+			portlet = "Open Graph",
+			remoteStaging = "true",
+			siteURLKey = "remote-site");
 
 		AssertElementNotPresent(
 			key_imageName = "Document_2.jpg",
@@ -1860,13 +1838,11 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
-
-		Click(
-			key_itemName = "Pages",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			portlet = "Open Graph",
+			siteURLKey = "site-name");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -1894,20 +1870,11 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.openSitePage(
+		Navigator.openToGroupPagesPortlet(
 			baseURL = "http://localhost:9080",
-			pageName = "Test Page",
-			siteName = "Remote Site");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
-
-		Click(
-			key_itemName = "Pages",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
+			portlet = "Open Graph",
+			remoteStaging = "true",
+			siteURLKey = "remote-site");
 
 		AssertVisible(
 			key_imageName = "Document_1.jpg",
@@ -1918,13 +1885,11 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
-
-		Click(
-			key_itemName = "Pages",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			portlet = "Open Graph",
+			siteURLKey = "site-name");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -1953,20 +1918,11 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.openSitePage(
+		Navigator.openToGroupPagesPortlet(
 			baseURL = "http://localhost:9080",
-			pageName = "Test Page",
-			siteName = "Remote Site");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
-
-		Click(
-			key_itemName = "Pages",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
+			portlet = "Open Graph",
+			remoteStaging = "true",
+			siteURLKey = "remote-site");
 
 		AssertVisible(
 			key_imageName = "Document_2.jpg",

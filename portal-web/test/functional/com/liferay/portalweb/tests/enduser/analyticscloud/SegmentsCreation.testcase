@@ -696,6 +696,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8482 | Test Summary: Create a nested criteria"
 	@priority = "3"
 	test CanCreateNestedCriteria {
+		var usernameList = "userea,user1,test";
+
+		var fullNameList = "userfn userln,Test Test,user1 user1";
+
 		task ("Add one more user with a given birth date") {
 			JSONUser.addUser(
 				birthdayDay = "10",
@@ -721,7 +725,7 @@ definition {
 		}
 
 		task ("View the page as different users") {
-			for (var username : list "userea,user1,test") {
+			for (var username : list "${usernameList}") {
 				if ("${username}" == "userea") {
 					var fullName = "userfn userln";
 				}
@@ -741,7 +745,13 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "3000");
 			}
+		}
+
+		task ("Close sessions and wait for 30 seconds") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -784,7 +794,7 @@ definition {
 		task ("Add a userName criteria from Individual Attributes nested in email") {
 			ACSegments.addNestedSegmentField(
 				index = "2",
-				segmentField = "userName");
+				segmentField = "additionalName");
 
 			ACSegments.selectOperator(
 				index = "3",
@@ -818,14 +828,37 @@ definition {
 		task ("Search the new segment") {
 			ACUtils.searchBar(searchItem = "Dynamic Segment Test");
 
-			ACAssets.viewAssets(assetName = "Dynamic Segment Test");
+			ACUtils.viewNameList(nameList = "Dynamic Segment Test");
+
+			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 		}
 
-		task ("View the number of Membership is 2") {
-			ACAssets.viewAssetsInfo(
-				assetName = "Dynamic Segment Test",
-				index = "1",
-				value = "2");
+		task ("View both criterias in Segment Criteria card") {
+			ACSegments.viewSegmentCriteriaIndividualAttributes(
+				attributeName = "email",
+				attributeValue = '''"@liferay.com"''',
+				condition = "contains",
+				conjunction = "AND");
+
+			ACSegments.viewSegmentCriteriaIndividualAttributes(
+				attributeName = "birthDate",
+				attributeValue = "2000-09-10",
+				condition = "is after",
+				conjunction = "OR",
+				index = "2");
+
+			ACSegments.viewSegmentCriteriaIndividualAttributes(
+				attributeName = "additionalName",
+				attributeValue = '''"@liferay.com"''',
+				condition = "does not contain",
+				index = "2",
+				key_indexNested = "2");
+		}
+
+		task ("Switch tab to membership and check the membership list") {
+			ACNavigation.switchTab(tabName = "Membership");
+
+			ACUtils.viewNameList(nameList = "${fullNameList}");
 		}
 	}
 

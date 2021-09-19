@@ -49,8 +49,9 @@ public interface ObjectEntryManager {
 		throws Exception;
 
 	public ObjectEntry fetchObjectEntry(
-		DTOConverterContext dtoConverterContext,
-		ObjectDefinition objectDefinition, long objectEntryId);
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, long objectEntryId)
+		throws Exception;
 
 	public Page<ObjectEntry> getObjectEntries(
 			long companyId, ObjectDefinition objectDefinition, String scopeKey,

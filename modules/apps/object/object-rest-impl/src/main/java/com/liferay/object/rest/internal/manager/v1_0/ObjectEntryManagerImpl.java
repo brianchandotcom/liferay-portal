@@ -26,10 +26,6 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -135,9 +131,9 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 	@Override
 	public ObjectEntry fetchObjectEntry(
-		DTOConverterContext dtoConverterContext,
-		ObjectDefinition objectDefinition,
-		long objectEntryId) {
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, long objectEntryId)
+		throws Exception {
 
 		com.liferay.object.model.ObjectEntry objectEntry =
 			_objectEntryLocalService.fetchObjectEntry(objectEntryId);
@@ -289,36 +285,6 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 		return ObjectDefinition.class.getName() + "#" + objectDefinitionId;
 	}
 
-	private String _getScopeKey(
-		ObjectDefinition objectDefinition,
-		com.liferay.object.model.ObjectEntry objectEntry) {
-
-		ObjectScopeProvider objectScopeProvider =
-			_objectScopeProviderRegistry.getObjectScopeProvider(
-				objectDefinition.getScope());
-
-		if (objectScopeProvider.isGroupAware()) {
-			Group group = null;
-
-			try {
-				group = _groupLocalService.getGroup(objectEntry.getGroupId());
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException, portalException);
-				}
-			}
-
-			if (group == null) {
-				return null;
-			}
-
-			return group.getGroupKey();
-		}
-
-		return null;
-	}
-
 	private Date _toDate(Locale locale, String valueString) {
 		if (Validator.isNull(valueString)) {
 			return null;
@@ -341,9 +307,10 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	}
 
 	private ObjectEntry _toObjectEntry(
-		DTOConverterContext dtoConverterContext,
-		ObjectDefinition objectDefinition,
-		com.liferay.object.model.ObjectEntry objectEntry) {
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry objectEntry)
+		throws Exception {
 
 		Optional<UriInfo> uriInfoOptional =
 			dtoConverterContext.getUriInfoOptional();
@@ -387,7 +354,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 				uriInfo, dtoConverterContext.getUser());
 
 		defaultDTOConverterContext.setAttribute(
-			"scopeKey", _getScopeKey(objectDefinition, objectEntry));
+			"objectDefinition", objectDefinition);
 
 		return _objectEntryDTOConverter.toDTO(
 			defaultDTOConverterContext, objectEntry);
@@ -421,9 +388,6 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 		return values;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectEntryManagerImpl.class);
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;

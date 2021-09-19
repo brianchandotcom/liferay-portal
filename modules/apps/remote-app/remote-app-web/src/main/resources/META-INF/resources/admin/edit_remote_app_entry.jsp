@@ -28,8 +28,19 @@ portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "new-remote-app") : remoteAppEntry.getName(locale));
 
-boolean isCustomElement = (remoteAppEntry != null) && RemoteAppConstants.TYPE_CUSTOM_ELEMENT.equals(remoteAppEntry.getType());
-boolean isIFrame = (remoteAppEntry == null) || RemoteAppConstants.TYPE_IFRAME.equals(remoteAppEntry.getType());
+String errorSection = StringPool.BLANK;
+
+if (MultiSessionErrors.contains(liferayPortletRequest, RemoteAppEntryIFrameURLException.class.getName())) {
+	errorSection = "iframe";
+}
+
+if (MultiSessionErrors.contains(liferayPortletRequest, RemoteAppEntryCustomElementCSSURLsException.class.getName()) || MultiSessionErrors.contains(liferayPortletRequest, RemoteAppEntryCustomElementHTMLElementNameException.class.getName()) || MultiSessionErrors.contains(liferayPortletRequest, RemoteAppEntryCustomElementURLsException.class.getName())) {
+	errorSection = "customElement";
+}
+
+boolean isCustomElement = errorSection.equals("customElement") || ((remoteAppEntry != null) && RemoteAppConstants.TYPE_CUSTOM_ELEMENT.equals(remoteAppEntry.getType()));
+
+boolean isIFrame = !isCustomElement && (errorSection.equals("iframe") || (remoteAppEntry == null) || RemoteAppConstants.TYPE_IFRAME.equals(remoteAppEntry.getType()));
 %>
 
 <portlet:actionURL name="/remote_app_admin/edit_remote_app_entry" var="editRemoteAppEntryURL" />
@@ -95,7 +106,9 @@ boolean isIFrame = (remoteAppEntry == null) || RemoteAppConstants.TYPE_IFRAME.eq
 					customElementURLsArray = customElementURLs.split(StringPool.NEW_LINE);
 				}
 
-				for (String customElementURL : customElementURLsArray) {
+				String[] remoteAppCustomElementURLsArray = ParamUtil.getStringValues(request, "customElementURLs", customElementURLsArray);
+
+				for (String customElementURL : remoteAppCustomElementURLsArray) {
 				%>
 
 					<div class="repeatable">
@@ -115,7 +128,9 @@ boolean isIFrame = (remoteAppEntry == null) || RemoteAppConstants.TYPE_IFRAME.eq
 					customElementCSSURLsArray = customElementCSSURLs.split(StringPool.NEW_LINE);
 				}
 
-				for (String customElementCSSURL : customElementCSSURLsArray) {
+				String[] remoteAppCustomElementCSSURLsArray = ParamUtil.getStringValues(request, "customElementCSSURLs", customElementCSSURLsArray);
+
+				for (String customElementCSSURL : remoteAppCustomElementCSSURLsArray) {
 				%>
 
 					<div class="repeatable">

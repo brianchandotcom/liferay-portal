@@ -95,7 +95,24 @@ boolean isIFrame = !isCustomElement && (errorSection.equals("iframe") || (remote
 				disabled="<%= !isCustomElement %>"
 				id='<%= liferayPortletResponse.getNamespace() + "_type_customElement" %>'
 			>
-				<aui:input label="html-element-name" name="customElementHTMLElementName" />
+				<aui:input label="html-element-name" name="customElementHTMLElementName">
+					<aui:validator errorMessage="please-enter-a-valid-html-element-name" name="custom">
+						(val) => {
+							const RESERVED_CUSTOM_ELEMENT_NAMES = [
+								"annotation-xml",
+								"color-profile",
+								"font-face",
+								"font-face-src",
+								"font-face-uri",
+								"font-face-format",
+								"font-face-name",
+								"missing-glyph",
+							];
+
+							return !RESERVED_CUSTOM_ELEMENT_NAMES.includes(val) && /^[a-z]([a-z]|[0-9]|-|\.|_)*-([a-z]|[0-9]|-|\.|_)*/.test(val);
+						}
+					</aui:validator>
+				</aui:input>
 
 				<%
 				String[] customElementURLsArray = new String[1];
@@ -113,6 +130,7 @@ boolean isIFrame = !isCustomElement && (errorSection.equals("iframe") || (remote
 
 					<div class="repeatable">
 						<aui:input ignoreRequestValue="<%= true %>" label="url" name="customElementURLs" type="text" value="<%= customElementURL %>">
+							<aui:validator name="required" />
 							<aui:validator name="url" />
 						</aui:input>
 					</div>

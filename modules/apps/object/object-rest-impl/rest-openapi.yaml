@@ -30,6 +30,9 @@ components:
                         type: object
                     type: object
                     x-json-map: true
+                scopeKey:
+                    readOnly: true
+                    type: string
                 status:
                     $ref: "#/components/schemas/Status"
                     readOnly: true

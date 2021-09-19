@@ -58,7 +58,8 @@ public interface ObjectEntryManager {
 		throws Exception;
 
 	public ObjectEntry getObjectEntry(
-			DTOConverterContext dtoConverterContext, long objectEntryId)
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, long objectEntryId)
 		throws Exception;
 
 	public ObjectEntry getObjectEntry(
@@ -69,7 +70,8 @@ public interface ObjectEntryManager {
 
 	public ObjectEntry updateObjectEntry(
 			DTOConverterContext dtoConverterContext, long userId,
-			long objectEntryId, ObjectEntry objectEntry)
+			ObjectDefinition objectDefinition, long objectEntryId,
+			ObjectEntry objectEntry)
 		throws Exception;
 
 }

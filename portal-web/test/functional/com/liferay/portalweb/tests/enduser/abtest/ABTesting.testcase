@@ -1,0 +1,816 @@
+@component-name = "portal-ab-test"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "A/B Test";
+
+	setUp {
+		task ("Open Analytics Cloud") {
+			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
+			Navigator.openURL(baseURL = "${analyticsCloudURL}");
+		}
+
+		task ("Take token from Analytics Cloud") {
+			AnalyticsCloud.loginAnalyticsCloud(
+				emailAddress = "test@liferay.com",
+				password = "test");
+
+			AnalyticsCloud.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Go to DXP portal, login and create site") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Navigator.openURL();
+
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Connect and synchronyze with Analytics Cloud") {
+			AnalyticsCloud.syncAnalyticsCloud(siteName = "Test Site Name");
+		}
+
+		task ("Create content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page",
+				type = "content");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Navigator.openURL();
+
+		AnalyticsCloud.teardownAnalyticsCloud();
+
+		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-101341: Validate if the user has one experience with the AB test in a Running status, the experiences dropdown menu shows the AB test icon and one help hint"
+	@ignore = "true"
+	@priority = "5"
+	test ABTestIconInExperience {
+
+		// TODO LPS-137497 ABTestIconInExperience pending implementation
+
+	}
+
+	@description = "LPS-97882: Validate if the A/B Test icon is displayed in the control bar, when the user has the page edit permission"
+	@ignore = "true"
+	@priority = "3"
+	test ABTestIconVisibleWithPermissions {
+
+		// TODO LPS-137478 ABTestIconVisibleWithPermissions pending implementation
+
+	}
+
+	@description = "LPS-97882: Validate if the A/B Test icon is not displayed in the control bar, when the user has not the page edit permission"
+	@ignore = "true"
+	@priority = "3"
+	test ABTestIconVisibleWithNoPermissions {
+
+		// TODO LPS-137478 ABTestIconVisibleWithNoPermissions pending implementation
+
+	}
+
+	@description = "LPS-119475: When a user accesses the AB testing panel while a click goal test is running, the Change clickable element button don't show and the ID element box isn't enabled for edition, but the eye button will work normally"
+	@ignore = "true"
+	@priority = "3"
+	test AssertChangeClickableIDBoxNotEnabled {
+
+		// TODO LPS-137500 AssertChangeClickableIDBoxNotEnabled pending implementation
+
+	}
+
+	@description = "LPS-97195: Validate if, in the list of the variant for A/B Test, the user have the options to edit the name and delete"
+	@ignore = "true"
+	@priority = "3"
+	test AssertEditDeleteVarianOptions {
+
+		// TODO LPS-137480 AssertEditDeleteVarianOptions pending implementation
+
+	}
+
+	@description = "LPS-97194: Validate if the goal input test for the AB Test appears when the user tries to edit one AB Test"
+	@ignore = "true"
+	@priority = "3"
+	test AssertGoalInputWhenEdit {
+
+		// TODO LPS-137479 AssertGoalInputWhenEdit pending implementation
+
+	}
+
+	@description = "LPS-97882: Validate if, when the user tries to edit an existing A/B Test, after edit the mandatory information, A/B Test sidebar appears with the A/B Testing configuration"
+	@ignore = "true"
+	@priority = "3"
+	test ChangesAppliedAfterEdit {
+
+		// TODO LPS-137478 ChangesAppliedAfterEdit pending implementation
+
+	}
+
+	@description = "LPS-97882: Validate if when the user is editing the A/B Testing, he can press the cancel button on the modal, and the changes in the A/B Testing is not saved"
+	@ignore = "true"
+	@priority = "4"
+	test ChangesNotAppliedAfterCancel {
+
+		// TODO LPS-137478 ChangesNotAppliedAfterCancel pending implementation
+
+	}
+
+	@description = "LPS-97882: Validate if when the user is editing the A/B Testing, he can close the modal, and the changes in the A/B Testing is not saved"
+	@ignore = "true"
+	@priority = "3"
+	test ChangesNotAppliedAfterCloseModal {
+
+		// TODO LPS-137478 ChangesNotAppliedAfterCloseModal pending implementation
+
+	}
+
+	@description = "LPS-101055: Validate if the A/B test Icon appears in the Liferay DXP bundle"
+	@ignore = "true"
+	@priority = "3"
+	test CheckABTestIconDXP {
+
+		// TODO LPS-137490 CheckABTestIconDXP pending implementation
+
+	}
+
+	@description = "LPS-101055: Validate if the A/B test panel is shown in content pages when AC is configured"
+	@ignore = "true"
+	@priority = "3"
+	test CheckABTestPanelAtContentPages {
+
+		// TODO LPS-137490 CheckABTestPanelAtContentPages pending implementation
+
+	}
+
+	@description = "LPS-101055: Validate if the A/B test panel is shown not shown in widget pages"
+	@ignore = "true"
+	@priority = "3"
+	test CheckABTestPanelAtWidgetPages {
+
+		// TODO LPS-137490 CheckABTestPanelAtWidgetPages pending implementation
+
+	}
+
+	@description = "LPS-100945: Validate if the Button components have the ID"
+	@ignore = "true"
+	@priority = "3"
+	test CheckButtonElementId {
+
+		// TODO LPS-137487 CheckButtonElementId pending implementation
+
+	}
+
+	@description = "LPS-96791: Validate if A tooltip Click Element to Set as Click Target for your Goal appears when the user clicks on Set Target Button"
+	@ignore = "true"
+	@priority = "3"
+	test CheckClickElementTooltip {
+
+		// TODO LPS-137486 CheckClickElementTooltip pending implementation
+
+	}
+
+	@description = "LPS-101167: Validate if the image for the empty state appears"
+	@ignore = "true"
+	@priority = "3"
+	test CheckEmptyStateImage {
+
+		// TODO LPS-137493 CheckEmptyStateImage pending implementation
+
+	}
+
+	@description = "LPS-101055: Validate if the A/B test panel is hidden when the user clicks the "Hide A/B Test Panel" button"
+	@ignore = "true"
+	@priority = "4"
+	test CheckHiddenABTestPanel {
+
+		// TODO LPS-137490 CheckHiddenABTestPanel pending implementation
+
+	}
+
+	@description = "LPS-101167: Validate if the image for the running state appears"
+	@ignore = "true"
+	@priority = "3"
+	test CheckRunningStateImage {
+
+		// TODO LPS-137493 CheckRunningStateImage pending implementation
+
+	}
+
+	@description = "LPS-96781: Validate if, when the A/B Testing changes in the Liferay DXP, information about the Liferay DXP context, the changes are reflected in the test in Analytics Cloud"
+	@ignore = "true"
+	@priority = "4"
+	test CheckTestChangesInAC {
+
+		// TODO LPS-137406 CheckTestChangesInAC pending implementation
+
+	}
+
+	@description = "LPS-97195: Validate if the variant for A/B Test that was added on Liferay portal is visible in the Analytics Cloud"
+	@ignore = "true"
+	@priority = "5"
+	test CheckVariantAddedInAC {
+
+		// TODO LPS-137480 CheckVariantAddedInAC pending implementation
+
+	}
+
+	@description = "LPS-97195: Validate if the variant for A/B Test that was deleted on Liferay portal is visible in the Analytics Cloud"
+	@ignore = "true"
+	@priority = "4"
+	test CheckVariantDeletedInAC {
+
+		// TODO LPS-137480 CheckVariantDeletedInAC pending implementation
+
+	}
+
+	@description = "LPS-97195: Validate if the variant for A/B Test that was edited on Liferay portal is visible in the Analytics Cloud"
+	@ignore = "true"
+	@priority = "4"
+	test CheckVariantEditedInAC {
+
+		// TODO LPS-137480 CheckVariantEditedInAC pending implementation
+
+	}
+
+	@description = "LPS-119475: When a user has selected an element and clicks on the x icon within the ID box, the ID box gets empty and the Change clickable element button changes into Select clickable element"
+	@ignore = "true"
+	@priority = "3"
+	test ClearIDBox {
+
+		// TODO LPS-137500 ClearIDBox pending implementation
+
+	}
+
+	@description = "Validate if the user can create an A/B Test by Bounce rate"
+	@priority = "5"
+	@uitest
+	test CreateABTestByBounceRate {
+		task ("Create AB test, create variant and run the test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.createVariant(variantName = "Variant name");
+
+			ABTest.runTest();
+		}
+
+		task ("Check the info is correct in Analytics Cloud") {
+			ABTest.checkAnalyticsCloudInfo(ABtestTitle = "AB test title");
+		}
+
+		task ("Go back to DXP") {
+			Navigator.openURL();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Terminate the AB test") {
+			ABTest.terminateTest();
+		}
+	}
+
+	@description = "LPS-119475 Validate if the user can create an A/B Test by Click"
+	@priority = "5"
+	@uitest
+	test CreateABTestByClick {
+		task ("Edit the Content page to add a button fragment") {
+			ContentPages.clickPencil();
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Create AB test, create variant and run the test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+
+			ABTest.selectElementID();
+
+			ABTest.createVariant(variantName = "Variant name");
+
+			ABTest.runTest();
+		}
+
+		task ("Check the info is correct in Analytics Cloud") {
+			ABTest.checkAnalyticsCloudInfo(ABtestTitle = "AB test title");
+		}
+
+		task ("Go back to DXP") {
+			Navigator.openURL();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Terminate the AB test") {
+			ABTest.terminateTest();
+		}
+	}
+
+	@description = "LPS-119475 Validate if, in the AB Test by Click, the sidebar informs the user that the element id is mandatory"
+	@priority = "3"
+	@uitest
+	test CreateABTestByClickInvalidId {
+		task ("Create AB test, write an invalid ID for the element and run the test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+
+			ABTest.writeId(elementId = "invalidID");
+
+			ABTest.runTest();
+		}
+
+		task ("Assert an error message is displayed") {
+			AssertElementPresent(locator1 = "ABTest#INVALID_ID_MESSAGE");
+		}
+	}
+
+	@description = "LPS-86285 Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control if the user add variants and remove all variants"
+	@priority = "4"
+	@uitest
+	test CreateABTestRunWithDeletedVariants {
+		task ("Create AB test, create variant, delete variant and run the test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.createVariant(variantName = "Variant name");
+
+			ABTest.deleteVariant();
+
+			ABTest.runTest();
+		}
+
+		task ("Assert an error message is displayed") {
+			AssertTextEquals(
+				locator1 = "ABTest#VARIANT_NEEDED_MESSAGE",
+				value1 = "A variant needs to be created.");
+		}
+	}
+
+	@description = "LPS-86285 Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control"
+	@priority = "5"
+	@uitest
+	test CreateABTestRunWithNoVariants {
+		task ("Create AB test and run the test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.runTest();
+		}
+
+		task ("Assert an error message is displayed") {
+			AssertTextEquals(
+				locator1 = "ABTest#VARIANT_NEEDED_MESSAGE",
+				value1 = "A variant needs to be created.");
+		}
+	}
+
+	@description = "LPS-97195: Validate if the user can create a variant for A/B Test with the same name that already exists with success"
+	@ignore = "true"
+	@priority = "4"
+	test CreateVariantSameName {
+
+		// TODO LPS-137480 CreateVariantSameName pending implementation
+
+	}
+
+	@description = "LPS-104203: Validate if in the AB Test, when the user delete the clickable element that was set, the warning alert appears"
+	@ignore = "true"
+	@priority = "4"
+	test DeleteClickableElementWarning {
+
+		// TODO LPS-137498 DeleteClickableElementWarning pending implementation
+
+	}
+
+	@description = "LPS-101341: Validate if an alert appears when the user tries to delete an experience with an AB Test in a draft mode, the user should be able to delete the experience"
+	@ignore = "true"
+	@priority = "4"
+	test DeletExperienceWithDraftABTest {
+
+		// TODO LPS-137497 DeletExperienceWithDraftABTest pending implementation
+
+	}
+
+	@description = "LPS-101341: Validate if an alert appears when the user tries to delete an experience with an AB Test in a draft mode, the user should be able to cancel the deletion of the experience"
+	@ignore = "true"
+	@priority = "3"
+	test DeletExperienceWithDraftABTestCancel {
+
+		// TODO LPS-137497 DeletExperienceWithDraftABTestCancel pending implementation
+
+	}
+
+	@description = "LPS-98829: Validate if the ab test in History tab can be deleted"
+	@ignore = "true"
+	@priority = "3"
+	test DeleteHistoryTab {
+
+		// TODO LPS-137495 DeleteHistoryTab pending implementation
+
+	}
+
+	@description = "LPS-99225: Validate if the admin can delete a page with an A/B test in terminated status"
+	@ignore = "true"
+	@priority = "3"
+	test DeletePageABTestTerminated {
+
+		// TODO LPS-137491 DeletePageABTestTerminated pending implementation
+
+	}
+
+	@description = "LPS-99225: Validate if the admin can delete a segment in an experience with an A/B test in the draft status"
+	@ignore = "true"
+	@priority = "3"
+	test DeleteSegmentABTestDraft {
+
+		// TODO LPS-137491 DeleteSegmentABTestDraft pending implementation
+
+	}
+
+	@description = "LPS-99225: Validate if the admin can delete a segment in an experience with an A/B test in terminated status"
+	@ignore = "true"
+	@priority = "3"
+	test DeleteSegmentABTestTerminated {
+
+		// TODO LPS-137491 DeleteSegmentABTestTerminated pending implementation
+
+	}
+
+	@description = "LPS-97195: Validate if a message will appear asking if the user wants to delete a variant for A/B Test and he can delete with success"
+	@ignore = "true"
+	@priority = "4"
+	test DeleteVariant {
+
+		// TODO LPS-137480 DeleteVariant pending implementation
+
+	}
+
+	@description = "LPS-97195: Validate if the user not will delete a variant for A/B Test, if when he will delete and he presses the cancel button"
+	@ignore = "true"
+	@priority = "4"
+	test DeleteVariantCancel {
+
+		// TODO LPS-137480 DeleteVariantCancel pending implementation
+
+	}
+
+	@description = "LPS-96791: Validate if the user can edit the target"
+	@ignore = "true"
+	@priority = "5"
+	test EditClickElementTarget {
+
+		// TODO LPS-137486 EditClickElementTarget pending implementation
+
+	}
+
+	@description = "LPS-101341: Validate if when the user will edit some Experience with an AB Test in a Terminated status, the system not will show any information about AB Test"
+	@ignore = "true"
+	@priority = "4"
+	test EditExperienceAfterTerminatedABTest {
+
+		// TODO LPS-137497 EditExperienceAfterTerminatedABTest pending implementation
+
+	}
+
+	@description = "LPS-103334: Validate if the AB Test is in the status draft, the experience about the AB Test is active is in Edition Mode"
+	@ignore = "true"
+	@priority = "5"
+	test EditExperienceWithDraftABTest {
+
+		// TODO LPS-137496 EditExperienceWithDraftABTest pending implementation
+
+	}
+
+	@description = "LPS-97882: Validate if, when the user tries to edit an existing A/B Test, a modal is opened requiring some initial fields information"
+	@ignore = "true"
+	@priority = "3"
+	test EditRequiredInfo {
+
+		// TODO LPS-137478 EditRequiredInfo pending implementation
+
+	}
+
+	@description = "LPS-97195: Validate if the user can edit a variant for A/B Test with success"
+	@ignore = "true"
+	@priority = "5"
+	test EditVariant {
+
+		// TODO LPS-137480 EditVariant pending implementation
+
+	}
+
+	@description = "LPS-97195: Validate if the user can cancel the creation of one variant for A/B Test, and the data that he inputs during the creation is discarded"
+	@ignore = "true"
+	@priority = "3"
+	test EditVariantCancel {
+
+		// TODO LPS-137480 EditVariantCancel pending implementation
+
+	}
+
+	@description = "LPS-99349: Validate if the user can edit the variant for A/B Test content with success"
+	@ignore = "true"
+	@priority = "5"
+	test EditVariantContent {
+
+		// TODO LPS-137481 EditVariantContent pending implementation
+
+	}
+
+	@description = "LPS-99349: Validate if the user can cancel the edition of one variant for A/B Test, and the data that he inputs during the creation is discarded"
+	@ignore = "true"
+	@priority = "4"
+	test EditVariantContentCancel {
+
+		// TODO LPS-137481 EditVariantContentCancel pending implementation
+
+	}
+
+	@description = "LPS-97195: Validate if the user can edit a variant for A/B Test with the same name that already exists with success"
+	@ignore = "true"
+	@priority = "3"
+	test EditVariantSameName {
+
+		// TODO LPS-137480 EditVariantSameName pending implementation
+
+	}
+
+	@description = "LPS-119475: When a user clicks on the "eye" button, by click or by ID, the page scrolls if needed and shows the selected element highlighted"
+	@ignore = "true"
+	@priority = "3"
+	test EyeButton {
+
+		// TODO LPS-137500 EyeButton pending implementation
+
+	}
+
+	@description = "LPS-101055: Validate if the "Hide A/B Test Panel" button is displayed when AC is not connected"
+	@ignore = "true"
+	@priority = "3"
+	test HideABTestPanel {
+
+		// TODO LPS-137490 HideABTestPanel pending implementation
+
+	}
+
+	@description = "LPS-98829: Validate if the History tab appears with the list ordered by modified date DESC"
+	@ignore = "true"
+	@priority = "3"
+	test HistoryTabListedDescModifiedDate {
+
+		// TODO LPS-137495 HistoryTabListedDescModifiedDate pending implementation
+
+	}
+
+	@description = "LPS-119475: When a user selects any highlighted element in the page, the ID of the selected element shows in the ID box"
+	@ignore = "true"
+	@priority = "3"
+	test IDShownInTheBox {
+
+		// TODO LPS-137500 IDShownInTheBox pending implementation
+
+	}
+
+	@description = "LPS-96787: Validate if the Liferay NOT receives the notification when the test status is changed by the same user that created the test"
+	@ignore = "true"
+	@priority = "3"
+	test NoNotificationAfterChangesSameUser {
+
+		// TODO LPS-137489 NoNotificationAfterChangesSameUser pending implementation
+
+	}
+
+	@description = "LPS-96787: Validate if the Liferay receives the notification when the AB Test status is changes in Analytics Cloud"
+	@ignore = "true"
+	@priority = "3"
+	test NotificationAfterChangesInAC {
+
+		// TODO LPS-137489 NotificationAfterChangesInAC pending implementation
+
+	}
+
+	@description = "LPS-96787: Validate if in the notification message has one link to the content page of the test, with the AB test panel open in that test"
+	@ignore = "true"
+	@priority = "3"
+	test NotificationLinkToContentPage {
+
+		// TODO LPS-137489 NotificationLinkToContentPage pending implementation
+
+	}
+
+	@description = "LPS-103334: Validate if the AB Test is in the status running, the experience about the AB Test is active is in Non-Edition Mode"
+	@ignore = "true"
+	@priority = "5"
+	test NotPossibleToEditExperienceWithRunningABTest {
+
+		// TODO LPS-137496 NotPossibleToEditExperienceWithRunningABTest pending implementation
+
+	}
+
+	@description = "LPS-97882: Validate if, when the A/B Test icon is pressed, it calls the function to open or close the A/B Test sidebar"
+	@ignore = "true"
+	@priority = "3"
+	test PanelOpenCloseAfterClickIcon {
+
+		// TODO LPS-137478 PanelOpenCloseAfterClickIcon pending implementation
+
+	}
+
+	@description = "LPS-99225: Validate if the admin can reassign a segment in an experience with an A/B test in the draft status"
+	@ignore = "true"
+	@priority = "3"
+	test ReassignSegmentABTestDraft {
+
+		// TODO LPS-137491 ReassignSegmentABTestDraft pending implementation
+
+	}
+
+	@description = "LPS-99225: Validate if the admin cannot reassign a segment in an experience with an A/B test in running status"
+	@ignore = "true"
+	@priority = "4"
+	test ReassignSegmentABTestRunning {
+
+		// TODO LPS-137491 ReassignSegmentABTestRunning pending implementation
+
+	}
+
+	@description = "LPS-96791: Validate if the user can remove the target"
+	@ignore = "true"
+	@priority = "5"
+	test RemoveClickElementTarget {
+
+		// TODO LPS-137486 RemoveClickElementTarget pending implementation
+
+	}
+
+	@description = "LPS-99225: Validate if the admin can rename a segment in an experience with an A/B test in the draft status"
+	@ignore = "true"
+	@priority = "3"
+	test RemaneSegmentABTestDraft {
+
+		// TODO LPS-137491 RemaneSegmentABTestDraft pending implementation
+
+	}
+
+	@description = "LPS-99225: Validate if the admin cannot rename a segment in an experience with an A/B test in running status"
+	@ignore = "true"
+	@priority = "3"
+	test RenameSegmentABTestRunning {
+
+		// TODO LPS-137491 RenameSegmentABTestRunning pending implementation
+
+	}
+
+	@description = "LPS-99225: Validate if the admin can rename a segment in an experience with an A/B test in terminated status"
+	@ignore = "true"
+	@priority = "3"
+	test RenameSegmentABTestTerminated {
+
+		// TODO LPS-137491 RenameSegmentABTestTerminated pending implementation
+
+	}
+
+	@description = "LPS-97196: Validate if when the user is in the "Review and Start Test" screen, all data is discarded after the user clicks on cancel button"
+	@ignore = "true"
+	@priority = "4"
+	test ReviewAndStartCancel {
+
+		// TODO LPS-137483 ReviewAndStartCancel pending implementation
+
+	}
+
+	@description = "LPS-97196: Validate if all the information configured in the "Review and Start Test" screen appears correctly after the user clicks on the Run button"
+	@ignore = "true"
+	@priority = "5"
+	test ReviewAndStartRunCheckInfo {
+
+		// TODO LPS-137483 ReviewAndStartRunCheckInfo pending implementation
+
+	}
+
+	@description = "LPS-97196: Validate if when the user is in the "Review and Start Test" screen, all data is discarded after the user clicks in closed button"
+	@ignore = "true"
+	@priority = "3"
+	test ReviewAndStartClose {
+
+		// TODO LPS-137483 ReviewAndStartClose pending implementation
+
+	}
+
+	@description = "LPS-97196: Validate if when the user is in the "Review and Start Test" screen, the sum of all traffic split options should be 100%"
+	@ignore = "true"
+	@priority = "4"
+	test ReviewAndStartSum100 {
+
+		// TODO LPS-137483 ReviewAndStartSum100 pending implementation
+
+	}
+
+	@description = "LPS-119475: When a user has selected an element, the Select clickable element button changes into Change clickable element, and the elements are highlighted"
+	@ignore = "true"
+	@priority = "3"
+	test SelectButtonToChangeClickableElement {
+
+		// TODO LPS-137500 SelectButtonToChangeClickableElement pending implementation
+
+	}
+
+	@description = "LPS-119476: When the ID of a submit element accomplishes all the conditions, the element will be rightly measured in AC"
+	@ignore = "true"
+	@priority = "4"
+	test SubmitElementInAC {
+
+		// TODO LPS-137499 SubmitElementInAC pending implementation
+
+	}
+
+	@description = "LPS-119476: When there's a submit element with no ID, the matching element doesn't show as selectable"
+	@ignore = "true"
+	@priority = "3"
+	test SubmitElementWithNoID {
+
+		// TODO LPS-137499 SubmitElementWithNoID pending implementation
+
+	}
+
+	@description = "LPS-97882: Validate if each A/B Test is related for one experience, if the user changes between the experience, the context about the A/B Test changes too"
+	@ignore = "true"
+	@priority = "4"
+	test SwitchExperienceSelected {
+
+		// TODO LPS-137478 SwitchExperienceSelected pending implementation
+
+	}
+
+	@description = "LPS-97882: Validate if each A/B Test is related for one experience, if the user changes between the site pages, the context about the A/B Test changes too"
+	@ignore = "true"
+	@priority = "3"
+	test SwitchSitePage {
+
+		// TODO LPS-137478 SwitchSitePage pending implementation
+
+	}
+
+	@description = "LPS-119475: When a user has selected an element, s/he can enter a different ID in the Element ID box and press enter again, so the element is highlighted and gets selected"
+	@ignore = "true"
+	@priority = "3"
+	test TypeDifferentID {
+
+		// TODO LPS-137500 TypeDifferentID pending implementation
+
+	}
+
+	@description = "LPS-119475: When a user enters a valid ID and presses Enter or clicks anywhere outside the box, the element with that ID get highlighted and the element with the ID is selected"
+	@ignore = "true"
+	@priority = "3"
+	test TypeElementID {
+
+		// TODO LPS-137500 TypeElementID pending implementation
+
+	}
+
+	@description = "LPS-119476: When the user enters the ID of a submit element in the ID Element box and hits enter, the matching element gets highlighted and selected"
+	@ignore = "true"
+	@priority = "3"
+	test TypeSubmitElementID {
+
+		// TODO LPS-137499 TypeSubmitElementID pending implementation
+
+	}
+
+	@description = "LPS-119475: When a user clicks on the x icon of the selected element, the element gets unselected"
+	@ignore = "true"
+	@priority = "3"
+	test UnselectSelectedElement {
+
+		// TODO LPS-137500 UnselectSelectedElement pending implementation
+
+	}
+
+}

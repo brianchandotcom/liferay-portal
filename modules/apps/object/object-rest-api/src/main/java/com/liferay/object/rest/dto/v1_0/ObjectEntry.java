@@ -263,6 +263,34 @@ public class ObjectEntry implements Serializable {
 	protected Map<String, Object> properties = new HashMap<>();
 
 	@Schema
+	public String getScopeKey() {
+		return scopeKey;
+	}
+
+	public void setScopeKey(String scopeKey) {
+		this.scopeKey = scopeKey;
+	}
+
+	@JsonIgnore
+	public void setScopeKey(
+		UnsafeSupplier<String, Exception> scopeKeyUnsafeSupplier) {
+
+		try {
+			scopeKey = scopeKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String scopeKey;
+
+	@Schema
 	@Valid
 	public Status getStatus() {
 		return status;
@@ -401,6 +429,20 @@ public class ObjectEntry implements Serializable {
 			sb.append("\"properties\": ");
 
 			sb.append(_toJSON(properties));
+		}
+
+		if (scopeKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"scopeKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(scopeKey));
+
+			sb.append("\"");
 		}
 
 		if (status != null) {

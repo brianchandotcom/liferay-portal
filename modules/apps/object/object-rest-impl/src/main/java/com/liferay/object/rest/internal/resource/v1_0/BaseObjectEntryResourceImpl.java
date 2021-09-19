@@ -384,6 +384,10 @@ public abstract class BaseObjectEntryResourceImpl
 			existingObjectEntry.setProperties(objectEntry.getProperties());
 		}
 
+		if (objectEntry.getScopeKey() != null) {
+			existingObjectEntry.setScopeKey(objectEntry.getScopeKey());
+		}
+
 		preparePatch(objectEntry, existingObjectEntry);
 
 		return putObjectEntry(objectEntryId, existingObjectEntry);

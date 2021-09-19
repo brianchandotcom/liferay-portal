@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilter;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
@@ -39,6 +40,7 @@ import com.liferay.object.web.internal.object.entries.frontend.taglib.clay.data.
 import com.liferay.object.web.internal.object.entries.portlet.ObjectEntriesPortlet;
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryMVCActionCommand;
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryMVCRenderCommand;
+import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryRelMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -128,12 +130,22 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"mvc.command.name", "/object_entries/edit_object_entry"
 				).build()),
 			_bundleContext.registerService(
+				MVCActionCommand.class,
+				new EditObjectEntryRelMVCActionCommand(
+					_objectDefinitionLocalService,
+					_objectRelationshipLocalService, _portal),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"javax.portlet.name", objectDefinition.getPortletId()
+				).put(
+					"mvc.command.name", "/object_entries/edit_object_entry_rel"
+				).build()),
+			_bundleContext.registerService(
 				MVCRenderCommand.class,
 				new EditObjectEntryMVCRenderCommand(
-					_ddmFormRenderer, _listTypeEntryLocalService,
-					_objectEntryService, _objectFieldLocalService,
-					_objectLayoutLocalService, _objectRelationshipLocalService,
-					_portal),
+					_ddmFormRenderer, _itemSelector, _listTypeEntryLocalService,
+					_objectDefinitionLocalService, _objectEntryService,
+					_objectFieldLocalService, _objectLayoutLocalService,
+					_objectRelationshipLocalService, _portal),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"javax.portlet.name", objectDefinition.getPortletId()
 				).put(
@@ -153,6 +165,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private DDMFormRenderer _ddmFormRenderer;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer<InfoItemItemSelectorCriterion>

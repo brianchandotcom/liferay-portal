@@ -22,6 +22,7 @@ import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.base.ObjectRelationshipLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
@@ -30,9 +31,13 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.io.Serializable;
 
 import java.util.List;
 import java.util.Locale;
@@ -114,6 +119,52 @@ public class ObjectRelationshipLocalServiceImpl
 		}
 
 		return objectRelationshipPersistence.update(objectRelationship);
+	}
+
+	@Override
+	public void addObjectRelationshipMap(
+			long userId, long objectRelationshipId, long primaryKey1,
+			long primaryKey2, ServiceContext serviceContext)
+		throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			objectRelationshipLocalService.getObjectRelationship(
+				objectRelationshipId);
+
+		if (Objects.equals(
+				objectRelationship.getType(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+			objectRelationshipLocalService.
+				addObjectRelationshipMappingTableValues(
+					objectRelationship.getObjectRelationshipId(), primaryKey1,
+					primaryKey2);
+
+			return;
+		}
+
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectRelationship.getObjectDefinitionId2());
+
+		ObjectField objectField2 = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		if (objectDefinition2.isSystem()) {
+			_objectEntryLocalService.addOrUpdateExtensionTableEntry(
+				primaryKey2, objectRelationship.getObjectDefinitionId2(),
+				HashMapBuilder.<String, Serializable>put(
+					objectField2.getName(), primaryKey1
+				).build());
+		}
+		else {
+			_objectEntryLocalService.updateObjectEntry(
+				userId, primaryKey2,
+				HashMapBuilder.<String, Serializable>put(
+					objectField2.getName(), primaryKey1
+				).build(),
+				serviceContext);
+		}
 	}
 
 	@Override
@@ -320,6 +371,9 @@ public class ObjectRelationshipLocalServiceImpl
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

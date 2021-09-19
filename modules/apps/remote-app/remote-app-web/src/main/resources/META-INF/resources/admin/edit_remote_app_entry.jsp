@@ -27,6 +27,9 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "new-remote-app") : remoteAppEntry.getName(locale));
+
+boolean isCustomElement = (remoteAppEntry != null) && RemoteAppConstants.TYPE_CUSTOM_ELEMENT.equals(remoteAppEntry.getType());
+boolean isIFrame = (remoteAppEntry == null) || RemoteAppConstants.TYPE_IFRAME.equals(remoteAppEntry.getType());
 %>
 
 <portlet:actionURL name="/remote_app_admin/edit_remote_app_entry" var="editRemoteAppEntryURL" />
@@ -61,13 +64,14 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 				label="type"
 				name="type"
 				options='<%=
-					Arrays.asList(new SelectOption(LanguageUtil.get(request, "custom-element"), RemoteAppConstants.TYPE_CUSTOM_ELEMENT, (remoteAppEntry != null) && RemoteAppConstants.TYPE_CUSTOM_ELEMENT.equals(remoteAppEntry.getType())), new SelectOption(LanguageUtil.get(request, "iframe"), RemoteAppConstants.TYPE_IFRAME, (remoteAppEntry == null) || RemoteAppConstants.TYPE_IFRAME.equals(remoteAppEntry.getType())))
+					Arrays.asList(new SelectOption(LanguageUtil.get(request, "custom-element"), RemoteAppConstants.TYPE_CUSTOM_ELEMENT, isCustomElement), new SelectOption(LanguageUtil.get(request, "iframe"), RemoteAppConstants.TYPE_IFRAME, isIFrame))
 				%>'
 				propsTransformer="admin/js/remoteAppEntryTypeSelectPropsTransformer"
 			/>
 
 			<liferay-frontend:fieldset
-				cssClass='<%= ((remoteAppEntry == null) || RemoteAppConstants.TYPE_IFRAME.equals(remoteAppEntry.getType())) ? StringPool.BLANK : "d-none" %>'
+				cssClass='<%= isIFrame ? StringPool.BLANK : "d-none" %>'
+				disabled="<%= !isIFrame %>"
 				id='<%= liferayPortletResponse.getNamespace() + "_type_iframe" %>'
 			>
 				<aui:input fieldParam="iFrameURL" label="url" name="IFrameURL">
@@ -76,7 +80,8 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 			</liferay-frontend:fieldset>
 
 			<liferay-frontend:fieldset
-				cssClass='<%= ((remoteAppEntry != null) && RemoteAppConstants.TYPE_CUSTOM_ELEMENT.equals(remoteAppEntry.getType())) ? StringPool.BLANK : "d-none" %>'
+				cssClass='<%= isCustomElement ? StringPool.BLANK : "d-none" %>'
+				disabled="<%= !isCustomElement %>"
 				id='<%= liferayPortletResponse.getNamespace() + "_type_customElement" %>'
 			>
 				<aui:input label="html-element-name" name="customElementHTMLElementName" />

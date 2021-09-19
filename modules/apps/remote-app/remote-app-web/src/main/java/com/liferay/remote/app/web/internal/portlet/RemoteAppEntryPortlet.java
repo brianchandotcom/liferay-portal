@@ -35,6 +35,9 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -156,10 +159,28 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 
 		PrintWriter printWriter = renderResponse.getWriter();
 
-		printWriter.print(
-			StringBundler.concat(
-				"<iframe src=\"", _remoteAppEntry.getIFrameURL(),
-				"\"></iframe>"));
+		printWriter.print("<iframe src=\"");
+		printWriter.print(_remoteAppEntry.getIFrameURL());
+
+		Properties properties = _getProperties(renderRequest);
+
+		if ((properties != null) && (properties.size() > 0)) {
+			Set<Map.Entry<Object, Object>> propertiesEntrySet =
+				properties.entrySet();
+
+			Stream<Map.Entry<Object, Object>> propertiesStream =
+				propertiesEntrySet.stream();
+
+			String searchParams = propertiesStream.map(
+				entry -> entry.getKey() + "=" + (String)entry.getValue()
+			).collect(
+				Collectors.joining(StringPool.AMPERSAND)
+			);
+
+			printWriter.write(StringPool.QUESTION + searchParams);
+		}
+
+		printWriter.print("\"></iframe>");
 
 		printWriter.flush();
 	}

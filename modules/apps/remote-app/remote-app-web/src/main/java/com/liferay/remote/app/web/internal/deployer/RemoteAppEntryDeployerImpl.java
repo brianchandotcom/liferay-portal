@@ -18,6 +18,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
@@ -25,7 +26,6 @@ import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.web.internal.portlet.RemoteAppEntryPortlet;
 import com.liferay.remote.app.web.internal.portlet.action.RemoteAppEntryConfigurationAction;
 
-import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Objects;
@@ -46,19 +46,9 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 
 	@Override
 	public List<ServiceRegistration<?>> deploy(RemoteAppEntry remoteAppEntry) {
-		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
-
-		if (Objects.equals(
-				remoteAppEntry.getType(),
-				RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
-
-			serviceRegistrations.add(
-				_registerConfigurationAction(remoteAppEntry));
-		}
-
-		serviceRegistrations.add(_registerPortlet(remoteAppEntry));
-
-		return serviceRegistrations;
+		return ListUtil.fromArray(
+			_registerConfigurationAction(remoteAppEntry),
+			_registerPortlet(remoteAppEntry));
 	}
 
 	@Activate

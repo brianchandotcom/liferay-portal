@@ -61,6 +61,7 @@ public class ObjectEntryDTOConverter
 				externalReferenceCode = objectEntry.getExternalReferenceCode();
 				id = objectEntry.getObjectEntryId();
 				properties = (Map)objectEntry.getValues();
+				scopeKey = (String)dtoConverterContext.getAttribute("scopeKey");
 				status = new Status() {
 					{
 						code = objectEntry.getStatus();

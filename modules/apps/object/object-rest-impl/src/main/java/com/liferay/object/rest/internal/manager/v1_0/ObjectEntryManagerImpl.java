@@ -26,6 +26,10 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -81,7 +85,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 		throws Exception {
 
 		return _toObjectEntry(
-			dtoConverterContext,
+			dtoConverterContext, objectDefinition,
 			_objectEntryLocalService.addObjectEntry(
 				userId, _getGroupId(objectDefinition, scopeKey),
 				objectDefinition.getObjectDefinitionId(),
@@ -101,7 +105,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 		throws Exception {
 
 		return _toObjectEntry(
-			dtoConverterContext,
+			dtoConverterContext, objectDefinition,
 			_objectEntryLocalService.addOrUpdateObjectEntry(
 				externalReferenceCode, userId,
 				_getGroupId(objectDefinition, scopeKey),
@@ -131,14 +135,16 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 	@Override
 	public ObjectEntry fetchObjectEntry(
-		DTOConverterContext dtoConverterContext, long objectEntryId) {
+		DTOConverterContext dtoConverterContext,
+		ObjectDefinition objectDefinition,
+		long objectEntryId) {
 
 		com.liferay.object.model.ObjectEntry objectEntry =
 			_objectEntryLocalService.fetchObjectEntry(objectEntryId);
 
 		if (objectEntry != null) {
 			return _toObjectEntry(
-				dtoConverterContext,
+				dtoConverterContext, objectDefinition,
 				_objectEntryLocalService.fetchObjectEntry(objectEntryId));
 		}
 
@@ -203,17 +209,18 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 			},
 			sorts,
 			document -> getObjectEntry(
-				dtoConverterContext,
+				dtoConverterContext, objectDefinition,
 				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 	}
 
 	@Override
 	public ObjectEntry getObjectEntry(
-			DTOConverterContext dtoConverterContext, long objectEntryId)
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, long objectEntryId)
 		throws Exception {
 
 		return _toObjectEntry(
-			dtoConverterContext,
+			dtoConverterContext, objectDefinition,
 			_objectEntryLocalService.getObjectEntry(objectEntryId));
 	}
 
@@ -225,7 +232,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 		throws Exception {
 
 		return _toObjectEntry(
-			dtoConverterContext,
+			dtoConverterContext, objectDefinition,
 			_objectEntryLocalService.getObjectEntry(
 				externalReferenceCode, companyId,
 				_getGroupId(objectDefinition, scopeKey)));
@@ -234,14 +241,15 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	@Override
 	public ObjectEntry updateObjectEntry(
 			DTOConverterContext dtoConverterContext, long userId,
-			long objectEntryId, ObjectEntry objectEntry)
+			ObjectDefinition objectDefinition, long objectEntryId,
+			ObjectEntry objectEntry)
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryLocalService.getObjectEntry(objectEntryId);
 
 		return _toObjectEntry(
-			dtoConverterContext,
+			dtoConverterContext, objectDefinition,
 			_objectEntryLocalService.updateObjectEntry(
 				userId, objectEntryId,
 				_toObjectValues(
@@ -281,6 +289,36 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 		return ObjectDefinition.class.getName() + "#" + objectDefinitionId;
 	}
 
+	private String _getScopeKey(
+		ObjectDefinition objectDefinition,
+		com.liferay.object.model.ObjectEntry objectEntry) {
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				objectDefinition.getScope());
+
+		if (objectScopeProvider.isGroupAware()) {
+			Group group = null;
+
+			try {
+				group = _groupLocalService.getGroup(objectEntry.getGroupId());
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException, portalException);
+				}
+			}
+
+			if (group == null) {
+				return null;
+			}
+
+			return group.getGroupKey();
+		}
+
+		return null;
+	}
+
 	private Date _toDate(Locale locale, String valueString) {
 		if (Validator.isNull(valueString)) {
 			return null;
@@ -304,6 +342,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 	private ObjectEntry _toObjectEntry(
 		DTOConverterContext dtoConverterContext,
+		ObjectDefinition objectDefinition,
 		com.liferay.object.model.ObjectEntry objectEntry) {
 
 		Optional<UriInfo> uriInfoOptional =
@@ -311,7 +350,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 		UriInfo uriInfo = uriInfoOptional.orElse(null);
 
-		return _objectEntryDTOConverter.toDTO(
+		DefaultDTOConverterContext defaultDTOConverterContext =
 			new DefaultDTOConverterContext(
 				dtoConverterContext.isAcceptAllLanguages(),
 				HashMapBuilder.put(
@@ -345,8 +384,13 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 				dtoConverterContext.getDTOConverterRegistry(),
 				dtoConverterContext.getHttpServletRequest(),
 				objectEntry.getObjectEntryId(), dtoConverterContext.getLocale(),
-				uriInfo, dtoConverterContext.getUser()),
-			objectEntry);
+				uriInfo, dtoConverterContext.getUser());
+
+		defaultDTOConverterContext.setAttribute(
+			"scopeKey", _getScopeKey(objectDefinition, objectEntry));
+
+		return _objectEntryDTOConverter.toDTO(
+			defaultDTOConverterContext, objectEntry);
 	}
 
 	private Map<String, Serializable> _toObjectValues(
@@ -377,6 +421,9 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 		return values;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntryManagerImpl.class);
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;

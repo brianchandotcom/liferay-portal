@@ -108,7 +108,8 @@ public class ObjectDefinitionGraphQLDTOContributor
 		throws Exception {
 
 		return _toMap(
-			_objectEntryManager.getObjectEntry(dtoConverterContext, id));
+			_objectEntryManager.getObjectEntry(
+				dtoConverterContext, _objectDefinition, id));
 	}
 
 	@Override
@@ -174,8 +175,8 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 		return _toMap(
 			_objectEntryManager.updateObjectEntry(
-				dtoConverterContext, dtoConverterContext.getUserId(), id,
-				_toObjectEntry(dto)));
+				dtoConverterContext, dtoConverterContext.getUserId(),
+				_objectDefinition, id, _toObjectEntry(dto)));
 	}
 
 	private ObjectDefinitionGraphQLDTOContributor(

@@ -38,8 +38,10 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -86,10 +88,15 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		throws StorageException {
 
 		try {
+			long primaryKey = ddmStorageAdapterDeleteRequest.getPrimaryKey();
+
+			ObjectDefinition objectDefinition = _getObjectDefinition(
+				primaryKey);
+
 			ObjectEntry objectEntry = _objectEntryManager.fetchObjectEntry(
 				_getDTOConverterContext(
 					null, null, LocaleUtil.getSiteDefault()),
-				ddmStorageAdapterDeleteRequest.getPrimaryKey());
+				objectDefinition, primaryKey);
 
 			if (objectEntry != null) {
 				_objectEntryManager.deleteObjectEntry(objectEntry.getId());
@@ -111,14 +118,18 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		try {
 			DDMForm ddmForm = ddmStorageAdapterGetRequest.getDDMForm();
 
+			long primaryKey = ddmStorageAdapterGetRequest.getPrimaryKey();
+
+			ObjectDefinition objectDefinition = _getObjectDefinition(
+				primaryKey);
+
 			return DDMStorageAdapterGetResponse.Builder.newBuilder(
 				_getDDMFormValues(
 					ddmForm,
 					_objectEntryManager.getObjectEntry(
 						_getDTOConverterContext(
-							ddmStorageAdapterGetRequest.getPrimaryKey(), null,
-							ddmForm.getDefaultLocale()),
-						ddmStorageAdapterGetRequest.getPrimaryKey()))
+							primaryKey, null, ddmForm.getDefaultLocale()),
+						objectDefinition, primaryKey))
 			).build();
 		}
 		catch (Exception exception) {
@@ -250,6 +261,16 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			Collections.singletonMap(
 				"delete", Collections.singletonMap("delete", "")),
 			null, null, objectEntryId, locale, null, user);
+	}
+
+	private ObjectDefinition _getObjectDefinition(long primaryKey)
+		throws PortalException {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(primaryKey);
+
+		return _objectDefinitionLocalService.getObjectDefinition(
+			serviceBuilderObjectEntry.getObjectDefinitionId());
 	}
 
 	private long _getObjectDefinitionId(
@@ -434,6 +455,9 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 	@Reference
 	private ObjectEntryManager _objectEntryManager;
+
+	@Reference
+	private ObjectEntryService _objectEntryService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

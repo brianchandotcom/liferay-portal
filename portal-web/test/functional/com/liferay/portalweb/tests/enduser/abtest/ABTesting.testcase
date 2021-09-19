@@ -68,21 +68,21 @@ definition {
 
 	}
 
-	@description = "LPS-97882: Validate if the A/B Test icon is displayed in the control bar, when the user has the page edit permission"
-	@ignore = "true"
-	@priority = "3"
-	test ABTestIconVisibleWithPermissions {
-
-		// TODO LPS-137478 ABTestIconVisibleWithPermissions pending implementation
-
-	}
-
 	@description = "LPS-97882: Validate if the A/B Test icon is not displayed in the control bar, when the user has not the page edit permission"
 	@ignore = "true"
 	@priority = "3"
 	test ABTestIconVisibleWithNoPermissions {
 
 		// TODO LPS-137478 ABTestIconVisibleWithNoPermissions pending implementation
+
+	}
+
+	@description = "LPS-97882: Validate if the A/B Test icon is displayed in the control bar, when the user has the page edit permission"
+	@ignore = "true"
+	@priority = "3"
+	test ABTestIconVisibleWithPermissions {
+
+		// TODO LPS-137478 ABTestIconVisibleWithPermissions pending implementation
 
 	}
 
@@ -408,24 +408,6 @@ definition {
 
 	}
 
-	@description = "LPS-101341: Validate if an alert appears when the user tries to delete an experience with an AB Test in a draft mode, the user should be able to delete the experience"
-	@ignore = "true"
-	@priority = "4"
-	test DeletExperienceWithDraftABTest {
-
-		// TODO LPS-137497 DeletExperienceWithDraftABTest pending implementation
-
-	}
-
-	@description = "LPS-101341: Validate if an alert appears when the user tries to delete an experience with an AB Test in a draft mode, the user should be able to cancel the deletion of the experience"
-	@ignore = "true"
-	@priority = "3"
-	test DeletExperienceWithDraftABTestCancel {
-
-		// TODO LPS-137497 DeletExperienceWithDraftABTestCancel pending implementation
-
-	}
-
 	@description = "LPS-98829: Validate if the ab test in History tab can be deleted"
 	@ignore = "true"
 	@priority = "3"
@@ -477,6 +459,24 @@ definition {
 	test DeleteVariantCancel {
 
 		// TODO LPS-137480 DeleteVariantCancel pending implementation
+
+	}
+
+	@description = "LPS-101341: Validate if an alert appears when the user tries to delete an experience with an AB Test in a draft mode, the user should be able to delete the experience"
+	@ignore = "true"
+	@priority = "4"
+	test DeletExperienceWithDraftABTest {
+
+		// TODO LPS-137497 DeletExperienceWithDraftABTest pending implementation
+
+	}
+
+	@description = "LPS-101341: Validate if an alert appears when the user tries to delete an experience with an AB Test in a draft mode, the user should be able to cancel the deletion of the experience"
+	@ignore = "true"
+	@priority = "3"
+	test DeletExperienceWithDraftABTestCancel {
+
+		// TODO LPS-137497 DeletExperienceWithDraftABTestCancel pending implementation
 
 	}
 
@@ -660,21 +660,21 @@ definition {
 
 	}
 
-	@description = "LPS-96791: Validate if the user can remove the target"
-	@ignore = "true"
-	@priority = "5"
-	test RemoveClickElementTarget {
-
-		// TODO LPS-137486 RemoveClickElementTarget pending implementation
-
-	}
-
 	@description = "LPS-99225: Validate if the admin can rename a segment in an experience with an A/B test in the draft status"
 	@ignore = "true"
 	@priority = "3"
 	test RemaneSegmentABTestDraft {
 
 		// TODO LPS-137491 RemaneSegmentABTestDraft pending implementation
+
+	}
+
+	@description = "LPS-96791: Validate if the user can remove the target"
+	@ignore = "true"
+	@priority = "5"
+	test RemoveClickElementTarget {
+
+		// TODO LPS-137486 RemoveClickElementTarget pending implementation
 
 	}
 
@@ -705,21 +705,21 @@ definition {
 
 	}
 
-	@description = "LPS-97196: Validate if all the information configured in the "Review and Start Test" screen appears correctly after the user clicks on the Run button"
-	@ignore = "true"
-	@priority = "5"
-	test ReviewAndStartRunCheckInfo {
-
-		// TODO LPS-137483 ReviewAndStartRunCheckInfo pending implementation
-
-	}
-
 	@description = "LPS-97196: Validate if when the user is in the "Review and Start Test" screen, all data is discarded after the user clicks in closed button"
 	@ignore = "true"
 	@priority = "3"
 	test ReviewAndStartClose {
 
 		// TODO LPS-137483 ReviewAndStartClose pending implementation
+
+	}
+
+	@description = "LPS-97196: Validate if all the information configured in the "Review and Start Test" screen appears correctly after the user clicks on the Run button"
+	@ignore = "true"
+	@priority = "5"
+	test ReviewAndStartRunCheckInfo {
+
+		// TODO LPS-137483 ReviewAndStartRunCheckInfo pending implementation
 
 	}
 

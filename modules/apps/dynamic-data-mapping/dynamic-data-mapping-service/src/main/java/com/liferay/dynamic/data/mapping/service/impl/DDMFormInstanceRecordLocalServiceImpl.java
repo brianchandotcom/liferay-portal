@@ -130,7 +130,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		ddmFormInstanceRecord.setVersionUserName(user.getFullName());
 
 		long ddmStorageId = createDDMContent(
-			ddmFormInstanceId, ddmFormValues, serviceContext);
+			groupId, ddmFormInstanceId, ddmFormValues, serviceContext);
 
 		ddmFormInstanceRecord.setStorageId(ddmStorageId);
 
@@ -437,6 +437,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 		if (ddmFormInstanceRecordVersion.isApproved()) {
 			long ddmStorageId = createDDMContent(
+				ddmFormInstanceRecord.getGroupId(),
 				ddmFormInstance.getFormInstanceId(), ddmFormValues,
 				serviceContext);
 
@@ -450,6 +451,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		}
 		else {
 			updateDDMContent(
+				ddmFormInstanceRecord.getGroupId(),
 				ddmFormInstanceRecordVersion, ddmFormValues, serviceContext);
 
 			String version = ddmFormInstanceRecordVersion.getVersion();
@@ -633,7 +635,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	}
 
 	protected long createDDMContent(
-			long ddmFormInstanceId, DDMFormValues ddmFormValues,
+			long groupId, long ddmFormInstanceId, DDMFormValues ddmFormValues,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -654,6 +656,8 @@ public class DDMFormInstanceRecordLocalServiceImpl
 					DDMStorageLink.class.getName()
 				).withDDMFormInstance(
 					ddmFormInstance
+				).withGroupId(
+					groupId
 				).withStructureId(
 					ddmFormInstance.getStructureId()
 				).withUuid(
@@ -885,6 +889,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	}
 
 	protected void updateDDMContent(
+			long groupId,
 			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion,
 			DDMFormValues ddmFormValues, ServiceContext serviceContext)
 		throws PortalException {
@@ -903,6 +908,8 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				ddmFormValues
 			).withDDMFormInstance(
 				ddmFormInstance
+			).withGroupId(
+				groupId
 			).withPrimaryKey(
 				ddmFormInstanceRecordVersion.getStorageId()
 			).withStructureId(

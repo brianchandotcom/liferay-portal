@@ -685,6 +685,36 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro deletePropertyByCheckbox {
+		Click.clickAtNotVisible(
+			key_propertyName = "${propertyName}",
+			locator1 = "ACSettings#PROPERTY_CHECKBOX");
+
+		Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
+
+		AssertTextEquals(
+		locator1 = "Modal#HEADER",
+		value1 = "Delete ${propertyName}?");
+
+		AssertTextPresent(
+			locator1 = "Modal#BODY",
+			value1 = "To delete ${propertyName}, copy the sentence below to confirm your intention to delete property.");
+
+		AssertTextPresent(
+			locator1 = "Modal#BODY",
+			value1 = "This will result in the complete removal of this property's historical events. You will not be able to undo this operation.");
+
+		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+
+		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro deleteUser {
 		if (IsVisible(locator1 = "ACSettings#USER_LIST_EMAIL", value1 = "${userDelete}")) {
 			Click(locator1 = "ACSettings#DELETE_USER");

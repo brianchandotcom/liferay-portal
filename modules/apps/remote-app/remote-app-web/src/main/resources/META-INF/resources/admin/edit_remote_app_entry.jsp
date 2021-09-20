@@ -71,6 +71,14 @@ boolean isIFrame = !isCustomElement && (errorSection.equals("iframe") || (remote
 			</aui:field-wrapper>
 
 			<clay:select
+				label="portlet-category-name"
+				name="portletCategoryName"
+				options="<%=
+					remoteAppAdminDisplayContext.getPortletCategoryNames()
+				%>"
+			/>
+
+			<clay:select
 				disabled="<%= remoteAppEntry != null %>"
 				label="type"
 				name="type"

@@ -16,10 +16,6 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<%
-RemoteAppAdminDisplayContext remoteAppAdminDisplayContext = (RemoteAppAdminDisplayContext)renderRequest.getAttribute(RemoteAppAdminWebKeys.REMOTE_APP_ADMIN_DISPLAY_CONTEXT);
-%>
-
 <clay:data-set-display
 	actionParameterName="remoteAppEntryId"
 	creationMenu="<%= remoteAppAdminDisplayContext.getCreationMenu() %>"

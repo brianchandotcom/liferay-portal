@@ -16,11 +16,26 @@ package com.liferay.remote.app.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PortletCategoryUtil;
+import com.liferay.portal.util.WebAppPool;
+import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
+import com.liferay.remote.app.web.internal.constants.RemoteAppAdminWebKeys;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -60,6 +75,78 @@ public class RemoteAppAdminDisplayContext {
 
 	public PortletURL getCurrentPortletURL() {
 		return PortletURLUtil.getCurrent(_renderRequest, _renderResponse);
+	}
+
+	public List<SelectOption> getPortletCategoryNames() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletCategory rootPortletCategory = (PortletCategory)WebAppPool.get(
+			themeDisplay.getCompanyId(), WebKeys.PORTLET_CATEGORY);
+
+		try {
+			rootPortletCategory =
+				PortletCategoryUtil.getRelevantPortletCategory(
+					themeDisplay.getPermissionChecker(),
+					themeDisplay.getCompanyId(), themeDisplay.getLayout(),
+					rootPortletCategory, themeDisplay.getLayoutTypePortlet());
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+
+		List<SelectOption> selectOptions = new ArrayList<>();
+
+		RemoteAppEntry remoteAppEntry =
+			(RemoteAppEntry)_renderRequest.getAttribute(
+				RemoteAppAdminWebKeys.REMOTE_APP_ENTRY);
+
+		String portletCategoryName = BeanPropertiesUtil.getString(
+			remoteAppEntry, "portletCategoryName", "category.remote-apps");
+
+		boolean categoryRemoteAppsFound = false;
+
+		for (PortletCategory portletCategory :
+				rootPortletCategory.getCategories()) {
+
+			selectOptions.add(
+				new SelectOption(
+					LanguageUtil.get(
+						themeDisplay.getLocale(), portletCategory.getName()),
+					portletCategory.getName(),
+					portletCategoryName.equals(portletCategory.getName())));
+
+			if (Objects.equals(
+					portletCategory.getName(), "category.remote-apps")) {
+
+				categoryRemoteAppsFound = true;
+			}
+		}
+
+		if (!categoryRemoteAppsFound) {
+			selectOptions.add(
+				new SelectOption(
+					LanguageUtil.get(
+						themeDisplay.getLocale(), "category.remote-apps"),
+					"category.remote-apps",
+					Objects.equals(
+						portletCategoryName, "category.remote-apps")));
+		}
+
+		return ListUtil.sort(
+			selectOptions,
+			new Comparator<SelectOption>() {
+
+				@Override
+				public int compare(
+					SelectOption selectOption, SelectOption selectOption2) {
+
+					String label = selectOption.getLabel();
+
+					return label.compareTo(selectOption2.getLabel());
+				}
+
+			});
 	}
 
 	private HttpServletRequest _getHttpServletRequest() {

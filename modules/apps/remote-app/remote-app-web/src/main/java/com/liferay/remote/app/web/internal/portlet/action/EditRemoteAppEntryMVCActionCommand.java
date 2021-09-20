@@ -84,6 +84,8 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 	private void _add(ActionRequest actionRequest) throws PortalException {
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
+		String portletCategoryName = ParamUtil.getString(
+			actionRequest, "portletCategoryName");
 		String type = ParamUtil.getString(actionRequest, "type");
 
 		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
@@ -92,11 +94,12 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 				ParamUtil.getString(
 					actionRequest, "customElementHTMLElementName"),
 				ParamUtil.getString(actionRequest, "customElementURLs"),
-				nameMap);
+				nameMap, portletCategoryName);
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
 			_remoteAppEntryService.addIFrameRemoteAppEntry(
-				ParamUtil.getString(actionRequest, "iFrameURL"), nameMap);
+				ParamUtil.getString(actionRequest, "iFrameURL"), nameMap,
+				portletCategoryName);
 		}
 	}
 
@@ -109,6 +112,8 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
+		String portletCategoryName = ParamUtil.getString(
+			actionRequest, "portletCategoryName");
 
 		if (Objects.equals(
 				remoteAppEntry.getType(),
@@ -125,14 +130,15 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 				ParamUtil.getString(
 					actionRequest, "customElementHTMLElementName"),
 				StringUtil.merge(customElementURLs, StringPool.NEW_LINE),
-				nameMap);
+				nameMap, portletCategoryName);
 		}
 		else if (Objects.equals(
 					remoteAppEntry.getType(), RemoteAppConstants.TYPE_IFRAME)) {
 
 			_remoteAppEntryService.updateIFrameRemoteAppEntry(
 				remoteAppEntryId,
-				ParamUtil.getString(actionRequest, "iFrameURL"), nameMap);
+				ParamUtil.getString(actionRequest, "iFrameURL"), nameMap,
+				portletCategoryName);
 		}
 	}
 

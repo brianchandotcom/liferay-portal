@@ -31,3 +31,7 @@ page import="com.liferay.remote.app.web.internal.constants.RemoteAppAdminWebKeys
 page import="com.liferay.remote.app.web.internal.display.context.RemoteAppAdminDisplayContext" %>
 
 <%@ page import="java.util.Arrays" %>
+
+<%
+RemoteAppAdminDisplayContext remoteAppAdminDisplayContext = (RemoteAppAdminDisplayContext)renderRequest.getAttribute(RemoteAppAdminWebKeys.REMOTE_APP_ADMIN_DISPLAY_CONTEXT);
+%>

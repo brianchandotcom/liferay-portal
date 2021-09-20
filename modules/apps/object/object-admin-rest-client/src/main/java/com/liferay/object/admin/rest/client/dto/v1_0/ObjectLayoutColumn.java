@@ -95,6 +95,25 @@ public class ObjectLayoutColumn implements Cloneable, Serializable {
 
 	protected Integer priority;
 
+	public Integer getSize() {
+		return size;
+	}
+
+	public void setSize(Integer size) {
+		this.size = size;
+	}
+
+	public void setSize(UnsafeSupplier<Integer, Exception> sizeUnsafeSupplier) {
+		try {
+			size = sizeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer size;
+
 	@Override
 	public ObjectLayoutColumn clone() throws CloneNotSupportedException {
 		return (ObjectLayoutColumn)super.clone();

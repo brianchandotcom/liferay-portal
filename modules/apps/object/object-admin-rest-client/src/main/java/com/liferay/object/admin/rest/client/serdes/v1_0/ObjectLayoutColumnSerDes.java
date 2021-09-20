@@ -85,6 +85,16 @@ public class ObjectLayoutColumnSerDes {
 			sb.append(objectLayoutColumn.getPriority());
 		}
 
+		if (objectLayoutColumn.getSize() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"size\": ");
+
+			sb.append(objectLayoutColumn.getSize());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -130,6 +140,13 @@ public class ObjectLayoutColumnSerDes {
 				"priority", String.valueOf(objectLayoutColumn.getPriority()));
 		}
 
+		if (objectLayoutColumn.getSize() == null) {
+			map.put("size", null);
+		}
+		else {
+			map.put("size", String.valueOf(objectLayoutColumn.getSize()));
+		}
+
 		return map;
 	}
 
@@ -166,6 +183,12 @@ public class ObjectLayoutColumnSerDes {
 			else if (Objects.equals(jsonParserFieldName, "priority")) {
 				if (jsonParserFieldValue != null) {
 					objectLayoutColumn.setPriority(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "size")) {
+				if (jsonParserFieldValue != null) {
+					objectLayoutColumn.setSize(
 						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}

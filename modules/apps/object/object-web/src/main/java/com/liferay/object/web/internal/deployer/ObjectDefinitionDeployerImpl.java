@@ -106,8 +106,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				Portlet.class,
 				new ObjectEntriesPortlet(
 					objectDefinition.getObjectDefinitionId(),
-					_objectDefinitionLocalService, _portal,
-					objectDefinition.getRESTContextPath()),
+					_objectDefinitionLocalService, _objectScopeProviderRegistry,
+					_portal, objectDefinition.getRESTContextPath()),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"com.liferay.portlet.display-category", "category.hidden"
 				).put(

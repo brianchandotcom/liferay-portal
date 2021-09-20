@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -55,24 +56,6 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		if (cmd.equals(Constants.PUBLISH)) {
-			long objectDefinitionId = ParamUtil.getLong(
-				actionRequest, "objectDefinitionId");
-
-			_objectDefinitionService.publishCustomObjectDefinition(
-				objectDefinitionId);
-		}
-		else if (cmd.equals(Constants.UPDATE)) {
-			_updateObjectDefinition(actionRequest, actionResponse);
-		}
-	}
-
-	private void _updateObjectDefinition(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
 		long objectDefinitionId = ParamUtil.getLong(
 			actionRequest, "objectDefinitionId");
 
@@ -92,6 +75,14 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			_objectDefinitionService.updateCustomObjectDefinition(
 				objectDefinitionId, active, labelMap, name, panelCategoryOrder,
 				panelCategoryKey, pluralLabelMap, scope);
+
+			if (StringUtil.equals(
+					ParamUtil.getString(actionRequest, Constants.CMD),
+					Constants.PUBLISH)) {
+
+				_objectDefinitionService.publishCustomObjectDefinition(
+					objectDefinitionId);
+			}
 		}
 		catch (Exception exception) {
 			if (exception instanceof DuplicateObjectDefinitionException ||

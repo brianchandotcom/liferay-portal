@@ -15,134 +15,131 @@
 import {PagesVisitor, generateName} from 'data-engine-js-components-web';
 
 const getPredefinedValues = ({locale, localizedValue, options}) => {
-	if (Array.isArray(localizedValue[locale])) {
-		return localizedValue[locale].filter((value) => {
-			if (options.find((option) => value === option.value)) {
-				return value;
-			}
-		});
+	const predefinedValue = localizedValue[locale];
+
+	if (!Array.isArray(predefinedValue)) {
+		return predefinedValue;
 	}
 
-	return localizedValue[locale];
+	const optionValues = new Set(options.map(({value}) => value));
+
+	return predefinedValue.filter((value) => optionValues.has(value));
 };
 
 export const getFilteredSettingsContext = ({
-	config,
-	defaultLanguageId = themeDisplay.getDefaultLanguageId(),
+	config: {
+		disabledProperties,
+		disabledTabs,
+		unimplementedProperties,
+		visibleProperties,
+	},
+	defaultLanguageId,
 	editingLanguageId,
-	settingsContext,
+	settingsContext: {pages, ...otherSettings},
 }) => {
-	const unsupportedTabs = [...config.disabledTabs];
+	const hiddenProperties = new Set([
+		...unimplementedProperties,
+		...disabledProperties,
+	]);
+	const hiddenTabs = new Set(disabledTabs);
+	const visiblePages = pages.filter(({title}) => !hiddenTabs.has(title));
+	const visitor = new PagesVisitor(visiblePages);
+	const updatedPages = visitor.mapFields(
+		({
+			fieldName,
+			instanceId,
+			locale,
+			localizedValue,
+			name,
+			options,
+			portletNamespace,
+			repeatedIndex,
+		}) => {
+			const getName = () =>
+				generateName(name, {
+					editingLanguageId,
+					fieldName,
+					instanceId,
+					portletNamespace,
+					repeatedIndex,
+				});
+			const updatedProperties = {
+				defaultLanguageId,
+				editingLanguageId,
+			};
 
-	const pages = settingsContext.pages.filter(
-		(page) => !unsupportedTabs.includes(page.title)
+			if (hiddenProperties.has(fieldName)) {
+				updatedProperties.name = getName();
+				updatedProperties.visibilityExpression = 'FALSE';
+				updatedProperties.visible = false;
+
+				return updatedProperties;
+			}
+
+			if (visibleProperties.includes(fieldName)) {
+				updatedProperties.visibilityExpression = 'TRUE';
+				updatedProperties.visible = true;
+			}
+
+			switch (fieldName) {
+				case 'dataSourceType': {
+					updatedProperties.name = getName();
+					updatedProperties.predefinedValue = '["manual"]';
+
+					if (!name.includes('form_web')) {
+						updatedProperties.readOnly = true;
+						updatedProperties.visibilityExpression = 'FALSE';
+						updatedProperties.visible = false;
+					}
+					break;
+				}
+				case 'ddmDataProviderInstanceId':
+				case 'ddmDataProviderInstanceOutput': {
+					if (!name.includes('form_web')) {
+						updatedProperties.visibilityExpression = 'FALSE';
+						updatedProperties.visible = false;
+					}
+					break;
+				}
+				case 'localizable': {
+					updatedProperties.showAsSwitcher = true;
+					break;
+				}
+				case 'name': {
+					updatedProperties.readOnly = true;
+					break;
+				}
+				case 'predefinedValue': {
+					updatedProperties.localizedValue = {
+						...localizedValue,
+						[locale]: getPredefinedValues({
+							locale,
+							localizedValue,
+							options,
+						}),
+					};
+					updatedProperties.name = getName();
+					break;
+				}
+				case 'repeatable': {
+					if (!name.includes('form_web')) {
+						updatedProperties.name = getName();
+						updatedProperties.showMaximumRepetitionsInfo = false;
+					}
+					break;
+				}
+				default: {
+					updatedProperties.name = getName();
+				}
+			}
+
+			return updatedProperties;
+		},
+		true
 	);
 
-	const visitor = new PagesVisitor(pages);
-
-	const unsupportedProperties = [
-		...config.unimplementedProperties,
-		...config.disabledProperties,
-	];
-
 	return {
-		...settingsContext,
-		pages: visitor.mapColumns((column) => {
-			return {
-				...column,
-				fields: column.fields.map((field) => {
-					const {fieldName, name} = field;
-					const updatedField = {
-						...field,
-						defaultLanguageId,
-						editingLanguageId,
-					};
-
-					const {visibleProperties} = config;
-
-					if (visibleProperties.includes(fieldName)) {
-						updatedField.visibilityExpression = 'TRUE';
-						updatedField.visible = true;
-					}
-
-					if (unsupportedProperties.includes(fieldName)) {
-						return {
-							...updatedField,
-							name: generateName(name, updatedField),
-							visibilityExpression: 'FALSE',
-							visible: false,
-						};
-					}
-
-					if (fieldName === 'dataSourceType') {
-						const field = {
-							...updatedField,
-							name: generateName(name, updatedField),
-							predefinedValue: '["manual"]',
-						};
-
-						if (!name.includes('form_web')) {
-							field.readOnly = true;
-							field.visibilityExpression = 'FALSE';
-							field.visible = false;
-						}
-
-						return field;
-					}
-
-					if (
-						fieldName === 'ddmDataProviderInstanceId' ||
-						fieldName === 'ddmDataProviderInstanceOutput'
-					) {
-						const field = {
-							...updatedField,
-						};
-
-						if (!name.includes('form_web')) {
-							field.visibilityExpression = 'FALSE';
-							field.visible = false;
-						}
-
-						return field;
-					}
-
-					if (fieldName === 'localizable') {
-						return {
-							...updatedField,
-							showAsSwitcher: true,
-						};
-					}
-
-					if (fieldName === 'name') {
-						return {
-							...updatedField,
-							readOnly: true,
-						};
-					}
-
-					if (fieldName === 'predefinedValue') {
-						field.localizedValue[
-							field.locale
-						] = getPredefinedValues(field);
-					}
-
-					if (fieldName === 'repeatable') {
-						const field = {...updatedField};
-
-						if (!name.includes('form_web')) {
-							field.name = generateName(name, updatedField);
-							field.showMaximumRepetitionsInfo = false;
-						}
-
-						return field;
-					}
-
-					return {
-						...updatedField,
-						name: generateName(name, updatedField),
-					};
-				}),
-			};
-		}),
+		...otherSettings,
+		pages: updatedPages,
 	};
 };

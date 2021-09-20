@@ -693,8 +693,8 @@ definition {
 		Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
 
 		AssertTextEquals(
-		locator1 = "Modal#HEADER",
-		value1 = "Delete ${propertyName}?");
+			locator1 = "Modal#HEADER",
+			value1 = "Delete ${propertyName}?");
 
 		AssertTextPresent(
 			locator1 = "Modal#BODY",

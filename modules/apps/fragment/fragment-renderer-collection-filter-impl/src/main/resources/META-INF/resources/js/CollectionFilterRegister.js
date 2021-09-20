@@ -17,7 +17,10 @@ let _filterPrefix = '';
 /**
  * @param {string} filterType
  * @param {string} filterFragmentEntryLinkId
- * @return {*}
+ * @return {null|string|string[]} Returns null if there are no filter values,
+ *  a string if there is a single one, or an Array of strings if multiple values
+ *  are found for the given filterType (Java's filterKey) and
+ *  fragmentEntryLinkId.
  */
 export const getCollectionFilterValue = (
 	filterType,
@@ -38,9 +41,11 @@ export const getCollectionFilterValue = (
 };
 
 /**
+ * Replaces all existing filter values with the new one, only for given
+ * filterType (which corresponds to Java's filterKey) and fragmentEntryLinkId.
  * @param {string} filterType
  * @param {string} filterFragmentEntryLinkId
- * @param {*} value
+ * @param {string|string[]} value
  */
 export const setCollectionFilterValue = (
 	filterType,

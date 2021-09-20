@@ -353,6 +353,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8132 | Test Summary: Custom asset list shows a list of custom assets"
 	@priority = "5"
 	test CanShowsCustomAssetList {
+		var assetName = "Custom Asset Analytics Cloud,Custom Asset Analytics Cloud 2,Custom Asset Analytics Cloud 3";
+
 		for (var layoutName : list "AC Page 2,AC Page 3") {
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -392,9 +394,7 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Custom");
 
-		for (var assetName : list "Custom Asset Analytics Cloud,Custom Asset Analytics Cloud 2,Custom Asset Analytics Cloud 3") {
-			ACAssets.viewAssets(assetName = "${assetName}");
-		}
+		ACUtils.viewNameList(nameList = "${assetName}");
 	}
 
 }

@@ -130,7 +130,7 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			ACAssets.viewAssets(assetName = "Web Content AC Title");
+			ACUtils.viewNameList(nameList = "Web Content AC Title");
 		}
 
 		task ("Set time filter use 180Days") {
@@ -331,7 +331,7 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			ACAssets.viewAssets(assetName = "Web Content AC Title");
+			ACUtils.viewNameList(nameList = "Web Content AC Title");
 		}
 
 		task ("Set time filter use Custom Range") {
@@ -353,7 +353,7 @@ definition {
 			// Use a macro to assert time filter return the right data
 			// Create a locator that can be used later
 
-			ACAssets.viewAssets(assetName = "Web Content AC Title Custom Range");
+			ACUtils.viewNameList(nameList = "Web Content AC Title Custom Range");
 		}
 	}
 
@@ -412,6 +412,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8441 | Test Summary: Web content list is searchable"
 	@priority = "5"
 	test CanSearchWebContentList {
+		var assetNameList = "Web Content AC Title,Web Content AC Title 2,Web Content AC Title 3";
+
 		task ("Add pages and add web content to earch of the page") {
 			for (var layoutName : list "AC Page 2,AC Page 3") {
 				ACUtils.addSiteAndPage(layoutName = "${layoutName}");
@@ -475,17 +477,15 @@ definition {
 		task ("Search the Web Contents") {
 			ACUtils.searchBar(searchItem = "Web Content AC Title");
 
-			for (var assetName : list "Web Content AC Title,Web Content AC Title 2,Web Content AC Title 3") {
-				ACAssets.viewAssets(assetName = "${assetName}");
-			}
+			ACUtils.viewNameList(nameList = "${assetNameList}");
 
 			ACUtils.searchBar(searchItem = "2");
 
-			ACAssets.viewAssets(assetName = "Web Content AC Title 2");
+			ACUtils.viewNameList(nameList = "Web Content AC Title 2");
 
 			ACUtils.searchBar(searchItem = "3");
 
-			ACAssets.viewAssets(assetName = "Web Content AC Title 3");
+			ACUtils.viewNameList(nameList = "Web Content AC Title 3");
 		}
 	}
 
@@ -683,6 +683,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8125 | Test Summary: Web content list shows all web content in a list"
 	@priority = "5"
 	test ViewAllWebContentShownInAssetList {
+		var assetNameList = "Web Content AC Title,Web Content AC Title 2,Web Content AC Title 3";
+
 		for (var layoutName : list "AC Page 2,AC Page 3") {
 			ACUtils.addSiteAndPage(layoutName = "${layoutName}");
 		}
@@ -727,9 +729,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		for (var assetName : list "Web Content AC Title,Web Content AC Title 2,Web Content AC Title 3") {
-			ACAssets.viewAssets(assetName = "${assetName}");
-		}
+		ACUtils.viewNameList(nameList = "${assetNameList}");
 	}
 
 	@description = "Web content visitor behavior card shows expected amount of views"

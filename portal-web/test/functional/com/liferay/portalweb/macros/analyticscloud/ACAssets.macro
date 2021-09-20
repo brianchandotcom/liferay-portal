@@ -57,14 +57,6 @@ definition {
 		}
 	}
 
-	macro viewAssets {
-		var key_assetName = "${assetName}";
-
-		AssertTextEquals(
-			locator1 = "ACAssets#ASSETS_TABLE",
-			value1 = "${assetName}");
-	}
-
 	macro viewAssetsInfo {
 		AssertTextEquals(
 			index = "${index}",

@@ -364,7 +364,7 @@ definition {
 		task ("Search the new segment") {
 			ACUtils.searchBar(searchItem = "Dynamic Segment Test");
 
-			ACAssets.viewAssets(assetName = "Dynamic Segment Test");
+			ACUtils.viewNameList(nameList = "Dynamic Segment Test");
 		}
 
 		task ("View the number of Membership is 1") {
@@ -468,7 +468,7 @@ definition {
 		task ("Search the new segment") {
 			ACUtils.searchBar(searchItem = "Dynamic Segment Test");
 
-			ACAssets.viewAssets(assetName = "Dynamic Segment Test");
+			ACUtils.viewNameList(nameList = "Dynamic Segment Test");
 		}
 
 		task ("View the number of Membership is 1") {
@@ -572,7 +572,7 @@ definition {
 		task ("Search the new segment") {
 			ACUtils.searchBar(searchItem = "Dynamic Segment Test");
 
-			ACAssets.viewAssets(assetName = "Dynamic Segment Test");
+			ACUtils.viewNameList(nameList = "Dynamic Segment Test");
 		}
 
 		task ("View the number of Membership is 2") {
@@ -1016,7 +1016,7 @@ definition {
 		task ("Search the new segment") {
 			ACUtils.searchBar(searchItem = "Dynamic Segment Test");
 
-			ACAssets.viewAssets(assetName = "Dynamic Segment Test");
+			ACUtils.viewNameList(nameList = "Dynamic Segment Test");
 		}
 
 		task ("View the number of Membership is 2") {
@@ -1150,6 +1150,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8471 | Test Summary: Paginate Segment Profile in Membership List"
 	@priority = "3"
 	test CanPaginateSegmentProfileInMembershipList {
+		var usernameList = "userfn userln,user1 user1,user2 user2,user3 user3,user4 user4";
+
 		task ("Add 5 more new users") {
 			for (var n : list "1,2,3,4,5") {
 				JSONUser.addUser(
@@ -1230,13 +1232,11 @@ definition {
 		}
 
 		task ("View only 5 users are shown in page 1") {
-			for (var username : list "userfn userln,user1 user1,user2 user2,user3 user3,user4 user4") {
-				ACAssets.viewAssets(assetName = "${username}");
-			}
+			ACUtils.viewNameList(nameList = "${usernameList}");
 
 			AssertElementNotPresent(
 				key_assetName = "user5 user5",
-				locator1 = "ACAssets#ASSETS_TABLE");
+				locator1 = "ACUtils#NAME_LIST");
 		}
 
 		task ("Navigate to the page 2") {
@@ -1244,7 +1244,7 @@ definition {
 		}
 
 		task ("View the user5 user5 is shown in page 2") {
-			ACAssets.viewAssets(assetName = "user5 user5");
+			ACUtils.viewNameList(nameList = "user5 user5");
 		}
 	}
 
@@ -1352,6 +1352,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8475 | Test Summary: Dynamic segment members preview in real time"
 	@priority = "3"
 	test CanPreviewDynamicSegmentMembers {
+		var usernameList = "userfn userln,user1 user1";
+
 		task ("Add one more user with a jobTitle") {
 			JSONUser.addUser(
 				jobTitle = "lawyer",
@@ -1425,9 +1427,7 @@ definition {
 		task ("View two users are shown on the Preview mode") {
 			ACSegments.previewSegmentMembership();
 
-			for (var username : list "userfn userln,user1 user1") {
-				ACAssets.viewAssets(assetName = "${username}");
-			}
+			ACUtils.viewNameList(nameList = "${usernameList}");
 
 			Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
 		}
@@ -1443,11 +1443,11 @@ definition {
 		task ("View only one user is shown on Preview mode") {
 			ACSegments.previewSegmentMembership();
 
-			ACAssets.viewAssets(assetName = "user1 user1");
+			ACUtils.viewNameList(nameList = "user1 user1");
 
 			AssertElementNotPresent(
 				key_assetName = "userfn userln",
-				locator1 = "ACAssets#ASSETS_TABLE");
+				locator1 = "ACUtils#NAME_LIST");
 		}
 	}
 
@@ -1520,11 +1520,11 @@ definition {
 		task ("View only the userea shown in modal") {
 			AssertVisible(
 				key_assetName = "userfn userln",
-				locator1 = "ACAssets#ASSETS_TABLE");
+				locator1 = "ACUtils#NAME_LIST");
 
 			AssertElementNotPresent(
 				key_assetName = "user1 user1",
-				locator1 = "ACAssets#ASSETS_TABLE");
+				locator1 = "ACUtils#NAME_LIST");
 		}
 
 		task ("Search email in Add Members modal") {
@@ -1536,11 +1536,11 @@ definition {
 		task ("View only the user1 shown in modal") {
 			AssertVisible(
 				key_assetName = "user1 user1",
-				locator1 = "ACAssets#ASSETS_TABLE");
+				locator1 = "ACUtils#NAME_LIST");
 
 			AssertElementNotPresent(
 				key_assetName = "userfn userln",
-				locator1 = "ACAssets#ASSETS_TABLE");
+				locator1 = "ACUtils#NAME_LIST");
 		}
 	}
 

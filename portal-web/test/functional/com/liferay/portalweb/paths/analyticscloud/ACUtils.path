@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>NAME_LIST</td>
+	<td>//div[contains(@class,'table-title')][normalize-space()='${key_nameList}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LABEL</td>
 	<td>//label[normalize-space()='${label}']</td>
 	<td></td>

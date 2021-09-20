@@ -568,6 +568,16 @@ definition {
 			value1 = "${infoMessage}");
 	}
 
+	macro viewNameList {
+		for (var name : list "${nameList}") {
+			var key_nameList = "${name}";
+
+			AssertTextEquals(
+				locator1 = "ACUtils#NAME_LIST",
+				value1 = "${name}");
+		}
+	}
+
 	macro viewNoResultsMessage {
 		var key_noResultMessage = "${noResultMessage}";
 

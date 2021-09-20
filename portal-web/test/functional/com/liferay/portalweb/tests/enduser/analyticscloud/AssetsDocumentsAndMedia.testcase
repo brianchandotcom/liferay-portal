@@ -383,11 +383,11 @@ definition {
 
 			ACUtils.searchBar(searchItem = "DM AC Title");
 
-			ACAssets.viewAssets(assetName = "DM AC Title");
+			ACUtils.viewNameList(nameList = "DM AC Title");
 
 			ACUtils.searchBar(searchItem = "New Document");
 
-			ACAssets.viewAssets(assetName = "New Document");
+			ACUtils.viewNameList(nameList = "New Document");
 
 			ACUtils.searchBar(searchItem = "Should not be here");
 
@@ -693,6 +693,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8115 | Test Summary: Assert document list shows all of the documents and media assets in a list"
 	@priority = "5"
 	test ViewAllDocumentsAndMediaShownInAssetList {
+		var assetName = "DM AC Title,DM AC Title 2,DM AC Title 3,DM AC Title 4";
+
 		for (var n : list "2,3,4") {
 			ACUtils.createDMAndAddToPage(
 				dmDocumentFile = "Document_${n}.jpg",
@@ -723,9 +725,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		for (var assetName : list "DM AC Title,DM AC Title 2,DM AC Title 3,DM AC Title 4") {
-			ACAssets.viewAssets(assetName = "${assetName}");
-		}
+		ACUtils.viewNameList(nameList = "${assetName}");
 	}
 
 	@description = "Documents visitor behavior card shows expected amount of views"

@@ -730,7 +730,7 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			ACAssets.viewAssets(assetName = "Blogs AC Title");
+			ACUtils.viewNameList(nameList = "Blogs AC Title");
 		}
 	}
 

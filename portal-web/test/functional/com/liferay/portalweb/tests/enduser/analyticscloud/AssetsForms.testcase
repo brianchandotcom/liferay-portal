@@ -267,6 +267,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8417 | Test Summary: Forms list is searchable"
 	@priority = "5"
 	test CanFormsListSearchable {
+		var formName = "Created Form Name,Created Form Name 1";
+
 		ACUtils.addSiteAndPage(layoutName = "AC Page 1");
 
 		ACUtils.createFormAndAddToPage(
@@ -299,11 +301,11 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		for (var formName : list "Created Form Name,Created Form Name 1") {
+		for (var formName : list "${formName}") {
 			ACUtils.searchBar(searchItem = "${formName}");
-
-			ACAssets.viewAssets(assetName = "${formName}");
 		}
+
+		ACUtils.viewNameList(nameList = "${formName}");
 
 		ACUtils.searchBar(searchItem = "Should not be here");
 
@@ -770,6 +772,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8120 | Test Summary: Assert forms list shows all of the forms in a list"
 	@priority = "5"
 	test ViewAllFormsShownInAssetList {
+		var formNameList = "Created Form Name,Created Form Name 1,Created Form Name 2,Created Form Name 3";
+
 		for (var n : list "1,2,3") {
 			ACUtils.addSiteAndPage(layoutName = "AC Page ${n}");
 		}
@@ -818,9 +822,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		for (var formACTitle : list "Created Form Name,Created Form Name 1,Created Form Name 2,Created Form Name 3") {
-			ACAssets.viewAssets(assetName = "${formACTitle}");
-		}
+		ACUtils.viewNameList(nameList = "${formNameList}");
 	}
 
 	@description = "Forms visitor behavior card shows expected amount of views"

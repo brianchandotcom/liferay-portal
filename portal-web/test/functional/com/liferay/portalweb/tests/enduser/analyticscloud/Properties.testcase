@@ -43,6 +43,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9034 | Test Summary: As a Business User, I should be able to create multiple properties with multiple sites"
 	@priority = "3"
 	test AddPropertyBasedOnMultiplePropertiesType {
+		var propertyNameList = "AC Site,Site Name";
+
 		task ("Connect the DXP to Analytics Cloud") {
 			ACUtils.addSiteAndPage(siteName = "AC Site");
 
@@ -70,9 +72,7 @@ definition {
 
 			ACSettings.goToProperties();
 
-			for (var propertyName : list "AC Site,Site Name") {
-				ACAssets.viewAssets(assetName = "${propertyName}");
-			}
+			ACUtils.viewNameList(nameList = "${propertyNameList}");
 		}
 	}
 
@@ -113,6 +113,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9037 | Test Summary: As an Business User, a Property with a duplicate name should have an incrementing identifier appended to it's name"
 	@priority = "3"
 	test AutoRenamePropertyWhenDuplicateWithExistingOne {
+		var propertyNameList = "AC Test Property,AC Test Property (1)";
+
 		task ("Add a new property on AC") {
 			ACUtils.launchAC();
 
@@ -138,9 +140,7 @@ definition {
 		task ("View both properties are available") {
 			ACSettings.goToProperties();
 
-			for (var propertyName : list "AC Test Property,AC Test Property (1)") {
-				ACAssets.viewAssets(assetName = "${propertyName}");
-			}
+			ACUtils.viewNameList(nameList = "${propertyNameList}");
 		}
 	}
 

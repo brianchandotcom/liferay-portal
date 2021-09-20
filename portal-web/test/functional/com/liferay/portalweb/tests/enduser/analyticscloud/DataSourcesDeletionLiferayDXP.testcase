@@ -92,7 +92,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_assetName = "Web Content AC Title",
-			locator1 = "ACAssets#ASSETS_TABLE");
+			locator1 = "ACUtils#NAME_LIST");
 	}
 
 }

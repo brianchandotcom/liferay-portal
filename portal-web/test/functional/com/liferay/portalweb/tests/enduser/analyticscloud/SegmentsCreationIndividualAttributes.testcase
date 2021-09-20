@@ -126,7 +126,7 @@ definition {
 		task ("View the user showns on the Preview mode") {
 			ACSegments.previewSegmentMembership();
 
-			ACAssets.viewAssets(assetName = "ac ac");
+			ACUtils.viewNameList(nameList = "ac ac");
 		}
 	}
 
@@ -190,7 +190,7 @@ definition {
 		task ("View the user showns on the Preview mode") {
 			ACSegments.previewSegmentMembership();
 
-			ACAssets.viewAssets(assetName = "ac ac");
+			ACUtils.viewNameList(nameList = "ac ac");
 		}
 	}
 
@@ -266,7 +266,7 @@ definition {
 		task ("View the user showns on the Preview mode") {
 			ACSegments.previewSegmentMembership();
 
-			ACAssets.viewAssets(assetName = "ac ac");
+			ACUtils.viewNameList(nameList = "ac ac");
 		}
 	}
 
@@ -332,7 +332,7 @@ definition {
 		task ("View and asset user") {
 			ACSegments.previewSegmentMembership();
 
-			ACAssets.viewAssets(assetName = "ac ac");
+			ACUtils.viewNameList(nameList = "ac ac");
 
 			ACSegments.saveSegment();
 		}
@@ -410,7 +410,7 @@ definition {
 		task ("View the user showns on the Preview mode") {
 			ACSegments.previewSegmentMembership();
 
-			ACAssets.viewAssets(assetName = "ac ac");
+			ACUtils.viewNameList(nameList = "ac ac");
 		}
 	}
 
@@ -498,7 +498,7 @@ definition {
 		task ("View the user showns on the Preview mode") {
 			ACSegments.previewSegmentMembership();
 
-			ACAssets.viewAssets(assetName = "ac ac");
+			ACUtils.viewNameList(nameList = "ac ac");
 		}
 	}
 
@@ -574,7 +574,7 @@ definition {
 		task ("View the user showns on the Preview mode") {
 			ACSegments.previewSegmentMembership();
 
-			ACAssets.viewAssets(assetName = "ac ac");
+			ACUtils.viewNameList(nameList = "ac ac");
 		}
 	}
 

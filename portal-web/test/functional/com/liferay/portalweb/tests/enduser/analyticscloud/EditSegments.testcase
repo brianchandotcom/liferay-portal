@@ -525,13 +525,11 @@ definition {
 		}
 
 		task ("View only 5 users are shown in page 1") {
-			for (var username : list "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6") {
-				ACAssets.viewAssets(assetName = "${username}");
-			}
+			ACUtils.viewNameList(nameList = "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6");
 
 			AssertElementNotPresent(
 				key_assetName = "ac7 ac7",
-				locator1 = "ACAssets#ASSETS_TABLE");
+				locator1 = "ACUtils#NAME_LIST");
 		}
 
 		task ("Navigate to the page 2") {
@@ -539,7 +537,7 @@ definition {
 		}
 
 		task ("View the ac7 ac7 is shown in page 2") {
-			ACAssets.viewAssets(assetName = "ac7 ac7");
+			ACUtils.viewNameList(nameList = "ac7 ac7");
 
 			ACNavigation.clickCancelButton();
 		}
@@ -557,13 +555,11 @@ definition {
 		}
 
 		task ("View only 5 users are shown in page 1") {
-			for (var username : list "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6") {
-				ACAssets.viewAssets(assetName = "${username}");
-			}
+			ACUtils.viewNameList(nameList = "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6");
 
 			AssertElementNotPresent(
 				key_assetName = "ac7 ac7",
-				locator1 = "ACAssets#ASSETS_TABLE");
+				locator1 = "ACUtils#NAME_LIST");
 		}
 
 		task ("Navigate to the page 2") {
@@ -571,7 +567,7 @@ definition {
 		}
 
 		task ("View the ac7 ac7 is shown in page 2") {
-			ACAssets.viewAssets(assetName = "ac7 ac7");
+			ACUtils.viewNameList(nameList = "ac7 ac7");
 		}
 	}
 

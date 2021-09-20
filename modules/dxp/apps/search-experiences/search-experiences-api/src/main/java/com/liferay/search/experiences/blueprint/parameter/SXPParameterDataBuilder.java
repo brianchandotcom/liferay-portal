@@ -23,10 +23,6 @@ public interface SXPParameterDataBuilder {
 
 	public SXPParameterData build();
 
-	public SXPParameterDataBuilder from(int from);
-
 	public SXPParameterDataBuilder keywords(String keywords);
-
-	public SXPParameterDataBuilder size(int size);
 
 }

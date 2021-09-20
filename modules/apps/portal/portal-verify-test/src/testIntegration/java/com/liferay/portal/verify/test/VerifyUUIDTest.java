@@ -20,7 +20,6 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
@@ -52,16 +51,14 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testVerifyModel() {
-		_testDoVerify(new AssetTagVerifiableModel());
+	public void testVerifyModel() throws Exception {
+		VerifyUUID.verify(new AssetTagVerifiableModel());
 	}
 
 	@Test
 	public void testVerifyModelWithUnknownPKColumnName() throws Exception {
 		try {
-			ReflectionTestUtil.invoke(
-				_verifyUUID, "verifyUUID",
-				new Class<?>[] {VerifiableUUIDModel.class},
+			VerifyUUID.verify(
 				new VerifiableUUIDModel() {
 
 					@Override
@@ -119,7 +116,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 		}
 
 		try {
-			_testDoVerify(verifiableUUIDModels);
+			VerifyUUID.verify(verifiableUUIDModels);
 		}
 		catch (Exception exception) {
 			_verifyException(
@@ -151,7 +148,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 		throws Exception {
 
 		try {
-			_testDoVerify(
+			VerifyUUID.verify(
 				new VerifiableUUIDModel() {
 
 					@Override
@@ -196,13 +193,6 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 		return _verifyUUID;
 	}
 
-	private void _testDoVerify(VerifiableUUIDModel... verifiableUUIDModels) {
-		ReflectionTestUtil.invoke(
-			_verifyUUID, "doVerify",
-			new Class<?>[] {VerifiableUUIDModel[].class},
-			new Object[] {verifiableUUIDModels});
-	}
-
 	private void _verifyException(
 			Exception exception, Map<DBType, String> expectedMessages)
 		throws Exception {
@@ -218,8 +208,8 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 		String message = exception.getMessage();
 
 		Assert.assertTrue(
-			message + " does not start " + expectedMessagePrefix,
-			message.startsWith(expectedMessagePrefix));
+			message + " does not contain " + expectedMessagePrefix,
+			message.contains(expectedMessagePrefix));
 	}
 
 	private static final String _UNKNOWN = "Unknown";

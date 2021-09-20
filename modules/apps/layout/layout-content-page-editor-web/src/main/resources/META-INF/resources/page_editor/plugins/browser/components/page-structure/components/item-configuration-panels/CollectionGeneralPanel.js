@@ -41,6 +41,7 @@ import updateCollectionDisplayCollection from '../../../../../../app/thunks/upda
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import {useId} from '../../../../../../app/utils/useId';
 import CollectionSelector from '../../../../../../common/components/CollectionSelector';
+import useControlledState from '../../../../../../core/hooks/useControlledState';
 import CollectionFilterConfigurationModal from '../CollectionFilterConfigurationModal';
 
 const LAYOUT_OPTIONS = [
@@ -98,13 +99,17 @@ export const CollectionGeneralPanel = ({item}) => {
 		item.config.numberOfItemsPerPage > config.searchContainerPageMaxDelta;
 	const isMounted = useIsMounted();
 	const listStyleId = useId();
-	const [nextValue, setNextValue] = useState({
-		numberOfItems: item.config.numberOfItems,
-		numberOfItemsPerPage: item.config.numberOfItemsPerPage,
-	});
-	const [showAllItems, setShowAllItems] = useState(item.config.showAllItems);
-	const [totalNumberOfItems, setTotalNumberOfItems] = useState(0);
+	const [numberOfItems, setNumberOfItems] = useControlledState(
+		item.config.numberOfItems
+	);
+	const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useControlledState(
+		item.config.numberOfItemsPerPage
+	);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+	const [showAllItems, setShowAllItems] = useControlledState(
+		item.config.showAllItems
+	);
+	const [totalNumberOfItems, setTotalNumberOfItems] = useState(0);
 
 	const [numberOfItemsError, setNumberOfItemsError] = useState(null);
 	const [numberOfItemsPerPageError, setNumberOfItemsPerPageError] = useState(
@@ -144,39 +149,20 @@ export const CollectionGeneralPanel = ({item}) => {
 	};
 
 	const handleCollectionNumberOfItemsBlurred = (event) => {
-		if (Number(nextValue.numberOfItems) !== item.config.numberOfItems) {
+		if (Number(numberOfItems) !== item.config.numberOfItems) {
 			handleConfigurationChanged({
 				numberOfItems: Number(event.target.value),
 			});
 		}
 	};
 
-	const handleCollectionNumberOfItemsChanged = (event) => {
-		setNextValue({
-			...nextValue,
-			numberOfItems: event.target.value,
-		});
-
-		if (showAllItems) {
-			setShowAllItems(false);
-		}
-	};
-
 	const handleCollectionNumberOfItemsPerPageBlurred = (event) => {
-		if (
-			nextValue.numberOfItemsPerPage !== item.config.numberOfItemsPerPage
-		) {
+		if (Number(numberOfItemsPerPage) !== item.config.numberOfItemsPerPage) {
 			handleConfigurationChanged({
 				numberOfItemsPerPage: Number(event.target.value),
 			});
 		}
 	};
-
-	const handleCollectionNumberOfItemsPerPageChanged = (event) =>
-		setNextValue({
-			...nextValue,
-			numberOfItemsPerPage: event.target.value,
-		});
 
 	const handleCollectionSelect = (collection = {}) => {
 		dispatch(
@@ -242,11 +228,6 @@ export const CollectionGeneralPanel = ({item}) => {
 
 	const handleShowAllItemsChanged = (event) => {
 		setShowAllItems(event.target.checked);
-
-		setNextValue({
-			...nextValue,
-			numberOfItems: totalNumberOfItems,
-		});
 
 		handleConfigurationChanged({
 			numberOfItems: totalNumberOfItems,
@@ -325,11 +306,6 @@ export const CollectionGeneralPanel = ({item}) => {
 						handleConfigurationChanged({
 							numberOfItems: totalNumberOfItems,
 						});
-
-						setNextValue((prevValue) => ({
-							...prevValue,
-							numberOfItems: totalNumberOfItems,
-						}));
 					}
 				}
 			});
@@ -496,9 +472,11 @@ export const CollectionGeneralPanel = ({item}) => {
 							id={collectionNumberOfItemsId}
 							min="1"
 							onBlur={handleCollectionNumberOfItemsBlurred}
-							onChange={handleCollectionNumberOfItemsChanged}
+							onChange={(event) =>
+								setNumberOfItems(Number(event.target.value))
+							}
 							type="number"
-							value={nextValue.numberOfItems}
+							value={numberOfItems || ''}
 						/>
 
 						{numberOfItemsError && (
@@ -524,11 +502,13 @@ export const CollectionGeneralPanel = ({item}) => {
 								onBlur={
 									handleCollectionNumberOfItemsPerPageBlurred
 								}
-								onChange={
-									handleCollectionNumberOfItemsPerPageChanged
+								onChange={(event) =>
+									setNumberOfItemsPerPage(
+										Number(event.target.value)
+									)
 								}
 								type="number"
-								value={nextValue.numberOfItemsPerPage}
+								value={numberOfItemsPerPage || ''}
 							/>
 
 							<div className="mb-2 mt-2">

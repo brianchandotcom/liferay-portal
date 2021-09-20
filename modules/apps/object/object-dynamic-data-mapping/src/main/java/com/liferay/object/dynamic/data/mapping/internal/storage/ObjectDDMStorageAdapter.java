@@ -155,7 +155,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 								objectDefinitionId));
 					}
 				},
-				String.valueOf(ddmStorageAdapterSaveRequest.getScopeGroupId()));
+				String.valueOf(ddmStorageAdapterSaveRequest.getGroupId()));
 
 			return DDMStorageAdapterSaveResponse.Builder.newBuilder(
 				addObjectEntry.getId()

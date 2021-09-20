@@ -1,19 +1,10 @@
 definition {
 
 	macro addEntry {
-
-		// Workaround for LPS-121683
-
 		Type(
-			locator1 = "RemoteAppsEntry#NAME",
-			value1 = "${entryName}");
-
-		/* Use this instead when LPS-121683 is fixed
-		Type(
-		 	key_text = "Name"
+			key_text = "Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${name}");
-		*/
+			value1 = "${entryName}");
 
 		Type(
 			key_text = "URL",

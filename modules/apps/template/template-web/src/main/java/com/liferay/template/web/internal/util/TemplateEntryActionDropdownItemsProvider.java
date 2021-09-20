@@ -15,6 +15,7 @@
 package com.liferay.template.web.internal.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -27,27 +28,28 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.security.PermissionsURLTag;
-import com.liferay.template.web.internal.security.permissions.resource.DDMTemplatePermission;
+import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.web.internal.security.permissions.resource.TemplateEntryPermission;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Lourdes Fernández Besada
+ * @author Eudaldo Alonso
  */
 public class TemplateEntryActionDropdownItemsProvider {
 
 	public TemplateEntryActionDropdownItemsProvider(
-		boolean addButtonEnabled, DDMTemplate ddmTemplate,
-		HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse, String tabs1) {
+		boolean addButtonEnabled, HttpServletRequest httpServletRequest,
+		LiferayPortletResponse liferayPortletResponse, String tabs1,
+		TemplateEntry templateEntry) {
 
 		_addButtonEnabled = addButtonEnabled;
-		_ddmTemplate = ddmTemplate;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_tabs1 = tabs1;
+		_templateEntry = templateEntry;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -58,10 +60,10 @@ public class TemplateEntryActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> DDMTemplatePermission.contains(
-							_themeDisplay.getPermissionChecker(), _ddmTemplate,
-							ActionKeys.UPDATE),
-						_getEditDDMTemplateActionUnsafeConsumer()
+						() -> TemplateEntryPermission.contains(
+							_themeDisplay.getPermissionChecker(),
+							_templateEntry, ActionKeys.UPDATE),
+						_getEditTemplateEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -69,14 +71,8 @@ public class TemplateEntryActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() ->
-							_addButtonEnabled &&
-							DDMTemplatePermission.containsAddTemplatePermission(
-								_themeDisplay.getPermissionChecker(),
-								_themeDisplay.getScopeGroupId(),
-								_ddmTemplate.getClassNameId(),
-								_ddmTemplate.getResourceClassNameId()),
-						_getCopyDDMTemplateActionUnsafeConsumer()
+						() -> _addButtonEnabled,
+						_getCopyTemplateEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -84,10 +80,10 @@ public class TemplateEntryActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> DDMTemplatePermission.contains(
-							_themeDisplay.getPermissionChecker(), _ddmTemplate,
-							ActionKeys.PERMISSIONS),
-						_getPermissionsDDMTemplateActionUnsafeConsumer()
+						() -> TemplateEntryPermission.contains(
+							_themeDisplay.getPermissionChecker(),
+							_templateEntry, ActionKeys.PERMISSIONS),
+						_getPermissionsTemplateEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -95,10 +91,10 @@ public class TemplateEntryActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> DDMTemplatePermission.contains(
-							_themeDisplay.getPermissionChecker(), _ddmTemplate,
-							ActionKeys.DELETE),
-						_getDeleteDDMTemplateActionUnsafeConsumer()
+						() -> TemplateEntryPermission.contains(
+							_themeDisplay.getPermissionChecker(),
+							_templateEntry, ActionKeys.DELETE),
+						_getDeleteTemplateEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -106,18 +102,18 @@ public class TemplateEntryActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getCopyDDMTemplateActionUnsafeConsumer() {
+		_getCopyTemplateEntryActionUnsafeConsumer() {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
 				).setMVCPath(
-					"/copy_ddm_template.jsp"
+					"/copy_template_entry.jsp"
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
 				).setParameter(
-					"ddmTemplateId", _ddmTemplate.getTemplateId()
+					"templateEntryId", _templateEntry.getTemplateEntryId()
 				).buildPortletURL());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "copy"));
@@ -125,20 +121,20 @@ public class TemplateEntryActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getDeleteDDMTemplateActionUnsafeConsumer() {
+		_getDeleteTemplateEntryActionUnsafeConsumer() {
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "deleteDDMTemplate");
+			dropdownItem.putData("action", "deleteTemplateEntry");
 			dropdownItem.putData(
-				"deleteDDMTemplateURL",
+				"deleteTemplateEntryURL",
 				PortletURLBuilder.createActionURL(
 					_liferayPortletResponse
 				).setActionName(
-					"/template/delete_ddm_template"
+					"/template/delete_template_entry"
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
 				).setParameter(
-					"ddmTemplateId", _ddmTemplate.getTemplateId()
+					"templateEntryId", _templateEntry.getTemplateEntryId()
 				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
@@ -146,7 +142,7 @@ public class TemplateEntryActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getEditDDMTemplateActionUnsafeConsumer() {
+		_getEditTemplateEntryActionUnsafeConsumer() {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
@@ -159,7 +155,9 @@ public class TemplateEntryActionDropdownItemsProvider {
 				).setTabs1(
 					_tabs1
 				).setParameter(
-					"ddmTemplateId", _ddmTemplate.getTemplateId()
+					"ddmTemplateId", _templateEntry.getDDMTemplateId()
+				).setParameter(
+					"templateEntryId", _templateEntry.getTemplateEntryId()
 				).buildPortletURL());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
@@ -167,29 +165,32 @@ public class TemplateEntryActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-			_getPermissionsDDMTemplateActionUnsafeConsumer()
+			_getPermissionsTemplateEntryActionUnsafeConsumer()
 		throws Exception {
+
+		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(
+			_templateEntry.getDDMTemplateId());
 
 		String permissionsDisplayPageURL = PermissionsURLTag.doTag(
 			StringPool.BLANK, DDMTemplate.class.getName(),
-			_ddmTemplate.getName(), null,
-			String.valueOf(_ddmTemplate.getTemplateId()),
+			ddmTemplate.getName(_themeDisplay.getLocale()), null,
+			String.valueOf(_templateEntry.getDDMTemplateId()),
 			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "permissionsDDMTemplate");
+			dropdownItem.putData("action", "permissionsTemplateEntry");
 			dropdownItem.putData(
-				"permissionsDDMTemplateURL", permissionsDisplayPageURL);
+				"permissionsTemplateEntryURL", permissionsDisplayPageURL);
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};
 	}
 
 	private final boolean _addButtonEnabled;
-	private final DDMTemplate _ddmTemplate;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final String _tabs1;
+	private final TemplateEntry _templateEntry;
 	private final ThemeDisplay _themeDisplay;
 
 }

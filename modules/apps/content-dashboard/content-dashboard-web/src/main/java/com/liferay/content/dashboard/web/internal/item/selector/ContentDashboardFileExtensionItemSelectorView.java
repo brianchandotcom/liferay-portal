@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -135,31 +136,24 @@ public class ContentDashboardFileExtensionItemSelectorView
 
 		_fileExtensionGroups = Arrays.asList(
 			new FileExtensionGroup(
-				"document-multimedia", "audio",
-				PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES),
+				"audio", PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES),
 			new FileExtensionGroup(
-				"document-code", "code", _dlConfiguration.codeFileMimeTypes()),
+				"code", _dlConfiguration.codeFileMimeTypes()),
 			new FileExtensionGroup(
-				"document-compressed", "compressed",
-				_dlConfiguration.compressedFileMimeTypes()),
+				"compressed", _dlConfiguration.compressedFileMimeTypes()),
 			new FileExtensionGroup(
-				"document-image", "image",
-				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES),
+				"image", PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES),
 			new FileExtensionGroup(
-				"document-presentation", "presentation",
-				_dlConfiguration.presentationFileMimeTypes()),
+				"presentation", _dlConfiguration.presentationFileMimeTypes()),
 			new FileExtensionGroup(
-				"document-table", "spreadsheet",
-				_dlConfiguration.spreadSheetFileMimeTypes()),
+				"spreadsheet", _dlConfiguration.spreadSheetFileMimeTypes()),
 			new FileExtensionGroup(
-				"document-text", "text", _dlConfiguration.textFileMimeTypes()),
+				"text", _dlConfiguration.textFileMimeTypes()),
 			new FileExtensionGroup(
-				"document-pdf", "vectorial",
-				_dlConfiguration.vectorialFileMimeTypes()),
+				"vectorial", _dlConfiguration.vectorialFileMimeTypes()),
 			new FileExtensionGroup(
-				"document-multimedia", "video",
-				PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES),
-			new FileExtensionGroup("document-default", "other", new String[0]));
+				"video", PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES),
+			new FileExtensionGroup("other", new String[0]));
 
 		_fileExtensionFileExtensionGroupKeys = new HashMap<>();
 
@@ -322,8 +316,15 @@ public class ContentDashboardFileExtensionItemSelectorView
 
 	private class FileExtensionGroup {
 
-		public FileExtensionGroup(String icon, String key, String[] mimeTypes) {
-			_icon = icon;
+		public FileExtensionGroup(String key, String[] mimeTypes) {
+			if (ArrayUtil.isEmpty(mimeTypes)) {
+				_icon = "document-default";
+			}
+			else {
+				_icon = _dlMimeTypeDisplayContext.getIconFileMimeType(
+					mimeTypes[0]);
+			}
+
 			_key = key;
 			_mimeTypes = mimeTypes;
 		}

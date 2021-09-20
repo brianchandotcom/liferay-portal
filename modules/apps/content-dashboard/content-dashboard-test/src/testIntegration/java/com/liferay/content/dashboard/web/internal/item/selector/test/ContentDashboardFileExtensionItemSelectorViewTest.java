@@ -118,7 +118,7 @@ public class ContentDashboardFileExtensionItemSelectorViewTest {
 			"txt", "document-text", "Text",
 			fileExtensionGroupsJSONArray.getJSONObject(6));
 		_assertExtensionGroupJSONObject(
-			"pdf", "document-pdf", "Vectorial",
+			"pdf", "document-vector", "Vectorial",
 			fileExtensionGroupsJSONArray.getJSONObject(7));
 		_assertExtensionGroupJSONObject(
 			"mp4", "document-multimedia", "Video",

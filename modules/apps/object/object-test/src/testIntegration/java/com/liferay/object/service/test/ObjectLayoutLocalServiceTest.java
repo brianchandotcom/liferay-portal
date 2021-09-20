@@ -75,6 +75,51 @@ public class ObjectLayoutLocalServiceTest {
 
 	@Test
 	public void testAddObjectLayout() throws Exception {
+		try {
+			ObjectLayoutTab objectLayoutTab =
+				_objectLayoutTabPersistence.create(0);
+
+			objectLayoutTab.setNameMap(
+				LocalizedMapUtil.getLocalizedMap(
+					RandomTestUtil.randomString()));
+			objectLayoutTab.setPriority(0);
+			objectLayoutTab.setObjectLayoutBoxes(
+				Arrays.asList(_addObjectLayoutBox(), _addObjectLayoutBox()));
+
+			List<ObjectLayoutBox> objectLayoutBoxes =
+				objectLayoutTab.getObjectLayoutBoxes();
+
+			ObjectLayoutBox objectLayoutBox = objectLayoutBoxes.get(0);
+
+			List<ObjectLayoutRow> objectLayoutRows =
+				objectLayoutBox.getObjectLayoutRows();
+
+			ObjectLayoutRow objectLayoutRow = objectLayoutRows.get(0);
+
+			List<ObjectLayoutColumn> objectLayoutColumns =
+				objectLayoutRow.getObjectLayoutColumns();
+
+			ObjectLayoutColumn objectLayoutColumn = objectLayoutColumns.get(0);
+
+			objectLayoutColumn.setSize(13);
+
+			_objectLayoutLocalService.addObjectLayout(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), true,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				Collections.singletonList(objectLayoutTab));
+
+			Assert.fail();
+		}
+		catch (RuntimeException runtimeException) {
+			String message = runtimeException.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					"Object layout column size must be more than 0 and less " +
+						"than 12"));
+		}
+
 		ObjectLayout objectLayout = _addObjectLayout();
 
 		_assertObjectLayout(objectLayout);

@@ -52,7 +52,8 @@ public abstract class BaseRemoteAppEntryUADDisplay
 	public String[] getDisplayFieldNames() {
 		return new String[] {
 			"customElementCSSURLs", "customElementHTMLElementName",
-			"customElementURLs", "iFrameURL", "name", "type"
+			"customElementURLs", "iFrameURL", "name", "portletCategoryName",
+			"type"
 		};
 	}
 

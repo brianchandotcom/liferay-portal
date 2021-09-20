@@ -54,11 +54,13 @@ public interface RemoteAppEntryService extends BaseService {
 	 */
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			String customElementCSSURLs, String customElementHTMLElementName,
-			String customElementURLs, Map<Locale, String> nameMap)
+			String customElementURLs, Map<Locale, String> nameMap,
+			String portletCategoryName)
 		throws PortalException;
 
 	public RemoteAppEntry addIFrameRemoteAppEntry(
-			String iFrameURL, Map<Locale, String> nameMap)
+			String iFrameURL, Map<Locale, String> nameMap,
+			String portletCategoryName)
 		throws PortalException;
 
 	/**
@@ -75,12 +77,12 @@ public interface RemoteAppEntryService extends BaseService {
 	public RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			Map<Locale, String> nameMap)
+			Map<Locale, String> nameMap, String portletCategoryName)
 		throws PortalException;
 
 	public RemoteAppEntry updateIFrameRemoteAppEntry(
 			long remoteAppEntryId, String iFrameURL,
-			Map<Locale, String> nameMap)
+			Map<Locale, String> nameMap, String portletCategoryName)
 		throws PortalException;
 
 }

@@ -40,19 +40,22 @@ public class RemoteAppEntryServiceUtil {
 	 */
 	public static RemoteAppEntry addCustomElementRemoteAppEntry(
 			String customElementCSSURLs, String customElementHTMLElementName,
-			String customElementURLs, Map<java.util.Locale, String> nameMap)
+			String customElementURLs, Map<java.util.Locale, String> nameMap,
+			String portletCategoryName)
 		throws PortalException {
 
 		return getService().addCustomElementRemoteAppEntry(
 			customElementCSSURLs, customElementHTMLElementName,
-			customElementURLs, nameMap);
+			customElementURLs, nameMap, portletCategoryName);
 	}
 
 	public static RemoteAppEntry addIFrameRemoteAppEntry(
-			String iFrameURL, Map<java.util.Locale, String> nameMap)
+			String iFrameURL, Map<java.util.Locale, String> nameMap,
+			String portletCategoryName)
 		throws PortalException {
 
-		return getService().addIFrameRemoteAppEntry(iFrameURL, nameMap);
+		return getService().addIFrameRemoteAppEntry(
+			iFrameURL, nameMap, portletCategoryName);
 	}
 
 	/**
@@ -73,21 +76,22 @@ public class RemoteAppEntryServiceUtil {
 	public static RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			Map<java.util.Locale, String> nameMap)
+			Map<java.util.Locale, String> nameMap, String portletCategoryName)
 		throws PortalException {
 
 		return getService().updateCustomElementRemoteAppEntry(
 			remoteAppEntryId, customElementCSSURLs,
-			customElementHTMLElementName, customElementURLs, nameMap);
+			customElementHTMLElementName, customElementURLs, nameMap,
+			portletCategoryName);
 	}
 
 	public static RemoteAppEntry updateIFrameRemoteAppEntry(
 			long remoteAppEntryId, String iFrameURL,
-			Map<java.util.Locale, String> nameMap)
+			Map<java.util.Locale, String> nameMap, String portletCategoryName)
 		throws PortalException {
 
 		return getService().updateIFrameRemoteAppEntry(
-			remoteAppEntryId, iFrameURL, nameMap);
+			remoteAppEntryId, iFrameURL, nameMap, portletCategoryName);
 	}
 
 	public static RemoteAppEntryService getService() {

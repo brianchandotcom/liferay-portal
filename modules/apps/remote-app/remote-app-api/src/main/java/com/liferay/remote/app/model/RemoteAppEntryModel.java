@@ -370,6 +370,21 @@ public interface RemoteAppEntryModel
 	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
 
 	/**
+	 * Returns the portlet category name of this remote app entry.
+	 *
+	 * @return the portlet category name of this remote app entry
+	 */
+	@AutoEscape
+	public String getPortletCategoryName();
+
+	/**
+	 * Sets the portlet category name of this remote app entry.
+	 *
+	 * @param portletCategoryName the portlet category name of this remote app entry
+	 */
+	public void setPortletCategoryName(String portletCategoryName);
+
+	/**
 	 * Returns the type of this remote app entry.
 	 *
 	 * @return the type of this remote app entry

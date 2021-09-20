@@ -12,5 +12,6 @@ create table RemoteAppEntry (
 	customElementURLs TEXT null,
 	iFrameURL VARCHAR(1024) null,
 	name STRING null,
+	portletCategoryName VARCHAR(75) null,
 	type_ VARCHAR(75) null
 );

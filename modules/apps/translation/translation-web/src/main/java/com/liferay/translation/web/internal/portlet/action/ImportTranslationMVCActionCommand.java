@@ -108,18 +108,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 					"file")) {
 
-				TranslationSnapshot translationSnapshot =
-					_translationSnapshotProvider.getTranslationSnapshot(
-						groupId, new InfoItemReference(className, classPK),
-						inputStream);
-
-				_translationEntryService.addOrUpdateTranslationEntry(
-					groupId,
-					_language.getLanguageId(
-						translationSnapshot.getTargetLocale()),
-					new InfoItemReference(className, classPK),
-					translationSnapshot.getInfoItemFieldValues(),
-					ServiceContextFactory.getInstance(actionRequest));
+				_importXLIFFFile(
+					actionRequest, classPK, groupId, className, inputStream);
 			}
 
 			String portletResource = ParamUtil.getString(
@@ -212,6 +202,24 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, className, classPK, ActionKeys.UPDATE);
 		}
+	}
+
+	private void _importXLIFFFile(
+			ActionRequest actionRequest, long classPK, long groupId,
+			String className, InputStream inputStream)
+		throws IOException, PortalException {
+
+		TranslationSnapshot translationSnapshot =
+			_translationSnapshotProvider.getTranslationSnapshot(
+				groupId, new InfoItemReference(className, classPK),
+				inputStream);
+
+		_translationEntryService.addOrUpdateTranslationEntry(
+			groupId,
+			_language.getLanguageId(translationSnapshot.getTargetLocale()),
+			new InfoItemReference(className, classPK),
+			translationSnapshot.getInfoItemFieldValues(),
+			ServiceContextFactory.getInstance(actionRequest));
 	}
 
 	@Reference

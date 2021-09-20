@@ -66,8 +66,8 @@ export default function TemplateModal({
 		setLoading(true);
 
 		const body = Liferay.Util.ns(namespace, {
-			classNameId: itemType.value,
-			classPK: itemSubtype,
+			infoItemClassName: itemType.value,
+			infoItemFormVariationKey: itemSubtype,
 			name,
 		});
 

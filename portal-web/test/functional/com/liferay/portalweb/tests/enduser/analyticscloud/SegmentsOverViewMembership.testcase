@@ -404,18 +404,20 @@ definition {
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
+		var userList = "user1,user2";
+
 		task ("Add new users in DXP") {
-			for (var n : list "1,2") {
+			for (var n : list "${userList}") {
 				JSONUser.addUser(
-					userEmailAddress = "user${n}@liferay.com",
-					userFirstName = "user${n}",
-					userLastName = "user${n}",
-					userScreenName = "user${n}");
+					userEmailAddress = "${n}@liferay.com",
+					userFirstName = "${n}",
+					userLastName = "${n}",
+					userScreenName = "${n}");
 
 				JSONUser.setFirstPassword(
 					agreeToTermsAndAnswerReminderQuery = "true",
 					requireReset = "false",
-					userEmailAddress = "user${n}@liferay.com");
+					userEmailAddress = "${n}@liferay.com");
 			}
 		}
 
@@ -424,7 +426,7 @@ definition {
 		}
 
 		task ("View the page as different users") {
-			for (var username : list "user1,user2") {
+			for (var username : list "${userList}") {
 				var fullName = "${username} ${username}";
 
 				User.logoutAndLoginPG(
@@ -435,7 +437,7 @@ definition {
 					pageName = "AC Page",
 					siteName = "Site Name");
 
-				Pause(locator1 = "10000");
+				Pause(locator1 = "3000");
 			}
 		}
 
@@ -460,7 +462,7 @@ definition {
 		}
 
 		// Data takes to long to appear
-		
+
 		task ("Show members added") {
 			ACSegments.viewSegmentMembershipLegendNumbers(
 				anonymousNumber = "0",

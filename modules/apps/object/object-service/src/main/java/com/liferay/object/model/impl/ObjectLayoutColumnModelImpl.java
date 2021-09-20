@@ -78,7 +78,7 @@ public class ObjectLayoutColumnModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"objectFieldId", Types.BIGINT}, {"objectLayoutRowId", Types.BIGINT},
-		{"priority", Types.INTEGER}
+		{"priority", Types.INTEGER}, {"size_", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -96,10 +96,11 @@ public class ObjectLayoutColumnModelImpl
 		TABLE_COLUMNS_MAP.put("objectFieldId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("objectLayoutRowId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("size_", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectLayoutColumn (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectLayoutColumnId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectFieldId LONG,objectLayoutRowId LONG,priority INTEGER)";
+		"create table ObjectLayoutColumn (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectLayoutColumnId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectFieldId LONG,objectLayoutRowId LONG,priority INTEGER,size_ INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectLayoutColumn";
 
@@ -346,6 +347,11 @@ public class ObjectLayoutColumnModelImpl
 			"priority",
 			(BiConsumer<ObjectLayoutColumn, Integer>)
 				ObjectLayoutColumn::setPriority);
+		attributeGetterFunctions.put("size", ObjectLayoutColumn::getSize);
+		attributeSetterBiConsumers.put(
+			"size",
+			(BiConsumer<ObjectLayoutColumn, Integer>)
+				ObjectLayoutColumn::setSize);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -569,6 +575,20 @@ public class ObjectLayoutColumnModelImpl
 	}
 
 	@Override
+	public int getSize() {
+		return _size;
+	}
+
+	@Override
+	public void setSize(int size) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_size = size;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(ObjectLayoutColumn.class.getName()));
@@ -644,6 +664,7 @@ public class ObjectLayoutColumnModelImpl
 		objectLayoutColumnImpl.setObjectFieldId(getObjectFieldId());
 		objectLayoutColumnImpl.setObjectLayoutRowId(getObjectLayoutRowId());
 		objectLayoutColumnImpl.setPriority(getPriority());
+		objectLayoutColumnImpl.setSize(getSize());
 
 		objectLayoutColumnImpl.resetOriginalValues();
 
@@ -677,6 +698,8 @@ public class ObjectLayoutColumnModelImpl
 			this.<Long>getColumnOriginalValue("objectLayoutRowId"));
 		objectLayoutColumnImpl.setPriority(
 			this.<Integer>getColumnOriginalValue("priority"));
+		objectLayoutColumnImpl.setSize(
+			this.<Integer>getColumnOriginalValue("size_"));
 
 		return objectLayoutColumnImpl;
 	}
@@ -804,6 +827,8 @@ public class ObjectLayoutColumnModelImpl
 
 		objectLayoutColumnCacheModel.priority = getPriority();
 
+		objectLayoutColumnCacheModel.size = getSize();
+
 		return objectLayoutColumnCacheModel;
 	}
 
@@ -907,6 +932,7 @@ public class ObjectLayoutColumnModelImpl
 	private long _objectFieldId;
 	private long _objectLayoutRowId;
 	private int _priority;
+	private int _size;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -949,6 +975,7 @@ public class ObjectLayoutColumnModelImpl
 		_columnOriginalValues.put("objectFieldId", _objectFieldId);
 		_columnOriginalValues.put("objectLayoutRowId", _objectLayoutRowId);
 		_columnOriginalValues.put("priority", _priority);
+		_columnOriginalValues.put("size_", _size);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -957,6 +984,7 @@ public class ObjectLayoutColumnModelImpl
 		Map<String, String> attributeNames = new HashMap<>();
 
 		attributeNames.put("uuid_", "uuid");
+		attributeNames.put("size_", "size");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -993,6 +1021,8 @@ public class ObjectLayoutColumnModelImpl
 		columnBitmasks.put("objectLayoutRowId", 512L);
 
 		columnBitmasks.put("priority", 1024L);
+
+		columnBitmasks.put("size_", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

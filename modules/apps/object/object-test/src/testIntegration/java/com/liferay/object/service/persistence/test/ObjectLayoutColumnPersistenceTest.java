@@ -140,6 +140,8 @@ public class ObjectLayoutColumnPersistenceTest {
 
 		newObjectLayoutColumn.setPriority(RandomTestUtil.nextInt());
 
+		newObjectLayoutColumn.setSize(RandomTestUtil.nextInt());
+
 		_objectLayoutColumns.add(_persistence.update(newObjectLayoutColumn));
 
 		ObjectLayoutColumn existingObjectLayoutColumn =
@@ -180,6 +182,9 @@ public class ObjectLayoutColumnPersistenceTest {
 		Assert.assertEquals(
 			existingObjectLayoutColumn.getPriority(),
 			newObjectLayoutColumn.getPriority());
+		Assert.assertEquals(
+			existingObjectLayoutColumn.getSize(),
+			newObjectLayoutColumn.getSize());
 	}
 
 	@Test
@@ -236,7 +241,8 @@ public class ObjectLayoutColumnPersistenceTest {
 			"ObjectLayoutColumn", "mvccVersion", true, "uuid", true,
 			"objectLayoutColumnId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"objectFieldId", true, "objectLayoutRowId", true, "priority", true);
+			"objectFieldId", true, "objectLayoutRowId", true, "priority", true,
+			"size", true);
 	}
 
 	@Test
@@ -459,6 +465,8 @@ public class ObjectLayoutColumnPersistenceTest {
 		objectLayoutColumn.setObjectLayoutRowId(RandomTestUtil.nextLong());
 
 		objectLayoutColumn.setPriority(RandomTestUtil.nextInt());
+
+		objectLayoutColumn.setSize(RandomTestUtil.nextInt());
 
 		_objectLayoutColumns.add(_persistence.update(objectLayoutColumn));
 

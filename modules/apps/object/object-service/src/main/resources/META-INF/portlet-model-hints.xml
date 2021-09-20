@@ -110,6 +110,7 @@
 		<field name="objectFieldId" type="long" />
 		<field name="objectLayoutRowId" type="long" />
 		<field name="priority" type="int" />
+		<field name="size" type="int" />
 	</model>
 	<model name="com.liferay.object.model.ObjectLayoutRow">
 		<field name="mvccVersion" type="long" />

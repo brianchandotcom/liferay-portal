@@ -54,6 +54,7 @@ public class ObjectLayoutColumnWrapper
 		attributes.put("objectFieldId", getObjectFieldId());
 		attributes.put("objectLayoutRowId", getObjectLayoutRowId());
 		attributes.put("priority", getPriority());
+		attributes.put("size", getSize());
 
 		return attributes;
 	}
@@ -125,6 +126,12 @@ public class ObjectLayoutColumnWrapper
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		Integer size = (Integer)attributes.get("size");
+
+		if (size != null) {
+			setSize(size);
 		}
 	}
 
@@ -221,6 +228,16 @@ public class ObjectLayoutColumnWrapper
 	@Override
 	public int getPriority() {
 		return model.getPriority();
+	}
+
+	/**
+	 * Returns the size of this object layout column.
+	 *
+	 * @return the size of this object layout column
+	 */
+	@Override
+	public int getSize() {
+		return model.getSize();
 	}
 
 	/**
@@ -351,6 +368,16 @@ public class ObjectLayoutColumnWrapper
 	@Override
 	public void setPriority(int priority) {
 		model.setPriority(priority);
+	}
+
+	/**
+	 * Sets the size of this object layout column.
+	 *
+	 * @param size the size of this object layout column
+	 */
+	@Override
+	public void setSize(int size) {
+		model.setSize(size);
 	}
 
 	/**

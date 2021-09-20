@@ -78,7 +78,7 @@ public class ObjectLayoutColumnCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -102,6 +102,8 @@ public class ObjectLayoutColumnCacheModel
 		sb.append(objectLayoutRowId);
 		sb.append(", priority=");
 		sb.append(priority);
+		sb.append(", size=");
+		sb.append(size);
 		sb.append("}");
 
 		return sb.toString();
@@ -149,6 +151,7 @@ public class ObjectLayoutColumnCacheModel
 		objectLayoutColumnImpl.setObjectFieldId(objectFieldId);
 		objectLayoutColumnImpl.setObjectLayoutRowId(objectLayoutRowId);
 		objectLayoutColumnImpl.setPriority(priority);
+		objectLayoutColumnImpl.setSize(size);
 
 		objectLayoutColumnImpl.resetOriginalValues();
 
@@ -174,6 +177,8 @@ public class ObjectLayoutColumnCacheModel
 		objectLayoutRowId = objectInput.readLong();
 
 		priority = objectInput.readInt();
+
+		size = objectInput.readInt();
 	}
 
 	@Override
@@ -208,6 +213,8 @@ public class ObjectLayoutColumnCacheModel
 		objectOutput.writeLong(objectLayoutRowId);
 
 		objectOutput.writeInt(priority);
+
+		objectOutput.writeInt(size);
 	}
 
 	public long mvccVersion;
@@ -221,5 +228,6 @@ public class ObjectLayoutColumnCacheModel
 	public long objectFieldId;
 	public long objectLayoutRowId;
 	public int priority;
+	public int size;
 
 }

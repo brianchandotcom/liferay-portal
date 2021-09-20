@@ -246,6 +246,20 @@ public interface ObjectLayoutColumnModel
 	 */
 	public void setPriority(int priority);
 
+	/**
+	 * Returns the size of this object layout column.
+	 *
+	 * @return the size of this object layout column
+	 */
+	public int getSize();
+
+	/**
+	 * Sets the size of this object layout column.
+	 *
+	 * @param size the size of this object layout column
+	 */
+	public void setSize(int size);
+
 	@Override
 	public ObjectLayoutColumn cloneWithOriginalValues();
 

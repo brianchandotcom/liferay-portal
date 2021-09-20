@@ -44,6 +44,7 @@ public class ObjectLayoutColumnSoap implements Serializable {
 		soapModel.setObjectFieldId(model.getObjectFieldId());
 		soapModel.setObjectLayoutRowId(model.getObjectLayoutRowId());
 		soapModel.setPriority(model.getPriority());
+		soapModel.setSize(model.getSize());
 
 		return soapModel;
 	}
@@ -194,6 +195,14 @@ public class ObjectLayoutColumnSoap implements Serializable {
 		_priority = priority;
 	}
 
+	public int getSize() {
+		return _size;
+	}
+
+	public void setSize(int size) {
+		_size = size;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _objectLayoutColumnId;
@@ -205,5 +214,6 @@ public class ObjectLayoutColumnSoap implements Serializable {
 	private long _objectFieldId;
 	private long _objectLayoutRowId;
 	private int _priority;
+	private int _size;
 
 }

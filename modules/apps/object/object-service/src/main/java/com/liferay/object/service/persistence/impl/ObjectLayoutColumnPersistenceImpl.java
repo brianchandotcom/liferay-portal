@@ -1739,6 +1739,7 @@ public class ObjectLayoutColumnPersistenceImpl
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put("size", "size_");
 
 		setDBColumnNames(dbColumnNames);
 
@@ -2428,7 +2429,7 @@ public class ObjectLayoutColumnPersistenceImpl
 		ObjectLayoutColumnPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid"});
+		new String[] {"uuid", "size"});
 
 	@Override
 	protected FinderCache getFinderCache() {

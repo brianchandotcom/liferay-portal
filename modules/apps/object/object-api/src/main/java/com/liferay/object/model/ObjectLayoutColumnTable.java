@@ -65,6 +65,8 @@ public class ObjectLayoutColumnTable
 	public final Column<ObjectLayoutColumnTable, Integer> priority =
 		createColumn(
 			"priority", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<ObjectLayoutColumnTable, Integer> size = createColumn(
+		"size_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private ObjectLayoutColumnTable() {
 		super("ObjectLayoutColumn", ObjectLayoutColumnTable::new);

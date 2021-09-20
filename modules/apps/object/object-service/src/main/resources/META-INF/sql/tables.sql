@@ -123,7 +123,8 @@ create table ObjectLayoutColumn (
 	modifiedDate DATE null,
 	objectFieldId LONG,
 	objectLayoutRowId LONG,
-	priority INTEGER
+	priority INTEGER,
+	size_ INTEGER
 );
 
 create table ObjectLayoutRow (

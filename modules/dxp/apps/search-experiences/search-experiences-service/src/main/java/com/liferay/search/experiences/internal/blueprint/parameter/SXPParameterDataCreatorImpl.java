@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.search.experiences.blueprint.keyword.KeywordProcessor;
 import com.liferay.search.experiences.blueprint.parameter.IntegerSXPParameter;
@@ -42,6 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -58,10 +58,11 @@ import org.osgi.service.component.annotations.Reference;
 public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 	@Override
-	public SXPParameterData create(SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint) {
- 
+	public SXPParameterData create(
+		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint) {
+
 		// TODO Placeholder for Parameter configuration DTO
-		
+
 		Optional<JSONObject> optional = Optional.empty();
 
 		if (!optional.isPresent()) {
@@ -74,18 +75,24 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 		JSONObject jsonObject = optional.get();
 
-		_addKeywordParameter(
+		_addKeywordParameter(searchRequestBuilder, sxpParameterDataBuilder);
+
+		_addPagingParameter(
+			jsonObject.getJSONObject("page"), searchRequestBuilder,
+			sxpParameterDataBuilder);
+
+		_addSizeParameter(
+			jsonObject.getJSONObject("size"), searchRequestBuilder,
+			sxpParameterDataBuilder);
+
+		_addSortParameters(searchRequestBuilder, sxpParameterDataBuilder);
+
+		_executeParameterContributors(
 			searchRequestBuilder, sxpBlueprint, sxpParameterDataBuilder);
 
-		_addPagingParameter(jsonObject.getJSONObject("page"), searchRequestBuilder, sxpBlueprint, sxpParameterDataBuilder);
-
-		_addSizeParameter(jsonObject.getJSONObject("size"), searchRequestBuilder, sxpBlueprint, sxpParameterDataBuilder);
-
-		_addSortParameters(searchRequestBuilder, sxpBlueprint, sxpParameterDataBuilder);
-
-		_executeParameterContributors(searchRequestBuilder, sxpBlueprint, sxpParameterDataBuilder);
-
-		_addCustomParameters(jsonObject.getJSONArray("custom"), searchRequestBuilder, sxpParameterDataBuilder);
+		_addCustomParameters(
+			jsonObject.getJSONArray("custom"), searchRequestBuilder,
+			sxpParameterDataBuilder);
 
 		SXPParameterData sxpParameterData = sxpParameterDataBuilder.build();
 
@@ -95,7 +102,8 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 	}
 
 	@Override
-	public Map<String, List<SXPParameterContributionDefinition>> getSXPParameterContributionDefinitions() {
+	public Map<String, List<SXPParameterContributionDefinition>>
+		getSXPParameterContributionDefinitions() {
 
 		Map<String, List<SXPParameterContributionDefinition>>
 			parameterContributionDefinitions = new HashMap<>();
@@ -108,8 +116,9 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 					_sxpParameterContributorServiceTrackerMap.getService(name);
 
 				parameterContributionDefinitions.put(
-						sxpParameterContributor.getCategoryNameKey(),
-						sxpParameterContributor.getSXPParameterContributionDefinitions());
+					sxpParameterContributor.getCategoryNameKey(),
+					sxpParameterContributor.
+						getSXPParameterContributionDefinitions());
 			});
 
 		return parameterContributionDefinitions;
@@ -134,17 +143,17 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 	}
 
 	private void _addCustomParameter(
-		JSONObject jsonObject,
-			SearchRequestBuilder searchRequestBuilder,
+		JSONObject jsonObject, SearchRequestBuilder searchRequestBuilder,
 		SXPParameterDataBuilder sxpParameterDataBuilder) {
 
 		String type = jsonObject.getString("type");
 
 		try {
-			SXPParameterBuilder sxpPrameterBuilder =
+			SXPParameterBuilder sxpParameterBuilder =
 				_sxpParameterBuilderFactory.getBuilder(type);
 
-			Optional<SXPParameter> optional = sxpPrameterBuilder.build(jsonObject, searchRequestBuilder);
+			Optional<SXPParameter> optional = sxpParameterBuilder.build(
+				jsonObject, searchRequestBuilder);
 
 			if (optional.isPresent()) {
 				sxpParameterDataBuilder.addSXPParameter(optional.get());
@@ -160,33 +169,30 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 	}
 
 	private void _addCustomParameters(
-		JSONArray jsonArray,
-		SearchRequestBuilder searchRequestBuilder, 
-		SXPParameterDataBuilder sxpParameterDataBuilder
-		) {
+		JSONArray jsonArray, SearchRequestBuilder searchRequestBuilder,
+		SXPParameterDataBuilder sxpParameterDataBuilder) {
 
-		if ((jsonArray == null) ||
-			(jsonArray.length() == 0)) {
-
+		if ((jsonArray == null) || (jsonArray.length() == 0)) {
 			return;
 		}
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			_addCustomParameter(jsonArray.getJSONObject(i), searchRequestBuilder, sxpParameterDataBuilder);
+			_addCustomParameter(
+				jsonArray.getJSONObject(i), searchRequestBuilder,
+				sxpParameterDataBuilder);
 		}
 	}
 
-
 	private void _addKeywordParameter(
-			SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint, 
-			SXPParameterDataBuilder sxpParameterDataBuilder) {
+		SearchRequestBuilder searchRequestBuilder,
+		SXPParameterDataBuilder sxpParameterDataBuilder) {
 
 		String keywords = SearchContextUtil.getKeywords(searchRequestBuilder);
 
 		sxpParameterDataBuilder.addSXPParameter(
 			new StringSXPParameter("keywords.raw", true, keywords));
 
-		keywords = _executeKeywordProcessors(keywords, searchRequestBuilder, sxpBlueprint);
+		keywords = _executeKeywordProcessors(keywords, searchRequestBuilder);
 
 		sxpParameterDataBuilder.addSXPParameter(
 			new StringSXPParameter("keywords", true, keywords));
@@ -195,52 +201,48 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 	}
 
 	private void _addPagingParameter(
-			JSONObject jsonObject,
-			SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint, 
-			SXPParameterDataBuilder sxpParameterDataBuilder) {
+		JSONObject jsonObject, SearchRequestBuilder searchRequestBuilder,
+		SXPParameterDataBuilder sxpParameterDataBuilder) {
 
 		String parameterName = jsonObject.getString("parameter_name");
 
 		Integer page = SearchContextUtil.getIntegerAttribute(
-					parameterName,
-					searchRequestBuilder);
+			parameterName, searchRequestBuilder);
 
-		if (Validator.isNotNull(page)) {
+		if (!Objects.isNull(page)) {
 			sxpParameterDataBuilder.addSXPParameter(
 				new IntegerSXPParameter(parameterName, true, page));
 		}
 	}
 
 	private void _addSizeParameter(
-			JSONObject jsonObject, SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint, 
-			SXPParameterDataBuilder sxpParameterDataBuilder) {
+		JSONObject jsonObject, SearchRequestBuilder searchRequestBuilder,
+		SXPParameterDataBuilder sxpParameterDataBuilder) {
 
 		SXPParameterBuilder sxpParameterBuilder =
 			_sxpParameterBuilderFactory.getBuilder("integer");
 
-		Optional<SXPParameter> optional = sxpParameterBuilder.build(jsonObject, searchRequestBuilder);
+		Optional<SXPParameter> optional = sxpParameterBuilder.build(
+			jsonObject, searchRequestBuilder);
 
 		if (!optional.isPresent()) {
 			return;
 		}
 
 		SXPParameter sxpParameter = optional.get();
-		
+
 		int size = GetterUtil.getInteger(sxpParameter.getValue());
 
 		sxpParameterDataBuilder.addSXPParameter(
-			new IntegerSXPParameter(
-				"size", true,
-				size));
+			new IntegerSXPParameter("size", true, size));
 	}
 
 	private void _addSortParameters(
 		SearchRequestBuilder searchRequestBuilder,
-		
-		SXPBlueprint sxpBlueprint, SXPParameterDataBuilder sxpParameterDataBuilder) {
-		
+		SXPParameterDataBuilder sxpParameterDataBuilder) {
+
 		// TODO Placeholder for Sort configuration DTO
-		
+
 		Optional<JSONObject> jsonObjectOptional = Optional.empty();
 
 		if (!jsonObjectOptional.isPresent()) {
@@ -257,7 +259,8 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 					_sxpParameterBuilderFactory.getBuilder("string");
 
 				Optional<SXPParameter> parameterOptional =
-					sxpParameterBuilder.build(jsonObject.getJSONObject(key), searchRequestBuilder);
+					sxpParameterBuilder.build(
+						jsonObject.getJSONObject(key), searchRequestBuilder);
 
 				if (parameterOptional.isPresent()) {
 					sxpParameterDataBuilder.addSXPParameter(
@@ -267,23 +270,23 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 	}
 
 	private String _executeKeywordProcessors(
-		String keywords, SearchRequestBuilder searchRequestBuilder, 
-		SXPBlueprint sxpBlueprint) {
+		String keywords, SearchRequestBuilder searchRequestBuilder) {
 
 		Set<String> keySet = _keywordProcessorServiceTrackerMap.keySet();
 
 		for (String name : keySet) {
-			KeywordProcessor keywordsProcessor =
+			KeywordProcessor keywordProcessor =
 				_keywordProcessorServiceTrackerMap.getService(name);
 
-			keywords = keywordsProcessor.process(keywords, searchRequestBuilder);
+			keywords = keywordProcessor.process(keywords, searchRequestBuilder);
 		}
 
 		return keywords;
 	}
 
 	private void _executeParameterContributors(
-		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint, SXPParameterDataBuilder sxpParameterDataBuilder) {
+		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint,
+		SXPParameterDataBuilder sxpParameterDataBuilder) {
 
 		Set<String> keySet = _sxpParameterContributorServiceTrackerMap.keySet();
 
@@ -293,7 +296,8 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 					_sxpParameterContributorServiceTrackerMap.getService(name);
 
 				parameterContributor.contribute(
-					searchRequestBuilder, sxpBlueprint, sxpParameterDataBuilder);
+					searchRequestBuilder, sxpBlueprint,
+					sxpParameterDataBuilder);
 			});
 	}
 

@@ -185,26 +185,26 @@ public class TypeFacetPortlet extends MVCPortlet {
 		TypeFacetPortletPreferences typeFacetPortletPreferences,
 		ThemeDisplay themeDisplay) {
 
-		Map<String, String> assetTypesClassNames = new HashMap<>();
+		Map<String, String> assetTypesTypeNames = new HashMap<>();
 
-		String[] assetTypes = getAssetTypesClassNames(
+		String[] classNames = getAssetTypesClassNames(
 			typeFacetPortletPreferences, themeDisplay);
 
-		for (String assetType : assetTypes) {
+		for (String className : classNames) {
 			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(assetType);
+					getAssetRendererFactoryByClassName(className);
 
-			String typeName = assetType;
+			String typeName = className;
 
 			if (assetRendererFactory != null) {
 				typeName = assetRendererFactory.getTypeName(
 					themeDisplay.getLocale());
 			}
-			else if (assetType.startsWith(
+			else if (className.startsWith(
 						ObjectDefinition.class.getName() + "#")) {
 
-				String[] parts = StringUtil.split(assetType, "#");
+				String[] parts = StringUtil.split(className, "#");
 
 				ObjectDefinition objectDefinition =
 					objectDefinitionLocalService.fetchObjectDefinition(
@@ -213,10 +213,10 @@ public class TypeFacetPortlet extends MVCPortlet {
 				typeName = objectDefinition.getLabel(themeDisplay.getLocale());
 			}
 
-			assetTypesClassNames.put(assetType, typeName);
+			assetTypesTypeNames.put(className, typeName);
 		}
 
-		return assetTypesClassNames;
+		return assetTypesTypeNames;
 	}
 
 	protected String getPaginationStartParameterName(

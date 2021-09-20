@@ -44,6 +44,7 @@ import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectE
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Arrays;
@@ -112,7 +113,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"com.liferay.portlet.display-category", "category.hidden"
 				).put(
 					"javax.portlet.display-name",
-					objectDefinition.getShortName()
+					objectDefinition.getPluralLabel(LocaleUtil.getSiteDefault())
 				).put(
 					"javax.portlet.init-param.view-template",
 					"/object_entries/view_object_entries.jsp"

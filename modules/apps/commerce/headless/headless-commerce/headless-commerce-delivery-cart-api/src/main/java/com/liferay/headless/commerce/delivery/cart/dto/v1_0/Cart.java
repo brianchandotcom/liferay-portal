@@ -537,6 +537,38 @@ public class Cart implements Serializable {
 	protected Status orderStatusInfo;
 
 	@Schema
+	public String getOrderTypeExternalReferenceCode() {
+		return orderTypeExternalReferenceCode;
+	}
+
+	public void setOrderTypeExternalReferenceCode(
+		String orderTypeExternalReferenceCode) {
+
+		this.orderTypeExternalReferenceCode = orderTypeExternalReferenceCode;
+	}
+
+	@JsonIgnore
+	public void setOrderTypeExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			orderTypeExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			orderTypeExternalReferenceCode =
+				orderTypeExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String orderTypeExternalReferenceCode;
+
+	@Schema
 	public Long getOrderTypeId() {
 		return orderTypeId;
 	}
@@ -1304,6 +1336,20 @@ public class Cart implements Serializable {
 			sb.append("\"orderStatusInfo\": ");
 
 			sb.append(String.valueOf(orderStatusInfo));
+		}
+
+		if (orderTypeExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"orderTypeExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(orderTypeExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		if (orderTypeId != null) {

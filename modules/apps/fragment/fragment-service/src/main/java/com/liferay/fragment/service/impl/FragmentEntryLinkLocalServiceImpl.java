@@ -738,7 +738,10 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		fragmentEntryLink.setLastPropagationDate(new Date());
 
-		fragmentEntryLinkPersistence.update(fragmentEntryLink);
+		fragmentEntryLink = fragmentEntryLinkPersistence.update(
+			fragmentEntryLink);
+
+		_updateFragmentEntryLinkLayout(fragmentEntryLink);
 	}
 
 	private String _getProcessedHTML(
@@ -859,6 +862,21 @@ public class FragmentEntryLinkLocalServiceImpl
 		}
 
 		return html;
+	}
+
+	private void _updateFragmentEntryLinkLayout(
+		FragmentEntryLink fragmentEntryLink) {
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			fragmentEntryLink.getPlid());
+
+		if (layout == null) {
+			return;
+		}
+
+		layout.setModifiedDate(new Date());
+
+		_layoutLocalService.updateLayout(layout);
 	}
 
 	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {

@@ -19,6 +19,8 @@ package com.liferay.remote.app.constants;
  */
 public class RemoteAppConstants {
 
+	public static final String RESOURCE_NAME = "com.liferay.remote.app.model";
+
 	public static final String TYPE_CUSTOM_ELEMENT = "customElement";
 
 	public static final String TYPE_IFRAME = "iframe";

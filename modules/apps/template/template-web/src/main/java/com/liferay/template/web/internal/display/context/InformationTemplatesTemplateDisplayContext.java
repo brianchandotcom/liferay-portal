@@ -14,19 +14,27 @@
 
 package com.liferay.template.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
-import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.service.TemplateEntryLocalServiceUtil;
+import com.liferay.template.web.internal.security.permissions.resource.TemplateEntryPermission;
+import com.liferay.template.web.internal.util.TemplateEntryActionDropdownItemsProvider;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * @author Eudaldo Alonso
@@ -46,46 +54,86 @@ public class InformationTemplatesTemplateDisplayContext
 				InfoItemServiceTracker.class.getName());
 	}
 
-	@Override
-	public long[] getClassNameIds() {
-		if (_classNameIds != null) {
-			return _classNameIds;
-		}
+	public List<DropdownItem> getTemplateEntryActionDropdownItems(
+		TemplateEntry templateEntry) {
 
-		List<String> infoItemClassNames =
-			_infoItemServiceTracker.getInfoItemClassNames(
-				InfoItemFormProvider.class);
+		TemplateEntryActionDropdownItemsProvider
+			templateEntryActionDropdownItemsProvider =
+				new TemplateEntryActionDropdownItemsProvider(
+					isAddButtonEnabled(),
+					PortalUtil.getHttpServletRequest(liferayPortletRequest),
+					liferayPortletResponse, getTabs1(), templateEntry);
 
-		Stream<String> infoItemClassNamesStream = infoItemClassNames.stream();
-
-		_classNameIds = infoItemClassNamesStream.mapToLong(
-			PortalUtil::getClassNameId
-		).toArray();
-
-		return _classNameIds;
+		return templateEntryActionDropdownItemsProvider.
+			getActionDropdownItems();
 	}
 
-	@Override
-	public long getResourceClassNameId() {
-		if (_resourceClassNameId != null) {
-			return _resourceClassNameId;
+	public String getTemplateEntryEditURL(TemplateEntry templateEntry)
+		throws PortalException {
+
+		if (!TemplateEntryPermission.contains(
+				themeDisplay.getPermissionChecker(), templateEntry,
+				ActionKeys.UPDATE)) {
+
+			return StringPool.BLANK;
 		}
 
-		_resourceClassNameId = PortalUtil.getClassNameId(
-			InfoItemFormProvider.class);
-
-		return _resourceClassNameId;
+		return PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/template/edit_ddm_template"
+		).setRedirect(
+			themeDisplay.getURLCurrent()
+		).setTabs1(
+			getTabs1()
+		).setParameter(
+			"ddmTemplateId", templateEntry.getDDMTemplateId()
+		).setParameter(
+			"templateEntryId", templateEntry.getTemplateEntryId()
+		).buildString();
 	}
 
-	public String getTemplateSubtypeLabel(long classNameId, long classPK) {
+	public SearchContainer<TemplateEntry> getTemplateSearchContainer() {
+		if (_templateEntrySearchContainer != null) {
+			return _templateEntrySearchContainer;
+		}
+
+		SearchContainer<TemplateEntry> templateEntrySearchContainer =
+			new SearchContainer<>(
+				liferayPortletRequest, getPortletURL(), null,
+				"there-are-no-templates");
+
+		templateEntrySearchContainer.setOrderByCol(getOrderByCol());
+		templateEntrySearchContainer.setOrderByComparator(null);
+		templateEntrySearchContainer.setOrderByType(getOrderByType());
+		templateEntrySearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(liferayPortletResponse));
+
+		templateEntrySearchContainer.setResults(
+			TemplateEntryLocalServiceUtil.getTemplateEntries(
+				themeDisplay.getScopeGroupId(),
+				templateEntrySearchContainer.getStart(),
+				templateEntrySearchContainer.getEnd(),
+				templateEntrySearchContainer.getOrderByComparator()));
+		templateEntrySearchContainer.setTotal(
+			TemplateEntryLocalServiceUtil.getTemplateEntriesCount(
+				themeDisplay.getScopeGroupId()));
+
+		_templateEntrySearchContainer = templateEntrySearchContainer;
+
+		return _templateEntrySearchContainer;
+	}
+
+	public String getTemplateSubtypeLabel(TemplateEntry templateEntry) {
 		return Optional.ofNullable(
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class,
-				PortalUtil.getClassName(classNameId))
+				templateEntry.getInfoItemClassName())
 		).map(
 			infoItemFormVariationsProvider ->
 				infoItemFormVariationsProvider.getInfoItemFormVariation(
-					themeDisplay.getScopeGroupId(), String.valueOf(classPK))
+					themeDisplay.getScopeGroupId(),
+					templateEntry.getInfoItemFormVariationKey())
 		).map(
 			infoItemFormVariation -> infoItemFormVariation.getLabel(
 				themeDisplay.getLocale())
@@ -94,12 +142,11 @@ public class InformationTemplatesTemplateDisplayContext
 		);
 	}
 
-	@Override
-	public String getTemplateTypeLabel(long classNameId) {
+	public String getTemplateTypeLabel(TemplateEntry templateEntry) {
 		return Optional.ofNullable(
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemDetailsProvider.class,
-				PortalUtil.getClassName(classNameId))
+				templateEntry.getInfoItemClassName())
 		).map(
 			InfoItemDetailsProvider::getInfoItemClassDetails
 		).map(
@@ -107,12 +154,11 @@ public class InformationTemplatesTemplateDisplayContext
 				themeDisplay.getLocale())
 		).orElse(
 			ResourceActionsUtil.getModelResource(
-				themeDisplay.getLocale(), PortalUtil.getClassName(classNameId))
+				themeDisplay.getLocale(), templateEntry.getInfoItemClassName())
 		);
 	}
 
-	private long[] _classNameIds;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
-	private Long _resourceClassNameId;
+	private SearchContainer<TemplateEntry> _templateEntrySearchContainer;
 
 }

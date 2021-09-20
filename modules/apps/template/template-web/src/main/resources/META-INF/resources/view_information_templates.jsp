@@ -33,32 +33,34 @@ InformationTemplatesManagementToolbarDisplayContext informationTemplatesManageme
 	propsTransformer="js/InformationTemplatesManagementToolbarPropsTransformer"
 />
 
-<portlet:actionURL name="/template/delete_ddm_template" var="deleteDDMTemplateURL">
+<portlet:actionURL name="/template/delete_template_entry" var="deleteTemplateEntryURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
 <clay:container-fluid>
-	<aui:form action="<%= deleteDDMTemplateURL %>" name="fm">
+	<aui:form action="<%= deleteTemplateEntryURL %>" name="fm">
 		<liferay-ui:search-container
 			id="<%= informationTemplatesManagementToolbarDisplayContext.getSearchContainerId() %>"
 			searchContainer="<%= informationTemplatesTemplateDisplayContext.getTemplateSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.dynamic.data.mapping.model.DDMTemplate"
-				keyProperty="templateId"
-				modelVar="ddmTemplate"
+				className="com.liferay.template.model.TemplateEntry"
+				keyProperty="templateEntryId"
+				modelVar="templateEntry"
 			>
 
 				<%
 				row.setData(
 					HashMapBuilder.<String, Object>put(
-						"actions", informationTemplatesManagementToolbarDisplayContext.getAvailableActions(ddmTemplate)
+						"actions", informationTemplatesManagementToolbarDisplayContext.getAvailableActions(templateEntry)
 					).build());
+
+				DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(templateEntry.getDDMTemplateId());
 				%>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand table-title"
-					href="<%= informationTemplatesTemplateDisplayContext.getDDMTemplateEditURL(ddmTemplate) %>"
+					href="<%= informationTemplatesTemplateDisplayContext.getTemplateEntryEditURL(templateEntry) %>"
 					name="name"
 					value="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>"
 				/>
@@ -66,18 +68,18 @@ InformationTemplatesManagementToolbarDisplayContext informationTemplatesManageme
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
 					name="item-type"
-					value="<%= HtmlUtil.escape(informationTemplatesTemplateDisplayContext.getTemplateTypeLabel(ddmTemplate.getClassNameId())) %>"
+					value="<%= HtmlUtil.escape(informationTemplatesTemplateDisplayContext.getTemplateTypeLabel(templateEntry)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
 					name="item-subtype"
-					value="<%= HtmlUtil.escape(informationTemplatesTemplateDisplayContext.getTemplateSubtypeLabel(ddmTemplate.getClassNameId(), ddmTemplate.getClassPK())) %>"
+					value="<%= HtmlUtil.escape(informationTemplatesTemplateDisplayContext.getTemplateSubtypeLabel(templateEntry)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text>
 					<clay:dropdown-actions
-						dropdownItems="<%= informationTemplatesTemplateDisplayContext.getDDMTemplateActionDropdownItems(ddmTemplate) %>"
+						dropdownItems="<%= informationTemplatesTemplateDisplayContext.getTemplateEntryActionDropdownItems(templateEntry) %>"
 						propsTransformer="js/InformationTemplatesDropdownPropsTransformer"
 					/>
 				</liferay-ui:search-container-column-text>

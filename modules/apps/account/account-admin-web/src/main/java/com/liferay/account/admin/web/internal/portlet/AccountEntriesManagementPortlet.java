@@ -14,12 +14,22 @@
 
 package com.liferay.account.admin.web.internal.portlet;
 
+import com.liferay.account.admin.web.internal.constants.AccountWebKeys;
 import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.account.settings.AccountEntryGroupSettings;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Portal;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -41,4 +51,29 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class AccountEntriesManagementPortlet extends MVCPortlet {
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		try {
+			renderRequest.setAttribute(
+				AccountWebKeys.ACCOUNT_ENTRY_ALLOWED_TYPES,
+				_accountEntryGroupSettings.getAllowedTypes(
+					_portal.getScopeGroupId(renderRequest)));
+
+			super.doDispatch(renderRequest, renderResponse);
+		}
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
+		}
+	}
+
+	@Reference
+	private AccountEntryGroupSettings _accountEntryGroupSettings;
+
+	@Reference
+	private Portal _portal;
+
 }

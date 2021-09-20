@@ -33,6 +33,10 @@ public final class DDMStorageAdapterSaveRequest {
 		return _ddmFormValues;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
 	public long getPrimaryKey() {
 		return _primaryKey;
 	}
@@ -85,6 +89,12 @@ public final class DDMStorageAdapterSaveRequest {
 			return this;
 		}
 
+		public Builder withGroupId(long groupId) {
+			_ddmStorageAdapterSaveRequest._groupId = groupId;
+
+			return this;
+		}
+
 		public Builder withPrimaryKey(long primaryKey) {
 			_ddmStorageAdapterSaveRequest._primaryKey = primaryKey;
 
@@ -122,6 +132,7 @@ public final class DDMStorageAdapterSaveRequest {
 	private String _className;
 	private DDMFormInstance _ddmFormInstance;
 	private DDMFormValues _ddmFormValues;
+	private long _groupId;
 	private long _primaryKey;
 	private long _scopeGroupId;
 	private long _structureId;

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.model.impl.GroupImpl;
 
 /**
@@ -56,9 +57,11 @@ public class CommerceChannelImpl extends CommerceChannelBaseImpl {
 	@Override
 	public UnicodeProperties getTypeSettingsProperties() {
 		if (_typeSettingsUnicodeProperties == null) {
-			_typeSettingsUnicodeProperties = new UnicodeProperties(true);
-
-			_typeSettingsUnicodeProperties.fastLoad(getTypeSettings());
+			_typeSettingsUnicodeProperties = UnicodePropertiesBuilder.create(
+				true
+			).fastLoad(
+				getTypeSettings()
+			).build();
 		}
 
 		return _typeSettingsUnicodeProperties;

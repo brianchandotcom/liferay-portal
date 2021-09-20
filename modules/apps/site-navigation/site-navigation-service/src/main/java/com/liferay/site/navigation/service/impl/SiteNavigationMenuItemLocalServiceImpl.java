@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemOrderException;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemTypeException;
@@ -399,10 +400,12 @@ public class SiteNavigationMenuItemLocalServiceImpl
 	}
 
 	protected void validateLayout(String typeSettings) throws PortalException {
-		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
-			true);
-
-		typeSettingsUnicodeProperties.fastLoad(typeSettings);
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).fastLoad(
+				typeSettings
+			).build();
 
 		String layoutUuid = typeSettingsUnicodeProperties.getProperty(
 			"layoutUuid");

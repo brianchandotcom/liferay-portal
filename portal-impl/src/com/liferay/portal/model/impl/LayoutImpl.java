@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.LayoutClone;
@@ -824,9 +825,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 	@Override
 	public UnicodeProperties getTypeSettingsProperties() {
 		if (_typeSettingsUnicodeProperties == null) {
-			_typeSettingsUnicodeProperties = new UnicodeProperties(true);
-
-			_typeSettingsUnicodeProperties.fastLoad(super.getTypeSettings());
+			_typeSettingsUnicodeProperties = UnicodePropertiesBuilder.create(
+				true
+			).fastLoad(
+				super.getTypeSettings()
+			).build();
 		}
 
 		return _typeSettingsUnicodeProperties;
@@ -1412,9 +1415,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 			if (typeSettings != null) {
 				UnicodeProperties typeSettingsUnicodeProperties =
-					new UnicodeProperties(true);
-
-				typeSettingsUnicodeProperties.load(typeSettings);
+					UnicodePropertiesBuilder.create(
+						true
+					).load(
+						typeSettings
+					).build();
 
 				String stateMax = typeSettingsUnicodeProperties.getProperty(
 					LayoutTypePortletConstants.STATE_MAX);

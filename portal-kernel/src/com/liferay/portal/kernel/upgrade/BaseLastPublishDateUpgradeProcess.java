@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
@@ -62,10 +63,11 @@ public abstract class BaseLastPublishDateUpgradeProcess extends UpgradeProcess {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
 					UnicodeProperties settingsUnicodeProperties =
-						new UnicodeProperties(true);
-
-					settingsUnicodeProperties.load(
-						resultSet.getString("settings_"));
+						UnicodePropertiesBuilder.create(
+							true
+						).load(
+							resultSet.getString("settings_")
+						).build();
 
 					String lastPublishDateString =
 						settingsUnicodeProperties.getProperty(

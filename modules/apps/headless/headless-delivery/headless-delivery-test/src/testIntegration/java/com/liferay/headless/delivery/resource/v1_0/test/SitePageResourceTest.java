@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
@@ -227,10 +227,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			long groupId, boolean importPageDefinition, String title)
 		throws Exception {
 
-		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
-		unicodeProperties.put("published", Boolean.TRUE.toString());
-
 		Layout layout = _layoutLocalService.addLayout(
 			TestPropsValues.getUserId(), groupId, false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
@@ -241,8 +237,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
-			LayoutConstants.TYPE_CONTENT, unicodeProperties.toString(), false,
-			new HashMap<>(), ServiceContextTestUtil.getServiceContext(groupId));
+			LayoutConstants.TYPE_CONTENT,
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"published", Boolean.TRUE.toString()
+			).buildString(),
+			false, new HashMap<>(),
+			ServiceContextTestUtil.getServiceContext(groupId));
 
 		if (importPageDefinition) {
 			String name = PrincipalThreadLocal.getName();

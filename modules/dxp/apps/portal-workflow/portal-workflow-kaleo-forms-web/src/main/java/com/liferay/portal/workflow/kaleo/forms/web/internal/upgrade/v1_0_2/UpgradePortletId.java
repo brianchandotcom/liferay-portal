@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 
 import java.sql.PreparedStatement;
@@ -58,10 +59,12 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 	protected String getNewTypeSettings(
 		String typeSettings, String oldRootPortletId) {
 
-		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
-			true);
-
-		typeSettingsUnicodeProperties.fastLoad(typeSettings);
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).fastLoad(
+				typeSettings
+			).build();
 
 		Set<String> keys = typeSettingsUnicodeProperties.keySet();
 

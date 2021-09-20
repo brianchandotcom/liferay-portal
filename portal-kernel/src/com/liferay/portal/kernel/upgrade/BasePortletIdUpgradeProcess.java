@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
@@ -57,10 +58,12 @@ public abstract class BasePortletIdUpgradeProcess extends UpgradeProcess {
 	protected String getNewTypeSettings(
 		String typeSettings, String oldPropertyId, String newPropertyId) {
 
-		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
-			true);
-
-		typeSettingsUnicodeProperties.fastLoad(typeSettings);
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).fastLoad(
+				typeSettings
+			).build();
 
 		String value = typeSettingsUnicodeProperties.remove(oldPropertyId);
 
@@ -75,10 +78,12 @@ public abstract class BasePortletIdUpgradeProcess extends UpgradeProcess {
 		String typeSettings, String oldRootPortletId, String newRootPortletId,
 		boolean exactMatch) {
 
-		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
-			true);
-
-		typeSettingsUnicodeProperties.fastLoad(typeSettings);
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).fastLoad(
+				typeSettings
+			).build();
 
 		for (Map.Entry<String, String> entry :
 				typeSettingsUnicodeProperties.entrySet()) {

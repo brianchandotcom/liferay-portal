@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletPreferencesImpl;
 
@@ -81,10 +82,12 @@ public class LayoutTypeUpgradeProcess extends UpgradeProcess {
 	}
 
 	protected String getJournalArticleId(String typeSettings) throws Exception {
-		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
-			true);
-
-		typeSettingsUnicodeProperties.fastLoad(typeSettings);
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).fastLoad(
+				typeSettings
+			).build();
 
 		return typeSettingsUnicodeProperties.getProperty("article-id");
 	}
@@ -130,14 +133,13 @@ public class LayoutTypeUpgradeProcess extends UpgradeProcess {
 	}
 
 	protected String getTypeSettings(String portletId) {
-		UnicodeProperties newTypeSettingsUnicodeProperties =
-			new UnicodeProperties(true);
-
-		newTypeSettingsUnicodeProperties.put("column-1", portletId);
-		newTypeSettingsUnicodeProperties.put(
-			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column");
-
-		return newTypeSettingsUnicodeProperties.toString();
+		return UnicodePropertiesBuilder.create(
+			true
+		).put(
+			"column-1", portletId
+		).put(
+			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column"
+		).buildString();
 	}
 
 	protected void updateLayout(long plid, String portletId) throws Exception {

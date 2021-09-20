@@ -124,6 +124,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -137,8 +138,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.sites.kernel.util.Sites;
 import com.liferay.sites.kernel.util.SitesUtil;
 import com.liferay.staging.configuration.StagingConfiguration;
-
-import java.io.IOException;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -2087,103 +2086,91 @@ public class LayoutStagedModelDataHandler
 	protected void mergePortlets(
 		Layout layout, String newTypeSettings, String portletsMergeMode) {
 
-		try {
-			UnicodeProperties previousTypeSettingsUnicodeProperties =
-				layout.getTypeSettingsProperties();
+		UnicodeProperties previousTypeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
 
-			LayoutTypePortlet previousLayoutType =
-				(LayoutTypePortlet)layout.getLayoutType();
+		LayoutTypePortlet previousLayoutType =
+			(LayoutTypePortlet)layout.getLayoutType();
 
-			LayoutTemplate previousLayoutTemplate =
-				previousLayoutType.getLayoutTemplate();
+		LayoutTemplate previousLayoutTemplate =
+			previousLayoutType.getLayoutTemplate();
 
-			List<String> previousColumns = previousLayoutTemplate.getColumns();
+		List<String> previousColumns = previousLayoutTemplate.getColumns();
 
-			UnicodeProperties newTypeSettingsUnicodeProperties =
-				new UnicodeProperties(true);
+		UnicodeProperties newTypeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).load(
+				newTypeSettings
+			).build();
 
-			newTypeSettingsUnicodeProperties.load(newTypeSettings);
+		String layoutTemplateId = newTypeSettingsUnicodeProperties.getProperty(
+			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID);
 
-			String layoutTemplateId =
-				newTypeSettingsUnicodeProperties.getProperty(
-					LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID);
+		previousTypeSettingsUnicodeProperties.setProperty(
+			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, layoutTemplateId);
 
+		String nestedColumnIds = newTypeSettingsUnicodeProperties.getProperty(
+			LayoutTypePortletConstants.NESTED_COLUMN_IDS);
+
+		if (Validator.isNotNull(nestedColumnIds)) {
 			previousTypeSettingsUnicodeProperties.setProperty(
-				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID,
-				layoutTemplateId);
+				LayoutTypePortletConstants.NESTED_COLUMN_IDS, nestedColumnIds);
 
-			String nestedColumnIds =
-				newTypeSettingsUnicodeProperties.getProperty(
-					LayoutTypePortletConstants.NESTED_COLUMN_IDS);
+			String[] nestedColumnIdsArray = StringUtil.split(nestedColumnIds);
 
-			if (Validator.isNotNull(nestedColumnIds)) {
+			for (String nestedColumnId : nestedColumnIdsArray) {
+				String nestedColumnValue =
+					newTypeSettingsUnicodeProperties.getProperty(
+						nestedColumnId);
+
 				previousTypeSettingsUnicodeProperties.setProperty(
-					LayoutTypePortletConstants.NESTED_COLUMN_IDS,
-					nestedColumnIds);
-
-				String[] nestedColumnIdsArray = StringUtil.split(
-					nestedColumnIds);
-
-				for (String nestedColumnId : nestedColumnIdsArray) {
-					String nestedColumnValue =
-						newTypeSettingsUnicodeProperties.getProperty(
-							nestedColumnId);
-
-					previousTypeSettingsUnicodeProperties.setProperty(
-						nestedColumnId, nestedColumnValue);
-				}
+					nestedColumnId, nestedColumnValue);
 			}
-
-			LayoutTemplate newLayoutTemplate =
-				_layoutTemplateLocalService.getLayoutTemplate(
-					layoutTemplateId, false, null);
-
-			String[] newPortletIds = new String[0];
-
-			for (String columnId : newLayoutTemplate.getColumns()) {
-				String columnValue =
-					newTypeSettingsUnicodeProperties.getProperty(columnId);
-
-				String[] portletIds = StringUtil.split(columnValue);
-
-				if (!previousColumns.contains(columnId)) {
-					newPortletIds = ArrayUtil.append(newPortletIds, portletIds);
-				}
-				else {
-					String[] previousPortletIds = StringUtil.split(
-						previousTypeSettingsUnicodeProperties.getProperty(
-							columnId));
-
-					portletIds = appendPortletIds(
-						previousPortletIds, portletIds, portletsMergeMode);
-
-					previousTypeSettingsUnicodeProperties.setProperty(
-						columnId, StringUtil.merge(portletIds));
-				}
-			}
-
-			// Add portlets in nonexistent column to the first column
-
-			String columnId = previousColumns.get(0);
-
-			String[] portletIds = StringUtil.split(
-				previousTypeSettingsUnicodeProperties.getProperty(columnId));
-
-			appendPortletIds(portletIds, newPortletIds, portletsMergeMode);
-
-			previousTypeSettingsUnicodeProperties.setProperty(
-				columnId, StringUtil.merge(portletIds));
-
-			layout.setTypeSettings(
-				previousTypeSettingsUnicodeProperties.toString());
 		}
-		catch (IOException ioException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ioException, ioException);
-			}
 
-			layout.setTypeSettings(newTypeSettings);
+		LayoutTemplate newLayoutTemplate =
+			_layoutTemplateLocalService.getLayoutTemplate(
+				layoutTemplateId, false, null);
+
+		String[] newPortletIds = new String[0];
+
+		for (String columnId : newLayoutTemplate.getColumns()) {
+			String columnValue = newTypeSettingsUnicodeProperties.getProperty(
+				columnId);
+
+			String[] portletIds = StringUtil.split(columnValue);
+
+			if (!previousColumns.contains(columnId)) {
+				newPortletIds = ArrayUtil.append(newPortletIds, portletIds);
+			}
+			else {
+				String[] previousPortletIds = StringUtil.split(
+					previousTypeSettingsUnicodeProperties.getProperty(
+						columnId));
+
+				portletIds = appendPortletIds(
+					previousPortletIds, portletIds, portletsMergeMode);
+
+				previousTypeSettingsUnicodeProperties.setProperty(
+					columnId, StringUtil.merge(portletIds));
+			}
 		}
+
+		// Add portlets in nonexistent column to the first column
+
+		String columnId = previousColumns.get(0);
+
+		String[] portletIds = StringUtil.split(
+			previousTypeSettingsUnicodeProperties.getProperty(columnId));
+
+		appendPortletIds(portletIds, newPortletIds, portletsMergeMode);
+
+		previousTypeSettingsUnicodeProperties.setProperty(
+			columnId, StringUtil.merge(portletIds));
+
+		layout.setTypeSettings(
+			previousTypeSettingsUnicodeProperties.toString());
 	}
 
 	protected void populateElementLayoutMetadata(

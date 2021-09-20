@@ -62,7 +62,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
@@ -624,27 +624,32 @@ public class FragmentEntryProcessorFreemarkerTest {
 	}
 
 	private String _getTypeSettings(long groupId, long classNameId) {
-		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
-		unicodeProperties.put("anyAssetType", String.valueOf(classNameId));
-		unicodeProperties.put(
-			"anyClassTypeDLFileEntryAssetRendererFactory", "true");
-		unicodeProperties.put(
-			"anyClassTypeJournalArticleAssetRendererFactory", "true");
-		unicodeProperties.put("classNameIds", String.valueOf(classNameId));
-		unicodeProperties.put("groupIds", String.valueOf(groupId));
-		unicodeProperties.put("orderByColumn1", "modifiedDate");
-		unicodeProperties.put("orderByColumn2", "title");
-		unicodeProperties.put("orderByType1", "DESC");
-		unicodeProperties.put("orderByType2", "ASC");
-		unicodeProperties.put(
-			"subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory",
-			"false");
-		unicodeProperties.put(
+		return UnicodePropertiesBuilder.create(
+			true
+		).put(
+			"anyAssetType", String.valueOf(classNameId)
+		).put(
+			"anyClassTypeDLFileEntryAssetRendererFactory", "true"
+		).put(
+			"anyClassTypeJournalArticleAssetRendererFactory", "true"
+		).put(
+			"classNameIds", String.valueOf(classNameId)
+		).put(
+			"groupIds", String.valueOf(groupId)
+		).put(
+			"orderByColumn1", "modifiedDate"
+		).put(
+			"orderByColumn2", "title"
+		).put(
+			"orderByType1", "DESC"
+		).put(
+			"orderByType2", "ASC"
+		).put(
+			"subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory", "false"
+		).put(
 			"subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory",
-			"false");
-
-		return unicodeProperties.toString();
+			"false"
+		).buildString();
 	}
 
 	private String _readFileToString(String fileName) throws Exception {

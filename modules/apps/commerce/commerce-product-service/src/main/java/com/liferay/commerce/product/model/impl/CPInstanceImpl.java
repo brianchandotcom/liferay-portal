@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 /**
  * @author Marco Leo
@@ -79,10 +80,11 @@ public class CPInstanceImpl extends CPInstanceBaseImpl {
 	public UnicodeProperties getDeliverySubscriptionTypeSettingsProperties() {
 		if (_deliverySubscriptionTypeSettingsUnicodeProperties == null) {
 			_deliverySubscriptionTypeSettingsUnicodeProperties =
-				new UnicodeProperties(true);
-
-			_deliverySubscriptionTypeSettingsUnicodeProperties.fastLoad(
-				getDeliverySubscriptionTypeSettings());
+				UnicodePropertiesBuilder.create(
+					true
+				).fastLoad(
+					getDeliverySubscriptionTypeSettings()
+				).build();
 		}
 
 		return _deliverySubscriptionTypeSettingsUnicodeProperties;
@@ -91,11 +93,12 @@ public class CPInstanceImpl extends CPInstanceBaseImpl {
 	@Override
 	public UnicodeProperties getSubscriptionTypeSettingsProperties() {
 		if (_subscriptionTypeSettingsUnicodeProperties == null) {
-			_subscriptionTypeSettingsUnicodeProperties = new UnicodeProperties(
-				true);
-
-			_subscriptionTypeSettingsUnicodeProperties.fastLoad(
-				getSubscriptionTypeSettings());
+			_subscriptionTypeSettingsUnicodeProperties =
+				UnicodePropertiesBuilder.create(
+					true
+				).fastLoad(
+					getSubscriptionTypeSettings()
+				).build();
 		}
 
 		return _subscriptionTypeSettingsUnicodeProperties;

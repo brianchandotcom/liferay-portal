@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -78,10 +79,12 @@ public class UpdateAssetListEntryDynamicMVCActionCommand
 			actionRequest, "segmentsEntryId");
 
 		try {
-			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
-			unicodeProperties.fastLoad(
-				assetListEntry.getTypeSettings(segmentsEntryId));
+			UnicodeProperties unicodeProperties =
+				UnicodePropertiesBuilder.create(
+					true
+				).fastLoad(
+					assetListEntry.getTypeSettings(segmentsEntryId)
+				).build();
 
 			updateQueryLogic(actionRequest, unicodeProperties);
 

@@ -19,6 +19,7 @@ import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.service.DispatchLogLocalServiceUtil;
 import com.liferay.dispatch.service.DispatchTriggerLocalServiceUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 import java.util.Date;
 
@@ -31,11 +32,12 @@ public class DispatchTriggerImpl extends DispatchTriggerBaseImpl {
 	@Override
 	public UnicodeProperties getDispatchTaskSettingsUnicodeProperties() {
 		if (_dispatchTaskSettingsUnicodeProperties == null) {
-			_dispatchTaskSettingsUnicodeProperties = new UnicodeProperties(
-				true);
-
-			_dispatchTaskSettingsUnicodeProperties.fastLoad(
-				getDispatchTaskSettings());
+			_dispatchTaskSettingsUnicodeProperties =
+				UnicodePropertiesBuilder.create(
+					true
+				).fastLoad(
+					getDispatchTaskSettings()
+				).build();
 		}
 
 		return _dispatchTaskSettingsUnicodeProperties;

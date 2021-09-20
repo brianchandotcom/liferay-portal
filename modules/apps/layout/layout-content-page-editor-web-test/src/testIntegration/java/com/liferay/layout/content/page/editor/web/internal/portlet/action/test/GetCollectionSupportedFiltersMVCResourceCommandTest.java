@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -193,19 +193,24 @@ public class GetCollectionSupportedFiltersMVCResourceCommandTest {
 	}
 
 	private String _getTypeSettings() {
-		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
-		unicodeProperties.put(
+		return UnicodePropertiesBuilder.create(
+			true
+		).put(
 			"anyAssetType",
-			String.valueOf(_portal.getClassNameId(BlogsEntry.class)));
-		unicodeProperties.put("classNameIds", BlogsEntry.class.getName());
-		unicodeProperties.put("groupIds", String.valueOf(_group.getGroupId()));
-		unicodeProperties.put("orderByColumn1", "modifiedDate");
-		unicodeProperties.put("orderByColumn2", "title");
-		unicodeProperties.put("orderByType1", "ASC");
-		unicodeProperties.put("orderByType2", "ASC");
-
-		return unicodeProperties.toString();
+			String.valueOf(_portal.getClassNameId(BlogsEntry.class))
+		).put(
+			"classNameIds", BlogsEntry.class.getName()
+		).put(
+			"groupIds", String.valueOf(_group.getGroupId())
+		).put(
+			"orderByColumn1", "modifiedDate"
+		).put(
+			"orderByColumn2", "title"
+		).put(
+			"orderByType1", "ASC"
+		).put(
+			"orderByType2", "ASC"
+		).buildString();
 	}
 
 	@Inject

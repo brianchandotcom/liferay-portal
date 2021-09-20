@@ -15,6 +15,7 @@
 package com.liferay.trash.model.impl;
 
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.trash.model.TrashEntry;
 
 /**
@@ -39,9 +40,11 @@ public class TrashEntryImpl extends TrashEntryBaseImpl {
 	@Override
 	public UnicodeProperties getTypeSettingsProperties() {
 		if (_typeSettingsUnicodeProperties == null) {
-			_typeSettingsUnicodeProperties = new UnicodeProperties(true);
-
-			_typeSettingsUnicodeProperties.fastLoad(super.getTypeSettings());
+			_typeSettingsUnicodeProperties = UnicodePropertiesBuilder.create(
+				true
+			).fastLoad(
+				super.getTypeSettings()
+			).build();
 		}
 
 		return _typeSettingsUnicodeProperties;

@@ -272,6 +272,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1874,12 +1875,13 @@ public class DataFactory {
 		List<PortletPreferencesModel> portletPreferencesModels =
 			new ArrayList<>();
 
-		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
-			true);
-
-		typeSettingsUnicodeProperties.load(
-			StringUtil.replace(
-				layoutModel.getTypeSettings(), "\\n", StringPool.NEW_LINE));
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).load(
+				StringUtil.replace(
+					layoutModel.getTypeSettings(), "\\n", StringPool.NEW_LINE)
+			).build();
 
 		Set<String> typeSettingPropertiesKeys =
 			typeSettingsUnicodeProperties.keySet();

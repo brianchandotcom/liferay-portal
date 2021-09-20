@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.internal.upgrade.v_1_0_0;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
@@ -39,10 +40,12 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
-			true);
-
-		typeSettingsUnicodeProperties.load(typeSettings);
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).load(
+				typeSettings
+			).build();
 
 		typeSettingsUnicodeProperties.setProperty(
 			"embeddedLayoutURL",

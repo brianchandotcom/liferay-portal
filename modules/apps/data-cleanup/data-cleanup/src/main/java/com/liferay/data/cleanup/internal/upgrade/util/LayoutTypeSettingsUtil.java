@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -73,11 +74,13 @@ public class LayoutTypeSettingsUtil {
 			PreparedStatement updatePreparedStatement)
 		throws Exception {
 
-		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
 		String typeSettings = resultSet.getString(2);
 
-		unicodeProperties.fastLoad(typeSettings);
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.create(
+			true
+		).fastLoad(
+			typeSettings
+		).build();
 
 		Set<Map.Entry<String, String>> set = unicodeProperties.entrySet();
 

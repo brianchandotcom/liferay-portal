@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
@@ -676,31 +677,35 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			String ddmStructureKey, String[] assetTagNames)
 		throws Exception {
 
-		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
-		unicodeProperties.put(
-			"anyAssetType",
-			String.valueOf(_portal.getClassNameId(JournalArticle.class)));
-
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			_serviceContext.getScopeGroupId(),
 			_portal.getClassNameId(JournalArticle.class.getName()),
 			ddmStructureKey);
 
-		unicodeProperties.put(
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.create(
+			true
+		).put(
+			"anyAssetType",
+			String.valueOf(_portal.getClassNameId(JournalArticle.class))
+		).put(
 			"anyClassTypeJournalArticleAssetRendererFactory",
-			String.valueOf(ddmStructure.getStructureId()));
-
-		unicodeProperties.put("classNameIds", JournalArticle.class.getName());
-		unicodeProperties.put(
+			String.valueOf(ddmStructure.getStructureId())
+		).put(
+			"classNameIds", JournalArticle.class.getName()
+		).put(
 			"classTypeIdsJournalArticleAssetRendererFactory",
-			String.valueOf(ddmStructure.getStructureId()));
-		unicodeProperties.put(
-			"groupIds", String.valueOf(_serviceContext.getScopeGroupId()));
-		unicodeProperties.put("orderByColumn1", "modifiedDate");
-		unicodeProperties.put("orderByColumn2", "title");
-		unicodeProperties.put("orderByType1", "ASC");
-		unicodeProperties.put("orderByType2", "ASC");
+			String.valueOf(ddmStructure.getStructureId())
+		).put(
+			"groupIds", String.valueOf(_serviceContext.getScopeGroupId())
+		).put(
+			"orderByColumn1", "modifiedDate"
+		).put(
+			"orderByColumn2", "title"
+		).put(
+			"orderByType1", "ASC"
+		).put(
+			"orderByType2", "ASC"
+		).build();
 
 		if (ArrayUtil.isNotEmpty(assetTagNames)) {
 			for (int i = 0; i < assetTagNames.length; i++) {
@@ -884,13 +889,12 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		UnicodeProperties settingsUnicodeProperties =
 			layoutSet.getSettingsProperties();
 
-		UnicodeProperties themeSettingsUnicodeProperties =
-			new UnicodeProperties(true);
-
-		themeSettingsUnicodeProperties.fastLoad(
-			_read("/layout-set/" + type + "/theme.properties"));
-
-		settingsUnicodeProperties.putAll(themeSettingsUnicodeProperties);
+		settingsUnicodeProperties.putAll(
+			UnicodePropertiesBuilder.create(
+				true
+			).fastLoad(
+				_read("/layout-set/" + type + "/theme.properties")
+			).build());
 
 		_layoutSetLocalService.updateSettings(
 			_serviceContext.getScopeGroupId(), privateLayoutSet,

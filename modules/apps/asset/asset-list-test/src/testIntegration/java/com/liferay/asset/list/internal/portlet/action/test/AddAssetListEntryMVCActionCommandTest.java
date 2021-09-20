@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -107,11 +108,11 @@ public class AddAssetListEntryMVCActionCommandTest {
 
 		Assert.assertEquals(title, assetListEntry.getTitle());
 
-		String typeSettings = assetListEntry.getTypeSettings(0);
-
-		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
-		unicodeProperties.fastLoad(typeSettings);
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.create(
+			true
+		).fastLoad(
+			assetListEntry.getTypeSettings(0)
+		).build();
 
 		Assert.assertEquals(
 			String.valueOf(_group.getGroupId()),

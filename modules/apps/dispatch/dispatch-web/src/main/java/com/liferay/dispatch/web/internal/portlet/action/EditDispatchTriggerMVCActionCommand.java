@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -220,10 +221,11 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		UnicodeProperties dispatchTaskSettingsUnicodeProperties =
-			new UnicodeProperties(true);
-
-		dispatchTaskSettingsUnicodeProperties.fastLoad(
-			ParamUtil.getString(actionRequest, "dispatchTaskSettings"));
+			UnicodePropertiesBuilder.create(
+				true
+			).fastLoad(
+				ParamUtil.getString(actionRequest, "dispatchTaskSettings")
+			).build();
 
 		DispatchTrigger dispatchTrigger = null;
 

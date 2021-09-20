@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -262,10 +263,11 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	public UnicodeProperties getDeliverySubscriptionTypeSettingsProperties() {
 		if (_deliverySubscriptionTypeSettingsUnicodeProperties == null) {
 			_deliverySubscriptionTypeSettingsUnicodeProperties =
-				new UnicodeProperties(true);
-
-			_deliverySubscriptionTypeSettingsUnicodeProperties.fastLoad(
-				getDeliverySubscriptionTypeSettings());
+				UnicodePropertiesBuilder.create(
+					true
+				).fastLoad(
+					getDeliverySubscriptionTypeSettings()
+				).build();
 		}
 
 		return _deliverySubscriptionTypeSettingsUnicodeProperties;
@@ -358,11 +360,12 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	@Override
 	public UnicodeProperties getSubscriptionTypeSettingsProperties() {
 		if (_subscriptionTypeSettingsUnicodeProperties == null) {
-			_subscriptionTypeSettingsUnicodeProperties = new UnicodeProperties(
-				true);
-
-			_subscriptionTypeSettingsUnicodeProperties.fastLoad(
-				getSubscriptionTypeSettings());
+			_subscriptionTypeSettingsUnicodeProperties =
+				UnicodePropertiesBuilder.create(
+					true
+				).fastLoad(
+					getSubscriptionTypeSettings()
+				).build();
 		}
 
 		return _subscriptionTypeSettingsUnicodeProperties;

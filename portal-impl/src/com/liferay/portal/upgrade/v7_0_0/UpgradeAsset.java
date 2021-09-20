@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.upgrade.v7_0_0.util.AssetEntryTable;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
@@ -150,9 +151,11 @@ public class UpgradeAsset extends UpgradeProcess {
 	}
 
 	protected String upgradeVocabularySettings(String settings) {
-		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
-		unicodeProperties.fastLoad(settings);
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.create(
+			true
+		).fastLoad(
+			settings
+		).build();
 
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			new AssetVocabularySettingsHelper();

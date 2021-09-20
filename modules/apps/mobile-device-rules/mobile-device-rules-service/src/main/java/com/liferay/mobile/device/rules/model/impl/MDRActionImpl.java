@@ -15,6 +15,7 @@
 package com.liferay.mobile.device.rules.model.impl;
 
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 /**
  * @author Edward C. Han
@@ -24,9 +25,11 @@ public class MDRActionImpl extends MDRActionBaseImpl {
 	@Override
 	public UnicodeProperties getTypeSettingsProperties() {
 		if (_typeSettingsUnicodeProperties == null) {
-			_typeSettingsUnicodeProperties = new UnicodeProperties(true);
-
-			_typeSettingsUnicodeProperties.fastLoad(super.getTypeSettings());
+			_typeSettingsUnicodeProperties = UnicodePropertiesBuilder.create(
+				true
+			).fastLoad(
+				super.getTypeSettings()
+			).build();
 		}
 
 		return _typeSettingsUnicodeProperties;

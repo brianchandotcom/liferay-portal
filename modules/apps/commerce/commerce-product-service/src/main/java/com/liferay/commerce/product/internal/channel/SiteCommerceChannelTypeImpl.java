@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 import java.util.Locale;
 import java.util.Map;
@@ -54,16 +55,15 @@ public class SiteCommerceChannelTypeImpl implements CommerceChannelType {
 	public UnicodeProperties getTypeSettingsProperties(
 		Map<String, String[]> parameterMap) {
 
-		UnicodeProperties typeSettingsUnicodeProperties = new UnicodeProperties(
-			true);
-
-		long[] groupIds = GetterUtil.getLongValues(
-			parameterMap.get("CommerceChannelSitesSearchContainerPrimaryKeys"));
-
-		typeSettingsUnicodeProperties.put(
-			"groupIds", StringUtil.merge(groupIds));
-
-		return typeSettingsUnicodeProperties;
+		return UnicodePropertiesBuilder.create(
+			true
+		).put(
+			"groupIds",
+			StringUtil.merge(
+				GetterUtil.getLongValues(
+					parameterMap.get(
+						"CommerceChannelSitesSearchContainerPrimaryKeys")))
+		).build();
 	}
 
 }

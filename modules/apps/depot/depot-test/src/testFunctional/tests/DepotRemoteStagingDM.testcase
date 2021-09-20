@@ -218,9 +218,7 @@ definition {
 			layoutName = "Test Page",
 			siteURLKey = "remote-site");
 
-		AssertVisible(
-			key_uploadFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE");
+		BlogsEntry.viewInlineImage(uploadFileName = "Document_2.jpg");
 
 		User.loginPG(
 			nodePort = "8080",
@@ -248,9 +246,7 @@ definition {
 			layoutName = "Test Page",
 			siteURLKey = "site-name");
 
-		AssertVisible(
-			key_uploadFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE");
+		BlogsEntry.viewInlineImage(uploadFileName = "Document_2.jpg");
 
 		Staging.gotoPublishToLive();
 
@@ -269,9 +265,7 @@ definition {
 			layoutName = "Test Page",
 			siteURLKey = "remote-site");
 
-		AssertVisible(
-			key_uploadFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE");
+		BlogsEntry.viewInlineImage(uploadFileName = "Document_2.jpg");
 	}
 
 	@description = "This ensures that a document in depot can be removed and republished in AP through widget config manual selection when enabling remote staging."
@@ -1148,9 +1142,7 @@ definition {
 			layoutName = "Test Page",
 			siteURLKey = "site-name");
 
-		AssertVisible(
-			key_uploadFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE");
+		BlogsEntry.viewInlineImage(uploadFileName = "Document_2.jpg");
 
 		Staging.gotoPublishToLive();
 
@@ -1169,9 +1161,7 @@ definition {
 			layoutName = "Test Page",
 			siteURLKey = "remote-site");
 
-		AssertVisible(
-			key_uploadFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE");
+		BlogsEntry.viewInlineImage(uploadFileName = "Document_2.jpg");
 
 		User.loginPG(
 			nodePort = "8080",
@@ -1202,9 +1192,7 @@ definition {
 			layoutName = "Test Page",
 			siteURLKey = "site-name");
 
-		AssertVisible(
-			key_uploadFileName = "Document_1.jpg",
-			locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE");
+		BlogsEntry.viewInlineImage(uploadFileName = "Document_1.jpg");
 
 		Staging.gotoPublishToLive();
 
@@ -1223,9 +1211,7 @@ definition {
 			layoutName = "Test Page",
 			siteURLKey = "remote-site");
 
-		AssertVisible(
-			key_uploadFileName = "Document_1.jpg",
-			locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE");
+		BlogsEntry.viewInlineImage(uploadFileName = "Document_1.jpg");
 	}
 
 	@description = "This ensures that the blog small image from a depot can be edited and republished when enabling remote staging."

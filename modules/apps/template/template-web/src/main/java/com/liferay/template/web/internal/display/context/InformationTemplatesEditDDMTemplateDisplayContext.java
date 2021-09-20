@@ -190,9 +190,7 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 			InformationTemplatesTemplateDisplayContext.class.getClassLoader(),
 			"com/liferay/template/web/internal/portlet/template/dependencies/",
 			SetUtil.fromArray(
-				new String[] {
-					"boolean", "document-library", "image"
-				}));
+				new String[] {"boolean", "document-library", "image"}));
 	private final ThemeDisplay _themeDisplay;
 
 }

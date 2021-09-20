@@ -471,6 +471,7 @@
 <tr>
 	<td>ADD_MEMBERS_INDEX_TABLE</td>
 	<td>//tr[${index}]//td[2]//div[text()='${key_userName}']</td>
+	<td></td>
 </tr>
 <tr>
 	<td>REMOVE_MEMBERS_BUTTON</td>

@@ -28,7 +28,7 @@
 
 	&.form-group,
 	.form-group {
-		&:not(.filled):not(:focus-within) {
+		&:not(.filled):not(:focus-within):not(.toggle-switch) {
 			--form-input-placeholder-color: transparent;
 			--form-input-placeholder-disabled-color: transparent;
 			--form-input-color: transparent;
@@ -39,7 +39,7 @@
 			}
 		}
 
-		> label {
+		> label:not(.toggle-switch) {
 			background-color: var(
 				--condensed-form-input-label-background-color,
 				transparent
@@ -90,13 +90,16 @@
 	--condensed-form-input-label-color: #{$form-input-focus-color};
 }
 
-label {
-	line-height: var(--form-input-label-line-height);
-	margin-left: var(--form-input-label-margin-left);
-	margin-right: var(--form-input-label-margin-right);
-	margin-top: var(--form-input-label-margin-top);
-	transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out,
-		font-size 0.15s ease-in-out, transform 0.15s ease-in-out;
+.form-group > label,
+.lfr-ddm-legend {
+	&:not(.toggle-switch) {
+		line-height: var(--form-input-label-line-height);
+		margin-left: var(--form-input-label-margin-left);
+		margin-right: var(--form-input-label-margin-right);
+		margin-top: var(--form-input-label-margin-top);
+		transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out,
+			font-size 0.15s ease-in-out, transform 0.15s ease-in-out;
+	}
 }
 
 label.disabled,
@@ -105,6 +108,34 @@ fieldset[disabled],
 	--condensed-form-input-label-color: var(
 		--condensed-form-input-disabled-label-color
 	);
+}
+
+fieldset > .lfr-ddm-legend {
+	color: $input-label-color;
+	font-size: $input-label-font-size;
+	font-weight: $input-label-font-weight;
+	margin-bottom: $input-label-margin-bottom;
+	max-width: 100%;
+	word-wrap: break-word;
+
+	&.focus {
+		color: $input-label-focus-color;
+	}
+
+	.reference-mark {
+		color: $input-label-reference-mark-color;
+		font-size: $input-label-reference-mark-font-size;
+		margin-bottom: 0;
+		margin-left: $input-label-reference-mark-spacer;
+		margin-right: $input-label-reference-mark-spacer;
+		margin-top: 0;
+		padding: 0;
+		vertical-align: $input-label-reference-mark-vertical-align;
+	}
+}
+
+.ddm-label-required {
+	padding-left: 0;
 }
 
 .form-control::placeholder,

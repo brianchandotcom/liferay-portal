@@ -5,7 +5,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "#000000ff",
+							"defaultValue": "#000",
 							"editorType": "ColorPicker",
 							"label": "color-brand-primary-darken-5",
 							"mappings": [
@@ -18,7 +18,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#110532ff",
+							"defaultValue": "#110532",
 							"editorType": "ColorPicker",
 							"label": "color-brand-primary-darken-4",
 							"mappings": [
@@ -31,7 +31,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#210963FF",
+							"defaultValue": "#210963",
 							"editorType": "ColorPicker",
 							"label": "color-brand-primary-darken-3",
 							"mappings": [
@@ -44,7 +44,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#320E95FF",
+							"defaultValue": "#320e95",
 							"editorType": "ColorPicker",
 							"label": "color-brand-primary-darken-2",
 							"mappings": [
@@ -57,7 +57,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#4212C7FF",
+							"defaultValue": "#4212c7",
 							"editorType": "ColorPicker",
 							"label": "color-brand-primary-darken-1",
 							"mappings": [
@@ -70,7 +70,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#5924EBFF",
+							"defaultValue": "#5924eb",
 							"editorType": "ColorPicker",
 							"label": "color-brand-primary",
 							"mappings": [
@@ -83,7 +83,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#7549EEFF",
+							"defaultValue": "#7549ee",
 							"editorType": "ColorPicker",
 							"label": "color-brand-primary-lighten-1",
 							"mappings": [
@@ -96,7 +96,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#906DF2FF",
+							"defaultValue": "#906df2",
 							"editorType": "ColorPicker",
 							"label": "color-brand-primary-lighten-2",
 							"mappings": [
@@ -109,7 +109,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#AC92F5FF",
+							"defaultValue": "#ac92f5",
 							"editorType": "ColorPicker",
 							"label": "color-brand-primary-lighten-3",
 							"mappings": [
@@ -122,7 +122,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#C8B6F8FF",
+							"defaultValue": "#c8b6f8",
 							"editorType": "ColorPicker",
 							"label": "color-brand-primary-lighten-4",
 							"mappings": [
@@ -135,7 +135,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#E3DBFCFF",
+							"defaultValue": "#e3dbfc",
 							"editorType": "ColorPicker",
 							"label": "color-brand-primary-lighten-5",
 							"mappings": [
@@ -148,7 +148,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#FBFAFFFF",
+							"defaultValue": "#fbfaff",
 							"editorType": "ColorPicker",
 							"label": "color-brand-primary-lighten-6",
 							"mappings": [
@@ -167,7 +167,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "#312300FF",
+							"defaultValue": "#312300",
 							"editorType": "ColorPicker",
 							"label": "color-brand-secondary-darken-5",
 							"mappings": [
@@ -193,7 +193,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#926800FF",
+							"defaultValue": "#926800",
 							"editorType": "ColorPicker",
 							"label": "color-brand-secondary-darken-3",
 							"mappings": [
@@ -206,7 +206,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#C28B00FF",
+							"defaultValue": "#c28b00",
 							"editorType": "ColorPicker",
 							"label": "color-brand-secondary-darken-2",
 							"mappings": [
@@ -219,7 +219,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#F3AE00FF",
+							"defaultValue": "#f3ae00",
 							"editorType": "ColorPicker",
 							"label": "color-brand-secondary-darken-1",
 							"mappings": [
@@ -232,7 +232,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#FFC124FF",
+							"defaultValue": "#ffc124",
 							"editorType": "ColorPicker",
 							"label": "color-brand-secondary",
 							"mappings": [
@@ -245,7 +245,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#FFCB48FF",
+							"defaultValue": "#ffcb48",
 							"editorType": "ColorPicker",
 							"label": "color-brand-secondary-lighten-1",
 							"mappings": [
@@ -258,7 +258,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#FFD66DFF",
+							"defaultValue": "#ffd66d",
 							"editorType": "ColorPicker",
 							"label": "color-brand-secondary-lighten-2",
 							"mappings": [
@@ -271,7 +271,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#FFE092FF",
+							"defaultValue": "#ffe092",
 							"editorType": "ColorPicker",
 							"label": "color-brand-secondary-lighten-3",
 							"mappings": [
@@ -284,7 +284,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#FFEAB6FF",
+							"defaultValue": "#ffeab6",
 							"editorType": "ColorPicker",
 							"label": "color-brand-secondary-lighten-4",
 							"mappings": [
@@ -297,7 +297,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#FFF5DBFF",
+							"defaultValue": "#fff5db",
 							"editorType": "ColorPicker",
 							"label": "color-brand-secondary-lighten-5",
 							"mappings": [
@@ -310,7 +310,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#FFFBF0FF",
+							"defaultValue": "#fffbf0",
 							"editorType": "ColorPicker",
 							"label": "color-brand-secondary-lighten-6",
 							"mappings": [
@@ -329,7 +329,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "#1D1C21FF",
+							"defaultValue": "#1d1c21",
 							"editorType": "ColorPicker",
 							"label": "color-neutral-0",
 							"mappings": [
@@ -342,7 +342,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#332B4AFF",
+							"defaultValue": "#332b4a",
 							"editorType": "ColorPicker",
 							"label": "color-neutral-1",
 							"mappings": [
@@ -355,7 +355,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#3F3851FF",
+							"defaultValue": "#3f3851",
 							"editorType": "ColorPicker",
 							"label": "color-neutral-2",
 							"mappings": [
@@ -368,7 +368,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#5A5469FF",
+							"defaultValue": "#5a5469",
 							"editorType": "ColorPicker",
 							"label": "color-neutral-3",
 							"mappings": [
@@ -381,7 +381,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#716C7FFF",
+							"defaultValue": "#716c7f",
 							"editorType": "ColorPicker",
 							"label": "color-neutral-4",
 							"mappings": [
@@ -394,7 +394,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#898593FF",
+							"defaultValue": "#898593",
 							"editorType": "ColorPicker",
 							"label": "color-neutral-5",
 							"mappings": [
@@ -407,7 +407,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#A7A3B2FF",
+							"defaultValue": "#a7a3b2",
 							"editorType": "ColorPicker",
 							"label": "color-neutral-6",
 							"mappings": [
@@ -420,7 +420,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#DCD9E2FF",
+							"defaultValue": "#dcd9e2",
 							"editorType": "ColorPicker",
 							"label": "color-neutral-7",
 							"mappings": [
@@ -433,7 +433,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#EEECF3FF",
+							"defaultValue": "#eeecf3",
 							"editorType": "ColorPicker",
 							"label": "color-neutral-8",
 							"mappings": [
@@ -446,7 +446,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#F7F6F9FF",
+							"defaultValue": "#f7f6f9",
 							"editorType": "ColorPicker",
 							"label": "color-neutral-9",
 							"mappings": [
@@ -459,7 +459,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#FFFFFFFF",
+							"defaultValue": "#fff",
 							"editorType": "ColorPicker",
 							"label": "color-neutral-10",
 							"mappings": [
@@ -517,7 +517,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#4d2ec980",
+							"defaultValue": "#a696e4",
 							"editorType": "ColorPicker",
 							"label": "action-primary-disabled",
 							"mappings": [
@@ -530,7 +530,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#4429b3f9",
+							"defaultValue": "#f2f0fa",
 							"editorType": "ColorPicker",
 							"label": "action-primary-hover-lighten",
 							"mappings": [
@@ -543,7 +543,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#3c249eef",
+							"defaultValue": "#ece9f5",
 							"editorType": "ColorPicker",
 							"label": "action-primary-active-lighten",
 							"mappings": [
@@ -653,7 +653,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#ed710580",
+							"defaultValue": "#f6b882",
 							"editorType": "ColorPicker",
 							"label": "action-secondary-disabled",
 							"mappings": [
@@ -666,7 +666,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#d26404e6",
+							"defaultValue": "#faf0e6",
 							"editorType": "ColorPicker",
 							"label": "action-secondary-hover-lighten",
 							"mappings": [
@@ -679,7 +679,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#b95804cd",
+							"defaultValue": "#f1decd",
 							"editorType": "ColorPicker",
 							"label": "action-secondary-active-lighten",
 							"mappings": [
@@ -789,7 +789,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#2b3a4b80",
+							"defaultValue": "#959ca5",
 							"editorType": "ColorPicker",
 							"label": "action-neutral-disabled",
 							"mappings": [
@@ -802,7 +802,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#2b3a4be6",
+							"defaultValue": "#eaebed",
 							"editorType": "ColorPicker",
 							"label": "action-neutral-hover-lighten",
 							"mappings": [
@@ -815,7 +815,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "#2b3a4bcd",
+							"defaultValue": "#d5d8db",
 							"editorType": "ColorPicker",
 							"label": "action-neutral-active-lighten",
 							"mappings": [
@@ -2053,6 +2053,112 @@
 					],
 					"label": "form-text",
 					"name": "formText"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "var(--action-primary-default)",
+							"editorType": "ColorPicker",
+							"label": "custom-control-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "custom-control-border-color"
+								}
+							],
+							"name": "customControlBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--form-input-label-color)",
+							"editorType": "ColorPicker",
+							"label": "custom-control-label-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "custom-control-label-color"
+								}
+							],
+							"name": "customControlLabelColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-sm-font-size)",
+							"label": "custom-control-label-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "custom-control-label-font-size"
+								}
+							],
+							"name": "customControlLabelFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--form-input-label-font-weight)",
+							"label": "custom-control-label-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "custom-control-label-font-weight"
+								}
+							],
+							"name": "customControlLabelFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-sm-line-height)",
+							"label": "custom-control-label-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "custom-control-label-line-height"
+								}
+							],
+							"name": "customControlLabelLineHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.75rem",
+							"label": "custom-control-label-padding-left",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "custom-control-label-padding-left"
+								}
+							],
+							"name": "customControlLabelPaddingLeft",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--action-primary-disabled)",
+							"editorType": "ColorPicker",
+							"label": "custom-control-disabled-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "custom-control-disabled-border-color"
+								}
+							],
+							"name": "customControlDisabledBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--action-primary-active-lighten)",
+							"editorType": "ColorPicker",
+							"label": "custom-control-focus-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "custom-control-focus-color"
+								}
+							],
+							"name": "customControlFocusColor",
+							"type": "String"
+						}
+					],
+					"label": "custom-control",
+					"name": "customControl"
 				},
 				{
 					"frontendTokens": [

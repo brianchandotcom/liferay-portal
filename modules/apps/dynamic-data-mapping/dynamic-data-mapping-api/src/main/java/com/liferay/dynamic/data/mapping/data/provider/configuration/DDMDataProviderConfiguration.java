@@ -38,4 +38,13 @@ public interface DDMDataProviderConfiguration {
 	)
 	public boolean accessLocalNetwork();
 
+	@Meta.AD(
+		deflt = "false",
+		description = "trust-self-signed-certificates-description",
+		name = "trust-self-signed-certificates-name", required = false
+	)
+	public default boolean trustSelfSignedCertificates() {
+		return false;
+	}
+
 }

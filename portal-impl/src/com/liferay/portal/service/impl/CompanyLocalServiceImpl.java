@@ -380,9 +380,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					companyId);
 		}
 
+		Long previousCompanyId = CompanyThreadLocal.getCompanyId();
 		boolean deleteInProcess = CompanyThreadLocal.isDeleteInProcess();
 
 		try {
+			CompanyThreadLocal.setCompanyId(companyId);
 			CompanyThreadLocal.setDeleteInProcess(true);
 
 			return doDeleteCompany(companyId);
@@ -395,6 +397,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			throw portalException;
 		}
 		finally {
+			CompanyThreadLocal.setCompanyId(previousCompanyId);
 			CompanyThreadLocal.setDeleteInProcess(deleteInProcess);
 		}
 	}

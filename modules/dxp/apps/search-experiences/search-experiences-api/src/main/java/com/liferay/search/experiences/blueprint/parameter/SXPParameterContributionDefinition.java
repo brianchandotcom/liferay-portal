@@ -14,21 +14,37 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
-import com.liferay.portal.search.searcher.SearchRequestBuilder;
-import com.liferay.search.experiences.model.SXPBlueprint;
-
-import java.util.List;
-import java.util.Map;
-
 /**
  * @author Petteri Karttunen
  */
-public interface SXPParameterDataCreator {
+public class SXPParameterContributionDefinition {
 
-	public SXPParameterData create(
-		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint);
+	public SXPParameterContributionDefinition(
+		String className, String languageKey, String name) {
 
-	public Map<String, List<SXPParameterContributionDefinition>>
-		getSXPParameterContributionDefinitions();
+		_className = className;
+		_languageKey = languageKey;
+
+		_name = name;
+
+		_templateVariable = "${" + _name + "}";
+	}
+
+	public String getClassName() {
+		return _className;
+	}
+
+	public String getLanguageKey() {
+		return _languageKey;
+	}
+
+	public String getTemplateVariable() {
+		return _templateVariable;
+	}
+
+	private final String _className;
+	private final String _languageKey;
+	private final String _name;
+	private final String _templateVariable;
 
 }

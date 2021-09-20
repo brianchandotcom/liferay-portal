@@ -46,7 +46,8 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 		}
 
 		alter(
-			RemoteAppEntryTable.class, new AlterColumnName("url", "iFrameURL"));
+			RemoteAppEntryTable.class,
+			new AlterColumnName("url", "iFrameURL VARCHAR(1024) null"));
 
 		if (!hasColumn("RemoteAppEntry", "type_")) {
 			alter(

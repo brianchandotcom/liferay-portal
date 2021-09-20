@@ -56,7 +56,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "123.123456");
-
 	}
 
 	@description = "LPS-135393 - Verify that a Boolean entry is correctly displayed on the auto-generated table on the Custom Object Portlet"
@@ -216,7 +215,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "1.54");
-
 	}
 
 	@description = "LPS-135393 - Verify the empty state when searching for a value that does not exist on the auto-generated table on the Custom Object Portlet"

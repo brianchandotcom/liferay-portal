@@ -118,6 +118,25 @@ public class RemoteAppEntryServiceSoap {
 	}
 
 	public static com.liferay.remote.app.model.RemoteAppEntrySoap
+			deleteRemoteAppEntry(long remoteAppEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.remote.app.model.RemoteAppEntry returnValue =
+				RemoteAppEntryServiceUtil.deleteRemoteAppEntry(
+					remoteAppEntryId);
+
+			return com.liferay.remote.app.model.RemoteAppEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.remote.app.model.RemoteAppEntrySoap
 			getRemoteAppEntry(long remoteAppEntryId)
 		throws RemoteException {
 

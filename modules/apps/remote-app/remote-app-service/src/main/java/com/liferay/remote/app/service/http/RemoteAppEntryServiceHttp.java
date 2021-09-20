@@ -138,6 +138,47 @@ public class RemoteAppEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.remote.app.model.RemoteAppEntry
+			deleteRemoteAppEntry(
+				HttpPrincipal httpPrincipal, long remoteAppEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				RemoteAppEntryServiceUtil.class, "deleteRemoteAppEntry",
+				_deleteRemoteAppEntryParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, remoteAppEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.remote.app.model.RemoteAppEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.remote.app.model.RemoteAppEntry getRemoteAppEntry(
 			HttpPrincipal httpPrincipal, long remoteAppEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -145,7 +186,7 @@ public class RemoteAppEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				RemoteAppEntryServiceUtil.class, "getRemoteAppEntry",
-				_getRemoteAppEntryParameterTypes2);
+				_getRemoteAppEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, remoteAppEntryId);
@@ -190,7 +231,7 @@ public class RemoteAppEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				RemoteAppEntryServiceUtil.class,
 				"updateCustomElementRemoteAppEntry",
-				_updateCustomElementRemoteAppEntryParameterTypes3);
+				_updateCustomElementRemoteAppEntryParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, remoteAppEntryId, customElementCSSURLs,
@@ -234,7 +275,7 @@ public class RemoteAppEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				RemoteAppEntryServiceUtil.class, "updateIFrameRemoteAppEntry",
-				_updateIFrameRemoteAppEntryParameterTypes4);
+				_updateIFrameRemoteAppEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, remoteAppEntryId, iFrameURL, nameMap);
@@ -276,14 +317,16 @@ public class RemoteAppEntryServiceHttp {
 		};
 	private static final Class<?>[] _addIFrameRemoteAppEntryParameterTypes1 =
 		new Class[] {String.class, java.util.Map.class};
-	private static final Class<?>[] _getRemoteAppEntryParameterTypes2 =
+	private static final Class<?>[] _deleteRemoteAppEntryParameterTypes2 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getRemoteAppEntryParameterTypes3 =
 		new Class[] {long.class};
 	private static final Class<?>[]
-		_updateCustomElementRemoteAppEntryParameterTypes3 = new Class[] {
+		_updateCustomElementRemoteAppEntryParameterTypes4 = new Class[] {
 			long.class, String.class, String.class, String.class,
 			java.util.Map.class
 		};
-	private static final Class<?>[] _updateIFrameRemoteAppEntryParameterTypes4 =
+	private static final Class<?>[] _updateIFrameRemoteAppEntryParameterTypes5 =
 		new Class[] {long.class, String.class, java.util.Map.class};
 
 }

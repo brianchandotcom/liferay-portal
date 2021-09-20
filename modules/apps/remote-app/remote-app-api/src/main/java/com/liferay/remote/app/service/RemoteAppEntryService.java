@@ -61,6 +61,9 @@ public interface RemoteAppEntryService extends BaseService {
 			String iFrameURL, Map<Locale, String> nameMap)
 		throws PortalException;
 
+	public RemoteAppEntry deleteRemoteAppEntry(long remoteAppEntryId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

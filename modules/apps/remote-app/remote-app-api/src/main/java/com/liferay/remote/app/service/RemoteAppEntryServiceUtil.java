@@ -55,6 +55,12 @@ public class RemoteAppEntryServiceUtil {
 		return getService().addIFrameRemoteAppEntry(iFrameURL, nameMap);
 	}
 
+	public static RemoteAppEntry deleteRemoteAppEntry(long remoteAppEntryId)
+		throws PortalException {
+
+		return getService().deleteRemoteAppEntry(remoteAppEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

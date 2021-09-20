@@ -54,6 +54,14 @@ public class RemoteAppEntryServiceWrapper
 			iFrameURL, nameMap);
 	}
 
+	@Override
+	public com.liferay.remote.app.model.RemoteAppEntry deleteRemoteAppEntry(
+			long remoteAppEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _remoteAppEntryService.deleteRemoteAppEntry(remoteAppEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -16,7 +16,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import React, {useEffect, useRef, useState} from 'react';
 
-const VALID_EXTENSIONS = '.xliff,.xlf';
+const VALID_EXTENSIONS = '.xliff,.xlf,.zip';
 
 export default function ImportTranslation({
 	saveDraftBtnId,

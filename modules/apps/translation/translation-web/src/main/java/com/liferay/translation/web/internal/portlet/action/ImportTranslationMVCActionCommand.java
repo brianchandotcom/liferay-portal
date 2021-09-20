@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -162,7 +163,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 		throws XLIFFFileException {
 
 		if (!Objects.equals("application/x-xliff+xml", contentType) &&
-			!Objects.equals("application/xliff+xml", contentType)) {
+			!Objects.equals("application/xliff+xml", contentType) &&
+			!Objects.equals(ContentTypes.APPLICATION_ZIP, contentType)) {
 
 			throw new XLIFFFileException.MustBeValid(
 				"Unsupported content type: " + contentType);

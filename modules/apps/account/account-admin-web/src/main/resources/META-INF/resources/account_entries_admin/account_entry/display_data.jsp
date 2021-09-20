@@ -18,6 +18,8 @@
 
 <%
 AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
+
+String[] types = GetterUtil.getStringValues(request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_ALLOWED_TYPES), AccountConstants.ACCOUNT_ENTRY_TYPES);
 %>
 
 <clay:sheet-section>
@@ -33,22 +35,26 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 				<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AccountEntry.class.getName(), "name") %></aui:validator>
 			</aui:input>
 
-			<aui:select disabled="<%= accountEntryDisplay.getAccountEntryId() > 0 %>" label="type" name="type">
+			<c:choose>
+				<c:when test="<%= accountEntryDisplay.getAccountEntryId() > 0 %>">
+					<aui:input disabled="<%= true %>" label="type" name="type" value="<%= LanguageUtil.get(request, accountEntryDisplay.getType()) %>" />
+				</c:when>
+				<c:otherwise>
+					<aui:select label="type" name="type">
 
-				<%
-				for (String type : AccountConstants.ACCOUNT_ENTRY_TYPES) {
-				%>
+						<%
+						for (String type : types) {
+						%>
 
-					<aui:option label="<%= LanguageUtil.get(request, type) %>" selected="<%= type.equals(accountEntryDisplay.getType()) %>" value="<%= type %>" />
+							<aui:option label="<%= LanguageUtil.get(request, type) %>" value="<%= type %>" />
 
-				<%
-				}
-				%>
+						<%
+						}
+						%>
 
-				<c:if test="<%= Objects.equals(accountEntryDisplay.getType(), AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST) %>">
-					<aui:option label="<%= LanguageUtil.get(request, accountEntryDisplay.getType()) %>" selected="<%= true %>" value="<%= accountEntryDisplay.getType() %>" />
-				</c:if>
-			</aui:select>
+					</aui:select>
+				</c:otherwise>
+			</c:choose>
 
 			<aui:input helpMessage="tax-id-help" label="tax-id" name="taxIdNumber" type="text" value="<%= accountEntryDisplay.getTaxIdNumber() %>">
 				<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AccountEntry.class.getName(), "taxIdNumber") %></aui:validator>

@@ -85,7 +85,7 @@ boolean isIFrame = !isCustomElement && (errorSection.equals("iframe") || (remote
 				disabled="<%= !isIFrame %>"
 				id='<%= liferayPortletResponse.getNamespace() + "_type_iframe" %>'
 			>
-				<aui:input fieldParam="iFrameURL" label="url" name="IFrameURL">
+				<aui:input label="url" name="iFrameURL">
 					<aui:validator name="url" />
 				</aui:input>
 			</liferay-frontend:fieldset>

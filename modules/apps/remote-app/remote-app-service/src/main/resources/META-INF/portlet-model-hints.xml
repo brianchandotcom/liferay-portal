@@ -21,6 +21,7 @@
 		</field>
 		<field name="iFrameURL" type="String">
 			<hint name="max-length">1024</hint>
+			<hint name="method-name">IFrameURL</hint>
 		</field>
 		<field localized="true" name="name" type="String" />
 		<field name="type" type="String" />

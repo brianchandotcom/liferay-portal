@@ -197,7 +197,7 @@ definition {
 			fieldPositionNumber = "0",
 			fieldType = "Multiple Selection");
 
-		FormFields.enableSwitch(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "Required Field");
 
 		Form.save();
 

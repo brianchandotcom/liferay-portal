@@ -1279,20 +1279,20 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "0");
 
-		FormFields.enableSwitch(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "Required Field");
 
 		FormFields.viewRequiredAsterisk();
 
 		AssertElementPresent(locator1 = "FormFields#SIDEBAR_BASIC_DEFAULT_ERROR_MESSAGE");
 
-		FormFields.disableSwitch(fieldName = "Required");
+		FormFields.disableSwitch(fieldName = "Required Field");
 
 		AssertElementPresent(
 			key_dataFieldName = "requiredErrorMessage",
 			key_fieldName = "Error Message",
 			locator1 = "Form#SIDEBAR_NOT_VISIBLE_FIELD");
 
-		FormFields.enableSwitch(fieldName = "Required");
+		FormFields.enableSwitch(fieldName = "Required Field");
 
 		FormFields.editRequiredErrorMessage(errorMessage = "This is a customized message to test feature: 12345 &!@#$%");
 

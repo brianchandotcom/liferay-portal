@@ -35,15 +35,12 @@ const RichText = ({
 		const editor = editorRef.current?.editor;
 
 		if (editor) {
-			const data = {...editor.getData()};
-			const config = {...data.config};
-
-			config.contentsLangDirection =
+			editor.config.contentsLangDirection =
 				Liferay.Language.direction[editingLanguageId];
 
-			config.contentsLanguage = editingLanguageId;
+			editor.config.contentsLanguage = editingLanguageId;
 
-			editor.setData({...data, config});
+			editor.setData(editor.getData());
 		}
 	}, [editingLanguageId, editorRef]);
 

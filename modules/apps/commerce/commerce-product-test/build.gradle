@@ -1,11 +1,15 @@
 dependencies {
 	testIntegrationCompile group: "com.github.ignaciotcrespo", name: "frutilla", version: "0.7.1"
+	testIntegrationCompile project(":apps:change-tracking:change-tracking-test-util")
 	testIntegrationCompile project(":apps:commerce:commerce-currency-api")
 	testIntegrationCompile project(":apps:commerce:commerce-currency-test-util")
+	testIntegrationCompile project(":apps:commerce:commerce-inventory-api")
 	testIntegrationCompile project(":apps:commerce:commerce-price-list-api")
 	testIntegrationCompile project(":apps:commerce:commerce-product-api")
 	testIntegrationCompile project(":apps:commerce:commerce-product-test-util")
 	testIntegrationCompile project(":apps:commerce:commerce-product-type-simple")
+	testIntegrationCompile project(":apps:commerce:commerce-test-util")
+	testIntegrationCompile project(":apps:document-library:document-library-test-util")
 	testIntegrationCompile project(":apps:portal-search:portal-search-api")
 	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

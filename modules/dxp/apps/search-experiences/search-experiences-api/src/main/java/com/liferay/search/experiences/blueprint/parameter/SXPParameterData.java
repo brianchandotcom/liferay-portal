@@ -22,11 +22,7 @@ import java.util.Optional;
  */
 public interface SXPParameterData {
 
-	public int getFrom();
-
 	public String getKeywords();
-
-	public int getSize();
 
 	public Optional<SXPParameter> getSXPParameterOptionalByName(String name);
 

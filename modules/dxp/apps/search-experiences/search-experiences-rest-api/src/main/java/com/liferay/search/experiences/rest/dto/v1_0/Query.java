@@ -14,11 +14,9 @@
 
 package com.liferay.search.experiences.rest.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -46,40 +44,31 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Aggregration")
+@GraphQLName("Query")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Aggregration")
-public class Aggregration implements Serializable {
+@XmlRootElement(name = "Query")
+public class Query implements Serializable {
 
-	public static Aggregration toDTO(String json) {
-		return ObjectMapperUtil.readValue(Aggregration.class, json);
+	public static Query toDTO(String json) {
+		return ObjectMapperUtil.readValue(Query.class, json);
 	}
 
 	@Schema
 	@Valid
-	public DistanceType getDistanceType() {
-		return distanceType;
+	public Claus[] getClauses() {
+		return clauses;
+	}
+
+	public void setClauses(Claus[] clauses) {
+		this.clauses = clauses;
 	}
 
 	@JsonIgnore
-	public String getDistanceTypeAsString() {
-		if (distanceType == null) {
-			return null;
-		}
-
-		return distanceType.toString();
-	}
-
-	public void setDistanceType(DistanceType distanceType) {
-		this.distanceType = distanceType;
-	}
-
-	@JsonIgnore
-	public void setDistanceType(
-		UnsafeSupplier<DistanceType, Exception> distanceTypeUnsafeSupplier) {
+	public void setClauses(
+		UnsafeSupplier<Claus[], Exception> clausesUnsafeSupplier) {
 
 		try {
-			distanceType = distanceTypeUnsafeSupplier.get();
+			clauses = clausesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -91,7 +80,7 @@ public class Aggregration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected DistanceType distanceType;
+	protected Claus[] clauses;
 
 	@Schema
 	public Boolean getEnabled() {
@@ -127,13 +116,13 @@ public class Aggregration implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Aggregration)) {
+		if (!(object instanceof Query)) {
 			return false;
 		}
 
-		Aggregration aggregration = (Aggregration)object;
+		Query query = (Query)object;
 
-		return Objects.equals(toString(), aggregration.toString());
+		return Objects.equals(toString(), query.toString());
 	}
 
 	@Override
@@ -148,18 +137,24 @@ public class Aggregration implements Serializable {
 
 		sb.append("{");
 
-		if (distanceType != null) {
+		if (clauses != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"distanceType\": ");
+			sb.append("\"clauses\": ");
 
-			sb.append("\"");
+			sb.append("[");
 
-			sb.append(distanceType);
+			for (int i = 0; i < clauses.length; i++) {
+				sb.append(String.valueOf(clauses[i]));
 
-			sb.append("\"");
+				if ((i + 1) < clauses.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (enabled != null) {
@@ -179,48 +174,10 @@ public class Aggregration implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Aggregration",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Query",
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("DistanceType")
-	public static enum DistanceType {
-
-		ARC("arc"), PLANE("plane");
-
-		@JsonCreator
-		public static DistanceType create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (DistanceType distanceType : values()) {
-				if (Objects.equals(distanceType.getValue(), value)) {
-					return distanceType;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private DistanceType(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);

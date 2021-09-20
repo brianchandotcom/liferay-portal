@@ -15,7 +15,7 @@
 package com.liferay.search.experiences.rest.client.dto.v1_0;
 
 import com.liferay.search.experiences.rest.client.function.UnsafeSupplier;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.AggregrationSerDes;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.AggregationSerDes;
 
 import java.io.Serializable;
 
@@ -28,10 +28,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Aggregration implements Cloneable, Serializable {
+public class Aggregation implements Cloneable, Serializable {
 
-	public static Aggregration toDTO(String json) {
-		return AggregrationSerDes.toDTO(json);
+	public static Aggregation toDTO(String json) {
+		return AggregationSerDes.toDTO(json);
 	}
 
 	public DistanceType getDistanceType() {
@@ -85,8 +85,8 @@ public class Aggregration implements Cloneable, Serializable {
 	protected Boolean enabled;
 
 	@Override
-	public Aggregration clone() throws CloneNotSupportedException {
-		return (Aggregration)super.clone();
+	public Aggregation clone() throws CloneNotSupportedException {
+		return (Aggregation)super.clone();
 	}
 
 	@Override
@@ -95,13 +95,13 @@ public class Aggregration implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Aggregration)) {
+		if (!(object instanceof Aggregation)) {
 			return false;
 		}
 
-		Aggregration aggregration = (Aggregration)object;
+		Aggregation aggregation = (Aggregation)object;
 
-		return Objects.equals(toString(), aggregration.toString());
+		return Objects.equals(toString(), aggregation.toString());
 	}
 
 	@Override
@@ -112,7 +112,7 @@ public class Aggregration implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return AggregrationSerDes.toJSON(this);
+		return AggregationSerDes.toJSON(this);
 	}
 
 	public static enum DistanceType {

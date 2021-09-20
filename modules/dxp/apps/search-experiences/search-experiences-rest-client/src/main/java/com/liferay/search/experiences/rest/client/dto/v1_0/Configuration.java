@@ -55,26 +55,26 @@ public class Configuration implements Cloneable, Serializable {
 
 	protected Advanced advanced;
 
-	public Aggregration getAggregration() {
-		return aggregration;
+	public Aggregation getAggregation() {
+		return aggregation;
 	}
 
-	public void setAggregration(Aggregration aggregration) {
-		this.aggregration = aggregration;
+	public void setAggregation(Aggregation aggregation) {
+		this.aggregation = aggregation;
 	}
 
-	public void setAggregration(
-		UnsafeSupplier<Aggregration, Exception> aggregrationUnsafeSupplier) {
+	public void setAggregation(
+		UnsafeSupplier<Aggregation, Exception> aggregationUnsafeSupplier) {
 
 		try {
-			aggregration = aggregrationUnsafeSupplier.get();
+			aggregation = aggregationUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Aggregration aggregration;
+	protected Aggregation aggregation;
 
 	public Facet getFacet() {
 		return facet;
@@ -136,6 +136,27 @@ public class Configuration implements Cloneable, Serializable {
 	}
 
 	protected Highlight highlight;
+
+	public Query[] getQueries() {
+		return queries;
+	}
+
+	public void setQueries(Query[] queries) {
+		this.queries = queries;
+	}
+
+	public void setQueries(
+		UnsafeSupplier<Query[], Exception> queriesUnsafeSupplier) {
+
+		try {
+			queries = queriesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Query[] queries;
 
 	@Override
 	public Configuration clone() throws CloneNotSupportedException {

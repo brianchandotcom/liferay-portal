@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.Aggregration;
+import com.liferay.search.experiences.rest.client.dto.v1_0.Claus;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class AggregrationSerDes {
+public class ClausSerDes {
 
-	public static Aggregration toDTO(String json) {
-		AggregrationJSONParser aggregrationJSONParser =
-			new AggregrationJSONParser();
+	public static Claus toDTO(String json) {
+		ClausJSONParser clausJSONParser = new ClausJSONParser();
 
-		return aggregrationJSONParser.parseToDTO(json);
+		return clausJSONParser.parseToDTO(json);
 	}
 
-	public static Aggregration[] toDTOs(String json) {
-		AggregrationJSONParser aggregrationJSONParser =
-			new AggregrationJSONParser();
+	public static Claus[] toDTOs(String json) {
+		ClausJSONParser clausJSONParser = new ClausJSONParser();
 
-		return aggregrationJSONParser.parseToDTOs(json);
+		return clausJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Aggregration aggregration) {
-		if (aggregration == null) {
+	public static String toJSON(Claus claus) {
+		if (claus == null) {
 			return "null";
 		}
 
@@ -55,28 +53,46 @@ public class AggregrationSerDes {
 
 		sb.append("{");
 
-		if (aggregration.getDistanceType() != null) {
+		if (claus.getContext() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"distanceType\": ");
+			sb.append("\"context\": ");
 
 			sb.append("\"");
 
-			sb.append(aggregration.getDistanceType());
+			sb.append(_escape(claus.getContext()));
 
 			sb.append("\"");
 		}
 
-		if (aggregration.getEnabled() != null) {
+		if (claus.getOccur() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"enabled\": ");
+			sb.append("\"occur\": ");
 
-			sb.append(aggregration.getEnabled());
+			sb.append("\"");
+
+			sb.append(_escape(claus.getOccur()));
+
+			sb.append("\"");
+		}
+
+		if (claus.getQueryJSON() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"queryJSON\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(claus.getQueryJSON()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -85,65 +101,72 @@ public class AggregrationSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		AggregrationJSONParser aggregrationJSONParser =
-			new AggregrationJSONParser();
+		ClausJSONParser clausJSONParser = new ClausJSONParser();
 
-		return aggregrationJSONParser.parseToMap(json);
+		return clausJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Aggregration aggregration) {
-		if (aggregration == null) {
+	public static Map<String, String> toMap(Claus claus) {
+		if (claus == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (aggregration.getDistanceType() == null) {
-			map.put("distanceType", null);
+		if (claus.getContext() == null) {
+			map.put("context", null);
 		}
 		else {
-			map.put(
-				"distanceType", String.valueOf(aggregration.getDistanceType()));
+			map.put("context", String.valueOf(claus.getContext()));
 		}
 
-		if (aggregration.getEnabled() == null) {
-			map.put("enabled", null);
+		if (claus.getOccur() == null) {
+			map.put("occur", null);
 		}
 		else {
-			map.put("enabled", String.valueOf(aggregration.getEnabled()));
+			map.put("occur", String.valueOf(claus.getOccur()));
+		}
+
+		if (claus.getQueryJSON() == null) {
+			map.put("queryJSON", null);
+		}
+		else {
+			map.put("queryJSON", String.valueOf(claus.getQueryJSON()));
 		}
 
 		return map;
 	}
 
-	public static class AggregrationJSONParser
-		extends BaseJSONParser<Aggregration> {
+	public static class ClausJSONParser extends BaseJSONParser<Claus> {
 
 		@Override
-		protected Aggregration createDTO() {
-			return new Aggregration();
+		protected Claus createDTO() {
+			return new Claus();
 		}
 
 		@Override
-		protected Aggregration[] createDTOArray(int size) {
-			return new Aggregration[size];
+		protected Claus[] createDTOArray(int size) {
+			return new Claus[size];
 		}
 
 		@Override
 		protected void setField(
-			Aggregration aggregration, String jsonParserFieldName,
+			Claus claus, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "distanceType")) {
+			if (Objects.equals(jsonParserFieldName, "context")) {
 				if (jsonParserFieldValue != null) {
-					aggregration.setDistanceType(
-						Aggregration.DistanceType.create(
-							(String)jsonParserFieldValue));
+					claus.setContext((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "enabled")) {
+			else if (Objects.equals(jsonParserFieldName, "occur")) {
 				if (jsonParserFieldValue != null) {
-					aggregration.setEnabled((Boolean)jsonParserFieldValue);
+					claus.setOccur((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "queryJSON")) {
+				if (jsonParserFieldValue != null) {
+					claus.setQueryJSON((String)jsonParserFieldValue);
 				}
 			}
 		}

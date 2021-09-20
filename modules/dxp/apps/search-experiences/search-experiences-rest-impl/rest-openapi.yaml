@@ -15,7 +15,7 @@ components:
                                         type: string
                                     type: array
                             type: object
-                        aggregration:
+                        aggregation:
                             properties:
                                 distanceType:
                                     enum: [arc, plane]
@@ -50,6 +50,24 @@ components:
                                 fragmentOffset:
                                     type: integer
                             type: object
+                        queries:
+                            items:
+                                properties:
+                                    clauses:
+                                        items:
+                                            properties:
+                                                context:
+                                                    type: string
+                                                occur:
+                                                    type: string
+                                                queryJSON:
+                                                    type: string
+                                            type: object
+                                        type: array
+                                    enabled:
+                                        type: boolean
+                                type: object
+                            type: array
                     type: object
                 description:
                     type: string

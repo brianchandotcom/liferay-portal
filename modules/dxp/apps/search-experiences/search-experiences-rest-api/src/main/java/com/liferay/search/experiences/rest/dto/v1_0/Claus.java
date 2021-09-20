@@ -35,8 +35,6 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -44,31 +42,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Configuration")
+@GraphQLName("Claus")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Configuration")
-public class Configuration implements Serializable {
+@XmlRootElement(name = "Claus")
+public class Claus implements Serializable {
 
-	public static Configuration toDTO(String json) {
-		return ObjectMapperUtil.readValue(Configuration.class, json);
+	public static Claus toDTO(String json) {
+		return ObjectMapperUtil.readValue(Claus.class, json);
 	}
 
 	@Schema
-	@Valid
-	public Advanced getAdvanced() {
-		return advanced;
+	public String getContext() {
+		return context;
 	}
 
-	public void setAdvanced(Advanced advanced) {
-		this.advanced = advanced;
+	public void setContext(String context) {
+		this.context = context;
 	}
 
 	@JsonIgnore
-	public void setAdvanced(
-		UnsafeSupplier<Advanced, Exception> advancedUnsafeSupplier) {
+	public void setContext(
+		UnsafeSupplier<String, Exception> contextUnsafeSupplier) {
 
 		try {
-			advanced = advancedUnsafeSupplier.get();
+			context = contextUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -80,24 +77,23 @@ public class Configuration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Advanced advanced;
+	protected String context;
 
 	@Schema
-	@Valid
-	public Aggregation getAggregation() {
-		return aggregation;
+	public String getOccur() {
+		return occur;
 	}
 
-	public void setAggregation(Aggregation aggregation) {
-		this.aggregation = aggregation;
+	public void setOccur(String occur) {
+		this.occur = occur;
 	}
 
 	@JsonIgnore
-	public void setAggregation(
-		UnsafeSupplier<Aggregation, Exception> aggregationUnsafeSupplier) {
+	public void setOccur(
+		UnsafeSupplier<String, Exception> occurUnsafeSupplier) {
 
 		try {
-			aggregation = aggregationUnsafeSupplier.get();
+			occur = occurUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -109,22 +105,23 @@ public class Configuration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Aggregation aggregation;
+	protected String occur;
 
 	@Schema
-	@Valid
-	public Facet getFacet() {
-		return facet;
+	public String getQueryJSON() {
+		return queryJSON;
 	}
 
-	public void setFacet(Facet facet) {
-		this.facet = facet;
+	public void setQueryJSON(String queryJSON) {
+		this.queryJSON = queryJSON;
 	}
 
 	@JsonIgnore
-	public void setFacet(UnsafeSupplier<Facet, Exception> facetUnsafeSupplier) {
+	public void setQueryJSON(
+		UnsafeSupplier<String, Exception> queryJSONUnsafeSupplier) {
+
 		try {
-			facet = facetUnsafeSupplier.get();
+			queryJSON = queryJSONUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -136,94 +133,7 @@ public class Configuration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Facet facet;
-
-	@Schema
-	@Valid
-	public General getGeneral() {
-		return general;
-	}
-
-	public void setGeneral(General general) {
-		this.general = general;
-	}
-
-	@JsonIgnore
-	public void setGeneral(
-		UnsafeSupplier<General, Exception> generalUnsafeSupplier) {
-
-		try {
-			general = generalUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected General general;
-
-	@Schema
-	@Valid
-	public Highlight getHighlight() {
-		return highlight;
-	}
-
-	public void setHighlight(Highlight highlight) {
-		this.highlight = highlight;
-	}
-
-	@JsonIgnore
-	public void setHighlight(
-		UnsafeSupplier<Highlight, Exception> highlightUnsafeSupplier) {
-
-		try {
-			highlight = highlightUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Highlight highlight;
-
-	@Schema
-	@Valid
-	public Query[] getQueries() {
-		return queries;
-	}
-
-	public void setQueries(Query[] queries) {
-		this.queries = queries;
-	}
-
-	@JsonIgnore
-	public void setQueries(
-		UnsafeSupplier<Query[], Exception> queriesUnsafeSupplier) {
-
-		try {
-			queries = queriesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Query[] queries;
+	protected String queryJSON;
 
 	@Override
 	public boolean equals(Object object) {
@@ -231,13 +141,13 @@ public class Configuration implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Configuration)) {
+		if (!(object instanceof Claus)) {
 			return false;
 		}
 
-		Configuration configuration = (Configuration)object;
+		Claus claus = (Claus)object;
 
-		return Objects.equals(toString(), configuration.toString());
+		return Objects.equals(toString(), claus.toString());
 	}
 
 	@Override
@@ -252,74 +162,46 @@ public class Configuration implements Serializable {
 
 		sb.append("{");
 
-		if (advanced != null) {
+		if (context != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"advanced\": ");
+			sb.append("\"context\": ");
 
-			sb.append(String.valueOf(advanced));
+			sb.append("\"");
+
+			sb.append(_escape(context));
+
+			sb.append("\"");
 		}
 
-		if (aggregation != null) {
+		if (occur != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"aggregation\": ");
+			sb.append("\"occur\": ");
 
-			sb.append(String.valueOf(aggregation));
+			sb.append("\"");
+
+			sb.append(_escape(occur));
+
+			sb.append("\"");
 		}
 
-		if (facet != null) {
+		if (queryJSON != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"facet\": ");
+			sb.append("\"queryJSON\": ");
 
-			sb.append(String.valueOf(facet));
-		}
+			sb.append("\"");
 
-		if (general != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
+			sb.append(_escape(queryJSON));
 
-			sb.append("\"general\": ");
-
-			sb.append(String.valueOf(general));
-		}
-
-		if (highlight != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"highlight\": ");
-
-			sb.append(String.valueOf(highlight));
-		}
-
-		if (queries != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"queries\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < queries.length; i++) {
-				sb.append(String.valueOf(queries[i]));
-
-				if ((i + 1) < queries.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -329,7 +211,7 @@ public class Configuration implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Configuration",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Claus",
 		name = "x-class-name"
 	)
 	public String xClassName;

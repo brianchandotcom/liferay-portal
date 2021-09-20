@@ -15,6 +15,7 @@
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
 import com.liferay.search.experiences.rest.client.dto.v1_0.Configuration;
+import com.liferay.search.experiences.rest.client.dto.v1_0.Query;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -65,14 +67,14 @@ public class ConfigurationSerDes {
 			sb.append(String.valueOf(configuration.getAdvanced()));
 		}
 
-		if (configuration.getAggregration() != null) {
+		if (configuration.getAggregation() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"aggregration\": ");
+			sb.append("\"aggregation\": ");
 
-			sb.append(String.valueOf(configuration.getAggregration()));
+			sb.append(String.valueOf(configuration.getAggregation()));
 		}
 
 		if (configuration.getFacet() != null) {
@@ -105,6 +107,26 @@ public class ConfigurationSerDes {
 			sb.append(String.valueOf(configuration.getHighlight()));
 		}
 
+		if (configuration.getQueries() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"queries\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < configuration.getQueries().length; i++) {
+				sb.append(String.valueOf(configuration.getQueries()[i]));
+
+				if ((i + 1) < configuration.getQueries().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -131,13 +153,12 @@ public class ConfigurationSerDes {
 			map.put("advanced", String.valueOf(configuration.getAdvanced()));
 		}
 
-		if (configuration.getAggregration() == null) {
-			map.put("aggregration", null);
+		if (configuration.getAggregation() == null) {
+			map.put("aggregation", null);
 		}
 		else {
 			map.put(
-				"aggregration",
-				String.valueOf(configuration.getAggregration()));
+				"aggregation", String.valueOf(configuration.getAggregation()));
 		}
 
 		if (configuration.getFacet() == null) {
@@ -159,6 +180,13 @@ public class ConfigurationSerDes {
 		}
 		else {
 			map.put("highlight", String.valueOf(configuration.getHighlight()));
+		}
+
+		if (configuration.getQueries() == null) {
+			map.put("queries", null);
+		}
+		else {
+			map.put("queries", String.valueOf(configuration.getQueries()));
 		}
 
 		return map;
@@ -188,10 +216,10 @@ public class ConfigurationSerDes {
 						AdvancedSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "aggregration")) {
+			else if (Objects.equals(jsonParserFieldName, "aggregation")) {
 				if (jsonParserFieldValue != null) {
-					configuration.setAggregration(
-						AggregrationSerDes.toDTO((String)jsonParserFieldValue));
+					configuration.setAggregation(
+						AggregationSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "facet")) {
@@ -210,6 +238,18 @@ public class ConfigurationSerDes {
 				if (jsonParserFieldValue != null) {
 					configuration.setHighlight(
 						HighlightSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "queries")) {
+				if (jsonParserFieldValue != null) {
+					configuration.setQueries(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> QuerySerDes.toDTO((String)object)
+						).toArray(
+							size -> new Query[size]
+						));
 				}
 			}
 		}

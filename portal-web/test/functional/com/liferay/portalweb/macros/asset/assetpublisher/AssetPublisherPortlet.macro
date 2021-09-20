@@ -1076,13 +1076,13 @@ definition {
 	macro viewAssetNotPresentPG {
 		var key_assetTitle = "${assetTitle}";
 
-		AssertTextNotPresent(
-			locator1 = "AP#ASSET_ABSTRACT_TITLE",
-			value1 = "${assetTitle}");
+		AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE");
 
-		AssertTextNotPresent(
-			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
-			value1 = "${assetContent}");
+		if (isSet(assetContent)) {
+			AssertTextNotPresent(
+				locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+				value1 = "${assetContent}");
+		}
 	}
 
 	macro viewAssetOrderPG {
@@ -1112,9 +1112,11 @@ definition {
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "${assetTitle}");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
-			value1 = "${assetContent}");
+		if (isSet(assetContent)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+				value1 = "${assetContent}");
+		}
 	}
 
 	macro viewAssetRelatedAssets {

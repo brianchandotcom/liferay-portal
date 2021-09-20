@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.order.engine.test;
+package com.liferay.commerce.test.util.order.status;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.status.CommerceOrderStatus;

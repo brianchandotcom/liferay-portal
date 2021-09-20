@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.order.engine.test;
+package com.liferay.commerce.test.util.order.status;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
@@ -33,16 +33,16 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"commerce.order.status.key=" + Test3CommerceOrderStatusImpl.KEY,
-		"commerce.order.status.priority:Integer=" + Test3CommerceOrderStatusImpl.PRIORITY
+		"commerce.order.status.key=" + Test2CommerceOrderStatusImpl.KEY,
+		"commerce.order.status.priority:Integer=" + Test2CommerceOrderStatusImpl.PRIORITY
 	},
 	service = CommerceOrderStatus.class
 )
-public class Test3CommerceOrderStatusImpl implements CommerceOrderStatus {
+public class Test2CommerceOrderStatusImpl implements CommerceOrderStatus {
 
-	public static final int KEY = 111;
+	public static final int KEY = 110;
 
-	public static final int PRIORITY = 54;
+	public static final int PRIORITY = 53;
 
 	@Override
 	public CommerceOrder doTransition(CommerceOrder commerceOrder, long userId)

@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuild
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -47,7 +48,8 @@ public class ObjectEntriesTableClayDataSetDisplayView
 		for (ObjectField objectField : objectFields) {
 			ClayTableSchemaField clayTableSchemaField =
 				clayTableSchemaBuilder.addClayTableSchemaField(
-					objectField.getName(), objectField.getName());
+					objectField.getName(),
+					objectField.getLabel(LocaleUtil.getSiteDefault(), true));
 
 			if (Objects.equals(objectField.getType(), "Boolean")) {
 				clayTableSchemaField.setContentRenderer("boolean");

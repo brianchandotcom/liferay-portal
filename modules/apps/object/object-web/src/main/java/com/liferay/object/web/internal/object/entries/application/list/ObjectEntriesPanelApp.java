@@ -44,7 +44,7 @@ public class ObjectEntriesPanelApp extends BasePanelApp {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _objectDefinition.getShortName();
+		return _objectDefinition.getLabel(locale);
 	}
 
 	@Override

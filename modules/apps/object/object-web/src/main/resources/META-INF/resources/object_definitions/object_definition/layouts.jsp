@@ -26,7 +26,7 @@ ObjectDefinitionsLayoutsDisplayContext objectDefinitionsLayoutsDisplayContext = 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle(objectDefinition.getShortName());
+renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 %>
 
 <clay:headless-data-set-display

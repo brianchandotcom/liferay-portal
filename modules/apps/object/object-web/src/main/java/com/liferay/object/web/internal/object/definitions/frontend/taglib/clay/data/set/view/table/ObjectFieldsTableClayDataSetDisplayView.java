@@ -41,10 +41,11 @@ public class ObjectFieldsTableClayDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField nameClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
+		ClayTableSchemaField labelClayTableSchemaField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"label.LANG", "label");
 
-		nameClayTableSchemaField.setContentRenderer("actionLink");
+		labelClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("type", "type");
 

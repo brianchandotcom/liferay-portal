@@ -26,7 +26,7 @@ ObjectDefinition objectDefinition = objectDefinitionsDetailsDisplayContext.getOb
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.getShortName(), false));
+renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.getLabel(locale, true), false));
 %>
 
 <portlet:actionURL name="/object_definitions/edit_object_definition" var="editObjectDefinitionURL" />

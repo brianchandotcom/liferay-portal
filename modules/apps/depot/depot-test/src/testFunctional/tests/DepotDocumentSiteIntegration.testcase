@@ -284,10 +284,7 @@ definition {
 			pageName = "Page Name",
 			siteName = "Site Name");
 
-		AssertTextEquals.assertPartialText(
-			key_assetTitle = "Document_1.jpg",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE",
-			value1 = "Document_1.jpg");
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_1.jpg");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",

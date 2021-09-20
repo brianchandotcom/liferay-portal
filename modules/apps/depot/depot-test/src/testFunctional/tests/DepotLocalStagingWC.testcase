@@ -722,9 +722,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertElementNotPresent(
-			key_assetTitle = "WC Folder Name",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "WC Folder Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",

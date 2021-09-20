@@ -671,10 +671,7 @@ definition {
 			siteName = "Site Name");
 
 		for (var count : list "1,2") {
-			AssertTextEquals.assertPartialText(
-				key_assetTitle = "Web Content Title${count}",
-				locator1 = "AP#ASSET_ABSTRACT_TITLE",
-				value1 = "Web Content Title${count}");
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "Web Content Title${count}");
 		}
 	}
 

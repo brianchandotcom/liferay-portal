@@ -249,9 +249,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_assetTitle = "Document_1.doc",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_1.doc");
 
 		Staging.gotoPublishToLive();
 
@@ -261,9 +259,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_assetTitle = "Document_1.doc",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_1.doc");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -285,9 +281,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertElementNotPresent(
-			key_assetTitle = "Document_1.doc",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Document_1.doc");
 
 		Staging.gotoPublishToLive();
 
@@ -297,9 +291,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertElementNotPresent(
-			key_assetTitle = "Document_1.doc",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Document_1.doc");
 	}
 
 	@description = "This ensures that custom field in document from depot can be deleted and republished in the site when enabling local staging."
@@ -376,9 +368,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertElementNotPresent(
-			key_assetTitle = "DM Document Title",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "DM Document Title");
 
 		Staging.gotoPublishToLive();
 
@@ -388,9 +378,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertElementNotPresent(
-			key_assetTitle = "DM Document Title",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "DM Document Title");
 	}
 
 	@description = "This ensures that image in depot can be removed and republished in AP through widget config manual selection when enabling local staging."
@@ -432,9 +420,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_assetTitle = "Document_2.jpg",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_2.jpg");
 
 		Staging.gotoPublishToLive();
 
@@ -444,9 +430,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_assetTitle = "Document_2.jpg",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_2.jpg");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -466,9 +450,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertTextNotPresent(
-			locator1 = "AP#ASSET_ABSTRACT_TITLE",
-			value1 = "Document_2.jpg");
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Document_2.jpg");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -1072,9 +1054,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_assetTitle = "Document_2.doc",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_2.doc");
 
 		Staging.gotoPublishToLive();
 
@@ -1084,9 +1064,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_assetTitle = "Document_2.doc",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_2.doc");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -1103,9 +1081,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_assetTitle = "Document_3.doc",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_3.doc");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -1119,9 +1095,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_assetTitle = "Document_3.doc",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_3.doc");
 	}
 
 	@description = "This ensures that the custom field in document from depot can be edited and republished in the site when enabling local staging."
@@ -1251,9 +1225,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_assetTitle = "Document_2.jpg",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_2.jpg");
 
 		Staging.gotoPublishToLive();
 
@@ -1263,9 +1235,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_assetTitle = "Document_2.jpg",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_2.jpg");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -1282,9 +1252,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_assetTitle = "Document_1.jpg",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_1.jpg");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -1298,9 +1266,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_assetTitle = "Document_1.jpg",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_1.jpg");
 	}
 
 	@description = "This ensures that an edited internal video in depot can be republished on a connected staging site with enabling FFmpeg."
@@ -1756,9 +1722,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertElementNotPresent(
-			key_assetTitle = "DM Folder Name",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "DM Folder Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
@@ -1886,9 +1850,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_assetTitle = "Document_2.jpg",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_2.jpg");
 	}
 
 	@description = "This ensures that the latest version of an image in a depot can be published in local staging site."
@@ -1969,9 +1931,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_assetTitle = "Document_2.jpg",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_2.jpg");
 
 		AssertTextEquals.assertPartialText(
 			key_assetTitle = "Document_2.jpg",

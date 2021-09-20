@@ -636,85 +636,85 @@ definition {
 	test SortSegmentAddMembersModal {
 		var users = "ac,liferay,dxp";
 
-        task ("Add a new user in DXP") {
-            for (var name : list "${users}") {
-                JSONUser.addUser(
-                    userEmailAddress = "${name}@liferay.com",
-                    userFirstName = "${name}",
-                    userLastName = "${name}",
-                    userScreenName = "${name}");
-            }
-        }
+		task ("Add a new user in DXP") {
+			for (var name : list "${users}") {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
+			}
+		}
 
-        task ("Conect DXP to AC") {
-            var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-        }
+		task ("Conect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
-        task ("Sign in with the new user to visit the site pages") {
-            for (var name : list "${users}") {
-                User.logoutAndLoginPG(
-                    userLoginEmailAddress = "${name}@liferay.com",
-                    userLoginFullName = "${name} ${name}");
+		task ("Sign in with the new user to visit the site pages") {
+			for (var name : list "${users}") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${name}@liferay.com",
+					userLoginFullName = "${name} ${name}");
 
-                Navigator.gotoSitePage(
-                    pageName = "AC Page",
-                    siteName = "Site Name");
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
 
-                Pause(locator1 = "3000");
-            }
-        }
+				Pause(locator1 = "3000");
+			}
+		}
 
-        task ("Switch to new property in AC") {
-            ACUtils.closeAllSessionsAndWait();
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
 
-            ACUtils.launchAC();
+			ACUtils.launchAC();
 
-            ACProperties.switchProperty(propertyName = "${propertyName}");
-        }
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
 
-        task ("Go to Segments and add a new segment") {
-            ACNavigation.goToSegments();
+		task ("Go to Segments and add a new segment") {
+			ACNavigation.goToSegments();
 
-            ACSegments.createStaticSegment();
+			ACSegments.createStaticSegment();
 
-            ACSegments.nameSegment(segmentName = "Static Segment Test");
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
 
-            ACSegments.addStaticMember(tableMember = "ac ac");
+			ACSegments.addStaticMember(tableMember = "ac ac");
 
-            ACSegments.saveSegment();
-        }
+			ACSegments.saveSegment();
+		}
 
-        task ("Go to Segments and edit") {
-            ACNavigation.goToSegments();
+		task ("Go to Segments and edit") {
+			ACNavigation.goToSegments();
 
-            ACSegments.editSegment(searchTerm = "Static Segment Test");
+			ACSegments.editSegment(searchTerm = "Static Segment Test");
 
-            Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-        }
+			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+		}
 
-        task ("Assert the first user in the list, click the sort button and assert that the user has changed") {
-            AssertElementPresent(
-                index = "1",
-                key_userName = "dxp dxp",
-                locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE");
+		task ("Assert the first user in the list, click the sort button and assert that the user has changed") {
+			AssertElementPresent(
+				index = "1",
+				key_userName = "dxp dxp",
+				locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE");
 
-            AssertElementPresent(
-                index = "2",
-                key_userName = "liferay liferay",
-                locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE");
+			AssertElementPresent(
+				index = "2",
+				key_userName = "liferay liferay",
+				locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE");
 
-            ACSegments.sortSegmentButton();
+			ACSegments.sortSegmentButton();
 
-            AssertElementPresent(
-                index = "1",
-                key_userName = "liferay liferay",
-                locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE");
+			AssertElementPresent(
+				index = "1",
+				key_userName = "liferay liferay",
+				locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE");
 
-            AssertElementPresent(
-                index = "2",
-                key_userName = "dxp dxp",
-                locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE");
-        }
+			AssertElementPresent(
+				index = "2",
+				key_userName = "dxp dxp",
+				locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8590 | Test Summary: Undo Adding a Segment Member in the Edit Modal"

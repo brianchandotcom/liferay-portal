@@ -15,7 +15,6 @@
 package com.liferay.search.experiences.problem;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONObject;
 
 /**
  * @author Petteri Karttunen
@@ -30,9 +29,9 @@ public class Problem {
 		_message = problem._message;
 		_throwable = problem._throwable;
 		_rootConfiguration = problem._rootConfiguration;
-		_rootJSONObject = problem._rootJSONObject;
-		_rootJSONObjectPropertyKey = problem._rootJSONObjectPropertyKey;
-		_rootJSONObjectValue = problem._rootJSONObjectValue;
+		_rootObject = problem._rootObject;
+		_rootProperty = problem._rootProperty;
+		_rootValue = problem._rootValue;
 		_severity = problem._severity;
 	}
 
@@ -59,16 +58,16 @@ public class Problem {
 		return _rootConfiguration;
 	}
 
-	public JSONObject getRootJSONObject() {
-		return _rootJSONObject;
+	public Object getRootObject() {
+		return _rootObject;
 	}
 
-	public String getRootJSONObjectPropertyKey() {
-		return _rootJSONObjectPropertyKey;
+	public String getRootProperty() {
+		return _rootProperty;
 	}
 
-	public String getRootJSONObjectValue() {
-		return _rootJSONObjectValue;
+	public String getRootValue() {
+		return _rootValue;
 	}
 
 	public Severity getSeverity() {
@@ -88,11 +87,10 @@ public class Problem {
 		return StringBundler.concat(
 			"{_className=", _className, ", _elementKey=", _elementKey,
 			", _languageKey=", _languageKey, ", _message=", _message,
-			", _rootConfiguration=", _rootConfiguration, ", _rootJSONObject=",
-			_rootJSONObject, ", _rootJSONObjectPropertyKey=",
-			_rootJSONObjectPropertyKey, ", _rootJSONObjectValue=",
-			_rootJSONObjectValue, ", _severity=", _severity, ", _throwable=",
-			_throwable, "}");
+			", _rootConfiguration=", _rootConfiguration, ", _rootObject=",
+			_rootObject, ", _rootProperty=", _rootProperty, ", _rootValue=",
+			_rootValue, ", _severity=", _severity, ", _throwable=", _throwable,
+			"}");
 	}
 
 	public static class Builder {
@@ -139,22 +137,20 @@ public class Problem {
 			return this;
 		}
 
-		public Builder rootJSONObject(JSONObject rootJSONObject) {
-			_problem._rootJSONObject = rootJSONObject;
+		public Builder rootObject(Object rootObject) {
+			_problem._rootObject = rootObject;
 
 			return this;
 		}
 
-		public Builder rootJSONObjectPropertyKey(
-			String rootJSONObjectPropertyKey) {
-
-			_problem._rootJSONObjectPropertyKey = rootJSONObjectPropertyKey;
+		public Builder rootProperty(String rootProperty) {
+			_problem._rootProperty = rootProperty;
 
 			return this;
 		}
 
-		public Builder rootJSONObjectValue(String rootJSONObjectValue) {
-			_problem._rootJSONObjectValue = rootJSONObjectValue;
+		public Builder rootValue(String rootValue) {
+			_problem._rootValue = rootValue;
 
 			return this;
 		}
@@ -183,9 +179,9 @@ public class Problem {
 	private String _languageKey;
 	private String _message;
 	private String _rootConfiguration;
-	private JSONObject _rootJSONObject;
-	private String _rootJSONObjectPropertyKey;
-	private String _rootJSONObjectValue;
+	private Object _rootObject;
+	private String _rootProperty;
+	private String _rootValue;
 	private Severity _severity;
 	private Throwable _throwable;
 

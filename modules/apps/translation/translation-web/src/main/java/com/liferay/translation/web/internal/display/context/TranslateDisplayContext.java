@@ -488,8 +488,8 @@ public class TranslateDisplayContext {
 
 		List<SegmentsExperience> segmentsExperiences =
 			SegmentsExperienceServiceUtil.getSegmentsExperiences(
-				_groupId, PortalUtil.getClassNameId(Layout.class.getName()),
-				_classPK, true);
+				_groupId, PortalUtil.getClassNameId(_className), _classPK,
+				true);
 
 		boolean addedDefault = false;
 
@@ -499,7 +499,7 @@ public class TranslateDisplayContext {
 				_themeDisplay.getLocale())
 		).put(
 			"value",
-			String.valueOf((Object)SegmentsExperienceConstants.ID_DEFAULT)
+			String.valueOf(SegmentsExperienceConstants.ID_DEFAULT)
 		).build();
 
 		List<Map<String, String>> options = new ArrayList<>();

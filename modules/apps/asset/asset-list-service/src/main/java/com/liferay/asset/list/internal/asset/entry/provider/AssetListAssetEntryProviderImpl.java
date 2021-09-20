@@ -894,24 +894,28 @@ public class AssetListAssetEntryProviderImpl
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
 		long[][] assetCategoryIds, String keywords, int start, int end) {
 
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+			_getAssetListEntryAssetEntryRels(
+				assetListEntry, segmentsEntryIds, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		if (ListUtil.isEmpty(assetListEntryAssetEntryRels)) {
+			return Collections.emptyList();
+		}
+
+		List<Long> assetEntryIds = ListUtil.toList(
+			assetListEntryAssetEntryRels,
+			AssetListEntryAssetEntryRelModel::getAssetEntryId);
+
 		try {
 			Hits hits = _assetHelper.search(
 				_getManualSearchContext(
-					assetListEntry, segmentsEntryIds, assetCategoryIds,
-					keywords),
+					assetEntryIds, assetListEntry.getCompanyId(),
+					assetCategoryIds, keywords),
 				_getManualAssetEntryQuery(assetListEntry), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
 			List<AssetEntry> assetEntries = _assetHelper.getAssetEntries(hits);
-
-			List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-				_getAssetListEntryAssetEntryRels(
-					assetListEntry, segmentsEntryIds, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS);
-
-			List<Long> assetEntryIds = ListUtil.toList(
-				assetListEntryAssetEntryRels,
-				AssetListEntryAssetEntryRelModel::getAssetEntryId);
 
 			ListUtil.sort(
 				assetEntries,
@@ -932,11 +936,24 @@ public class AssetListAssetEntryProviderImpl
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
 		long[][] assetCategoryIds, String keywords) {
 
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+			_getAssetListEntryAssetEntryRels(
+				assetListEntry, segmentsEntryIds, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		if (ListUtil.isEmpty(assetListEntryAssetEntryRels)) {
+			return 0;
+		}
+
+		List<Long> assetEntryIds = ListUtil.toList(
+			assetListEntryAssetEntryRels,
+			AssetListEntryAssetEntryRelModel::getAssetEntryId);
+
 		try {
 			Long count = _assetHelper.searchCount(
 				_getManualSearchContext(
-					assetListEntry, segmentsEntryIds, assetCategoryIds,
-					keywords),
+					assetEntryIds, assetListEntry.getCompanyId(),
+					assetCategoryIds, keywords),
 				_getManualAssetEntryQuery(assetListEntry));
 
 			return count.intValue();
@@ -977,26 +994,17 @@ public class AssetListAssetEntryProviderImpl
 	}
 
 	private SearchContext _getManualSearchContext(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, String keywords) {
+		List<Long> assetEntryIds, long companyId, long[][] assetCategoryIds,
+		String keywords) {
 
 		SearchContext searchContext = new SearchContext();
-
-		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-			_getAssetListEntryAssetEntryRels(
-				assetListEntry, segmentsEntryIds, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		List<Long> assetEntryIds = ListUtil.toList(
-			assetListEntryAssetEntryRels,
-			AssetListEntryAssetEntryRelModel::getAssetEntryId);
 
 		searchContext.setAttribute(
 			Field.ASSET_ENTRY_IDS, ArrayUtil.toLongArray(assetEntryIds));
 
 		searchContext.setBooleanClauses(
 			_getAssetCategoryIdsBooleanClauses(assetCategoryIds));
-		searchContext.setCompanyId(assetListEntry.getCompanyId());
+		searchContext.setCompanyId(companyId);
 		searchContext.setKeywords(keywords);
 
 		return searchContext;

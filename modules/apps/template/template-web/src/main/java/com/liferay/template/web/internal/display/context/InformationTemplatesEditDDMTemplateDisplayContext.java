@@ -191,8 +191,7 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 			"com/liferay/template/web/internal/portlet/template/dependencies/",
 			SetUtil.fromArray(
 				new String[] {
-					"boolean", "date", "document-library", "geolocation",
-					"image", "journal-article", "link-to-page"
+					"boolean", "document-library", "image"
 				}));
 	private final ThemeDisplay _themeDisplay;
 

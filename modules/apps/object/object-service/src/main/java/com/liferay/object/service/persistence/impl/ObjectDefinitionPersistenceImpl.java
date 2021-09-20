@@ -5070,29 +5070,30 @@ public class ObjectDefinitionPersistenceImpl
 	private static final String _FINDER_COLUMN_S_S_STATUS_2 =
 		"objectDefinition.status = ?";
 
-	private FinderPath _finderPathWithPaginationFindByC_A_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_A_S;
-	private FinderPath _finderPathCountByC_A_S;
+	private FinderPath _finderPathWithPaginationFindByC_A_S_S;
+	private FinderPath _finderPathWithoutPaginationFindByC_A_S_S;
+	private FinderPath _finderPathCountByC_A_S_S;
 
 	/**
-	 * Returns all the object definitions where companyId = &#63; and active = &#63; and status = &#63;.
+	 * Returns all the object definitions where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param active the active
+	 * @param system the system
 	 * @param status the status
 	 * @return the matching object definitions
 	 */
 	@Override
-	public List<ObjectDefinition> findByC_A_S(
-		long companyId, boolean active, int status) {
+	public List<ObjectDefinition> findByC_A_S_S(
+		long companyId, boolean active, boolean system, int status) {
 
-		return findByC_A_S(
-			companyId, active, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return findByC_A_S_S(
+			companyId, active, system, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the object definitions where companyId = &#63; and active = &#63; and status = &#63;.
+	 * Returns a range of all the object definitions where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
@@ -5100,20 +5101,23 @@ public class ObjectDefinitionPersistenceImpl
 	 *
 	 * @param companyId the company ID
 	 * @param active the active
+	 * @param system the system
 	 * @param status the status
 	 * @param start the lower bound of the range of object definitions
 	 * @param end the upper bound of the range of object definitions (not inclusive)
 	 * @return the range of matching object definitions
 	 */
 	@Override
-	public List<ObjectDefinition> findByC_A_S(
-		long companyId, boolean active, int status, int start, int end) {
+	public List<ObjectDefinition> findByC_A_S_S(
+		long companyId, boolean active, boolean system, int status, int start,
+		int end) {
 
-		return findByC_A_S(companyId, active, status, start, end, null);
+		return findByC_A_S_S(
+			companyId, active, system, status, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the object definitions where companyId = &#63; and active = &#63; and status = &#63;.
+	 * Returns an ordered range of all the object definitions where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
@@ -5121,6 +5125,7 @@ public class ObjectDefinitionPersistenceImpl
 	 *
 	 * @param companyId the company ID
 	 * @param active the active
+	 * @param system the system
 	 * @param status the status
 	 * @param start the lower bound of the range of object definitions
 	 * @param end the upper bound of the range of object definitions (not inclusive)
@@ -5128,16 +5133,17 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the ordered range of matching object definitions
 	 */
 	@Override
-	public List<ObjectDefinition> findByC_A_S(
-		long companyId, boolean active, int status, int start, int end,
-		OrderByComparator<ObjectDefinition> orderByComparator) {
+	public List<ObjectDefinition> findByC_A_S_S(
+		long companyId, boolean active, boolean system, int status, int start,
+		int end, OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		return findByC_A_S(
-			companyId, active, status, start, end, orderByComparator, true);
+		return findByC_A_S_S(
+			companyId, active, system, status, start, end, orderByComparator,
+			true);
 	}
 
 	/**
-	 * Returns an ordered range of all the object definitions where companyId = &#63; and active = &#63; and status = &#63;.
+	 * Returns an ordered range of all the object definitions where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
@@ -5145,6 +5151,7 @@ public class ObjectDefinitionPersistenceImpl
 	 *
 	 * @param companyId the company ID
 	 * @param active the active
+	 * @param system the system
 	 * @param status the status
 	 * @param start the lower bound of the range of object definitions
 	 * @param end the upper bound of the range of object definitions (not inclusive)
@@ -5153,9 +5160,9 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the ordered range of matching object definitions
 	 */
 	@Override
-	public List<ObjectDefinition> findByC_A_S(
-		long companyId, boolean active, int status, int start, int end,
-		OrderByComparator<ObjectDefinition> orderByComparator,
+	public List<ObjectDefinition> findByC_A_S_S(
+		long companyId, boolean active, boolean system, int status, int start,
+		int end, OrderByComparator<ObjectDefinition> orderByComparator,
 		boolean useFinderCache) {
 
 		FinderPath finderPath = null;
@@ -5165,14 +5172,14 @@ public class ObjectDefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_A_S;
-				finderArgs = new Object[] {companyId, active, status};
+				finderPath = _finderPathWithoutPaginationFindByC_A_S_S;
+				finderArgs = new Object[] {companyId, active, system, status};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_A_S;
+			finderPath = _finderPathWithPaginationFindByC_A_S_S;
 			finderArgs = new Object[] {
-				companyId, active, status, start, end, orderByComparator
+				companyId, active, system, status, start, end, orderByComparator
 			};
 		}
 
@@ -5186,6 +5193,7 @@ public class ObjectDefinitionPersistenceImpl
 				for (ObjectDefinition objectDefinition : list) {
 					if ((companyId != objectDefinition.getCompanyId()) ||
 						(active != objectDefinition.isActive()) ||
+						(system != objectDefinition.isSystem()) ||
 						(status != objectDefinition.getStatus())) {
 
 						list = null;
@@ -5201,19 +5209,21 @@ public class ObjectDefinitionPersistenceImpl
 
 			if (orderByComparator != null) {
 				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
+					6 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				sb = new StringBundler(5);
+				sb = new StringBundler(6);
 			}
 
 			sb.append(_SQL_SELECT_OBJECTDEFINITION_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_A_S_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_A_S_S_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_C_A_S_ACTIVE_2);
+			sb.append(_FINDER_COLUMN_C_A_S_S_ACTIVE_2);
 
-			sb.append(_FINDER_COLUMN_C_A_S_STATUS_2);
+			sb.append(_FINDER_COLUMN_C_A_S_S_SYSTEM_2);
+
+			sb.append(_FINDER_COLUMN_C_A_S_S_STATUS_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -5238,6 +5248,8 @@ public class ObjectDefinitionPersistenceImpl
 
 				queryPos.add(active);
 
+				queryPos.add(system);
+
 				queryPos.add(status);
 
 				list = (List<ObjectDefinition>)QueryUtil.list(
@@ -5261,29 +5273,30 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the first object definition in the ordered set where companyId = &#63; and active = &#63; and status = &#63;.
+	 * Returns the first object definition in the ordered set where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param active the active
+	 * @param system the system
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object definition
 	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	@Override
-	public ObjectDefinition findByC_A_S_First(
-			long companyId, boolean active, int status,
+	public ObjectDefinition findByC_A_S_S_First(
+			long companyId, boolean active, boolean system, int status,
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByC_A_S_First(
-			companyId, active, status, orderByComparator);
+		ObjectDefinition objectDefinition = fetchByC_A_S_S_First(
+			companyId, active, system, status, orderByComparator);
 
 		if (objectDefinition != null) {
 			return objectDefinition;
 		}
 
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(10);
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
@@ -5292,6 +5305,9 @@ public class ObjectDefinitionPersistenceImpl
 
 		sb.append(", active=");
 		sb.append(active);
+
+		sb.append(", system=");
+		sb.append(system);
 
 		sb.append(", status=");
 		sb.append(status);
@@ -5302,21 +5318,22 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the first object definition in the ordered set where companyId = &#63; and active = &#63; and status = &#63;.
+	 * Returns the first object definition in the ordered set where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param active the active
+	 * @param system the system
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object definition, or <code>null</code> if a matching object definition could not be found
 	 */
 	@Override
-	public ObjectDefinition fetchByC_A_S_First(
-		long companyId, boolean active, int status,
+	public ObjectDefinition fetchByC_A_S_S_First(
+		long companyId, boolean active, boolean system, int status,
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		List<ObjectDefinition> list = findByC_A_S(
-			companyId, active, status, 0, 1, orderByComparator);
+		List<ObjectDefinition> list = findByC_A_S_S(
+			companyId, active, system, status, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5326,29 +5343,30 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object definition in the ordered set where companyId = &#63; and active = &#63; and status = &#63;.
+	 * Returns the last object definition in the ordered set where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param active the active
+	 * @param system the system
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object definition
 	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	@Override
-	public ObjectDefinition findByC_A_S_Last(
-			long companyId, boolean active, int status,
+	public ObjectDefinition findByC_A_S_S_Last(
+			long companyId, boolean active, boolean system, int status,
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByC_A_S_Last(
-			companyId, active, status, orderByComparator);
+		ObjectDefinition objectDefinition = fetchByC_A_S_S_Last(
+			companyId, active, system, status, orderByComparator);
 
 		if (objectDefinition != null) {
 			return objectDefinition;
 		}
 
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(10);
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
@@ -5357,6 +5375,9 @@ public class ObjectDefinitionPersistenceImpl
 
 		sb.append(", active=");
 		sb.append(active);
+
+		sb.append(", system=");
+		sb.append(system);
 
 		sb.append(", status=");
 		sb.append(status);
@@ -5367,27 +5388,29 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object definition in the ordered set where companyId = &#63; and active = &#63; and status = &#63;.
+	 * Returns the last object definition in the ordered set where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param active the active
+	 * @param system the system
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
 	 */
 	@Override
-	public ObjectDefinition fetchByC_A_S_Last(
-		long companyId, boolean active, int status,
+	public ObjectDefinition fetchByC_A_S_S_Last(
+		long companyId, boolean active, boolean system, int status,
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		int count = countByC_A_S(companyId, active, status);
+		int count = countByC_A_S_S(companyId, active, system, status);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<ObjectDefinition> list = findByC_A_S(
-			companyId, active, status, count - 1, count, orderByComparator);
+		List<ObjectDefinition> list = findByC_A_S_S(
+			companyId, active, system, status, count - 1, count,
+			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5397,19 +5420,21 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the object definitions before and after the current object definition in the ordered set where companyId = &#63; and active = &#63; and status = &#63;.
+	 * Returns the object definitions before and after the current object definition in the ordered set where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
 	 *
 	 * @param objectDefinitionId the primary key of the current object definition
 	 * @param companyId the company ID
 	 * @param active the active
+	 * @param system the system
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next object definition
 	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	@Override
-	public ObjectDefinition[] findByC_A_S_PrevAndNext(
-			long objectDefinitionId, long companyId, boolean active, int status,
+	public ObjectDefinition[] findByC_A_S_S_PrevAndNext(
+			long objectDefinitionId, long companyId, boolean active,
+			boolean system, int status,
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
@@ -5423,14 +5448,14 @@ public class ObjectDefinitionPersistenceImpl
 
 			ObjectDefinition[] array = new ObjectDefinitionImpl[3];
 
-			array[0] = getByC_A_S_PrevAndNext(
-				session, objectDefinition, companyId, active, status,
+			array[0] = getByC_A_S_S_PrevAndNext(
+				session, objectDefinition, companyId, active, system, status,
 				orderByComparator, true);
 
 			array[1] = objectDefinition;
 
-			array[2] = getByC_A_S_PrevAndNext(
-				session, objectDefinition, companyId, active, status,
+			array[2] = getByC_A_S_S_PrevAndNext(
+				session, objectDefinition, companyId, active, system, status,
 				orderByComparator, false);
 
 			return array;
@@ -5443,9 +5468,9 @@ public class ObjectDefinitionPersistenceImpl
 		}
 	}
 
-	protected ObjectDefinition getByC_A_S_PrevAndNext(
+	protected ObjectDefinition getByC_A_S_S_PrevAndNext(
 		Session session, ObjectDefinition objectDefinition, long companyId,
-		boolean active, int status,
+		boolean active, boolean system, int status,
 		OrderByComparator<ObjectDefinition> orderByComparator,
 		boolean previous) {
 
@@ -5453,20 +5478,22 @@ public class ObjectDefinitionPersistenceImpl
 
 		if (orderByComparator != null) {
 			sb = new StringBundler(
-				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			sb = new StringBundler(5);
+			sb = new StringBundler(6);
 		}
 
 		sb.append(_SQL_SELECT_OBJECTDEFINITION_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_A_S_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_A_S_S_COMPANYID_2);
 
-		sb.append(_FINDER_COLUMN_C_A_S_ACTIVE_2);
+		sb.append(_FINDER_COLUMN_C_A_S_S_ACTIVE_2);
 
-		sb.append(_FINDER_COLUMN_C_A_S_STATUS_2);
+		sb.append(_FINDER_COLUMN_C_A_S_S_SYSTEM_2);
+
+		sb.append(_FINDER_COLUMN_C_A_S_S_STATUS_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -5541,6 +5568,8 @@ public class ObjectDefinitionPersistenceImpl
 
 		queryPos.add(active);
 
+		queryPos.add(system);
+
 		queryPos.add(status);
 
 		if (orderByComparator != null) {
@@ -5563,24 +5592,25 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns all the object definitions that the user has permission to view where companyId = &#63; and active = &#63; and status = &#63;.
+	 * Returns all the object definitions that the user has permission to view where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param active the active
+	 * @param system the system
 	 * @param status the status
 	 * @return the matching object definitions that the user has permission to view
 	 */
 	@Override
-	public List<ObjectDefinition> filterFindByC_A_S(
-		long companyId, boolean active, int status) {
+	public List<ObjectDefinition> filterFindByC_A_S_S(
+		long companyId, boolean active, boolean system, int status) {
 
-		return filterFindByC_A_S(
-			companyId, active, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return filterFindByC_A_S_S(
+			companyId, active, system, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the object definitions that the user has permission to view where companyId = &#63; and active = &#63; and status = &#63;.
+	 * Returns a range of all the object definitions that the user has permission to view where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
@@ -5588,20 +5618,23 @@ public class ObjectDefinitionPersistenceImpl
 	 *
 	 * @param companyId the company ID
 	 * @param active the active
+	 * @param system the system
 	 * @param status the status
 	 * @param start the lower bound of the range of object definitions
 	 * @param end the upper bound of the range of object definitions (not inclusive)
 	 * @return the range of matching object definitions that the user has permission to view
 	 */
 	@Override
-	public List<ObjectDefinition> filterFindByC_A_S(
-		long companyId, boolean active, int status, int start, int end) {
+	public List<ObjectDefinition> filterFindByC_A_S_S(
+		long companyId, boolean active, boolean system, int status, int start,
+		int end) {
 
-		return filterFindByC_A_S(companyId, active, status, start, end, null);
+		return filterFindByC_A_S_S(
+			companyId, active, system, status, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the object definitions that the user has permissions to view where companyId = &#63; and active = &#63; and status = &#63;.
+	 * Returns an ordered range of all the object definitions that the user has permissions to view where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
@@ -5609,6 +5642,7 @@ public class ObjectDefinitionPersistenceImpl
 	 *
 	 * @param companyId the company ID
 	 * @param active the active
+	 * @param system the system
 	 * @param status the status
 	 * @param start the lower bound of the range of object definitions
 	 * @param end the upper bound of the range of object definitions (not inclusive)
@@ -5616,23 +5650,24 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the ordered range of matching object definitions that the user has permission to view
 	 */
 	@Override
-	public List<ObjectDefinition> filterFindByC_A_S(
-		long companyId, boolean active, int status, int start, int end,
-		OrderByComparator<ObjectDefinition> orderByComparator) {
+	public List<ObjectDefinition> filterFindByC_A_S_S(
+		long companyId, boolean active, boolean system, int status, int start,
+		int end, OrderByComparator<ObjectDefinition> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_A_S(
-				companyId, active, status, start, end, orderByComparator);
+			return findByC_A_S_S(
+				companyId, active, system, status, start, end,
+				orderByComparator);
 		}
 
 		StringBundler sb = null;
 
 		if (orderByComparator != null) {
 			sb = new StringBundler(
-				5 + (orderByComparator.getOrderByFields().length * 2));
+				6 + (orderByComparator.getOrderByFields().length * 2));
 		}
 		else {
-			sb = new StringBundler(6);
+			sb = new StringBundler(7);
 		}
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -5643,11 +5678,13 @@ public class ObjectDefinitionPersistenceImpl
 				_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_C_A_S_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_A_S_S_COMPANYID_2);
 
-		sb.append(_FINDER_COLUMN_C_A_S_ACTIVE_2_SQL);
+		sb.append(_FINDER_COLUMN_C_A_S_S_ACTIVE_2_SQL);
 
-		sb.append(_FINDER_COLUMN_C_A_S_STATUS_2);
+		sb.append(_FINDER_COLUMN_C_A_S_S_SYSTEM_2_SQL);
+
+		sb.append(_FINDER_COLUMN_C_A_S_S_STATUS_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			sb.append(
@@ -5699,6 +5736,8 @@ public class ObjectDefinitionPersistenceImpl
 
 			queryPos.add(active);
 
+			queryPos.add(system);
+
 			queryPos.add(status);
 
 			return (List<ObjectDefinition>)QueryUtil.list(
@@ -5713,25 +5752,27 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the object definitions before and after the current object definition in the ordered set of object definitions that the user has permission to view where companyId = &#63; and active = &#63; and status = &#63;.
+	 * Returns the object definitions before and after the current object definition in the ordered set of object definitions that the user has permission to view where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
 	 *
 	 * @param objectDefinitionId the primary key of the current object definition
 	 * @param companyId the company ID
 	 * @param active the active
+	 * @param system the system
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next object definition
 	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	@Override
-	public ObjectDefinition[] filterFindByC_A_S_PrevAndNext(
-			long objectDefinitionId, long companyId, boolean active, int status,
+	public ObjectDefinition[] filterFindByC_A_S_S_PrevAndNext(
+			long objectDefinitionId, long companyId, boolean active,
+			boolean system, int status,
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_A_S_PrevAndNext(
-				objectDefinitionId, companyId, active, status,
+			return findByC_A_S_S_PrevAndNext(
+				objectDefinitionId, companyId, active, system, status,
 				orderByComparator);
 		}
 
@@ -5745,14 +5786,14 @@ public class ObjectDefinitionPersistenceImpl
 
 			ObjectDefinition[] array = new ObjectDefinitionImpl[3];
 
-			array[0] = filterGetByC_A_S_PrevAndNext(
-				session, objectDefinition, companyId, active, status,
+			array[0] = filterGetByC_A_S_S_PrevAndNext(
+				session, objectDefinition, companyId, active, system, status,
 				orderByComparator, true);
 
 			array[1] = objectDefinition;
 
-			array[2] = filterGetByC_A_S_PrevAndNext(
-				session, objectDefinition, companyId, active, status,
+			array[2] = filterGetByC_A_S_S_PrevAndNext(
+				session, objectDefinition, companyId, active, system, status,
 				orderByComparator, false);
 
 			return array;
@@ -5765,9 +5806,9 @@ public class ObjectDefinitionPersistenceImpl
 		}
 	}
 
-	protected ObjectDefinition filterGetByC_A_S_PrevAndNext(
+	protected ObjectDefinition filterGetByC_A_S_S_PrevAndNext(
 		Session session, ObjectDefinition objectDefinition, long companyId,
-		boolean active, int status,
+		boolean active, boolean system, int status,
 		OrderByComparator<ObjectDefinition> orderByComparator,
 		boolean previous) {
 
@@ -5775,11 +5816,11 @@ public class ObjectDefinitionPersistenceImpl
 
 		if (orderByComparator != null) {
 			sb = new StringBundler(
-				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+				8 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			sb = new StringBundler(6);
+			sb = new StringBundler(7);
 		}
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -5790,11 +5831,13 @@ public class ObjectDefinitionPersistenceImpl
 				_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_C_A_S_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_A_S_S_COMPANYID_2);
 
-		sb.append(_FINDER_COLUMN_C_A_S_ACTIVE_2_SQL);
+		sb.append(_FINDER_COLUMN_C_A_S_S_ACTIVE_2_SQL);
 
-		sb.append(_FINDER_COLUMN_C_A_S_STATUS_2);
+		sb.append(_FINDER_COLUMN_C_A_S_S_SYSTEM_2_SQL);
+
+		sb.append(_FINDER_COLUMN_C_A_S_S_STATUS_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			sb.append(
@@ -5908,6 +5951,8 @@ public class ObjectDefinitionPersistenceImpl
 
 		queryPos.add(active);
 
+		queryPos.add(system);
+
 		queryPos.add(status);
 
 		if (orderByComparator != null) {
@@ -5930,17 +5975,20 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Removes all the object definitions where companyId = &#63; and active = &#63; and status = &#63; from the database.
+	 * Removes all the object definitions where companyId = &#63; and active = &#63; and system = &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param active the active
+	 * @param system the system
 	 * @param status the status
 	 */
 	@Override
-	public void removeByC_A_S(long companyId, boolean active, int status) {
+	public void removeByC_A_S_S(
+		long companyId, boolean active, boolean system, int status) {
+
 		for (ObjectDefinition objectDefinition :
-				findByC_A_S(
-					companyId, active, status, QueryUtil.ALL_POS,
+				findByC_A_S_S(
+					companyId, active, system, status, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null)) {
 
 			remove(objectDefinition);
@@ -5948,31 +5996,36 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of object definitions where companyId = &#63; and active = &#63; and status = &#63;.
+	 * Returns the number of object definitions where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param active the active
+	 * @param system the system
 	 * @param status the status
 	 * @return the number of matching object definitions
 	 */
 	@Override
-	public int countByC_A_S(long companyId, boolean active, int status) {
-		FinderPath finderPath = _finderPathCountByC_A_S;
+	public int countByC_A_S_S(
+		long companyId, boolean active, boolean system, int status) {
 
-		Object[] finderArgs = new Object[] {companyId, active, status};
+		FinderPath finderPath = _finderPathCountByC_A_S_S;
+
+		Object[] finderArgs = new Object[] {companyId, active, system, status};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(5);
 
 			sb.append(_SQL_COUNT_OBJECTDEFINITION_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_A_S_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_A_S_S_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_C_A_S_ACTIVE_2);
+			sb.append(_FINDER_COLUMN_C_A_S_S_ACTIVE_2);
 
-			sb.append(_FINDER_COLUMN_C_A_S_STATUS_2);
+			sb.append(_FINDER_COLUMN_C_A_S_S_SYSTEM_2);
+
+			sb.append(_FINDER_COLUMN_C_A_S_S_STATUS_2);
 
 			String sql = sb.toString();
 
@@ -5988,6 +6041,8 @@ public class ObjectDefinitionPersistenceImpl
 				queryPos.add(companyId);
 
 				queryPos.add(active);
+
+				queryPos.add(system);
 
 				queryPos.add(status);
 
@@ -6007,28 +6062,33 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of object definitions that the user has permission to view where companyId = &#63; and active = &#63; and status = &#63;.
+	 * Returns the number of object definitions that the user has permission to view where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param active the active
+	 * @param system the system
 	 * @param status the status
 	 * @return the number of matching object definitions that the user has permission to view
 	 */
 	@Override
-	public int filterCountByC_A_S(long companyId, boolean active, int status) {
+	public int filterCountByC_A_S_S(
+		long companyId, boolean active, boolean system, int status) {
+
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByC_A_S(companyId, active, status);
+			return countByC_A_S_S(companyId, active, system, status);
 		}
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_A_S_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_A_S_S_COMPANYID_2);
 
-		sb.append(_FINDER_COLUMN_C_A_S_ACTIVE_2_SQL);
+		sb.append(_FINDER_COLUMN_C_A_S_S_ACTIVE_2_SQL);
 
-		sb.append(_FINDER_COLUMN_C_A_S_STATUS_2);
+		sb.append(_FINDER_COLUMN_C_A_S_S_SYSTEM_2_SQL);
+
+		sb.append(_FINDER_COLUMN_C_A_S_S_STATUS_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
 			sb.toString(), ObjectDefinition.class.getName(),
@@ -6050,6 +6110,8 @@ public class ObjectDefinitionPersistenceImpl
 
 			queryPos.add(active);
 
+			queryPos.add(system);
+
 			queryPos.add(status);
 
 			Long count = (Long)sqlQuery.uniqueResult();
@@ -6064,16 +6126,22 @@ public class ObjectDefinitionPersistenceImpl
 		}
 	}
 
-	private static final String _FINDER_COLUMN_C_A_S_COMPANYID_2 =
+	private static final String _FINDER_COLUMN_C_A_S_S_COMPANYID_2 =
 		"objectDefinition.companyId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_A_S_ACTIVE_2 =
+	private static final String _FINDER_COLUMN_C_A_S_S_ACTIVE_2 =
 		"objectDefinition.active = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_A_S_ACTIVE_2_SQL =
+	private static final String _FINDER_COLUMN_C_A_S_S_ACTIVE_2_SQL =
 		"objectDefinition.active_ = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_A_S_STATUS_2 =
+	private static final String _FINDER_COLUMN_C_A_S_S_SYSTEM_2 =
+		"objectDefinition.system = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_A_S_S_SYSTEM_2_SQL =
+		"objectDefinition.system_ = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_A_S_S_STATUS_2 =
 		"objectDefinition.status = ?";
 
 	public ObjectDefinitionPersistenceImpl() {
@@ -6770,30 +6838,31 @@ public class ObjectDefinitionPersistenceImpl
 			new String[] {Boolean.class.getName(), Integer.class.getName()},
 			new String[] {"system_", "status"}, false);
 
-		_finderPathWithPaginationFindByC_A_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_S",
+		_finderPathWithPaginationFindByC_A_S_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_S_S",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
+				OrderByComparator.class.getName()
 			},
-			new String[] {"companyId", "active_", "status"}, true);
+			new String[] {"companyId", "active_", "system_", "status"}, true);
 
-		_finderPathWithoutPaginationFindByC_A_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_S",
+		_finderPathWithoutPaginationFindByC_A_S_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_S_S",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
+				Boolean.class.getName(), Integer.class.getName()
 			},
-			new String[] {"companyId", "active_", "status"}, true);
+			new String[] {"companyId", "active_", "system_", "status"}, true);
 
-		_finderPathCountByC_A_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_S",
+		_finderPathCountByC_A_S_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_S_S",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
+				Boolean.class.getName(), Integer.class.getName()
 			},
-			new String[] {"companyId", "active_", "status"}, false);
+			new String[] {"companyId", "active_", "system_", "status"}, false);
 	}
 
 	@Deactivate

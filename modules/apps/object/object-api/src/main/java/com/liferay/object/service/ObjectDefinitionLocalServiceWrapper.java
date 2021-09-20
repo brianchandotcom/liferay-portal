@@ -404,10 +404,11 @@ public class ObjectDefinitionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.object.model.ObjectDefinition>
-		getObjectDefinitions(long companyId, boolean active, int status) {
+		getObjectDefinitions(
+			long companyId, boolean active, boolean system, int status) {
 
 		return _objectDefinitionLocalService.getObjectDefinitions(
-			companyId, active, status);
+			companyId, active, system, status);
 	}
 
 	/**

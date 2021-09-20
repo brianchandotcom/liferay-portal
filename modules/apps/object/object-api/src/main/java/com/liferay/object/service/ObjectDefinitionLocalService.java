@@ -306,7 +306,7 @@ public interface ObjectDefinitionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectDefinition> getObjectDefinitions(
-		long companyId, boolean active, int status);
+		long companyId, boolean active, boolean system, int status);
 
 	/**
 	 * Returns the number of object definitions.

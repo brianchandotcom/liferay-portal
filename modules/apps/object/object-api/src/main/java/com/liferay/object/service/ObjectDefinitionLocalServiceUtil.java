@@ -363,9 +363,10 @@ public class ObjectDefinitionLocalServiceUtil {
 	}
 
 	public static List<ObjectDefinition> getObjectDefinitions(
-		long companyId, boolean active, int status) {
+		long companyId, boolean active, boolean system, int status) {
 
-		return getService().getObjectDefinitions(companyId, active, status);
+		return getService().getObjectDefinitions(
+			companyId, active, system, status);
 	}
 
 	/**

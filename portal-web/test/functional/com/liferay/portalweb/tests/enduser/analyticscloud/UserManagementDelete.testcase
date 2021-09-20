@@ -37,13 +37,15 @@ definition {
 			ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
 		}
 
-		task ("Login with the admin user and check if he can delete another user") {
+		task ("Login with the admin user") {
 			ACWorkspace.signOut();
 
 			ACLogin.loginAs(
-				emailAddress = "corbin.murakami@faro.io",
+				emailAddress = "michelle.hoshi@faro.io",
 				password = "test");
+		}
 
+		task ("Check if the admin user can delete another user") {
 			ACWorkspace.openWorkspace();
 
 			ACNavigation.goToSettings();
@@ -55,7 +57,9 @@ definition {
 			ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
 
 			ACSettings.deleteUser(userDelete = "user@liferay.com");
+		}
 
+		task ("Assert user not present") {
 			ACUtils.clearSearchBar();
 
 			ACSettings.assertUserNotPresent(userEmail = "user@liferay.com");

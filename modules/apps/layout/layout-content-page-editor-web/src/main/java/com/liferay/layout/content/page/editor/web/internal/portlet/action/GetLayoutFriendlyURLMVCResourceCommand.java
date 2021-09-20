@@ -72,7 +72,7 @@ public class GetLayoutFriendlyURLMVCResourceCommand
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
 					"friendlyURL",
-					_portal.getLayoutFullURL(layout, themeDisplay)));
+					_portal.getLayoutRelativeURL(layout, themeDisplay)));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

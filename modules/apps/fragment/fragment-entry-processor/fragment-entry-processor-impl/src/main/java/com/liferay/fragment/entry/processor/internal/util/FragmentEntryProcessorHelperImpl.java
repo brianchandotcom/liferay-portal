@@ -489,7 +489,7 @@ public class FragmentEntryProcessorHelperImpl
 			return StringPool.POUND;
 		}
 
-		return _portal.getLayoutFullURL(layout, themeDisplay);
+		return _portal.getLayoutRelativeURL(layout, themeDisplay);
 	}
 
 	/**

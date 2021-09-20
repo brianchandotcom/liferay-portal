@@ -14,6 +14,7 @@
 
 package com.liferay.layout.internal.search.util;
 
+import com.liferay.layout.search.util.LayoutCrawler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
@@ -50,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(immediate = true, service = LayoutCrawler.class)
-public class LayoutCrawler {
+public class LayoutCrawlerImpl implements LayoutCrawler {
 
 	public String getLayoutContent(Layout layout, Locale locale)
 		throws Exception {

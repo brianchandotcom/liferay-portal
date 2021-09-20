@@ -20,6 +20,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -105,6 +107,8 @@ public class RemoteAppEntryLocalServiceImpl
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
+		_addRemoteAppEntryResources(remoteAppEntry);
+
 		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
 
 		return remoteAppEntry;
@@ -135,6 +139,8 @@ public class RemoteAppEntryLocalServiceImpl
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
+		_addRemoteAppEntryResources(remoteAppEntry);
+
 		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
 
 		return remoteAppEntry;
@@ -155,6 +161,11 @@ public class RemoteAppEntryLocalServiceImpl
 		throws PortalException {
 
 		remoteAppEntryPersistence.remove(remoteAppEntry);
+
+		_resourceLocalService.deleteResource(
+			remoteAppEntry.getCompanyId(), RemoteAppEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			remoteAppEntry.getRemoteAppEntryId());
 
 		remoteAppEntryLocalService.undeployRemoteAppEntry(remoteAppEntry);
 
@@ -298,6 +309,15 @@ public class RemoteAppEntryLocalServiceImpl
 		_bundleContext = bundleContext;
 	}
 
+	private void _addRemoteAppEntryResources(RemoteAppEntry remoteAppEntry)
+		throws PortalException {
+
+		_resourceLocalService.addResources(
+			remoteAppEntry.getCompanyId(), 0, remoteAppEntry.getUserId(),
+			RemoteAppEntry.class.getName(),
+			remoteAppEntry.getRemoteAppEntryId(), false, true, true);
+	}
+
 	private SearchContext _buildSearchContext(
 		long companyId, String keywords, int start, int end, Sort sort) {
 
@@ -439,6 +459,9 @@ public class RemoteAppEntryLocalServiceImpl
 
 	@Reference
 	private RemoteAppEntryDeployer _remoteAppEntryDeployer;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	private final Map<Long, List<ServiceRegistration<?>>>
 		_serviceRegistrationsMaps = new ConcurrentHashMap<>();

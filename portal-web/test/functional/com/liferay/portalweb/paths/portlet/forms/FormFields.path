@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_DISABLED_SELECT_OPTION</td>
+	<td>//*[contains(@class, 'dropdown')]//*[contains(@class, 'disabled') and contains(text(), '${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_FIELD</td>
 	<td>//div[contains(@data-field-name,'${key_fieldName}')]</td>
 	<td></td>
@@ -148,6 +153,11 @@
 <tr>
 	<td>PREDEFINED_VALUE_INPUT</td>
 	<td>//input[contains(@name,'predefinedValue')]/..//input[@type!="hidden"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREDEFINED_VALUE_AT_FORM_SELECT</td>
+	<td>//label[contains(text(),'${key_fieldName}')]/..//div[contains(@class,'option-selected') and contains(text(),'${key_fieldValue}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -507,6 +517,16 @@
 	<td></td>
 </tr>
 <tr>
+		<td>INPUT_MASK_PREFIX_OR_SUFFIX</td>
+		<td>//label[contains(text(),'Prefix or Suffix')]//..//input[(@type='text')]</td>
+		<td></td>
+</tr>
+<tr>
+		<td>INPUT_MASK_PREFIX_OR_SUFFIX_VALUE</td>
+		<td>//div[contains(concat(' ',normalize-space(@class),' '),'ddm-field-container')]//div[contains(@class,'input-group-text') and contains(text(),'${key_affixValue}')]</td>
+		<td></td>
+</tr>
+<tr>
 	<td>INPUT_MASK_VALUE</td>
 	<td>//div[contains(concat(' ',normalize-space(@class),' '),'ddm-field-container')]//div[@class='form-group']//input[@placeholder='${key_inputMaskValue}']</td>
 	<td></td>
@@ -520,11 +540,6 @@
 	<td>NUMBER_FIELD_VALUE_ROW</td>
 	<td>//div[${key_rowNumber}]//div[contains(concat(' ',normalize-space(@class),' '),'ddm-field-container')]//label[contains(text(),'${key_fieldName}')]/..//input[@value='${key_fieldValue}']
 </td>
-	<td></td>
-</tr>
-<tr>
-	<td>NUMERIC_TYPE</td>
-	<td>//div[contains(@class,'ddm-radio')]//..//input[contains(@class,'form-control') and contains(@value,'${key_numericType}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -784,6 +799,11 @@
 <tr>
 	<td>SELECTOR</td>
 	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTION_SELECTED</td>
+	<td>//div[contains(@class,'ddm-radio')]//..//input[contains(@class,'form-control') and contains(@value,'${key_optionSelected}')]</td>
 	<td></td>
 </tr>
 <tr>

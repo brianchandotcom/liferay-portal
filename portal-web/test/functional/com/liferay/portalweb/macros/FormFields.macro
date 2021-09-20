@@ -340,6 +340,13 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro editNumericType {
+		Click(
+			key_fieldName = "",
+			key_radioOption = "${numericType}",
+			locator1 = "FormFields#RADIO_OPTION_LABEL");
+	}
+
 	macro editOptionsRow {
 		var key_rowNumber = "${rowNumber}";
 
@@ -1001,6 +1008,43 @@ definition {
 			value1 = "${inputMaskFormat}");
 	}
 
+	macro setInputMaskOnDecimal {
+		if (isSet(thousandsSeparator)) {
+			Click(
+				key_fieldName = "Thousands Separator",
+				locator1 = "FormFields#SELECT_FIELD");
+
+			MenuItem.click(menuItem = "${thousandsSeparator}");
+		}
+
+		if (isSet(decimalSeparator)) {
+			Click(
+				key_fieldName = "Decimal Separator",
+				locator1 = "FormFields#SELECT_FIELD");
+
+			MenuItem.click(menuItem = "${decimalSeparator}");
+		}
+
+		if (isSet(prefix)) {
+			var inputMask = "${prefix}";
+			var maskOption = "Prefix";
+		}
+
+		if (isSet(suffix)) {
+			var inputMask = "${suffix}";
+			var maskOption = "Suffix";
+		}
+
+		Type(
+			locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX",
+			value1 = "${inputMask}");
+
+		Click(
+			key_fieldName = "",
+			key_radioOption = "${maskOption}",
+			locator1 = "FormFields#RADIO_OPTION_LABEL");
+	}
+
 	macro toggleCKEditorContentStyle {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
@@ -1201,6 +1245,16 @@ definition {
 		AssertTextNotPresent(
 			locator1 = "FormFields#SELECT_OPTIONS_OPTION_VALUE_FIELD_VISIBLE",
 			value1 = "${fieldValue}");
+	}
+
+	macro viewDisabledSelectOption {
+		Click(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#SELECT_FIELD");
+
+		AssertElementPresent(
+			key_text = "${optionValue}",
+			locator1 = "FormFields#ANY_DISABLED_SELECT_OPTION");
 	}
 
 	macro viewField {
@@ -1463,12 +1517,12 @@ definition {
 		AssertElementPresent(
 			key_inputMaskValue = "${inputMaskValue}",
 			locator1 = "FormFields#INPUT_MASK_VALUE");
-	}
 
-	macro viewNumericType {
-		AssertElementPresent(
-			key_numericType = "${numericType}",
-			locator1 = "FormFields#NUMERIC_TYPE");
+		if (isSet(affixValue)) {
+			AssertElementPresent(
+				key_affixValue = "${affixValue}",
+				locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX_VALUE");
+		}
 	}
 
 	macro viewOptionColumnsName {
@@ -1493,6 +1547,12 @@ definition {
 			key_optionName = "${optionName}",
 			key_rowNumber = "${rowNumber}",
 			locator1 = "FormFields#GRID_OPTIONS_OPTION_ROW_NAME");
+	}
+
+	macro viewOptionSelected {
+		AssertElementPresent(
+			key_optionSelected = "${optionSelected}",
+			locator1 = "FormFields#OPTION_SELECTED");
 	}
 
 	macro viewOptionSingleSelection {
@@ -2066,6 +2126,13 @@ definition {
 		var key_fieldLabel = "${fieldLabel}";
 
 		AssertElementNotPresent(locator1 = "FormFields#VALIDATION_VALUE_FIELD");
+	}
+
+	macro viewWarningMessage {
+		AssertTextEquals(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#HELP_TEXT",
+			value1 = "${warningMessage}");
 	}
 
 }

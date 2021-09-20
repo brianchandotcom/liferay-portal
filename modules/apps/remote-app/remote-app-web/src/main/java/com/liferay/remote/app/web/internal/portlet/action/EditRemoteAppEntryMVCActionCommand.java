@@ -128,8 +128,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 				nameMap);
 		}
 		else if (Objects.equals(
-					remoteAppEntry.getType(),
-					RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+					remoteAppEntry.getType(), RemoteAppConstants.TYPE_IFRAME)) {
 
 			_remoteAppEntryService.updateIFrameRemoteAppEntry(
 				remoteAppEntryId,

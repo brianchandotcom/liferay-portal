@@ -910,8 +910,8 @@ public class AssetListAssetEntryProviderImpl
 		try {
 			Hits hits = _assetHelper.search(
 				_getManualSearchContext(
-					assetEntryIds, assetListEntry.getCompanyId(),
-					assetCategoryIds, keywords),
+					assetCategoryIds, assetEntryIds,
+					assetListEntry.getCompanyId(), keywords),
 				_getManualAssetEntryQuery(assetListEntry), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
@@ -952,8 +952,8 @@ public class AssetListAssetEntryProviderImpl
 		try {
 			Long count = _assetHelper.searchCount(
 				_getManualSearchContext(
-					assetEntryIds, assetListEntry.getCompanyId(),
-					assetCategoryIds, keywords),
+					assetCategoryIds, assetEntryIds,
+					assetListEntry.getCompanyId(), keywords),
 				_getManualAssetEntryQuery(assetListEntry));
 
 			return count.intValue();
@@ -994,7 +994,7 @@ public class AssetListAssetEntryProviderImpl
 	}
 
 	private SearchContext _getManualSearchContext(
-		List<Long> assetEntryIds, long companyId, long[][] assetCategoryIds,
+		long[][] assetCategoryIds, List<Long> assetEntryIds, long companyId,
 		String keywords) {
 
 		SearchContext searchContext = new SearchContext();

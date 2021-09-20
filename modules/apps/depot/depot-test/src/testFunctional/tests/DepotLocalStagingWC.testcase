@@ -166,11 +166,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Web Content Display");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(
 			depotName = "Test Depot Name",
@@ -542,11 +546,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "WC WebContent Title",
@@ -616,11 +624,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Web Content Display");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Test Embedded Video Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(
 			depotName = "Test Embedded Video Depot Name",
@@ -673,11 +685,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		Staging.gotoPublishToLive();
 

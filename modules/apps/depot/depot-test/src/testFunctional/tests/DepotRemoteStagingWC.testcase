@@ -198,11 +198,14 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			widgetName = "Web Content Display");
+
 		Navigator.openSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(
 			depotName = "Test Depot Name",
@@ -644,11 +647,14 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			widgetName = "Asset Publisher");
+
 		Navigator.openSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "WC WebContent Title",
@@ -708,11 +714,14 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			widgetName = "Web Content Display");
+
 		Navigator.openSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(
 			depotName = "Test Depot Name",
@@ -775,13 +784,14 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			widgetName = "Asset Publisher");
 
 		Navigator.openSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "WC Folder Name",

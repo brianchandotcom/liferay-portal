@@ -75,11 +75,15 @@ definition {
 			imageFileName = "Document_2.jpg",
 			siteURLKey = "site-name-staging");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Blogs");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
 
 		Staging.gotoPublishToLive();
 
@@ -147,11 +151,11 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Blogs");
 
 		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
@@ -238,11 +242,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "Document_1.doc",
@@ -333,11 +341,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "DM Document Title",
@@ -413,11 +425,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "Document_2.jpg",
@@ -584,11 +600,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Blogs");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntry(
 			depotName = "Test Depot Name",
@@ -704,11 +724,15 @@ definition {
 
 		PortletEntry.publish();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Web Content Display");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
 
@@ -786,11 +810,15 @@ definition {
 			imageFileName = "Document_2.jpg",
 			siteURLKey = "site-name-staging");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Blogs");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
 
 		AssertVisible(
 			key_uploadFileName = "Document_2.jpg",
@@ -867,11 +895,11 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Blogs");
 
 		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
@@ -968,11 +996,11 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Blogs");
 
 		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
@@ -1061,11 +1089,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "Document_2.doc",
@@ -1155,11 +1187,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "DM Document Title",
@@ -1232,11 +1268,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "Document_2.jpg",
@@ -1324,11 +1364,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "DM Video Title In Depot",
@@ -1554,11 +1598,15 @@ definition {
 
 		PortletEntry.publish();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Web Content Display");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
 
@@ -1642,11 +1690,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Documents and Media");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Documents and Media");
 
 		DMDocument.enableActionsMenuOnPortlet();
 
@@ -1705,11 +1757,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		Staging.gotoPublishToLive();
 
@@ -1839,11 +1895,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "Document_2.jpg",
@@ -1904,11 +1964,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "Document_2.jpg",
@@ -1996,11 +2060,15 @@ definition {
 			imageFileName = "Document_2.jpg",
 			siteURLKey = "site-name-staging");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Blogs");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
 
 		Staging.gotoPublishToLive();
 
@@ -2029,11 +2097,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "Test YouTube Video Name",
@@ -2091,11 +2163,15 @@ definition {
 
 		PortletEntry.publish();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Blogs");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
 
 		Staging.gotoPublishToLive();
 
@@ -2231,11 +2307,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "DM Document Title",
@@ -2311,11 +2391,15 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewImageFromDisconnectedSite {
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(depotName = "Test Depot Name");
 

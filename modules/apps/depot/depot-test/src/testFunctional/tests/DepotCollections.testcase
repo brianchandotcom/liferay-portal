@@ -128,11 +128,15 @@ definition {
 
 		Staging.publishToLive();
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.selectAssetList(
 			assetListName = "Depot Manual Asset List",
@@ -220,6 +224,11 @@ definition {
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
 
 		Staging.publishToLive(remoteStaging = "true");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			widgetName = "Asset Publisher");
 
 		Navigator.openSitePage(
 			pageName = "Test Page",

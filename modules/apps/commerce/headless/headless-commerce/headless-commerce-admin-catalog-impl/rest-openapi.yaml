@@ -419,11 +419,13 @@ components:
                     type: string
                 productExternalReferenceCode:
                     example: exampleERC
+                    readOnly: true
                     type: string
                 productId:
                     example: 33131
                     format: int64
                     minimum: 0
+                    readOnly: true
                     type: integer
                 radius:
                     example: 33.54
@@ -6309,8 +6311,8 @@ paths:
             summary: Gets the diagram by product external reference code.
             tags:
                 - Diagram
-        put:
-            operationId: putProductByExternalReferenceCodeDiagram
+        post:
+            operationId: postProductByExternalReferenceCodeDiagram
             parameters:
                 - in: path
                   explode: false
@@ -10789,8 +10791,8 @@ paths:
             summary: Gets the diagram by product ID.
             tags:
                 - Diagram
-        put:
-            operationId: putProductIdDiagram
+        post:
+            operationId: postProductIdDiagram
             parameters:
                 - in: path
                   explode: false

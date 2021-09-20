@@ -25,6 +25,18 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class DiagramUtil {
 
+	public static CSDiagramSetting addCSDiagramSetting(
+			long cpDefinitionId,
+			CSDiagramSettingService csDiagramSettingService, Diagram diagram)
+		throws PortalException {
+
+		return csDiagramSettingService.addCSDiagramSetting(
+			cpDefinitionId, GetterUtil.getLong(diagram.getImageId()),
+			GetterUtil.getString(diagram.getColor()),
+			GetterUtil.getDouble(diagram.getRadius()),
+			GetterUtil.getString(diagram.getType()));
+	}
+
 	public static CSDiagramSetting addOrUpdateCSDiagramSetting(
 			long cpDefinitionId,
 			CSDiagramSettingService csDiagramSettingService, Diagram diagram)
@@ -35,12 +47,18 @@ public class DiagramUtil {
 				cpDefinitionId);
 
 		if (csDiagramSetting == null) {
-			return csDiagramSettingService.addCSDiagramSetting(
-				cpDefinitionId, GetterUtil.getLong(diagram.getImageId()),
-				GetterUtil.getString(diagram.getColor()),
-				GetterUtil.getDouble(diagram.getRadius()),
-				GetterUtil.getString(diagram.getType()));
+			addOrUpdateCSDiagramSetting(
+				cpDefinitionId, csDiagramSettingService, diagram);
 		}
+
+		return updateCSDiagramSetting(
+			csDiagramSetting, csDiagramSettingService, diagram);
+	}
+
+	public static CSDiagramSetting updateCSDiagramSetting(
+			CSDiagramSetting csDiagramSetting,
+			CSDiagramSettingService csDiagramSettingService, Diagram diagram)
+		throws PortalException {
 
 		return csDiagramSettingService.updateCSDiagramSetting(
 			csDiagramSetting.getCSDiagramSettingId(),

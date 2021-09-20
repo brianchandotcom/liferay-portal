@@ -25,6 +25,17 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class PinUtil {
 
+	public static CSDiagramPin addCSDiagramPin(
+			long cpDefinitionId, CSDiagramPinService csDiagramPinService,
+			Pin pin)
+		throws PortalException {
+
+		return csDiagramPinService.addCSDiagramPin(
+			cpDefinitionId, GetterUtil.getDouble(pin.getPositionX()),
+			GetterUtil.getDouble(pin.getPositionY()),
+			GetterUtil.getString(pin.getSequence()));
+	}
+
 	public static CSDiagramPin addOrUpdateCSDiagramPin(
 			long cpDefinitionId, CSDiagramPinService csDiagramPinService,
 			Pin pin)
@@ -34,11 +45,16 @@ public class PinUtil {
 			cpDefinitionId);
 
 		if (csDiagramPin == null) {
-			return csDiagramPinService.addCSDiagramPin(
-				cpDefinitionId, GetterUtil.getDouble(pin.getPositionX()),
-				GetterUtil.getDouble(pin.getPositionY()),
-				GetterUtil.getString(pin.getSequence()));
+			addCSDiagramPin(cpDefinitionId, csDiagramPinService, pin);
 		}
+
+		return updateCSDiagramPin(csDiagramPin, csDiagramPinService, pin);
+	}
+
+	public static CSDiagramPin updateCSDiagramPin(
+			CSDiagramPin csDiagramPin, CSDiagramPinService csDiagramPinService,
+			Pin pin)
+		throws PortalException {
 
 		return csDiagramPinService.updateCSDiagramPin(
 			csDiagramPin.getCSDiagramPinId(),

@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class MappedProductUtil {
 
-	public static CSDiagramEntry addOrUpdateCSDiagramEntry(
+	public static CSDiagramEntry addCSDiagramEntry(
 			long companyId, long cpDefinitionId,
 			CPDefinitionService cpDefinitionService,
 			CPInstanceService cpInstanceService,
@@ -58,19 +58,41 @@ public class MappedProductUtil {
 			productId = cpDefinition.getCProductId();
 		}
 
+		return csDiagramEntryService.addCSDiagramEntry(
+			cpDefinitionId, skuId, productId,
+			GetterUtil.getBoolean(mappedProduct.getDiagram()),
+			GetterUtil.getInteger(mappedProduct.getQuantity()),
+			GetterUtil.getString(mappedProduct.getSequence()),
+			GetterUtil.getString(mappedProduct.getSku()), new ServiceContext());
+	}
+
+	public static CSDiagramEntry addOrUpdateCSDiagramEntry(
+			long companyId, long cpDefinitionId,
+			CPDefinitionService cpDefinitionService,
+			CPInstanceService cpInstanceService,
+			CSDiagramEntryService csDiagramEntryService,
+			MappedProduct mappedProduct)
+		throws PortalException {
+
 		CSDiagramEntry csDiagramEntry =
 			csDiagramEntryService.fetchCSDiagramEntry(
 				cpDefinitionId, mappedProduct.getSequence());
 
 		if (csDiagramEntry == null) {
-			return csDiagramEntryService.addCSDiagramEntry(
-				cpDefinitionId, skuId, productId,
-				GetterUtil.getBoolean(mappedProduct.getDiagram()),
-				GetterUtil.getInteger(mappedProduct.getQuantity()),
-				GetterUtil.getString(mappedProduct.getSequence()),
-				GetterUtil.getString(mappedProduct.getSku()),
-				new ServiceContext());
+			addCSDiagramEntry(
+				companyId, cpDefinitionId, cpDefinitionService,
+				cpInstanceService, csDiagramEntryService, mappedProduct);
 		}
+
+		return updateCSDiagramEntry(
+			csDiagramEntry, csDiagramEntryService, mappedProduct);
+	}
+
+	public static CSDiagramEntry updateCSDiagramEntry(
+			CSDiagramEntry csDiagramEntry,
+			CSDiagramEntryService csDiagramEntryService,
+			MappedProduct mappedProduct)
+		throws PortalException {
 
 		return csDiagramEntryService.updateCSDiagramEntry(
 			csDiagramEntry.getCSDiagramEntryId(),

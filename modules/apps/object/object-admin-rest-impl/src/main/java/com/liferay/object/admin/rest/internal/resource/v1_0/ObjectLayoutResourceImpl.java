@@ -178,6 +178,7 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 				objectFieldId =
 					serviceBuilderObjectLayoutColumn.getObjectFieldId();
 				priority = serviceBuilderObjectLayoutColumn.getPriority();
+				size = serviceBuilderObjectLayoutColumn.getSize();
 			}
 		};
 	}
@@ -193,6 +194,7 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 			objectLayoutColumn.getObjectFieldId());
 		serviceBuilderObjectLayoutColumn.setPriority(
 			objectLayoutColumn.getPriority());
+		serviceBuilderObjectLayoutColumn.setSize(objectLayoutColumn.getSize());
 
 		return serviceBuilderObjectLayoutColumn;
 	}

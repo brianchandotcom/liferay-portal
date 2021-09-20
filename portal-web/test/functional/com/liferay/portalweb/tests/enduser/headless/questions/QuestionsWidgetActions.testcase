@@ -1633,7 +1633,7 @@ definition {
 
 		AssertVisible(
 			key_questionTitle = "Title AddQuestion",
-			locator1 = "Questions#QUESTIONS_TITLE");
+			locator1 = "Questions#QUESTIONS_DETAILS_TITLE");
 	}
 
 	@description = "Validate if the user can view the my activity default after delete all the responses."

@@ -2218,6 +2218,7 @@ definition {
 	}
 
 	@description = "LRQA-53639 - Automate LPS-100675"
+	@ignore = "true"
 	@priority = "5"
 	test VerifyFilterTopStepPerformance {
 		property portal.acceptance = "true";

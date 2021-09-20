@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.exception.XLIFFFileException;
 import com.liferay.translation.service.TranslationEntryService;
@@ -105,11 +107,26 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				className, classPK, object,
 				themeDisplay.getPermissionChecker());
 
-			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
-					"file")) {
+			if (Objects.equals(
+					uploadPortletRequest.getContentType("file"),
+					ContentTypes.APPLICATION_ZIP)) {
 
-				_importXLIFFFile(
-					actionRequest, classPK, groupId, className, inputStream);
+				try (InputStream inputStream =
+						uploadPortletRequest.getFileAsStream("file")) {
+
+					_importZipFile(
+						actionRequest, classPK, groupId, className,
+						inputStream);
+				}
+			}
+			else {
+				try (InputStream inputStream =
+						uploadPortletRequest.getFileAsStream("file")) {
+
+					_importXLIFFFile(
+						actionRequest, classPK, groupId, className,
+						inputStream);
+				}
 			}
 
 			String portletResource = ParamUtil.getString(
@@ -220,6 +237,29 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			new InfoItemReference(className, classPK),
 			translationSnapshot.getInfoItemFieldValues(),
 			ServiceContextFactory.getInstance(actionRequest));
+	}
+
+	private void _importZipFile(
+			ActionRequest actionRequest, long classPK, long groupId,
+			String className, InputStream inputStream)
+		throws IOException, PortalException {
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(inputStream);
+
+		try {
+			for (String entry : zipReader.getEntries()) {
+				try (InputStream entryInputStream =
+						zipReader.getEntryAsInputStream(entry)) {
+
+					_importXLIFFFile(
+						actionRequest, classPK, groupId, className,
+						entryInputStream);
+				}
+			}
+		}
+		finally {
+			zipReader.close();
+		}
 	}
 
 	@Reference

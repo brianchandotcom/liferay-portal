@@ -1,9 +1,6 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:asset:asset-category-property-api")
 	testIntegrationCompile project(":apps:asset:asset-test-util")
 	testIntegrationCompile project(":apps:change-tracking:change-tracking-test-util")
-	testIntegrationCompile project(":core:petra:petra-sql-dsl-api")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

@@ -1,8 +1,6 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:archived:portal-security-sso-ntlm-api")
 	testIntegrationCompile project(":apps:portal:portal-verify-test-util")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

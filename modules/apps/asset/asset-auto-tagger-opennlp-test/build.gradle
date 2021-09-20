@@ -1,10 +1,8 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:asset:asset-auto-tagger-api")
 	testIntegrationCompile project(":apps:blogs:blogs-api")
 	testIntegrationCompile project(":apps:journal:journal-api")
 	testIntegrationCompile project(":apps:journal:journal-test-util")
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
-	testIntegrationCompile project(":core:petra:petra-function")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

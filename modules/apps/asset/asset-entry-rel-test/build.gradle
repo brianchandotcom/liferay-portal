@@ -2,6 +2,5 @@ dependencies {
 	testIntegrationCompile project(":apps:asset:asset-entry-rel-api")
 	testIntegrationCompile project(":apps:asset:asset-test-util")
 	testIntegrationCompile project(":apps:change-tracking:change-tracking-test-util")
-	testIntegrationCompile project(":core:petra:petra-sql-dsl-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

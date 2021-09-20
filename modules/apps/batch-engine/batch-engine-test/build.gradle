@@ -2,7 +2,6 @@ dependencies {
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.12.4"
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.12.4"
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.12.4"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "org.apache.commons", name: "commons-collections4", version: "4.4"
 	testIntegrationCompile group: "org.apache.commons", name: "commons-compress", version: "1.21"
 	testIntegrationCompile group: "org.apache.poi", name: "poi", version: "4.1.2"
@@ -13,7 +12,5 @@ dependencies {
 	testIntegrationCompile project(":apps:batch-engine:batch-engine-api")
 	testIntegrationCompile project(":apps:blogs:blogs-api")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
-	testIntegrationCompile project(":core:petra:petra-io")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

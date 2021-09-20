@@ -1,6 +1,5 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:bookmarks:bookmarks-api")
 	testIntegrationCompile project(":apps:bookmarks:bookmarks-test-util")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
@@ -17,7 +16,5 @@ dependencies {
 	testIntegrationCompile project(":apps:trash:trash-api")
 	testIntegrationCompile project(":apps:trash:trash-test-util")
 	testIntegrationCompile project(":apps:users-admin:users-admin-test-util")
-	testIntegrationCompile project(":core:petra:petra-sql-dsl-api")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

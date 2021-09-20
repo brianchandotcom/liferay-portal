@@ -1,15 +1,11 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:adaptive-media:adaptive-media-api")
 	testIntegrationCompile project(":apps:adaptive-media:adaptive-media-image-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:journal:journal-api")
-	testIntegrationCompile project(":core:petra:petra-concurrent")
-	testIntegrationCompile project(":core:petra:petra-memory")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 
 	testIntegrationRuntime project(":apps:asset:asset-test-util")

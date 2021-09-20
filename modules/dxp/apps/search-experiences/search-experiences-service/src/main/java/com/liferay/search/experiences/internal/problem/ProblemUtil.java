@@ -31,25 +31,21 @@ public class ProblemUtil {
 
 	public static void addError(
 		String className, String languageKey, Object rootObject,
-		String rootProperty, String rootValue,
-		Throwable throwable) {
+		String rootProperty, String rootValue, Throwable throwable) {
 
 		_addProblem(
 			className, languageKey, _getExceptionMessage(throwable, className),
-			rootObject, rootProperty, rootValue,
-			Severity.ERROR, throwable);
+			rootObject, rootProperty, rootValue, Severity.ERROR, throwable);
 	}
 
 	public static void addInvalidConfigurationValueError(
-		String className, Object rootObject,
-		String rootProperty, String rootValue,
-		Throwable throwable) {
+		String className, Object rootObject, String rootProperty,
+		String rootValue, Throwable throwable) {
 
 		_addProblem(
 			className, "invalid-configuration-value",
 			_getExceptionMessage(throwable, className), rootObject,
-			rootProperty, rootValue, Severity.ERROR,
-			throwable);
+			rootProperty, rootValue, Severity.ERROR, throwable);
 	}
 
 	public static void addInvalidConfigurationValueTypeError(
@@ -66,8 +62,7 @@ public class ProblemUtil {
 
 		_addProblem(
 			className, "invalid-configuration-value-type", sb.toString(),
-			rootObject, rootProperty, rootValue,
-			Severity.ERROR, null);
+			rootObject, rootProperty, rootValue, Severity.ERROR, null);
 	}
 
 	public static void addProblem(Problem problem) {
@@ -77,57 +72,47 @@ public class ProblemUtil {
 	}
 
 	public static void addRequiredPropertyMissingError(
-		String className, Object rootObject,
-		String rootProperty) {
+		String className, Object rootObject, String rootProperty) {
 
 		_addProblem(
 			className, "a-required-field-is-missing",
-			"[ " + rootProperty + " ] must be defined",
-			rootObject, rootProperty, null, Severity.ERROR,
-			null);
+			"[ " + rootProperty + " ] must be defined", rootObject,
+			rootProperty, null, Severity.ERROR, null);
 	}
 
 	public static void addUnknownError(
-			String className,
-			Throwable throwable) {
-		_addProblem(
-				className, "there-was-an-unknown-error",
-				_getExceptionMessage(throwable, className), null, null, null, Severity.ERROR,
-				throwable);
-	}
-
-	public static void addUnknownError(
-		String className, Object rootObject,
-		String rootProperty, String rootValue,
-		Throwable throwable) {
+		String className, Object rootObject, String rootProperty,
+		String rootValue, Throwable throwable) {
 
 		_addProblem(
 			className, "there-was-an-unknown-error",
 			_getExceptionMessage(throwable, className), rootObject,
-			rootProperty, rootValue, Severity.ERROR,
-			throwable);
+			rootProperty, rootValue, Severity.ERROR, throwable);
+	}
+
+	public static void addUnknownError(String className, Throwable throwable) {
+		_addProblem(
+			className, "there-was-an-unknown-error",
+			_getExceptionMessage(throwable, className), null, null, null,
+			Severity.ERROR, throwable);
 	}
 
 	public static void addWarning(
 		String className, String languageKey, Object rootObject,
-		String rootProperty, String rootValue,
-		Throwable throwable) {
+		String rootProperty, String rootValue, Throwable throwable) {
 
 		_addProblem(
 			className, languageKey, _getExceptionMessage(throwable, className),
-			rootObject, rootProperty, rootValue,
-			Severity.WARN, throwable);
+			rootObject, rootProperty, rootValue, Severity.WARN, throwable);
 	}
 
 	public static void addWarning(
-		String className, String languageKey, String message,
-		Object rootObject, String rootProperty,
-		String rootValue) {
+		String className, String languageKey, Object rootObject,
+		String rootProperty, String rootValue) {
 
 		_addProblem(
-			className, languageKey, message, rootObject,
-			rootProperty, rootValue, Severity.WARN,
-			null);
+			className, languageKey, null, rootObject, rootProperty,
+			rootValue, Severity.WARN, null);
 	}
 
 	public static List<Problem> getProblems() {
@@ -151,9 +136,9 @@ public class ProblemUtil {
 	}
 
 	private static void _addProblem(
-		String className, String languageKey, String message,
-		Object rootObject, String rootProperty,
-		String rootValue, Severity severity, Throwable throwable) {
+		String className, String languageKey, String message, Object rootObject,
+		String rootProperty, String rootValue, Severity severity,
+		Throwable throwable) {
 
 		addProblem(
 			new Problem.Builder().className(

@@ -24,7 +24,6 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.DiagramDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.DiagramUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.DiagramResource;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -90,23 +89,15 @@ public class DiagramResourceImpl
 	public Diagram patchDiagram(Long diagramId, Diagram diagram)
 		throws Exception {
 
-		CSDiagramSetting csDiagramSetting =
-			_csDiagramSettingService.getCSDiagramSetting(diagramId);
-
-		_csDiagramSettingService.updateCSDiagramSetting(
-			diagramId, csDiagramSetting.getCPAttachmentFileEntryId(),
-			GetterUtil.getString(
-				diagram.getColor(), csDiagramSetting.getColor()),
-			GetterUtil.getDouble(
-				diagram.getRadius(), csDiagramSetting.getRadius()),
-			GetterUtil.getString(
-				diagram.getType(), csDiagramSetting.getType()));
+		DiagramUtil.updateCSDiagramSetting(
+			_csDiagramSettingService.getCSDiagramSetting(diagramId),
+			_csDiagramSettingService, diagram);
 
 		return _toDiagram(diagramId);
 	}
 
 	@Override
-	public Diagram putProductByExternalReferenceCodeDiagram(
+	public Diagram postProductByExternalReferenceCodeDiagram(
 			String externalReferenceCode, Diagram diagram)
 		throws Exception {
 
@@ -121,16 +112,15 @@ public class DiagramResourceImpl
 					externalReferenceCode);
 		}
 
-		CSDiagramSetting csDiagramSetting =
-			DiagramUtil.addOrUpdateCSDiagramSetting(
-				cpDefinition.getCPDefinitionId(), _csDiagramSettingService,
-				diagram);
+		CSDiagramSetting csDiagramSetting = DiagramUtil.addCSDiagramSetting(
+			cpDefinition.getCPDefinitionId(), _csDiagramSettingService,
+			diagram);
 
 		return _toDiagram(csDiagramSetting.getCSDiagramSettingId());
 	}
 
 	@Override
-	public Diagram putProductIdDiagram(Long productId, Diagram diagram)
+	public Diagram postProductIdDiagram(Long productId, Diagram diagram)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -141,10 +131,9 @@ public class DiagramResourceImpl
 				"Unable to find product with ID " + productId);
 		}
 
-		CSDiagramSetting csDiagramSetting =
-			DiagramUtil.addOrUpdateCSDiagramSetting(
-				cpDefinition.getCPDefinitionId(), _csDiagramSettingService,
-				diagram);
+		CSDiagramSetting csDiagramSetting = DiagramUtil.addCSDiagramSetting(
+			cpDefinition.getCPDefinitionId(), _csDiagramSettingService,
+			diagram);
 
 		return _toDiagram(csDiagramSetting.getCSDiagramSettingId());
 	}

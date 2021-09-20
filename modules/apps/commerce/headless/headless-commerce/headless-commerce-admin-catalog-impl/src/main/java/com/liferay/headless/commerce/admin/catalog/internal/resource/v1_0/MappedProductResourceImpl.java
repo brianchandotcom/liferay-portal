@@ -140,15 +140,11 @@ public class MappedProductResourceImpl
 			Long mappedProductId, MappedProduct mappedProduct)
 		throws Exception {
 
-		CSDiagramEntry csDiagramEntry =
-			_csDiagramEntryService.getCSDiagramEntry(mappedProductId);
+		MappedProductUtil.updateCSDiagramEntry(
+			_csDiagramEntryService.getCSDiagramEntry(mappedProductId),
+			_csDiagramEntryService, mappedProduct);
 
-		csDiagramEntry = MappedProductUtil.addOrUpdateCSDiagramEntry(
-			contextCompany.getCompanyId(), csDiagramEntry.getCPDefinitionId(),
-			_cpDefinitionService, _cpInstanceService, _csDiagramEntryService,
-			mappedProduct);
-
-		return _toMappedProduct(csDiagramEntry.getCSDiagramEntryId());
+		return _toMappedProduct(mappedProductId);
 	}
 
 	@Override
@@ -167,11 +163,10 @@ public class MappedProductResourceImpl
 					externalReferenceCode);
 		}
 
-		CSDiagramEntry csDiagramEntry =
-			MappedProductUtil.addOrUpdateCSDiagramEntry(
-				contextCompany.getCompanyId(), cpDefinition.getCPDefinitionId(),
-				_cpDefinitionService, _cpInstanceService,
-				_csDiagramEntryService, mappedProduct);
+		CSDiagramEntry csDiagramEntry = MappedProductUtil.addCSDiagramEntry(
+			contextCompany.getCompanyId(), cpDefinition.getCPDefinitionId(),
+			_cpDefinitionService, _cpInstanceService, _csDiagramEntryService,
+			mappedProduct);
 
 		return _toMappedProduct(csDiagramEntry.getCSDiagramEntryId());
 	}
@@ -189,11 +184,10 @@ public class MappedProductResourceImpl
 				"Unable to find product with ID " + productId);
 		}
 
-		CSDiagramEntry csDiagramEntry =
-			MappedProductUtil.addOrUpdateCSDiagramEntry(
-				contextCompany.getCompanyId(), cpDefinition.getCPDefinitionId(),
-				_cpDefinitionService, _cpInstanceService,
-				_csDiagramEntryService, mappedProduct);
+		CSDiagramEntry csDiagramEntry = MappedProductUtil.addCSDiagramEntry(
+			contextCompany.getCompanyId(), cpDefinition.getCPDefinitionId(),
+			_cpDefinitionService, _cpInstanceService, _csDiagramEntryService,
+			mappedProduct);
 
 		return _toMappedProduct(csDiagramEntry.getCSDiagramEntryId());
 	}

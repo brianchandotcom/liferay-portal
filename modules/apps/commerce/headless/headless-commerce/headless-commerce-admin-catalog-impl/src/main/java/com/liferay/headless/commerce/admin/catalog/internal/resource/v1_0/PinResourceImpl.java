@@ -116,12 +116,11 @@ public class PinResourceImpl
 
 	@Override
 	public Pin patchPin(Long pinId, Pin pin) throws Exception {
-		CSDiagramPin csDiagramPin = _csDiagramPinService.getCSDiagramPin(pinId);
+		PinUtil.updateCSDiagramPin(
+			_csDiagramPinService.getCSDiagramPin(pinId), _csDiagramPinService,
+			pin);
 
-		csDiagramPin = PinUtil.addOrUpdateCSDiagramPin(
-			csDiagramPin.getCPDefinitionId(), _csDiagramPinService, pin);
-
-		return _toPin(csDiagramPin.getCSDiagramPinId());
+		return _toPin(pinId);
 	}
 
 	@Override
@@ -157,7 +156,7 @@ public class PinResourceImpl
 	}
 
 	private Pin _addPin(long cpDefinitionId, Pin pin) throws Exception {
-		CSDiagramPin csDiagramPin = PinUtil.addOrUpdateCSDiagramPin(
+		CSDiagramPin csDiagramPin = PinUtil.addCSDiagramPin(
 			cpDefinitionId, _csDiagramPinService, pin);
 
 		MappedProduct mappedProduct = pin.getMappedProduct();

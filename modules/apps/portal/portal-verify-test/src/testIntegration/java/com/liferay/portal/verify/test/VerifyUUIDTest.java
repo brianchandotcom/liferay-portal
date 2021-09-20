@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyUUID;
 import com.liferay.portal.verify.model.AssetTagVerifiableModel;
@@ -98,12 +97,12 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 	public void testVerifyParallelUnknownModelWithUnknownPKColumnName()
 		throws Exception {
 
-		VerifiableUUIDModel[] verifiableUUIDModels = new VerifiableUUIDModel
-			[PropsValues.VERIFY_PROCESS_CONCURRENCY_THRESHOLD];
+		int modelCount = 3;
 
-		for (int i = 0; i < PropsValues.VERIFY_PROCESS_CONCURRENCY_THRESHOLD;
-			 i++) {
+		VerifiableUUIDModel[] verifiableUUIDModels =
+			new VerifiableUUIDModel[modelCount];
 
+		for (int i = 0; i < modelCount; i++) {
 			verifiableUUIDModels[i] = new VerifiableUUIDModel() {
 
 				@Override

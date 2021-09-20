@@ -3531,6 +3531,10 @@ public interface PropsKeys {
 	public static final String VERIFY_PATCH_LEVELS_DISABLED =
 		"verify.patch.levels.disabled";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String VERIFY_PROCESS_CONCURRENCY_THRESHOLD =
 		"verify.process.concurrency.threshold";
 

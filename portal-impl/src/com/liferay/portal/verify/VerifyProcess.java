@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -104,27 +103,23 @@ public abstract class VerifyProcess extends BaseDBProcess {
 	protected void doVerify() throws Exception {
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #processConcurrently(Object[], UnsafeConsumer, String)}
+	 */
+	@Deprecated
 	protected void doVerify(Collection<? extends Callable<Void>> callables)
 		throws Exception {
 
 		try {
-			if ((callables.size() <
-					PropsValues.VERIFY_PROCESS_CONCURRENCY_THRESHOLD) &&
-				!isForceConcurrent(callables)) {
+			ExecutorService executorService = Executors.newFixedThreadPool(
+				callables.size());
 
-				UnsafeConsumer.accept(callables, Callable<Void>::call);
-			}
-			else {
-				ExecutorService executorService = Executors.newFixedThreadPool(
-					callables.size());
+			List<Future<Void>> futures = executorService.invokeAll(callables);
 
-				List<Future<Void>> futures = executorService.invokeAll(
-					callables);
+			executorService.shutdown();
 
-				executorService.shutdown();
-
-				UnsafeConsumer.accept(futures, Future::get);
-			}
+			UnsafeConsumer.accept(futures, Future::get);
 		}
 		catch (Throwable throwable) {
 			Class<?> clazz = getClass();

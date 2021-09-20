@@ -68,6 +68,17 @@ public class RemoteAppEntryServiceImpl extends RemoteAppEntryServiceBaseImpl {
 	}
 
 	@Override
+	public RemoteAppEntry deleteRemoteAppEntry(long remoteAppEntryId)
+		throws PortalException {
+
+		_remoteAppEntryModelResourcePermission.check(
+			getPermissionChecker(), remoteAppEntryId, ActionKeys.DELETE);
+
+		return remoteAppEntryLocalService.deleteRemoteAppEntry(
+			remoteAppEntryId);
+	}
+
+	@Override
 	public RemoteAppEntry getRemoteAppEntry(long remoteAppEntryId)
 		throws PortalException {
 

@@ -68,7 +68,13 @@ function SegmentsExperiments({
 		: selectedExperienceId;
 	const noExperimentIllustration = `${imagesPath}${NO_EXPERIMENT_ILLUSTRATION_FILE_NAME}`;
 	const winnerVariant = variants.find((variant) => variant.winner === true);
-	const goalTarget = experiment?.goal?.target?.substring(1);
+	const goalTarget = experiment?.goal?.target?.replace('#', '');
+
+	// If the target has been removed from the page we must reset it
+
+	if (goalTarget && !document.getElementById(goalTarget)) {
+		onTargetChange('');
+	}
 
 	return (
 		<>

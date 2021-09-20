@@ -364,3 +364,16 @@ textarea.script {
 		}
 	}
 }
+
+.form-builder-field {
+	background-color: $white;
+	border: 0.0625rem solid $secondary-l3;
+	border-radius: 0.25rem;
+	margin-top: 0.5rem;
+	padding: 0.625rem;
+}
+
+.form-builder-placeholder {
+	border: 0.0625rem dashed $secondary-l2;
+	margin: 0.3125rem;
+}

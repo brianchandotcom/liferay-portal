@@ -14,6 +14,7 @@
 
 package com.liferay.account.admin.web.internal.dao.search;
 
+import com.liferay.account.admin.web.internal.constants.AccountWebKeys;
 import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -115,10 +117,10 @@ public class AccountEntryDisplaySearchContainerFactory {
 
 		params.put("status", _getStatus(navigation));
 
-		String[] types = {
-			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-			AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
-		};
+		String[] types = GetterUtil.getStringValues(
+			liferayPortletRequest.getAttribute(
+				AccountWebKeys.ACCOUNT_ENTRY_ALLOWED_TYPES),
+			AccountConstants.ACCOUNT_ENTRY_TYPES);
 
 		String type = ParamUtil.getString(liferayPortletRequest, "type");
 

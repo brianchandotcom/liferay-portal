@@ -15,15 +15,16 @@
 package com.liferay.layout.admin.web.internal.info.item.provider;
 
 import com.liferay.info.exception.InfoItemPermissionException;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.layout.admin.web.internal.info.item.helper.LayoutInfoItemPermissionProviderHelper;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -39,13 +40,8 @@ public class LayoutInfoItemPermissionProvider
 			InfoItemReference infoItemReference, String actionId)
 		throws InfoItemPermissionException {
 
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			(ClassPKInfoItemIdentifier)
-				infoItemReference.getInfoItemIdentifier();
-
-		return _hasPermission(
-			permissionChecker, classPKInfoItemIdentifier.getClassPK(),
-			actionId);
+		return _layoutInfoItemPermissionProviderHelper.hasPermission(
+			permissionChecker, infoItemReference, actionId);
 	}
 
 	@Override
@@ -53,21 +49,20 @@ public class LayoutInfoItemPermissionProvider
 			PermissionChecker permissionChecker, Layout layout, String actionId)
 		throws InfoItemPermissionException {
 
-		return _hasPermission(permissionChecker, layout.getPlid(), actionId);
+		return _layoutInfoItemPermissionProviderHelper.hasPermission(
+			permissionChecker, layout, actionId);
 	}
 
-	private boolean _hasPermission(
-			PermissionChecker permissionChecker, long plid, String actionId)
-		throws InfoItemPermissionException {
-
-		try {
-			return _layoutModelResourcePermission.contains(
-				permissionChecker, plid, actionId);
-		}
-		catch (PortalException portalException) {
-			throw new InfoItemPermissionException(plid, portalException);
-		}
+	@Activate
+	@Modified
+	protected void activate() {
+		_layoutInfoItemPermissionProviderHelper =
+			new LayoutInfoItemPermissionProviderHelper(
+				_layoutModelResourcePermission);
 	}
+
+	private volatile LayoutInfoItemPermissionProviderHelper
+		_layoutInfoItemPermissionProviderHelper;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.model.Layout)"

@@ -15,19 +15,15 @@
 package com.liferay.layout.admin.web.internal.info.item.provider;
 
 import com.liferay.fragment.renderer.FragmentRendererController;
-import com.liferay.info.field.InfoFieldSet;
-import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.layout.admin.web.internal.info.item.LayoutInfoItemFields;
-import com.liferay.layout.admin.web.internal.util.InfoFieldUtil;
+import com.liferay.layout.admin.web.internal.info.item.helper.LayoutInfoItemFormProviderHelper;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -39,62 +35,26 @@ public class LayoutInfoItemFormProvider
 
 	@Override
 	public InfoForm getInfoForm() {
-		return InfoForm.builder(
-		).infoFieldSetEntry(
-			_getBasicInformationInfoFieldSet()
-		).build();
+		return _layoutInfoItemFormProviderHelper.getInfoForm();
 	}
 
 	@Override
 	public InfoForm getInfoForm(Layout layout) {
-		if (!layout.isTypeContent()) {
-			return getInfoForm();
-		}
-
-		return InfoForm.builder(
-		).infoFieldSetEntry(
-			_getBasicInformationInfoFieldSet()
-		).infoFieldSetEntry(
-			_getLayoutInfoFieldSet(layout)
-		).build();
+		return _layoutInfoItemFormProviderHelper.getInfoForm(
+			layout, SegmentsExperienceConstants.ID_DEFAULT);
 	}
 
-	private InfoFieldSet _getBasicInformationInfoFieldSet() {
-		return InfoFieldSet.builder(
-		).infoFieldSetEntry(
-			LayoutInfoItemFields.nameInfoField
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(getClass(), "basic-information")
-		).name(
-			"basic-information"
-		).build();
-	}
-
-	private InfoFieldSet _getLayoutInfoFieldSet(Layout layout) {
-		return InfoFieldSet.builder(
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(getClass(), "inline-content")
-		).infoFieldSetEntries(
-			_getLayoutInfoFieldSetEntries(layout)
-		).name(
-			"inline-content"
-		).build();
-	}
-
-	private List<InfoFieldSetEntry> _getLayoutInfoFieldSetEntries(
-		Layout layout) {
-
-		List<InfoFieldSetEntry> infoFieldSetEntries = new ArrayList<>();
-
-		InfoFieldUtil.forEachInfoField(
-			_fragmentRendererController, layout,
-			(name, infoField, unsafeSupplier) -> infoFieldSetEntries.add(
-				infoField));
-
-		return infoFieldSetEntries;
+	@Activate
+	@Modified
+	protected void activate() {
+		_layoutInfoItemFormProviderHelper =
+			new LayoutInfoItemFormProviderHelper(_fragmentRendererController);
 	}
 
 	@Reference
 	private FragmentRendererController _fragmentRendererController;
+
+	private volatile LayoutInfoItemFormProviderHelper
+		_layoutInfoItemFormProviderHelper;
 
 }

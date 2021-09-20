@@ -41,7 +41,6 @@ definition {
 			entryURL = "http://www.liferay.com");
 
 		RemoteApps.viewTableEntryName(entryName = "Test Remote App");
-		RemoteApps.viewTableEntryURL(entryURL = "http://www.liferay.com");
 	}
 
 	@description = "Verify remote app can be deleted"

@@ -274,31 +274,11 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			_commerceChannelLocalService.getCommerceChannelByGroupId(
 				commerceChannelGroupId);
 
-		int commerceOrderTypesCount =
-			_commerceOrderTypeService.getCommerceOrderTypesCount(
-				CommerceChannel.class.getName(),
-				commerceChannel.getCommerceChannelId(), true);
-
-		if ((cart.getOrderTypeId() == null) && (commerceOrderTypesCount == 1)) {
-			List<CommerceOrderType> commerceOrderTypes =
-				_commerceOrderTypeService.getCommerceOrderTypes(
-					CommerceChannel.class.getName(),
-					commerceChannel.getCommerceChannelId(), true,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			CommerceOrderType commerceOrderType = commerceOrderTypes.get(0);
-
-			cart.setOrderTypeId(commerceOrderType.getCommerceOrderTypeId());
-		}
-		else if ((cart.getOrderTypeId() == null) &&
-				 (commerceOrderTypesCount == 0)) {
-
-			cart.setOrderTypeId(Long.valueOf(0));
-		}
-
 		return _commerceOrderService.addCommerceOrder(
 			commerceChannelGroupId, commerceAccount.getCommerceAccountId(),
-			commerceCurrencyId, GetterUtil.getLong(cart.getOrderTypeId()));
+			commerceCurrencyId,
+			_getCommerceOrderTypeId(
+				commerceChannel.getCommerceChannelId(), cart));
 	}
 
 	private void _addOrUpdateBillingAddress(
@@ -450,6 +430,40 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
 			commerceOrder.getShippingAmount(), commerceOrder.getTotal(),
 			commerceOrder.getAdvanceStatus(), commerceContext);
+	}
+
+	private long _getCommerceOrderTypeId(long commerceChannelId, Cart cart)
+		throws Exception {
+
+		if (cart.getOrderTypeId() != null) {
+			return cart.getOrderTypeId();
+		}
+
+		CommerceOrderType commerceOrderType =
+			_commerceOrderTypeService.fetchByExternalReferenceCode(
+				cart.getOrderTypeExternalReferenceCode(),
+				contextCompany.getCompanyId());
+
+		if (commerceOrderType != null) {
+			return commerceOrderType.getCommerceOrderTypeId();
+		}
+
+		int commerceOrderTypesCount =
+			_commerceOrderTypeService.getCommerceOrderTypesCount(
+				CommerceChannel.class.getName(), commerceChannelId, true);
+
+		if (commerceOrderTypesCount == 1) {
+			List<CommerceOrderType> commerceOrderTypes =
+				_commerceOrderTypeService.getCommerceOrderTypes(
+					CommerceChannel.class.getName(), commerceChannelId, true,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			commerceOrderType = commerceOrderTypes.get(0);
+
+			return commerceOrderType.getCommerceOrderTypeId();
+		}
+
+		return 0;
 	}
 
 	private long _getRegionId(

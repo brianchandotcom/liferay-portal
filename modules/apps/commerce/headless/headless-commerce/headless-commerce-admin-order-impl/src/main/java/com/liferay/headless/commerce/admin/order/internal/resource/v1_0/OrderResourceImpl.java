@@ -294,30 +294,6 @@ public class OrderResourceImpl
 			_commerceCurrencyService.getCommerceCurrency(
 				commerceChannel.getCompanyId(), order.getCurrencyCode());
 
-		int commerceOrderTypesCount =
-			_commerceOrderTypeService.getCommerceOrderTypesCount(
-				CommerceChannel.class.getName(),
-				commerceChannel.getCommerceChannelId(), true);
-
-		if ((order.getOrderTypeId() == null) &&
-			(commerceOrderTypesCount == 1)) {
-
-			List<CommerceOrderType> commerceOrderTypes =
-				_commerceOrderTypeService.getCommerceOrderTypes(
-					CommerceChannel.class.getName(),
-					commerceChannel.getCommerceChannelId(), true,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			CommerceOrderType commerceOrderType = commerceOrderTypes.get(0);
-
-			order.setOrderTypeId(commerceOrderType.getCommerceOrderTypeId());
-		}
-		else if ((order.getOrderTypeId() == null) &&
-				 (commerceOrderTypesCount == 0)) {
-
-			order.setOrderTypeId(Long.valueOf(0));
-		}
-
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			commerceChannel.getGroupId());
 
@@ -326,7 +302,8 @@ public class OrderResourceImpl
 				order.getExternalReferenceCode(), commerceChannel.getGroupId(),
 				commerceAccount.getCommerceAccountId(),
 				commerceCurrency.getCommerceCurrencyId(),
-				GetterUtil.getLong(order.getOrderTypeId()),
+				_getCommerceOrderTypeId(
+					commerceChannel.getCommerceChannelId(), order),
 				GetterUtil.getLong(order.getBillingAddressId()),
 				GetterUtil.getLong(order.getShippingAddressId()),
 				order.getPaymentMethod(), commerceShippingMethodId,
@@ -434,6 +411,40 @@ public class OrderResourceImpl
 				ActionKeys.UPDATE, commerceOrder.getCommerceOrderId(),
 				contextUriInfo, "patchOrder", getClass())
 		).build();
+	}
+
+	private long _getCommerceOrderTypeId(long commerceChannelId, Order order)
+		throws Exception {
+
+		if (order.getOrderTypeId() != null) {
+			return order.getOrderTypeId();
+		}
+
+		CommerceOrderType commerceOrderType =
+			_commerceOrderTypeService.fetchByExternalReferenceCode(
+				order.getOrderTypeExternalReferenceCode(),
+				contextCompany.getCompanyId());
+
+		if (commerceOrderType != null) {
+			return commerceOrderType.getCommerceOrderTypeId();
+		}
+
+		int commerceOrderTypesCount =
+			_commerceOrderTypeService.getCommerceOrderTypesCount(
+				CommerceChannel.class.getName(), commerceChannelId, true);
+
+		if (commerceOrderTypesCount == 1) {
+			List<CommerceOrderType> commerceOrderTypes =
+				_commerceOrderTypeService.getCommerceOrderTypes(
+					CommerceChannel.class.getName(), commerceChannelId, true,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			commerceOrderType = commerceOrderTypes.get(0);
+
+			return commerceOrderType.getCommerceOrderTypeId();
+		}
+
+		return 0;
 	}
 
 	private String _getHttpMethodName(Class<?> clazz, Method method)

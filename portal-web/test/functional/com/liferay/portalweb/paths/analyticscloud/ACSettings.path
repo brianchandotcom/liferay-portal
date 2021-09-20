@@ -284,6 +284,11 @@
 	<td>//button[text()='Save']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PROPERTY_CHECKBOX</td>
+	<td>//span[@class='text-truncate' and text()='${key_propertyName}']//ancestor::tr//input</td>
+	<td></td>
+</tr>
 <!-- USAGE -->
 <tr>
 	<td>INDIVIDUALS_USAGE_METRIC</td>

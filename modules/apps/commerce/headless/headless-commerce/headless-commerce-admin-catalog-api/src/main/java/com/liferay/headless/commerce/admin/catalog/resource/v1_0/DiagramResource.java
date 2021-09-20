@@ -61,13 +61,13 @@ public interface DiagramResource {
 			String externalReferenceCode)
 		throws Exception;
 
-	public Diagram putProductByExternalReferenceCodeDiagram(
+	public Diagram postProductByExternalReferenceCodeDiagram(
 			String externalReferenceCode, Diagram diagram)
 		throws Exception;
 
 	public Diagram getProductIdDiagram(Long productId) throws Exception;
 
-	public Diagram putProductIdDiagram(Long productId, Diagram diagram)
+	public Diagram postProductIdDiagram(Long productId, Diagram diagram)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

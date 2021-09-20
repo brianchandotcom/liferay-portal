@@ -194,7 +194,7 @@ public class Diagram implements Serializable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String productExternalReferenceCode;
 
 	@DecimalMin("0")
@@ -223,7 +223,7 @@ public class Diagram implements Serializable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long productId;
 
 	@Schema

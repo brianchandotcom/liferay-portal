@@ -592,7 +592,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Diagram updateProductByExternalReferenceCodeDiagram(
+	public Diagram createProductByExternalReferenceCodeDiagram(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("diagram") Diagram diagram)
 		throws Exception {
@@ -601,12 +601,12 @@ public class Mutation {
 			_diagramResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			diagramResource ->
-				diagramResource.putProductByExternalReferenceCodeDiagram(
+				diagramResource.postProductByExternalReferenceCodeDiagram(
 					externalReferenceCode, diagram));
 	}
 
 	@GraphQLField
-	public Diagram updateProductIdDiagram(
+	public Diagram createProductIdDiagram(
 			@GraphQLName("productId") Long productId,
 			@GraphQLName("diagram") Diagram diagram)
 		throws Exception {
@@ -614,7 +614,7 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_diagramResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			diagramResource -> diagramResource.putProductIdDiagram(
+			diagramResource -> diagramResource.postProductIdDiagram(
 				productId, diagram));
 	}
 

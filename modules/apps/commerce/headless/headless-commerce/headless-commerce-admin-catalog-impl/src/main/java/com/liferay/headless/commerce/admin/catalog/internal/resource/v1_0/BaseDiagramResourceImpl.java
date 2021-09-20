@@ -62,7 +62,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PATCH;
-import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -83,7 +83,7 @@ public abstract class BaseDiagramResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/diagrams/{diagramId}' -d $'{"color": ___, "id": ___, "imageId": ___, "imageURL": ___, "productExternalReferenceCode": ___, "productId": ___, "radius": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/diagrams/{diagramId}' -d $'{"color": ___, "id": ___, "imageId": ___, "imageURL": ___, "radius": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Override
@@ -128,7 +128,7 @@ public abstract class BaseDiagramResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/diagrams' -d $'{"color": ___, "id": ___, "imageId": ___, "imageURL": ___, "productExternalReferenceCode": ___, "productId": ___, "radius": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/diagrams' -d $'{"color": ___, "id": ___, "imageId": ___, "imageURL": ___, "radius": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Override
@@ -138,10 +138,10 @@ public abstract class BaseDiagramResourceImpl
 		}
 	)
 	@Path("/products/by-externalReferenceCode/{externalReferenceCode}/diagrams")
+	@POST
 	@Produces({"application/json", "application/xml"})
-	@PUT
 	@Tags(value = {@Tag(name = "Diagram")})
-	public Diagram putProductByExternalReferenceCodeDiagram(
+	public Diagram postProductByExternalReferenceCodeDiagram(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("externalReferenceCode")
 			String externalReferenceCode,
@@ -173,16 +173,16 @@ public abstract class BaseDiagramResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{productId}/diagrams' -d $'{"color": ___, "id": ___, "imageId": ___, "imageURL": ___, "productExternalReferenceCode": ___, "productId": ___, "radius": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{productId}/diagrams' -d $'{"color": ___, "id": ___, "imageId": ___, "imageURL": ___, "radius": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "productId")})
 	@Path("/products/{productId}/diagrams")
+	@POST
 	@Produces({"application/json", "application/xml"})
-	@PUT
 	@Tags(value = {@Tag(name = "Diagram")})
-	public Diagram putProductIdDiagram(
+	public Diagram postProductIdDiagram(
 			@NotNull @Parameter(hidden = true) @PathParam("productId") Long
 				productId,
 			Diagram diagram)

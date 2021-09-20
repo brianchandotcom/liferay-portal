@@ -53,12 +53,12 @@ public interface DiagramResource {
 				String externalReferenceCode)
 		throws Exception;
 
-	public Diagram putProductByExternalReferenceCodeDiagram(
+	public Diagram postProductByExternalReferenceCodeDiagram(
 			String externalReferenceCode, Diagram diagram)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putProductByExternalReferenceCodeDiagramHttpResponse(
+			postProductByExternalReferenceCodeDiagramHttpResponse(
 				String externalReferenceCode, Diagram diagram)
 		throws Exception;
 
@@ -68,10 +68,10 @@ public interface DiagramResource {
 			Long productId)
 		throws Exception;
 
-	public Diagram putProductIdDiagram(Long productId, Diagram diagram)
+	public Diagram postProductIdDiagram(Long productId, Diagram diagram)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putProductIdDiagramHttpResponse(
+	public HttpInvoker.HttpResponse postProductIdDiagramHttpResponse(
 			Long productId, Diagram diagram)
 		throws Exception;
 
@@ -315,12 +315,12 @@ public interface DiagramResource {
 			return httpInvoker.invoke();
 		}
 
-		public Diagram putProductByExternalReferenceCodeDiagram(
+		public Diagram postProductByExternalReferenceCodeDiagram(
 				String externalReferenceCode, Diagram diagram)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putProductByExternalReferenceCodeDiagramHttpResponse(
+				postProductByExternalReferenceCodeDiagramHttpResponse(
 					externalReferenceCode, diagram);
 
 			String content = httpResponse.getContent();
@@ -362,7 +362,7 @@ public interface DiagramResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putProductByExternalReferenceCodeDiagramHttpResponse(
+				postProductByExternalReferenceCodeDiagramHttpResponse(
 					String externalReferenceCode, Diagram diagram)
 			throws Exception {
 
@@ -387,7 +387,7 @@ public interface DiagramResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
@@ -482,11 +482,11 @@ public interface DiagramResource {
 			return httpInvoker.invoke();
 		}
 
-		public Diagram putProductIdDiagram(Long productId, Diagram diagram)
+		public Diagram postProductIdDiagram(Long productId, Diagram diagram)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putProductIdDiagramHttpResponse(productId, diagram);
+				postProductIdDiagramHttpResponse(productId, diagram);
 
 			String content = httpResponse.getContent();
 
@@ -526,7 +526,7 @@ public interface DiagramResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse putProductIdDiagramHttpResponse(
+		public HttpInvoker.HttpResponse postProductIdDiagramHttpResponse(
 				Long productId, Diagram diagram)
 			throws Exception {
 
@@ -551,7 +551,7 @@ public interface DiagramResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

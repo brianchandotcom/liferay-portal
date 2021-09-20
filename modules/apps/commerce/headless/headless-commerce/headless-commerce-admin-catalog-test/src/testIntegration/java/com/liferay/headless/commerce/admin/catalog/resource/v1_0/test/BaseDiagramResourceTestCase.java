@@ -271,30 +271,21 @@ public abstract class BaseDiagramResourceTestCase {
 	}
 
 	@Test
-	public void testPutProductByExternalReferenceCodeDiagram()
+	public void testPostProductByExternalReferenceCodeDiagram()
 		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Diagram postDiagram =
-			testPutProductByExternalReferenceCodeDiagram_addDiagram();
 
 		Diagram randomDiagram = randomDiagram();
 
-		Diagram putDiagram =
-			diagramResource.putProductByExternalReferenceCodeDiagram(
-				null, randomDiagram);
+		Diagram postDiagram =
+			testPostProductByExternalReferenceCodeDiagram_addDiagram(
+				randomDiagram);
 
-		assertEquals(randomDiagram, putDiagram);
-		assertValid(putDiagram);
-
-		Diagram getDiagram =
-			diagramResource.getProductByExternalReferenceCodeDiagram(null);
-
-		assertEquals(randomDiagram, getDiagram);
-		assertValid(getDiagram);
+		assertEquals(randomDiagram, postDiagram);
+		assertValid(postDiagram);
 	}
 
-	protected Diagram testPutProductByExternalReferenceCodeDiagram_addDiagram()
+	protected Diagram testPostProductByExternalReferenceCodeDiagram_addDiagram(
+			Diagram diagram)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -361,25 +352,19 @@ public abstract class BaseDiagramResourceTestCase {
 	}
 
 	@Test
-	public void testPutProductIdDiagram() throws Exception {
-		Diagram postDiagram = testPutProductIdDiagram_addDiagram();
-
+	public void testPostProductIdDiagram() throws Exception {
 		Diagram randomDiagram = randomDiagram();
 
-		Diagram putDiagram = diagramResource.putProductIdDiagram(
-			postDiagram.getProductId(), randomDiagram);
+		Diagram postDiagram = testPostProductIdDiagram_addDiagram(
+			randomDiagram);
 
-		assertEquals(randomDiagram, putDiagram);
-		assertValid(putDiagram);
-
-		Diagram getDiagram = diagramResource.getProductIdDiagram(
-			putDiagram.getProductId());
-
-		assertEquals(randomDiagram, getDiagram);
-		assertValid(getDiagram);
+		assertEquals(randomDiagram, postDiagram);
+		assertValid(postDiagram);
 	}
 
-	protected Diagram testPutProductIdDiagram_addDiagram() throws Exception {
+	protected Diagram testPostProductIdDiagram_addDiagram(Diagram diagram)
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

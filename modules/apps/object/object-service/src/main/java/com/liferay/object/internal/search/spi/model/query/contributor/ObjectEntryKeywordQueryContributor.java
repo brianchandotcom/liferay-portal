@@ -106,7 +106,7 @@ public class ObjectEntryKeywordQueryContributor
 						BooleanClauseOccur.SHOULD);
 
 					String titleField =
-						"object_entry_title_" +
+						"objectEntryTitle_" +
 							LocaleUtil.toLanguageId(searchContext.getLocale());
 
 					booleanQuery.add(

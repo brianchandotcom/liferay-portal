@@ -67,7 +67,7 @@ public class ObjectEntryModelSummaryContributor
 
 		if (Validator.isBlank(content)) {
 			content = StringUtil.shorten(
-				document.get("object_entry_content"), 300,
+				document.get("objectEntryContent"), 300,
 				StringPool.TRIPLE_PERIOD);
 		}
 
@@ -76,19 +76,19 @@ public class ObjectEntryModelSummaryContributor
 
 	private String _getTitle(Document document, Locale locale) {
 		String title = document.get(
-			"snippet_object_entry_title_" + LanguageUtil.getLanguageId(locale));
+			"snippet_objectEntryTitle_" + LanguageUtil.getLanguageId(locale));
 
 		if (Validator.isBlank(title)) {
 			title = document.get(
-				"object_entry_title_" + LanguageUtil.getLanguageId(locale));
+				"objectEntryTitle_" + LanguageUtil.getLanguageId(locale));
 		}
 
 		if (Validator.isBlank(title)) {
-			title = document.get("snippet_object_entry_title");
+			title = document.get("snippet_objectEntryTitle");
 		}
 
 		if (Validator.isBlank(title)) {
-			title = document.get("object_entry_title");
+			title = document.get("objectEntryTitle");
 		}
 
 		if (Validator.isBlank(title)) {

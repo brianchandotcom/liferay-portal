@@ -131,15 +131,15 @@ public class ObjectEntryModelDocumentContributor
 			if (!Validator.isBlank(objectField.getIndexedLanguageId())) {
 				document.add(
 					new Field(
-						"object_entry_title_" +
+						"objectEntryTitle_" +
 							objectField.getIndexedLanguageId(),
 						valueString));
 			}
 			else {
-				document.add(new Field("object_entry_title", valueString));
+				document.add(new Field("objectEntryTitle", valueString));
 			}
 
-			document.add(new Field("title_field_prefix", titleFieldPrefix));
+			document.add(new Field("titleFieldPrefix", titleFieldPrefix));
 		}
 
 		if (objectField.isIndexedAsKeyword()) {
@@ -250,9 +250,7 @@ public class ObjectEntryModelDocumentContributor
 
 			String title = "This is a title";
 
-			// TODO Can we camel case this?
-
-			document.add(new Field("object_entry_title", title));
+			document.add(new Field("objectEntryTitle", title));
 		}
 
 		FieldArray fieldArray = (FieldArray)document.getField(
@@ -283,9 +281,7 @@ public class ObjectEntryModelDocumentContributor
 			sb.setIndex(sb.index() - 1);
 		}
 
-		// TODO Can we camel case this?
-
-		document.add(new Field("object_entry_content", sb.toString()));
+		document.add(new Field("objectEntryContent", sb.toString()));
 	}
 
 	private String _getDateString(Object value) {

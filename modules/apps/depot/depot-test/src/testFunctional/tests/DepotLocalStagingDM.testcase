@@ -93,9 +93,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_uploadFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_2.jpg");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -117,9 +115,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_uploadFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_2.jpg");
 
 		Staging.gotoPublishToLive();
 
@@ -129,9 +125,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_uploadFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_2.jpg");
 	}
 
 	@description = "This ensures that the image in depot can be removed and republished in Blogs inline image when enabling local staging."
@@ -820,9 +814,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_uploadFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_2.jpg");
 
 		Staging.gotoPublishToLive();
 
@@ -832,9 +824,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_uploadFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_2.jpg");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
@@ -859,9 +849,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_uploadFileName = "Document_1.jpg",
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_1.jpg");
 
 		Staging.gotoPublishToLive();
 
@@ -871,9 +859,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_uploadFileName = "Document_1.jpg",
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_1.jpg");
 	}
 
 	@description = "This ensures that the blog inline image from a depot can be edited and republished when enabling local staging."
@@ -2078,9 +2064,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_uploadFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_2.jpg");
 	}
 
 	@description = "This ensures that the thumbnail of a video shortcut in depot can be published through AP when enabling local staging."

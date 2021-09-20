@@ -109,9 +109,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
-		AssertVisible(
-			key_uploadFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_2.jpg");
 
 		User.loginPG(
 			nodePort = "8080",
@@ -142,9 +140,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_uploadFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_2.jpg");
 
 		Staging.gotoPublishToLive();
 
@@ -162,9 +158,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
-		AssertVisible(
-			key_uploadFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_2.jpg");
 	}
 
 	@description = "This ensures that the image in depot can be removed and republished in Blogs inline image when enabling remote staging."
@@ -1056,9 +1050,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
-		AssertVisible(
-			key_uploadFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_2.jpg");
 
 		User.loginPG(
 			nodePort = "8080",
@@ -1088,9 +1080,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_uploadFileName = "Document_1.jpg",
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_1.jpg");
 
 		Staging.gotoPublishToLive();
 
@@ -1108,9 +1098,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
-		AssertVisible(
-			key_uploadFileName = "Document_1.jpg",
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_1.jpg");
 	}
 
 	@description = "This ensures that the blog inline image from a depot can be edited and republished when enabling remote staging."
@@ -2539,9 +2527,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
-		AssertVisible(
-			key_uploadFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_2.jpg");
 	}
 
 	@description = "This test covers LPS-124892. It ensures that the thumbnail of a video shortcut in depot can be published through AP when enabling remote staging."

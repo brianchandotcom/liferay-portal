@@ -783,6 +783,12 @@ definition {
 			value1 = "${entryTitle}");
 	}
 
+	macro viewCoverImage {
+		AssertVisible(
+			key_uploadFileName = "${uploadFileName}",
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+	}
+
 	macro viewDefaultCP {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",

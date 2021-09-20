@@ -84,20 +84,20 @@ public class Configuration implements Serializable {
 
 	@Schema
 	@Valid
-	public Aggregation getAggregation() {
-		return aggregation;
+	public Map<String, ?> getAggregations() {
+		return aggregations;
 	}
 
-	public void setAggregation(Aggregation aggregation) {
-		this.aggregation = aggregation;
+	public void setAggregations(Map<String, ?> aggregations) {
+		this.aggregations = aggregations;
 	}
 
 	@JsonIgnore
-	public void setAggregation(
-		UnsafeSupplier<Aggregation, Exception> aggregationUnsafeSupplier) {
+	public void setAggregations(
+		UnsafeSupplier<Map<String, ?>, Exception> aggregationsUnsafeSupplier) {
 
 		try {
-			aggregation = aggregationUnsafeSupplier.get();
+			aggregations = aggregationsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -109,7 +109,7 @@ public class Configuration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Aggregation aggregation;
+	protected Map<String, ?> aggregations;
 
 	@Schema
 	@Valid
@@ -262,14 +262,14 @@ public class Configuration implements Serializable {
 			sb.append(String.valueOf(advanced));
 		}
 
-		if (aggregation != null) {
+		if (aggregations != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"aggregation\": ");
+			sb.append("\"aggregations\": ");
 
-			sb.append(String.valueOf(aggregation));
+			sb.append(_toJSON(aggregations));
 		}
 
 		if (facet != null) {

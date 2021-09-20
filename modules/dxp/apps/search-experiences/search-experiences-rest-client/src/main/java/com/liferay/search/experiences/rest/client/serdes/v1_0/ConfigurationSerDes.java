@@ -67,14 +67,14 @@ public class ConfigurationSerDes {
 			sb.append(String.valueOf(configuration.getAdvanced()));
 		}
 
-		if (configuration.getAggregation() != null) {
+		if (configuration.getAggregations() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"aggregation\": ");
+			sb.append("\"aggregations\": ");
 
-			sb.append(String.valueOf(configuration.getAggregation()));
+			sb.append(_toJSON(configuration.getAggregations()));
 		}
 
 		if (configuration.getFacet() != null) {
@@ -153,12 +153,13 @@ public class ConfigurationSerDes {
 			map.put("advanced", String.valueOf(configuration.getAdvanced()));
 		}
 
-		if (configuration.getAggregation() == null) {
-			map.put("aggregation", null);
+		if (configuration.getAggregations() == null) {
+			map.put("aggregations", null);
 		}
 		else {
 			map.put(
-				"aggregation", String.valueOf(configuration.getAggregation()));
+				"aggregations",
+				String.valueOf(configuration.getAggregations()));
 		}
 
 		if (configuration.getFacet() == null) {
@@ -216,10 +217,11 @@ public class ConfigurationSerDes {
 						AdvancedSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "aggregation")) {
+			else if (Objects.equals(jsonParserFieldName, "aggregations")) {
 				if (jsonParserFieldValue != null) {
-					configuration.setAggregation(
-						AggregationSerDes.toDTO((String)jsonParserFieldValue));
+					configuration.setAggregations(
+						(Map)ConfigurationSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "facet")) {

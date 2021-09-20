@@ -15,13 +15,47 @@ components:
                                         type: string
                                     type: array
                             type: object
-                        aggregation:
-                            properties:
-                                distanceType:
-                                    enum: [arc, plane]
-                                    type: boolean
-                                enabled:
-                                    type: boolean
+                        aggregations:
+                            additionalProperties:
+                                $ref: "#/definitions/aggregations"
+                            definitions:
+                                aggregation:
+                                    properties:
+                                        aggs:
+                                            additionalProperties:
+                                                $ref: "#/definitions/aggregations"
+                                        enabled:
+                                            type: boolean
+                                    type: object
+                                aggregations:
+                                    properties:
+                                        aggs:
+                                            additionalProperties:
+                                                $ref: "#/definitions/aggregations"
+                                        avg:
+                                            allOf:
+                                                - $ref: "#/definitions/aggregation"
+                                            required:
+                                                - field
+                                        cardinality:
+                                            allOf:
+                                                - $ref: "#/definitions/aggregation"
+                                            properties:
+                                                precision_threshold:
+                                                    properties:
+                                                        maximum: 40000
+                                                        minimum: 0
+                                                        type: number
+                                                    type: object
+                                            required:
+                                                - field
+                                            type: object
+                                    type: object
+                                range:
+                                    properties:
+                                        key:
+                                            type: string
+                                    type: object
                             type: object
                         facet:
                             properties:

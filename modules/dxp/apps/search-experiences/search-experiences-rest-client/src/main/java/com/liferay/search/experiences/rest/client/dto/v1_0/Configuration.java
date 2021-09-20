@@ -19,6 +19,7 @@ import com.liferay.search.experiences.rest.client.serdes.v1_0.ConfigurationSerDe
 
 import java.io.Serializable;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -55,26 +56,26 @@ public class Configuration implements Cloneable, Serializable {
 
 	protected Advanced advanced;
 
-	public Aggregation getAggregation() {
-		return aggregation;
+	public Map<String, ?> getAggregations() {
+		return aggregations;
 	}
 
-	public void setAggregation(Aggregation aggregation) {
-		this.aggregation = aggregation;
+	public void setAggregations(Map<String, ?> aggregations) {
+		this.aggregations = aggregations;
 	}
 
-	public void setAggregation(
-		UnsafeSupplier<Aggregation, Exception> aggregationUnsafeSupplier) {
+	public void setAggregations(
+		UnsafeSupplier<Map<String, ?>, Exception> aggregationsUnsafeSupplier) {
 
 		try {
-			aggregation = aggregationUnsafeSupplier.get();
+			aggregations = aggregationsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Aggregation aggregation;
+	protected Map<String, ?> aggregations;
 
 	public Facet getFacet() {
 		return facet;

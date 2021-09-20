@@ -2962,6 +2962,7 @@ definition {
 	}
 
 	@description = "LRQA-53631 Automate LPS-97666: [Performance] View top assignee performance"
+	@ignore = "true"
 	@priority = "5"
 	test ViewTopAsigneePerformance {
 		property portal.acceptance = "true";

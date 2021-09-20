@@ -14,6 +14,7 @@
 
 package com.liferay.account.admin.web.internal.display.context;
 
+import com.liferay.account.admin.web.internal.constants.AccountWebKeys;
 import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountPermission;
@@ -40,8 +41,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -316,9 +317,10 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 	}
 
 	protected String[] getFilterByTypeKeys() {
-		return ArrayUtil.append(
-			new String[] {"all"}, AccountConstants.ACCOUNT_ENTRY_TYPES,
-			new String[] {"guest"});
+		return GetterUtil.getStringValues(
+			liferayPortletRequest.getAttribute(
+				AccountWebKeys.ACCOUNT_ENTRY_ALLOWED_TYPES),
+			AccountConstants.ACCOUNT_ENTRY_TYPES);
 	}
 
 	@Override

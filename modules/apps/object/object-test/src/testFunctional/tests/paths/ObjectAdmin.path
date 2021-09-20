@@ -147,7 +147,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_OBJECT_FIELD</td>
-		<td>//a[contains(text(),'${key_fieldName}')]</td>
+		<td>//a[contains(text(),'${key_label}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -191,8 +191,8 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>VIEW_OBJECT_FIELD_NAME</td>
-		<td>//div[(@class = 'dnd-td') and contains (.,'${key_fieldName}')]</td>
+		<td>VIEW_OBJECT_FIELD_LABEL</td>
+		<td>//div[(@class = 'dnd-td') and contains (.,'${key_fieldLabel}')]</td>
 		<td></td>
 	</tr>
 	<tr>

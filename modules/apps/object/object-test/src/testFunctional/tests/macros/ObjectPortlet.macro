@@ -16,7 +16,7 @@ definition {
 
 	macro selectCustomObject {
 		Click(
-			key_name = "${name}",
+			key_label = "${label}",
 			locator1 = "ObjectPortlet#SELECT_CUSTOM_OBJECT");
 	}
 

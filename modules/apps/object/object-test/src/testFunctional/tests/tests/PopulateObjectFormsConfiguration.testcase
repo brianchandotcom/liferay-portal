@@ -337,8 +337,6 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.viewDisplaySelectOption(label = "User");
-
 		PopulateObjectFormsConfiguration.viewDisplaySelectOption(label = "Custom Object");
 	}
 

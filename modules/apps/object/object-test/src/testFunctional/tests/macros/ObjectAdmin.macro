@@ -119,24 +119,20 @@ definition {
 	}
 
 	macro assertObjectField {
-		var key_fieldName = "${fieldName}";
+		var key_fieldLabel = "${fieldLabel}";
 		var key_fieldType = "${fieldType}";
 
-		AssertElementPresent(
-			locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_NAME",
-			value1 = "${fieldName}");
+		AssertElementPresent(locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
 
-		AssertElementPresent(
-			locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_TYPE",
-			value1 = "${fieldType}");
+		AssertElementPresent(locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_TYPE");
 	}
 
 	macro assertObjectFieldNotPresent {
+		var key_fielLabel = "${fieldLabel}";
+
 		ObjectAdmin.goToFieldsTab();
 
-		AssertElementNotPresent(
-			locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_NAME",
-			value1 = "${fieldName}");
+		AssertElementNotPresent(locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
 	}
 
 	macro assertObjectStatus {
@@ -216,7 +212,7 @@ definition {
 
 	macro goToFieldsDetails {
 		Click(
-			key_fieldName = "${fieldName}",
+			key_label = "${label}",
 			locator1 = "ObjectAdmin#SELECT_OBJECT_FIELD");
 
 		SelectFrame(locator1 = "IFrame#IFRAME");

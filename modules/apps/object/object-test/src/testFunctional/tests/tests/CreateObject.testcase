@@ -61,7 +61,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -77,7 +77,7 @@ definition {
 
 		Button.clickCancel();
 
-		ObjectAdmin.assertObjectFieldNotPresent(fieldName = "customField");
+		ObjectAdmin.assertObjectFieldNotPresent(fieldLabel = "Custom Field");
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a BigDecimal field"
@@ -90,7 +90,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -101,7 +101,7 @@ definition {
 		Refresh();
 
 		ObjectAdmin.assertObjectField(
-			fieldName = "customField",
+			fieldLabel = "Custom Field",
 			fieldType = "BigDecimal");
 	}
 
@@ -115,7 +115,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -126,7 +126,7 @@ definition {
 		Refresh();
 
 		ObjectAdmin.assertObjectField(
-			fieldName = "customField",
+			fieldLabel = "Custom Field",
 			fieldType = "Boolean");
 	}
 
@@ -143,7 +143,7 @@ definition {
 
 		ObjectAdmin.saveCustomObject();
 
-		CreateObject.assertCustomObject(labelName = "CustomObject");
+		CreateObject.assertCustomObject(labelName = "Custom Object");
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a Date field"
@@ -156,7 +156,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -167,7 +167,7 @@ definition {
 		Refresh();
 
 		ObjectAdmin.assertObjectField(
-			fieldName = "customField",
+			fieldLabel = "Custom Field",
 			fieldType = "Date");
 	}
 
@@ -181,7 +181,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -192,7 +192,7 @@ definition {
 		Refresh();
 
 		ObjectAdmin.assertObjectField(
-			fieldName = "customField",
+			fieldLabel = "Custom Field",
 			fieldType = "Double");
 	}
 
@@ -206,7 +206,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -217,7 +217,7 @@ definition {
 		Refresh();
 
 		ObjectAdmin.assertObjectField(
-			fieldName = "customField",
+			fieldLabel = "Custom Field",
 			fieldType = "Integer");
 	}
 
@@ -233,7 +233,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -242,7 +242,7 @@ definition {
 			fieldType = "Long");
 
 		ObjectAdmin.assertObjectField(
-			fieldName = "customField",
+			fieldLabel = "Custom Field",
 			fieldType = "Long");
 	}
 
@@ -258,7 +258,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -269,7 +269,7 @@ definition {
 		Refresh();
 
 		ObjectAdmin.assertObjectField(
-			fieldName = "customField",
+			fieldLabel = "Custom Field",
 			fieldType = "String");
 	}
 
@@ -307,7 +307,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -331,7 +331,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -387,7 +387,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -425,7 +425,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -447,7 +447,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -507,11 +507,11 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+		ObjectAdmin.goToFieldsDetails(label = "Text");
 
 		CreateObject.assertDisabledFieldName();
 	}
@@ -535,11 +535,11 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+		ObjectAdmin.goToFieldsDetails(label = "Text");
 
 		CreateObject.assertDisabledFieldType();
 	}
@@ -558,7 +558,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.assertDisabledObjectName();
 	}
@@ -575,7 +575,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		AssertElementPresent(locator1 = "CreateObject#VIEW_OBJECT_SCOPE_DISABLED");
 	}
@@ -599,11 +599,11 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+		ObjectAdmin.goToFieldsDetails(label = "Text");
 
 		AssertElementPresent(locator1 = "ObjectAdmin#VIEW_SEARCHABLE_SECTION_DISABLED");
 	}
@@ -622,7 +622,7 @@ definition {
 
 		ObjectAdmin.assertObjectStatus(status = "Draft");
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.publishObjectViaUI();
 
@@ -669,7 +669,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -678,7 +678,7 @@ definition {
 			fieldType = "String",
 			isMandatory = "true");
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customField");
+		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
 
 		CreateObject.assertToggleMandatory();
 	}
@@ -704,11 +704,11 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+		ObjectAdmin.goToFieldsDetails(label = "Text");
 
 		CreateObject.editLabel(labelName = "Text Update");
 
@@ -716,7 +716,7 @@ definition {
 
 		Refresh();
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+		ObjectAdmin.goToFieldsDetails(label = "Text Update");
 
 		CreateObject.assertObjectLabel(labelName = "Text Update");
 	}
@@ -740,11 +740,11 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+		ObjectAdmin.goToFieldsDetails(label = "Text");
 
 		CreateObject.editLabel(labelName = "Text Update");
 
@@ -752,7 +752,7 @@ definition {
 
 		Refresh();
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+		ObjectAdmin.goToFieldsDetails(label = "Text Update");
 
 		CreateObject.assertObjectLabel(labelName = "Text Update");
 	}
@@ -774,11 +774,11 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+		ObjectAdmin.goToFieldsDetails(label = "Text");
 
 		CreateObject.toggleMandatory();
 
@@ -786,7 +786,7 @@ definition {
 
 		Refresh();
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+		ObjectAdmin.goToFieldsDetails(label = "Text");
 
 		CreateObject.checkToggleMandatory();
 	}
@@ -808,11 +808,11 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+		ObjectAdmin.goToFieldsDetails(label = "Text");
 
 		CreateObject.editName(fieldName = "customObjectFieldUpdate");
 
@@ -820,7 +820,7 @@ definition {
 
 		Refresh();
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectFieldUpdate");
+		ObjectAdmin.goToFieldsDetails(label = "Text");
 
 		CreateObject.assertFieldName(fieldName = "customObjectFieldUpdate");
 	}
@@ -842,11 +842,11 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+		ObjectAdmin.goToFieldsDetails(label = "Text");
 
 		ObjectAdmin.clickFieldsSearchableSectionRadioOption(radioOption = "Text");
 
@@ -854,7 +854,7 @@ definition {
 
 		Refresh();
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+		ObjectAdmin.goToFieldsDetails(label = "Text");
 
 		ObjectAdmin.viewFieldSearchableSectionLanguage();
 	}
@@ -876,11 +876,11 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+		ObjectAdmin.goToFieldsDetails(label = "Text");
 
 		CreateObject.editType(fieldType = "Date");
 
@@ -888,7 +888,7 @@ definition {
 
 		Refresh();
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+		ObjectAdmin.goToFieldsDetails(label = "Text");
 
 		CreateObject.assertFieldType(fieldType = "Date");
 	}
@@ -930,7 +930,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.editLabel(labelName = "Update Custom Object");
 
@@ -938,7 +938,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.assertObjectLabel(labelName = "Update Custom Object");
 	}
@@ -953,13 +953,13 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.editCustomObject(fieldName = "CustomObject2");
 
 		Navigator.gotoBack();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		AssertTextEquals(
 			locator1 = "ObjectAdmin#DETAILS_NAME_CUSTOM_OBJECT",
@@ -978,7 +978,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel >> Users");
 
@@ -986,7 +986,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.assertPanelCategoryKey(panelCategoryKey = "Control Panel >> Users");
 	}
@@ -1005,7 +1005,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel >> Users");
 
@@ -1013,7 +1013,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.assertPanelCategoryKey(panelCategoryKey = "Control Panel >> Users");
 	}
@@ -1053,7 +1053,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.editPluralLabel(pluralLabelName = "Update Plural Label Custom Object");
 
@@ -1061,7 +1061,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.assertObjectPluralLabel(pluralLabelName = "Update Plural Label Custom Object");
 	}
@@ -1078,7 +1078,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.selectObjectScope(fieldOption = "Site");
 
@@ -1108,7 +1108,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -1134,11 +1134,11 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
+		ObjectAdmin.goToFieldsDetails(label = "CustomObject");
 
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_DETAILS_IFRAME");
 	}
@@ -1170,7 +1170,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.assertObjectDetailsPage();
 	}
@@ -1194,7 +1194,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -1221,7 +1221,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -1267,11 +1267,11 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customField");
+		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
 
 		ObjectAdmin.assertKeywordAndText();
 	}
@@ -1295,11 +1295,11 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(name = "CustomObject");
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(fieldName = "customField");
+		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
 
 		ObjectAdmin.clickFieldsSearchableSectionRadioOption(radioOption = "Text");
 
@@ -1346,7 +1346,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.viewCustomObject(name = "CustomObject");
+		ObjectAdmin.viewCustomObject(name = "Custom Object");
 	}
 
 	@description = "LPS-135548 - Verify that user can view system objects"

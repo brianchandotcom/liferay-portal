@@ -27,7 +27,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_CUSTOM_OBJECT</td>
-		<td>//div[(@class='table-list-title') and contains (.,'${key_name}')]</td>
+		<td>//div[(@class='table-list-title') and contains (.,'${key_label}')]</td>
 		<td></td>
 	</tr>
 </tbody>

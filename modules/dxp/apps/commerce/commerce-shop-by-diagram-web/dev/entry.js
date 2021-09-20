@@ -11,17 +11,27 @@
 
 import {render} from '@liferay/frontend-js-react-web';
 
-import Diagram from '../src/main/resources/META-INF/resources/js/Diagram';
+import Diagram from '../src/main/resources/META-INF/resources/js/diagram/Diagram';
+import DiagramWithAutomapping from '../src/main/resources/META-INF/resources/js/diagram/DiagramWithAutomapping';
 
 render(
 	Diagram,
 	{
+		diagramId: 1231,
 		imageURL: './assets/308056.svg',
 		isAdmin: true,
-		namespace: 'portlet_shop_by_diagram_namespace_',
 		productId: 44212,
-		spritemap: './assets/clay/icons.svg',
-		type: 'diagram.type.default',
 	},
 	document.getElementById('shop-by-diagram')
+);
+
+render(
+	DiagramWithAutomapping,
+	{
+		diagramId: 1231,
+		imageURL: './assets/308056.svg',
+		isAdmin: true,
+		productId: 44212,
+	},
+	document.getElementById('shop-by-diagram-automapping')
 );

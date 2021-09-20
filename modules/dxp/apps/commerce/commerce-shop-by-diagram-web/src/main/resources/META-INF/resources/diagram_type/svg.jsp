@@ -25,4 +25,19 @@ CSDiagramSetting csDiagramSetting = csDiagramSettingDisplayContext.fetchCSDiagra
 String type = SVGCSDiagramType.KEY;
 %>
 
-<%@ include file="/diagram_type/diagram.jspf" %>
+<div id="shop-by-diagram">
+	<react:component
+		module="js/diagram/DiagramWithAutomapping"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"diagramId", csDiagramSetting.getCSDiagramSettingId()
+			).put(
+				"imageURL", csDiagramSettingDisplayContext.getImageURL()
+			).put(
+				"isAdmin", true
+			).put(
+				"productId", cpDefinition.getCProductId()
+			).build()
+		%>'
+	/>
+</div>

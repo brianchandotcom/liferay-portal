@@ -98,10 +98,7 @@ public class VerifyResourcePermissionsTest extends BaseVerifyProcessTestCase {
 		_resourcePermissionLocalService.deleteResourcePermission(
 			resourcePermission);
 
-		VerifyResourcePermissions verifyResourcePermissions =
-			new VerifyResourcePermissions();
-
-		verifyResourcePermissions.verify(verifiableResourcedModel);
+		VerifyResourcePermissions.verify(verifiableResourcedModel);
 
 		_entityCache.clearCache(ResourcePermissionImpl.class);
 		_finderCache.clearCache(ResourcePermissionImpl.class);

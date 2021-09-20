@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
 
@@ -43,7 +44,36 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Deprecated
 public class VerifyResourcePermissions extends VerifyProcess {
 
-	public void verify(VerifiableResourcedModel... verifiableResourcedModels)
+	public static void verify(
+			VerifiableResourcedModel... verifiableResourcedModels)
+		throws Exception {
+
+		VerifyResourcePermissions verifyResourcePermissions =
+			new VerifyResourcePermissions();
+
+		_verifiableResourcedModels = verifiableResourcedModels;
+
+		verifyResourcePermissions.verify();
+	}
+
+	@Override
+	protected void doVerify() throws Exception {
+		if (!ArrayUtil.isEmpty(_verifiableResourcedModels)) {
+			doVerify(_verifiableResourcedModels);
+		}
+
+		Map<String, VerifiableResourcedModel> verifiableResourcedModelsMap =
+			PortalBeanLocatorUtil.locate(VerifiableResourcedModel.class);
+
+		Collection<VerifiableResourcedModel> verifiableResourcedModels =
+			verifiableResourcedModelsMap.values();
+
+		doVerify(
+			verifiableResourcedModels.toArray(new VerifiableResourcedModel[0]));
+	}
+
+	protected void doVerify(
+			VerifiableResourcedModel... verifiableResourcedModels)
 		throws Exception {
 
 		CompanyLocalServiceUtil.forEachCompanyId(
@@ -57,18 +87,6 @@ public class VerifyResourcePermissions extends VerifyProcess {
 						role, verifiableResourcedModel),
 					null);
 			});
-	}
-
-	@Override
-	protected void doVerify() throws Exception {
-		Map<String, VerifiableResourcedModel> verifiableResourcedModelsMap =
-			PortalBeanLocatorUtil.locate(VerifiableResourcedModel.class);
-
-		Collection<VerifiableResourcedModel> verifiableResourcedModels =
-			verifiableResourcedModelsMap.values();
-
-		verify(
-			verifiableResourcedModels.toArray(new VerifiableResourcedModel[0]));
 	}
 
 	private String _getVerifyResourcedModelSQL(
@@ -196,5 +214,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyResourcePermissions.class);
+
+	private static VerifiableResourcedModel[] _verifiableResourcedModels;
 
 }

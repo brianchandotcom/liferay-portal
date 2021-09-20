@@ -37,21 +37,14 @@ public class MDRServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyResourcedModels();
+		VerifyResourcePermissions.verify(
+			new MDRRuleGroupInstanceVerifiableModel(),
+			new MDRRuleGroupVerifiableModel());
 	}
 
 	@Reference(unbind = "-")
 	protected void setMDRActionLocalService(
 		MDRActionLocalService mdrActionLocalService) {
 	}
-
-	protected void verifyResourcedModels() throws Exception {
-		_verifyResourcePermissions.verify(
-			new MDRRuleGroupInstanceVerifiableModel());
-		_verifyResourcePermissions.verify(new MDRRuleGroupVerifiableModel());
-	}
-
-	private final VerifyResourcePermissions _verifyResourcePermissions =
-		new VerifyResourcePermissions();
 
 }

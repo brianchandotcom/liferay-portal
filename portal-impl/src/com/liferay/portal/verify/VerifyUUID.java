@@ -19,12 +19,11 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -41,11 +40,17 @@ public class VerifyUUID extends VerifyProcess {
 
 		VerifyUUID verifyUUID = new VerifyUUID();
 
-		verifyUUID.doVerify(verifiableUUIDModels);
+		_verifiableUUIDModels = verifiableUUIDModels;
+
+		verifyUUID.verify();
 	}
 
 	@Override
 	protected void doVerify() throws Exception {
+		if (!ArrayUtil.isEmpty(_verifiableUUIDModels)) {
+			doVerify(_verifiableUUIDModels);
+		}
+
 		Map<String, VerifiableUUIDModel> verifiableUUIDModelsMap =
 			PortalBeanLocatorUtil.locate(VerifiableUUIDModel.class);
 
@@ -69,7 +74,6 @@ public class VerifyUUID extends VerifyProcess {
 		if (db.isSupportsNewUuidFunction()) {
 			try (LoggingTimer loggingTimer = new LoggingTimer(
 					verifiableUUIDModel.getTableName());
-				Connection connection = DataAccess.getConnection();
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						StringBundler.concat(
@@ -85,7 +89,6 @@ public class VerifyUUID extends VerifyProcess {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				verifiableUUIDModel.getTableName());
-			Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select ", verifiableUUIDModel.getPrimaryKeyColumnName(),
@@ -114,5 +117,7 @@ public class VerifyUUID extends VerifyProcess {
 			preparedStatement2.executeBatch();
 		}
 	}
+
+	private static VerifiableUUIDModel[] _verifiableUUIDModels;
 
 }

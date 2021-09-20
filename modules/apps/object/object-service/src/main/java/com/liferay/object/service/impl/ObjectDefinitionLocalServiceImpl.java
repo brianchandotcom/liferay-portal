@@ -353,10 +353,10 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Override
 	public List<ObjectDefinition> getObjectDefinitions(
-		long companyId, boolean active, int status) {
+		long companyId, boolean active, boolean system, int status) {
 
-		return objectDefinitionPersistence.findByC_A_S(
-			companyId, active, status);
+		return objectDefinitionPersistence.findByC_A_S_S(
+			companyId, active, system, status);
 	}
 
 	@Override

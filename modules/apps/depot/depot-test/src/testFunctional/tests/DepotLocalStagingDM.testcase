@@ -991,9 +991,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_imageFileName = "Document_1.jpg",
-			locator1 = "BlogsEntry#CONTENT_SMALL_IMAGE");
+		BlogsEntry.viewSmallImage(uploadFileName = "Document_1.jpg");
 
 		Staging.gotoPublishToLive();
 
@@ -1003,9 +1001,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_imageFileName = "Document_1.jpg",
-			locator1 = "BlogsEntry#CONTENT_SMALL_IMAGE");
+		BlogsEntry.viewSmallImage(uploadFileName = "Document_1.jpg");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
@@ -1025,9 +1021,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_imageFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#CONTENT_SMALL_IMAGE");
+		BlogsEntry.viewSmallImage(uploadFileName = "Document_2.jpg");
 
 		Staging.gotoPublishToLive();
 
@@ -1037,9 +1031,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_imageFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#CONTENT_SMALL_IMAGE");
+		BlogsEntry.viewSmallImage(uploadFileName = "Document_2.jpg");
 	}
 
 	@description = "This ensures that document in depot can be replaced and republished in AP through widget config manual selection when enabling local staging."
@@ -2151,9 +2143,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_imageFileName = "Document_1.jpg",
-			locator1 = "BlogsEntry#CONTENT_SMALL_IMAGE");
+		BlogsEntry.viewSmallImage(uploadFileName = "Document_1.jpg");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
@@ -2173,9 +2163,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertElementNotPresent(
-			key_imageFileName = "Document_1.jpg",
-			locator1 = "BlogsEntry#CONTENT_SMALL_IMAGE");
+		BlogsEntry.viewNoSmallImage(uploadFileName = "Document_1.jpg");
 	}
 
 	@description = "This ensures that a document pending review cannot be searched for in a staged site when enabling local staging."

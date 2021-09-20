@@ -1071,6 +1071,12 @@ definition {
 		AssertElementNotPresent(locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_REMOVE_LINK");
 	}
 
+	macro viewNoSmallImage {
+		AssertElementNotPresent(
+			key_imageFileName = "${uploadFileName}",
+			locator1 = "BlogsEntry#CONTENT_SMALL_IMAGE");
+	}
+
 	macro viewNoTag {
 		var key_entryTitle = "${entryTitle}";
 
@@ -1259,6 +1265,12 @@ definition {
 		AssertTextEquals(
 			locator1 = "Sharing#BLOGS_TITLE",
 			value1 = "${entryTitle}");
+	}
+
+	macro viewSmallImage {
+		AssertVisible(
+			key_imageFileName = "${uploadFileName}",
+			locator1 = "BlogsEntry#CONTENT_SMALL_IMAGE");
 	}
 
 	macro viewStatus {

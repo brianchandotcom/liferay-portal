@@ -2539,16 +2539,15 @@ public abstract class Base${schemaName}ResourceTestCase {
 <#macro getGetterParameters
 	javaMethodSignature
 >
-<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-	put${schemaName}.getId()
-<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
-	put${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
-<#else>
-	null
-</#if>
-<#sep>, </#sep>
-</#list>
+	<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+		<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+			put${schemaName}.getId()
+		<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
+			put${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
+		</#if>
+
+		<#sep>, </#sep>
+	</#list>
 </#macro>
 
 <#macro getPermissionParameter

@@ -262,7 +262,7 @@ definition {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "DMFileEntry#CanReviewDocumentWhenDateIsSet";
 
-		DMDocument.updateCheckInterval(fieldValue = "2");
+		DMDocument.updateCheckInterval(fieldValue = "1");
 
 		DMNavigator.openToAddEntry(
 			groupName = "Guest",
@@ -375,7 +375,7 @@ definition {
 			roleTitle = "Portal Content Reviewer",
 			userEmailAddress = "userea@liferay.com");
 
-		DMDocument.updateCheckInterval(fieldValue = "2");
+		DMDocument.updateCheckInterval(fieldValue = "1");
 
 		DMNavigator.openToAddEntry(
 			groupName = "Guest",

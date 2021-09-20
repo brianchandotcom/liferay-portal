@@ -15,6 +15,7 @@
 package com.liferay.search.experiences.internal.enhancer;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -24,26 +25,41 @@ import com.liferay.search.experiences.rest.dto.v1_0.General;
 import com.liferay.search.experiences.rest.dto.v1_0.Query;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
+import java.util.Map;
+
 /**
  * @author Petteri Karttunen
  */
 public class SXPBlueprintSearchRequestEnhancer {
 
 	public SXPBlueprintSearchRequestEnhancer(
-		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint,
+		Aggregations aggregations,
 		ComplexQueryPartBuilderFactory complexQueryPartBuilderFactory,
-		Queries queries) {
+		Queries queries, SearchRequestBuilder searchRequestBuilder,
+		SXPBlueprint sxpBlueprint) {
 
-		_searchRequestBuilder = searchRequestBuilder;
+		_aggregations = aggregations;
 		_complexQueryPartBuilderFactory = complexQueryPartBuilderFactory;
 		_queries = queries;
+		_searchRequestBuilder = searchRequestBuilder;
 
 		_configuration = sxpBlueprint.getConfiguration();
 	}
 
 	public void enhance() {
+		processAggregations(_configuration.getAggregations());
 		processGeneral(_configuration.getGeneral());
 		processQueries(_configuration.getQueries());
+	}
+
+	protected void processAggregation(String name, Object aggregation) {
+		_searchRequestBuilder.addAggregation(
+			_aggregations.avg(name, String.valueOf(aggregation)));
+	}
+
+	protected void processAggregations(Map<String, ?> aggregationsMap) {
+		aggregationsMap.forEach(
+			(name, aggregation) -> processAggregation(name, aggregation));
 	}
 
 	protected void processClause(Claus claus) {
@@ -92,6 +108,7 @@ public class SXPBlueprintSearchRequestEnhancer {
 		return _queries.wrapper(queryJSON);
 	}
 
+	private final Aggregations _aggregations;
 	private final ComplexQueryPartBuilderFactory
 		_complexQueryPartBuilderFactory;
 	private final Configuration _configuration;

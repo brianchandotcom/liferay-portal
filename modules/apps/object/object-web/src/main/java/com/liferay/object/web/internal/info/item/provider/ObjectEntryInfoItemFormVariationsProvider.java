@@ -63,7 +63,7 @@ public class ObjectEntryInfoItemFormVariationsProvider
 
 		return TransformUtil.transform(
 			_objectDefinitionLocalService.getObjectDefinitions(
-				serviceContext.getCompanyId(), true,
+				serviceContext.getCompanyId(), true, false,
 				WorkflowConstants.STATUS_APPROVED),
 			objectDefinition -> new InfoItemFormVariation(
 				groupId,

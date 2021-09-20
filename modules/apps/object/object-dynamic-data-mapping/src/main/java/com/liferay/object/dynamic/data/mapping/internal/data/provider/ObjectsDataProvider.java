@@ -52,7 +52,7 @@ public class ObjectsDataProvider implements DDMDataProvider {
 
 			List<ObjectDefinition> objectDefinitions =
 				_objectDefinitionLocalService.getObjectDefinitions(
-					ddmDataProviderRequest.getCompanyId(), true,
+					ddmDataProviderRequest.getCompanyId(), true, false,
 					WorkflowConstants.STATUS_APPROVED);
 
 			for (ObjectDefinition objectDefinition : objectDefinitions) {

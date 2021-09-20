@@ -22,4 +22,7 @@ public class PortletLayoutTypeControllerWebKeys {
 	public static final String ORIGINAL_HTTP_SERVLET_REQUEST =
 		"ORIGINAL_HTTP_SERVLET_REQUEST";
 
+	public static final String PORTLET_LAYOUT_DISPLAY_CONTEXT =
+		"PORTLET_LAYOUT_DISPLAY_CONTEXT";
+
 }

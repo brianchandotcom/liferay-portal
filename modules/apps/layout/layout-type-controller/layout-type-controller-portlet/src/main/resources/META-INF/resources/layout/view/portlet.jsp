@@ -63,7 +63,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 		</style>
 
 		<%
-		PortletLayoutDisplayContext portletLayoutDisplayContext = new PortletLayoutDisplayContext();
+		PortletLayoutDisplayContext portletLayoutDisplayContext = (PortletLayoutDisplayContext)request.getAttribute(PortletLayoutTypeControllerWebKeys.PORTLET_LAYOUT_DISPLAY_CONTEXT);
 		%>
 
 		<liferay-layout:render-layout-structure

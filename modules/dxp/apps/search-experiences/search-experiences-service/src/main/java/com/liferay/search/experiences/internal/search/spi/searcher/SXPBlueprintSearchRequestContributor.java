@@ -17,6 +17,8 @@ package com.liferay.search.experiences.internal.search.spi.searcher;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
+import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -68,9 +70,13 @@ public class SXPBlueprintSearchRequestContributor
 			return searchRequest;
 		}
 
-		_sxpBlueprintSearchRequestEnhancer.enhance(
-			searchRequestBuilder,
-			SXPBlueprintUtil.toSXPBlueprint(sxpBlueprint));
+		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
+			new SXPBlueprintSearchRequestEnhancer(
+				searchRequestBuilder,
+				SXPBlueprintUtil.toSXPBlueprint(sxpBlueprint),
+				_complexQueryPartBuilderFactory, _queries);
+
+		sxpBlueprintSearchRequestEnhancer.enhance();
 
 		return searchRequestBuilder.build();
 	}
@@ -79,13 +85,15 @@ public class SXPBlueprintSearchRequestContributor
 		SXPBlueprintSearchRequestContributor.class);
 
 	@Reference
+	private ComplexQueryPartBuilderFactory _complexQueryPartBuilderFactory;
+
+	@Reference
+	private Queries _queries;
+
+	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	@Reference
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;
-
-	private final SXPBlueprintSearchRequestEnhancer
-		_sxpBlueprintSearchRequestEnhancer =
-			new SXPBlueprintSearchRequestEnhancer();
 
 }

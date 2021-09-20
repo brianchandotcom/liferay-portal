@@ -578,6 +578,10 @@ definition {
 			value1 = "${occurenceNumber}");
 	}
 
+	macro sortSegmentButton {
+        Click(locator1 = "ACSegments#ADD_MEMBERS_SORT_BUTTON");
+    }
+
 	macro viewActivePageCreationModel {
 		AssertTextEquals(
 			locator1 = "ACSegments#ACTIVE_PAGE",

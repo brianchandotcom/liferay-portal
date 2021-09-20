@@ -16,6 +16,7 @@ package com.liferay.object.service.impl;
 
 import com.liferay.object.exception.DefaultObjectLayoutException;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
+import com.liferay.object.exception.ObjectLayoutColumnSizeException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectLayout;
@@ -236,7 +237,7 @@ public class ObjectLayoutLocalServiceImpl
 
 	private ObjectLayoutColumn _addObjectLayoutColumn(
 			User user, long objectDefinitionId, long objectFieldId,
-			long objectLayoutRowId, int priority)
+			long objectLayoutRowId, int priority, int size)
 		throws PortalException {
 
 		ObjectField objectField = _objectFieldPersistence.findByPrimaryKey(
@@ -249,6 +250,12 @@ public class ObjectLayoutLocalServiceImpl
 			throw new PortalException();
 		}
 
+		if ((size < 0) || (size > 12)) {
+			throw new ObjectLayoutColumnSizeException(
+				"Object layout column size must be more than 0 and less than " +
+					"12");
+		}
+
 		ObjectLayoutColumn objectLayoutColumn =
 			_objectLayoutColumnPersistence.create(
 				counterLocalService.increment());
@@ -259,6 +266,7 @@ public class ObjectLayoutLocalServiceImpl
 		objectLayoutColumn.setObjectFieldId(objectField.getObjectFieldId());
 		objectLayoutColumn.setObjectLayoutRowId(objectLayoutRowId);
 		objectLayoutColumn.setPriority(priority);
+		objectLayoutColumn.setSize(size);
 
 		return _objectLayoutColumnPersistence.update(objectLayoutColumn);
 	}
@@ -275,7 +283,8 @@ public class ObjectLayoutLocalServiceImpl
 				_addObjectLayoutColumn(
 					user, objectDefinitionId,
 					objectLayoutColumn.getObjectFieldId(), objectLayoutRowId,
-					objectLayoutColumn.getPriority()));
+					objectLayoutColumn.getPriority(),
+					objectLayoutColumn.getSize()));
 		}
 
 		return addObjectLayoutColumns;

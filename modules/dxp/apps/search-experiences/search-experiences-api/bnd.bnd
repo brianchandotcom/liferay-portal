@@ -2,6 +2,7 @@ Bundle-Name: Liferay Search Experiences API
 Bundle-SymbolicName: com.liferay.search.experiences.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.search.experiences.blueprint.keyword,\
 	com.liferay.search.experiences.blueprint.parameter,\
 	com.liferay.search.experiences.blueprint.util,\
 	com.liferay.search.experiences.constants,\

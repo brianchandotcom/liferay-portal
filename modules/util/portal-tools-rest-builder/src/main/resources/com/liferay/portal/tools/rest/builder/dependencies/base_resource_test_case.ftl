@@ -1249,12 +1249,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#if !properties?keys?seq_contains("id")>
 					Assert.assertTrue(false);
 				<#else>
-					<#if javaMethodSignature.methodName?ends_with("ByExternalReferenceCodeDiagram") &&
-						 stringUtil.equals(configYAML.apiPackagePath, "com.liferay.headless.commerce.admin.catalog") &&
-						 stringUtil.equals(schemaName, "Diagram")>
-
-						@SuppressWarnings("PMD.UnusedLocalVariable")
-					</#if>
 					${schemaName} post${schemaName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
 					${schemaName} random${schemaName} = random${schemaName}();

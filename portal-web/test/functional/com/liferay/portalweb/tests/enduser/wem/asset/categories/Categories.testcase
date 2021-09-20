@@ -32,6 +32,8 @@ definition {
 	@description = "Add properties in category."
 	@priority = "3"
 	test AddCategoryProperties {
+		property testray.component.names = "AUI,Categories";
+
 		task ("Add a category") {
 			JSONCategory.addCategory(
 				groupName = "Test Site Name",

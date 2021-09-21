@@ -19,6 +19,8 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -69,17 +71,8 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection.prepareStatement(
 						"update Role_ set type_ = " +
-							RoleConstants.TYPE_ACCOUNT + " where roleId = ?"));
-			PreparedStatement preparedStatement3 =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						StringBundler.concat(
-							"update UserGroupRole inner join Group_ on ",
-							"Group_.classNameId = '",
-							_classNameLocalService.getClassNameId(
-								AccountEntry.class),
-							"' and UserGroupRole.groupId = Group_.groupId set ",
-							"roleId =  ? where roleId = ?")))) {
+							RoleConstants.TYPE_ACCOUNT +
+								" where roleId = ?"))) {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
@@ -88,11 +81,7 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 					if (_hasNonaccountEntryGroup(roleId)) {
 						AccountRole accountRole = _copyToAccountRole(roleId);
 
-						preparedStatement3.setLong(1, accountRole.getRoleId());
-
-						preparedStatement3.setLong(2, roleId);
-
-						preparedStatement3.addBatch();
+						_updateUserGroupRole(accountRole.getRoleId(), roleId);
 					}
 					else {
 						preparedStatement2.setLong(1, roleId);
@@ -102,7 +91,6 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 				}
 
 				preparedStatement2.executeBatch();
-				preparedStatement3.executeBatch();
 			}
 		}
 	}
@@ -192,6 +180,29 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 				return false;
 			}
 		}
+	}
+
+	private void _updateUserGroupRole(long newRoleId, long oldRoleId)
+		throws Exception {
+
+		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
+			StringBundler.concat(
+				"update UserGroupRole set roleId = ", newRoleId,
+				" from Group_ where Group_.classNameId = '",
+				_classNameLocalService.getClassNameId(AccountEntry.class),
+				"' and Group_.groupId = UserGroupRole.groupId and ",
+				"UserGroupRole.roleId = ", oldRoleId));
+
+		String sql = StringBundler.concat(
+			"update UserGroupRole inner join Group_ on Group_.classNameId = '",
+			_classNameLocalService.getClassNameId(AccountEntry.class),
+			"' and UserGroupRole.groupId = Group_.groupId set roleId = ",
+			newRoleId, " where roleId = ", oldRoleId);
+
+		dbTypeToSQLMap.add(DBType.MARIADB, sql);
+		dbTypeToSQLMap.add(DBType.MYSQL, sql);
+
+		runSQL(dbTypeToSQLMap);
 	}
 
 	private final AccountRoleLocalService _accountRoleLocalService;

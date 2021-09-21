@@ -401,6 +401,8 @@ components:
             type: object
         Diagram:
             properties:
+                attachmentBase64:
+                    $ref: "#/components/schemas/AttachmentBase64"
                 color:
                     example: black
                     type: string
@@ -416,6 +418,7 @@ components:
                     type: integer
                 imageURL:
                     example: Name 1
+                    readOnly: true
                     type: string
                 productExternalReferenceCode:
                     example: exampleERC
@@ -501,6 +504,15 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
+                productName:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: Hand Saw
+                        hr_HR: Product Name HR
+                        hu_HU: Product Name HU
+                    readOnly: true
+                    type: object
                 quantity:
                     example: 1
                     format: int32

@@ -17,12 +17,13 @@ package com.liferay.batch.planner.web.internal.display.context;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.BatchPlannerPlanServiceUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -31,10 +32,12 @@ import javax.portlet.RenderResponse;
 /**
  * @author Matija Petanjek
  */
-public class BatchPlannerPlanDisplayContext {
+public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 
 	public BatchPlannerPlanDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		super(renderRequest, renderResponse);
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
@@ -43,6 +46,8 @@ public class BatchPlannerPlanDisplayContext {
 	public PortletURL getPortletURL() {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
+		).setTabs1(
+			"batch-planner-plans"
 		).setParameter(
 			"delta", () -> ParamUtil.getString(_renderRequest, "delta")
 		).buildPortletURL();
@@ -106,17 +111,8 @@ public class BatchPlannerPlanDisplayContext {
 		return _searchContainer;
 	}
 
-	public String getSimpleInternalClassName(
-		BatchPlannerPlan batchPlannerPlan) {
-
-		String internalClassName = batchPlannerPlan.getInternalClassName();
-
-		return internalClassName.substring(
-			internalClassName.lastIndexOf(StringPool.PERIOD) + 1);
-	}
-
 	private boolean _isExport(String navigation) {
-		return navigation.equals("export");
+		return Objects.equals(navigation, "export");
 	}
 
 	private final RenderRequest _renderRequest;

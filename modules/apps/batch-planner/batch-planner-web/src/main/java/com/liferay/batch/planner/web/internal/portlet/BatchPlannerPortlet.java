@@ -15,7 +15,7 @@
 package com.liferay.batch.planner.web.internal.portlet;
 
 import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
-import com.liferay.batch.planner.web.internal.display.context.BatchPlannerPlanDisplayContext;
+import com.liferay.batch.planner.web.internal.display.context.BatchPlannerLogDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -59,7 +59,7 @@ public class BatchPlannerPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new BatchPlannerPlanDisplayContext(renderRequest, renderResponse));
+			new BatchPlannerLogDisplayContext(renderRequest, renderResponse));
 
 		super.render(renderRequest, renderResponse);
 	}

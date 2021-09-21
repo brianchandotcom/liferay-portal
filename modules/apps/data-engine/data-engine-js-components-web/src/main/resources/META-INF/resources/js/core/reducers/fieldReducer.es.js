@@ -24,7 +24,7 @@ import {EVENT_TYPES} from '../actions/eventTypes.es';
 
 export const createRepeatedField = (sourceField, repeatedIndex) => {
 	const instanceId = generateInstanceId();
-
+	const {locale, name, nestedFields, predefinedValue} = sourceField;
 	let localizedValue;
 
 	if (sourceField.localizedValue) {
@@ -36,6 +36,8 @@ export const createRepeatedField = (sourceField, repeatedIndex) => {
 			},
 			{}
 		);
+
+		localizedValue[locale] = predefinedValue ?? localizedValue[locale];
 	}
 
 	return {
@@ -43,12 +45,12 @@ export const createRepeatedField = (sourceField, repeatedIndex) => {
 		confirmationValue: '',
 		instanceId,
 		localizedValue,
-		name: generateName(sourceField.name, {instanceId, repeatedIndex}),
-		nestedFields: (sourceField.nestedFields || []).map((nestedField) =>
+		name: generateName(name, {instanceId, repeatedIndex}),
+		nestedFields: nestedFields?.map((nestedField) =>
 			createRepeatedField(nestedField)
 		),
 		valid: true,
-		value: sourceField.predefinedValue,
+		value: predefinedValue,
 	};
 };
 

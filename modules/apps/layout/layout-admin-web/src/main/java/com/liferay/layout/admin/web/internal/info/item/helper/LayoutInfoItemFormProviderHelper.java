@@ -53,7 +53,7 @@ public class LayoutInfoItemFormProviderHelper {
 		).infoFieldSetEntry(
 			_getBasicInformationInfoFieldSet()
 		).infoFieldSetEntry(
-			_getLayoutInfoFieldSet(layout)
+			_getLayoutInfoFieldSet(layout, segmentsExperienceId)
 		).build();
 	}
 
@@ -68,24 +68,26 @@ public class LayoutInfoItemFormProviderHelper {
 		).build();
 	}
 
-	private InfoFieldSet _getLayoutInfoFieldSet(Layout layout) {
+	private InfoFieldSet _getLayoutInfoFieldSet(
+		Layout layout, long segmentsExperienceId) {
+
 		return InfoFieldSet.builder(
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "inline-content")
 		).infoFieldSetEntries(
-			_getLayoutInfoFieldSetEntries(layout)
+			_getLayoutInfoFieldSetEntries(layout, segmentsExperienceId)
 		).name(
 			"inline-content"
 		).build();
 	}
 
 	private List<InfoFieldSetEntry> _getLayoutInfoFieldSetEntries(
-		Layout layout) {
+		Layout layout, long segmentsExperienceId) {
 
 		List<InfoFieldSetEntry> infoFieldSetEntries = new ArrayList<>();
 
 		InfoFieldUtil.forEachInfoField(
-			_fragmentRendererController, layout,
+			_fragmentRendererController, layout, segmentsExperienceId,
 			(name, infoField, unsafeSupplier) -> infoFieldSetEntries.add(
 				infoField));
 

@@ -59,7 +59,7 @@ public class LayoutInfoItemFieldValuesProviderHelper {
 					layout.getNameMap()
 				).build())
 		).infoFieldValues(
-			_getLayoutInfoFieldValues(layout)
+			_getLayoutInfoFieldValues(layout, segmentsExperienceId)
 		).infoItemReference(
 			new InfoItemReference(Layout.class.getName(), layout.getPlid())
 		).build();
@@ -105,13 +105,13 @@ public class LayoutInfoItemFieldValuesProviderHelper {
 	}
 
 	private List<InfoFieldValue<Object>> _getLayoutInfoFieldValues(
-		Layout layout) {
+		Layout layout, long segmentsExperienceId) {
 
 		try {
 			List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
 
 			InfoFieldUtil.forEachInfoField(
-				_fragmentRendererController, layout,
+				_fragmentRendererController, layout, segmentsExperienceId,
 				(name, infoField, unsafeSupplier) -> infoFieldValues.add(
 					new InfoFieldValue<>(
 						infoField,

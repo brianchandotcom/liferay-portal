@@ -134,6 +134,7 @@ definition {
 	@refactorneeded
 	test CanAddLinkToPage {
 		property portal.acceptance = "true";
+		property testray.component.names = "WYSIWYG";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

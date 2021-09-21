@@ -210,7 +210,6 @@ definition {
 	}
 
 	@description = "LPS-135393 - Verify the table is updated when changing the pagination number on the Custom Object Portlet"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test TableUpdatedWhenChangingPaginationNumber {
 		ObjectAdmin.addObjectViaAPI(

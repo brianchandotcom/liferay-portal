@@ -69,7 +69,7 @@ else {
 				</portlet:actionURL>
 
 				<c:choose>
-					<c:when test="<%= !workflowEnabled && !layoutRevision.isIncomplete() %>">
+					<c:when test="<%= !layout.isTypeContent() && !workflowEnabled && !layoutRevision.isIncomplete() %>">
 						<span class="staging-bar-control-toggle">
 							<aui:input id="readyToggle" label="<%= StringPool.BLANK %>" labelOff="ready-for-publish-process" labelOn="ready-for-publish-process" name="readyToggle" onChange='<%= liferayPortletResponse.getNamespace() + "submitLayoutRevision('" + publishURL + "')" %>' type="toggle-switch" value="<%= false %>" />
 						</span>
@@ -100,7 +100,7 @@ else {
 
 	<c:if test="<%= !layoutRevision.isIncomplete() %>">
 		<li class="control-menu-nav-item">
-			<c:if test="<%= layoutRevision.isHead() %>">
+			<c:if test="<%= !layout.isTypeContent() && layoutRevision.isHead() %>">
 				<span class="staging-bar-control-toggle">
 					<aui:input disabled="<%= true %>" id="readyToggle" label="<%= StringPool.BLANK %>" labelOn="ready-for-publish-process" name="readyToggle" type="toggle-switch" value="<%= true %>" />
 				</span>

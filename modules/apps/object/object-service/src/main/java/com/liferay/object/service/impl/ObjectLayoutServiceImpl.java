@@ -63,6 +63,20 @@ public class ObjectLayoutServiceImpl extends ObjectLayoutServiceBaseImpl {
 	}
 
 	@Override
+	public ObjectLayout deleteObjectLayout(long objectLayoutId)
+		throws PortalException {
+
+		ObjectLayout objectLayout = objectLayoutPersistence.findByPrimaryKey(
+			objectLayoutId);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectLayout.getObjectDefinitionId(),
+			ActionKeys.DELETE);
+
+		return objectLayoutLocalService.deleteObjectLayout(objectLayoutId);
+	}
+
+	@Override
 	public ObjectLayout getObjectLayout(long objectLayoutId)
 		throws PortalException {
 

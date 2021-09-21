@@ -1391,6 +1391,7 @@ definition {
 	}
 
 	@description = "LRQA-55450 [Performance] Search assignees in the performance of all assignees screen"
+	@ignore = "true"
 	@priority = "5"
 	test SearchPerformanceOfAllAssignees {
 		property portal.acceptance = "true";

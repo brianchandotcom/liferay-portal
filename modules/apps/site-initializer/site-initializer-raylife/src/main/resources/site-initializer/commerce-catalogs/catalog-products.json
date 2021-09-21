@@ -1,0 +1,98 @@
+[
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Business Owners Policy"
+		],
+		"description": "Covers cost for property damage claims against your business, medical expenses if someone gets injured at your company and safeguards your business if you are sued.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "RAY001",
+		"height": 2,
+		"images": [
+		],
+		"length": 7,
+		"minStockQuantity": 5,
+		"name": "General Liability",
+		"price": 29.0,
+		"promoPrice": 18.0,
+		"sku": "RAY001",
+		"specificationOptions": [
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Business Owners Policy"
+		],
+		"description": "Coverage to help protect your business against negligence and other claims from your clients.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "RAY002",
+		"height": 2,
+		"images": [
+		],
+		"length": 7,
+		"minStockQuantity": 5,
+		"name": "Professional Liability",
+		"price": 45.0,
+		"promoPrice": 20.0,
+		"sku": "RAY002",
+		"specificationOptions": [
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Business Owners Policy"
+		],
+		"description": "Provides benefits to employees who experience a work-related injury or illness.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "RAY003",
+		"height": 2,
+		"images": [
+		],
+		"length": 7,
+		"minStockQuantity": 5,
+		"name": "Workers Compensation",
+		"price": 40.0,
+		"promoPrice": 18.0,
+		"sku": "RAY003",
+		"specificationOptions": [
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60
+	},
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Business Owners Policy"
+		],
+		"description": "Combines coverage for all major property and liability risks into one insurance policy.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "RAY004",
+		"height": 2,
+		"images": [
+		],
+		"length": 7,
+		"minStockQuantity": 5,
+		"name": "Business Owners Policy",
+		"price": 60.0,
+		"promoPrice": 25.0,
+		"sku": "RAY004",
+		"specificationOptions": [
+		],
+		"taxCategory": "Normal Product",
+		"warehouse1": 60
+	}
+]

@@ -14,9 +14,11 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.initializer.util.CPDefinitionsImporter;
 import com.liferay.commerce.initializer.util.CommerceInventoryWarehousesImporter;
 import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
@@ -92,17 +94,18 @@ public class SiteInitializerExtender
 
 		SiteInitializerExtension siteInitializerExtension =
 			new SiteInitializerExtension(
-				_assetListEntryLocalService, bundle, _bundleContext,
-				_catalogResourceFactory, _channelResourceFactory,
-				_commerceAccountRoleHelper, _commerceCurrencyLocalService,
-				_commerceInventoryWarehousesImporter, _cpFileImporter,
-				_cpMeasurementUnitLocalService, _ddmStructureLocalService,
-				_ddmTemplateLocalService, _defaultDDMStructureHelper,
-				_dlURLHelper, _documentFolderResourceFactory,
-				_documentResourceFactory, _fragmentsImporter,
-				_groupLocalService, _journalArticleLocalService, _jsonFactory,
-				_layoutCopyHelper, _layoutLocalService,
-				_layoutPageTemplateEntryLocalService,
+				_assetListEntryLocalService, _assetVocabularyLocalService,
+				bundle, _bundleContext, _catalogResourceFactory,
+				_channelResourceFactory, _commerceAccountRoleHelper,
+				_commerceCurrencyLocalService,
+				_commerceInventoryWarehousesImporter, _cpDefinitionsImporter,
+				_cpFileImporter, _cpMeasurementUnitLocalService,
+				_ddmStructureLocalService, _ddmTemplateLocalService,
+				_defaultDDMStructureHelper, _dlURLHelper,
+				_documentFolderResourceFactory, _documentResourceFactory,
+				_fragmentsImporter, _groupLocalService,
+				_journalArticleLocalService, _jsonFactory, _layoutCopyHelper,
+				_layoutLocalService, _layoutPageTemplateEntryLocalService,
 				_layoutPageTemplatesImporter,
 				_layoutPageTemplateStructureLocalService,
 				_layoutSetLocalService, _objectDefinitionResourceFactory,
@@ -154,6 +157,9 @@ public class SiteInitializerExtender
 	@Reference
 	private AssetListEntryLocalService _assetListEntryLocalService;
 
+	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
 	private BundleContext _bundleContext;
 	private BundleTracker<?> _bundleTracker;
 
@@ -172,6 +178,9 @@ public class SiteInitializerExtender
 	@Reference
 	private CommerceInventoryWarehousesImporter
 		_commerceInventoryWarehousesImporter;
+
+	@Reference
+	private CPDefinitionsImporter _cpDefinitionsImporter;
 
 	@Reference
 	private CPFileImporter _cpFileImporter;

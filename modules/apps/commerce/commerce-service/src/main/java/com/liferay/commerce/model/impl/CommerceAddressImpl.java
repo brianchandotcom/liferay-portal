@@ -147,32 +147,29 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 	}
 
 	public static int toCommerceAddressType(Address address) {
-		if (isAccountEntryAddress(address)) {
-			ListType listType = address.getType();
+		ListType listType = address.getType();
 
-			String listTypeName = listType.getName();
+		String listTypeName = listType.getName();
 
-			if (Objects.equals(
-					AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING,
+		if (Objects.equals(
+				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING,
+				listTypeName)) {
+
+			return CommerceAddressConstants.ADDRESS_TYPE_BILLING;
+		}
+		else if (Objects.equals(
+					AccountListTypeConstants.
+						ACCOUNT_ENTRY_ADDRESS_TYPE_SHIPPING,
 					listTypeName)) {
 
-				return CommerceAddressConstants.ADDRESS_TYPE_BILLING;
-			}
-			else if (Objects.equals(
-						AccountListTypeConstants.
-							ACCOUNT_ENTRY_ADDRESS_TYPE_SHIPPING,
-						listTypeName)) {
+			return CommerceAddressConstants.ADDRESS_TYPE_SHIPPING;
+		}
+		else if (Objects.equals(
+					AccountListTypeConstants.
+						ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING_AND_SHIPPING,
+					listTypeName)) {
 
-				return CommerceAddressConstants.ADDRESS_TYPE_SHIPPING;
-			}
-			else if (Objects.equals(
-						AccountListTypeConstants.
-							ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING_AND_SHIPPING,
-						listTypeName)) {
-
-				return CommerceAddressConstants.
-					ADDRESS_TYPE_BILLING_AND_SHIPPING;
-			}
+			return CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING;
 		}
 
 		return CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING;

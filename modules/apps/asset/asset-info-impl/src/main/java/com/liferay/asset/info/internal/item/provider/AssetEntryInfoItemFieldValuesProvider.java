@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.text.Format;
 
@@ -60,6 +61,9 @@ public class AssetEntryInfoItemFieldValuesProvider
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry)
 		).infoFieldValues(
 			_getAssetEntryInfoFieldValues(assetEntry)
+		).infoFieldValues(
+			_templateInfoItemFieldSetProvider.getInfoFieldValues(
+				AssetEntry.class.getName(), assetEntry)
 		).infoItemReference(
 			new InfoItemReference(
 				AssetEntry.class.getName(), assetEntry.getEntryId())
@@ -192,6 +196,9 @@ public class AssetEntryInfoItemFieldValuesProvider
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

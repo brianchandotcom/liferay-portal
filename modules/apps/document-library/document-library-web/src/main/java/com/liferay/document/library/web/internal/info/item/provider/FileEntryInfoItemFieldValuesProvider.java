@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -82,6 +83,10 @@ public class FileEntryInfoItemFieldValuesProvider
 			).infoFieldValues(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
 					FileEntry.class.getName(), fileEntry)
+			).infoFieldValues(
+				_templateInfoItemFieldSetProvider.getInfoFieldValues(
+					FileEntry.class.getName(),
+					_getInfoItemFormVariationKey(fileEntry), fileEntry)
 			).infoItemReference(
 				new InfoItemReference(
 					FileEntry.class.getName(), fileEntry.getFileEntryId())
@@ -298,6 +303,16 @@ public class FileEntryInfoItemFieldValuesProvider
 		}
 	}
 
+	private String _getInfoItemFormVariationKey(FileEntry fileEntry) {
+		if (fileEntry.getModel() instanceof DLFileEntry) {
+			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+			return String.valueOf(dlFileEntry.getFileEntryTypeId());
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private ThemeDisplay _getThemeDisplay() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -336,6 +351,9 @@ public class FileEntryInfoItemFieldValuesProvider
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
+
+	@Reference
+	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

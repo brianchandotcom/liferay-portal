@@ -88,17 +88,20 @@ public class RowViewport implements Serializable {
 
 	@Schema(description = "The definition of the row vieport.")
 	@Valid
-	public Object getRowViewportDefinition() {
+	public RowViewportDefinition getRowViewportDefinition() {
 		return rowViewportDefinition;
 	}
 
-	public void setRowViewportDefinition(Object rowViewportDefinition) {
+	public void setRowViewportDefinition(
+		RowViewportDefinition rowViewportDefinition) {
+
 		this.rowViewportDefinition = rowViewportDefinition;
 	}
 
 	@JsonIgnore
 	public void setRowViewportDefinition(
-		UnsafeSupplier<Object, Exception> rowViewportDefinitionUnsafeSupplier) {
+		UnsafeSupplier<RowViewportDefinition, Exception>
+			rowViewportDefinitionUnsafeSupplier) {
 
 		try {
 			rowViewportDefinition = rowViewportDefinitionUnsafeSupplier.get();
@@ -114,7 +117,7 @@ public class RowViewport implements Serializable {
 	@GraphQLField(description = "The definition of the row vieport.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
-	protected Object rowViewportDefinition;
+	protected RowViewportDefinition rowViewportDefinition;
 
 	@Override
 	public boolean equals(Object object) {

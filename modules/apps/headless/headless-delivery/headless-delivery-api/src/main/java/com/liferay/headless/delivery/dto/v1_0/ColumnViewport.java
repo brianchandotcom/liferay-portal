@@ -58,17 +58,19 @@ public class ColumnViewport implements Serializable {
 
 	@Schema
 	@Valid
-	public Object getColumnViewportDefinition() {
+	public ColumnViewportDefinition getColumnViewportDefinition() {
 		return columnViewportDefinition;
 	}
 
-	public void setColumnViewportDefinition(Object columnViewportDefinition) {
+	public void setColumnViewportDefinition(
+		ColumnViewportDefinition columnViewportDefinition) {
+
 		this.columnViewportDefinition = columnViewportDefinition;
 	}
 
 	@JsonIgnore
 	public void setColumnViewportDefinition(
-		UnsafeSupplier<Object, Exception>
+		UnsafeSupplier<ColumnViewportDefinition, Exception>
 			columnViewportDefinitionUnsafeSupplier) {
 
 		try {
@@ -86,7 +88,7 @@ public class ColumnViewport implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
-	protected Object columnViewportDefinition;
+	protected ColumnViewportDefinition columnViewportDefinition;
 
 	@Schema
 	public String getId() {

@@ -53,16 +53,19 @@ public class RowViewport implements Cloneable, Serializable {
 
 	protected String id;
 
-	public Object getRowViewportDefinition() {
+	public RowViewportDefinition getRowViewportDefinition() {
 		return rowViewportDefinition;
 	}
 
-	public void setRowViewportDefinition(Object rowViewportDefinition) {
+	public void setRowViewportDefinition(
+		RowViewportDefinition rowViewportDefinition) {
+
 		this.rowViewportDefinition = rowViewportDefinition;
 	}
 
 	public void setRowViewportDefinition(
-		UnsafeSupplier<Object, Exception> rowViewportDefinitionUnsafeSupplier) {
+		UnsafeSupplier<RowViewportDefinition, Exception>
+			rowViewportDefinitionUnsafeSupplier) {
 
 		try {
 			rowViewportDefinition = rowViewportDefinitionUnsafeSupplier.get();
@@ -72,7 +75,7 @@ public class RowViewport implements Cloneable, Serializable {
 		}
 	}
 
-	protected Object rowViewportDefinition;
+	protected RowViewportDefinition rowViewportDefinition;
 
 	@Override
 	public RowViewport clone() throws CloneNotSupportedException {

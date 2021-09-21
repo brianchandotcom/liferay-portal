@@ -62,11 +62,8 @@ public class ColumnViewportSerDes {
 
 			sb.append("\"columnViewportDefinition\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(columnViewport.getColumnViewportDefinition()));
-
-			sb.append("\"");
+			sb.append(
+				String.valueOf(columnViewport.getColumnViewportDefinition()));
 		}
 
 		if (columnViewport.getId() != null) {
@@ -144,7 +141,8 @@ public class ColumnViewportSerDes {
 
 				if (jsonParserFieldValue != null) {
 					columnViewport.setColumnViewportDefinition(
-						(Object)jsonParserFieldValue);
+						ColumnViewportDefinitionSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

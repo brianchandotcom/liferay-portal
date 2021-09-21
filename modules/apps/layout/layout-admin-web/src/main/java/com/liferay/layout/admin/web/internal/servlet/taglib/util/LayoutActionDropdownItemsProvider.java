@@ -17,7 +17,6 @@ package com.liferay.layout.admin.web.internal.servlet.taglib.util;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
-import com.liferay.layout.admin.web.internal.util.FFLayoutPreviewDraftConfigurationUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -215,10 +214,8 @@ public class LayoutActionDropdownItemsProvider {
 									"discard-conversion-draft"));
 						}
 					).add(
-						() ->
-							FFLayoutPreviewDraftConfigurationUtil.enabled() &&
-							_layoutsAdminDisplayContext.isShowDraftActions(
-								layout),
+						() -> _layoutsAdminDisplayContext.isShowDraftActions(
+							layout),
 						dropdownItem -> {
 							dropdownItem.put("symbolRight", "shortcut");
 							dropdownItem.setHref(

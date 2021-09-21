@@ -16,10 +16,8 @@ package com.liferay.layout.internal.util;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
-import com.liferay.layout.internal.configuration.FFLayoutPreviewDraftConfiguration;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -57,15 +55,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -254,18 +249,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ffLayoutPreviewDraftConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFLayoutPreviewDraftConfiguration.class, properties);
-	}
-
 	private Layout _getDraftLayout(Layout layout) {
-		if (!_ffLayoutPreviewDraftConfiguration.enabled() ||
-			!layout.isTypeContent()) {
-
+		if (!layout.isTypeContent()) {
 			return null;
 		}
 
@@ -675,9 +660,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutsTreeImpl.class);
-
-	private volatile FFLayoutPreviewDraftConfiguration
-		_ffLayoutPreviewDraftConfiguration;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -268,16 +268,6 @@ definition {
 			Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation");
 		}
 
-		task ("Assert the workflow status is Approved") {
-			AssertTextEquals(
-				locator1 = "Staging#WORKFLOW_STATUS",
-				value1 = "Approved");
-		}
-
-		task ("Switch Ready for Publish Process to Yes") {
-			Staging.markAsReadyForPublication();
-		}
-
 		task ("Assert the workflow status is Ready for Publish Process") {
 			Pause(locator1 = "3000");
 
@@ -350,16 +340,6 @@ definition {
 
 		task ("Assert the Main Variation is selected in Site Pages Variation field") {
 			Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation");
-		}
-
-		task ("Assert the workflow status is Approved") {
-			AssertTextEquals(
-				locator1 = "Staging#WORKFLOW_STATUS",
-				value1 = "Approved");
-		}
-
-		task ("Switch Ready for Publish Process to Yes") {
-			Staging.markAsReadyForPublication();
 		}
 
 		task ("Assert the workflow status is Ready for Publish Process") {

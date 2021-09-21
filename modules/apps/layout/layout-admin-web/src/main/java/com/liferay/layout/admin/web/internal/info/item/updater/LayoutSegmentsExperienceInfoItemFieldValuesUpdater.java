@@ -18,9 +18,12 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.layout.admin.web.internal.info.item.helper.LayoutInfoItemFieldValuesUpdaterHelper;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.model.SegmentsExperience;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -31,20 +34,22 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	property = "item.class.name=com.liferay.portal.kernel.model.Layout",
+	property = "item.class.name=com.liferay.segments.model.SegmentsExperience",
 	service = InfoItemFieldValuesUpdater.class
 )
-public class LayoutInfoItemFieldValuesUpdater
-	implements InfoItemFieldValuesUpdater<Layout> {
+public class LayoutSegmentsExperienceInfoItemFieldValuesUpdater
+	implements InfoItemFieldValuesUpdater<SegmentsExperience> {
 
 	@Override
-	public Layout updateFromInfoItemFieldValues(
-		Layout layout, InfoItemFieldValues infoItemFieldValues) {
+	public SegmentsExperience updateFromInfoItemFieldValues(
+		SegmentsExperience segmentsExperience,
+		InfoItemFieldValues infoItemFieldValues) {
 
-		return _layoutInfoItemFieldValuesUpdaterHelper.
-			updateFromInfoItemFieldValues(
-				layout, SegmentsExperienceConstants.ID_DEFAULT,
-				infoItemFieldValues);
+		_layoutInfoItemFieldValuesUpdaterHelper.updateFromInfoItemFieldValues(
+			_getLayout(segmentsExperience),
+			segmentsExperience.getSegmentsExperienceId(), infoItemFieldValues);
+
+		return segmentsExperience;
 	}
 
 	@Activate
@@ -53,6 +58,16 @@ public class LayoutInfoItemFieldValuesUpdater
 		_layoutInfoItemFieldValuesUpdaterHelper =
 			new LayoutInfoItemFieldValuesUpdaterHelper(
 				_fragmentEntryLinkLocalService, _layoutLocalService);
+	}
+
+	private Layout _getLayout(SegmentsExperience segmentsExperience) {
+		try {
+			return _layoutLocalService.getLayout(
+				segmentsExperience.getClassPK());
+		}
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
+		}
 	}
 
 	@Reference

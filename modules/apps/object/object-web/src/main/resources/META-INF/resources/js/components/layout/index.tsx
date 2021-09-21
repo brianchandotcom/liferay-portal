@@ -23,7 +23,7 @@ import InfoScreen from './info-screen/InfoScreen';
 import LayoutScreen from './layout-screen/LayoutScreen';
 import {
 	TObjectField,
-	TObjectLayoutColumn,
+	TObjectLayout,
 	TObjectLayoutTab,
 	TObjectRelationship,
 } from './types';
@@ -46,24 +46,23 @@ const HEADERS = new Headers({
 
 type TNormalizeObjectFields = ({
 	objectFields,
-	objectLayoutTabs,
+	objectLayout,
 }: {
 	objectFields: TObjectField[];
-	objectLayoutTabs: TObjectLayoutTab[];
+	objectLayout: TObjectLayout;
 }) => TObjectField[];
 
 const normalizeObjectFields: TNormalizeObjectFields = ({
 	objectFields,
-	objectLayoutTabs,
+	objectLayout,
 }) => {
-	const visitor = new TabsVisitor(objectLayoutTabs);
+	const visitor = new TabsVisitor(objectLayout);
 	const objectFieldIds = objectFields.map(({id}) => id);
 
 	const normalizedObjectFields = [...objectFields];
 
-	visitor.mapTabs(({objectFieldId}: TObjectLayoutColumn) => {
-		const objectFieldIndex = objectFieldIds.indexOf(objectFieldId);
-
+	visitor.mapFields((field) => {
+		const objectFieldIndex = objectFieldIds.indexOf(field.objectFieldId);
 		normalizedObjectFields[objectFieldIndex].inLayout = true;
 	});
 
@@ -141,13 +140,15 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				}
 			);
 
+			const objectLayout = {
+				defaultObjectLayout,
+				name,
+				objectLayoutTabs,
+			};
+
 			dispatch({
 				payload: {
-					objectLayout: {
-						defaultObjectLayout,
-						name,
-						objectLayoutTabs,
-					},
+					objectLayout,
 				},
 				type: TYPES.ADD_OBJECT_LAYOUT,
 			});
@@ -160,7 +161,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				payload: {
 					objectFields: normalizeObjectFields({
 						objectFields,
-						objectLayoutTabs,
+						objectLayout,
 					}),
 				},
 				type: TYPES.ADD_OBJECT_FIELDS,

@@ -39,6 +39,7 @@ export declare type TObjectLayoutRow = {
 export declare type TObjectLayoutColumn = {
 	objectFieldId: number;
 	priority: number;
+	size: number;
 };
 export declare type TObjectField = {
 	id: number;

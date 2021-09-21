@@ -12,23 +12,10 @@ $bgColor: #f7f8f9;
 	}
 
 	&__rows {
-		display: flex;
 		margin-bottom: 1.5rem;
 
 		&:last-child {
 			margin-bottom: 0 !important;
-		}
-	}
-
-	&__columns {
-		margin: 0 0.75rem;
-
-		&:first-child {
-			margin-left: 0 !important;
-		}
-
-		&:last-child {
-			margin-right: 0 !important;
 		}
 	}
 
@@ -56,5 +43,47 @@ $bgColor: #f7f8f9;
 			border: 2px solid #0b5fff;
 			color: initial;
 		}
+	}
+}
+
+.box-btn-columns {
+	display: flex;
+
+	&__btn {
+		background-color: #fff;
+		border: 1px solid #e2e4ea;
+		border-radius: 4px;
+		display: flex;
+		flex-direction: row;
+		height: 80px;
+		margin-right: 1rem;
+		padding: 4px;
+		width: 80px;
+
+		&:hover {
+			border-color: #ccced4;
+
+			.box-btn-columns__item {
+				background-color: #ccd0d8;
+			}
+		}
+
+		&.active,
+		&.active:hover {
+			background-color: #f0f5ff;
+			border-color: #0b5fff;
+
+			.box-btn-columns__item {
+				background-color: #80acff;
+			}
+		}
+	}
+
+	&__item {
+		background-color: #e2e4ea;
+		border-radius: 4px;
+		height: calc(100% - 8px);
+		margin: 4px;
+		width: 100%;
 	}
 }

@@ -13,63 +13,95 @@
  */
 
 import {
+	TObjectLayout,
 	TObjectLayoutBox,
 	TObjectLayoutColumn,
+	TObjectLayoutRow,
 	TObjectLayoutTab,
 } from '../components/layout/types';
 
 class TabsVisitor {
-	private _tabs: any;
+	private _layout: any;
 
-	constructor(tabs: TObjectLayoutTab[]) {
-		this.setTabs(tabs);
+	constructor(layout: TObjectLayout) {
+		this.setLayout(layout);
 	}
 
 	dispose() {
-		this._tabs = null;
+		this._layout = null;
 	}
 
-	setTabs(tabs: TObjectLayoutTab[]) {
-		this._tabs = [...tabs];
+	setLayout(layout: TObjectLayout) {
+		this._layout = {...layout};
 	}
 
-	mapTabs(mapper: (column: TObjectLayoutColumn) => void) {
-		return this._tabs.map((tab: TObjectLayoutTab) => {
-			return tab.objectLayoutBoxes.map((box) => {
-				return box.objectLayoutRows.map((row) => {
-					return row.objectLayoutColumns.map((column) => {
-						return mapper(column);
+	mapFields(mapper: (field: TObjectLayoutColumn) => void) {
+		return this._layout.objectLayoutTabs.map(
+			({objectLayoutBoxes}: TObjectLayoutTab) => {
+				return objectLayoutBoxes.map(({objectLayoutRows}) => {
+					return objectLayoutRows.map(({objectLayoutColumns}) => {
+						return objectLayoutColumns.map((field) => {
+							return field && mapper(field);
+						});
 					});
 				});
-			});
-		});
+			}
+		);
 	}
 }
 
 class BoxesVisitor {
-	private _boxes: any;
+	private _tab: any;
 
-	constructor(boxes: TObjectLayoutBox[]) {
-		this.setBoxes(boxes);
+	constructor(tab: TObjectLayoutTab) {
+		this.setTab(tab);
 	}
 
 	dispose() {
-		this._boxes = null;
+		this._tab = null;
 	}
 
-	setBoxes(boxes: TObjectLayoutBox[]) {
-		this._boxes = [...boxes];
+	setTab(tab: TObjectLayoutTab) {
+		this._tab = {...tab};
 	}
 
-	mapBoxes(mapper: (column: TObjectLayoutColumn) => void) {
-		return this._boxes.map((box: TObjectLayoutBox) => {
-			return box.objectLayoutRows.map((row) => {
-				return row.objectLayoutColumns.map((column) => {
-					return mapper(column);
+	mapFields(mapper: (field: TObjectLayoutColumn) => void) {
+		return this._tab.objectLayoutBoxes.map(
+			({objectLayoutRows}: TObjectLayoutBox) => {
+				return objectLayoutRows.map(({objectLayoutColumns}) => {
+					return objectLayoutColumns.map((field) => {
+						return field && mapper(field);
+					});
 				});
-			});
-		});
+			}
+		);
 	}
 }
 
-export {BoxesVisitor, TabsVisitor};
+class RowsVisitor {
+	private _box: any;
+
+	constructor(box: TObjectLayoutBox) {
+		this.setBox(box);
+	}
+
+	dispose() {
+		this._box = null;
+	}
+
+	setBox(box: TObjectLayoutBox) {
+		this._box = {...box};
+	}
+
+	mapFields(mapper: (field: TObjectLayoutColumn) => void) {
+		return this._box.objectLayoutRows.map(
+			({objectLayoutColumns}: TObjectLayoutRow) => {
+				return objectLayoutColumns.map((field) => {
+					return field && mapper(field);
+				});
+			}
+		);
+	}
+}
+
+export {BoxesVisitor, RowsVisitor, TabsVisitor};

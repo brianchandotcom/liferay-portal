@@ -57,8 +57,11 @@ const ObjectLayoutBox: React.FC<IObjectLayoutBoxProps> = ({
 								onToggle={(value) => {
 									dispatch({
 										payload: {
+											attribute: {
+												collapsable,
+												value,
+											},
 											boxIndex,
-											collapsable: value,
 											tabIndex,
 										},
 										type:

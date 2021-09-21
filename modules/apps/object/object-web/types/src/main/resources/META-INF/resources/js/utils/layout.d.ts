@@ -12,12 +12,15 @@
  * details.
  */
 
-import React from 'react';
-import {TObjectLayoutRow} from '../types';
-interface IObjectLayoutRowsProps extends React.HTMLAttributes<HTMLElement> {
-	boxIndex: number;
-	objectLayoutRows: TObjectLayoutRow[];
-	tabIndex: number;
-}
-declare const ObjectLayoutRows: React.FC<IObjectLayoutRowsProps>;
-export default ObjectLayoutRows;
+import {TObjectLayoutRow} from '../components/layout/types';
+declare type TFindObjectLayoutRowIndex = (
+	objectLayoutRows: TObjectLayoutRow[],
+	size: number
+) => number;
+export declare const findObjectLayoutRowIndex: TFindObjectLayoutRowIndex;
+declare type TFindObjectFieldIndex = (
+	object: any[],
+	objectId: number
+) => number;
+export declare const findObjectFieldIndex: TFindObjectFieldIndex;
+export {};

@@ -14,13 +14,12 @@
 
 import React, {createContext, useReducer} from 'react';
 
-import {BoxesVisitor, TabsVisitor} from '../../utils/visitor';
 import {
-	TObjectField,
-	TObjectLayout,
-	TObjectLayoutColumn,
-	TObjectRelationship,
-} from './types';
+	findObjectFieldIndex,
+	findObjectLayoutRowIndex,
+} from '../../utils/layout';
+import {BoxesVisitor, TabsVisitor} from '../../utils/visitor';
+import {TObjectField, TObjectLayout, TObjectRelationship} from './types';
 
 type TState = {
 	objectFields: TObjectField[];
@@ -41,35 +40,26 @@ interface ILayoutContextProps extends Array<TState | Function> {
 
 const LayoutContext = createContext({} as ILayoutContextProps);
 
-export const TYPES = {
-	ADD_OBJECT_FIELDS: 'ADD_OBJECT_FIELDS',
-	ADD_OBJECT_LAYOUT: 'ADD_OBJECT_LAYOUT',
-	ADD_OBJECT_LAYOUT_BOX: 'ADD_OBJECT_LAYOUT_BOX',
-	ADD_OBJECT_LAYOUT_FIELD: 'ADD_OBJECT_LAYOUT_FIELD',
-	ADD_OBJECT_LAYOUT_TAB: 'ADD_OBJECT_LAYOUT_TAB',
-	ADD_OBJECT_RELATIONSHIPS: 'ADD_OBJECT_RELATIONSHIPS',
-	CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE: 'CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE',
-	CHANGE_OBJECT_LAYOUT_NAME: 'CHANGE_OBJECT_LAYOUT_NAME',
-	DELETE_OBJECT_LAYOUT_BOX: 'DELETE_OBJECT_LAYOUT_BOX',
-	DELETE_OBJECT_LAYOUT_FIELD: 'DELETE_OBJECT_LAYOUT_FIELD',
-	DELETE_OBJECT_LAYOUT_TAB: 'DELETE_OBJECT_LAYOUT_TAB',
-	SET_OBJECT_LAYOUT_AS_DEFAULT: 'SET_OBJECT_LAYOUT_AS_DEFAULT',
-} as const;
+export enum TYPES {
+	ADD_OBJECT_FIELDS = 'ADD_OBJECT_FIELDS',
+	ADD_OBJECT_LAYOUT = 'ADD_OBJECT_LAYOUT',
+	ADD_OBJECT_LAYOUT_BOX = 'ADD_OBJECT_LAYOUT_BOX',
+	ADD_OBJECT_LAYOUT_FIELD = 'ADD_OBJECT_LAYOUT_FIELD',
+	ADD_OBJECT_LAYOUT_TAB = 'ADD_OBJECT_LAYOUT_TAB',
+	ADD_OBJECT_RELATIONSHIPS = 'ADD_OBJECT_RELATIONSHIPS',
+	CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE = 'CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE',
+	CHANGE_OBJECT_LAYOUT_NAME = 'CHANGE_OBJECT_LAYOUT_NAME',
+	DELETE_OBJECT_LAYOUT_BOX = 'DELETE_OBJECT_LAYOUT_BOX',
+	DELETE_OBJECT_LAYOUT_FIELD = 'DELETE_OBJECT_LAYOUT_FIELD',
+	DELETE_OBJECT_LAYOUT_TAB = 'DELETE_OBJECT_LAYOUT_TAB',
+	SET_OBJECT_LAYOUT_AS_DEFAULT = 'SET_OBJECT_LAYOUT_AS_DEFAULT',
+}
 
 const initialState = {
 	objectFields: [] as TObjectField[],
 	objectLayout: {} as TObjectLayout,
 	objectRelationships: [] as TObjectRelationship[],
 } as TState;
-
-type TGetObjectIndex = (object: any[], objectId: number) => number;
-
-const getObjectIndex: TGetObjectIndex = (object, objectId) => {
-	const objIds = object.map(({id}) => id);
-	const objectIndex = objIds.indexOf(objectId);
-
-	return objectIndex;
-};
 
 const layoutReducer = (state: TState, action: TAction) => {
 	switch (action.type) {
@@ -103,7 +93,7 @@ const layoutReducer = (state: TState, action: TAction) => {
 
 			if (objectRelationshipId) {
 				newState.objectRelationships[
-					getObjectIndex(
+					findObjectFieldIndex(
 						newState.objectRelationships,
 						objectRelationshipId
 					)
@@ -152,29 +142,48 @@ const layoutReducer = (state: TState, action: TAction) => {
 
 			return {
 				...state,
-				currentObjectFields: [...objectFields],
 				objectFields,
 			};
 		}
 		case TYPES.ADD_OBJECT_LAYOUT_FIELD: {
-			const {boxIndex, objectFieldId, tabIndex} = action.payload;
+			const {
+				boxIndex,
+				objectFieldId,
+				objectFieldSize,
+				tabIndex,
+			} = action.payload;
 
 			const newState = {...state};
 
-			newState.objectLayout.objectLayoutTabs[tabIndex].objectLayoutBoxes[
-				boxIndex
-			].objectLayoutRows.push({
-				objectLayoutColumns: [
-					{
-						objectFieldId,
-						priority: 0,
-					},
-				],
+			const newField = {
+				objectFieldId,
 				priority: 0,
-			});
+				size: objectFieldSize,
+			};
+
+			const objectLayoutBox =
+				newState.objectLayout.objectLayoutTabs[tabIndex]
+					.objectLayoutBoxes[boxIndex];
+
+			const objectLayoutRowIndex = findObjectLayoutRowIndex(
+				objectLayoutBox.objectLayoutRows,
+				objectFieldSize
+			);
+
+			if (objectLayoutRowIndex > -1) {
+				objectLayoutBox.objectLayoutRows[
+					objectLayoutRowIndex
+				].objectLayoutColumns.push(newField);
+			}
+			else {
+				objectLayoutBox.objectLayoutRows.push({
+					objectLayoutColumns: [newField],
+					priority: 0,
+				});
+			}
 
 			newState.objectFields[
-				getObjectIndex(newState.objectFields, objectFieldId)
+				findObjectFieldIndex(newState.objectFields, objectFieldId)
 			].inLayout = true;
 
 			return newState;
@@ -202,13 +211,21 @@ const layoutReducer = (state: TState, action: TAction) => {
 			};
 		}
 		case TYPES.CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE: {
-			const {boxIndex, collapsable, tabIndex} = action.payload;
+			type TObjectLayoutBoxAttribute = {
+				key: keyof {collapsable: boolean};
+				value: any;
+			};
+
+			const {attribute, boxIndex, tabIndex} = action.payload;
+			const {key, value}: TObjectLayoutBoxAttribute = attribute;
 
 			const newState = {...state};
 
-			newState.objectLayout.objectLayoutTabs[tabIndex].objectLayoutBoxes[
-				boxIndex
-			].collapsable = collapsable;
+			const objectLayoutBox =
+				newState.objectLayout.objectLayoutTabs[tabIndex]
+					.objectLayoutBoxes[boxIndex];
+
+			objectLayoutBox[key] = value;
 
 			return newState;
 		}
@@ -220,14 +237,12 @@ const layoutReducer = (state: TState, action: TAction) => {
 			// Change object field inLayout attribute to false to be visible when add field again.
 
 			const objectFieldIds = newState.objectFields.map(({id}) => id);
-			const visitor = new BoxesVisitor([
+			const visitor = new BoxesVisitor(
 				newState.objectLayout.objectLayoutTabs[tabIndex]
-					.objectLayoutBoxes[boxIndex],
-			]);
+			);
 
-			visitor.mapBoxes(({objectFieldId}: TObjectLayoutColumn) => {
-				const objectIndex = objectFieldIds.indexOf(objectFieldId);
-
+			visitor.mapFields((field) => {
+				const objectIndex = objectFieldIds.indexOf(field.objectFieldId);
 				newState.objectFields[objectIndex].inLayout = false;
 			});
 
@@ -242,6 +257,7 @@ const layoutReducer = (state: TState, action: TAction) => {
 		case TYPES.DELETE_OBJECT_LAYOUT_FIELD: {
 			const {
 				boxIndex,
+				columnIndex,
 				objectFieldId,
 				rowIndex,
 				tabIndex,
@@ -249,20 +265,24 @@ const layoutReducer = (state: TState, action: TAction) => {
 
 			const newState = {...state};
 
-			const objectFieldIndex = getObjectIndex(
+			const objectLayoutBox =
+				newState.objectLayout.objectLayoutTabs[tabIndex]
+					.objectLayoutBoxes[boxIndex];
+
+			const objectLayoutRow = objectLayoutBox.objectLayoutRows[rowIndex];
+
+			objectLayoutRow.objectLayoutColumns.splice(columnIndex, 1);
+
+			if (!objectLayoutRow.objectLayoutColumns.length) {
+				objectLayoutBox.objectLayoutRows.splice(rowIndex, 1);
+			}
+
+			const objectFieldIndex = findObjectFieldIndex(
 				newState.objectFields,
 				objectFieldId
 			);
 
 			newState.objectFields[objectFieldIndex].inLayout = false;
-
-			// Delete a row because we only have one field by row.
-			// In the future, we'll have drag and drop, so we'll just
-			// need to implement field removal
-
-			newState.objectLayout.objectLayoutTabs[tabIndex].objectLayoutBoxes[
-				boxIndex
-			].objectLayoutRows.splice(rowIndex, 1);
 
 			return newState;
 		}
@@ -270,8 +290,6 @@ const layoutReducer = (state: TState, action: TAction) => {
 			const {tabIndex} = action.payload;
 
 			const newState = {...state};
-
-			// Change object relationship inLayout attribute to false to be visible when add field again.
 
 			const objectRelationshipId =
 				newState.objectLayout.objectLayoutTabs[tabIndex]
@@ -293,14 +311,15 @@ const layoutReducer = (state: TState, action: TAction) => {
 			// Change object field inLayout attribute to false to be visible when add field again.
 
 			const objectFieldIds = newState.objectFields.map(({id}) => id);
-			const visitor = new TabsVisitor([
-				newState.objectLayout.objectLayoutTabs[tabIndex],
-			]);
+			const visitor = new TabsVisitor(newState.objectLayout);
 
-			visitor.mapTabs(({objectFieldId}: TObjectLayoutColumn) => {
-				const objectFieldIndex = objectFieldIds.indexOf(objectFieldId);
-
-				newState.objectFields[objectFieldIndex].inLayout = false;
+			visitor.mapFields((field) => {
+				if (field.objectFieldId) {
+					const objectFieldIndex = objectFieldIds.indexOf(
+						field.objectFieldId
+					);
+					newState.objectFields[objectFieldIndex].inLayout = false;
+				}
 			});
 
 			// Delete object layout tab

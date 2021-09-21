@@ -19,7 +19,7 @@ import ObjectLayoutColumns from './ObjectLayoutColumns';
 
 interface IObjectLayoutRowsProps extends React.HTMLAttributes<HTMLElement> {
 	boxIndex: number;
-	objectLayoutRows?: TObjectLayoutRow[];
+	objectLayoutRows: TObjectLayoutRow[];
 	tabIndex: number;
 }
 
@@ -32,15 +32,16 @@ const ObjectLayoutRows: React.FC<IObjectLayoutRowsProps> = ({
 		<>
 			{objectLayoutRows?.map(({objectLayoutColumns}, rowIndex) => {
 				return (
-					<div className="layout-tab__rows" key={`row_${rowIndex}`}>
-						{!!objectLayoutColumns?.length && (
-							<ObjectLayoutColumns
-								boxIndex={boxIndex}
-								objectLayoutColumns={objectLayoutColumns}
-								rowIndex={rowIndex}
-								tabIndex={tabIndex}
-							/>
-						)}
+					<div
+						className="layout-tab__rows row"
+						key={`row_${rowIndex}`}
+					>
+						<ObjectLayoutColumns
+							boxIndex={boxIndex}
+							objectLayoutColumns={objectLayoutColumns}
+							rowIndex={rowIndex}
+							tabIndex={tabIndex}
+						/>
 					</div>
 				);
 			})}

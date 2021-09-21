@@ -20,14 +20,7 @@ import React, {useContext} from 'react';
 import useForm from '../../../hooks/useForm';
 import {normalizeLanguageId} from '../../../utils/string';
 import Input from '../../form/Input';
-import Select from '../../form/Select';
 import LayoutContext, {TYPES} from '../context';
-
-const partitionNumbers = [
-	Liferay.Language.get('one-column'),
-	Liferay.Language.get('two-columns'),
-	Liferay.Language.get('three-columns'),
-];
 
 const defaultLanguageId = normalizeLanguageId(
 	Liferay.ThemeDisplay.getDefaultLanguageId()
@@ -35,7 +28,6 @@ const defaultLanguageId = normalizeLanguageId(
 
 type TInitialValues = {
 	name: string;
-	partitionNumbers: number;
 };
 
 interface IModalAddObjectLayoutBoxProps
@@ -53,7 +45,6 @@ const ModalAddObjectLayoutBox: React.FC<IModalAddObjectLayoutBoxProps> = ({
 
 	const initialValues: TInitialValues = {
 		name: '',
-		partitionNumbers: 0,
 	};
 
 	const onSubmit = (values: any) => {
@@ -75,10 +66,6 @@ const ModalAddObjectLayoutBox: React.FC<IModalAddObjectLayoutBoxProps> = ({
 
 		if (!values.name) {
 			errors.name = Liferay.Language.get('required');
-		}
-
-		if (!values.partitionNumbers) {
-			errors.partitionNumbers = Liferay.Language.get('required');
 		}
 
 		return errors;
@@ -105,16 +92,6 @@ const ModalAddObjectLayoutBox: React.FC<IModalAddObjectLayoutBoxProps> = ({
 						onChange={handleChange}
 						required
 						value={values.name}
-					/>
-
-					<Select
-						error={errors.partitionNumbers}
-						id="inputPartitionNumbers"
-						label={Liferay.Language.get('partition-numbers')}
-						name="partitionNumbers"
-						onChange={handleChange}
-						options={partitionNumbers}
-						required
 					/>
 				</ClayModal.Body>
 				<ClayModal.Footer

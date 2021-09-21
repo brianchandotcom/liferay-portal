@@ -12,6 +12,7 @@
  * details.
  */
 
+import classNames from 'classnames';
 import React from 'react';
 
 import {TObjectLayoutColumn} from '../types';
@@ -32,12 +33,13 @@ const ObjectLayoutColumns: React.FC<IObjectLayoutColumnsProps> = ({
 }) => {
 	return (
 		<>
-			{objectLayoutColumns?.map(({objectFieldId}, columnIndex) => {
+			{objectLayoutColumns?.map(({objectFieldId, size}, columnIndex) => {
 				return (
 					<div
-						className="layout-tab__columns"
+						className={classNames('layout-tab__columns', {
+							[`col-md-${size}`]: size,
+						})}
 						key={`column_${columnIndex}`}
-						style={{width: `${100 / objectLayoutColumns.length}%`}}
 					>
 						<ObjectLayoutField
 							boxIndex={boxIndex}

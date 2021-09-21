@@ -290,6 +290,18 @@ public class BatchPlannerLogLocalServiceWrapper
 		return _batchPlannerLogLocalService.getBatchPlannerLogs(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.batch.planner.model.BatchPlannerLog>
+		getBatchPlannerLogs(
+			long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.batch.planner.model.BatchPlannerLog>
+					orderByComparator) {
+
+		return _batchPlannerLogLocalService.getBatchPlannerLogs(
+			companyId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of batch planner logs.
 	 *
@@ -298,6 +310,11 @@ public class BatchPlannerLogLocalServiceWrapper
 	@Override
 	public int getBatchPlannerLogsCount() {
 		return _batchPlannerLogLocalService.getBatchPlannerLogsCount();
+	}
+
+	@Override
+	public int getBatchPlannerLogsCount(long companyId) {
+		return _batchPlannerLogLocalService.getBatchPlannerLogsCount(companyId);
 	}
 
 	@Override

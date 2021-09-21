@@ -262,6 +262,14 @@ public class BatchPlannerLogLocalServiceUtil {
 		return getService().getBatchPlannerLogs(start, end);
 	}
 
+	public static List<BatchPlannerLog> getBatchPlannerLogs(
+		long companyId, int start, int end,
+		OrderByComparator<BatchPlannerLog> orderByComparator) {
+
+		return getService().getBatchPlannerLogs(
+			companyId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of batch planner logs.
 	 *
@@ -269,6 +277,10 @@ public class BatchPlannerLogLocalServiceUtil {
 	 */
 	public static int getBatchPlannerLogsCount() {
 		return getService().getBatchPlannerLogsCount();
+	}
+
+	public static int getBatchPlannerLogsCount(long companyId) {
+		return getService().getBatchPlannerLogsCount(companyId);
 	}
 
 	public static

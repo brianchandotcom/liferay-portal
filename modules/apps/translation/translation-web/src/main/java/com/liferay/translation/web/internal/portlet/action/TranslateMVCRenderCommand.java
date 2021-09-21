@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.translation.constants.TranslationActionKeys;
 import com.liferay.translation.constants.TranslationConstants;
 import com.liferay.translation.constants.TranslationPortletKeys;
@@ -93,11 +94,14 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
+			long segmentsExperienceId = ParamUtil.getLong(
+				renderRequest, "segmentsExperienceId",
+				SegmentsExperienceConstants.ID_DEFAULT);
 
-			String className = _portal.getClassName(classNameId);
+			String className = _getClassName(
+				renderRequest, segmentsExperienceId);
 
-			long classPK = ParamUtil.getLong(renderRequest, "classPK");
+			long classPK = _getClassPK(renderRequest, segmentsExperienceId);
 
 			Object object = _getInfoItem(className, classPK);
 
@@ -147,10 +151,6 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				return _getErrorJSP(
 					renderRequest, renderResponse, className, classPK);
 			}
-
-			String segmentsExperienceId = ParamUtil.getString(
-				renderRequest, "segmentsExperienceId",
-				String.valueOf(SegmentsExperienceConstants.ID_DEFAULT));
 
 			String targetLanguageId = ParamUtil.getString(
 				renderRequest, "targetLanguageId",
@@ -224,6 +224,28 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		);
 	}
 
+	private String _getClassName(
+		RenderRequest renderRequest, long segmentsExperienceId) {
+
+		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
+			return SegmentsExperience.class.getName();
+		}
+
+		long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
+
+		return _portal.getClassName(classNameId);
+	}
+
+	private long _getClassPK(
+		RenderRequest renderRequest, long segmentsExperienceId) {
+
+		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
+			return segmentsExperienceId;
+		}
+
+		return ParamUtil.getLong(renderRequest, "classPK");
+	}
+
 	private String _getDefaultTargetLanguageId(
 		List<String> availableTargetLanguageIds) {
 
@@ -250,8 +272,9 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					_translator.isEnabled(themeDisplay.getCompanyId()),
 				className, classPK, _ffLayoutExperienceSelectorConfiguration,
 				null, _portal.getLiferayPortletRequest(renderRequest),
-				_portal.getLiferayPortletResponse(renderResponse), null, null,
-				null, null, null, null, _translationInfoFieldChecker));
+				_portal.getLiferayPortletResponse(renderResponse), null,
+				SegmentsExperienceConstants.ID_DEFAULT, null, null, null, null,
+				_translationInfoFieldChecker));
 
 		return "/translate.jsp";
 	}

@@ -38,8 +38,6 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 	<liferay-frontend:edit-form-body>
 		<aui:input bean="<%= batchPlannerPlan %>" model="<%= BatchPlannerPlan.class %>" name="name" />
 
-		<aui:input bean="<%= batchPlannerPlan %>" model="<%= BatchPlannerPlan.class %>" name="export" />
-
 		<aui:select bean="<%= batchPlannerPlan %>" model="<%= BatchPlannerPlan.class %>" name="externalType">
 			<aui:option label="CSV" value="CSV" />
 			<aui:option label="TXT" value="TXT" />
@@ -47,7 +45,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 			<aui:option label="XML" value="XML" />
 		</aui:select>
 
-		<aui:input bean="<%= batchPlannerPlan %>" model="<%= BatchPlannerPlan.class %>" name="externalURL" />
+		<aui:input name="importFile" required="<%= true %>" type="file" />
 
 		<%
 		EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBatchPlannerPlanDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
@@ -77,28 +75,6 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 				/>
 			</clay:col>
 		</clay:row>
-
-		<div class="form-group-autofit">
-			<c:if test="<%= batchPlannerPlanId > 0 %>">
-				<c:forEach items="<%= BatchPlannerPolicyServiceUtil.getBatchPlannerPolicies(batchPlannerPlanId) %>" var="batchPlannerPolicy">
-					<div class="form-group-item">
-						<aui:input name="policyName_${batchPlannerPolicy.batchPlannerPolicyId}" value="${batchPlannerPolicy.name}" />
-					</div>
-
-					<div class="form-group-item">
-						<aui:input name="policyValue_${batchPlannerPolicy.batchPlannerPolicyId}" value="${batchPlannerPolicy.value}" />
-					</div>
-				</c:forEach>
-			</c:if>
-
-			<div class="form-group-item">
-				<aui:input name="policyName" placeholder="name policy" value="" />
-			</div>
-
-			<div class="form-group-item">
-				<aui:input name="policyValue" placeholder="policy value" value="" />
-			</div>
-		</div>
 
 		<clay:content-section>
 			<clay:row

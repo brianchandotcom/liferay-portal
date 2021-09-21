@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.model.SegmentsExperience;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,8 +63,20 @@ public class LayoutInfoItemFieldValuesProviderHelper {
 		).infoFieldValues(
 			_getLayoutInfoFieldValues(layout, segmentsExperienceId)
 		).infoItemReference(
-			new InfoItemReference(Layout.class.getName(), layout.getPlid())
+			_getInfoItemReference(layout, segmentsExperienceId)
 		).build();
+	}
+
+	private InfoItemReference _getInfoItemReference(
+		Layout layout, long segmentsExperienceId) {
+
+		if (segmentsExperienceId == SegmentsExperienceConstants.ID_DEFAULT) {
+			return new InfoItemReference(
+				Layout.class.getName(), layout.getPlid());
+		}
+
+		return new InfoItemReference(
+			SegmentsExperience.class.getName(), segmentsExperienceId);
 	}
 
 	private InfoLocalizedValue<String> _getInfoLocalizedValue(

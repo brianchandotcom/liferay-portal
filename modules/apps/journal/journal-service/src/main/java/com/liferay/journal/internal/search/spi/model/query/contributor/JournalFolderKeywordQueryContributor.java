@@ -16,7 +16,6 @@ package com.liferay.journal.internal.search.spi.model.query.contributor;
 
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -25,9 +24,6 @@ import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContrib
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
 
 import java.io.Serializable;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -55,34 +51,26 @@ public class JournalFolderKeywordQueryContributor
 			Field.TITLE, false);
 	}
 
-	protected Map<String, Query> addSearchLocalizedTerm(
+	protected void addSearchLocalizedTerm(
 			BooleanQuery searchQuery, SearchContext searchContext, String field,
 			boolean like)
 		throws Exception {
 
-		Map<String, Query> queries = new HashMap<>();
-
-		queries.put(
-			field, addSearchTerm(searchQuery, searchContext, field, like));
+		addSearchTerm(searchQuery, searchContext, field, like);
 
 		String localizedFieldName = Field.getLocalizedName(
 			searchContext.getLocale(), field);
 
-		Query localizedQuery = addSearchTerm(
-			searchQuery, searchContext, localizedFieldName, like);
-
-		queries.put(localizedFieldName, localizedQuery);
-
-		return queries;
+		addSearchTerm(searchQuery, searchContext, localizedFieldName, like);
 	}
 
-	protected Query addSearchTerm(
+	protected void addSearchTerm(
 			BooleanQuery searchQuery, SearchContext searchContext, String field,
 			boolean like)
 		throws Exception {
 
 		if (Validator.isNull(field)) {
-			return null;
+			return;
 		}
 
 		String value = null;
@@ -106,7 +94,7 @@ public class JournalFolderKeywordQueryContributor
 		if (Validator.isNotNull(value) &&
 			(searchContext.getFacet(field) != null)) {
 
-			return null;
+			return;
 		}
 
 		if (Validator.isNull(value)) {
@@ -114,19 +102,15 @@ public class JournalFolderKeywordQueryContributor
 		}
 
 		if (Validator.isNull(value)) {
-			return null;
+			return;
 		}
-
-		Query query = null;
 
 		if (searchContext.isAndSearch()) {
-			query = searchQuery.addRequiredTerm(field, value, like);
+			searchQuery.addRequiredTerm(field, value, like);
 		}
 		else {
-			query = searchQuery.addTerm(field, value, like);
+			searchQuery.addTerm(field, value, like);
 		}
-
-		return query;
 	}
 
 }

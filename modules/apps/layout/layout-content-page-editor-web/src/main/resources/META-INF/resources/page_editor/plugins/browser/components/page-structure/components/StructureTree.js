@@ -406,6 +406,31 @@ function getDocumentFragment(content) {
 	return fragment.appendChild(div);
 }
 
+function getKey({collectionConfig, editable, infoItem, selectedMappingTypes}) {
+	if (collectionConfig) {
+		if (collectionConfig.classNameId) {
+			return getMappingFieldsKey(
+				collectionConfig.classNameId,
+				collectionConfig.classPK
+			);
+		}
+		else {
+			return collectionConfig.key;
+		}
+	}
+	else if (editable.mappedField) {
+		return getMappingFieldsKey(
+			selectedMappingTypes.type.id,
+			selectedMappingTypes.subtype.id || 0
+		);
+	}
+	else if (!infoItem) {
+		return null;
+	}
+
+	return getMappingFieldsKey(infoItem.classNameId, infoItem.classTypeId);
+}
+
 function getMappedFieldLabel(
 	editable,
 	collectionConfig,
@@ -439,20 +464,12 @@ function getMappedFieldLabel(
 		return null;
 	}
 
-	const key = collectionConfig
-		? collectionConfig.classNameId
-			? getMappingFieldsKey(
-					collectionConfig.classNameId,
-					collectionConfig.classPK
-			  )
-			: collectionConfig.key
-		: editable.mappedField
-		? getMappingFieldsKey(
-				selectedMappingTypes.type.id,
-				selectedMappingTypes.subtype.id || 0
-		  )
-		: getMappingFieldsKey(infoItem.classNameId, infoItem.classTypeId);
-
+	const key = getKey({
+		collectionConfig,
+		editable,
+		infoItem,
+		selectedMappingTypes,
+	});
 	const fields = mappingFields[key];
 
 	if (fields) {

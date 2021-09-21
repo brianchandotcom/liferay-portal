@@ -446,6 +446,14 @@ public abstract class BaseDiagramResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("attachmentBase64", additionalAssertFieldName)) {
+				if (diagram.getAttachmentBase64() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("color", additionalAssertFieldName)) {
 				if (diagram.getColor() == null) {
 					valid = false;
@@ -594,6 +602,17 @@ public abstract class BaseDiagramResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("attachmentBase64", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						diagram1.getAttachmentBase64(),
+						diagram2.getAttachmentBase64())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("color", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -771,6 +790,11 @@ public abstract class BaseDiagramResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("attachmentBase64")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("color")) {
 			sb.append("'");

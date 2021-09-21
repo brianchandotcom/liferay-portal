@@ -34,6 +34,28 @@ public class Diagram implements Cloneable, Serializable {
 		return DiagramSerDes.toDTO(json);
 	}
 
+	public AttachmentBase64 getAttachmentBase64() {
+		return attachmentBase64;
+	}
+
+	public void setAttachmentBase64(AttachmentBase64 attachmentBase64) {
+		this.attachmentBase64 = attachmentBase64;
+	}
+
+	public void setAttachmentBase64(
+		UnsafeSupplier<AttachmentBase64, Exception>
+			attachmentBase64UnsafeSupplier) {
+
+		try {
+			attachmentBase64 = attachmentBase64UnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected AttachmentBase64 attachmentBase64;
+
 	public String getColor() {
 		return color;
 	}

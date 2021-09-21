@@ -35,6 +35,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -52,6 +53,36 @@ public class Diagram implements Serializable {
 	public static Diagram toDTO(String json) {
 		return ObjectMapperUtil.readValue(Diagram.class, json);
 	}
+
+	@Schema
+	@Valid
+	public AttachmentBase64 getAttachmentBase64() {
+		return attachmentBase64;
+	}
+
+	public void setAttachmentBase64(AttachmentBase64 attachmentBase64) {
+		this.attachmentBase64 = attachmentBase64;
+	}
+
+	@JsonIgnore
+	public void setAttachmentBase64(
+		UnsafeSupplier<AttachmentBase64, Exception>
+			attachmentBase64UnsafeSupplier) {
+
+		try {
+			attachmentBase64 = attachmentBase64UnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected AttachmentBase64 attachmentBase64;
 
 	@Schema
 	public String getColor() {
@@ -162,7 +193,7 @@ public class Diagram implements Serializable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String imageURL;
 
 	@Schema
@@ -306,6 +337,16 @@ public class Diagram implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (attachmentBase64 != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"attachmentBase64\": ");
+
+			sb.append(String.valueOf(attachmentBase64));
+		}
 
 		if (color != null) {
 			if (sb.length() > 1) {

@@ -109,6 +109,16 @@ public class MappedProductSerDes {
 			sb.append(mappedProduct.getProductId());
 		}
 
+		if (mappedProduct.getProductName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productName\": ");
+
+			sb.append(_toJSON(mappedProduct.getProductName()));
+		}
+
 		if (mappedProduct.getQuantity() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -228,6 +238,14 @@ public class MappedProductSerDes {
 			map.put("productId", String.valueOf(mappedProduct.getProductId()));
 		}
 
+		if (mappedProduct.getProductName() == null) {
+			map.put("productName", null);
+		}
+		else {
+			map.put(
+				"productName", String.valueOf(mappedProduct.getProductName()));
+		}
+
 		if (mappedProduct.getQuantity() == null) {
 			map.put("quantity", null);
 		}
@@ -316,6 +334,13 @@ public class MappedProductSerDes {
 				if (jsonParserFieldValue != null) {
 					mappedProduct.setProductId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "productName")) {
+				if (jsonParserFieldValue != null) {
+					mappedProduct.setProductName(
+						(Map)MappedProductSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "quantity")) {

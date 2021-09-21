@@ -53,6 +53,16 @@ public class DiagramSerDes {
 
 		sb.append("{");
 
+		if (diagram.getAttachmentBase64() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"attachmentBase64\": ");
+
+			sb.append(String.valueOf(diagram.getAttachmentBase64()));
+		}
+
 		if (diagram.getColor() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -167,6 +177,15 @@ public class DiagramSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (diagram.getAttachmentBase64() == null) {
+			map.put("attachmentBase64", null);
+		}
+		else {
+			map.put(
+				"attachmentBase64",
+				String.valueOf(diagram.getAttachmentBase64()));
+		}
+
 		if (diagram.getColor() == null) {
 			map.put("color", null);
 		}
@@ -245,7 +264,14 @@ public class DiagramSerDes {
 			Diagram diagram, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "color")) {
+			if (Objects.equals(jsonParserFieldName, "attachmentBase64")) {
+				if (jsonParserFieldValue != null) {
+					diagram.setAttachmentBase64(
+						AttachmentBase64SerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "color")) {
 				if (jsonParserFieldValue != null) {
 					diagram.setColor((String)jsonParserFieldValue);
 				}

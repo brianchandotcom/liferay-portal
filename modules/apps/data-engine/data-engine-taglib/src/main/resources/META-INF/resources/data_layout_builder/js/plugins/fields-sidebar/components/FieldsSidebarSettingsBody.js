@@ -23,7 +23,7 @@ import {
 import {EVENT_TYPES as CORE_EVENT_TYPES} from 'data-engine-js-components-web/js/core/actions/eventTypes.es';
 import React, {useMemo} from 'react';
 
-import {getFilteredSettingsContext} from '../../../utils/settingsForm.es';
+import {useSettingsContextFilter} from '../../../utils/settingsForm.es';
 
 /**
  * This component will override the Column from Form Renderer.
@@ -62,22 +62,13 @@ export default function FieldsSidebarSettingsBody() {
 		pages,
 		rules,
 	} = useFormState();
-	const config = useConfig();
+	const {submitButtonId} = useConfig();
 	const dispatch = useForm();
 
 	const Column = useMemo(() => getColumn({objectFields}), [objectFields]);
 
-	const {settingsContext} = focusedField;
-
-	const filteredSettingsContext = useMemo(
-		() =>
-			getFilteredSettingsContext({
-				config,
-				defaultLanguageId,
-				editingLanguageId,
-				settingsContext,
-			}),
-		[config, defaultLanguageId, editingLanguageId, settingsContext]
+	const filteredSettingsContext = useSettingsContextFilter(
+		focusedField.settingsContext
 	);
 
 	return (
@@ -117,7 +108,7 @@ export default function FieldsSidebarSettingsBody() {
 							break;
 					}
 				}}
-				submitButtonId={config.submitButtonId}
+				submitButtonId={submitButtonId}
 			>
 				<Pages
 					editable={false}

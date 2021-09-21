@@ -12,7 +12,13 @@
  * details.
  */
 
-import {PagesVisitor, generateName} from 'data-engine-js-components-web';
+import {
+	PagesVisitor,
+	generateName,
+	useConfig,
+	useFormState,
+} from 'data-engine-js-components-web';
+import {useMemo} from 'react';
 
 const getPredefinedValues = ({locale, localizedValue, options}) => {
 	const predefinedValue = localizedValue[locale];
@@ -26,16 +32,14 @@ const getPredefinedValues = ({locale, localizedValue, options}) => {
 	return predefinedValue.filter((value) => optionValues.has(value));
 };
 
-export const getFilteredSettingsContext = ({
-	config: {
-		disabledProperties,
-		disabledTabs,
-		unimplementedProperties,
-		visibleProperties,
-	},
+const filterSettingsContext = ({
 	defaultLanguageId,
+	disabledProperties,
+	disabledTabs,
 	editingLanguageId,
 	settingsContext: {pages, ...otherSettings},
+	unimplementedProperties,
+	visibleProperties,
 }) => {
 	const hiddenProperties = new Set([
 		...unimplementedProperties,
@@ -142,4 +146,39 @@ export const getFilteredSettingsContext = ({
 		...otherSettings,
 		pages: updatedPages,
 	};
+};
+
+export const useSettingsContextFilter = (settingsContext) => {
+	const {defaultLanguageId, editingLanguageId} = useFormState();
+
+	const {
+		disabledProperties,
+		disabledTabs,
+		unimplementedProperties,
+		visibleProperties,
+	} = useConfig();
+
+	const filteredSettingsContext = useMemo(
+		() =>
+			filterSettingsContext({
+				defaultLanguageId,
+				disabledProperties,
+				disabledTabs,
+				editingLanguageId,
+				settingsContext,
+				unimplementedProperties,
+				visibleProperties,
+			}),
+		[
+			defaultLanguageId,
+			disabledProperties,
+			disabledTabs,
+			editingLanguageId,
+			settingsContext,
+			unimplementedProperties,
+			visibleProperties,
+		]
+	);
+
+	return filteredSettingsContext;
 };

@@ -779,6 +779,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8451 | Test Summary: Web content submissions by location card shows expected views by location"
 	@priority = "5"
 	test WebContentLocationCardShowsViewsByExpectedLocation {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Location data issues happen on this ticket because of the bug
+		// AC Bug ticket : LRAC-9345
+		// AC Refactor ticket: LRAC-9346
+
 		task ("Add a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",

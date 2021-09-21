@@ -288,6 +288,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8378 | Test Summary: Blogs location card shows views by the expected location"
 	@priority = "5"
 	test BlogsLocationCardShowsViewsByExpectedLocation {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Location data issues happen on this ticket because of the bug
+		// AC Bug ticket : LRAC-9345
+		// AC Refactor ticket: LRAC-9395
+
 		task ("Connect the DXP to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}

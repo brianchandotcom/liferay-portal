@@ -17,15 +17,19 @@ package com.liferay.site.initializer.extender.internal;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.initializer.util.CPDefinitionsImporter;
 import com.liferay.commerce.initializer.util.CommerceInventoryWarehousesImporter;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
+import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
@@ -155,12 +159,14 @@ import org.osgi.framework.wiring.BundleWiring;
 public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
-		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
+		AssetListEntryLocalService assetListEntryLocalService,
+		AssetVocabularyLocalService assetVocabularyLocalService, Bundle bundle,
 		CatalogResource.Factory catalogResourceFactory,
 		ChannelResource.Factory channelResourceFactory,
 		CommerceAccountRoleHelper commerceAccountRoleHelper,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CommerceInventoryWarehousesImporter commerceInventoryWarehousesImporter,
+		CPDefinitionsImporter cpDefinitionsImporter,
 		CPFileImporter cpFileImporter,
 		CPMeasurementUnitLocalService cpMeasurementUnitLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
@@ -196,6 +202,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		UserLocalService userLocalService) {
 
 		_assetListEntryLocalService = assetListEntryLocalService;
+		_assetVocabularyLocalService = assetVocabularyLocalService;
 		_bundle = bundle;
 		_catalogResourceFactory = catalogResourceFactory;
 		_channelResourceFactory = channelResourceFactory;
@@ -203,6 +210,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
 		_commerceInventoryWarehousesImporter =
 			commerceInventoryWarehousesImporter;
+		_cpDefinitionsImporter = cpDefinitionsImporter;
 		_cpFileImporter = cpFileImporter;
 		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
@@ -290,15 +298,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_addPermissions(serviceContext);
 
-			_addCommerceCatalogs(serviceContext);
-			_addCommerceChannels(serviceContext);
-			_addCommerceInventoryWarehouses(serviceContext);
 			_addDDMStructures(serviceContext);
 			_addFragmentEntries(serviceContext);
 			_addLayoutPageTemplates(serviceContext);
 			_addObjectDefinitions(serviceContext);
 			_addStyleBookEntries(serviceContext);
 			_addTaxonomyVocabularies(serviceContext);
+
+			_addCommerceStructure(serviceContext);
+
 			_updateLayoutSets(serviceContext);
 
 			Map<String, String> documentsStringUtilReplaceValues =
@@ -414,19 +422,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String.valueOf(new UnicodeProperties(map, true)), serviceContext);
 	}
 
-	private void _addCommerceCatalogs(ServiceContext serviceContext)
-		throws Exception {
-
-		_addCommerceCatalogs(
-			"/site-initializer/commerce-catalogs", serviceContext);
-	}
-
 	private void _addCommerceCatalogs(
-			String parentResourcePath, ServiceContext serviceContext)
+			Channel commerceChannel,
+			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			parentResourcePath);
+			"/site-initializer/commerce-catalogs");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
 			return;
@@ -440,6 +443,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).build();
 
 		for (String resourcePath : resourcePaths) {
+			if (resourcePath.endsWith("-products.json")) {
+				continue;
+			}
+
 			String json = _read(resourcePath);
 
 			Catalog catalog = Catalog.toDTO(json);
@@ -451,18 +458,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			catalogResource.postCatalog(catalog);
+			catalog = catalogResource.postCatalog(catalog);
+
+			_addCPDefinitions(
+				catalog, commerceChannel, commerceInventoryWarehouses,
+				StringUtil.replaceLast(resourcePath, ".json", "-products.json"),
+				serviceContext);
 		}
 	}
 
-	private void _addCommerceChannels(ServiceContext serviceContext)
+	private Channel _addCommerceChannel(ServiceContext serviceContext)
 		throws Exception {
 
-		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/commerce-channels");
+		String resourcePath = "/site-initializer/commerce-channel.json";
 
-		if (SetUtil.isEmpty(resourcePaths)) {
-			return;
+		String json = _read(resourcePath);
+
+		if (json == null) {
+			return null;
 		}
 
 		ChannelResource.Builder channelResourceBuilder =
@@ -472,64 +485,56 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext.fetchUser()
 		).build();
 
-		for (String resourcePath : resourcePaths) {
-			if (resourcePath.endsWith(".model-resource-permissions.json")) {
-				continue;
-			}
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
-			String json = _read(resourcePath);
+		jsonObject.put("siteGroupId", serviceContext.getScopeGroupId());
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+		Channel channel = Channel.toDTO(jsonObject.toString());
 
-			jsonObject.put("siteGroupId", serviceContext.getScopeGroupId());
+		if (channel == null) {
+			_log.error(
+				"Unable to transform commerce channel from JSON: " + json);
 
-			Channel channel = Channel.toDTO(jsonObject.toString());
-
-			if (channel == null) {
-				_log.error(
-					"Unable to transform commerce channel from JSON: " + json);
-
-				continue;
-			}
-
-			channel = channelResource.postChannel(channel);
-
-			_addModelResourcePermissions(
-				CommerceChannel.class.getName(),
-				String.valueOf(channel.getId()),
-				StringUtil.replaceLast(
-					resourcePath, ".json", ".model-resource-permissions.json"),
-				serviceContext);
-
-			Group group = _groupLocalService.getGroup(
-				serviceContext.getScopeGroupId());
-
-			group.setType(GroupConstants.TYPE_SITE_PRIVATE);
-			group.setManualMembership(true);
-			group.setMembershipRestriction(
-				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION);
-
-			_groupLocalService.updateGroup(group);
-
-			Settings settings = _settingsFactory.getSettings(
-				new GroupServiceSettingsLocator(
-					serviceContext.getScopeGroupId(),
-					CommerceAccountConstants.SERVICE_NAME));
-
-			ModifiableSettings modifiableSettings =
-				settings.getModifiableSettings();
-
-			modifiableSettings.setValue(
-				"commerceSiteType",
-				String.valueOf(CommerceAccountConstants.SITE_TYPE_B2C));
-
-			modifiableSettings.store();
-
-			_commerceAccountRoleHelper.checkCommerceAccountRoles(
-				serviceContext);
-			_commerceCurrencyLocalService.importDefaultValues(serviceContext);
-			_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
+			return null;
 		}
+
+		channel = channelResource.postChannel(channel);
+
+		_addModelResourcePermissions(
+			CommerceChannel.class.getName(), String.valueOf(channel.getId()),
+			StringUtil.replaceLast(
+				resourcePath, ".json", ".model-resource-permissions.json"),
+			serviceContext);
+
+		Group group = _groupLocalService.getGroup(
+			serviceContext.getScopeGroupId());
+
+		group.setType(GroupConstants.TYPE_SITE_PRIVATE);
+		group.setManualMembership(true);
+		group.setMembershipRestriction(
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION);
+
+		_groupLocalService.updateGroup(group);
+
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				serviceContext.getScopeGroupId(),
+				CommerceAccountConstants.SERVICE_NAME));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		modifiableSettings.setValue(
+			"commerceSiteType",
+			String.valueOf(CommerceAccountConstants.SITE_TYPE_B2C));
+
+		modifiableSettings.store();
+
+		_commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
+		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
+		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
+
+		return channel;
 	}
 
 	private List<CommerceInventoryWarehouse> _addCommerceInventoryWarehouses(
@@ -539,10 +544,59 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return _commerceInventoryWarehousesImporter.
 			importCommerceInventoryWarehouses(
 				JSONFactoryUtil.createJSONArray(
-					_read(
-						"/site-initializer/commerce-warehouses" +
-							"/warehouses.json")),
+					_read("/site-initializer/commerce-warehouses.json")),
 				serviceContext.getScopeGroupId(), serviceContext.getUserId());
+	}
+
+	private void _addCommerceStructure(ServiceContext serviceContext)
+		throws Exception {
+
+		Channel commerceChannel = _addCommerceChannel(serviceContext);
+
+		List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
+			_addCommerceInventoryWarehouses(serviceContext);
+
+		_addCommerceCatalogs(
+			commerceChannel, commerceInventoryWarehouses, serviceContext);
+	}
+
+	private void _addCPDefinitions(
+			Catalog catalog, Channel commerceChannel,
+			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
+			String resourcePath, ServiceContext serviceContext)
+		throws Exception {
+
+		String json = _read(resourcePath);
+
+		if (json == null) {
+			return;
+		}
+
+		long[] commerceInventoryWarehouseIds = ListUtil.toLongArray(
+			commerceInventoryWarehouses,
+			CommerceInventoryWarehouse.
+				COMMERCE_INVENTORY_WAREHOUSE_ID_ACCESSOR);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		Group group = CommerceCatalogLocalServiceUtil.getCommerceCatalogGroup(
+			catalog.getId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.
+				fetchAssetVocabularyByExternalReferenceCode(
+					serviceContext.getCompanyId(),
+					commerceChannel.getExternalReferenceCode());
+
+		//TODO: Change the logic for filter with the Resource
+
+		_cpDefinitionsImporter.importCPDefinitions(
+			jsonArray, assetVocabulary.getName(), group.getGroupId(),
+			commerceChannel.getId(), commerceInventoryWarehouseIds,
+			BundleSiteInitializer.class.getClassLoader(),
+			"/site-initializer/commerce-catalogs/catalogs/" +
+				StringUtil.replace(resourcePath, ".json", "/"),
+			serviceContext.getScopeGroupId(), serviceContext.getUserId());
 	}
 
 	private void _addDDMStructures(ServiceContext serviceContext)
@@ -1730,6 +1784,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 	private final AssetListEntryLocalService _assetListEntryLocalService;
+	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final Bundle _bundle;
 	private final CatalogResource.Factory _catalogResourceFactory;
 	private final ChannelResource.Factory _channelResourceFactory;
@@ -1738,6 +1793,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
 	private final CommerceInventoryWarehousesImporter
 		_commerceInventoryWarehousesImporter;
+	private final CPDefinitionsImporter _cpDefinitionsImporter;
 	private final CPFileImporter _cpFileImporter;
 	private final CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;

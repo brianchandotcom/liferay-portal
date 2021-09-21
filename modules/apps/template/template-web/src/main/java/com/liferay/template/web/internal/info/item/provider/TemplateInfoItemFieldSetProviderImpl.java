@@ -65,26 +65,7 @@ public class TemplateInfoItemFieldSetProviderImpl
 						_getTemplateEntries(
 							infoItemClassName, infoItemFormVariationKey)) {
 
-					DDMTemplate ddmTemplate =
-						_ddmTemplateLocalService.fetchDDMTemplate(
-							templateEntry.getDDMTemplateId());
-
-					consumer.accept(
-						InfoField.builder(
-						).infoFieldType(
-							TextInfoFieldType.INSTANCE
-						).name(
-							PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-								templateEntry.getTemplateEntryId()
-						).labelInfoLocalizedValue(
-							InfoLocalizedValue.<String>builder(
-							).value(
-								LocaleUtil.getDefault(),
-								ddmTemplate.getName(LocaleUtil.getDefault())
-							).defaultLocale(
-								LocaleUtil.getDefault()
-							).build()
-						).build());
+					consumer.accept(_getInfoField(templateEntry));
 				}
 			}
 		).labelInfoLocalizedValue(
@@ -111,6 +92,27 @@ public class TemplateInfoItemFieldSetProviderImpl
 		return infoFieldValues;
 	}
 
+	private InfoField<?> _getInfoField(TemplateEntry templateEntry) {
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchDDMTemplate(
+			templateEntry.getDDMTemplateId());
+
+		return InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				templateEntry.getTemplateEntryId()
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.<String>builder(
+			).value(
+				LocaleUtil.getDefault(),
+				ddmTemplate.getName(LocaleUtil.getDefault())
+			).defaultLocale(
+				LocaleUtil.getDefault()
+			).build()
+		).build();
+	}
+
 	private InfoFieldValue<Object> _getInfoFieldValue(
 		TemplateEntry templateEntry, Object itemObject) {
 
@@ -118,25 +120,8 @@ public class TemplateInfoItemFieldSetProviderImpl
 			return null;
 		}
 
-		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchDDMTemplate(
-			templateEntry.getDDMTemplateId());
-
 		return new InfoFieldValue<>(
-			InfoField.builder(
-			).infoFieldType(
-				TextInfoFieldType.INSTANCE
-			).name(
-				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-					templateEntry.getTemplateEntryId()
-			).labelInfoLocalizedValue(
-				InfoLocalizedValue.<String>builder(
-				).value(
-					LocaleUtil.getDefault(),
-					ddmTemplate.getName(LocaleUtil.getDefault())
-				).defaultLocale(
-					LocaleUtil.getDefault()
-				).build()
-			).build(),
+			_getInfoField(templateEntry),
 			() -> {
 				InfoItemFieldValues infoItemFieldValues =
 					InfoItemFieldValues.builder(

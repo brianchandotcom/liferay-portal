@@ -79,7 +79,7 @@ public class MappedProductUtil {
 				cpDefinitionId, mappedProduct.getSequence());
 
 		if (csDiagramEntry == null) {
-			addCSDiagramEntry(
+			return addCSDiagramEntry(
 				companyId, cpDefinitionId, cpDefinitionService,
 				cpInstanceService, csDiagramEntryService, mappedProduct);
 		}

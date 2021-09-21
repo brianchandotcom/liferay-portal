@@ -45,7 +45,7 @@ public class PinUtil {
 			cpDefinitionId);
 
 		if (csDiagramPin == null) {
-			addCSDiagramPin(cpDefinitionId, csDiagramPinService, pin);
+			return addCSDiagramPin(cpDefinitionId, csDiagramPinService, pin);
 		}
 
 		return updateCSDiagramPin(csDiagramPin, csDiagramPinService, pin);

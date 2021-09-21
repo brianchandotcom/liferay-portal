@@ -17,15 +17,12 @@ package com.liferay.journal.internal.search.spi.model.query.contributor;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
 
-import java.io.Serializable;
-
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lourdes Fernández Besada
@@ -52,9 +49,8 @@ public class JournalFolderKeywordQueryContributor
 	}
 
 	protected void addSearchLocalizedTerm(
-			BooleanQuery searchQuery, SearchContext searchContext, String field,
-			boolean like)
-		throws Exception {
+		BooleanQuery searchQuery, SearchContext searchContext, String field,
+		boolean like) {
 
 		addSearchTerm(searchQuery, searchContext, field, like);
 
@@ -65,48 +61,13 @@ public class JournalFolderKeywordQueryContributor
 	}
 
 	protected void addSearchTerm(
-			BooleanQuery searchQuery, SearchContext searchContext, String field,
-			boolean like)
-		throws Exception {
+		BooleanQuery searchQuery, SearchContext searchContext, String field,
+		boolean like) {
 
-		String value = null;
-
-		Serializable serializable = searchContext.getAttribute(field);
-
-		if (serializable != null) {
-			Class<?> clazz = serializable.getClass();
-
-			if (clazz.isArray()) {
-				value = StringUtil.merge((Object[])serializable);
-			}
-			else {
-				value = GetterUtil.getString(serializable);
-			}
-		}
-		else {
-			value = GetterUtil.getString(serializable);
-		}
-
-		if (Validator.isNotNull(value) &&
-			(searchContext.getFacet(field) != null)) {
-
-			return;
-		}
-
-		if (Validator.isNull(value)) {
-			value = searchContext.getKeywords();
-		}
-
-		if (Validator.isNull(value)) {
-			return;
-		}
-
-		if (searchContext.isAndSearch()) {
-			searchQuery.addRequiredTerm(field, value, like);
-		}
-		else {
-			searchQuery.addTerm(field, value, like);
-		}
+		_queryHelper.addSearchTerm(searchQuery, searchContext, field, like);
 	}
+
+	@Reference
+	private QueryHelper _queryHelper;
 
 }

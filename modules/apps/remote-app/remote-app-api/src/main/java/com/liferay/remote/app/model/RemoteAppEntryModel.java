@@ -385,6 +385,21 @@ public interface RemoteAppEntryModel
 	public void setPortletCategoryName(String portletCategoryName);
 
 	/**
+	 * Returns the properties of this remote app entry.
+	 *
+	 * @return the properties of this remote app entry
+	 */
+	@AutoEscape
+	public String getProperties();
+
+	/**
+	 * Sets the properties of this remote app entry.
+	 *
+	 * @param properties the properties of this remote app entry
+	 */
+	public void setProperties(String properties);
+
+	/**
 	 * Returns the type of this remote app entry.
 	 *
 	 * @return the type of this remote app entry

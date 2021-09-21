@@ -58,6 +58,7 @@ public class RemoteAppEntryWrapper
 		attributes.put("iFrameURL", getIFrameURL());
 		attributes.put("name", getName());
 		attributes.put("portletCategoryName", getPortletCategoryName());
+		attributes.put("properties", getProperties());
 		attributes.put("type", getType());
 
 		return attributes;
@@ -150,6 +151,12 @@ public class RemoteAppEntryWrapper
 
 		if (portletCategoryName != null) {
 			setPortletCategoryName(portletCategoryName);
+		}
+
+		String properties = (String)attributes.get("properties");
+
+		if (properties != null) {
+			setProperties(properties);
 		}
 
 		String type = (String)attributes.get("type");
@@ -378,6 +385,16 @@ public class RemoteAppEntryWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the properties of this remote app entry.
+	 *
+	 * @return the properties of this remote app entry
+	 */
+	@Override
+	public String getProperties() {
+		return model.getProperties();
 	}
 
 	/**
@@ -643,6 +660,16 @@ public class RemoteAppEntryWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the properties of this remote app entry.
+	 *
+	 * @param properties the properties of this remote app entry
+	 */
+	@Override
+	public void setProperties(String properties) {
+		model.setProperties(properties);
 	}
 
 	/**

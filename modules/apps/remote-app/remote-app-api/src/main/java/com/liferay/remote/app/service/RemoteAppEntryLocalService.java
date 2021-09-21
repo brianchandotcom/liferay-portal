@@ -71,13 +71,14 @@ public interface RemoteAppEntryLocalService
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			long userId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			Map<Locale, String> nameMap, String portletCategoryName)
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public RemoteAppEntry addIFrameRemoteAppEntry(
 			long userId, String iFrameURL, Map<Locale, String> nameMap,
-			String portletCategoryName)
+			String portletCategoryName, String properties)
 		throws PortalException;
 
 	/**
@@ -321,13 +322,15 @@ public interface RemoteAppEntryLocalService
 	public RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			Map<Locale, String> nameMap, String portletCategoryName)
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public RemoteAppEntry updateIFrameRemoteAppEntry(
 			long remoteAppEntryId, String iFrameURL,
-			Map<Locale, String> nameMap, String portletCategoryName)
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties)
 		throws PortalException;
 
 	/**

@@ -48,6 +48,7 @@ public class RemoteAppEntrySoap implements Serializable {
 		soapModel.setIFrameURL(model.getIFrameURL());
 		soapModel.setName(model.getName());
 		soapModel.setPortletCategoryName(model.getPortletCategoryName());
+		soapModel.setProperties(model.getProperties());
 		soapModel.setType(model.getType());
 
 		return soapModel;
@@ -221,6 +222,14 @@ public class RemoteAppEntrySoap implements Serializable {
 		_portletCategoryName = portletCategoryName;
 	}
 
+	public String getProperties() {
+		return _properties;
+	}
+
+	public void setProperties(String properties) {
+		_properties = properties;
+	}
+
 	public String getType() {
 		return _type;
 	}
@@ -243,6 +252,7 @@ public class RemoteAppEntrySoap implements Serializable {
 	private String _iFrameURL;
 	private String _name;
 	private String _portletCategoryName;
+	private String _properties;
 	private String _type;
 
 }

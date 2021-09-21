@@ -53,7 +53,7 @@ public abstract class BaseRemoteAppEntryUADDisplay
 		return new String[] {
 			"customElementCSSURLs", "customElementHTMLElementName",
 			"customElementURLs", "iFrameURL", "name", "portletCategoryName",
-			"type"
+			"properties", "type"
 		};
 	}
 

@@ -77,7 +77,7 @@ public class RemoteAppEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -107,6 +107,8 @@ public class RemoteAppEntryCacheModel
 		sb.append(name);
 		sb.append(", portletCategoryName=");
 		sb.append(portletCategoryName);
+		sb.append(", properties=");
+		sb.append(properties);
 		sb.append(", type=");
 		sb.append(type);
 		sb.append("}");
@@ -195,6 +197,13 @@ public class RemoteAppEntryCacheModel
 			remoteAppEntryImpl.setPortletCategoryName(portletCategoryName);
 		}
 
+		if (properties == null) {
+			remoteAppEntryImpl.setProperties("");
+		}
+		else {
+			remoteAppEntryImpl.setProperties(properties);
+		}
+
 		if (type == null) {
 			remoteAppEntryImpl.setType("");
 		}
@@ -228,6 +237,7 @@ public class RemoteAppEntryCacheModel
 		iFrameURL = objectInput.readUTF();
 		name = objectInput.readUTF();
 		portletCategoryName = objectInput.readUTF();
+		properties = objectInput.readUTF();
 		type = objectInput.readUTF();
 	}
 
@@ -300,6 +310,13 @@ public class RemoteAppEntryCacheModel
 			objectOutput.writeUTF(portletCategoryName);
 		}
 
+		if (properties == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(properties);
+		}
+
 		if (type == null) {
 			objectOutput.writeUTF("");
 		}
@@ -322,6 +339,7 @@ public class RemoteAppEntryCacheModel
 	public String iFrameURL;
 	public String name;
 	public String portletCategoryName;
+	public String properties;
 	public String type;
 
 }

@@ -41,21 +41,21 @@ public class RemoteAppEntryServiceUtil {
 	public static RemoteAppEntry addCustomElementRemoteAppEntry(
 			String customElementCSSURLs, String customElementHTMLElementName,
 			String customElementURLs, Map<java.util.Locale, String> nameMap,
-			String portletCategoryName)
+			String portletCategoryName, String properties)
 		throws PortalException {
 
 		return getService().addCustomElementRemoteAppEntry(
 			customElementCSSURLs, customElementHTMLElementName,
-			customElementURLs, nameMap, portletCategoryName);
+			customElementURLs, nameMap, portletCategoryName, properties);
 	}
 
 	public static RemoteAppEntry addIFrameRemoteAppEntry(
 			String iFrameURL, Map<java.util.Locale, String> nameMap,
-			String portletCategoryName)
+			String portletCategoryName, String properties)
 		throws PortalException {
 
 		return getService().addIFrameRemoteAppEntry(
-			iFrameURL, nameMap, portletCategoryName);
+			iFrameURL, nameMap, portletCategoryName, properties);
 	}
 
 	public static RemoteAppEntry deleteRemoteAppEntry(long remoteAppEntryId)
@@ -82,22 +82,25 @@ public class RemoteAppEntryServiceUtil {
 	public static RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			Map<java.util.Locale, String> nameMap, String portletCategoryName)
+			Map<java.util.Locale, String> nameMap, String portletCategoryName,
+			String properties)
 		throws PortalException {
 
 		return getService().updateCustomElementRemoteAppEntry(
 			remoteAppEntryId, customElementCSSURLs,
 			customElementHTMLElementName, customElementURLs, nameMap,
-			portletCategoryName);
+			portletCategoryName, properties);
 	}
 
 	public static RemoteAppEntry updateIFrameRemoteAppEntry(
 			long remoteAppEntryId, String iFrameURL,
-			Map<java.util.Locale, String> nameMap, String portletCategoryName)
+			Map<java.util.Locale, String> nameMap, String portletCategoryName,
+			String properties)
 		throws PortalException {
 
 		return getService().updateIFrameRemoteAppEntry(
-			remoteAppEntryId, iFrameURL, nameMap, portletCategoryName);
+			remoteAppEntryId, iFrameURL, nameMap, portletCategoryName,
+			properties);
 	}
 
 	public static RemoteAppEntryService getService() {

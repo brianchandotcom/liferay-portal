@@ -13,5 +13,6 @@ create table RemoteAppEntry (
 	iFrameURL VARCHAR(1024) null,
 	name STRING null,
 	portletCategoryName VARCHAR(75) null,
+	properties VARCHAR(75) null,
 	type_ VARCHAR(75) null
 );

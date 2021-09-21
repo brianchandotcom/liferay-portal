@@ -1080,6 +1080,135 @@ definition {
 			fieldValue = "E.g +12 (34) 1234-1234");
 	}
 
+	@description = "Verify that input mask on integers can be translated"
+	@priority = "5"
+	test InputMaskOnIntegersCanBeTranslated {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric",
+			formPageNumber = "0");
+
+		FormFields.viewOptionSelected(optionSelected = "integer");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		FormFields.setInputMaskFormat(inputMaskFormat = "+9 (999) 999 9999");
+
+		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "+_ (___) ___ ____");
+
+		FormFields.setInputMaskFormat(inputMaskFormat = "+99 (99) 99999 9999");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "+__ (__) _____ ____");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewNumericInputMask(inputMaskValue = "+_ (___) ___ ____");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "11111111111");
+
+		FormPortlet.submitSuccessfully();
+
+		Refresh();
+
+		FormPortlet.changeLocale(locale = "português-Brasil");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "+__ (__) _____ ____");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "2222222222222");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
+	}
+
+	@description = "Verify that input mask on integers working on rules"
+	@priority = "5"
+	test InputMaskOnIntegersWorkingOnRules {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Numeric 1");
+
+		FormFields.viewOptionSelected(optionSelected = "integer");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		FormFields.setInputMaskFormat(inputMaskFormat = "E.g +99 (99) 9999-9999");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "E.g +__ (__) ____-____");
+
+		FormViewBuilder.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Numeric 2");
+
+		FormFields.viewOptionSelected(optionSelected = "integer");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		FormFields.setInputMaskFormat(inputMaskFormat = "E.g +99 (99) 9999-9999");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "E.g +__ (__) ____-____");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Numeric 1",
+			conditionFieldValue = "999999999999",
+			conditionOperator = "Is Equal To",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Numeric 2");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		Form.validateNoFieldLabel(fieldLabel = "Numeric 2");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "999999999999");
+
+		FormFields.viewLabel(
+			fieldLabel = "Numeric 2",
+			fieldName = "Numeric 2");
+	}
+
 	@description = "Verify that the Field Label can be edited"
 	@priority = "5"
 	test LabelCanBeEdited {

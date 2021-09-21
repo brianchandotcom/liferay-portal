@@ -66,6 +66,8 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 				propsTransformer="admin/js/remoteAppEntryTypeSelectPropsTransformer"
 			/>
 
+			<aui:input label="properties" name="properties" type="textarea" />
+
 			<liferay-frontend:fieldset
 				cssClass='<%= remoteAppAdminDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_IFRAME) ? StringPool.BLANK : "d-none" %>'
 				disabled="<%= !remoteAppAdminDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_IFRAME) %>"

@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.Range;
+import com.liferay.search.experiences.rest.client.dto.v1_0.Avg;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,22 +30,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class RangeSerDes {
+public class AvgSerDes {
 
-	public static Range toDTO(String json) {
-		RangeJSONParser rangeJSONParser = new RangeJSONParser();
+	public static Avg toDTO(String json) {
+		AvgJSONParser avgJSONParser = new AvgJSONParser();
 
-		return rangeJSONParser.parseToDTO(json);
+		return avgJSONParser.parseToDTO(json);
 	}
 
-	public static Range[] toDTOs(String json) {
-		RangeJSONParser rangeJSONParser = new RangeJSONParser();
+	public static Avg[] toDTOs(String json) {
+		AvgJSONParser avgJSONParser = new AvgJSONParser();
 
-		return rangeJSONParser.parseToDTOs(json);
+		return avgJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Range range) {
-		if (range == null) {
+	public static String toJSON(Avg avg) {
+		if (avg == null) {
 			return "null";
 		}
 
@@ -53,16 +53,16 @@ public class RangeSerDes {
 
 		sb.append("{");
 
-		if (range.getKey() != null) {
+		if (avg.getField() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"key\": ");
+			sb.append("\"field\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(range.getKey()));
+			sb.append(_escape(avg.getField()));
 
 			sb.append("\"");
 		}
@@ -73,48 +73,47 @@ public class RangeSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		RangeJSONParser rangeJSONParser = new RangeJSONParser();
+		AvgJSONParser avgJSONParser = new AvgJSONParser();
 
-		return rangeJSONParser.parseToMap(json);
+		return avgJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Range range) {
-		if (range == null) {
+	public static Map<String, String> toMap(Avg avg) {
+		if (avg == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (range.getKey() == null) {
-			map.put("key", null);
+		if (avg.getField() == null) {
+			map.put("field", null);
 		}
 		else {
-			map.put("key", String.valueOf(range.getKey()));
+			map.put("field", String.valueOf(avg.getField()));
 		}
 
 		return map;
 	}
 
-	public static class RangeJSONParser extends BaseJSONParser<Range> {
+	public static class AvgJSONParser extends BaseJSONParser<Avg> {
 
 		@Override
-		protected Range createDTO() {
-			return new Range();
+		protected Avg createDTO() {
+			return new Avg();
 		}
 
 		@Override
-		protected Range[] createDTOArray(int size) {
-			return new Range[size];
+		protected Avg[] createDTOArray(int size) {
+			return new Avg[size];
 		}
 
 		@Override
 		protected void setField(
-			Range range, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			Avg avg, String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "key")) {
+			if (Objects.equals(jsonParserFieldName, "field")) {
 				if (jsonParserFieldValue != null) {
-					range.setKey((String)jsonParserFieldValue);
+					avg.setField((String)jsonParserFieldValue);
 				}
 			}
 		}

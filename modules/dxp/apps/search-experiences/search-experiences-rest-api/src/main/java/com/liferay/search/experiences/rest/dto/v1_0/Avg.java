@@ -35,7 +35,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -44,32 +44,31 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Aggregations")
+@GraphQLName("Avg")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Aggregations")
-public class Aggregations implements Serializable {
+@Schema(requiredProperties = {"field"})
+@XmlRootElement(name = "Avg")
+public class Avg implements Serializable {
 
-	public static Aggregations toDTO(String json) {
-		return ObjectMapperUtil.readValue(Aggregations.class, json);
+	public static Avg toDTO(String json) {
+		return ObjectMapperUtil.readValue(Avg.class, json);
 	}
 
 	@Schema
-	@Valid
-	public Map<String, Aggregations> getAggs() {
-		return aggs;
+	public String getField() {
+		return field;
 	}
 
-	public void setAggs(Map<String, Aggregations> aggs) {
-		this.aggs = aggs;
+	public void setField(String field) {
+		this.field = field;
 	}
 
 	@JsonIgnore
-	public void setAggs(
-		UnsafeSupplier<Map<String, Aggregations>, Exception>
-			aggsUnsafeSupplier) {
+	public void setField(
+		UnsafeSupplier<String, Exception> fieldUnsafeSupplier) {
 
 		try {
-			aggs = aggsUnsafeSupplier.get();
+			field = fieldUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -81,65 +80,8 @@ public class Aggregations implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, Aggregations> aggs;
-
-	@Schema
-	@Valid
-	public Aggregations getAvg() {
-		return avg;
-	}
-
-	public void setAvg(Aggregations avg) {
-		this.avg = avg;
-	}
-
-	@JsonIgnore
-	public void setAvg(
-		UnsafeSupplier<Aggregations, Exception> avgUnsafeSupplier) {
-
-		try {
-			avg = avgUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Aggregations avg;
-
-	@Schema
-	@Valid
-	public Cardinality getCardinality() {
-		return cardinality;
-	}
-
-	public void setCardinality(Cardinality cardinality) {
-		this.cardinality = cardinality;
-	}
-
-	@JsonIgnore
-	public void setCardinality(
-		UnsafeSupplier<Cardinality, Exception> cardinalityUnsafeSupplier) {
-
-		try {
-			cardinality = cardinalityUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Cardinality cardinality;
+	@NotEmpty
+	protected String field;
 
 	@Override
 	public boolean equals(Object object) {
@@ -147,13 +89,13 @@ public class Aggregations implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Aggregations)) {
+		if (!(object instanceof Avg)) {
 			return false;
 		}
 
-		Aggregations aggregations = (Aggregations)object;
+		Avg avg = (Avg)object;
 
-		return Objects.equals(toString(), aggregations.toString());
+		return Objects.equals(toString(), avg.toString());
 	}
 
 	@Override
@@ -168,34 +110,18 @@ public class Aggregations implements Serializable {
 
 		sb.append("{");
 
-		if (aggs != null) {
+		if (field != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"aggs\": ");
+			sb.append("\"field\": ");
 
-			sb.append(_toJSON(aggs));
-		}
+			sb.append("\"");
 
-		if (avg != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
+			sb.append(_escape(field));
 
-			sb.append("\"avg\": ");
-
-			sb.append(String.valueOf(avg));
-		}
-
-		if (cardinality != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"cardinality\": ");
-
-			sb.append(String.valueOf(cardinality));
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -205,7 +131,7 @@ public class Aggregations implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Aggregations",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Avg",
 		name = "x-class-name"
 	)
 	public String xClassName;

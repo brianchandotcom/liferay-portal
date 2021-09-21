@@ -65,14 +65,24 @@ public class AggregationSerDes {
 			sb.append(_toJSON(aggregation.getAggs()));
 		}
 
-		if (aggregation.getEnabled() != null) {
+		if (aggregation.getAvg() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"enabled\": ");
+			sb.append("\"avg\": ");
 
-			sb.append(aggregation.getEnabled());
+			sb.append(String.valueOf(aggregation.getAvg()));
+		}
+
+		if (aggregation.getCardinality() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cardinality\": ");
+
+			sb.append(String.valueOf(aggregation.getCardinality()));
 		}
 
 		sb.append("}");
@@ -101,11 +111,19 @@ public class AggregationSerDes {
 			map.put("aggs", String.valueOf(aggregation.getAggs()));
 		}
 
-		if (aggregation.getEnabled() == null) {
-			map.put("enabled", null);
+		if (aggregation.getAvg() == null) {
+			map.put("avg", null);
 		}
 		else {
-			map.put("enabled", String.valueOf(aggregation.getEnabled()));
+			map.put("avg", String.valueOf(aggregation.getAvg()));
+		}
+
+		if (aggregation.getCardinality() == null) {
+			map.put("cardinality", null);
+		}
+		else {
+			map.put(
+				"cardinality", String.valueOf(aggregation.getCardinality()));
 		}
 
 		return map;
@@ -136,9 +154,16 @@ public class AggregationSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "enabled")) {
+			else if (Objects.equals(jsonParserFieldName, "avg")) {
 				if (jsonParserFieldValue != null) {
-					aggregation.setEnabled((Boolean)jsonParserFieldValue);
+					aggregation.setAvg(
+						AvgSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "cardinality")) {
+				if (jsonParserFieldValue != null) {
+					aggregation.setCardinality(
+						CardinalitySerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 		}

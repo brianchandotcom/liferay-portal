@@ -4,42 +4,26 @@ components:
             properties:
                 aggs:
                     additionalProperties:
-                        $ref: "#/components/schemas/Aggregations"
+                        $ref: "#/components/schemas/Aggregation"
                     type: object
-                enabled:
-                    type: boolean
-        Aggregations:
-            properties:
-                aggregation:
-                    $ref: "#/components/schemas/Aggregation"
-                aggregations:
+                avg:
                     properties:
-                        aggs:
-                            additionalProperties:
-                                $ref: "#/components/schemas/Aggregations"
-                            type: object
-                        avg:
-                            allOf:
-                                - $ref: "#/components/schemas/Aggregations"
-                            required:
-                                - field
-                        cardinality:
-                            allOf:
-                                - $ref: "#/components/schemas/Aggregations"
-                            properties:
-                                precision_threshold:
-                                    maximum: 40000
-                                    minimum: 0
-                                    type: number
-                            required:
-                                - field
-                            type: object
-                    type: object
-                range:
-                    properties:
-                        key:
+                        field:
                             type: string
-            type: object
+                    required:
+                        - field
+                    type: object
+                cardinality:
+                    properties:
+                        field:
+                            type: string
+                        precision_threshold:
+                            maximum: 40000
+                            minimum: 0
+                            type: integer
+                    required:
+                        - field
+                    type: object
         SXPBlueprint:
             properties:
                 configuration:

@@ -34,16 +34,37 @@ public class Cardinality implements Cloneable, Serializable {
 		return CardinalitySerDes.toDTO(json);
 	}
 
-	public Number getPrecision_threshold() {
+	public String getField() {
+		return field;
+	}
+
+	public void setField(String field) {
+		this.field = field;
+	}
+
+	public void setField(
+		UnsafeSupplier<String, Exception> fieldUnsafeSupplier) {
+
+		try {
+			field = fieldUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String field;
+
+	public Integer getPrecision_threshold() {
 		return precision_threshold;
 	}
 
-	public void setPrecision_threshold(Number precision_threshold) {
+	public void setPrecision_threshold(Integer precision_threshold) {
 		this.precision_threshold = precision_threshold;
 	}
 
 	public void setPrecision_threshold(
-		UnsafeSupplier<Number, Exception> precision_thresholdUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> precision_thresholdUnsafeSupplier) {
 
 		try {
 			precision_threshold = precision_thresholdUnsafeSupplier.get();
@@ -53,7 +74,7 @@ public class Cardinality implements Cloneable, Serializable {
 		}
 	}
 
-	protected Number precision_threshold;
+	protected Integer precision_threshold;
 
 	@Override
 	public Cardinality clone() throws CloneNotSupportedException {

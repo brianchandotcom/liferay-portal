@@ -35,16 +35,16 @@ public class Aggregation implements Cloneable, Serializable {
 		return AggregationSerDes.toDTO(json);
 	}
 
-	public Map<String, Aggregations> getAggs() {
+	public Map<String, Aggregation> getAggs() {
 		return aggs;
 	}
 
-	public void setAggs(Map<String, Aggregations> aggs) {
+	public void setAggs(Map<String, Aggregation> aggs) {
 		this.aggs = aggs;
 	}
 
 	public void setAggs(
-		UnsafeSupplier<Map<String, Aggregations>, Exception>
+		UnsafeSupplier<Map<String, Aggregation>, Exception>
 			aggsUnsafeSupplier) {
 
 		try {
@@ -55,28 +55,47 @@ public class Aggregation implements Cloneable, Serializable {
 		}
 	}
 
-	protected Map<String, Aggregations> aggs;
+	protected Map<String, Aggregation> aggs;
 
-	public Boolean getEnabled() {
-		return enabled;
+	public Avg getAvg() {
+		return avg;
 	}
 
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
+	public void setAvg(Avg avg) {
+		this.avg = avg;
 	}
 
-	public void setEnabled(
-		UnsafeSupplier<Boolean, Exception> enabledUnsafeSupplier) {
-
+	public void setAvg(UnsafeSupplier<Avg, Exception> avgUnsafeSupplier) {
 		try {
-			enabled = enabledUnsafeSupplier.get();
+			avg = avgUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Boolean enabled;
+	protected Avg avg;
+
+	public Cardinality getCardinality() {
+		return cardinality;
+	}
+
+	public void setCardinality(Cardinality cardinality) {
+		this.cardinality = cardinality;
+	}
+
+	public void setCardinality(
+		UnsafeSupplier<Cardinality, Exception> cardinalityUnsafeSupplier) {
+
+		try {
+			cardinality = cardinalityUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Cardinality cardinality;
 
 	@Override
 	public Aggregation clone() throws CloneNotSupportedException {

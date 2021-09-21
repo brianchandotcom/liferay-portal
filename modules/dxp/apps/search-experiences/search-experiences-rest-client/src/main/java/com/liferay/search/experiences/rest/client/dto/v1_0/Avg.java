@@ -15,7 +15,7 @@
 package com.liferay.search.experiences.rest.client.dto.v1_0;
 
 import com.liferay.search.experiences.rest.client.function.UnsafeSupplier;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.RangeSerDes;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.AvgSerDes;
 
 import java.io.Serializable;
 
@@ -28,34 +28,36 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Range implements Cloneable, Serializable {
+public class Avg implements Cloneable, Serializable {
 
-	public static Range toDTO(String json) {
-		return RangeSerDes.toDTO(json);
+	public static Avg toDTO(String json) {
+		return AvgSerDes.toDTO(json);
 	}
 
-	public String getKey() {
-		return key;
+	public String getField() {
+		return field;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public void setField(String field) {
+		this.field = field;
 	}
 
-	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
+	public void setField(
+		UnsafeSupplier<String, Exception> fieldUnsafeSupplier) {
+
 		try {
-			key = keyUnsafeSupplier.get();
+			field = fieldUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String key;
+	protected String field;
 
 	@Override
-	public Range clone() throws CloneNotSupportedException {
-		return (Range)super.clone();
+	public Avg clone() throws CloneNotSupportedException {
+		return (Avg)super.clone();
 	}
 
 	@Override
@@ -64,13 +66,13 @@ public class Range implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Range)) {
+		if (!(object instanceof Avg)) {
 			return false;
 		}
 
-		Range range = (Range)object;
+		Avg avg = (Avg)object;
 
-		return Objects.equals(toString(), range.toString());
+		return Objects.equals(toString(), avg.toString());
 	}
 
 	@Override
@@ -81,7 +83,7 @@ public class Range implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return RangeSerDes.toJSON(this);
+		return AvgSerDes.toJSON(this);
 	}
 
 }

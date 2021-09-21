@@ -55,17 +55,17 @@ public class Aggregation implements Serializable {
 
 	@Schema
 	@Valid
-	public Map<String, Aggregations> getAggs() {
+	public Map<String, Aggregation> getAggs() {
 		return aggs;
 	}
 
-	public void setAggs(Map<String, Aggregations> aggs) {
+	public void setAggs(Map<String, Aggregation> aggs) {
 		this.aggs = aggs;
 	}
 
 	@JsonIgnore
 	public void setAggs(
-		UnsafeSupplier<Map<String, Aggregations>, Exception>
+		UnsafeSupplier<Map<String, Aggregation>, Exception>
 			aggsUnsafeSupplier) {
 
 		try {
@@ -81,23 +81,22 @@ public class Aggregation implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, Aggregations> aggs;
+	protected Map<String, Aggregation> aggs;
 
 	@Schema
-	public Boolean getEnabled() {
-		return enabled;
+	@Valid
+	public Avg getAvg() {
+		return avg;
 	}
 
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
+	public void setAvg(Avg avg) {
+		this.avg = avg;
 	}
 
 	@JsonIgnore
-	public void setEnabled(
-		UnsafeSupplier<Boolean, Exception> enabledUnsafeSupplier) {
-
+	public void setAvg(UnsafeSupplier<Avg, Exception> avgUnsafeSupplier) {
 		try {
-			enabled = enabledUnsafeSupplier.get();
+			avg = avgUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -109,7 +108,36 @@ public class Aggregation implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean enabled;
+	protected Avg avg;
+
+	@Schema
+	@Valid
+	public Cardinality getCardinality() {
+		return cardinality;
+	}
+
+	public void setCardinality(Cardinality cardinality) {
+		this.cardinality = cardinality;
+	}
+
+	@JsonIgnore
+	public void setCardinality(
+		UnsafeSupplier<Cardinality, Exception> cardinalityUnsafeSupplier) {
+
+		try {
+			cardinality = cardinalityUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Cardinality cardinality;
 
 	@Override
 	public boolean equals(Object object) {
@@ -148,14 +176,24 @@ public class Aggregation implements Serializable {
 			sb.append(_toJSON(aggs));
 		}
 
-		if (enabled != null) {
+		if (avg != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"enabled\": ");
+			sb.append("\"avg\": ");
 
-			sb.append(enabled);
+			sb.append(String.valueOf(avg));
+		}
+
+		if (cardinality != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cardinality\": ");
+
+			sb.append(String.valueOf(cardinality));
 		}
 
 		sb.append("}");

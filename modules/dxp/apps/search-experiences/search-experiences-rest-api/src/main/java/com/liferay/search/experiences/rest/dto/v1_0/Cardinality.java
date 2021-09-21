@@ -35,9 +35,9 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -56,21 +56,49 @@ public class Cardinality implements Serializable {
 		return ObjectMapperUtil.readValue(Cardinality.class, json);
 	}
 
+	@Schema
+	public String getField() {
+		return field;
+	}
+
+	public void setField(String field) {
+		this.field = field;
+	}
+
+	@JsonIgnore
+	public void setField(
+		UnsafeSupplier<String, Exception> fieldUnsafeSupplier) {
+
+		try {
+			field = fieldUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
+	protected String field;
+
 	@DecimalMax("40000")
 	@DecimalMin("0")
 	@Schema
-	@Valid
-	public Number getPrecision_threshold() {
+	public Integer getPrecision_threshold() {
 		return precision_threshold;
 	}
 
-	public void setPrecision_threshold(Number precision_threshold) {
+	public void setPrecision_threshold(Integer precision_threshold) {
 		this.precision_threshold = precision_threshold;
 	}
 
 	@JsonIgnore
 	public void setPrecision_threshold(
-		UnsafeSupplier<Number, Exception> precision_thresholdUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> precision_thresholdUnsafeSupplier) {
 
 		try {
 			precision_threshold = precision_thresholdUnsafeSupplier.get();
@@ -85,7 +113,7 @@ public class Cardinality implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Number precision_threshold;
+	protected Integer precision_threshold;
 
 	@Override
 	public boolean equals(Object object) {
@@ -113,6 +141,20 @@ public class Cardinality implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (field != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"field\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(field));
+
+			sb.append("\"");
+		}
 
 		if (precision_threshold != null) {
 			if (sb.length() > 1) {

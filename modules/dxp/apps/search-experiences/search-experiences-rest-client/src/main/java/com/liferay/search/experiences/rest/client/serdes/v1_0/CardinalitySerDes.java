@@ -55,6 +55,20 @@ public class CardinalitySerDes {
 
 		sb.append("{");
 
+		if (cardinality.getField() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"field\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(cardinality.getField()));
+
+			sb.append("\"");
+		}
+
 		if (cardinality.getPrecision_threshold() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -83,6 +97,13 @@ public class CardinalitySerDes {
 		}
 
 		Map<String, String> map = new TreeMap<>();
+
+		if (cardinality.getField() == null) {
+			map.put("field", null);
+		}
+		else {
+			map.put("field", String.valueOf(cardinality.getField()));
+		}
 
 		if (cardinality.getPrecision_threshold() == null) {
 			map.put("precision_threshold", null);
@@ -114,7 +135,14 @@ public class CardinalitySerDes {
 			Cardinality cardinality, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "precision_threshold")) {
+			if (Objects.equals(jsonParserFieldName, "field")) {
+				if (jsonParserFieldValue != null) {
+					cardinality.setField((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "precision_threshold")) {
+
 				if (jsonParserFieldValue != null) {
 					cardinality.setPrecision_threshold(
 						Integer.valueOf((String)jsonParserFieldValue));

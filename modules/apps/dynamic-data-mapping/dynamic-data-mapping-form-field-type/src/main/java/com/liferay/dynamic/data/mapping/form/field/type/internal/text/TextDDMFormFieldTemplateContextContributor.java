@@ -100,8 +100,9 @@ public class TextDDMFormFieldTemplateContextContributor
 			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext)
 		).put(
 			"predefinedValue",
-			DDMFormFieldTypeUtil.getPredefinedValue(
-				ddmFormField, ddmFormFieldRenderingContext)
+			DDMFormFieldTypeUtil.getPropertyValue(
+				ddmFormField, ddmFormFieldRenderingContext.getLocale(),
+				"predefinedValue")
 		).putAll(
 			parameters
 		).build();

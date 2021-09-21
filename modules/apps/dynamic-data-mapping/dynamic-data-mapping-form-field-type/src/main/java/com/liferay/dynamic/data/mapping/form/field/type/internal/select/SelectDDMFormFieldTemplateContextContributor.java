@@ -89,8 +89,9 @@ public class SelectDDMFormFieldTemplateContextContributor
 		).put(
 			"predefinedValue",
 			getValue(
-				DDMFormFieldTypeUtil.getPredefinedValue(
-					ddmFormField, ddmFormFieldRenderingContext))
+				DDMFormFieldTypeUtil.getPropertyValue(
+					ddmFormField, ddmFormFieldRenderingContext.getLocale(),
+					"predefinedValue"))
 		).put(
 			"showEmptyOption",
 			GetterUtil.getBoolean(

@@ -54,8 +54,9 @@ public class RichTextDDMFormFieldTemplateContextContributor
 
 		return HashMapBuilder.<String, Object>put(
 			"predefinedValue",
-			DDMFormFieldTypeUtil.getPredefinedValue(
-				ddmFormField, ddmFormFieldRenderingContext)
+			DDMFormFieldTypeUtil.getPropertyValue(
+				ddmFormField, ddmFormFieldRenderingContext.getLocale(),
+				"predefinedValue")
 		).put(
 			"value",
 			DDMFormFieldTypeUtil.getPropertyValue(

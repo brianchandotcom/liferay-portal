@@ -56,8 +56,9 @@ public class CheckboxDDMFormFieldTemplateContextContributor
 			"predefinedValue",
 			GetterUtil.getBoolean(
 				DDMFormFieldTypeUtil.getValue(
-					DDMFormFieldTypeUtil.getPredefinedValue(
-						ddmFormField, ddmFormFieldRenderingContext)))
+					DDMFormFieldTypeUtil.getPropertyValue(
+						ddmFormField, ddmFormFieldRenderingContext.getLocale(),
+						"predefinedValue")))
 		).put(
 			"showAsSwitcher",
 			GetterUtil.getBoolean(ddmFormField.getProperty("showAsSwitcher"))

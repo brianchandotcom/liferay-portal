@@ -140,6 +140,7 @@ describe('FragmentWithControls', () => {
 				},
 			});
 		});
+
 		expect(
 			document.body.querySelector('.page-editor__fragment-content')
 		).toBeVisible();

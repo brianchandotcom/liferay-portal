@@ -2,6 +2,7 @@
 
 <Configuration strict="true">
 	<Loggers>
+		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.data.provider.internal.rest.DDMRESTDataProvider" />
 		<Logger level="ERROR" name="com.netflix.config.sources.URLConfigurationSource" />
 	</Loggers>
 </Configuration>

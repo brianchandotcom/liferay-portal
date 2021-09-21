@@ -308,6 +308,8 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+                externalReferenceCode:
+                    type: string
                 id:
                     description:
                         The vocabulary's ID.

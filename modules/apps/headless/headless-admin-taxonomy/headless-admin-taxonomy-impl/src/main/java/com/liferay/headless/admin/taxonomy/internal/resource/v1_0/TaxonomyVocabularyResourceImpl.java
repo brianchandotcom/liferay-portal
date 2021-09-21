@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
+import com.liferay.external.reference.service.ERAssetVocabularyLocalService;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.AssetType;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.internal.dto.v1_0.util.CreatorUtil;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -234,8 +236,10 @@ public class TaxonomyVocabularyResourceImpl
 			new HashSet<>(descriptionMap.keySet()));
 
 		return _toTaxonomyVocabulary(
-			_assetVocabularyService.addVocabulary(
-				siteId, null, titleMap, descriptionMap,
+			_erAssetVocabularyLocalService.addOrUpdateVocabulary(
+				taxonomyVocabulary.getExternalReferenceCode(),
+				PrincipalThreadLocal.getUserId(), siteId, null, titleMap,
+				descriptionMap,
 				_getSettings(taxonomyVocabulary.getAssetTypes(), siteId),
 				ServiceContextRequestUtil.createServiceContext(
 					siteId, contextHttpServletRequest,
@@ -568,6 +572,8 @@ public class TaxonomyVocabularyResourceImpl
 				description_i18n = LocalizedMapUtil.getI18nMap(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					assetVocabulary.getDescriptionMap());
+				externalReferenceCode =
+					assetVocabulary.getExternalReferenceCode();
 				id = assetVocabulary.getVocabularyId();
 				name = assetVocabulary.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
@@ -612,6 +618,9 @@ public class TaxonomyVocabularyResourceImpl
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
+
+	@Reference
+	private ERAssetVocabularyLocalService _erAssetVocabularyLocalService;
 
 	@Reference
 	private Portal _portal;

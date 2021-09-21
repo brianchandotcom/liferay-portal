@@ -16,6 +16,7 @@ package com.liferay.journal.web.internal.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleLocalization;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -34,7 +35,6 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,21 +45,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = CTDisplayRenderer.class)
 public class JournalArticleLocalizationCTDisplayRenderer
 	extends BaseCTDisplayRenderer<JournalArticleLocalization> {
-
-	@Override
-	public String getContent(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, Locale locale,
-			JournalArticleLocalization journalArticleLocalization)
-		throws PortalException {
-
-		return JournalArticleCTDisplayRenderer.getJournalArticleContent(
-			_journalArticleLocalService.getJournalArticle(
-				journalArticleLocalization.getArticlePK()),
-			_journalArticleLocalService,
-			journalArticleLocalization.getLanguageId(), httpServletRequest,
-			httpServletResponse);
-	}
 
 	@Override
 	public String getEditURL(
@@ -107,6 +92,28 @@ public class JournalArticleLocalizationCTDisplayRenderer
 	@Override
 	public String getTypeName(Locale locale) {
 		return _language.get(locale, "web-content-translation");
+	}
+
+	@Override
+	public String renderPreview(
+			DisplayContext<JournalArticleLocalization> displayContext)
+		throws Exception {
+
+		JournalArticleLocalization journalArticleLocalization =
+			displayContext.getModel();
+
+		return JournalArticleCTDisplayRenderer.getJournalArticleContent(
+			_journalArticleLocalService.getJournalArticle(
+				journalArticleLocalization.getArticlePK()),
+			_journalArticleLocalService,
+			journalArticleLocalization.getLanguageId(),
+			displayContext.getHttpServletRequest(),
+			displayContext.getHttpServletResponse());
+	}
+
+	@Override
+	public boolean showPreviewDiff() {
+		return true;
 	}
 
 	@Override

@@ -41,7 +41,6 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,25 +52,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = CTDisplayRenderer.class)
 public class MBMessageCTDisplayRenderer
 	extends BaseCTDisplayRenderer<MBMessage> {
-
-	@Override
-	public String getContent(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, Locale locale,
-			MBMessage mbMessage)
-		throws Exception {
-
-		if (mbMessage.isFormatBBCode()) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			return MBUtil.getBBCodeHTML(
-				mbMessage.getBody(false), themeDisplay.getPathThemeImages());
-		}
-
-		return mbMessage.getBody(false);
-	}
 
 	@Override
 	public String getEditURL(
@@ -109,6 +89,30 @@ public class MBMessageCTDisplayRenderer
 	@Override
 	public String getTitle(Locale locale, MBMessage mbMessage) {
 		return mbMessage.getSubject();
+	}
+
+	@Override
+	public String renderPreview(DisplayContext<MBMessage> displayContext) {
+		MBMessage mbMessage = displayContext.getModel();
+
+		if (mbMessage.isFormatBBCode()) {
+			HttpServletRequest httpServletRequest =
+				displayContext.getHttpServletRequest();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			return MBUtil.getBBCodeHTML(
+				mbMessage.getBody(false), themeDisplay.getPathThemeImages());
+		}
+
+		return mbMessage.getBody(false);
+	}
+
+	@Override
+	public boolean showPreviewDiff() {
+		return true;
 	}
 
 	@Override

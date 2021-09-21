@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.web.internal.change.tracking.spi.d
 
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
@@ -36,7 +37,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,36 +51,6 @@ public class DDMFormInstanceCTDisplayRenderer
 	@Override
 	public String[] getAvailableLanguageIds(DDMFormInstance ddmFormInstance) {
 		return ddmFormInstance.getAvailableLanguageIds();
-	}
-
-	@Override
-	public String getContent(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, Locale locale,
-			DDMFormInstance ddmFormInstance)
-		throws PortalException {
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
-		ddmFormFieldRenderingContext.setHttpServletRequest(httpServletRequest);
-		ddmFormFieldRenderingContext.setHttpServletResponse(
-			httpServletResponse);
-		ddmFormFieldRenderingContext.setLocale(locale);
-
-		PortletResponse portletResponse =
-			(PortletResponse)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		ddmFormFieldRenderingContext.setPortletNamespace(
-			portletResponse.getNamespace());
-
-		ddmFormFieldRenderingContext.setShowEmptyFieldLabel(true);
-		ddmFormFieldRenderingContext.setReturnFullContext(true);
-		ddmFormFieldRenderingContext.setViewMode(true);
-
-		return DDMFormRendererUtil.render(
-			ddmFormInstance.getDDMForm(), ddmFormFieldRenderingContext);
 	}
 
 	@Override
@@ -132,6 +102,44 @@ public class DDMFormInstanceCTDisplayRenderer
 	@Override
 	public String getTitle(Locale locale, DDMFormInstance ddmFormInstance) {
 		return ddmFormInstance.getName(locale);
+	}
+
+	@Override
+	public String renderPreview(DisplayContext<DDMFormInstance> displayContext)
+		throws Exception {
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		HttpServletRequest httpServletRequest =
+			displayContext.getHttpServletRequest();
+
+		ddmFormFieldRenderingContext.setHttpServletRequest(httpServletRequest);
+
+		ddmFormFieldRenderingContext.setHttpServletResponse(
+			displayContext.getHttpServletResponse());
+		ddmFormFieldRenderingContext.setLocale(displayContext.getLocale());
+
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		ddmFormFieldRenderingContext.setPortletNamespace(
+			portletResponse.getNamespace());
+
+		ddmFormFieldRenderingContext.setShowEmptyFieldLabel(true);
+		ddmFormFieldRenderingContext.setReturnFullContext(true);
+		ddmFormFieldRenderingContext.setViewMode(true);
+
+		DDMFormInstance ddmFormInstance = displayContext.getModel();
+
+		return DDMFormRendererUtil.render(
+			ddmFormInstance.getDDMForm(), ddmFormFieldRenderingContext);
+	}
+
+	@Override
+	public boolean showPreviewDiff() {
+		return true;
 	}
 
 	@Override

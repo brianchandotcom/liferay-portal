@@ -16,6 +16,7 @@ package com.liferay.journal.web.internal.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -66,19 +67,6 @@ public class JournalArticleCTDisplayRenderer
 	@Override
 	public String[] getAvailableLanguageIds(JournalArticle journalArticle) {
 		return journalArticle.getAvailableLanguageIds();
-	}
-
-	@Override
-	public String getContent(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, Locale locale,
-			JournalArticle journalArticle)
-		throws Exception {
-
-		return getJournalArticleContent(
-			journalArticle, _journalArticleLocalService,
-			_language.getLanguageId(locale), httpServletRequest,
-			httpServletResponse);
 	}
 
 	@Override
@@ -134,6 +122,17 @@ public class JournalArticleCTDisplayRenderer
 		return String.valueOf(journalArticle.getVersion());
 	}
 
+	@Override
+	public String renderPreview(DisplayContext<JournalArticle> displayContext)
+		throws Exception {
+
+		return getJournalArticleContent(
+			displayContext.getModel(), _journalArticleLocalService,
+			_language.getLanguageId(displayContext.getLocale()),
+			displayContext.getHttpServletRequest(),
+			displayContext.getHttpServletResponse());
+	}
+
 	protected static String getJournalArticleContent(
 			JournalArticle journalArticle,
 			JournalArticleLocalService journalArticleLocalService,
@@ -167,6 +166,11 @@ public class JournalArticleCTDisplayRenderer
 				portletRequestModel, themeDisplay);
 
 		return journalArticleDisplay.getContent();
+	}
+
+	@Override
+	public boolean showPreviewDiff() {
+		return true;
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.web.internal.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -40,7 +41,6 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,42 +51,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = CTDisplayRenderer.class)
 public class DDLRecordCTDisplayRenderer
 	extends BaseCTDisplayRenderer<DDLRecord> {
-
-	@Override
-	public String getContent(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, Locale locale,
-			DDLRecord ddlRecord)
-		throws Exception {
-
-		DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
-
-		HTMLTag htmlTag = new HTMLTag();
-
-		htmlTag.setClassNameId(
-			_classNameLocalService.getClassNameId(DDMStructure.class));
-		htmlTag.setClassPK(ddlRecordSet.getDDMStructureId());
-		htmlTag.setDdmFormValues(ddlRecord.getDDMFormValues());
-		htmlTag.setGroupId(ddlRecord.getGroupId());
-		htmlTag.setReadOnly(true);
-		htmlTag.setRequestedLocale(locale);
-
-		try (UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter()) {
-			htmlTag.doTag(
-				httpServletRequest,
-				new PipingServletResponse(
-					httpServletResponse, unsyncStringWriter));
-
-			return unsyncStringWriter.toString();
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
-			}
-		}
-
-		return null;
-	}
 
 	@Override
 	public String getEditURL(
@@ -128,6 +92,47 @@ public class DDLRecordCTDisplayRenderer
 	@Override
 	public String getTitle(Locale locale, DDLRecord ddlRecord) {
 		return String.valueOf(ddlRecord.getPrimaryKey());
+	}
+
+	@Override
+	public String renderPreview(DisplayContext<DDLRecord> displayContext)
+		throws Exception {
+
+		DDLRecord ddlRecord = displayContext.getModel();
+
+		DDLRecordSet ddlRecordSet = ddlRecord.getRecordSet();
+
+		HTMLTag htmlTag = new HTMLTag();
+
+		htmlTag.setClassNameId(
+			_classNameLocalService.getClassNameId(DDMStructure.class));
+		htmlTag.setClassPK(ddlRecordSet.getDDMStructureId());
+		htmlTag.setDdmFormValues(ddlRecord.getDDMFormValues());
+		htmlTag.setGroupId(ddlRecord.getGroupId());
+		htmlTag.setReadOnly(true);
+		htmlTag.setRequestedLocale(displayContext.getLocale());
+
+		try (UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter()) {
+			htmlTag.doTag(
+				displayContext.getHttpServletRequest(),
+				new PipingServletResponse(
+					displayContext.getHttpServletResponse(),
+					unsyncStringWriter));
+
+			return unsyncStringWriter.toString();
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception, exception);
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public boolean showPreviewDiff() {
+		return true;
 	}
 
 	@Override

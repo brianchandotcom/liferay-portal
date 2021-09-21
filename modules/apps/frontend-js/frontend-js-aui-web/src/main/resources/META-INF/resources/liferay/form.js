@@ -25,11 +25,24 @@ AUI.add(
 
 		var TABS_SECTION_STR = 'TabsSection';
 
+		var REGEX_CUSTOM_ELEMENT_NAME = /^[a-z]([a-z]|[0-9]|-|\.|_)*-([a-z]|[0-9]|-|\.|_)*/;
+
 		var REGEX_EMAIL = /^[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:\w(?:[\w-]*\w)?\.)+(\w(?:[\w-]*\w))$/;
 
 		var REGEX_NUMBER = /^[+-]?(\d+)([.|,]\d+)*([eE][+-]?\d+)?$/;
 
 		var REGEX_URL = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(https?:\/\/|www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))((.*):(\d*)\/?(.*))?)/;
+
+		var RESERVED_CUSTOM_ELEMENT_NAMES = new Set([
+			'annotation-xml',
+			'color-profile',
+			'font-face',
+			'font-face-src',
+			'font-face-uri',
+			'font-face-format',
+			'font-face-name',
+			'missing-glyph',
+		]);
 
 		var acceptFiles = function (val, node, ruleValue) {
 			if (ruleValue && ruleValue.split(',').includes('*')) {
@@ -37,6 +50,13 @@ AUI.add(
 			}
 
 			return defaultAcceptFiles(val, node, ruleValue);
+		};
+
+		var customElementName = function (val, _node, _ruleValue) {
+			return (
+				REGEX_CUSTOM_ELEMENT_NAME.test(val) &&
+				!RESERVED_CUSTOM_ELEMENT_NAMES.has(val)
+			);
 		};
 
 		var email = function (val) {
@@ -65,6 +85,7 @@ AUI.add(
 			DEFAULTS_FORM_VALIDATOR.RULES,
 			{
 				acceptFiles,
+				customElementName,
 				email,
 				maxFileSize,
 				number,
@@ -85,6 +106,9 @@ AUI.add(
 				),
 				alphanum: Liferay.Language.get(
 					'please-enter-only-alphanumeric-characters'
+				),
+				customElementName: Liferay.Language.get(
+					'please-enter-a-valid-html-element-name'
 				),
 				date: Liferay.Language.get('please-enter-a-valid-date'),
 				digits: Liferay.Language.get('please-enter-only-digits'),

@@ -79,7 +79,9 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 				cssClass='<%= ((remoteAppEntry != null) && RemoteAppConstants.TYPE_CUSTOM_ELEMENT.equals(remoteAppEntry.getType())) ? StringPool.BLANK : "d-none" %>'
 				id='<%= liferayPortletResponse.getNamespace() + "_type_customElement" %>'
 			>
-				<aui:input label="html-element-name" name="customElementHTMLElementName" />
+				<aui:input label="html-element-name" name="customElementHTMLElementName">
+					<aui:validator name="customElementName" />
+				</aui:input>
 
 				<%
 				String[] customElementURLsArray = new String[1];

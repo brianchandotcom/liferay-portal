@@ -62,8 +62,20 @@ public class LayoutSegmentsExperienceInfoItemLanguagesProvider
 
 	private Layout _getLayout(SegmentsExperience segmentsExperience) {
 		try {
-			return _layoutLocalService.getLayout(
+			Layout layout = _layoutLocalService.getLayout(
 				segmentsExperience.getClassPK());
+
+			if (layout.isDraftLayout()) {
+				return layout;
+			}
+
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			if (draftLayout != null) {
+				return draftLayout;
+			}
+
+			return layout;
 		}
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);

@@ -286,10 +286,8 @@ components:
                 - classPK
             type: object
         ColumnViewport:
-            additionalProperties: false
             properties:
                 columnViewportDefinition:
-                    additionalProperties: false
                     properties:
                         size:
                             maximum: 12
@@ -1917,13 +1915,11 @@ components:
                     type: string
             type: object
         FragmentViewport:
-            additionalProperties: false
             # @review
             description:
                 Represents a fragment viewport.
             properties:
                 fragmentViewportStyle:
-                    additionalProperties: false
                     # @review
                     description:
                         The fragment's viewport style.
@@ -3825,7 +3821,6 @@ components:
                     type: string
             type: object
         RowViewport:
-            additionalProperties: false
             # @review
             description:
                 Represents a row viewport.
@@ -3836,7 +3831,6 @@ components:
                         The row vieport's ID.
                     type: string
                 rowViewportDefinition:
-                    additionalProperties: false
                     # @review
                     description:
                         The definition of the row vieport.

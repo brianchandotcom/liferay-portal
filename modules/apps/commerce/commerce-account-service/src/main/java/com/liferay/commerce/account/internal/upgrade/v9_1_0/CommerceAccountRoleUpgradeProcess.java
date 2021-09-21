@@ -61,10 +61,10 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 				StringBundler.concat(
 					"select distinct UserGroupRole.roleId from UserGroupRole ",
 					"inner join Role_ on UserGroupRole.roleId = Role_.roleId ",
-					"inner join Group_ on UserGroupRole.groupId = ",
-					"Group_.groupId and Group_.classNameId = '",
-					AccountEntry.class.getName(), "' where Role_.type_ =",
-					RoleConstants.TYPE_SITE));
+					"inner join Group_ on Group_.classNameId = '",
+					_classNameLocalService.getClassNameId(AccountEntry.class),
+					"' and UserGroupRole.groupId = Group_.groupId where ",
+					"Role_.type_ =", RoleConstants.TYPE_SITE));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection.prepareStatement(
@@ -75,10 +75,11 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 					connection.prepareStatement(
 						StringBundler.concat(
 							"update UserGroupRole inner join Group_ on ",
-							"UserGroupRole.groupId = Group_.groupId and ",
 							"Group_.classNameId = '",
-							AccountEntry.class.getName(), "' set roleId =  ?",
-							" where roleId = ?")))) {
+							_classNameLocalService.getClassNameId(
+								AccountEntry.class),
+							"' and UserGroupRole.groupId = Group_.groupId set ",
+							"roleId =  ? where roleId = ?")))) {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
@@ -173,12 +174,11 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 	private boolean _hasNonaccountEntryGroup(long roleId) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select count(distinct UserGroupRole.groupId)",
-					"from UserGroupRole inner join Group_ on ",
-					"UserGroupRole.groupId = Group_.groupId and ",
-					"Group.classNameId != '",
+					"select count(distinct UserGroupRole.groupId) from ",
+					"UserGroupRole inner join Group_ on Group.classNameId != '",
 					_classNameLocalService.getClassNameId(AccountEntry.class),
-					"' where UserGroupRole.roleId = ", roleId))) {
+					"' and UserGroupRole.groupId = Group_.groupId where ",
+					"UserGroupRole.roleId = ", roleId))) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {

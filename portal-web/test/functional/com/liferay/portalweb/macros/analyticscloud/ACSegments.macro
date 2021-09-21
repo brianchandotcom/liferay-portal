@@ -97,6 +97,14 @@ definition {
 		for (var tableMember : list "${tableMember}") {
 			var key_TableMember = "${tableMember}";
 
+			Type(
+				locator1 = "ACSegments#SEARCH_MEMBER",
+				value1 = "${tableMember}");
+
+			KeyPress(
+				locator1 = "Segmentation#SEARCH_FIELD",
+				value1 = "\ENTER");
+
 			Click(locator1 = "ACSegments#TABLE_CHECKBOX");
 		}
 

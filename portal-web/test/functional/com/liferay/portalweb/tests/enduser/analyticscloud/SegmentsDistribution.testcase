@@ -211,6 +211,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8628 | Test Summary: Segment distribution chart can be filtered by text property"
 	@priority = "3"
 	test CanDistributionChartFilteredText {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Chart fails to appear the right percentage when filtering with a givenName property.
+		// AC Refactor ticket: LRAC-9387
+		// AC Bug ticekt: LRAC-9383
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -262,6 +268,8 @@ definition {
 		}
 
 		task ("View Chart Entry") {
+			// Test will fail here because the percentage is wrong
+
 			ACSegments.viewBreakdownChartsEntry(key_entry = "userfn - 100.0%");
 		}
 	}

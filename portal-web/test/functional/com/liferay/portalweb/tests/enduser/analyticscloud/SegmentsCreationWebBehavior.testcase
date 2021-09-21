@@ -724,6 +724,12 @@ definition {
 	@description = "Add segment using a web behavior 'ever' done"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentUsingEver {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Timing issues may happen on this test case
+		// AC Refactor ticket: LRAC-9402
+		// AC Fix ticket: LRAC-9285
+
 		ACUtils.createFormAndAddToPage();
 
 		Navigator.openURL();
@@ -793,6 +799,8 @@ definition {
 		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 
 		ACNavigation.switchTab(tabName = "Membership");
+
+		// Couldn't assert the user due to missing data.
 
 		AssertElementPresent(
 			key_userName = "ac ac",
@@ -972,6 +980,12 @@ definition {
 	@description = "Add segment using a web behavior 'since' some time"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentUsingSince {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Timing issues may happen on this test case
+		// AC Refactor ticket: LRAC-9401
+		// AC Fix ticket: LRAC-9285
+
 		ACUtils.createBlogsAndAddToPage();
 
 		Navigator.openURL();
@@ -1052,6 +1066,8 @@ definition {
 			timePeriod = "Yesterday");
 
 		ACNavigation.switchTab(tabName = "Membership");
+
+		// Couldn't assert the user due to missing data.
 
 		AssertElementPresent(
 			key_userName = "ac ac",
@@ -1140,6 +1156,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9224 | Test Summary: Create a Web Behavior Segment of Viewing Document & Media in a Topic"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentViewingDM {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Timing issues may happen on this test case
+		// AC Refactor ticket: LRAC-9404
+		// AC Fix ticket: LRAC-9285
+
 		ACUtils.createDMAndAddToPage();
 
 		Navigator.openURL();
@@ -1218,6 +1240,8 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Membership");
 
+		// Couldn't assert the user due to missing data.
+
 		AssertElementPresent(
 			key_userName = "ac ac",
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
@@ -1226,6 +1250,12 @@ definition {
 	@description = "Create a segment with behavior of viewing a form"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentViewingForm {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Timing issues may happen on this test case
+		// AC Refactor ticket: LRAC-9406
+		// AC Fix ticket: LRAC-9285
+
 		ACUtils.createFormAndAddToPage();
 
 		Navigator.openURL();
@@ -1306,6 +1336,8 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Membership");
 
+		// Couldn't assert the user due to missing data.
+
 		AssertElementPresent(
 			key_userName = "ac ac",
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
@@ -1314,6 +1346,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9225 | Test Summary: Create a Web Behavior Segment of Viewing a Page"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentViewingPage {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Timing issues may happen on this test case
+		// AC Refactor ticket: LRAC-9405
+		// AC Fix ticket: LRAC-9285
+
 		Navigator.openURL();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -1389,6 +1427,8 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Membership");
 
+		// Couldn't assert the user due to missing data.
+
 		AssertElementPresent(
 			key_userName = "ac ac",
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
@@ -1397,6 +1437,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9226 | Test Summary: Create a Web Behavior Segment of Viewing a Web Content"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentViewingWC {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Timing issues may happen on this test case
+		// AC Refactor ticket: LRAC-9403
+		// AC Fix ticket: LRAC-9285
+
 		ACUtils.createWCAndAddToPage();
 
 		Navigator.openURL();
@@ -1463,6 +1509,8 @@ definition {
 		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 
 		ACNavigation.switchTab(tabName = "Membership");
+
+		// Couldn't assert the user due to missing data.
 
 		AssertElementPresent(
 			key_userName = "ac ac",

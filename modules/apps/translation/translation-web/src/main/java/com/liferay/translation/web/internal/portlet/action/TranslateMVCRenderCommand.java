@@ -106,8 +106,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			Object object = _getInfoItem(className, classPK);
 
 			if (object == null) {
-				return _getErrorJSP(
-					renderRequest, renderResponse, className, classPK);
+				return _getErrorJSP(renderRequest, renderResponse);
 			}
 
 			InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
@@ -115,8 +114,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					InfoItemLanguagesProvider.class, className);
 
 			if (infoItemLanguagesProvider == null) {
-				return _getErrorJSP(
-					renderRequest, renderResponse, className, classPK);
+				return _getErrorJSP(renderRequest, renderResponse);
 			}
 
 			List<String> availableSourceLanguageIds = Arrays.asList(
@@ -138,8 +136,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					InfoItemFormProvider.class, className);
 
 			if (infoItemFormProvider == null) {
-				return _getErrorJSP(
-					renderRequest, renderResponse, className, classPK);
+				return _getErrorJSP(renderRequest, renderResponse);
 			}
 
 			InfoForm infoForm = infoItemFormProvider.getInfoForm(object);
@@ -148,8 +145,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				_getSourceInfoItemFieldValues(className, object);
 
 			if (sourceInfoItemFieldValues == null) {
-				return _getErrorJSP(
-					renderRequest, renderResponse, className, classPK);
+				return _getErrorJSP(renderRequest, renderResponse);
 			}
 
 			String targetLanguageId = ParamUtil.getString(
@@ -168,7 +164,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					() ->
 						(_translator != null) &&
 						_translator.isEnabled(themeDisplay.getCompanyId()),
-					className, classPK,
+					_getModelClassName(renderRequest),
+					_getModelClassPK(renderRequest),
 					_ffLayoutExperienceSelectorConfiguration, infoForm,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse), object,
@@ -231,9 +228,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			return SegmentsExperience.class.getName();
 		}
 
-		long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
-
-		return _portal.getClassName(classNameId);
+		return _getModelClassName(renderRequest);
 	}
 
 	private long _getClassPK(
@@ -243,7 +238,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			return segmentsExperienceId;
 		}
 
-		return ParamUtil.getLong(renderRequest, "classPK");
+		return _getModelClassPK(renderRequest);
 	}
 
 	private String _getDefaultTargetLanguageId(
@@ -257,8 +252,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private String _getErrorJSP(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		String className, long classPK) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -270,8 +264,10 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				() ->
 					(_translator != null) &&
 					_translator.isEnabled(themeDisplay.getCompanyId()),
-				className, classPK, _ffLayoutExperienceSelectorConfiguration,
-				null, _portal.getLiferayPortletRequest(renderRequest),
+				_getModelClassName(renderRequest),
+				_getModelClassPK(renderRequest),
+				_ffLayoutExperienceSelectorConfiguration, null,
+				_portal.getLiferayPortletRequest(renderRequest),
 				_portal.getLiferayPortletResponse(renderResponse), null,
 				SegmentsExperienceConstants.ID_DEFAULT, null, null, null, null,
 				_translationInfoFieldChecker));
@@ -298,6 +294,15 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 			return null;
 		}
+	}
+
+	private String _getModelClassName(RenderRequest renderRequest) {
+		return _portal.getClassName(
+			ParamUtil.getLong(renderRequest, "classNameId"));
+	}
+
+	private long _getModelClassPK(RenderRequest renderRequest) {
+		return ParamUtil.getLong(renderRequest, "classPK");
 	}
 
 	private <T> InfoItemFieldValues _getSourceInfoItemFieldValues(

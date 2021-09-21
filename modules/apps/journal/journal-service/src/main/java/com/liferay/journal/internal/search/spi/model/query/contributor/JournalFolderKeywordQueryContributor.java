@@ -69,10 +69,6 @@ public class JournalFolderKeywordQueryContributor
 			boolean like)
 		throws Exception {
 
-		if (Validator.isNull(field)) {
-			return;
-		}
-
 		String value = null;
 
 		Serializable serializable = searchContext.getAttribute(field);

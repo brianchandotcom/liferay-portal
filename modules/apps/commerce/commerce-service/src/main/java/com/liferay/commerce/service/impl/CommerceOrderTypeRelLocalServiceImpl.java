@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.exception.DuplicateCommerceOrderTypeRelException;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceOrderTypeRel;
 import com.liferay.commerce.model.CommerceOrderTypeRelTable;
@@ -52,6 +53,8 @@ public class CommerceOrderTypeRelLocalServiceImpl
 			long userId, String className, long classPK,
 			long commerceOrderTypeId, ServiceContext serviceContext)
 		throws PortalException {
+
+		_validate(className, classPK, commerceOrderTypeId);
 
 		CommerceOrderTypeRel commerceOrderTypeRel =
 			commerceOrderTypeRelPersistence.create(
@@ -235,6 +238,20 @@ public class CommerceOrderTypeRelLocalServiceImpl
 			IndexerRegistryUtil.nullSafeGetIndexer(CommerceOrderType.class);
 
 		indexer.reindex(CommerceOrderType.class.getName(), commerceOrderTypeId);
+	}
+
+	private void _validate(
+			String className, long classPK, long commerceOrderTypeId)
+		throws PortalException {
+
+		int commerceOrderTypeRelsCount =
+			commerceOrderTypeRelPersistence.countByC_C_C(
+				classNameLocalService.getClassNameId(className), classPK,
+				commerceOrderTypeId);
+
+		if (commerceOrderTypeRelsCount > 0) {
+			throw new DuplicateCommerceOrderTypeRelException();
+		}
 	}
 
 	@ServiceReference(type = CustomSQL.class)

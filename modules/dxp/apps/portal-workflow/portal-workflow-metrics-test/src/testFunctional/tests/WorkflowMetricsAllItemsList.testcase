@@ -1069,59 +1069,58 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, when an item is completed On Time, the icon on modal title will keep informing the SLA status but styled in grey color"
 	@priority = "3"
 	test IconOnModalTitleIsGreyWhenItemIsCompletedOnTime {
-		
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
-        
+
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
-        
+
 		WorkflowMetrics.fillSLAForm(
-            slaDefinitionDays = "1",
-            slaDefinitionDescription = "SLA Description",
-            slaDefinitionEnd = "Process Ends: Approved",
-            slaDefinitionHours = "00:05",
-            slaDefinitionName = "SLA Definition",
-            slaDefinitionStart = "Process Begins");
-        
+			slaDefinitionDays = "1",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "00:05",
+			slaDefinitionName = "SLA Definition",
+			slaDefinitionStart = "Process Begins");
+
 		Button.clickSave();
-        
+
 		ApplicationsMenu.gotoPortlet(
-            category = "Workflow",
-            panel = "Applications",
-            portlet = "Process Builder");
-        
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
 		Navigator.gotoNavItem(navItem = "Configuration");
-        
+
 		Workflow.configureWorkflow(
-            workflowDefinition = "Single Approver",
-            workflowResourceValue = "Blogs Entry");
-        
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
 		JSONBlog.addEntry(
-            entryContent = "Blogs Entry Content",
-            entryTitle = "Blogs Entry Title");
-        
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
-        
+
 		WorkflowMetrics.waitForSLA(
-            key_expectedValue = "0",
-            key_status = "ONTIME");
-        
+			key_expectedValue = "0",
+			key_status = "ONTIME");
+
 		Workflow.completeWorkflowBlogInstance(key_workflowInstanceTitle = "Blogs Entry Title");
-        
+
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
-        
+
 		Navigator.gotoNavItem(navItem = "Performance");
-        
+
 		Click(
-            key_index = "2",
-            locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_COMPLETED_ITEMS_BUTTON");
-        
+			key_index = "2",
+			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_COMPLETED_ITEMS_BUTTON");
+
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
-        
+
 		AssertCssValue(
-            locator1 = "WorkflowAllItems#MODAL_TITLE_ICON",
-            locator2 = "color",
-            value1 = "rgba(107, 108, 126, 1)");
-    }
+			locator1 = "WorkflowAllItems#MODAL_TITLE_ICON",
+			locator2 = "color",
+			value1 = "rgba(107, 108, 126, 1)");
+	}
 
 	@description = "LPS-92053 - Verify that, in the item detail modal, when an item is completed Overdue, the icon on modal title will keep informing the SLA status but styled in grey color "
 	@priority = "3"

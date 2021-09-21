@@ -339,6 +339,19 @@ public class TemplateEntryLocalServiceWrapper
 			groupId, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.template.model.TemplateEntry>
+		getTemplateEntries(
+			long groupId, String infoItemClassName,
+			String infoItemFormVariationKey, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.template.model.TemplateEntry> orderByComparator) {
+
+		return _templateEntryLocalService.getTemplateEntries(
+			groupId, infoItemClassName, infoItemFormVariationKey, start, end,
+			orderByComparator);
+	}
+
 	/**
 	 * Returns all the template entries matching the UUID and company.
 	 *

@@ -238,6 +238,15 @@ public class TemplateEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_IICN_IIFVK() throws Exception {
+		_persistence.countByG_IICN_IIFVK(RandomTestUtil.nextLong(), "", "");
+
+		_persistence.countByG_IICN_IIFVK(0L, "null", "null");
+
+		_persistence.countByG_IICN_IIFVK(0L, (String)null, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		TemplateEntry newTemplateEntry = addTemplateEntry();
 

@@ -90,9 +90,6 @@ public class JournalFolderIndexer
 			SearchContext searchContext)
 		throws Exception {
 
-		addSearchLocalizedTerm(
-			searchQuery, searchContext, Field.DESCRIPTION, false);
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
 	}
 
 	@Override

@@ -721,10 +721,12 @@ definition {
 			locator1 = "ACSegments#SEGMENT_CRITERIA_CONDITION",
 			value1 = "${condition}");
 
-		AssertTextEquals(
-			index = "${index}",
-			locator1 = "ACSegments#SEGMENT_CRITERIA_ATTRIBUTE_VALUE",
-			value1 = "${attributeValue}");
+		if (isSet(attributeValue)) {
+			AssertTextEquals(
+				index = "${index}",
+				locator1 = "ACSegments#SEGMENT_CRITERIA_ATTRIBUTE_VALUE",
+				value1 = "${attributeValue}");
+		}
 
 		if (isSet(conjunction)) {
 			AssertTextEquals(
@@ -758,10 +760,12 @@ definition {
 			locator1 = "ACSegments#SEGMENT_CRITERIA_CONDITION",
 			value1 = "${condition}");
 
-		AssertTextEquals(
-			index = "${index}",
-			locator1 = "ACSegments#SEGMENT_CRITERIA_ATTRIBUTE_VALUE",
-			value1 = "${attributeValue}");
+		if (isSet(attributeValue)) {
+			AssertTextEquals(
+				index = "${index}",
+				locator1 = "ACSegments#SEGMENT_CRITERIA_ATTRIBUTE_VALUE",
+				value1 = "${attributeValue}");
+		}
 
 		AssertTextEquals(
 			index = "${index}",

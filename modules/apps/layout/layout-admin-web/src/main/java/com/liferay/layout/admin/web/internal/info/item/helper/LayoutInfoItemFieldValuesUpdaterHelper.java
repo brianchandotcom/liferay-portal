@@ -52,8 +52,7 @@ public class LayoutInfoItemFieldValuesUpdaterHelper {
 	}
 
 	public Layout updateFromInfoItemFieldValues(
-		Layout layout, long segmentsExperienceId,
-		InfoItemFieldValues infoItemFieldValues) {
+		Layout layout, InfoItemFieldValues infoItemFieldValues) {
 
 		_updateFragmentEntryLinks(infoItemFieldValues);
 

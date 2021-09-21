@@ -60,7 +60,7 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 
 			searchEverywhereURL.setParameter("folderId", String.valueOf(folderId));
 
-			searchEverywhereURL.setParameter("searchFolderId", String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+			searchEverywhereURL.setParameter("searchFolderId", String.valueOf(dlAdminDisplayContext.getRootFolderId()));
 
 			String keywords = ParamUtil.getString(request, "keywords");
 

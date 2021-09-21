@@ -73,7 +73,11 @@ public class ObjectDefinitionsLayoutsDisplayContext {
 				).buildString(),
 				"view", "view",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
-				"get", null, "sidePanel"));
+				"get", null, "sidePanel"),
+			new ClayDataSetActionDropdownItem(
+				"/o/object-admin/v1.0/object-layouts/{id}", "trash", "delete",
+				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
+				"delete", "delete", "async"));
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {

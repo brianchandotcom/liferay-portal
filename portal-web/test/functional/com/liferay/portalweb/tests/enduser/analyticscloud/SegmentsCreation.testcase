@@ -282,6 +282,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8478 | Test Summary: Create a Dynamic Individuals Segment By Date"
 	@priority = "4"
 	test CanCreateDynamicIndividualsSegmentByDate {
+		var fullNameList = "userfn userln,user1 user1";
+
 		task ("Add one more user with a given birth date") {
 			JSONUser.addUser(
 				birthdayDay = "10",
@@ -323,7 +325,13 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "3000");
 			}
+		}
+
+		task ("Close sessions and wait for 30 seconds") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -350,28 +358,34 @@ definition {
 			ACSegments.editDateCriterion(
 				day = "14",
 				month = "September",
-				year = "2016");
+				year = "1985");
 		}
 
 		task ("Create the segment") {
 			ACSegments.saveSegment();
 		}
 
-		task ("Navigate to Segments admin") {
+		task ("Navigate to Segments") {
 			ACNavigation.goToSegments();
 		}
 
 		task ("Search the new segment") {
 			ACUtils.searchBar(searchItem = "Dynamic Segment Test");
 
-			ACUtils.viewNameList(nameList = "Dynamic Segment Test");
+			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 		}
 
-		task ("View the number of Membership is 1") {
-			ACAssets.viewAssetsInfo(
-				assetName = "Dynamic Segment Test",
-				index = "1",
-				value = "1");
+		task ("View the segment criteria card") {
+			ACSegments.viewSegmentCriteriaIndividualAttributes(
+				attributeName = "birthDate",
+				attributeValue = "1985-09-14",
+				condition = "is after");
+		}
+
+		task ("Switch tab to membership and check the membership list") {
+			ACNavigation.switchTab(tabName = "Membership");
+
+			ACUtils.viewNameList(nameList = "${fullNameList}");
 		}
 	}
 

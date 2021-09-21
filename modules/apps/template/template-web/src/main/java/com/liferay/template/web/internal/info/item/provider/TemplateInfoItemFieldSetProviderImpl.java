@@ -14,14 +14,11 @@
 
 package com.liferay.template.web.internal.info.item.provider;
 
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -29,10 +26,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
+import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.service.TemplateEntryLocalService;
 import com.liferay.template.web.internal.info.item.field.reader.TemplateInfoItemFieldReader;
 
 import java.util.Collections;
@@ -53,12 +51,12 @@ public class TemplateInfoItemFieldSetProviderImpl
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
 			consumer -> {
-				for (DDMTemplate ddmTemplate :
-						_getDDMTemplates(className, classPK)) {
+				for (TemplateEntry templateEntry :
+						_getTemplateEntries(className, classPK)) {
 
 					TemplateInfoItemFieldReader templateInfoItemFieldReader =
 						new TemplateInfoItemFieldReader(
-							ddmTemplate,
+							templateEntry,
 							InfoItemFieldValues.builder(
 							).build());
 
@@ -74,12 +72,9 @@ public class TemplateInfoItemFieldSetProviderImpl
 
 	@Override
 	public InfoFieldValue<Object> getInfoFieldValue(
-		DDMTemplate ddmTemplate, Object itemObject) {
+		TemplateEntry templateEntry, Object itemObject) {
 
-		if ((ddmTemplate == null) ||
-			(ddmTemplate.getResourceClassNameId() != _portal.getClassNameId(
-				InfoItemFormProvider.class.getName()))) {
-
+		if (templateEntry == null) {
 			return null;
 		}
 
@@ -89,7 +84,7 @@ public class TemplateInfoItemFieldSetProviderImpl
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class,
-				_portal.getClassName(ddmTemplate.getClassNameId()));
+				templateEntry.getInfoItemClassName());
 
 		if (infoItemFieldValuesProvider != null) {
 			infoItemFieldValues =
@@ -97,14 +92,15 @@ public class TemplateInfoItemFieldSetProviderImpl
 		}
 
 		TemplateInfoItemFieldReader templateInfoItemFieldReader =
-			new TemplateInfoItemFieldReader(ddmTemplate, infoItemFieldValues);
+			new TemplateInfoItemFieldReader(templateEntry, infoItemFieldValues);
 
 		return new InfoFieldValue<>(
 			templateInfoItemFieldReader.getInfoField(),
 			templateInfoItemFieldReader.getValue(itemObject));
 	}
 
-	private List<DDMTemplate> _getDDMTemplates(String className, long classPK)
+	private List<TemplateEntry> _getTemplateEntries(
+			String className, long classPK)
 		throws RuntimeException {
 
 		ServiceContext serviceContext =
@@ -127,13 +123,9 @@ public class TemplateInfoItemFieldSetProviderImpl
 				}
 			}
 
-			return _ddmTemplateLocalService.getTemplates(
-				serviceContext.getCompanyId(),
-				_portal.getCurrentAndAncestorSiteGroupIds(groupId),
-				new long[] {_portal.getClassNameId(className)},
-				new long[] {classPK},
-				_portal.getClassNameId(InfoItemFormProvider.class.getName()),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			return _templateEntryLocalService.getTemplateEntries(
+				groupId, className, String.valueOf(classPK), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -148,15 +140,12 @@ public class TemplateInfoItemFieldSetProviderImpl
 		TemplateInfoItemFieldSetProviderImpl.class);
 
 	@Reference
-	private DDMTemplateLocalService _ddmTemplateLocalService;
-
-	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
-	private Portal _portal;
+	private StagingGroupHelper _stagingGroupHelper;
 
 	@Reference
-	private StagingGroupHelper _stagingGroupHelper;
+	private TemplateEntryLocalService _templateEntryLocalService;
 
 }

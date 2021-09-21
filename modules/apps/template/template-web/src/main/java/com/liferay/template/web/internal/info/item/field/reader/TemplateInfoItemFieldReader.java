@@ -15,6 +15,7 @@
 package com.liferay.template.web.internal.info.item.field.reader;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.web.internal.portlet.template.TemplateDisplayTemplateTransformer;
 
 import java.util.Locale;
@@ -35,15 +37,10 @@ import java.util.Locale;
 public class TemplateInfoItemFieldReader
 	implements LocalizedInfoItemFieldReader {
 
-	public static String getFieldName(String templateKey) {
-		return PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-			templateKey.replaceAll("\\W", "_");
-	}
-
 	public TemplateInfoItemFieldReader(
-		DDMTemplate ddmTemplate, InfoItemFieldValues infoItemFieldValues) {
+		TemplateEntry templateEntry, InfoItemFieldValues infoItemFieldValues) {
 
-		_ddmTemplate = ddmTemplate;
+		_templateEntry = templateEntry;
 		_infoItemFieldValues = infoItemFieldValues;
 	}
 
@@ -59,16 +56,20 @@ public class TemplateInfoItemFieldReader
 
 	@Override
 	public InfoField getInfoField() {
+		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(
+			_templateEntry.getDDMTemplateId());
+
 		return InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
 		).name(
-			getFieldName(_ddmTemplate.getTemplateKey())
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				_templateEntry.getTemplateEntryId()
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.<String>builder(
 			).value(
 				LocaleUtil.getDefault(),
-				_ddmTemplate.getName(LocaleUtil.getDefault())
+				ddmTemplate.getName(LocaleUtil.getDefault())
 			).defaultLocale(
 				LocaleUtil.getDefault()
 			).build()
@@ -84,7 +85,7 @@ public class TemplateInfoItemFieldReader
 	public Object getValue(Object model, Locale locale) {
 		TemplateDisplayTemplateTransformer templateDisplayTemplateTransformer =
 			new TemplateDisplayTemplateTransformer(
-				_ddmTemplate, _infoItemFieldValues);
+				_templateEntry, _infoItemFieldValues);
 
 		try {
 			return templateDisplayTemplateTransformer.transform(locale);
@@ -99,7 +100,7 @@ public class TemplateInfoItemFieldReader
 	private static final Log _log = LogFactoryUtil.getLog(
 		TemplateInfoItemFieldReader.class);
 
-	private final DDMTemplate _ddmTemplate;
 	private final InfoItemFieldValues _infoItemFieldValues;
+	private final TemplateEntry _templateEntry;
 
 }

@@ -14,9 +14,9 @@
 
 package com.liferay.template.info.item.provider;
 
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.template.model.TemplateEntry;
 
 /**
  * @author Lourdes Fernández Besada
@@ -30,6 +30,6 @@ public interface TemplateInfoItemFieldSetProvider {
 	public InfoFieldSet getInfoFieldSet(String className, long classPK);
 
 	public InfoFieldValue<Object> getInfoFieldValue(
-		DDMTemplate ddmTemplate, Object itemObject);
+		TemplateEntry templateEntry, Object itemObject);
 
 }

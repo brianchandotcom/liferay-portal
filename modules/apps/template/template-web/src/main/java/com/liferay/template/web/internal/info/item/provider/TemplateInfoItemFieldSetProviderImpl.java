@@ -33,6 +33,7 @@ import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
 import com.liferay.template.web.internal.info.item.field.reader.TemplateInfoItemFieldReader;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -74,7 +75,23 @@ public class TemplateInfoItemFieldSetProviderImpl
 	}
 
 	@Override
-	public InfoFieldValue<Object> getInfoFieldValue(
+	public List<InfoFieldValue<Object>> getInfoFieldValues(
+		String infoItemClassName, String infoItemFormVariationKey,
+		Object itemObject) {
+
+		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
+
+		for (TemplateEntry templateEntry :
+				_getTemplateEntries(
+					infoItemClassName, infoItemFormVariationKey)) {
+
+			infoFieldValues.add(_getInfoFieldValue(templateEntry, itemObject));
+		}
+
+		return infoFieldValues;
+	}
+
+	private InfoFieldValue<Object> _getInfoFieldValue(
 		TemplateEntry templateEntry, Object itemObject) {
 
 		if (templateEntry == null) {

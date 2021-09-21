@@ -14,7 +14,9 @@
 
 package com.liferay.journal.internal.search.spi.model.result.contributor;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
@@ -36,8 +38,24 @@ public class JournalFolderModelSummaryContributor
 	public Summary getSummary(
 		Document document, Locale locale, String snippet) {
 
-		return null;
+		Summary summary = _createSummary(
+			locale, document, Field.TITLE, Field.DESCRIPTION);
+
+		summary.setMaxContentLength(200);
+
+		return summary;
 	}
+
+	private Summary _createSummary(
+		Locale locale, Document document, String titleField,
+		String contentField) {
+
+		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
+
+		String title = document.get(locale, prefix + titleField, titleField);
+		String content = document.get(prefix + contentField, contentField);
+
+		return new Summary(title, content);
+	}
+
 }
-
-

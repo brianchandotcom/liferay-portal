@@ -16,7 +16,6 @@ package com.liferay.journal.internal.search;
 
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -108,12 +107,7 @@ public class JournalFolderIndexer
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		Summary summary = _createSummary(
-			locale, document, Field.TITLE, Field.DESCRIPTION);
-
-		summary.setMaxContentLength(200);
-
-		return summary;
+		return null;
 	}
 
 	@Override
@@ -165,18 +159,6 @@ public class JournalFolderIndexer
 
 	@Reference
 	protected UIDFactory uidFactory;
-
-	private Summary _createSummary(
-		Locale locale, Document document, String titleField,
-		String contentField) {
-
-		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
-
-		String title = document.get(locale, prefix + titleField, titleField);
-		String content = document.get(prefix + contentField, contentField);
-
-		return new Summary(title, content);
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalFolderIndexer.class);

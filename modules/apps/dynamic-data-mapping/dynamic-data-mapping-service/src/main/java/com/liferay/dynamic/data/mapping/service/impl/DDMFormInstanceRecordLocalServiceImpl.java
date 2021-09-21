@@ -650,8 +650,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		DDMStorageAdapterSaveResponse ddmStorageAdapterSaveResponse =
 			ddmStorageAdapter.save(
 				DDMStorageAdapterSaveRequest.Builder.newBuilder(
-					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(), ddmFormValues
+					serviceContext.getUserId(), ddmFormValues
 				).withClassName(
 					DDMStorageLink.class.getName()
 				).withDDMFormInstance(
@@ -904,8 +903,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 		ddmStorageAdapter.save(
 			DDMStorageAdapterSaveRequest.Builder.newBuilder(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				ddmFormValues
+				serviceContext.getUserId(), ddmFormValues
 			).withDDMFormInstance(
 				ddmFormInstance
 			).withGroupId(

@@ -68,9 +68,7 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 			DDMStorageAdapterSaveResponse ddmStorageAdapterSaveResponse =
 				ddmStorageAdapter.save(
 					DDMStorageAdapterSaveRequest.Builder.newBuilder(
-						serviceContext.getUserId(),
-						serviceContext.getScopeGroupId(),
-						translatedDDMFormValues
+						serviceContext.getUserId(), translatedDDMFormValues
 					).withStructureId(
 						ddmStructureId
 					).withUuid(
@@ -155,8 +153,7 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 
 			ddmStorageAdapter.save(
 				DDMStorageAdapterSaveRequest.Builder.newBuilder(
-					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(), translatedDDMFormValues
+					serviceContext.getUserId(), translatedDDMFormValues
 				).withStructureId(
 					ddmStorageLink.getStructureId()
 				).withPrimaryKey(

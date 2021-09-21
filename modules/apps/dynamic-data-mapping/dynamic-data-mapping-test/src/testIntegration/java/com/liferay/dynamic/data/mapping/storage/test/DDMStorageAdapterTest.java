@@ -196,8 +196,7 @@ public class DDMStorageAdapterTest {
 		DDMStorageAdapterSaveResponse ddmStorageAdapterSaveResponse =
 			ddmStorageAdapter.save(
 				DDMStorageAdapterSaveRequest.Builder.newBuilder(
-					TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-					ddmFormValues
+					TestPropsValues.getUserId(), ddmFormValues
 				).build());
 
 		return ddmStorageAdapterSaveResponse.getPrimaryKey();

@@ -19,7 +19,11 @@ import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.store.Store;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.util.AudioProcessor;
+import com.liferay.document.library.kernel.util.ImageProcessor;
+import com.liferay.document.library.kernel.util.PDFProcessor;
+import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -27,7 +31,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.io.InputStream;
@@ -40,6 +43,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Samuel Trong Tran
@@ -50,16 +54,12 @@ public class DLFileEntryCTDisplayRenderer
 
 	@Override
 	public InputStream getDownloadInputStream(
-			DLFileEntry dlFileEntry, String version)
+			DLFileEntry dlFileEntry, String key)
 		throws PortalException {
 
-		StoreFactory storeFactory = StoreFactory.getInstance();
-
-		Store store = storeFactory.getStore();
-
-		return store.getFileAsStream(
-			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-			dlFileEntry.getName(), version);
+		return DLFileVersionCTDisplayRenderer.getDownloadInputStream(
+			_audioProcessor, _dlAppLocalService, dlFileEntry.getFileVersion(),
+			_imageProcessor, key, _pdfProcessor, _videoProcessor);
 	}
 
 	@Override
@@ -114,10 +114,35 @@ public class DLFileEntryCTDisplayRenderer
 			displayContext.getLocale(), dlFileEntry.getFileVersion());
 	}
 
+	@Override
+	public String renderPreview(DisplayContext<DLFileEntry> displayContext)
+		throws Exception {
+
+		DLFileEntry dlFileEntry = displayContext.getModel();
+
+		return displayContext.renderPreview(
+			displayContext.getLocale(), dlFileEntry.getFileVersion());
+	}
+
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	private AudioProcessor _audioProcessor;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
 	@Reference
 	private GroupLocalService _groupLocalService;
 
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	private ImageProcessor _imageProcessor;
+
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	private PDFProcessor _pdfProcessor;
+
 	@Reference
 	private Portal _portal;
+
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	private VideoProcessor _videoProcessor;
 
 }

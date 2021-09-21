@@ -44,6 +44,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 				"setRequired('options', contains(getValue('dataSourceType'), \"manual\") OR isEmpty(getValue('dataSourceType')))",
 				"setVisible('ddmDataProviderInstanceId', contains(getValue('dataSourceType'), \"data-provider\"))",
 				"setVisible('ddmDataProviderInstanceOutput', contains(getValue('dataSourceType'), \"data-provider\"))",
+				"setVisible('multiple', not(hasObjectField(getValue('objectFieldName'))))",
 				"setVisible('options', (contains(getValue('dataSourceType'), \"manual\") OR isEmpty(getValue('dataSourceType'))) AND not(hasObjectField(getValue('objectFieldName'))))",
 				"setVisible('predefinedValue', contains(getValue('dataSourceType'), \"manual\"))",
 				"setVisible('requiredErrorMessage', getValue('required'))"

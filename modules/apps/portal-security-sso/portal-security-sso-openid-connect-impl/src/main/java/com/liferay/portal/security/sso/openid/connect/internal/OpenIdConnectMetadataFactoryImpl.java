@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 
 import com.nimbusds.jose.JWEAlgorithm;
@@ -51,8 +52,9 @@ public class OpenIdConnectMetadataFactoryImpl
 	implements OpenIdConnectMetadataFactory {
 
 	public OpenIdConnectMetadataFactoryImpl(
-			String providerName, String[] idTokenSigningAlgValues,
-			String issuerURL, String[] subjectTypes, String jwksURL,
+			String providerName, String expectedIdTokenSigningAlg,
+			String[] idTokenSigningAlgValues, String issuerURL,
+			String[] subjectTypes, String jwksURL,
 			String authorizationEndPointURL, String tokenEndPointURL,
 			String userInfoEndPointURL)
 		throws OpenIdConnectServiceException.ProviderException {
@@ -88,7 +90,8 @@ public class OpenIdConnectMetadataFactoryImpl
 			_oidcProviderMetadata.setUserInfoEndpointURI(
 				new URI(userInfoEndPointURL));
 
-			refreshClientMetadata(_oidcProviderMetadata);
+			refreshClientMetadata(
+				expectedIdTokenSigningAlg, _oidcProviderMetadata);
 		}
 		catch (ParseException parseException) {
 			throw new OpenIdConnectServiceException.ProviderException(
@@ -110,16 +113,18 @@ public class OpenIdConnectMetadataFactoryImpl
 	public OpenIdConnectMetadataFactoryImpl(
 		String providerName, URL discoveryEndPointURL) {
 
-		this(providerName, discoveryEndPointURL, 0);
+		this(providerName, discoveryEndPointURL, 0, null);
 	}
 
 	public OpenIdConnectMetadataFactoryImpl(
-		String providerName, URL discoveryEndPointURL,
-		long cacheInMilliseconds) {
+		String providerName, URL discoveryEndPointURL, long cacheInMilliseconds,
+		String expectedIdTokenSigningAlg) {
 
 		_providerName = providerName;
 		_discoveryEndPointURL = discoveryEndPointURL;
 		_cacheInMilliseconds = cacheInMilliseconds;
+
+		refreshClientMetadata(expectedIdTokenSigningAlg, null);
 	}
 
 	@Override
@@ -180,6 +185,8 @@ public class OpenIdConnectMetadataFactoryImpl
 		stopWatch.start();
 
 		try {
+			JWSAlgorithm idTokenJWSAlg = _oidcClientMetadata.getIDTokenJWSAlg();
+
 			HTTPRequest httpRequest = new HTTPRequest(
 				HTTPRequest.Method.GET, _discoveryEndPointURL);
 
@@ -189,7 +196,13 @@ public class OpenIdConnectMetadataFactoryImpl
 
 			_oidcProviderMetadata = OIDCProviderMetadata.parse(jsonObject);
 
-			refreshClientMetadata(_oidcProviderMetadata);
+			if (idTokenJWSAlg == null) {
+				refreshClientMetadata(null, _oidcProviderMetadata);
+			}
+			else {
+				refreshClientMetadata(
+					idTokenJWSAlg.getName(), _oidcProviderMetadata);
+			}
 
 			_lastRefreshTimestamp = time;
 		}
@@ -215,22 +228,25 @@ public class OpenIdConnectMetadataFactoryImpl
 	}
 
 	protected synchronized void refreshClientMetadata(
+		String expectedIdTokenSigningAlg,
 		OIDCProviderMetadata oidcProviderMetadata) {
 
 		_oidcClientMetadata = new OIDCClientMetadata();
+
+		if (!Validator.isBlank(expectedIdTokenSigningAlg)) {
+			_oidcClientMetadata.setIDTokenJWSAlg(
+				JWSAlgorithm.parse(expectedIdTokenSigningAlg));
+		}
+
+		if (oidcProviderMetadata == null) {
+			return;
+		}
 
 		List<JWEAlgorithm> jweAlgorithms =
 			oidcProviderMetadata.getIDTokenJWEAlgs();
 
 		if (ListUtil.isNotEmpty(jweAlgorithms)) {
 			_oidcClientMetadata.setIDTokenJWEAlg(jweAlgorithms.get(0));
-		}
-
-		List<JWSAlgorithm> jwsAlgorithms =
-			oidcProviderMetadata.getIDTokenJWSAlgs();
-
-		if (ListUtil.isNotEmpty(jwsAlgorithms)) {
-			_oidcClientMetadata.setIDTokenJWSAlg(jwsAlgorithms.get(0));
 		}
 
 		_oidcClientMetadata.setJWKSetURI(oidcProviderMetadata.getJWKSetURI());

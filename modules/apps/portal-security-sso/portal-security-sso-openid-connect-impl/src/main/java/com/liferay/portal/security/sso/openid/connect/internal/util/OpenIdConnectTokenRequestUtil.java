@@ -15,12 +15,17 @@
 package com.liferay.portal.security.sso.openid.connect.internal.util;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProvider;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 
+import com.nimbusds.jose.Algorithm;
+import com.nimbusds.jose.Header;
 import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.proc.BadJOSEException;
 import com.nimbusds.jose.util.DefaultResourceRetriever;
+import com.nimbusds.jwt.JWT;
 import com.nimbusds.oauth2.sdk.AuthorizationCodeGrant;
 import com.nimbusds.oauth2.sdk.AuthorizationGrant;
 import com.nimbusds.oauth2.sdk.ErrorObject;
@@ -49,6 +54,8 @@ import java.io.IOException;
 
 import java.net.MalformedURLException;
 import java.net.URI;
+
+import java.util.Objects;
 
 import net.minidev.json.JSONObject;
 
@@ -163,15 +170,48 @@ public class OpenIdConnectTokenRequestUtil {
 		throws OpenIdConnectServiceException.TokenException {
 
 		try {
-			URI uri = oidcProviderMetadata.getJWKSetURI();
+			JWSAlgorithm expectedIdTokenJWSAlg =
+				oidcClientMetadata.getIDTokenJWSAlg();
 
-			IDTokenValidator idTokenValidator = new IDTokenValidator(
-				oidcProviderMetadata.getIssuer(), clientID,
-				oidcClientMetadata.getIDTokenJWSAlg(), uri.toURL(),
-				new DefaultResourceRetriever(
-					tokenConnectionTimeout, tokenConnectionTimeout));
+			JWT idToken = oidcTokens.getIDToken();
 
-			return idTokenValidator.validate(oidcTokens.getIDToken(), nonce);
+			Header header = idToken.getHeader();
+
+			Algorithm algorithm = header.getAlgorithm();
+
+			String algorithmName = algorithm.getName();
+
+			if (!Validator.isBlank(expectedIdTokenJWSAlg.getName()) &&
+				!algorithmName.equals(expectedIdTokenJWSAlg.getName())) {
+
+				throw new OpenIdConnectServiceException.TokenException(
+					StringBundler.concat(
+						"The ID Token is signed using an unexpected ",
+						"algorithm. Expected ", expectedIdTokenJWSAlg.getName(),
+						", got ", algorithmName));
+			}
+
+			for (JWSAlgorithm jwsAlgorithm :
+					oidcProviderMetadata.getIDTokenJWSAlgs()) {
+
+				if (Objects.equals(jwsAlgorithm.getName(), algorithmName)) {
+					URI uri = oidcProviderMetadata.getJWKSetURI();
+
+					IDTokenValidator idTokenValidator = new IDTokenValidator(
+						oidcProviderMetadata.getIssuer(), clientID,
+						JWSAlgorithm.parse(algorithmName), uri.toURL(),
+						new DefaultResourceRetriever(
+							tokenConnectionTimeout, tokenConnectionTimeout));
+
+					return idTokenValidator.validate(idToken, nonce);
+				}
+			}
+
+			throw new OpenIdConnectServiceException.TokenException(
+				StringBundler.concat(
+					"The ID Token is signed using ", algorithmName,
+					" which is unsupported for OpenId Connect client ",
+					clientID.getValue()));
 		}
 		catch (BadJOSEException | JOSEException exception) {
 			throw new OpenIdConnectServiceException.TokenException(

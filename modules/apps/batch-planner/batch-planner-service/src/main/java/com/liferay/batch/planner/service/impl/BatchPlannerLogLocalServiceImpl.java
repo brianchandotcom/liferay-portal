@@ -23,7 +23,10 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -108,6 +111,20 @@ public class BatchPlannerLogLocalServiceImpl
 		batchPlannerLog.setStatus(status);
 
 		return batchPlannerLogPersistence.update(batchPlannerLog);
+	}
+
+	@Override
+	public List<BatchPlannerLog> getBatchPlannerLogs(
+		long companyId, int start, int end,
+		OrderByComparator<BatchPlannerLog> orderByComparator) {
+
+		return batchPlannerLogPersistence.findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getBatchPlannerLogsCount(long companyId) {
+		return batchPlannerLogPersistence.countByCompanyId(companyId);
 	}
 
 	@Override

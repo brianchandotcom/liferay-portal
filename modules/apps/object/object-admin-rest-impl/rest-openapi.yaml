@@ -715,3 +715,19 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectLayout"
             tags: ["ObjectLayout"]
+    "/object-relationships/{objectRelationshipId}":
+        delete:
+            operationId: deleteObjectRelationship
+            parameters:
+                - in: path
+                  name: objectRelationshipId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ObjectRelationship"]

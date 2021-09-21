@@ -59,6 +59,9 @@ public interface ObjectLayoutService extends BaseService {
 			Map<Locale, String> nameMap, List<ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException;
 
+	public ObjectLayout deleteObjectLayout(long objectLayoutId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectLayout getObjectLayout(long objectLayoutId)
 		throws PortalException;

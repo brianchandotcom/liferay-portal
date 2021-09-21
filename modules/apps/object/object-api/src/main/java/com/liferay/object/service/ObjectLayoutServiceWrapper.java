@@ -43,6 +43,14 @@ public class ObjectLayoutServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectLayout deleteObjectLayout(
+			long objectLayoutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectLayoutService.deleteObjectLayout(objectLayoutId);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectLayout getObjectLayout(
 			long objectLayoutId)
 		throws com.liferay.portal.kernel.exception.PortalException {

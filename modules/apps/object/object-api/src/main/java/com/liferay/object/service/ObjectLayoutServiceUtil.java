@@ -49,6 +49,12 @@ public class ObjectLayoutServiceUtil {
 			objectDefinitionId, defaultObjectLayout, nameMap, objectLayoutTabs);
 	}
 
+	public static ObjectLayout deleteObjectLayout(long objectLayoutId)
+		throws PortalException {
+
+		return getService().deleteObjectLayout(objectLayoutId);
+	}
+
 	public static ObjectLayout getObjectLayout(long objectLayoutId)
 		throws PortalException {
 

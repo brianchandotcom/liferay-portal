@@ -96,6 +96,46 @@ public class ObjectLayoutServiceHttp {
 		}
 	}
 
+	public static com.liferay.object.model.ObjectLayout deleteObjectLayout(
+			HttpPrincipal httpPrincipal, long objectLayoutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectLayoutServiceUtil.class, "deleteObjectLayout",
+				_deleteObjectLayoutParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, objectLayoutId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectLayout)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.object.model.ObjectLayout getObjectLayout(
 			HttpPrincipal httpPrincipal, long objectLayoutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -103,7 +143,7 @@ public class ObjectLayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectLayoutServiceUtil.class, "getObjectLayout",
-				_getObjectLayoutParameterTypes1);
+				_getObjectLayoutParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectLayoutId);
@@ -147,7 +187,7 @@ public class ObjectLayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectLayoutServiceUtil.class, "updateObjectLayout",
-				_updateObjectLayoutParameterTypes2);
+				_updateObjectLayoutParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectLayoutId, defaultObjectLayout, nameMap,
@@ -188,9 +228,11 @@ public class ObjectLayoutServiceHttp {
 		new Class[] {
 			long.class, boolean.class, java.util.Map.class, java.util.List.class
 		};
-	private static final Class<?>[] _getObjectLayoutParameterTypes1 =
+	private static final Class<?>[] _deleteObjectLayoutParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateObjectLayoutParameterTypes2 =
+	private static final Class<?>[] _getObjectLayoutParameterTypes2 =
+		new Class[] {long.class};
+	private static final Class<?>[] _updateObjectLayoutParameterTypes3 =
 		new Class[] {
 			long.class, boolean.class, java.util.Map.class, java.util.List.class
 		};

@@ -93,6 +93,24 @@ public class ObjectLayoutServiceSoap {
 		}
 	}
 
+	public static com.liferay.object.model.ObjectLayoutSoap deleteObjectLayout(
+			long objectLayoutId)
+		throws RemoteException {
+
+		try {
+			com.liferay.object.model.ObjectLayout returnValue =
+				ObjectLayoutServiceUtil.deleteObjectLayout(objectLayoutId);
+
+			return com.liferay.object.model.ObjectLayoutSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.object.model.ObjectLayoutSoap getObjectLayout(
 			long objectLayoutId)
 		throws RemoteException {

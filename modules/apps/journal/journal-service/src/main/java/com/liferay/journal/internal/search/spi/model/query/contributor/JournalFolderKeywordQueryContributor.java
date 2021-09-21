@@ -54,11 +54,8 @@ public class JournalFolderKeywordQueryContributor
 
 		_queryHelper.addSearchTerm(searchQuery, searchContext, field, like);
 
-		String localizedFieldName = Field.getLocalizedName(
-			searchContext.getLocale(), field);
-
-		_queryHelper.addSearchTerm(
-			searchQuery, searchContext, localizedFieldName, like);
+		_queryHelper.addSearchLocalizedTerm(
+			searchQuery, searchContext, field, like);
 	}
 
 	@Reference

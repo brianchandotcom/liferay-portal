@@ -14,10 +14,21 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.base.ObjectRelationshipServiceBaseImpl;
+import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -32,4 +43,65 @@ import org.osgi.service.component.annotations.Component;
 )
 public class ObjectRelationshipServiceImpl
 	extends ObjectRelationshipServiceBaseImpl {
+
+	@Override
+	public ObjectRelationship addObjectRelationship(
+			long userId, long objectDefinitionId1, long objectDefinitionId2,
+			Map<Locale, String> labelMap, String name, String type)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId1);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectDefinition.getObjectDefinitionId(),
+			ActionKeys.UPDATE);
+
+		return objectRelationshipLocalService.addObjectRelationship(
+			userId, objectDefinitionId1, objectDefinitionId2, labelMap, name,
+			type);
+	}
+
+	@Override
+	public ObjectRelationship deleteObjectRelationship(
+			long objectRelationshipId)
+		throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			objectRelationshipPersistence.findByPrimaryKey(
+				objectRelationshipId);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectRelationship.getObjectDefinitionId1(),
+			ActionKeys.DELETE);
+
+		return objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationshipId);
+	}
+
+	@Override
+	public List<ObjectRelationship> getObjectRelationships(
+			long objectDefinitionId1, int start, int end)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId1);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectDefinition.getObjectDefinitionId(),
+			ActionKeys.VIEW);
+
+		return objectRelationshipLocalService.getObjectRelationships(
+			objectDefinitionId1, start, end);
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"
+	)
+	private ModelResourcePermission<ObjectDefinition>
+		_objectDefinitionModelResourcePermission;
+
+	@Reference
+	private ObjectDefinitionPersistence _objectDefinitionPersistence;
+
 }

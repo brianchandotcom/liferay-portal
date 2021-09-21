@@ -26,14 +26,8 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
-import com.liferay.portal.kernel.dao.orm.Disjunction;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,7 +48,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -445,55 +438,6 @@ public class AccountRoleLocalServiceImpl
 				return predicate;
 			}
 		);
-	}
-
-	private DynamicQuery _getRoleDynamicQuery(
-		long companyId, long[] accountEntryIds, String keywords,
-		OrderByComparator<?> orderByComparator) {
-
-		DynamicQuery accountRoleDynamicQuery =
-			accountRoleLocalService.dynamicQuery();
-
-		accountRoleDynamicQuery.add(
-			RestrictionsFactoryUtil.in(
-				"accountEntryId", ListUtil.fromArray(accountEntryIds)));
-		accountRoleDynamicQuery.add(
-			RestrictionsFactoryUtil.eq("companyId", companyId));
-		accountRoleDynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("roleId"));
-
-		List<Long> roleIds = accountRoleLocalService.dynamicQuery(
-			accountRoleDynamicQuery);
-
-		if (roleIds.isEmpty()) {
-			return null;
-		}
-
-		DynamicQuery roleDynamicQuery = _roleLocalService.dynamicQuery();
-
-		roleDynamicQuery.add(RestrictionsFactoryUtil.in("roleId", roleIds));
-
-		if (Validator.isNotNull(keywords)) {
-			Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
-
-			disjunction.add(
-				RestrictionsFactoryUtil.ilike(
-					"name", StringUtil.quote(keywords, StringPool.PERCENT)));
-			disjunction.add(
-				RestrictionsFactoryUtil.ilike(
-					"description",
-					StringUtil.quote(keywords, StringPool.PERCENT)));
-			disjunction.add(
-				RestrictionsFactoryUtil.ilike(
-					"title", StringUtil.quote(keywords, StringPool.PERCENT)));
-
-			roleDynamicQuery.add(disjunction);
-		}
-
-		OrderFactoryUtil.addOrderByComparator(
-			roleDynamicQuery, orderByComparator);
-
-		return roleDynamicQuery;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

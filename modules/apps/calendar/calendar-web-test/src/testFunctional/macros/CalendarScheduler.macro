@@ -561,12 +561,7 @@ definition {
 	macro viewSpecificEventNotPresent {
 		var key_eventTitle = "${eventTitle}";
 
-		if (IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC")) {
-			CalendarScheduler.viewSpecificEventNotVisible(eventTitle = "${eventTitle}");
-		}
-		else {
-			AssertElementNotPresent(locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC");
-		}
+		AssertElementNotPresent(locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC");
 
 		AssertTextNotPresent(value1 = "${eventTitle}");
 	}

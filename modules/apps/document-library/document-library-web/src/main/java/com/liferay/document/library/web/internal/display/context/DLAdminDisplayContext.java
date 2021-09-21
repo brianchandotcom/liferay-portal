@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
@@ -311,6 +312,10 @@ public class DLAdminDisplayContext {
 		return _defaultFolderView;
 	}
 
+	public boolean isRootFolderInTrash() {
+		return _rootFolderInTrash;
+	}
+
 	public boolean isSearch() {
 		String mvcRenderCommandName = ParamUtil.getString(
 			_httpServletRequest, "mvcRenderCommandName");
@@ -381,6 +386,11 @@ public class DLAdminDisplayContext {
 				_rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 				_rootFolderName = StringPool.BLANK;
 			}
+
+			TrashCapability trashCapability =
+				rootFolder.getRepositoryCapability(TrashCapability.class);
+
+			_rootFolderInTrash = trashCapability.isInTrash(rootFolder);
 		}
 		catch (NoSuchFolderException noSuchFolderException) {
 			_rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
@@ -785,6 +795,7 @@ public class DLAdminDisplayContext {
 	private Folder _folder;
 	private long _folderId;
 	private final HttpServletRequest _httpServletRequest;
+	private boolean _rootFolderInTrash;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _navigation;

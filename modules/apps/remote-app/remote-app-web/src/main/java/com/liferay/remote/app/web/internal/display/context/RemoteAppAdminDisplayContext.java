@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.PortletCategory;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.servlet.MultiSessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortletCategoryUtil;
@@ -83,6 +85,40 @@ public class RemoteAppAdminDisplayContext {
 		return PortletURLUtil.getCurrent(_renderRequest, _renderResponse);
 	}
 
+	public String[] getCustomElementCSSURLs() {
+		String[] customElementCSSURLs = new String[1];
+
+		RemoteAppEntry remoteAppEntry = _getRemoteAppEntry();
+
+		if (remoteAppEntry != null) {
+			String customElementCSSURLsString =
+				remoteAppEntry.getCustomElementCSSURLs();
+
+			customElementCSSURLs = customElementCSSURLsString.split(
+				StringPool.NEW_LINE);
+		}
+
+		return ParamUtil.getStringValues(
+			_renderRequest, "customElementCSSURLs", customElementCSSURLs);
+	}
+
+	public String[] getCustomElementURLs() {
+		String[] customElementURLs = new String[1];
+
+		RemoteAppEntry remoteAppEntry = _getRemoteAppEntry();
+
+		if (remoteAppEntry != null) {
+			String customElementURLsString =
+				remoteAppEntry.getCustomElementURLs();
+
+			customElementURLs = customElementURLsString.split(
+				StringPool.NEW_LINE);
+		}
+
+		return ParamUtil.getStringValues(
+			_renderRequest, "customElementURLs", customElementURLs);
+	}
+
 	public List<SelectOption> getPortletCategoryNameSelectOptions()
 		throws Exception {
 
@@ -99,12 +135,9 @@ public class RemoteAppAdminDisplayContext {
 			themeDisplay.getLayout(), rootPortletCategory,
 			themeDisplay.getLayoutTypePortlet());
 
-		RemoteAppEntry remoteAppEntry =
-			(RemoteAppEntry)_renderRequest.getAttribute(
-				RemoteAppAdminWebKeys.REMOTE_APP_ENTRY);
-
 		String portletCategoryName = BeanPropertiesUtil.getString(
-			remoteAppEntry, "portletCategoryName", "category.remote-apps");
+			_getRemoteAppEntry(), "portletCategoryName",
+			"category.remote-apps");
 
 		boolean found = false;
 
@@ -163,9 +196,7 @@ public class RemoteAppAdminDisplayContext {
 			return errorSection;
 		}
 
-		RemoteAppEntry remoteAppEntry =
-			(RemoteAppEntry)_renderRequest.getAttribute(
-				RemoteAppAdminWebKeys.REMOTE_APP_ENTRY);
+		RemoteAppEntry remoteAppEntry = _getRemoteAppEntry();
 
 		if (remoteAppEntry == null) {
 			return RemoteAppConstants.TYPE_IFRAME;
@@ -209,6 +240,11 @@ public class RemoteAppAdminDisplayContext {
 
 	private String _getRedirect() {
 		return PortalUtil.getCurrentURL(_getHttpServletRequest());
+	}
+
+	private RemoteAppEntry _getRemoteAppEntry() {
+		return (RemoteAppEntry)_renderRequest.getAttribute(
+			RemoteAppAdminWebKeys.REMOTE_APP_ENTRY);
 	}
 
 	private final RenderRequest _renderRequest;

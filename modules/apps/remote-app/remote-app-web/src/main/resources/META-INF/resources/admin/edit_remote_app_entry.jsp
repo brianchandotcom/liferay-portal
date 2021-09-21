@@ -86,15 +86,7 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 				</aui:input>
 
 				<%
-				String[] customElementURLsArray = new String[1];
-
-				if (remoteAppEntry != null) {
-					String customElementURLs = remoteAppEntry.getCustomElementURLs();
-
-					customElementURLsArray = customElementURLs.split(StringPool.NEW_LINE);
-				}
-
-				for (String customElementURL : customElementURLsArray) {
+				for (String customElementURL : remoteAppAdminDisplayContext.getCustomElementURLs()) {
 				%>
 
 					<div class="repeatable">
@@ -106,15 +98,7 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 				<%
 				}
 
-				String[] customElementCSSURLsArray = new String[1];
-
-				if (remoteAppEntry != null) {
-					String customElementCSSURLs = remoteAppEntry.getCustomElementCSSURLs();
-
-					customElementCSSURLsArray = customElementCSSURLs.split(StringPool.NEW_LINE);
-				}
-
-				for (String customElementCSSURL : customElementCSSURLsArray) {
+				for (String customElementCSSURL : remoteAppAdminDisplayContext.getCustomElementCSSURLs()) {
 				%>
 
 					<div class="repeatable">

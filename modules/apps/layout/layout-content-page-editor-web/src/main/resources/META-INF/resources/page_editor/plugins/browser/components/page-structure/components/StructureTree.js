@@ -60,29 +60,6 @@ const LAYOUT_DATA_ITEM_TYPE_ICONS = {
 	[LAYOUT_DATA_ITEM_TYPES.row]: 'table',
 };
 
-function getCollectionAncestor(layoutData, itemId) {
-	const item = layoutData.items[itemId];
-
-	const parent = layoutData.items[item.parentId];
-
-	if (!parent) {
-		return null;
-	}
-
-	return parent.type === LAYOUT_DATA_ITEM_TYPES.collection
-		? parent
-		: getCollectionAncestor(layoutData, item.parentId);
-}
-
-function isItemHidden(item, selectedViewportSize) {
-	const responsiveConfig = getResponsiveConfig(
-		item.config,
-		selectedViewportSize
-	);
-
-	return responsiveConfig.styles.display === 'none';
-}
-
 export default function PageStructureSidebar() {
 	const activeItemId = useActiveItemId();
 	const canUpdateEditables = useSelector(selectCanUpdateEditables);
@@ -171,6 +148,121 @@ export default function PageStructureSidebar() {
 			</div>
 		</PageStructureSidebarSection>
 	);
+}
+
+function getCollectionAncestor(layoutData, itemId) {
+	const item = layoutData.items[itemId];
+
+	const parent = layoutData.items[item.parentId];
+
+	if (!parent) {
+		return null;
+	}
+
+	return parent.type === LAYOUT_DATA_ITEM_TYPES.collection
+		? parent
+		: getCollectionAncestor(layoutData, item.parentId);
+}
+
+function getDocumentFragment(content) {
+	const fragment = document.createDocumentFragment();
+	const div = document.createElement('div');
+
+	div.innerHTML = content;
+
+	return fragment.appendChild(div);
+}
+
+function getKey({collectionConfig, editable, infoItem, selectedMappingTypes}) {
+	if (collectionConfig) {
+		if (collectionConfig.classNameId) {
+			return getMappingFieldsKey(
+				collectionConfig.classNameId,
+				collectionConfig.classPK
+			);
+		}
+		else {
+			return collectionConfig.key;
+		}
+	}
+	else if (editable.mappedField) {
+		return getMappingFieldsKey(
+			selectedMappingTypes.type.id,
+			selectedMappingTypes.subtype.id || 0
+		);
+	}
+	else if (!infoItem) {
+		return null;
+	}
+
+	return getMappingFieldsKey(infoItem.classNameId, infoItem.classTypeId);
+}
+
+function getMappedFieldLabel(
+	editable,
+	collectionConfig,
+	pageContents,
+	mappingFields
+) {
+	const infoItem = pageContents.find(
+		({classNameId, classPK}) =>
+			editable.classNameId === classNameId && editable.classPK === classPK
+	);
+
+	const {selectedMappingTypes} = config;
+
+	if (!infoItem && !selectedMappingTypes && !collectionConfig) {
+		for (const [key, value] of Object.entries(mappingFields)) {
+			if (key.startsWith(editable.classNameId)) {
+				const field = value
+					.flatMap((fieldSet) => fieldSet.fields)
+					.find(
+						(field) =>
+							field.key ===
+							(editable.mappedField ||
+								editable.fieldId ||
+								editable.collectionFieldId)
+					);
+
+				return field?.label;
+			}
+		}
+
+		return null;
+	}
+
+	const key = getKey({
+		collectionConfig,
+		editable,
+		infoItem,
+		selectedMappingTypes,
+	});
+	const fields = mappingFields[key];
+
+	if (fields) {
+		const field = fields
+			.flatMap((fieldSet) => fieldSet.fields)
+			.find(
+				(field) =>
+					field.key ===
+					(editable.mappedField ||
+						editable.fieldId ||
+						editable.collectionFieldId)
+			);
+
+		return field?.label;
+	}
+
+	return null;
+}
+
+function isItemHidden(item, selectedViewportSize) {
+	const responsiveConfig = getResponsiveConfig(
+		item.config,
+		selectedViewportSize
+	);
+
+	return responsiveConfig.styles.display === 'none';
 }
 
 function isRemovable(item, layoutData) {
@@ -395,96 +487,4 @@ function visit(
 		removable: !itemInMasterLayout && isRemovable(item, layoutData),
 		type: item.type,
 	};
-}
-
-function getDocumentFragment(content) {
-	const fragment = document.createDocumentFragment();
-	const div = document.createElement('div');
-
-	div.innerHTML = content;
-
-	return fragment.appendChild(div);
-}
-
-function getKey({collectionConfig, editable, infoItem, selectedMappingTypes}) {
-	if (collectionConfig) {
-		if (collectionConfig.classNameId) {
-			return getMappingFieldsKey(
-				collectionConfig.classNameId,
-				collectionConfig.classPK
-			);
-		}
-		else {
-			return collectionConfig.key;
-		}
-	}
-	else if (editable.mappedField) {
-		return getMappingFieldsKey(
-			selectedMappingTypes.type.id,
-			selectedMappingTypes.subtype.id || 0
-		);
-	}
-	else if (!infoItem) {
-		return null;
-	}
-
-	return getMappingFieldsKey(infoItem.classNameId, infoItem.classTypeId);
-}
-
-function getMappedFieldLabel(
-	editable,
-	collectionConfig,
-	pageContents,
-	mappingFields
-) {
-	const infoItem = pageContents.find(
-		({classNameId, classPK}) =>
-			editable.classNameId === classNameId && editable.classPK === classPK
-	);
-
-	const {selectedMappingTypes} = config;
-
-	if (!infoItem && !selectedMappingTypes && !collectionConfig) {
-		for (const [key, value] of Object.entries(mappingFields)) {
-			if (key.startsWith(editable.classNameId)) {
-				const field = value
-					.flatMap((fieldSet) => fieldSet.fields)
-					.find(
-						(field) =>
-							field.key ===
-							(editable.mappedField ||
-								editable.fieldId ||
-								editable.collectionFieldId)
-					);
-
-				return field?.label;
-			}
-		}
-
-		return null;
-	}
-
-	const key = getKey({
-		collectionConfig,
-		editable,
-		infoItem,
-		selectedMappingTypes,
-	});
-	const fields = mappingFields[key];
-
-	if (fields) {
-		const field = fields
-			.flatMap((fieldSet) => fieldSet.fields)
-			.find(
-				(field) =>
-					field.key ===
-					(editable.mappedField ||
-						editable.fieldId ||
-						editable.collectionFieldId)
-			);
-
-		return field?.label;
-	}
-
-	return null;
 }

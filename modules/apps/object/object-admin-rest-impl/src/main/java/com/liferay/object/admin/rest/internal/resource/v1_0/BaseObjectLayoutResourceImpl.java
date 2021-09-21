@@ -62,6 +62,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -180,6 +181,61 @@ public abstract class BaseObjectLayoutResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/object-admin/v1.0/object-layouts/{objectLayoutId}'  -u 'test@liferay.com:test'
+	 */
+	@DELETE
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "objectLayoutId")}
+	)
+	@Path("/object-layouts/{objectLayoutId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ObjectLayout")})
+	public void deleteObjectLayout(
+			@NotNull @Parameter(hidden = true) @PathParam("objectLayoutId") Long
+				objectLayoutId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/object-admin/v1.0/object-layouts/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@DELETE
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/object-layouts/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "ObjectLayout")})
+	public Response deleteObjectLayoutBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.deleteImportTask(
+				ObjectLayout.class.getName(), callbackURL, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-layouts/{objectLayoutId}'  -u 'test@liferay.com:test'
 	 */
 	@GET
@@ -279,6 +335,10 @@ public abstract class BaseObjectLayoutResourceImpl
 			java.util.Collection<ObjectLayout> objectLayouts,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		for (ObjectLayout objectLayout : objectLayouts) {
+			deleteObjectLayout(objectLayout.getId());
+		}
 	}
 
 	@Override

@@ -30,6 +30,7 @@ import com.liferay.object.admin.rest.client.resource.v1_0.ObjectLayoutResource;
 import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectLayoutSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -233,6 +234,10 @@ public abstract class BaseObjectLayoutResourceTestCase {
 			Arrays.asList(objectLayout1, objectLayout2),
 			(List<ObjectLayout>)page.getItems());
 		assertValid(page);
+
+		objectLayoutResource.deleteObjectLayout(objectLayout1.getId());
+
+		objectLayoutResource.deleteObjectLayout(objectLayout2.getId());
 	}
 
 	@Test
@@ -328,6 +333,63 @@ public abstract class BaseObjectLayoutResourceTestCase {
 		return objectLayoutResource.postObjectDefinitionObjectLayout(
 			testGetObjectDefinitionObjectLayoutsPage_getObjectDefinitionId(),
 			objectLayout);
+	}
+
+	@Test
+	public void testDeleteObjectLayout() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectLayout objectLayout = testDeleteObjectLayout_addObjectLayout();
+
+		assertHttpResponseStatusCode(
+			204,
+			objectLayoutResource.deleteObjectLayoutHttpResponse(
+				objectLayout.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			objectLayoutResource.getObjectLayoutHttpResponse(
+				objectLayout.getId()));
+
+		assertHttpResponseStatusCode(
+			404, objectLayoutResource.getObjectLayoutHttpResponse(0L));
+	}
+
+	protected ObjectLayout testDeleteObjectLayout_addObjectLayout()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteObjectLayout() throws Exception {
+		ObjectLayout objectLayout = testGraphQLObjectLayout_addObjectLayout();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteObjectLayout",
+						new HashMap<String, Object>() {
+							{
+								put("objectLayoutId", objectLayout.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteObjectLayout"));
+
+		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"objectLayout",
+					new HashMap<String, Object>() {
+						{
+							put("objectLayoutId", objectLayout.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
 	@Test

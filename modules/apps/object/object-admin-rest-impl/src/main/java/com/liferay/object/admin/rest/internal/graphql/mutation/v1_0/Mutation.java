@@ -320,6 +320,34 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteObjectLayout(
+			@GraphQLName("objectLayoutId") Long objectLayoutId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_objectLayoutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectLayoutResource -> objectLayoutResource.deleteObjectLayout(
+				objectLayoutId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteObjectLayoutBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectLayoutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectLayoutResource ->
+				objectLayoutResource.deleteObjectLayoutBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
 	public ObjectLayout updateObjectLayout(
 			@GraphQLName("objectLayoutId") Long objectLayoutId,
 			@GraphQLName("objectLayout") ObjectLayout objectLayout)

@@ -69,6 +69,11 @@ public interface ObjectLayoutResource {
 			Long objectDefinitionId, String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteObjectLayout(Long objectLayoutId) throws Exception;
+
+	public Response deleteObjectLayoutBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public ObjectLayout getObjectLayout(Long objectLayoutId) throws Exception;
 
 	public ObjectLayout putObjectLayout(

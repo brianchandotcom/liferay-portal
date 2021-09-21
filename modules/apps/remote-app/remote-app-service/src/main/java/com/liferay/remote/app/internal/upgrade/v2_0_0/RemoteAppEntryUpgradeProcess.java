@@ -69,6 +69,12 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 					"update RemoteAppEntry set type_ = '",
 					RemoteAppConstants.TYPE_IFRAME, "'"));
 		}
+
+		if (!hasColumn("RemoteAppEntry", "properties")) {
+			alter(
+				RemoteAppEntryTable.class,
+				new AlterTableAddColumn("properties", "TEXT"));
+		}
 	}
 
 }

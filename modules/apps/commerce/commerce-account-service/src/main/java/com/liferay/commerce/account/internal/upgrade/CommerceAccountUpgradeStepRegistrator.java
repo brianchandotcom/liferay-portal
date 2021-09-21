@@ -29,7 +29,6 @@ import com.liferay.commerce.account.internal.upgrade.v1_4_0.CommerceAccountDefau
 import com.liferay.commerce.account.internal.upgrade.v2_0_0.CommerceAccountGroupSystemUpgradeProcess;
 import com.liferay.commerce.account.internal.upgrade.v4_0_0.CommerceAccountOrganizationRelUpgradeProcess;
 import com.liferay.commerce.account.internal.upgrade.v5_0_0.CommerceAccountUserRelUpgradeProcess;
-import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.portal.kernel.log.Log;
@@ -131,8 +130,8 @@ public class CommerceAccountUpgradeStepRegistrator
 			new com.liferay.commerce.account.internal.upgrade.v9_1_0.
 				CommerceAccountRoleUpgradeProcess(
 					_accountRoleLocalService, _classNameLocalService,
-					_counterLocalService, _groupLocalService,
-					_resourcePermissionLocalService, _roleLocalService));
+					_groupLocalService, _resourcePermissionLocalService,
+					_roleLocalService));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce account upgrade step registrator finished");
@@ -163,9 +162,6 @@ public class CommerceAccountUpgradeStepRegistrator
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private CounterLocalService _counterLocalService;
 
 	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;

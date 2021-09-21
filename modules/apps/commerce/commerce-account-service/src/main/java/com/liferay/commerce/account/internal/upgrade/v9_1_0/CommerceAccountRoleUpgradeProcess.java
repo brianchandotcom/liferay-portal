@@ -18,7 +18,6 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
-import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -45,14 +44,12 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 	public CommerceAccountRoleUpgradeProcess(
 		AccountRoleLocalService accountRoleLocalService,
 		ClassNameLocalService classNameLocalService,
-		CounterLocalService counterLocalService,
 		GroupLocalService groupLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService) {
 
 		_accountRoleLocalService = accountRoleLocalService;
 		_classNameLocalService = classNameLocalService;
-		_counterLocalService = counterLocalService;
 		_groupLocalService = groupLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
@@ -114,8 +111,7 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 
 		ResourcePermission newResourcePermission =
 			_resourcePermissionLocalService.createResourcePermission(
-				_counterLocalService.increment(
-					ResourcePermission.class.getName()));
+				increment(ResourcePermission.class.getName()));
 
 		newResourcePermission.setCompanyId(resourcePermission.getCompanyId());
 		newResourcePermission.setName(resourcePermission.getName());
@@ -200,7 +196,6 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 
 	private final AccountRoleLocalService _accountRoleLocalService;
 	private final ClassNameLocalService _classNameLocalService;
-	private final CounterLocalService _counterLocalService;
 	private final GroupLocalService _groupLocalService;
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;

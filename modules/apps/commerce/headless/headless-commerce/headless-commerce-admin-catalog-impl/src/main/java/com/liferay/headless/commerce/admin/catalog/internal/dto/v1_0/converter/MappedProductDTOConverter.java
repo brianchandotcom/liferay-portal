@@ -23,6 +23,7 @@ import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct;
+import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -55,6 +56,10 @@ public class MappedProductDTOConverter
 			_csDiagramEntryService.getCSDiagramEntry(
 				(Long)dtoConverterContext.getId());
 
+		CPDefinition cpDefinition =
+			_cpDefinitionService.fetchCPDefinitionByCProductId(
+				csDiagramEntry.getCProductId());
+
 		ExpandoBridge expandoBridge = csDiagramEntry.getExpandoBridge();
 
 		return new MappedProduct() {
@@ -70,10 +75,6 @@ public class MappedProductDTOConverter
 
 				setProductExternalReferenceCode(
 					() -> {
-						CPDefinition cpDefinition =
-							_cpDefinitionService.fetchCPDefinitionByCProductId(
-								csDiagramEntry.getCProductId());
-
 						if (cpDefinition == null) {
 							return StringPool.BLANK;
 						}
@@ -81,6 +82,16 @@ public class MappedProductDTOConverter
 						CProduct cProduct = cpDefinition.getCProduct();
 
 						return cProduct.getExternalReferenceCode();
+					});
+
+				setProductName(
+					() -> {
+						if (cpDefinition == null) {
+							return null;
+						}
+
+						return LanguageUtils.getLanguageIdMap(
+							cpDefinition.getNameMap());
 					});
 
 				setSkuExternalReferenceCode(

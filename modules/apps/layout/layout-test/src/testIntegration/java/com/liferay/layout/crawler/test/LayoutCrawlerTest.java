@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.search.test;
+package com.liferay.layout.crawler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;

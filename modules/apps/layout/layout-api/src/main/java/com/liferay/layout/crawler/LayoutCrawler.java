@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.search.util;
+package com.liferay.layout.crawler;
 
 import com.liferay.portal.kernel.model.Layout;
 

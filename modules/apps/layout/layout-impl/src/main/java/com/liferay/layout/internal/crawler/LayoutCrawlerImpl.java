@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.layout.internal.search.util;
+package com.liferay.layout.internal.crawler;
 
-import com.liferay.layout.search.util.LayoutCrawler;
+import com.liferay.layout.crawler.LayoutCrawler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;

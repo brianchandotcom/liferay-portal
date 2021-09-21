@@ -14,9 +14,9 @@
 
 package com.liferay.layout.internal.search.spi.model.index.contributor;
 
+import com.liferay.layout.crawler.LayoutCrawler;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.search.util.LayoutCrawler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;

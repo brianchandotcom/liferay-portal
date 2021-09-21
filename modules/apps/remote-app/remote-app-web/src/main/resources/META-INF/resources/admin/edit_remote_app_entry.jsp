@@ -70,7 +70,7 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 				cssClass='<%= ((remoteAppEntry == null) || RemoteAppConstants.TYPE_IFRAME.equals(remoteAppEntry.getType())) ? StringPool.BLANK : "d-none" %>'
 				id='<%= liferayPortletResponse.getNamespace() + "_type_iframe" %>'
 			>
-				<aui:input fieldParam="iFrameURL" label="url" name="IFrameURL">
+				<aui:input label="url" name="iFrameURL">
 					<aui:validator name="url" />
 				</aui:input>
 			</liferay-frontend:fieldset>

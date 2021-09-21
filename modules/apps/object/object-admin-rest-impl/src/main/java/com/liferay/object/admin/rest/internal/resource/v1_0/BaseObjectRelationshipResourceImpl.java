@@ -62,6 +62,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -174,6 +175,64 @@ public abstract class BaseObjectRelationshipResourceImpl
 		).build();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/object-admin/v1.0/object-relationships/{objectRelationshipId}'  -u 'test@liferay.com:test'
+	 */
+	@DELETE
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "objectRelationshipId")
+		}
+	)
+	@Path("/object-relationships/{objectRelationshipId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ObjectRelationship")})
+	public void deleteObjectRelationship(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("objectRelationshipId")
+			Long objectRelationshipId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/object-admin/v1.0/object-relationships/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@DELETE
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/object-relationships/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "ObjectRelationship")})
+	public Response deleteObjectRelationshipBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.deleteImportTask(
+				ObjectRelationship.class.getName(), callbackURL, object)
+		).build();
+	}
+
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
@@ -198,6 +257,10 @@ public abstract class BaseObjectRelationshipResourceImpl
 			java.util.Collection<ObjectRelationship> objectRelationships,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			deleteObjectRelationship(objectRelationship.getId());
+		}
 	}
 
 	@Override

@@ -246,6 +246,12 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			Arrays.asList(objectRelationship1, objectRelationship2),
 			(List<ObjectRelationship>)page.getItems());
 		assertValid(page);
+
+		objectRelationshipResource.deleteObjectRelationship(
+			objectRelationship1.getId());
+
+		objectRelationshipResource.deleteObjectRelationship(
+			objectRelationship2.getId());
 	}
 
 	@Test
@@ -349,6 +355,46 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			postObjectDefinitionObjectRelationship(
 				testGetObjectDefinitionObjectRelationshipsPage_getObjectDefinitionId(),
 				objectRelationship);
+	}
+
+	@Test
+	public void testDeleteObjectRelationship() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectRelationship objectRelationship =
+			testDeleteObjectRelationship_addObjectRelationship();
+
+		assertHttpResponseStatusCode(
+			204,
+			objectRelationshipResource.deleteObjectRelationshipHttpResponse(
+				objectRelationship.getId()));
+	}
+
+	protected ObjectRelationship
+			testDeleteObjectRelationship_addObjectRelationship()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteObjectRelationship() throws Exception {
+		ObjectRelationship objectRelationship =
+			testGraphQLObjectRelationship_addObjectRelationship();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteObjectRelationship",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"objectRelationshipId",
+									objectRelationship.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteObjectRelationship"));
 	}
 
 	protected ObjectRelationship

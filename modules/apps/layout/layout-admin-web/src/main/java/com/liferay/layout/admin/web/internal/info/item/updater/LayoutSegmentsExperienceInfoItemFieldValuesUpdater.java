@@ -22,7 +22,6 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 
 import org.osgi.service.component.annotations.Activate;
@@ -46,8 +45,7 @@ public class LayoutSegmentsExperienceInfoItemFieldValuesUpdater
 		InfoItemFieldValues infoItemFieldValues) {
 
 		_layoutInfoItemFieldValuesUpdaterHelper.updateFromInfoItemFieldValues(
-			_getLayout(segmentsExperience),
-			segmentsExperience.getSegmentsExperienceId(), infoItemFieldValues);
+			_getLayout(segmentsExperience), infoItemFieldValues);
 
 		return segmentsExperience;
 	}

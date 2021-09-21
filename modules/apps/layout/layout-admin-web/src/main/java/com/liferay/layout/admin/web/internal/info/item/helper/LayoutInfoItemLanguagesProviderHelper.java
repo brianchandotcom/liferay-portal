@@ -75,9 +75,7 @@ public class LayoutInfoItemLanguagesProviderHelper {
 		return availableLocalesIds.toArray(new String[0]);
 	}
 
-	public String getDefaultLanguageId(
-		Layout layout, long segmentsExperienceId) {
-
+	public String getDefaultLanguageId(Layout layout) {
 		return layout.getDefaultLanguageId();
 	}
 

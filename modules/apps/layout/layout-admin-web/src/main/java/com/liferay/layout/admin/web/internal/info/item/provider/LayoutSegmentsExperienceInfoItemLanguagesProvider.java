@@ -49,8 +49,7 @@ public class LayoutSegmentsExperienceInfoItemLanguagesProvider
 	@Override
 	public String getDefaultLanguageId(SegmentsExperience segmentsExperience) {
 		return _layoutInfoItemLanguagesProviderHelper.getDefaultLanguageId(
-			_getLayout(segmentsExperience),
-			segmentsExperience.getSegmentsExperienceId());
+			_getLayout(segmentsExperience));
 	}
 
 	@Activate

@@ -67,8 +67,8 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 				address.setCompanyId(resultSet.getLong("companyId"));
 				address.setUserId(resultSet.getLong("userId"));
 				address.setUserName(resultSet.getString("userName"));
-				address.setCreateDate(resultSet.getTime("createDate"));
-				address.setModifiedDate(resultSet.getTime("modifiedDate"));
+				address.setCreateDate(resultSet.getTimestamp("createDate"));
+				address.setModifiedDate(resultSet.getTimestamp("modifiedDate"));
 				address.setClassNameId(resultSet.getLong("classNameId"));
 				address.setClassPK(resultSet.getLong("classPK"));
 				address.setCountryId(resultSet.getLong("countryId"));

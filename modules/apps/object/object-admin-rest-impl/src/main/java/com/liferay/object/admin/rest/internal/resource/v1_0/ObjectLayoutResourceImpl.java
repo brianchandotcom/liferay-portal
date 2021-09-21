@@ -48,6 +48,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 
 	@Override
+	public void deleteObjectLayout(Long objectLayoutId) throws Exception {
+		_objectLayoutService.deleteObjectLayout(objectLayoutId);
+	}
+
+	@Override
 	public Page<ObjectLayout> getObjectDefinitionObjectLayoutsPage(
 			Long objectDefinitionId, String search, Pagination pagination)
 		throws Exception {

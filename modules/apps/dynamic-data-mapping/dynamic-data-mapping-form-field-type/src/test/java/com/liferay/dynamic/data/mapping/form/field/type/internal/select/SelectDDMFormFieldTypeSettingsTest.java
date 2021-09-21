@@ -148,7 +148,7 @@ public class SelectDDMFormFieldTypeSettingsTest
 
 		actions = ddmFormRule1.getActions();
 
-		Assert.assertEquals(actions.toString(), 11, actions.size());
+		Assert.assertEquals(actions.toString(), 12, actions.size());
 		Assert.assertEquals(
 			"setEnabled('dataSourceType', not(hasObjectField(getValue(" +
 				"'objectFieldName'))))",
@@ -191,6 +191,10 @@ public class SelectDDMFormFieldTypeSettingsTest
 		Assert.assertEquals(
 			"setVisible('requiredErrorMessage', getValue('required'))",
 			actions.get(10));
+		Assert.assertEquals(
+			"setVisible('multiple', not(hasObjectField(getValue('" +
+				"objectFieldName'))))",
+			actions.get(11));
 
 		DDMFormRule ddmFormRule3 = ddmFormRules.get(2);
 

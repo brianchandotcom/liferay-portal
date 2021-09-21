@@ -18,6 +18,7 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
+import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -44,6 +45,8 @@ public class JournalFolderSearchRegistrar {
 					Field.DESCRIPTION, Field.TITLE);
 				modelSearchDefinition.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
+				modelSearchDefinition.setModelSummaryContributor(
+					modelSummaryContributor);
 				modelSearchDefinition.setSelectAllLocales(true);
 			});
 	}
@@ -61,6 +64,11 @@ public class JournalFolderSearchRegistrar {
 
 	@Reference
 	protected ModelSearchRegistrarHelper modelSearchRegistrarHelper;
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.journal.model.JournalFolder)"
+	)
+	protected ModelSummaryContributor modelSummaryContributor;
 
 	private ServiceRegistration<?> _serviceRegistration;
 

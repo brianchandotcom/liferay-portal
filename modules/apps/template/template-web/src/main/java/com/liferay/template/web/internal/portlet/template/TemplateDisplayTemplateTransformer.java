@@ -30,7 +30,9 @@ import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.templateparser.Transformer;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 import com.liferay.template.model.TemplateEntry;
 
@@ -79,6 +81,13 @@ public class TemplateDisplayTemplateTransformer {
 				_infoItemFieldValues.getInfoFieldValues()) {
 
 			InfoField<?> infoField = infoFieldValue.getInfoField();
+
+			if (StringUtil.startsWith(
+					infoField.getName(),
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+
+				continue;
+			}
 
 			TemplateNode templateNode = new TemplateNode(
 				themeDisplay, infoField.getName(),

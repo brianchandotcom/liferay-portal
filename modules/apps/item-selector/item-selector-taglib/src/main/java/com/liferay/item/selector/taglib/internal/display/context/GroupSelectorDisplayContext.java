@@ -80,6 +80,9 @@ public class GroupSelectorDisplayContext {
 		).setParameter(
 			"groupType", groupType
 		).setParameter(
+			"scopeGroupType",
+			ParamUtil.getString(_liferayPortletRequest, "scopeGroupType")
+		).setParameter(
 			"selectedTab",
 			ParamUtil.getString(_liferayPortletRequest, "selectedTab")
 		).setParameter(

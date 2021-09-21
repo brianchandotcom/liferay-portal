@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingService;
@@ -24,9 +25,11 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.DiagramDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.DiagramUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.DiagramResource;
+import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
+import com.liferay.upload.UniqueFileNameProvider;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -89,9 +92,17 @@ public class DiagramResourceImpl
 	public Diagram patchDiagram(Long diagramId, Diagram diagram)
 		throws Exception {
 
+		CSDiagramSetting csDiagramSetting =
+			_csDiagramSettingService.getCSDiagramSetting(diagramId);
+
+		CPDefinition cpDefinition = csDiagramSetting.getCPDefinition();
+
 		DiagramUtil.updateCSDiagramSetting(
-			_csDiagramSettingService.getCSDiagramSetting(diagramId),
-			_csDiagramSettingService, diagram);
+			contextCompany.getCompanyId(), _cpAttachmentFileEntryService,
+			csDiagramSetting, _csDiagramSettingService, diagram,
+			cpDefinition.getGroupId(),
+			contextAcceptLanguage.getPreferredLocale(), _serviceContextHelper,
+			_uniqueFileNameProvider);
 
 		return _toDiagram(diagramId);
 	}
@@ -113,8 +124,11 @@ public class DiagramResourceImpl
 		}
 
 		CSDiagramSetting csDiagramSetting = DiagramUtil.addCSDiagramSetting(
-			cpDefinition.getCPDefinitionId(), _csDiagramSettingService,
-			diagram);
+			contextCompany.getCompanyId(), _cpAttachmentFileEntryService,
+			cpDefinition.getCPDefinitionId(), _csDiagramSettingService, diagram,
+			cpDefinition.getGroupId(),
+			contextAcceptLanguage.getPreferredLocale(), _serviceContextHelper,
+			_uniqueFileNameProvider);
 
 		return _toDiagram(csDiagramSetting.getCSDiagramSettingId());
 	}
@@ -132,8 +146,11 @@ public class DiagramResourceImpl
 		}
 
 		CSDiagramSetting csDiagramSetting = DiagramUtil.addCSDiagramSetting(
-			cpDefinition.getCPDefinitionId(), _csDiagramSettingService,
-			diagram);
+			contextCompany.getCompanyId(), _cpAttachmentFileEntryService,
+			cpDefinition.getCPDefinitionId(), _csDiagramSettingService, diagram,
+			cpDefinition.getGroupId(),
+			contextAcceptLanguage.getPreferredLocale(), _serviceContextHelper,
+			_uniqueFileNameProvider);
 
 		return _toDiagram(csDiagramSetting.getCSDiagramSettingId());
 	}
@@ -146,6 +163,9 @@ public class DiagramResourceImpl
 	}
 
 	@Reference
+	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
+
+	@Reference
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
@@ -153,5 +173,11 @@ public class DiagramResourceImpl
 
 	@Reference
 	private DiagramDTOConverter _diagramDTOConverter;
+
+	@Reference
+	private ServiceContextHelper _serviceContextHelper;
+
+	@Reference
+	private UniqueFileNameProvider _uniqueFileNameProvider;
 
 }

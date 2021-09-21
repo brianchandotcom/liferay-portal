@@ -18,6 +18,8 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.service.ObjectRelationshipService;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -83,6 +85,14 @@ public class ObjectRelationshipResourceImpl
 
 		return new ObjectRelationship() {
 			{
+				actions = HashMapBuilder.put(
+					"delete",
+					addAction(
+						ActionKeys.DELETE, "deleteObjectRelationship",
+						com.liferay.object.model.ObjectDefinition.class.
+							getName(),
+						objectRelationship.getObjectDefinitionId1())
+				).build();
 				id = objectRelationship.getObjectRelationshipId();
 				label = LocalizedMapUtil.getI18nMap(
 					objectRelationship.getLabelMap());

@@ -63,6 +63,16 @@ public class ObjectLayoutSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (objectLayout.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(objectLayout.getActions()));
+		}
+
 		if (objectLayout.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -178,6 +188,13 @@ public class ObjectLayoutSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (objectLayout.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(objectLayout.getActions()));
+		}
+
 		if (objectLayout.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -258,7 +275,14 @@ public class ObjectLayoutSerDes {
 			ObjectLayout objectLayout, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					objectLayout.setActions(
+						(Map)ObjectLayoutSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				if (jsonParserFieldValue != null) {
 					objectLayout.setDateCreated(
 						toDate((String)jsonParserFieldValue));

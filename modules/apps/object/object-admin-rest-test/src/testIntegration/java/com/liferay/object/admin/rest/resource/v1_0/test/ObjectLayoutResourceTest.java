@@ -101,6 +101,13 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 		return objectLayout;
 	}
 
+	protected ObjectLayout testDeleteObjectLayout_addObjectLayout()
+		throws Exception {
+
+		return objectLayoutResource.postObjectDefinitionObjectLayout(
+			_objectDefinition.getObjectDefinitionId(), randomObjectLayout());
+	}
+
 	@Override
 	protected Long
 			testGetObjectDefinitionObjectLayoutsPage_getObjectDefinitionId()
@@ -152,6 +159,7 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 			{
 				objectFieldId = _objectField.getObjectFieldId();
 				priority = RandomTestUtil.randomInt();
+				size = RandomTestUtil.randomInt(1, 12);
 			}
 		};
 	}

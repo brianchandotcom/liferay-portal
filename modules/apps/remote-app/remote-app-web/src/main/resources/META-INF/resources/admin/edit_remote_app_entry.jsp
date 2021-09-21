@@ -126,6 +126,14 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 				%>
 
 			</liferay-frontend:fieldset>
+
+			<clay:select
+				label="portlet-category-name"
+				name="portletCategoryName"
+				options="<%=
+					remoteAppAdminDisplayContext.getPortletCategoryNameSelectOptions()
+				%>"
+			/>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 

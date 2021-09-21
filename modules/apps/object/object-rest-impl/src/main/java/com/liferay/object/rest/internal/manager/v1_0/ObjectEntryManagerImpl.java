@@ -130,6 +130,22 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	}
 
 	@Override
+	public ObjectEntry fetchObjectEntry(
+		DTOConverterContext dtoConverterContext, long objectEntryId) {
+
+		com.liferay.object.model.ObjectEntry objectEntry =
+			_objectEntryLocalService.fetchObjectEntry(objectEntryId);
+
+		if (objectEntry != null) {
+			return _toObjectEntry(
+				dtoConverterContext,
+				_objectEntryLocalService.fetchObjectEntry(objectEntryId));
+		}
+
+		return null;
+	}
+
+	@Override
 	public Page<ObjectEntry> getObjectEntries(
 			long companyId, ObjectDefinition objectDefinition, String scopeKey,
 			Aggregation aggregation, DTOConverterContext dtoConverterContext,

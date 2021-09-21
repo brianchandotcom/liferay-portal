@@ -34,6 +34,7 @@
 		"layout": {
 			"align": "Center",
 			"borderWidth": 0,
+			"contentDisplay": "FlexRow",
 			"paddingBottom": 0,
 			"paddingTop": 0,
 			"widthType": "Fluid"

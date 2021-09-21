@@ -37,10 +37,10 @@ AUI.add(
 			'annotation-xml',
 			'color-profile',
 			'font-face',
-			'font-face-src',
-			'font-face-uri',
 			'font-face-format',
 			'font-face-name',
+			'font-face-src',
+			'font-face-uri',
 			'missing-glyph',
 		]);
 

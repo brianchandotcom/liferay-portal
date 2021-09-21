@@ -155,7 +155,9 @@ const Main = ({
 	useEffect(() => {
 		window.gm_authFailure = function () {
 			Liferay.Util.openToast({
-				message: Liferay.Language.get('communication-with-the-api-provider-failed'),
+				message: Liferay.Language.get(
+					'communication-with-the-api-provider-failed'
+				),
 				title: Liferay.Language.get('error'),
 				type: 'danger',
 			});

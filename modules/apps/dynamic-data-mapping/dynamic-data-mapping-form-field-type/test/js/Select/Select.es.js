@@ -542,4 +542,77 @@ describe('Select', () => {
 			'item11',
 		]);
 	});
+
+	it('shows the options value if there are values', async () => {
+		const handleFieldEdited = jest.fn();
+
+		render(
+			<SelectWithProvider
+				dataSourceType="manual"
+				multiple={true}
+				onChange={handleFieldEdited}
+				options={createOptions(12)}
+				predefinedValue={['item1', 'item2']}
+				spritemap={spritemap}
+				value={['item3']}
+			/>
+		);
+
+		expect(
+			document.querySelector('span[value="item1"]')
+		).not.toBeInTheDocument();
+		expect(
+			document.querySelector('span[value="item2"]')
+		).not.toBeInTheDocument();
+		expect(
+			document.querySelector('span[value="item3"]')
+		).toBeInTheDocument();
+	});
+
+	it('shows the predefinedValues if there is no value', async () => {
+		const handleFieldEdited = jest.fn();
+
+		render(
+			<SelectWithProvider
+				dataSourceType="manual"
+				multiple={true}
+				onChange={handleFieldEdited}
+				options={createOptions(12)}
+				predefinedValue={['item1', 'item2']}
+				spritemap={spritemap}
+				value={[]}
+			/>
+		);
+
+		expect(
+			document.querySelector('span[value="item1"]')
+		).toBeInTheDocument();
+		expect(
+			document.querySelector('span[value="item2"]')
+		).toBeInTheDocument();
+	});
+
+	it('clear all values if the user has edited the field to clear the predefinedValue', async () => {
+		const handleFieldEdited = jest.fn();
+
+		render(
+			<SelectWithProvider
+				dataSourceType="manual"
+				localizedValueEdited={{en_US: true}}
+				multiple={true}
+				onChange={handleFieldEdited}
+				options={createOptions(12)}
+				predefinedValue={['item1', 'item2']}
+				spritemap={spritemap}
+				value={[]}
+			/>
+		);
+
+		expect(
+			document.querySelector('span[value="item1"]')
+		).not.toBeInTheDocument();
+		expect(
+			document.querySelector('span[value="item2"]')
+		).not.toBeInTheDocument();
+	});
 });

@@ -12,6 +12,7 @@
  * details.
  */
 
+import '@testing-library/jest-dom/extend-expect';
 import {act, cleanup, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {PageProvider} from 'data-engine-js-components-web';
@@ -236,5 +237,90 @@ describe('Field Checkbox Multiple', () => {
 		});
 
 		expect(handleFieldEdited).toHaveBeenCalled();
+	});
+
+	it('checks the value if there is a value', () => {
+		const {getByLabelText} = render(
+			<CheckboxMultipleWithProvider
+				options={[
+					{
+						label: 'Option 1',
+						value: 'option1',
+					},
+					{
+						label: 'Option 2',
+						value: 'option2',
+					},
+					{
+						label: 'Option 3',
+						value: 'option3',
+					},
+				]}
+				predefinedValue={['option1', 'option2']}
+				spritemap={spritemap}
+				value={['option3']}
+			/>
+		);
+
+		expect(getByLabelText('Option 1')).not.toBeChecked();
+		expect(getByLabelText('Option 2')).not.toBeChecked();
+		expect(getByLabelText('Option 3')).toBeChecked();
+	});
+
+	it('checks the predefinedValue if there is no value', () => {
+		const {getByLabelText} = render(
+			<CheckboxMultipleWithProvider
+				options={[
+					{
+						label: 'Option 1',
+						value: 'option1',
+					},
+					{
+						label: 'Option 2',
+						value: 'option2',
+					},
+					{
+						label: 'Option 3',
+						value: 'option3',
+					},
+				]}
+				predefinedValue={['option1', 'option2']}
+				spritemap={spritemap}
+				value={[]}
+			/>
+		);
+
+		expect(getByLabelText('Option 1')).toBeChecked();
+		expect(getByLabelText('Option 2')).toBeChecked();
+		expect(getByLabelText('Option 3')).not.toBeChecked();
+	});
+
+	it('uncheck all values if the user has edited the field to clear the predefinedValue', () => {
+		const {getByLabelText} = render(
+			<CheckboxMultipleWithProvider
+				localizedValueEdited={{en_US: true}}
+				options={[
+					{
+						label: 'Option 1',
+						value: 'option1',
+					},
+					{
+						label: 'Option 2',
+						value: 'option2',
+					},
+					{
+						label: 'Option 3',
+						value: 'option3',
+					},
+				]}
+				predefinedValue={['option1', 'option2']}
+				spritemap={spritemap}
+				value={[]}
+			/>
+		);
+
+		expect(getByLabelText('Option 1')).not.toBeChecked();
+		expect(getByLabelText('Option 2')).not.toBeChecked();
+		expect(getByLabelText('Option 3')).not.toBeChecked();
 	});
 });

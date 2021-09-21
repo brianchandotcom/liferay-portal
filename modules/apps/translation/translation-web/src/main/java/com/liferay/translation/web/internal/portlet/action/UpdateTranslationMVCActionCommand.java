@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.service.TranslationEntryService;
 
@@ -71,11 +73,14 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
-			long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
+			long segmentsExperienceId = ParamUtil.getLong(
+				actionRequest, "segmentsExperienceId",
+				SegmentsExperienceConstants.ID_DEFAULT);
 
-			String className = _portal.getClassName(classNameId);
+			String className = _getClassName(
+				actionRequest, segmentsExperienceId);
 
-			long classPK = ParamUtil.getLong(actionRequest, "classPK");
+			long classPK = _getClassPK(actionRequest, segmentsExperienceId);
 
 			InfoItemReference infoItemReference = new InfoItemReference(
 				className, classPK);
@@ -120,6 +125,27 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 			actionResponse.setRenderParameter(
 				"mvcRenderCommandName", "/translation/translate");
 		}
+	}
+
+	private String _getClassName(
+		ActionRequest actionRequest, long segmentsExperienceId) {
+
+		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
+			return SegmentsExperience.class.getName();
+		}
+
+		return _portal.getClassName(
+			ParamUtil.getLong(actionRequest, "classNameId"));
+	}
+
+	private long _getClassPK(
+		ActionRequest actionRequest, long segmentsExperienceId) {
+
+		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
+			return segmentsExperienceId;
+		}
+
+		return ParamUtil.getLong(actionRequest, "classPK");
 	}
 
 	private <T> List<InfoField> _getInfoFields(String className, T object) {

@@ -427,6 +427,8 @@ public class TranslateDisplayContext {
 			"classPK", _classPK
 		).setParameter(
 			"groupId", _getGroupId()
+		).setParameter(
+			"segmentsExperienceId", _segmentsExperienceId
 		).buildPortletURL();
 	}
 

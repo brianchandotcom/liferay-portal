@@ -33,6 +33,36 @@ public class ObjectRelationshipServiceWrapper
 		_objectRelationshipService = objectRelationshipService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectRelationship addObjectRelationship(
+			long userId, long objectDefinitionId1, long objectDefinitionId2,
+			java.util.Map<java.util.Locale, String> labelMap, String name,
+			String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectRelationshipService.addObjectRelationship(
+			userId, objectDefinitionId1, objectDefinitionId2, labelMap, name,
+			type);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectRelationship deleteObjectRelationship(
+			long objectRelationshipId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectRelationshipService.deleteObjectRelationship(
+			objectRelationshipId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectRelationship>
+			getObjectRelationships(long objectDefinitionId1, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectRelationshipService.getObjectRelationships(
+			objectDefinitionId1, start, end);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

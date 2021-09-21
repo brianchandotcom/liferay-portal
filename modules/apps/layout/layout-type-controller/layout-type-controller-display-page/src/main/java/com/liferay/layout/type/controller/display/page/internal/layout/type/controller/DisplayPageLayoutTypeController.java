@@ -214,8 +214,7 @@ public class DisplayPageLayoutTypeController
 				httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			}
 			else {
-				httpServletResponse.setStatus(
-					HttpServletResponse.SC_UNAUTHORIZED);
+				httpServletResponse.sendRedirect(themeDisplay.getURLSignIn());
 			}
 		}
 

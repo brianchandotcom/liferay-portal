@@ -86,7 +86,7 @@ public class TranslateDisplayContext {
 			ffLayoutExperienceSelectorConfiguration,
 		InfoForm infoForm, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, Object object,
-		String segmentsExperienceId,
+		long segmentsExperienceId,
 		InfoItemFieldValues sourceInfoItemFieldValues, String sourceLanguageId,
 		InfoItemFieldValues targetInfoItemFieldValues, String targetLanguageId,
 		TranslationInfoFieldChecker translationInfoFieldChecker) {
@@ -497,8 +497,7 @@ public class TranslateDisplayContext {
 			SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
 				_themeDisplay.getLocale())
 		).put(
-			"value",
-			String.valueOf(SegmentsExperienceConstants.ID_DEFAULT)
+			"value", String.valueOf(SegmentsExperienceConstants.ID_DEFAULT)
 		).build();
 
 		List<Map<String, String>> options = new ArrayList<>();
@@ -603,7 +602,7 @@ public class TranslateDisplayContext {
 	private final InfoForm _infoForm;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final Object _object;
-	private final String _segmentsExperienceId;
+	private final long _segmentsExperienceId;
 	private final InfoItemFieldValues _sourceInfoItemFieldValues;
 	private final String _sourceLanguageId;
 	private final Locale _sourceLocale;

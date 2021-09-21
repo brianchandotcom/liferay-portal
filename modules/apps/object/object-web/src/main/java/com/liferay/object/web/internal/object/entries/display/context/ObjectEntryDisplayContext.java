@@ -79,6 +79,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -551,8 +552,13 @@ public class ObjectEntryDisplayContext {
 				).findFirst();
 
 				objectFieldOptional.ifPresent(
-					objectField -> nestedDDMFormFields.add(
-						_getDDMFormField(objectField)));
+					objectField -> {
+						_ddmFormFieldsColumnsSizeMap.put(
+							objectField.getName(),
+							objectLayoutColumn.getSize());
+
+						nestedDDMFormFields.add(_getDDMFormField(objectField));
+					});
 			}
 		}
 
@@ -587,7 +593,9 @@ public class ObjectEntryDisplayContext {
 						JSONUtil.put(
 							"fields", JSONUtil.put(ddmFormField.getName())
 						).put(
-							"size", 12
+							"size",
+							_ddmFormFieldsColumnsSizeMap.get(
+								ddmFormField.getName())
 						))));
 		}
 
@@ -649,6 +657,8 @@ public class ObjectEntryDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryDisplayContext.class);
 
+	private final HashMap<String, Integer> _ddmFormFieldsColumnsSizeMap =
+		new HashMap<>();
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final ItemSelector _itemSelector;
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;

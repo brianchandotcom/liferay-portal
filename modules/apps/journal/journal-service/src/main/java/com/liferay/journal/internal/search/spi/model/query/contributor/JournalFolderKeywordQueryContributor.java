@@ -52,19 +52,13 @@ public class JournalFolderKeywordQueryContributor
 		BooleanQuery searchQuery, SearchContext searchContext, String field,
 		boolean like) {
 
-		addSearchTerm(searchQuery, searchContext, field, like);
+		_queryHelper.addSearchTerm(searchQuery, searchContext, field, like);
 
 		String localizedFieldName = Field.getLocalizedName(
 			searchContext.getLocale(), field);
 
-		addSearchTerm(searchQuery, searchContext, localizedFieldName, like);
-	}
-
-	protected void addSearchTerm(
-		BooleanQuery searchQuery, SearchContext searchContext, String field,
-		boolean like) {
-
-		_queryHelper.addSearchTerm(searchQuery, searchContext, field, like);
+		_queryHelper.addSearchTerm(
+			searchQuery, searchContext, localizedFieldName, like);
 	}
 
 	@Reference

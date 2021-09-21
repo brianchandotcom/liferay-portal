@@ -20,27 +20,22 @@ export const ACTIONS = {
 			buttonAddLabel: Liferay.Language.get('done'),
 			multiple: true,
 			onSelect: (selectedItems) => {
-				if (selectedItems.length) {
-					const editUserGroupRoleFm = document.getElementById(
-						`${portletNamespace}editUserGroupRoleFm`
-					);
+				const editUserGroupRoleFm = document.getElementById(
+					`${portletNamespace}editUserGroupRoleFm`
+				);
 
-					if (!editUserGroupRoleFm) {
-						return;
-					}
-
-					const input = document.createElement('input');
-
-					input.name = `${portletNamespace}rowIds`;
-					input.value = selectedItems.map((item) => item.value);
-
-					editUserGroupRoleFm.appendChild(input);
-
-					submitForm(
-						editUserGroupRoleFm,
-						itemData.editUserGroupRoleURL
-					);
+				if (!editUserGroupRoleFm) {
+					return;
 				}
+
+				const input = document.createElement('input');
+
+				input.name = `${portletNamespace}rowIds`;
+				input.value = selectedItems.map((item) => item.value);
+
+				editUserGroupRoleFm.appendChild(input);
+
+				submitForm(editUserGroupRoleFm, itemData.editUserGroupRoleURL);
 			},
 			title: Liferay.Language.get('assign-roles'),
 			url: itemData.assignRolesURL,

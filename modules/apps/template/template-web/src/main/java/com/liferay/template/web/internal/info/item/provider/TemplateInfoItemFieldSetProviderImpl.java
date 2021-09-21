@@ -47,12 +47,15 @@ public class TemplateInfoItemFieldSetProviderImpl
 	implements TemplateInfoItemFieldSetProvider {
 
 	@Override
-	public InfoFieldSet getInfoFieldSet(String className, long classPK) {
+	public InfoFieldSet getInfoFieldSet(
+		String infoItemClassName, String infoItemFormVariationKey) {
+
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
 			consumer -> {
 				for (TemplateEntry templateEntry :
-						_getTemplateEntries(className, classPK)) {
+						_getTemplateEntries(
+							infoItemClassName, infoItemFormVariationKey)) {
 
 					TemplateInfoItemFieldReader templateInfoItemFieldReader =
 						new TemplateInfoItemFieldReader(
@@ -100,7 +103,7 @@ public class TemplateInfoItemFieldSetProviderImpl
 	}
 
 	private List<TemplateEntry> _getTemplateEntries(
-			String className, long classPK)
+			String infoItemClassName, String infoItemFormVariationKey)
 		throws RuntimeException {
 
 		ServiceContext serviceContext =
@@ -124,8 +127,8 @@ public class TemplateInfoItemFieldSetProviderImpl
 			}
 
 			return _templateEntryLocalService.getTemplateEntries(
-				groupId, className, String.valueOf(classPK), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+				groupId, infoItemClassName, infoItemFormVariationKey,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

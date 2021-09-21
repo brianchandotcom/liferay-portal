@@ -264,7 +264,7 @@ public class FileEntryInfoItemFormProvider
 					DLFileEntryConstants.getClassName())
 			).infoFieldSetEntry(
 				_templateInfoItemFieldSetProvider.getInfoFieldSet(
-					FileEntry.class.getName(), fileEntryTypeId)
+					FileEntry.class.getName(), String.valueOf(fileEntryTypeId))
 			).infoFieldSetEntry(
 				assetEntryInfoFieldSet
 			).infoFieldSetEntry(

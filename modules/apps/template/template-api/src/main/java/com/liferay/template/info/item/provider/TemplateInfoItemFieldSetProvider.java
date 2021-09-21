@@ -16,6 +16,7 @@ package com.liferay.template.info.item.provider;
 
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.petra.string.StringPool;
 import com.liferay.template.model.TemplateEntry;
 
 /**
@@ -23,11 +24,12 @@ import com.liferay.template.model.TemplateEntry;
  */
 public interface TemplateInfoItemFieldSetProvider {
 
-	public default InfoFieldSet getInfoFieldSet(String className) {
-		return getInfoFieldSet(className, 0);
+	public default InfoFieldSet getInfoFieldSet(String infoItemClassName) {
+		return getInfoFieldSet(infoItemClassName, StringPool.BLANK);
 	}
 
-	public InfoFieldSet getInfoFieldSet(String className, long classPK);
+	public InfoFieldSet getInfoFieldSet(
+		String infoItemClassName, String infoItemFormVariationKey);
 
 	public InfoFieldValue<Object> getInfoFieldValue(
 		TemplateEntry templateEntry, Object itemObject);

@@ -216,7 +216,7 @@ public class ObjectEntryInfoItemFormProvider
 			}
 		).infoFieldSetEntry(
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(
-				ObjectEntry.class.getName(), objectDefinitionId)
+				ObjectEntry.class.getName(), String.valueOf(objectDefinitionId))
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.<String>builder(
 			).values(

@@ -18,7 +18,7 @@
 
 <c:choose>
 	<c:when test="<%= mapProvider != null %>">
-		<div class="lfr-map" id="<%= name %>Map">
+		<div class="lfr-map" data-latitude="<%= latitude %>" data-longitude="<%= longitude %>" id="<%= name %>Map">
 
 			<%
 			mapProvider.include(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));

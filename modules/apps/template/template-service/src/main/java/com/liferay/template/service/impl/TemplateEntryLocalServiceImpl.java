@@ -81,6 +81,17 @@ public class TemplateEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<TemplateEntry> getTemplateEntries(
+		long groupId, String infoItemClassName, String infoItemFormVariationKey,
+		int start, int end,
+		OrderByComparator<TemplateEntry> orderByComparator) {
+
+		return templateEntryPersistence.findByG_IICN_IIFVK(
+			groupId, infoItemClassName, infoItemFormVariationKey, start, end,
+			orderByComparator);
+	}
+
+	@Override
 	public int getTemplateEntriesCount(long groupId) {
 		return templateEntryPersistence.countByGroupId(groupId);
 	}

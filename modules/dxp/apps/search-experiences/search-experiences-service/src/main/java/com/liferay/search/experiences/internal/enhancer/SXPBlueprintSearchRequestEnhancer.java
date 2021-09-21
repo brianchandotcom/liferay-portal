@@ -16,6 +16,7 @@ package com.liferay.search.experiences.internal.enhancer;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.metrics.CardinalityAggregation;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
@@ -97,7 +98,7 @@ public class SXPBlueprintSearchRequestEnhancer {
 
 	private void _processAggregation(String name, Aggregation aggregation) {
 		_searchRequestBuilder.addAggregation(
-			_toPortalSearchAggregation(name, aggregation));
+			_toPortalSearchAggregationWithChildren(name, aggregation));
 	}
 
 	private void _processAggregations(Map<String, Aggregation> map) {
@@ -152,27 +153,18 @@ public class SXPBlueprintSearchRequestEnhancer {
 	}
 
 	private com.liferay.portal.search.aggregation.Aggregation
-		_toPortalSearchAggregation(String name1, Aggregation aggregation1) {
+		_toPortalSearchAggregation(String name, Aggregation aggregation) {
 
-		if (aggregation1.getAvg() != null) {
-			Avg avg = aggregation1.getAvg();
+		if (aggregation.getAvg() != null) {
+			Avg avg = aggregation.getAvg();
 
-			com.liferay.portal.search.aggregation.Aggregation
-				portalSearchAggregation = _aggregations.avg(
-					name1, avg.getField());
-
-			_forEach(
-				aggregation1.getAggs(),
-				(name2, aggregation2) ->
-					portalSearchAggregation.addChildAggregation(
-						_toPortalSearchAggregation(name2, aggregation2)),
-				_runtimeException::addSuppressed);
+			return _aggregations.avg(name, avg.getField());
 		}
-		else if (aggregation1.getCardinality() != null) {
-			Cardinality cardinality = aggregation1.getCardinality();
+		else if (aggregation.getCardinality() != null) {
+			Cardinality cardinality = aggregation.getCardinality();
 
 			CardinalityAggregation cardinalityAggregation =
-				_aggregations.cardinality(name1, cardinality.getField());
+				_aggregations.cardinality(name, cardinality.getField());
 
 			cardinalityAggregation.setPrecisionThreshold(
 				cardinality.getPrecision_threshold());
@@ -181,6 +173,27 @@ public class SXPBlueprintSearchRequestEnhancer {
 		}
 
 		throw new IllegalArgumentException();
+	}
+
+	private com.liferay.portal.search.aggregation.Aggregation
+		_toPortalSearchAggregationWithChildren(
+			String name1, Aggregation aggregation1) {
+
+		com.liferay.portal.search.aggregation.Aggregation
+			portalSearchAggregation = _toPortalSearchAggregation(
+				name1, aggregation1);
+
+		if (!MapUtil.isEmpty(aggregation1.getAggs())) {
+			_forEach(
+				aggregation1.getAggs(),
+				(name2, aggregation2) ->
+					portalSearchAggregation.addChildAggregation(
+						_toPortalSearchAggregationWithChildren(
+							name2, aggregation2)),
+				_runtimeException::addSuppressed);
+		}
+
+		return portalSearchAggregation;
 	}
 
 	private com.liferay.portal.search.query.Query _toQuery(String queryJSON) {

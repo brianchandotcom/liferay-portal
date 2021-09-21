@@ -392,18 +392,20 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8481 | Test Summary: Create a Dynamic Individuals Segment with a criteria that uses a boolean and a does not contain"
 	@priority = "4"
 	test CanCreateDynamicSegmentWithIndividualCriteriaUsesBooleanAndDoesNotContain {
+		var usernameList = "user1,user2,user3";
+
 		task ("Add three more new users") {
-			for (var n : list "1,2,3") {
+			for (var name : list "${usernameList}") {
 				JSONUser.addUser(
-					userEmailAddress = "user${n}@liferay.com",
-					userFirstName = "user${n}",
-					userLastName = "user${n}",
-					userScreenName = "user${n}");
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
 
 				JSONUser.setFirstPassword(
 					agreeToTermsAndAnswerReminderQuery = "true",
 					requireReset = "false",
-					userEmailAddress = "user${n}@liferay.com");
+					userEmailAddress = "${name}@liferay.com");
 			}
 		}
 
@@ -416,7 +418,7 @@ definition {
 		}
 
 		task ("View the page as different users") {
-			for (var username : list "user1,user2,user3") {
+			for (var username : list "${usernameList}") {
 				var fullName = "${username} ${username}";
 
 				User.logoutAndLoginPG(
@@ -426,7 +428,13 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "3000");
 			}
+		}
+
+		task ("Close sessions and wait for 30 seconds") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -482,14 +490,27 @@ definition {
 		task ("Search the new segment") {
 			ACUtils.searchBar(searchItem = "Dynamic Segment Test");
 
-			ACUtils.viewNameList(nameList = "Dynamic Segment Test");
+			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 		}
 
-		task ("View the number of Membership is 1") {
-			ACAssets.viewAssetsInfo(
-				assetName = "Dynamic Segment Test",
-				index = "1",
-				value = "1");
+		task ("View the segment criteria card") {
+			ACSegments.viewSegmentCriteriaIndividualAttributes(
+				attributeName = "jobTitle",
+				attributeValue = '''"Doctor"''',
+				condition = "does not contain",
+				conjunction = "AND");
+
+			ACSegments.viewSegmentCriteriaIndividualAttributes(
+				attributeName = "doNotCall",
+				attributeValue = "FALSE",
+				condition = "is",
+				index = "2");
+		}
+
+		task ("Switch tab to membership and check the membership list") {
+			ACNavigation.switchTab(tabName = "Membership");
+
+			ACUtils.viewNameList(nameList = "user3 user3");
 		}
 	}
 

@@ -228,30 +228,23 @@ definition {
 
 		for (var number : list "1,2,3,4,5,6,7,8") {
 			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "text",
+				fieldName = "customObjectField",
 				objectName = "CustomObject",
-				value = "Test text");
+				value = "Test text ${number}");
 		}
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.changePagination(itemsPerPage = "4 items");
 
-		ObjectPortlet.assertEntryRowIsPresent(rowNumber = "1");
-
-		ObjectPortlet.assertEntryRowIsPresent(rowNumber = "2");
-
-		ObjectPortlet.assertEntryRowIsPresent(rowNumber = "3");
-
-		ObjectPortlet.assertEntryRowIsPresent(rowNumber = "4");
-
-		ObjectPortlet.assertEntryRowNotDisplayed(rowNumber = "5");
-
-		ObjectPortlet.assertEntryRowNotDisplayed(rowNumber = "6");
-
-		ObjectPortlet.assertEntryRowNotDisplayed(rowNumber = "7");
-
-		ObjectPortlet.assertEntryRowNotDisplayed(rowNumber = "8");
+		ObjectPortlet.viewEntry(entry = "Test text 1");
+		ObjectPortlet.viewEntry(entry = "Test text 2");
+		ObjectPortlet.viewEntry(entry = "Test text 3");
+		ObjectPortlet.viewEntry(entry = "Test text 4");
+		ObjectPortlet.assertEntryNotPresent(entry = "Test text 5");
+		ObjectPortlet.assertEntryNotPresent(entry = "Test text 6");
+		ObjectPortlet.assertEntryNotPresent(entry = "Test text 7");
+		ObjectPortlet.assertEntryNotPresent(entry = "Test text 8");
 	}
 
 }

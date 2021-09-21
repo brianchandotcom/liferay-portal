@@ -16,11 +16,6 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>ENTRY_ROW_NUMBER</td>
-		<td>//div[contains(@class,'dnd-tr')][${key_rowNumber}]</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>ENTRY_KEBAB_MENU</td>
 		<td>//div[contains(@class,'dnd-tbody')]//div[contains(text(),'${key_entry}')]/following-sibling::div//button</td>
 		<td></td>

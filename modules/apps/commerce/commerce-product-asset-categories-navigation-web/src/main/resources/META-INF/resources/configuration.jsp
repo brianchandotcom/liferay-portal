@@ -124,12 +124,14 @@ if (assetVocabulary != null) {
 			var preferencesRootAssetCategoryId = A.one(
 				'#<portlet:namespace />preferencesRootAssetCategoryId'
 			);
-			var assetCategoriesSelectorCategoryId = A.one(
-				'#<portlet:namespace />assetCategoriesSelectorCategoryId'
+			var form = window.document['<portlet:namespace />fm'];
+
+			var assetCategoryIdsKey = Object.keys(form.elements).filter((input) =>
+				input.includes('assetCategoryIds')
 			);
 
 			preferencesRootAssetCategoryId.val(
-				assetCategoriesSelectorCategoryId.val()
+				form.elements[assetCategoryIdsKey].value
 			);
 		}
 

@@ -40,22 +40,18 @@ public class JournalFolderKeywordQueryContributor
 		String keywords, BooleanQuery booleanQuery,
 		KeywordQueryContributorHelper keywordQueryContributorHelper) {
 
-		addSearchLocalizedTerm(
-			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
-			Field.DESCRIPTION, false);
-		addSearchLocalizedTerm(
-			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
-			Field.TITLE, false);
-	}
+		SearchContext searchContext =
+			keywordQueryContributorHelper.getSearchContext();
 
-	protected void addSearchLocalizedTerm(
-		BooleanQuery searchQuery, SearchContext searchContext, String field,
-		boolean like) {
-
-		_queryHelper.addSearchTerm(searchQuery, searchContext, field, like);
-
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, Field.DESCRIPTION, false);
 		_queryHelper.addSearchLocalizedTerm(
-			searchQuery, searchContext, field, like);
+			booleanQuery, searchContext, Field.DESCRIPTION, false);
+
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, Field.TITLE, false);
+		_queryHelper.addSearchLocalizedTerm(
+			booleanQuery, searchContext, Field.TITLE, false);
 	}
 
 	@Reference

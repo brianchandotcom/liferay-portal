@@ -454,6 +454,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8412 | Test Summary: Documents location card shows downloads by the expected location"
 	@priority = "5"
 	test DocumentsLocationCardShowsDownloadsByExpectedLocation {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Location data issues happen on this ticket because of the bug
+		// AC Bug ticket : LRAC-9345
+		// AC Refactor ticket: LRAC-9398
+
 		task ("Connect the DXP to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -493,7 +499,7 @@ definition {
 		}
 
 		task ("Navigate to the Overview tab in document report entry") {
-			ACNavigation.openItem(itemName = "DM AC Title");
+			ACNavigation.openItem(itemName = "Document_1.jpg");
 		}
 
 		task ("View the time filter of Downloads by Location map is Last 24 Hours") {

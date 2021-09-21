@@ -42,7 +42,7 @@ public class LiferayJSONSerializerTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void getClassFromHint() throws Exception {
+	public void testGetClassFromHint() throws Exception {
 		ClassLoaderPool.register(
 			"TestClassLoader",
 			new ClassLoader() {

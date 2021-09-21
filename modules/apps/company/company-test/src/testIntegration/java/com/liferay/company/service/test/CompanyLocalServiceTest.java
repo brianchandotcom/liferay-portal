@@ -888,17 +888,16 @@ public class CompanyLocalServiceTest {
 	public void testUpdateInvalidCompanyNames() throws Exception {
 		Company company = addCompany();
 
-		Group group = GroupTestUtil.addGroup();
+		long companyId = company.getCompanyId();
 
-		group.setCompanyId(company.getCompanyId());
+		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
 
-		GroupLocalServiceUtil.updateGroup(group);
+		Group group = GroupTestUtil.addGroup(
+			companyId, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		testUpdateCompanyNames(
 			company,
 			new String[] {StringPool.BLANK, group.getDescriptiveName()}, true);
-
-		GroupLocalServiceUtil.deleteGroup(group);
 
 		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
 	}

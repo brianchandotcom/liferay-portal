@@ -36,6 +36,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="BatchPlannerPlanId" return-type="Collection">
 			<finder-column name="batchPlannerPlanId" />
 		</finder>

@@ -70,8 +70,8 @@ public class RemoteAppEntryTable extends BaseTable<RemoteAppEntryTable> {
 		createColumn(
 			"portletCategoryName", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<RemoteAppEntryTable, String> properties = createColumn(
-		"properties", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<RemoteAppEntryTable, Clob> properties = createColumn(
+		"properties", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<RemoteAppEntryTable, String> type = createColumn(
 		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 

@@ -237,7 +237,7 @@ public class RemoteAppEntryCacheModel
 		iFrameURL = objectInput.readUTF();
 		name = objectInput.readUTF();
 		portletCategoryName = objectInput.readUTF();
-		properties = objectInput.readUTF();
+		properties = (String)objectInput.readObject();
 		type = objectInput.readUTF();
 	}
 
@@ -311,10 +311,10 @@ public class RemoteAppEntryCacheModel
 		}
 
 		if (properties == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(properties);
+			objectOutput.writeObject(properties);
 		}
 
 		if (type == null) {

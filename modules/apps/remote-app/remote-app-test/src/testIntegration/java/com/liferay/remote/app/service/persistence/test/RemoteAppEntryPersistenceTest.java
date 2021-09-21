@@ -252,8 +252,7 @@ public class RemoteAppEntryPersistenceTest {
 			"remoteAppEntryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"customElementHTMLElementName", true, "iFrameURL", true, "name",
-			true, "portletCategoryName", true, "properties", true, "type",
-			true);
+			true, "portletCategoryName", true, "type", true);
 	}
 
 	@Test

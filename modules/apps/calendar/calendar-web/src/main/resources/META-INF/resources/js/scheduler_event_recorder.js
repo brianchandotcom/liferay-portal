@@ -630,7 +630,7 @@ AUI.add(
 						arguments
 					);
 
-					return A.merge(templateData, {
+					return Object.assign(templateData, {
 						acceptLinkEnabled: instance._hasWorkflowStatusPermission(
 							schedulerEvent,
 							CalendarWorkflow.STATUS_APPROVED
@@ -689,7 +689,7 @@ AUI.add(
 
 					return SchedulerEventRecorder.superclass.getUpdatedSchedulerEvent.call(
 						instance,
-						A.merge(attrMap, optAttrMap)
+						Object.assign(attrMap, optAttrMap)
 					);
 				},
 

@@ -102,7 +102,7 @@ AUI.add(
 
 						buffer.push(
 							tplReminder.parse(
-								A.merge(strings, {
+								Object.assign(strings, {
 									disabled: !value.interval,
 									i,
 									portletNamespace,

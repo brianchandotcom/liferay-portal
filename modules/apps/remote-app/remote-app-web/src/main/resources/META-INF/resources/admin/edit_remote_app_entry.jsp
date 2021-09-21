@@ -17,16 +17,12 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-RemoteAppEntry remoteAppEntry = (RemoteAppEntry)request.getAttribute(RemoteAppAdminWebKeys.REMOTE_APP_ENTRY);
-
-long remoteAppEntryId = BeanParamUtil.getLong(remoteAppEntry, request, "remoteAppEntryId");
+EditRemoteAppEntryDisplayContext editRemoteAppEntryDisplayContext = (EditRemoteAppEntryDisplayContext)renderRequest.getAttribute(RemoteAppAdminWebKeys.EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(editRemoteAppEntryDisplayContext.getRedirect());
 
-renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "new-remote-app") : remoteAppEntry.getName(locale));
+renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 %>
 
 <portlet:actionURL name="/remote_app_admin/edit_remote_app_entry" var="editRemoteAppEntryURL" />
@@ -35,16 +31,16 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 	action="<%= editRemoteAppEntryURL %>"
 	method="post"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (remoteAppEntry == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="remoteAppEntryId" type="hidden" value="<%= remoteAppEntryId %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= editRemoteAppEntryDisplayContext.getCmd() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= editRemoteAppEntryDisplayContext.getRedirect() %>" />
+	<aui:input name="remoteAppEntryId" type="hidden" value="<%= editRemoteAppEntryDisplayContext.getRemoteAppEntryId() %>" />
 
 	<liferay-ui:error exception="<%= RemoteAppEntryCustomElementCSSURLsException.class %>" message="please-enter-valid-css-urls" />
 	<liferay-ui:error exception="<%= RemoteAppEntryCustomElementHTMLElementNameException.class %>" message="please-enter-a-valid-html-element-name" />
 	<liferay-ui:error exception="<%= RemoteAppEntryCustomElementURLsException.class %>" message="please-enter-valid-remote-app-urls" />
 	<liferay-ui:error exception="<%= RemoteAppEntryIFrameURLException.class %>" message="please-enter-a-unique-remote-app-url" />
 
-	<aui:model-context bean="<%= remoteAppEntry %>" model="<%= RemoteAppEntry.class %>" />
+	<aui:model-context bean="<%= editRemoteAppEntryDisplayContext.getRemoteAppEntry() %>" model="<%= RemoteAppEntry.class %>" />
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
@@ -52,25 +48,23 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 				<liferay-ui:input-localized
 					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 					name="name"
-					xml='<%= BeanPropertiesUtil.getString(remoteAppEntry, "name") %>'
+					xml="<%= editRemoteAppEntryDisplayContext.getName() %>"
 				/>
 			</aui:field-wrapper>
 
 			<clay:select
-				disabled="<%= remoteAppEntry != null %>"
+				disabled="<%= editRemoteAppEntryDisplayContext.isTypeDisabled() %>"
 				label="type"
 				name="type"
 				options='<%=
-					Arrays.asList(new SelectOption(LanguageUtil.get(request, "custom-element"), RemoteAppConstants.TYPE_CUSTOM_ELEMENT, remoteAppAdminDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)), new SelectOption(LanguageUtil.get(request, "iframe"), RemoteAppConstants.TYPE_IFRAME, remoteAppAdminDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_IFRAME)))
+					Arrays.asList(new SelectOption(LanguageUtil.get(request, "custom-element"), RemoteAppConstants.TYPE_CUSTOM_ELEMENT, editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)), new SelectOption(LanguageUtil.get(request, "iframe"), RemoteAppConstants.TYPE_IFRAME, editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_IFRAME)))
 				%>'
 				propsTransformer="admin/js/remoteAppEntryTypeSelectPropsTransformer"
 			/>
 
-			<aui:input label="properties" name="properties" type="textarea" />
-
 			<liferay-frontend:fieldset
-				cssClass='<%= remoteAppAdminDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_IFRAME) ? StringPool.BLANK : "d-none" %>'
-				disabled="<%= !remoteAppAdminDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_IFRAME) %>"
+				cssClass='<%= editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_IFRAME) ? StringPool.BLANK : "d-none" %>'
+				disabled="<%= !editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_IFRAME) %>"
 				id='<%= liferayPortletResponse.getNamespace() + "_type_iframe" %>'
 			>
 				<aui:input label="url" name="iFrameURL">
@@ -79,8 +73,8 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 			</liferay-frontend:fieldset>
 
 			<liferay-frontend:fieldset
-				cssClass='<%= remoteAppAdminDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT) ? StringPool.BLANK : "d-none" %>'
-				disabled="<%= !remoteAppAdminDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT) %>"
+				cssClass='<%= editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT) ? StringPool.BLANK : "d-none" %>'
+				disabled="<%= !editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT) %>"
 				id='<%= liferayPortletResponse.getNamespace() + "_type_customElement" %>'
 			>
 				<aui:input label="html-element-name" name="customElementHTMLElementName">
@@ -88,7 +82,7 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 				</aui:input>
 
 				<%
-				for (String customElementURL : remoteAppAdminDisplayContext.getCustomElementURLs()) {
+				for (String customElementURL : editRemoteAppEntryDisplayContext.getCustomElementURLs()) {
 				%>
 
 					<div class="repeatable">
@@ -100,7 +94,7 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 				<%
 				}
 
-				for (String customElementCSSURL : remoteAppAdminDisplayContext.getCustomElementCSSURLs()) {
+				for (String customElementCSSURL : editRemoteAppEntryDisplayContext.getCustomElementCSSURLs()) {
 				%>
 
 					<div class="repeatable">
@@ -119,9 +113,11 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 				label="portlet-category-name"
 				name="portletCategoryName"
 				options="<%=
-					remoteAppAdminDisplayContext.getPortletCategoryNameSelectOptions()
+					editRemoteAppEntryDisplayContext.getPortletCategoryNameSelectOptions()
 				%>"
 			/>
+
+			<aui:input label="properties" name="properties" type="textarea" />
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 
@@ -133,7 +129,7 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 
 		<clay:link
 			displayType="secondary"
-			href="<%= redirect %>"
+			href="<%= editRemoteAppEntryDisplayContext.getRedirect() %>"
 			label="cancel"
 			type="button"
 		/>

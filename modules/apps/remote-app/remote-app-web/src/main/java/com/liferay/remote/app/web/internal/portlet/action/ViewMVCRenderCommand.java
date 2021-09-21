@@ -15,7 +15,7 @@
 package com.liferay.remote.app.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.remote.app.service.RemoteAppEntryLocalService;
+import com.liferay.remote.app.service.RemoteAppEntryService;
 import com.liferay.remote.app.web.internal.constants.RemoteAppAdminPortletKeys;
 import com.liferay.remote.app.web.internal.constants.RemoteAppAdminWebKeys;
 import com.liferay.remote.app.web.internal.display.context.RemoteAppAdminDisplayContext;
@@ -47,13 +47,12 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		renderRequest.setAttribute(
 			RemoteAppAdminWebKeys.REMOTE_APP_ADMIN_DISPLAY_CONTEXT,
-			new RemoteAppAdminDisplayContext(
-				renderRequest, renderResponse, _remoteAppEntryLocalService));
+			new RemoteAppAdminDisplayContext(renderRequest, renderResponse));
 
 		return "/admin/view.jsp";
 	}
 
 	@Reference
-	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
+	private RemoteAppEntryService _remoteAppEntryService;
 
 }

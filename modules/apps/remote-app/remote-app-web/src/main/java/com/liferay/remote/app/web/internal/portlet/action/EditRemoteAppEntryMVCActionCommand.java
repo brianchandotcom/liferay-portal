@@ -28,6 +28,8 @@ import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.RemoteAppEntryService;
 import com.liferay.remote.app.web.internal.constants.RemoteAppAdminPortletKeys;
+import com.liferay.remote.app.web.internal.constants.RemoteAppAdminWebKeys;
+import com.liferay.remote.app.web.internal.display.context.EditRemoteAppEntryDisplayContext;
 
 import java.util.Locale;
 import java.util.Map;
@@ -76,6 +78,11 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 		catch (Exception exception) {
 			SessionErrors.add(actionRequest, exception.getClass());
 
+			actionRequest.setAttribute(
+				RemoteAppAdminWebKeys.EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT,
+				new EditRemoteAppEntryDisplayContext(
+					_getRemoteAppEntry(actionRequest), actionRequest));
+
 			actionResponse.setRenderParameter(
 				"mvcPath", "/admin/edit_remote_app_entry.jsp");
 		}
@@ -105,12 +112,21 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _update(ActionRequest actionRequest) throws PortalException {
+	private RemoteAppEntry _getRemoteAppEntry(ActionRequest actionRequest)
+		throws PortalException {
+
 		long remoteAppEntryId = ParamUtil.getLong(
 			actionRequest, "remoteAppEntryId");
 
-		RemoteAppEntry remoteAppEntry =
-			_remoteAppEntryService.getRemoteAppEntry(remoteAppEntryId);
+		if (remoteAppEntryId != 0) {
+			return _remoteAppEntryService.getRemoteAppEntry(remoteAppEntryId);
+		}
+
+		return null;
+	}
+
+	private void _update(ActionRequest actionRequest) throws PortalException {
+		RemoteAppEntry remoteAppEntry = _getRemoteAppEntry(actionRequest);
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
@@ -127,7 +143,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "customElementURLs");
 
 			_remoteAppEntryService.updateCustomElementRemoteAppEntry(
-				remoteAppEntryId,
+				remoteAppEntry.getRemoteAppEntryId(),
 				StringUtil.merge(customElementCSSURLs, StringPool.NEW_LINE),
 				ParamUtil.getString(
 					actionRequest, "customElementHTMLElementName"),
@@ -139,7 +155,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 					remoteAppEntry.getType(), RemoteAppConstants.TYPE_IFRAME)) {
 
 			_remoteAppEntryService.updateIFrameRemoteAppEntry(
-				remoteAppEntryId,
+				remoteAppEntry.getRemoteAppEntryId(),
 				ParamUtil.getString(actionRequest, "iFrameURL"), nameMap,
 				portletCategoryName,
 				ParamUtil.getString(actionRequest, "properties"));

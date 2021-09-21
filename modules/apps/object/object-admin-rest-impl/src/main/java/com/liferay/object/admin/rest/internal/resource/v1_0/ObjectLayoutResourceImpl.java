@@ -194,7 +194,8 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 			objectLayoutColumn.getObjectFieldId());
 		serviceBuilderObjectLayoutColumn.setPriority(
 			objectLayoutColumn.getPriority());
-		serviceBuilderObjectLayoutColumn.setSize(objectLayoutColumn.getSize());
+		serviceBuilderObjectLayoutColumn.setSize(
+			GetterUtil.getInteger(objectLayoutColumn.getSize(), 12));
 
 		return serviceBuilderObjectLayoutColumn;
 	}

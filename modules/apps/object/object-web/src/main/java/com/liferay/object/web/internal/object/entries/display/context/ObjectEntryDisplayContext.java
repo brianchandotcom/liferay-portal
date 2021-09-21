@@ -128,6 +128,12 @@ public class ObjectEntryDisplayContext {
 			_objectRequestHelper.getLiferayPortletResponse();
 		ObjectEntry objectEntry = getObjectEntry();
 
+		long objectEntryId = 0;
+
+		if (objectEntry != null) {
+			objectEntryId = objectEntry.getObjectEntryId();
+		}
+
 		for (ObjectLayoutTab objectLayoutTab :
 				objectLayout.getObjectLayoutTabs()) {
 
@@ -142,7 +148,7 @@ public class ObjectEntryDisplayContext {
 				).setMVCRenderCommandName(
 					"/object_entries/edit_object_entry"
 				).setParameter(
-					"objectEntryId", objectEntry.getObjectEntryId()
+					"objectEntryId", objectEntryId
 				).setParameter(
 					"objectLayoutTabId", objectLayoutTab.getObjectLayoutTabId()
 				).buildString());

@@ -47,7 +47,8 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 						"update DDMField set parentFieldId = ? where ",
 						"DDMField.storageId = ? and ",
 						"DDMField.structureVersionId = ? and ",
-						"DDMField.fieldName like ? "))) {
+						"DDMField.fieldName like ? and DDMField.priority = ",
+						"?"))) {
 
 			preparedStatement1.setString(1, "CUSTOM-META-TAGS");
 
@@ -61,9 +62,9 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 				try (PreparedStatement preparedStatement3 =
 						connection.prepareStatement(
 							StringBundler.concat(
-								"select DDMField.fieldId from DDMField where ",
-								"DDMField.storageId = ? and ",
-								"DDMField.structureVersionId = ? and ",
+								"select DDMField.fieldId, DDMField.priority ",
+								"from DDMField where DDMField.storageId = ? ",
+								"and DDMField.structureVersionId = ? and ",
 								"DDMField.fieldName like ? "))) {
 
 					preparedStatement3.setLong(1, storageId);
@@ -78,6 +79,8 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 						preparedStatement2.setLong(2, storageId);
 						preparedStatement2.setLong(3, structureVersionId);
 						preparedStatement2.setString(4, "content");
+						preparedStatement2.setLong(
+							5, resultSet2.getLong("priority") + 1);
 
 						preparedStatement2.addBatch();
 					}

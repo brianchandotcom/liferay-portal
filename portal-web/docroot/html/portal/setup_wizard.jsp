@@ -241,6 +241,25 @@
 
 						<aui:button-row>
 							<aui:button name="finishButton" type="submit" value="finish-configuration" />
+
+							<div class="btn float-right" id="basicConfiguration">
+
+								<%
+								request.setAttribute("liferay-learn:message:key", "basic-configuration");
+								request.setAttribute("liferay-learn:message:resource", "portal-web");
+								%>
+
+								<liferay-util:dynamic-include key="/html/portal/setup_wizard.jsp#help_link" />
+							</div>
+
+							<div class="btn float-right hide" id="databaseConfiguration">
+
+								<%
+								request.setAttribute("liferay-learn:message:key", "database-configuration");
+								%>
+
+								<liferay-util:dynamic-include key="/html/portal/setup_wizard.jsp#help_link" />
+							</div>
 						</aui:button-row>
 					</aui:form>
 
@@ -263,6 +282,9 @@
 						var sampleData = A.one('#sampleData');
 						var addSampleData = A.one('#addSampleData');
 
+						var basicConfiguration = A.one('#basicConfiguration');
+						var databaseConfiguration = A.one('#databaseConfiguration');
+
 						var command = A.one('#<%= Constants.CMD %>');
 						var setupForm = A.one('#fm');
 
@@ -280,6 +302,10 @@
 							sampleData.toggle(!showDefault);
 
 							defaultDatabase.val(showDefault);
+
+							databaseConfiguration.toggle(!showDefault);
+
+							basicConfiguration.toggle(showDefault);
 						};
 
 						databaseSelector.on(

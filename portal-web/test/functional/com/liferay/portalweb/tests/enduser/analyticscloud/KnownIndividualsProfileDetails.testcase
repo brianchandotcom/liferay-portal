@@ -57,6 +57,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8938 | Test Summary: All attributes of the individual appear in a list"
 	@priority = "5"
 	test AllIndividualAttributesAppearInList {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user1@liferay.com",
@@ -68,7 +72,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -94,7 +98,7 @@ definition {
 
 			ACIndividualsDashboard.assertIndividualAttributeValue(
 				individualAttribute = "birthDate",
-				individualAttributeValue = "2020-10-10T00:00:00.000Z");
+				individualAttributeValue = "2020-11-10T00:00:00.000Z");
 
 			var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "user1@liferay.com");
 

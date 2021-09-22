@@ -16,6 +16,10 @@ package com.liferay.portal.osgi.web.portlet.container.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletCategory;
@@ -27,6 +31,9 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -35,10 +42,16 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.WebAppPool;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 
 import java.util.HashMap;
 import java.util.Set;
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
+import java.util.jar.JarOutputStream;
+import java.util.jar.Manifest;
+import java.util.zip.ZipEntry;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -54,6 +67,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 
 /**
@@ -66,6 +84,30 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testPortletTrackerBundleStopCleanup() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(PortletTrackerTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		Bundle testBundle = bundleContext.installBundle(
+			"test-bundle-stop-cleanup-bundle",
+			_createBundle("test-bundle-stop-cleanup-bundle"));
+
+		try {
+			testBundle.start();
+
+			Portlet testBundleTestPortlet =
+				PortletLocalServiceUtil.getPortletById(
+					TestBundleActivator.TEST_BUNDLE_TEST_PORTLET_NAME);
+
+			Assert.assertNotNull(testBundleTestPortlet);
+		}
+		finally {
+			testBundle.uninstall();
+		}
+	}
 
 	@Test
 	public void testPortletTrackerRegistrationCompanyScope() throws Exception {
@@ -163,6 +205,51 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 		_testPortletTrackerRegistration("simplename", "simplename");
 	}
 
+	public static class TestBundleActivator implements BundleActivator {
+
+		public static final String TEST_BUNDLE_TEST_PORTLET_NAME =
+			"TEST_BUNDLE_TEST_PORTLET_NAME";
+
+		@Override
+		public void start(BundleContext bundleContext) throws Exception {
+			bundleContext.registerService(
+				javax.portlet.Portlet.class,
+				(javax.portlet.Portlet)ProxyUtil.newProxyInstance(
+					javax.portlet.Portlet.class.getClassLoader(),
+					new Class<?>[] {javax.portlet.Portlet.class},
+					(proxy, method, args) -> method.getDefaultValue()),
+				MapUtil.singletonDictionary(
+					"javax.portlet.name", TEST_BUNDLE_TEST_PORTLET_NAME));
+		}
+
+		@Override
+		public void stop(BundleContext bundleContext) {
+		}
+
+	}
+
+	private InputStream _createBundle(String bundleSymbolicName)
+		throws Exception {
+
+		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream()) {
+
+			try (JarOutputStream jarOutputStream = new JarOutputStream(
+					unsyncByteArrayOutputStream)) {
+
+				_writeManifest(
+					bundleSymbolicName, jarOutputStream,
+					TestBundleActivator.class);
+
+				_writeClasses(jarOutputStream, TestBundleActivator.class);
+			}
+
+			return new UnsyncByteArrayInputStream(
+				unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
+				unsyncByteArrayOutputStream.size());
+		}
+	}
+
 	private void _testPortletIsAvailable(String expectedPortletId)
 		throws Exception {
 
@@ -212,6 +299,57 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 			givenPortletId, false);
 
 		_testPortletIsAvailable(expectedPortletId);
+	}
+
+	private void _writeClasses(
+			JarOutputStream jarOutputStream, Class<?>... classes)
+		throws IOException {
+
+		for (Class<?> clazz : classes) {
+			String className = clazz.getName();
+
+			String path = StringUtil.replace(
+				className, CharPool.PERIOD, CharPool.SLASH);
+
+			String resourcePath = path.concat(".class");
+
+			jarOutputStream.putNextEntry(new ZipEntry(resourcePath));
+
+			ClassLoader classLoader = clazz.getClassLoader();
+
+			StreamUtil.transfer(
+				classLoader.getResourceAsStream(resourcePath), jarOutputStream,
+				false);
+
+			jarOutputStream.closeEntry();
+		}
+	}
+
+	private void _writeManifest(
+			String bundleSymbolicName, JarOutputStream jarOutputStream,
+			Class<?> bundleActivatorClass)
+		throws IOException {
+
+		Manifest manifest = new Manifest();
+
+		Attributes attributes = manifest.getMainAttributes();
+
+		attributes.putValue(
+			Constants.BUNDLE_ACTIVATOR, bundleActivatorClass.getName());
+		attributes.putValue(Constants.BUNDLE_MANIFESTVERSION, "2");
+		attributes.putValue(Constants.BUNDLE_SYMBOLICNAME, bundleSymbolicName);
+		attributes.putValue(Constants.BUNDLE_VERSION, "1.0.0");
+		attributes.putValue(
+			Constants.IMPORT_PACKAGE,
+			"com.liferay.portal.kernel.util,javax.portlet,org.osgi.framework");
+
+		attributes.putValue("Manifest-Version", "2");
+
+		jarOutputStream.putNextEntry(new ZipEntry(JarFile.MANIFEST_NAME));
+
+		manifest.write(jarOutputStream);
+
+		jarOutputStream.closeEntry();
 	}
 
 	@Inject

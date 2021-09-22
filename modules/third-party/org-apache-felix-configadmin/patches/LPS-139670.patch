@@ -1,0 +1,19 @@
+diff --git a/org/apache/felix/cm/impl/ConfigurationManager.java b/org/apache/felix/cm/impl/ConfigurationManager.java
+index 0737f12..499dc88 100644
+--- a/org/apache/felix/cm/impl/ConfigurationManager.java
++++ b/org/apache/felix/cm/impl/ConfigurationManager.java
+@@ -951,7 +951,7 @@ public class ConfigurationManager implements BundleListener
+         StringBuilder buf = new StringBuilder( factoryPid.length() + 1 + 36 );
+ 
+         // prefix the new pid with the factory pid
+-        buf.append( factoryPid ).append( "." );
++        buf.append( factoryPid ).append( "~" );
+ 
+         // serialize the UUID into the buffer
+         for ( int i = 0; i < randomBytes.length; i++ )
+@@ -1703,4 +1703,4 @@ public class ConfigurationManager implements BundleListener
+         this.coordinator = service;
+     }
+ }
+-
++/* @generated */

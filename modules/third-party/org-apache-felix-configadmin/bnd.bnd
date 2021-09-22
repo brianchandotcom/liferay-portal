@@ -1,5 +1,5 @@
 Bundle-SymbolicName: org.apache.felix.configadmin
-Bundle-Version: 1.9.8.LIFERAY-PATCHED-4
+Bundle-Version: 1.9.8.LIFERAY-PATCHED-5
 Import-Package:\
 	!org.osgi.service.coordinator,\
 	!org.osgi.service.log,\

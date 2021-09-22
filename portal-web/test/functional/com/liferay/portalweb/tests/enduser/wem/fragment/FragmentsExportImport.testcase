@@ -1478,9 +1478,9 @@ definition {
 		}
 
 		task ("Import fragment dependencies") {
-			UploadCommonFile(
-				locator1 = "TextInput#FILE",
-				value1 = "collections-HTMLCSSJSJSON-replace.zip");
+			UploadFileWithCustomPath.uploadArchiveFile(
+				fileName = "collections-HTMLCSSJSJSON-replace.zip",
+				filePath = "enduser/wem/fragment");
 
 			SelectFrameTop();
 
@@ -1545,9 +1545,9 @@ definition {
 		}
 
 		task ("Import fragment dependencies") {
-			UploadCommonFile(
-				locator1 = "TextInput#FILE",
-				value1 = "collections-InlineContent-edited.zip");
+			UploadFileWithCustomPath.uploadArchiveFile(
+				fileName = "collections-InlineContent-edited.zip",
+				filePath = "enduser/wem/fragment");
 
 			SelectFrameTop();
 
@@ -1591,9 +1591,9 @@ definition {
 		}
 
 		task ("Import fragment dependencies") {
-			UploadCommonFile(
-				locator1 = "TextInput#FILE",
-				value1 = "fragment-collection.zip");
+			UploadFileWithCustomPath.uploadArchiveFile(
+				fileName = "fragment-collection.zip",
+				filePath = "enduser/wem/fragment");
 
 			SelectFrameTop();
 

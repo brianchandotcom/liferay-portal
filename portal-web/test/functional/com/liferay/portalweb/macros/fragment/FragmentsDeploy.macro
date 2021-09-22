@@ -6,7 +6,7 @@ definition {
 		var testBaseDirName = PropsUtil.get("test.base.dir.name");
 		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
 
-		com.liferay.poshi.runner.util.ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/${fragmentsZip}", "${liferayHome}/deploy/${fragmentsZip}");
+		ArchiveUtil.archive("${testBaseDirName}tests/enduser/wem/fragment/${testDependenciesDirName}/${fragmentsZip}", "${liferayHome}/deploy/${fragmentsZip}");
 
 		Pause(locator1 = "10000");
 	}

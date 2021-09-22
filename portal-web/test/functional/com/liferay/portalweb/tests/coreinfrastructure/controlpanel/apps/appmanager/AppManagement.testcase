@@ -584,9 +584,9 @@ definition {
 
 		AssertElementPresent(locator1 = "TextInput#FILE");
 
-		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			locator1 = "TextInput#FILE",
-			value1 = "title.zip");
+		UploadFileWithCustomPath.uploadArchiveFile(
+			fileName = "title.zip",
+			filePath = "enduser/wem/fragment");
 
 		Button.clickInstall();
 

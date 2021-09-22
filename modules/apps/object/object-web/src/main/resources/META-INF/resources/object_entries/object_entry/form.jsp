@@ -83,7 +83,7 @@ portletDisplay.setURLBack(backURL);
 
 				ddmFormValues.value = JSON.stringify(values);
 
-				form.submit();
+				Liferay.Util.submitForm(form);
 			}
 		});
 	}

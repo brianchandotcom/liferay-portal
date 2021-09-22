@@ -136,7 +136,7 @@
 	color: $table-list-color;
 	display: table;
 	font-size: 0.875rem;
-	overflow-x: scroll;
+	overflow-x: auto;
 	transition: opacity 0.1s ease-in;
 	white-space: nowrap;
 	width: 100%;

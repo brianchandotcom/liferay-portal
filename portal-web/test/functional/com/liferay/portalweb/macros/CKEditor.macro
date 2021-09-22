@@ -115,16 +115,6 @@ definition {
 		Click(locator1 = "CKEditor#OK_BUTTON");
 	}
 
-	macro assertEditorPresent {
-		AssertElementPresent(locator1 = "CKEditor#BODY_FIELD");
-	}
-
-	macro viewEntryContent {
-		AssertTextEquals(
-			locator1 = "CKEditor#BODY",
-			value1 = "${content}");
-	}
-
 	macro viewEntryContentImage {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 

@@ -271,16 +271,6 @@
 	<td>//div[contains(@class,'thumbnail-overlay')]//button[contains(@aria-label,'Play')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>VIDEO_OK</td>
-	<td>//span[contains(@class,'button')][normalize-space(text())='OK']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIDEO_URL</td>
-	<td>//div[label[contains(.,'Video')]]//input</td>
-	<td></td>
-</tr>
 <!--SOURCE_CODE_PREVIEW-->
 <tr>
 	<td>CODE_PREVIEW_IFRAME</td>

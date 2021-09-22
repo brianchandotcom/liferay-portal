@@ -271,7 +271,6 @@ function visit(
 						canUpdateEditables &&
 						canActivateEditable(selectedViewportSize, type),
 					children: [],
-					disabled: !isMasterPage && itemInMasterLayout,
 					dragAndDropHoveredItemId,
 					draggable: false,
 					expanded: childId === activeItemId,

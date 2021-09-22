@@ -146,7 +146,7 @@ AUI.add(
 						instance.ns('name')
 					);
 
-					var sessionMap = A.merge(
+					var sessionMap = Object.assign(
 						instance._getInputLocalizedValuesMap(
 							descriptionInputLocalized,
 							'description'
@@ -169,7 +169,7 @@ AUI.add(
 						.one('#workflowDefinition')
 						.val();
 
-					return A.merge(sessionMap, {
+					return Object.assign(sessionMap, {
 						ddmStructureId,
 						ddmStructureName,
 						ddmTemplateId,

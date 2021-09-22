@@ -559,14 +559,12 @@ AUI.add(
 				);
 
 				if (!editorForm) {
-					config = A.merge(
-						{
-							builder: instance.get('builder'),
-							parentEditor: instance,
-							render: false,
-						},
-						config
-					);
+					config = {
+						builder: instance.get('builder'),
+						parentEditor: instance,
+						render: false,
+						...config,
+					};
 
 					editorForm = new editorFormClass(config);
 
@@ -579,13 +577,11 @@ AUI.add(
 			showEditorForm(editorFormClass, container, value, config) {
 				var instance = this;
 
-				config = A.merge(
-					{
-						render: container,
-						value,
-					},
-					config
-				);
+				config = {
+					render: container,
+					value,
+					...config,
+				};
 
 				var editor = instance.getEmbeddedEditorForm(
 					editorFormClass,
@@ -656,7 +652,7 @@ AUI.add(
 
 				strings: {
 					valueFn() {
-						return A.merge(KaleoDesignerStrings, {
+						return Object.assign(KaleoDesignerStrings, {
 							assignmentTypeLabel:
 								KaleoDesignerStrings.assignmentType,
 							defaultAssignmentLabel:
@@ -1236,7 +1232,7 @@ AUI.add(
 
 				strings: {
 					valueFn() {
-						return A.merge(KaleoDesignerStrings, {
+						return Object.assign(KaleoDesignerStrings, {
 							assignmentTypeLabel:
 								KaleoDesignerStrings.recipientType,
 							defaultAssignmentLabel:
@@ -1712,7 +1708,7 @@ AUI.add(
 
 					instance.set('recipients', localRecipients);
 
-					return A.merge(
+					return Object.assign(
 						NotificationsEditorForm.superclass.getValue.apply(
 							this,
 							arguments
@@ -1892,7 +1888,7 @@ AUI.add(
 
 			instance.set('recipients', localRecipients);
 
-			return A.merge(
+			return Object.assign(
 				NotificationsEditorForm.superclass.getValue.apply(
 					this,
 					arguments

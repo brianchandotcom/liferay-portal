@@ -75,6 +75,16 @@ public class DisplayPageTemplateSerDes {
 			sb.append(String.valueOf(displayPageTemplate.getContentType()));
 		}
 
+		if (displayPageTemplate.getDefaultTemplate() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultTemplate\": ");
+
+			sb.append(displayPageTemplate.getDefaultTemplate());
+		}
+
 		if (displayPageTemplate.getKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -142,6 +152,15 @@ public class DisplayPageTemplateSerDes {
 				String.valueOf(displayPageTemplate.getContentType()));
 		}
 
+		if (displayPageTemplate.getDefaultTemplate() == null) {
+			map.put("defaultTemplate", null);
+		}
+		else {
+			map.put(
+				"defaultTemplate",
+				String.valueOf(displayPageTemplate.getDefaultTemplate()));
+		}
+
 		if (displayPageTemplate.getKey() == null) {
 			map.put("key", null);
 		}
@@ -188,6 +207,12 @@ public class DisplayPageTemplateSerDes {
 				if (jsonParserFieldValue != null) {
 					displayPageTemplate.setContentType(
 						ContentTypeSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "defaultTemplate")) {
+				if (jsonParserFieldValue != null) {
+					displayPageTemplate.setDefaultTemplate(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "key")) {

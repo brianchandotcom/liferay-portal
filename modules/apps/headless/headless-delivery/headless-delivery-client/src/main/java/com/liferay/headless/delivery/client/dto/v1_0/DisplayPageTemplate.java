@@ -77,6 +77,27 @@ public class DisplayPageTemplate implements Cloneable, Serializable {
 
 	protected ContentType contentType;
 
+	public Boolean getDefaultTemplate() {
+		return defaultTemplate;
+	}
+
+	public void setDefaultTemplate(Boolean defaultTemplate) {
+		this.defaultTemplate = defaultTemplate;
+	}
+
+	public void setDefaultTemplate(
+		UnsafeSupplier<Boolean, Exception> defaultTemplateUnsafeSupplier) {
+
+		try {
+			defaultTemplate = defaultTemplateUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean defaultTemplate;
+
 	public String getKey() {
 		return key;
 	}

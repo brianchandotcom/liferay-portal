@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.account.internal.util;
 
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.manager.CurrentAccountEntryManager;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceConfiguration;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.constants.CommerceAccountPortletKeys;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.model.CommerceAccountModel;
 import com.liferay.commerce.account.model.impl.CommerceAccountImpl;
@@ -80,12 +80,13 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 		long groupId = _portal.getScopeGroupId(httpServletRequest);
 
 		long plid = _portal.getPlidFromPortletId(
-			groupId, CommerceAccountPortletKeys.COMMERCE_ACCOUNT);
+			groupId, AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT);
 
 		if (plid > 0) {
 			PortletURL portletURL = _portletURLFactory.create(
-				httpServletRequest, CommerceAccountPortletKeys.COMMERCE_ACCOUNT,
-				plid, PortletRequest.RENDER_PHASE);
+				httpServletRequest,
+				AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT, plid,
+				PortletRequest.RENDER_PHASE);
 
 			return portletURL.toString();
 		}

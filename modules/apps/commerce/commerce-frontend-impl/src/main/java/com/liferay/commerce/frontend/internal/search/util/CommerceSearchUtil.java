@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.frontend.internal.search.util;
 
-import com.liferay.commerce.account.constants.CommerceAccountPortletKeys;
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -106,7 +106,7 @@ public class CommerceSearchUtil {
 		}
 
 		long plid = _portal.getPlidFromPortletId(
-			groupId, CommerceAccountPortletKeys.COMMERCE_ACCOUNT);
+			groupId, AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT);
 
 		if (plid > 0) {
 			layout = _layoutLocalService.fetchLayout(plid);

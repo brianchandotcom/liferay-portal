@@ -427,6 +427,8 @@ definition {
 				siteName = "Site Name");
 
 			DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
+
+			Pause(locator1 = "3000");
 		}
 
 		ACUtils.closeAllSessionsAndWait();

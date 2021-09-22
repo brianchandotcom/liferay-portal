@@ -4,7 +4,6 @@
 	<checkstyle>
 		<suppress checks="CamelCaseNameCheck" files="dynamic-data-mapping-data-provider-impl/src/main/java/com/liferay/dynamic/data/mapping/data/provider/internal/rest/DDMRESTDataProviderSettings\.java" />
 		<suppress checks="CamelCaseNameCheck" files="dynamic-data-mapping-data-provider-impl/src/test/java/com/liferay/dynamic/data/mapping/data/provider/internal/rest/DDMRESTDataProviderSettingsTest\.java" />
-		<suppress checks="GenericTypeCheck" files="dynamic-data-mapping-data-provider-impl/src/test/java/com/liferay/dynamic/data/mapping/data/provider/internal/rest/DDMRESTDataProviderTest.java" />
 		<suppress checks="MapBuilderCheck" files="dynamic-data-mapping-form-field-type/src/main/java/com/liferay/dynamic/data/mapping/form/field/type/internal/document/library/DocumentLibraryDDMFormFieldTemplateContextContributor\.java" />
 		<suppress checks="MapBuilderCheck" files="dynamic-data-mapping-form-field-type/src/main/java/com/liferay/dynamic/data/mapping/form/field/type/internal/select/SelectDDMFormFieldTemplateContextContributor\.java" />
 		<suppress checks="MapBuilderCheck" files="dynamic-data-mapping-form-renderer/src/main/java/com/liferay/dynamic/data/mapping/form/renderer/internal/DDMFormFieldTemplateContextFactory\.java" />

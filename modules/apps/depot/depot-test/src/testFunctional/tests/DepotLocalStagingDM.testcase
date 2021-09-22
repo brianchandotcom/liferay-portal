@@ -1755,11 +1755,9 @@ definition {
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
 
-		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
-
-		AssertVisible(
-			key_dmDocumentFileName = "Document_1.jpg",
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
+		DMDocument.viewCP(
+			dmDocumentTitle = "Document_1.jpg",
+			previewImage = "Document_1.jpg");
 	}
 
 	@description = "This ensures that an image with custom field in depot can be published in staging site when enabling local staging."

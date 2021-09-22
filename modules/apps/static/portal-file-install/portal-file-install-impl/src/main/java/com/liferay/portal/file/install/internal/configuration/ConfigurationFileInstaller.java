@@ -110,6 +110,15 @@ public class ConfigurationFileInstaller implements FileInstaller {
 			old.remove(DirectoryWatcher.FILENAME);
 			old.remove(Constants.SERVICE_PID);
 			old.remove(ConfigurationAdmin.SERVICE_FACTORYPID);
+
+			if ((dictionary.get(ConfigurationAdmin.SERVICE_BUNDLELOCATION) ==
+					null) &&
+				Objects.equals(
+					StringPool.QUESTION,
+					old.get(ConfigurationAdmin.SERVICE_BUNDLELOCATION))) {
+
+				old.remove(ConfigurationAdmin.SERVICE_BUNDLELOCATION);
+			}
 		}
 
 		if (!_equals(dictionary, old)) {

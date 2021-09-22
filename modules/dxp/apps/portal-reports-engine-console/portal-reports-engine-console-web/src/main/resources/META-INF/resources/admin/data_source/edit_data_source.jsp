@@ -57,7 +57,7 @@ renderResponse.setTitle((source != null) ? LanguageUtil.format(request, "edit-x"
 
 				<aui:input autocomplete="off" label="jdbc-user-name" name="driverUserName" required="<%= true %>" />
 
-				<aui:input autocomplete="off" label="jdbc-password" name="driverPassword" type="password" />
+				<aui:input label="jdbc-password" name="driverPassword" type="password" />
 			</div>
 		</aui:fieldset>
 

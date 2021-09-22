@@ -486,8 +486,6 @@ definition {
 			depotName = "Test Depot Name",
 			uploadFileName = "Document_2.jpg");
 
-		Pause(locator1 = "1000");
-
 		AssertVisible(
 			key_imageName = "Document_2.jpg",
 			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
@@ -1421,8 +1419,6 @@ definition {
 			depotName = "Test Depot Name",
 			uploadFileName = "Document_1.jpg");
 
-		Pause(locator1 = "1000");
-
 		AssertVisible(
 			key_imageName = "Document_1.jpg",
 			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
@@ -1457,8 +1453,6 @@ definition {
 			depotName = "Test Depot Name",
 			navTab = "Documents and Media",
 			uploadFileName = "Document_2.jpg");
-
-		Pause(locator1 = "1000");
 
 		AssertVisible(
 			key_imageName = "Document_2.jpg",

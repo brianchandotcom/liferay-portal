@@ -5,7 +5,7 @@ task runGradleTest
 runGradleTest {
 	doLast {
 		File dir = file("../../../bundle")
-		String tomcatVersion = "9.0.43"
+		String tomcatVersion = "9.0.53"
 
 		assert liferay.appServerDir == new File(dir, "tomcat-${tomcatVersion}")
 		assert liferay.appServerLibGlobalDir == new File(dir, "tomcat-${tomcatVersion}/lib/ext")

@@ -68,6 +68,8 @@ public class PortalUpgradeProcessRegistryImpl
 			new UpgradeCalendarClassNameIdsPortletPreferences());
 
 		upgradeProcesses.put(new Version(2, 0, 9), new DummyUpgradeProcess());
+
+		upgradeProcesses.put(new Version(2, 0, 10), new DummyUpgradeProcess());
 	}
 
 }

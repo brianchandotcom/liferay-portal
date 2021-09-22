@@ -66,16 +66,16 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 
 						<aui:input disabled="<%= objectDefinition.isApproved() %>" label="name" name="shortName" required="<%= true %>" type="text" value="<%= objectDefinition.getShortName() %>" />
 
-						<aui:input name="label" />
+						<aui:input disabled="<%= objectDefinition.isSystem() %>" name="label" />
 
-						<aui:input name="pluralLabel" />
+						<aui:input disabled="<%= objectDefinition.isSystem() %>" name="pluralLabel" />
 
 						<aui:input cssClass="disabled" label="object-definition-table-name" name="DBTableName" readonly="true" type="text" />
 					</clay:col>
 				</clay:row>
 
 				<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-					<aui:input label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= objectDefinition.isActive() %>" />
+					<aui:input disabled="<%= objectDefinition.isSystem() %>" label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= objectDefinition.isActive() %>" />
 				</aui:field-wrapper>
 			</clay:sheet-section>
 
@@ -108,7 +108,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					<clay:col
 						md="11"
 					>
-						<aui:select name="panelCategoryKey" showEmptyOption="<%= true %>">
+						<aui:select disabled="<%= objectDefinition.isSystem() %>" name="panelCategoryKey" showEmptyOption="<%= true %>">
 
 							<%
 							for (KeyValuePair keyValuePair : objectDefinitionsDetailsDisplayContext.getKeyValuePairs()) {

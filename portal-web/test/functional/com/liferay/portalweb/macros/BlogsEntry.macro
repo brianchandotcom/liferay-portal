@@ -577,6 +577,14 @@ definition {
 			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_UNPUBLISHED");
 	}
 
+	macro removeExternalLink {
+		Click(
+			key_entryContent = "${entryContent}",
+			locator1 = "BlogsEntry#CONTENT_LINK");
+
+		Click(locator1 = "AlloyEditor#TEXT_FORMATTING_REMOVE_LINK_BUTTON");
+	}
+
 	macro removeSmallImage {
 		Panel.expandPanel(panel = "Configuration");
 

@@ -52,7 +52,7 @@ definition {
 	macro addEntryExternalURLToExistingText {
 		SelectFrame.selectFrameNoLoading(
 			key_fieldLabel = "${fieldLabel}",
-			locator1 = "CKEditor#FIELD_LABEL_IFRAME");
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
 		SelectFieldText(locator1 = "CKEditor#BODY");
 

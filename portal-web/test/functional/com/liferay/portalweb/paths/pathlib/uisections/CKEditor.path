@@ -66,11 +66,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIELD_LABEL_IFRAME</td>
-	<td>//label[contains(.,'${key_fieldLabel}')]//following-sibling::div//div[contains(@id,'cke')]/iframe</td>
-	<td></td>
-</tr>
-<tr>
 	<td>OK_BUTTON</td>
 	<td>//a[contains(@role,'button')][normalize-space()='OK']</td>
 	<td></td>

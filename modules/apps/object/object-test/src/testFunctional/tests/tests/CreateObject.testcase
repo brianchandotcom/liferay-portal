@@ -369,8 +369,10 @@ definition {
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.addNewObject(
-			fieldLabelName = "",
+			fieldLabelName = "Custom Field",
 			pluralLabelName = "Custom Fields");
+
+		ObjectAdmin.saveCustomObject();
 
 		ObjectAdmin.viewFieldErrorMessage(message = "Name is null");
 	}

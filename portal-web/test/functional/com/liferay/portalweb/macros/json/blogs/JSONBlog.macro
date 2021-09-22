@@ -63,6 +63,10 @@ definition {
 				workflowAction = "${workflowAction}");
 		}
 
+		if (!(isSet(friendlyURL))) {
+			var friendlyURL = "";
+		}
+
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
 		}
@@ -95,8 +99,10 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/blogs.blogsentry/add-entry \
 			-u ${userEmailAddress}:${userPassword} \
+			-d externalReferenceCode= \
 			-d title=${entryTitle} \
 			-d subtitle=${entrySubtitle} \
+			-d urlTitle=${friendlyURL} \
 			-d description= \
 			-d content=${contentXML} \
 			-d displayDateMonth=${displayDateMonth} \
@@ -263,24 +269,33 @@ definition {
 
 	@summary = "This calls the JSON WS API to update a blog entry"
 	macro updateEntry {
-		Variables.assertDefined(parameterList = "${entryContent},${entryTitle},${groupName}");
+		Variables.assertDefined(parameterList = "${entryTitle},${groupName}");
 
 		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		if (isSet(newEntryContent)) {
+			var entryContent = "${newEntryContent}";
+		}
+
+		if (!(isSet(entrySubtitle))) {
+			var entrySubtitle = "";
+		}
+
+		if (!(isSet(newFriendlyURL))) {
+			var newFriendlyURL = "";
+		}
 
 		var contentXML = JSONBlogSetter.setContentXML(content = "${entryContent}");
 
 		var entryId = JSONBlog.getBlogEntryId(
 			friendlyURL = "${friendlyURL}",
 			entryTitle = "${entryTitle}",
-			groupName = "${groupName}");
-
-		if (!(isSet(site))) {
-			var site = "true";
-		}
-
-		if (!(isSet(entrySubtitle))) {
-			var entrySubtitle = "";
-		}
+			groupName = "${groupName}",
+			site = "${site}");
 
 		var serviceContext = JSONBlogSetter.setServiceContext(
 			assetCategoryIds = "${assetCategoryIds}",
@@ -290,15 +305,7 @@ definition {
 			site = "${site}",
 			workflowAction = "${workflowAction}");
 
-		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
-		}
-
-		if (!(isSet(userPassword))) {
-			var userPassword = "test";
-		}
-
-		if (isSet(displayDate)) {
+		if (isSet(newDisplayDate)) {
 			var displayDateMinute = DateUtil.getFormattedCurrentDate("m");
 			var displayDateHour = DateUtil.getFormattedCurrentDate("H");
 			var displayDateDay = DateUtil.getCurrentDate();
@@ -319,12 +326,21 @@ definition {
 			var displayDateYear = "2004";
 		}
 
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/blogs.blogsentry/update-entry \
 			-u ${userEmailAddress}:${userPassword} \
 			-d entryId=${entryId} \
 			-d title=${entryTitle} \
 			-d subtitle=${entrySubtitle} \
+			-d urlTitle=${newFriendlyURL} \
 			-d description= \
 			-d content=${contentXML} \
 			-d displayDateMonth=${displayDateMonth} \

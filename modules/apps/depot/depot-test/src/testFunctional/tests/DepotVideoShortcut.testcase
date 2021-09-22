@@ -104,17 +104,9 @@ definition {
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Shortened URL Depot Name");
 
-		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
-
-		Pause(locator1 = "3000");
-
-		SelectFrame(
-			key_title = "WC WebContent Title",
-			locator1 = "IFrame#MODAL_ANY");
-
-		AssertVisible(
-			key_service = "https://www.youtube.com",
-			locator1 = "WCPreview#BODY_FIELD_VIDEO");
+		WebContent.viewVideoPreview(
+			service = "youtube",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that a depot video shortcut associated with a tag can be searched from the connected site."

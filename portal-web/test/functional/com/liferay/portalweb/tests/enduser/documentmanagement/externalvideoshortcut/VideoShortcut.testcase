@@ -245,15 +245,9 @@ definition {
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
-		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
-
-		Pause(locator1 = "3000");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertVisible(
-			key_service = "https://player.twitch.tv",
-			locator1 = "WCPreview#BODY_FIELD_VIDEO");
+		WebContent.viewVideoPreview(
+			service = "https://player.twitch.tv",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that a video shortcut can be added with Vimeo."
@@ -379,15 +373,9 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
-
-		Pause(locator1 = "3000");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertVisible(
-			key_service = "https://www.youtube.com",
-			locator1 = "WCPreview#BODY_FIELD_VIDEO");
+		WebContent.viewVideoPreview(
+			service = "https://www.youtube.com",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "It ensures that a message is displayed in the preview section When pasting an invalid URL."
@@ -517,15 +505,9 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
-
-		Pause(locator1 = "3000");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertVisible(
-			key_service = "https://www.youtube.com",
-			locator1 = "WCPreview#BODY_FIELD_VIDEO");
+		WebContent.viewVideoPreview(
+			service = "https://www.youtube.com",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that the video shortcut can be viewed with different views in the item selector."

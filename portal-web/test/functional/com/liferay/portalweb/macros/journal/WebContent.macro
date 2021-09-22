@@ -2638,6 +2638,21 @@ definition {
 			value1 = "${version}");
 	}
 
+	macro viewVideoPreview {
+		if (isSet(webContentTitle)) {
+			WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "${webContentTitle}");
+
+			Pause(locator1 = "3000");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		AssertVisible(
+			key_service = "${service}",
+			locator1 = "WCPreview#BODY_FIELD_VIDEO");
+
+	}
+
 	macro viewVideoViaWCD {
 		SelectFrame(locator1 = "IFrame#IFRAME");
 

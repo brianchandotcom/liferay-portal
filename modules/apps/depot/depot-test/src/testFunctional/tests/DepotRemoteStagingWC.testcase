@@ -731,9 +731,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_service = "youtube",
-			locator1 = "WCPreview#BODY_FIELD_VIDEO");
+		WebContent.viewVideoPreview(service = "youtube");
 
 		Staging.gotoPublishToLive();
 
@@ -751,9 +749,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
-		AssertVisible(
-			key_service = "youtube",
-			locator1 = "WCPreview#BODY_FIELD_VIDEO");
+		WebContent.viewVideoPreview(service = "youtube");
 	}
 
 	@description = "This ensures that a web content folder with an article in depot can be published in AP through widget config manual selection when enabling remote staging."

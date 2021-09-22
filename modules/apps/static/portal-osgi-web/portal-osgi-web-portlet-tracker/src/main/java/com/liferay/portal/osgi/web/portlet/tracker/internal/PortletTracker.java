@@ -1593,8 +1593,12 @@ public class PortletTracker
 
 			BundleContext bundleContext = _bundle.getBundleContext();
 
-			bundleContext.ungetService(
-				_servletContextHelperRegistrationServiceReference);
+			try {
+				bundleContext.ungetService(
+					_servletContextHelperRegistrationServiceReference);
+			}
+			catch (IllegalStateException illegalStateException) {
+			}
 		}
 
 		public synchronized void setPortletApp(PortletApp portletApp) {

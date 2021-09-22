@@ -32,6 +32,7 @@ definition {
 	@priority = "5"
 	test ShowsKnownAnonymousIndividualsAsWellAsSegmentedUnsegmentedIndividuals {
 		property portal.upstream = "quarantine";
+
 		// AC Refactor: Timing issues may happen on this test case
 		// AC Refactor ticket: LRAC-9409
 
@@ -139,6 +140,7 @@ definition {
 			ACNavigation.openItem(itemName = "AC Page - Site Name - ${portalURL}");
 
 			// The page takes too long to appear in the Page Section in AC
+
 		}
 
 		task ("Assert that Known, Anonymous, Segmented and Unsegmented Individuals are displayed") {

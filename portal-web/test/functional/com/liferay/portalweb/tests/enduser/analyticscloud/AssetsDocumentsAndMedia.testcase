@@ -593,6 +593,8 @@ definition {
 					siteName = "Site Name");
 
 				DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "3000");
 			}
 		}
 
@@ -615,7 +617,7 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			ACNavigation.openItem(itemName = "DM AC Title");
+			ACNavigation.openItem(itemName = "Document_1.jpg");
 		}
 
 		task ("Assert downloads by devices metric") {

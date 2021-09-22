@@ -163,7 +163,8 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select count(distinct UserGroupRole.groupId) from ",
-					"UserGroupRole inner join Group_ on Group.classNameId != '",
+					"UserGroupRole inner join Group_ on Group_.classNameId != ",
+					"'",
 					_classNameLocalService.getClassNameId(AccountEntry.class),
 					"' and Group_.groupId = UserGroupRole.groupId where ",
 					"UserGroupRole.roleId = ", roleId))) {

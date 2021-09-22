@@ -414,10 +414,6 @@ definition {
 		ObjectPortlet.assertEntryNotPresent(entry = "Test text 3");
 
 		ObjectPortlet.assertEntryNotPresent(entry = "Test text 4");
-
-
-
-		
 	}
 
 	@description = "LPS-135393 - Verify the table is updated when changing the pagination number on the Custom Object Portlet"

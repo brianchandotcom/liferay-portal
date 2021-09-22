@@ -11,6 +11,11 @@
 
 <tbody>
 	<tr>
+		<td>ANY_PAGE</td>
+		<td>//ul[contains(@class,'pagination')]//li[contains(@class,'page-item')]//*[contains(@class,'page-link')][normalize-space(text())='${key_pageNumber}']</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ARROW_DOWN_ICON</td>
 		<td>//button[contains(@class,'dropdown-toggle btn btn-monospaced btn-outline-borderless btn-outline-secondary')]</td>
 		<td></td>

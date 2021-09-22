@@ -16,17 +16,12 @@ definition {
 		Click(locator1 = "ObjectPortlet#PAGINATION_ITEMS_PER_PAGE_SELECT");
 
 		MenuItem.click(menuItem = "${itemsPerPage}");
-
-
 	}
 
 	macro checkAnyPage {
 		var key_pageNumber = "${pageNumber}";
 
 		Click(locator1 = "ObjectPortlet#ANY_PAGE");
-
-
-		
 	}
 
 	macro checkUncheckColumnsDisplayed {

@@ -47,8 +47,12 @@ import com.liferay.search.experiences.blueprint.parameter.SXPParameterDataCreato
 import com.liferay.search.experiences.blueprint.parameter.StringArraySXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.StringSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributor;
+import com.liferay.search.experiences.internal.blueprint.data.provider.GeoLocationDataProvider;
+import com.liferay.search.experiences.internal.blueprint.data.provider.WeatherDataProvider;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.CommerceSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.ContextSXPParameterContributor;
+import com.liferay.search.experiences.internal.blueprint.parameter.contributor.IPStackParameterContributor;
+import com.liferay.search.experiences.internal.blueprint.parameter.contributor.OpenWeatherMapSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.SystemSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.TimeSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.UserSXPParameterContributor;
@@ -114,6 +118,9 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			new CommerceSXPParameterContributor(),
 			new ContextSXPParameterContributor(
 				_groupLocalService, _language, _layoutLocalService),
+			new IPStackParameterContributor(_geoLocationDataProvider),
+			new OpenWeatherMapSXPParameterContributor(
+				_geoLocationDataProvider, _weatherDataProvider),
 			new SystemSXPParameterContributor(),
 			new TimeSXPParameterContributor(_language, _userLocalService),
 			new UserSXPParameterContributor(
@@ -636,6 +643,13 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		return array;
 	}
 
+	// TODO (NOTE TO BE REMOVED): wiring this to IPStack
+	//  as the parameter contributor in activate() is wired
+	// to IPStack config
+
+	@Reference(target = "(name=ipstack)", unbind = "-")
+	private GeoLocationDataProvider _geoLocationDataProvider;
+
 	@Reference
 	private GroupLocalService _groupLocalService;
 
@@ -667,5 +681,12 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	// TODO (NOTE TO BE REMOVED): wiring this to OpenWeatherMap
+	//  as the parameter contributor in activate() is wired
+	// to OpenWeatherMap config
+
+	@Reference(target = "(name=openweathermap)", unbind = "-")
+	private WeatherDataProvider _weatherDataProvider;
 
 }

@@ -35,14 +35,13 @@ public class ObjectRelationshipServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectRelationship addObjectRelationship(
-			long userId, long objectDefinitionId1, long objectDefinitionId2,
+			long objectDefinitionId1, long objectDefinitionId2,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectRelationshipService.addObjectRelationship(
-			userId, objectDefinitionId1, objectDefinitionId2, labelMap, name,
-			type);
+			objectDefinitionId1, objectDefinitionId2, labelMap, name, type);
 	}
 
 	@Override

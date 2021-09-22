@@ -40,13 +40,12 @@ public class ObjectRelationshipServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectRelationshipServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectRelationship addObjectRelationship(
-			long userId, long objectDefinitionId1, long objectDefinitionId2,
+			long objectDefinitionId1, long objectDefinitionId2,
 			Map<java.util.Locale, String> labelMap, String name, String type)
 		throws PortalException {
 
 		return getService().addObjectRelationship(
-			userId, objectDefinitionId1, objectDefinitionId2, labelMap, name,
-			type);
+			objectDefinitionId1, objectDefinitionId2, labelMap, name, type);
 	}
 
 	public static ObjectRelationship deleteObjectRelationship(

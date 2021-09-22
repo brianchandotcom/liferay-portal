@@ -123,6 +123,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8939 | Test Summary: Assert Individuals details search result displays correct number"
 	@priority = "3"
 	test AssertIndividualsSearchDetailsResult {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user1@liferay.com",

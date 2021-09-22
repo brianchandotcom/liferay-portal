@@ -6,6 +6,7 @@
 	"fields": [
 		{
 			"dataType": "string",
+			"fieldReference": "Foo",
 			"indexType": "keyword",
 			"label": {
 				"en_US": "TextFieldNameLabel"

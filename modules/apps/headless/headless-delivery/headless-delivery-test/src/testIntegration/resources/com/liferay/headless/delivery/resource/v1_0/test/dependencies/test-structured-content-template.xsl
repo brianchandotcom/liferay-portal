@@ -1,1 +1,1 @@
-<div>${MyText.getData()}</div>
+<div>${Foo.getData()}</div>

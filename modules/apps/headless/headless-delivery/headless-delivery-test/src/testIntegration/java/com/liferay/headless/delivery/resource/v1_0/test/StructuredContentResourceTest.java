@@ -511,7 +511,7 @@ public class StructuredContentResourceTest
 								data = RandomTestUtil.randomString(10);
 							}
 						};
-						name = "MyText";
+						name = "Foo";
 					}
 				}
 			});

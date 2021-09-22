@@ -184,6 +184,11 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 				LayoutPageTemplateStructureUpgradeProcess(
 					_layoutLocalService, _segmentsExperienceLocalService,
 					_userLocalService));
+
+		registry.register(
+			"5.1.0", "5.1.1",
+			new com.liferay.layout.page.template.internal.upgrade.v5_1_1.
+				LayoutPageTemplateStructureUpgradeProcess(_layoutLocalService));
 	}
 
 	@Reference

@@ -1716,4 +1716,10 @@ definition {
 		}
 	}
 
+	macro viewVideoThumbnail {
+		AssertVisible(
+			key_thumbnailName = "${thumbnailName}",
+			locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL");
+	}
+
 }

@@ -1317,9 +1317,7 @@ definition {
 			Refresh();
 		}
 
-		AssertVisible(
-			key_thumbnailName = "Document_1.mp4",
-			locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL");
+		AssetPublisherPortlet.viewVideoThumbnail(thumbnailName = "Document_1.mp4");
 
 		Staging.gotoPublishToLive();
 
@@ -1335,9 +1333,7 @@ definition {
 			Refresh();
 		}
 
-		AssertVisible(
-			key_thumbnailName = "Document_1.mp4",
-			locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL");
+		AssetPublisherPortlet.viewVideoThumbnail(thumbnailName = "Document_1.mp4");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -1361,9 +1357,7 @@ definition {
 			Refresh();
 		}
 
-		AssertVisible(
-			key_thumbnailName = "Document_2.mp4",
-			locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL");
+		AssetPublisherPortlet.viewVideoThumbnail(thumbnailName = "Document_2.mp4");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -1383,9 +1377,7 @@ definition {
 			Refresh();
 		}
 
-		AssertVisible(
-			key_thumbnailName = "Document_2.mp4",
-			locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL");
+		AssetPublisherPortlet.viewVideoThumbnail(thumbnailName = "Document_2.mp4");
 	}
 
 	@description = "This ensures that the open graph image from a depot can be edited and republished when enabling local staging."
@@ -2032,9 +2024,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_thumbnailName = "https://i.ytimg.com",
-			locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL");
+		AssetPublisherPortlet.viewVideoThumbnail(thumbnailName = "https://i.ytimg.com");
 
 		Staging.gotoPublishToLive();
 
@@ -2044,9 +2034,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_thumbnailName = "https://i.ytimg.com",
-			locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL");
+		AssetPublisherPortlet.viewVideoThumbnail(thumbnailName = "https://i.ytimg.com");
 	}
 
 	@description = "This ensures that the blog small image from a depot can be removed and republished when enabling local staging."

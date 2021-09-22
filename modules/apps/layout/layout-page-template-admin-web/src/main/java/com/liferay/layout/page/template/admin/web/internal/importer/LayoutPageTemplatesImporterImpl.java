@@ -1570,13 +1570,23 @@ public class LayoutPageTemplatesImporterImpl
 					fetchLayoutPageTemplateEntry(
 						_groupId, _displayPageTemplateEntry.getKey());
 
-			_processLayoutPageTemplateEntry(
+			layoutPageTemplateEntry = _processLayoutPageTemplateEntry(
 				classNameId, classTypeId, _groupId, 0, layoutPageTemplateEntry,
 				displayPageTemplate.getName(),
 				_displayPageTemplateEntry.getPageDefinition(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
 				_overwrite, _displayPageTemplateEntry.getThumbnailZipEntry(),
 				_displayPageTemplateEntry.getZipPath(), _zipFile);
+
+			boolean defaultTemplate = GetterUtil.getBoolean(
+				displayPageTemplate.getDefaultTemplate());
+
+			if ((layoutPageTemplateEntry != null) && defaultTemplate) {
+				_layoutPageTemplateEntryLocalService.
+					updateLayoutPageTemplateEntry(
+						layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+						true);
+			}
 
 			return null;
 		}

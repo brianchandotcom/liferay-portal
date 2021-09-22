@@ -60,7 +60,8 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 							size = 12,
 							value = {
 								"fieldReference", "name", "objectFieldName",
-								"dataType", "nativeField", "showLabel"
+								"dataType", "nativeField", "showLabel",
+								"rulesActionDisabled", "rulesConditionDisabled"
 							}
 						)
 					}
@@ -81,7 +82,7 @@ public interface ObjectRelationshipDDMFormFieldTypeSettings
 		properties = {
 			"dataSourceType=data-provider", "ddmDataProviderInstanceId=objects"
 		},
-		type = "select"
+		required = true, type = "select"
 	)
 	public String objectDefinitionId();
 

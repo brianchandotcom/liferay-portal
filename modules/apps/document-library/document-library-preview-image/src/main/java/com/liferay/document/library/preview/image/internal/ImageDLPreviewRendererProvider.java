@@ -15,8 +15,6 @@
 package com.liferay.document.library.preview.image.internal;
 
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
-import com.liferay.document.library.kernel.model.DLProcessorConstants;
-import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.preview.DLPreviewRenderer;
@@ -101,18 +99,10 @@ public class ImageDLPreviewRendererProvider
 		}
 	}
 
-	@Reference(
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(type=" + DLProcessorConstants.IMAGE_PROCESSOR + ")",
-		unbind = "-"
-	)
-	protected void setDLProcessor(DLProcessor dlProcessor) {
-		_imageProcessor = (ImageProcessor)dlProcessor;
-	}
-
 	@Reference
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
 	private ImageProcessor _imageProcessor;
 
 	@Reference(

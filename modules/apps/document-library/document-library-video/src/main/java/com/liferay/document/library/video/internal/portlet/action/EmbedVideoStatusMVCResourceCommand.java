@@ -15,9 +15,7 @@
 package com.liferay.document.library.video.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
-import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
@@ -59,15 +57,6 @@ public class EmbedVideoStatusMVCResourceCommand extends BaseMVCResourceCommand {
 		throws IOException {
 
 		resourceResponse.setStatus(_getEmbedVideoStatus(resourceRequest));
-	}
-
-	@Reference(
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(type=" + DLProcessorConstants.VIDEO_PROCESSOR + ")",
-		unbind = "-"
-	)
-	protected void setDLProcessor(DLProcessor dlProcessor) {
-		_videoProcessor = (VideoProcessor)dlProcessor;
 	}
 
 	private int _getEmbedVideoStatus(ResourceRequest resourceRequest) {
@@ -115,6 +104,7 @@ public class EmbedVideoStatusMVCResourceCommand extends BaseMVCResourceCommand {
 	@Reference
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
 	private VideoProcessor _videoProcessor;
 
 }

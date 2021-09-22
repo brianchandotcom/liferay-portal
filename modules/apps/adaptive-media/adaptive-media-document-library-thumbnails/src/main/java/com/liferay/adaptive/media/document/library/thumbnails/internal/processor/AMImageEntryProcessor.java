@@ -70,7 +70,9 @@ import org.osgi.service.component.annotations.Reference;
 		"service.ranking:Integer=100",
 		"type=" + DLProcessorConstants.IMAGE_PROCESSOR
 	},
-	service = {AMImageEntryProcessor.class, DLProcessor.class}
+	service = {
+		AMImageEntryProcessor.class, DLProcessor.class, ImageProcessor.class
+	}
 )
 public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 

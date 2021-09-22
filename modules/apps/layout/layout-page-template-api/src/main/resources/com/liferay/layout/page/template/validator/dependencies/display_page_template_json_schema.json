@@ -30,6 +30,10 @@
 			"title": "The contentType Schema",
 			"type": "object"
 		},
+		"defaultTemplate": {
+			"title": "The defaultTemplate Schema",
+			"type": "boolean"
+		},
 		"key": {
 			"title": "The key Schema",
 			"type": "string"

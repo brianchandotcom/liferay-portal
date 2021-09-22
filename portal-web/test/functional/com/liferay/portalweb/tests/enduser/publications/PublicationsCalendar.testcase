@@ -197,6 +197,8 @@ definition {
 			entryTitle = "Publication Calendar Event Title Edit");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
 	}
 
 }

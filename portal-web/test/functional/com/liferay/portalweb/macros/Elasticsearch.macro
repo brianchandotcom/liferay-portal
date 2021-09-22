@@ -12,6 +12,22 @@ definition {
 		return "${clientVersion}";
 	}
 
+	macro getClusterHealth {
+		if (!(isSet(port))) {
+			var port = Elasticsearch.getServerPort();
+		}
+
+		var curl = "http://localhost:${port}/_cluster/health";
+
+		var clusterHealth = JSONCurlUtil.get("${curl}");
+
+		var clusterHealth = RegexUtil.replace("${clusterHealth}", "status&quot;:&quot;(.*)&quot;,", "1");
+
+		echo("Elasticsearch Cluster Health: ${clusterHealth}");
+
+		return "${clusterHealth}";
+	}
+
 	macro getServerPort {
 		var remoteEnabled = Elasticsearch.isRemoteMode();
 
@@ -84,6 +100,16 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "//body",
 			value1 = "&quot;number_of_data_nodes&quot; : ${numberOfNodes}");
+	}
+
+	macro waitForClusterHealthGreen {
+		var clusterHealth = Elasticsearch.getClusterHealth();
+
+		while (!(contains("${clusterHealth}", "green"))) {
+			Pause.pauseNoSPARefresh(locator1 = "10000");
+
+			var clusterHealth = Elasticsearch.getClusterHealth();
+		}
 	}
 
 }

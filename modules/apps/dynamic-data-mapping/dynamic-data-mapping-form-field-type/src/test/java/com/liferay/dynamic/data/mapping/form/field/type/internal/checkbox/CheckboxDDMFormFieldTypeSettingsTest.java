@@ -117,17 +117,16 @@ public class CheckboxDDMFormFieldTypeSettingsTest
 		DDMFormRule ddmFormRule0 = ddmFormRules.get(0);
 
 		Assert.assertEquals(
-			"not(isEmpty(getValue('objectFieldName')))",
+			"hasObjectField(getValue('objectFieldName'))",
 			ddmFormRule0.getCondition());
 
 		List<String> actions = ddmFormRule0.getActions();
 
-		Assert.assertEquals(actions.toString(), 2, actions.size());
-		Assert.assertEquals("setEnabled('required', FALSE)", actions.get(0));
+		Assert.assertEquals(actions.toString(), 1, actions.size());
 		Assert.assertEquals(
 			"setValue('required', isRequiredObjectField(getValue(" +
 				"'objectFieldName')))",
-			actions.get(1));
+			actions.get(0));
 
 		DDMFormRule ddmFormRule1 = ddmFormRules.get(1);
 
@@ -135,11 +134,15 @@ public class CheckboxDDMFormFieldTypeSettingsTest
 
 		actions = ddmFormRule1.getActions();
 
-		Assert.assertEquals(actions.toString(), 2, actions.size());
-		Assert.assertEquals("setVisible('dataType', FALSE)", actions.get(0));
+		Assert.assertEquals(actions.toString(), 3, actions.size());
+		Assert.assertEquals(
+			"setEnabled('required', not(hasObjectField(" +
+				"getValue('objectFieldName'))))",
+			actions.get(0));
+		Assert.assertEquals("setVisible('dataType', FALSE)", actions.get(1));
 		Assert.assertEquals(
 			"setVisible('requiredErrorMessage', getValue('required'))",
-			actions.get(1));
+			actions.get(2));
 	}
 
 	@Test

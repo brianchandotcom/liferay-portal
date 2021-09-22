@@ -286,17 +286,16 @@ public class TextDDMFormFieldTypeSettingsTest
 		DDMFormRule ddmFormRule4 = ddmFormRules.get(4);
 
 		Assert.assertEquals(
-			"not(isEmpty(getValue('objectFieldName')))",
+			"hasObjectField(getValue('objectFieldName'))",
 			ddmFormRule4.getCondition());
 
 		actions = ddmFormRule4.getActions();
 
-		Assert.assertEquals(actions.toString(), 2, actions.size());
-		Assert.assertEquals("setEnabled('required', FALSE)", actions.get(0));
+		Assert.assertEquals(actions.toString(), 1, actions.size());
 		Assert.assertEquals(
 			"setValue('required', isRequiredObjectField(getValue(" +
 				"'objectFieldName')))",
-			actions.get(1));
+			actions.get(0));
 
 		DDMFormRule ddmFormRule5 = ddmFormRules.get(5);
 
@@ -304,51 +303,55 @@ public class TextDDMFormFieldTypeSettingsTest
 
 		actions = ddmFormRule5.getActions();
 
-		Assert.assertEquals(actions.toString(), 12, actions.size());
+		Assert.assertEquals(actions.toString(), 13, actions.size());
+		Assert.assertEquals(
+			"setEnabled('required', not(hasObjectField(" +
+				"getValue('objectFieldName'))))",
+			actions.get(0));
 		Assert.assertEquals(
 			"setRequired('ddmDataProviderInstanceId', equals(getValue(" +
 				"'dataSourceType'), \"data-provider\"))",
-			actions.get(0));
+			actions.get(1));
 		Assert.assertEquals(
 			"setRequired('ddmDataProviderInstanceOutput', equals(" +
 				"getValue('dataSourceType'), \"data-provider\"))",
-			actions.get(1));
-		Assert.assertEquals(
-			"setValidationDataType('validation', getValue('dataType'))",
 			actions.get(2));
 		Assert.assertEquals(
-			"setValidationFieldName('validation', getValue('name'))",
+			"setValidationDataType('validation', getValue('dataType'))",
 			actions.get(3));
+		Assert.assertEquals(
+			"setValidationFieldName('validation', getValue('name'))",
+			actions.get(4));
 		Assert.assertEquals(
 			"setVisible('confirmationErrorMessage', getValue(" +
 				"'requireConfirmation'))",
-			actions.get(4));
-		Assert.assertEquals(
-			"setVisible('confirmationLabel', getValue('requireConfirmation'))",
 			actions.get(5));
 		Assert.assertEquals(
-			"setVisible('dataSourceType', getValue('autocomplete'))",
+			"setVisible('confirmationLabel', getValue('requireConfirmation'))",
 			actions.get(6));
+		Assert.assertEquals(
+			"setVisible('dataSourceType', getValue('autocomplete'))",
+			actions.get(7));
 		Assert.assertEquals(
 			"setVisible('ddmDataProviderInstanceId', equals(getValue(" +
 				"'dataSourceType'), \"data-provider\") and getValue(" +
 					"'autocomplete'))",
-			actions.get(7));
+			actions.get(8));
 		Assert.assertEquals(
 			"setVisible('ddmDataProviderInstanceOutput', equals(getValue(" +
 				"'dataSourceType'), \"data-provider\") and getValue(" +
 					"'autocomplete'))",
-			actions.get(8));
+			actions.get(9));
 		Assert.assertEquals(
 			"setVisible('direction', getValue('requireConfirmation'))",
-			actions.get(9));
+			actions.get(10));
 		Assert.assertEquals(
 			"setVisible('options', contains(getValue('dataSourceType'), " +
 				"\"manual\") and getValue('autocomplete'))",
-			actions.get(10));
+			actions.get(11));
 		Assert.assertEquals(
 			"setVisible('requiredErrorMessage', getValue('required'))",
-			actions.get(11));
+			actions.get(12));
 
 		DDMFormRule ddmFormRule6 = ddmFormRules.get(6);
 

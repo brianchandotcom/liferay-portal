@@ -211,7 +211,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "Yes");
-		
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Date type and view its entries"

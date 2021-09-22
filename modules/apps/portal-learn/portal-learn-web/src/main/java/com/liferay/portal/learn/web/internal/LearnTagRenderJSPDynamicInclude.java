@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.learn.tag.web.internal.servlet.taglib;
+package com.liferay.portal.learn.web.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -48,7 +48,7 @@ public class LearnTagRenderJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.learn.tag.web)",
+		target = "(osgi.web.symbolicname=com.liferay.portal.learn.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Learn Web
+Bundle-SymbolicName: com.liferay.portal.learn.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /portal-learn-web

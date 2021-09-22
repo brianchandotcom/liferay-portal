@@ -637,9 +637,7 @@ definition {
 			depotName = "Test Depot Name",
 			uploadFileName = "Document_2.jpg");
 
-		AssertVisible(
-			key_imageName = "Document_2.jpg",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		OpenGraph.viewPreviewImage(imageName = "Document_2.jpg");
 
 		Navigator.openSitePage(
 			pageName = "Test Page",
@@ -662,9 +660,7 @@ definition {
 			remoteStaging = "true",
 			siteURLKey = "remote-site");
 
-		AssertVisible(
-			key_imageName = "Document_2.jpg",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		OpenGraph.viewPreviewImage(imageName = "Document_2.jpg");
 
 		User.loginPG(
 			nodePort = "8080",
@@ -693,9 +689,7 @@ definition {
 			portlet = "Open Graph",
 			siteURLKey = "site-name");
 
-		AssertElementNotPresent(
-			key_imageName = "Document_2.jpg",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		OpenGraph.viewNoPreviewImage(imageName = "Document_2.jpg");
 
 		Navigator.openSitePage(
 			pageName = "Test Page",
@@ -718,9 +712,7 @@ definition {
 			remoteStaging = "true",
 			siteURLKey = "remote-site");
 
-		AssertElementNotPresent(
-			key_imageName = "Document_2.jpg",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		OpenGraph.viewNoPreviewImage(imageName = "Document_2.jpg");
 	}
 
 	@description = "This ensures that video shortcut in depot can be deleted and republished in Blogs when enabling remote staging."
@@ -1815,9 +1807,7 @@ definition {
 			depotName = "Test Depot Name",
 			uploadFileName = "Document_1.jpg");
 
-		AssertVisible(
-			key_imageName = "Document_1.jpg",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		OpenGraph.viewPreviewImage(imageName = "Document_1.jpg");
 
 		Navigator.openSitePage(
 			pageName = "Test Page",
@@ -1840,9 +1830,7 @@ definition {
 			remoteStaging = "true",
 			siteURLKey = "remote-site");
 
-		AssertVisible(
-			key_imageName = "Document_1.jpg",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		OpenGraph.viewPreviewImage(imageName = "Document_1.jpg");
 
 		User.loginPG(
 			nodePort = "8080",
@@ -1861,9 +1849,7 @@ definition {
 			navTab = "Documents and Media",
 			uploadFileName = "Document_2.jpg");
 
-		AssertVisible(
-			key_imageName = "Document_2.jpg",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		OpenGraph.viewPreviewImage(imageName = "Document_2.jpg");
 
 		Navigator.openSitePage(
 			pageName = "Test Page",
@@ -1886,9 +1872,7 @@ definition {
 			remoteStaging = "true",
 			siteURLKey = "remote-site");
 
-		AssertVisible(
-			key_imageName = "Document_2.jpg",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		OpenGraph.viewPreviewImage(imageName = "Document_2.jpg");
 	}
 
 	@description = "This ensures that the image in depot can be replaced and republished in web content when enabling remote staging."

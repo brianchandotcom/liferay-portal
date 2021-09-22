@@ -486,9 +486,7 @@ definition {
 			depotName = "Test Depot Name",
 			uploadFileName = "Document_2.jpg");
 
-		AssertVisible(
-			key_imageName = "Document_2.jpg",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		OpenGraph.viewPreviewImage(imageName = "Document_2.jpg");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
@@ -504,9 +502,7 @@ definition {
 			portlet = "Open Graph",
 			siteURLKey = "site-name");
 
-		AssertVisible(
-			key_imageName = "Document_2.jpg",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		OpenGraph.viewPreviewImage(imageName = "Document_2.jpg");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -531,9 +527,7 @@ definition {
 			site = "false",
 			siteURLKey = "site-name-staging");
 
-		AssertElementNotPresent(
-			key_imageName = "Document_2.jpg",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		OpenGraph.viewNoPreviewImage(imageName = "Document_2.jpg");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
@@ -549,9 +543,7 @@ definition {
 			portlet = "Open Graph",
 			siteURLKey = "site-name");
 
-		AssertElementNotPresent(
-			key_imageName = "Document_2.jpg",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		OpenGraph.viewNoPreviewImage(imageName = "Document_2.jpg");
 	}
 
 	@description = "This ensures that video shortcut in depot can be deleted and republished in Blogs when enabling local staging."
@@ -1411,9 +1403,7 @@ definition {
 			depotName = "Test Depot Name",
 			uploadFileName = "Document_1.jpg");
 
-		AssertVisible(
-			key_imageName = "Document_1.jpg",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		OpenGraph.viewPreviewImage(imageName = "Document_1.jpg");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
@@ -1429,9 +1419,7 @@ definition {
 			portlet = "Open Graph",
 			siteURLKey = "site-name");
 
-		AssertVisible(
-			key_imageName = "Document_1.jpg",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		OpenGraph.viewPreviewImage(imageName = "Document_1.jpg");
 
 		Navigator.openToGroupPagesPortlet(
 			groupName = "Site Name (Staging)",
@@ -1446,9 +1434,7 @@ definition {
 			navTab = "Documents and Media",
 			uploadFileName = "Document_2.jpg");
 
-		AssertVisible(
-			key_imageName = "Document_2.jpg",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		OpenGraph.viewPreviewImage(imageName = "Document_2.jpg");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
@@ -1464,9 +1450,7 @@ definition {
 			portlet = "Open Graph",
 			siteURLKey = "site-name");
 
-		AssertVisible(
-			key_imageName = "Document_2.jpg",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		OpenGraph.viewPreviewImage(imageName = "Document_2.jpg");
 	}
 
 	@description = "This ensures that the image in depot can be replaced and republished in web content when enabling local staging."

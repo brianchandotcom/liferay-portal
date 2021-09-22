@@ -106,8 +106,10 @@ public class ConfigurationFileInstaller implements FileInstaller {
 			}
 		}
 
+		String oldFileName = null;
+
 		if (old != null) {
-			old.remove(DirectoryWatcher.FILENAME);
+			oldFileName = (String)old.remove(DirectoryWatcher.FILENAME);
 			old.remove(Constants.SERVICE_PID);
 			old.remove(ConfigurationAdmin.SERVICE_FACTORYPID);
 
@@ -121,8 +123,12 @@ public class ConfigurationFileInstaller implements FileInstaller {
 			}
 		}
 
-		if (!_equals(dictionary, old)) {
-			dictionary.put(DirectoryWatcher.FILENAME, _toConfigKey(file));
+		String currentFileName = _toConfigKey(file);
+
+		if (!_equals(dictionary, old) ||
+			!Objects.equals(oldFileName, currentFileName)) {
+
+			dictionary.put(DirectoryWatcher.FILENAME, currentFileName);
 
 			String logString = StringPool.BLANK;
 

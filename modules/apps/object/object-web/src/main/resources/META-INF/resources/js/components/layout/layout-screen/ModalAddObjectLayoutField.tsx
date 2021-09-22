@@ -72,6 +72,7 @@ const BoxBtnColumns: React.FC<IBoxBtnColumnsProps> = ({handleChange}) => {
 							setActiveIndex(objectFieldSizeIndex);
 							handleChange(syntheticEvent);
 						}}
+						type="button"
 						value={objectFieldSize}
 					>
 						{columns}

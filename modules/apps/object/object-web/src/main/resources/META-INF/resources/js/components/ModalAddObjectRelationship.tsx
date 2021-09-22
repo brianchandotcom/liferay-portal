@@ -14,7 +14,6 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
@@ -23,7 +22,9 @@ import {
 	firstLetterUppercase,
 	removeAllSpecialCharacters,
 } from '../utils/string';
-import RequiredMask from './form/RequiredMask';
+import CustomSelect from './form/CustomSelect';
+import Input from './form/Input';
+import Select from './form/Select';
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
@@ -42,10 +43,35 @@ type TFormState = {
 	};
 	name: string;
 	objectDefinitionId2: number;
-	type: string;
+	type: {
+		label: string;
+		value: string;
+	};
 };
 
-const objectRelationshipTypes = ['one_to_one', 'one_to_many', 'many_to_many'];
+const objectRelationshipTypes = [
+	{
+		description: Liferay.Language.get(
+			'one-object-interacts-only-with-one-other-object'
+		),
+		label: Liferay.Language.get('one-to-one'),
+		value: 'one_to_one',
+	},
+	{
+		description: Liferay.Language.get(
+			'one-object-interacts-with-many-other-objects'
+		),
+		label: Liferay.Language.get('one-to-many'),
+		value: 'one_to_many',
+	},
+	{
+		description: Liferay.Language.get(
+			'multiple-objects-can-interact-with-many-other-objects'
+		),
+		label: Liferay.Language.get('many-to-many'),
+		value: 'many_to_many',
+	},
+];
 
 const headers = new Headers({
 	Accept: 'application/json',
@@ -78,7 +104,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 		},
 		name: '',
 		objectDefinitionId2: 0,
-		type: '',
+		type: {label: '', value: ''},
 	});
 	const [error, setError] = useState<string>('');
 
@@ -94,7 +120,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 				label: label ?? {[defaultLanguageId]: name},
 				name,
 				objectDefinitionId2,
-				type,
+				type: type.value,
 			}),
 			headers,
 			method: 'POST',
@@ -143,127 +169,85 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 							<ClayAlert displayType="danger">{error}</ClayAlert>
 						)}
 
-						<ClayForm.Group>
-							<label htmlFor="objectRelationshipLabel">
-								{Liferay.Language.get('label')}
-							</label>
+						<Input
+							id="objectRelationshipLabel"
+							label={Liferay.Language.get('label')}
+							name="objectRelationshipLabel"
+							onChange={({target: {value}}: any) => {
+								setFormState({
+									...formState,
+									...(formState.generateAutoName && {
+										name: formatName(value),
+									}),
+									label: {
+										[defaultLanguageId]: value,
+									},
+								});
 
-							<ClayInput
-								id="objectRelationshipLabel"
-								onChange={({target: {value}}) => {
-									setFormState({
-										...formState,
-										...(formState.generateAutoName && {
-											name: formatName(value),
-										}),
-										label: {
-											[defaultLanguageId]: value,
-										},
-									});
+								error && setError('');
+							}}
+							required
+							value={formState.label[defaultLanguageId]}
+						/>
 
-									error && setError('');
-								}}
-								type="text"
-								value={formState.label[defaultLanguageId]}
-							/>
-						</ClayForm.Group>
+						<Input
+							id="objectRelationshipName"
+							label={Liferay.Language.get('relationship-name')}
+							name="objectRelationshipName"
+							onChange={({target: {value}}: any) => {
+								setFormState({
+									...formState,
+									name: value,
+								});
 
-						<ClayForm.Group>
-							<label htmlFor="objectRelationshipName">
-								{Liferay.Language.get('relationship-name')}
+								error && setError('');
+							}}
+							required
+							value={formState.name}
+						/>
 
-								<RequiredMask />
-							</label>
+						<CustomSelect
+							label={Liferay.Language.get('type')}
+							onChange={(type: any) => {
+								setFormState({
+									...formState,
+									type,
+								});
 
-							<ClayInput
-								id="objectRelationshipName"
-								onChange={({target: {value}}) => {
-									setFormState({
-										...formState,
-										name: value,
-									});
+								error && setError('');
+							}}
+							options={objectRelationshipTypes}
+							required
+							value={formState.type.label}
+						>
+							{({description, label}) => (
+								<>
+									<div>{label}</div>
+									<span className="text-small">
+										{description}
+									</span>
+								</>
+							)}
+						</CustomSelect>
 
-									error && setError('');
-								}}
-								type="text"
-								value={formState.name}
-							/>
-						</ClayForm.Group>
+						<Select
+							id="objectDefinitionId2"
+							label={Liferay.Language.get('object')}
+							onChange={({target: {value}}: any) => {
+								const {id} = objectDefinitions[
+									Number(value) - 1
+								];
 
-						<ClayForm.Group>
-							<label htmlFor="objectRelationshipType">
-								{Liferay.Language.get('type')}
+								setFormState({
+									...formState,
+									objectDefinitionId2: Number(id),
+								});
 
-								<RequiredMask />
-							</label>
-
-							<ClaySelect
-								id="objectRelationshipType"
-								onChange={async ({target: {value}}) => {
-									setFormState({
-										...formState,
-										type: value,
-									});
-
-									error && setError('');
-								}}
-							>
-								<ClaySelect.Option
-									key={0}
-									label={Liferay.Language.get(
-										'choose-an-option'
-									)}
-									value={Liferay.Language.get(
-										'choose-an-option'
-									)}
-								/>
-
-								{objectRelationshipTypes.map((type) => (
-									<ClaySelect.Option
-										key={type}
-										label={type}
-										value={type}
-									/>
-								))}
-							</ClaySelect>
-						</ClayForm.Group>
-						<ClayForm.Group>
-							<label htmlFor="objectDefinitionId2">
-								{Liferay.Language.get('object')}
-
-								<RequiredMask />
-							</label>
-
-							<ClaySelect
-								id="objectDefinitionId2"
-								onChange={async ({target: {value}}) => {
-									setFormState({
-										...formState,
-										objectDefinitionId2: Number(value),
-									});
-
-									error && setError('');
-								}}
-							>
-								<ClaySelect.Option
-									key={0}
-									label={Liferay.Language.get(
-										'choose-an-option'
-									)}
-									value={Liferay.Language.get(
-										'choose-an-option'
-									)}
-								/>
-
-								{objectDefinitions.map(({id, name}) => (
-									<ClaySelect.Option
-										key={id}
-										label={name}
-										value={id}
-									/>
-								))}
-							</ClaySelect>
-						</ClayForm.Group>
+								error && setError('');
+							}}
+							options={objectDefinitions.map(({name}) => name)}
+							required
+						/>
 					</ClayModal.Body>
 
 					<ClayModal.Footer

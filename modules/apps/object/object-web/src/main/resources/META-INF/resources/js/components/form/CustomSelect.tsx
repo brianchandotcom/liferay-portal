@@ -12,24 +12,29 @@
  * details.
  */
 
-import ClayForm, {ClaySelect} from '@clayui/form';
+import ClayDropDown from '@clayui/drop-down';
+import ClayForm from '@clayui/form';
 import classNames from 'classnames';
-import React from 'react';
+import React, {useState} from 'react';
 
+import CustomSelectComponent from '../custom-select/CustomSelect';
 import ErrorFeedback from './ErrorFeedback';
 import FeedbackMessage from './FeedbackMessage';
 import RequiredMask from './RequiredMask';
 
-interface ISelectProps extends React.HTMLAttributes<HTMLElement> {
+interface ICustomSelectProps extends React.HTMLAttributes<HTMLElement> {
+	children: (item: any) => React.ReactNode;
 	disabled?: boolean;
 	error?: string;
 	feedbackMessage?: string;
 	label: string;
-	options: string[];
+	options: any[];
 	required?: boolean;
+	value: string;
 }
 
-const Select: React.FC<ISelectProps> = ({
+const CustomSelect: React.FC<ICustomSelectProps> = ({
+	children,
 	className,
 	disabled = false,
 	error,
@@ -37,11 +42,12 @@ const Select: React.FC<ISelectProps> = ({
 	id,
 	label,
 	onChange,
-	options: optionsProps,
-	required = false,
+	options,
+	required,
+	value,
 	...otherProps
 }) => {
-	const options = [Liferay.Language.get('choose-an-option'), ...optionsProps];
+	const [active, setActive] = useState<boolean>(false);
 
 	return (
 		<ClayForm.Group
@@ -55,21 +61,33 @@ const Select: React.FC<ISelectProps> = ({
 				{required && <RequiredMask />}
 			</label>
 
-			<ClaySelect
+			<ClayDropDown
 				{...otherProps}
-				defaultValue={options[0]}
-				disabled={disabled}
-				id={id}
-				onChange={onChange}
-			>
-				{options.map((label, index) => (
-					<ClaySelect.Option
-						key={index}
-						label={label}
-						value={index}
+				active={active}
+				onActiveChange={(value) => setActive(value)}
+				trigger={
+					<CustomSelectComponent
+						placeholder={Liferay.Language.get('choose-an-option')}
+						value={value}
 					/>
-				))}
-			</ClaySelect>
+				}
+			>
+				<ClayDropDown.ItemList>
+					{options?.map((option, index) => {
+						return (
+							<ClayDropDown.Item
+								key={index}
+								onClick={() => {
+									setActive(false);
+									onChange && onChange(option);
+								}}
+							>
+								{children && children(option)}
+							</ClayDropDown.Item>
+						);
+					})}
+				</ClayDropDown.ItemList>
+			</ClayDropDown>
 
 			{error && <ErrorFeedback error={error} />}
 
@@ -80,4 +98,4 @@ const Select: React.FC<ISelectProps> = ({
 	);
 };
 
-export default Select;
+export default CustomSelect;

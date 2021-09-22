@@ -12,43 +12,16 @@
  * details.
  */
 
-import ClayIcon from '@clayui/icon';
 import React from 'react';
-
-import './CustomSelect.scss';
-
 interface ICustomSelectProps extends React.HTMLAttributes<HTMLElement> {
-	contentRight?: React.ReactNode;
-	value?: string;
+	children: (item: any) => React.ReactNode;
+	disabled?: boolean;
+	error?: string;
+	feedbackMessage?: string;
+	label: string;
+	options: any[];
+	required?: boolean;
+	value: string;
 }
-
-const CustomSelect: React.ForwardRefExoticComponent<
-	ICustomSelectProps & React.RefAttributes<HTMLDivElement>
-> = React.forwardRef(
-	(
-		{contentRight, onClick, placeholder, value, ...otherProps},
-		forwardRef
-	) => {
-		return (
-			<div
-				{...otherProps}
-				className="custom-select__content form-control"
-				onClick={onClick}
-				ref={forwardRef}
-				tabIndex={0}
-			>
-				<span>{value || placeholder}</span>
-
-				<div>
-					{contentRight}
-
-					<a className="custom-select__icon">
-						<ClayIcon symbol="caret-double" />
-					</a>
-				</div>
-			</div>
-		);
-	}
-);
-
+declare const CustomSelect: React.FC<ICustomSelectProps>;
 export default CustomSelect;

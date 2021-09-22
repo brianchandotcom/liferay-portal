@@ -15,7 +15,7 @@
 import React from 'react';
 import './CustomSelect.scss';
 interface ICustomSelectProps extends React.HTMLAttributes<HTMLElement> {
-	contentRight: React.ReactNode;
+	contentRight?: React.ReactNode;
 	value?: string;
 }
 declare const CustomSelect: React.ForwardRefExoticComponent<

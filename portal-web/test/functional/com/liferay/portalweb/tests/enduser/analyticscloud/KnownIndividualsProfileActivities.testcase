@@ -99,6 +99,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LLRAC-8940 | Test Summary: Assert Chart ticks for Individuals Metrics standardized"
 	@priority = "3"
 	test AssertIndividualTicksDateFormat {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "ac@liferay.com",
@@ -129,20 +133,20 @@ definition {
 
 		task ("View the time period is Last 30 days in individuals metrics chart") {
 			ACTimeFilter.assertCurrentTimeFilterRange(
-				cardName = "Individual Activities",
+				cardName = "Individual Events",
 				timeFilterRange = "Last 30 days");
 		}
 
 		task ("View the interval is D in individuals metrics chart") {
 			ACCards.viewSelectedInterval(
-				cardName = "Individual Activities",
+				cardName = "Individual Events",
 				interval = "D");
 		}
 
 		task ("View the format of recharts xAxis ticks is MMM d") {
 			var date = ACCards.getAxisTick(
 				axis = "xAxis",
-				cardName = "Individual Activities");
+				cardName = "Individual Events");
 
 			ACUtils.assertDatePattern(
 				date = "${date}",
@@ -151,14 +155,14 @@ definition {
 
 		task ("Select the W in interval selector") {
 			ACCards.selectInterval(
-				cardName = "Individual Activities",
+				cardName = "Individual Events",
 				interval = "W");
 		}
 
 		task ("View the format of recharts xAxis ticks is MMM d - d") {
 			var date = ACCards.getAxisTick(
 				axis = "xAxis",
-				cardName = "Individual Activities");
+				cardName = "Individual Events");
 
 			ACUtils.assertDatePattern(
 				date = "${date}",
@@ -167,14 +171,14 @@ definition {
 
 		task ("Select the M in interval selector") {
 			ACCards.selectInterval(
-				cardName = "Individual Activities",
+				cardName = "Individual Events",
 				interval = "M");
 		}
 
 		task ("View the format of recharts xAxis ticks is MMM") {
 			var date = ACCards.getAxisTick(
 				axis = "xAxis",
-				cardName = "Individual Activities");
+				cardName = "Individual Events");
 
 			ACUtils.assertDatePattern(
 				date = "${date}",
@@ -182,7 +186,7 @@ definition {
 		}
 
 		task ("Select the Last 24 hours time period in individuals metrics chart") {
-			ACTimeFilter.clickTimeFilterButton(cardName = "Individual Activities");
+			ACTimeFilter.clickTimeFilterButton(cardName = "Individual Events");
 
 			ACTimeFilter.setLast24Hours();
 		}

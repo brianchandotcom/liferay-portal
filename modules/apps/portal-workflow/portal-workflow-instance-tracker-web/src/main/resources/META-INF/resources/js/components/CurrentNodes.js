@@ -64,7 +64,13 @@ export default function CurrentNodes({nodesNames = []}) {
 	);
 
 	const focusNode = (nodeLabel) => () => {
-		const node = currentNodes.find(
+		const {nodes} = store.getState();
+
+		const updatedCurrentNodes = nodes.filter((node) =>
+			nodesNames.includes(node.id)
+		);
+
+		const node = updatedCurrentNodes.find(
 			(currentNode) => currentNode.data.label === nodeLabel
 		);
 

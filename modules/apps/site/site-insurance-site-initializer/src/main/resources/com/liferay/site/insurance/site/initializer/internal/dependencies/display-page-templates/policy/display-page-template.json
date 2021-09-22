@@ -5,5 +5,6 @@
 	"contentType": {
 		"className": "com.liferay.journal.model.JournalArticle"
 	},
+	"defaultTemplate": true,
 	"name": "Policy"
 }

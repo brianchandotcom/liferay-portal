@@ -165,7 +165,6 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			_setDefaultStyleBookEntry();
 
 			_addLayoutPageTemplateEntries();
-			_setDefaultLayoutPageTemplateEntries();
 
 			_addLayouts();
 
@@ -861,26 +860,6 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			path.substring(0, path.lastIndexOf("/") + 1) + fileName);
 
 		return StringUtil.read(entryURL.openStream());
-	}
-
-	private void _setDefaultLayoutPageTemplateEntries() {
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_serviceContext.getScopeGroupId(), "policy");
-
-		if (layoutPageTemplateEntry != null) {
-			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
-		}
-
-		layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_serviceContext.getScopeGroupId(), "claim");
-
-		if (layoutPageTemplateEntry != null) {
-			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
-		}
 	}
 
 	private void _setDefaultStyleBookEntry() throws PortalException {

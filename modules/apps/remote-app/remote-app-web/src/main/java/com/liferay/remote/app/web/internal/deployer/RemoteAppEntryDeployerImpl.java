@@ -117,9 +117,16 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 			String customElementCSSURLs =
 				remoteAppEntry.getCustomElementCSSURLs();
 
+			String[] customElementCSSURLsArray = null;
+
+			if (!customElementCSSURLs.isEmpty()) {
+				customElementCSSURLsArray = customElementCSSURLs.split(
+					StringPool.NEW_LINE);
+			}
+
 			dictionary.put(
 				"com.liferay.portlet.header-portlet-css",
-				customElementCSSURLs.split(StringPool.NEW_LINE));
+				customElementCSSURLsArray);
 		}
 		else if (Objects.equals(
 					remoteAppEntry.getType(), RemoteAppConstants.TYPE_IFRAME)) {

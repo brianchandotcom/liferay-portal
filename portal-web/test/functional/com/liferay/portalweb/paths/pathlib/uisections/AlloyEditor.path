@@ -78,6 +78,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEXT_FORMATTING_REMOVE_LINK_BUTTON</td>
+	<td>//button[contains(@aria-label,'Remove link')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEXT_FORMATTING_UNDERLINE</td>
 	<td>//button[contains(@data-type,'button-underline')]</td>
 	<td></td>

@@ -28,7 +28,7 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 
 	@Override
 	public String getURLSeparator() {
-		return "/g/";
+		return "/v/";
 	}
 
 }

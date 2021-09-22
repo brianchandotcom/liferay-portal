@@ -24,10 +24,18 @@ const ObjectRelationship = ({
 	itemsKey,
 	itemsLabel,
 	name,
+	onChange,
+	readOnly,
+	required,
 	value,
 	...otherProps
 }) => (
-	<FieldBase name={name} {...otherProps}>
+	<FieldBase
+		name={name}
+		readOnly={readOnly}
+		required={required}
+		{...otherProps}
+	>
 		<Autocomplete
 			apiUrl={apiURL}
 			initialLabel={initialLabel}
@@ -36,6 +44,9 @@ const ObjectRelationship = ({
 			itemsKey={itemsKey}
 			itemsLabel={itemsLabel}
 			name={name}
+			onChange={onChange}
+			readOnly={readOnly}
+			required={required}
 			value={value}
 		/>
 	</FieldBase>

@@ -87,7 +87,8 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 		if (onChange) {
 			onChange({target: {value}});
 		}
-	}, [selectedItem, props.id, props.itemsKey, onChange, onValueUpdated]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [selectedItem, props.id, props.itemsKey, onValueUpdated]);
 
 	useEffect(() => {
 		if (query) {

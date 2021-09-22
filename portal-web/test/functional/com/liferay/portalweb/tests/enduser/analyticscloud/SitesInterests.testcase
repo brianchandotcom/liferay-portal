@@ -36,14 +36,14 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8283 | Test Summary: Site overview interests card shows what the top interests are"
 	@priority = "5"
 	test ShowsSitesTopInterests {
+		var pageNameList = "sports,technology,science";
+
 		task ("Connect DXP to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Add specific pages and web contents to Site as interest topics") {
-			Navigator.openSiteURL(siteName = "Site Name");
-
-			for (var layoutName : list "Sports,Technology,Science") {
+			for (var layoutName : list "${pageNameList}") {
 				JSONLayout.addPublicLayout(
 					groupName = "Site Name",
 					layoutName = "${layoutName}");
@@ -69,7 +69,7 @@ definition {
 				userLoginEmailAddress = "ac@liferay.com",
 				userLoginFullName = "ac ac");
 
-			for (var pageName : list "Sports,Technology,Science") {
+			for (var pageName : list "${pageNameList}") {
 				Navigator.gotoSitePage(
 					pageName = "${pageName}",
 					siteName = "Site Name");
@@ -101,7 +101,7 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			for (var interests : list "liferay dxp,site,sports,science,technology") {
+			for (var interests : list "${pageNameList}") {
 				ACInterests.viewInterests(interestName = "${interests}");
 			}
 		}

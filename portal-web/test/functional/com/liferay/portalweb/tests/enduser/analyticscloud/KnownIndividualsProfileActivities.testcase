@@ -203,6 +203,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8941 | Test Summary: Assert Known Individual Chart Popover follows format"
 	@priority = "3"
 	test AssertKnownIndividualChartPopover {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "ac@liferay.com",
@@ -232,7 +236,7 @@ definition {
 		}
 
 		task ("Assert chart popover date formatted") {
-			var formattedDate = ACIndividualsDashboard.getChartPopoverDate();
+			var formattedDate = ACIndividualsDashboard.getChartPopoverDateWithoutBar();
 
 			ACUtils.assertDatePattern(
 				date = "${formattedDate}",

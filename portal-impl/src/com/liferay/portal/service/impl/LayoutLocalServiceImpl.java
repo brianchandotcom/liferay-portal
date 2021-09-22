@@ -895,12 +895,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * Deletes the group's private or non-private layouts, also deleting the
 	 * layouts' child layouts, and associated resources.
 	 *
-	 * @param groupId the primary key of the group
-	 * @param privateLayout whether the layout is private to the group
-	 * @param serviceContext the service context to be applied. The parent
-	 *        layout set's page count will be updated by default, unless an
-	 *        attribute named <code>updatePageCount</code> is set to
-	 *        <code>false</code>.
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @param  serviceContext the service context to be applied. The parent
+	 *         layout set's page count will be updated by default, unless an
+	 *         attribute named <code>updatePageCount</code> is set to
+	 *         <code>false</code>.
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override

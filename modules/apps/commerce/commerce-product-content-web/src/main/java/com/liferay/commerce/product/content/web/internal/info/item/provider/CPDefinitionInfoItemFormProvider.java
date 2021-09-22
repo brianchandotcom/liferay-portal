@@ -59,12 +59,18 @@ public class CPDefinitionInfoItemFormProvider
 
 		return InfoForm.builder(
 		).infoFieldSetEntry(
-			_getBasicInformationInfoFieldSet()
-		).infoFieldSetEntry(
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(
 				CPDefinition.class.getName())
 		).infoFieldSetEntry(
+			_getBasicInformationInfoFieldSet()
+		).infoFieldSetEntry(
+			_getCategorizationInfoFieldSet()
+		).infoFieldSetEntry(
+			_getDetailedInformationInfoFieldSet()
+		).infoFieldSetEntry(
 			_getDisplayPageInfoFieldSet()
+		).infoFieldSetEntry(
+			_getScheduleInfoFieldSet()
 		).labelInfoLocalizedValue(
 			infoLocalizedValueBuilder.build()
 		).name(
@@ -75,11 +81,15 @@ public class CPDefinitionInfoItemFormProvider
 	private InfoFieldSet _getBasicInformationInfoFieldSet() {
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
-			CPDefinitionInfoItemFields.titleInfoField
-		).infoFieldSetEntry(
 			CPDefinitionInfoItemFields.descriptionInfoField
 		).infoFieldSetEntry(
-			CPDefinitionInfoItemFields.defaultImage
+			CPDefinitionInfoItemFields.nameInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.productTypeNameInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.shortDescriptionInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.userNameInfoField
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				"com.liferay.commerce.lang", "basic-information")
@@ -88,14 +98,146 @@ public class CPDefinitionInfoItemFormProvider
 		).build();
 	}
 
+	private InfoFieldSet _getCategorizationInfoFieldSet() {
+		return InfoFieldSet.builder(
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.categoriesInfoField
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "categorization")
+		).name(
+			"categorization"
+		).build();
+	}
+
+	private InfoFieldSet _getDetailedInformationInfoFieldSet() {
+		return InfoFieldSet.builder(
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.accountGroupFilterEnabledInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.approvedInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.availableIndividuallyInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.channelFilterEnabledInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.companyIdInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.cpDefinitionIdInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.cProductIdInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.createDateInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.ddmStructureKeyInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.defaultLanguageIdInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.deliveryMaxSubscriptionCyclesInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.deliverySubscriptionEnabledInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.deliverySubscriptionLengthInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.deliverySubscriptionTypeInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.deliverySubscriptionTypeSettingsInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.deniedInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.depthInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.draftInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.expiredInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.freeShippingInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.groupIdInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.heightInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.ignoreSKUCombinationsInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.inactiveInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.incompleteInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.pendingInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.publishedInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.scheduledInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.shippableInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.shippingExtraPriceInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.shipSeparatelyPriceInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.stagedModelTypeInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.statusInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.statusByUserIdInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.statusByUserNameInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.statusByUserUuidInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.statusDateInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.subscriptionEnabledInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.subscriptionLengthInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.subscriptionTypeInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.subscriptionTypeSettingsInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.taxExemptInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.telcoOrElectronicsInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.userIdInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.userUuidInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.uuidInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.versionInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.weightInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.widthInfoField
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				"com.liferay.commerce.lang", "detailed-information")
+		).name(
+			"detailed-information"
+		).build();
+	}
+
 	private InfoFieldSet _getDisplayPageInfoFieldSet() {
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
 			CPDefinitionInfoItemFields.displayPageUrlInfoField
 		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(getClass(), "configuration")
+			InfoLocalizedValue.localize(getClass(), "display-page")
 		).name(
-			"configuration"
+			"displayPage"
+		).build();
+	}
+
+	private InfoFieldSet _getScheduleInfoFieldSet() {
+		return InfoFieldSet.builder(
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.displayDateInfoField
+		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.expirationDateInfoField
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "schedule")
+		).name(
+			"schedule"
 		).build();
 	}
 

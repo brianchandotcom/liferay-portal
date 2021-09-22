@@ -14,9 +14,15 @@
 
 package com.liferay.commerce.product.content.web.internal.info.item.provider;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
+import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.product.content.web.internal.info.CPDefinitionInfoItemFields;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
@@ -31,6 +37,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -72,14 +82,71 @@ public class CPDefinitionInfoItemFieldValuesProvider
 		try {
 			cpDefinitionInfoFieldValues.add(
 				new InfoFieldValue<>(
-					CPDefinitionInfoItemFields.titleInfoField,
-					InfoLocalizedValue.<String>builder(
-					).defaultLocale(
-						LocaleUtil.fromLanguageId(
-							cpDefinition.getDefaultLanguageId())
-					).values(
-						cpDefinition.getNameMap()
-					).build()));
+					CPDefinitionInfoItemFields.
+						accountGroupFilterEnabledInfoField,
+					cpDefinition.isAccountGroupFilterEnabled()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.approvedInfoField,
+					cpDefinition.isApproved()));
+
+			List<AssetCategory> assetCategories =
+				_assetCategoryLocalService.getCategories(
+					CPDefinition.class.getName(),
+					cpDefinition.getCPDefinitionId());
+
+			Stream<AssetCategory> stream = assetCategories.stream();
+
+			Stream<Map<Locale, String>> assetCategoriesTitleMapStream =
+				stream.map(AssetCategory::getTitleMap);
+
+			Optional<Map<Locale, String>> assetCategoriesTitleMapOptional =
+				assetCategoriesTitleMapStream.findAny();
+
+			assetCategoriesTitleMapOptional.ifPresent(
+				assetCategoriesTitleMap -> cpDefinitionInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CPDefinitionInfoItemFields.categoriesInfoField,
+						InfoLocalizedValue.<String>builder(
+						).defaultLocale(
+							LocaleUtil.fromLanguageId(
+								cpDefinition.getDefaultLanguageId())
+						).values(
+							assetCategoriesTitleMap
+						).build())));
+
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.channelFilterEnabledInfoField,
+					cpDefinition.isChannelFilterEnabled()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.companyIdInfoField,
+					cpDefinition.getCompanyId()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.cpDefinitionIdInfoField,
+					cpDefinition.getCPDefinitionId()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.cProductIdInfoField,
+					cpDefinition.getCProductId()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.cpTaxCategoryIdInfoField,
+					cpDefinition.getCPTaxCategoryId()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.createDateInfoField,
+					cpDefinition.getCreateDate()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.ddmStructureKeyInfoField,
+					cpDefinition.getDDMStructureKey()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.defaultLanguageIdInfoField,
+					cpDefinition.getDefaultLanguageId()));
 			cpDefinitionInfoFieldValues.add(
 				new InfoFieldValue<>(
 					CPDefinitionInfoItemFields.descriptionInfoField,
@@ -92,10 +159,46 @@ public class CPDefinitionInfoItemFieldValuesProvider
 					).build()));
 			cpDefinitionInfoFieldValues.add(
 				new InfoFieldValue<>(
-					CPDefinitionInfoItemFields.defaultImage,
-					cpDefinition.getDefaultImageFileURL()));
+					CPDefinitionInfoItemFields.
+						deliveryMaxSubscriptionCyclesInfoField,
+					cpDefinition.getDeliveryMaxSubscriptionCycles()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.
+						deliverySubscriptionEnabledInfoField,
+					cpDefinition.isDeliverySubscriptionEnabled()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.
+						deliverySubscriptionLengthInfoField,
+					cpDefinition.getDeliverySubscriptionLength()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.
+						deliverySubscriptionTypeInfoField,
+					cpDefinition.getDeliverySubscriptionType()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.
+						deliverySubscriptionTypeSettingsInfoField,
+					cpDefinition.getDeliverySubscriptionTypeSettings()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.deniedInfoField,
+					cpDefinition.isDenied()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.depthInfoField,
+					cpDefinition.getDepth()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.displayDateInfoField,
+					cpDefinition.getDisplayDate()));
 
-			ThemeDisplay themeDisplay = _getThemeDisplay();
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 			if (themeDisplay != null) {
 				cpDefinitionInfoFieldValues.add(
@@ -104,6 +207,210 @@ public class CPDefinitionInfoItemFieldValuesProvider
 						_cpDefinitionHelper.getFriendlyURL(
 							cpDefinition.getCPDefinitionId(), themeDisplay)));
 			}
+
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.draftInfoField,
+					cpDefinition.isDraft()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.expirationDateInfoField,
+					cpDefinition.getExpirationDate()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.expiredInfoField,
+					cpDefinition.isExpired()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.freeShippingInfoField,
+					cpDefinition.isFreeShipping()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.groupIdInfoField,
+					cpDefinition.getGroupId()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.heightInfoField,
+					cpDefinition.getHeight()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.ignoreSKUCombinationsInfoField,
+					cpDefinition.isIgnoreSKUCombinations()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.inactiveInfoField,
+					cpDefinition.isInactive()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.incompleteInfoField,
+					cpDefinition.isIncomplete()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.lastPublishDateInfoField,
+					cpDefinition.getLastPublishDate()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.maxSubscriptionCyclesInfoField,
+					cpDefinition.getMaxSubscriptionCycles()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.metaDescriptionInfoField,
+					InfoLocalizedValue.<String>builder(
+					).defaultLocale(
+						LocaleUtil.fromLanguageId(
+							cpDefinition.getDefaultLanguageId())
+					).values(
+						cpDefinition.getMetaDescriptionMap()
+					).build()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.metaKeywordsInfoField,
+					InfoLocalizedValue.<String>builder(
+					).defaultLocale(
+						LocaleUtil.fromLanguageId(
+							cpDefinition.getDefaultLanguageId())
+					).values(
+						cpDefinition.getMetaKeywordsMap()
+					).build()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.metaTitleInfoField,
+					InfoLocalizedValue.<String>builder(
+					).defaultLocale(
+						LocaleUtil.fromLanguageId(
+							cpDefinition.getDefaultLanguageId())
+					).values(
+						cpDefinition.getMetaTitleMap()
+					).build()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.modifiedDateInfoField,
+					cpDefinition.getModifiedDate()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.nameInfoField,
+					InfoLocalizedValue.<String>builder(
+					).defaultLocale(
+						LocaleUtil.fromLanguageId(
+							cpDefinition.getDefaultLanguageId())
+					).values(
+						cpDefinition.getNameMap()
+					).build()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.pendingInfoField,
+					cpDefinition.isPending()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.publishedInfoField,
+					cpDefinition.isPublished()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.productTypeNameInfoField,
+					cpDefinition.getProductTypeName()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.shortDescriptionInfoField,
+					InfoLocalizedValue.<String>builder(
+					).defaultLocale(
+						LocaleUtil.fromLanguageId(
+							cpDefinition.getDefaultLanguageId())
+					).values(
+						cpDefinition.getShortDescriptionMap()
+					).build()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.scheduledInfoField,
+					cpDefinition.isScheduled()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.shippableInfoField,
+					cpDefinition.isShippable()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.shippingExtraPriceInfoField,
+					cpDefinition.getShippingExtraPrice()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.shipSeparatelyPriceInfoField,
+					cpDefinition.isShipSeparately()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.stagedModelTypeInfoField,
+					cpDefinition.getStagedModelType()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.statusInfoField,
+					cpDefinition.getStatus()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.statusByUserIdInfoField,
+					cpDefinition.getStatusByUserId()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.statusByUserNameInfoField,
+					cpDefinition.getStatusByUserName()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.statusByUserUuidInfoField,
+					cpDefinition.getStatusByUserUuid()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.statusDateInfoField,
+					cpDefinition.getStatusDate()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.subscriptionEnabledInfoField,
+					cpDefinition.isSubscriptionEnabled()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.subscriptionLengthInfoField,
+					cpDefinition.getSubscriptionLength()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.subscriptionTypeInfoField,
+					cpDefinition.getSubscriptionType()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.
+						subscriptionTypeSettingsInfoField,
+					cpDefinition.getSubscriptionTypeSettings()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.taxExemptInfoField,
+					cpDefinition.isTaxExempt()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.telcoOrElectronicsInfoField,
+					cpDefinition.isTelcoOrElectronics()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.userIdInfoField,
+					cpDefinition.getUserId()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.userUuidInfoField,
+					cpDefinition.getUserUuid()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.userNameInfoField,
+					cpDefinition.getUserName()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.uuidInfoField,
+					cpDefinition.getUuid()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.versionInfoField,
+					cpDefinition.getVersion()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.weightInfoField,
+					cpDefinition.getWeight()));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.widthInfoField,
+					cpDefinition.getWidth()));
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -112,19 +419,25 @@ public class CPDefinitionInfoItemFieldValuesProvider
 		return cpDefinitionInfoFieldValues;
 	}
 
-	private ThemeDisplay _getThemeDisplay() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
-		if (serviceContext != null) {
-			return serviceContext.getThemeDisplay();
-		}
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
-		return null;
-	}
+	@Reference
+	private CommerceInventoryEngine _commerceInventoryEngine;
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;
+
+	@Reference
+	private CPDefinitionInventoryEngineRegistry
+		_cpDefinitionInventoryEngineRegistry;
+
+	@Reference
+	private CPDefinitionInventoryLocalService
+		_cpDefinitionInventoryLocalService;
 
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider

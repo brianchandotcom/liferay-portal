@@ -76,7 +76,7 @@ public class SQLServerLimitStringUtil {
 			Matcher matcher = _selectPattern.matcher(innerSelectFrom);
 
 			innerSelectFrom = matcher.replaceAll(
-				StringBundler.concat("select top ", limit, StringPool.SPACE));
+				StringBundler.concat("$1 top ", limit, StringPool.SPACE));
 		}
 
 		return innerSelectFrom;
@@ -173,6 +173,6 @@ public class SQLServerLimitStringUtil {
 	private static final Pattern _qualifiedColumnPattern = Pattern.compile(
 		"\\w+\\.([\\w\\*]+)");
 	private static final Pattern _selectPattern = Pattern.compile(
-		"SELECT ", Pattern.CASE_INSENSITIVE);
+		"(SELECT(?: DISTINCT)?) ", Pattern.CASE_INSENSITIVE);
 
 }

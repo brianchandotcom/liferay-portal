@@ -157,28 +157,23 @@ public class InstanceWorkflowMetricsIndexerImpl
 					).build(),
 					booleanQuery);
 
+				DocumentBuilder fieldsDocumentBuilder =
+					documentBuilderFactory.builder();
+
+				fieldsDocumentBuilder.setBoolean(
+					"instanceCompleted", Boolean.TRUE
+				).setString(
+					"instanceCompletionDate", document.getDate("completionDate")
+				);
+
 				_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
-					companyId,
-					HashMapBuilder.<String, Object>put(
-						"instanceCompleted", Boolean.TRUE
-					).put(
-						"instanceCompletionDate",
-						document.getDate("completionDate")
-					).build(),
-					booleanQuery);
+					companyId, fieldsDocumentBuilder.build(), booleanQuery);
 
 				BaseWorkflowMetricsIndexer baseWorkflowMetricsIndexer =
 					(BaseWorkflowMetricsIndexer)_taskWorkflowMetricsIndexer;
 
 				baseWorkflowMetricsIndexer.updateDocuments(
-					companyId,
-					HashMapBuilder.<String, Object>put(
-						"instanceCompleted", Boolean.TRUE
-					).put(
-						"instanceCompletionDate",
-						document.getDate("completionDate")
-					).build(),
-					booleanQuery);
+					companyId, fieldsDocumentBuilder.build(), booleanQuery);
 			});
 
 		return document;

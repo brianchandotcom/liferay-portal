@@ -31,6 +31,10 @@ import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.hits.SearchHit;
+import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
@@ -169,6 +173,55 @@ public abstract class BaseWorkflowMetricsIndexer {
 	)
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	protected void updateDocuments(
+		long companyId, Document fieldsDocument, Query filterQuery) {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames(getIndexName(companyId));
+
+		BooleanQuery booleanQuery = queries.booleanQuery();
+
+		searchSearchRequest.setQuery(
+			booleanQuery.addFilterQueryClauses(filterQuery));
+
+		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(
+			searchSearchRequest);
+
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
+
+		if (searchHits.getTotalHits() != 0) {
+			BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
+
+			if (PortalRunMode.isTestMode()) {
+				bulkDocumentRequest.setRefresh(true);
+			}
+
+			Stream.of(
+				searchHits.getSearchHits()
+			).flatMap(
+				List::stream
+			).map(
+				SearchHit::getDocument
+			).forEach(
+				document -> {
+					UpdateDocumentRequest updateDocumentRequest =
+						new UpdateDocumentRequest(
+							getIndexName(companyId), document.getString("uid"),
+							fieldsDocument);
+
+					updateDocumentRequest.setType(getIndexType());
+					updateDocumentRequest.setUpsert(true);
+
+					bulkDocumentRequest.addBulkableDocumentRequest(
+						updateDocumentRequest);
+				}
+			);
+
+			searchEngineAdapter.execute(bulkDocumentRequest);
+		}
 	}
 
 	protected void updateDocuments(

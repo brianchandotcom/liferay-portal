@@ -240,11 +240,11 @@ definition {
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
 		}
 
+		task ("Close all sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
 		task ("Switch to new property in AC") {
-			ACUtils.closeAllSessions();
-
-			Pause(locator1 = "30000");
-
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = "${propertyName}");

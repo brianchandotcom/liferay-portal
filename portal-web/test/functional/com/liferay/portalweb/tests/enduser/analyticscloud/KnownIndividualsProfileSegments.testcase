@@ -133,10 +133,9 @@ definition {
 
 			ACNavigation.openItem(itemName = "Static Segment Test1");
 
-			ACSegments.viewSegmentMembershipLegendNumbers(
-				anonymousNumber = "0",
-				knownNumber = "2",
-				totalNumber = "2");
+			ACNavigation.switchTab(tabName = "Membership");
+
+			ACUtils.viewNameList(nameList = "user1 user1");
 		}
 	}
 
@@ -216,10 +215,11 @@ definition {
 
 			ACNavigation.openItem(itemName = "Static Segment Test2");
 
-			ACSegments.viewSegmentMembershipLegendNumbers(
-				anonymousNumber = "0",
-				knownNumber = "1",
-				totalNumber = "1");
+			ACNavigation.switchTab(tabName = "Membership");
+
+			AssertElementPresent(
+				key_userName = "user1 user1",
+				locator1 = "ACSegments#SEGMENT_MEMBERS");
 		}
 	}
 
@@ -522,7 +522,7 @@ definition {
 
 				ACSegments.nameSegment(segmentName = "${segmentName}");
 
-				// Error when search users to add in the segment				
+				// Error when search users to add in the segment
 
 				if ("${segmentName}" == "Static Segment Test1") {
 					ACSegments.addStaticMultiMember(tableMember = "user1 user1,user2 user2");

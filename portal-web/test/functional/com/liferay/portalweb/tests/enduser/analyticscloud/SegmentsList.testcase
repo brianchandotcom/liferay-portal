@@ -130,8 +130,6 @@ definition {
 	@description = "Search for specific segment"
 	@priority = "5"
 	test CanShowSegmentList {
-		property portal.upstream = "afonso";
-
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}

@@ -726,9 +726,10 @@ definition {
 	test CanCreateWebBehaviorSegmentUsingEver {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Timing issues may happen on this test case
+		// AC Refactor: Issues with segment members may happen on this test case
 		// AC Refactor ticket: LRAC-9402
 		// AC Fix ticket: LRAC-9285
+		// AC Bug ticket : LRAC-9412
 
 		ACUtils.createFormAndAddToPage();
 
@@ -982,9 +983,10 @@ definition {
 	test CanCreateWebBehaviorSegmentUsingSince {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Timing issues may happen on this test case
+		// AC Refactor: Issues with segment members may happen on this test case
 		// AC Refactor ticket: LRAC-9401
 		// AC Fix ticket: LRAC-9285
+		// AC Bug ticket : LRAC-9412
 
 		ACUtils.createBlogsAndAddToPage();
 
@@ -1158,9 +1160,10 @@ definition {
 	test CanCreateWebBehaviorSegmentViewingDM {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Timing issues may happen on this test case
+		// AC Refactor: Issues with segment members may happen on this test case
 		// AC Refactor ticket: LRAC-9404
 		// AC Fix ticket: LRAC-9285
+		// AC Bug ticket : LRAC-9412
 
 		ACUtils.createDMAndAddToPage();
 
@@ -1252,9 +1255,10 @@ definition {
 	test CanCreateWebBehaviorSegmentViewingForm {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Timing issues may happen on this test case
+		// AC Refactor: Issues with segment members may happen on this test case
 		// AC Refactor ticket: LRAC-9406
 		// AC Fix ticket: LRAC-9285
+		// AC Bug ticket : LRAC-9412
 
 		ACUtils.createFormAndAddToPage();
 
@@ -1439,9 +1443,10 @@ definition {
 	test CanCreateWebBehaviorSegmentViewingWC {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: Timing issues may happen on this test case
+		// AC Refactor: Issues with segment members may happen on this test case
 		// AC Refactor ticket: LRAC-9403
 		// AC Fix ticket: LRAC-9285
+		// AC Bug ticket : LRAC-9412
 
 		ACUtils.createWCAndAddToPage();
 

@@ -30,6 +30,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.impl.ObjectDefinitionImpl;
+import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -43,6 +44,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.Clusterable;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -57,7 +59,10 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
@@ -65,6 +70,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
@@ -76,6 +82,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -666,6 +674,23 @@ public class ObjectDefinitionLocalServiceImpl
 		runSQL(dynamicObjectDefinitionTable.getCreateTableSQL());
 	}
 
+	private void _deleteWorkflowInstanceLinks(ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		List<ObjectEntry> objectEntries = _getObjectEntriesNotApproved(
+			objectDefinition);
+
+		for (ObjectEntry objectEntry : objectEntries) {
+			_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+				objectEntry.getCompanyId(),
+				_getGroupId(
+					objectDefinition,
+					ServiceContextThreadLocal.getServiceContext()),
+				objectDefinition.getClassName(),
+				objectEntry.getObjectEntryId());
+		}
+	}
+
 	private void _dropTable(String dbTableName) {
 		String sql = "drop table " + dbTableName;
 
@@ -703,6 +728,21 @@ public class ObjectDefinitionLocalServiceImpl
 			"O_", companyId, StringPool.UNDERLINE, shortName);
 	}
 
+	private long _getGroupId(
+			ObjectDefinition objectDefinition, ServiceContext serviceContext)
+		throws PortalException {
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				objectDefinition.getScope());
+
+		if (!objectScopeProvider.isGroupAware()) {
+			return 0;
+		}
+
+		return objectScopeProvider.getGroupId(serviceContext.getRequest());
+	}
+
 	private String _getName(String name, boolean system) {
 		name = StringUtil.trim(name);
 
@@ -711,6 +751,28 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		return name;
+	}
+
+	private List<ObjectEntry> _getObjectEntriesNotApproved(
+			ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		List<ObjectEntry> objectEntries =
+			_objectEntryLocalService.getObjectEntries(
+				_getGroupId(
+					objectDefinition,
+					ServiceContextThreadLocal.getServiceContext()),
+				objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Stream<ObjectEntry> stream = objectEntries.stream();
+
+		return stream.filter(
+			listTypeEntry ->
+				listTypeEntry.getStatus() != WorkflowConstants.STATUS_APPROVED
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private String _getPKObjectFieldDBColumnName(
@@ -759,6 +821,24 @@ public class ObjectDefinitionLocalServiceImpl
 		return false;
 	}
 
+	private void _startWorkflowInstanceLinks(ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		List<ObjectEntry> objectEntries = _getObjectEntriesNotApproved(
+			objectDefinition);
+
+		for (ObjectEntry objectEntry : objectEntries) {
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				objectEntry.getCompanyId(),
+				_getGroupId(
+					objectDefinition,
+					ServiceContextThreadLocal.getServiceContext()),
+				objectEntry.getUserId(), objectDefinition.getClassName(),
+				objectEntry.getObjectEntryId(), objectEntry,
+				ServiceContextThreadLocal.getServiceContext());
+		}
+	}
+
 	private ObjectDefinition _updateObjectDefinition(
 			ObjectDefinition objectDefinition, boolean active,
 			String dbTableName, Map<Locale, String> labelMap, String name,
@@ -780,12 +860,16 @@ public class ObjectDefinitionLocalServiceImpl
 
 		if (objectDefinition.isApproved()) {
 			if (!active && originalActive) {
+				_deleteWorkflowInstanceLinks(objectDefinition);
+
 				objectDefinitionLocalService.undeployObjectDefinition(
 					objectDefinition);
 			}
 			else if (active) {
 				objectDefinitionLocalService.deployObjectDefinition(
 					objectDefinition);
+
+				_startWorkflowInstanceLinks(objectDefinition);
 			}
 
 			return objectDefinitionPersistence.update(objectDefinition);
@@ -996,6 +1080,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 	@Reference(target = "(model.pre.filter.contributor.id=WorkflowStatus)")
 	private ModelPreFilterContributor _workflowStatusModelPreFilterContributor;

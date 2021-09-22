@@ -1,0 +1,22 @@
+[
+	{
+		"cssURLs": "",
+		"elementURLs": "https://ictus-ipg.s3.us-east-2.amazonaws.com/2.chunk.min.js\nhttps://ictus-ipg.s3.us-east-2.amazonaws.com/main.min.js\nhttps://ictus-ipg.s3.us-east-2.amazonaws.com/runtime-main.min.js",
+		"htmlElementName": "d2c-web",
+		"name_i18n": {
+			"en_US": "d2c-web",
+			"pt_BR": "direto-web"
+		},
+		"portletCategoryName": "sample"
+	},
+	{
+		"cssURLs": "",
+		"elementURLs": "https://ictus-ipg.s3.us-east-2.amazonaws.com/2.chunk.min.js\nhttps://ictus-ipg.s3.us-east-2.amazonaws.com/main.min.js\nhttps://ictus-ipg.s3.us-east-2.amazonaws.com/runtime-main.min.js",
+		"htmlElementName": "d2c-web",
+		"name_i18n": {
+			"en_US": "d3c-web",
+			"pt_BR": "direto-cliente"
+		},
+		"portletCategoryName": "sample"
+	}
+]

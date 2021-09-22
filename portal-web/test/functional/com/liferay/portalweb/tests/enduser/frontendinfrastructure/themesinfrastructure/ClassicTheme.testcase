@@ -26,7 +26,7 @@ definition {
 	@description = "Verify custom look and feel Settings can be applied to page"
 	@priority = "5"
 	@refactordone
-	test ConfigureLookAndFeelSettingsSinglePage {
+	test CanConfigureLookAndFeelSettingsOnSinglePage {
 		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
 		property portal.acceptance = "true";
 

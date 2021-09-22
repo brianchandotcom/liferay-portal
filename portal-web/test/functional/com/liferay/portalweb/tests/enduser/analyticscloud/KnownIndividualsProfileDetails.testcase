@@ -188,6 +188,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8938 | Test Summary: Order an Individual's Details"
 	@priority = "3"
 	test OrderIndividualDetails {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user1@liferay.com",
@@ -199,7 +203,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -223,19 +227,19 @@ definition {
 				desc = "true",
 				rowName = "Attribute");
 
-			ACIndividualsDashboard.viewKnownIndividualDetailsSpecificOrder(itemName = "modifiedDate,givenName,familyName,email,createDate,contactId,classPK,birthDate");
+			ACIndividualsDashboard.viewKnownIndividualDetailsSpecificOrder(itemName = "modifiedDate,jobTitle,givenName,familyName,email,createDate,contactId,classPK,birthDate");
 		}
 
 		task ("Sort the table by the Attribute column header in ascending order") {
 			ACIndividualsDashboard.filterKnownIndividualList(rowName = "Attribute");
 
-			ACIndividualsDashboard.viewKnownIndividualDetailsSpecificOrder(itemName = "birthDate,classPK,contactId,createDate,email,familyName,givenName,modifiedDate");
+			ACIndividualsDashboard.viewKnownIndividualDetailsSpecificOrder(itemName = "birthDate,classPK,contactId,createDate,email,familyName,givenName,jobTitle,modifiedDate");
 		}
 
 		task ("Sort the table by the Source Name column header in ascending order") {
 			ACIndividualsDashboard.filterKnownIndividualList(rowName = "Source Name");
 
-			ACIndividualsDashboard.viewKnownIndividualDetailsSpecificOrder(itemName = "birthDate,classPK,contactId,createDate,email,givenName,familyName,modifiedDate");
+			ACIndividualsDashboard.viewKnownIndividualDetailsSpecificOrder(itemName = "birthDate,classPK,contactId,createDate,email,givenName,jobTitle,familyName,modifiedDate");
 		}
 
 		task ("Sort the table by the Source Name column header in descending order") {
@@ -243,7 +247,7 @@ definition {
 				desc = "true",
 				rowName = "Source Name");
 
-			ACIndividualsDashboard.viewKnownIndividualDetailsSpecificOrder(itemName = "modifiedDate,familyName,givenName,email,createDate,contactId,classPK,birthDate");
+			ACIndividualsDashboard.viewKnownIndividualDetailsSpecificOrder(itemName = "modifiedDate,familyName,jobTitle,givenName,email,createDate,contactId,classPK,birthDate");
 		}
 	}
 

@@ -798,6 +798,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		// Company
 
+		if (companyId == PortalUtil.getDefaultCompanyId()) {
+			active = true;
+		}
+
 		virtualHostname = StringUtil.toLowerCase(
 			StringUtil.trim(virtualHostname));
 

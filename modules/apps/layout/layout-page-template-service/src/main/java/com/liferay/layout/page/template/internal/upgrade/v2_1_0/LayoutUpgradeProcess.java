@@ -71,9 +71,9 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 			Statement s = connection.createStatement();
 			ResultSet resultSet = s.executeQuery(
 				StringBundler.concat(
-					"select layoutPageTemplateEntryId, userId, groupId, name, ",
-					"type_, layoutPrototypeId from LayoutPageTemplateEntry ",
-					"where plid is null or plid = 0"));
+					"select layoutPageTemplateEntryId, groupId, companyId, ",
+					"userId, name, type_, layoutPrototypeId, companyId from ",
+					"LayoutPageTemplateEntry where plid is null or plid = 0"));
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection.prepareStatement(
@@ -81,7 +81,11 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 							"layoutPageTemplateEntryId = ?"))) {
 
 			while (resultSet.next()) {
+				long companyId = resultSet.getLong("companyId");
 				long userId = resultSet.getLong("userId");
+
+				userId = PortalUtil.getValidUserId(companyId, userId);
+
 				long groupId = resultSet.getLong("groupId");
 				String name = resultSet.getString("name");
 				int type = resultSet.getInt("type_");

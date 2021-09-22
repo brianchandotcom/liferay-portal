@@ -29,7 +29,15 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 @DDMForm(
 	rules = {
 		@DDMFormRule(
-			actions = "setVisible('dataType', false)", condition = "TRUE"
+			actions = "setValue('required', isRequiredObjectField(getValue('objectFieldName')))",
+			condition = "hasObjectField(getValue('objectFieldName'))"
+		),
+		@DDMFormRule(
+			actions = {
+				"setEnabled('required', not(hasObjectField(getValue('objectFieldName'))))",
+				"setVisible('dataType', false)"
+			},
+			condition = "TRUE"
 		)
 	}
 )

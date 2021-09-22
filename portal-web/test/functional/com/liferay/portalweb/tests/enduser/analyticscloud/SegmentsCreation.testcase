@@ -1299,11 +1299,13 @@ definition {
 					pageName = "AC Page",
 					siteName = "Site Name");
 
-				Pause(locator1 = "3000");
+				Pause(locator1 = "5000");
 			}
 		}
 
 		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = "${propertyName}");

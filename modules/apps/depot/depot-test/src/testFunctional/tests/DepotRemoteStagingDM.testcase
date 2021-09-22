@@ -994,9 +994,10 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		AssertVisible(
-			key_uploadFileName = "Document_2.jpg",
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			uploadFileName = "Document_2.jpg");
 
 		Staging.gotoPublishToLive();
 

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Learn Tag Web
+Bundle-SymbolicName: com.liferay.portal.learn.tag.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /portal-learn-tag-web

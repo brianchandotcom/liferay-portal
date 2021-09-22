@@ -127,7 +127,7 @@ public class TypedProperties implements ConfigurationProperties {
 
 			if (layout == null) {
 				sb.append(entry.getKey());
-				sb.append(_EQUALS_WITH_SPACES);
+				sb.append(CharPool.EQUAL);
 				sb.append(valuesEntry.getKey());
 				sb.append(_LINE_SEPARATOR);
 
@@ -163,8 +163,6 @@ public class TypedProperties implements ConfigurationProperties {
 
 		return false;
 	}
-
-	private static final String _EQUALS_WITH_SPACES = " = ";
 
 	private static final String _LINE_SEPARATOR = System.getProperty(
 		"line.separator");

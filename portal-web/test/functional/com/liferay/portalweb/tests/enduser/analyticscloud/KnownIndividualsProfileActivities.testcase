@@ -247,37 +247,59 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8124 | Test Summary: Individual activities graph shows activities from today when switched to 24 hour view"
 	@priority = "5"
 	test GraphShowsIndividualActivitiesFromTodayWhenSwitchedTo24HourView {
-		ACUtils.createDMAndAddToPage();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "ac@liferay.com",
-			userLoginFullName = "ac ac");
-
-		for (var n : list "1,2,3,4") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
-		ACUtils.closeAllSessionsAndWait();
+		task ("Create a Document And Media") {
+			ACUtils.createDMAndAddToPage();
+		}
 
-		ACUtils.launchAC();
+		task ("Sign in as AC user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+		}
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		task ("Visit the document") {
+			for (var n : list "1,2,3,4") {
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
 
-		ACNavigation.goToIndividuals();
+				DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
+			}
+		}
 
-		ACIndividualsDashboard.goToKnownIndividualsTab();
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
 
-		ACNavigation.openItem(itemName = "ac ac");
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
 
-		ACTimeFilter.clickTimeFilterButton();
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
 
-		ACTimeFilter.setLast24Hours();
+		task ("Go to the Individual and KnownIndividuals tab") {
+			ACNavigation.goToIndividuals();
 
-		ACIndividualsDashboard.viewRechartsBarOnIndividualsActivitiesChart();
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+		}
+
+		task ("Open item") {
+			ACNavigation.openItem(itemName = "ac ac");
+		}
+
+		task ("Select the Last 24 hours time period in individuals metrics chart") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("View the charts bar with individuals activities") {
+			ACIndividualsDashboard.viewRechartsBarOnIndividualsActivitiesChart();
+		}
 	}
 
 }

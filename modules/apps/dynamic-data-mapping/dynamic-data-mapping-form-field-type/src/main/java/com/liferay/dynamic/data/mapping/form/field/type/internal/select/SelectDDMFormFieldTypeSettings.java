@@ -37,6 +37,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		@DDMFormRule(
 			actions = {
 				"setEnabled('dataSourceType', not(hasObjectField(getValue('objectFieldName'))))",
+				"setEnabled('required', not(hasObjectField(getValue('objectFieldName'))))",
 				"setMultiple('predefinedValue', getValue('multiple'))",
 				"setOptions('predefinedValue', getValue('options'))",
 				"setRequired('ddmDataProviderInstanceId', contains(getValue('dataSourceType'), \"data-provider\"))",
@@ -59,7 +60,10 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 			condition = "not(equals(getValue('dataSourceType'), \"data-provider\"))"
 		),
 		@DDMFormRule(
-			actions = "setValue('options', getListTypeEntries(getValue('objectFieldName')))",
+			actions = {
+				"setValue('options', getListTypeEntries(getValue('objectFieldName')))",
+				"setValue('required', isRequiredObjectField(getValue('objectFieldName')))"
+			},
 			condition = "hasObjectField(getValue('objectFieldName'))"
 		)
 	}

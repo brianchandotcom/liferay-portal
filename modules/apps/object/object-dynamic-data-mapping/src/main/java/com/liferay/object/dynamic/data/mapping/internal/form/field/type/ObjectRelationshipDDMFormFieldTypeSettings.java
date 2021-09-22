@@ -36,7 +36,8 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 			actions = {
 				"setEnabled('required', not(hasObjectField(getValue('objectFieldName'))))",
 				"setVisible('dataType', false)",
-				"setVisible('objectDefinitionId', not(hasObjectField(getValue('objectFieldName'))))"
+				"setVisible('objectDefinitionId', not(hasObjectField(getValue('objectFieldName'))))",
+				"setVisible('requiredErrorMessage', getValue('required'))"
 			},
 			condition = "TRUE"
 		)
@@ -53,7 +54,8 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"label", "tip", "objectDefinitionId", "required"
+								"label", "tip", "objectDefinitionId",
+								"required", "requiredErrorMessage"
 							}
 						)
 					}

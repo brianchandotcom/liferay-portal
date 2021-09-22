@@ -160,13 +160,58 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Boolean type and view its entries"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanMapBooleanTypeAndViewEntries {
 		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CanMapBooleanTypeAndViewEntries";
 
-		// TODO LPS-138047 CanMapBooleanTypeAndViewEntries pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "Boolean",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+
+		Form.gotoAddField(fieldType = "Boolean");
+
+		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Custom Field");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		Check.checkToggleSwitch(
+			checkboxName = "Boolean",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntry(entry = "Yes");
+		
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Date type and view its entries"

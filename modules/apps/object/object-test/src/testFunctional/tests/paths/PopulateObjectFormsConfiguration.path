@@ -102,7 +102,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_FIELD_TAB</td>
-		<td>//div[@class='form-control results-chosen select-field-trigger']</td>
+		<td>//div[@class='form-control results-chosen select-field-trigger']//div[contains(text(),'Choose an Option')]</td>
 		<td></td>
 	</tr>
 	<tr>

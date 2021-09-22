@@ -1073,6 +1073,11 @@ components:
                                 The content type's class name.
                             type: string
                     type: object
+                defaultTemplate:
+                    # @review
+                    description:
+                        Specifies if the page template should be the default for the given content type/subtype.
+                    type: boolean
                 key:
                     # @review
                     description:

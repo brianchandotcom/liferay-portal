@@ -256,6 +256,7 @@
 
 								<%
 								request.setAttribute("liferay-learn:message:key", "database-configuration");
+								request.setAttribute("liferay-learn:message:resource", "portal-web");
 								%>
 
 								<liferay-util:dynamic-include key="/html/portal/setup_wizard.jsp#help_link" />

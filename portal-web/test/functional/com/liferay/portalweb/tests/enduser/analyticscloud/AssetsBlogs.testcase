@@ -84,7 +84,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8384 | Test Summary: Assert 180 day time filter in Blogs"
 	@priority = "3"
 	test AssertBlogsPageTImeFilter180Days {
-		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		// AC Refactor: It is not possible to perform the assert because this test needs data from the past.
 		// AC Refactor ticket: LRAC-8930
@@ -132,7 +132,7 @@ definition {
 
 			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Last 180 days");
 
-			ACUtils.viewNoResultsMessage(noResultMessage = "No visitor data received from your assets");
+			ACUtils.viewNameList(nameList = "Blogs AC Title");
 
 			// Is not possible to assert the blog because this test needs data from the past.
 
@@ -553,7 +553,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8383 | Test Summary: Custom Range time filter in Blogs assets page"
 	@priority = "5"
 	test CanUseCustomRangeBlogsAssetsPage {
-		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		// AC Refactor: It is not possible to perform the assert because this test needs data from the past.
 		// AC Refactor ticket: LRAC-8931

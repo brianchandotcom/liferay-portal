@@ -99,9 +99,16 @@ definition {
 
 		Click(locator1 = "AlloyEditor#TEXT_FORMATTING_LINK_BROWSE_BUTTON");
 
-		ItemSelector.selectDMImage(
-			imageFileName = "${imageFileName}",
-			navTab = "${navTab}");
+		if (isSet(imageFileName)) {
+			ItemSelector.selectDMImage(
+				imageFileName = "${imageFileName}",
+				navTab = "${navTab}");
+		}
+		else {
+			ItemSelector.uploadFile(
+				navTab = "${navTab}",
+				uploadFileName = "${uploadFileName}");
+		}
 
 		PortletEntry.publish();
 	}
@@ -896,6 +903,16 @@ definition {
 		if (isSet(entryInlineImage)) {
 			BlogsEntry.viewInlineImage(uploadFileName = "${entryInlineImage}");
 		}
+	}
+
+	macro viewEntryEmbeddedImage {
+		Click.pauseClickAt(
+			key_entryContent = "${entryContent}",
+			locator1 = "BlogsEntry#CONTENT_LINK");
+
+		AssertElementPresent.pauseAssertVisible(
+			key_imageSourceURL = "${imageSourceURL}",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}
 
 	macro viewEntryExternalURL {

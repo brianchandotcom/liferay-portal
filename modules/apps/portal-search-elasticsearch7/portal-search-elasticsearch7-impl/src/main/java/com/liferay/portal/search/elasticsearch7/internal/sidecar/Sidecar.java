@@ -27,7 +27,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -425,10 +424,8 @@ public class Sidecar {
 			return new Elasticsearch790Distribution();
 		}
 
-		if (ArrayUtil.contains(
-				_SUPPORTED_ELASTICSEARCH_SIDECAR_VERSIONS, versionNumber)) {
-
-			return new ElasticsearchDistribution(versionNumber);
+		if (versionNumber.equals("7.10.2")) {
+			return new Elasticsearch_7_10_2_Distribution();
 		}
 
 		throw new IllegalArgumentException(
@@ -604,10 +601,6 @@ public class Sidecar {
 		).build(
 		).install();
 	}
-
-	private static final String[] _SUPPORTED_ELASTICSEARCH_SIDECAR_VERSIONS = {
-		"7.10.2"
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(Sidecar.class);
 

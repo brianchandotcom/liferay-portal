@@ -19,16 +19,14 @@ package com.liferay.portal.search.elasticsearch7.internal.sidecar;
  */
 public class DistributableImpl implements Distributable {
 
-	public DistributableImpl(String downloadURLString) {
-		_downloadURLString = downloadURLString;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #DistributableImpl(String)}
-	 */
-	@Deprecated
 	public DistributableImpl(String downloadURLString, String checksum) {
 		_downloadURLString = downloadURLString;
+		_checksum = checksum;
+	}
+
+	@Override
+	public String getChecksum() {
+		return _checksum;
 	}
 
 	@Override
@@ -36,6 +34,7 @@ public class DistributableImpl implements Distributable {
 		return _downloadURLString;
 	}
 
+	private final String _checksum;
 	private final String _downloadURLString;
 
 }

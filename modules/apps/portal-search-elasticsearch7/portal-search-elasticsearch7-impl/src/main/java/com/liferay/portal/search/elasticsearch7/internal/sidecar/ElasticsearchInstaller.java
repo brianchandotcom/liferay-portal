@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.URL;
 
@@ -27,6 +28,7 @@ import java.nio.file.Paths;
 
 import java.util.stream.Stream;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -116,6 +118,12 @@ public class ElasticsearchInstaller {
 
 	}
 
+	protected static String getChecksum(Path path) throws IOException {
+		try (InputStream inputStream = Files.newInputStream(path)) {
+			return DigestUtils.sha512Hex(inputStream);
+		}
+	}
+
 	protected static Path getExtractedElasticsearchDirectoryPath(
 			Path extractedRootDirectoryPath)
 		throws IOException {
@@ -132,6 +140,14 @@ public class ElasticsearchInstaller {
 		Path path = Paths.get(SystemProperties.get(SystemProperties.TMP_DIR));
 
 		return path.resolve(ElasticsearchInstaller.class.getSimpleName());
+	}
+
+	protected static void guardChecksum(Path filePath, String checksum)
+		throws IOException {
+
+		if (!checksum.equals(getChecksum(filePath))) {
+			throw new RuntimeException("Checksum mismatch");
+		}
 	}
 
 	protected void createDestinationDirectory() {
@@ -215,6 +231,20 @@ public class ElasticsearchInstaller {
 	}
 
 	protected Path getFilePath(Distributable distributable) throws IOException {
+		Path filePath = locateOrDownload(distributable);
+
+		guardChecksum(filePath, distributable.getChecksum());
+
+		return filePath;
+	}
+
+	protected boolean isAlreadyInstalled() {
+		return Files.exists(_installationDirectoryPath);
+	}
+
+	protected Path locateOrDownload(Distributable distributable)
+		throws IOException {
+
 		String downloadURLString = distributable.getDownloadURLString();
 
 		String fileName = StringUtils.substringAfterLast(
@@ -232,10 +262,6 @@ public class ElasticsearchInstaller {
 		PathUtil.download(new URL(downloadURLString), downloadedFilePath);
 
 		return downloadedFilePath;
-	}
-
-	protected boolean isAlreadyInstalled() {
-		return Files.exists(_installationDirectoryPath);
 	}
 
 	private static final Path _temporaryDirectoryPath =

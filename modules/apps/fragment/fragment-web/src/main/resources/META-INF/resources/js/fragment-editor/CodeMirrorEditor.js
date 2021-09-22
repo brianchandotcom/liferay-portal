@@ -59,23 +59,25 @@ import ClayIcon from '@clayui/icon';
 import CodeMirror from 'codemirror';
 import React, {useEffect, useMemo, useRef} from 'react';
 
-const AUTOCOMPLETE_EXCLUDED_KEY_CODES = new Set(
-	Object.values({
-		ALT: 18,
-		ARROW_DOWN: 40,
-		ARROW_LEFT: 37,
-		ARROW_RIGHT: 39,
-		ARROW_UP: 38,
-		BACKSPACE: 8,
-		CONTROL: 17,
-		ESCAPE: 27,
-		META: 91,
-		RETURN: 13,
-		SEMICOLON: 59,
-		SHIFT: 16,
-		SPACE: 32,
-	})
-);
+const AUTOCOMPLETE_EXCLUDED_KEYS = new Set([
+	' ',
+	';',
+	'Alt',
+	'AltGraph',
+	'AltRight',
+	'ArrowDown',
+	'ArrowLeft',
+	'ArrowRight',
+	'ArrowUp',
+	'Backspace',
+	'Control',
+	'Enter',
+	'Escape',
+	'Delete',
+	'Meta',
+	'Return',
+	'Shift',
+]);
 
 const MODES = {
 	css: {
@@ -294,7 +296,7 @@ const CodeMirrorEditor = ({
 			codeMirror.on('keyup', (cm, event) => {
 				if (
 					!cm.state.completionActive &&
-					!AUTOCOMPLETE_EXCLUDED_KEY_CODES.has(event.keyCode)
+					!AUTOCOMPLETE_EXCLUDED_KEYS.has(event.key)
 				) {
 					codeMirror.showHint();
 				}

@@ -249,7 +249,7 @@
 								request.setAttribute("liferay-learn:message:resource", "portal-web");
 								%>
 
-								<liferay-util:dynamic-include key="com.liferay.portal.learn.tag.web#/render_learn_tag#" />
+								<liferay-util:dynamic-include key="/html/portal/setup_wizard.jsp#help_link" />
 							</div>
 
 							<div class="btn float-right hide" id="databaseConfiguration">
@@ -258,7 +258,7 @@
 								request.setAttribute("liferay-learn:message:key", "database-configuration");
 								%>
 
-								<liferay-util:dynamic-include key="com.liferay.portal.learn.tag.web#/render_learn_tag#" />
+								<liferay-util:dynamic-include key="/html/portal/setup_wizard.jsp#help_link" />
 							</div>
 						</aui:button-row>
 					</aui:form>

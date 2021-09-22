@@ -33,7 +33,7 @@ public class LearnTagRenderJSPDynamicInclude extends BaseJSPDynamicInclude {
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
-			"com.liferay.portal.learn.tag.web#/render_learn_tag#");
+			"/html/portal/setup_wizard.jsp#help_link");
 	}
 
 	@Override

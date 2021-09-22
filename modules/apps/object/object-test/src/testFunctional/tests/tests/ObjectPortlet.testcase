@@ -376,12 +376,48 @@ definition {
 	}
 
 	@description = "LPS-135393 - Verify the table is updated when changing a page on the Custom Object Portlet"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test TableUpdatedWhenChangingPage {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-138961 TableUpdatedWhenChangingPage pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Text",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		for (var number : list "1,2,3,4,5") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject",
+				value = "Test text ${number}");
+		}
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.changePagination(itemsPerPage = "4 items");
+
+		ObjectPortlet.checkAnyPage(pageNumber = "2");
+
+		ObjectPortlet.viewEntry(entry = "Test text 5");
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Test text 1");
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Test text 2");
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Test text 3");
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Test text 4");
+
+
+
+		
 	}
 
 	@description = "LPS-135393 - Verify the table is updated when changing the pagination number on the Custom Object Portlet"

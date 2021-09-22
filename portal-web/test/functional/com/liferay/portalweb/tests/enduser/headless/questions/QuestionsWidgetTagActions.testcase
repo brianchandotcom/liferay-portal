@@ -82,13 +82,13 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		JSONQuestions.addQuestionWithTag(
-			bodyField = "Content AddQuestion New",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			tagField = "tag",
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "Content AddQuestion New",
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			tagLocatorList = "tag",
 			titleField = "Title AddQuestion New",
-			userEmailAddress = "userea@liferay.com");
+			topicName = "questions-test-category");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",

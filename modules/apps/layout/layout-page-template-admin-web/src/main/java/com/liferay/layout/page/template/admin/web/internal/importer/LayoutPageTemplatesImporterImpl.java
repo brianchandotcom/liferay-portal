@@ -902,7 +902,7 @@ public class LayoutPageTemplatesImporterImpl
 		}
 	}
 
-	private void _processLayoutPageTemplateEntry(
+	private LayoutPageTemplateEntry _processLayoutPageTemplateEntry(
 			long classNameId, long classTypeId, long groupId,
 			long layoutPageTemplateCollectionId,
 			LayoutPageTemplateEntry layoutPageTemplateEntry, String name,
@@ -961,9 +961,12 @@ public class LayoutPageTemplatesImporterImpl
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 					thumbnailZipEntry, zipFile);
 
-				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-					previewFileEntryId);
+				layoutPageTemplateEntry =
+					_layoutPageTemplateEntryService.
+						updateLayoutPageTemplateEntry(
+							layoutPageTemplateEntry.
+								getLayoutPageTemplateEntryId(),
+							previewFileEntryId);
 
 				_layoutPageTemplatesImporterResultEntries.add(
 					new LayoutPageTemplatesImporterResultEntry(
@@ -1009,7 +1012,11 @@ public class LayoutPageTemplatesImporterImpl
 						new String[] {
 							zipPath, _toTypeName(layoutPageTemplateEntryType)
 						})));
+
+			return null;
 		}
+
+		return layoutPageTemplateEntry;
 	}
 
 	private void _processMasterLayoutPageTemplateEntries(

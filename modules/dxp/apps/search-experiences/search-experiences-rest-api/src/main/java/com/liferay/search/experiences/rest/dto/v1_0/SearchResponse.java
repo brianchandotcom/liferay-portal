@@ -1,0 +1,495 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+
+package com.liferay.search.experiences.rest.dto.v1_0;
+
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.util.ObjectMapperUtil;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+import java.io.Serializable;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+
+import javax.annotation.Generated;
+
+import javax.validation.Valid;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+/**
+ * @author Brian Wing Shun Chan
+ * @generated
+ */
+@Generated("")
+@GraphQLName("SearchResponse")
+@JsonFilter("Liferay.Vulcan")
+@XmlRootElement(name = "SearchResponse")
+public class SearchResponse implements Serializable {
+
+	public static SearchResponse toDTO(String json) {
+		return ObjectMapperUtil.readValue(SearchResponse.class, json);
+	}
+
+	@Schema
+	@Valid
+	public Document[] getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(Document[] documents) {
+		this.documents = documents;
+	}
+
+	@JsonIgnore
+	public void setDocuments(
+		UnsafeSupplier<Document[], Exception> documentsUnsafeSupplier) {
+
+		try {
+			documents = documentsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Document[] documents;
+
+	@Schema
+	public Double getMaxScore() {
+		return maxScore;
+	}
+
+	public void setMaxScore(Double maxScore) {
+		this.maxScore = maxScore;
+	}
+
+	@JsonIgnore
+	public void setMaxScore(
+		UnsafeSupplier<Double, Exception> maxScoreUnsafeSupplier) {
+
+		try {
+			maxScore = maxScoreUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Double maxScore;
+
+	@Schema
+	public Integer getPage() {
+		return page;
+	}
+
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+
+	@JsonIgnore
+	public void setPage(UnsafeSupplier<Integer, Exception> pageUnsafeSupplier) {
+		try {
+			page = pageUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer page;
+
+	@Schema
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	@JsonIgnore
+	public void setPageSize(
+		UnsafeSupplier<Integer, Exception> pageSizeUnsafeSupplier) {
+
+		try {
+			pageSize = pageSizeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer pageSize;
+
+	@Schema
+	public String getRequestString() {
+		return requestString;
+	}
+
+	public void setRequestString(String requestString) {
+		this.requestString = requestString;
+	}
+
+	@JsonIgnore
+	public void setRequestString(
+		UnsafeSupplier<String, Exception> requestStringUnsafeSupplier) {
+
+		try {
+			requestString = requestStringUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String requestString;
+
+	@Schema
+	public String getResponseString() {
+		return responseString;
+	}
+
+	public void setResponseString(String responseString) {
+		this.responseString = responseString;
+	}
+
+	@JsonIgnore
+	public void setResponseString(
+		UnsafeSupplier<String, Exception> responseStringUnsafeSupplier) {
+
+		try {
+			responseString = responseStringUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String responseString;
+
+	@Schema
+	@Valid
+	public SearchRequest getSearchRequest() {
+		return searchRequest;
+	}
+
+	public void setSearchRequest(SearchRequest searchRequest) {
+		this.searchRequest = searchRequest;
+	}
+
+	@JsonIgnore
+	public void setSearchRequest(
+		UnsafeSupplier<SearchRequest, Exception> searchRequestUnsafeSupplier) {
+
+		try {
+			searchRequest = searchRequestUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected SearchRequest searchRequest;
+
+	@Schema
+	public Integer getTotalHits() {
+		return totalHits;
+	}
+
+	public void setTotalHits(Integer totalHits) {
+		this.totalHits = totalHits;
+	}
+
+	@JsonIgnore
+	public void setTotalHits(
+		UnsafeSupplier<Integer, Exception> totalHitsUnsafeSupplier) {
+
+		try {
+			totalHits = totalHitsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer totalHits;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof SearchResponse)) {
+			return false;
+		}
+
+		SearchResponse searchResponse = (SearchResponse)object;
+
+		return Objects.equals(toString(), searchResponse.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBundler sb = new StringBundler();
+
+		sb.append("{");
+
+		if (documents != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"documents\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < documents.length; i++) {
+				sb.append(String.valueOf(documents[i]));
+
+				if ((i + 1) < documents.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (maxScore != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"maxScore\": ");
+
+			sb.append(maxScore);
+		}
+
+		if (page != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"page\": ");
+
+			sb.append(page);
+		}
+
+		if (pageSize != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pageSize\": ");
+
+			sb.append(pageSize);
+		}
+
+		if (requestString != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"requestString\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(requestString));
+
+			sb.append("\"");
+		}
+
+		if (responseString != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"responseString\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(responseString));
+
+			sb.append("\"");
+		}
+
+		if (searchRequest != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"searchRequest\": ");
+
+			sb.append(String.valueOf(searchRequest));
+		}
+
+		if (totalHits != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalHits\": ");
+
+			sb.append(totalHits);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.SearchResponse",
+		name = "x-class-name"
+	)
+	public String xClassName;
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
+	private static boolean _isArray(Object value) {
+		if (value == null) {
+			return false;
+		}
+
+		Class<?> clazz = value.getClass();
+
+		return clazz.isArray();
+	}
+
+	private static String _toJSON(Map<String, ?> map) {
+		StringBuilder sb = new StringBuilder("{");
+
+		@SuppressWarnings("unchecked")
+		Set set = map.entrySet();
+
+		@SuppressWarnings("unchecked")
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\": ");
+
+			Object value = entry.getValue();
+
+			if (_isArray(value)) {
+				sb.append("[");
+
+				Object[] valueArray = (Object[])value;
+
+				for (int i = 0; i < valueArray.length; i++) {
+					if (valueArray[i] instanceof String) {
+						sb.append("\"");
+						sb.append(valueArray[i]);
+						sb.append("\"");
+					}
+					else {
+						sb.append(valueArray[i]);
+					}
+
+					if ((i + 1) < valueArray.length) {
+						sb.append(", ");
+					}
+				}
+
+				sb.append("]");
+			}
+			else if (value instanceof Map) {
+				sb.append(_toJSON((Map<String, ?>)value));
+			}
+			else if (value instanceof String) {
+				sb.append("\"");
+				sb.append(value);
+				sb.append("\"");
+			}
+			else {
+				sb.append(value);
+			}
+
+			if (iterator.hasNext()) {
+				sb.append(", ");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+}

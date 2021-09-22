@@ -107,6 +107,48 @@ components:
                 title:
                     type: string
             type: object
+        SearchRequest:
+            properties:
+                queryString:
+                    type: string
+            type: object
+        SearchResponse:
+            properties:
+                documents:
+                    items:
+                        properties:
+                            documentFields:
+                                items:
+                                    properties:
+                                        name:
+                                            type: string
+                                        valueString:
+                                            type: string
+                                    type: object
+                                type: array
+                            explanation:
+                                type: string
+                            score:
+                                format: double
+                                type: number
+                        type: object
+                    type: array
+                maxScore:
+                    format: double
+                    type: number
+                page:
+                    type: integer
+                pageSize:
+                    type: integer
+                requestString:
+                    type: string
+                responseString:
+                    type: string
+                searchRequest:
+                    $ref: "#/components/schemas/SearchRequest"
+                totalHits:
+                    type: integer
+            type: object
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID

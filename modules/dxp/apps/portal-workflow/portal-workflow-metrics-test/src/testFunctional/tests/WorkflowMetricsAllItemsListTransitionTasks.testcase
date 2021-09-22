@@ -650,7 +650,7 @@ definition {
 
 		KaleoDesigner.deleteNode(nodeNodeLabel = "update");
 
-		KaleoFormsAdmin.updateWorkflow();
+		Click(locator1 = "Button#UPDATE");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

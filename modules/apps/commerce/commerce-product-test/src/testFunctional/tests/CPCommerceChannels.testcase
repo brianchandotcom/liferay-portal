@@ -34,6 +34,7 @@ definition {
 	@priority = "3"
 	test ActiveAllTaxCalculations {
 		property portal.acceptance = "false";
+		property portal.release = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannels#ActiveAllTaxCalculations";
 
 		// TODO Review
@@ -847,6 +848,7 @@ definition {
 	@priority = "3"
 	test EditAvalaraTaxCalculation {
 		property portal.acceptance = "false";
+		property portal.release = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannels#EditAvalaraTaxCalculation";
 
 		// TODO Review

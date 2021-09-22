@@ -252,7 +252,7 @@
 					{
 						"layoutColumnId": "column-3",
 						"layoutColumnPos": 0,
-						"portletName": "com_liferay_commerce_account_web_internal_portlet_CommerceAccountPortlet"
+						"portletName": "com_liferay_account_admin_web_internal_portlet_AccountEntriesManagementPortlet"
 					}
 				],
 				"privateLayout": false

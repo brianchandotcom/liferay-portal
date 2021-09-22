@@ -358,17 +358,15 @@ definition {
 		}
 
 		task ("Visit the two documents") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
+			for (var documentName : list "DM AC Title,New Document") {
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
 
-			DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "${documentName}");
 
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			DMNavigator.gotoDocumentPG(dmDocumentTitle = "New Document");
+				Pause(locator1 = "5000");
+			}
 		}
 
 		task ("Close sessions") {

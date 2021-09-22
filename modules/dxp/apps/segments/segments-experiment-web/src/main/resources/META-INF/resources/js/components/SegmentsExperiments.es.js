@@ -69,10 +69,11 @@ function SegmentsExperiments({
 	const noExperimentIllustration = `${imagesPath}${NO_EXPERIMENT_ILLUSTRATION_FILE_NAME}`;
 	const winnerVariant = variants.find((variant) => variant.winner === true);
 	const goalTarget = experiment?.goal?.target?.replace('#', '');
+	const isGoalTargetInDOM = document.getElementById(goalTarget);
 
 	// If the target has been removed from the page we must reset it
 
-	if (goalTarget && !document.getElementById(goalTarget)) {
+	if (goalTarget && !isGoalTargetInDOM) {
 		onTargetChange('');
 	}
 

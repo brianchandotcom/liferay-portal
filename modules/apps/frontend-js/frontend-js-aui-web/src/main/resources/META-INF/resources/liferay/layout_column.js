@@ -94,7 +94,7 @@ AUI.add(
 			},
 
 			register() {
-				var columnLayoutDefaults = A.merge(
+				var columnLayoutDefaults = Object.assign(
 					Layout.DEFAULT_LAYOUT_OPTIONS,
 					{
 						after: {

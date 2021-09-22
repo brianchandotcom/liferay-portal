@@ -238,7 +238,7 @@ AUI.add(
 						bodyCssClass: '',
 					};
 
-					dialogIframeConfig = A.merge(
+					dialogIframeConfig = Object.assign(
 						defaultDialogIframeConfig,
 						config.dialogIframe,
 						{
@@ -304,16 +304,12 @@ AUI.add(
 						});
 					}
 
-					modal = new LiferayModal(
-						A.merge(
-							{
-								cssClass: 'modal-full-screen',
-								headerContent: titleNode,
-								id,
-							},
-							modalConfig
-						)
-					);
+					modal = new LiferayModal({
+						cssClass: 'modal-full-screen',
+						headerContent: titleNode,
+						id,
+						...modalConfig,
+					});
 
 					Liferay.once('screenLoad', () => {
 						modal.destroy();
@@ -377,7 +373,10 @@ AUI.add(
 			_getWindowConfig(config) {
 				var instance = this;
 
-				var modalConfig = A.merge(instance.DEFAULTS, config.dialog);
+				var modalConfig = Object.assign(
+					instance.DEFAULTS,
+					config.dialog
+				);
 
 				var height = modalConfig.height;
 				var width = modalConfig.width;

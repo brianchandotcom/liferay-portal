@@ -242,7 +242,10 @@ AUI.add(
 					];
 
 					instance.setAttrs(
-						A.merge(instance._triggerConfigDefaults, triggerConfig)
+						Object.assign(
+							instance._triggerConfigDefaults,
+							triggerConfig
+						)
 					);
 
 					instance._trigger = trigger;
@@ -281,9 +284,7 @@ AUI.add(
 					return item !== 'value';
 				});
 
-				instance._triggerConfigDefaults = A.merge(
-					TRIGGER_CONFIG_DEFAULTS
-				);
+				instance._triggerConfigDefaults = TRIGGER_CONFIG_DEFAULTS;
 
 				A.mix(
 					instance._triggerConfigDefaults,

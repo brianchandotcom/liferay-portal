@@ -200,6 +200,11 @@
 	<td>//span[contains(text(),'No Events Found')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CHARTS_WRAPPER</td>
+	<td>//div[contains(@class,'recharts-wrapper')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

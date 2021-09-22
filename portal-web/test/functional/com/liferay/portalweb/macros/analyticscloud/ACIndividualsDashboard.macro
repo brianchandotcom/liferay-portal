@@ -95,6 +95,16 @@ definition {
 		return "${formattedDate}";
 	}
 
+	macro getChartPopoverDateWithoutBar {
+		Click(locator1 = "ACIndividualsDashboard#CHARTS_WRAPPER");
+
+		SelectFrame.selectFrame(locator1 = "ACIndividualsDashboard#CHARTS_WRAPPER");
+
+		var formattedDate = selenium.getText("ACIndividualsDashboard#CHART_POPOVER_ACTIVITIES_DATE");
+
+		return "${formattedDate}";
+	}
+
 	macro goToDistributionTab {
 		ACNavigation.switchTab(tabName = "Distribution");
 	}

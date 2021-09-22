@@ -32,6 +32,7 @@ import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -138,37 +139,38 @@ public class ObjectEntryDisplayContext {
 		for (ObjectLayoutTab objectLayoutTab :
 				objectLayout.getObjectLayoutTabs()) {
 
-			NavigationItem navigationItem = new NavigationItem();
+			navigationItemList.add(
+				NavigationItemBuilder.setActive(
+					objectLayoutTab.getObjectLayoutTabId() ==
+						currentObjectLayoutTab.getObjectLayoutTabId()
+				).setHref(
+					PortletURLBuilder.create(
+						liferayPortletResponse.createRenderURL()
+					).setMVCRenderCommandName(
+						"/object_entries/edit_object_entry"
+					).setParameter(
+						"objectEntryId", objectEntryId
+					).setParameter(
+						"objectLayoutTabId",
+						objectLayoutTab.getObjectLayoutTabId()
+					).buildString()
+				).setLabel(
+					() -> {
+						if (objectLayoutTab.getObjectRelationshipId() > 0) {
+							ObjectRelationship objectRelationship =
+								_objectRelationshipLocalService.
+									fetchObjectRelationship(
+										objectLayoutTab.
+											getObjectRelationshipId());
 
-			navigationItem.setActive(
-				objectLayoutTab.getObjectLayoutTabId() ==
-					currentObjectLayoutTab.getObjectLayoutTabId());
-			navigationItem.setHref(
-				PortletURLBuilder.create(
-					liferayPortletResponse.createRenderURL()
-				).setMVCRenderCommandName(
-					"/object_entries/edit_object_entry"
-				).setParameter(
-					"objectEntryId", objectEntryId
-				).setParameter(
-					"objectLayoutTabId", objectLayoutTab.getObjectLayoutTabId()
-				).buildString());
+							return objectRelationship.getLabel(
+								_objectRequestHelper.getLocale());
+						}
 
-			if (objectLayoutTab.getObjectRelationshipId() > 0) {
-				ObjectRelationship objectRelationship =
-					_objectRelationshipLocalService.fetchObjectRelationship(
-						objectLayoutTab.getObjectRelationshipId());
-
-				navigationItem.setLabel(
-					objectRelationship.getLabel(
-						_objectRequestHelper.getLocale()));
-			}
-			else {
-				navigationItem.setLabel(
-					objectLayoutTab.getName(_objectRequestHelper.getLocale()));
-			}
-
-			navigationItemList.add(navigationItem);
+						return objectLayoutTab.getName(
+							_objectRequestHelper.getLocale());
+					}
+				).build());
 		}
 
 		return navigationItemList;

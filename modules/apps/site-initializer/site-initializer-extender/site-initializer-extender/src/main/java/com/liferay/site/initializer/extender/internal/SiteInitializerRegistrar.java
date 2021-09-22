@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
@@ -75,7 +76,7 @@ public class SiteInitializerRegistrar {
 		JournalArticleLocalService journalArticleLocalService,
 		JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
-		Portal portal,
+		Portal portal, RemoteAppEntryLocalService remoteAppEntryLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService, SettingsFactory settingsFactory,
 		StructuredContentFolderResource.Factory
@@ -106,6 +107,7 @@ public class SiteInitializerRegistrar {
 		_jsonFactory = jsonFactory;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_portal = portal;
+		_remoteAppEntryLocalService = remoteAppEntryLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
 		_settingsFactory = settingsFactory;
@@ -134,8 +136,8 @@ public class SiteInitializerRegistrar {
 				_documentResourceFactory, _fragmentsImporter,
 				_groupLocalService, _journalArticleLocalService, _jsonFactory,
 				_objectDefinitionResourceFactory, _portal,
-				_resourcePermissionLocalService, _roleLocalService,
-				_servletContext, _settingsFactory,
+				_remoteAppEntryLocalService, _resourcePermissionLocalService,
+				_roleLocalService, _servletContext, _settingsFactory,
 				_structuredContentFolderResourceFactory,
 				_styleBookEntryZipProcessor, _taxonomyCategoryResourceFactory,
 				_taxonomyVocabularyResourceFactory, _userLocalService),
@@ -169,6 +171,7 @@ public class SiteInitializerRegistrar {
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private final Portal _portal;
+	private final RemoteAppEntryLocalService _remoteAppEntryLocalService;
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;
 	private final RoleLocalService _roleLocalService;

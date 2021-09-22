@@ -20,6 +20,7 @@ dependencies {
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":apps:object:object-admin-rest-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
+	compileOnly project(":apps:remote-app:remote-app-api")
 	compileOnly project(":apps:site:site-api")
 	compileOnly project(":apps:style-book:style-book-api")
 	compileOnly project(":core:petra:petra-string")

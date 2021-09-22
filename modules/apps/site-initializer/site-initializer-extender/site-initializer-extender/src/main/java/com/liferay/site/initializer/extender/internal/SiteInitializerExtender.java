@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
 import java.util.List;
@@ -89,8 +90,9 @@ public class SiteInitializerExtender
 				_fragmentsImporter, _groupLocalService,
 				_journalArticleLocalService, _jsonFactory,
 				_objectDefinitionResourceFactory, _portal,
-				_resourcePermissionLocalService, _roleLocalService,
-				_settingsFactory, _structuredContentFolderResourceFactory,
+				_remoteAppEntryLocalService, _resourcePermissionLocalService,
+				_roleLocalService, _settingsFactory,
+				_structuredContentFolderResourceFactory,
 				_styleBookEntryZipProcessor, _taxonomyCategoryResourceFactory,
 				_taxonomyVocabularyResourceFactory, _userLocalService);
 
@@ -187,6 +189,9 @@ public class SiteInitializerExtender
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

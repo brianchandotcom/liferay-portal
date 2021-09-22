@@ -91,6 +91,8 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.util.ObjectMapperUtil;
+import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
@@ -138,7 +140,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JournalArticleLocalService journalArticleLocalService,
 		JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
-		Portal portal,
+		Portal portal, RemoteAppEntryLocalService remoteAppEntryLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService, ServletContext servletContext,
 		SettingsFactory settingsFactory,
@@ -169,6 +171,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_jsonFactory = jsonFactory;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_portal = portal;
+		_remoteAppEntryLocalService = remoteAppEntryLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
 		_servletContext = servletContext;
@@ -240,6 +243,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addJournalArticles(
 				documentsStringUtilReplaceValues, serviceContext);
 			_addObjectDefinitions(serviceContext);
+			_addRemoteAppEntries(serviceContext);
 			_addStyleBookEntries(serviceContext);
 			_addTaxonomyVocabularies(serviceContext);
 		}
@@ -844,6 +848,29 @@ public class BundleSiteInitializer implements SiteInitializer {
 			"/site-initializer/resource-permissions.json", serviceContext);
 	}
 
+	private void _addRemoteAppEntries(ServiceContext serviceContext)
+		throws Exception {
+
+		String json = _read("/site-initializer/custom-element-entries.json");
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			_remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
+				serviceContext.getUserId(), jsonObject.getString("cssURLs"),
+				jsonObject.getString("htmlElementName"),
+				jsonObject.getString("elementURLs"),
+				_generateLocaleMap(jsonObject.getString("name_i18n")),
+				jsonObject.getString("portletCategoryName"));
+		}
+	}
+
 	private void _addResourcePermissions(
 			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
@@ -1138,6 +1165,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return taxonomyCategory;
 	}
 
+	private Map<Locale, String> _generateLocaleMap(String values) {
+		if (StringUtil.equals(StringPool.BLANK, values)) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, String> valuesMap = ObjectMapperUtil.readValue(
+			HashMap.class, values);
+
+		Map<Locale, String> localeMap = new HashMap<>();
+
+		for (Map.Entry<String, String> entry : valuesMap.entrySet()) {
+			localeMap.put(
+				LocaleUtil.fromLanguageId(entry.getKey()), entry.getValue());
+		}
+
+		return localeMap;
+	}
+
 	private String _read(String resourcePath) throws Exception {
 		InputStream inputStream = _servletContext.getResourceAsStream(
 			resourcePath);
@@ -1185,6 +1230,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private final Portal _portal;
+	private final RemoteAppEntryLocalService _remoteAppEntryLocalService;
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;
 	private final RoleLocalService _roleLocalService;

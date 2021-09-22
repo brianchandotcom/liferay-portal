@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
 import javax.servlet.ServletContext;
@@ -76,7 +77,7 @@ public class SiteInitializerExtension {
 		JournalArticleLocalService journalArticleLocalService,
 		JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
-		Portal portal,
+		Portal portal, RemoteAppEntryLocalService remoteAppEntryLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService, SettingsFactory settingsFactory,
 		StructuredContentFolderResource.Factory
@@ -102,8 +103,9 @@ public class SiteInitializerExtension {
 				fragmentsImporter, groupLocalService,
 				journalArticleLocalService, jsonFactory,
 				objectDefinitionResourceFactory, portal,
-				resourcePermissionLocalService, roleLocalService,
-				settingsFactory, structuredContentFolderResourceFactory,
+				remoteAppEntryLocalService, resourcePermissionLocalService,
+				roleLocalService, settingsFactory,
+				structuredContentFolderResourceFactory,
 				styleBookEntryZipProcessor, taxonomyCategoryResourceFactory,
 				taxonomyVocabularyResourceFactory, userLocalService));
 

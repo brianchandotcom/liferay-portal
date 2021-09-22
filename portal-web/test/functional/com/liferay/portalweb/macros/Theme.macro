@@ -100,29 +100,6 @@ definition {
 		WaitForSPARefresh();
 	}
 
-	macro deployThemeWar {
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "deploy-dependency-war -Dliferay.dependency.war=${themeName}.war");
-
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "copy-log-file");
-
-		var projectDir = PropsUtil.get("project.dir");
-		var logContent = FileUtil.read("${projectDir}/log");
-
-		while (!(contains("${logContent}", "STARTED ${themeName}"))) {
-			Pause(locator1 = "3000");
-
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "copy-log-file");
-
-			var logContent = FileUtil.read("${projectDir}/log");
-		}
-	}
-
 	macro viewClassicThemeBackgroundColor {
 		AssertCssValue(
 			locator1 = "//body",

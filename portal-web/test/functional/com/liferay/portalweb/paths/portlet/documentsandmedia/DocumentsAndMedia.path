@@ -170,11 +170,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DESCRIPTIVE_LIST_DOCUMENT_SHARED</td>
-	<td>//li[contains(@data-title,'${key_dmDocumentTitle}')]//*[*[name()='svg'][contains(@class,'lexicon-icon-users')]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DESCRIPTIVE_LIST_DOCUMENT_TITLE</td>
 	<td>//li[contains(@data-title,'${key_dmDocumentTitle}')]//a</td>
 	<td></td>

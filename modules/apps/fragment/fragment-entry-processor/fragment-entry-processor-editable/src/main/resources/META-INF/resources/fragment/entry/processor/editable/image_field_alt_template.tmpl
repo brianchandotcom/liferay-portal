@@ -1,7 +1,7 @@
-[#if field_name??]
-    [#if field_name?is_hash]
-        [#if field_name.alt??]
-            ${field_name.alt}
+[#if .vars["field_name"]??]
+    [#if .vars["field_name"]?is_hash]
+        [#if .vars["field_name"].alt??]
+            ${.vars["field_name"].alt}
         [/#if]
     [/#if]
 [/#if]

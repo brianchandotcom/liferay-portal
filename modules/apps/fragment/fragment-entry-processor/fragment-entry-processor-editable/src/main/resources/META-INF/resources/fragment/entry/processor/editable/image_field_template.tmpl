@@ -1,9 +1,9 @@
-[#if field_name??]
-	[#if field_name?is_hash]
-		[#if field_name.url??]
-			${field_name.url}
+[#if .vars["field_name"]??]
+	[#if .vars["field_name"]?is_hash]
+		[#if .vars["field_name"].url??]
+			${.vars["field_name"].url}
 		[/#if]
-	[#elseif field_name?is_string]
-		${field_name}
+	[#elseif .vars["field_name"]?is_string]
+		${.vars["field_name"]}
 	[/#if]
 [/#if]

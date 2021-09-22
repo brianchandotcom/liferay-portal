@@ -130,6 +130,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8402 | Test Summary: Documents audience card shows expected amount of know and anonymous individuals"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInDM {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: More than one document is being created in the assets list because of the bug
+		// AC Bug ticket: LRAC-7890
+		// AC Refactor ticket: LRAC-9400
+
 		task ("Connect the DXP to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -195,6 +201,9 @@ definition {
 		}
 
 		task ("Open document by name") {
+
+			// More than one document is being created in the assets list because of the bug
+
 			ACNavigation.openItem(itemName = "Document_1.jpg");
 		}
 

@@ -29,7 +29,7 @@ definition {
 
 	@description = "Verify page theme can be applied to page"
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanBeAppliedToPage {
 		property test.name.skip.portal.instance = "Theme#CanBeAppliedToPage";
 
@@ -59,7 +59,7 @@ definition {
 
 	@description = "Verify portal will apply different available page theme if classic theme not available"
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanBeAppliedToPageWhenClassicThemeNotAvailable {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Theme#CanBeAppliedToPageWhenClassicThemeNotAvailable";
@@ -87,7 +87,7 @@ definition {
 
 	@description = "Verify page theme can be deactivated and reactivated"
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanBeDeactivatedAndReactivated {
 		property test.name.skip.portal.instance = "Theme#CanBeDeactivatedAndReactivated";
 
@@ -164,7 +164,7 @@ definition {
 
 	@description = "Verify page theme can be uninstalled and redeployed"
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanBeUnInstalledAndRedeployed {
 		property test.name.skip.portal.instance = "Theme#CanBeUnInstalledAndRedeployed";
 

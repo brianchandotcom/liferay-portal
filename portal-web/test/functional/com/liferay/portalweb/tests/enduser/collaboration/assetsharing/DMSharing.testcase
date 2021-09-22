@@ -78,9 +78,9 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "Cards");
 
-		AssertVisible(
-			key_dmDocumentTitle = "DM Document Title 1",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_SHARED");
+		DMDocumentSharing.viewSharedFlag(
+			detailsView = "true",
+			dmDocumentTitle = "DM Document Title 1");
 
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
@@ -100,9 +100,9 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		AssertVisible(
-			key_dmDocumentTitle = "DM Document Title 2",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_SHARED");
+		DMDocumentSharing.viewSharedFlag(
+			detailsView = "true",
+			dmDocumentTitle = "DM Document Title 2");
 
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
@@ -303,7 +303,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
 
-		DMDocumentSharing.viewSharedFlag();
+		DMDocumentSharing.viewSharedFlag(dmDocumentTitle = "DM Document Title");
 
 		var key_contentTitle = "DM Document Title";
 

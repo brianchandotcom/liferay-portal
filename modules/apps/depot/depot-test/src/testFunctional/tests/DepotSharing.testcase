@@ -66,9 +66,9 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "Cards");
 
-		AssertVisible(
-			key_dmDocumentTitle = "Document_1",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_SHARED");
+		DMDocumentSharing.viewSharedFlag(
+			detailsView = "true",
+			dmDocumentTitle = "Document_1");
 
 		DepotNavigator.gotoShare(dmDocumentTitle = "Document_2");
 
@@ -81,9 +81,9 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		AssertVisible(
-			key_dmDocumentTitle = "Document_2",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_SHARED");
+		DMDocumentSharing.viewSharedFlag(
+			detailsView = "true",
+			dmDocumentTitle = "Document_2");
 
 		DepotNavigator.gotoShare(dmDocumentTitle = "Document_3");
 
@@ -478,7 +478,9 @@ definition {
 			depotName = "Test Depot Name",
 			dmDocumentTitle = "Document_1.doc");
 
-		DMDocumentSharing.viewSharedFlag(detailsView = "true");
+		DMDocumentSharing.viewSharedFlag(
+			detailsView = "true",
+			dmDocumentTitle = "Document_1");
 
 		DMDocumentSharing.viewCollaborators(collaboratorList = "userfn,userfn2");
 

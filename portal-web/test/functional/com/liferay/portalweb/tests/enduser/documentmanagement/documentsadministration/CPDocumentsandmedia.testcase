@@ -766,21 +766,6 @@ definition {
 		AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL");
 	}
 
-	@priority = "4"
-	@refactordone
-	test CanSearchForDocumentInHomeFolder {
-		JSONDocument.addFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		Search.searchCP(searchTerm = "DM Document Title");
-
-		DMDocument.viewSearchResultsCP(dmDocumentTitle = "DM Document Title");
-	}
-
 	@description = "This ensures that the user can create a document with edited display page template."
 	@priority = "4"
 	@refactorneeded

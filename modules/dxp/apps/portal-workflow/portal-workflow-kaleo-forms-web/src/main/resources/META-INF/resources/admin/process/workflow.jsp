@@ -263,6 +263,10 @@ if (tabs1.equals("published")) {
 
 			Liferay.Util.openWindow({
 				id: A.guid(),
+				dialog: {
+					destroyOnHide: true,
+					modal: true,
+				},
 				refreshWindow: WIN,
 				title: '<liferay-ui:message key="workflow" />',
 				uri: uri,

@@ -12,6 +12,12 @@
  * details.
  */
 
+// AC Version
+
+export const ANALYTICS_CLIENT_VERSION = 1.0;
+
+// Default Config
+
 export const DEBOUNCE = 1500;
 
 export const FLUSH_INTERVAL = 2000;

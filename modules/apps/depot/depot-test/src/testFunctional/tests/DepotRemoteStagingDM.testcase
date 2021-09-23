@@ -59,7 +59,7 @@ definition {
 
 	@description = "This ensures that the image in depot can be removed and republished in Blogs cover image when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanDeleteBlogCoverImage {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteBlogCoverImage";
 
@@ -163,7 +163,7 @@ definition {
 
 	@description = "This ensures that the image in depot can be removed and republished in Blogs inline image when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanDeleteBlogInlineImage {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteBlogInlineImage";
 
@@ -270,7 +270,7 @@ definition {
 
 	@description = "This ensures that the blog small image from a depot can be removed and republished when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanDeleteBlogSmallImage {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteBlogSmallImage";
 
@@ -375,7 +375,7 @@ definition {
 
 	@description = "This ensures that image in depot can be removed and republished in AP through widget config manual selection when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanDeleteDMImage {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteDMImage";
@@ -477,7 +477,7 @@ definition {
 
 	@description = "This ensures that a document in depot can be removed and republished in AP through widget config manual selection when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanDeleteDocument {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteDocument";
 
@@ -578,7 +578,7 @@ definition {
 
 	@description = "This ensures that custom field in document from depot can be deleted and republished in the site when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanDeleteDocumentWithCustomField {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteDocumentWithCustomField";
 
@@ -713,7 +713,7 @@ definition {
 
 	@description = "This ensures that the image in depot can be removed and republished in open graph when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanDeleteOpenGraphImage {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteOpenGraphImage";
 
@@ -821,7 +821,7 @@ definition {
 
 	@description = "This ensures that video shortcut in depot can be deleted and republished in Blogs when enabling remote staging."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanDeleteVideoShortcut {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteVideoShortcut";
 
@@ -938,7 +938,7 @@ definition {
 
 	@description = "This ensures that the image in depot can be removed and republished in web content when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanDeleteWCImage {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteWCImage";
 
@@ -1062,7 +1062,7 @@ definition {
 
 	@description = "This ensures that the blog image from a depot can be edited and republished when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanEditBlogCoverImage {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanEditBlogCoverImage";
 
@@ -1172,7 +1172,7 @@ definition {
 
 	@description = "This ensures that the blog inline image from a depot can be edited and republished when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanEditBlogInlineImage {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanEditBlogInlineImage";
 
@@ -1291,7 +1291,7 @@ definition {
 
 	@description = "This ensures that the blog small image from a depot can be edited and republished when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanEditBlogSmallImage {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanEditBlogSmallImage";
 
@@ -1390,7 +1390,7 @@ definition {
 
 	@description = "This ensures that an image in depot can be replaced and republished in AP through widget config manual selection when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanEditDMImage {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanEditDMImage";
 
@@ -1488,7 +1488,7 @@ definition {
 
 	@description = "This ensures that document in depot can be replaced and republished in AP through widget config manual selection when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanEditDocument {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanEditDocument";
 
@@ -1586,7 +1586,7 @@ definition {
 
 	@description = "This ensures that the custom field in document from depot can be edited and republished in the site when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanEditDocumentWithCustomField {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanEditDocumentWithCustomField";
 
@@ -1733,7 +1733,7 @@ definition {
 
 	@description = "This ensures that an edited internal video in depot can be republished on a connected staging site with enabling FFmpeg."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanEditInternalVideo {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanEditInternalVideo";
 
@@ -1882,7 +1882,7 @@ definition {
 
 	@description = "This ensures that the open graph image from a depot can be edited and republished when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanEditOpenGraphImage {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanEditOpenGraphImage";
 
@@ -1982,7 +1982,7 @@ definition {
 
 	@description = "This ensures that the image in depot can be replaced and republished in web content when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanEditWCImage {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanEditWCImage";
 
@@ -2109,7 +2109,7 @@ definition {
 
 	@description = "This ensures that a document pending review cannot be searched for in a staged site when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanNotSearchForPendingDocument {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanNotSearchForPendingDocument";
 
@@ -2151,7 +2151,7 @@ definition {
 
 	@description = "This ensures that an unavailable structure from a depot can not be viewed in the staged site when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanNotSelectUnavailableStructure {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanNotSelectUnavailableStructure";
 
@@ -2179,7 +2179,7 @@ definition {
 
 	@description = "This ensures that a depot image cannot be found from the disconnected remote staging site."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanNotViewImageFromDisconnectedSite {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanNotViewImageFromDisconnectedSite";
 
@@ -2229,7 +2229,7 @@ definition {
 
 	@description = "This ensures that a pending image in depot cannot be found in remote staging site."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanNotViewPendingImage {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanNotViewPendingImage";
 
@@ -2274,7 +2274,7 @@ definition {
 
 	@description = "This ensures that a document using a custom document type from a depot can be published in the staging site when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanPublishDMWithDocumentType {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishDMWithDocumentType";
 
@@ -2342,7 +2342,7 @@ definition {
 
 	@description = "This ensures that a folder with a document in depot can be published in AP through widget config manual selection when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanPublishDocumentFolder {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishDocumentFolder";
 
@@ -2410,7 +2410,7 @@ definition {
 
 	@description = "This ensures that the shortcut to an image in the depot can be added and published in the staging site when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanPublishImageShortcut {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishImageShortcut";
 
@@ -2466,7 +2466,7 @@ definition {
 
 	@description = "This ensures that an image with custom field in depot can be published in remote staging site."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanPublishImageWithCustomField {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishImageWithCustomField";
 
@@ -2558,7 +2558,7 @@ definition {
 
 	@description = "This ensures that the latest version of an image in a depot can be published in remote staging site."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanPublishImageWithLatestVersion {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishImageWithLatestVersion";
 
@@ -2645,7 +2645,7 @@ definition {
 
 	@description = "This ensures that the latest version of an image in a depot can be published in blogs when remote staging is enabled."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanPublishImageWithLatestVersionInBlogs {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishImageWithLatestVersionInBlogs";
 
@@ -2712,7 +2712,7 @@ definition {
 
 	@description = "This test covers LPS-124892. It ensures that the thumbnail of a video shortcut in depot can be published through AP when enabling remote staging."
 	@priority = "3"
-	@refactorneeded
+	@refactordone
 	test CanPublishVideoShortcutThumbnail {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishVideoShortcutThumbnail";
 
@@ -2771,7 +2771,7 @@ definition {
 
 	@description = "This ensures that a document can be accessed in a staged site through the item selector after it has been approved when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanViewApprovedDocument {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanViewApprovedDocument";
 
@@ -2855,7 +2855,7 @@ definition {
 
 	@description = "This ensures that a depot image can be displayed in the Blog's item selector after scoped everywhere filter when enabling remote staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanViewImageAfterScopedFilter {
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanViewImageAfterScopedFilter";
 

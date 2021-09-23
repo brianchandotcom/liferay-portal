@@ -52,7 +52,7 @@ definition {
 
 	@description = "This ensures that the image in depot can be removed and republished in Blogs cover image when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanDeleteBlogCoverImage {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -130,7 +130,7 @@ definition {
 
 	@description = "This ensures that the image in depot can be removed and republished in Blogs inline image when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanDeleteBlogInlineImage {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -215,7 +215,7 @@ definition {
 
 	@description = "This ensures that the blog small image from a depot can be removed and republished when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanDeleteBlogSmallImage {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -298,7 +298,7 @@ definition {
 
 	@description = "This ensures that image in depot can be removed and republished in AP through widget config manual selection when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	@uitest
 	test CanDeleteDMImage {
 		property portal.acceptance = "true";
@@ -374,7 +374,7 @@ definition {
 
 	@description = "This ensures that a document in depot can be removed and republished in AP through widget config manual selection when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanDeleteDocument {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -455,7 +455,7 @@ definition {
 
 	@description = "This ensures that custom field in document from depot can be deleted and republished in the site when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanDeleteDocumentWithCustomField {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -542,7 +542,7 @@ definition {
 
 	@description = "This ensures that the image in depot can be removed and republished in open graph when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanDeleteOpenGraphImage {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -631,7 +631,7 @@ definition {
 
 	@description = "This ensures that video shortcut in depot can be deleted and republished in Blogs when enabling local staging."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanDeleteVideoShortcut {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -726,7 +726,7 @@ definition {
 
 	@description = "This ensures that the image in depot can be removed and republished in web content when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanDeleteWCImage {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -828,7 +828,7 @@ definition {
 
 	@description = "This ensures that the blog image from a depot can be edited and republished when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanEditBlogCoverImage {
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -913,7 +913,7 @@ definition {
 
 	@description = "This ensures that the blog inline image from a depot can be edited and republished when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanEditBlogInlineImage {
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -1006,7 +1006,7 @@ definition {
 
 	@description = "This ensures that the blog small image from a depot can be edited and republished when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanEditBlogSmallImage {
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -1091,7 +1091,7 @@ definition {
 
 	@description = "This ensures that an image in depot can be replaced and republished in AP through widget config manual selection when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanEditDMImage {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1171,7 +1171,7 @@ definition {
 
 	@description = "This ensures that document in depot can be replaced and republished in AP through widget config manual selection when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanEditDocument {
 		property portal.acceptance = "true";
 
@@ -1253,7 +1253,7 @@ definition {
 
 	@description = "This ensures that the custom field in document from depot can be edited and republished in the site when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanEditDocumentWithCustomField {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -1344,7 +1344,7 @@ definition {
 
 	@description = "This ensures that an edited internal video in depot can be republished on a connected staging site with enabling FFmpeg."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanEditInternalVideo {
 		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanEditInternalVideo";
 
@@ -1457,7 +1457,7 @@ definition {
 
 	@description = "This ensures that the open graph image from a depot can be edited and republished when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanEditOpenGraphImage {
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -1538,7 +1538,7 @@ definition {
 
 	@description = "This ensures that the image in depot can be replaced and republished in web content when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanEditWCImage {
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -1641,7 +1641,7 @@ definition {
 
 	@description = "This ensures that a document pending review cannot be searched for in a staged site when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanNotSearchForPendingDocument {
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -1681,7 +1681,7 @@ definition {
 
 	@description = "This ensures that an unavailable structure from a depot can not be viewed in the staged site when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanNotSelectUnavailableStructure {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -1711,7 +1711,7 @@ definition {
 
 	@description = "This test covers LPS-122133. It ensures that a depot image cannot be found from the disconnected local staging site."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanNotViewImageFromDisconnectedSite {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name (Staging)",
@@ -1773,7 +1773,7 @@ definition {
 
 	@description = "This ensures that a pending image in depot cannot be found in staging site when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanNotViewPendingImage {
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -1816,7 +1816,7 @@ definition {
 
 	@description = "This ensures that a document using a custom document type from a depot can be published in the staging site when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanPublishDMWithDocumentType {
 		property test.name.skip.portal.instance = "DepotLocalStagingDM#CanPublishDMWithDocumentType";
 
@@ -1894,7 +1894,7 @@ definition {
 
 	@description = "This ensures that a folder with a document in depot can be published in AP through widget config manual selection when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanPublishDocumentFolder {
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -1971,7 +1971,7 @@ definition {
 
 	@description = "This ensures that the shortcut to an image in the depot can be added and published in the staging site when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanPublishImageShortcut {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -2020,7 +2020,7 @@ definition {
 
 	@description = "This ensures that an image with custom field in depot can be published in staging site when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanPublishImageWithCustomField {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -2081,7 +2081,7 @@ definition {
 
 	@description = "This ensures that the latest version of an image in a depot can be published in local staging site."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanPublishImageWithLatestVersion {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -2167,7 +2167,7 @@ definition {
 
 	@description = "This ensures that the latest version of an image in a depot can be published in blogs when local staging is enabled."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanPublishImageWithLatestVersionInBlogs {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -2233,7 +2233,7 @@ definition {
 
 	@description = "This ensures that the thumbnail of a video shortcut in depot can be published through AP when enabling local staging."
 	@priority = "3"
-	@refactorneeded
+	@refactordone
 	test CanPublishVideoShortcutThumbnail {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -2279,7 +2279,7 @@ definition {
 
 	@description = "This ensures that a document can be accessed in a staged site through the item selector after it has been approved when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanViewApprovedDocument {
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -2362,7 +2362,7 @@ definition {
 
 	@description = "This ensures that a depot image can be displayed in the Blog's item selector after scoped everywhere filter when enabling local staging."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanViewImageAfterScopedFilter {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

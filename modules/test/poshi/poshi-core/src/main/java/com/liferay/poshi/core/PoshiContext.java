@@ -127,7 +127,7 @@ public class PoshiContext {
 
 		sb.append("(");
 		sb.append(query);
-		sb.append(") AND (ignored != true)");
+		sb.append(") AND (ignored == null)");
 
 		if (Validator.isNotNull(PropsValues.TEST_RUN_ENVIRONMENT)) {
 			sb.append(" AND (test.run.environment == \"");

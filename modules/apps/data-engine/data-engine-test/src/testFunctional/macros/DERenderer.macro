@@ -147,6 +147,18 @@ definition {
 			value1 = "${webContentUpload}");
 	}
 
+	macro assertDataInWebContentField {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		AssertTextEquals(
+			key_fieldLabel = "${fieldLabel}",
+			key_index = "${index}",
+			locator1 = "DataEngineRenderer#SELECTOR_INPUT_INDEXED",
+			value1 = "${contentName}");
+	}
+
 	macro assertImageNotPresent {
 		if (!(isSet(index))) {
 			var index = "1";
@@ -186,6 +198,18 @@ definition {
 			key_index = "${index}",
 			locator1 = "DataEngineRenderer#SELECTOR_INPUT_INDEXED",
 			value1 = "${webContentUpload}");
+	}
+
+	macro assertWebContentNotPresent {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		AssertElementNotPresent(
+			key_fieldLabel = "${fieldLabel}",
+			key_index = "${index}",
+			locator1 = "DataEngineRenderer#SELECTOR_INPUT_INDEXED",
+			value1 = "${contentName}");
 	}
 
 	macro clearImageField {
@@ -447,6 +471,38 @@ definition {
 			ItemSelector.uploadFile(
 				navTab = "${dmNavTab}",
 				uploadFileName = "${webContentUpload}");
+		}
+	}
+
+	macro inputDataInWebContentField {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		Click(
+			key_fieldLabel = "${fieldLabel}",
+			key_index = "${index}",
+			key_text = "Select",
+			locator1 = "DataEngineRenderer#BUTTON_LABEL_INDEXED");
+
+		if (isSet(depotName)) {
+			WebContent.selectRepositoryWC(
+				available = "${available}",
+				contentName = "${contentName}",
+				depotName = "${depotName}",
+				folderName = "${folderName}");
+		}
+		else {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertClick.assertPartialTextClickAt(
+				key_listEntry = "${contentName}",
+				locator1 = "LexiconList#LIST_ENTRY",
+				value1 = "${contentName}");
+
+			SelectFrame(value1 = "relative=top");
 		}
 	}
 

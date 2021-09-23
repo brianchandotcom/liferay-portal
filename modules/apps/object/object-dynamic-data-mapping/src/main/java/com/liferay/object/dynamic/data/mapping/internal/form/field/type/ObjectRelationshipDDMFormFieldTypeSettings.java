@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 
 /**
  * @author Marco Leo
@@ -54,8 +55,9 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"label", "tip", "objectDefinitionId",
-								"required", "requiredErrorMessage"
+								"label", "placeholder", "tip",
+								"objectDefinitionId", "required",
+								"requiredErrorMessage"
 							}
 						)
 					}
@@ -96,5 +98,15 @@ public interface ObjectRelationshipDDMFormFieldTypeSettings
 		required = true, type = "select"
 	)
 	public String objectDefinitionId();
+
+	@DDMFormField(
+		dataType = "string", label = "%placeholder-text",
+		properties = {
+			"tooltip=%enter-text-that-assists-the-user-but-is-not-submitted-as-a-field-value",
+			"visualProperty=true"
+		},
+		type = "text"
+	)
+	public LocalizedValue placeholder();
 
 }

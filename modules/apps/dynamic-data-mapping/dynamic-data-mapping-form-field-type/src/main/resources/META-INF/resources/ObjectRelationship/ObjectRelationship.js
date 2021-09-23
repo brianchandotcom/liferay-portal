@@ -25,6 +25,7 @@ const ObjectRelationship = ({
 	itemsLabel,
 	name,
 	onChange,
+	placeholder,
 	readOnly,
 	required,
 	value,
@@ -37,6 +38,7 @@ const ObjectRelationship = ({
 		{...otherProps}
 	>
 		<Autocomplete
+			{...(placeholder && {inputPlaceholder: placeholder})}
 			apiUrl={apiURL}
 			initialLabel={initialLabel}
 			initialValue={initialValue}

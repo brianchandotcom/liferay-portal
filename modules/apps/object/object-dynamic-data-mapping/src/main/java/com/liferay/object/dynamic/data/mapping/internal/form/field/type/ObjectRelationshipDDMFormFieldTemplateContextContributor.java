@@ -17,6 +17,7 @@ package com.liferay.object.dynamic.data.mapping.internal.form.field.type;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Collections;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -60,6 +60,22 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
+		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
+			"placeholder",
+			() -> {
+				LocalizedValue localizedValue =
+					(LocalizedValue)ddmFormField.getProperty("placeholder");
+
+				if (localizedValue == null) {
+					return null;
+				}
+
+				return GetterUtil.getString(
+					localizedValue.getString(
+						ddmFormFieldRenderingContext.getLocale()));
+			}
+		).build();
+
 		try {
 			return HashMapBuilder.<String, Object>put(
 				"apiURL", _getAPIURL(ddmFormField, ddmFormFieldRenderingContext)
@@ -75,13 +91,15 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 				"itemsLabel", "id"
 			).put(
 				"value", ddmFormFieldRenderingContext.getValue()
+			).putAll(
+				parameters
 			).build();
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
 		}
 
-		return Collections.<String, Object>emptyMap();
+		return parameters;
 	}
 
 	protected String getValue(String valueString) {

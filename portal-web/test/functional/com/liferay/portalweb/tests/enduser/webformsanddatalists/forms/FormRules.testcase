@@ -985,4 +985,106 @@ definition {
 		FormRules.viewBrokenRule(ruleNumber = "1");
 	}
 
+	@description = "LPS-77284 - Verify that sync between rule builder and fields/pages "
+	@priority = "5"
+	test SyncBetweenFormAndRuleBuilder {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "FormRules#SyncBetweenFormAndRuleBuilder";
+
+		FormsAdmin.addForm();
+
+		Form.editName();
+
+		Form.editPageTitle(
+			formPageName = "Page 1",
+			formTitleNumber = "1");
+
+		Form.addTextField(formPageNumber = "0");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 1");
+
+		Form.closeSidebar();
+
+		Form.addPage(formAddNewPageNumber = "1");
+
+		Form.editPageTitle(
+			formPageName = "Page 2",
+			formTitleNumber = "2");
+
+		Form.addTextField(formPageNumber = "1");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 2");
+
+		Form.closeSidebar();
+
+		Form.addPage(formAddNewPageNumber = "2");
+
+		Form.editPageTitle(
+			formPageName = "Page 3",
+			formTitleNumber = "3");
+
+		Form.addTextField(formPageNumber = "2");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 3");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field 1",
+			conditionOperator = "Is not empty",
+			conditionRowNumber = "1");
+
+		FormRules.configureActionOptions(
+			action = "Jump to Page",
+			actionRowNumber = "1",
+			actionTarget = "2 Page 2");
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.viewPageTitleDefault(pageIndex = "2");
+
+		Form.deleteCurrentLastPage(
+			formDropDownNumber = "1",
+			formPageNumber = "3");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Date");
+
+		FormsAdminNavigator.gotoRules();
+
+		var key_conditionRowNumber = "1";
+
+		var key_fieldColumnNumber = "1";
+
+		Click(locator1 = "FormRules#RULE_BUILDER_CONDITION_FIELD");
+
+		for (var conditionField : list "Text Field 1,Text Field 2,Date") {
+			var key_selectValue = "${conditionField}";
+
+			AssertElementPresent(
+				locator1 = "FormRules#RULE_BUILDER_FIELD_SELECT_VALUE",
+				value1 = "${conditionField}");
+		}
+
+		var key_actionRowNumber = "1";
+
+		var key_fieldColumnNumber = "2";
+
+		Click(locator1 = "FormRules#RULE_BUILDER_ACTION_FIELD");
+
+		AssertElementPresent(
+			key_selectValue = "2 Page 2",
+			locator1 = "FormRules#RULE_BUILDER_FIELD_SELECT_VALUE");
+
+		AssertElementNotPresent(
+			key_selectValue = "3 Page 3",
+			locator1 = "FormRules#RULE_BUILDER_FIELD_SELECT_VALUE");
+	}
+
 }

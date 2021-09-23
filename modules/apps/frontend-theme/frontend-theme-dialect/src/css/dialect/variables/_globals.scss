@@ -1,0 +1,11 @@
+// Border Radius
+
+$border-radius: var(--border-radius);
+$border-radius-lg: var(--border-radius-lg);
+$border-radius-sm: var(--border-radius-sm);
+
+$rounded-border-radius: $border-radius;
+$rounded-circle-border-radius: var(--border-radius-circle);
+$rounded-pill: var(--border-radius-pill);
+
+$panel-border-radius: 0.5rem;

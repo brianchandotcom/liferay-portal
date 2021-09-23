@@ -1260,6 +1260,108 @@
 				{
 					"frontendTokens": [
 						{
+							"defaultValue": "0.25rem",
+							"label": "border-radius-xs",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "border-radius-xs"
+								}
+							],
+							"name": "borderRadiusXs",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.375rem",
+							"label": "border-radius-sm",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "border-radius-sm"
+								}
+							],
+							"name": "borderRadiusSm",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.5rem",
+							"label": "border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "border-radius"
+								}
+							],
+							"name": "borderRadius",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.75rem",
+							"label": "border-radius-lg",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "border-radius-lg"
+								}
+							],
+							"name": "borderRadiusLg",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1rem",
+							"label": "border-radius-xl",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "border-radius-xl"
+								}
+							],
+							"name": "borderRadiusXl",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1.5rem",
+							"label": "border-radius-xxl",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "border-radius-xxl"
+								}
+							],
+							"name": "borderRadiusXxl",
+							"type": "String"
+						},
+						{
+							"defaultValue": "50%",
+							"label": "border-radius-circle",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "border-radius-circle"
+								}
+							],
+							"name": "borderRadiusCircle",
+							"type": "String"
+						},
+						{
+							"defaultValue": "50rem",
+							"label": "border-radius-pill",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "border-radius-pill"
+								}
+							],
+							"name": "borderRadiusPill",
+							"type": "String"
+						}
+					],
+					"label": "border-radius",
+					"name": "borderRadius"
+				},
+				{
+					"frontendTokens": [
+						{
 							"defaultValue": "0 1px 3px",
 							"label": "elevation-tight-1",
 							"mappings": [
@@ -2882,72 +2984,6 @@
 					],
 					"label": "body",
 					"name": "body"
-				},
-				{
-					"frontendTokens": [
-						{
-							"defaultValue": "0.25rem",
-							"label": "border-radius",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "border-radius"
-								}
-							],
-							"name": "borderRadius",
-							"type": "String"
-						},
-						{
-							"defaultValue": "0.1875rem",
-							"label": "border-radius-sm",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "border-radius-sm"
-								}
-							],
-							"name": "borderRadiusSm",
-							"type": "String"
-						},
-						{
-							"defaultValue": "0.375rem",
-							"label": "border-radius-lg",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "border-radius-lg"
-								}
-							],
-							"name": "borderRadiusLg",
-							"type": "String"
-						},
-						{
-							"defaultValue": "50%",
-							"label": "border-radius-circle",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "border-radius-circle"
-								}
-							],
-							"name": "borderRadiusCircle",
-							"type": "String"
-						},
-						{
-							"defaultValue": "50rem",
-							"label": "rounded-pill",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "rounded-pill"
-								}
-							],
-							"name": "roundedPill",
-							"type": "String"
-						}
-					],
-					"label": "borders",
-					"name": "borders"
 				},
 				{
 					"frontendTokens": [

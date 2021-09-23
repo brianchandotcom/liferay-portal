@@ -1,0 +1,16 @@
+.card,
+.card-horizontal {
+	@include border-radius(var(--border-radius));
+
+	> .list-group:first-child {
+		.list-group-item:first-child {
+			@include border-top-radius(var(--border-radius));
+		}
+	}
+
+	> .list-group:last-child {
+		.list-group-item:last-child {
+			@include border-bottom-radius(var(--border-radius));
+		}
+	}
+}

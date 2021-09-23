@@ -1,0 +1,8 @@
+$card-border-radius: 0.5rem;
+$card-border-width: $border-width;
+
+$card-inner-border-radius: if(
+	$card-border-width > 0,
+	calc(var(--border-radius) - #{$card-border-width}),
+	var(--border-radius)
+);

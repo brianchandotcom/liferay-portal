@@ -29,6 +29,51 @@ definition {
 		}
 	}
 
+	@description = "Assert we can publish the publication with category with Message Board Thread."
+	@priority = "4"
+	test PublishCategoryWithMessageBoardThread {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name",
+			userEmailAddress = "test@liferay.com");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.gotoCP(categoryName = "MB Category Name");
+
+		MessageboardsThread.addCP(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		Publications.gotoReviewChanges();
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Message Boards Category",
+			changeSite = "Guest",
+			changeTitle = "Message Boards Category",
+			changeType = "Added",
+			changeUser = "Test Test",
+			showAllItems = "true");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.gotoCP(categoryName = "MB Category Name");
+
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject",
+			userName = "Test Test");
+	}
+
 	@description = "Assert we can publish the publication with message board thread and reiview the changes."
 	@priority = "4"
 	test PublishNewMessageBoardThreadAndMessage {

@@ -144,8 +144,6 @@ if (portletTitleBasedNavigation) {
 
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack((viewParentPageURL != null) ? viewParentPageURL.toString() : backToViewPagesURL.toString());
-
-	renderResponse.setTitle(wikiPage.getTitle());
 }
 %>
 

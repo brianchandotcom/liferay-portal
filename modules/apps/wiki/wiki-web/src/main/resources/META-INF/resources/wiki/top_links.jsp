@@ -46,8 +46,6 @@ PortletURL backToNodeURL = wikiURLHelper.getBackToNodeURL(node);
 if (portletTitleBasedNavigation) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backToNodeURL.toString());
-
-	renderResponse.setTitle(node.getName());
 }
 %>
 

@@ -31,21 +31,6 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(redirect);
-
-	String headerTitle = StringPool.BLANK;
-
-	if (kbFolderView) {
-		KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(parentResourcePrimKey);
-
-		headerTitle = kbFolder.getName();
-	}
-	else {
-		KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
-
-		headerTitle = kbArticle.getTitle();
-	}
-
-	renderResponse.setTitle(headerTitle);
 }
 %>
 

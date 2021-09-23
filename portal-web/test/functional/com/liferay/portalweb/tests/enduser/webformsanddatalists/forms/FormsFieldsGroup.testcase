@@ -320,9 +320,9 @@ definition {
 			repeatableFieldNumber = "2");
 	}
 
-	@description = "Verify that a Fields Group can be Submit"
+	@description = "LPS-115196, Verify that an Entry using a Group Field can be viewed in Forms Details"
 	@priority = "5"
-	test CanBeSubmit {
+	test EntryWithGroupFieldCanBeViewedInFormsDetails {
 		property forms.functional = "true";
 
 		FormsAdmin.addForm();

@@ -1338,7 +1338,6 @@ definition {
 
 	@priority = "3"
 	test ReviewerApproveResubmitTaskByActionsUser {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -1372,8 +1371,8 @@ definition {
 		Navigator.openURL();
 
 		JSONBlog.addEntry(
-				entryContent = "Blogs Entry",
-				entryTitle = "Blogs Entry Title");
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -1455,8 +1454,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Blogs#ICON_VIEW_ENTRY_STATUS",
 			value1 = "Approved");
-
-
 	}
 
 	@description = "Verify that when there are no results for the search in Assigned to My Roles tab, the page displays the message -There are no tasks assigned to your roles with the specified search criteria-"

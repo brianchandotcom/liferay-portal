@@ -74,6 +74,72 @@ definition {
 			userName = "Test Test");
 	}
 
+	@description = "Assert we can publish the publication with edited message board thread."
+	@priority = "4"
+	test PublishEditedMessageBoardThread {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Asset Publisher Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Asset Publisher Page",
+			widgetName = "Asset Publisher");
+
+		JSONMBMessage.addMessage(
+			groupName = "Site Name",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONMBMessage.addMessageReply(
+			groupName = "Site Name",
+			replyBody = "MB Thread Reply Body",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site Name");
+
+		MessageboardsThread.editReplyViaAP(
+			mbAttachmentFile = "Document_1.jpeg",
+			threadBody = "MB Thread Reply Body Edit",
+			threadReplySubject = "RE: MB Thread Message Subject",
+			threadSubject = "RE: MB Thread Message Subject Edit");
+
+		AssetPublisherPortlet.viewPG(
+			assetContent = "MB Thread Reply Body Edit",
+			assetTitle = "RE: MB Thread Message Subject Edit");
+
+		Publications.gotoReviewChanges(
+			gotoManagePublications = "true",
+			publicationName = "Publication Name");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Message Boards Message",
+			changeSite = "Site Name",
+			changeTitle = "RE: MB Thread Message Subject Edit",
+			changeType = "Modified",
+			changeUser = "Test Test");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewPG(
+			assetContent = "MB Thread Reply Body Edit",
+			assetTitle = "RE: MB Thread Message Subject Edit");
+	}
+
 	@description = "Assert we can publish the publication with message board thread and reiview the changes."
 	@priority = "4"
 	test PublishNewMessageBoardThreadAndMessage {

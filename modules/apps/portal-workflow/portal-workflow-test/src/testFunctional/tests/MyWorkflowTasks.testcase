@@ -161,9 +161,6 @@ definition {
 		AssertElementPresent(
 			key_status = "Approved",
 			locator1 = "CommerceEntry#WORKFLOW_STATUS");
-	
-	
-	
 	}
 
 	@description = "LPS-135888 - Verify that the user with Account role can view the order details through the My Workflow Tasks page"

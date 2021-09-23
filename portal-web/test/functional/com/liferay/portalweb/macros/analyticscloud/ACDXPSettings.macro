@@ -44,6 +44,8 @@ definition {
 		if (!(isSet(siteName))) {
 			LexiconEntry.gotoAdd();
 
+			WaitForElementPresent(locator1 = "ACDXPSettings#SITE_NAME");
+
 			siteName = selenium.getText(locator1 = "ACDXPSettings#SITE_NAME");
 
 			Navigator.gotoBack();

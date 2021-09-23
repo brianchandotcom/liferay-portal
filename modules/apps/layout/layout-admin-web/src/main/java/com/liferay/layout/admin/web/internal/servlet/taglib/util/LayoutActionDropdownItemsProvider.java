@@ -385,18 +385,18 @@ public class LayoutActionDropdownItemsProvider {
 									"pages-are-you-sure-you-want-to-delete-",
 									"this-page");
 							}
+							else if (layout.hasChildren()) {
+								messageKey =
+									"this-page-has-child-pages-that-will-" +
+										"also-be-removed-are-you-sure-you-" +
+											"want-to-delete-this-page";
+							}
 							else if (_hasScopeGroup(layout)) {
 								messageKey = StringBundler.concat(
 									"this-page-is-being-used-as-a-scope-for-",
 									"content-any-content-that-is-scoped-to-",
 									"this-page-will-also-be-removed-are-you-",
 									"sure-you-want-to-delete-this-page");
-							}
-							else if (layout.hasChildren()) {
-								messageKey =
-									"this-page-has-child-pages-that-will-" +
-										"also-be-removed-are-you-sure-you-" +
-											"want-to-delete-this-page";
 							}
 
 							dropdownItem.putData(

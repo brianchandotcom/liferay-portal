@@ -25,6 +25,7 @@ import com.liferay.object.rest.context.path.RESTContextPathResolverRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -60,7 +61,19 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
+		return HashMapBuilder.<String, Object>put(
+			"apiURL", _getAPIURL(ddmFormField, ddmFormFieldRenderingContext)
+		).put(
+			"initialLabel", ddmFormFieldRenderingContext.getValue()
+		).put(
+			"initialValue", ddmFormFieldRenderingContext.getValue()
+		).put(
+			"inputName", ddmFormField.getName()
+		).put(
+			"itemsKey", "id"
+		).put(
+			"itemsLabel", "id"
+		).put(
 			"placeholder",
 			() -> {
 				LocalizedValue localizedValue =
@@ -74,32 +87,9 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 					localizedValue.getString(
 						ddmFormFieldRenderingContext.getLocale()));
 			}
+		).put(
+			"value", ddmFormFieldRenderingContext.getValue()
 		).build();
-
-		try {
-			return HashMapBuilder.<String, Object>put(
-				"apiURL", _getAPIURL(ddmFormField, ddmFormFieldRenderingContext)
-			).put(
-				"initialLabel", ddmFormFieldRenderingContext.getValue()
-			).put(
-				"initialValue", ddmFormFieldRenderingContext.getValue()
-			).put(
-				"inputName", ddmFormField.getName()
-			).put(
-				"itemsKey", "id"
-			).put(
-				"itemsLabel", "id"
-			).put(
-				"value", ddmFormFieldRenderingContext.getValue()
-			).putAll(
-				parameters
-			).build();
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-		}
-
-		return parameters;
 	}
 
 	protected String getValue(String valueString) {
@@ -118,9 +108,21 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 	}
 
 	private String _getAPIURL(
-			DDMFormField ddmFormField,
-			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
-		throws PortalException {
+		DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		long objectDefinitionId = GetterUtil.getLong(
+			getValue(
+				GetterUtil.getString(
+					ddmFormField.getProperty("objectDefinitionId"))));
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectDefinitionId);
+
+		if (objectDefinition == null) {
+			return StringPool.BLANK;
+		}
 
 		String apiURL = GetterUtil.getString(
 			ddmFormField.getProperty("apiURL"));
@@ -131,15 +133,6 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 
 		apiURL = _portal.getPortalURL(
 			ddmFormFieldRenderingContext.getHttpServletRequest());
-
-		long objectDefinitionId = GetterUtil.getLong(
-			getValue(
-				GetterUtil.getString(
-					ddmFormField.getProperty("objectDefinitionId"))));
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId);
 
 		RESTContextPathResolver restContextPathResolver =
 			_restContextPathResolverRegistry.getRESTContextPathResolver(
@@ -152,9 +145,8 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 	}
 
 	private long _getGroupId(
-			DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
-			ObjectDefinition objectDefinition)
-		throws PortalException {
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
+		ObjectDefinition objectDefinition) {
 
 		if (StringUtil.startsWith(
 				ddmFormFieldRenderingContext.getPortletNamespace(),
@@ -165,12 +157,21 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 				ddmFormFieldRenderingContext.getProperty("groupId"));
 		}
 
-		ObjectScopeProvider objectScopeProvider =
-			_objectScopeProviderRegistry.getObjectScopeProvider(
-				objectDefinition.getScope());
+		try {
+			ObjectScopeProvider objectScopeProvider =
+				_objectScopeProviderRegistry.getObjectScopeProvider(
+					objectDefinition.getScope());
 
-		return objectScopeProvider.getGroupId(
-			ddmFormFieldRenderingContext.getHttpServletRequest());
+			return objectScopeProvider.getGroupId(
+				ddmFormFieldRenderingContext.getHttpServletRequest());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+
+			return 0L;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

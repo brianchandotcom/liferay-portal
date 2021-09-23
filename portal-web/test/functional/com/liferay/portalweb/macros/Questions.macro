@@ -835,6 +835,17 @@ definition {
 			locator1 = "Button#ANY_DISABLED");
 	}
 
+	macro viewNoBreadcrumbEllipsis {
+		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_BREADCRUMB_ELLIPSIS");
+	}
+
+	macro viewNoFilteredResult {
+		AssertTextEquals(
+			key_emptyInfo = "There are no results.",
+			locator1 = "Questions#EMPTY_STATE_MESSAGE",
+			value1 = "There are no results.");
+	}
+
 	macro viewNoPermissionsAddQuestion {
 		AssertElementNotPresent(locator1 = "Questions#ASK_QUESTION_BUTTON");
 	}
@@ -863,6 +874,12 @@ definition {
 				key_tagName = "${tagName}",
 				locator1 = "Questions#TAGS_LIST_TAB_NAMES");
 		}
+	}
+
+	macro viewNoTopicDropdownToggle {
+		AssertElementNotPresent(
+			key_topicName = "${topicName}",
+			locator1 = "Questions#QUESTIONS_BREADCRUMB_TOPIC_DROPDOWN_TOGGLE");
 	}
 
 	macro viewPaginationResults {
@@ -1044,6 +1061,13 @@ definition {
 			AssertTextEquals(
 				key_votedResult = "${votedCount}",
 				locator1 = "Questions#VOTED_RESULT_ANSWER",
+				value1 = "${votedCount}");
+		}
+
+		else if (isSet(questionTitle)) {
+			AssertTextEquals(
+				key_questionTitle = "${questionTitle}",
+				locator1 = "Questions#QUESTIONS_VOTED_COUNT",
 				value1 = "${votedCount}");
 		}
 		else {

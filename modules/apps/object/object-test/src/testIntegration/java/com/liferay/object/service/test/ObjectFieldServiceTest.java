@@ -103,7 +103,7 @@ public class ObjectFieldServiceTest {
 	}
 
 	@Test
-	public void testDeleteListTypeDefinition() throws Exception {
+	public void testDeleteObjectField() throws Exception {
 		try {
 			_testDeleteObjectField(_defaultUser);
 
@@ -122,7 +122,7 @@ public class ObjectFieldServiceTest {
 	}
 
 	@Test
-	public void testGetListTypeDefinition() throws Exception {
+	public void testGetObjectField() throws Exception {
 		try {
 			_testGetObjectField(_defaultUser);
 		}
@@ -139,7 +139,7 @@ public class ObjectFieldServiceTest {
 	}
 
 	@Test
-	public void testUpdateListTypeDefinition() throws Exception {
+	public void testUpdateCustomObjectField() throws Exception {
 		try {
 			_testUpdateCustomObjectField(_defaultUser);
 

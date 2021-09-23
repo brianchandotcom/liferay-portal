@@ -181,7 +181,7 @@ public class SelectDDMFormFieldTypeSettingsTest
 			actions.get(7));
 		Assert.assertEquals(
 			"setVisible('multiple', not(hasObjectField(getValue('" +
-			"objectFieldName'))))",
+				"objectFieldName'))))",
 			actions.get(8));
 		Assert.assertEquals(
 			"setVisible('options', (contains(getValue('dataSourceType'), " +

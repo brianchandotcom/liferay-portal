@@ -21,7 +21,9 @@ definition {
 	}
 
 	macro addImageResolution {
-		LexiconEntry.gotoAdd();
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "New Image Resolution")) {
+			LexiconEntry.gotoAdd();
+		}
 
 		PortletEntry.inputName(name = "${imageName}");
 
@@ -218,6 +220,22 @@ definition {
 		AssertClick(
 			locator1 = "AdaptiveMediaTable#NAME",
 			value1 = "${imageName}");
+	}
+
+	macro openAdaptiveMediaAdmin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_adaptive_media_web_portlet_AMPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view");
+	}
+
+	macro openToAddImageResolution {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_adaptive_media_web_portlet_AMPortlet&_com_liferay_adaptive_media_web_portlet_AMPortlet_mvcRenderCommandName=%2Fadaptive_media%2Fedit_image_configuration_entry&_com_liferay_adaptive_media_web_portlet_AMPortlet_redirect=${baseURL}/group/control_panel/manage?p_p_id=com_liferay_adaptive_media_web_portlet_AMPortlet&_com_liferay_adaptive_media_web_portlet_AMPortlet_mvcRenderCommandName=%2Fadaptive_media%2Fedit_image_configuration_entry");
 	}
 
 	macro selectAdaptiveMediaImage {

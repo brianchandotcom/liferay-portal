@@ -2502,8 +2502,8 @@ definition {
 	@description = "This ensures that the blog small image from a depot can be removed and republished when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test RemoveBlogSmallImage {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#RemoveBlogSmallImage";
+	test CanDeleteBlogSmallImageInDepot {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteBlogSmallImageInDepot";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -2563,15 +2563,27 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
+
+		DepotNavigator.openDepotRecycleBinAdmin(depotName = "Test Depot Name");
+
+		RecycleBin.deleteCP(
+			assetName = "Document_1.jpg",
+			assetType = "Document");
+
+		DepotNavigator.openDepotRecycleBinAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
 		Navigator.openSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.removeSmallImage(uploadFileName = "Document_1.jpg");
-
-		PortletEntry.publish();
+		BlogsEntry.viewSmallImage(uploadFileName = "Document_1.jpg");
 
 		Staging.gotoPublishToLive();
 
@@ -2589,7 +2601,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Remote Site");
 
-		BlogsEntry.viewNoSmallImage(uploadFileName = "Document_1.jpg");
+		BlogsEntry.viewSmallImage(uploadFileName = "Document_1.jpg");
 	}
 
 	@description = "This ensures that a document pending review cannot be searched for in a staged site when enabling remote staging."

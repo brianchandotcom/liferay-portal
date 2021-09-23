@@ -2022,7 +2022,7 @@ definition {
 	@description = "This ensures that the blog small image from a depot can be removed and republished when enabling local staging."
 	@priority = "5"
 	@refactorneeded
-	test RemoveBlogSmallImage {
+	test CanDeleteBlogSmallImageInDepot {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.jpg",
@@ -2069,15 +2069,27 @@ definition {
 
 		BlogsEntry.viewSmallImage(uploadFileName = "Document_1.jpg");
 
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
+
+		DepotNavigator.openDepotRecycleBinAdminStaging(depotName = "Test Depot Name");
+
+		RecycleBin.deleteCP(
+			assetName = "Document_1.jpg",
+			assetType = "Document");
+
+		DepotNavigator.openDepotRecycleBinAdminStaging(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.removeSmallImage(uploadFileName = "Document_1.jpg");
-
-		PortletEntry.publish();
+		BlogsEntry.viewSmallImage(uploadFileName = "Document_1.jpg");
 
 		Staging.gotoPublishToLive();
 
@@ -2087,7 +2099,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		BlogsEntry.viewNoSmallImage(uploadFileName = "Document_1.jpg");
+		BlogsEntry.viewSmallImage(uploadFileName = "Document_1.jpg");
 	}
 
 	@description = "This ensures that a document pending review cannot be searched for in a staged site when enabling local staging."

@@ -474,13 +474,15 @@ definition {
 			userEmailAddress = "userea2@liferay.com",
 			userName = "userfn2 userln2");
 
-		DepotNavigator.openToDMEntryInDepot(
-			depotName = "Test Depot Name",
-			dmDocumentTitle = "Document_1.doc");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocumentSharing.viewSharedFlag(
 			detailsView = "true",
 			dmDocumentTitle = "Document_1");
+
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "Document_1.doc");
 
 		DMDocumentSharing.viewCollaborators(collaboratorList = "userfn,userfn2");
 

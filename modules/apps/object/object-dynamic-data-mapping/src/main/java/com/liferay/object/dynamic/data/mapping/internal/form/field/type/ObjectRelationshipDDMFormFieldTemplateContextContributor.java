@@ -14,6 +14,7 @@
 
 package com.liferay.object.dynamic.data.mapping.internal.form.field.type;
 
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
@@ -125,15 +127,32 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 			_restContextPathResolverRegistry.getRESTContextPathResolver(
 				objectDefinition.getClassName());
 
+		String restContextPath = restContextPathResolver.getRESTContextPath(
+			_getGroupId(ddmFormFieldRenderingContext, objectDefinition));
+
+		return apiURL + restContextPath;
+	}
+
+	private long _getGroupId(
+			DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
+			ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		if (StringUtil.startsWith(
+				ddmFormFieldRenderingContext.getPortletNamespace(),
+				_portal.getPortletNamespace(
+					DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM))) {
+
+			return GetterUtil.getLong(
+				ddmFormFieldRenderingContext.getProperty("groupId"));
+		}
+
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition.getScope());
 
-		String restContextPath = restContextPathResolver.getRESTContextPath(
-			objectScopeProvider.getGroupId(
-				ddmFormFieldRenderingContext.getHttpServletRequest()));
-
-		return apiURL + restContextPath;
+		return objectScopeProvider.getGroupId(
+			ddmFormFieldRenderingContext.getHttpServletRequest());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

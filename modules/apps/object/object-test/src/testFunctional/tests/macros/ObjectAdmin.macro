@@ -71,7 +71,7 @@ definition {
 	}
 
 	macro assertFieldsTableColumnsAreDisplayed {
-		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_NAME_COLUMN");
+		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_LABEL_COLUMN");
 
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_TYPE_COLUMN");
 	}
@@ -91,7 +91,7 @@ definition {
 	}
 
 	macro assertObjectColumnsAreDisplayed {
-		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_NAME_COLUMN");
+		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LABEL_COLUMN");
 
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_SYSTEM_COLUMN");
 
@@ -99,9 +99,13 @@ definition {
 	}
 
 	macro assertObjectColumnValue {
+		var key_label = "${label}";
+		var key_system = "${system}";
+		var key_status = "${status}";
+
 		AssertTextEquals(
-			locator1 = "ObjectAdmin#OBJECT_NAME",
-			value1 = "${name}");
+			locator1 = "ObjectAdmin#OBJECT_LABEL",
+			value1 = "${label}");
 
 		AssertTextEquals(
 			locator1 = "ObjectAdmin#OBJECT_SYSTEM",

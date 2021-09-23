@@ -33,14 +33,14 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
-			fieldLabelName = "Not Required Field",
+			fieldLabelName = "Integer",
 			fieldName = "integer",
 			fieldType = "Integer",
 			isRequired = "false",
 			objectName = "CustomObject");
 
 		ObjectAdmin.addObjectFieldViaAPI(
-			fieldLabelName = "Not Required Field",
+			fieldLabelName = "Text",
 			fieldName = "text",
 			fieldType = "String",
 			isRequired = "false",
@@ -68,13 +68,13 @@ definition {
 			key_fieldLabel = "Numeric",
 			key_fieldName = "Text");
 
-		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Not Required Field");
+		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Text");
 
 		Form.closeSidebar();
 
 		PopulateObjectFormsConfiguration.gotoFormField(formFieldName = "Numeric");
 
-		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Not Required Field");
+		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Integer");
 
 		Form.save();
 

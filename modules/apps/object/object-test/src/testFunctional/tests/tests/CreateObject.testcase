@@ -907,7 +907,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.viewObject(labelName = "CustomObject");
+		CreateObject.viewObject(labelName = "Custom Object");
 
 		CreateObject.editLabel(labelName = "Update Custom Object");
 
@@ -915,7 +915,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.viewObject(labelName = "CustomObject");
+		CreateObject.viewObject(labelName = "Custom Object");
 
 		CreateObject.assertObjectLabel(labelName = "Update Custom Object");
 	}
@@ -1032,7 +1032,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.viewObject(labelName = "CustomObject");
+		CreateObject.viewObject(labelName = "Custom Object");
 
 		CreateObject.editPluralLabel(pluralLabelName = "Update Plural Label Custom Object");
 
@@ -1040,7 +1040,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.viewObject(labelName = "CustomObject");
+		CreateObject.viewObject(labelName = "Custom Object");
 
 		CreateObject.assertObjectPluralLabel(pluralLabelName = "Update Plural Label Custom Object");
 	}
@@ -1331,7 +1331,7 @@ definition {
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.assertObjectColumnValue(
-			name = "CustomObject",
+			label = "Custom Object",
 			status = "Draft",
 			system = "No");
 	}

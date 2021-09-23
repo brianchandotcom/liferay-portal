@@ -111,23 +111,23 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>OBJECT_NAME</td>
-		<td>//a[contains(text(),'${name}')]</td>
+		<td>OBJECT_LABEL</td>
+		<td>//a[contains(text(),'${key_label}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>OBJECT_STATUS</td>
-		<td>//strong[contains(@class, 'workflow-value') and contains(text(),'${status}')]</td>
+		<td>//strong[contains(@class, 'workflow-value') and contains(text(),'${key_status}')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>OBJECT_SYSTEM</td>
-		<td>//div[contains(text(),'${system}')]</td>
+		<td>//div[contains(text(),'${key_system}')]</td>
 		<td></td>
 	</tr>
 	<tr>
-		<td>OBJECT_NAME_COLUMN</td>
-		<td>//div[contains(@class,'dnd-th') and contains(text(),'Name')]</td>
+		<td>OBJECT_LABEL_COLUMN</td>
+		<td>//div[contains(@class,'dnd-th') and contains(text(),'Label')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -166,8 +166,8 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>FIELDS_NAME_COLUMN</td>
-		<td>//div[contains(@class,'dnd-th') and contains(text(),'Name')]</td>
+		<td>FIELDS_LABEL_COLUMN</td>
+		<td>//div[contains(@class,'dnd-th') and contains(text(),'Label')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -54,17 +54,27 @@ public class AssetDisplayPageEntryUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		_companyLocalService.forEachCompany(
-			company -> updateAssetDisplayPageEntry(company));
+			company -> {
+				_init(company.getCompanyId());
+
+				updateAssetDisplayPageEntry(company, true);
+				updateAssetDisplayPageEntry(company, false);
+			});
 	}
 
-	protected void updateAssetDisplayPageEntry(Company company)
+	protected void updateAssetDisplayPageEntry(
+			Company company, boolean stagingGroups)
 		throws Exception {
-
-		_init(company.getCompanyId());
 
 		long journalArticleClassNameId = PortalUtil.getClassNameId(
 			JournalArticle.class);
 		User user = company.getDefaultUser();
+
+		String stagingGroupCondition = "Group_.liveGroupId != 0";
+
+		if (stagingGroups) {
+			stagingGroupCondition = "Group_.liveGroupId = 0";
+		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement = connection.prepareStatement(
@@ -75,7 +85,8 @@ public class AssetDisplayPageEntryUpgradeProcess extends UpgradeProcess {
 						"from JournalArticle inner join AssetEntry on ( ",
 						"AssetEntry.classNameId = ? and AssetEntry.classPK = ",
 						"JournalArticle.resourcePrimKey ) inner join Group_ ",
-						"on ( Group_.groupId = JournalArticle.groupId) where ",
+						"on (Group_.groupId = JournalArticle.groupId and ",
+						stagingGroupCondition, ") where ",
 						"JournalArticle.companyId = ? and ",
 						"JournalArticle.layoutUuid is not null and ",
 						"JournalArticle.layoutUuid != '' and ",

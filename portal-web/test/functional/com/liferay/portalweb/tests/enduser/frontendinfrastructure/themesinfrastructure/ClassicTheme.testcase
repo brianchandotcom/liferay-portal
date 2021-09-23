@@ -34,6 +34,11 @@ definition {
 			groupName = "Guest",
 			layoutName = "Classic Theme Page");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Classic Theme Page",
+			widgetName = "Clay Sample");
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -63,11 +68,6 @@ definition {
 		takeScreenshot();
 
 		AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Classic Theme Page",
-			widgetName = "Clay Sample");
 
 		Portlet.gotoPortletOptions(portletName = "Clay Sample");
 

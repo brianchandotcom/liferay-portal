@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.channel.web.internal.portlet.action;
 
+import com.liferay.account.settings.AccountEntryGroupSettings;
+import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceConfiguration;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
@@ -22,7 +24,9 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.permission.CommerceChannelPermission;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.commerce.util.AccountEntryAllowedTypesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -132,11 +136,17 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		CommerceChannel commerceChannel =
 			_commerceChannelService.getCommerceChannel(commerceChannelId);
 
-		return _commerceChannelService.updateCommerceChannel(
+		commerceChannel = _commerceChannelService.updateCommerceChannel(
 			commerceChannel.getCommerceChannelId(), siteGroupId,
 			commerceChannel.getName(), commerceChannel.getType(),
 			commerceChannel.getTypeSettingsProperties(),
 			commerceChannel.getCommerceCurrencyCode());
+
+		_accountEntryGroupSettings.setAllowedTypes(
+			commerceChannel.getSiteGroupId(),
+			_getAllowedTypes(commerceChannel.getGroupId()));
+
+		return commerceChannel;
 	}
 
 	protected CommerceChannel updateCommerceChannel(ActionRequest actionRequest)
@@ -199,6 +209,21 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 			_portal.getUserId(actionRequest), commerceChannel.getCompanyId(),
 			commerceChannel.getGroupId(), CommerceOrder.class.getName(), 0,
 			workflowDefinitionOVPs);
+	}
+
+	private String[] _getAllowedTypes(long commerceChannelGroupId)
+		throws Exception {
+
+		CommerceAccountGroupServiceConfiguration
+			commerceAccountGroupServiceConfiguration =
+				_configurationProvider.getConfiguration(
+					CommerceAccountGroupServiceConfiguration.class,
+					new GroupServiceSettingsLocator(
+						commerceChannelGroupId,
+						CommerceAccountConstants.SERVICE_NAME));
+
+		return AccountEntryAllowedTypesUtil.getAllowedTypes(
+			commerceAccountGroupServiceConfiguration.commerceSiteType());
 	}
 
 	private void _updateAccountCartMaxAllowed(
@@ -287,13 +312,23 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		modifiableSettings.store();
+
+		_accountEntryGroupSettings.setAllowedTypes(
+			commerceChannel.getSiteGroupId(),
+			_getAllowedTypes(commerceChannel.getGroupId()));
 	}
+
+	@Reference
+	private AccountEntryGroupSettings _accountEntryGroupSettings;
 
 	@Reference
 	private CommerceChannelPermission _commerceChannelPermission;
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Portal _portal;

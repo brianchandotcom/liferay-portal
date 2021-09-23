@@ -4370,10 +4370,6 @@ definition {
 			fieldName = "errorTemplateFTL",
 			fieldValue = "errortest.ftl");
 
-		SystemSettings.viewTextareaValue(
-			fieldName = "errorTemplateVM",
-			fieldValue = "errortest.vm");
-
 		FormFields.viewTextValue(
 			fieldName = "checkInterval",
 			fieldValue = "5");

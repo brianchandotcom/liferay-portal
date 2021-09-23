@@ -1196,7 +1196,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		_validate(title, urlTitle, content, status);
 
 		if (Validator.isNotNull(urlTitle) &&
-			!urlTitle.equals(entry.getUrlTitle())) {
+			!urlTitle.equals(entry.getUrlTitle()) &&
+			!ExportImportThreadLocal.isImportInProcess()) {
 
 			urlTitle = _validateURLTitle(
 				entry.getGroupId(), urlTitle, serviceContext);

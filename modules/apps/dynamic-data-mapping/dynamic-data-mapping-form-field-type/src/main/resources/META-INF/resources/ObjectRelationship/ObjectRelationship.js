@@ -41,6 +41,8 @@ export function ObjectRelationship({
 	apiURL,
 	inputName,
 	labelKey = 'label',
+	initialLabel,
+	initialValue,
 	name,
 	onBlur = () => {},
 	onChange,
@@ -73,7 +75,7 @@ export function ObjectRelationship({
 
 	const loading = networkStatus < NETWORK_STATUS_UNUSED;
 
-	value = mutatedRef.current ? value : predefinedValue;
+	value = mutatedRef.current ? value : initialValue || predefinedValue;
 
 	return (
 		<FieldBase
@@ -89,14 +91,14 @@ export function ObjectRelationship({
 					onChange={(event) => {
 						mutatedRef.current = true;
 
-						onChange(event.target.value);
+						onChange(event, event.target.value);
 					}}
 					onBlur={onBlur}
 					onFocus={onFocus}
 					placeholder={placeholder}
 					readOnly={readOnly}
 					required={required}
-					value={value}
+					value={mutatedRef.current ? value : initialLabel}
 				/>
 
 				<ClayAutocomplete.DropDown
@@ -118,8 +120,11 @@ export function ObjectRelationship({
 										<ClayAutocomplete.Item
 											key={item.id}
 											match={String(value)}
-											onClick={() =>
-												onChange(String(item[valueKey]))
+											onClick={(event) =>
+												onChange(
+													event,
+													String(item[valueKey])
+												)
 											}
 											value={String(item[labelKey])}
 										/>

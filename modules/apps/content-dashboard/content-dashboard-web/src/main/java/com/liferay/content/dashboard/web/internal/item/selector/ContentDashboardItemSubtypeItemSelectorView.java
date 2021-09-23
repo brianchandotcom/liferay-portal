@@ -22,6 +22,7 @@ import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFacto
 import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemSubtypeItemSelectorCriterion;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactory;
+import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardSearchClassNameUtil;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFormVariation;
@@ -164,17 +165,6 @@ public class ContentDashboardItemSubtypeItemSelectorView
 		).toArray();
 	}
 
-	private String _getGroupName(Group group, Locale locale) {
-		try {
-			return group.getDescriptiveName(locale);
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-
-			return group.getName(locale);
-		}
-	}
-
 	private String _getIcon(String className) {
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
@@ -209,7 +199,7 @@ public class ContentDashboardItemSubtypeItemSelectorView
 					locale, "x-group-x",
 					new String[] {
 						labelInfoLocalizedValue.getValue(locale),
-						_getGroupName(group, locale)
+						ContentDashboardGroupUtil.getGroupName(group, locale)
 					});
 			}
 		).orElseGet(

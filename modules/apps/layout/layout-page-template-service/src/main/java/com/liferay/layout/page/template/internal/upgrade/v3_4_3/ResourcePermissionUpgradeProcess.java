@@ -95,6 +95,17 @@ public class ResourcePermissionUpgradeProcess extends UpgradeProcess {
 				primKey = LayoutPageTemplateEntry.class.getName();
 			}
 
+			ResourcePermission existingResourcePermission =
+				_resourcePermissionLocalService.fetchResourcePermission(
+					resourcePermission.getCompanyId(),
+					LayoutPageTemplateEntry.class.getName(),
+					resourcePermission.getScope(), primKey,
+					resourcePermission.getRoleId());
+
+			if (existingResourcePermission != null) {
+				continue;
+			}
+
 			ResourcePermission newResourcePermission =
 				_resourcePermissionLocalService.createResourcePermission(
 					increment());

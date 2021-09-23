@@ -874,17 +874,27 @@ definition {
 		}
 	}
 
-	@description = "This test covers LPS-91598. It makes sure that all files are deleted when user selects all."
+	@description = "This test covers LPS-90736. It makes sure that all files are deleted when user selects all."
 	@priority = "4"
-	@refactorneeded
-	test SelectAllAndDelete {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+	@refactordone
+	test CanDeleteAllDocumentsAtOnce {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
-		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt,Commerce_Black.jpg,Commerce_Blue.jpg,Commerce_White.jpg,Spaceport.jpg,analytics-cloud-hero-image.png,marketplace_icon.png");
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_2.doc",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_2.doc");
 
-		Pagination.changePagination(itemsPerPage = "4");
-
-		Pagination.viewResults(results = "Showing 1 to 4 of 10 entries.");
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_3.doc",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_3.doc");
 
 		PortletEntry.selectAll();
 

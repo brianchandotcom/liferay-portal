@@ -17,18 +17,14 @@ package com.liferay.search.experiences.constants;
 /**
  * @author Petteri Karttunen
  */
-public class SXPPortletKeys {
+public class SXPElementTypes {
 
-	public static final String SXP_BLUEPRINT =
-		"com_liferay_search_experiences_web_internal_" +
-			"_portlet_SXPBlueprintPortlet";
+	public static final int AGGREGATION_SXP_ELEMENT = 1;
 
-	public static final String SXP_BLUEPRINT_OPTIONS =
-		"com_liferay_search_experiences_web_internal_" +
-			"options_portlet_SXPBlueprintOptionsPortlet";
+	public static final int FACET_SXP_ELEMENT = 5;
 
-	public static final String SXP_RESULT =
-		"com_liferay_search_experiences_web_internal_" +
-			"result_portlet_SXPResultPortlet";
+	public static final int QUERY_SXP_ELEMENT = 10;
+
+	public static final int SUGGESTER_SXP_ELEMENT = 15;
 
 }

@@ -273,16 +273,20 @@ public class UpdatePasswordAction implements Action {
 			PwdToolkitUtilThreadLocal.setValidate(previousValidate);
 		}
 
-		if (ticket != null) {
-			TicketLocalServiceUtil.deleteTicket(ticket);
-
-			UserLocalServiceUtil.updatePasswordReset(userId, false);
-		}
-
 		User user = UserLocalServiceUtil.getUser(userId);
 
 		Company company = CompanyLocalServiceUtil.getCompanyById(
 			user.getCompanyId());
+
+		if (ticket != null) {
+			TicketLocalServiceUtil.deleteTicket(ticket);
+
+			UserLocalServiceUtil.updatePasswordReset(userId, false);
+
+			if (company.isStrangersVerify()) {
+				UserLocalServiceUtil.updateEmailAddressVerified(userId, true);
+			}
+		}
 
 		String login = null;
 

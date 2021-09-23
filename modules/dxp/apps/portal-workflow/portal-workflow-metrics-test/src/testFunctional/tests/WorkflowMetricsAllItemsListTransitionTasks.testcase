@@ -581,13 +581,13 @@ definition {
 
 		WorkflowMetrics.goToBulkTransitionSelectTasks();
 
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL_MODAL");
+		Click(locator1 = "WorkflowMetricsAllItemsListTransitionTasks#SELECT_ALL_TRANSITION_TASKS");
 
 		Click(locator1 = "Button#SELECT_ALL");
 
 		Button.clickNext();
 
-		AssertElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SHOW_ALL_OR_LESS_BUTTON");
+		AssertElementPresent(locator1 = "WorkflowMetricsAllItemsListTransitionTasks#WORKFLOW_ALL_ITEMS_SHOW_ALL_OR_LESS_BUTTON");
 
 		var count = "1";
 
@@ -598,7 +598,7 @@ definition {
 			var count = ${count} + 1;
 		}
 
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SHOW_ALL_OR_LESS_BUTTON");
+		Click(locator1 = "WorkflowMetricsAllItemsListTransitionTasks#WORKFLOW_ALL_ITEMS_SHOW_ALL_OR_LESS_BUTTON");
 
 		var count = "1";
 
@@ -609,7 +609,7 @@ definition {
 			var count = ${count} + 1;
 		}
 
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SHOW_ALL_OR_LESS_BUTTON");
+		Click(locator1 = "WorkflowMetricsAllItemsListTransitionTasks#WORKFLOW_ALL_ITEMS_SHOW_ALL_OR_LESS_BUTTON");
 
 		var count = "1";
 

@@ -451,11 +451,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WORKFLOW_ALL_ITEMS_SHOW_ALL_OR_LESS_BUTTON</td>
-	<td>//span[contains(@class,'show-all-button')] | //span[contains(@class,'show-less-button')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>WORKFLOW_ALL_ITEMS_ASSERT_ITEM</td>
 	<td>//span[contains(text(),'${key_columnName}')]/../../../../..//tr[contains(.,'${key_fieldName}')]</td>
 	<td></td>

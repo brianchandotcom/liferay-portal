@@ -850,6 +850,7 @@
 		<exception>FormInstanceRecordExporter</exception>
 		<exception>FormInstanceRecordGroupId</exception>
 		<exception>FormInstanceSettingsRedirectURL</exception>
+		<exception>FormInstanceSettingsStorageType</exception>
 		<exception>FormInstanceStructureId</exception>
 		<exception>InvalidParentStructure</exception>
 		<exception>InvalidStructureVersion</exception>

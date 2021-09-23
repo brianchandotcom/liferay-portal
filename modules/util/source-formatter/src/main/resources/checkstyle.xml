@@ -222,7 +222,6 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.AssertEqualsCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks that additional information is provided when calling `Assert.assertEquals`." />
-			<property name="enabled" value="false" />
 			<message key="assert.add.information" value="Add ''{0}'' as extra parameter at the beginning of the ''Assert.assertEquals'' call to provide more information to the test. See LPS-70411." />
 			<message key="assert.use.boolean" value="Use ''Assert.assert{0}'' instead of ''Assert.assertEquals'' when assert boolean" />
 		</module>

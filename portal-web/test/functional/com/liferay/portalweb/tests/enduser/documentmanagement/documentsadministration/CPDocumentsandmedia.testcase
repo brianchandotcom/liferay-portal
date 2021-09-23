@@ -911,11 +911,13 @@ definition {
 
 	@description = "This ensures that the document title can be displayed correctly in the different views."
 	@priority = "5"
-	@refactorneeded
-	test ViewDocumentInDifferentViews {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addMultipleCP(dmDocumentFileList = "Document_2.docx,Document_3.docx");
+	@refactordone
+	test CanViewInDifferentDisplayStyles {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_2",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_2.doc");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

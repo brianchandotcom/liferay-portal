@@ -41,7 +41,7 @@ AUI.add(
 
 					return new A.Do.AlterReturn(
 						'Modified type attribute',
-						A.merge(currentRetVal, {
+						Object.assign(currentRetVal, {
 							type: 'liferay-radio',
 						})
 					);
@@ -75,7 +75,7 @@ AUI.add(
 
 					return new A.Do.AlterReturn(
 						'Modified cssClass, label and type attributes',
-						A.merge(A.Do.currentRetVal, {
+						Object.assign(A.Do.currentRetVal, {
 							labelEl,
 							type: 'liferay-radio',
 						})

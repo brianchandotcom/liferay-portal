@@ -70,7 +70,7 @@ AUI.add(
 
 					return new A.Do.AlterReturn(
 						'Modified label attribute',
-						A.merge(A.Do.currentRetVal, {
+						Object.assign(A.Do.currentRetVal, {
 							label: instance.get(STR_HOST).get('root').label,
 						})
 					);

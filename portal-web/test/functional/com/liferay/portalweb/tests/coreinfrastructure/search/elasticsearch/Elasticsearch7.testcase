@@ -596,8 +596,6 @@ definition {
 
 		WaitForConsoleTextPresent(value1 = "Stopping sidecar Elasticsearch");
 
-		Elasticsearch.waitForClusterHealthGreen();
-
 		// LRCI-2401
 
 		//Navigator.openSpecificURL(url = "http://localhost:9201");

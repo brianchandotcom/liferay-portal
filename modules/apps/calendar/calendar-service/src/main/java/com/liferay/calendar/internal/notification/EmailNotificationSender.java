@@ -53,31 +53,24 @@ public class EmailNotificationSender implements NotificationSender {
 			CalendarNotificationTemplate calendarNotificationTemplate =
 				notificationTemplateContext.getCalendarNotificationTemplate();
 
-			String fromAddressValue = NotificationUtil.getTemplatePropertyValue(
-				calendarNotificationTemplate,
-				CalendarNotificationTemplateConstants.PROPERTY_FROM_ADDRESS,
-				fromAddress);
-			String fromNameValue = NotificationUtil.getTemplatePropertyValue(
-				calendarNotificationTemplate,
-				CalendarNotificationTemplateConstants.PROPERTY_FROM_NAME,
-				fromName);
+			notificationTemplateContext.setFromAddress(
+				NotificationUtil.getTemplatePropertyValue(
+					calendarNotificationTemplate,
+					CalendarNotificationTemplateConstants.PROPERTY_FROM_ADDRESS,
+					fromAddress));
+			notificationTemplateContext.setFromName(
+				NotificationUtil.getTemplatePropertyValue(
+					calendarNotificationTemplate,
+					CalendarNotificationTemplateConstants.PROPERTY_FROM_NAME,
+					fromName));
 
-			notificationTemplateContext.setFromAddress(fromAddressValue);
-			notificationTemplateContext.setFromName(fromNameValue);
 			notificationTemplateContext.setToAddress(
 				notificationRecipient.getEmailAddress());
 			notificationTemplateContext.setToName(
 				notificationRecipient.getName());
 
 			_sendNotification(
-				notificationRecipient, notificationTemplateContext,
-				NotificationTemplateRenderer.render(
-					notificationTemplateContext, NotificationField.BODY,
-					NotificationTemplateRenderer.MODE_HTML),
-				fromAddressValue, fromNameValue,
-				NotificationTemplateRenderer.render(
-					notificationTemplateContext, NotificationField.SUBJECT,
-					NotificationTemplateRenderer.MODE_PLAIN));
+				notificationRecipient, notificationTemplateContext);
 		}
 		catch (Exception exception) {
 			throw new NotificationSenderException(exception);
@@ -86,8 +79,7 @@ public class EmailNotificationSender implements NotificationSender {
 
 	private void _sendNotification(
 			NotificationRecipient notificationRecipient,
-			NotificationTemplateContext notificationTemplateContext,
-			String body, String fromEmail, String fromName, String subject)
+			NotificationTemplateContext notificationTemplateContext)
 		throws NotificationSenderException {
 
 		try {
@@ -123,9 +115,11 @@ public class EmailNotificationSender implements NotificationSender {
 				notificationTemplateContext.getAttribute("portletName"),
 				"[$SITE_NAME$]",
 				notificationTemplateContext.getAttribute("siteName"),
-				"[$TO_NAME$]", notificationRecipient.getName());
+				"[$TO_NAME$]", notificationTemplateContext.getToName());
 			subscriptionSender.setContextCreatorUserPrefix("EVENT");
-			subscriptionSender.setFrom(fromEmail, fromName);
+			subscriptionSender.setFrom(
+				notificationTemplateContext.getFromAddress(),
+				notificationTemplateContext.getFromName());
 			subscriptionSender.setHtmlFormat(
 				notificationRecipient.isHTMLFormat());
 
@@ -143,8 +137,14 @@ public class EmailNotificationSender implements NotificationSender {
 						calendarNotificationTemplate.getSubject()));
 			}
 			else {
-				subscriptionSender.setBody(body);
-				subscriptionSender.setSubject(subject);
+				subscriptionSender.setBody(
+					NotificationTemplateRenderer.render(
+						notificationTemplateContext, NotificationField.BODY,
+						NotificationTemplateRenderer.MODE_HTML));
+				subscriptionSender.setSubject(
+					NotificationTemplateRenderer.render(
+						notificationTemplateContext, NotificationField.SUBJECT,
+						NotificationTemplateRenderer.MODE_PLAIN));
 			}
 
 			subscriptionSender.setMailId(

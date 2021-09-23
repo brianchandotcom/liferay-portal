@@ -324,12 +324,12 @@ definition {
 			rowEntry = "Created Form Name");
 	}
 
-	@description = "LPS-72048 - Verify that belong rule can be worked for guest role"
+	@description = "LPS-72048 - Verify that Belongs To rule can be paired with Guest role"
 	@priority = "4"
-	test BelongRoleCanBeWorkedForGuestUser {
+	test BelongsToRuleCanPairWithGuestUser {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "Forms#BelongRoleCanBeWorkedForGuestUser";
+		property test.name.skip.portal.instance = "Forms#BelongsToRuleCanPairWithGuestUser";
 
 		FormsAdmin.addForm();
 

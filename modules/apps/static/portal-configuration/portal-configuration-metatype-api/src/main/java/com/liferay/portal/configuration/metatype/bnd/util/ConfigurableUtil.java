@@ -258,7 +258,7 @@ public class ConfigurableUtil {
 		}
 
 		return HashMapBuilder.create(
-			properties
+			(Map)properties
 		).putAll(
 			overrideProperties
 		).build();

@@ -198,11 +198,10 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 									/>
 
 									<c:if test="<%= workflowTaskDisplayContext.hasViewDiffsPortletURL(workflowTask) %>">
-										<liferay-ui:icon
+										<liferay-frontend:management-bar-button
+											href="<%= workflowTaskDisplayContext.getTaglibViewDiffsURL(workflowTask) %>"
 											icon="paste"
-											markupView="lexicon"
-											message="diffs"
-											url="<%= workflowTaskDisplayContext.getTaglibViewDiffsURL(workflowTask) %>"
+											label="diffs"
 										/>
 									</c:if>
 

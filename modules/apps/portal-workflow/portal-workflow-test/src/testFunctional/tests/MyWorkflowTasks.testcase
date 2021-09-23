@@ -52,7 +52,6 @@ definition {
 	@description = "LPS-135888 - Verify that the user with Account role type can Approve the task"
 	@priority = "5"
 	test AccountUserCanApproveTask {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "MyWorkflowTasks#AccountUserCanApproveTask";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -78,7 +77,7 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn_");
+			userScreenName = "usersn");
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
 
@@ -104,9 +103,8 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		ApplicationsMenu.gotoPortlet(
+		CommerceNavigator.gotoPortlet(
 			category = "Store Management",
-			panel = "Commerce",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
@@ -133,20 +131,6 @@ definition {
 		Button.click(button = "Review Order");
 
 		Click(locator1 = "CommerceAccelerators#ORDERS_SUBMIT_BUTTON");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "User Authentication",
-			configurationName = "General",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-
-		Navigator.openURL();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -177,6 +161,9 @@ definition {
 		AssertElementPresent(
 			key_status = "Approved",
 			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+	
+	
+	
 	}
 
 	@description = "LPS-135888 - Verify that the user with Account role can view the order details through the My Workflow Tasks page"
@@ -460,7 +447,6 @@ definition {
 	@description = "LPS-135888 - Verify that the task is assigned to the user with Account role type"
 	@priority = "4"
 	test CanAssignTaskToUserWithAccountRole {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "MyWorkflowTasks#CanAssignTaskToUserWithAccountRole";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -486,7 +472,7 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn_");
+			userScreenName = "usersn");
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
 
@@ -512,9 +498,8 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		ApplicationsMenu.gotoPortlet(
+		CommerceNavigator.gotoPortlet(
 			category = "Store Management",
-			panel = "Commerce",
 			portlet = "Channels");
 
 		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
@@ -562,13 +547,6 @@ definition {
 		AssertElementPresent(
 			key_status = "Pending",
 			locator1 = "CommerceEntry#WORKFLOW_STATUS");
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "User Authentication",
-			configurationName = "General",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
 		Navigator.openURL();
 

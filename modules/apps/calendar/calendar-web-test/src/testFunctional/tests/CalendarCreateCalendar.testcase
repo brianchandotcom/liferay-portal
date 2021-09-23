@@ -167,6 +167,65 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@description = "LPS-60800, Verify that can save individual calendar permissions."
+	@priority = "3"
+	test ViewEntryPermissionsNotDefinedByRolePermissions {
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.publish();
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoEditEvent(eventTitle = "Calendar Event Title");
+
+		Click(locator1 = "Button#PERMISSIONS");
+
+		SelectFrameTop();
+
+		IFrame.selectModalFrame();
+
+		Check(
+			key_roleTitle = "Site Member",
+			locator1 = "Permissions#CONTENT_PERMISSIONS_DELETE_CHECKBOX");
+
+		Check(
+			key_roleTitle = "Site Member",
+			locator1 = "Permissions#CONTENT_PERMISSIONS_UPDATE_CHECKBOX");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		RoleNavigator.gotoViewNotHaveRolePermissions(
+			roleTitle = "Site Member",
+			roleType = "Site");
+
+		Navigator.gotoPage(pageName = "Calendar Page");
+
+		CalendarNavigator.gotoEditEvent(eventTitle = "Calendar Event Title");
+
+		Click(locator1 = "Button#PERMISSIONS");
+
+		SelectFrameTop();
+
+		IFrame.selectModalFrame();
+
+		AssertChecked(
+			key_roleTitle = "Site Member",
+			locator1 = "Permissions#CONTENT_PERMISSIONS_DELETE_CHECKBOX");
+
+		AssertChecked(
+			key_roleTitle = "Site Member",
+			locator1 = "Permissions#CONTENT_PERMISSIONS_UPDATE_CHECKBOX");
+	}
+
 	@description = "This is a use case for LPS-56229."
 	@priority = "3"
 	test ViewUserCanAddSiteCalendarsWithCalendarPermissions {

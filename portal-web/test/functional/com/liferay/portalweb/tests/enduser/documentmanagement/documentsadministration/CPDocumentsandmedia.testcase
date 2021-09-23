@@ -799,11 +799,41 @@ definition {
 
 	@description = "This test covers LPS-101908. It makes sure that all elements selected on different pages can be checked out and checked in."
 	@priority = "3"
-	@refactorneeded
-	test SelectAllAndCheckIn {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+	@refactordone
+	test CanCheckInAllDocumentsOnDifferentPagesAtOnce {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
-		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt,Commerce_Black.jpg");
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_2.doc",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_2.doc");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_3.doc",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_3.doc");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "Document_1.txt",
+			dmDocumentTitle = "Document_1.txt",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "Document_2.txt",
+			dmDocumentTitle = "Document_2.txt",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_2.txt");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		Pagination.changePagination(itemsPerPage = "4");
 

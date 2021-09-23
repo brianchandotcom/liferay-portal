@@ -18,26 +18,25 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierConfiguration;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.security.auth.registry.AuthVerifierRegistry;
 import com.liferay.portal.service.impl.UserLocalServiceImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
@@ -46,6 +45,9 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockServletContext;
@@ -62,8 +64,6 @@ public class AuthVerifierPipelineTest {
 
 	@Test
 	public void testVerifyRequest() throws PortalException {
-		Registry registry = RegistryUtil.getRegistry();
-
 		ReflectionTestUtil.setFieldValue(
 			UserLocalServiceUtil.class, "_service",
 			new UserLocalServiceImpl() {
@@ -101,17 +101,17 @@ public class AuthVerifierPipelineTest {
 		Class<? extends AuthVerifier> authVerifierClass =
 			authVerifier.getClass();
 
-		Map<String, Object> propertyMap = Collections.singletonMap(
+		Dictionary<String, Object> propertyMap = MapUtil.singletonDictionary(
 			"urls.includes",
 			StringBundler.concat(
 				_BASE_URL, "/regular/*,", _BASE_URL, "/legacy*"));
 
 		Properties properties = new Properties();
 
-		for (Map.Entry<String, Object> entry : propertyMap.entrySet()) {
-			properties.setProperty(
-				entry.getKey(), String.valueOf(entry.getValue()));
-		}
+		properties.put(
+			"urls.includes",
+			StringBundler.concat(
+				_BASE_URL, "/regular/*,", _BASE_URL, "/legacy*"));
 
 		authVerifierConfiguration.setAuthVerifierClassName(
 			authVerifierClass.getName());
@@ -157,8 +157,10 @@ public class AuthVerifierPipelineTest {
 
 			});
 
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
 		ServiceRegistration<AuthVerifier> serviceRegistration =
-			registry.registerService(
+			bundleContext.registerService(
 				AuthVerifier.class, authVerifier, propertyMap);
 
 		AccessControlContext accessControlContext = new AccessControlContext();

@@ -14,10 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +26,9 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+
 /**
  * @author Dante Wang
  * @author Peter Fellwock
@@ -36,7 +37,7 @@ public class OpenSearchRegistryUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		_openSearch = (OpenSearch)ProxyUtil.newProxyInstance(
 			OpenSearch.class.getClassLoader(),
@@ -49,8 +50,8 @@ public class OpenSearchRegistryUtilTest {
 				return null;
 			});
 
-		_serviceRegistration = registry.registerService(
-			OpenSearch.class, _openSearch);
+		_serviceRegistration = bundleContext.registerService(
+			OpenSearch.class, _openSearch, null);
 	}
 
 	@AfterClass

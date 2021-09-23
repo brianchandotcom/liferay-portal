@@ -17,13 +17,12 @@ package com.liferay.portal.kernel.scheduler.messaging;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.FutureTask;
@@ -37,6 +36,9 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Tina Tian
@@ -118,45 +120,52 @@ public class SchedulerEventMessageListenerWrapperTest {
 		schedulerEventMessageListenerWrapper.setMessageListener(
 			_testMessageListener);
 
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		Message[] receivedMessage = new Message[1];
 
-		registry.registerService(
-			MessageBus.class,
-			(MessageBus)ProxyUtil.newProxyInstance(
-				MessageBus.class.getClassLoader(),
-				new Class<?>[] {MessageBus.class},
-				(proxy, method, args) -> {
-					receivedMessage[0] = (Message)args[1];
+		ServiceRegistration<?> serviceRegistration =
+			bundleContext.registerService(
+				MessageBus.class,
+				(MessageBus)ProxyUtil.newProxyInstance(
+					MessageBus.class.getClassLoader(),
+					new Class<?>[] {MessageBus.class},
+					(proxy, method, args) -> {
+						receivedMessage[0] = (Message)args[1];
 
-					return null;
-				}));
+						return null;
+					}),
+				null);
 
-		FutureTask<Void> futureTask1 = _createFutureTask(
-			schedulerEventMessageListenerWrapper, _testMessage1);
+		try {
+			FutureTask<Void> futureTask1 = _createFutureTask(
+				schedulerEventMessageListenerWrapper, _testMessage1);
 
-		_startThread(futureTask1, "Thread1");
+			_startThread(futureTask1, "Thread1");
 
-		_testMessageListener.waitUntilBlock();
+			_testMessageListener.waitUntilBlock();
 
-		FutureTask<Void> futureTask2 = _createFutureTask(
-			schedulerEventMessageListenerWrapper, _testMessage2);
+			FutureTask<Void> futureTask2 = _createFutureTask(
+				schedulerEventMessageListenerWrapper, _testMessage2);
 
-		_startThread(futureTask2, "Thread2");
+			_startThread(futureTask2, "Thread2");
 
-		futureTask2.get();
+			futureTask2.get();
 
-		Assert.assertNull(_testMessage2.getResponse());
-		Assert.assertSame(_testMessage2, receivedMessage[0]);
+			Assert.assertNull(_testMessage2.getResponse());
+			Assert.assertSame(_testMessage2, receivedMessage[0]);
 
-		_testMessageListener.unblock();
+			_testMessageListener.unblock();
 
-		futureTask1.get();
+			futureTask1.get();
 
-		Assert.assertSame(
-			"Message is not processed", _testMessage1.getPayload(),
-			_testMessage1.getResponse());
+			Assert.assertSame(
+				"Message is not processed", _testMessage1.getPayload(),
+				_testMessage1.getResponse());
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Test

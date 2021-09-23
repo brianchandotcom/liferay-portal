@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.nio.intraband.mailbox;
 
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.io.Deserializer;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.PortalExecutorManagerInvocationHandler;
 import com.liferay.portal.kernel.nio.intraband.SystemDataType;
@@ -27,18 +28,20 @@ import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.nio.ByteBuffer;
 
 import java.util.Collections;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Shuyang Zhou
@@ -53,14 +56,20 @@ public class MailboxDatagramReceiveHandlerTest {
 
 	@Before
 	public void setUp() {
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		registry.registerService(
+		_serviceRegistration = bundleContext.registerService(
 			PortalExecutorManager.class,
 			(PortalExecutorManager)ProxyUtil.newProxyInstance(
 				MailboxDatagramReceiveHandlerTest.class.getClassLoader(),
 				new Class<?>[] {PortalExecutorManager.class},
-				new PortalExecutorManagerInvocationHandler()));
+				new PortalExecutorManagerInvocationHandler()),
+			null);
+	}
+
+	@After
+	public void tearDown() {
+		_serviceRegistration.unregister();
 	}
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
@@ -87,5 +96,7 @@ public class MailboxDatagramReceiveHandlerTest {
 
 		Assert.assertEquals(0, deserializer.readLong());
 	}
+
+	private ServiceRegistration<?> _serviceRegistration;
 
 }

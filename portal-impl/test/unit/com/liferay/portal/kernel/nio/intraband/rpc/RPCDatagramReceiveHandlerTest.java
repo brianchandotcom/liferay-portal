@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.nio.intraband.rpc;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.io.Serializer;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.PortalExecutorManagerInvocationHandler;
 import com.liferay.portal.kernel.nio.intraband.SystemDataType;
@@ -29,16 +30,18 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Shuyang Zhou
@@ -61,14 +64,20 @@ public class RPCDatagramReceiveHandlerTest {
 
 	@Before
 	public void setUp() {
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		registry.registerService(
+		_serviceRegistration = bundleContext.registerService(
 			PortalExecutorManager.class,
 			(PortalExecutorManager)ProxyUtil.newProxyInstance(
 				RPCDatagramReceiveHandlerTest.class.getClassLoader(),
 				new Class<?>[] {PortalExecutorManager.class},
-				new PortalExecutorManagerInvocationHandler()));
+				new PortalExecutorManagerInvocationHandler()),
+			null);
+	}
+
+	@After
+	public void tearDown() {
+		_serviceRegistration.unregister();
 	}
 
 	@Test
@@ -127,6 +136,8 @@ public class RPCDatagramReceiveHandlerTest {
 		Assert.assertEquals(
 			ErrorTestProcessCallable.class.getName(), exception.getMessage());
 	}
+
+	private ServiceRegistration<?> _serviceRegistration;
 
 	private static class ErrorTestProcessCallable
 		implements ProcessCallable<String> {

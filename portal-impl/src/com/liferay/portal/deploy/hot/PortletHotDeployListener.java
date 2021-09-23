@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.PortletFilter;
 import com.liferay.portal.kernel.model.PortletURLListener;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.CustomUserAttributes;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
@@ -42,7 +43,7 @@ import com.liferay.portal.kernel.servlet.FileTimestampUtil;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -53,9 +54,6 @@ import com.liferay.portlet.PortletContextBag;
 import com.liferay.portlet.PortletContextBagPool;
 import com.liferay.portlet.PortletFilterFactory;
 import com.liferay.portlet.PortletURLListenerFactory;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.io.InputStream;
 
@@ -80,6 +78,9 @@ import javax.portlet.filter.RenderFilter;
 import javax.portlet.filter.ResourceFilter;
 
 import javax.servlet.ServletContext;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Brian Wing Shun Chan
@@ -122,7 +123,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			return;
 		}
 
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		ResourceBundleLoader resourceBundleLoader =
 			new ClassResourceBundleLoader(
@@ -130,9 +131,9 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		_resourceBundleLoaderServiceRegistrations.put(
 			portlet.getPortletId(),
-			registry.registerService(
+			bundleContext.registerService(
 				ResourceBundleLoader.class, resourceBundleLoader,
-				HashMapBuilder.<String, Object>put(
+				HashMapDictionaryBuilder.<String, Object>put(
 					"resource.bundle.base.name", portlet.getResourceBundle()
 				).put(
 					"service.ranking", Integer.MIN_VALUE

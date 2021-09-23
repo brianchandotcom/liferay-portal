@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.proxy.MessagingProxy;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.test.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
@@ -27,14 +28,13 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.nio.ByteBuffer;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -42,6 +42,9 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Shuyang Zhou
@@ -56,11 +59,12 @@ public class IntrabandBridgeDestinationTest {
 
 	@Before
 	public void setUp() {
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		_messageBus = Mockito.mock(MessageBus.class);
 
-		registry.registerService(MessageBus.class, _messageBus);
+		_serviceRegistration = bundleContext.registerService(
+			MessageBus.class, _messageBus, null);
 
 		_baseDestination =
 			new SynchronousDestinationTestRule.TestSynchronousDestination();
@@ -106,6 +110,11 @@ public class IntrabandBridgeDestinationTest {
 			_mockIntraband);
 
 		ClassLoaderPool.unregister(ClassLoaderPool.class.getClassLoader());
+	}
+
+	@After
+	public void tearDown() {
+		_serviceRegistration.unregister();
 	}
 
 	@Test
@@ -257,5 +266,6 @@ public class IntrabandBridgeDestinationTest {
 	private MessageBus _messageBus;
 	private MockIntraband _mockIntraband;
 	private MockRegistrationReference _mockRegistrationReference;
+	private ServiceRegistration<?> _serviceRegistration;
 
 }

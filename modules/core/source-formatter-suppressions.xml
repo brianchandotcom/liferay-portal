@@ -3,7 +3,6 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="MapBuilderCheck" files="portal-bootstrap/src/main/java/com/liferay/portal/bootstrap/ModuleFrameworkImpl\.java" />
-		<suppress checks="MapBuilderCheck" files="registry-test/.*" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="BNDDefinitionKeysCheck" files="portal-bootstrap/system.packages.extra.bnd" />

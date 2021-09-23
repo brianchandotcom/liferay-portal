@@ -14,12 +14,10 @@
 
 package com.liferay.portal.xmlrpc;
 
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.Objects;
 
@@ -27,6 +25,9 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Leon Chi
@@ -54,10 +55,10 @@ public class XmlRpcMethodUtilTest {
 				return null;
 			});
 
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		ServiceRegistration<Method> serviceRegistration =
-			registry.registerService(Method.class, xmlRpcMethod);
+			bundleContext.registerService(Method.class, xmlRpcMethod, null);
 
 		try {
 			Assert.assertSame(

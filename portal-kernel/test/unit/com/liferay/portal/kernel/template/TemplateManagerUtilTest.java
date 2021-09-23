@@ -14,13 +14,11 @@
 
 package com.liferay.portal.kernel.template;
 
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -29,6 +27,9 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Dante Wang
@@ -55,11 +56,11 @@ public class TemplateManagerUtilTest {
 				return null;
 			});
 
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		_serviceRegistration = registry.registerService(
+		_serviceRegistration = bundleContext.registerService(
 			TemplateManager.class, _templateManager,
-			Collections.singletonMap("language.type", "test"));
+			MapUtil.singletonDictionary("language.type", "test"));
 	}
 
 	@AfterClass

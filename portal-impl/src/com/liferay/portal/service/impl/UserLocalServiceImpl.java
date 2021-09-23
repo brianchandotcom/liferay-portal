@@ -1999,8 +1999,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		boolean sendEmail = ParamUtil.getBoolean(serviceContext, "sendEmail");
 
-		if (sendEmail) {
+		if (autoPassword && sendEmail &&
+			PrefsPropsUtil.getBoolean(
+				user.getCompanyId(),
+				PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED)) {
+
 			notifyUser(user, serviceContext);
+
+			return;
 		}
 
 		Company company = companyPersistence.findByPrimaryKey(
@@ -2009,6 +2015,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if (company.isStrangersVerify() && (user.getLdapServerId() < 0)) {
 			sendEmailAddressVerification(
 				user, user.getEmailAddress(), serviceContext);
+		}
+		else if (sendEmail &&
+				 PrefsPropsUtil.getBoolean(
+					 user.getCompanyId(),
+					 PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED)) {
+
+			notifyUser(user, serviceContext);
 		}
 	}
 

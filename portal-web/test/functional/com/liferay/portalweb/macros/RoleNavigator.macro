@@ -35,4 +35,28 @@ definition {
 		Navigator.gotoNavItem(navItem = "${roleType} Roles");
 	}
 
+	macro gotoViewNotHaveRolePermissions {
+		if (contains("Asset Library,Organization,Site", "${roleType}")) {
+			Navigator.gotoNavItem(navItem = "${roleType} Roles");
+		}
+		else {
+			Navigator.gotoNavItem(navItem = "Regular Roles");
+		}
+
+		Search.searchCP(searchTerm = "${roleTitle}");
+
+		AssertClick(
+			key_itemName = "${roleTitle}",
+			locator1 = "ListGroupItem#ITEM_NAME_LINK",
+			value1 = "${roleTitle}");
+
+		Navigator.gotoNavItem(navItem = "Define Permissions");
+
+		if ((IsElementPresent.isElementPresentAfterWait(locator1 = "Message#INFO")) && (IsVisible(locator1 = "Message#INFO"))) {
+			AssertTextEquals(
+				locator1 = "Message#INFO",
+				value1 = "This role does not have any permissions.");
+		}
+	}
+
 }

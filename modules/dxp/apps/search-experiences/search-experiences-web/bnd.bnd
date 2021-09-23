@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Search Experiences Web
 Bundle-SymbolicName: com.liferay.search.experiences.web
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.search.experiences.web.application.list.constants
 Web-ContextPath: /search-experiences-web
--dsannotations-options: inherit

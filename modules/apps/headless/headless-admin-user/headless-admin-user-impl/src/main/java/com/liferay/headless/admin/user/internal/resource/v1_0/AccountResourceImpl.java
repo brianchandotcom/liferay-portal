@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -133,13 +134,12 @@ public class AccountResourceImpl
 				"create",
 				addAction(
 					AccountActionKeys.ADD_ACCOUNT_ENTRY, "postAccount",
-					AccountConstants.RESOURCE_NAME, 0L)
+					PortletKeys.PORTAL, 0L)
 			).put(
 				"create-by-external-reference-code",
 				addAction(
 					AccountActionKeys.ADD_ACCOUNT_ENTRY,
-					"putAccountByExternalReferenceCode",
-					AccountConstants.RESOURCE_NAME, 0L)
+					"putAccountByExternalReferenceCode", PortletKeys.PORTAL, 0L)
 			).put(
 				"get",
 				addAction(

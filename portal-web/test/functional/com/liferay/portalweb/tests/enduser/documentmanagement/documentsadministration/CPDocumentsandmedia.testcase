@@ -851,7 +851,7 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		for (var dmDocumentFileList : list "Document_1,Document_2,Document_3,Document_4,Commerce_Black") {
+		for (var dmDocumentFileList : list "Document_1.doc,Document_2.doc,Document_3.doc,Document_1.txt,Document_2.txt") {
 			AssertElementPresent(
 				key_dmDocumentTitle = "${dmDocumentFileList}",
 				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
@@ -867,7 +867,7 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		for (var dmDocumentFileList : list "Document_1,Document_2,Document_3,Document_4,Commerce_Black") {
+		for (var dmDocumentFileList : list "Document_1.doc,Document_2.doc,Document_3.doc,Document_1.txt,Document_2.txt") {
 			AssertElementNotPresent(
 				key_dmDocumentTitle = "${dmDocumentFileList}",
 				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");

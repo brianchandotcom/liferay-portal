@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSet
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsClayDataSetDisplayNames;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,6 +39,12 @@ public class ObjectRelationshipsTableClayDataSetDisplayView
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
+
+		ClayTableSchemaField labelClayTableSchemaField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"label.LANG", "label");
+
+		labelClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("type", "type");
 		clayTableSchemaBuilder.addClayTableSchemaField(

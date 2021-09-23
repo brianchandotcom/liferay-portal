@@ -39,6 +39,7 @@ page import="com.liferay.object.model.ObjectEntry" %><%@
 page import="com.liferay.object.model.ObjectField" %><%@
 page import="com.liferay.object.model.ObjectLayout" %><%@
 page import="com.liferay.object.model.ObjectLayoutTab" %><%@
+page import="com.liferay.object.model.ObjectRelationship" %><%@
 page import="com.liferay.object.scope.ObjectScopeProvider" %><%@
 page import="com.liferay.object.web.internal.constants.ObjectWebKeys" %><%@
 page import="com.liferay.object.web.internal.list.type.constants.ListTypeClayDataSetDisplayNames" %><%@

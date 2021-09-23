@@ -64,9 +64,9 @@ public class ObjectDefinitionsRelationshipsDisplayContext {
 				PortletURLBuilder.create(
 					getPortletURL()
 				).setMVCRenderCommandName(
-					"/object_definitions/edit_object_field"
+					"/object_definitions/edit_object_relationship"
 				).setParameter(
-					"objectFieldId", "{id}"
+					"objectRelationshipId", "{id}"
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).buildString(),

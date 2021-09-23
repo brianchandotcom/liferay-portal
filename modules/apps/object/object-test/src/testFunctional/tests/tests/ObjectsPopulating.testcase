@@ -380,7 +380,6 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of Long type and view its entries"
-	@ignore = "true"
 	@priority = "4"
 	test CanMapLongTypeAndViewEntries {
 		property test.name.skip.portal.instance = "PopulateObjectFormsConfiguration#CanMapLongTypeAndViewEntries";
@@ -423,7 +422,7 @@ definition {
 
 		FormViewBuilder.editText(
 			fieldName = "Numeric",
-			fieldValue = "123456789123456789");
+			fieldValue = "12345678912345678");
 
 		FormPortlet.submitSuccessfully();
 
@@ -431,7 +430,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.viewEntry(entry = "123456789123456789");
+		ObjectPortlet.viewEntry(entry = "12345678912345678");
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field of String type and view its entries"

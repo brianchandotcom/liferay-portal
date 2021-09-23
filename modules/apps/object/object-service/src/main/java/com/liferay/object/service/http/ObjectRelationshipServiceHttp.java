@@ -180,6 +180,48 @@ public class ObjectRelationshipServiceHttp {
 		}
 	}
 
+	public static com.liferay.object.model.ObjectRelationship
+			updateObjectRelationship(
+				HttpPrincipal httpPrincipal, long objectRelationshipId,
+				java.util.Map<java.util.Locale, String> labelMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectRelationshipServiceUtil.class, "updateObjectRelationship",
+				_updateObjectRelationshipParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, objectRelationshipId, labelMap);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectRelationship)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ObjectRelationshipServiceHttp.class);
 
@@ -192,5 +234,7 @@ public class ObjectRelationshipServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _getObjectRelationshipsParameterTypes2 =
 		new Class[] {long.class, int.class, int.class};
+	private static final Class<?>[] _updateObjectRelationshipParameterTypes3 =
+		new Class[] {long.class, java.util.Map.class};
 
 }

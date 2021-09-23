@@ -72,6 +72,14 @@ public class ObjectRelationshipServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static ObjectRelationship updateObjectRelationship(
+			long objectRelationshipId, Map<java.util.Locale, String> labelMap)
+		throws PortalException {
+
+		return getService().updateObjectRelationship(
+			objectRelationshipId, labelMap);
+	}
+
 	public static ObjectRelationshipService getService() {
 		return _service;
 	}

@@ -311,6 +311,10 @@ public interface ObjectRelationshipLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public ObjectRelationship updateObjectRelationship(
+			long objectRelationshipId, Map<Locale, String> labelMap)
+		throws PortalException;
+
 	/**
 	 * Updates the object relationship in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

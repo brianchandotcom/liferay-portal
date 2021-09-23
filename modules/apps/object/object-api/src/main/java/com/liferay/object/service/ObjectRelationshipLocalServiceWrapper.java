@@ -403,6 +403,16 @@ public class ObjectRelationshipLocalServiceWrapper
 		return _objectRelationshipLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectRelationship updateObjectRelationship(
+			long objectRelationshipId,
+			java.util.Map<java.util.Locale, String> labelMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectRelationshipLocalService.updateObjectRelationship(
+			objectRelationshipId, labelMap);
+	}
+
 	/**
 	 * Updates the object relationship in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

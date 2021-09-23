@@ -364,6 +364,14 @@ public class ObjectRelationshipLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static ObjectRelationship updateObjectRelationship(
+			long objectRelationshipId, Map<java.util.Locale, String> labelMap)
+		throws PortalException {
+
+		return getService().updateObjectRelationship(
+			objectRelationshipId, labelMap);
+	}
+
 	/**
 	 * Updates the object relationship in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

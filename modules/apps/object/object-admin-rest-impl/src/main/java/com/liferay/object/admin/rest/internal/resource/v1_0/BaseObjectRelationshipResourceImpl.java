@@ -65,6 +65,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -233,6 +234,92 @@ public abstract class BaseObjectRelationshipResourceImpl
 		).build();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-relationships/{objectRelationshipId}'  -u 'test@liferay.com:test'
+	 */
+	@GET
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "objectRelationshipId")
+		}
+	)
+	@Path("/object-relationships/{objectRelationshipId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ObjectRelationship")})
+	public ObjectRelationship getObjectRelationship(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("objectRelationshipId")
+			Long objectRelationshipId)
+		throws Exception {
+
+		return new ObjectRelationship();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-relationships/{objectRelationshipId}' -d $'{"label": ___, "name": ___, "objectDefinitionId1": ___, "objectDefinitionId2": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "objectRelationshipId")
+		}
+	)
+	@Path("/object-relationships/{objectRelationshipId}")
+	@Produces({"application/json", "application/xml"})
+	@PUT
+	@Tags(value = {@Tag(name = "ObjectRelationship")})
+	public ObjectRelationship putObjectRelationship(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("objectRelationshipId")
+			Long objectRelationshipId,
+			ObjectRelationship objectRelationship)
+		throws Exception {
+
+		return new ObjectRelationship();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-relationships/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/object-relationships/batch")
+	@Produces("application/json")
+	@PUT
+	@Tags(value = {@Tag(name = "ObjectRelationship")})
+	public Response putObjectRelationshipBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.putImportTask(
+				ObjectRelationship.class.getName(), callbackURL, object)
+		).build();
+	}
+
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
@@ -316,6 +403,15 @@ public abstract class BaseObjectRelationshipResourceImpl
 			java.util.Collection<ObjectRelationship> objectRelationships,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			putObjectRelationship(
+				objectRelationship.getId() != null ?
+					objectRelationship.getId() :
+						Long.parseLong(
+							(String)parameters.get("objectRelationshipId")),
+				objectRelationship);
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

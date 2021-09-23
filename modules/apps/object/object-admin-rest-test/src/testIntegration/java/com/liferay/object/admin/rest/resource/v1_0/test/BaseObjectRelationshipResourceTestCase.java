@@ -30,6 +30,7 @@ import com.liferay.object.admin.rest.client.resource.v1_0.ObjectRelationshipReso
 import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectRelationshipSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -367,6 +368,15 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			204,
 			objectRelationshipResource.deleteObjectRelationshipHttpResponse(
 				objectRelationship.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			objectRelationshipResource.getObjectRelationshipHttpResponse(
+				objectRelationship.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			objectRelationshipResource.getObjectRelationshipHttpResponse(0L));
 	}
 
 	protected ObjectRelationship
@@ -395,6 +405,120 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteObjectRelationship"));
+
+		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"objectRelationship",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"objectRelationshipId",
+								objectRelationship.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	@Test
+	public void testGetObjectRelationship() throws Exception {
+		ObjectRelationship postObjectRelationship =
+			testGetObjectRelationship_addObjectRelationship();
+
+		ObjectRelationship getObjectRelationship =
+			objectRelationshipResource.getObjectRelationship(
+				postObjectRelationship.getId());
+
+		assertEquals(postObjectRelationship, getObjectRelationship);
+		assertValid(getObjectRelationship);
+	}
+
+	protected ObjectRelationship
+			testGetObjectRelationship_addObjectRelationship()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetObjectRelationship() throws Exception {
+		ObjectRelationship objectRelationship =
+			testGraphQLObjectRelationship_addObjectRelationship();
+
+		Assert.assertTrue(
+			equals(
+				objectRelationship,
+				ObjectRelationshipSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"objectRelationship",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"objectRelationshipId",
+											objectRelationship.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/objectRelationship"))));
+	}
+
+	@Test
+	public void testGraphQLGetObjectRelationshipNotFound() throws Exception {
+		Long irrelevantObjectRelationshipId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"objectRelationship",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"objectRelationshipId",
+									irrelevantObjectRelationshipId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testPutObjectRelationship() throws Exception {
+		ObjectRelationship postObjectRelationship =
+			testPutObjectRelationship_addObjectRelationship();
+
+		ObjectRelationship randomObjectRelationship =
+			randomObjectRelationship();
+
+		ObjectRelationship putObjectRelationship =
+			objectRelationshipResource.putObjectRelationship(
+				postObjectRelationship.getId(), randomObjectRelationship);
+
+		assertEquals(randomObjectRelationship, putObjectRelationship);
+		assertValid(putObjectRelationship);
+
+		ObjectRelationship getObjectRelationship =
+			objectRelationshipResource.getObjectRelationship(
+				putObjectRelationship.getId());
+
+		assertEquals(randomObjectRelationship, getObjectRelationship);
+		assertValid(getObjectRelationship);
+	}
+
+	protected ObjectRelationship
+			testPutObjectRelationship_addObjectRelationship()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected ObjectRelationship

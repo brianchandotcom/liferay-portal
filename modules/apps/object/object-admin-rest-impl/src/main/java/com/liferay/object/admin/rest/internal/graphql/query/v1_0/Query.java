@@ -18,6 +18,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutColumn;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutTab;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
@@ -222,6 +223,47 @@ public class Query {
 				objectRelationshipResource.
 					getObjectDefinitionObjectRelationshipsPage(
 						objectDefinitionId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectRelationship(objectRelationshipId: ___){actions, id, label, name, objectDefinitionId1, objectDefinitionId2, type}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ObjectRelationship objectRelationship(
+			@GraphQLName("objectRelationshipId") Long objectRelationshipId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectRelationshipResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectRelationshipResource ->
+				objectRelationshipResource.getObjectRelationship(
+					objectRelationshipId));
+	}
+
+	@GraphQLTypeExtension(ObjectLayoutTab.class)
+	public class GetObjectRelationshipTypeExtension {
+
+		public GetObjectRelationshipTypeExtension(
+			ObjectLayoutTab objectLayoutTab) {
+
+			_objectLayoutTab = objectLayoutTab;
+		}
+
+		@GraphQLField
+		public ObjectRelationship objectRelationship() throws Exception {
+			return _applyComponentServiceObjects(
+				_objectRelationshipResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				objectRelationshipResource ->
+					objectRelationshipResource.getObjectRelationship(
+						_objectLayoutTab.getObjectRelationshipId()));
+		}
+
+		private ObjectLayoutTab _objectLayoutTab;
+
 	}
 
 	@GraphQLTypeExtension(ObjectLayout.class)

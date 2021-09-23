@@ -1,0 +1,30 @@
+[
+	{
+		"cssURLs": "",
+		"elementURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/d2c-web/2.chunk.min.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/d2c-web/main.min.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/d2c-web/runtime-main.min.js$]"
+		],
+		"htmlElementName": "d2c-web",
+		"name_i18n": {
+			"en_US": "Raylife Application"
+		},
+		"portletCategoryName": "category.remote-apps",
+		"properties": {
+			"PROP_1": "AAA"
+		}
+	},
+	{
+		"elementURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/hello-world/2.chunk.min.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/hello-world/main.min.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/hello-world/runtime-main.min.js$]"
+		],
+		"htmlElementName": "my-custom-element",
+		"name_i18n": {
+			"en_US": "Hello World"
+		},
+		"portletCategoryName": "category.remote-apps"
+	}
+]

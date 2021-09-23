@@ -46,8 +46,13 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -117,6 +122,8 @@ public class DDMFormDisplayContext {
 		DDMFormWebConfiguration ddmFormWebConfiguration,
 		DDMStorageAdapterTracker ddmStorageAdapterTracker,
 		GroupLocalService groupLocalService, JSONFactory jsonFactory,
+		ObjectFieldLocalService objectFieldLocalService,
+		ObjectRelationshipLocalService objectRelationshipLocalService,
 		Portal portal, RenderRequest renderRequest,
 		RenderResponse renderResponse, RoleLocalService roleLocalService,
 		UserLocalService userLocalService,
@@ -137,6 +144,8 @@ public class DDMFormDisplayContext {
 		_ddmStorageAdapterTracker = ddmStorageAdapterTracker;
 		_groupLocalService = groupLocalService;
 		_jsonFactory = jsonFactory;
+		_objectFieldLocalService = objectFieldLocalService;
+		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_portal = portal;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
@@ -221,6 +230,16 @@ public class DDMFormDisplayContext {
 						_ddmFormWebConfiguration.
 							maximumRepetitionsForUploadFields());
 				}
+			}
+			else if (Objects.equals(
+						ddmFormInstance.getStorageType(), "object") &&
+					 Objects.equals(
+						 ddmFormField.getType(), "object-relationship")) {
+
+				ddmFormField.setProperty(
+					"objectDefinitionId",
+					String.valueOf(
+						_getObjectDefinitionId(ddmFormField, ddmFormInstance)));
 			}
 		}
 
@@ -967,6 +986,41 @@ public class DDMFormDisplayContext {
 		return _latestDDMFormInstanceVersion;
 	}
 
+	private long _getObjectDefinitionId(
+			DDMFormField ddmFormField, DDMFormInstance ddmFormInstance)
+		throws Exception {
+
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			ddmFormInstance.getSettingsModel();
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			GetterUtil.getLong(ddmFormInstanceSettings.objectDefinitionId()),
+			_getObjectFieldName(ddmFormField));
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.
+				fetchObjectRelationshipByObjectFieldId2(
+					objectField.getObjectFieldId());
+
+		return objectRelationship.getObjectDefinitionId1();
+	}
+
+	private String _getObjectFieldName(DDMFormField ddmFormField) {
+		try {
+			JSONArray jsonArray = _jsonFactory.createJSONArray(
+				(String)ddmFormField.getProperty("objectFieldName"));
+
+			return jsonArray.getString(0);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			return StringPool.BLANK;
+		}
+	}
+
 	private static final String _DDM_FORM_FIELD_NAME_CAPTCHA = "_CAPTCHA_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -998,6 +1052,9 @@ public class DDMFormDisplayContext {
 	private Boolean _hasViewPermission;
 	private final JSONFactory _jsonFactory;
 	private DDMFormInstanceVersion _latestDDMFormInstanceVersion;
+	private final ObjectFieldLocalService _objectFieldLocalService;
+	private final ObjectRelationshipLocalService
+		_objectRelationshipLocalService;
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

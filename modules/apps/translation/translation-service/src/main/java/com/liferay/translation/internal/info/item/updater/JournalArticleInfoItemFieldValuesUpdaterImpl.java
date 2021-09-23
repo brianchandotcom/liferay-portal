@@ -14,11 +14,16 @@
 
 package com.liferay.translation.internal.info.item.updater;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetLink;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -27,9 +32,12 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -38,6 +46,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -139,7 +148,7 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 				importedLocaleContentMap, targetLocale);
 		}
 
-		ServiceContext serviceContext = new ServiceContext();
+		ServiceContext serviceContext = _getServiceContext(latestArticle);
 
 		serviceContext.setFormDate(new Date());
 		serviceContext.setScopeGroupId(latestArticle.getGroupId());
@@ -179,6 +188,30 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 		_updateFieldsDisplay(ddmFields, ddmFieldName);
 	}
 
+	private AssetEntry _getAssetLinkEntry(
+		long assetEntryId, AssetLink assetLink) {
+
+		try {
+			if ((assetEntryId > 0) ||
+				(assetLink.getEntryId1() == assetEntryId)) {
+
+				return _assetEntryLocalService.getEntry(
+					assetLink.getEntryId2());
+			}
+
+			return _assetEntryLocalService.getEntry(assetLink.getEntryId1());
+		}
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
+		}
+	}
+
+	private long _getAssetLinkEntryId(long assetEntryId, AssetLink assetLink) {
+		AssetEntry assetEntry = _getAssetLinkEntry(assetEntryId, assetLink);
+
+		return assetEntry.getEntryId();
+	}
+
 	private Optional<InfoLocalizedValue<Object>> _getInfoLocalizedValueOptional(
 		InfoFieldValue<Object> infoFieldValue) {
 
@@ -189,6 +222,39 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 		}
 
 		return Optional.empty();
+	}
+
+	private ServiceContext _getServiceContext(JournalArticle journalArticle)
+		throws Exception {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		serviceContext.setAssetCategoryIds(assetEntry.getCategoryIds());
+		serviceContext.setAssetPriority(assetEntry.getPriority());
+		serviceContext.setAssetTagNames(assetEntry.getTagNames());
+
+		List<AssetLink> assetLinks = _assetLinkLocalService.getDirectLinks(
+			assetEntry.getEntryId(), false);
+
+		serviceContext.setAssetLinkEntryIds(
+			ListUtil.toLongArray(
+				assetLinks,
+				assetLink -> _getAssetLinkEntryId(
+					assetEntry.getEntryId(), assetLink)));
+
+		ExpandoBridge expandoBridge = journalArticle.getExpandoBridge();
+
+		serviceContext.setExpandoBridgeAttributes(
+			expandoBridge.getAttributes());
+
+		serviceContext.setFormDate(new Date());
+		serviceContext.setScopeGroupId(journalArticle.getGroupId());
+
+		return serviceContext;
 	}
 
 	private String _getTranslatedContent(
@@ -256,6 +322,12 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 
 		fieldsDisplayField.setValue(StringUtil.merge(fieldsDisplayValues));
 	}
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetLinkLocalService _assetLinkLocalService;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

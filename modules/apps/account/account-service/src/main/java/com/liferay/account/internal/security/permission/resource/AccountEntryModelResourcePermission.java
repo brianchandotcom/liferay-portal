@@ -87,6 +87,16 @@ public class AccountEntryModelResourcePermission
 			String actionId)
 		throws PortalException {
 
+		AccountEntry accountEntry = _accountEntryLocalService.fetchAccountEntry(
+			accountEntryId);
+
+		if (permissionChecker.hasOwnerPermission(
+				accountEntry.getCompanyId(), AccountEntry.class.getName(),
+				accountEntryId, permissionChecker.getUserId(), actionId)) {
+
+			return true;
+		}
+
 		List<AccountEntryOrganizationRel> accountEntryOrganizationRels =
 			_accountEntryOrganizationRelLocalService.
 				getAccountEntryOrganizationRels(accountEntryId);
@@ -129,9 +139,6 @@ public class AccountEntryModelResourcePermission
 		}
 
 		long accountEntryGroupId = 0;
-
-		AccountEntry accountEntry = _accountEntryLocalService.fetchAccountEntry(
-			accountEntryId);
 
 		if (accountEntry != null) {
 			accountEntryGroupId = accountEntry.getAccountEntryGroupId();

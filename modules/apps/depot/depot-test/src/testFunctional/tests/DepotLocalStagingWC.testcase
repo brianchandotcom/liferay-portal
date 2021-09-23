@@ -625,7 +625,7 @@ definition {
 		Staging.publishToLive();
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name (Staging)",
+			groupName = "Test Embedded Video Site Name (Staging)",
 			layoutName = "Test Page",
 			site = "false",
 			widgetName = "Web Content Display");

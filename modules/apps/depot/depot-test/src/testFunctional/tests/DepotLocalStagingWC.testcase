@@ -518,6 +518,98 @@ definition {
 			webContentTitle = "Web Content Title Edit");
 	}
 
+	@description = "This ensures that a web content folder with an article in depot can be published in AP through widget config manual selection when enabling local staging."
+	@priority = "5"
+	@refactorneeded
+	test CanPublishWCFolder {
+		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name");
+
+		WebContentFolder.addCP(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name");
+
+		WebContentFolder.gotoCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "WC Folder Name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Asset Publisher");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "WC Folder Name",
+			assetType = "Web Content Folder",
+			depotName = "Test Depot Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetDetailsPG(
+			assetArticleDetails = "1 Article",
+			assetSubfolderDetails = "0 Subfolders",
+			assetTitle = "WC Folder Name",
+			assetType = "Web Content Folder");
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "WC Folder Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetDetailsPG(
+			assetArticleDetails = "1 Article",
+			assetSubfolderDetails = "0 Subfolders",
+			assetTitle = "WC Folder Name",
+			assetType = "Web Content Folder");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoPortlet(portlet = "Staging");
+
+		Depot.deactivateStaging(depotName = "Test Depot Name");
+	}
+
 	@description = "This ensures that web content with a category in depot can be published in local staging site."
 	@priority = "4"
 	@refactorneeded
@@ -653,98 +745,6 @@ definition {
 			siteName = "Test Embedded Video Site Name");
 
 		WebContent.viewVideoPreview(service = "youtube");
-	}
-
-	@description = "This ensures that a web content folder with an article in depot can be published in AP through widget config manual selection when enabling local staging."
-	@priority = "5"
-	@refactorneeded
-	test CanPublishWCFolder {
-		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name");
-
-		WebContentFolder.addCP(
-			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name");
-
-		WebContentFolder.gotoCP(
-			folderName = "WC Folder Name",
-			webContentTitle = "WC Folder Name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
-
-		Staging.publishToLive();
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name (Staging)",
-			layoutName = "Test Page",
-			site = "false",
-			widgetName = "Asset Publisher");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		AssetPublisherPortlet.configureManualAssetSelectionPG(
-			assetTitle = "WC Folder Name",
-			assetType = "Web Content Folder",
-			depotName = "Test Depot Name");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		AssetPublisherPortlet.viewAssetDetailsPG(
-			assetArticleDetails = "1 Article",
-			assetSubfolderDetails = "0 Subfolders",
-			assetTitle = "WC Folder Name",
-			assetType = "Web Content Folder");
-
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "WC Folder Name");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		AssetPublisherPortlet.viewAssetDetailsPG(
-			assetArticleDetails = "1 Article",
-			assetSubfolderDetails = "0 Subfolders",
-			assetTitle = "WC Folder Name",
-			assetType = "Web Content Folder");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoPortlet(portlet = "Staging");
-
-		Depot.deactivateStaging(depotName = "Test Depot Name");
 	}
 
 }

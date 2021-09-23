@@ -2650,7 +2650,6 @@ definition {
 		AssertVisible(
 			key_service = "${service}",
 			locator1 = "WCPreview#BODY_FIELD_VIDEO");
-
 	}
 
 	macro viewVideoViaWCD {

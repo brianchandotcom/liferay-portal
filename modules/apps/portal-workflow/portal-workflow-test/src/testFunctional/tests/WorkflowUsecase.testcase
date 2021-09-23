@@ -1294,7 +1294,6 @@ definition {
 
 	@priority = "4"
 	test XSSScriptWebContent {
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Navigator.openURL();
@@ -1403,9 +1402,6 @@ definition {
 		WebContent.viewPGViaAP(
 			webContentContent = '''<script>alert(123);</script>''',
 			webContentTitle = "WC WebContent Title");
-
-
-
 	}
 
 }

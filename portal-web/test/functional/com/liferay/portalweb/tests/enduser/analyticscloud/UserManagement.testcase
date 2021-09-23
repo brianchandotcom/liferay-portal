@@ -9,6 +9,8 @@ definition {
 	setUp {
 		task ("Launch AC") {
 			ACUtils.launchAC();
+
+			TestCase.setUpPortalInstance();
 		}
 	}
 
@@ -353,12 +355,16 @@ definition {
 	@description = "Automation ID: LRAC-9076 | Test Summary: The logged in user accesses directly an inexistent workspace"
 	@priority = "3"
 	test LoggedUserAcessesDirectlyInexistentWorkspace {
-		task ("Open an inexistent workspace in a new tab") {
-			Open.openInTheNewTab(locator1 = "http://localhost:8080/workspace/sites");
+		task ("Change URL to a workspace that doesn't exist") {
+			var workspaceURL = Navigator.getCurrentURL();
+
+			var workspaceURL = StringUtil.extractFirst("${workspaceURL}", "workspace");
+
+			var workspaceURL = StringUtil.add("${workspaceURL}", "workspace/0000", "");
 		}
 
-		task ("Switch to the new tab") {
-			SelectWindow(locator1 = "title=Analytics Cloud");
+		task ("Open an inexistent workspace in a new tab") {
+			Open.openNoError(locator1 = "${workspaceURL}");
 		}
 
 		task ("Assert the error message") {

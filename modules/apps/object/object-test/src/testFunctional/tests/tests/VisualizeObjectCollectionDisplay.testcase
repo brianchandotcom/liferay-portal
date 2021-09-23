@@ -151,7 +151,6 @@ definition {
 	@priority = "5"
 	test ObjectEntriesAreRendered {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "VisualizeObjectCollectionDisplay#ObjectEntriesAreRendered";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",

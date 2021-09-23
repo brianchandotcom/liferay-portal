@@ -474,7 +474,8 @@ public class ObjectLayoutLocalServiceImpl
 		if ((objectLayout != null) &&
 			(objectLayout.getObjectLayoutId() != objectLayoutId)) {
 
-			throw new DefaultObjectLayoutException();
+			throw new DefaultObjectLayoutException(
+				"There can only be one default object layout");
 		}
 	}
 

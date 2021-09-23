@@ -22,16 +22,34 @@ definition {
 		}
 	}
 
-	@description = "LPS-136595 - Verify the empty state message when there is no Picklist"
+	@description = "LPS-136595 - Verify it is possible to cancel the creation of a Picklist"
 	@ignore = "Test Stub"
-	@priority = "3"
-	test EmptyStateMessageDisplayedWhenNoPicklist {
+	@priority = "4"
+	test CanCancelCreatePicklist {
 
-		// TODO LPS-139751 EmptyStateMessageDisplayedWhenNoPicklist pending implementation
+		// TODO LPS-139753 CanCancelCreatePicklist pending implementation
 
 	}
 
-    @description = "LPS-136595 - Verify it is possible to create a Picklist"
+	@description = "LPS-136595 - Verify it is possible to cancel the creation of a Picklist item"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCancelCreatePicklistItem {
+
+		// TODO LPS-139763 CanCancelCreatePicklistItem pending implementation
+
+	}
+
+	@description = "LPS-136595 - Verify it is possible to cancel the update of a Picklist"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCancelUpdatePicklist {
+
+		// TODO LPS-139756 CanCancelUpdatePicklist pending implementation
+
+	}
+
+	@description = "LPS-136595 - Verify it is possible to create a Picklist"
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanCreatePicklist {
@@ -41,89 +59,7 @@ definition {
 
 	}
 
-    @description = "LPS-136595 - Verify it is possible to cancel the creation of a Picklist"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanCancelCreatePicklist {
-
-		// TODO LPS-139753 CanCancelCreatePicklist pending implementation
-
-	}
-
-    @description = "LPS-136595 - Verify it is possible to search for a Picklist"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanSearchPicklist {
-
-		// TODO LPS-139754 CanSearchPicklist pending implementation
-
-	}
-
-    @description = "LPS-136595 - Verify it is possible to view a Picklist"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanViewPicklist {
-
-		// TODO LPS-139755 CanViewPicklist pending implementation
-
-	}
-
-    @description = "LPS-136595 - Verify it is possible to cancel the update of a Picklist"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanCancelUpdatePicklist {
-
-		// TODO LPS-139756 CanCancelUpdatePicklist pending implementation
-
-	}
-
-    @description = "LPS-136595 - Verify it is possible to delete a Picklist"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanDeletePicklist {
-		property portal.acceptance = "true";
-
-		// TODO LPS-139757 CanDeletePicklist pending implementation
-
-	}
-
-    @description = "LPS-136595 - Verify that the updating or deleting a picklist item warn message is displayed"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test WarnMessageDisplayedOnPickListItemScreen {
-
-		// TODO LPS-139758 WarnMessageDisplayedOnPickListItemScreen pending implementation
-
-	}
-
-    @description = "LPS-136595 - Verify the empty state message when where is no items for a Picklist"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test EmptyStateMessageDisplayedWhenNoPicklistItem {
-
-		// TODO LPS-139759 EmptyStateMessageDisplayedWhenNoPicklistItem pending implementation
-
-	}
-
-    @description = "LPS-136595 - Verify it is not possible to leave Key field empty for a Picklist item"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CannotLeavePicklistItemKeyFieldEmpty {
-
-		// TODO LPS-139760 CannotLeavePicklistItemKeyFieldEmpty pending implementation
-
-	}
-
-    @description = "LPS-136595 - Verify it is not possible to add special characters for the Key field for a Picklist item"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CannotAddSpecialCharacterForPicklistItemKeyField {
-
-		// TODO LPS-139761 CannotAddSpecialCharacterForPicklistItemKeyField pending implementation
-
-	}
-
-    @description = "LPS-136595 - Verify it is possible to create an item for a Picklist"
+	@description = "LPS-136595 - Verify it is possible to create an item for a Picklist"
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanCreatePicklistItem {
@@ -133,43 +69,17 @@ definition {
 
 	}
 
-    @description = "LPS-136595 - Verify it is possible to cancel the creation of a Picklist item"
+	@description = "LPS-136595 - Verify it is possible to delete a Picklist"
 	@ignore = "Test Stub"
-	@priority = "4"
-	test CanCancelCreatePicklistItem {
+	@priority = "5"
+	test CanDeletePicklist {
+		property portal.acceptance = "true";
 
-		// TODO LPS-139763 CanCancelCreatePicklistItem pending implementation
+		// TODO LPS-139757 CanDeletePicklist pending implementation
 
 	}
 
-    @description = "LPS-136595 - Verify it is possible to search for a Picklist item"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanSearchPicklistItem {
-
-		// TODO LPS-139764 CanSearchPicklistItem pending implementation
-
-	}
-
-    @description = "LPS-136595 - Verify it is possible to view a Picklist item"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanViewPicklistItem {
-
-		// TODO LPS-139765 CanViewPicklistItem pending implementation
-
-	}
-
-    @description = "LPS-136595 - Verify it is not possible to update a Picklist item's key"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CannotUpdatePicklistItemKey {
-
-		// TODO LPS-139766 CannotUpdatePicklistItemKey pending implementation
-
-	}
-
-    @description = "LPS-136595 - Verify it is possible to delete a Picklist item"
+	@description = "LPS-136595 - Verify it is possible to delete a Picklist item"
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDeletePicklistItem {
@@ -179,16 +89,52 @@ definition {
 
 	}
 
-    @description = "LPS-136595 - Verify it is possible to set a different language for a Picklist name"
+	@description = "LPS-136595 - Verify it is not possible to add special characters for the Key field for a Picklist item"
 	@ignore = "Test Stub"
 	@priority = "3"
-	test CanSetDifferentPicklistNameLanguage {
+	test CannotAddSpecialCharacterForPicklistItemKeyField {
 
-		// TODO LPS-139768 CanSetDifferentPicklistNameLanguage pending implementation
+		// TODO LPS-139761 CannotAddSpecialCharacterForPicklistItemKeyField pending implementation
 
 	}
 
-    @description = "LPS-136595 - Verify it is possible to set a different language for Picklists item's name"
+	@description = "LPS-136595 - Verify it is not possible to leave Key field empty for a Picklist item"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotLeavePicklistItemKeyFieldEmpty {
+
+		// TODO LPS-139760 CannotLeavePicklistItemKeyFieldEmpty pending implementation
+
+	}
+
+	@description = "LPS-136595 - Verify it is not possible to update a Picklist item's key"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotUpdatePicklistItemKey {
+
+		// TODO LPS-139766 CannotUpdatePicklistItemKey pending implementation
+
+	}
+
+	@description = "LPS-136595 - Verify it is possible to search for a Picklist"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchPicklist {
+
+		// TODO LPS-139754 CanSearchPicklist pending implementation
+
+	}
+
+	@description = "LPS-136595 - Verify it is possible to search for a Picklist item"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchPicklistItem {
+
+		// TODO LPS-139764 CanSearchPicklistItem pending implementation
+
+	}
+
+	@description = "LPS-136595 - Verify it is possible to set a different language for Picklists item's name"
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSetDifferentPicklistItemNameLanguage {
@@ -197,7 +143,52 @@ definition {
 
 	}
 
-    @description = "LPS-136595 - Verify that the translated Picklist item's name will be displayed on the Object layout"
+	@description = "LPS-136595 - Verify it is possible to set a different language for a Picklist name"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSetDifferentPicklistNameLanguage {
+
+		// TODO LPS-139768 CanSetDifferentPicklistNameLanguage pending implementation
+
+	}
+
+	@description = "LPS-136595 - Verify it is possible to view a Picklist"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewPicklist {
+
+		// TODO LPS-139755 CanViewPicklist pending implementation
+
+	}
+
+	@description = "LPS-136595 - Verify it is possible to view a Picklist item"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewPicklistItem {
+
+		// TODO LPS-139765 CanViewPicklistItem pending implementation
+
+	}
+
+	@description = "LPS-136595 - Verify the empty state message when there is no Picklist"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test EmptyStateMessageDisplayedWhenNoPicklist {
+
+		// TODO LPS-139751 EmptyStateMessageDisplayedWhenNoPicklist pending implementation
+
+	}
+
+	@description = "LPS-136595 - Verify the empty state message when where is no items for a Picklist"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test EmptyStateMessageDisplayedWhenNoPicklistItem {
+
+		// TODO LPS-139759 EmptyStateMessageDisplayedWhenNoPicklistItem pending implementation
+
+	}
+
+	@description = "LPS-136595 - Verify that the translated Picklist item's name will be displayed on the Object layout"
 	@ignore = "Test Stub"
 	@priority = "3"
 	test ViewTranslatedPicklistItemNameOnObjectLayout {
@@ -205,4 +196,14 @@ definition {
 		// TODO LPS-139770 ViewTranslatedPicklistItemNameOnObjectLayout pending implementation
 
 	}
+
+	@description = "LPS-136595 - Verify that the updating or deleting a picklist item warn message is displayed"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test WarnMessageDisplayedOnPickListItemScreen {
+
+		// TODO LPS-139758 WarnMessageDisplayedOnPickListItemScreen pending implementation
+
+	}
+
 }

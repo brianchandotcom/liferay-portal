@@ -22,6 +22,16 @@ definition {
 		}
 	}
 
+	@description = "LPS-136456 - Verify it is not possible to change the required option when a field is mapped to an object field"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CannotChangeRequiredOption {
+		property portal.acceptance = "true";
+
+		// TODO LPS-139745 CannotChangeRequiredOption pending implementation
+
+	}
+
 	@description = "LPS-133365 - Verify if it's not possible to map a Object field with a Form field of a different type"
 	@priority = "4"
 	test CannotMapWithDifferentFieldTypes {
@@ -314,6 +324,15 @@ definition {
 			fieldType = "Date");
 	}
 
+	@description = "LPS-136456 - Verify that it is not possible to view forms entries when it is mapped to an object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotViewFormsEntries {
+
+		// TODO LPS-139749 CannotViewFormsEntries pending implementation
+
+	}
+
 	@description = "LPS-133365 - Verify if it's possible to select Object as a Storage Type"
 	@priority = "5"
 	test CanSelectObjectStorageType {
@@ -340,13 +359,12 @@ definition {
 		PopulateObjectFormsConfiguration.viewDisplaySelectOption(label = "Custom Object");
 	}
 
-	@description = "LPS-136456 - Verify it is not possible to change the required option when a field is mapped to an object field"
+	@description = "LPS-136456 - Verify that a decimal number will use a comma instead of a dot when Portal language is set to pt_BR"
 	@ignore = "Test Stub"
-	@priority = "5"
-	test CannotChangeRequiredOption {
-		property portal.acceptance = "true";
+	@priority = "4"
+	test DecimalNumberWillUseCommaForPortuguese {
 
-		// TODO LPS-139745 CannotChangeRequiredOption pending implementation
+		// TODO LPS-139748 DecimalNumberWillUseCommaForPortuguese pending implementation
 
 	}
 
@@ -365,24 +383,6 @@ definition {
 	test SearchableOptionNotAvailable {
 
 		// TODO LPS-139747 SearchableOptionNotAvailable pending implementation
-
-	}
-
-	@description = "LPS-136456 - Verify that a decimal number will use a comma instead of a dot when Portal language is set to pt_BR"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test DecimalNumberWillUseCommaForPortuguese {
-
-		// TODO LPS-139748 DecimalNumberWillUseCommaForPortuguese pending implementation
-
-	}
-
-	@description = "LPS-136456 - Verify that it is not possible to view forms entries when it is mapped to an object"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CannotViewFormsEntries {
-
-		// TODO LPS-139749 CannotViewFormsEntries pending implementation
 
 	}
 

@@ -548,9 +548,10 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 			mock(DDMFormRenderer.class), mock(DDMFormValuesFactory.class),
 			mock(DDMFormValuesMerger.class), _ddmFormWebConfiguration,
 			mock(DDMStorageAdapterTracker.class), mock(GroupLocalService.class),
-			new JSONFactoryImpl(), mock(Portal.class), renderRequest,
-			new MockRenderResponse(), mock(RoleLocalService.class),
-			mock(UserLocalService.class), _workflowDefinitionLinkLocalService);
+			new JSONFactoryImpl(), null, null, mock(Portal.class),
+			renderRequest, new MockRenderResponse(),
+			mock(RoleLocalService.class), mock(UserLocalService.class),
+			_workflowDefinitionLinkLocalService);
 	}
 
 	private DDMFormDisplayContext _createSpy(

@@ -509,12 +509,12 @@ AUI.add(
 
 					var portletNamespace = instance.get('portletNamespace');
 
-					var eventRecorderCalendar = A.one(
-						'#' + portletNamespace + 'eventRecorderCalendar'
+					var eventRecorderCalendar = document.querySelector(
+						`#${portletNamespace}eventRecorderCalendar`
 					);
 
 					if (eventRecorderCalendar) {
-						eventRecorderCalendar.val(calendarId.toString());
+						eventRecorderCalendar.value = calendarId.toString();
 					}
 
 					instance._syncInvitees();
@@ -587,21 +587,21 @@ AUI.add(
 						return Liferay.Util.escapeHTML(item.name);
 					});
 
-					contentNode = A.one(contentNode);
+					contentNode = document.querySelector(contentNode);
 
-					var messageNode = contentNode.one(
+					var messageNode = contentNode.querySelector(
 						'.calendar-portlet-invitees'
 					);
 
 					var messageHTML = '&mdash;';
 
 					if (values.length > 0) {
-						contentNode.show();
+						contentNode.style.display = '';
 
 						messageHTML = values.join(STR_COMMA_SPACE);
 					}
 
-					messageNode.html(messageHTML);
+					messageNode.innerHTML = messageHTML;
 				},
 
 				getTemplateData() {

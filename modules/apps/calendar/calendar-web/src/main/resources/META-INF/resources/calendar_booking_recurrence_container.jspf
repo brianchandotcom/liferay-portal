@@ -241,11 +241,14 @@ if (recurrence != null) {
 <%@ include file="/calendar_booking_recurrence_language_keys.jspf" %>
 
 <aui:script use="liferay-calendar-recurrence-dialog,liferay-util-window">
+	// eslint-disable-next-line @liferay/aui/no-one
 	var editEventFormNode = A.one('#<portlet:namespace />fm');
+	// eslint-disable-next-line @liferay/aui/no-one
 	var recurrenceContainerNode = A.one(
 		'#<portlet:namespace />recurrenceContainer'
 	);
-	var repeatCheckboxNode = A.one('#<portlet:namespace />repeat');
+	var repeatCheckboxNode = document.getElementById('<portlet:namespace />repeat');
+	// eslint-disable-next-line @liferay/aui/no-one
 	var summaryNode = A.one('#<portlet:namespace />summary');
 
 	var recurrenceDialogController = new Liferay.RecurrenceDialogController({
@@ -367,8 +370,8 @@ if (recurrence != null) {
 		Liferay.on('destroyPortlet', destroyRecurrenceDialog);
 	};
 
-	repeatCheckboxNode.on('change', (event) => {
-		var checked = event.currentTarget.get('checked');
+	repeatCheckboxNode.addEventListener('change', (event) => {
+		var checked = event.currentTarget.checked;
 
 		if (!checked) {
 			summaryNode.empty();
@@ -391,10 +394,10 @@ if (recurrence != null) {
 	});
 
 	window.<portlet:namespace />updateSummary = function (element) {
-		var previewNode = A.one(element);
+		var previewNode = document.querySelector(element);
 
 		if (previewNode) {
-			previewNode.html(recurrenceDialogController.get('summary'));
+			previewNode.innerHTML = recurrenceDialogController.get('summary');
 		}
 	};
 

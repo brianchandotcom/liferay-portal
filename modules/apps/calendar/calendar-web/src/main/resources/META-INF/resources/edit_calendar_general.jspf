@@ -91,9 +91,15 @@
 			'<%= ColorUtil.toHexString((calendar != null) ? calendar.getColor() : CalendarServiceConfigurationValues.CALENDAR_COLOR_DEFAULT) %>',
 		on: {
 			colorChange: function (event) {
-				A.one('#<portlet:namespace />color').val(
-					parseInt(event.newVal.substring(1), 16)
+				var colorPicker = document.getElementById(
+					'<portlet:namespace />color'
 				);
+
+				if (colorPicker) {
+					var newColor = parseInt(event.newVal.substring(1), 16);
+
+					colorPicker.value = newColor;
+				}
 			},
 		},
 		render: '#<portlet:namespace />colorPicker',

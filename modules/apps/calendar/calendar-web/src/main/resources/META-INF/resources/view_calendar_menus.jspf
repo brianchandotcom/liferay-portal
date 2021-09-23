@@ -494,6 +494,7 @@
 		visible: false,
 	}).render();
 
+	// eslint-disable-next-line @liferay/aui/no-one
 	A.one('#<portlet:namespace />calendarListContainer').delegate(
 		'click',
 		(event) => {
@@ -522,6 +523,7 @@
 	});
 
 	<c:if test="<%= themeDisplay.isSignedIn() %>">
+		// eslint-disable-next-line @liferay/aui/no-one
 		var addOtherCalendarInput = A.one('#<portlet:namespace />addOtherCalendar');
 
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="calendarResources" var="calendarResourcesURL" />
@@ -539,35 +541,46 @@
 		);
 	</c:if>
 
-	A.one('#<portlet:namespace />columnToggler').on('click', (event) => {
-		var columnTogglerIconId = '<portlet:namespace />columnTogglerIcon';
-		var columnGrid = A.one('#<portlet:namespace />columnGrid');
-		var columnOptions = A.one('#<portlet:namespace />columnOptions');
-		var columnTogglerIcon = A.one('#' + columnTogglerIconId);
+	var columnToggler = document.getElementById(
+		'<portlet:namespace />columnToggler'
+	);
 
-		Liferay.Util.Session.set(
-			'com.liferay.calendar.web_columnOptionsVisible',
-			columnOptions.hasClass('hide')
-		);
+	if (columnToggler) {
+		columnToggler.addEventListener('click', (event) => {
+			var columnTogglerIconId = '<portlet:namespace />columnTogglerIcon';
+			var columnGrid = document.getElementById(
+				'<portlet:namespace />columnGrid'
+			);
+			var columnOptions = document.getElementById(
+				'<portlet:namespace />columnOptions'
+			);
+			var columnTogglerIcon = document.getElementById(
+				'<portlet:namespace />columnTogglerIcon'
+			);
 
-		columnGrid.toggleClass('col-md-9').toggleClass('col-md-12');
+			Liferay.Util.Session.set(
+				'com.liferay.calendar.web_columnOptionsVisible',
+				columnOptions.classList.contains('hide')
+			);
 
-		columnOptions.toggleClass('hide');
+			columnGrid.classList.toggle('col-md-9');
+			columnGrid.classList.toggle('col-md-12');
 
-		var newIcon = A.Node.create(
-			Liferay.Util.getLexiconIconTpl(
-				columnTogglerIcon._node.classList.contains(
-					'lexicon-icon-caret-left'
+			columnOptions.classList.toggle('hide');
+
+			var newIcon = A.Node.create(
+				Liferay.Util.getLexiconIconTpl(
+					columnTogglerIcon.classList.contains('lexicon-icon-caret-left')
+						? 'caret-right'
+						: 'caret-left'
 				)
-					? 'caret-right'
-					: 'caret-left'
-			)
-		);
+			);
 
-		newIcon.attr('id', columnTogglerIconId);
+			newIcon.attr('id', columnTogglerIconId);
 
-		columnTogglerIcon.replace(newIcon);
-	});
+			columnTogglerIcon.replaceWith(newIcon._node);
+		});
+	}
 
 	window.<portlet:namespace />refreshMiniCalendarSelectedDates = function () {
 		<portlet:namespace />miniCalendar._clearSelection();

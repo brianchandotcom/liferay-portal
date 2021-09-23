@@ -178,8 +178,6 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 				<%@ include file="/calendar_booking_recurrence_language_keys.jspf" %>
 
 				<aui:script use="liferay-calendar-recurrence-util">
-					var summaryNode = A.one('#<portlet:namespace />recurrenceSummary');
-
 					var endValue = 'never';
 					var untilDate = null;
 
@@ -238,9 +236,14 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 						weekdays: <%= jsonSerializer.serialize(weekdayValues) %>,
 					};
 
+					var summaryNode = document.getElementById(
+						'<portlet:namespace />recurrenceSummary'
+					);
 					var recurrenceSummary = Liferay.RecurrenceUtil.getSummary(recurrence);
 
-					summaryNode.html(recurrenceSummary);
+					if (summaryNode) {
+						summaryNode.innerHTML = recurrenceSummary;
+					}
 				</aui:script>
 			</c:if>
 

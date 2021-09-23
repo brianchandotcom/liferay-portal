@@ -48,6 +48,7 @@ AUI.add(
 				_initPicker(picker) {
 					var attrs = picker.getAttrs();
 
+					// eslint-disable-next-line @liferay/aui/no-one
 					var inputNode = A.one(attrs.container._node.children[0]);
 
 					picker.useInputNodeOnce(inputNode);

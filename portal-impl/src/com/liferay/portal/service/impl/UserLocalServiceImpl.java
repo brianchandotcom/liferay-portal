@@ -1997,13 +1997,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				user.getEmailAddress());
 		}
 
+		boolean adminEmailUserAddedEnabled = PrefsPropsUtil.getBoolean(
+			user.getCompanyId(), PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED);
+
 		boolean sendEmail = ParamUtil.getBoolean(serviceContext, "sendEmail");
 
-		if (autoPassword && sendEmail &&
-			PrefsPropsUtil.getBoolean(
-				user.getCompanyId(),
-				PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED)) {
-
+		if (adminEmailUserAddedEnabled && autoPassword && sendEmail) {
 			notifyUser(user, serviceContext);
 
 			return;
@@ -2016,11 +2015,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			sendEmailAddressVerification(
 				user, user.getEmailAddress(), serviceContext);
 		}
-		else if (sendEmail &&
-				 PrefsPropsUtil.getBoolean(
-					 user.getCompanyId(),
-					 PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED)) {
-
+		else if (adminEmailUserAddedEnabled && sendEmail) {
 			notifyUser(user, serviceContext);
 		}
 	}

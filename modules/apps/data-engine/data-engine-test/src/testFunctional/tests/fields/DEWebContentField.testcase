@@ -156,12 +156,51 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "5"
 	test CanInputDataOnDuplicatedField {
+		NavItem.gotoStructures();
 
-		// TODO LRQA-70033	Refactor of Renderer Web Content Field
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DEBuilder.addField(
+			fieldLabel = "Web Content",
+			fieldName = "Web Content");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Web Content");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Web Content");
+
+		DERenderer.inputDataInWebContentField(
+			fieldLabel = "Web Content",
+			index = "1",
+			contentName = "Web Content Title 1");
+
+		DERenderer.inputDataInWebContentField(
+			fieldLabel = "Web Content",
+			index = "2",
+			contentName = "Web Content Title 2");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInWebContentField(
+			fieldLabel = "Web Content",
+			index = "1",
+			contentName = "Web Content Title 1");
+
+		DERenderer.assertDataInWebContentField(
+			fieldLabel = "Web Content",
+			index = "2",
+			contentName = "Web Content Title 2");
 	}
 
 	@description = "This is a stubbed description"

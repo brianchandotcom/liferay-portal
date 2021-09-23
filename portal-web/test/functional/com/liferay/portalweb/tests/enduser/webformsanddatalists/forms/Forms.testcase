@@ -345,7 +345,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "User",
-			conditionOperator = "Belongs to",
+			conditionOperator = "Belongs To",
 			conditionRowNumber = "1",
 			conditionValueType = "Guest");
 

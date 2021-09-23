@@ -687,7 +687,7 @@ AUI.add(
 								A.bind(this._sort, this)
 							);
 
-							var facade = A.merge(options, {
+							var facade = Object.assign(options, {
 								models,
 								src: 'sort',
 							});

@@ -257,24 +257,22 @@ AUI.add(
 
 				validator: {
 					setter(val) {
-						var config = A.merge(
-							{
-								fieldStrings: {
-									name: {
-										required: Liferay.Language.get(
-											'this-field-is-required'
-										),
-									},
-								},
-								rules: {
-									name: {
-										required: true,
-										structureFieldName: true,
-									},
+						var config = {
+							fieldStrings: {
+								name: {
+									required: Liferay.Language.get(
+										'this-field-is-required'
+									),
 								},
 							},
-							val
-						);
+							rules: {
+								name: {
+									required: true,
+									structureFieldName: true,
+								},
+							},
+							...val,
+						};
 
 						return config;
 					},

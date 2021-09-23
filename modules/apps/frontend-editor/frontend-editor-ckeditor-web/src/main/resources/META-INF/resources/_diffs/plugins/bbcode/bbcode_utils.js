@@ -15,7 +15,7 @@
 (function () {
 	var A = AUI();
 
-	var entities = A.merge(Liferay.Util.MAP_HTML_CHARS_ESCAPED, {
+	var entities = Object.assign(Liferay.Util.MAP_HTML_CHARS_ESCAPED, {
 		'(': '&#40;',
 		')': '&#41;',
 		'[': '&#91;',

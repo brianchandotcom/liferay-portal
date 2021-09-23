@@ -15,6 +15,7 @@
 package com.liferay.template.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -54,6 +55,16 @@ public class WidgetTemplatesEditDDMTemplateDisplayContext
 			TemplateHandlerRegistryUtil.getTemplateHandler(getClassNameId());
 
 		return templateHandler.getName(_themeDisplay.getLocale());
+	}
+
+	public String getUpdateDDMTemplateURL() {
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse
+		).setActionName(
+			"/template/update_ddm_template"
+		).setTabs1(
+			getTabs1()
+		).buildString();
 	}
 
 	@Override

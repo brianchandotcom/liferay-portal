@@ -42,12 +42,7 @@ else {
 }
 %>
 
-<portlet:actionURL name="/template/update_ddm_template" var="updateDDMTemplateURL">
-	<portlet:param name="mvcRenderCommandName" value="/template/edit_ddm_template" />
-	<portlet:param name="tabs1" value="<%= editDDMTemplateDisplayContext.getTabs1() %>" />
-</portlet:actionURL>
-
-<aui:form action="<%= updateDDMTemplateURL %>" enctype="multipart/form-data" method="post" name="fm">
+<aui:form action="<%= editDDMTemplateDisplayContext.getUpdateDDMTemplateURL() %>" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="ddmTemplateId" type="hidden" value="<%= ddmTemplateId %>" />
 	<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />

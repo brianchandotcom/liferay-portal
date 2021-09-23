@@ -25,6 +25,7 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -106,6 +107,18 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 			ResourceActionsUtil.getModelResource(
 				_themeDisplay.getLocale(), templateEntry.getInfoItemClassName())
 		);
+	}
+
+	public String getUpdateDDMTemplateURL() {
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse
+		).setActionName(
+			"/template/update_template_entry"
+		).setTabs1(
+			getTabs1()
+		).setParameter(
+			"templateEntryId", getTemplateEntryId()
+		).buildString();
 	}
 
 	@Override

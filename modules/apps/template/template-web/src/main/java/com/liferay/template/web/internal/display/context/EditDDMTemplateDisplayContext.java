@@ -62,7 +62,7 @@ public class EditDDMTemplateDisplayContext {
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_liferayPortletRequest = liferayPortletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
+		this.liferayPortletResponse = liferayPortletResponse;
 
 		_ddmGroupServiceConfiguration =
 			(DDMGroupServiceConfiguration)liferayPortletRequest.getAttribute(
@@ -111,7 +111,7 @@ public class EditDDMTemplateDisplayContext {
 		).put(
 			"propertiesViewURL",
 			() -> PortletURLBuilder.createRenderURL(
-				_liferayPortletResponse
+				liferayPortletResponse
 			).setMVCRenderCommandName(
 				"/template/edit_ddm_template_properties"
 			).setTabs1(
@@ -215,6 +215,10 @@ public class EditDDMTemplateDisplayContext {
 		return StringPool.BLANK;
 	}
 
+	public String getUpdateDDMTemplateURL() {
+		return StringPool.BLANK;
+	}
+
 	public boolean isSmallImage() {
 		if (_smallImage != null) {
 			return _smallImage;
@@ -275,6 +279,7 @@ public class EditDDMTemplateDisplayContext {
 	}
 
 	protected final HttpServletRequest httpServletRequest;
+	protected final LiferayPortletResponse liferayPortletResponse;
 
 	private String _getScript() {
 		if (_script != null) {
@@ -374,7 +379,6 @@ public class EditDDMTemplateDisplayContext {
 	private final DDMTemplateHelper _ddmTemplateHelper;
 	private Long _ddmTemplateId;
 	private final LiferayPortletRequest _liferayPortletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _refererWebDAVToken;
 	private String _script;
 	private Boolean _smallImage;

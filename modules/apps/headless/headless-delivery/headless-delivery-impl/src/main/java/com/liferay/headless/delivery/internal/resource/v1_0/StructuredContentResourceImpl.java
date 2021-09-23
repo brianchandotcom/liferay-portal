@@ -881,10 +881,9 @@ public class StructuredContentResourceImpl
 
 		Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
 
-		Map<String, DDMFormFieldValue> ddmFormFieldValuesMap =
-			stream.collect(
-				Collectors.toMap(
-					DDMFormFieldValue::getFieldReference, Function.identity()));
+		Map<String, DDMFormFieldValue> ddmFormFieldValuesMap = stream.collect(
+			Collectors.toMap(
+				DDMFormFieldValue::getFieldReference, Function.identity()));
 
 		for (ContentField contentField : contentFields) {
 			DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValuesMap.get(

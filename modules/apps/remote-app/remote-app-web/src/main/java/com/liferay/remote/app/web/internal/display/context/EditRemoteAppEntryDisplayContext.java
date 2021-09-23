@@ -198,6 +198,11 @@ public class EditRemoteAppEntryDisplayContext {
 		return type.equals(_getRemoteAppEntryType());
 	}
 
+	public boolean isInstanceable() {
+		return BeanParamUtil.getBoolean(
+			_remoteAppEntry, _getHttpServletRequest(), "instanceable", true);
+	}
+
 	public boolean isTypeDisabled() {
 		if (_remoteAppEntry != null) {
 			return true;

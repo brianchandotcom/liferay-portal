@@ -117,6 +117,8 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 				%>"
 			/>
 
+			<aui:input label="instanceable" name="instanceable" type="checkbox" value="<%= editRemoteAppEntryDisplayContext.isInstanceable() %>" />
+
 			<aui:input label="properties" name="properties" type="textarea" />
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

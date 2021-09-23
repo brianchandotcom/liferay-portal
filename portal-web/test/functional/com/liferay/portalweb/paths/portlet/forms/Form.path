@@ -203,6 +203,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_CONTROLS_DELETE_CURRENT_PAGE_LAST</td>
+	<td>xpath=(//button[contains(@class,'dropdown-item') and contains(text(),'Remove Page')][${key_formDropDownNumber}])[last()]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_CONTROLS_DELETE_SUCCESS_PAGE</td>
 	<td>//li[contains(@class,'dropdown-item')]//a[text()='Remove Success Page'] | //button[contains(@class,'dropdown-item') and contains(text(),'Remove Success Page')]</td>
 	<td></td>

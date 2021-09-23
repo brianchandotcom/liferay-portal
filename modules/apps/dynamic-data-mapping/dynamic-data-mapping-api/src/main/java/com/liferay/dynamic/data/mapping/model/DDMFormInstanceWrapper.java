@@ -444,6 +444,13 @@ public class DDMFormInstanceWrapper
 		return model.getNameMap();
 	}
 
+	@Override
+	public Long getObjectDefinitionId()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getObjectDefinitionId();
+	}
+
 	/**
 	 * Returns the primary key of this ddm form instance.
 	 *

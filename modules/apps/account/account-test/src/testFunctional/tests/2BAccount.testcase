@@ -170,4 +170,40 @@ definition {
 		Accounts.searchAccountsViaId(accountName = "Account Name");
 	}
 
+	@description = "This test filters Accounts by status."
+	@priority = "4"
+	test FilterByStatus {
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ACCOUNT_ENTRY",
+			resourceName = "com.liferay.account",
+			roleTitle = "Account Administrator",
+			roleType = "account");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "DELETE",
+			resourceName = "com.liferay.account.model.AccountEntry",
+			roleTitle = "Account Administrator",
+			roleType = "account");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		Accounts.addBusinessAccount(accountName = "New Active Account");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		Accounts.deactivateAccount(accountName = "Account Name");
+
+		Accounts.viewInactiveAccount(accountName = "Account Name");
+
+		LexiconEntry.viewNoEntry(rowEntry = "New Active Account");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Active");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Account Name");
+
+		LexiconEntry.viewEntryStatus(
+			rowEntry = "New Active Account",
+			rowStatus = "Active");
+	}
+
 }

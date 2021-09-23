@@ -46,7 +46,7 @@ public class MapsEditCompanyPortalSettingsConfigurationScreenContributor
 
 	@Override
 	public String getKey() {
-		return "third-party-maps";
+		return "portal-settings-maps";
 	}
 
 	@Override

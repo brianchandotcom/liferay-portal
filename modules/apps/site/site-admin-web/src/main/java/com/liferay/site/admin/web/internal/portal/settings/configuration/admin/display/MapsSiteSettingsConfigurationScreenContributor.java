@@ -51,7 +51,7 @@ public class MapsSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getKey() {
-		return "site-configuration-maps";
+		return "site-settings-maps";
 	}
 
 	@Override

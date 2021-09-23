@@ -306,4 +306,89 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
+	@description = "Assert we can resolve the conflict publications by discarding."
+	@priority = "4"
+	test ResolveConflictingPublicationsByDiscarding {
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONPublications.addPublication(publicationName = "Publication Name 1");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 1");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsThread.editCP(
+			threadBodyEdit = "MB Thread Message Body Edit",
+			threadSubjectEdit = "MB Thread Message Subject Edit");
+
+		JSONPublications.addPublication(publicationName = "Publication Name 2");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 2");
+
+		JSONMBMessage.moveThreadToTrash(
+			groupName = "Guest",
+			threadSubject = "MB Thread Message Subject");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.deleteCP(
+			assetName = "MB Thread Message Subject",
+			assetType = "Message Boards Thread");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 1");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name 1");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name 1");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "MB Thread Message Body Edit",
+			threadSubject = "MB Thread Message Subject Edit",
+			userName = "Test Test");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 2");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsThread.viewDefaultCP(threadSubject = "MB Thread Message Subject");
+
+		Publications.gotoPublish(
+			gotoManagePublications = "true",
+			publicationName = "Publication Name 2");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "Asset",
+			warningMessage = "Modification Deletion Conflict: Deletion conflicts with a modification.");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "Message Boards Thread",
+			warningMessage = "Modification Deletion Conflict: Deletion conflicts with a modification.");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "Message Boards Message",
+			warningMessage = "Modification Deletion Conflict: Deletion conflicts with a modification.");
+
+		Publications.discardChanges(
+			changeCategory = "Message Boards Thread",
+			changeTitle = "Message Boards Thread",
+			conflictingChanges = "true",
+			entryTitle = "Message Boards Thread");
+
+		Publications.publishPublication(publicationName = "Publication Name 2");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "MB Thread Message Body Edit",
+			threadSubject = "MB Thread Message Subject Edit",
+			userName = "Test Test");
+	}
+
 }

@@ -105,4 +105,94 @@ definition {
 			userName = "Test Test");
 	}
 
+	@description = "Assert we can publish the publication with split message board threads."
+	@priority = "4"
+	test PublishSplitMessageBoardThreads {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			widgetName = "Message Boards");
+
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONMBMessage.addMessageReply(
+			groupName = "Guest",
+			replyBody = "MB Thread Reply Body",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "1",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.splitThreadPG(
+			threadBody = "MB Thread Message Body",
+			threadReplyBody = "MB Thread Reply Body",
+			threadSplitReplyBody = "Split Reply Thread Body",
+			threadSplitReplySubject = "Split Reply Thread Subject",
+			threadSplitSubject = "MB Thread Split Subject",
+			threadSubject = "MB Thread Message Subject");
+
+		Publications.gotoReviewChanges();
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Message Boards Message",
+			changeSite = "Guest",
+			changeTitle = "MB Thread Split Subject",
+			changeType = "Modified",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Message Boards Message",
+			changeOrder = "2",
+			changeSite = "Guest",
+			changeTitle = "Split Reply Thread Subject",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Message Boards Thread",
+			changeSite = "Guest",
+			changeTitle = "MB Thread Message Subject",
+			changeType = "Modified",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Message Boards Thread",
+			changeOrder = "2",
+			changeSite = "Guest",
+			changeTitle = "MB Thread Split Subject",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewSplitThreadPG(
+			pageName = "Message Boards Page",
+			threadBody = "MB Thread Message Body",
+			threadReplyBody = "MB Thread Reply Body",
+			threadSplitReplyBody = "Split Reply Thread Body",
+			threadSplitReplySubject = "Split Reply Thread Subject",
+			threadSplitSubject = "MB Thread Split Subject",
+			threadSubject = "MB Thread Message Subject");
+	}
+
 }

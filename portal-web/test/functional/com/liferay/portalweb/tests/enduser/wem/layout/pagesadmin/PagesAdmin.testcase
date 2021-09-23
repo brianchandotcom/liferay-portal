@@ -261,7 +261,7 @@ definition {
 				title = "Manual Collection");
 		}
 
-		task ("Add a collection page based on maual collection") {
+		task ("Add a collection page based on manual collection") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPublicCollectionPage(

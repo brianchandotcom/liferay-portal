@@ -11,6 +11,7 @@ create table RemoteAppEntry (
 	customElementHTMLElementName VARCHAR(255) null,
 	customElementURLs TEXT null,
 	iFrameURL STRING null,
+	instanceable BOOLEAN,
 	name STRING null,
 	portletCategoryName VARCHAR(75) null,
 	properties TEXT null,

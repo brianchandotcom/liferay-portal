@@ -77,7 +77,7 @@ public class RemoteAppEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -103,6 +103,8 @@ public class RemoteAppEntryCacheModel
 		sb.append(customElementURLs);
 		sb.append(", iFrameURL=");
 		sb.append(iFrameURL);
+		sb.append(", instanceable=");
+		sb.append(instanceable);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", portletCategoryName=");
@@ -183,6 +185,8 @@ public class RemoteAppEntryCacheModel
 			remoteAppEntryImpl.setIFrameURL(iFrameURL);
 		}
 
+		remoteAppEntryImpl.setInstanceable(instanceable);
+
 		if (name == null) {
 			remoteAppEntryImpl.setName("");
 		}
@@ -235,6 +239,8 @@ public class RemoteAppEntryCacheModel
 		customElementHTMLElementName = objectInput.readUTF();
 		customElementURLs = (String)objectInput.readObject();
 		iFrameURL = objectInput.readUTF();
+
+		instanceable = objectInput.readBoolean();
 		name = objectInput.readUTF();
 		portletCategoryName = objectInput.readUTF();
 		properties = (String)objectInput.readObject();
@@ -296,6 +302,8 @@ public class RemoteAppEntryCacheModel
 			objectOutput.writeUTF(iFrameURL);
 		}
 
+		objectOutput.writeBoolean(instanceable);
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -337,6 +345,7 @@ public class RemoteAppEntryCacheModel
 	public String customElementHTMLElementName;
 	public String customElementURLs;
 	public String iFrameURL;
+	public boolean instanceable;
 	public String name;
 	public String portletCategoryName;
 	public String properties;

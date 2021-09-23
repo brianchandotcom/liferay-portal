@@ -271,6 +271,27 @@ public interface RemoteAppEntryModel
 	public void setIFrameURL(String iFrameURL);
 
 	/**
+	 * Returns the instanceable of this remote app entry.
+	 *
+	 * @return the instanceable of this remote app entry
+	 */
+	public boolean getInstanceable();
+
+	/**
+	 * Returns <code>true</code> if this remote app entry is instanceable.
+	 *
+	 * @return <code>true</code> if this remote app entry is instanceable; <code>false</code> otherwise
+	 */
+	public boolean isInstanceable();
+
+	/**
+	 * Sets whether this remote app entry is instanceable.
+	 *
+	 * @param instanceable the instanceable of this remote app entry
+	 */
+	public void setInstanceable(boolean instanceable);
+
+	/**
 	 * Returns the name of this remote app entry.
 	 *
 	 * @return the name of this remote app entry

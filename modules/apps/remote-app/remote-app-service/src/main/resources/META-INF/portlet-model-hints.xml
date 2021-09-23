@@ -23,6 +23,7 @@
 			<hint-collection name="URL" />
 			<hint name="method-name">IFrameURL</hint>
 		</field>
+		<field name="instanceable" type="boolean" />
 		<field localized="true" name="name" type="String" />
 		<field name="portletCategoryName" type="String" />
 		<field name="properties" type="String">

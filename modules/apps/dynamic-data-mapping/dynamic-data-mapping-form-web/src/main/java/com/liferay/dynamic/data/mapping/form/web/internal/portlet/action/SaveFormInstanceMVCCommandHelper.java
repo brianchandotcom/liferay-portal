@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.dynamic.data.mapping.exception.FormInstanceSettingsRedirectURLException;
+import com.liferay.dynamic.data.mapping.exception.FormInstanceSettingsStorageTypeException;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.exception.StructureLayoutException;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializer;
@@ -30,7 +31,9 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -44,6 +47,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -129,9 +133,10 @@ public class SaveFormInstanceMVCCommandHelper {
 		DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
 			portletRequest);
 
-		validateRedirectURL(
+		_validateSettingsDDMFormValues(
 			settingsDDMFormValues,
-			_portal.getHttpServletRequest(portletRequest));
+			_portal.getHttpServletRequest(portletRequest),
+			ddmForm.getDefaultLocale());
 
 		return formInstanceService.addFormInstance(
 			groupId, nameMap, descriptionMap, ddmForm, ddmFormLayout,
@@ -263,19 +268,106 @@ public class SaveFormInstanceMVCCommandHelper {
 		DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
 			portletRequest);
 
-		validateRedirectURL(
+		_validateSettingsDDMFormValues(
 			settingsDDMFormValues,
-			_portal.getHttpServletRequest(portletRequest));
+			_portal.getHttpServletRequest(portletRequest),
+			ddmForm.getDefaultLocale());
 
 		return formInstanceService.updateFormInstance(
 			formInstanceId, nameMap, descriptionMap, ddmForm, ddmFormLayout,
 			settingsDDMFormValues, serviceContext);
 	}
 
-	protected void validateRedirectURL(
+	@Reference(
+		target = "(dynamic.data.mapping.form.builder.context.deserializer.type=form)"
+	)
+	protected DDMFormContextDeserializer<DDMForm>
+		ddmFormBuilderContextToDDMForm;
+
+	@Reference(
+		target = "(dynamic.data.mapping.form.builder.context.deserializer.type=formLayout)"
+	)
+	protected DDMFormContextDeserializer<DDMFormLayout>
+		ddmFormBuilderContextToDDMFormLayout;
+
+	@Reference(
+		target = "(dynamic.data.mapping.form.builder.context.deserializer.type=formValues)"
+	)
+	protected DDMFormContextDeserializer<DDMFormValues>
+		ddmFormTemplateContextToDDMFormValues;
+
+	@Reference
+	protected volatile DDMFormInstanceFieldSettingsValidator
+		formInstanceFieldSettingsValidator;
+
+	@Reference
+	protected DDMFormInstanceService formInstanceService;
+
+	@Reference
+	protected JSONFactory jsonFactory;
+
+	private String _getPropertyValue(
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap,
+		Locale locale, String propertyName) {
+
+		if (!ddmFormFieldValuesMap.containsKey(propertyName)) {
+			return StringPool.BLANK;
+		}
+
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			propertyName);
+
+		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
+
+		Value value = ddmFormFieldValue.getValue();
+
+		String valueString = value.getString(locale);
+
+		try {
+			JSONArray jsonArray = jsonFactory.createJSONArray(valueString);
+
+			return jsonArray.getString(0);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			return valueString;
+		}
+	}
+
+	private String _getRedirectURLExceptionMessage(
+		HttpServletRequest httpServletRequest, String fieldName, String value) {
+
+		return LanguageUtil.format(
+			httpServletRequest,
+			"the-external-redirect-url-x-is-not-allowed.-set-it-in-the-x-" +
+				"field-of-the-x-configuration-in-x-to-allow-it",
+			new String[] {
+				value, fieldName, "redirect-url-configuration-name",
+				"javax.portlet.title." +
+					ConfigurationAdminPortletKeys.INSTANCE_SETTINGS
+			});
+	}
+
+	private URI _getURI(String uriString) {
+		try {
+			return new URI(uriString.trim());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			return null;
+		}
+	}
+
+	private void _validateRedirectURL(
 			DDMFormValues settingsDDMFormValues,
 			HttpServletRequest httpServletRequest)
-		throws PortalException {
+		throws Exception {
 
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			settingsDDMFormValues.getDDMFormFieldValuesMap();
@@ -357,58 +449,38 @@ public class SaveFormInstanceMVCCommandHelper {
 		}
 	}
 
-	@Reference(
-		target = "(dynamic.data.mapping.form.builder.context.deserializer.type=form)"
-	)
-	protected DDMFormContextDeserializer<DDMForm>
-		ddmFormBuilderContextToDDMForm;
+	private void _validateSettingsDDMFormValues(
+			DDMFormValues settingsDDMFormValues,
+			HttpServletRequest httpServletRequest, Locale locale)
+		throws Exception {
 
-	@Reference(
-		target = "(dynamic.data.mapping.form.builder.context.deserializer.type=formLayout)"
-	)
-	protected DDMFormContextDeserializer<DDMFormLayout>
-		ddmFormBuilderContextToDDMFormLayout;
-
-	@Reference(
-		target = "(dynamic.data.mapping.form.builder.context.deserializer.type=formValues)"
-	)
-	protected DDMFormContextDeserializer<DDMFormValues>
-		ddmFormTemplateContextToDDMFormValues;
-
-	@Reference
-	protected volatile DDMFormInstanceFieldSettingsValidator
-		formInstanceFieldSettingsValidator;
-
-	@Reference
-	protected DDMFormInstanceService formInstanceService;
-
-	@Reference
-	protected JSONFactory jsonFactory;
-
-	private String _getRedirectURLExceptionMessage(
-		HttpServletRequest httpServletRequest, String fieldName, String value) {
-
-		return LanguageUtil.format(
-			httpServletRequest,
-			"the-external-redirect-url-x-is-not-allowed.-set-it-in-the-x-" +
-				"field-of-the-x-configuration-in-x-to-allow-it",
-			new String[] {
-				value, fieldName, "redirect-url-configuration-name",
-				"javax.portlet.title." +
-					ConfigurationAdminPortletKeys.INSTANCE_SETTINGS
-			});
+		_validateRedirectURL(settingsDDMFormValues, httpServletRequest);
+		_validateStorageType(settingsDDMFormValues, httpServletRequest, locale);
 	}
 
-	private URI _getURI(String uriString) {
-		try {
-			return new URI(uriString.trim());
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
+	private void _validateStorageType(
+			DDMFormValues settingsDDMFormValues,
+			HttpServletRequest httpServletRequest, Locale locale)
+		throws Exception {
 
-			return null;
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			settingsDDMFormValues.getDDMFormFieldValuesMap(false);
+
+		String storageType = _getPropertyValue(
+			ddmFormFieldValuesMap, locale, "storageType");
+
+		if (!StringUtil.equals(storageType, "object")) {
+			return;
+		}
+
+		String objectDefinitionId = _getPropertyValue(
+			ddmFormFieldValuesMap, locale, "objectDefinitionId");
+
+		if (Validator.isNull(objectDefinitionId)) {
+			throw new FormInstanceSettingsStorageTypeException(
+				LanguageUtil.get(
+					httpServletRequest,
+					"you-must-define-an-object-for-the-selected-storage-type"));
 		}
 	}
 

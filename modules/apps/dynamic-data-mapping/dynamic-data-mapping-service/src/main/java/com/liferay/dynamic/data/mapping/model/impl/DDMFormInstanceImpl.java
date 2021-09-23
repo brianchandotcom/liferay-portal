@@ -59,6 +59,15 @@ public class DDMFormInstanceImpl extends DDMFormInstanceBaseImpl {
 	}
 
 	@Override
+	public Long getObjectDefinitionId() throws PortalException {
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			DDMFormInstanceFactory.create(
+				DDMFormInstanceSettings.class, getSettingsDDMFormValues());
+
+		return Long.valueOf(ddmFormInstanceSettings.objectDefinitionId());
+	}
+
+	@Override
 	public DDMFormValues getSettingsDDMFormValues() throws PortalException {
 		if (_ddmFormValues == null) {
 			_ddmFormValues =

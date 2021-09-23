@@ -77,6 +77,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.frontend.taglib.servlet.taglib.util.EmptyResultMessageKeys;
 import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
 import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
@@ -164,7 +166,9 @@ public class DDMFormAdminDisplayContext {
 		DDMStorageAdapterTracker ddmStorageAdapterTracker,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMStructureService ddmStructureService, JSONFactory jsonFactory,
-		NPMResolver npmResolver, Portal portal) {
+		NPMResolver npmResolver,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
+		Portal portal) {
 
 		_addDefaultSharedFormLayoutPortalInstanceLifecycleListener =
 			addDefaultSharedFormLayoutPortalInstanceLifecycleListener;
@@ -188,6 +192,7 @@ public class DDMFormAdminDisplayContext {
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmStructureService = ddmStructureService;
 		_npmResolver = npmResolver;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_portal = portal;
 
 		this.renderRequest = renderRequest;
@@ -893,6 +898,16 @@ public class DDMFormAdminDisplayContext {
 		).build();
 	}
 
+	public String getObjectLabel(DDMFormInstance ddmFormInstance, Locale locale)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				ddmFormInstance.getObjectDefinitionId());
+
+		return objectDefinition.getLabel(locale);
+	}
+
 	public String getOrderByCol() {
 		return ParamUtil.getString(
 			renderRequest, "orderByCol", "modified-date");
@@ -1143,6 +1158,20 @@ public class DDMFormAdminDisplayContext {
 		}
 
 		return false;
+	}
+
+	public boolean hasValidMappedObject(DDMFormInstance ddmFormInstance)
+		throws PortalException {
+
+		if (!Objects.equals(ddmFormInstance.getStorageType(), "object")) {
+			return true;
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				ddmFormInstance.getObjectDefinitionId());
+
+		return objectDefinition.isActive();
 	}
 
 	public boolean hasValidStorageType(DDMFormInstance ddmFormInstance) {
@@ -1718,6 +1747,7 @@ public class DDMFormAdminDisplayContext {
 		_formInstancePermissionCheckerHelper;
 	private final Map<Long, String> _invalidDDMFormFieldTypes = new HashMap<>();
 	private final NPMResolver _npmResolver;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final Portal _portal;
 
 }

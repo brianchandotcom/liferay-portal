@@ -52,6 +52,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
@@ -112,7 +113,9 @@ public class DDMFormAdminFieldSetDisplayContext
 		DDMStorageAdapterTracker ddmStorageAdapterTracker,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMStructureService ddmStructureService, JSONFactory jsonFactory,
-		NPMResolver npmResolver, Portal portal) {
+		NPMResolver npmResolver,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
+		Portal portal) {
 
 		super(
 			renderRequest, renderResponse,
@@ -126,7 +129,8 @@ public class DDMFormAdminFieldSetDisplayContext
 			ddmFormTemplateContextFactory, ddmFormValuesFactory,
 			ddmFormValuesMerger, ddmFormWebConfiguration,
 			ddmStorageAdapterTracker, ddmStructureLocalService,
-			ddmStructureService, jsonFactory, npmResolver, portal);
+			ddmStructureService, jsonFactory, npmResolver,
+			objectDefinitionLocalService, portal);
 
 		_fieldSetPermissionCheckerHelper = new FieldSetPermissionCheckerHelper(
 			ddmFormAdminRequestHelper);

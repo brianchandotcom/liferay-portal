@@ -328,6 +328,8 @@ definition {
 				siteName = "Site Name");
 
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
+
+			Pause(locator1 = "3000");
 		}
 
 		ACUtils.closeAllSessionsAndWait();

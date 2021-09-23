@@ -1361,4 +1361,22 @@ definition {
 		ObjectAdmin.viewSystemObject(name = "User");
 	}
 
+	@description = "LPS-136595 - Verify it is possible to create a Picklist field"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCreatePicklistField {
+
+		// TODO LPS-139742 CanCreatePicklistField pending implementation
+
+	}
+
+	@description = "LPS-135549 - Verify that it is not possible to create a Field with a duplicated Field Name"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotCreateDuplicatedFieldName {
+
+		// TODO LPS-139744 CannotCreateDuplicatedFieldName pending implementation
+
+	}
+
 }

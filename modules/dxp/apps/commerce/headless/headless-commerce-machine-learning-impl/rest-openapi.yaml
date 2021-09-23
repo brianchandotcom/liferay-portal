@@ -47,6 +47,16 @@ components:
             schema:
                 type: integer
             style: form
+        skusQueryParam:
+            in: query
+            explode: true
+            name: skus
+            required: false
+            schema:
+                items:
+                    type: string
+                type: array
+            style: form
     responses:
         NotFound:
             content:
@@ -808,6 +818,282 @@ paths:
                       - CommerceOpenApiForecast.read
             tags:
                 - AccountForecast
+    /skuForecasts/by-monthlyDemand:
+        get:
+            description:
+                Get the forecast points
+            operationId: getSkuForecastsByMonthlyRevenuePage
+            parameters:
+                - in: query
+                  explode: true
+                  name: forecastLength
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+                - in: query
+                  explode: true
+                  name: forecastStartDate
+                  required: false
+                  schema:
+                      format: date
+                      type: string
+                  style: form
+                - in: query
+                  explode: true
+                  name: historyLength
+                  required: false
+                  schema:
+                      type: integer
+                  style: form
+                - in: query
+                  explode: true
+                  name: skus
+                  required: false
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                  style: form
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            example:
+                                items:
+                                    - actual: 1.4E-45
+                                      forecast: 410459.44
+                                      forecastLowerBound: -21236.652
+                                      forecastUpperBound: 842155.5
+                                      sku: tt0042475
+                                      timestamp: 2018-04-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 1.4E-45
+                                      forecast: 454099.03
+                                      forecastLowerBound: -373120.1
+                                      forecastUpperBound: 1281318.1
+                                      sku: tt0058415
+                                      timestamp: 2018-04-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 1.4E-45
+                                      forecast: 458636.75
+                                      forecastLowerBound: -359997.84
+                                      forecastUpperBound: 1277271.4
+                                      sku: tt0058415
+                                      timestamp: 2018-03-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 1.4E-45
+                                      forecast: 409315.44
+                                      forecastLowerBound: -22285.682
+                                      forecastUpperBound: 840916.56
+                                      sku: tt0042475
+                                      timestamp: 2018-03-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 230225
+                                      forecast: 425982.1
+                                      forecastLowerBound: -63249.176
+                                      forecastUpperBound: 915213.4
+                                      sku: tt0042475
+                                      timestamp: 2018-02-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 278663.6
+                                      forecast: 417194.34
+                                      forecastLowerBound: -467485.44
+                                      forecastUpperBound: 1301874.1
+                                      sku: tt0058415
+                                      timestamp: 2018-02-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 607180.8
+                                      forecast: 556741.1
+                                      forecastLowerBound: -534401.2
+                                      forecastUpperBound: 1647883.4
+                                      sku: tt0058415
+                                      timestamp: 2018-01-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 400120.6
+                                      forecast: 442232.75
+                                      forecastLowerBound: 9856.678
+                                      forecastUpperBound: 874608.9
+                                      sku: tt0042475
+                                      timestamp: 2018-01-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 420215.2
+                                      forecast: 1.4E-45
+                                      forecastLowerBound: 0
+                                      forecastUpperBound: 0
+                                      sku: tt0042475
+                                      timestamp: 2017-12-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 475485.4
+                                      forecast: 1.4E-45
+                                      forecastLowerBound: 0
+                                      forecastUpperBound: 0
+                                      sku: tt0058415
+                                      timestamp: 2017-12-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 574000.8
+                                      forecast: 1.4E-45
+                                      forecastLowerBound: 0
+                                      forecastUpperBound: 0
+                                      sku: tt0042475
+                                      timestamp: 2017-11-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 543114
+                                      forecast: 1.4E-45
+                                      forecastLowerBound: 0
+                                      forecastUpperBound: 0
+                                      sku: tt0058415
+                                      timestamp: 2017-11-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 357431.6
+                                      forecast: 1.4E-45
+                                      forecastLowerBound: 0
+                                      forecastUpperBound: 0
+                                      sku: tt0042475
+                                      timestamp: 2017-10-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 542683.8
+                                      forecast: 1.4E-45
+                                      forecastLowerBound: 0
+                                      forecastUpperBound: 0
+                                      sku: tt0058415
+                                      timestamp: 2017-10-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 384831
+                                      forecast: 1.4E-45
+                                      forecastLowerBound: 0
+                                      forecastUpperBound: 0
+                                      sku: tt0042475
+                                      timestamp: 2017-09-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 272531.2
+                                      forecast: 1.4E-45
+                                      forecastLowerBound: 0
+                                      forecastUpperBound: 0
+                                      sku: tt0058415
+                                      timestamp: 2017-09-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 322792.4
+                                      forecast: 1.4E-45
+                                      forecastLowerBound: 0
+                                      forecastUpperBound: 0
+                                      sku: tt0058415
+                                      timestamp: 2017-08-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 730314
+                                      forecast: 1.4E-45
+                                      forecastLowerBound: 0
+                                      forecastUpperBound: 0
+                                      sku: tt0042475
+                                      timestamp: 2017-08-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 307055
+                                      forecast: 1.4E-45
+                                      forecastLowerBound: 0
+                                      forecastUpperBound: 0
+                                      sku: tt0042475
+                                      timestamp: 2017-07-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 298547.6
+                                      forecast: 1.4E-45
+                                      forecastLowerBound: 0
+                                      forecastUpperBound: 0
+                                      sku: tt0058415
+                                      timestamp: 2017-07-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 418839.2
+                                      forecast: 1.4E-45
+                                      forecastLowerBound: 0
+                                      forecastUpperBound: 0
+                                      sku: tt0058415
+                                      timestamp: 2017-06-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 599931
+                                      forecast: 1.4E-45
+                                      forecastLowerBound: 0
+                                      forecastUpperBound: 0
+                                      sku: tt0042475
+                                      timestamp: 2017-06-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 286286.6
+                                      forecast: 1.4E-45
+                                      forecastLowerBound: 0
+                                      forecastUpperBound: 0
+                                      sku: tt0042475
+                                      timestamp: 2017-05-01T00:00:00Z
+                                      unit: quantity
+                                    - actual: 352542.6
+                                      forecast: 1.4E-45
+                                      forecastLowerBound: 0
+                                      forecastUpperBound: 0
+                                      sku: tt0058415
+                                      timestamp: 2017-05-01T00:00:00Z
+                                      unit: quantity
+                                lastPage: 1
+                                page: 1
+                                pageSize: 24
+                                totalCount: 24
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SkuForecast"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SkuForecast"
+                                type: array
+                    description:
+                        Successful operation
+                "400":
+                    description:
+                        Invalid input
+                "401":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                "404":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                "500":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiForecast.read
+            tags:
+                - SkuForecast
 servers:
     - description:
           Liferay Commerce API server

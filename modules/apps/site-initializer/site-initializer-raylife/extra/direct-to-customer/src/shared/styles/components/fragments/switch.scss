@@ -1,0 +1,27 @@
+.switch-wrapper {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	gap: 0.75rem;
+	justify-items: flex-start;
+}
+
+.switch {
+	background: inherit;
+	border: 1px solid $primary-default-light;
+	border-radius: 2rem;
+	color: $primary-default-light;
+	padding-left: 2.5rem;
+	padding-right: 2.5rem;
+
+	&:hover {
+		background: $primary-dark;
+		border-color: $primary-dark;
+		color: $background;
+	}
+
+	&.selected {
+		background: $primary-default;
+		color: $background;
+	}
+}

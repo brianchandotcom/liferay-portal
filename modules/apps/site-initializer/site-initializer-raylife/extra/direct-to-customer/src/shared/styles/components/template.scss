@@ -1,0 +1,13 @@
+.template {
+	padding: 2rem 0 2rem 2rem;
+
+	.title-area {
+		margin: 0rem 7rem 3rem $card-padding;
+		width: 595px;
+	}
+
+	.form-area {
+		display: flex;
+		justify-content: space-between;
+	}
+}

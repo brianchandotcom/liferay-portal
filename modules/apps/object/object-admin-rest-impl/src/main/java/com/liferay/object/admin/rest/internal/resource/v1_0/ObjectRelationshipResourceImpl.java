@@ -67,6 +67,15 @@ public class ObjectRelationshipResourceImpl
 	}
 
 	@Override
+	public ObjectRelationship getObjectRelationship(Long objectRelationshipId)
+		throws Exception {
+
+		return _toObjectRelationship(
+			_objectRelationshipService.getObjectRelationship(
+				objectRelationshipId));
+	}
+
+	@Override
 	public ObjectRelationship postObjectDefinitionObjectRelationship(
 			Long objectDefinitionId, ObjectRelationship objectRelationship)
 		throws Exception {
@@ -77,6 +86,18 @@ public class ObjectRelationshipResourceImpl
 				LocalizedMapUtil.getLocalizedMap(objectRelationship.getLabel()),
 				objectRelationship.getName(),
 				objectRelationship.getTypeAsString()));
+	}
+
+	@Override
+	public ObjectRelationship putObjectRelationship(
+			Long objectRelationshipId, ObjectRelationship objectRelationship)
+		throws Exception {
+
+		return _toObjectRelationship(
+			_objectRelationshipService.updateObjectRelationship(
+				objectRelationshipId,
+				LocalizedMapUtil.getLocalizedMap(
+					objectRelationship.getLabel())));
 	}
 
 	private ObjectRelationship _toObjectRelationship(

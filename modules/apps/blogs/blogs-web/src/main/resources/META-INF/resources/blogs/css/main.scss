@@ -232,23 +232,8 @@ html#{$cadmin-selector} {
 			width: 100%;
 		}
 
-		.cover-image-caption .alloy-editor {
-			padding-left: 0;
-			text-align: center;
-
-			&.alloy-editor-placeholder.ae-placeholder:not(:focus):not(.form-control) {
-				border-left-width: 0;
-			}
-
-			&.alloy-editor-placeholder:before {
-				border-color: inherit;
-				border-left: 2px solid;
-				display: inline-block;
-				margin: 0 auto;
-				padding-left: 0.5rem;
-				text-align: center;
-				width: auto;
-			}
+		.cover-image-caption .cke_editable {
+			background-color: white;
 		}
 
 		.entry-subtitle {
@@ -444,7 +429,7 @@ html#{$cadmin-selector} {
 	}
 
 	.edit-entry {
-		.cover-image-caption .alloy-editor {
+		.cover-image-caption .cke_editable {
 			color: #a7a9bc;
 		}
 

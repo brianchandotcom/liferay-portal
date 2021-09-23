@@ -41,7 +41,7 @@ if (!customAbstract) {
 
 boolean allowPingbacks = PropsValues.BLOGS_PINGBACK_ENABLED && BeanParamUtil.getBoolean(entry, request, "allowPingbacks", true);
 boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.getBoolean(entry, request, "allowTrackbacks", true);
-String coverImageCaption = BeanParamUtil.getString(entry, request, "coverImageCaption");
+String coverImageCaption = BeanParamUtil.getString(entry, request, "coverImageCaption", LanguageUtil.get(request, "caption"));
 long coverImageFileEntryId = BeanParamUtil.getLong(entry, request, "coverImageFileEntryId");
 long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFileEntryId");
 

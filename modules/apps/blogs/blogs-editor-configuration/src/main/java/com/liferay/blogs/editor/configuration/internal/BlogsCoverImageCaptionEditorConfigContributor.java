@@ -42,7 +42,8 @@ public class BlogsCoverImageCaptionEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	public static final String DEFAULT_REMOVE_PLUGINS =
-		"magicline,stylescombo,videoembed";
+		"magicline,stylescombo,videoembed,video,image,contextmenu," +
+			"tabletools,liststyle";
 
 	@Override
 	public void populateConfigJSONObject(

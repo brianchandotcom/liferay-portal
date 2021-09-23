@@ -104,14 +104,14 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
 		throws PortalException {
 
-		String apiUrl = GetterUtil.getString(
-			ddmFormField.getProperty("apiUrl"));
+		String apiURL = GetterUtil.getString(
+			ddmFormField.getProperty("apiURL"));
 
-		if (Validator.isNotNull(apiUrl)) {
-			return apiUrl;
+		if (Validator.isNotNull(apiURL)) {
+			return apiURL;
 		}
 
-		String apiURL = _portal.getPortalURL(
+		apiURL = _portal.getPortalURL(
 			ddmFormFieldRenderingContext.getHttpServletRequest());
 
 		long objectDefinitionId = GetterUtil.getLong(

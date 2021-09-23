@@ -24,6 +24,54 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that the document type of a published basic document can be changed."
+	@priority = "4"
+	@refactordone
+	test CanChangeDocumentType {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.txt",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		DMDocument.viewCP(
+			dmDocumentTitle = "Document_1.txt",
+			dmDocumentType = "Basic Document");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentTitle = "Document_1.txt",
+			dmDocumentTypeEdit = "DM Document Type Name");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_1.txt",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewCP(
+			dmDocumentTitle = "Document_1.txt",
+			dmDocumentType = "DM Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Document_1.txt");
+
+		DMDocument.viewFieldLabels(labels = "Text");
+	}
+
 	@description = "This is a test for LPS-136825. It checks that a file entry can be imported with tags."
 	@ignore = "true"
 	@priority = "3"

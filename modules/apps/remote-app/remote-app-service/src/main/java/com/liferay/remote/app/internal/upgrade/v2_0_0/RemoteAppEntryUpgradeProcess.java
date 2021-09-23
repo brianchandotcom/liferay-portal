@@ -59,6 +59,14 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 					"'category.remote-apps'");
 		}
 
+		if (!hasColumn("RemoteAppEntry", "instanceable")) {
+			alter(
+				RemoteAppEntryTable.class,
+				new AlterTableAddColumn("instanceable", "BOOLEAN"));
+
+			runSQL("update RemoteAppEntry set instanceable = true");
+		}
+
 		if (!hasColumn("RemoteAppEntry", "properties")) {
 			alter(
 				RemoteAppEntryTable.class,

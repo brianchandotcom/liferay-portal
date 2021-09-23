@@ -21,6 +21,7 @@ import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemA
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
+import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.info.field.InfoFieldValue;
@@ -309,16 +310,7 @@ public class FileEntryContentDashboardItem
 		return Optional.ofNullable(
 			_group
 		).map(
-			group -> {
-				try {
-					return group.getDescriptiveName(locale);
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
-
-					return StringPool.BLANK;
-				}
-			}
+			group -> ContentDashboardGroupUtil.getGroupName(group, locale)
 		).orElse(
 			StringPool.BLANK
 		);

@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
+import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
@@ -828,16 +829,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		return Optional.ofNullable(
 			_groupLocalService.fetchGroup(scopeId)
 		).map(
-			group -> {
-				try {
-					return group.getDescriptiveName(_locale);
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
-
-					return StringPool.BLANK;
-				}
-			}
+			group -> ContentDashboardGroupUtil.getGroupName(group, _locale)
 		).orElse(
 			StringPool.BLANK
 		);

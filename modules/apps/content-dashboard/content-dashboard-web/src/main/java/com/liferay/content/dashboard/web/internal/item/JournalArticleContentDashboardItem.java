@@ -21,13 +21,13 @@ import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemA
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
+import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -304,16 +304,7 @@ public class JournalArticleContentDashboardItem
 		return Optional.ofNullable(
 			_group
 		).map(
-			group -> {
-				try {
-					return group.getDescriptiveName(locale);
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
-
-					return StringPool.BLANK;
-				}
-			}
+			group -> ContentDashboardGroupUtil.getGroupName(group, locale)
 		).orElse(
 			StringPool.BLANK
 		);

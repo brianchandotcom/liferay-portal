@@ -53,7 +53,7 @@ definition {
 	@description = "This ensures that image in basic article in depot can be deleted and republished in staging site when enabling local staging."
 	@priority = "5"
 	@refactorneeded
-	test DeleteImageInDepot {
+	test CanDeleteWCInlineImage {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_2.jpg",
@@ -152,7 +152,7 @@ definition {
 	@description = "This ensures that friendly URL in basic article in depot can be edited and republished in staging site when enabling local staging."
 	@priority = "5"
 	@refactorneeded
-	test EditFriendlyURLInDepot {
+	test CanEditFriendlyURL {
 		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name");
 
 		WebContentNavigator.gotoAddCP();
@@ -252,7 +252,7 @@ definition {
 	@description = "This ensures that image in basic article in depot can be edited and republished in staging site when enabling local staging."
 	@priority = "5"
 	@refactorneeded
-	test EditImageInDepot {
+	test CanEditWCInlineImageInDepot {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		AssertTextEquals(
@@ -348,7 +348,7 @@ definition {
 	@description = "This ensures that an article using a structure stored in depot can be deleted and republished in staging site when enabling local staging."
 	@priority = "5"
 	@refactorneeded
-	test PublishDeletedWCCustomization {
+	test CanPublishDeletedWCCustomization {
 		DepotNavigator.openDepotAdmin();
 
 		Depot.configureDDMStructures(
@@ -429,7 +429,7 @@ definition {
 	@description = "This ensures that an article using a structure stored in depot can be edited and republished in staging site when enabling local staging."
 	@priority = "5"
 	@refactorneeded
-	test PublishEditedWCCustomization {
+	test CanPublishEditedWCCustomization {
 		DepotNavigator.openDepotAdmin();
 
 		Depot.configureDDMStructures(
@@ -521,7 +521,7 @@ definition {
 	@description = "This ensures that web content with a category in depot can be published in local staging site."
 	@priority = "4"
 	@refactorneeded
-	test PublishWCWithCategory {
+	test CanPublishWCWithCategory {
 		DepotNavigator.openDepotCategoriesAdminStaging(depotName = "Test Depot Name");
 
 		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
@@ -581,7 +581,7 @@ definition {
 	@description = "This test ensures that a depot WC with an embedded video added from the item selector can be published on a connected local staging site."
 	@priority = "4"
 	@refactorneeded
-	test PublishWCWithEmbeddedVideo {
+	test CanPublishWCWithEmbeddedVideo {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Embedded Video Depot Name");
@@ -658,7 +658,7 @@ definition {
 	@description = "This ensures that a web content folder with an article in depot can be published in AP through widget config manual selection when enabling local staging."
 	@priority = "5"
 	@refactorneeded
-	test PublishWebContentFolder {
+	test CanPublishWCFolder {
 		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name");
 
 		WebContentFolder.addCP(

@@ -60,8 +60,8 @@ definition {
 	@description = "This ensures that the image in depot can be removed and republished in Blogs cover image when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test DeleteBlogImageInDepot {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#DeleteBlogImageInDepot";
+	test CanDeleteBlogCoverImage {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteBlogCoverImage";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -164,8 +164,8 @@ definition {
 	@description = "This ensures that the image in depot can be removed and republished in Blogs inline image when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test DeleteBlogInlineImageInDepot {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#DeleteBlogInlineImageInDepot";
+	test CanDeleteBlogInlineImage {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteBlogInlineImage";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -271,8 +271,8 @@ definition {
 	@description = "This ensures that a document in depot can be removed and republished in AP through widget config manual selection when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test DeleteDocumentInDepot {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#DeleteDocumentInDepot";
+	test CanDeleteDocument {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteDocument";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -372,8 +372,8 @@ definition {
 	@description = "This ensures that custom field in document from depot can be deleted and republished in the site when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test DeleteDocumentWithCustomField {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#DeleteDocumentWithCustomField";
+	test CanDeleteDocumentWithCustomField {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteDocumentWithCustomField";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -507,9 +507,9 @@ definition {
 	@description = "This ensures that image in depot can be removed and republished in AP through widget config manual selection when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test DeleteImageInDepot {
+	test CanDeleteDMImage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#DeleteImageInDepot";
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteDMImage";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -609,8 +609,8 @@ definition {
 	@description = "This ensures that the image in depot can be removed and republished in open graph when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test DeleteOpenGraphImageInDepot {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#DeleteOpenGraphImageInDepot";
+	test CanDeleteOpenGraphImage {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteOpenGraphImage";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -717,8 +717,8 @@ definition {
 	@description = "This ensures that video shortcut in depot can be deleted and republished in Blogs when enabling remote staging."
 	@priority = "4"
 	@refactorneeded
-	test DeleteVideoShortcutInDepot {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#DeleteVideoShortcutInDepot";
+	test CanDeleteVideoShortcut {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteVideoShortcut";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -834,8 +834,8 @@ definition {
 	@description = "This ensures that the image in depot can be removed and republished in web content when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test DeleteWebContentImageInDepot {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#DeleteWebContentImageInDepot";
+	test CanDeleteWCImage {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteWCImage";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -958,8 +958,8 @@ definition {
 	@description = "This ensures that the blog image from a depot can be edited and republished when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test EditBlogImage {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#EditBlogImage";
+	test CanEditBlogCoverImage {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanEditBlogCoverImage";
 
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -1068,8 +1068,8 @@ definition {
 	@description = "This ensures that the blog inline image from a depot can be edited and republished when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test EditBlogInlineImage {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#EditBlogInlineImage";
+	test CanEditBlogInlineImage {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanEditBlogInlineImage";
 
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -1187,8 +1187,8 @@ definition {
 	@description = "This ensures that the blog small image from a depot can be edited and republished when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test EditBlogSmallImage {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#EditBlogSmallImage";
+	test CanEditBlogSmallImage {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanEditBlogSmallImage";
 
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -1286,8 +1286,8 @@ definition {
 	@description = "This ensures that document in depot can be replaced and republished in AP through widget config manual selection when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test EditDocumentInDepot {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#EditDocumentInDepot";
+	test CanEditDocument {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanEditDocument";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1384,8 +1384,8 @@ definition {
 	@description = "This ensures that the custom field in document from depot can be edited and republished in the site when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test EditDocumentWithCustomField {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#EditDocumentWithCustomField";
+	test CanEditDocumentWithCustomField {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanEditDocumentWithCustomField";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -1531,8 +1531,8 @@ definition {
 	@description = "This ensures that an image in depot can be replaced and republished in AP through widget config manual selection when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test EditImageInDepot {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#EditImageInDepot";
+	test CanEditDMImage {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanEditDMImage";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1629,8 +1629,8 @@ definition {
 	@description = "This ensures that an edited internal video in depot can be republished on a connected staging site with enabling FFmpeg."
 	@priority = "4"
 	@refactorneeded
-	test EditInternalVideoInDepot {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#EditInternalVideoInDepot";
+	test CanEditInternalVideo {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanEditInternalVideo";
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
 
@@ -1778,8 +1778,8 @@ definition {
 	@description = "This ensures that the open graph image from a depot can be edited and republished when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test EditOpenGraphImage {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#EditOpenGraphImage";
+	test CanEditOpenGraphImage {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanEditOpenGraphImage";
 
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -1878,8 +1878,8 @@ definition {
 	@description = "This ensures that the image in depot can be replaced and republished in web content when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test EditWebContentImage {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#EditWebContentImage";
+	test CanEditWCImage {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanEditWCImage";
 
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -2005,8 +2005,8 @@ definition {
 	@description = "This ensures that a document using a custom document type from a depot can be published in the staging site when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test PublishDMWithDocumentType {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#PublishDMWithDocumentType";
+	test CanPublishDMWithDocumentType {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishDMWithDocumentType";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -2073,8 +2073,8 @@ definition {
 	@description = "This ensures that a folder with a document in depot can be published in AP through widget config manual selection when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test PublishDocumentFolder {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#PublishDocumentFolder";
+	test CanPublishDocumentFolder {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishDocumentFolder";
 
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -2141,8 +2141,8 @@ definition {
 	@description = "This ensures that the shortcut to an image in the depot can be added and published in the staging site when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test PublishImageShortcut {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#PublishImageShortcut";
+	test CanPublishImageShortcut {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishImageShortcut";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -2197,8 +2197,8 @@ definition {
 	@description = "This ensures that an image with custom field in depot can be published in remote staging site."
 	@priority = "5"
 	@refactorneeded
-	test PublishImageWithCustomField {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#PublishImageWithCustomField";
+	test CanPublishImageWithCustomField {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishImageWithCustomField";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -2289,8 +2289,8 @@ definition {
 	@description = "This ensures that the latest version of an image in a depot can be published in remote staging site."
 	@priority = "5"
 	@refactorneeded
-	test PublishImageWithLatestVersion {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#PublishImageWithLatestVersion";
+	test CanPublishImageWithLatestVersion {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishImageWithLatestVersion";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -2376,8 +2376,8 @@ definition {
 	@description = "This ensures that the latest version of an image in a depot can be published in blogs when remote staging is enabled."
 	@priority = "5"
 	@refactorneeded
-	test PublishImageWithLatestVersionInBlogs {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#PublishImageWithLatestVersionInBlogs";
+	test CanPublishImageWithLatestVersionInBlogs {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishImageWithLatestVersionInBlogs";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -2443,8 +2443,8 @@ definition {
 	@description = "This test covers LPS-124892. It ensures that the thumbnail of a video shortcut in depot can be published through AP when enabling remote staging."
 	@priority = "3"
 	@refactorneeded
-	test PublishVideoShortcutThumbnail {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#PublishVideoShortcutThumbnail";
+	test CanPublishVideoShortcutThumbnail {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanPublishVideoShortcutThumbnail";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -2502,8 +2502,8 @@ definition {
 	@description = "This ensures that the blog small image from a depot can be removed and republished when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test CanDeleteBlogSmallImageInDepot {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteBlogSmallImageInDepot";
+	test CanDeleteBlogSmallImage {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanDeleteBlogSmallImage";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -2607,8 +2607,8 @@ definition {
 	@description = "This ensures that a document pending review cannot be searched for in a staged site when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test SearchForPendingDocument {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#SearchForPendingDocument";
+	test CanNotSearchForPendingDocument {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanNotSearchForPendingDocument";
 
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -2649,8 +2649,8 @@ definition {
 	@description = "This ensures that an unavailable structure from a depot can not be viewed in the staged site when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test SelectUnavailableStructure {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#SelectUnavailableStructure";
+	test CanNotSelectUnavailableStructure {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanNotSelectUnavailableStructure";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -2677,8 +2677,8 @@ definition {
 	@description = "This ensures that a document can be accessed in a staged site through the item selector after it has been approved when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test ViewApprovedDocument {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#ViewApprovedDocument";
+	test CanViewApprovedDocument {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanViewApprovedDocument";
 
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -2761,8 +2761,8 @@ definition {
 	@description = "This ensures that a depot image can be displayed in the Blog's item selector after scoped everywhere filter when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test ViewImageAfterScopedFilter {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#ViewImageAfterScopedFilter";
+	test CanViewImageAfterScopedFilter {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanViewImageAfterScopedFilter";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -2789,8 +2789,8 @@ definition {
 	@description = "This ensures that a depot image cannot be found from the disconnected remote staging site."
 	@priority = "4"
 	@refactorneeded
-	test ViewImageFromDisconnectedSite {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#ViewImageFromDisconnectedSite";
+	test CanNotViewImageFromDisconnectedSite {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanNotViewImageFromDisconnectedSite";
 
 		Navigator.openSitePage(
 			pageName = "Test Page",
@@ -2839,8 +2839,8 @@ definition {
 	@description = "This ensures that a pending image in depot cannot be found in remote staging site."
 	@priority = "5"
 	@refactorneeded
-	test ViewPendingImage {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#ViewPendingImage";
+	test CanNotViewPendingImage {
+		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanNotViewPendingImage";
 
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",

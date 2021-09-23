@@ -60,8 +60,8 @@ definition {
 	@description = "This ensures that image in basic article in depot can be deleted and republished in staging site when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test DeleteImageInDepot {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#DeleteImageInDepot";
+	test CanDeleteWCInlineImage {
+		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanDeleteWCInlineImage";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -182,8 +182,8 @@ definition {
 	@description = "This ensures that friendly URL in basic article in depot can be edited and republished in staging site when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test EditFriendlyURLInDepot {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#EditFriendlyURLInDepot";
+	test CanEditFriendlyURL {
+		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanEditFriendlyURL";
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
@@ -304,9 +304,9 @@ definition {
 	@description = "This ensures that image in basic article in depot can be edited and republished in staging site when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test EditImageInDepot {
+	test CanEditWCInlineImage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#EditImageInDepot";
+		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanEditWCInlineImage";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -414,8 +414,8 @@ definition {
 	@description = "This ensures that an article using a structure stored in depot can be deleted and republished in remote staging site."
 	@priority = "5"
 	@refactorneeded
-	test PublishDeletedWCCustomization {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#PublishDeletedWCCustomization";
+	test CanPublishDeletedWCCustomization {
+		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanPublishDeletedWCCustomization";
 
 		DepotNavigator.openDepotAdmin();
 
@@ -505,8 +505,8 @@ definition {
 	@description = "This ensures that an article using a structure stored in depot can be edited and republished in remote staging site."
 	@priority = "5"
 	@refactorneeded
-	test PublishEditedWCCustomization {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#PublishEditedWCCustomization";
+	test CanPublishEditedWCCustomization {
+		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanPublishEditedWCCustomization";
 
 		DepotNavigator.openDepotAdmin();
 
@@ -620,8 +620,8 @@ definition {
 	@description = "This test covers LPS-122790. It ensures that web content with a category in depot can be published in remote staging site."
 	@priority = "4"
 	@refactorneeded
-	test PublishWCWithCategory {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#PublishWCWithCategory";
+	test CanPublishWCWithCategory {
+		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanPublishWCWithCategory";
 
 		DepotNavigator.openDepotCategoriesAdmin(depotName = "Test Depot Name");
 
@@ -689,8 +689,8 @@ definition {
 	@description = "This test ensures that a depot WC with an embedded video added from the item selector can be published on a connected remote staging site."
 	@priority = "4"
 	@refactorneeded
-	test PublishWCWithEmbeddedVideo {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#PublishWCWithEmbeddedVideo";
+	test CanPublishWCWithEmbeddedVideo {
+		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanPublishWCWithEmbeddedVideo";
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
@@ -755,8 +755,8 @@ definition {
 	@description = "This ensures that a web content folder with an article in depot can be published in AP through widget config manual selection when enabling remote staging."
 	@priority = "5"
 	@refactorneeded
-	test PublishWebContentFolder {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#PublishWebContentFolder";
+	test CanPublishWCFolder {
+		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanPublishWCFolder";
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 

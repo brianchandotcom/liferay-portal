@@ -290,7 +290,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addFragmentEntries(serviceContext);
 			_addLayoutPageTemplates(serviceContext);
 			_addObjectDefinitions(serviceContext);
-			_addRemoteAppEntries(serviceContext);
 			_addStyleBookEntries(serviceContext);
 			_addTaxonomyVocabularies(serviceContext);
 			_updateLayoutSets(serviceContext);
@@ -304,6 +303,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_ddmStructureLocalService, _ddmTemplateLocalService,
 				documentsStringUtilReplaceValues, serviceContext);
 
+			_addRemoteAppEntries(
+				documentsStringUtilReplaceValues, serviceContext);
 			_addLayouts(_journalArticleLocalService, serviceContext);
 		}
 		catch (Exception exception) {
@@ -1129,7 +1130,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			"/site-initializer/resource-permissions.json", serviceContext);
 	}
 
-	private void _addRemoteAppEntries(ServiceContext serviceContext)
+	private void _addRemoteAppEntries(
+			Map<String, String> documentsStringUtilReplaceValues,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		String json = _read("/site-initializer/remote-app-entries.json");
@@ -1148,23 +1151,30 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONObject propertiesJSONObject = jsonObject.getJSONObject(
 				"properties");
 
-			for (String key : propertiesJSONObject.keySet()) {
-				sb.append(key);
-				sb.append(StringPool.EQUAL);
-				sb.append(propertiesJSONObject.getString(key));
-				sb.append(StringPool.NEW_LINE);
+			if(propertiesJSONObject != null) {
+				for (String key : propertiesJSONObject.keySet()) {
+					sb.append(key);
+					sb.append(StringPool.EQUAL);
+					sb.append(propertiesJSONObject.getString(key));
+					sb.append(StringPool.NEW_LINE);
+				}
 			}
 
 			_remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
 				serviceContext.getUserId(),
-				StringUtil.merge(
-					JSONUtil.toStringArray(jsonObject.getJSONArray("cssURLs")),
-					StringPool.NEW_LINE),
+				StringUtil.replace(
+					StringUtil.merge(
+						JSONUtil.toStringArray(
+							jsonObject.getJSONArray("cssURLs")),
+						StringPool.NEW_LINE),
+					"[$", "$]", documentsStringUtilReplaceValues),
 				jsonObject.getString("htmlElementName"),
-				StringUtil.merge(
-					JSONUtil.toStringArray(
-						jsonObject.getJSONArray("elementURLs")),
-					StringPool.NEW_LINE),
+				StringUtil.replace(
+					StringUtil.merge(
+						JSONUtil.toStringArray(
+							jsonObject.getJSONArray("elementURLs")),
+						StringPool.NEW_LINE),
+					"[$", "$]", documentsStringUtilReplaceValues),
 				_toMap(jsonObject.getString("name_i18n")),
 				jsonObject.getString("portletCategoryName"), sb.toString());
 		}

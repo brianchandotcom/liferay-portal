@@ -14,7 +14,6 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -29,8 +28,11 @@ import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.hits.SearchHit;
+import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
@@ -178,60 +180,67 @@ public abstract class BaseWorkflowMetricsIndexer {
 			return;
 		}
 
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames(getIndexName(companyId));
+
 		BooleanQuery booleanQuery = queries.booleanQuery();
 
-		StringBundler sb = new StringBundler("");
+		searchSearchRequest.setQuery(
+			booleanQuery.addFilterQueryClauses(filterQuery));
 
-		fieldsMap.forEach(
-			(name, value) -> {
-				sb.append("ctx._source.");
-				sb.append(name);
-				sb.append(" = ");
+		searchSearchRequest.setSelectedFieldNames("uid");
+		searchSearchRequest.setSize(10000);
+		searchSearchRequest.setTypes(getIndexType());
 
-				if (_isArray(value)) {
-					sb.append("[");
+		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(
+			searchSearchRequest);
 
-					Object[] valueArray = (Object[])value;
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
-					for (int i = 0; i < valueArray.length; i++) {
-						if (valueArray[i] instanceof String) {
-							sb.append("\"");
-							sb.append(valueArray[i]);
-							sb.append("\"");
-						}
-						else {
-							sb.append(valueArray[i]);
-						}
-
-						if ((i + 1) < valueArray.length) {
-							sb.append(", ");
-						}
-					}
-
-					sb.append("]");
-				}
-				else if (value instanceof String) {
-					sb.append("\"");
-					sb.append(value);
-					sb.append("\"");
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append(";");
-			});
-
-		UpdateByQueryDocumentRequest updateByQueryDocumentRequest =
-			new UpdateByQueryDocumentRequest(
-				booleanQuery.addFilterQueryClauses(filterQuery),
-				scripts.script(sb.toString()), getIndexName(companyId));
-
-		if (PortalRunMode.isTestMode()) {
-			updateByQueryDocumentRequest.setRefresh(true);
+		if (searchHits.getTotalHits() == 0) {
+			return;
 		}
 
-		searchEngineAdapter.execute(updateByQueryDocumentRequest);
+		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
+
+		Stream.of(
+			searchHits.getSearchHits()
+		).flatMap(
+			List::stream
+		).map(
+			SearchHit::getDocument
+		).forEach(
+			document -> {
+				DocumentBuilder documentBuilder =
+					documentBuilderFactory.builder();
+
+				documentBuilder.setString("uid", document.getString("uid"));
+
+				fieldsMap.forEach(documentBuilder::setValue);
+
+				UpdateDocumentRequest updateDocumentRequest =
+					new UpdateDocumentRequest(
+						getIndexName(companyId), document.getString("uid"),
+						documentBuilder.build());
+
+				updateDocumentRequest.setType(getIndexType());
+				updateDocumentRequest.setUpsert(true);
+
+				bulkDocumentRequest.addBulkableDocumentRequest(
+					updateDocumentRequest);
+			}
+		);
+
+		if (ListUtil.isNotEmpty(
+				bulkDocumentRequest.getBulkableDocumentRequests())) {
+
+			if (PortalRunMode.isTestMode()) {
+				bulkDocumentRequest.setRefresh(true);
+			}
+
+			searchEngineAdapter.execute(bulkDocumentRequest);
+		}
 	}
 
 	@Reference
@@ -253,16 +262,6 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 	@Reference
 	protected WorkflowMetricsPortalExecutor workflowMetricsPortalExecutor;
-
-	private boolean _isArray(Object value) {
-		if (value == null) {
-			return false;
-		}
-
-		Class<?> clazz = value.getClass();
-
-		return clazz.isArray();
-	}
 
 	private void _updateDocument(Document document) {
 		if (searchEngineAdapter == null) {

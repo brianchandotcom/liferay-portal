@@ -434,7 +434,9 @@ definition {
 	}
 
 	macro editCP {
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		if (!(isSet(skipNavigation))) {
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		}
 
 		if (isSet(threadBody)) {
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");

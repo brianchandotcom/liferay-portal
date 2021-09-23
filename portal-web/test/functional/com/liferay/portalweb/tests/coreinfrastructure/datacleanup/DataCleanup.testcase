@@ -1,0 +1,81 @@
+@component-name = "portal-data-cleanup"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Data Cleanup";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		PortalInstances.tearDownCP();
+	}
+
+	@priority = "4"
+	test FileConfigsWillTriggerDataCleanup {
+		property data.archive.type = "data-archive-portal";
+		property osgi.module.configuration.file.names = "com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration.config:com.liferay.data.cleanup.internal.configuration.DataRemovalConfiguration.config";
+		property osgi.module.configurations = "cleanUpSoftwareCatalogModuleData=B&quot;true&quot;:removeExpiredJournalArticles=B&quot;true&quot;";
+		property portal.version = "6.2.10.21";
+
+		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.ExpiredJournalArticleUpgradeProcess");
+		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.SoftwareCatalogUpgradeProcess");
+	}
+
+	@priority = "5"
+	test UIConfigsWillTriggerCleanupAndBeSetToFalseAfterExecution {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "6.2.10.21";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Upgrades",
+			configurationName = "Data Cleanup",
+			configurationScope = "System Scope");
+
+		var key_settingFieldName = "Clean up software catalog module data.";
+
+		Check.toggleSwitch(locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+		SystemSettings.saveConfiguration();
+
+		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Upgrades",
+			configurationName = "Data Removal",
+			configurationScope = "System Scope");
+
+		var key_settingFieldName = "Remove expired journal articles.";
+
+		Check.toggleSwitch(locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+		SystemSettings.saveConfiguration();
+
+		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.ExpiredJournalArticleUpgradeProcess");
+		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.SoftwareCatalogUpgradeProcess");
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer(keepOSGiState = "true");
+
+		AssertConsoleTextNotPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.ExpiredJournalArticleUpgradeProcess");
+		AssertConsoleTextNotPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.SoftwareCatalogUpgradeProcess");
+	}
+
+}

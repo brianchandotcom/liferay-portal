@@ -123,6 +123,30 @@ public class ObjectRelationshipLocalServiceTest {
 		Assert.assertFalse(_hasTable(objectRelationship.getDBTableName()));
 	}
 
+	@Test
+	public void testUpdateObjectRelationship() throws Exception {
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				_objectDefinition2.getObjectDefinitionId(),
+				LocalizedMapUtil.getLocalizedMap("Able"), StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_ONE);
+
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("Able"),
+			objectRelationship.getLabelMap());
+
+		objectRelationship =
+			_objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship.getObjectRelationshipId(),
+				LocalizedMapUtil.getLocalizedMap("Baker"));
+
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("Baker"),
+			objectRelationship.getLabelMap());
+	}
+
 	private boolean _hasColumn(String tableName, String columnName)
 		throws Exception {
 

@@ -136,10 +136,29 @@ public class ObjectRelationshipServiceTest {
 			Assert.assertTrue(
 				message.contains(
 					"User " + _defaultUser.getUserId() +
-						" must have DELETE permission for"));
+						" must have UPDATE permission for"));
 		}
 
 		_testDeleteObjectRelationship(_user);
+	}
+
+	@Test
+	public void testGetObjectRelationship() throws Exception {
+		try {
+			_testGetObjectRelationship(_defaultUser);
+
+			Assert.fail();
+		}
+		catch (PrincipalException.MustHavePermission principalException) {
+			String message = principalException.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					"User " + _defaultUser.getUserId() +
+						" must have VIEW permission for"));
+		}
+
+		_testGetObjectRelationship(_user);
 	}
 
 	@Test
@@ -157,6 +176,25 @@ public class ObjectRelationshipServiceTest {
 		}
 
 		_testGetObjectRelationships(_user);
+	}
+
+	@Test
+	public void testUpdateObjectRelationship() throws Exception {
+		try {
+			_testUpdateObjectRelationship(_defaultUser);
+
+			Assert.fail();
+		}
+		catch (PrincipalException.MustHavePermission principalException) {
+			String message = principalException.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					"User " + _defaultUser.getUserId() +
+						" must have UPDATE permission for"));
+		}
+
+		_testUpdateObjectRelationship(_user);
 	}
 
 	private ObjectRelationship _addObjectRelationship(User user)
@@ -221,6 +259,25 @@ public class ObjectRelationshipServiceTest {
 		}
 	}
 
+	private void _testGetObjectRelationship(User user) throws Exception {
+		ObjectRelationship objectRelationship = null;
+
+		try {
+			_setUser(user);
+
+			objectRelationship = _addObjectRelationship(user);
+
+			_objectRelationshipService.getObjectRelationship(
+				objectRelationship.getObjectRelationshipId());
+		}
+		finally {
+			if (objectRelationship != null) {
+				_objectRelationshipLocalService.deleteObjectRelationship(
+					objectRelationship);
+			}
+		}
+	}
+
 	private void _testGetObjectRelationships(User user) throws Exception {
 		ObjectRelationship objectRelationship = null;
 
@@ -232,6 +289,27 @@ public class ObjectRelationshipServiceTest {
 			_objectRelationshipService.getObjectRelationships(
 				objectRelationship.getObjectDefinitionId1(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
+		}
+		finally {
+			if (objectRelationship != null) {
+				_objectRelationshipLocalService.deleteObjectRelationship(
+					objectRelationship);
+			}
+		}
+	}
+
+	private void _testUpdateObjectRelationship(User user) throws Exception {
+		ObjectRelationship objectRelationship = null;
+
+		try {
+			_setUser(user);
+
+			objectRelationship = _addObjectRelationship(user);
+
+			objectRelationship =
+				_objectRelationshipService.updateObjectRelationship(
+					objectRelationship.getObjectRelationshipId(),
+					LocalizedMapUtil.getLocalizedMap("Baker"));
 		}
 		finally {
 			if (objectRelationship != null) {

@@ -5202,8 +5202,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		for (Group group : groups) {
 			try {
-				if (group.isCompany() ||
-					permissionChecker.isGroupAdmin(group.getGroupId()) ||
+				if (permissionChecker.isGroupAdmin(group.getGroupId()) ||
 					GroupPermissionUtil.contains(
 						permissionChecker, group.getGroupId(), actionId)) {
 

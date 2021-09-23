@@ -73,9 +73,25 @@ public class ObjectRelationshipServiceImpl
 
 		_objectDefinitionModelResourcePermission.check(
 			getPermissionChecker(), objectRelationship.getObjectDefinitionId1(),
-			ActionKeys.DELETE);
+			ActionKeys.UPDATE);
 
 		return objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationshipId);
+	}
+
+	@Override
+	public ObjectRelationship getObjectRelationship(long objectRelationshipId)
+		throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			objectRelationshipPersistence.findByPrimaryKey(
+				objectRelationshipId);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectRelationship.getObjectDefinitionId1(),
+			ActionKeys.VIEW);
+
+		return objectRelationshipLocalService.getObjectRelationship(
 			objectRelationshipId);
 	}
 
@@ -93,6 +109,23 @@ public class ObjectRelationshipServiceImpl
 
 		return objectRelationshipLocalService.getObjectRelationships(
 			objectDefinitionId1, start, end);
+	}
+
+	@Override
+	public ObjectRelationship updateObjectRelationship(
+			long objectRelationshipId, Map<Locale, String> labelMap)
+		throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			objectRelationshipPersistence.findByPrimaryKey(
+				objectRelationshipId);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectRelationship.getObjectDefinitionId1(),
+			ActionKeys.UPDATE);
+
+		return objectRelationshipLocalService.updateObjectRelationship(
+			objectRelationshipId, labelMap);
 	}
 
 	@Reference(

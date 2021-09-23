@@ -236,6 +236,20 @@ public class ObjectRelationshipLocalServiceImpl
 			objectDefinitionId1, start, end);
 	}
 
+	@Override
+	public ObjectRelationship updateObjectRelationship(
+			long objectRelationshipId, Map<Locale, String> labelMap)
+		throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			objectRelationshipPersistence.findByPrimaryKey(
+				objectRelationshipId);
+
+		objectRelationship.setLabelMap(labelMap);
+
+		return objectRelationshipPersistence.update(objectRelationship);
+	}
+
 	private ObjectField _addObjectField(
 			User user, String name, long objectDefinitionId1,
 			long objectDefinitionId2, String type)

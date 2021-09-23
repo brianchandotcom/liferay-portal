@@ -95,7 +95,7 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 				_getPortletCategoryName(remoteAppEntry)
 			).put(
 				"com.liferay.portlet.instanceable",
-				remoteAppEntry.getInstanceable()
+				remoteAppEntry.isInstanceable()
 			).put(
 				"javax.portlet.display-name",
 				remoteAppEntry.getName(LocaleUtil.US)

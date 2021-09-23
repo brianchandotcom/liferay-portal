@@ -261,7 +261,11 @@ definition {
 
 		ACNavigation.goToSettings();
 
-		ACUtils.assertItemsName(itemList = "${dataSource},Beryl Commerce");
+		ACUtils.assertItemsName(itemList = "${dataSource}");
+
+		AssertElementPresent(
+			locator1 = "ACSettings#PROPERTIES_ASSET_TITLE_LIST",
+			propertyName = "Data Sources");
 	}
 
 	@description = "Sync Liferay Data Source Contacts"

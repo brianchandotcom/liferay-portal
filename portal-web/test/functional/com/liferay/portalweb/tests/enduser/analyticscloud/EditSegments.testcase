@@ -528,7 +528,7 @@ definition {
 			ACUtils.viewNameList(nameList = "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6");
 
 			AssertElementNotPresent(
-				key_assetName = "ac7 ac7",
+				key_nameList = "ac7 ac7",
 				locator1 = "ACUtils#NAME_LIST");
 		}
 
@@ -558,7 +558,7 @@ definition {
 			ACUtils.viewNameList(nameList = "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6");
 
 			AssertElementNotPresent(
-				key_assetName = "ac7 ac7",
+				key_nameList = "ac7 ac7",
 				locator1 = "ACUtils#NAME_LIST");
 		}
 

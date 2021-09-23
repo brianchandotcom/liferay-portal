@@ -91,7 +91,7 @@ definition {
 		ACTimeFilter.setLast24Hours();
 
 		AssertElementNotPresent(
-			key_assetName = "Web Content AC Title",
+			key_nameList = "Web Content AC Title",
 			locator1 = "ACUtils#NAME_LIST");
 	}
 

@@ -1343,7 +1343,7 @@ definition {
 			ACUtils.viewNameList(nameList = "${usernameList}");
 
 			AssertElementNotPresent(
-				key_assetName = "user5 user5",
+				key_nameList = "user5 user5",
 				locator1 = "ACUtils#NAME_LIST");
 		}
 

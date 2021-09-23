@@ -16,11 +16,6 @@ import {STORAGE_KEY_CONTEXTS} from './constants';
 import {convertMapToArr} from './map';
 import {getItem, setItem} from './storage';
 
-/**
- * !Array.isArray(storedContextKvArr[0]) is to convert contexts after migration
- * from Array to Map, it should be removed when removing object-hash after some
- * time in production.
- */
 const getContexts = (contextStorageKey = STORAGE_KEY_CONTEXTS) => {
 	const storedContextKvArr = getItem(contextStorageKey);
 

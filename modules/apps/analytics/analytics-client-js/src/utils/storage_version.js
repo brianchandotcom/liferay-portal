@@ -14,7 +14,6 @@
 
 import {STORAGE_KEY_CONTEXTS, STORAGE_KEY_STORAGE_VERSION} from './constants';
 import {setContexts} from './contexts';
-import {legacyHash} from './hash';
 import {getItem, setItem} from './storage';
 
 export const AC_CLIENT_STORAGE_VERSION = 1.0;
@@ -27,10 +26,6 @@ const upgradeStorageSteps = [
 
 			if (storedContextKvArr && !Array.isArray(storedContextKvArr[0])) {
 				const storedContexts = new Map();
-
-				storedContextKvArr.forEach((context) => {
-					return storedContexts.set(legacyHash(context), context);
-				});
 
 				setContexts(storedContexts);
 			}

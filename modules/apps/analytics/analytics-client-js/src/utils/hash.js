@@ -13,7 +13,6 @@
  */
 
 import sha256 from 'hash.js/lib/hash/sha/256';
-import objectHash from 'object-hash';
 
 function sort(object) {
 	if (typeof object !== 'object' || !object) {
@@ -42,12 +41,5 @@ function hash(value) {
 	return sha256().update(toHash).digest('hex');
 }
 
-function legacyHash(value) {
-	return objectHash(value, {
-		algorithm: 'md5',
-		unorderedObjects: true,
-	});
-}
-
-export {hash, legacyHash};
+export {hash};
 export default hash;

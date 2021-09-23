@@ -1,0 +1,40 @@
+.badge {
+	align-items: center;
+	background: $primary-light;
+	border: none;
+	border-radius: 0.25rem;
+	color: $primary-default;
+	display: flex;
+	fill: $primary-default;
+	font-family: $font-family;
+	font-size: 0.8rem;
+	font-weight: 500;
+	gap: 0.5rem;
+	height: 2rem;
+	justify-content: flex-start;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+button.btn.badge {
+	background: #e1ebff;
+	font-weight: 500;
+
+	&.open {
+		background: $primary-default;
+		color: #fff;
+		fill: #fff;
+	}
+}
+
+.badge-primary {
+	background: $primary-light;
+	color: $primary-default;
+	fill: $primary-default;
+}
+
+.badge-error {
+	background: $error-light;
+	color: $error-default;
+	fill: $error-default;
+}

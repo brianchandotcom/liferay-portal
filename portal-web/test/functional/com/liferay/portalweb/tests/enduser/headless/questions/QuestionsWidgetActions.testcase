@@ -1549,6 +1549,333 @@ definition {
 		Questions.viewDetailsTitle(questionTitle = "Title AddQuestionEdit");
 	}
 
+	@description = "Validate if the user can view the responses from my activity."
+	@priority = "4"
+	@refactordone
+	test CanViewMyActivityResponses {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		JSONQuestions.addQuestion(
+			bodyField = "Body AddQuestionText",
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			titleField = "Title AddQuestion");
+
+		JSONQuestions.addAnswer(
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			replyBody = "Body AddAnswerText",
+			threadSubject = "Title AddQuestion",
+			titleField = "Title AddQuestion");
+
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			questionsTitle = "title-addquestion",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.replyToComment(commentReply = "Body AddCommentText");
+
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.gotoTab(questionTabField = "My Activity");
+
+		for (var articleBodyContent : list "Body AddQuestionText,Body AddAnswerText,Body AddCommentText") {
+			AssertElementPresent(
+				key_articleBodyContent = "${articleBodyContent}",
+				locator1 = "Questions#QUESTIONS_ARTICLE_BODY");
+		}
+
+		Click(
+			key_questionTitle = "Title AddQuestion",
+			locator1 = "Questions#QUESTIONS_TITLE");
+
+		Questions.viewDetailsTitle(questionTitle = "Title AddQuestion");
+	}
+
+	@description = "Validate if the user can view the question after changing the subtopic using the breadcrumb filter."
+	@priority = "3"
+	@refactordone
+	test CanViewQuestionAfterChangingSubTopic {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category1",
+			userEmailAddress = "test@liferay.com");
+
+		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+			categoryName = "Questions Test Category1",
+			groupName = "Guest");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Subcategory Description",
+			categoryName = "Questions Test Category2",
+			groupName = "Guest",
+			parentCategoryId = "${parentCategoryId}",
+			userEmailAddress = "test@liferay.com");
+
+		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+			categoryName = "Questions Test Category2",
+			groupName = "Guest");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Subcategory Description",
+			categoryName = "Questions Test Category3",
+			groupName = "Guest",
+			parentCategoryId = "${parentCategoryId}",
+			userEmailAddress = "test@liferay.com");
+
+		JSONQuestions.addQuestion(
+			bodyField = "Question Body 2",
+			categoryName = "Questions Test Category2",
+			groupName = "Guest",
+			titleField = "Question 2");
+
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "questions-test-category1");
+
+		Questions.changeTopic(
+			parentTopicName = "Questions Test Category1",
+			subTopicName = "Questions Test Category2");
+
+		Questions.changeTopic(
+			parentTopicName = "Questions Test Category2",
+			subTopicName = "Questions Test Category3");
+
+		Questions.changeTopic(
+			gotoParentTopic = "Questions Test Category2",
+			multipleSubTopics = "true");
+
+		Questions.viewNoBreadcrumbEllipsis();
+
+		Questions.viewList(listedQuestions = "Question 2");
+	}
+
+	@description = "Validate if the user can filter by votes."
+	@priority = "4"
+	@refactordone
+	test CanViewQuestionsAfterFilteringByVotes {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		for (var num : list "1,2,3") {
+			JSONQuestions.addQuestion(
+				bodyField = "Question Body ${num}",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				titleField = "Question ${num}");
+		}
+
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			questionsTitle = "question-1",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.voteQuestion(
+			currentVotedCount = "0",
+			voteUp = "true");
+
+		Click(locator1 = "Questions#QUESTIONS_HOME_ICON");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Question 2");
+
+		Questions.voteQuestion(
+			currentVotedCount = "0",
+			voteUp = "true");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			questionsTitle = "question-2",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.voteQuestion(
+			currentVotedCount = "1",
+			voteUp = "true");
+
+		Click(locator1 = "Questions#QUESTIONS_HOME_ICON");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.viewVotedResult(
+			questionTitle = "Question 1",
+			votedCount = "1");
+
+		Questions.viewVotedResult(
+			questionTitle = "Question 2",
+			votedCount = "2");
+
+		Questions.viewVotedResult(
+			questionTitle = "Question 3",
+			votedCount = "0");
+
+		Questions.configureFilter(filterBy = "Most Voted");
+
+		Questions.viewFilterResults(
+			lastQuestionTitle = "Question 1",
+			questionTitle = "Question 2");
+	}
+
+	@description = "Validate if the users can view the questions from different topics via the breadcrumb."
+	@priority = "4"
+	@refactordone
+	test CanViewQuestionsFromDifferentSubTopics {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		JSONQuestions.addQuestion(
+			bodyField = "Content Question3",
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			titleField = "Question 3");
+
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.viewNoTopicDropdownToggle(topicName = "Questions Test Category");
+
+		for (var num : list "1,2") {
+			var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+				categoryName = "Questions Test Category",
+				groupName = "Guest");
+
+			JSONMBMessage.addCategory(
+				categoryDescription = "MB Subcategory Description",
+				categoryName = "Questions Subcategory${num}",
+				groupName = "Guest",
+				parentCategoryId = "${parentCategoryId}",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		for (var num : list "1,2") {
+			JSONQuestions.addQuestion(
+				bodyField = "Question Body ${num}",
+				categoryName = "Questions Subcategory${num}",
+				groupName = "Guest",
+				titleField = "Question ${num}");
+		}
+
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.viewList(listedQuestions = "Question 1,Question 2,Question 3");
+
+		Questions.changeTopic(
+			parentTopicName = "Questions Test Category",
+			subTopicName = "Questions Subcategory1");
+
+		Questions.viewList(
+			listedQuestions = "Question 1",
+			unlistedQuestions = "Question 2,Question 3");
+
+		Questions.changeTopic(
+			parentTopicName = "Questions Test Category",
+			subTopicName = "Questions Subcategory2");
+
+		Questions.viewList(
+			listedQuestions = "Question 2",
+			unlistedQuestions = "Question 1,Question 3");
+
+		Questions.changeTopic(gotoParentTopic = "Questions Test Category");
+
+		Questions.viewList(listedQuestions = "Question 1,Question 2,Question 3");
+	}
+
+	@description = "Validate if the user can select the filter and view the related results."
+	@priority = "4"
+	@refactordone
+	test CanViewQuestionsWithConfiguredFilter {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		for (var num : list "1,2") {
+			JSONQuestions.addQuestion(
+				bodyField = "Question Body ${num}",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				titleField = "Question ${num}");
+		}
+
+		MessageboardsThread.openToEditThread(
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			siteURLKey = "guest",
+			threadSubject = "Question 1");
+
+		MessageboardsThread.editCP(
+			skipNavigation = "true",
+			threadBodyEdit = "Question Body 1 Edit",
+			threadSubjectEdit = "Question 1 Edit");
+
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.configureFilter(filterBy = "Latest Edited");
+
+		Questions.viewFilterResults(
+			lastQuestionTitle = "Question 2",
+			questionTitle = "Question 1 Edit");
+
+		Questions.configureFilter(filterBy = "Voted in the Last Week");
+
+		Questions.viewNoFilteredResult();
+
+		Questions.configureFilter(filterBy = "Voted in the Last Month");
+
+		Questions.viewNoFilteredResult();
+
+		Questions.configureFilter(filterBy = "Latest Created");
+
+		Questions.viewFilterResults(
+			lastQuestionTitle = "Question 1 Edit",
+			questionTitle = "Question 2");
+	}
+
 	@description = "Validate if the user can create the second answer to a question, it also covers LPS-125810."
 	@priority = "3"
 	@refactordone
@@ -1580,6 +1907,148 @@ definition {
 		Questions.replyToComment(commentReply = "This is my reply text");
 
 		Questions.answerQuestion(contentField = "This is my second answer");
+	}
+
+	@description = "Validate if the user can view the voting style from the answers list."
+	@priority = "4"
+	@refactordone
+	test CanViewVotingStyleFromAnswersList {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		JSONQuestions.addQuestion(
+			bodyField = "Body AddQuestionWithTheTestBody",
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			titleField = "Title AddQuestion");
+
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			questionsTitle = "title-addquestion",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.answerQuestion(contentField = "This is my answer for voting");
+
+		Questions.voteAnswer(
+			currentVotedCount = "0",
+			voteUp = "true");
+
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.voteAnswer(
+			currentVotedCount = "1",
+			voteDown = "true");
+
+		Questions.voteAnswer(
+			currentVotedCount = "0",
+			voteDown = "true");
+
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.voteAnswer(
+			currentVotedCount = "-1",
+			voteUp = "true");
+
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.viewVotedResult(
+			answersList = "true",
+			votedCount = "0");
+	}
+
+	@description = "Validate if the user can view the voting style from the questions list."
+	@priority = "4"
+	@refactordone
+	test CanViewVotingStyleFromQuestionsList {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		JSONQuestions.addQuestion(
+			bodyField = "Body AddQuestionWithTheTestBody",
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			titleField = "Title AddQuestion");
+
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			questionsTitle = "title-addquestion",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.voteQuestion(
+			currentVotedCount = "0",
+			voteUp = "true");
+
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.viewVotedResult(
+			votedCaret = "top",
+			votedCount = "1");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.voteQuestion(
+			currentVotedCount = "1",
+			voteDown = "true");
+
+		Questions.voteQuestion(
+			currentVotedCount = "0",
+			voteDown = "true");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.viewVotedResult(
+			votedCaret = "bottom",
+			votedCount = "-1");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestion");
+
+		Questions.voteQuestion(
+			currentVotedCount = "-1",
+			voteUp = "true");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.viewVotedResult(
+			votedCaret = "top",
+			votedCount = "0");
 	}
 
 	@description = "Validate if the user can view the statistics."
@@ -1752,514 +2221,6 @@ definition {
 			topicName = "questions-test-category");
 
 		Questions.viewRelatedQuestion(questionTitle = "What is your name");
-	}
-
-	@description = "Validate if the user can view the responses from my activity."
-	@priority = "4"
-	@refactorneeded
-	test ViewMyActivityResponses {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		JSONQuestions.addQuestion(
-			bodyField = "Body AddQuestionText",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			titleField = "Title AddQuestion");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Title AddQuestion");
-
-		Questions.answerQuestion(contentField = "Body AddAnswerText");
-
-		Questions.replyToComment(commentReply = "Body AddCommentText");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoTab(questionTabField = "My Activity");
-
-		for (var articleBodyContent : list "Body AddQuestionText,Body AddAnswerText,Body AddCommentText") {
-			AssertElementPresent(
-				key_articleBodyContent = "${articleBodyContent}",
-				locator1 = "Questions#QUESTIONS_ARTICLE_BODY");
-		}
-
-		Click(
-			key_questionTitle = "Title AddQuestion",
-			locator1 = "Questions#QUESTIONS_TITLE");
-
-		AssertTextEquals(
-			key_questionTitle = "Title AddQuestion",
-			locator1 = "Questions#QUESTIONS_DETAILS_TITLE",
-			value1 = "Title AddQuestion");
-	}
-
-	@description = "Validate if the user can view the question after changing the subtopic using the breadcrumb filter."
-	@priority = "3"
-	@refactorneeded
-	test ViewQuestionAfterChangingSubTopic {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category1",
-			userEmailAddress = "test@liferay.com");
-
-		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
-			categoryName = "Questions Test Category1",
-			groupName = "Guest");
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "MB Subcategory Description",
-			categoryName = "Questions Test Category2",
-			groupName = "Guest",
-			parentCategoryId = "${parentCategoryId}",
-			userEmailAddress = "test@liferay.com");
-
-		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
-			categoryName = "Questions Test Category2",
-			groupName = "Guest");
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "MB Subcategory Description",
-			categoryName = "Questions Test Category3",
-			groupName = "Guest",
-			parentCategoryId = "${parentCategoryId}",
-			userEmailAddress = "test@liferay.com");
-
-		JSONQuestions.addQuestion(
-			bodyField = "Question Body 2",
-			categoryName = "Questions Test Category2",
-			groupName = "Guest",
-			titleField = "Question 2");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category1");
-
-		Questions.changeTopic(
-			parentTopicName = "Questions Test Category1",
-			subTopicName = "Questions Test Category2");
-
-		Questions.changeTopic(
-			parentTopicName = "Questions Test Category2",
-			subTopicName = "Questions Test Category3");
-
-		Questions.changeTopic(
-			gotoParentTopic = "Questions Test Category2",
-			multipleSubTopics = "true");
-
-		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_BREADCRUMB_ELLIPSIS");
-
-		AssertElementPresent(
-			key_questionTitle = "Question 2",
-			locator1 = "Questions#QUESTIONS_TITLE");
-	}
-
-	@description = "Validate if the user can filter by votes."
-	@priority = "4"
-	@refactorneeded
-	test ViewQuestionsFilteredByVotes {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Administrator",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Test Questions Page");
-
-		for (var num : list "1,2,3") {
-			JSONQuestions.addQuestion(
-				bodyField = "Question Body ${num}",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Question ${num}");
-		}
-
-		Navigator.gotoPage(pageName = "Test Questions Page");
-
-		Portlet.addPG(portletName = "Questions");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Question 1");
-
-		Questions.voteQuestion(
-			currentVotedCount = "0",
-			voteUp = "true");
-
-		Click(locator1 = "Questions#QUESTIONS_HOME_ICON");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Question 2");
-
-		Questions.voteQuestion(
-			currentVotedCount = "0",
-			voteUp = "true");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Test Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Question 2");
-
-		Questions.voteQuestion(
-			currentVotedCount = "1",
-			voteUp = "true");
-
-		Click(locator1 = "Questions#QUESTIONS_HOME_ICON");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Refresh();
-
-		AssertTextEquals(
-			key_questionTitle = "Question 1",
-			locator1 = "Questions#QUESTIONS_VOTED_COUNT",
-			value1 = "1");
-
-		AssertTextEquals(
-			key_questionTitle = "Question 2",
-			locator1 = "Questions#QUESTIONS_VOTED_COUNT",
-			value1 = "2");
-
-		AssertTextEquals(
-			key_questionTitle = "Question 3",
-			locator1 = "Questions#QUESTIONS_VOTED_COUNT",
-			value1 = "0");
-
-		Questions.configureFilter(filterBy = "Most Voted");
-
-		Questions.viewFilterResults(
-			lastQuestionTitle = "Question 1",
-			questionTitle = "Question 2");
-	}
-
-	@description = "Validate if the users can view the questions from different topics via the breadcrumb."
-	@priority = "4"
-	@refactorneeded
-	test ViewQuestionsFromDifferentSubTopics {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		JSONQuestions.addQuestion(
-			bodyField = "Content Question3",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			titleField = "Question 3");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		AssertElementNotPresent(
-			key_topicName = "Questions Test Category",
-			locator1 = "Questions#QUESTIONS_BREADCRUMB_TOPIC_DROPDOWN_TOGGLE");
-
-		for (var num : list "1,2") {
-			var parentCategoryId = JSONMBMessage.getCategoryIdByName(
-				categoryName = "Questions Test Category",
-				groupName = "Guest");
-
-			JSONMBMessage.addCategory(
-				categoryDescription = "MB Subcategory Description",
-				categoryName = "Questions Subcategory${num}",
-				groupName = "Guest",
-				parentCategoryId = "${parentCategoryId}",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		for (var num : list "1,2") {
-			JSONQuestions.addQuestion(
-				bodyField = "Question Body ${num}",
-				categoryName = "Questions Subcategory${num}",
-				groupName = "Guest",
-				titleField = "Question ${num}");
-		}
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.viewList(listedQuestions = "Question 1,Question 2,Question 3");
-
-		Questions.changeTopic(
-			parentTopicName = "Questions Test Category",
-			subTopicName = "Questions Subcategory1");
-
-		Questions.viewList(
-			listedQuestions = "Question 1",
-			unlistedQuestions = "Question 2,Question 3");
-
-		Questions.changeTopic(
-			parentTopicName = "Questions Test Category",
-			subTopicName = "Questions Subcategory2");
-
-		Questions.viewList(
-			listedQuestions = "Question 2",
-			unlistedQuestions = "Question 1,Question 3");
-
-		Questions.changeTopic(gotoParentTopic = "Questions Test Category");
-
-		Questions.viewList(listedQuestions = "Question 1,Question 2,Question 3");
-	}
-
-	@description = "Validate if the user can select the filter and view the related results."
-	@priority = "4"
-	@refactorneeded
-	test ViewQuestionsWithConfiguredFilter {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		for (var num : list "1,2") {
-			JSONQuestions.addQuestion(
-				bodyField = "Question Body ${num}",
-				categoryName = "Questions Test Category",
-				groupName = "Guest",
-				titleField = "Question ${num}");
-		}
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsCategory.gotoCP(categoryName = "Questions Test Category");
-
-		MessageboardsThread.gotoCP(threadSubject = "Question 1");
-
-		MessageboardsThread.editCP(
-			threadBodyEdit = "Question Body 1 Edit",
-			threadSubjectEdit = "Question 1 Edit");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Pause(locator = "3000");
-
-		Questions.configureFilter(filterBy = "Latest Edited");
-
-		Questions.viewFilterResults(
-			lastQuestionTitle = "Question 2",
-			questionTitle = "Question 1 Edit");
-
-		Questions.configureFilter(filterBy = "Voted in the Last Week");
-
-		AssertElementPresent(
-			key_emptyInfo = "There are no results.",
-			locator1 = "Questions#EMPTY_STATE_MESSAGE");
-
-		for (var num : list "1 Edit,2") {
-			AssertElementNotPresent(
-				key_questionTitle = "Question ${num}",
-				locator1 = "Questions#QUESTIONS_TITLE");
-		}
-
-		Questions.configureFilter(filterBy = "Voted in the Last Month");
-
-		AssertElementPresent(
-			key_emptyInfo = "There are no results.",
-			locator1 = "Questions#EMPTY_STATE_MESSAGE");
-
-		for (var num : list "1 Edit,2") {
-			AssertElementNotPresent(
-				key_questionTitle = "Question ${num}",
-				locator1 = "Questions#QUESTIONS_TITLE");
-		}
-
-		Questions.configureFilter(filterBy = "Latest Created");
-
-		Questions.viewFilterResults(
-			lastQuestionTitle = "Question 1 Edit",
-			questionTitle = "Question 2");
-	}
-
-	@description = "Validate if the user can view the voting style from the answers list."
-	@priority = "4"
-	@refactorneeded
-	test ViewVotingStyleFromAnswersList {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		JSONQuestions.addQuestion(
-			bodyField = "Body AddQuestionWithTheTestBody",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			titleField = "Title AddQuestion");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Title AddQuestion");
-
-		Questions.answerQuestion(contentField = "This is my answer for voting");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Title AddQuestion");
-
-		Questions.voteAnswer(
-			currentVotedCount = "0",
-			voteUp = "true");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Title AddQuestion");
-
-		Questions.voteAnswer(
-			currentVotedCount = "1",
-			voteDown = "true");
-
-		Questions.voteAnswer(
-			currentVotedCount = "0",
-			voteDown = "true");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Title AddQuestion");
-
-		Questions.voteAnswer(
-			currentVotedCount = "-1",
-			voteUp = "true");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Title AddQuestion");
-
-		Questions.viewVotedResult(
-			answersList = "true",
-			votedCount = "0");
-	}
-
-	@description = "Validate if the user can view the voting style from the questions list."
-	@priority = "4"
-	@refactorneeded
-	test ViewVotingStyleFromQuestionsList {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "Body AddQuestionWithTheTestBody",
-			titleField = "Title AddQuestion");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Title AddQuestion");
-
-		Questions.voteQuestion(
-			currentVotedCount = "0",
-			voteUp = "true");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.viewVotedResult(
-			votedCaret = "top",
-			votedCount = "1");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Title AddQuestion");
-
-		Questions.voteQuestion(
-			currentVotedCount = "1",
-			voteDown = "true");
-
-		Questions.voteQuestion(
-			currentVotedCount = "0",
-			voteDown = "true");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.viewVotedResult(
-			votedCaret = "bottom",
-			votedCount = "-1");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Title AddQuestion");
-
-		Questions.voteQuestion(
-			currentVotedCount = "-1",
-			voteUp = "true");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.viewVotedResult(
-			votedCaret = "top",
-			votedCount = "0");
 	}
 
 }

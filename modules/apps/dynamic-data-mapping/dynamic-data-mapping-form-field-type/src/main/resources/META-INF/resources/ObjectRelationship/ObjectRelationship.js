@@ -88,12 +88,13 @@ export function ObjectRelationship({
 		>
 			<ClayAutocomplete>
 				<ClayAutocomplete.Input
+					name={inputName}
+					onBlur={onBlur}
 					onChange={(event) => {
 						mutatedRef.current = true;
 
 						onChange(event, event.target.value);
 					}}
-					onBlur={onBlur}
 					onFocus={onFocus}
 					placeholder={placeholder}
 					readOnly={readOnly}

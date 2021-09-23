@@ -130,6 +130,7 @@ public class GroupItemSelectorProviderImpl
 
 		for (Group group : groups) {
 			if (group.isCompany() ||
+				permissionChecker.isGroupAdmin(group.getGroupId()) ||
 				GroupPermissionUtil.contains(
 					permissionChecker, group, ActionKeys.VIEW)) {
 

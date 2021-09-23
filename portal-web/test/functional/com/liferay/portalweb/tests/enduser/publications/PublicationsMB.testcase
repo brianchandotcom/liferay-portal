@@ -1,0 +1,108 @@
+@component-name = "portal-publications"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Publications";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONPublications.enablePublications();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ApplicationsMenu.gotoPortlet(
+				category = "Publications",
+				panel = "Applications",
+				portlet = "Settings");
+
+			Publications.disablePublications();
+		}
+	}
+
+	@description = "Assert we can publish the publication with message board thread and reiview the changes."
+	@priority = "4"
+	test PublishNewMessageBoardThreadAndMessage {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONMBMessage.addMessageReply(
+			groupName = "Guest",
+			replyBody = "MB Thread Reply Body",
+			threadSubject = "MB Thread Message Subject");
+
+		Publications.gotoReviewChanges(
+			gotoManagePublications = "true",
+			publicationName = "Publication Name");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Message Boards Message",
+			changeSite = "Guest",
+			changeTitle = "MB Thread Message Subject",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Message Boards Message",
+			changeOrder = "2",
+			changeSite = "Guest",
+			changeTitle = "RE: MB Thread Message Subject",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Message Boards Thread",
+			changeSite = "Guest",
+			changeTitle = "MB Thread Message Subject",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChangesViaContextStyle(
+			changeCategory = "Message Boards Message",
+			changeDescription = "Test Test added a Message Boards Message in Guest",
+			changeTitle = "MB Thread Message Subject");
+
+		PublicationsChanges.viewChangesViaContextStyle(
+			changeCategory = "Message Boards Message",
+			changeDescription = "Test Test added a Message Boards Message in Guest",
+			changeTitle = "RE: MB Thread Message Subject");
+
+		PublicationsChanges.viewChangesViaContextStyle(
+			changeCategory = "Message Boards Thread",
+			changeDescription = "Test Test added a Message Boards Thread in Guest",
+			changeTitle = "MB Thread Message Subject");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsThread.viewCP(
+			replyCount = "1",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject",
+			userName = "Test Test");
+
+		MessageboardsThread.viewReplyCP(
+			threadBody = "MB Thread Reply Body",
+			threadSubject = "MB Thread Message Subject",
+			userName = "Test Test");
+	}
+
+}

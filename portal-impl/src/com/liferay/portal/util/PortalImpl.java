@@ -8249,20 +8249,26 @@ public class PortalImpl implements Portal {
 			Set<Locale> availableLocales)
 		throws PortalException {
 
-		String virtualHostname = getVirtualHostname(
+		TreeMap<String, String> virtualHostnames = getVirtualHostnames(
 			themeDisplay.getLayoutSet());
 
-		if (Validator.isNull(virtualHostname)) {
+		String virtualHostname = "";
+
+		if (virtualHostnames.isEmpty()) {
 			Company company = themeDisplay.getCompany();
 
 			virtualHostname = company.getVirtualHostname();
 		}
+		else {
+			virtualHostname = virtualHostnames.firstKey();
+		}
 
 		String portalDomain = themeDisplay.getPortalDomain();
 
-		if (!Validator.isBlank(portalDomain) &&
-			!StringUtil.equalsIgnoreCase(portalDomain, _LOCALHOST) &&
-			StringUtil.equalsIgnoreCase(virtualHostname, _LOCALHOST)) {
+		if ((!Validator.isBlank(portalDomain) &&
+			 !StringUtil.equalsIgnoreCase(portalDomain, _LOCALHOST) &&
+			 StringUtil.equalsIgnoreCase(virtualHostname, _LOCALHOST)) ||
+			virtualHostnames.containsKey(portalDomain)) {
 
 			virtualHostname = portalDomain;
 		}

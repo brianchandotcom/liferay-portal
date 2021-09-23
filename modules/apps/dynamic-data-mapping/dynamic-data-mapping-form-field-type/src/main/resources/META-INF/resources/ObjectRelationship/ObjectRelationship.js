@@ -12,46 +12,127 @@
  * details.
  */
 
-import Autocomplete from 'commerce-frontend-js/components/autocomplete/Autocomplete';
+import ClayAutocomplete from '@clayui/autocomplete';
+import {useResource} from '@clayui/data-provider';
+import ClayDropDown from '@clayui/drop-down';
+import {useDebounce} from '@clayui/shared';
 import {FieldBase} from 'dynamic-data-mapping-form-field-type/FieldBase/ReactFieldBase.es';
+import {fetch} from 'frontend-js-web';
 import React from 'react';
 
-const ObjectRelationship = ({
+const NETWORK_STATUS_LOADING = 1;
+const NETWORK_STATUS_UNUSED = 4;
+
+const LoadingWithDebounce = ({loading, render}) => {
+	const debouncedLoadingChange = useDebounce(loading, 500);
+
+	if (loading || debouncedLoadingChange) {
+		return (
+			<ClayDropDown.Item className="disabled">
+				{Liferay.Language.get('loading')}
+			</ClayDropDown.Item>
+		);
+	}
+
+	return render;
+};
+
+export function ObjectRelationship({
 	apiURL,
-	initialLabel,
-	initialValue,
 	inputName,
-	itemsKey,
-	itemsLabel,
+	labelKey = 'label',
 	name,
+	onBlur = () => {},
 	onChange,
-	placeholder,
+	onFocus = () => {},
+	placeholder = Liferay.Language.get('search'),
+	predefinedValue,
 	readOnly,
 	required,
 	value,
+	valueKey = 'value',
 	...otherProps
-}) => (
-	<FieldBase
-		name={name}
-		readOnly={readOnly}
-		required={required}
-		{...otherProps}
-	>
-		<Autocomplete
-			{...(placeholder && {inputPlaceholder: placeholder})}
-			apiUrl={apiURL}
-			initialLabel={initialLabel}
-			initialValue={initialValue}
-			inputName={inputName}
-			itemsKey={itemsKey}
-			itemsLabel={itemsLabel}
+}) {
+	const mutatedRef = React.useRef(false);
+
+	const [networkStatus, setNetworkStatus] = React.useState(
+		NETWORK_STATUS_LOADING
+	);
+
+	const {resource} = useResource({
+		fetch,
+		fetchPolicy: 'cache-first',
+		link: apiURL,
+		onNetworkStatusChange: setNetworkStatus,
+		variables: {
+			page: 1,
+			pageSize: 10,
+			search: value,
+		},
+	});
+
+	const loading = networkStatus < NETWORK_STATUS_UNUSED;
+
+	value = mutatedRef.current ? value : predefinedValue;
+
+	return (
+		<FieldBase
 			name={name}
 			onChange={onChange}
 			readOnly={readOnly}
 			required={required}
 			value={value}
-		/>
-	</FieldBase>
-);
+			{...otherProps}
+		>
+			<ClayAutocomplete>
+				<ClayAutocomplete.Input
+					onChange={(event) => {
+						mutatedRef.current = true;
+
+						onChange(event.target.value);
+					}}
+					onBlur={onBlur}
+					onFocus={onFocus}
+					placeholder={placeholder}
+					readOnly={readOnly}
+					required={required}
+					value={value}
+				/>
+
+				<ClayAutocomplete.DropDown
+					active={readOnly ? false : !!resource && !!value}
+				>
+					<ClayDropDown.ItemList>
+						<LoadingWithDebounce
+							loading={loading}
+							render={
+								<>
+									{resource?.items?.length === 0 && (
+										<ClayDropDown.Item className="disabled">
+											{Liferay.Language.get(
+												'no-results-found'
+											)}
+										</ClayDropDown.Item>
+									)}
+									{resource?.items?.map((item) => (
+										<ClayAutocomplete.Item
+											key={item.id}
+											match={String(value)}
+											onClick={() =>
+												onChange(String(item[valueKey]))
+											}
+											value={String(item[labelKey])}
+										/>
+									))}
+								</>
+							}
+						/>
+					</ClayDropDown.ItemList>
+				</ClayAutocomplete.DropDown>
+				{loading && <ClayAutocomplete.LoadingIndicator />}
+			</ClayAutocomplete>
+		</FieldBase>
+	);
+}
 
 export default ObjectRelationship;

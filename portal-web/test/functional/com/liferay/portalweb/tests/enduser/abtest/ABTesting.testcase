@@ -108,9 +108,33 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test AssertGoalInputWhenEdit {
+		task ("Create AB test, create variant and run the test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
 
-		// TODO LPS-137479 AssertGoalInputWhenEdit pending implementation
+			ABTest.createVariant(variantName = "Variant name");
+		}
 
+		task ("Edit test A/B and assert that user tries to edit one AB Test") {
+			ABTest.editOrDeleteABTest(value = "Edit");
+
+			AssertElementPresent(locator1 = "ABTest#CHANGE_SELECT_GOAL");
+
+			Select(
+			locator1 = "ABTest#CHANGE_SELECT_GOAL",
+			value1 = "Bounce Rate");
+			
+			Click(locator1 = "ABTest#SAVE_AB_TEST_BUTTON");
+
+			Alert.viewSuccessMessage();
+
+			ABTest.runTest();
+		}
+
+		task ("Terminate the AB test") {
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-97882: Validate if, when the user tries to edit an existing A/B Test, after edit the mandatory information, A/B Test sidebar appears with the A/B Testing configuration"

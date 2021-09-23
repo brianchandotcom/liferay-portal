@@ -36,8 +36,8 @@ definition {
 			locator1 = "ABTest#AB_TEST_TITLE_FIELD",
 			value1 = "${testTitle}");
 
-		AssertClick(
-			locator1 = "ABTest#SELECT_GOAL",
+		Select(
+			locator1 = "ABTest#CHANGE_SELECT_GOAL",
 			value1 = "${goal}");
 
 		Click(locator1 = "ABTest#SAVE_AB_TEST_BUTTON");
@@ -64,7 +64,12 @@ definition {
 
 		Alert.viewSuccessMessage();
 	}
+	macro editOrDeleteABTest {
+		Click(locator1 = "ABTest#KEBAB_AB_TEST");
 
+		Click(value = "${value}",
+				locator1 = "ABTest#KEBAB_OPTIONS_AB_TEST");
+	}
 	macro runTest {
 		Click(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
 

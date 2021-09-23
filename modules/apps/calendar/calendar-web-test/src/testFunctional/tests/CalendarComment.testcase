@@ -95,7 +95,7 @@ definition {
 
 	@priority = "4"
 	test AddToEventRegular {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

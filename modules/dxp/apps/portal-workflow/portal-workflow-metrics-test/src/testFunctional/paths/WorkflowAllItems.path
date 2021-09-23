@@ -256,6 +256,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WORKFLOW_ALL_ITEMS_CREATION_DATE</td>
+	<td>//span[contains(@class, "text-truncate title") and text()="Creation Date"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_ALL_ITEMS_ITEM_ORDER</td>
 	<td>//tbody//tr[${key_order}]//td[4][@title='${key_itemSubject}']</td>
 	<td></td>

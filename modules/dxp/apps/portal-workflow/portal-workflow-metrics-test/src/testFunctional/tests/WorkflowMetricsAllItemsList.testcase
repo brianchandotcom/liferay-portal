@@ -1467,7 +1467,7 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ITEM_SUBJECT");
+		WorkflowMetricsAllItemsList.orderByCreationDateAsc();
 
 		WorkflowMetricsProcessListView.changePagination(itemsPerPage = "8 Entries");
 

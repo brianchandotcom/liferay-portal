@@ -1,0 +1,9 @@
+definition {
+
+	macro orderByCreationDateAsc {
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_CREATION_DATE");
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_CREATION_DATE");
+	}
+
+}

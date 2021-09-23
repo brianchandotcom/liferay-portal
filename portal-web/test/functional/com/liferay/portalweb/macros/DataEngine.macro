@@ -874,7 +874,7 @@ definition {
 	}
 
 	macro editFieldLocalizable {
-		var checkboxName = "Localizable";
+		var key_fieldName = "localizable";
 
 		if (isSet(fieldsetModal)) {
 			AssertClick.assertPartialTextClickAt(
@@ -891,7 +891,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
-		Click.javaScriptClick(locator1 = "Checkbox#ANY_CHECKBOX");
+		Check.checkToggleSwitch(locator1 = "Checkbox#SWITCH");
 
 		Click(locator1 = "Sidebar#BACK");
 	}

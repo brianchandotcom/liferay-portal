@@ -332,7 +332,6 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.DTOEnumCreationCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks the creation of DTO enum." />
-			<property name="enabled" value="false" />
 			<message key="create.use" value="Use ''create'' to create DTO enum, instead of ''valueOf''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.EmptyConstructorCheck">

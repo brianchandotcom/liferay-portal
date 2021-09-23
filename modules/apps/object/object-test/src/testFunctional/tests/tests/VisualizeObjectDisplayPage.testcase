@@ -104,12 +104,40 @@ definition {
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Long type for a specific Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DisplaySpecificEntryLong {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "CustomObject",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-139037 DisplaySpecificEntryLong pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Long",
+			fieldName = "customObjectField",
+			fieldType = "Long",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "123456789123456789");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		VisualizeObjectCollectionDisplay.openHeading();
+
+		VisualizeObjectDisplayPage.addItem(labelName = "Custom", frameTitle = "Select");
+
+        VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Long");
+
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry ="123456789123456789");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of String type for a specific Object"

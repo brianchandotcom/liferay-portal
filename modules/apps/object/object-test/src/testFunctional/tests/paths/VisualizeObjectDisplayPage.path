@@ -11,6 +11,26 @@
 
 <tbody>
 	<tr>
+		<td>SELECT_ITEM</td>
+		<td>//button[@title='Select Item']</td>
+		<td></td>
+	</tr>
+		<tr>
+		<td>SELECT_OBJECT</td>
+		<td>//a[contains(text(),'${key_labelName}')]</td>
+		<td></td>
+	</tr>
+		<tr>
+		<td>SELECT_ENTRY</td>
+		<td>//li[@data-qa-id='row']</td>
+		<td></td>
+	</tr>
+		<tr>
+		<td>DISPLAY_ENTRY</td>
+		<td>//h1[(@data-lfr-editable-id='element-text') and contains(.,'${key_entry}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ADD_PLUS_BUTTON</td>
 		<td>//*[@title='Add']</td>
 		<td></td>

@@ -1,5 +1,22 @@
 definition {
 
+	macro addItem {
+		Click.javaScriptClick(locator1 = "VisualizeObjectDisplayPage#SELECT_ITEM");
+
+		SelectFrame(
+			key_title ="${frameTitle}",
+			locator1 = "IFrame#MODAL_ANY");
+
+	    Click.javaScriptClick(key_labelName = "${labelName}",
+		locator1 = "VisualizeObjectDisplayPage#SELECT_OBJECT");
+
+		Click(locator1 = "VisualizeObjectDisplayPage#SELECT_ENTRY");
+	}
+
+	macro assertDisplayEntry {
+				 AssertElementPresent(key_entry = "${entry}", locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
+	}
+
 	macro createObjectPageTemplate {
 		VisualizeObjectDisplayPage.openPageTemplate();
 

@@ -16,12 +16,13 @@ package com.liferay.portal.kernel.internal.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
 
 import java.lang.reflect.Method;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Preston Crary
@@ -29,11 +30,11 @@ import java.lang.reflect.Method;
 public class SystemCheckerUtil {
 
 	public static void runSystemCheckers(Log log) {
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		try {
 			ServiceReference<?>[] serviceReferences =
-				registry.getAllServiceReferences(
+				bundleContext.getAllServiceReferences(
 					"com.liferay.portal.osgi.debug.SystemChecker", null);
 
 			if (serviceReferences == null) {
@@ -45,7 +46,8 @@ public class SystemCheckerUtil {
 			}
 
 			for (ServiceReference<?> serviceReference : serviceReferences) {
-				Object systemChecker = registry.getService(serviceReference);
+				Object systemChecker = bundleContext.getService(
+					serviceReference);
 
 				StringBundler sb = new StringBundler(4);
 
@@ -72,7 +74,7 @@ public class SystemCheckerUtil {
 					log.warn(sb.toString());
 				}
 
-				registry.ungetService(serviceReference);
+				bundleContext.ungetService(serviceReference);
 			}
 		}
 		catch (Exception exception) {

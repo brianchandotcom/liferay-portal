@@ -44,9 +44,6 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
 
 import java.io.Closeable;
 import java.io.Serializable;
@@ -69,6 +66,7 @@ import org.junit.Assert;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleReference;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 
 /**
@@ -431,10 +429,10 @@ public class DataGuardTestRuleUtil {
 
 		field.setAccessible(true);
 
-		Registry registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		ServiceReference<?>[] serviceReferences =
-			registry.getAllServiceReferences(
+			bundleContext.getAllServiceReferences(
 				"com.liferay.portal.spring.transaction.TransactionExecutor",
 				"(origin.bundle.symbolic.name=" + originBundleSymbolicName +
 					")");
@@ -452,7 +450,7 @@ public class DataGuardTestRuleUtil {
 
 		ServiceReference<?> serviceReference = serviceReferences[0];
 
-		Object portletTransactionExecutor = registry.getService(
+		Object portletTransactionExecutor = bundleContext.getService(
 			serviceReference);
 
 		ThreadLocal<Deque<Object>> transactionExecutorsThreadLocal =
@@ -471,7 +469,7 @@ public class DataGuardTestRuleUtil {
 		return () -> {
 			transactionExecutors.pop();
 
-			registry.ungetService(serviceReference);
+			bundleContext.ungetService(serviceReference);
 		};
 	}
 

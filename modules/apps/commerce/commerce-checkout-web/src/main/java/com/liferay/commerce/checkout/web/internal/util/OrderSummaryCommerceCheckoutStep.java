@@ -43,11 +43,13 @@ import com.liferay.commerce.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -62,6 +64,7 @@ import javax.portlet.ActionResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -105,7 +108,8 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			_validateCommerceOrder(actionRequest, commerceOrderUuid);
 
 			_checkoutCommerceOrder(
-				_portal.getHttpServletRequest(actionRequest));
+				_portal.getHttpServletRequest(actionRequest),
+				_portal.getHttpServletResponse(actionResponse));
 		}
 		catch (Exception exception) {
 			Throwable throwable = exception.getCause();
@@ -212,7 +216,9 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		}
 	}
 
-	private void _checkoutCommerceOrder(HttpServletRequest httpServletRequest)
+	private void _checkoutCommerceOrder(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		CommerceOrder commerceOrder =
@@ -220,8 +226,27 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 				CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
 		if (commerceOrder.isOpen()) {
-			_commerceOrderEngine.checkoutCommerceOrder(
-				commerceOrder, _portal.getUserId(httpServletRequest));
+			CommerceOrder checkedOutCommerceOrder =
+				_commerceOrderEngine.checkoutCommerceOrder(
+					commerceOrder, _portal.getUserId(httpServletRequest));
+
+			if (!checkedOutCommerceOrder.isOpen()) {
+				CookieKeys.deleteCookies(
+					httpServletRequest, httpServletResponse,
+					CookieKeys.getDomain(httpServletRequest),
+					CommerceOrder.class.getName() + StringPool.POUND +
+						commerceOrder.getGroupId());
+
+				HttpServletRequest originalHttpServletRequest =
+					_portal.getOriginalServletRequest(httpServletRequest);
+
+				HttpSession httpSession =
+					originalHttpServletRequest.getSession();
+
+				httpSession.removeAttribute(
+					CommerceOrder.class.getName() + StringPool.POUND +
+						commerceOrder.getGroupId());
+			}
 		}
 	}
 

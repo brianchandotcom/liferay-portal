@@ -32,9 +32,7 @@ definition {
 			consumerSecret = "AC Test",
 			salesforceName = "AC Test");
 
-		AssertElementNotPresent(
-			itemName = "AC Test",
-			locator1 = "ACSettings#ITEM_ON_LIST");
+		ACUtils.assertItemsNameNotPresent(itemList = "AC Test");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8855 | Test Summary: Delete a Salesforce data source"

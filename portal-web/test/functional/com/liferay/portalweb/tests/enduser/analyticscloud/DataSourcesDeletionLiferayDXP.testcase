@@ -58,7 +58,7 @@ definition {
 
 		ACNavigation.goToSettings();
 
-		AssertElementNotPresent(locator1 = "ACSettings#ITEM_ON_LIST");
+		ACUtils.assertItemsNameNotPresent(itemList = "${itemName}");
 
 		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 

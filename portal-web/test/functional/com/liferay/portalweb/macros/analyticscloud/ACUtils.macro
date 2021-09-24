@@ -153,6 +153,15 @@ definition {
 		}
 	}
 
+	@summary = "Asserts an element not present in the list of items by the name"
+	macro assertItemsNameNotPresent {
+		for (var itemName : list "${itemList}") {
+			AssertElementNotPresent(
+				itemName = "${itemName}",
+				locator1 = "ACSettings#ITEM_ON_LIST");
+		}
+	}
+
 	macro assertPageTitle {
 		var key_pageTitle = "${pageTitle}";
 		AssertTextEquals(

@@ -175,9 +175,7 @@ definition {
 		}
 
 		task ("Assert that the 24h filter page is not present on Custom Range filter") {
-			AssertElementNotPresent(
-				itemName = "AC Page",
-				locator1 = "ACSettings#ITEM_ON_LIST");
+			ACUtils.assertItemsNameNotPresent(itemList = "AC Page");
 		}
 
 		// Can't assert that the filter is working properly without past data
@@ -232,9 +230,7 @@ definition {
 		}
 
 		task ("Assert that the 24h filter page is not present on Last 180 Days filter") {
-			AssertElementNotPresent(
-				itemName = "AC Page",
-				locator1 = "ACSettings#ITEM_ON_LIST");
+			ACUtils.assertItemsNameNotPresent(itemList = "AC Page");
 		}
 
 		// Can't assert that the filter is working properly without past data
@@ -289,9 +285,7 @@ definition {
 		}
 
 		task ("Assert that the 24h filter page is not present on Last Year filter") {
-			AssertElementNotPresent(
-				itemName = "AC Page",
-				locator1 = "ACSettings#ITEM_ON_LIST");
+			ACUtils.assertItemsNameNotPresent(itemList = "AC Page");
 		}
 
 		// Can't assert that the filter is working properly without past data

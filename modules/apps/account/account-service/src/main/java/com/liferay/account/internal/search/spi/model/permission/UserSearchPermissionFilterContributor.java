@@ -15,8 +15,11 @@
 package com.liferay.account.internal.search.spi.model.permission;
 
 import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRel;
+import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -24,6 +27,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.UserBag;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.search.spi.model.permission.SearchPermissionFilterContributor;
@@ -55,6 +59,25 @@ public class UserSearchPermissionFilterContributor
 
 		try {
 			TermsFilter termsFilter = new TermsFilter("accountEntryIds");
+
+			List<AccountEntryUserRel> accountEntryUserRels =
+				_accountEntryUserRelLocalService.
+					getAccountEntryUserRelsByAccountUserId(
+						permissionChecker.getUserId());
+
+			for (AccountEntryUserRel accountEntryUserRel :
+					accountEntryUserRels) {
+
+				if (_accountEntryModelResourcePermission.contains(
+						permissionChecker,
+						accountEntryUserRel.getAccountEntryId(),
+						AccountActionKeys.VIEW_USERS)) {
+
+					termsFilter.addValue(
+						String.valueOf(
+							accountEntryUserRel.getAccountEntryId()));
+				}
+			}
 
 			UserBag userBag = permissionChecker.getUserBag();
 
@@ -100,8 +123,17 @@ public class UserSearchPermissionFilterContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserSearchPermissionFilterContributor.class);
 
+	@Reference(
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
+
 	@Reference
 	private AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
+
+	@Reference
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 }

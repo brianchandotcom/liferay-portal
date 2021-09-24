@@ -149,20 +149,16 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 
 		InfoForm infoForm = null;
 
-		String formVariationKey = StringPool.BLANK;
-
-		if (getClassPK() > 0) {
-			formVariationKey = String.valueOf(getClassPK());
-		}
-
 		try {
 			infoForm = infoItemFormProvider.getInfoForm(
-				formVariationKey, _themeDisplay.getScopeGroupId());
+				templateEntry.getInfoItemFormVariationKey(),
+				_themeDisplay.getScopeGroupId());
 		}
 		catch (NoSuchFormVariationException noSuchFormVariationException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to get form variation with key " + formVariationKey,
+					"Unable to get form variation with key " +
+						templateEntry.getInfoItemFormVariationKey(),
 					noSuchFormVariationException);
 			}
 

@@ -63,13 +63,20 @@ CSDiagramType csDiagramType = csDiagramSettingDisplayContext.getCSDiagramType(ty
 				<commerce-ui:panel
 					title='<%= LanguageUtil.get(resourceBundle, "diagram-mapping") %>'
 				>
+
 					<%
-					if(csDiagramSetting != null) {
+					if (csDiagramSetting != null) {
 						csDiagramType.render(csDiagramSetting, request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
-					} else {
+					}
+					else {
 					%>
+
 						<div class="p-3 text-center"><liferay-ui:message key="please-upload-a-file" /></div>
-					<% } %>
+
+					<%
+					}
+					%>
+
 				</commerce-ui:panel>
 			</div>
 

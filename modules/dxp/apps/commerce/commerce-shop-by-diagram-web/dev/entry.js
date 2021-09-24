@@ -11,27 +11,17 @@
 
 import {render} from '@liferay/frontend-js-react-web';
 
-import Diagram from '../src/main/resources/META-INF/resources/js/diagram/Diagram';
 import DiagramWithAutomapping from '../src/main/resources/META-INF/resources/js/diagram/DiagramWithAutomapping';
-
-render(
-	Diagram,
-	{
-		diagramId: 1231,
-		imageURL: './assets/308056.svg',
-		isAdmin: true,
-		productId: 44212,
-	},
-	document.getElementById('shop-by-diagram')
-);
 
 render(
 	DiagramWithAutomapping,
 	{
-		diagramId: 1231,
-		imageURL: './assets/308056.svg',
+		diagramId: '44515',
+		imageURL:
+			'/documents/42538/0/308056.svg/1f724d61-012d-3c0b-644d-e492251dc512?version=1.0&t=1632488647671&download=true',
 		isAdmin: true,
-		productId: 44212,
+		pinsCSSSelector: '#Livello_Testi > text, [id*=MTEXT] > text',
+		productId: '44498',
 	},
 	document.getElementById('shop-by-diagram-automapping')
 );

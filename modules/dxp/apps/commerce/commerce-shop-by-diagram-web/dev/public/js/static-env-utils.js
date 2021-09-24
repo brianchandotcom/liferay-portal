@@ -20,9 +20,10 @@ const Liferay = {
 		},
 	},
 	ThemeDisplay: {
+		getBCP47LanguageId: () => 'en-US',
 		getCanonicalURL: () => '/',
 		getDefaultLanguageId: () => 'en_US',
-		getLanguageId: () => 'it_IT',
+		getLanguageId: () => 'en_US',
 		getPathThemeImages: () => '/assets',
 		getPortalURL: () => window.location.origin,
 		getScopeGroupId: () => '123',
@@ -62,7 +63,7 @@ window.defaultFetch = fetch;
 window.fetch = (resource, {headers, ...init} = {}) => {
 	headers = new Headers({
 		Accept: 'application/json',
-		Authorization: `Basic ${window.btoa('test@test.com:test')}`,
+		Authorization: `Basic ${window.btoa('test@liferay.com:test')}`,
 		'Content-Type': 'application/json',
 	});
 

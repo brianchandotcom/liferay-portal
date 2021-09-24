@@ -34,7 +34,6 @@ page import="com.liferay.commerce.shop.by.diagram.admin.web.internal.display.con
 page import="com.liferay.commerce.shop.by.diagram.admin.web.internal.display.context.CSDiagramSettingDisplayContext" %><%@
 page import="com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.taglib.clay.data.set.constants.CSDiagramDataSetConstants" %><%@
 page import="com.liferay.commerce.shop.by.diagram.admin.web.internal.type.DefaultCSDiagramType" %><%@
-page import="com.liferay.commerce.shop.by.diagram.admin.web.internal.type.SVGCSDiagramType" %><%@
 page import="com.liferay.commerce.shop.by.diagram.constants.CSDiagramWebKeys" %><%@
 page import="com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting" %><%@
 page import="com.liferay.commerce.shop.by.diagram.type.CSDiagramType" %><%@

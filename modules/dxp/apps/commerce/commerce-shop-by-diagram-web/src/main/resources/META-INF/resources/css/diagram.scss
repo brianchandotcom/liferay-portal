@@ -1,1 +1,112 @@
 @import 'atlas-variables';
+
+.shop-by-diagram {
+	svg .pin {
+		cursor: pointer;
+		fill: $gray-600;
+
+		&.mapped {
+			fill: $primary;
+		}
+	}
+
+	.svg-wrapper {
+		height: 100%;
+		width: 100%;
+	}
+
+	.view-wrapper {
+		height: 600px;
+	}
+
+	&.expanded {
+		bottom: 0;
+		display: flex;
+		flex-direction: column;
+		left: 0;
+		position: fixed;
+		right: 0;
+		top: 0;
+
+		.view-wrapper {
+			flex-grow: 1;
+			height: auto;
+		}
+	}
+}
+
+.diagram-tooltip {
+	background: $white;
+	border-radius: 3px;
+	box-shadow: 1px 6px 11px rgba(0, 0, 0, 0.1);
+	left: 0;
+	padding: $spacer;
+	position: fixed;
+	top: 0;
+	width: 400px;
+}
+
+.pin-foreground {
+	align-items: center;
+	color: $gray-600;
+	display: flex;
+	font-weight: 600;
+	justify-content: center;
+	left: 0;
+	pointer-events: none;
+	position: fixed;
+	top: 0;
+	z-index: 1;
+
+	&.highlighted {
+		z-index: 2;
+	}
+
+	&::before {
+		animation: 0.1s ease-out 0s 1 zoomIn forwards;
+		background-color: $white;
+		border-color: $warning;
+		border-radius: 50%;
+		border-style: solid;
+		border-width: var(--border-width);
+		bottom: -15%;
+		content: '';
+		left: -15%;
+		position: absolute;
+		right: -15%;
+		top: -15%;
+		z-index: -1;
+	}
+
+	&.mapped {
+		color: $primary;
+
+		&::before {
+			border-color: $primary;
+		}
+	}
+
+	&.hide::before {
+		animation: 0.1s ease-in 0s 1 zoomOut forwards;
+	}
+}
+
+@keyframes zoomIn {
+	from {
+		opacity: 0.4;
+		transform: scale(0);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes zoomOut {
+	from {
+		transform: scale(0);
+	}
+	to {
+		transform: scale(1);
+	}
+}

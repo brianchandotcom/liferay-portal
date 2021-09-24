@@ -21,11 +21,11 @@ CSDiagramSettingDisplayContext csDiagramSettingDisplayContext = (CSDiagramSettin
 
 CPDefinition cpDefinition = csDiagramSettingDisplayContext.getCPDefinition();
 CSDiagramSetting csDiagramSetting = csDiagramSettingDisplayContext.fetchCSDiagramSetting();
-
-String type = SVGCSDiagramType.KEY;
 %>
 
-<div id="shop-by-diagram">
+<div>
+	<span aria-hidden="true" class="loading-animation"></span>
+
 	<react:component
 		module="js/diagram/DiagramWithAutomapping"
 		props='<%=
@@ -35,6 +35,8 @@ String type = SVGCSDiagramType.KEY;
 				"imageURL", csDiagramSettingDisplayContext.getImageURL()
 			).put(
 				"isAdmin", true
+			).put(
+				"pinsCSSSelector", "#Livello_Testi > text, [id*=MTEXT] > text"
 			).put(
 				"productId", cpDefinition.getCProductId()
 			).build()

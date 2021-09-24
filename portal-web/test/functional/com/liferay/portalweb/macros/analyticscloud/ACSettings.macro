@@ -194,9 +194,7 @@ definition {
 			key_sourceType = "Salesforce",
 			locator1 = "ACSettings#DXP_DATA_SOURCE_CHOOSE_OPTION");
 
-		AssertElementPresent(
-			itemName = "Configure Salesforce",
-			locator1 = "ACSettings#ITEM_ON_LIST");
+		ACUtils.assertItemsName(itemList = "Configure Salesforce");
 
 		Click(
 			key_breadcrumbName = "Add Data Source",

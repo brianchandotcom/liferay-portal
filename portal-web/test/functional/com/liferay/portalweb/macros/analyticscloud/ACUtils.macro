@@ -44,7 +44,7 @@ definition {
 	macro assertDataSourceName {
 		var itemName = "${dataSourceName}";
 
-		AssertElementPresent(locator1 = "ACSettings#ITEM_ON_LIST");
+		ACUtils.assertItemsName(itemList = "${itemName}");
 	}
 
 	macro assertDatePattern {

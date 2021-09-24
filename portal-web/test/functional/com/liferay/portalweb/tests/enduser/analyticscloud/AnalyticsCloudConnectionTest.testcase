@@ -263,9 +263,7 @@ definition {
 
 		ACUtils.assertItemsName(itemList = "${dataSource}");
 
-		AssertElementPresent(
-			locator1 = "ACSettings#PROPERTIES_ASSET_TITLE_LIST",
-			propertyName = "Data Sources");
+		ACUtils.assertPageTitle(pageTitle = "Data Sources");
 	}
 
 	@description = "Sync Liferay Data Source Contacts"

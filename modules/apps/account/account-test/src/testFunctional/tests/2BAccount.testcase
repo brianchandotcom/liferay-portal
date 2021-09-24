@@ -232,4 +232,35 @@ definition {
 			rowStatus = "Active");
 	}
 
+	test FilterByType {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "test test");
+
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Person Account",
+			accountEntryType = "Person");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		for (var allAccounts : list "Account Name,Person Account") {
+			LexiconEntry.viewEntryName(rowEntry = "${allAccounts}");
+		}
+
+		for (var filter : list "Business,Person") {
+			ManagementBar.setFilterAndOrder(filterBy = "${filter}");
+
+			if ("${filter}" == "Business") {
+				LexiconEntry.viewEntryName(rowEntry = "Account Name");
+
+				LexiconEntry.viewNoEntry(rowEntry = "Person Account");
+			}
+			else if ("${filter}" == "Person") {
+				LexiconEntry.viewEntryName(rowEntry = "Person Account");
+
+				LexiconEntry.viewNoEntry(rowEntry = "Account Name");
+			}
+		}
+	}
+
 }

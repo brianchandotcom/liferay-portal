@@ -2219,6 +2219,17 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
+	macro updateMaximumVersions {
+		DMNavigator.openToConfigInSystemSettings(portlet = "Service");
+
+		Type(
+			key_fieldLabel = "Maximum Number Of Versions",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldValue}");
+
+		SystemSettings.saveConfiguration();
+	}
+
 	macro viewAllPG {
 		DMDocument.viewPG(
 			categoryName = "${categoryName}",

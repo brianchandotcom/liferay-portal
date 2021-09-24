@@ -15,10 +15,6 @@ $transition-timing-function: ease;
 	width: $contextual-sidebar-width;
 	will-change: transform;
 
-	.rtl & {
-		transform: translateX(-100%);
-	}
-
 	&.contextual-sidebar-visible {
 		pointer-events: auto;
 		transform: translateX(0);

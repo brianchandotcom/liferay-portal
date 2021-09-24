@@ -445,7 +445,7 @@ public class DDMFormInstanceWrapper
 	}
 
 	@Override
-	public Long getObjectDefinitionId()
+	public long getObjectDefinitionId()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.getObjectDefinitionId();

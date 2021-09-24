@@ -15,7 +15,7 @@ definition {
 
 		ACUtils.launchDXP();
 
-		ACUtils.addSiteAndPage(layoutName = "AC Page");
+		ACUtils.addSiteAndPage();
 	}
 
 	tearDown {
@@ -25,6 +25,11 @@ definition {
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			JSONUser.tearDownNonAdminUsers();
 		}
 
 		ACUtils.tearDownAC();
@@ -346,7 +351,7 @@ definition {
 	@priority = "5"
 	test CanHoverOverPointOnGraphGetStats {
 		task ("Connect Analytics Cloud to DXP") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Add two new users") {
@@ -367,7 +372,9 @@ definition {
 					userLoginEmailAddress = "${name}@liferay.com",
 					userLoginFullName = "${name} ${name}");
 
-				Navigator.openURL();
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
 
 				Pause(locator1 = "5000");
 			}
@@ -376,7 +383,9 @@ definition {
 		task ("Access the page as a anonymous user") {
 			User.logoutPG();
 
-			Navigator.openURL();
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 
 			Pause(locator1 = "5000");
 		}

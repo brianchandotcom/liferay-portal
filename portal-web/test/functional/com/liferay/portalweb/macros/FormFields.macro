@@ -157,8 +157,6 @@ definition {
 		Uncheck.uncheckToggleSwitch(
 			key_fieldName = "${fieldName}",
 			locator1 = "FormFields#SWITCH");
-
-		FormFields.viewCheckboxNotChecked(fieldName = "${fieldName}");
 	}
 
 	macro duplicateField {

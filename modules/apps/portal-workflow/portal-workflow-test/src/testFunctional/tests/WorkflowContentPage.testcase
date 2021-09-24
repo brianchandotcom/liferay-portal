@@ -54,6 +54,8 @@ definition {
 	@description = "Verify that the user can approve a Content Page"
 	@priority = "5"
 	test CanApproveContentPageWithWorkflow {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

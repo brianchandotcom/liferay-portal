@@ -7,13 +7,21 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
+		}
+
+		task ("Add a new site and page") {
+			ACUtils.addSiteAndPage();
+		}
 	}
 
 	tearDown {
@@ -24,6 +32,11 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			JSONUser.tearDownNonAdminUsers();
+		}
 
 		ACUtils.tearDownAC();
 	}
@@ -33,24 +46,26 @@ definition {
 	test AddCSVWithIndividualWhoseEmailMatchesAnotherIndividualAlreadyHasActivitiesCheckIndividualDetailsUpdated {
 		task ("Add user") {
 			JSONUser.addUser(
-				userEmailAddress = "wuksiwze@fo.pf",
-				userFirstName = "Manuel",
-				userLastName = "Test",
-				userScreenName = "usersn");
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
 		}
 
 		task ("Connect to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Login as another user and visit DXP") {
-			Navigator.openURL();
-
-			Pause(locator1 = "5000");
-
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "wuksiwze@fo.pf",
-				userLoginFullName = "Manuel Test");
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+		}
+
+		task ("View the site page") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close sessions") {
@@ -66,21 +81,19 @@ definition {
 
 			ACNavigation.switchTab(tabName = "Known Individuals");
 
-			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "Manuel Test");
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "ac ac");
 
 			ACNavigation.switchTab(tabName = "Details");
 
-			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "wuksiwze@fo.pf");
+			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "ac@liferay.com");
 
-			ACIndividualsDashboard.assertIndividualAttributeNotPresent(individualAttribute = "Murphy");
+			ACIndividualsDashboard.assertIndividualAttributeNotPresent(individualAttribute = "Farmer");
 		}
 
 		task ("Add a CSV Data Source") {
 			ACSettings.addCSVDataSource(
-				dataSourceName = "CSV users",
-				fieldNameList = "additionalName,additionalName",
-				selectAnalyticsCloudField = "true",
-				sourceFileName = "10users.csv");
+				dataSourceName = "CSV Job Title",
+				sourceFileName = "jobTitle.csv");
 		}
 
 		task ("Exit Settings") {
@@ -94,15 +107,13 @@ definition {
 		}
 
 		task ("Assert that the new user is present") {
-			ACUtils.searchBar(searchItem = "Manuel Test");
-
-			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "Manuel Test");
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "ac ac");
 
 			ACNavigation.switchTab(tabName = "Details");
 
-			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "wuksiwze@fo.pf");
+			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "ac@liferay.com");
 
-			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "Murphy");
+			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "Farmer");
 		}
 	}
 

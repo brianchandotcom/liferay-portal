@@ -7,13 +7,17 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
-		ACUtils.launchDXP();
+			ACUtils.launchDXP();
+		}
 	}
 
 	tearDown {
@@ -32,17 +36,17 @@ definition {
 	@priority = "4"
 	test DeleteDXPDataSourceViaTokenAuth {
 		task ("Site creation and connection with AC") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud();
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
 
 			ACUtils.launchAC();
 		}
 
 		task ("Delete the data source and check if it has been deleted") {
-			ACSettings.deleteDataSource(dataSourceName = "Liferay");
+			ACSettings.deleteDataSource(dataSourceName = "${dataSource}");
 
-			AssertElementNotPresent(
-				itemName = "Liferay",
-				locator1 = "ACSettings#ITEM_ON_LIST");
+			ACUtils.assertItemsNameNotPresent(itemList = "${dataSource}");
 		}
 	}
 

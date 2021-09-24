@@ -15,6 +15,7 @@
 package com.liferay.portal.image;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
+import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.petra.string.StringPool;
@@ -86,7 +87,18 @@ public class DLHook extends BaseHook {
 		}
 
 		DLStoreUtil.addFile(
-			image.getCompanyId(), _REPOSITORY_ID, fileName, true, bytes);
+			DLStoreRequest.builder(
+				image.getCompanyId(), _REPOSITORY_ID, fileName
+			).setClassName(
+				image.getModelClassName()
+			).setClassPK(
+				image.getImageId()
+			).setSize(
+				image.getSize()
+			).setValidateFileExtension(
+				true
+			).build(),
+			bytes);
 	}
 
 	protected String getFileName(long imageId, String type) {

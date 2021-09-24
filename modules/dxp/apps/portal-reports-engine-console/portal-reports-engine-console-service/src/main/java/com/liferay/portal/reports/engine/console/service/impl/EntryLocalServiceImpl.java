@@ -14,6 +14,7 @@
 
 package com.liferay.portal.reports.engine.console.service.impl;
 
+import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.petra.memory.DeleteFileFinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
@@ -394,7 +395,13 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			entry.getAttachmentsDir() + StringPool.SLASH + reportName;
 
 		DLStoreUtil.addFile(
-			entry.getCompanyId(), CompanyConstants.SYSTEM, fileName, false,
+			DLStoreRequest.builder(
+				entry.getCompanyId(), CompanyConstants.SYSTEM, fileName
+			).setClassName(
+				this
+			).setSize(
+				reportResults.length
+			).build(),
 			reportResults);
 
 		String[] emailAddresses = StringUtil.split(entry.getEmailDelivery());

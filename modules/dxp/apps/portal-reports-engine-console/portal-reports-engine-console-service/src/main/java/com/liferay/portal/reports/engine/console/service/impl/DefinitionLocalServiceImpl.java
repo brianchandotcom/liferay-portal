@@ -14,6 +14,7 @@
 
 package com.liferay.portal.reports.engine.console.service.impl;
 
+import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -265,7 +266,11 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 			directoryName, StringPool.SLASH, fileName);
 
 		DLStoreUtil.addFile(
-			companyId, CompanyConstants.SYSTEM, fileLocation, false,
+			DLStoreRequest.builder(
+				companyId, CompanyConstants.SYSTEM, fileLocation
+			).setClassName(
+				this
+			).build(),
 			inputStream);
 	}
 

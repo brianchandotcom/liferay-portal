@@ -15,6 +15,7 @@
 package com.liferay.marketplace.service.impl;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
+import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.marketplace.exception.AppPropertiesException;
 import com.liferay.marketplace.exception.AppTitleException;
@@ -50,6 +51,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -395,16 +398,23 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 				DLStoreUtil.deleteFile(
 					app.getCompanyId(), CompanyConstants.SYSTEM,
 					app.getFilePath());
+
+				DLStoreUtil.addFile(
+					DLStoreRequest.builder(
+						app.getCompanyId(), CompanyConstants.SYSTEM,
+						app.getFilePath()
+					).setClassName(
+						this
+					).setSize(
+						Files.size(file.toPath())
+					).build(),
+					file);
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(exception, exception);
 				}
 			}
-
-			DLStoreUtil.addFile(
-				app.getCompanyId(), CompanyConstants.SYSTEM, app.getFilePath(),
-				false, file);
 		}
 
 		clearInstalledAppsCache();

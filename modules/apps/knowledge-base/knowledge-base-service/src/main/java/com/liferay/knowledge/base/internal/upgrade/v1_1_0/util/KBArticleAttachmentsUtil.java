@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.internal.upgrade.v1_1_0.util;
 
+import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.petra.string.StringPool;
@@ -72,8 +73,15 @@ public class KBArticleAttachmentsUtil {
 					fileName);
 
 				DLStoreUtil.addFile(
-					kbArticle.getCompanyId(), CompanyConstants.SYSTEM,
-					newDirName + StringPool.SLASH + shortFileName, bytes);
+					DLStoreRequest.builder(
+						kbArticle.getCompanyId(), CompanyConstants.SYSTEM,
+						newDirName + StringPool.SLASH + shortFileName
+					).setClassName(
+						KBArticleAttachmentsUtil.class.getName()
+					).setSize(
+						bytes.length
+					).build(),
+					bytes);
 			}
 
 			DLStoreUtil.deleteDirectory(

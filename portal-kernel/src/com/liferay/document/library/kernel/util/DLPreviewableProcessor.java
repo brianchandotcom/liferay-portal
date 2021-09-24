@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.kernel.util;
 
+import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -44,6 +45,8 @@ import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.nio.file.Files;
 
 import java.util.List;
 import java.util.Map;
@@ -226,7 +229,26 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			long companyId, String dirName, String filePath, File srcFile)
 		throws PortalException {
 
-		DLStoreUtil.addFile(companyId, REPOSITORY_ID, filePath, false, srcFile);
+		try {
+			long size = -1;
+
+			if (srcFile.exists()) {
+				size = Files.size(srcFile.toPath());
+			}
+
+			DLStoreUtil.addFile(
+				DLStoreRequest.builder(
+					companyId, REPOSITORY_ID, filePath
+				).setClassName(
+					this
+				).setSize(
+					size
+				).build(),
+				srcFile);
+		}
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
+		}
 	}
 
 	protected void addFileToStore(
@@ -235,7 +257,12 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		throws PortalException {
 
 		DLStoreUtil.addFile(
-			companyId, REPOSITORY_ID, filePath, false, inputStream);
+			DLStoreRequest.builder(
+				companyId, REPOSITORY_ID, filePath
+			).setClassName(
+				this
+			).build(),
+			inputStream);
 	}
 
 	protected void copyPreviews(

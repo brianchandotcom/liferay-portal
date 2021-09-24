@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.upgrade.v6_2_0;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -574,7 +575,14 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 					companyId, CompanyConstants.SYSTEM, attachment);
 
 				DLStoreUtil.addFile(
-					companyId, containerModelFolderId, name, false, bytes);
+					DLStoreRequest.builder(
+						companyId, containerModelFolderId, name
+					).setClassName(
+						this
+					).setSize(
+						bytes.length
+					).build(),
+					bytes);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {

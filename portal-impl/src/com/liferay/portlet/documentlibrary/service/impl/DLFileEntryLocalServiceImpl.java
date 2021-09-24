@@ -44,6 +44,7 @@ import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFileVersionPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFolderPersistence;
+import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DL;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
@@ -353,15 +354,23 @@ public class DLFileEntryLocalServiceImpl
 
 		// File
 
+		DLStoreRequest dlStoreRequest = DLStoreRequest.builder(
+			user.getCompanyId(), dlFileEntry.getDataRepositoryId(), name
+		).setClassName(
+			dlFileEntry.getModelClassName()
+		).setClassPK(
+			dlFileEntry.getFileEntryId()
+		).setSize(
+			dlFileEntry.getSize()
+		).setSourceFileName(
+			dlFileEntry.getFileName()
+		).build();
+
 		if (file != null) {
-			DLStoreUtil.addFile(
-				user.getCompanyId(), dlFileEntry.getDataRepositoryId(), name,
-				false, file);
+			DLStoreUtil.addFile(dlStoreRequest, file);
 		}
 		else {
-			DLStoreUtil.addFile(
-				user.getCompanyId(), dlFileEntry.getDataRepositoryId(), name,
-				false, inputStream);
+			DLStoreUtil.addFile(dlStoreRequest, inputStream);
 		}
 
 		return dlFileEntry;

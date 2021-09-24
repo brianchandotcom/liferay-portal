@@ -105,25 +105,22 @@ definition {
 	}
 
 	@description = "LPS-97194: Validate if the goal input test for the AB Test appears when the user tries to edit one AB Test"
-	@ignore = "true"
 	@priority = "3"
 	test AssertGoalInputWhenEdit {
 		task ("Create AB test, create variant and run the test") {
 			ABTest.createABTest(
-				goal = "Click",
+				goal = "Bounce Rate",
 				testTitle = "AB test title");
 
 			ABTest.createVariant(variantName = "Variant name");
 		}
 
-		task ("Edit test A/B and assert that user tries to edit one AB Test") {
+		task ("Edit test A/B and assert that user can edit the goal input") {
 			ABTest.editOrDeleteABTest(value = "Edit");
 
-			AssertElementPresent(locator1 = "ABTest#CHANGE_SELECT_GOAL");
-
-			Select(
-			locator1 = "ABTest#CHANGE_SELECT_GOAL",
-			value1 = "Bounce Rate");
+			AssertElementPresent(
+				value = "Bounce Rate",
+				locator1 = "ABTest#CHANGE_SELECT_GOAL");
 			
 			Click(locator1 = "ABTest#SAVE_AB_TEST_BUTTON");
 

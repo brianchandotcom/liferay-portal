@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.security.permission;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.registry.util.StringPlus;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class PermissionUpdateHandlerRegistryUtil {
 			SystemBundleUtil.getBundleContext(), PermissionUpdateHandler.class,
 			null,
 			(serviceReference, emitter) -> {
-				List<String> modelClassNames = StringPlus.asList(
+				List<String> modelClassNames = StringUtil.asList(
 					serviceReference.getProperty("model.class.name"));
 
 				for (String modelClassName : modelClassNames) {

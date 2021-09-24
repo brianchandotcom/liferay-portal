@@ -15,7 +15,7 @@
 package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.registry.util.StringPlus;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -57,7 +57,7 @@ public class AuthPublicPathRegistry {
 
 		@Override
 		public Object addingService(ServiceReference<Object> serviceReference) {
-			List<String> paths = StringPlus.asList(
+			List<String> paths = StringUtil.asList(
 				serviceReference.getProperty("auth.public.path"));
 
 			for (String path : paths) {
@@ -76,7 +76,7 @@ public class AuthPublicPathRegistry {
 		public void removedService(
 			ServiceReference<Object> serviceReference, Object object) {
 
-			List<String> paths = StringPlus.asList(
+			List<String> paths = StringUtil.asList(
 				serviceReference.getProperty("auth.public.path"));
 
 			for (String path : paths) {

@@ -17,7 +17,7 @@ package com.liferay.exportimport.kernel.controller;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.registry.util.StringPlus;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,7 @@ public class ExportImportControllerRegistryUtil {
 
 				if (exportImportController instanceof ExportController) {
 					for (String modelClassName :
-							StringPlus.asList(
+							StringUtil.asList(
 								serviceReference.getProperty(
 									"model.class.name"))) {
 
@@ -76,7 +76,7 @@ public class ExportImportControllerRegistryUtil {
 
 				if (exportImportController instanceof ImportController) {
 					for (String modelClassName :
-							StringPlus.asList(
+							StringUtil.asList(
 								serviceReference.getProperty(
 									"model.class.name"))) {
 

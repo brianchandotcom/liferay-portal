@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.registry.util.StringPlus;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 
@@ -50,7 +50,7 @@ public class PortletLayoutFinderRegistryUtil {
 			"(model.class.name=*)",
 			(serviceReference, emitter) -> {
 				for (String modelClassName :
-						StringPlus.asList(
+						StringUtil.asList(
 							serviceReference.getProperty("model.class.name"))) {
 
 					emitter.emit(modelClassName);

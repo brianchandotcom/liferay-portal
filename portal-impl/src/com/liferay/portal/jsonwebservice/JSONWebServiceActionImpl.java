@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.registry.util.StringPlus;
 
 import java.io.File;
 import java.io.IOException;
@@ -177,8 +176,9 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			for (ServiceReference<Object> serviceReference :
 					serviceReferences) {
 
-				List<String> whitelistedClassNames = StringPlus.asList(
-					serviceReference.getProperty(key));
+				List<String> whitelistedClassNames =
+					com.liferay.portal.kernel.util.StringUtil.asList(
+						serviceReference.getProperty(key));
 
 				if (whitelistedClassNames.contains(parameterTypeName)) {
 					return;

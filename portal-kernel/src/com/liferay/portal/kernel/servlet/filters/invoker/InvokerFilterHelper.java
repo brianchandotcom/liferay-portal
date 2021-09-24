@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-import com.liferay.registry.util.StringPlus;
 
 import java.io.InputStream;
 
@@ -509,7 +508,7 @@ public class InvokerFilterHelper {
 			Set<Dispatcher> dispatchers = new HashSet<>();
 
 			for (String dispatcherString :
-					StringPlus.asList(
+					StringUtil.asList(
 						serviceReference.getProperty("dispatcher"))) {
 
 				dispatchers.add(Dispatcher.valueOf(dispatcherString));
@@ -517,7 +516,7 @@ public class InvokerFilterHelper {
 
 			FilterMapping filterMapping = new FilterMapping(
 				servletFilterName, filter, filterConfig,
-				StringPlus.asList(serviceReference.getProperty("url-pattern")),
+				StringUtil.asList(serviceReference.getProperty("url-pattern")),
 				dispatchers);
 
 			registerFilterMapping(filterMapping, positionFilterName, after);

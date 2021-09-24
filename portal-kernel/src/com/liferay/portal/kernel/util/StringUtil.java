@@ -27,8 +27,11 @@ import java.net.URL;
 import java.text.Normalizer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -207,6 +210,30 @@ public class StringUtil {
 		return StringBundler.concat(
 			s, StringPool.SPACE, StringPool.OPEN_PARENTHESIS, suffix,
 			StringPool.CLOSE_PARENTHESIS);
+	}
+
+	public static List<String> asList(Object object) {
+		if (object instanceof String) {
+			return new ArrayList<>(Collections.singletonList((String)object));
+		}
+		else if (object instanceof String[]) {
+			return new ArrayList<>(Arrays.asList((String[])object));
+		}
+		else if (object instanceof Collection) {
+			Collection<?> collection = (Collection<?>)object;
+
+			if (!collection.isEmpty()) {
+				Iterator<?> iterator = collection.iterator();
+
+				Object element = iterator.next();
+
+				if (element instanceof String) {
+					return new ArrayList<>((Collection<String>)object);
+				}
+			}
+		}
+
+		return new ArrayList<>();
 	}
 
 	/**

@@ -17,8 +17,8 @@ package com.liferay.portal.kernel.portlet.configuration.icon;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.util.StringPlus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +43,7 @@ public class PortletConfigurationIconServiceReferenceMapper
 			portletId = StringPool.STAR;
 		}
 
-		List<String> paths = StringPlus.asList(
+		List<String> paths = StringUtil.asList(
 			serviceReference.getProperty("path"));
 
 		if (ListUtil.isEmpty(paths)) {

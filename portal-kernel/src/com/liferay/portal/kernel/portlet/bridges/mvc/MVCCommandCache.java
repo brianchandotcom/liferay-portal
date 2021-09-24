@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.util.StringPlus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -207,7 +206,7 @@ public class MVCCommandCache<T extends MVCCommand> {
 
 	private static final ServiceReferenceMapper<String, MVCCommand>
 		_SERVICE_REFERENCE_MAPPER = (serviceReference, emitter) -> {
-			List<String> mvcCommandNames = StringPlus.asList(
+			List<String> mvcCommandNames = StringUtil.asList(
 				serviceReference.getProperty("mvc.command.name"));
 
 			for (String mvcCommandName : mvcCommandNames) {

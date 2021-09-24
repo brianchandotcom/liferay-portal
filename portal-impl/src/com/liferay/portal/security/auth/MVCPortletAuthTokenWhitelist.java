@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.registry.util.StringPlus;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -267,10 +266,10 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		public Object addingService(ServiceReference<Object> serviceReference) {
 			Collection<String> whitelistValues = new ArrayList<>();
 
-			List<String> whitelistActions = StringPlus.asList(
+			List<String> whitelistActions = StringUtil.asList(
 				serviceReference.getProperty("mvc.command.name"));
 
-			List<String> portletNames = StringPlus.asList(
+			List<String> portletNames = StringUtil.asList(
 				serviceReference.getProperty("javax.portlet.name"));
 
 			for (String portletName : portletNames) {

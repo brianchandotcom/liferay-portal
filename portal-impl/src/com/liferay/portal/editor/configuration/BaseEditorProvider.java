@@ -16,7 +16,7 @@ package com.liferay.portal.editor.configuration;
 
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.registry.util.StringPlus;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -185,11 +185,11 @@ public abstract class BaseEditorProvider<T> {
 			T editorOptionsContributor = _bundleContext.getService(
 				serviceReference);
 
-			List<String> portletNames = StringPlus.asList(
+			List<String> portletNames = StringUtil.asList(
 				serviceReference.getProperty("javax.portlet.name"));
-			List<String> editorConfigKeys = StringPlus.asList(
+			List<String> editorConfigKeys = StringUtil.asList(
 				serviceReference.getProperty("editor.config.key"));
-			List<String> editorNames = StringPlus.asList(
+			List<String> editorNames = StringUtil.asList(
 				serviceReference.getProperty("editor.name"));
 
 			int serviceRanking = GetterUtil.getInteger(

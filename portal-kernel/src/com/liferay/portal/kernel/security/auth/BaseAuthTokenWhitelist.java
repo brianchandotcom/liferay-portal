@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.registry.util.StringPlus;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -129,7 +129,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 
 		@Override
 		public Object addingService(ServiceReference<Object> serviceReference) {
-			List<String> authTokenIgnoreActions = StringPlus.asList(
+			List<String> authTokenIgnoreActions = StringUtil.asList(
 				serviceReference.getProperty(_whitelistName));
 
 			_whitelist.addAll(authTokenIgnoreActions);

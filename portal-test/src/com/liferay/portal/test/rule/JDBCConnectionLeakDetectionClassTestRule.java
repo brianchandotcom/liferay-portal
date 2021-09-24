@@ -16,10 +16,8 @@ package com.liferay.portal.test.rule;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.pool.metrics.ConnectionPoolMetrics;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.ClassTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -27,6 +25,9 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.runner.Description;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Tom Wang
@@ -42,11 +43,13 @@ public class JDBCConnectionLeakDetectionClassTestRule
 		Description description,
 		Collection<ServiceReference<ConnectionPoolMetrics>> serviceReferences) {
 
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
 		for (ServiceReference<ConnectionPoolMetrics> serviceReference :
 				serviceReferences) {
 
-			ConnectionPoolMetrics connectionPoolMetrics = _registry.getService(
-				serviceReference);
+			ConnectionPoolMetrics connectionPoolMetrics =
+				bundleContext.getService(serviceReference);
 
 			int previousActiveNumber = _connectionPoolActiveNumbers.remove(
 				connectionPoolMetrics.getConnectionPoolName());
@@ -61,7 +64,7 @@ public class JDBCConnectionLeakDetectionClassTestRule
 					", current active number: ", currentActiveNumber),
 				previousActiveNumber >= currentActiveNumber);
 
-			_registry.ungetService(serviceReference);
+			bundleContext.ungetService(serviceReference);
 		}
 	}
 
@@ -70,10 +73,11 @@ public class JDBCConnectionLeakDetectionClassTestRule
 			Description description)
 		throws Exception {
 
-		_registry = RegistryUtil.getRegistry();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		Collection<ServiceReference<ConnectionPoolMetrics>> serviceReferences =
-			_registry.getServiceReferences(ConnectionPoolMetrics.class, null);
+			bundleContext.getServiceReferences(
+				ConnectionPoolMetrics.class, null);
 
 		Assert.assertTrue(
 			"Number of connection pool should be 2 or more: " +
@@ -83,20 +87,18 @@ public class JDBCConnectionLeakDetectionClassTestRule
 		for (ServiceReference<ConnectionPoolMetrics> serviceReference :
 				serviceReferences) {
 
-			ConnectionPoolMetrics connectionPoolMetrics = _registry.getService(
-				serviceReference);
+			ConnectionPoolMetrics connectionPoolMetrics =
+				bundleContext.getService(serviceReference);
 
 			_connectionPoolActiveNumbers.put(
 				connectionPoolMetrics.getConnectionPoolName(),
 				connectionPoolMetrics.getNumActive());
 
-			_registry.ungetService(serviceReference);
+			bundleContext.ungetService(serviceReference);
 		}
 
 		return serviceReferences;
 	}
-
-	private static Registry _registry;
 
 	private final Map<String, Integer> _connectionPoolActiveNumbers =
 		new HashMap<>();

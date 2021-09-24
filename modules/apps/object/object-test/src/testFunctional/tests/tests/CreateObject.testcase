@@ -283,11 +283,34 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify that it is not possible to create a Field with a duplicated Field Name"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotCreateDuplicatedFieldName {
 
-		// TODO LPS-139744 CannotCreateDuplicatedFieldName pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String");
+
+		ObjectAdmin.viewFieldErrorMessage(message = "Duplicate name customObjectField");
 
 	}
 

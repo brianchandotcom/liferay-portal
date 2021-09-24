@@ -99,7 +99,7 @@ definition {
 			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
 			value1 = "${wikiNodeName}");
 
-		SiteAdmin.viewPortletTitle(portletTitle = "${wikiNodeName}");
+		SiteAdmin.viewPortletTitle(portletTitle = "Wiki");
 	}
 
 	macro viewNoCP {

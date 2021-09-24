@@ -29,6 +29,10 @@ public interface CPType {
 
 	public String getName();
 
+	public default boolean isActive() {
+		return true;
+	}
+
 	public default boolean isConfigurationEnabled() {
 		return true;
 	}

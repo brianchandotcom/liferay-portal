@@ -947,7 +947,9 @@ public class ProductResourceImpl
 						contextCompany.getCompanyId(),
 						cpDefinition.getCPDefinitionId(), _cpDefinitionService,
 						_cpInstanceService, _csDiagramEntryService,
-						mappedProduct);
+						cpDefinition.getGroupId(),
+						contextAcceptLanguage.getPreferredLocale(),
+						mappedProduct, _serviceContextHelper);
 				}
 			}
 

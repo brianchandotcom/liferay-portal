@@ -25,6 +25,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.MappedProductDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.MappedProductUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.MappedProductResource;
+import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -140,9 +141,16 @@ public class MappedProductResourceImpl
 			Long mappedProductId, MappedProduct mappedProduct)
 		throws Exception {
 
+		CSDiagramEntry csDiagramEntry =
+			_csDiagramEntryService.getCSDiagramEntry(mappedProductId);
+
+		CPDefinition cpDefinition = csDiagramEntry.getCPDefinition();
+
 		MappedProductUtil.updateCSDiagramEntry(
-			_csDiagramEntryService.getCSDiagramEntry(mappedProductId),
-			_csDiagramEntryService, mappedProduct);
+			contextCompany.getCompanyId(), csDiagramEntry,
+			_csDiagramEntryService, cpDefinition.getGroupId(),
+			contextAcceptLanguage.getPreferredLocale(), mappedProduct,
+			_serviceContextHelper);
 
 		return _toMappedProduct(mappedProductId);
 	}
@@ -166,7 +174,9 @@ public class MappedProductResourceImpl
 		CSDiagramEntry csDiagramEntry = MappedProductUtil.addCSDiagramEntry(
 			contextCompany.getCompanyId(), cpDefinition.getCPDefinitionId(),
 			_cpDefinitionService, _cpInstanceService, _csDiagramEntryService,
-			mappedProduct);
+			cpDefinition.getGroupId(),
+			contextAcceptLanguage.getPreferredLocale(), mappedProduct,
+			_serviceContextHelper);
 
 		return _toMappedProduct(csDiagramEntry.getCSDiagramEntryId());
 	}
@@ -187,7 +197,9 @@ public class MappedProductResourceImpl
 		CSDiagramEntry csDiagramEntry = MappedProductUtil.addCSDiagramEntry(
 			contextCompany.getCompanyId(), cpDefinition.getCPDefinitionId(),
 			_cpDefinitionService, _cpInstanceService, _csDiagramEntryService,
-			mappedProduct);
+			cpDefinition.getGroupId(),
+			contextAcceptLanguage.getPreferredLocale(), mappedProduct,
+			_serviceContextHelper);
 
 		return _toMappedProduct(csDiagramEntry.getCSDiagramEntryId());
 	}
@@ -226,5 +238,8 @@ public class MappedProductResourceImpl
 
 	@Reference
 	private MappedProductDTOConverter _mappedProductDTOConverter;
+
+	@Reference
+	private ServiceContextHelper _serviceContextHelper;
 
 }

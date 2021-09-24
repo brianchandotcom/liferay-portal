@@ -351,9 +351,8 @@ public class BlogsEntryStagedModelDataHandler
 			newPrimaryKeysMap.put(
 				entry.getEntryId(), importedEntry.getEntryId());
 
-			_importFriendlyURLEntries(portletDataContext, entry, importedEntry);
-
 			_importAssetDisplayPage(portletDataContext, entry, importedEntry);
+			_importFriendlyURLEntries(portletDataContext, entry, importedEntry);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

@@ -112,6 +112,40 @@ definition {
 		Accounts.viewAssignee(assigneeName = "userfn1");
 	}
 
+	@description = "This test asserts that an Account Admin can add a shipping address to an Account."
+	@priority = "5"
+	test AccountAdminCanAddShippingAddressToAccount {
+		Search.searchPG(
+			portletName = "Account Management",
+			searchTerm = "Account Name");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		Accounts.addAddressViaSetDefaultAddress(
+			addressCity = "Diamond Bar",
+			addressCountry = "United States",
+			addressName = "Liferay, Inc.",
+			addressPostalCode = "91765",
+			addressRegion = "California",
+			addressStreet1 = "1400 Montefino Ave",
+			addressType = "Shipping",
+			phoneNumber = "+1-877-543-3729");
+
+		AssertElementPresent(
+			key_tab = "Addresses",
+			locator1 = "NavTab#ACTIVE_TAB_LINK");
+
+		Search.searchPG(
+			portletName = "Account Name",
+			searchTerm = "Liferay, Inc.");
+
+		LexiconEntry.viewEntryContent(
+			rowAny = "Shipping",
+			rowEntry = "Liferay, Inc.");
+	}
+
 	@description = "This test asserts that an Account can be deactivated and will show Active and Inactive filters."
 	@priority = "4"
 	test AccountAdminCanDeactivateAccount {

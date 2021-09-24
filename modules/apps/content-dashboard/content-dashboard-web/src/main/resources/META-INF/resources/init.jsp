@@ -38,14 +38,18 @@ page import="com.liferay.content.dashboard.web.internal.item.ContentDashboardIte
 page import="com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype" %><%@
 page import="com.liferay.info.item.InfoItemReference" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %>
 
-<%@ page import="java.util.Collections" %><%@
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Collections" %><%@
+page import="java.util.HashMap" %><%@
 page import="java.util.List" %>
 
 <liferay-frontend:defineObjects />

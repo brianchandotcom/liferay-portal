@@ -1,18 +1,11 @@
-<%--
-/**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
- */
---%>
+<%-- /** * Copyright (c) 2000-present Liferay, Inc. All rights reserved. * *
+This library is free software; you can redistribute it and/or modify it under *
+the terms of the GNU Lesser General Public License as published by the Free *
+Software Foundation; either version 2.1 of the License, or (at your option) *
+any later version. * * This library is distributed in the hope that it will be
+useful, but WITHOUT * ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS * FOR A PARTICULAR PURPOSE. See the GNU Lesser
+General Public License for more * details. */ --%> 
 
 <%@ include file="/init.jsp" %>
 
@@ -27,6 +20,7 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 	onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveConfiguration();" %>'
 >
 	<aui:input name="redirect" type="hidden" value="<%= contentDashboardAdminConfigurationDisplayContext.getRedirect() %>" />
+
 	<aui:input name="assetVocabularyNames" type="hidden" />
 
 	<liferay-frontend:edit-form-body>
@@ -45,15 +39,26 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 						<liferay-ui:message key="select-vocabularies-description" />
 					</p>
 
-					<liferay-ui:input-move-boxes
-						leftBoxName="availableAssetVocabularyNames"
-						leftList="<%= contentDashboardAdminConfigurationDisplayContext.getAvailableVocabularyNames() %>"
-						leftTitle="available"
-						rightBoxMaxItems="<%= 2 %>"
-						rightBoxName="currentAssetVocabularyNames"
-						rightList="<%= contentDashboardAdminConfigurationDisplayContext.getCurrentVocabularyNames() %>"
-						rightReorder="<%= Boolean.TRUE.toString() %>"
-						rightTitle="in-use"
+					<%
+					List<KeyValuePair> availableVocabularies = new ArrayList<KeyValuePair>();
+
+					availableVocabularies = contentDashboardAdminConfigurationDisplayContext.getAvailableVocabularyNames();
+
+					List<KeyValuePair> currentVocabularies = new ArrayList<KeyValuePair>();
+
+					currentVocabularies = contentDashboardAdminConfigurationDisplayContext.getCurrentVocabularyNames();
+
+					HashMap<String, Object> componentData = new HashMap<String, Object>();
+
+					componentData.put("leftBoxName", "availableAssetVocabularyNames");
+					componentData.put("leftList", JSONFactoryUtil.createJSONArray(availableVocabularies));
+					componentData.put("rightBoxName", "currentAssetVocabularyNames");
+					componentData.put("rightList", JSONFactoryUtil.createJSONArray(currentVocabularies));
+					%>
+
+					<react:component
+						module="js/VocabulariesSelectionBox"
+						props="<%= componentData %>"
 					/>
 				</aui:field-wrapper>
 			</liferay-frontend:fieldset>
@@ -70,7 +75,6 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 <aui:script>
 	function <portlet:namespace />saveConfiguration() {
 		var form = document.<portlet:namespace />fm;
-
 		Liferay.Util.postForm(form, {
 			data: {
 				assetVocabularyNames: Liferay.Util.listSelect(

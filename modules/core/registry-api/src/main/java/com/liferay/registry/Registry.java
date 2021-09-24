@@ -14,8 +14,6 @@
 
 package com.liferay.registry;
 
-import java.util.Collection;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -33,12 +31,6 @@ public interface Registry {
 	public <T> ServiceReference<T> getServiceReference(Class<T> clazz);
 
 	public <T> ServiceReference<T> getServiceReference(String className);
-
-	public <T> Collection<T> getServices(Class<T> clazz, String filterString)
-		throws Exception;
-
-	public <T> T[] getServices(String className, String filterString)
-		throws Exception;
 
 	public <T> boolean ungetService(ServiceReference<T> serviceReference);
 

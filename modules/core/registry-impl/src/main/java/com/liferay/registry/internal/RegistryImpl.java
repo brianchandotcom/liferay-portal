@@ -17,14 +17,6 @@ package com.liferay.registry.internal;
 import com.liferay.registry.Registry;
 import com.liferay.registry.ServiceReference;
 
-import java.lang.reflect.Array;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
 import org.osgi.framework.BundleContext;
 
 /**
@@ -88,68 +80,6 @@ public class RegistryImpl implements Registry {
 		}
 
 		return new ServiceReferenceWrapper<>(serviceReference);
-	}
-
-	@Override
-	public <T> Collection<T> getServices(Class<T> clazz, String filterString)
-		throws Exception {
-
-		Collection<org.osgi.framework.ServiceReference<T>> serviceReferences =
-			_bundleContext.getServiceReferences(clazz, filterString);
-
-		if (serviceReferences.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		List<T> services = new ArrayList<>();
-
-		Iterator<org.osgi.framework.ServiceReference<T>> iterator =
-			serviceReferences.iterator();
-
-		while (iterator.hasNext()) {
-			org.osgi.framework.ServiceReference<T> serviceReference =
-				iterator.next();
-
-			T service = _bundleContext.getService(serviceReference);
-
-			if (service != null) {
-				services.add(service);
-			}
-		}
-
-		return services;
-	}
-
-	@Override
-	public <T> T[] getServices(String className, String filterString)
-		throws Exception {
-
-		org.osgi.framework.ServiceReference<?>[] serviceReferences =
-			_bundleContext.getServiceReferences(className, filterString);
-
-		if (serviceReferences == null) {
-			return null;
-		}
-
-		Object service = _bundleContext.getService(serviceReferences[0]);
-
-		T[] services = (T[])Array.newInstance(
-			service.getClass(), serviceReferences.length);
-
-		services[0] = (T)service;
-
-		for (int i = 1; i < serviceReferences.length; i++) {
-			org.osgi.framework.ServiceReference<?> serviceReference =
-				serviceReferences[i];
-
-			service = _bundleContext.getService(serviceReference);
-
-			if (service != null) {
-				services[i] = (T)service;
-			}
-		}
-
-		return services;
 	}
 
 	@Override

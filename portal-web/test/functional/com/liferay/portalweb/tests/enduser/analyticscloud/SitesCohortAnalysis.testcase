@@ -110,6 +110,8 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			Pause(locator1 = "7000");
 		}
 
 		task ("Close sessions") {

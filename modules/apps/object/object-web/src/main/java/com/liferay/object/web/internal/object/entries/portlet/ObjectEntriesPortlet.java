@@ -15,15 +15,10 @@
 package com.liferay.object.web.internal.object.entries.portlet;
 
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.object.entries.display.context.ViewObjectEntriesDisplayContext;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -33,8 +28,6 @@ import java.io.IOException;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
@@ -67,46 +60,16 @@ public class ObjectEntriesPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			ObjectWebKeys.OBJECT_DEFINITION, objectDefinition);
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ViewObjectEntriesDisplayContext(
-				httpServletRequest,
-				_getRESTContextPath(httpServletRequest, objectDefinition)));
+				_portal.getHttpServletRequest(renderRequest),
+				_objectScopeProviderRegistry.getObjectScopeProvider(
+					objectDefinition.getScope()),
+				objectDefinition.getRESTContextPath()));
 
 		super.render(renderRequest, renderResponse);
 	}
-
-	private String _getRESTContextPath(
-		HttpServletRequest httpServletRequest,
-		ObjectDefinition objectDefinition) {
-
-		ObjectScopeProvider objectScopeProvider =
-			_objectScopeProviderRegistry.getObjectScopeProvider(
-				objectDefinition.getScope());
-
-		if (!objectScopeProvider.isGroupAware()) {
-			return _restContextPath;
-		}
-
-		try {
-			return StringBundler.concat(
-				_restContextPath, "/scopes/",
-				objectScopeProvider.getGroupId(httpServletRequest));
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-
-			return _restContextPath;
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectEntriesPortlet.class);
 
 	private final long _objectDefinitionId;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;

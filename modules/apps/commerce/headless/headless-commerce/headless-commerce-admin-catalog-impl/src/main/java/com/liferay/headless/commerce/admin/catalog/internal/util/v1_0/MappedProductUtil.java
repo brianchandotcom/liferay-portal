@@ -21,9 +21,17 @@ import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
+import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.io.Serializable;
+
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Alessio Antonio Rendina
@@ -34,8 +42,9 @@ public class MappedProductUtil {
 			long companyId, long cpDefinitionId,
 			CPDefinitionService cpDefinitionService,
 			CPInstanceService cpInstanceService,
-			CSDiagramEntryService csDiagramEntryService,
-			MappedProduct mappedProduct)
+			CSDiagramEntryService csDiagramEntryService, long groupId,
+			Locale locale, MappedProduct mappedProduct,
+			ServiceContextHelper serviceContextHelper)
 		throws PortalException {
 
 		long skuId = GetterUtil.getLong(mappedProduct.getSkuId());
@@ -58,20 +67,30 @@ public class MappedProductUtil {
 			productId = cpDefinition.getCProductId();
 		}
 
+		ServiceContext serviceContext = serviceContextHelper.getServiceContext(
+			groupId);
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			getExpandoBridgeAttributes(companyId, locale, mappedProduct);
+
+		if (expandoBridgeAttributes != null) {
+			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		}
+
 		return csDiagramEntryService.addCSDiagramEntry(
-			cpDefinitionId, skuId, productId,
-			GetterUtil.getBoolean(mappedProduct.getDiagram()),
+			cpDefinitionId, skuId, productId, isDiagram(null, mappedProduct),
 			GetterUtil.getInteger(mappedProduct.getQuantity()),
 			GetterUtil.getString(mappedProduct.getSequence()),
-			GetterUtil.getString(mappedProduct.getSku()), new ServiceContext());
+			GetterUtil.getString(mappedProduct.getSku()), serviceContext);
 	}
 
 	public static CSDiagramEntry addOrUpdateCSDiagramEntry(
 			long companyId, long cpDefinitionId,
 			CPDefinitionService cpDefinitionService,
 			CPInstanceService cpInstanceService,
-			CSDiagramEntryService csDiagramEntryService,
-			MappedProduct mappedProduct)
+			CSDiagramEntryService csDiagramEntryService, long groupId,
+			Locale locale, MappedProduct mappedProduct,
+			ServiceContextHelper serviceContextHelper)
 		throws PortalException {
 
 		CSDiagramEntry csDiagramEntry =
@@ -81,18 +100,55 @@ public class MappedProductUtil {
 		if (csDiagramEntry == null) {
 			return addCSDiagramEntry(
 				companyId, cpDefinitionId, cpDefinitionService,
-				cpInstanceService, csDiagramEntryService, mappedProduct);
+				cpInstanceService, csDiagramEntryService, groupId, locale,
+				mappedProduct, serviceContextHelper);
 		}
 
 		return updateCSDiagramEntry(
-			csDiagramEntry, csDiagramEntryService, mappedProduct);
+			companyId, csDiagramEntry, csDiagramEntryService, groupId, locale,
+			mappedProduct, serviceContextHelper);
+	}
+
+	public static Map<String, Serializable> getExpandoBridgeAttributes(
+		long companyId, Locale locale, MappedProduct mappedProduct) {
+
+		return CustomFieldsUtil.toMap(
+			CSDiagramEntry.class.getName(), companyId,
+			mappedProduct.getCustomFields(), locale);
+	}
+
+	public static boolean isDiagram(
+		CSDiagramEntry csDiagramEntry, MappedProduct mappedProduct) {
+
+		if ((csDiagramEntry == null) && (mappedProduct.getType() == null)) {
+			return false;
+		}
+
+		if (mappedProduct.getType() != null) {
+			return Objects.equals(
+				MappedProduct.Type.DIAGRAM.getValue(),
+				mappedProduct.getTypeAsString());
+		}
+
+		return csDiagramEntry.isDiagram();
 	}
 
 	public static CSDiagramEntry updateCSDiagramEntry(
-			CSDiagramEntry csDiagramEntry,
-			CSDiagramEntryService csDiagramEntryService,
-			MappedProduct mappedProduct)
+			long companyId, CSDiagramEntry csDiagramEntry,
+			CSDiagramEntryService csDiagramEntryService, long groupId,
+			Locale locale, MappedProduct mappedProduct,
+			ServiceContextHelper serviceContextHelper)
 		throws PortalException {
+
+		ServiceContext serviceContext = serviceContextHelper.getServiceContext(
+			groupId);
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			getExpandoBridgeAttributes(companyId, locale, mappedProduct);
+
+		if (expandoBridgeAttributes != null) {
+			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		}
 
 		return csDiagramEntryService.updateCSDiagramEntry(
 			csDiagramEntry.getCSDiagramEntryId(),
@@ -100,14 +156,13 @@ public class MappedProductUtil {
 				mappedProduct.getSkuId(), csDiagramEntry.getCPInstanceId()),
 			GetterUtil.get(
 				mappedProduct.getProductId(), csDiagramEntry.getCProductId()),
-			GetterUtil.get(
-				mappedProduct.getDiagram(), csDiagramEntry.isDiagram()),
+			isDiagram(csDiagramEntry, mappedProduct),
 			GetterUtil.get(
 				mappedProduct.getQuantity(), csDiagramEntry.getQuantity()),
 			GetterUtil.get(
 				mappedProduct.getSequence(), csDiagramEntry.getSequence()),
 			GetterUtil.get(mappedProduct.getSku(), csDiagramEntry.getSku()),
-			new ServiceContext());
+			serviceContext);
 	}
 
 }

@@ -150,17 +150,6 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 
 		ServiceContext serviceContext = _getServiceContext(latestArticle);
 
-		serviceContext.setFormDate(new Date());
-		serviceContext.setScopeGroupId(latestArticle.getGroupId());
-
-		if (latestArticle.getStatus() != WorkflowConstants.STATUS_APPROVED) {
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-		}
-		else {
-			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-		}
-
 		return _journalArticleLocalService.updateArticle(
 			latestArticle.getUserId(), latestArticle.getGroupId(),
 			latestArticle.getFolderId(), latestArticle.getArticleId(),
@@ -254,6 +243,14 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 
 		serviceContext.setFormDate(new Date());
 		serviceContext.setScopeGroupId(journalArticle.getGroupId());
+
+		if (journalArticle.getStatus() != WorkflowConstants.STATUS_APPROVED) {
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+		else {
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+		}
 
 		return serviceContext;
 	}

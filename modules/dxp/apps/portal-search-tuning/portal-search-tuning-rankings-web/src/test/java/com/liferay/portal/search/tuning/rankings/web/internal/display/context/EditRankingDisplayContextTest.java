@@ -53,7 +53,7 @@ public class EditRankingDisplayContextTest {
 		Assert.assertEquals(111L, editRankingDisplayContext.getCompanyId());
 		Assert.assertEquals("backURL", editRankingDisplayContext.getBackURL());
 		Assert.assertEquals(data, editRankingDisplayContext.getData());
-		Assert.assertEquals(false, editRankingDisplayContext.getInactive());
+		Assert.assertFalse(editRankingDisplayContext.getInactive());
 		Assert.assertEquals(
 			"formName", editRankingDisplayContext.getFormName());
 		Assert.assertEquals(

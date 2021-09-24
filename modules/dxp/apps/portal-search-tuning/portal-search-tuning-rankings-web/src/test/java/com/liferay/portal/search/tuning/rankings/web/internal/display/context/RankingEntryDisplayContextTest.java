@@ -45,7 +45,7 @@ public class RankingEntryDisplayContextTest {
 
 		Assert.assertEquals(
 			"aliases", _rankingEntryDisplayContext.getAliases());
-		Assert.assertEquals(false, _rankingEntryDisplayContext.getInactive());
+		Assert.assertFalse(_rankingEntryDisplayContext.getInactive());
 		Assert.assertEquals(
 			"hiddenResultsCount",
 			_rankingEntryDisplayContext.getHiddenResultsCount());

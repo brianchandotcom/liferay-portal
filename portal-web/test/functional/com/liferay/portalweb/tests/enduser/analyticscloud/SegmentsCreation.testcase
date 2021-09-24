@@ -1460,6 +1460,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8475 | Test Summary: Dynamic segment members preview in real time"
 	@priority = "3"
 	test CanPreviewDynamicSegmentMembers {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: A button to reload appears when users are searched because of a bug.
+		// AC Bug ticket: LRAC-9412
+		// AC Refactor ticket: LRAC-9429
+
 		var usernameList = "userfn userln,user1 user1";
 
 		task ("Add one more user with a jobTitle") {
@@ -1554,7 +1560,7 @@ definition {
 			ACUtils.viewNameList(nameList = "user1 user1");
 
 			AssertElementNotPresent(
-				key_assetName = "userfn userln",
+				key_nameList = "userfn userln",
 				locator1 = "ACUtils#NAME_LIST");
 		}
 	}

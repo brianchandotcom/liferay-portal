@@ -27,10 +27,39 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  * @author Edward Han
+ * @author Raymond Augé
  */
 @ProviderType
 @Transactional(rollbackFor = {PortalException.class, SystemException.class})
 public interface DLStore {
+
+	public default void addFile(DLStoreRequest dlStoreRequest, byte[] bytes)
+		throws PortalException {
+
+		addFile(
+			dlStoreRequest.getCompanyId(), dlStoreRequest.getRepositoryId(),
+			dlStoreRequest.getFileName(),
+			dlStoreRequest.isValidateFileExtension(), bytes);
+	}
+
+	public default void addFile(DLStoreRequest dlStoreRequest, File file)
+		throws PortalException {
+
+		addFile(
+			dlStoreRequest.getCompanyId(), dlStoreRequest.getRepositoryId(),
+			dlStoreRequest.getFileName(),
+			dlStoreRequest.isValidateFileExtension(), file);
+	}
+
+	public default void addFile(
+			DLStoreRequest dlStoreRequest, InputStream inputStream)
+		throws PortalException {
+
+		addFile(
+			dlStoreRequest.getCompanyId(), dlStoreRequest.getRepositoryId(),
+			dlStoreRequest.getFileName(),
+			dlStoreRequest.isValidateFileExtension(), inputStream);
+	}
 
 	public void addFile(
 			long companyId, long repositoryId, String fileName,
@@ -108,6 +137,29 @@ public interface DLStore {
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
 		throws PortalException;
+
+	public default void updateFile(DLStoreRequest dlStoreRequest, File file)
+		throws PortalException {
+
+		updateFile(
+			dlStoreRequest.getCompanyId(), dlStoreRequest.getRepositoryId(),
+			dlStoreRequest.getFileName(), dlStoreRequest.getFileExtension(),
+			dlStoreRequest.isValidateFileExtension(),
+			dlStoreRequest.getVersionLabel(),
+			dlStoreRequest.getSourceFileName(), file);
+	}
+
+	public default void updateFile(
+			DLStoreRequest dlStoreRequest, InputStream inputStream)
+		throws PortalException {
+
+		updateFile(
+			dlStoreRequest.getCompanyId(), dlStoreRequest.getRepositoryId(),
+			dlStoreRequest.getFileName(), dlStoreRequest.getFileExtension(),
+			dlStoreRequest.isValidateFileExtension(),
+			dlStoreRequest.getVersionLabel(),
+			dlStoreRequest.getSourceFileName(), inputStream);
+	}
 
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,

@@ -968,6 +968,15 @@ public class PortalUtil {
 	}
 
 	public static String getGroupFriendlyURL(
+			LayoutSet layoutSet, ThemeDisplay themeDisplay,
+			boolean canonicalURL, boolean controlPanel)
+		throws PortalException {
+
+		return _portal.getGroupFriendlyURL(
+			layoutSet, themeDisplay, canonicalURL, controlPanel);
+	}
+
+	public static String getGroupFriendlyURL(
 			LayoutSet layoutSet, ThemeDisplay themeDisplay, Locale locale)
 		throws PortalException {
 

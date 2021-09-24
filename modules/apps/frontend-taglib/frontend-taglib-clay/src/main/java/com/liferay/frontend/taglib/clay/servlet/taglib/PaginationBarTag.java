@@ -244,6 +244,10 @@ public class PaginationBarTag extends BaseContainerTag {
 
 		Integer to = _activePage * _activeDelta;
 
+		if (to > _totalItems) {
+			to = _totalItems;
+		}
+
 		jspWriter.write(to.toString());
 
 		jspWriter.write(StringPool.SPACE);
@@ -265,19 +269,28 @@ public class PaginationBarTag extends BaseContainerTag {
 
 		jspWriter.write("</li>");
 
-		int totalPages = (int)Math.ceil(_totalItems / _activeDelta);
+		int totalPages = (int)Math.ceil(
+			(double)_totalItems / (double)_activeDelta);
 
-		int ellipsisCount = _activePage + _ellipsisBuffer;
+		if (_ellipsisBuffer != 0) {
+			int activeIndex = _activePage - 1;
 
-		for (int i = 1; i < ellipsisCount; i++) {
+			int[] totalItems = new int[totalPages];
+
+			for (int i = 0; i < totalPages; i++) {
+				totalItems[i] = i + 1;
+			}
+
+			int firstItem = totalItems[0];
+
 			jspWriter.write("<li class=\"page-item");
 
-			if (i == _activePage) {
+			if (firstItem == _activePage) {
 				jspWriter.write(" active");
 			}
 
 			if ((_disabledPages != null) &&
-				_disabledPages.contains(Integer.valueOf(i))) {
+				_disabledPages.contains(Integer.valueOf(firstItem))) {
 
 				jspWriter.write(" disabled");
 			}
@@ -288,50 +301,135 @@ public class PaginationBarTag extends BaseContainerTag {
 
 			buttonTag.setCssClass("page-link");
 			buttonTag.setDisplayType("unstyled");
-			buttonTag.setLabel(String.valueOf(i));
+			buttonTag.setLabel(String.valueOf(firstItem));
 
 			buttonTag.doTag(pageContext);
 
-			jspWriter.write("</li>");
+			int leftBufferEnd = activeIndex - _ellipsisBuffer;
+
+			int[] leftBuffer = Arrays.copyOfRange(
+				totalItems, 1, Math.max(leftBufferEnd, 1));
+
+			if (leftBuffer.length > 1) {
+				jspWriter.write("<li class=\"dropdown page-item\">");
+
+				buttonTag = new ButtonTag();
+
+				buttonTag.setCssClass("dropdown-toggle page-link");
+				buttonTag.setDisplayType("unstyled");
+				buttonTag.setLabel("...");
+
+				buttonTag.doTag(pageContext);
+
+				jspWriter.write("</li>");
+			}
+
+			int lastIndex = totalItems.length - 1;
+
+			int[] itemsToRender = Arrays.copyOfRange(
+				totalItems, Math.max(activeIndex - _ellipsisBuffer, 1),
+				Math.min(activeIndex + _ellipsisBuffer + 1, lastIndex));
+
+			for (int itemToRender : itemsToRender) {
+				jspWriter.write("<li class=\"page-item");
+
+				if (itemToRender == _activePage) {
+					jspWriter.write(" active");
+				}
+
+				if ((_disabledPages != null) &&
+					_disabledPages.contains(Integer.valueOf(itemToRender))) {
+
+					jspWriter.write(" disabled");
+				}
+
+				jspWriter.write("\">");
+
+				buttonTag = new ButtonTag();
+
+				buttonTag.setCssClass("page-link");
+				buttonTag.setDisplayType("unstyled");
+				buttonTag.setLabel(String.valueOf(itemToRender));
+
+				buttonTag.doTag(pageContext);
+			}
+
+			int rightBufferStart = activeIndex + _ellipsisBuffer + 1;
+
+			if (rightBufferStart > lastIndex) {
+				rightBufferStart = lastIndex;
+			}
+
+			int[] rightBuffer = Arrays.copyOfRange(
+				totalItems, rightBufferStart,
+				Math.max(lastIndex, rightBufferStart));
+
+			if (rightBuffer.length > 1) {
+				jspWriter.write("<li class=\"dropdown page-item\">");
+
+				buttonTag = new ButtonTag();
+
+				buttonTag.setCssClass("dropdown-toggle page-link");
+				buttonTag.setDisplayType("unstyled");
+				buttonTag.setLabel("...");
+
+				buttonTag.doTag(pageContext);
+
+				jspWriter.write("</li>");
+			}
+
+			if (totalPages > 1) {
+				int lastItem = totalItems[lastIndex];
+
+				jspWriter.write("<li class=\"page-item");
+
+				if (lastItem == _activePage) {
+					jspWriter.write(" active");
+				}
+
+				if ((_disabledPages != null) &&
+					_disabledPages.contains(Integer.valueOf(lastItem))) {
+
+					jspWriter.write(" disabled");
+				}
+
+				jspWriter.write("\">");
+
+				buttonTag = new ButtonTag();
+
+				buttonTag.setCssClass("page-link");
+				buttonTag.setDisplayType("unstyled");
+				buttonTag.setLabel(String.valueOf(lastItem));
+
+				buttonTag.doTag(pageContext);
+			}
 		}
+		else {
+			for (int i = 1; i < (totalPages + 1); i++) {
+				jspWriter.write("<li class=\"page-item");
 
-		jspWriter.write("<li class=\"dropdown page-item\">");
+				if (i == _activePage) {
+					jspWriter.write(" active");
+				}
 
-		buttonTag = new ButtonTag();
+				if ((_disabledPages != null) &&
+					_disabledPages.contains(Integer.valueOf(i))) {
 
-		buttonTag.setCssClass("dropdown-toggle page-link");
-		buttonTag.setDisplayType("unstyled");
-		buttonTag.setLabel("...");
+					jspWriter.write(" disabled");
+				}
 
-		buttonTag.doTag(pageContext);
+				jspWriter.write("\">");
 
-		jspWriter.write("</li>");
+				buttonTag = new ButtonTag();
 
-		for (int i = ellipsisCount + 1; i < (totalPages + 1); i++) {
-			jspWriter.write("<li class=\"page-item");
+				buttonTag.setCssClass("page-link");
+				buttonTag.setDisplayType("unstyled");
+				buttonTag.setLabel(String.valueOf(i));
 
-			if (i == _activePage) {
-				jspWriter.write(" active");
+				buttonTag.doTag(pageContext);
+
+				jspWriter.write("</li>");
 			}
-
-			if ((_disabledPages != null) &&
-				_disabledPages.contains(Integer.valueOf(i))) {
-
-				jspWriter.write(" disabled");
-			}
-
-			jspWriter.write("\">");
-
-			buttonTag = new ButtonTag();
-
-			buttonTag.setCssClass("page-link");
-			buttonTag.setDisplayType("unstyled");
-
-			buttonTag.setLabel(String.valueOf(i));
-
-			buttonTag.doTag(pageContext);
-
-			jspWriter.write("</li>");
 		}
 
 		jspWriter.write("<li class=\"page-item\">");

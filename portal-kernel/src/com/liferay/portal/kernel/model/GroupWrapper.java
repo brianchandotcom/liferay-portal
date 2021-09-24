@@ -463,6 +463,14 @@ public class GroupWrapper
 		return model.getDisplayURL(themeDisplay, privateLayout);
 	}
 
+	@Override
+	public String getDisplayURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
+		boolean privateLayout, boolean controlPanel) {
+
+		return model.getDisplayURL(themeDisplay, privateLayout, controlPanel);
+	}
+
 	/**
 	 * Returns the friendly url of this group.
 	 *

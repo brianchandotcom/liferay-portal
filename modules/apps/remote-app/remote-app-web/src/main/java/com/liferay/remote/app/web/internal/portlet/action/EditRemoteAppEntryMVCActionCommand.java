@@ -96,11 +96,16 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 		String type = ParamUtil.getString(actionRequest, "type");
 
 		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+			String[] customElementCSSURLs = ParamUtil.getStringValues(
+				actionRequest, "customElementCSSURLs");
+			String[] customElementURLs = ParamUtil.getStringValues(
+				actionRequest, "customElementURLs");
+
 			_remoteAppEntryService.addCustomElementRemoteAppEntry(
-				ParamUtil.getString(actionRequest, "customElementCSSURLs"),
+				StringUtil.merge(customElementCSSURLs, StringPool.NEW_LINE),
 				ParamUtil.getString(
 					actionRequest, "customElementHTMLElementName"),
-				ParamUtil.getString(actionRequest, "customElementURLs"),
+				StringUtil.merge(customElementURLs, StringPool.NEW_LINE),
 				nameMap, portletCategoryName,
 				ParamUtil.getString(actionRequest, "properties"));
 		}

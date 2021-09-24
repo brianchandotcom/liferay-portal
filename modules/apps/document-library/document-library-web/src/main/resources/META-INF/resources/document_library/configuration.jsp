@@ -92,6 +92,12 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				<div class="form-group">
 					<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= dlAdminDisplayContext.getRootFolderName() %>" />
 
+					<c:if test="<%= dlAdminDisplayContext.isRootFolderInTrash() %>">
+						<div class="alert alert-warning">
+							<liferay-ui:message key="the-selected-root-folder-is-in-the-recycle-bin-please-remove-it-or-select-another-one" />
+						</div>
+					</c:if>
+
 					<aui:button name="selectFolderButton" value="select" />
 
 					<%

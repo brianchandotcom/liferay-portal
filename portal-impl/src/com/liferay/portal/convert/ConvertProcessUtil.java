@@ -14,13 +14,14 @@
 
 package com.liferay.portal.convert;
 
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Iván Zaera
@@ -28,14 +29,13 @@ import java.util.Iterator;
 public class ConvertProcessUtil {
 
 	public static Collection<ConvertProcess> getConvertProcesses() {
-		try {
-			Registry registry = RegistryUtil.getRegistry();
+		Iterator<ConvertProcess> iterator = _convertProcesses.iterator();
 
-			return registry.getServices(ConvertProcess.class, null);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
+		List<ConvertProcess> convertProcesses = new ArrayList<>();
+
+		iterator.forEachRemaining(convertProcesses::add);
+
+		return convertProcesses;
 	}
 
 	public static Collection<ConvertProcess> getEnabledConvertProcesses() {
@@ -54,5 +54,9 @@ public class ConvertProcessUtil {
 
 		return convertProcesses;
 	}
+
+	private static final ServiceTrackerList<ConvertProcess, ConvertProcess>
+		_convertProcesses = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(), ConvertProcess.class);
 
 }

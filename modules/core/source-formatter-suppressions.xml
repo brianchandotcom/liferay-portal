@@ -7,7 +7,6 @@
 	<source-check>
 		<suppress checks="BNDDefinitionKeysCheck" files="portal-bootstrap/system.packages.extra.bnd" />
 		<suppress checks="JavaDeserializationSecurityCheck" files="shielded-container-impl/src/main/java/com/liferay/shielded/container/internal/session/SerializationUtil\.java" />
-		<suppress checks="JavaDiamondOperatorCheck" files="registry-impl/src/main/java/com/liferay/registry/internal/RegistryImpl\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="portal-jsp-engine/src/main/java/com/liferay/portal/jsp/engine/internal/delegate/JspConfigDescriptorServletContextDelegate\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="portal-web/src/main/java/com/liferay/portal/web/internal/PortalWebShieldedContainerInitializer\.java" />
 	</source-check>

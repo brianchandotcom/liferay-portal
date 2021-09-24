@@ -1114,6 +1114,12 @@ definition {
 			locator1 = "Link#ANY");
 	}
 
+	macro viewNoPanel {
+		AssertElementNotPresent(
+			key_panel = "${panelName}",
+			locator1 = "Panel#PANEL");
+	}
+
 	macro viewNoWorkflowResource {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",

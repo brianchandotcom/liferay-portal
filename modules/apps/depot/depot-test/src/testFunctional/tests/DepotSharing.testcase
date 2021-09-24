@@ -150,9 +150,7 @@ definition {
 
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
-		AssertElementNotPresent(
-			key_panel = "Sharing",
-			locator1 = "Panel#PANEL");
+		Depot.viewNoPanel(panelName = "Sharing");
 	}
 
 	@description = "This test ensures that depot sharing can be disabled at the system level."
@@ -168,9 +166,7 @@ definition {
 
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
-		AssertElementNotPresent(
-			key_panel = "Sharing",
-			locator1 = "Panel#PANEL");
+		Depot.viewNoPanel(panelName = "Sharing");
 	}
 
 	@description = "This test ensures that sharing can be disabled in a depot."

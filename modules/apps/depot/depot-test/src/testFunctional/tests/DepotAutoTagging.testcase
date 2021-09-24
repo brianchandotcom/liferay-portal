@@ -162,9 +162,7 @@ definition {
 
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
-		AssertElementNotPresent(
-			key_panel = "Asset Auto Tagging",
-			locator1 = "Panel#PANEL");
+		Depot.viewNoPanel(panelName = "Asset Auto Tagging");
 
 		AutoTagging.enableAutoTagging(enableAutoTaggingFor = "Instance Settings");
 
@@ -185,9 +183,7 @@ definition {
 
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
-		AssertElementNotPresent(
-			key_panel = "Asset Auto Tagging",
-			locator1 = "Panel#PANEL");
+		Depot.viewNoPanel(panelName = "Asset Auto Tagging");
 
 		AutoTagging.enableAutoTagging(enableAutoTaggingFor = "System Settings");
 

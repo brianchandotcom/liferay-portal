@@ -207,13 +207,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		AssertElementNotPresent(
-			key_panel = "Display Page Template",
-			locator1 = "Panel#PANEL_COLLAPSED");
-
-		AssertElementNotPresent(
-			key_panel = "Display Page Template",
-			locator1 = "Panel#PANEL_EXPANDED");
+		Depot.viewNoPanel(panelName = "Display Page Template");
 
 		PortletEntry.publish();
 

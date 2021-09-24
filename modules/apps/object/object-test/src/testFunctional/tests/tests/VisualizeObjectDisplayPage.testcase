@@ -59,12 +59,40 @@ definition {
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Big Decimal type for a specific Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DisplaySpecificEntryBigDecimal {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-139032 DisplaySpecificEntryBigDecimal pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "BigDecimal",
+			fieldName = "customObjectField",
+			fieldType = "BigDecimal",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "123.123456");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		VisualizeObjectCollectionDisplay.openHeading();
+
+		VisualizeObjectDisplayPage.addItem(pluralLabelName = "Custom Objects", frameTitle = "Select");
+
+        VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "BigDecimal");
+
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry ="123.123456");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Boolean type for a specific Object"

@@ -173,6 +173,8 @@ public class RecentGroupManager {
 				}
 			}
 
+			portletRequest.setAttribute("controlPanel", Boolean.TRUE);
+
 			String groupURL = _groupURLProvider.getGroupURL(
 				group, portletRequest);
 

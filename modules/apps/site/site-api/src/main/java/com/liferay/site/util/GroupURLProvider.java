@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -114,7 +115,9 @@ public class GroupURLProvider {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String groupDisplayURL = group.getDisplayURL(themeDisplay, false);
+		String groupDisplayURL = group.getDisplayURL(
+			themeDisplay, false,
+			GetterUtil.getBoolean(portletRequest.getAttribute("controlPanel")));
 
 		if (Validator.isNotNull(groupDisplayURL)) {
 			return _http.removeParameter(groupDisplayURL, "p_p_id");

@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.cache.CacheField;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -59,12 +60,12 @@ public class DDMFormInstanceImpl extends DDMFormInstanceBaseImpl {
 	}
 
 	@Override
-	public Long getObjectDefinitionId() throws PortalException {
+	public long getObjectDefinitionId() throws PortalException {
 		DDMFormInstanceSettings ddmFormInstanceSettings =
 			DDMFormInstanceFactory.create(
 				DDMFormInstanceSettings.class, getSettingsDDMFormValues());
 
-		return Long.valueOf(ddmFormInstanceSettings.objectDefinitionId());
+		return GetterUtil.getLong(ddmFormInstanceSettings.objectDefinitionId());
 	}
 
 	@Override

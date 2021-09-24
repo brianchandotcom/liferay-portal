@@ -1,7 +1,6 @@
 import com.liferay.layout.util.BulkLayoutConverter
+import com.liferay.portal.kernel.module.util.SystemBundleUtil
 import com.liferay.portal.kernel.util.ArrayUtil
-import com.liferay.registry.Registry
-import com.liferay.registry.RegistryUtil
 import org.osgi.framework.ServiceReference
 import org.osgi.framework.BundleContext
 
@@ -9,9 +8,7 @@ companyId = com.liferay.portal.kernel.util.PortalUtil.getCompanyId(actionRequest
 group = com.liferay.portal.kernel.service.GroupLocalServiceUtil.getGroup(companyId, "Test Site Name");
 groupId = group.getGroupId();
 
-Registry registry = RegistryUtil.getRegistry()
-
-BundleContext bundleContext = registry._bundleContext
+BundleContext bundleContext = SystemBundleUtil.getBundleContext()
 
 ServiceReference serviceReference = bundleContext.getServiceReference(BulkLayoutConverter.class.getName())
 

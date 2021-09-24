@@ -1633,14 +1633,14 @@ definition {
 			ServerAdministration.openServerAdmin();
 
 			var script = '''
-import com.liferay.registry.RegistryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 try {
-	def registry = RegistryUtil.getRegistry();
+	def bundleContext = SystemBundleUtil.getBundleContext();
 
-	def serviceReference = registry.getServiceReference("com.liferay.asset.publisher.web.internal.messaging.AssetEntriesCheckerHelper");
+	def serviceReference = bundleContext.getServiceReference("com.liferay.asset.publisher.web.internal.messaging.AssetEntriesCheckerHelper");
 
-	def assetEntriesCheckerHelper = registry.getService(serviceReference);
+	def assetEntriesCheckerHelper = bundleContext.getService(serviceReference);
 
 	def checkEntriesMethod = assetEntriesCheckerHelper.getClass().getMethod("checkAssetEntries");
 

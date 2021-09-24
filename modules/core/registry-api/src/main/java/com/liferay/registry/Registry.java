@@ -34,14 +34,6 @@ public interface Registry {
 
 	public <T> ServiceReference<T> getServiceReference(String className);
 
-	public <T> Collection<ServiceReference<T>> getServiceReferences(
-			Class<T> clazz, String filterString)
-		throws Exception;
-
-	public <T> ServiceReference<T>[] getServiceReferences(
-			String className, String filterString)
-		throws Exception;
-
 	public <T> Collection<T> getServices(Class<T> clazz, String filterString)
 		throws Exception;
 

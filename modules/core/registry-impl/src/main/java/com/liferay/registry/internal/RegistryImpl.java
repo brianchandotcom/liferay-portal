@@ -91,54 +91,6 @@ public class RegistryImpl implements Registry {
 	}
 
 	@Override
-	public <T> Collection<ServiceReference<T>> getServiceReferences(
-			Class<T> clazz, String filterString)
-		throws Exception {
-
-		Collection<org.osgi.framework.ServiceReference<T>>
-			osgiServiceReferences = _bundleContext.getServiceReferences(
-				clazz, filterString);
-
-		if (osgiServiceReferences.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		Collection<ServiceReference<T>> serviceReferences = new ArrayList<>(
-			osgiServiceReferences.size());
-
-		Iterator<org.osgi.framework.ServiceReference<T>> iterator =
-			osgiServiceReferences.iterator();
-
-		while (iterator.hasNext()) {
-			org.osgi.framework.ServiceReference<T> osgiServiceReference =
-				iterator.next();
-
-			ServiceReference<T> serviceReference =
-				new ServiceReferenceWrapper<>(osgiServiceReference);
-
-			serviceReferences.add(serviceReference);
-		}
-
-		return serviceReferences;
-	}
-
-	@Override
-	public <T> ServiceReference<T>[] getServiceReferences(
-			String className, String filterString)
-		throws Exception {
-
-		org.osgi.framework.ServiceReference<T>[] osgiServiceReferences =
-			(org.osgi.framework.ServiceReference<T>[])
-				_bundleContext.getServiceReferences(className, filterString);
-
-		if (osgiServiceReferences == null) {
-			return null;
-		}
-
-		return _toServiceReferences(osgiServiceReferences);
-	}
-
-	@Override
 	public <T> Collection<T> getServices(Class<T> clazz, String filterString)
 		throws Exception {
 

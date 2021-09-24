@@ -155,6 +155,7 @@ definition {
 
 	macro assertPageTitle {
 		var key_pageTitle = "${pageTitle}";
+
 		AssertTextEquals(
 			locator1 = "ACUtils#PAGE_TITLE",
 			value1 = "${pageTitle}");

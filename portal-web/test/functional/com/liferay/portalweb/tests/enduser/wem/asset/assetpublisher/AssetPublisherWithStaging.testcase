@@ -210,7 +210,7 @@ definition {
 
 			AssetPublisherPortlet.editConfigureCategoriesFilterPG(
 				categoryNames = "Category Name 1,Category Name 2",
-				queryContains = "Does not Contain");
+				queryContains = "Does Not Contain");
 		}
 
 		task ("View displayed web content in staging site page") {

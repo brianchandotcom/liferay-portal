@@ -21,6 +21,7 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.Portal;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -128,8 +130,29 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 		String ddmFormValues = ParamUtil.getString(
 			actionRequest, "ddmFormValues");
 
-		return (Map<String, Serializable>)JSONFactoryUtil.looseDeserialize(
-			ddmFormValues);
+		Map<String, Serializable> ddmFormValuesMap =
+			(Map<String, Serializable>)JSONFactoryUtil.looseDeserialize(
+				ddmFormValues);
+
+		for (Map.Entry<String, Serializable> entry :
+				ddmFormValuesMap.entrySet()) {
+
+			Serializable value = entry.getValue();
+
+			if (value != null) {
+				Class<?> clazz = value.getClass();
+
+				if (clazz == ArrayList.class) {
+					String valueString = value.toString();
+
+					ddmFormValuesMap.put(
+						entry.getKey(),
+						valueString.replaceAll("\\[|\\]|\"", StringPool.BLANK));
+				}
+			}
+		}
+
+		return ddmFormValuesMap;
 	}
 
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;

@@ -40,12 +40,12 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -368,33 +368,23 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			JSONArray optionValueJSONArray = _jsonFactory.createJSONArray(
 				value.getString(value.getDefaultLocale()));
 
-			if (StringUtil.equals(
-					ddmFormFieldValue.getType(),
-					DDMFormFieldTypeConstants.SELECT)) {
-
-				return ddmFormFieldOptions.getOptionReference(
-					(String)optionValueJSONArray.get(0));
-			}
-
-			JSONArray optionReferencesValuesJSONArray =
-				JSONFactoryUtil.createJSONArray();
-
 			Map<String, String> optionsReferences =
 				ddmFormFieldOptions.getOptionsReferences();
 
-			for (Map.Entry<String, String> entry :
-					optionsReferences.entrySet()) {
+			StringBundler sb = new StringBundler(
+				(optionValueJSONArray.length() * 2) - 1);
 
-				for (Object optionValue : optionValueJSONArray) {
-					if (StringUtil.equals(
-							entry.getKey(), optionValue.toString())) {
+			for (Object optionValue : optionValueJSONArray) {
+				sb.append(optionsReferences.get(optionValue.toString()));
 
-						optionReferencesValuesJSONArray.put(entry.getValue());
-					}
-				}
+				sb.append(StringPool.COMMA_AND_SPACE);
 			}
 
-			return optionReferencesValuesJSONArray.toString();
+			if (sb.index() > 0) {
+				sb.setIndex(sb.index() - 1);
+			}
+
+			return sb.toString();
 		}
 		else if (StringUtil.equals(
 					ddmFormFieldValue.getType(),

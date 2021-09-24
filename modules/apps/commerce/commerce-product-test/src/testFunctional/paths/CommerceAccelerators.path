@@ -491,7 +491,7 @@
 </tr>
 <tr>
 	<td>ORDERS_SUBMIT_BUTTON</td>
-	<td>//div[@class='commerce-cta is-visible']//button[@data-transitionname='submit']</td>
+	<td>//input[@type='submit'][@value='Submit'] | //button[contains(text(),'Submit')] | //span[contains(text(),'Submit')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -27,8 +27,8 @@ public class ObjectFieldUtil {
 		String label, String name, boolean required, String type) {
 
 		return createObjectField(
-			0, null, indexed, indexedAsKeyword, null, label, name, required,
-			type);
+			0, null, indexed, indexedAsKeyword, indexedLanguageId, label, name,
+			required, type);
 	}
 
 	public static ObjectField createObjectField(

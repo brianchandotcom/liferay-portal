@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.text.MessageFormat;
 
@@ -36,6 +34,9 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Set;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleReference;
 
 /**
  * @author Shuyang Zhou
@@ -97,11 +98,17 @@ public class ResourceBundleUtil {
 	public static ResourceBundle getBundle(
 		String baseName, Locale locale, ClassLoader classLoader) {
 
-		Registry registry = RegistryUtil.getRegistry();
+		String symbolicName = null;
 
-		return _getBundle(
-			baseName, locale, classLoader,
-			registry.getSymbolicName(classLoader));
+		if (classLoader instanceof BundleReference) {
+			BundleReference bundleReference = (BundleReference)classLoader;
+
+			Bundle bundle = bundleReference.getBundle();
+
+			symbolicName = bundle.getSymbolicName();
+		}
+
+		return _getBundle(baseName, locale, classLoader, symbolicName);
 	}
 
 	/**

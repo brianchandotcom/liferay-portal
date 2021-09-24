@@ -66,7 +66,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.junit.Assert;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleReference;
 import org.osgi.framework.ServiceRegistration;
 
 /**
@@ -290,10 +292,8 @@ public class DataGuardTestRuleUtil {
 
 			Class<?> clazz = basePersistence.getClass();
 
-			Registry registry = RegistryUtil.getRegistry();
-
 			try (Closeable closeable1 = _installTransactionExecutor(
-					registry.getSymbolicName(clazz.getClassLoader()))) {
+					_getSymbolicName(clazz.getClassLoader()))) {
 
 				TransactionInvokerUtil.invoke(
 					_transactionConfig,
@@ -398,6 +398,18 @@ public class DataGuardTestRuleUtil {
 			PersistedModelLocalServiceRegistryUtil.
 				getPersistedModelLocalServiceRegistry(),
 			"_persistedModelLocalServices");
+	}
+
+	private static String _getSymbolicName(ClassLoader classLoader) {
+		if (classLoader instanceof BundleReference) {
+			BundleReference bundleReference = (BundleReference)classLoader;
+
+			Bundle bundle = bundleReference.getBundle();
+
+			return bundle.getSymbolicName();
+		}
+
+		return null;
 	}
 
 	private static Closeable _installTransactionExecutor(
@@ -535,11 +547,8 @@ public class DataGuardTestRuleUtil {
 
 			Class<?> persistenceClass = basePersistence.getClass();
 
-			Registry registry = RegistryUtil.getRegistry();
-
 			try (Closeable closeable1 = _installTransactionExecutor(
-					registry.getSymbolicName(
-						persistenceClass.getClassLoader()))) {
+					_getSymbolicName(persistenceClass.getClassLoader()))) {
 
 				TransactionInvokerUtil.invoke(
 					_transactionConfig,

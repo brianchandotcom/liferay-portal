@@ -38,11 +38,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test DisableIndexing {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		Navigator.gotoNavTab(navTab = "General");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Panel.expandPanel(panel = "Documents and Media");
 
@@ -61,11 +57,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ViewDocument {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		Navigator.gotoNavTab(navTab = "General");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Panel.expandPanel(panel = "Documents and Media");
 
@@ -95,11 +87,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ViewDocumentAfterDeleting {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		Navigator.gotoNavTab(navTab = "General");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Panel.expandPanel(panel = "Documents and Media");
 
@@ -127,11 +115,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ViewDocumentAfterEditing {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		Navigator.gotoNavTab(navTab = "General");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Panel.expandPanel(panel = "Documents and Media");
 
@@ -167,11 +151,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ViewDocumentInFolder {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		Navigator.gotoNavTab(navTab = "General");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Panel.expandPanel(panel = "Documents and Media");
 
@@ -205,11 +185,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewDocumentInWorkflow {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		Navigator.gotoNavTab(navTab = "General");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Panel.expandPanel(panel = "Documents and Media");
 
@@ -262,11 +238,7 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test ViewDocumentWithEscapeCharacters {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		Navigator.gotoNavTab(navTab = "General");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Panel.expandPanel(panel = "Documents and Media");
 
@@ -292,11 +264,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewDocumentWithoutPermissions {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		Navigator.gotoNavTab(navTab = "General");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Panel.expandPanel(panel = "Documents and Media");
 

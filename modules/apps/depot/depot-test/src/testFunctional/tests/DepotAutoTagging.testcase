@@ -39,6 +39,7 @@ definition {
 	@description = "This test asserts that an image is auto-tagged in a depot."
 	@priority = "5"
 	@refactorneeded
+	@uitest
 	test AddImage {
 		property test.name.skip.portal.instance = "DepotAutoTagging#AddImage";
 
@@ -47,8 +48,6 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		Navigator.gotoNavTab(navTab = "General");
 
 		Panel.expandPanel(panel = "Asset Auto Tagging");
 
@@ -202,9 +201,7 @@ definition {
 
 		AutoTagging.enableTensorFlow();
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureAutoTagging(autoTagging = "Disabled");
 
@@ -234,9 +231,7 @@ definition {
 			assetType = "Document",
 			confidenceThreshold = "0.05");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureAutoTagging(autoTagging = "Disabled");
 
@@ -266,9 +261,7 @@ definition {
 			assetType = "Web Content Article",
 			confidenceThreshold = "0.001");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureAutoTagging(autoTagging = "Disabled");
 

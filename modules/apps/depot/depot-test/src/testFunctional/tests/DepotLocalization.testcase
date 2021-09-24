@@ -99,11 +99,7 @@ definition {
 
 		Button.click(button = "Save");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoGeneral(depotName = "Test Depot Name");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Pause(locator1 = "3000");
 
@@ -236,11 +232,7 @@ definition {
 
 		Button.click(button = "Save");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoGeneral(depotName = "Test Depot Name");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Pause(locator1 = "3000");
 

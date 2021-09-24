@@ -188,9 +188,7 @@ definition {
 
 		MenuItem.viewPresent(menuItem = "Share");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureSharing(sharing = "Disabled");
 

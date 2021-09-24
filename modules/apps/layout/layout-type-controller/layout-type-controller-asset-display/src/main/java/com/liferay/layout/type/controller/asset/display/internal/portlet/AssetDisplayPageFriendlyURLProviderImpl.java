@@ -135,7 +135,8 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 				_setThemeDisplayI18n(clonedThemeDisplay, locale);
 
 				return _portal.getGroupFriendlyURL(
-					group.getPublicLayoutSet(), clonedThemeDisplay);
+					group.getPublicLayoutSet(), clonedThemeDisplay, false,
+					false);
 			}
 			catch (CloneNotSupportedException cloneNotSupportedException) {
 				throw new PortalException(cloneNotSupportedException);
@@ -143,7 +144,7 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 		}
 
 		return _portal.getGroupFriendlyURL(
-			group.getPublicLayoutSet(), themeDisplay);
+			group.getPublicLayoutSet(), themeDisplay, false, false);
 	}
 
 	private String _getI18nPath(Locale locale) {

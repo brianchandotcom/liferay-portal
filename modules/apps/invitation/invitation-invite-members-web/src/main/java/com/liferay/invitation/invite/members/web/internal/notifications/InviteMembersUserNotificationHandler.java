@@ -174,7 +174,8 @@ public class InviteMembersUserNotificationHandler
 			sb.append(" href=\"");
 
 			String groupFriendlyURL = _portal.getGroupFriendlyURL(
-				group.getPublicLayoutSet(), serviceContext.getThemeDisplay());
+				group.getPublicLayoutSet(), serviceContext.getThemeDisplay(),
+				false, false);
 
 			sb.append(groupFriendlyURL);
 

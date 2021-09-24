@@ -931,7 +931,7 @@ public class GroupServiceTest {
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 
 		String groupFriendlyURL = _portal.getGroupFriendlyURL(
-			_group.getPublicLayoutSet(), themeDisplay);
+			_group.getPublicLayoutSet(), themeDisplay, false, false);
 
 		Assert.assertFalse(
 			groupFriendlyURL + " should not contain " +

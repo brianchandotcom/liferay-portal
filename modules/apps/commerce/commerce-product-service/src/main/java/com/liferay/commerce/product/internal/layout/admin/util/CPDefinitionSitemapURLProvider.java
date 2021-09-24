@@ -153,7 +153,7 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 		}
 
 		String currentSiteURL = _portal.getGroupFriendlyURL(
-			layout.getLayoutSet(), themeDisplay);
+			layout.getLayoutSet(), themeDisplay, false, false);
 
 		String urlSeparator = _cpFriendlyURL.getProductURLSeparator(
 			themeDisplay.getCompanyId());

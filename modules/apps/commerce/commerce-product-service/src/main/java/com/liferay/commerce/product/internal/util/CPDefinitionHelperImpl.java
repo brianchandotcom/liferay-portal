@@ -250,7 +250,7 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		}
 
 		String currentSiteURL = _portal.getGroupFriendlyURL(
-			layout.getLayoutSet(), themeDisplay);
+			layout.getLayoutSet(), themeDisplay, false, false);
 
 		String urlSeparator = _cpFriendlyURL.getProductURLSeparator(
 			themeDisplay.getCompanyId());

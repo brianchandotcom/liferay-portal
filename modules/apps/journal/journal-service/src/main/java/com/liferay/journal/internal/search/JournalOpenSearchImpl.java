@@ -124,7 +124,7 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 			String groupFriendlyURL = _portal.getGroupFriendlyURL(
 				_layoutSetLocalService.getLayoutSet(
 					article.getGroupId(), false),
-				themeDisplay);
+				themeDisplay, false, false);
 
 			return StringBundler.concat(
 				groupFriendlyURL,

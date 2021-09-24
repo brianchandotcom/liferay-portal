@@ -130,7 +130,7 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 		}
 
 		String currentSiteURL = _portal.getGroupFriendlyURL(
-			layout.getLayoutSet(), themeDisplay);
+			layout.getLayoutSet(), themeDisplay, false, false);
 
 		String urlSeparator = _cpFriendlyURL.getAssetCategoryURLSeparator(
 			themeDisplay.getCompanyId());

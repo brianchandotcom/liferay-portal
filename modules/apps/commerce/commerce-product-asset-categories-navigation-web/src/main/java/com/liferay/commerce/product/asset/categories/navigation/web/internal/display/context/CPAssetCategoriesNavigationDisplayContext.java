@@ -253,7 +253,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 		}
 
 		String groupFriendlyURL = _portal.getGroupFriendlyURL(
-			themeDisplay.getLayoutSet(), themeDisplay);
+			themeDisplay.getLayoutSet(), themeDisplay, false, false);
 
 		String languageId = LanguageUtil.getLanguageId(
 			themeDisplay.getLocale());

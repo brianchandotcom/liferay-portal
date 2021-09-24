@@ -227,7 +227,7 @@ public class CommerceSitemapURLProviderTest {
 		Node node = nodes.get(0);
 
 		String currentSiteURL = _portal.getGroupFriendlyURL(
-			layout.getLayoutSet(), _themeDisplay);
+			layout.getLayoutSet(), _themeDisplay, false, false);
 
 		String urlSeparator = _cpFriendlyURL.getAssetCategoryURLSeparator(
 			_themeDisplay.getCompanyId());
@@ -302,7 +302,7 @@ public class CommerceSitemapURLProviderTest {
 				cpDefinition.getCProductId());
 
 		String currentSiteURL = _portal.getGroupFriendlyURL(
-			layout.getLayoutSet(), _themeDisplay);
+			layout.getLayoutSet(), _themeDisplay, false, false);
 
 		String urlSeparator = _cpFriendlyURL.getProductURLSeparator(
 			_themeDisplay.getCompanyId());

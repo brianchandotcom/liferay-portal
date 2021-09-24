@@ -82,7 +82,7 @@ public class AssetCategoryFriendlyURLInfoItemFieldReader
 			}
 
 			String groupFriendlyURL = _portal.getGroupFriendlyURL(
-				themeDisplay.getLayoutSet(), themeDisplay);
+				themeDisplay.getLayoutSet(), themeDisplay, false, false);
 
 			return InfoLocalizedValue.function(
 				locale -> {

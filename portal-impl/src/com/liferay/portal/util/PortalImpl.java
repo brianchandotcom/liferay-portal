@@ -2523,6 +2523,11 @@ public class PortalImpl implements Portal {
 			portlet, PropsValues.GOOGLE_GADGET_SERVLET_MAPPING, themeDisplay);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * #getGroupFriendlyURL(LayoutSet, ThemeDisplay, boolean, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public String getGroupFriendlyURL(
 			LayoutSet layoutSet, ThemeDisplay themeDisplay)
@@ -2559,7 +2564,7 @@ public class PortalImpl implements Portal {
 		try {
 			setThemeDisplayI18n(themeDisplay, locale);
 
-			return getGroupFriendlyURL(layoutSet, themeDisplay);
+			return getGroupFriendlyURL(layoutSet, themeDisplay, false, false);
 		}
 		finally {
 			resetThemeDisplayI18n(

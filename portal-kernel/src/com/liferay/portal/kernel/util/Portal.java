@@ -688,6 +688,11 @@ public interface Portal {
 	public String getGoogleGadgetURL(Portlet portlet, ThemeDisplay themeDisplay)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * #getGroupFriendlyURL(LayoutSet, ThemeDisplay, boolean, boolean)}
+	 */
+	@Deprecated
 	public String getGroupFriendlyURL(
 			LayoutSet layoutSet, ThemeDisplay themeDisplay)
 		throws PortalException;

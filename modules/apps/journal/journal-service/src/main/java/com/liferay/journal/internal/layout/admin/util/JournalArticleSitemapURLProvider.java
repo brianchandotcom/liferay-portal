@@ -233,7 +233,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			String groupFriendlyURL = _portal.getGroupFriendlyURL(
 				_layoutSetLocalService.getLayoutSet(
 					journalArticle.getGroupId(), false),
-				themeDisplay);
+				themeDisplay, false, false);
 
 			StringBundler sb = new StringBundler(4);
 

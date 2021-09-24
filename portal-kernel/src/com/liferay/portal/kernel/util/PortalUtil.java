@@ -960,6 +960,11 @@ public class PortalUtil {
 		return _portal.getGoogleGadgetURL(portlet, themeDisplay);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * #getGroupFriendlyURL(LayoutSet, ThemeDisplay, boolean, boolean)}
+	 */
+	@Deprecated
 	public static String getGroupFriendlyURL(
 			LayoutSet layoutSet, ThemeDisplay themeDisplay)
 		throws PortalException {

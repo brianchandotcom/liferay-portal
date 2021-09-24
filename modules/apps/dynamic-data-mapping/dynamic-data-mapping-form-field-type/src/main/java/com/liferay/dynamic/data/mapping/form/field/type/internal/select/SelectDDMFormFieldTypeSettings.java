@@ -36,13 +36,13 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		),
 		@DDMFormRule(
 			actions = {
-				"setEnabled('dataSourceType', not(hasObjectField(getValue('objectFieldName'))))",
 				"setEnabled('required', not(hasObjectField(getValue('objectFieldName'))))",
 				"setMultiple('predefinedValue', getValue('multiple'))",
 				"setOptions('predefinedValue', getValue('options'))",
 				"setRequired('ddmDataProviderInstanceId', contains(getValue('dataSourceType'), \"data-provider\"))",
 				"setRequired('ddmDataProviderInstanceOutput', contains(getValue('dataSourceType'), \"data-provider\"))",
 				"setRequired('options', contains(getValue('dataSourceType'), \"manual\") OR isEmpty(getValue('dataSourceType')))",
+				"setVisible('dataSourceType', not(hasObjectField(getValue('objectFieldName'))))",
 				"setVisible('ddmDataProviderInstanceId', contains(getValue('dataSourceType'), \"data-provider\"))",
 				"setVisible('ddmDataProviderInstanceOutput', contains(getValue('dataSourceType'), \"data-provider\"))",
 				"setVisible('multiple', not(hasObjectField(getValue('objectFieldName'))))",

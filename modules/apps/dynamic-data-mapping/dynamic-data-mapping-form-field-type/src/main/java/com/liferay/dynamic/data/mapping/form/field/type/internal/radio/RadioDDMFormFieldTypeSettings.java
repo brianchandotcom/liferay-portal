@@ -34,9 +34,15 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 			actions = {
 				"setOptions('predefinedValue', getValue('options'))",
 				"setRequired('options', true)",
+				"setVisible('options', not(hasObjectField(getValue('objectFieldName'))))",
+				"setVisible('predefinedValue', not(hasObjectField(getValue('objectFieldName'))))",
 				"setVisible('requiredErrorMessage', getValue('required'))"
 			},
 			condition = "TRUE"
+		),
+		@DDMFormRule(
+			actions = "setValue('options', getListTypeEntries(getValue('objectFieldName')))",
+			condition = "hasObjectField(getValue('objectFieldName'))"
 		)
 	}
 )

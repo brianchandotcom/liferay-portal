@@ -49,7 +49,7 @@ const ObjectField = ({
 }) => {
 	const {
 		formBuilder: {
-			focusedField: {dataType},
+			focusedField: {dataType, type: focusedFieldType},
 			pages,
 		},
 	} = useFormState();
@@ -59,9 +59,31 @@ const ObjectField = ({
 	]);
 
 	const options = useMemo(() => {
-		const filteredObjectFields = objectFields.filter(({type}) => {
-			return normalizedDataType.includes(type.toLowerCase());
-		});
+		const filteredObjectFields = objectFields.filter(
+			({listTypeDefinitionId, type}) => {
+				if (
+					!listTypeDefinitionId &&
+					(focusedFieldType == 'radio' ||
+						focusedFieldType == 'select') &&
+					normalizedDataType.includes(type.toLowerCase())
+				) {
+					return false;
+				}
+				else if (
+					listTypeDefinitionId &&
+					(focusedFieldType == 'checkbox_multiple' ||
+						focusedFieldType == 'color' ||
+						focusedFieldType == 'grid' ||
+						focusedFieldType == 'rich_text' ||
+						focusedFieldType == 'text') &&
+					normalizedDataType.includes(type.toLowerCase())
+				) {
+					return false;
+				}
+
+				return normalizedDataType.includes(type.toLowerCase());
+			}
+		);
 
 		if (filteredObjectFields.length) {
 			const mappedFields = getFields(pages)
@@ -97,7 +119,7 @@ const ObjectField = ({
 				},
 			];
 		}
-	}, [normalizedDataType, objectFields, pages]);
+	}, [focusedFieldType, normalizedDataType, objectFields, pages]);
 
 	return (
 		<Select

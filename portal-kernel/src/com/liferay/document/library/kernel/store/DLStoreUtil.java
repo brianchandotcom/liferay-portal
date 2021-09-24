@@ -15,6 +15,7 @@
 package com.liferay.document.library.kernel.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.io.File;
 import java.io.InputStream;
@@ -586,15 +587,14 @@ public class DLStoreUtil {
 	}
 
 	/**
-	 * Set's the {@link DLStore} object. Used primarily by Spring and should not
-	 * be used by the client.
-	 *
-	 * @param store the {@link DLStore} object
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
+	@Deprecated
 	public void setStore(DLStore store) {
-		_store = store;
 	}
 
-	private static DLStore _store;
+	private static volatile DLStore _store =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			DLStore.class, DLStoreUtil.class, "_store", true);
 
 }

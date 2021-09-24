@@ -119,9 +119,9 @@ definition {
 			ABTest.editOrDeleteABTest(value = "Edit");
 
 			AssertElementPresent(
-				value = "Bounce Rate",
-				locator1 = "ABTest#CHANGE_SELECT_GOAL");
-			
+				locator1 = "ABTest#CHANGE_SELECT_GOAL",
+				value = "Bounce Rate");
+
 			Click(locator1 = "ABTest#SAVE_AB_TEST_BUTTON");
 
 			Alert.viewSuccessMessage();

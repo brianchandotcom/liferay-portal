@@ -285,8 +285,6 @@ definition {
 	@description = "LPS-135549 - Verify that it is not possible to create a Field with a duplicated Field Name"
 	@priority = "4"
 	test CannotCreateDuplicatedFieldName {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -311,7 +309,6 @@ definition {
 			fieldType = "String");
 
 		ObjectAdmin.viewFieldErrorMessage(message = "Duplicate name customObjectField");
-
 	}
 
 	@description = "LPS-135549 - Verify that it is not possible to create a Object with a duplicated Object Name"

@@ -122,7 +122,8 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 			) ?? false;
 
 		if (
-			editableValues !== previousEditableValues ||
+			(!isNullOrUndefined(previousEditableValues) &&
+				editableValues !== previousEditableValues) ||
 			itemClassName !== previousItemClassName ||
 			itemClassPK !== previousItemClassPK ||
 			(hasLocalizable && languageId !== previousLanguageId)

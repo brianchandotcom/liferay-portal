@@ -10,7 +10,6 @@ dependencies {
 	compileOnly project(":apps:portal-security:portal-security-permission-api")
 	compileOnly project(":apps:sharing:sharing-api")
 	compileOnly project(":core:petra:petra-string")
-	compileOnly project(":core:registry-api")
 }
 
 liferay {

@@ -5,7 +5,6 @@ dependencies {
 	compileOnly project(":apps:portal-cache:portal-cache-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
-	compileOnly project(":core:registry-api")
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompile group: "org.aspectj", name: "aspectjweaver", version: "1.8.9"

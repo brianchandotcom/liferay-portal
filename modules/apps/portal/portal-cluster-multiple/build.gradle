@@ -24,5 +24,4 @@ dependencies {
 	testCompile group: "org.springframework", name: "spring-web", version: "5.2.2.RELEASE"
 	testCompile project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	testCompile project(":core:petra:petra-process")
-	testCompile project(":core:registry-api")
 }

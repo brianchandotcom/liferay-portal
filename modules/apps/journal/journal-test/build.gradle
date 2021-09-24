@@ -12,7 +12,6 @@ dependencies {
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-sql-dsl-api")
 	testCompile project(":core:petra:petra-string")
-	testCompile project(":core:registry-api")
 
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"

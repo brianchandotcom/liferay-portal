@@ -15,5 +15,4 @@ dependencies {
 	testCompile project(":apps:portal-search:portal-search")
 	testCompile project(":apps:portal-search:portal-search-test-util")
 	testCompile project(":core:petra:petra-lang")
-	testCompile project(":core:registry-api")
 }

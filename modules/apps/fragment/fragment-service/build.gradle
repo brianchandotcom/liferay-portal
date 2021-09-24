@@ -34,7 +34,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
-	compileOnly project(":core:registry-api")
 
 	testCompile classifier: "classic", group: "org.joda", name: "joda-convert", version: "2.2.1"
 	testCompile group: "com.damnhandy", name: "handy-uri-templates", version: "2.1.7"

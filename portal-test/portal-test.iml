@@ -30,8 +30,6 @@
 		<orderEntry type="module" module-name="petra-url-pattern-mapper" scope="PROVIDED" />
 		<orderEntry type="module" module-name="petra-xml" scope="PROVIDED" />
 		<orderEntry type="module" module-name="portal-kernel" scope="PROVIDED" />
-	    <orderEntry type="module" module-name="registry-api" scope="PROVIDED" />
-		<orderEntry type="module" module-name="registry-impl" scope="PROVIDED" />
 		<orderEntry type="library" name="development" level="project" />
 		<orderEntry type="library" name="portal" level="project" />
 		<orderEntry type="library" name="global" level="project" />

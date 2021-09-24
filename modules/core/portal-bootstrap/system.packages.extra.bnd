@@ -400,8 +400,5 @@ Provide-Capability:\
 	@lib/com.liferay.petra.sql.dsl.spi.jar,\
 	@lib/com.liferay.petra.string.jar,\
 	@lib/com.liferay.petra.url.pattern.mapper.jar,\
-	@lib/com.liferay.petra.xml.jar,\
-	@lib/com.liferay.registry.api.jar
--removeheaders:\
-	Private-Package,\
-	Service-Component
+	@lib/com.liferay.petra.xml.jar
+-removeheaders: Private-Package

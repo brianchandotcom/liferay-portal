@@ -141,18 +141,6 @@
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
-					<label>modules\core\registry-api\src\main\java</label>
-					<type>java</type>
-					<location>modules/core/registry-api/src/main/java</location>
-					<encoding>UTF-8</encoding>
-				</source-folder>
-				<source-folder>
-					<label>modules\core\registry-impl\src\main\java</label>
-					<type>java</type>
-					<location>modules/core/registry-impl/src/main/java</location>
-					<encoding>UTF-8</encoding>
-				</source-folder>
-				<source-folder>
 					<label>portal-impl\src</label>
 					<type>java</type>
 					<location>portal-impl/src</location>
@@ -321,10 +309,6 @@
 						<location>modules/core/petra/petra-string/src</location>
 					</source-folder>
 					<source-folder style="packages">
-						<label>modules\core\registry\registry-api\src</label>
-						<location>modules/core/registry/registry-api/src</location>
-					</source-folder>
-					<source-folder style="packages">
 						<label>portal-impl\src</label>
 						<location>portal-impl/src</location>
 					</source-folder>
@@ -408,7 +392,6 @@
 				<package-root>modules/core/petra/petra-sql-dsl-api/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-sql-dsl-spi/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-string/src/main/java</package-root>
-				<package-root>modules/core/registry-api/src/main/java</package-root>
 				<package-root>portal-impl/src</package-root>
 				<package-root>portal-impl/test/unit</package-root>
 				<package-root>portal-kernel/src</package-root>

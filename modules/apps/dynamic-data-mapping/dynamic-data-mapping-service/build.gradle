@@ -64,7 +64,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-sql-dsl-spi")
 	compileOnly project(":core:petra:petra-string")
-	compileOnly project(":core:registry-api")
 
 	testCompile group: "org.json", name: "json", version: "20180813"
 	testCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"

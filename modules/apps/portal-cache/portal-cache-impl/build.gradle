@@ -12,5 +12,4 @@ dependencies {
 	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-memory")
 	testCompile project(":core:petra:petra-sql-dsl-api")
-	testCompile project(":core:registry-api")
 }

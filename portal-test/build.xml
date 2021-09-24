@@ -15,7 +15,6 @@
 		<pathelement location="${project.dir}/portal-kernel/classes" />
 		<path refid="lib.classpath" />
 		<path refid="lib.pre.classpath" />
-		<pathelement location="${project.dir}/modules/core/registry-api/classes" />
 	</path>
 
 	<target depends="build-common-java.deploy" name="deploy">

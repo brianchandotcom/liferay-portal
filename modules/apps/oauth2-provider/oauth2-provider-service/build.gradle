@@ -22,7 +22,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
-	compileOnly project(":core:registry-api")
 
 	testCompile group: "junit", name: "junit", version: "4.13.1"
 	testCompile group: "org.apache.commons", name: "commons-compress", version: "1.21"

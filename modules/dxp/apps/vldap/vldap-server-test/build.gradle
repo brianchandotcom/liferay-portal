@@ -8,6 +8,5 @@ dependencies {
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-sql-dsl-api")
 	testCompile project(":core:petra:petra-string")
-	testCompile project(":core:registry-api")
 	testCompile project(":dxp:apps:vldap:vldap-server")
 }

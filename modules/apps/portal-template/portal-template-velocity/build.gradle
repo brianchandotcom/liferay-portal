@@ -24,5 +24,4 @@ dependencies {
 	testCompile project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-memory")
-	testCompile project(":core:registry-api")
 }

@@ -24,7 +24,6 @@ dependencies {
 	testCompile group: "org.aspectj", name: "aspectjweaver", version: "1.8.9"
 	testCompile project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	testCompile project(":core:petra:petra-function")
-	testCompile project(":core:registry-api")
 }
 
 liferayOSGi {

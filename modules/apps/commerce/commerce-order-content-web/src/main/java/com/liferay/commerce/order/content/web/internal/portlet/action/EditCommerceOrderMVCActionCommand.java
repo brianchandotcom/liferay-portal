@@ -160,6 +160,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
 				_portal.getScopeGroupId(actionRequest)),
 			commerceOrder.getCommerceAccountId());
+		_commerceOrderHttpHelper.setCurrentCommerceOrder(
+			_portal.getHttpServletRequest(actionRequest), commerceOrder);
 
 		actionRequest.setAttribute(
 			WebKeys.REDIRECT,
@@ -383,14 +385,6 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		CommerceOrder commerceOrder =
 			_commerceOrderService.reorderCommerceOrder(
 				commerceOrderId, commerceContext);
-
-		_commerceAccountHelper.setCurrentCommerceAccount(
-			_portal.getHttpServletRequest(actionRequest),
-			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
-				_portal.getScopeGroupId(actionRequest)),
-			commerceOrder.getCommerceAccountId());
-		_commerceOrderHttpHelper.setCurrentCommerceOrder(
-			_portal.getHttpServletRequest(actionRequest), commerceOrder);
 
 		checkoutOrSubmitCommerceOrder(actionRequest, commerceOrder);
 	}

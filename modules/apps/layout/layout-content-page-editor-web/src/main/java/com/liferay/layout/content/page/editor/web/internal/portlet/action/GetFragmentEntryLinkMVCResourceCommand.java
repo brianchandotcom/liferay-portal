@@ -167,6 +167,10 @@ public class GetFragmentEntryLinkMVCResourceCommand
 				}
 			}
 
+			boolean isolated = themeDisplay.isIsolated();
+
+			themeDisplay.setIsolated(true);
+
 			try {
 				String content = _fragmentRendererController.render(
 					defaultFragmentRendererContext, httpServletRequest,
@@ -204,6 +208,8 @@ public class GetFragmentEntryLinkMVCResourceCommand
 				httpServletRequest.setAttribute(
 					LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
 					currentLayoutDisplayPageProvider);
+
+				themeDisplay.setIsolated(isolated);
 			}
 
 			if (SessionErrors.contains(

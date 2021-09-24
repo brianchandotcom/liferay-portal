@@ -22,10 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface Registry {
 
-	public <T> ServiceReference<T>[] getAllServiceReferences(
-			String className, String filterString)
-		throws Exception;
-
 	public <T> T getService(ServiceReference<T> serviceReference);
 
 	public <T> ServiceReference<T> getServiceReference(Class<T> clazz);

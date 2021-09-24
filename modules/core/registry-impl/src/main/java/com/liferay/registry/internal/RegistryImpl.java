@@ -29,22 +29,6 @@ public class RegistryImpl implements Registry {
 	}
 
 	@Override
-	public <T> ServiceReference<T>[] getAllServiceReferences(
-			String className, String filterString)
-		throws Exception {
-
-		org.osgi.framework.ServiceReference<T>[] osgiServiceReferences =
-			(org.osgi.framework.ServiceReference<T>[])
-				_bundleContext.getAllServiceReferences(className, filterString);
-
-		if (osgiServiceReferences == null) {
-			return null;
-		}
-
-		return _toServiceReferences(osgiServiceReferences);
-	}
-
-	@Override
 	public <T> T getService(ServiceReference<T> serviceReference) {
 		if (!(serviceReference instanceof ServiceReferenceWrapper)) {
 			throw new IllegalArgumentException();

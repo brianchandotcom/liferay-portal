@@ -1391,7 +1391,6 @@ definition {
 	}
 
 	@description = "LRQA-55450 [Performance] Search assignees in the performance of all assignees screen"
-	@ignore = "true"
 	@priority = "5"
 	test SearchPerformanceOfAllAssignees {
 		property portal.acceptance = "true";
@@ -2219,7 +2218,6 @@ definition {
 	}
 
 	@description = "LRQA-53639 - Automate LPS-100675"
-	@ignore = "true"
 	@priority = "5"
 	test VerifyFilterTopStepPerformance {
 		property portal.acceptance = "true";
@@ -2964,7 +2962,6 @@ definition {
 	}
 
 	@description = "LRQA-53631 Automate LPS-97666: [Performance] View top assignee performance"
-	@ignore = "true"
 	@priority = "5"
 	test ViewTopAsigneePerformance {
 		property portal.acceptance = "true";

@@ -50,6 +50,8 @@ definition {
 			else {
 				if (isSet(fieldNameList)) {
 					for (var item : list "${fieldNameList}") {
+						ACUtils.searchBar(searchItem = "${item}");
+
 						MenuItem.click(menuItem = "${item}");
 
 						if (IsElementPresent(key_text = "Select Analytics Cloud Field",

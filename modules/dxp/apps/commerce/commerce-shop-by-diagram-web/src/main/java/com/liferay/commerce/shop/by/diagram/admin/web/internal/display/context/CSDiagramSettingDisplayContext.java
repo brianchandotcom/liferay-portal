@@ -121,6 +121,10 @@ public class CSDiagramSettingDisplayContext
 		return _csDiagramTypeRegistry.getCSDiagramTypes();
 	}
 
+	public String[] getImageCSSSelectors() {
+		return _csDiagramSettingImageConfiguration.imageCSSSelectors();
+	}
+
 	public String[] getImageExtensions() {
 		return _csDiagramSettingImageConfiguration.imageExtensions();
 	}

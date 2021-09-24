@@ -41,4 +41,47 @@ definition {
 		var messageId = JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "This calls the JSON WS API to delete an entry"
+	macro deleteEntry {
+		var redirectEntryId = JSONRedirect.getRedirectEntryId(
+			groupName = "${groupName}",
+			destinationURL = "${destinationURL}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/redirect.redirectentry/delete-redirect-entry \
+				-u test@liferay.com:test \
+				-d redirectEntryId=${redirectEntryId} \
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "This calls the JSON WS API to get the redirectEntryId"
+	macro getRedirectEntryId {
+		Variables.assertDefined(parameterList = "${destinationURL},${groupName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/redirect.redirectentry/get-redirect-entries \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d "start=-1" \
+			-d "end=-1" \
+			-d -orderByComparator=
+		''';
+
+		var redirectEntryId = JSONCurlUtil.post("${curl}", "$.[?(@['destinationURL'] == '${destinationURL}')]['redirectEntryId']");
+
+		if ("${redirectEntryId}" == "") {
+			fail("FAIL. Cannot find category.");
+		}
+
+		return "${redirectEntryId}";
+	}
+
 }

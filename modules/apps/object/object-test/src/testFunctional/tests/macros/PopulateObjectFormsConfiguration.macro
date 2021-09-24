@@ -22,6 +22,8 @@ definition {
 		Click(
 			key_fieldLabelName = "${fieldLabelName}",
 			locator1 = "PopulateObjectFormsConfiguration#MAP_OBJECT_FIELD");
+
+		WaitForPageLoad();
 	}
 
 	macro openForm {

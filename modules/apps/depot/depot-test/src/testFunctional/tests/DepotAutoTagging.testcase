@@ -118,10 +118,7 @@ definition {
 
 		Panel.expandPanel(panel = "Categorization");
 
-		AssertTextEquals(
-			key_tagName = "dxp",
-			locator1 = "AssetCategorization#TAG",
-			value1 = "dxp");
+		AssetCategorization.viewTag(tagName = "dxp");
 	}
 
 	@description = "This test asserts that an auto-tagged web content can be deleted in a depot when OpenNLP Auto-Tagging is enabled."
@@ -146,10 +143,7 @@ definition {
 
 		Panel.expandPanel(panel = "Categorization");
 
-		AssertTextEquals(
-			key_tagName = "dxp",
-			locator1 = "AssetCategorization#TAG",
-			value1 = "dxp");
+		AssetCategorization.viewTag(tagName = "dxp");
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 

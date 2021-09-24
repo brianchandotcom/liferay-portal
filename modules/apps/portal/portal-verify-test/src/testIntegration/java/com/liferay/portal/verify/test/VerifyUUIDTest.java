@@ -94,8 +94,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 	public void testVerifyParallelUnknownModelWithUnknownPKColumnName()
 		throws Exception {
 
-		VerifiableUUIDModel[] verifiableUUIDModels =
-			new VerifiableUUIDModel[3];
+		VerifiableUUIDModel[] verifiableUUIDModels = new VerifiableUUIDModel[3];
 
 		for (int i = 0; i < verifiableUUIDModels.length; i++) {
 			verifiableUUIDModels[i] = new VerifiableUUIDModel() {

@@ -1,0 +1,79 @@
+import com.liferay.gradle.util.OSDetector
+import com.liferay.gradle.util.StringUtil
+
+apply plugin: "com.liferay.node"
+
+task buildExtra
+
+classes {
+	dependsOn buildExtra
+}
+
+node {
+	global = false
+	nodeVersion = "14.17.6"
+	useNpm = false
+}
+
+_createExtraTasks()
+
+private void _createExtraTasks() {
+	File extraDir = new File(projectDir, "extra")
+
+	extraDir.eachDir {
+		File dir ->
+
+		String suffix = dir.name.replaceAll(/[\.-](\w)/) {
+			return it[1].toUpperCase()
+		}
+
+		Task yarnInstallTask = tasks.create(name: "yarnInstall" + StringUtil.capitalize(suffix), type: Exec) {
+			if (OSDetector.windows) {
+				executable "cmd.exe"
+
+				args "/c"
+				args new File(projectDir, "build/node/node.exe")
+			}
+			else {
+				executable "/bin/sh"
+
+				args "-c"
+				args new File(projectDir, "build/node/bin/node")
+			}
+
+			args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+			args "install"
+			dependsOn downloadNode
+			workingDir dir
+		}
+
+		Task yarnBuildTask = tasks.create(name: "yarnBuild" + StringUtil.capitalize(suffix), type: Exec) {
+			if (OSDetector.windows) {
+				executable "cmd.exe"
+
+				args "/c"
+				args new File(projectDir, "build/node/node.exe")
+			}
+			else {
+				executable "/bin/sh"
+
+				args "-c"
+				args new File(projectDir, "build/node/bin/node")
+			}
+
+			args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+			args "build"
+			dependsOn yarnInstallTask
+			workingDir dir
+
+			doLast {
+				copy {
+					from new File(dir, "build/static")
+					into new File(sourceSets.main.output.resourcesDir, "site-initializer/documents/extra/" + dir.name)
+				}
+			}
+		}
+
+		buildExtra.dependsOn yarnBuildTask
+	}
+}

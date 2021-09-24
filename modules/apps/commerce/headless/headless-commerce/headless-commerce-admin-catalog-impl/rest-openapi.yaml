@@ -485,12 +485,10 @@ components:
             type: object
         MappedProduct:
             properties:
-                diagram:
-                    example: false
-                    type: boolean
-                expando:
-                    additionalProperties: true
-                    type: object
+                customFields:
+                    items:
+                        $ref: "#/components/schemas/CustomField"
+                    type: array
                 id:
                     example: 33130
                     format: int64
@@ -532,6 +530,13 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
+                type:
+                    enum:
+                        - diagram
+                        - external
+                        - sku
+                    example: sku
+                    type: string
             type: object
         Option:
             properties:

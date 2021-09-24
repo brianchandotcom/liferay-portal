@@ -32,16 +32,15 @@ private void _createExtraTasks() {
 				executable "cmd.exe"
 
 				args "/c"
-				args new File(projectDir, "build/node/node.exe")
+				args new File(node.nodeDir, "node.exe")
+				args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
 			}
 			else {
-				executable "/bin/sh"
+				executable new File(node.nodeDir, "bin/node")
 
-				args "-c"
-				args new File(projectDir, "build/node/bin/node")
+				args new File(node.nodeDir, "lib/node_modules/yarn/yarn-" + node.yarnVersion + ".js")
 			}
 
-			args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
 			args "install"
 			dependsOn downloadNode
 			workingDir dir
@@ -52,16 +51,15 @@ private void _createExtraTasks() {
 				executable "cmd.exe"
 
 				args "/c"
-				args new File(projectDir, "build/node/node.exe")
+				args new File(node.nodeDir, "node.exe")
+				args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
 			}
 			else {
-				executable "/bin/sh"
+				executable new File(node.nodeDir, "bin/node")
 
-				args "-c"
-				args new File(projectDir, "build/node/bin/node")
+				args new File(node.nodeDir, "lib/node_modules/yarn/yarn-" + node.yarnVersion + ".js")
 			}
 
-			args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
 			args "build"
 			dependsOn yarnInstallTask
 			workingDir dir

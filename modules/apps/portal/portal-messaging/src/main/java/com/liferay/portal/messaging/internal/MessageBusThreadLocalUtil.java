@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
+import java.util.Optional;
 
 /**
  * @author Tina Tian
@@ -106,8 +107,15 @@ public class MessageBusThreadLocalUtil {
 			GroupThreadLocal.setGroupId(groupId);
 		}
 
-		PermissionChecker permissionChecker = (PermissionChecker)message.get(
-			"permissionChecker");
+		PermissionChecker permissionChecker = Optional.ofNullable(
+			message.get("permissionChecker")
+		).filter(
+			PermissionChecker.class::isInstance
+		).map(
+			PermissionChecker.class::cast
+		).orElse(
+			null
+		);
 
 		String principalName = message.getString("principalName");
 

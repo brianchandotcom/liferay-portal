@@ -45,12 +45,11 @@
 	"name": "@liferay/d2c-react",
 	"private": true,
 	"scripts": {
-		"build:liferay": "yarn build && ./setup-liferay.sh",
 		"build": "craco build",
 		"lint": "eslint src --ext js",
 		"mock": "json-server -p 3333 -d 200 ./mock/db.json --routes ./mock/routes.json",
-		"run:liferay": "yarn build:liferay && npx serve ./build",
-		"serve:liferay": "npx serve ./build",
+		"run": "yarn build && npx serve ./build",
+		"serve": "npx serve ./build",
 		"start": "craco start"
 	},
 	"version": "1.0.0"

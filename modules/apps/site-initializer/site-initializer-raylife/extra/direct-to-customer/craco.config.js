@@ -47,6 +47,13 @@ module.exports = {
 				],
 			});
 
+			/**
+			 * Avoid hashes in filenames
+			 */
+
+			webpackConfig.output.chunkFilename = 'static/js/[name].js';
+			webpackConfig.output.filename = 'static/js/[name].js';
+
 			return webpackConfig;
 		},
 	},

@@ -34,16 +34,15 @@ import com.liferay.search.experiences.rest.dto.v1_0.Avg;
 import com.liferay.search.experiences.rest.dto.v1_0.Cardinality;
 import com.liferay.search.experiences.rest.dto.v1_0.Clause;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
-import com.liferay.search.experiences.rest.dto.v1_0.General;
 import com.liferay.search.experiences.rest.dto.v1_0.Query;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
+import com.liferay.search.experiences.rest.dto.v1_0.SearchParameter;
 
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -57,32 +56,48 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Ignore
 	@Test
-	public void testEnhance() {
+	public void testAggregations() {
 		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
-			new SXPBlueprintSearchRequestEnhancer();
+			_createSXPBlueprintSearchRequestEnhancer();
 
-		ReflectionTestUtil.setFieldValue(
-			sxpBlueprintSearchRequestEnhancer, "_aggregations",
-			new AggregationsImpl());
-		ReflectionTestUtil.setFieldValue(
-			sxpBlueprintSearchRequestEnhancer,
-			"_complexQueryPartBuilderFactory",
-			new ComplexQueryPartBuilderFactoryImpl());
-		ReflectionTestUtil.setFieldValue(
-			sxpBlueprintSearchRequestEnhancer, "_queries", new QueriesImpl());
-		ReflectionTestUtil.setFieldValue(
-			sxpBlueprintSearchRequestEnhancer, "_sxpParameterDataCreator",
-			new SXPParameterDataCreator());
+		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
+
+		Configuration configuration = sxpBlueprint.getConfiguration();
+
+		configuration.setAggregations(
+			HashMapBuilder.put(
+				RandomTestUtil.randomString(),
+				() -> {
+					Aggregation aggregation = new Aggregation();
+
+					Avg avg = new Avg();
+
+					avg.setField(RandomTestUtil.randomString());
+
+					aggregation.setAvg(avg);
+
+					return aggregation;
+				}
+			).put(
+				RandomTestUtil.randomString(),
+				() -> {
+					Aggregation aggregation = new Aggregation();
+
+					Cardinality cardinality = new Cardinality();
+
+					cardinality.setField(RandomTestUtil.randomString());
+					cardinality.setPrecision_threshold(
+						RandomTestUtil.randomInt());
+
+					aggregation.setCardinality(cardinality);
+
+					return aggregation;
+				}
+			).build());
 
 		sxpBlueprintSearchRequestEnhancer.enhance(
-			_searchRequestBuilder,
-			new SXPBlueprint() {
-				{
-					configuration = _createConfiguration();
-				}
-			});
+			_searchRequestBuilder, sxpBlueprint);
 
 		SearchRequest searchRequest = _searchRequestBuilder.build();
 
@@ -91,6 +106,70 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 
 		Assert.assertEquals(
 			aggregationsMap.toString(), 2, aggregationsMap.size());
+	}
+
+	@Test
+	public void testParameters() {
+		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
+			_createSXPBlueprintSearchRequestEnhancer();
+
+		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
+
+		Configuration configuration = sxpBlueprint.getConfiguration();
+
+		configuration.setParameters(
+			HashMapBuilder.put(
+				RandomTestUtil.randomString(),
+				() -> {
+					SearchParameter searchParameter = new SearchParameter();
+
+					searchParameter.setDefaultValueString(
+						RandomTestUtil.randomString());
+
+					return searchParameter;
+				}
+			).build());
+
+		sxpBlueprintSearchRequestEnhancer.enhance(
+			_searchRequestBuilder, sxpBlueprint);
+
+		SearchRequest searchRequest = _searchRequestBuilder.build();
+
+		Assert.assertNull(searchRequest.getQueryString());
+	}
+
+	@Test
+	public void testQueries() {
+		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
+			_createSXPBlueprintSearchRequestEnhancer();
+
+		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
+
+		Configuration configuration = sxpBlueprint.getConfiguration();
+
+		configuration.setQueries(
+			new Query[] {
+				new Query() {
+					{
+						clauses = new Clause[] {
+							new Clause() {
+								{
+									occur = "must_not";
+									queryJSON = JSONUtil.put(
+										"term", JSONUtil.put("status", 0)
+									).toString();
+								}
+							}
+						};
+						enabled = true;
+					}
+				}
+			});
+
+		sxpBlueprintSearchRequestEnhancer.enhance(
+			_searchRequestBuilder, sxpBlueprint);
+
+		SearchRequest searchRequest = _searchRequestBuilder.build();
 
 		List<ComplexQueryPart> complexQueryParts =
 			searchRequest.getComplexQueryParts();
@@ -108,58 +187,34 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 			new String(wrapperQuery.getSource()));
 	}
 
-	private Configuration _createConfiguration() {
-		return new Configuration() {
+	private SXPBlueprint _createSXPBlueprint() {
+		return new SXPBlueprint() {
 			{
-				aggregations = HashMapBuilder.put(
-					RandomTestUtil.randomString(),
-					() -> {
-						Aggregation aggregation = new Aggregation();
-
-						Avg avg = new Avg();
-
-						avg.setField(RandomTestUtil.randomString());
-
-						aggregation.setAvg(avg);
-
-						return aggregation;
-					}
-				).put(
-					RandomTestUtil.randomString(),
-					() -> {
-						Aggregation aggregation = new Aggregation();
-
-						Cardinality cardinality = new Cardinality();
-
-						cardinality.setField(RandomTestUtil.randomString());
-						cardinality.setPrecision_threshold(
-							RandomTestUtil.randomInt());
-
-						aggregation.setCardinality(cardinality);
-
-						return aggregation;
-					}
-				).build();
-				general = new General();
-				queries = new Query[] {
-					new Query() {
-						{
-							clauses = new Clause[] {
-								new Clause() {
-									{
-										occur = "must_not";
-										queryJSON = JSONUtil.put(
-											"term", JSONUtil.put("status", 0)
-										).toString();
-									}
-								}
-							};
-							enabled = true;
-						}
-					}
-				};
+				configuration = new Configuration();
 			}
 		};
+	}
+
+	private SXPBlueprintSearchRequestEnhancer
+		_createSXPBlueprintSearchRequestEnhancer() {
+
+		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
+			new SXPBlueprintSearchRequestEnhancer();
+
+		ReflectionTestUtil.setFieldValue(
+			sxpBlueprintSearchRequestEnhancer, "_aggregations",
+			new AggregationsImpl());
+		ReflectionTestUtil.setFieldValue(
+			sxpBlueprintSearchRequestEnhancer,
+			"_complexQueryPartBuilderFactory",
+			new ComplexQueryPartBuilderFactoryImpl());
+		ReflectionTestUtil.setFieldValue(
+			sxpBlueprintSearchRequestEnhancer, "_queries", new QueriesImpl());
+		ReflectionTestUtil.setFieldValue(
+			sxpBlueprintSearchRequestEnhancer, "_sxpParameterDataCreator",
+			new SXPParameterDataCreator());
+
+		return sxpBlueprintSearchRequestEnhancer;
 	}
 
 	private final SearchRequestBuilder _searchRequestBuilder =

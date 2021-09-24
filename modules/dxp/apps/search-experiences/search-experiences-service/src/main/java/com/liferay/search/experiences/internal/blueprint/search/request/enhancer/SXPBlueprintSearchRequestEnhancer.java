@@ -16,6 +16,7 @@ package com.liferay.search.experiences.internal.blueprint.search.request.enhance
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.metrics.CardinalityAggregation;
@@ -115,6 +116,10 @@ public class SXPBlueprintSearchRequestEnhancer {
 			names = (String[])sxpParameter.getValue();
 		}
 
+		if (ListUtil.isEmpty(_sxpSearchRequestBodyContributors)) {
+			return;
+		}
+
 		for (SXPSearchRequestBodyContributor sxpSearchRequestBodyContributor :
 				_sxpSearchRequestBodyContributors) {
 
@@ -155,6 +160,10 @@ public class SXPBlueprintSearchRequestEnhancer {
 		Map<String, Aggregation> aggregations,
 		SearchRequestBuilder searchRequestBuilder) {
 
+		if (MapUtil.isEmpty(aggregations)) {
+			return;
+		}
+
 		for (Map.Entry<String, Aggregation> entry : aggregations.entrySet()) {
 			searchRequestBuilder.addAggregation(
 				_toPortalSearchAggregation(entry.getValue(), entry.getKey()));
@@ -180,6 +189,10 @@ public class SXPBlueprintSearchRequestEnhancer {
 
 	private void _processGeneral(
 		General general, SearchRequestBuilder searchRequestBuilder) {
+
+		if (general == null) {
+			return;
+		}
 
 		if (general.getApplyIndexerClauses() != null) {
 			searchRequestBuilder.withSearchContext(

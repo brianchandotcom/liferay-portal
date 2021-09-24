@@ -18,6 +18,7 @@
 
 <%
 KaleoProcess kaleoProcess = (KaleoProcess)request.getAttribute(KaleoFormsWebKeys.KALEO_PROCESS);
+String languageId = LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale());
 %>
 
 <h3 class="kaleo-process-header"><liferay-ui:message key="details" /></h3>
@@ -28,10 +29,10 @@ KaleoProcess kaleoProcess = (KaleoProcess)request.getAttribute(KaleoFormsWebKeys
 
 <aui:fieldset-group markupView="lexicon">
 	<aui:fieldset>
-		<aui:input cssClass="lfr-input-text" defaultLanguageId="<%= themeDisplay.getLanguageId() %>" localized="<%= true %>" name="name" type="text" value="<%= KaleoFormsUtil.getKaleoProcessName(kaleoProcess, portletSession) %>">
+		<aui:input cssClass="lfr-input-text" defaultLanguageId="<%= languageId %>" localized="<%= true %>" name="name" type="text" value="<%= KaleoFormsUtil.getKaleoProcessName(kaleoProcess, portletSession) %>">
 			<aui:validator name="required" />
 		</aui:input>
 
-		<aui:input cssClass="lfr-editor-textarea" defaultLanguageId="<%= themeDisplay.getLanguageId() %>" localized="<%= true %>" name="description" type="textarea" value="<%= KaleoFormsUtil.getKaleoProcessDescription(kaleoProcess, portletSession) %>" wrapperCssClass="lfr-textarea-container" />
+		<aui:input cssClass="lfr-editor-textarea" defaultLanguageId="<%= languageId %>" localized="<%= true %>" name="description" type="textarea" value="<%= KaleoFormsUtil.getKaleoProcessDescription(kaleoProcess, portletSession) %>" wrapperCssClass="lfr-textarea-container" />
 	</aui:fieldset>
 </aui:fieldset-group>

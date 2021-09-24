@@ -17,12 +17,7 @@ package com.liferay.journal.web.internal.frontend.taglib.form.navigator;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import javax.servlet.ServletContext;
 
@@ -46,21 +41,7 @@ public class JournalDisplayPageFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, JournalArticle article) {
-		Group group = null;
-
-		if ((article != null) && (article.getId() > 0)) {
-			group = _groupLocalService.fetchGroup(article.getGroupId());
-		}
-		else {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-			group = themeDisplay.getScopeGroup();
-		}
-
-		if ((group != null) && (group.isCompany() || group.isDepot())) {
+		if (isGlobalSiteOrDepot(article)) {
 			return false;
 		}
 
@@ -89,8 +70,5 @@ public class JournalDisplayPageFormNavigatorEntry
 	protected String getJspPath() {
 		return "/article/display_page.jsp";
 	}
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 }

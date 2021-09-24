@@ -21,8 +21,11 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 
 import java.util.Locale;
@@ -66,6 +69,28 @@ public abstract class BaseJournalFormNavigatorEntry
 			article, portletRequest, "classNameId");
 
 		if (classNameId > JournalArticleConstants.CLASS_NAME_ID_DEFAULT) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isGlobalSiteOrDepot(JournalArticle article) {
+		Group group = null;
+
+		if ((article != null) && (article.getId() > 0)) {
+			group = GroupLocalServiceUtil.fetchGroup(article.getGroupId());
+		}
+		else {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			group = themeDisplay.getScopeGroup();
+		}
+
+		if ((group != null) && (group.isCompany() || group.isDepot())) {
 			return true;
 		}
 

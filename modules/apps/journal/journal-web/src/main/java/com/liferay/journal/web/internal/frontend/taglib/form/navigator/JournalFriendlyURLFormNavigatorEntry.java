@@ -40,7 +40,7 @@ public class JournalFriendlyURLFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, JournalArticle article) {
-		if (isEditDefaultValues(article)) {
+		if (isEditDefaultValues(article) || isGlobalSiteOrDepot(article)) {
 			return false;
 		}
 

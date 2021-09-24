@@ -35,47 +35,26 @@ public class MappedProduct implements Cloneable, Serializable {
 		return MappedProductSerDes.toDTO(json);
 	}
 
-	public Boolean getDiagram() {
-		return diagram;
+	public CustomField[] getCustomFields() {
+		return customFields;
 	}
 
-	public void setDiagram(Boolean diagram) {
-		this.diagram = diagram;
+	public void setCustomFields(CustomField[] customFields) {
+		this.customFields = customFields;
 	}
 
-	public void setDiagram(
-		UnsafeSupplier<Boolean, Exception> diagramUnsafeSupplier) {
+	public void setCustomFields(
+		UnsafeSupplier<CustomField[], Exception> customFieldsUnsafeSupplier) {
 
 		try {
-			diagram = diagramUnsafeSupplier.get();
+			customFields = customFieldsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Boolean diagram;
-
-	public Map<String, ?> getExpando() {
-		return expando;
-	}
-
-	public void setExpando(Map<String, ?> expando) {
-		this.expando = expando;
-	}
-
-	public void setExpando(
-		UnsafeSupplier<Map<String, ?>, Exception> expandoUnsafeSupplier) {
-
-		try {
-			expando = expandoUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Map<String, ?> expando;
+	protected CustomField[] customFields;
 
 	public Long getId() {
 		return id;
@@ -267,6 +246,33 @@ public class MappedProduct implements Cloneable, Serializable {
 
 	protected Long skuId;
 
+	public Type getType() {
+		return type;
+	}
+
+	public String getTypeAsString() {
+		if (type == null) {
+			return null;
+		}
+
+		return type.toString();
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+		try {
+			type = typeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Type type;
+
 	@Override
 	public MappedProduct clone() throws CloneNotSupportedException {
 		return (MappedProduct)super.clone();
@@ -296,6 +302,39 @@ public class MappedProduct implements Cloneable, Serializable {
 
 	public String toString() {
 		return MappedProductSerDes.toJSON(this);
+	}
+
+	public static enum Type {
+
+		DIAGRAM("diagram"), EXTERNAL("external"), SKU("sku");
+
+		public static Type create(String value) {
+			for (Type type : values()) {
+				if (Objects.equals(type.getValue(), value) ||
+					Objects.equals(type.name(), value)) {
+
+					return type;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Type(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 }

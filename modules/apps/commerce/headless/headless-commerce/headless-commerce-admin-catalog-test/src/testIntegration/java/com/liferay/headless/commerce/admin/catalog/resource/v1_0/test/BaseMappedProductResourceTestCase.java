@@ -784,16 +784,8 @@ public abstract class BaseMappedProductResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("diagram", additionalAssertFieldName)) {
-				if (mappedProduct.getDiagram() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("expando", additionalAssertFieldName)) {
-				if (mappedProduct.getExpando() == null) {
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (mappedProduct.getCustomFields() == null) {
 					valid = false;
 				}
 
@@ -863,6 +855,14 @@ public abstract class BaseMappedProductResourceTestCase {
 
 			if (Objects.equals("skuId", additionalAssertFieldName)) {
 				if (mappedProduct.getSkuId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (mappedProduct.getType() == null) {
 					valid = false;
 				}
 
@@ -961,21 +961,10 @@ public abstract class BaseMappedProductResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("diagram", additionalAssertFieldName)) {
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						mappedProduct1.getDiagram(),
-						mappedProduct2.getDiagram())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("expando", additionalAssertFieldName)) {
-				if (!equals(
-						(Map)mappedProduct1.getExpando(),
-						(Map)mappedProduct2.getExpando())) {
+						mappedProduct1.getCustomFields(),
+						mappedProduct2.getCustomFields())) {
 
 					return false;
 				}
@@ -1084,6 +1073,16 @@ public abstract class BaseMappedProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						mappedProduct1.getType(), mappedProduct2.getType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1179,12 +1178,7 @@ public abstract class BaseMappedProductResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("diagram")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("expando")) {
+		if (entityFieldName.equals("customFields")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1249,6 +1243,11 @@ public abstract class BaseMappedProductResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("type")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1293,7 +1292,6 @@ public abstract class BaseMappedProductResourceTestCase {
 	protected MappedProduct randomMappedProduct() throws Exception {
 		return new MappedProduct() {
 			{
-				diagram = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				productExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

@@ -143,7 +143,7 @@ public abstract class BaseMappedProductResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/mapped-products/{mappedProductId}' -d $'{"diagram": ___, "expando": ___, "id": ___, "productExternalReferenceCode": ___, "productId": ___, "quantity": ___, "sequence": ___, "sku": ___, "skuExternalReferenceCode": ___, "skuId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/mapped-products/{mappedProductId}' -d $'{"customFields": ___, "id": ___, "productExternalReferenceCode": ___, "productId": ___, "quantity": ___, "sequence": ___, "sku": ___, "skuExternalReferenceCode": ___, "skuId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Override
@@ -196,7 +196,7 @@ public abstract class BaseMappedProductResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/mapped-products' -d $'{"diagram": ___, "expando": ___, "id": ___, "productExternalReferenceCode": ___, "productId": ___, "quantity": ___, "sequence": ___, "sku": ___, "skuExternalReferenceCode": ___, "skuId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/mapped-products' -d $'{"customFields": ___, "id": ___, "productExternalReferenceCode": ___, "productId": ___, "quantity": ___, "sequence": ___, "sku": ___, "skuExternalReferenceCode": ___, "skuId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Override
@@ -280,7 +280,7 @@ public abstract class BaseMappedProductResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{productId}/mapped-products' -d $'{"diagram": ___, "expando": ___, "id": ___, "productExternalReferenceCode": ___, "productId": ___, "quantity": ___, "sequence": ___, "sku": ___, "skuExternalReferenceCode": ___, "skuId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{productId}/mapped-products' -d $'{"customFields": ___, "id": ___, "productExternalReferenceCode": ___, "productId": ___, "quantity": ___, "sequence": ___, "sku": ___, "skuExternalReferenceCode": ___, "skuId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Override

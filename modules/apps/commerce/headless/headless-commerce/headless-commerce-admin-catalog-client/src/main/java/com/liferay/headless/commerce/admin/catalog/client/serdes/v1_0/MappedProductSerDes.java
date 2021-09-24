@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0;
 
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.CustomField;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.MappedProduct;
 import com.liferay.headless.commerce.admin.catalog.client.json.BaseJSONParser;
 
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -55,24 +57,24 @@ public class MappedProductSerDes {
 
 		sb.append("{");
 
-		if (mappedProduct.getDiagram() != null) {
+		if (mappedProduct.getCustomFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"diagram\": ");
+			sb.append("\"customFields\": ");
 
-			sb.append(mappedProduct.getDiagram());
-		}
+			sb.append("[");
 
-		if (mappedProduct.getExpando() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+			for (int i = 0; i < mappedProduct.getCustomFields().length; i++) {
+				sb.append(String.valueOf(mappedProduct.getCustomFields()[i]));
+
+				if ((i + 1) < mappedProduct.getCustomFields().length) {
+					sb.append(", ");
+				}
 			}
 
-			sb.append("\"expando\": ");
-
-			sb.append(_toJSON(mappedProduct.getExpando()));
+			sb.append("]");
 		}
 
 		if (mappedProduct.getId() != null) {
@@ -181,6 +183,20 @@ public class MappedProductSerDes {
 			sb.append(mappedProduct.getSkuId());
 		}
 
+		if (mappedProduct.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(mappedProduct.getType());
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -200,18 +216,13 @@ public class MappedProductSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (mappedProduct.getDiagram() == null) {
-			map.put("diagram", null);
+		if (mappedProduct.getCustomFields() == null) {
+			map.put("customFields", null);
 		}
 		else {
-			map.put("diagram", String.valueOf(mappedProduct.getDiagram()));
-		}
-
-		if (mappedProduct.getExpando() == null) {
-			map.put("expando", null);
-		}
-		else {
-			map.put("expando", String.valueOf(mappedProduct.getExpando()));
+			map.put(
+				"customFields",
+				String.valueOf(mappedProduct.getCustomFields()));
 		}
 
 		if (mappedProduct.getId() == null) {
@@ -283,6 +294,13 @@ public class MappedProductSerDes {
 			map.put("skuId", String.valueOf(mappedProduct.getSkuId()));
 		}
 
+		if (mappedProduct.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put("type", String.valueOf(mappedProduct.getType()));
+		}
+
 		return map;
 	}
 
@@ -304,16 +322,16 @@ public class MappedProductSerDes {
 			MappedProduct mappedProduct, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "diagram")) {
+			if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
-					mappedProduct.setDiagram((Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "expando")) {
-				if (jsonParserFieldValue != null) {
-					mappedProduct.setExpando(
-						(Map)MappedProductSerDes.toMap(
-							(String)jsonParserFieldValue));
+					mappedProduct.setCustomFields(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> CustomFieldSerDes.toDTO((String)object)
+						).toArray(
+							size -> new CustomField[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -371,6 +389,13 @@ public class MappedProductSerDes {
 				if (jsonParserFieldValue != null) {
 					mappedProduct.setSkuId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					mappedProduct.setType(
+						MappedProduct.Type.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

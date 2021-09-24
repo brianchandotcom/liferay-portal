@@ -139,6 +139,28 @@ public class Configuration implements Cloneable, Serializable {
 
 	protected Highlight highlight;
 
+	public Map<String, SearchParameter> getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(Map<String, SearchParameter> parameters) {
+		this.parameters = parameters;
+	}
+
+	public void setParameters(
+		UnsafeSupplier<Map<String, SearchParameter>, Exception>
+			parametersUnsafeSupplier) {
+
+		try {
+			parameters = parametersUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, SearchParameter> parameters;
+
 	public Query[] getQueries() {
 		return queries;
 	}

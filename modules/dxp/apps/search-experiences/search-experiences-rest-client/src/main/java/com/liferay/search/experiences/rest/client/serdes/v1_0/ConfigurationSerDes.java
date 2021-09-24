@@ -107,6 +107,16 @@ public class ConfigurationSerDes {
 			sb.append(String.valueOf(configuration.getHighlight()));
 		}
 
+		if (configuration.getParameters() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parameters\": ");
+
+			sb.append(_toJSON(configuration.getParameters()));
+		}
+
 		if (configuration.getQueries() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -183,6 +193,14 @@ public class ConfigurationSerDes {
 			map.put("highlight", String.valueOf(configuration.getHighlight()));
 		}
 
+		if (configuration.getParameters() == null) {
+			map.put("parameters", null);
+		}
+		else {
+			map.put(
+				"parameters", String.valueOf(configuration.getParameters()));
+		}
+
 		if (configuration.getQueries() == null) {
 			map.put("queries", null);
 		}
@@ -240,6 +258,13 @@ public class ConfigurationSerDes {
 				if (jsonParserFieldValue != null) {
 					configuration.setHighlight(
 						HighlightSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "parameters")) {
+				if (jsonParserFieldValue != null) {
+					configuration.setParameters(
+						(Map)ConfigurationSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "queries")) {

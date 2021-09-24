@@ -35,13 +35,17 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -148,13 +152,33 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 				importedLocaleContentMap, targetLocale);
 		}
 
+		User user = _userLocalService.getUser(latestArticle.getUserId());
+
+		int[] displayDateArray = _getDateArray(
+			user, latestArticle.getDisplayDate());
+		int[] expirationDateArray = _getDateArray(
+			user, latestArticle.getExpirationDate());
+		int[] reviewDateArray = _getDateArray(
+			user, latestArticle.getReviewDate());
+
 		ServiceContext serviceContext = _getServiceContext(latestArticle);
 
 		return _journalArticleLocalService.updateArticle(
 			latestArticle.getUserId(), latestArticle.getGroupId(),
 			latestArticle.getFolderId(), latestArticle.getArticleId(),
 			latestArticle.getVersion(), titleMap, descriptionMap,
-			translatedContent, latestArticle.getLayoutUuid(), serviceContext);
+			latestArticle.getFriendlyURLMap(), translatedContent,
+			latestArticle.getDDMStructureKey(),
+			latestArticle.getDDMTemplateKey(), latestArticle.getLayoutUuid(),
+			displayDateArray[0], displayDateArray[1], displayDateArray[2],
+			displayDateArray[3], displayDateArray[4], expirationDateArray[0],
+			expirationDateArray[1], expirationDateArray[2],
+			expirationDateArray[3], expirationDateArray[4],
+			_isNeverExpire(latestArticle), reviewDateArray[0],
+			reviewDateArray[1], reviewDateArray[2], reviewDateArray[3],
+			reviewDateArray[4], _isNeverReview(latestArticle),
+			latestArticle.isIndexable(), latestArticle.isSmallImage(),
+			latestArticle.getSmallImageURL(), null, null, null, serviceContext);
 	}
 
 	private void _addNewTranslatedDDMField(
@@ -199,6 +223,30 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 		AssetEntry assetEntry = _getAssetLinkEntry(assetEntryId, assetLink);
 
 		return assetEntry.getEntryId();
+	}
+
+	private int[] _getDateArray(User user, Date date) {
+		if (date == null) {
+			return new int[] {0, 0, 0, 0, 0};
+		}
+
+		int[] dateArray = new int[5];
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());
+
+		calendar.setTime(date);
+
+		dateArray[0] = calendar.get(Calendar.MONTH);
+		dateArray[1] = calendar.get(Calendar.DATE);
+		dateArray[2] = calendar.get(Calendar.YEAR);
+		dateArray[3] = calendar.get(Calendar.HOUR);
+		dateArray[4] = calendar.get(Calendar.MINUTE);
+
+		if (calendar.get(Calendar.AM_PM) == Calendar.PM) {
+			dateArray[3] += 12;
+		}
+
+		return dateArray;
 	}
 
 	private Optional<InfoLocalizedValue<Object>> _getInfoLocalizedValueOptional(
@@ -306,6 +354,22 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 		return defaultString;
 	}
 
+	private boolean _isNeverExpire(JournalArticle journalArticle) {
+		if (journalArticle.getExpirationDate() == null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isNeverReview(JournalArticle journalArticle) {
+		if (journalArticle.getReviewDate() == null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _updateFieldsDisplay(Fields ddmFields, String fieldName) {
 		String fieldsDisplayValue = StringBundler.concat(
 			fieldName, DDM.INSTANCE_SEPARATOR, StringUtil.randomString());
@@ -332,5 +396,8 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 
 	@Reference
 	private JournalConverter _journalConverter;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -67,6 +67,7 @@ private void _createExtraTasks() {
 			doLast {
 				copy {
 					from new File(dir, "build/static")
+					include "js/*.js"
 					into new File(sourceSets.main.output.resourcesDir, "site-initializer/documents/extra/" + dir.name)
 				}
 			}

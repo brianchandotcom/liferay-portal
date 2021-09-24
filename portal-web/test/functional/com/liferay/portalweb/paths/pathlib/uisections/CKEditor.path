@@ -87,6 +87,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOOLBAR_VIDEO_BUTTON</td>
+	<td>//a[contains(@class,'cke_button') and contains(@class,'video')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -251,11 +256,6 @@
 	<td></td>
 </tr>
 <!--CONTENT_VIDEO_LINK-->
-<tr>
-	<td>CONTENT_VIDEO_IMAGE</td>
-	<td>//span[contains(@class,'videoselector_icon')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>CONTENT_VIDEO_LINK_IMAGE</td>
 	<td>//img[contains(@src,'data:image/gif')]</td>

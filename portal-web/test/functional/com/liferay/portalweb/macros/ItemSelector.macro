@@ -244,7 +244,7 @@ definition {
 		if (isSet(video)) {
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
-			Click.pauseClickAt(locator1 = "CKEditor#CONTENT_VIDEO_IMAGE");
+			Click.pauseClickAt(locator1 = "CKEditor#TOOLBAR_VIDEO_BUTTON");
 		}
 		else {
 			Click(locator1 = "CKEditor#TOOLBAR_IMAGE_BUTTON");

@@ -24,6 +24,7 @@ definition {
 			fieldType = "${fieldType}",
 			isRequired = "${isRequired}",
 			objectName = "${objectName}",
+			picklistName = "${picklistName}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
 	}

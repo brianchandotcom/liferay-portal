@@ -1,0 +1,32 @@
+definition {
+
+	macro addPicklistViaAPI {
+		JSONObject.addPicklist(
+			picklistName = "${picklistName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+	}
+
+    macro addPicklistItemViaAPI {
+		JSONObject.addPicklistItem(
+			picklistName = "${picklistName}",
+            itemKey = "${itemKey}",
+            itemName = "${itemName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+	}
+
+    macro deletePicklistViaAPI {
+		JSONObject.deletePicklist(
+			picklistName = "${picklistName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+	}
+
+    macro deleteAllPicklistsViaAPI {
+		JSONObject.deleteAllPicklists(
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+	}
+
+}

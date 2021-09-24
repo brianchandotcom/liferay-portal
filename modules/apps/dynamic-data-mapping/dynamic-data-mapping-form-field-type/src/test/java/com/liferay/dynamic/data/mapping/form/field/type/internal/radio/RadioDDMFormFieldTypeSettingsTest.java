@@ -97,7 +97,7 @@ public class RadioDDMFormFieldTypeSettingsTest
 
 		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
 
-		Assert.assertEquals(ddmFormRules.toString(), 1, ddmFormRules.size());
+		Assert.assertEquals(ddmFormRules.toString(), 2, ddmFormRules.size());
 
 		DDMFormRule ddmFormRule = ddmFormRules.get(0);
 
@@ -105,15 +105,38 @@ public class RadioDDMFormFieldTypeSettingsTest
 
 		List<String> actions = ddmFormRule.getActions();
 
-		Assert.assertEquals(actions.toString(), 3, actions.size());
+		Assert.assertEquals(actions.toString(), 5, actions.size());
 
 		Assert.assertEquals(
 			"setOptions('predefinedValue', getValue('options'))",
 			actions.get(0));
 		Assert.assertEquals("setRequired('options', true)", actions.get(1));
 		Assert.assertEquals(
-			"setVisible('requiredErrorMessage', getValue('required'))",
+			"setVisible('options', not(hasObjectField(getValue(" +
+				"'objectFieldName'))))",
 			actions.get(2));
+		Assert.assertEquals(
+			"setVisible('predefinedValue', not(hasObjectField(getValue(" +
+				"'objectFieldName'))))",
+			actions.get(3));
+		Assert.assertEquals(
+			"setVisible('requiredErrorMessage', getValue('required'))",
+			actions.get(4));
+
+		ddmFormRule = ddmFormRules.get(1);
+
+		Assert.assertEquals(
+			"hasObjectField(getValue('objectFieldName'))",
+			ddmFormRule.getCondition());
+
+		actions = ddmFormRule.getActions();
+
+		Assert.assertEquals(actions.toString(), 1, actions.size());
+
+		Assert.assertEquals(
+			"setValue('options', getListTypeEntries(getValue(" +
+				"'objectFieldName')))",
+			actions.get(0));
 	}
 
 	@Test

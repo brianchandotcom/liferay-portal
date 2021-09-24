@@ -150,30 +150,30 @@ public class SelectDDMFormFieldTypeSettingsTest
 
 		Assert.assertEquals(actions.toString(), 13, actions.size());
 		Assert.assertEquals(
-			"setEnabled('dataSourceType', not(hasObjectField(getValue(" +
+			"setEnabled('required', not(hasObjectField(getValue(" +
 				"'objectFieldName'))))",
 			actions.get(0));
 		Assert.assertEquals(
-			"setEnabled('required', not(hasObjectField(getValue(" +
-				"'objectFieldName'))))",
+			"setMultiple('predefinedValue', getValue('multiple'))",
 			actions.get(1));
 		Assert.assertEquals(
-			"setMultiple('predefinedValue', getValue('multiple'))",
-			actions.get(2));
-		Assert.assertEquals(
 			"setOptions('predefinedValue', getValue('options'))",
-			actions.get(3));
+			actions.get(2));
 		Assert.assertEquals(
 			"setRequired('ddmDataProviderInstanceId', contains(getValue(" +
 				"'dataSourceType'), \"data-provider\"))",
-			actions.get(4));
+			actions.get(3));
 		Assert.assertEquals(
 			"setRequired('ddmDataProviderInstanceOutput', contains(" +
 				"getValue('dataSourceType'), \"data-provider\"))",
-			actions.get(5));
+			actions.get(4));
 		Assert.assertEquals(
 			"setRequired('options', contains(getValue('dataSourceType'), " +
 				"\"manual\") OR isEmpty(getValue('dataSourceType')))",
+			actions.get(5));
+		Assert.assertEquals(
+			"setVisible('dataSourceType', not(hasObjectField(getValue(" +
+				"'objectFieldName'))))",
 			actions.get(6));
 		Assert.assertEquals(
 			"setVisible('ddmDataProviderInstanceId', contains(getValue(" +

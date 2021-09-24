@@ -337,10 +337,9 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 	@Test
 	public void testGetValue2() {
 		List<String> values =
-			_selectDDMFormFieldTemplateContextContributor.getValue(
-				"INVALID_JSON");
+			_selectDDMFormFieldTemplateContextContributor.getValue("value");
 
-		Assert.assertTrue(values.toString(), values.isEmpty());
+		Assert.assertTrue(values.toString(), values.contains("value"));
 	}
 
 	private SelectDDMFormFieldTemplateContextContributor _createSpy() {

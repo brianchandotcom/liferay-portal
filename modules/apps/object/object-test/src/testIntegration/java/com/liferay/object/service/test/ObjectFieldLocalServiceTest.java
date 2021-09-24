@@ -100,6 +100,20 @@ public class ObjectFieldLocalServiceTest {
 		try {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
+					0, null, true, true, "en_US", "", "able", false, "Long"));
+
+			Assert.fail();
+		}
+		catch (ObjectFieldTypeException objectFieldTypeException) {
+			Assert.assertEquals(
+				"Indexed language ID can only be applied with type " +
+					"\"String\" that is not indexed as a keyword",
+				objectFieldTypeException.getMessage());
+		}
+
+		try {
+			_testAddSystemObjectField(
+				ObjectFieldUtil.createObjectField(
 					0, null, true, true, "en_US", "", "able", false, "String"));
 
 			Assert.fail();

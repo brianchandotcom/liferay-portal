@@ -104,6 +104,65 @@ definition {
 		JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "This calls the JSON WS API to add a picklist"
+	macro addPicklist {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions \
+			-H 'Content-Type: application/json' \
+			-u ${userEmailAddress}:${userPassword} \
+			-d '{
+			"name": "${picklistName}",
+			"name_i18n": {
+				"en_US": "${picklistName}"
+			}
+			}'
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "This calls the JSON WS API to add a picklist item"
+	macro addPicklistItem {
+		var portalURL = JSONCompany.getPortalURL();
+		var picklistId = JSONObject.getPicklistId(
+			picklistName = "${picklistName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId}/list-type-entries \
+			-H 'Content-Type: application/json' \
+			-u ${userEmailAddress}:${userPassword} \
+			-d '{
+			"key": "${itemKey}",
+			"name": "${itemName}",
+			"name_i18n": {
+				"en_US": "${itemName}"
+			}
+			}'
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "This calls the JSON WS API to delete all custom objects"
 	macro deleteAllCustomObjects {
 		var portalURL = JSONCompany.getPortalURL();
@@ -127,6 +186,37 @@ definition {
 			for (var objectId : list "${objectIdList}") {
 				var curl = '''
 				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId} \
+				-u ${userEmailAddress}:${userPassword}
+			''';
+
+				JSONCurlUtil.delete("${curl}");
+			}
+		}
+	}
+
+	@summary = "This calls the JSON WS API to delete all picklists"
+	macro deleteAllPicklists {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions \
+			-u ${userEmailAddress}:${userPassword}
+		''';
+
+		var picklistIdList = JSONCurlUtil.get("${curl}", "$.items..id");
+
+		if ("${picklistIdList}" != "") {
+			for (var picklistId : list "${picklistIdList}") {
+				var curl = '''
+				${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId} \
 				-u ${userEmailAddress}:${userPassword}
 			''';
 
@@ -180,6 +270,30 @@ definition {
 		var objectName = StringUtil.toLowerCase("${objectName}");
 		var curl = '''
 			${portalURL}/o/c/${objectName}s/${entryId} \
+			-u ${userEmailAddress}:${userPassword}
+		''';
+
+		JSONCurlUtil.delete("${curl}");
+	}
+
+	@summary = "This calls the JSON WS API to delete a picklist"
+	macro deletePicklist {
+		var portalURL = JSONCompany.getPortalURL();
+		var picklistId = JSONObject.getPicklistId(
+			picklistName = "${picklistName}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId} \
 			-u ${userEmailAddress}:${userPassword}
 		''';
 
@@ -251,6 +365,27 @@ definition {
 		return "${objectId}";
 	}
 
+	macro getPicklistId {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions \
+			-u ${userEmailAddress}:${userPassword}
+		''';
+
+		var picklistId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${picklistName}')]['id']");
+
+		return "${picklistId}";
+	}
+
 	@summary = "This calls the JSON WS API to publish an object"
 	macro publishObject {
 		var portalURL = JSONCompany.getPortalURL();
@@ -274,141 +409,6 @@ definition {
 		''';
 
 		JSONCurlUtil.post("${curl}");
-	}
-
-	@summary = "This calls the JSON WS API to add a picklist"
-	macro addPicklist {
-		var portalURL = JSONCompany.getPortalURL();
-
-		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
-		}
-
-		if (!(isSet(userPassword))) {
-			var userPassword = "test";
-		}
-
-		var curl = '''
-			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions \
-			-H 'Content-Type: application/json' \
-			-u ${userEmailAddress}:${userPassword} \
-			-d '{
-			"name": "${picklistName}",
-			"name_i18n": {
-				"en_US": "${picklistName}"
-			}
-			}'
-		''';
-
-		JSONCurlUtil.post("${curl}");
-	}
-
-	macro getPicklistId {
-		var portalURL = JSONCompany.getPortalURL();
-
-		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
-		}
-
-		if (!(isSet(userPassword))) {
-			var userPassword = "test";
-		}
-
-		var curl = '''
-			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions \
-			-u ${userEmailAddress}:${userPassword}
-		''';
-
-		var picklistId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${picklistName}')]['id']");
-
-		return "${picklistId}";
-	}
-
-	@summary = "This calls the JSON WS API to add a picklist item"
-	macro addPicklistItem {
-		var portalURL = JSONCompany.getPortalURL();
-		var picklistId = JSONObject.getPicklistId(
-			picklistName = "${picklistName}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
-
-		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
-		}
-
-		if (!(isSet(userPassword))) {
-			var userPassword = "test";
-		}
-
-		var curl = '''
-			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId}/list-type-entries \
-			-H 'Content-Type: application/json' \
-			-u ${userEmailAddress}:${userPassword} \
-			-d '{
-			"key": "${itemKey}",
-			"name": "${itemName}",
-			"name_i18n": {
-				"en_US": "${itemName}"
-			}
-			}'
-		''';
-
-		JSONCurlUtil.post("${curl}");
-	}
-
-	@summary = "This calls the JSON WS API to delete a picklist"
-	macro deletePicklist {
-		var portalURL = JSONCompany.getPortalURL();
-		var picklistId = JSONObject.getPicklistId(
-			picklistName = "${picklistName}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
-
-		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
-		}
-
-		if (!(isSet(userPassword))) {
-			var userPassword = "test";
-		}
-
-		var curl = '''
-			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId} \
-			-u ${userEmailAddress}:${userPassword}
-		''';
-
-		JSONCurlUtil.delete("${curl}");
-	}
-
-	@summary = "This calls the JSON WS API to delete all picklists"
-	macro deleteAllPicklists {
-		var portalURL = JSONCompany.getPortalURL();
-
-		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
-		}
-
-		if (!(isSet(userPassword))) {
-			var userPassword = "test";
-		}
-
-		var curl = '''
-			${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions \
-			-u ${userEmailAddress}:${userPassword}
-		''';
-
-		var picklistIdList = JSONCurlUtil.get("${curl}", "$.items..id");
-
-		if ("${picklistIdList}" != "") {
-			for (var picklistId : list "${picklistIdList}") {
-				var curl = '''
-				${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId} \
-				-u ${userEmailAddress}:${userPassword}
-			''';
-
-				JSONCurlUtil.delete("${curl}");
-			}
-		}
 	}
 
 }

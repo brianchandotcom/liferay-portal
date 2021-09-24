@@ -483,12 +483,7 @@ definition {
 	test PreviewFileThatExceedsLimit {
 		property test.name.skip.portal.instance = "CPDocumentsandmedia#PreviewFileThatExceedsLimit";
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
-			configurationName = "File Entries",
-			configurationScope = "System Scope");
+		DMNavigator.openToConfigInSystemSettings(portlet = "File Entries");
 
 		Type(
 			key_fieldLabel = "Previewable Processor Maximum Size",

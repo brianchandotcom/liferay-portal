@@ -341,6 +341,10 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if ("${portlet}" == "File Entries") {
+			var portletId = "com.liferay.document.library.configuration.DLFileEntryConfiguration";
+		}
+
 		if ("${portlet}" == "FFMPEG Audio Converter") {
 			var portletId = "com.liferay.document.library.preview.audio.internal.configuration.DLAudioFFMPEGAudioConverterConfiguration";
 		}

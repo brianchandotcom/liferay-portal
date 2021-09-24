@@ -2277,7 +2277,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.addProperties(propertyOption = "Name");
+		Segmentation.addProperties(propertyOption = "User Name");
 
 		Segmentation.fillTitle(titleField = "Segment Title");
 

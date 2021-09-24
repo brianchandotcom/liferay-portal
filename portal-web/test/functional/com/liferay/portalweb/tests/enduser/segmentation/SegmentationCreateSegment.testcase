@@ -1550,7 +1550,7 @@ definition {
 		task ("Add segment and check the user Belongs To the segment") {
 			LexiconEntry.gotoAdd();
 
-			Segmentation.addProperties(propertyOption = "Name");
+			Segmentation.addProperties(propertyOption = "User Name");
 
 			Segmentation.fillTitle(titleField = "AddSegmentByUserName Test");
 

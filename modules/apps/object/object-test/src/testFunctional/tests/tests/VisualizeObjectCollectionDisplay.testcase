@@ -23,12 +23,64 @@ definition {
 	}
 
 	@description = "LPS-135386 - Verify if the user can display the entries on a table format"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDisplayEntriesOnTableFormat {
 		property portal.acceptance = "true";
 
-		// TODO LPS-139022 CanDisplayEntriesOnTableFormat pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Test Text 1");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Test Text 2");
+
+		VisualizeObjectCollectionDisplay.addDisplayPageTemplate(
+			contentType = "Object",
+			displayPageName = "Blank Display Page",
+			subtype = "Custom Object");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			infoListProviderName = "Custom Object");
+		
+		DoubleClick(
+			locator1 = "VisualizeObjectCollectionDisplay#FRAGMENT_COLLECTION",
+			collectionName = "Collection Display");
+
+		Select(
+			key_fieldLabel = "List Style",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Table");
+
+		PageEditor.clickPublish();
+
+		VisualizeObjectDisplayPage.openDisplayPage(displayPageName = "Blank Display Page");
+
+		VisualizeObjectCollectionDisplay.viwEntriesTable(entries = "Test Text 1");
+		
+		VisualizeObjectCollectionDisplay.viwEntriesTable(entries = "Test Text 2");
+
 
 	}
 

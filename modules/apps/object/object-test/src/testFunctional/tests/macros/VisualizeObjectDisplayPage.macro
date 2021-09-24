@@ -18,6 +18,14 @@ definition {
 			value1 = "${subtype}");
 	}
 
+	macro openDisplayPage {
+		NavItem.gotoDisplayPages();
+
+		Click(
+			key_pageName = "${displayPageName}",
+			locator1 = "VisualizeObjectDisplayPage#DISPLAY_PAGE");
+	}
+
 	macro openPageTemplate {
 		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet");
 

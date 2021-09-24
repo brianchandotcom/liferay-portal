@@ -66,6 +66,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>ENTRIES_TABLE</td>
+		<td>//span//span[@class = 'text-truncate' and contains(text(),'${key_entries}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>EXPAND_BUTTON</td>
 		<td>//button[@aria-label='Expand Collection Display']</td>
 		<td></td>

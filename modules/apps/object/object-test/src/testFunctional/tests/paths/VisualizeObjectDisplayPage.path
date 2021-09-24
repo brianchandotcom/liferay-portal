@@ -35,6 +35,11 @@
 		<td>//select[@name='_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_classTypeId']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>DISPLAY_PAGE</td>
+		<td>//a[@class = 'text-truncate' and contains(text(),'${key_pageName}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

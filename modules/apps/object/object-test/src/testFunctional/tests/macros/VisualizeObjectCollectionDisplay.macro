@@ -58,6 +58,13 @@ definition {
 			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_FRAGMENT");
 	}
 
+	macro viwEntriesTable {
+		AssertElementPresent(
+			key_entries = "${entries}",
+			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_TABLE");
+
+	}
+
 	macro viewMappedFragment {
 		AssertSelectedLabel(
 			locator1 = "VisualizeObjectCollectionDisplay#MAP_FRAGMENT",

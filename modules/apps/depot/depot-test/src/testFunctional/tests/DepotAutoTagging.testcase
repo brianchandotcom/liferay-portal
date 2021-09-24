@@ -40,8 +40,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	@uitest
-	test AddImage {
-		property test.name.skip.portal.instance = "DepotAutoTagging#AddImage";
+	test ImageCanBeAutoTagged {
+		property test.name.skip.portal.instance = "DepotAutoTagging#ImageCanBeAutoTagged";
 
 		AutoTagging.enableTensorFlow();
 
@@ -72,8 +72,8 @@ definition {
 	@description = "This test asserts that a text document is auto-tagged in a depot."
 	@priority = "5"
 	@refactorneeded
-	test AddTextDocument {
-		property test.name.skip.portal.instance = "DepotAutoTagging#AddTextDocument";
+	test TextDocumentCanBeAutoTagged {
+		property test.name.skip.portal.instance = "DepotAutoTagging#TextDocumentCanBeAutoTagged";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -98,8 +98,8 @@ definition {
 	@description = "This test asserts that a web content article is auto-tagged in a depot."
 	@priority = "5"
 	@refactorneeded
-	test AddWebContent {
-		property test.name.skip.portal.instance = "DepotAutoTagging#AddWebContent";
+	test WebContentCanBeAutoTagged {
+		property test.name.skip.portal.instance = "DepotAutoTagging#WebContentCanBeAutoTagged";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Web Content Article",
@@ -123,8 +123,8 @@ definition {
 	@description = "This test asserts that an auto-tagged web content can be deleted in a depot when OpenNLP Auto-Tagging is enabled."
 	@priority = "3"
 	@refactorneeded
-	test DeleteAutotaggedWebContent {
-		property test.name.skip.portal.instance = "DepotAutoTagging#DeleteAutotaggedWebContent";
+	test CanDeleteAutotaggedWebContent {
+		property test.name.skip.portal.instance = "DepotAutoTagging#CanDeleteAutotaggedWebContent";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Web Content Article",
@@ -154,8 +154,8 @@ definition {
 	@description = "This ensures that the depot auto-tagging can be disabled and enabled at the instance level."
 	@priority = "4"
 	@refactorneeded
-	test DisableAndEnableAtInstanceScope {
-		property test.name.skip.portal.instance = "DepotAutoTagging#DisableAndEnableAtInstanceScope";
+	test CanDisableAtInstanceScope {
+		property test.name.skip.portal.instance = "DepotAutoTagging#CanDisableAtInstanceScope";
 
 		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "Instance Settings");
 
@@ -175,8 +175,8 @@ definition {
 	@description = "This ensures that the depot auto-tagging can be disabled and enabled at the system level."
 	@priority = "4"
 	@refactorneeded
-	test DisableAndEnableAtSystemScope {
-		property test.name.skip.portal.instance = "DepotAutoTagging#DisableAndEnableAtSystemScope";
+	test CanDisableAtSystemScope {
+		property test.name.skip.portal.instance = "DepotAutoTagging#CanDisableAtSystemScope";
 
 		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "System Settings");
 
@@ -196,8 +196,8 @@ definition {
 	@description = "This test asserts that no auto-tag is generated when an image is uploaded to a depot that has auto-tagging disabled."
 	@priority = "5"
 	@refactorneeded
-	test DisableForImage {
-		property test.name.skip.portal.instance = "DepotAutoTagging#DisableForImage";
+	test CanDisableForImage {
+		property test.name.skip.portal.instance = "DepotAutoTagging#CanDisableForImage";
 
 		AutoTagging.enableTensorFlow();
 
@@ -224,8 +224,8 @@ definition {
 	@description = "This test asserts that no auto-tag is generated when a text document is uploaded to a depot that has auto-tagging disabled."
 	@priority = "5"
 	@refactorneeded
-	test DisableForTextDocument {
-		property test.name.skip.portal.instance = "DepotAutoTagging#DisableForTextDocument";
+	test CanDisableForTextDocument {
+		property test.name.skip.portal.instance = "DepotAutoTagging#CanDisableForTextDocument";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -254,8 +254,8 @@ definition {
 	@description = "This test asserts that no auto-tag is generated when a web content article is uploaded to a depot that has auto-tagging disabled."
 	@priority = "5"
 	@refactorneeded
-	test DisableForWebContent {
-		property test.name.skip.portal.instance = "DepotAutoTagging#DisableForWebContent";
+	test CanDisableForWebContent {
+		property test.name.skip.portal.instance = "DepotAutoTagging#CanDisableForWebContent";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Web Content Article",
@@ -283,8 +283,8 @@ definition {
 	@description = "This ensures that a document in a depot can be auto tagged and have its tag replaced manually."
 	@priority = "4"
 	@refactorneeded
-	test ReplaceAutoTagInDocument {
-		property test.name.skip.portal.instance = "DepotAutoTagging#ReplaceAutoTagInDocument";
+	test AutoTagCanBeReplacedInDocument {
+		property test.name.skip.portal.instance = "DepotAutoTagging#AutoTagCanBeReplacedInDocument";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",

@@ -45,8 +45,6 @@ definition {
 			ACSettings.goToDataSources();
 
 			ACSettings.takeTokenFromAnalyticsCloud();
-
-			TestCase.setUpPortalInstance();
 		}
 
 		task ("Connect DXP to AC") {
@@ -55,18 +53,10 @@ definition {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
-
-			ACUtils.launchAC();
 		}
 
 		task ("Login in AC, go to settings then go to data sources") {
-			ACWorkspace.signOut();
-
-			ACLogin.loginAs(
-				emailAddress = "michelle.hoshi@faro.io",
-				password = "test");
-
-			ACWorkspace.openWorkspace();
+			ACUtils.launchAC(emailAddress = "michelle.hoshi@faro.io");
 
 			ACNavigation.goToSettings();
 
@@ -143,8 +133,6 @@ definition {
 			ACSettings.goToDataSources();
 
 			ACSettings.takeTokenFromAnalyticsCloud();
-
-			TestCase.setUpPortalInstance();
 		}
 
 		task ("Connect DXP to AC") {
@@ -521,21 +509,11 @@ definition {
 	@description = "Automation ID: LRAC-9090 | Test Summary: Owner can add data sources"
 	@priority = "5"
 	test OwnerCanAddDataSources {
-<<<<<<< HEAD
-		property portal.upstream = "nilo";
-
-<<<<<<< HEAD
-		task ("Logout and login as an owner user") {
-=======
 		task ("Logout AC and login as an owner user") {
->>>>>>> 279d33802 (sf)
-=======
-		task ("Logout AC and login as an owner user") {
->>>>>>> b643bba (LRAC-9298 Fix companyId error)
 			ACWorkspace.signOut();
 
 			ACLogin.loginAs(
-				emailAddress = "michelle.hoshi@faro.io",
+				emailAddress = "bryan.cheung@faro.io",
 				password = "test");
 		}
 
@@ -547,8 +525,6 @@ definition {
 			ACSettings.goToDataSources();
 
 			ACSettings.takeTokenFromAnalyticsCloud();
-
-			TestCase.setUpPortalInstance();
 		}
 
 		task ("Connect DXP to AC") {
@@ -557,18 +533,10 @@ definition {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
-
-			ACUtils.launchAC();
 		}
 
 		task ("Login in AC, go to settings then go to data sources") {
-			ACWorkspace.signOut();
-
-			ACLogin.loginAs(
-				emailAddress = "bryan.cheung@faro.io",
-				password = "test");
-
-			ACWorkspace.openWorkspace();
+			ACUtils.launchAC(emailAddress = "bryan.cheung@faro.io");
 
 			ACNavigation.goToSettings();
 

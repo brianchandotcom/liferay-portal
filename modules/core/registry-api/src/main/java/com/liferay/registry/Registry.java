@@ -48,8 +48,6 @@ public interface Registry {
 	public <T> T[] getServices(String className, String filterString)
 		throws Exception;
 
-	public String getSymbolicName(ClassLoader classLoader);
-
 	public <T> boolean ungetService(ServiceReference<T> serviceReference);
 
 }

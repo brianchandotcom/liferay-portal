@@ -25,9 +25,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleReference;
 
 /**
  * @author Raymond Augé
@@ -200,19 +198,6 @@ public class RegistryImpl implements Registry {
 		}
 
 		return services;
-	}
-
-	@Override
-	public String getSymbolicName(ClassLoader classLoader) {
-		if (classLoader instanceof BundleReference) {
-			BundleReference bundleReference = (BundleReference)classLoader;
-
-			Bundle bundle = bundleReference.getBundle();
-
-			return bundle.getSymbolicName();
-		}
-
-		return null;
 	}
 
 	@Override

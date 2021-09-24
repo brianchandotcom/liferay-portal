@@ -7,7 +7,7 @@ definition {
 			key_title ="${frameTitle}",
 			locator1 = "IFrame#MODAL_ANY");
 
-	    Click.javaScriptClick(key_labelName = "${labelName}",
+	    Click.javaScriptClick(key_pluralLabelName = "${pluralLabelName}",
 		locator1 = "VisualizeObjectDisplayPage#SELECT_OBJECT");
 
 		Click(locator1 = "VisualizeObjectDisplayPage#SELECT_ENTRY");

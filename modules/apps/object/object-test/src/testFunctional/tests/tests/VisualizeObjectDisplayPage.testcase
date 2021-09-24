@@ -107,7 +107,7 @@ definition {
 	@priority = "4"
 	test DisplaySpecificEntryLong {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "CustomObject",
+			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
 
@@ -133,7 +133,7 @@ definition {
 
 		VisualizeObjectCollectionDisplay.openHeading();
 
-		VisualizeObjectDisplayPage.addItem(labelName = "Custom", frameTitle = "Select");
+		VisualizeObjectDisplayPage.addItem(pluralLabelName = "Custom Objects", frameTitle = "Select");
 
         VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Long");
 
@@ -141,13 +141,42 @@ definition {
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of String type for a specific Object"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test DisplaySpecificEntryString {
 		property portal.acceptance = "true";
 
-		// TODO LPS-139038 DisplaySpecificEntryString pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "String",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Test text");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		VisualizeObjectCollectionDisplay.openHeading();
+
+		VisualizeObjectDisplayPage.addItem(pluralLabelName = "Custom Objects", frameTitle = "Select");
+
+        VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "String");
+
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry ="Test text");
 	}
 
 	@description = "LPS-137104 - Verify if Objects and its data are displayed as a Content Type and Subtype for a Page Template"

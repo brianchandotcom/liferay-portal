@@ -82,14 +82,16 @@ definition {
 	macro addEntryVia404URLs {
 		var portalURL = PropsUtil.get("portal.url");
 
-		if (isSet(ignoredURL)) {
+		if (!(isSet(skipNavigation))) {
 			AssertClick(
 				key_navItem = "404 URLs",
 				locator1 = "NavBar#NAV_ITEM_REDIRECTION",
 				value1 = "404 URLs");
+		}
 
-			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
+		if (isSet(ignoredURL)) {
 			MenuItem.click(menuItem = "Ignored URLs");
 
 			Redirect.gotoEntryMenuItem(
@@ -97,13 +99,6 @@ definition {
 				sourceURL = "${ignoredURL}");
 		}
 		else {
-			AssertClick(
-				key_navItem = "404 URLs",
-				locator1 = "NavBar#NAV_ITEM_REDIRECTION",
-				value1 = "404 URLs");
-
-			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
 			MenuItem.click(menuItem = "Active URLs");
 
 			Redirect.gotoEntryMenuItem(
@@ -252,14 +247,16 @@ definition {
 	}
 
 	macro ignoreEntry {
-		if ("${unignore}" == "true") {
+		if (!(isSet(skipNavigation))) {
 			AssertClick(
 				key_navItem = "404 URLs",
 				locator1 = "NavBar#NAV_ITEM_REDIRECTION",
 				value1 = "404 URLs");
+		}
 
-			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
+		if ("${unignore}" == "true") {
 			MenuItem.click(menuItem = "Ignored URLs");
 
 			if ("${unignoreAllEntries}" == "true") {
@@ -276,13 +273,6 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 		else {
-			AssertClick(
-				key_navItem = "404 URLs",
-				locator1 = "NavBar#NAV_ITEM_REDIRECTION",
-				value1 = "404 URLs");
-
-			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
 			MenuItem.click(menuItem = "Active URLs");
 
 			if ("${ignoreAllEntries}" == "true") {
@@ -298,6 +288,10 @@ definition {
 
 			Alert.viewSuccessMessage();
 		}
+	}
+
+	macro open404URLsAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_navigation=404-urls");
 	}
 
 	macro openRedirectAdmin {

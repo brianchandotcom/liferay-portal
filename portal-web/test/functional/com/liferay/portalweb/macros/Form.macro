@@ -287,10 +287,6 @@ definition {
 		FormFields.disableSwitch(fieldName = "Autocomplete");
 	}
 
-	macro disableAutocompleteSwitchTextField {
-		Click(locator1 = "FormFields#SWITCH_TEXTFIELD");
-	}
-
 	macro duplicate {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Duplicate",
@@ -470,7 +466,7 @@ definition {
 	}
 
 	macro enableAutocompleteConfiguration {
-		Click(locator1 = "FormFields#SWITCH_TEXTFIELD");
+		FormFields.enableSwitch(fieldName = "Autocomplete");
 	}
 
 	macro getPublishedFormPublicURL {

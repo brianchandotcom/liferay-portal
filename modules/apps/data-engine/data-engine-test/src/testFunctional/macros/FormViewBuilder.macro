@@ -383,9 +383,7 @@ definition {
 	}
 
 	macro editAutoComplete {
-		AssertClick(
-			locator1 = "FormViewBuilder#SIDEBAR_AUTOCOMPLETE_TAB",
-			value1 = "Autocomplete");
+		Form.gotoAutocompleteTab();
 
 		Form.enableAutocompleteConfiguration();
 

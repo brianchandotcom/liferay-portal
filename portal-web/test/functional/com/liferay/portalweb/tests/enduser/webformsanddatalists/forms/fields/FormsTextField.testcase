@@ -152,7 +152,7 @@ definition {
 			key_radioOption = "From Data Provider",
 			locator1 = "FormFields#RADIO_OPTION_LABEL");
 
-		Form.disableAutocompleteSwitchTextField();
+		Form.disableAutocompleteConfiguration();
 
 		AssertNotVisible(
 			key_fieldName = "dataSourceType",

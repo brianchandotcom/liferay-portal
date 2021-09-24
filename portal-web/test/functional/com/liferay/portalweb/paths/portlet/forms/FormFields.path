@@ -839,11 +839,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SWITCH_TEXTFIELD</td>
-	<td>//span[contains(text(),'Autocomplete')]/preceding-sibling::span[@class='toggle-switch-handle']</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

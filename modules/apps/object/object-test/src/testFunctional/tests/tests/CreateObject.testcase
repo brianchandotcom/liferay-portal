@@ -388,6 +388,7 @@ definition {
 
 		ObjectAdmin.addNewObject(
 			fieldLabelName = "Custom Field",
+			fieldName = "",
 			pluralLabelName = "Custom Fields");
 
 		ObjectAdmin.saveCustomObject();

@@ -88,11 +88,13 @@ definition {
 
 		VisualizeObjectCollectionDisplay.openHeading();
 
-		VisualizeObjectDisplayPage.addItem(pluralLabelName = "Custom Objects", frameTitle = "Select");
+		VisualizeObjectDisplayPage.addItem(
+			frameTitle = "Select",
+			pluralLabelName = "Custom Objects");
 
-        VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "BigDecimal");
+		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "BigDecimal");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry ="123.123456");
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "123.123456");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Boolean type for a specific Object"
@@ -125,11 +127,13 @@ definition {
 
 		VisualizeObjectCollectionDisplay.openHeading();
 
-		VisualizeObjectDisplayPage.addItem(pluralLabelName = "Custom Objects", frameTitle = "Select");
+		VisualizeObjectDisplayPage.addItem(
+			frameTitle = "Select",
+			pluralLabelName = "Custom Objects");
 
-        VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Boolean");
+		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Boolean");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry ="true");
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "true");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Date type for a specific Object"
@@ -144,7 +148,6 @@ definition {
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Double type for a specific Object"
 	@priority = "4"
 	test DisplaySpecificEntryDouble {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -156,7 +159,6 @@ definition {
 			fieldType = "Double",
 			isRequired = "false",
 			objectName = "CustomObject");
-
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
@@ -173,18 +175,18 @@ definition {
 
 		VisualizeObjectCollectionDisplay.openHeading();
 
-		VisualizeObjectDisplayPage.addItem(pluralLabelName = "Custom Objects", frameTitle = "Select");
+		VisualizeObjectDisplayPage.addItem(
+			frameTitle = "Select",
+			pluralLabelName = "Custom Objects");
 
-        VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Double");
+		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Double");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry ="1.54");
-
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "1.54");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Integer type for a specific Object"
 	@priority = "4"
 	test DisplaySpecificEntryInteger {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -212,12 +214,13 @@ definition {
 
 		VisualizeObjectCollectionDisplay.openHeading();
 
-		VisualizeObjectDisplayPage.addItem(pluralLabelName = "Custom Objects", frameTitle = "Select");
+		VisualizeObjectDisplayPage.addItem(
+			frameTitle = "Select",
+			pluralLabelName = "Custom Objects");
 
-        VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Integer");
+		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Integer");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry ="123456789");
-
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "123456789");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Long type for a specific Object"
@@ -250,11 +253,13 @@ definition {
 
 		VisualizeObjectCollectionDisplay.openHeading();
 
-		VisualizeObjectDisplayPage.addItem(pluralLabelName = "Custom Objects", frameTitle = "Select");
+		VisualizeObjectDisplayPage.addItem(
+			frameTitle = "Select",
+			pluralLabelName = "Custom Objects");
 
-        VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Long");
+		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Long");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry ="123456789123456789");
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "123456789123456789");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of String type for a specific Object"
@@ -289,11 +294,13 @@ definition {
 
 		VisualizeObjectCollectionDisplay.openHeading();
 
-		VisualizeObjectDisplayPage.addItem(pluralLabelName = "Custom Objects", frameTitle = "Select");
+		VisualizeObjectDisplayPage.addItem(
+			frameTitle = "Select",
+			pluralLabelName = "Custom Objects");
 
-        VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "String");
+		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "String");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry ="Test text");
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "Test text");
 	}
 
 	@description = "LPS-137104 - Verify if Objects and its data are displayed as a Content Type and Subtype for a Page Template"

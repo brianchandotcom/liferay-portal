@@ -591,6 +591,46 @@ definition {
 		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "document_1_Edit.jpg");
 	}
 
+	@description = "This test edits the title and description of a document. It asserts minor version increment because only its metadata was updated."
+	@priority = "5"
+	@refactordone
+	@uitest
+	test CanEditDocument {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(
+			dmDocumentFileName = "Document_1.txt",
+			dmDocumentSize = "259 B",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentFileName = "Document_1.txt",
+			dmDocumentFileNameEdit = "Document_1_Edit.txt",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit");
+
+		DMDocument.viewEditCP(
+			dmDocumentFileName = "Document_1_Edit.txt",
+			dmDocumentTitleEdit = "DM Document Title Edit",
+			dmDocumentVersionNumber = "1.1");
+	}
+
 	@description = "This is a test for LPS-136825. It checks that a file entry can be imported with tags."
 	@ignore = "true"
 	@priority = "3"

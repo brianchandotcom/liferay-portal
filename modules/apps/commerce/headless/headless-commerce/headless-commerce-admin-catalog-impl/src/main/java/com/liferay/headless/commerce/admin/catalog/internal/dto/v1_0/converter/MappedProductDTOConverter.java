@@ -21,8 +21,8 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -60,12 +60,14 @@ public class MappedProductDTOConverter
 			_cpDefinitionService.fetchCPDefinitionByCProductId(
 				csDiagramEntry.getCProductId());
 
-		ExpandoBridge expandoBridge = csDiagramEntry.getExpandoBridge();
-
 		return new MappedProduct() {
 			{
-				diagram = csDiagramEntry.isDiagram();
-				expando = expandoBridge.getAttributes();
+				customFields = CustomFieldsUtil.toCustomFields(
+					dtoConverterContext.isAcceptAllLanguages(),
+					CSDiagramEntry.class.getName(),
+					csDiagramEntry.getCSDiagramEntryId(),
+					csDiagramEntry.getCompanyId(),
+					dtoConverterContext.getLocale());
 				id = csDiagramEntry.getCSDiagramEntryId();
 				productId = csDiagramEntry.getCProductId();
 				quantity = csDiagramEntry.getQuantity();
@@ -104,6 +106,21 @@ public class MappedProductDTOConverter
 						}
 
 						return cpInstance.getExternalReferenceCode();
+					});
+				setType(
+					() -> {
+						if (csDiagramEntry.isDiagram()) {
+							return MappedProduct.Type.create(
+								Type.DIAGRAM.getValue());
+						}
+
+						if (csDiagramEntry.getCPInstanceId() > 0) {
+							return MappedProduct.Type.create(
+								Type.SKU.getValue());
+						}
+
+						return MappedProduct.Type.create(
+							Type.EXTERNAL.getValue());
 					});
 			}
 		};

@@ -14,16 +14,24 @@
 
 package com.liferay.account.retriever.test;
 
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountRole;
 import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -257,6 +265,49 @@ public class AccountUserRetrieverTest {
 		Assert.assertEquals(_users.get(3), users.get(0));
 	}
 
+	@Test
+	public void testSearchAccountUsersWithViewUsersPermission()
+		throws Exception {
+
+		List<User> users = Arrays.asList(
+			UserTestUtil.addUser(), UserTestUtil.addUser(),
+			UserTestUtil.addUser());
+
+		for (User user : users) {
+			_accountEntryUserRelLocalService.addAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), user.getUserId());
+		}
+
+		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
+			TestPropsValues.getUserId(), _accountEntry.getAccountEntryId(),
+			RandomTestUtil.randomString(), null, null);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+			accountRole.getRoleId(), AccountActionKeys.VIEW_USERS);
+
+		User roleUser = users.get(0);
+
+		_accountRoleLocalService.associateUser(
+			_accountEntry.getAccountEntryId(), accountRole.getAccountRoleId(),
+			roleUser.getUserId());
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(roleUser));
+
+			_assertSearch(null, users.size());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
@@ -313,7 +364,13 @@ public class AccountUserRetrieverTest {
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Inject
+	private AccountRoleLocalService _accountRoleLocalService;
+
+	@Inject
 	private AccountUserRetriever _accountUserRetriever;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();

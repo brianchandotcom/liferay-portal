@@ -425,11 +425,13 @@ definition {
 	@priority = "5"
 	test CanShownAnonAndKnownVisitorsLegend {
 		task ("Connect Analytics Cloud to DXP") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Visits the site with known user") {
-			Navigator.openURL();
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 
 			Pause(locator1 = "5000");
 		}
@@ -437,7 +439,11 @@ definition {
 		task ("Visits the site with anonymous user") {
 			User.logoutPG();
 
-			Navigator.openURL();
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
 		}
 
 		task ("Close sessions") {

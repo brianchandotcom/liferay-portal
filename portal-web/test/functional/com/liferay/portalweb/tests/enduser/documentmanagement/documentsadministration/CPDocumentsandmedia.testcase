@@ -66,18 +66,14 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
-	test EditFolder {
+	@refactordone
+	test CanEditFolder {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMFolder.addCP(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
-
-		DMFolder.viewCP(dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -269,10 +265,10 @@ definition {
 			locator1 = "DocumentsAndMedia#DOCUMENT_VERSION_ANY");
 	}
 
-	@description = "This case covers the folder name of a document can be viewed in the info panel and navigate to it."
+	@description = "This case ensures that a document can be viewed after being moved into a folder."
 	@priority = "5"
-	@refactorneeded
-	test MoveDocumentToFolder {
+	@refactordone
+	test CanMoveDocumentToFolder {
 		property portal.acceptance = "true";
 
 		JSONDocument.addFileWithUploadedFile(
@@ -282,24 +278,10 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMDocument.viewCP(
-			dmDocumentSize = "259 B",
-			dmDocumentTitle = "DM Document Title",
-			dmFolderName = "Home",
-			locationFieldName = "true");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMFolder.addCP(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
-
-		DMFolder.viewCP(dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -321,17 +303,19 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test MoveFolderToFolder {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMFolder.addCP(
+	@refactordone
+	test CanMoveFolderToFolder {
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder1 Description",
-			dmFolderName = "DM Folder1 Name");
+			dmFolderName = "DM Folder1 Name",
+			groupName = "Guest");
 
-		DMFolder.addCP(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder2 Description",
-			dmFolderName = "DM Folder2 Name");
+			dmFolderName = "DM Folder2 Name",
+			groupName = "Guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMFolder.moveToFolderCP(
 			dmFolderName = "DM Folder2 Name",
@@ -341,21 +325,18 @@ definition {
 
 	@description = "This case covers LPS-127681. It ensures that a subfolder cannot be moved to parent folder when they are using same name."
 	@priority = "3"
-	@refactorneeded
-	test MoveSubfolderToParentFolderWithSameName {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMFolder.addCP(
+	@refactordone
+	test CanMoveFolderToParentWithSameName {
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMFolder.addCP(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest",
+			parentFolderName = "DM Folder Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -388,17 +369,14 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
-	test MoveToRecycleBinFolder {
+	@refactordone
+	test CanMoveFolderToRecycleBin {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMFolder.addCP(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
-
-		DMFolder.viewCP(dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

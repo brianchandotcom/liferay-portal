@@ -131,8 +131,8 @@ public class DataGuardTestRuleUtil {
 
 	public static DataBag beforeMethod() {
 		return new DataBag(
-			_captureDataMap(), PortletLocalServiceUtil.getPortlets(), null,
-			null);
+			_captureDataMap(), PortletLocalServiceUtil.getPortlets(),
+			_recordsThreadLocal.get(), null);
 	}
 
 	public static class DataBag {

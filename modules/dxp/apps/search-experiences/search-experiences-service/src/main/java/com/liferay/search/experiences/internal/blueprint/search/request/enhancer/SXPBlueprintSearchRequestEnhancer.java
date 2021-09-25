@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.internal.blueprint.search.request.enhancer;
 
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -96,7 +97,8 @@ public class SXPBlueprintSearchRequestEnhancer {
 		_sxpSearchRequestBodyContributors = Arrays.asList(
 			new AggsSXPSearchRequestBodyContributor(),
 			new HighlightSXPSearchRequestBodyContributor(
-				_fieldConfigBuilderFactory, _highlightBuilderFactory),
+				_fieldConfigBuilderFactory, _highlightBuilderFactory,
+				_jsonFactory),
 			new QuerySXPSearchRequestBodyContributor(),
 			new SuggestSXPSearchRequestBodyContributor(),
 			new SortSXPSearchRequestBodyContributor(
@@ -280,6 +282,9 @@ public class SXPBlueprintSearchRequestEnhancer {
 
 	@Reference
 	private HighlightBuilderFactory _highlightBuilderFactory;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Queries _queries;

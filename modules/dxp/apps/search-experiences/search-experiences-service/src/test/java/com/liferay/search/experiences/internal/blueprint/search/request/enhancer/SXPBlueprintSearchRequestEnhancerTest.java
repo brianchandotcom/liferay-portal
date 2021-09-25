@@ -14,13 +14,17 @@
 
 package com.liferay.search.experiences.internal.blueprint.search.request.enhancer;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.filter.ComplexQueryPart;
+import com.liferay.portal.search.highlight.FieldConfig;
 import com.liferay.portal.search.internal.aggregation.AggregationsImpl;
 import com.liferay.portal.search.internal.filter.ComplexQueryPartBuilderFactoryImpl;
+import com.liferay.portal.search.internal.highlight.FieldConfigBuilderFactoryImpl;
+import com.liferay.portal.search.internal.highlight.HighlightBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderImpl;
 import com.liferay.portal.search.internal.query.QueriesImpl;
 import com.liferay.portal.search.internal.searcher.SearchRequestBuilderFactoryImpl;
@@ -29,15 +33,19 @@ import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
+import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.HighlightSXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.rest.dto.v1_0.Aggregation;
 import com.liferay.search.experiences.rest.dto.v1_0.Avg;
 import com.liferay.search.experiences.rest.dto.v1_0.Cardinality;
 import com.liferay.search.experiences.rest.dto.v1_0.Clause;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
+import com.liferay.search.experiences.rest.dto.v1_0.Highlight;
+import com.liferay.search.experiences.rest.dto.v1_0.HighlightField;
 import com.liferay.search.experiences.rest.dto.v1_0.Parameter;
 import com.liferay.search.experiences.rest.dto.v1_0.Query;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -106,6 +114,54 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 
 		Assert.assertEquals(
 			aggregationsMap.toString(), 2, aggregationsMap.size());
+	}
+
+	@Test
+	public void testHighlight() {
+		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
+			_createSXPBlueprintSearchRequestEnhancer();
+
+		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
+
+		Configuration configuration = sxpBlueprint.getConfiguration();
+
+		Integer fragmentOffset = RandomTestUtil.randomInt();
+		String[] postTags = {RandomTestUtil.randomString()};
+		String[] preTags = {RandomTestUtil.randomString()};
+
+		configuration.setHighlight(
+			new Highlight() {
+				{
+					fields = HashMapBuilder.<String, HighlightField>put(
+						RandomTestUtil.randomString(),
+						new HighlightField() {
+							{
+								fragment_offset = fragmentOffset;
+							}
+						}
+					).build();
+					post_tags = postTags;
+					pre_tags = preTags;
+				}
+			});
+
+		sxpBlueprintSearchRequestEnhancer.enhance(
+			_searchRequestBuilder, sxpBlueprint);
+
+		SearchRequest searchRequest = _searchRequestBuilder.build();
+
+		com.liferay.portal.search.highlight.Highlight highlight =
+			searchRequest.getHighlight();
+
+		Assert.assertArrayEquals(postTags, highlight.getPostTags());
+		Assert.assertArrayEquals(preTags, highlight.getPreTags());
+
+		List<FieldConfig> fieldConfigs = highlight.getFieldConfigs();
+
+		FieldConfig fieldConfig = fieldConfigs.get(0);
+
+		Assert.assertEquals(fragmentOffset, fieldConfig.getFragmentOffset());
+		Assert.assertNull(fieldConfig.getRequireFieldMatch());
 	}
 
 	@Test
@@ -213,6 +269,14 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 		ReflectionTestUtil.setFieldValue(
 			sxpBlueprintSearchRequestEnhancer, "_sxpParameterDataCreator",
 			new SXPParameterDataCreator());
+		ReflectionTestUtil.setFieldValue(
+			sxpBlueprintSearchRequestEnhancer,
+			"_sxpSearchRequestBodyContributors",
+			Arrays.asList(
+				new HighlightSXPSearchRequestBodyContributor(
+					new FieldConfigBuilderFactoryImpl(),
+					new HighlightBuilderFactoryImpl(),
+					JSONFactoryUtil.getJSONFactory())));
 
 		return sxpBlueprintSearchRequestEnhancer;
 	}

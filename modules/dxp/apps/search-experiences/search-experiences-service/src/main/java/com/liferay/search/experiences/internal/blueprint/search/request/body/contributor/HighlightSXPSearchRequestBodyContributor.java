@@ -14,16 +14,22 @@
 
 package com.liferay.search.experiences.internal.blueprint.search.request.body.contributor;
 
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.search.highlight.FieldConfigBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.highlight.FieldConfigBuilderFactory;
 import com.liferay.portal.search.highlight.HighlightBuilder;
 import com.liferay.portal.search.highlight.HighlightBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterParser;
+import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
+import com.liferay.search.experiences.rest.dto.v1_0.Highlight;
+import com.liferay.search.experiences.rest.dto.v1_0.HighlightField;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
+
+import java.util.Map;
 
 /**
  * @author Petteri Karttunen
@@ -33,10 +39,12 @@ public class HighlightSXPSearchRequestBodyContributor
 
 	public HighlightSXPSearchRequestBodyContributor(
 		FieldConfigBuilderFactory fieldConfigBuilderFactory,
-		HighlightBuilderFactory highlightBuilderFactory) {
+		HighlightBuilderFactory highlightBuilderFactory,
+		JSONFactory jsonFactory) {
 
 		_fieldConfigBuilderFactory = fieldConfigBuilderFactory;
 		_highlightBuilderFactory = highlightBuilderFactory;
+		_jsonFactory = jsonFactory;
 	}
 
 	@Override
@@ -44,73 +52,46 @@ public class HighlightSXPSearchRequestBodyContributor
 		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint,
 		SXPParameterData sxpParameterData) {
 
-		// TODO Replace with real JSON
+		Configuration configuration = sxpBlueprint.getConfiguration();
 
-		JSONObject jsonObject = SXPParameterParser.parse(
-			JSONUtil.put("test", "test"), sxpParameterData);
+		Highlight highlight = _substituteParameterValues(
+			configuration.getHighlight(), sxpParameterData);
 
-		if (jsonObject == null) {
+		if (highlight == null) {
 			return;
 		}
 
 		HighlightBuilder highlightBuilder = _highlightBuilderFactory.builder();
 
-		JSONObject fieldsJSONObject = jsonObject.getJSONObject("fields");
+		Map<String, HighlightField> fieldsMap = highlight.getFields();
 
-		if (fieldsJSONObject != null) {
-			for (String key : fieldsJSONObject.keySet()) {
-				JSONObject fieldJSONObject = fieldsJSONObject.getJSONObject(
-					key);
-
-				FieldConfigBuilder fieldConfigBuilder =
-					_fieldConfigBuilderFactory.builder(key);
-
-				if (fieldJSONObject.has("fragment_offset")) {
-					fieldConfigBuilder.fragmentOffset(
-						fieldJSONObject.getInt("fragment_offset"));
-				}
-
-				if (fieldJSONObject.has("fragment_size")) {
-					fieldConfigBuilder.fragmentSize(
-						fieldJSONObject.getInt("fragment_size"));
-				}
-
-				if (fieldJSONObject.has("number_of_fragments")) {
-					fieldConfigBuilder.numFragments(
-						fieldJSONObject.getInt("number_of_fragments"));
-				}
-
-				highlightBuilder.addFieldConfig(fieldConfigBuilder.build());
-			}
+		if (!MapUtil.isEmpty(fieldsMap)) {
+			fieldsMap.forEach(
+				(name, highlightField) -> highlightBuilder.addFieldConfig(
+					_fieldConfigBuilderFactory.builder(
+						name
+					).fragmentOffset(
+						highlightField.getFragment_offset()
+					).fragmentSize(
+						highlightField.getFragment_size()
+					).numFragments(
+						highlightField.getNumber_of_fragments()
+					).build()));
 		}
 
-		if (jsonObject.has("fragment_size")) {
-			highlightBuilder.fragmentSize(jsonObject.getInt("fragment_size"));
-		}
-
-		if (jsonObject.has("number_of_fragments")) {
-			highlightBuilder.numOfFragments(
-				jsonObject.getInt("number_of_fragments"));
-		}
-
-		if (jsonObject.has("post_tags")) {
-			highlightBuilder.postTags(
-				JSONUtil.toStringArray(jsonObject.getJSONArray("post_tags")));
-		}
-
-		if (jsonObject.has("pre_tags")) {
-			highlightBuilder.postTags(
-				JSONUtil.toStringArray(jsonObject.getJSONArray("pre_tags")));
-		}
-
-		if (jsonObject.has("require_field_match")) {
-			highlightBuilder.requireFieldMatch(
-				jsonObject.getBoolean("require_field_match"));
-		}
-
-		if (jsonObject.has("type")) {
-			highlightBuilder.highlighterType(jsonObject.getString("type"));
-		}
+		highlightBuilder.fragmentSize(
+			highlight.getFragment_size()
+		).numOfFragments(
+			highlight.getNumber_of_fragments()
+		).postTags(
+			highlight.getPost_tags()
+		).preTags(
+			highlight.getPre_tags()
+		).requireFieldMatch(
+			highlight.getRequire_field_match()
+		).highlighterType(
+			highlight.getType()
+		);
 
 		searchRequestBuilder.highlight(highlightBuilder.build());
 	}
@@ -120,7 +101,34 @@ public class HighlightSXPSearchRequestBodyContributor
 		return "highlight";
 	}
 
+	private JSONObject _createJSONObject(String string) {
+		try {
+			return _jsonFactory.createJSONObject(string);
+		}
+		catch (JSONException jsonException) {
+			throw new RuntimeException(jsonException);
+		}
+	}
+
+	private Highlight _substituteParameterValues(
+		Highlight highlight, SXPParameterData sxpParameterData) {
+
+		if (highlight == null) {
+			return null;
+		}
+
+		JSONObject jsonObject = SXPParameterParser.parse(
+			_createJSONObject(highlight.toString()), sxpParameterData);
+
+		if (jsonObject == null) {
+			return null;
+		}
+
+		return Highlight.toDTO(jsonObject.toString());
+	}
+
 	private final FieldConfigBuilderFactory _fieldConfigBuilderFactory;
 	private final HighlightBuilderFactory _highlightBuilderFactory;
+	private final JSONFactory _jsonFactory;
 
 }

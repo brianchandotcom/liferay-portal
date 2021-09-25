@@ -4,6 +4,42 @@
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.object" short-no-such-exception-enabled="false">
 	<author>Marco Leo</author>
 	<namespace>Object</namespace>
+	<entity local-service="true" name="ObjectActionEntry" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="objectActionEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="objectDefinitionId" type="long" />
+		<column name="active" type="boolean" />
+		<column name="triggerName" type="String" />
+		<column name="name" type="String" />
+		<column name="settings" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="O_A_T" return-type="Collection">
+			<finder-column name="objectDefinitionId" />
+			<finder-column name="active" />
+			<finder-column name="triggerName" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="ObjectDefinition" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

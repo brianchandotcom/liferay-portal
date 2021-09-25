@@ -2,6 +2,7 @@ Bundle-Name: Liferay Object API
 Bundle-SymbolicName: com.liferay.object.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.object.action,\
 	com.liferay.object.constants,\
 	com.liferay.object.deployer,\
 	com.liferay.object.exception,\

@@ -49,6 +49,10 @@
 		<finder name="System" return-type="Collection">
 			<finder-column name="system" />
 		</finder>
+		<finder name="C_C" return-type="ObjectDefinition">
+			<finder-column name="companyId" />
+			<finder-column name="className" />
+		</finder>
 		<finder name="C_N" return-type="ObjectDefinition">
 			<finder-column name="companyId" />
 			<finder-column name="name" />

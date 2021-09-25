@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = ModelListener.class)
+@Component(service = ObjectAction.class)
 public class CreateEntryObjectActionImpl implements ObjectAction {
 
 	@Override

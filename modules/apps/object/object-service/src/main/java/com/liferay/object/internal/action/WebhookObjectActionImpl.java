@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = ModelListener.class)
+@Component(service = ObjectAction.class)
 public class WebhookObjectActionImpl implements ObjectAction {
 
 	@Override

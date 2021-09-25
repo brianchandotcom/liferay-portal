@@ -842,3 +842,25 @@ This change was made to better match the current behaviour of `aui:select` and f
 well as simplify current usage of the `clay:select` tag.
 
 ---------------------------------------
+
+- **JIRA Ticket:** [LPS-138126](https://issues.liferay.com/browse/LPS-138126)
+
+#### What changed?
+
+Registry-API and Registry-Impl modules have been removed.
+
+#### Who is affected?
+
+This affects anyone using Registry-API.
+
+#### How should I update my code?
+
+Now you can get access to system bundle's org.osgi.framework.BundleConext through
+com.liferay.portal.kernel.module.util.SystemBundleUtil.getBundleContext(). Then you
+will have full access to native OSGi API.
+
+#### Why was this change made?
+
+This grants you access to native OSGi API rather than using the bridged Registry-API.
+
+---------------------------------------

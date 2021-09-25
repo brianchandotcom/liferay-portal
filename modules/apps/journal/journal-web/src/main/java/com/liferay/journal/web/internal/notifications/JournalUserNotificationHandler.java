@@ -72,7 +72,7 @@ public class JournalUserNotificationHandler
 		if (notificationType ==
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
 
-			title = LanguageUtil.get(
+			title = LanguageUtil.format(
 				serviceContext.getLocale(), "x-added-a-new-web-content-article",
 				userFullName);
 		}

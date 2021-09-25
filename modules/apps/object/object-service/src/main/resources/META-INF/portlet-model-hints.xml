@@ -1,6 +1,21 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="com.liferay.object.model.ObjectActionEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="objectActionEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="objectDefinitionId" type="long" />
+		<field name="active" type="boolean" />
+		<field name="triggerName" type="String" />
+		<field name="name" type="String" />
+		<field name="settings" type="String" />
+	</model>
 	<model name="com.liferay.object.model.ObjectDefinition">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />

@@ -889,6 +889,56 @@ public interface ObjectDefinitionPersistence
 	public int filterCountBySystem(boolean system);
 
 	/**
+	 * Returns the object definition where companyId = &#63; and className = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @return the matching object definition
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
+	 */
+	public ObjectDefinition findByC_C(long companyId, String className)
+		throws NoSuchObjectDefinitionException;
+
+	/**
+	 * Returns the object definition where companyId = &#63; and className = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @return the matching object definition, or <code>null</code> if a matching object definition could not be found
+	 */
+	public ObjectDefinition fetchByC_C(long companyId, String className);
+
+	/**
+	 * Returns the object definition where companyId = &#63; and className = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object definition, or <code>null</code> if a matching object definition could not be found
+	 */
+	public ObjectDefinition fetchByC_C(
+		long companyId, String className, boolean useFinderCache);
+
+	/**
+	 * Removes the object definition where companyId = &#63; and className = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @return the object definition that was removed
+	 */
+	public ObjectDefinition removeByC_C(long companyId, String className)
+		throws NoSuchObjectDefinitionException;
+
+	/**
+	 * Returns the number of object definitions where companyId = &#63; and className = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @return the number of matching object definitions
+	 */
+	public int countByC_C(long companyId, String className);
+
+	/**
 	 * Returns the object definition where companyId = &#63; and name = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID

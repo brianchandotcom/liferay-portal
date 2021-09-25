@@ -1,0 +1,868 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.object.service.persistence;
+
+import com.liferay.object.model.ObjectActionEntry;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+
+/**
+ * The persistence utility for the object action entry service. This utility wraps <code>com.liferay.object.service.persistence.impl.ObjectActionEntryPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ *
+ * <p>
+ * Caching information and settings can be found in <code>portal.properties</code>
+ * </p>
+ *
+ * @author Marco Leo
+ * @see ObjectActionEntryPersistence
+ * @generated
+ */
+public class ObjectActionEntryUtil {
+
+	/*
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify this class directly. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 */
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
+	 */
+	public static void clearCache() {
+		getPersistence().clearCache();
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void clearCache(ObjectActionEntry objectActionEntry) {
+		getPersistence().clearCache(objectActionEntry);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 */
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
+		return getPersistence().countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#fetchByPrimaryKeys(Set)
+	 */
+	public static Map<Serializable, ObjectActionEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 */
+	public static List<ObjectActionEntry> findWithDynamicQuery(
+		DynamicQuery dynamicQuery) {
+
+		return getPersistence().findWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 */
+	public static List<ObjectActionEntry> findWithDynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 */
+	public static List<ObjectActionEntry> findWithDynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<ObjectActionEntry> orderByComparator) {
+
+		return getPersistence().findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static ObjectActionEntry update(
+		ObjectActionEntry objectActionEntry) {
+
+		return getPersistence().update(objectActionEntry);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
+	 */
+	public static ObjectActionEntry update(
+		ObjectActionEntry objectActionEntry, ServiceContext serviceContext) {
+
+		return getPersistence().update(objectActionEntry, serviceContext);
+	}
+
+	/**
+	 * Returns all the object action entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching object action entries
+	 */
+	public static List<ObjectActionEntry> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the object action entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object action entries
+	 * @param end the upper bound of the range of object action entries (not inclusive)
+	 * @return the range of matching object action entries
+	 */
+	public static List<ObjectActionEntry> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object action entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object action entries
+	 * @param end the upper bound of the range of object action entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object action entries
+	 */
+	public static List<ObjectActionEntry> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<ObjectActionEntry> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the object action entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object action entries
+	 * @param end the upper bound of the range of object action entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object action entries
+	 */
+	public static List<ObjectActionEntry> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<ObjectActionEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByUuid(
+			uuid, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first object action entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object action entry
+	 * @throws NoSuchObjectActionEntryException if a matching object action entry could not be found
+	 */
+	public static ObjectActionEntry findByUuid_First(
+			String uuid, OrderByComparator<ObjectActionEntry> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectActionEntryException {
+
+		return getPersistence().findByUuid_First(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the first object action entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object action entry, or <code>null</code> if a matching object action entry could not be found
+	 */
+	public static ObjectActionEntry fetchByUuid_First(
+		String uuid, OrderByComparator<ObjectActionEntry> orderByComparator) {
+
+		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object action entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object action entry
+	 * @throws NoSuchObjectActionEntryException if a matching object action entry could not be found
+	 */
+	public static ObjectActionEntry findByUuid_Last(
+			String uuid, OrderByComparator<ObjectActionEntry> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectActionEntryException {
+
+		return getPersistence().findByUuid_Last(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object action entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object action entry, or <code>null</code> if a matching object action entry could not be found
+	 */
+	public static ObjectActionEntry fetchByUuid_Last(
+		String uuid, OrderByComparator<ObjectActionEntry> orderByComparator) {
+
+		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the object action entries before and after the current object action entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param objectActionEntryId the primary key of the current object action entry
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object action entry
+	 * @throws NoSuchObjectActionEntryException if a object action entry with the primary key could not be found
+	 */
+	public static ObjectActionEntry[] findByUuid_PrevAndNext(
+			long objectActionEntryId, String uuid,
+			OrderByComparator<ObjectActionEntry> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectActionEntryException {
+
+		return getPersistence().findByUuid_PrevAndNext(
+			objectActionEntryId, uuid, orderByComparator);
+	}
+
+	/**
+	 * Removes all the object action entries where uuid = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 */
+	public static void removeByUuid(String uuid) {
+		getPersistence().removeByUuid(uuid);
+	}
+
+	/**
+	 * Returns the number of object action entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching object action entries
+	 */
+	public static int countByUuid(String uuid) {
+		return getPersistence().countByUuid(uuid);
+	}
+
+	/**
+	 * Returns all the object action entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching object action entries
+	 */
+	public static List<ObjectActionEntry> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the object action entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object action entries
+	 * @param end the upper bound of the range of object action entries (not inclusive)
+	 * @return the range of matching object action entries
+	 */
+	public static List<ObjectActionEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object action entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object action entries
+	 * @param end the upper bound of the range of object action entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object action entries
+	 */
+	public static List<ObjectActionEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<ObjectActionEntry> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the object action entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object action entries
+	 * @param end the upper bound of the range of object action entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object action entries
+	 */
+	public static List<ObjectActionEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<ObjectActionEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first object action entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object action entry
+	 * @throws NoSuchObjectActionEntryException if a matching object action entry could not be found
+	 */
+	public static ObjectActionEntry findByUuid_C_First(
+			String uuid, long companyId,
+			OrderByComparator<ObjectActionEntry> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectActionEntryException {
+
+		return getPersistence().findByUuid_C_First(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first object action entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object action entry, or <code>null</code> if a matching object action entry could not be found
+	 */
+	public static ObjectActionEntry fetchByUuid_C_First(
+		String uuid, long companyId,
+		OrderByComparator<ObjectActionEntry> orderByComparator) {
+
+		return getPersistence().fetchByUuid_C_First(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object action entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object action entry
+	 * @throws NoSuchObjectActionEntryException if a matching object action entry could not be found
+	 */
+	public static ObjectActionEntry findByUuid_C_Last(
+			String uuid, long companyId,
+			OrderByComparator<ObjectActionEntry> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectActionEntryException {
+
+		return getPersistence().findByUuid_C_Last(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object action entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object action entry, or <code>null</code> if a matching object action entry could not be found
+	 */
+	public static ObjectActionEntry fetchByUuid_C_Last(
+		String uuid, long companyId,
+		OrderByComparator<ObjectActionEntry> orderByComparator) {
+
+		return getPersistence().fetchByUuid_C_Last(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the object action entries before and after the current object action entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param objectActionEntryId the primary key of the current object action entry
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object action entry
+	 * @throws NoSuchObjectActionEntryException if a object action entry with the primary key could not be found
+	 */
+	public static ObjectActionEntry[] findByUuid_C_PrevAndNext(
+			long objectActionEntryId, String uuid, long companyId,
+			OrderByComparator<ObjectActionEntry> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectActionEntryException {
+
+		return getPersistence().findByUuid_C_PrevAndNext(
+			objectActionEntryId, uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the object action entries where uuid = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 */
+	public static void removeByUuid_C(String uuid, long companyId) {
+		getPersistence().removeByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns the number of object action entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching object action entries
+	 */
+	public static int countByUuid_C(String uuid, long companyId) {
+		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns all the object action entries where objectDefinitionId = &#63; and active = &#63; and triggerName = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param triggerName the trigger name
+	 * @return the matching object action entries
+	 */
+	public static List<ObjectActionEntry> findByO_A_T(
+		long objectDefinitionId, boolean active, String triggerName) {
+
+		return getPersistence().findByO_A_T(
+			objectDefinitionId, active, triggerName);
+	}
+
+	/**
+	 * Returns a range of all the object action entries where objectDefinitionId = &#63; and active = &#63; and triggerName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param triggerName the trigger name
+	 * @param start the lower bound of the range of object action entries
+	 * @param end the upper bound of the range of object action entries (not inclusive)
+	 * @return the range of matching object action entries
+	 */
+	public static List<ObjectActionEntry> findByO_A_T(
+		long objectDefinitionId, boolean active, String triggerName, int start,
+		int end) {
+
+		return getPersistence().findByO_A_T(
+			objectDefinitionId, active, triggerName, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object action entries where objectDefinitionId = &#63; and active = &#63; and triggerName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param triggerName the trigger name
+	 * @param start the lower bound of the range of object action entries
+	 * @param end the upper bound of the range of object action entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object action entries
+	 */
+	public static List<ObjectActionEntry> findByO_A_T(
+		long objectDefinitionId, boolean active, String triggerName, int start,
+		int end, OrderByComparator<ObjectActionEntry> orderByComparator) {
+
+		return getPersistence().findByO_A_T(
+			objectDefinitionId, active, triggerName, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the object action entries where objectDefinitionId = &#63; and active = &#63; and triggerName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param triggerName the trigger name
+	 * @param start the lower bound of the range of object action entries
+	 * @param end the upper bound of the range of object action entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object action entries
+	 */
+	public static List<ObjectActionEntry> findByO_A_T(
+		long objectDefinitionId, boolean active, String triggerName, int start,
+		int end, OrderByComparator<ObjectActionEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByO_A_T(
+			objectDefinitionId, active, triggerName, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first object action entry in the ordered set where objectDefinitionId = &#63; and active = &#63; and triggerName = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param triggerName the trigger name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object action entry
+	 * @throws NoSuchObjectActionEntryException if a matching object action entry could not be found
+	 */
+	public static ObjectActionEntry findByO_A_T_First(
+			long objectDefinitionId, boolean active, String triggerName,
+			OrderByComparator<ObjectActionEntry> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectActionEntryException {
+
+		return getPersistence().findByO_A_T_First(
+			objectDefinitionId, active, triggerName, orderByComparator);
+	}
+
+	/**
+	 * Returns the first object action entry in the ordered set where objectDefinitionId = &#63; and active = &#63; and triggerName = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param triggerName the trigger name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object action entry, or <code>null</code> if a matching object action entry could not be found
+	 */
+	public static ObjectActionEntry fetchByO_A_T_First(
+		long objectDefinitionId, boolean active, String triggerName,
+		OrderByComparator<ObjectActionEntry> orderByComparator) {
+
+		return getPersistence().fetchByO_A_T_First(
+			objectDefinitionId, active, triggerName, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object action entry in the ordered set where objectDefinitionId = &#63; and active = &#63; and triggerName = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param triggerName the trigger name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object action entry
+	 * @throws NoSuchObjectActionEntryException if a matching object action entry could not be found
+	 */
+	public static ObjectActionEntry findByO_A_T_Last(
+			long objectDefinitionId, boolean active, String triggerName,
+			OrderByComparator<ObjectActionEntry> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectActionEntryException {
+
+		return getPersistence().findByO_A_T_Last(
+			objectDefinitionId, active, triggerName, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object action entry in the ordered set where objectDefinitionId = &#63; and active = &#63; and triggerName = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param triggerName the trigger name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object action entry, or <code>null</code> if a matching object action entry could not be found
+	 */
+	public static ObjectActionEntry fetchByO_A_T_Last(
+		long objectDefinitionId, boolean active, String triggerName,
+		OrderByComparator<ObjectActionEntry> orderByComparator) {
+
+		return getPersistence().fetchByO_A_T_Last(
+			objectDefinitionId, active, triggerName, orderByComparator);
+	}
+
+	/**
+	 * Returns the object action entries before and after the current object action entry in the ordered set where objectDefinitionId = &#63; and active = &#63; and triggerName = &#63;.
+	 *
+	 * @param objectActionEntryId the primary key of the current object action entry
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param triggerName the trigger name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object action entry
+	 * @throws NoSuchObjectActionEntryException if a object action entry with the primary key could not be found
+	 */
+	public static ObjectActionEntry[] findByO_A_T_PrevAndNext(
+			long objectActionEntryId, long objectDefinitionId, boolean active,
+			String triggerName,
+			OrderByComparator<ObjectActionEntry> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectActionEntryException {
+
+		return getPersistence().findByO_A_T_PrevAndNext(
+			objectActionEntryId, objectDefinitionId, active, triggerName,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the object action entries where objectDefinitionId = &#63; and active = &#63; and triggerName = &#63; from the database.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param triggerName the trigger name
+	 */
+	public static void removeByO_A_T(
+		long objectDefinitionId, boolean active, String triggerName) {
+
+		getPersistence().removeByO_A_T(objectDefinitionId, active, triggerName);
+	}
+
+	/**
+	 * Returns the number of object action entries where objectDefinitionId = &#63; and active = &#63; and triggerName = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param triggerName the trigger name
+	 * @return the number of matching object action entries
+	 */
+	public static int countByO_A_T(
+		long objectDefinitionId, boolean active, String triggerName) {
+
+		return getPersistence().countByO_A_T(
+			objectDefinitionId, active, triggerName);
+	}
+
+	/**
+	 * Caches the object action entry in the entity cache if it is enabled.
+	 *
+	 * @param objectActionEntry the object action entry
+	 */
+	public static void cacheResult(ObjectActionEntry objectActionEntry) {
+		getPersistence().cacheResult(objectActionEntry);
+	}
+
+	/**
+	 * Caches the object action entries in the entity cache if it is enabled.
+	 *
+	 * @param objectActionEntries the object action entries
+	 */
+	public static void cacheResult(
+		List<ObjectActionEntry> objectActionEntries) {
+
+		getPersistence().cacheResult(objectActionEntries);
+	}
+
+	/**
+	 * Creates a new object action entry with the primary key. Does not add the object action entry to the database.
+	 *
+	 * @param objectActionEntryId the primary key for the new object action entry
+	 * @return the new object action entry
+	 */
+	public static ObjectActionEntry create(long objectActionEntryId) {
+		return getPersistence().create(objectActionEntryId);
+	}
+
+	/**
+	 * Removes the object action entry with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param objectActionEntryId the primary key of the object action entry
+	 * @return the object action entry that was removed
+	 * @throws NoSuchObjectActionEntryException if a object action entry with the primary key could not be found
+	 */
+	public static ObjectActionEntry remove(long objectActionEntryId)
+		throws com.liferay.object.exception.NoSuchObjectActionEntryException {
+
+		return getPersistence().remove(objectActionEntryId);
+	}
+
+	public static ObjectActionEntry updateImpl(
+		ObjectActionEntry objectActionEntry) {
+
+		return getPersistence().updateImpl(objectActionEntry);
+	}
+
+	/**
+	 * Returns the object action entry with the primary key or throws a <code>NoSuchObjectActionEntryException</code> if it could not be found.
+	 *
+	 * @param objectActionEntryId the primary key of the object action entry
+	 * @return the object action entry
+	 * @throws NoSuchObjectActionEntryException if a object action entry with the primary key could not be found
+	 */
+	public static ObjectActionEntry findByPrimaryKey(long objectActionEntryId)
+		throws com.liferay.object.exception.NoSuchObjectActionEntryException {
+
+		return getPersistence().findByPrimaryKey(objectActionEntryId);
+	}
+
+	/**
+	 * Returns the object action entry with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param objectActionEntryId the primary key of the object action entry
+	 * @return the object action entry, or <code>null</code> if a object action entry with the primary key could not be found
+	 */
+	public static ObjectActionEntry fetchByPrimaryKey(
+		long objectActionEntryId) {
+
+		return getPersistence().fetchByPrimaryKey(objectActionEntryId);
+	}
+
+	/**
+	 * Returns all the object action entries.
+	 *
+	 * @return the object action entries
+	 */
+	public static List<ObjectActionEntry> findAll() {
+		return getPersistence().findAll();
+	}
+
+	/**
+	 * Returns a range of all the object action entries.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of object action entries
+	 * @param end the upper bound of the range of object action entries (not inclusive)
+	 * @return the range of object action entries
+	 */
+	public static List<ObjectActionEntry> findAll(int start, int end) {
+		return getPersistence().findAll(start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object action entries.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of object action entries
+	 * @param end the upper bound of the range of object action entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of object action entries
+	 */
+	public static List<ObjectActionEntry> findAll(
+		int start, int end,
+		OrderByComparator<ObjectActionEntry> orderByComparator) {
+
+		return getPersistence().findAll(start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the object action entries.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of object action entries
+	 * @param end the upper bound of the range of object action entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of object action entries
+	 */
+	public static List<ObjectActionEntry> findAll(
+		int start, int end,
+		OrderByComparator<ObjectActionEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Removes all the object action entries from the database.
+	 */
+	public static void removeAll() {
+		getPersistence().removeAll();
+	}
+
+	/**
+	 * Returns the number of object action entries.
+	 *
+	 * @return the number of object action entries
+	 */
+	public static int countAll() {
+		return getPersistence().countAll();
+	}
+
+	public static ObjectActionEntryPersistence getPersistence() {
+		return _serviceTracker.getService();
+	}
+
+	private static ServiceTracker
+		<ObjectActionEntryPersistence, ObjectActionEntryPersistence>
+			_serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			ObjectActionEntryPersistence.class);
+
+		ServiceTracker
+			<ObjectActionEntryPersistence, ObjectActionEntryPersistence>
+				serviceTracker =
+					new ServiceTracker
+						<ObjectActionEntryPersistence,
+						 ObjectActionEntryPersistence>(
+							 bundle.getBundleContext(),
+							 ObjectActionEntryPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
+
+}

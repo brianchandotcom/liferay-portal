@@ -3863,6 +3863,270 @@ public class ObjectDefinitionPersistenceImpl
 	private static final String _FINDER_COLUMN_SYSTEM_SYSTEM_2_SQL =
 		"objectDefinition.system_ = ?";
 
+	private FinderPath _finderPathFetchByC_C;
+	private FinderPath _finderPathCountByC_C;
+
+	/**
+	 * Returns the object definition where companyId = &#63; and className = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @return the matching object definition
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
+	 */
+	@Override
+	public ObjectDefinition findByC_C(long companyId, String className)
+		throws NoSuchObjectDefinitionException {
+
+		ObjectDefinition objectDefinition = fetchByC_C(companyId, className);
+
+		if (objectDefinition == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("companyId=");
+			sb.append(companyId);
+
+			sb.append(", className=");
+			sb.append(className);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchObjectDefinitionException(sb.toString());
+		}
+
+		return objectDefinition;
+	}
+
+	/**
+	 * Returns the object definition where companyId = &#63; and className = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @return the matching object definition, or <code>null</code> if a matching object definition could not be found
+	 */
+	@Override
+	public ObjectDefinition fetchByC_C(long companyId, String className) {
+		return fetchByC_C(companyId, className, true);
+	}
+
+	/**
+	 * Returns the object definition where companyId = &#63; and className = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object definition, or <code>null</code> if a matching object definition could not be found
+	 */
+	@Override
+	public ObjectDefinition fetchByC_C(
+		long companyId, String className, boolean useFinderCache) {
+
+		className = Objects.toString(className, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, className};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(_finderPathFetchByC_C, finderArgs);
+		}
+
+		if (result instanceof ObjectDefinition) {
+			ObjectDefinition objectDefinition = (ObjectDefinition)result;
+
+			if ((companyId != objectDefinition.getCompanyId()) ||
+				!Objects.equals(className, objectDefinition.getClassName())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_OBJECTDEFINITION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_COMPANYID_2);
+
+			boolean bindClassName = false;
+
+			if (className.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_C_CLASSNAME_3);
+			}
+			else {
+				bindClassName = true;
+
+				sb.append(_FINDER_COLUMN_C_C_CLASSNAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindClassName) {
+					queryPos.add(className);
+				}
+
+				List<ObjectDefinition> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_C, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									companyId, className
+								};
+							}
+
+							_log.warn(
+								"ObjectDefinitionPersistenceImpl.fetchByC_C(long, String, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					ObjectDefinition objectDefinition = list.get(0);
+
+					result = objectDefinition;
+
+					cacheResult(objectDefinition);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ObjectDefinition)result;
+		}
+	}
+
+	/**
+	 * Removes the object definition where companyId = &#63; and className = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @return the object definition that was removed
+	 */
+	@Override
+	public ObjectDefinition removeByC_C(long companyId, String className)
+		throws NoSuchObjectDefinitionException {
+
+		ObjectDefinition objectDefinition = findByC_C(companyId, className);
+
+		return remove(objectDefinition);
+	}
+
+	/**
+	 * Returns the number of object definitions where companyId = &#63; and className = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param className the class name
+	 * @return the number of matching object definitions
+	 */
+	@Override
+	public int countByC_C(long companyId, String className) {
+		className = Objects.toString(className, "");
+
+		FinderPath finderPath = _finderPathCountByC_C;
+
+		Object[] finderArgs = new Object[] {companyId, className};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_OBJECTDEFINITION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_COMPANYID_2);
+
+			boolean bindClassName = false;
+
+			if (className.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_C_CLASSNAME_3);
+			}
+			else {
+				bindClassName = true;
+
+				sb.append(_FINDER_COLUMN_C_C_CLASSNAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindClassName) {
+					queryPos.add(className);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_C_COMPANYID_2 =
+		"objectDefinition.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_CLASSNAME_2 =
+		"objectDefinition.className = ?";
+
+	private static final String _FINDER_COLUMN_C_C_CLASSNAME_3 =
+		"(objectDefinition.className IS NULL OR objectDefinition.className = '')";
+
 	private FinderPath _finderPathFetchByC_N;
 	private FinderPath _finderPathCountByC_N;
 
@@ -6173,6 +6437,13 @@ public class ObjectDefinitionPersistenceImpl
 			objectDefinition);
 
 		finderCache.putResult(
+			_finderPathFetchByC_C,
+			new Object[] {
+				objectDefinition.getCompanyId(), objectDefinition.getClassName()
+			},
+			objectDefinition);
+
+		finderCache.putResult(
 			_finderPathFetchByC_N,
 			new Object[] {
 				objectDefinition.getCompanyId(), objectDefinition.getName()
@@ -6254,6 +6525,15 @@ public class ObjectDefinitionPersistenceImpl
 		ObjectDefinitionModelImpl objectDefinitionModelImpl) {
 
 		Object[] args = new Object[] {
+			objectDefinitionModelImpl.getCompanyId(),
+			objectDefinitionModelImpl.getClassName()
+		};
+
+		finderCache.putResult(_finderPathCountByC_C, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByC_C, args, objectDefinitionModelImpl);
+
+		args = new Object[] {
 			objectDefinitionModelImpl.getCompanyId(),
 			objectDefinitionModelImpl.getName()
 		};
@@ -6808,6 +7088,16 @@ public class ObjectDefinitionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySystem",
 			new String[] {Boolean.class.getName()}, new String[] {"system_"},
 			false);
+
+		_finderPathFetchByC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "className"}, true);
+
+		_finderPathCountByC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "className"}, false);
 
 		_finderPathFetchByC_N = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",

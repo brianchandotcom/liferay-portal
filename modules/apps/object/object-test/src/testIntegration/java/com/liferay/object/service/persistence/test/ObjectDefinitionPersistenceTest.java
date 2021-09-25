@@ -271,6 +271,15 @@ public class ObjectDefinitionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_C(0L, "null");
+
+		_persistence.countByC_C(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByC_N() throws Exception {
 		_persistence.countByC_N(RandomTestUtil.nextLong(), "");
 
@@ -602,6 +611,17 @@ public class ObjectDefinitionPersistenceTest {
 	}
 
 	private void _assertOriginalValues(ObjectDefinition objectDefinition) {
+		Assert.assertEquals(
+			Long.valueOf(objectDefinition.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				objectDefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		Assert.assertEquals(
+			objectDefinition.getClassName(),
+			ReflectionTestUtil.invoke(
+				objectDefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "className"));
+
 		Assert.assertEquals(
 			Long.valueOf(objectDefinition.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(

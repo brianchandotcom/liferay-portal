@@ -367,6 +367,15 @@ public class ObjectDefinitionLocalServiceWrapper
 			objectDefinitionId);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectDefinition
+			getObjectDefinitionByClassName(long companyId, String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionLocalService.getObjectDefinitionByClassName(
+			companyId, className);
+	}
+
 	/**
 	 * Returns the object definition with the matching UUID and company.
 	 *

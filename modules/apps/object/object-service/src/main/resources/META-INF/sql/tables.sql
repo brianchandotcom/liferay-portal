@@ -1,3 +1,19 @@
+create table ObjectActionEntry (
+	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	objectActionEntryId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	objectDefinitionId LONG,
+	active_ BOOLEAN,
+	triggerName VARCHAR(75) null,
+	name VARCHAR(75) null,
+	settings_ VARCHAR(75) null
+);
+
 create table ObjectDefinition (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,

@@ -30,6 +30,58 @@ definition {
 	}
 
 	@priority = "4"
+	test PublishPrivateChildSite {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		Site.openSitesAdmin();
+
+		Site.addBlankCP(
+			membershipType = "Private",
+			parentSiteName = "Site Name",
+			siteName = "Child Site Name");
+
+		Site.openSitesAdmin();
+
+		LexiconTable.clickEllipsisItem(
+			item = "View Child Sites",
+			tableEntry = "Site Name");
+
+		Site.viewCP(
+			siteName = "Child Site Name",
+			siteType = "Private");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages",
+			site = "Child Site Name");
+
+		SitePages.addPublicPage(pageName = "Child Site Page");
+
+		Publications.gotoReviewChanges();
+
+		Publications.gotoReviewChanges();
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Site",
+			changeSite = "Site Name",
+			changeTitle = "Child Site Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		Navigator.openSitePage(
+			pageName = "Child Site Page",
+			siteName = "Child Site Name");
+	}
+
+	@priority = "4"
 	test PublishSiteCreatedInPublication {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 

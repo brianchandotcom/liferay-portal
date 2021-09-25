@@ -140,17 +140,9 @@ public class DDMFormEvaluatorHelper {
 			ddmFormRules = _ddmForm.getDDMFormRules();
 		}
 
-		Stream<DDMFormRule> stream = ddmFormRules.stream();
+		_evaluateDDMFormRules(ddmFormRules, false);
 
-		stream.filter(
-			DDMFormRule::isEnabled
-		).forEach(
-			rule -> {
-				evaluateDDMFormRule(rule);
-
-				_resetInvisibleFieldValue();
-			}
-		);
+		_evaluateDDMFormRules(ddmFormRules, true);
 
 		_validateFields();
 
@@ -234,41 +226,6 @@ public class DDMFormEvaluatorHelper {
 
 		_ddmFormFieldsPropertyChanges.putAll(
 			ddmFormEvaluatorEvaluateResponse.getDDMFormFieldsPropertyChanges());
-	}
-
-	protected void evaluateDDMFormRule(DDMFormRule ddmFormRule) {
-		if (Validator.isNotNull(ddmFormRule.getCondition())) {
-			if (evaluateDDMFormRuleCondition(ddmFormRule.getCondition())) {
-				List<String> actions = ddmFormRule.getActions();
-
-				Stream<String> stream = actions.stream();
-
-				evaluateDDMFormRuleAction(
-					stream.collect(Collectors.joining(" AND ")));
-
-				_evaluatedActions = ListUtil.copy(actions);
-			}
-			else {
-				DDMFormRule copyDDMFormRule = new DDMFormRule(ddmFormRule);
-
-				if (_evaluatedActions != null) {
-					List<String> actions = copyDDMFormRule.getActions();
-
-					Stream<String> stream = actions.stream();
-
-					List<String> actionsNotEvaluated = stream.filter(
-						action -> !_evaluatedActions.contains(action)
-					).collect(
-						Collectors.toList()
-					);
-
-					copyDDMFormRule.setActions(actionsNotEvaluated);
-				}
-
-				_ddmFormEvaluatorRuleHelper.checkFieldAffectedByAction(
-					copyDDMFormRule);
-			}
-		}
 	}
 
 	protected void evaluateDDMFormRuleAction(String action) {
@@ -729,6 +686,64 @@ public class DDMFormEvaluatorHelper {
 	protected final DDMFormFieldValueAccessor<String>
 		defaultDDMFormFieldValueAccessor =
 			new DefaultDDMFormFieldValueAccessor();
+
+	private void _evaluateDDMFormRule(
+		DDMFormRule ddmFormRule, boolean ddmFormRuleConditionEvaluationResult) {
+
+		if (ddmFormRuleConditionEvaluationResult) {
+			List<String> actions = ddmFormRule.getActions();
+
+			Stream<String> stream = actions.stream();
+
+			evaluateDDMFormRuleAction(
+				stream.collect(Collectors.joining(" AND ")));
+
+			_evaluatedActions = ListUtil.copy(actions);
+		}
+		else {
+			DDMFormRule copyDDMFormRule = new DDMFormRule(ddmFormRule);
+
+			if (_evaluatedActions != null) {
+				List<String> actions = copyDDMFormRule.getActions();
+
+				Stream<String> stream = actions.stream();
+
+				List<String> actionsNotEvaluated = stream.filter(
+					action -> !_evaluatedActions.contains(action)
+				).collect(
+					Collectors.toList()
+				);
+
+				copyDDMFormRule.setActions(actionsNotEvaluated);
+			}
+
+			_ddmFormEvaluatorRuleHelper.checkFieldAffectedByAction(
+				copyDDMFormRule);
+		}
+	}
+
+	private void _evaluateDDMFormRules(
+		List<DDMFormRule> ddmFormRules,
+		boolean ddmFormRuleConditionEvaluationResult) {
+
+		Stream<DDMFormRule> stream = ddmFormRules.stream();
+
+		stream.filter(
+			DDMFormRule::isEnabled
+		).filter(
+			ddmFormRule ->
+				Validator.isNotNull(ddmFormRule.getCondition()) &&
+				(evaluateDDMFormRuleCondition(ddmFormRule.getCondition()) ==
+					ddmFormRuleConditionEvaluationResult)
+		).forEach(
+			ddmFormRule -> {
+				_evaluateDDMFormRule(
+					ddmFormRule, ddmFormRuleConditionEvaluationResult);
+
+				_resetInvisibleFieldValue();
+			}
+		);
+	}
 
 	private boolean _filterVisibleFieldsWithInputMask(
 		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {

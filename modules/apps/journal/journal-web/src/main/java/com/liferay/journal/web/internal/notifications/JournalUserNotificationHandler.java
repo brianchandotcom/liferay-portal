@@ -79,7 +79,7 @@ public class JournalUserNotificationHandler
 		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
 
-			title = LanguageUtil.get(
+			title = LanguageUtil.format(
 				serviceContext.getLocale(), "x-updated-a-web-content-article",
 				userFullName);
 		}
@@ -87,7 +87,7 @@ public class JournalUserNotificationHandler
 					JournalArticleConstants.
 						NOTIFICATION_TYPE_MOVE_ENTRY_FROM_FOLDER) {
 
-			title = LanguageUtil.get(
+			title = LanguageUtil.format(
 				serviceContext.getLocale(),
 				"x-moved-a-web-content-from-a-folder", userFullName);
 		}
@@ -95,7 +95,7 @@ public class JournalUserNotificationHandler
 					JournalArticleConstants.
 						NOTIFICATION_TYPE_MOVE_ENTRY_FROM_TRASH) {
 
-			title = LanguageUtil.get(
+			title = LanguageUtil.format(
 				serviceContext.getLocale(),
 				"x-restored-a-web-content-from-the-recycle-bin", userFullName);
 		}
@@ -103,7 +103,7 @@ public class JournalUserNotificationHandler
 					JournalArticleConstants.
 						NOTIFICATION_TYPE_MOVE_ENTRY_TO_FOLDER) {
 
-			title = LanguageUtil.get(
+			title = LanguageUtil.format(
 				serviceContext.getLocale(), "x-moved-a-web-content-to-a-folder",
 				userFullName);
 		}
@@ -111,7 +111,7 @@ public class JournalUserNotificationHandler
 					JournalArticleConstants.
 						NOTIFICATION_TYPE_MOVE_ENTRY_TO_TRASH) {
 
-			title = LanguageUtil.get(
+			title = LanguageUtil.format(
 				serviceContext.getLocale(),
 				"x-moved-a-web-content-to-the-recycle-bin", userFullName);
 		}

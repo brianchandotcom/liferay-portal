@@ -53,14 +53,106 @@ public class HighlightSerDes {
 
 		sb.append("{");
 
-		if (highlight.getFragmentOffset() != null) {
+		if (highlight.getFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentOffset\": ");
+			sb.append("\"fields\": ");
 
-			sb.append(highlight.getFragmentOffset());
+			sb.append(_toJSON(highlight.getFields()));
+		}
+
+		if (highlight.getFragment_size() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fragment_size\": ");
+
+			sb.append(highlight.getFragment_size());
+		}
+
+		if (highlight.getNumber_of_fragments() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"number_of_fragments\": ");
+
+			sb.append(highlight.getNumber_of_fragments());
+		}
+
+		if (highlight.getPost_tags() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"post_tags\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < highlight.getPost_tags().length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(highlight.getPost_tags()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < highlight.getPost_tags().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (highlight.getPre_tags() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pre_tags\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < highlight.getPre_tags().length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(highlight.getPre_tags()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < highlight.getPre_tags().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (highlight.getRequire_field_match() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"require_field_match\": ");
+
+			sb.append(highlight.getRequire_field_match());
+		}
+
+		if (highlight.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(highlight.getType()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -81,13 +173,58 @@ public class HighlightSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (highlight.getFragmentOffset() == null) {
-			map.put("fragmentOffset", null);
+		if (highlight.getFields() == null) {
+			map.put("fields", null);
+		}
+		else {
+			map.put("fields", String.valueOf(highlight.getFields()));
+		}
+
+		if (highlight.getFragment_size() == null) {
+			map.put("fragment_size", null);
 		}
 		else {
 			map.put(
-				"fragmentOffset",
-				String.valueOf(highlight.getFragmentOffset()));
+				"fragment_size", String.valueOf(highlight.getFragment_size()));
+		}
+
+		if (highlight.getNumber_of_fragments() == null) {
+			map.put("number_of_fragments", null);
+		}
+		else {
+			map.put(
+				"number_of_fragments",
+				String.valueOf(highlight.getNumber_of_fragments()));
+		}
+
+		if (highlight.getPost_tags() == null) {
+			map.put("post_tags", null);
+		}
+		else {
+			map.put("post_tags", String.valueOf(highlight.getPost_tags()));
+		}
+
+		if (highlight.getPre_tags() == null) {
+			map.put("pre_tags", null);
+		}
+		else {
+			map.put("pre_tags", String.valueOf(highlight.getPre_tags()));
+		}
+
+		if (highlight.getRequire_field_match() == null) {
+			map.put("require_field_match", null);
+		}
+		else {
+			map.put(
+				"require_field_match",
+				String.valueOf(highlight.getRequire_field_match()));
+		}
+
+		if (highlight.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put("type", String.valueOf(highlight.getType()));
 		}
 
 		return map;
@@ -110,10 +247,50 @@ public class HighlightSerDes {
 			Highlight highlight, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "fragmentOffset")) {
+			if (Objects.equals(jsonParserFieldName, "fields")) {
 				if (jsonParserFieldValue != null) {
-					highlight.setFragmentOffset(
+					highlight.setFields(
+						(Map)HighlightSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fragment_size")) {
+				if (jsonParserFieldValue != null) {
+					highlight.setFragment_size(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "number_of_fragments")) {
+
+				if (jsonParserFieldValue != null) {
+					highlight.setNumber_of_fragments(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "post_tags")) {
+				if (jsonParserFieldValue != null) {
+					highlight.setPost_tags(
+						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "pre_tags")) {
+				if (jsonParserFieldValue != null) {
+					highlight.setPre_tags(
+						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "require_field_match")) {
+
+				if (jsonParserFieldValue != null) {
+					highlight.setRequire_field_match(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					highlight.setType((String)jsonParserFieldValue);
 				}
 			}
 		}

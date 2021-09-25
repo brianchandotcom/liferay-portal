@@ -35,8 +35,6 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -44,32 +42,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Highlight")
+@GraphQLName("HighlightField")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Highlight")
-public class Highlight implements Serializable {
+@XmlRootElement(name = "HighlightField")
+public class HighlightField implements Serializable {
 
-	public static Highlight toDTO(String json) {
-		return ObjectMapperUtil.readValue(Highlight.class, json);
+	public static HighlightField toDTO(String json) {
+		return ObjectMapperUtil.readValue(HighlightField.class, json);
 	}
 
 	@Schema
-	@Valid
-	public Map<String, HighlightField> getFields() {
-		return fields;
+	public Integer getFragment_offset() {
+		return fragment_offset;
 	}
 
-	public void setFields(Map<String, HighlightField> fields) {
-		this.fields = fields;
+	public void setFragment_offset(Integer fragment_offset) {
+		this.fragment_offset = fragment_offset;
 	}
 
 	@JsonIgnore
-	public void setFields(
-		UnsafeSupplier<Map<String, HighlightField>, Exception>
-			fieldsUnsafeSupplier) {
+	public void setFragment_offset(
+		UnsafeSupplier<Integer, Exception> fragment_offsetUnsafeSupplier) {
 
 		try {
-			fields = fieldsUnsafeSupplier.get();
+			fragment_offset = fragment_offsetUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -81,7 +77,7 @@ public class Highlight implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, HighlightField> fields;
+	protected Integer fragment_offset;
 
 	@Schema
 	public Integer getFragment_size() {
@@ -139,129 +135,19 @@ public class Highlight implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer number_of_fragments;
 
-	@Schema
-	public String[] getPost_tags() {
-		return post_tags;
-	}
-
-	public void setPost_tags(String[] post_tags) {
-		this.post_tags = post_tags;
-	}
-
-	@JsonIgnore
-	public void setPost_tags(
-		UnsafeSupplier<String[], Exception> post_tagsUnsafeSupplier) {
-
-		try {
-			post_tags = post_tagsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] post_tags;
-
-	@Schema
-	public String[] getPre_tags() {
-		return pre_tags;
-	}
-
-	public void setPre_tags(String[] pre_tags) {
-		this.pre_tags = pre_tags;
-	}
-
-	@JsonIgnore
-	public void setPre_tags(
-		UnsafeSupplier<String[], Exception> pre_tagsUnsafeSupplier) {
-
-		try {
-			pre_tags = pre_tagsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] pre_tags;
-
-	@Schema
-	public Boolean getRequire_field_match() {
-		return require_field_match;
-	}
-
-	public void setRequire_field_match(Boolean require_field_match) {
-		this.require_field_match = require_field_match;
-	}
-
-	@JsonIgnore
-	public void setRequire_field_match(
-		UnsafeSupplier<Boolean, Exception> require_field_matchUnsafeSupplier) {
-
-		try {
-			require_field_match = require_field_matchUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean require_field_match;
-
-	@Schema
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
-		try {
-			type = typeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String type;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
 		}
 
-		if (!(object instanceof Highlight)) {
+		if (!(object instanceof HighlightField)) {
 			return false;
 		}
 
-		Highlight highlight = (Highlight)object;
+		HighlightField highlightField = (HighlightField)object;
 
-		return Objects.equals(toString(), highlight.toString());
+		return Objects.equals(toString(), highlightField.toString());
 	}
 
 	@Override
@@ -276,14 +162,14 @@ public class Highlight implements Serializable {
 
 		sb.append("{");
 
-		if (fields != null) {
+		if (fragment_offset != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fields\": ");
+			sb.append("\"fragment_offset\": ");
 
-			sb.append(_toJSON(fields));
+			sb.append(fragment_offset);
 		}
 
 		if (fragment_size != null) {
@@ -306,78 +192,6 @@ public class Highlight implements Serializable {
 			sb.append(number_of_fragments);
 		}
 
-		if (post_tags != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"post_tags\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < post_tags.length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(post_tags[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < post_tags.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (pre_tags != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"pre_tags\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < pre_tags.length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(pre_tags[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < pre_tags.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (require_field_match != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"require_field_match\": ");
-
-			sb.append(require_field_match);
-		}
-
-		if (type != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"type\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(type));
-
-			sb.append("\"");
-		}
-
 		sb.append("}");
 
 		return sb.toString();
@@ -385,7 +199,7 @@ public class Highlight implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Highlight",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.HighlightField",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -24,6 +24,14 @@ components:
                     required:
                         - field
                     type: object
+        HighlightField:
+            properties:
+                fragment_offset:
+                    type: integer
+                fragment_size:
+                    type: integer
+                number_of_fragments:
+                    type: integer
         SXPBlueprint:
             properties:
                 configuration:
@@ -67,8 +75,26 @@ components:
                             type: object
                         highlight:
                             properties:
-                                fragmentOffset:
+                                fields:
+                                    additionalProperties:
+                                        $ref: "#/components/schemas/HighlightField"
+                                    type: object
+                                fragment_size:
                                     type: integer
+                                number_of_fragments:
+                                    type: integer
+                                post_tags:
+                                    items:
+                                        type: string
+                                    type: array
+                                pre_tags:
+                                    items:
+                                        type: string
+                                    type: array
+                                require_field_match:
+                                    type: boolean
+                                type:
+                                    type: string
                             type: object
                         parameters:
                             additionalProperties:

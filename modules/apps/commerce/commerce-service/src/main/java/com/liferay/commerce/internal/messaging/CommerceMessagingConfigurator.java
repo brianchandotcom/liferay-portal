@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.internal.messaging;
 
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceShipment;
+import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
@@ -42,15 +45,20 @@ public class CommerceMessagingConfigurator {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_basePriceListServiceRegistration = _registerDestination(
-			bundleContext, DestinationNames.COMMERCE_BASE_PRICE_LIST);
+			bundleContext, DestinationNames.COMMERCE_BASE_PRICE_LIST,
+			CommercePriceList.class.getName());
 		_orderStatusServiceRegistration = _registerDestination(
-			bundleContext, DestinationNames.COMMERCE_ORDER_STATUS);
+			bundleContext, DestinationNames.COMMERCE_ORDER_STATUS,
+			CommerceOrder.class.getName());
 		_paymentStatusServiceRegistration = _registerDestination(
-			bundleContext, DestinationNames.COMMERCE_PAYMENT_STATUS);
+			bundleContext, DestinationNames.COMMERCE_PAYMENT_STATUS,
+			CommerceOrder.class.getName());
 		_shipmentStatusServiceRegistration = _registerDestination(
-			bundleContext, DestinationNames.COMMERCE_SHIPMENT_STATUS);
+			bundleContext, DestinationNames.COMMERCE_SHIPMENT_STATUS,
+			CommerceShipment.class.getName());
 		_subscriptionStatusServiceRegistration = _registerDestination(
-			bundleContext, DestinationNames.COMMERCE_SUBSCRIPTION_STATUS);
+			bundleContext, DestinationNames.COMMERCE_SUBSCRIPTION_STATUS,
+			CommerceOrder.class.getName());
 	}
 
 	@Deactivate
@@ -77,7 +85,7 @@ public class CommerceMessagingConfigurator {
 	}
 
 	private ServiceRegistration<Destination> _registerDestination(
-		BundleContext bundleContext, String destinationName) {
+		BundleContext bundleContext, String destinationName, String className) {
 
 		DestinationConfiguration destinationConfiguration =
 			DestinationConfiguration.createParallelDestinationConfiguration(
@@ -90,7 +98,7 @@ public class CommerceMessagingConfigurator {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"destination.name", destination.getName()
 			).put(
-				"destination.webhook.required.company.id", 0
+				"model.class.name", className
 			).build();
 
 		return bundleContext.registerService(

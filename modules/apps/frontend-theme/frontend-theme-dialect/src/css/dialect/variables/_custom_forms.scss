@@ -1,8 +1,8 @@
-$custom-control-indicator-bg: var(--action-primary-inverted);
+$custom-control-indicator-bg: var(--color-action-primary-inverted);
 $custom-control-indicator-border-color: var(--custom-control-border-color);
 $custom-control-indicator-border-width: 0.0625rem !default; // 1px
 
-$custom-control-indicator-active-bg: var(--action-primary-inverted);
+$custom-control-indicator-active-bg: var(--color-action-primary-inverted);
 $custom-control-indicator-active-border-color: $custom-control-indicator-border-color !default;
 $custom-control-indicator-active-box-shadow: 0 0 0 1rem
 	var(--custom-control-focus-color);
@@ -10,7 +10,7 @@ $custom-control-indicator-active-box-shadow: 0 0 0 1rem
 $custom-control-indicator-focus-box-shadow: 0 0 0 1rem
 	var(--custom-control-focus-color);
 
-$custom-control-indicator-disabled-bg: var(--action-primary-inverted);
+$custom-control-indicator-disabled-bg: var(--color-action-primary-inverted);
 $custom-control-indicator-disabled-border-color: var(
 	--custom-control-disabled-border-color
 );

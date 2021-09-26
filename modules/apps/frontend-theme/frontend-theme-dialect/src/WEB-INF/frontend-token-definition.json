@@ -480,131 +480,131 @@
 						{
 							"defaultValue": "#5924eb",
 							"editorType": "ColorPicker",
-							"label": "action-primary-default",
+							"label": "color-action-primary-default",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-primary-default"
+									"value": "color-action-primary-default"
 								}
 							],
-							"name": "actionPrimaryDefault",
+							"name": "colorActionPrimaryDefault",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#4429b3",
 							"editorType": "ColorPicker",
-							"label": "action-primary-hover",
+							"label": "color-action-primary-hover",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-primary-hover"
+									"value": "color-action-primary-hover"
 								}
 							],
-							"name": "actionPrimaryHover",
+							"name": "colorActionPrimaryHover",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#3c249e",
 							"editorType": "ColorPicker",
-							"label": "action-primary-active",
+							"label": "color-action-primary-active",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-primary-active"
+									"value": "color-action-primary-active"
 								}
 							],
-							"name": "actionPrimaryActive",
+							"name": "colorActionPrimaryActive",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#a696e4",
 							"editorType": "ColorPicker",
-							"label": "action-primary-disabled",
+							"label": "color-action-primary-disabled",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-primary-disabled"
+									"value": "color-action-primary-disabled"
 								}
 							],
-							"name": "actionPrimaryDisabled",
+							"name": "colorActionPrimaryDisabled",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#f2f0fa",
 							"editorType": "ColorPicker",
-							"label": "action-primary-hover-lighten",
+							"label": "color-action-primary-hover-lighten",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-primary-hover-lighten"
+									"value": "color-action-primary-hover-lighten"
 								}
 							],
-							"name": "actionPrimaryHoverLighten",
+							"name": "colorActionPrimaryHoverLighten",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#ece9f5",
 							"editorType": "ColorPicker",
-							"label": "action-primary-active-lighten",
+							"label": "color-action-primary-active-lighten",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-primary-active-lighten"
+									"value": "color-action-primary-active-lighten"
 								}
 							],
-							"name": "actionPrimaryActiveLighten",
+							"name": "colorActionPrimaryActiveLighten",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#fff",
 							"editorType": "ColorPicker",
-							"label": "action-primary-inverted",
+							"label": "color-action-primary-inverted",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-primary-inverted"
+									"value": "color-action-primary-inverted"
 								}
 							],
-							"name": "actionPrimaryInverted",
+							"name": "colorActionPrimaryInverted",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#ffffff19",
 							"editorType": "ColorPicker",
-							"label": "action-primary-inverted-hover",
+							"label": "color-action-primary-inverted-hover",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-primary-inverted-hover"
+									"value": "color-action-primary-inverted-hover"
 								}
 							],
-							"name": "actionPrimaryInvertedHover",
+							"name": "colorActionPrimaryInvertedHover",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#ffffff80",
 							"editorType": "ColorPicker",
-							"label": "action-primary-inverted-disabled",
+							"label": "color-action-primary-inverted-disabled",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-primary-inverted-disabled"
+									"value": "color-action-primary-inverted-disabled"
 								}
 							],
-							"name": "actionPrimaryInvertedDisabled",
+							"name": "colorActionPrimaryInvertedDisabled",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#5e38ba",
 							"editorType": "ColorPicker",
-							"label": "action-primary-visited",
+							"label": "color-action-primary-visited",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-primary-visited"
+									"value": "color-action-primary-visited"
 								}
 							],
-							"name": "actionPrimaryVisited",
+							"name": "colorActionPrimaryVisited",
 							"type": "String"
 						}
 					],
@@ -616,131 +616,131 @@
 						{
 							"defaultValue": "#ed7105",
 							"editorType": "ColorPicker",
-							"label": "action-secondary-default",
+							"label": "color-action-secondary-default",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-secondary-default"
+									"value": "color-action-secondary-default"
 								}
 							],
-							"name": "actionSecondaryDefault",
+							"name": "colorActionSecondaryDefault",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#d26404",
 							"editorType": "ColorPicker",
-							"label": "action-secondary-hover",
+							"label": "color-action-secondary-hover",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-secondary-hover"
+									"value": "color-action-secondary-hover"
 								}
 							],
-							"name": "actionSecondaryHover",
+							"name": "colorActionSecondaryHover",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#b95804",
 							"editorType": "ColorPicker",
-							"label": "action-secondary-active",
+							"label": "color-action-secondary-active",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-secondary-active"
+									"value": "color-action-secondary-active"
 								}
 							],
-							"name": "actionSecondaryActive",
+							"name": "colorActionSecondaryActive",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#f6b882",
 							"editorType": "ColorPicker",
-							"label": "action-secondary-disabled",
+							"label": "color-action-secondary-disabled",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-secondary-disabled"
+									"value": "color-action-secondary-disabled"
 								}
 							],
-							"name": "actionSecondaryDisabled",
+							"name": "colorActionSecondaryDisabled",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#faf0e6",
 							"editorType": "ColorPicker",
-							"label": "action-secondary-hover-lighten",
+							"label": "color-action-secondary-hover-lighten",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-secondary-hover-lighten"
+									"value": "color-action-secondary-hover-lighten"
 								}
 							],
-							"name": "actionSecondaryHoverLighten",
+							"name": "colorActionSecondaryHoverLighten",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#f1decd",
 							"editorType": "ColorPicker",
-							"label": "action-secondary-active-lighten",
+							"label": "color-action-secondary-active-lighten",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-secondary-active-lighten"
+									"value": "color-action-secondary-active-lighten"
 								}
 							],
-							"name": "actionSecondaryActiveLighten",
+							"name": "colorActionSecondaryActiveLighten",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#fff",
 							"editorType": "ColorPicker",
-							"label": "action-secondary-inverted",
+							"label": "color-action-secondary-inverted",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-secondary-inverted"
+									"value": "color-action-secondary-inverted"
 								}
 							],
-							"name": "actionSecondaryInverted",
+							"name": "colorActionSecondaryInverted",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#ffffff19",
 							"editorType": "ColorPicker",
-							"label": "action-secondary-inverted-hover",
+							"label": "color-action-secondary-inverted-hover",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-secondary-inverted-hover"
+									"value": "color-action-secondary-inverted-hover"
 								}
 							],
-							"name": "actionSecondaryInvertedHover",
+							"name": "colorActionSecondaryInvertedHover",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#ffffff80",
 							"editorType": "ColorPicker",
-							"label": "action-secondary-inverted-disabled",
+							"label": "color-action-secondary-inverted-disabled",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-secondary-inverted-disabled"
+									"value": "color-action-secondary-inverted-disabled"
 								}
 							],
-							"name": "actionSecondaryInvertedDisabled",
+							"name": "colorActionSecondaryInvertedDisabled",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#5e38ba",
 							"editorType": "ColorPicker",
-							"label": "action-secondary-visited",
+							"label": "color-action-secondary-visited",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-secondary-visited"
+									"value": "color-action-secondary-visited"
 								}
 							],
-							"name": "actionSecondaryVisited",
+							"name": "colorActionSecondaryVisited",
 							"type": "String"
 						}
 					],
@@ -752,131 +752,131 @@
 						{
 							"defaultValue": "#2b3a4b",
 							"editorType": "ColorPicker",
-							"label": "action-neutral-default",
+							"label": "color-action-neutral-default",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-neutral-default"
+									"value": "color-action-neutral-default"
 								}
 							],
-							"name": "actionNeutralDefault",
+							"name": "colorActionNeutralDefault",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#34465b",
 							"editorType": "ColorPicker",
-							"label": "action-neutral-hover",
+							"label": "color-action-neutral-hover",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-neutral-hover"
+									"value": "color-action-neutral-hover"
 								}
 							],
-							"name": "actionNeutralHover",
+							"name": "colorActionNeutralHover",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#3d536b",
 							"editorType": "ColorPicker",
-							"label": "action-neutral-active",
+							"label": "color-action-neutral-active",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-neutral-active"
+									"value": "color-action-neutral-active"
 								}
 							],
-							"name": "actionNeutralActive",
+							"name": "colorActionNeutralActive",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#959ca5",
 							"editorType": "ColorPicker",
-							"label": "action-neutral-disabled",
+							"label": "color-action-neutral-disabled",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-neutral-disabled"
+									"value": "color-action-neutral-disabled"
 								}
 							],
-							"name": "actionNeutralDisabled",
+							"name": "colorActionNeutralDisabled",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#eaebed",
 							"editorType": "ColorPicker",
-							"label": "action-neutral-hover-lighten",
+							"label": "color-action-neutral-hover-lighten",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-neutral-hover-lighten"
+									"value": "color-action-neutral-hover-lighten"
 								}
 							],
-							"name": "actionNeutralHoverLighten",
+							"name": "colorActionNeutralHoverLighten",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#d5d8db",
 							"editorType": "ColorPicker",
-							"label": "action-neutral-active-lighten",
+							"label": "color-action-neutral-active-lighten",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-neutral-active-lighten"
+									"value": "color-action-neutral-active-lighten"
 								}
 							],
-							"name": "actionNeutralActiveLighten",
+							"name": "colorActionNeutralActiveLighten",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#fff",
 							"editorType": "ColorPicker",
-							"label": "action-neutral-inverted",
+							"label": "color-action-neutral-inverted",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-neutral-inverted"
+									"value": "color-action-neutral-inverted"
 								}
 							],
-							"name": "actionNeutralInverted",
+							"name": "colorActionNeutralInverted",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#ffffff19",
 							"editorType": "ColorPicker",
-							"label": "action-neutral-inverted-hover",
+							"label": "color-action-neutral-inverted-hover",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-neutral-inverted-hover"
+									"value": "color-action-neutral-inverted-hover"
 								}
 							],
-							"name": "actionNeutralInvertedHover",
+							"name": "colorActionNeutralInvertedHover",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#ffffff80",
 							"editorType": "ColorPicker",
-							"label": "action-neutral-inverted-disabled",
+							"label": "color-action-neutral-inverted-disabled",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-neutral-inverted-disabled"
+									"value": "color-action-neutral-inverted-disabled"
 								}
 							],
-							"name": "actionNeutralInvertedDisabled",
+							"name": "colorActionNeutralInvertedDisabled",
 							"type": "String"
 						},
 						{
 							"defaultValue": "#5e38ba",
 							"editorType": "ColorPicker",
-							"label": "action-neutral-visited",
+							"label": "color-action-neutral-visited",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "action-neutral-visited"
+									"value": "color-action-neutral-visited"
 								}
 							],
-							"name": "actionNeutralVisited",
+							"name": "colorActionNeutralVisited",
 							"type": "String"
 						}
 					],
@@ -2159,7 +2159,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "var(--action-primary-default)",
+							"defaultValue": "var(--color-action-primary-default)",
 							"editorType": "ColorPicker",
 							"label": "custom-control-border-color",
 							"mappings": [
@@ -2233,7 +2233,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--action-primary-disabled)",
+							"defaultValue": "var(--color-action-primary-disabled)",
 							"editorType": "ColorPicker",
 							"label": "custom-control-disabled-border-color",
 							"mappings": [
@@ -2246,7 +2246,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--action-primary-active-lighten)",
+							"defaultValue": "var(--color-action-primary-active-lighten)",
 							"editorType": "ColorPicker",
 							"label": "custom-control-focus-color",
 							"mappings": [

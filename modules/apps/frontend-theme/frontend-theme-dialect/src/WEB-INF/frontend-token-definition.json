@@ -478,6 +478,168 @@
 				{
 					"frontendTokens": [
 						{
+							"defaultValue": "#eb2453",
+							"editorType": "ColorPicker",
+							"label": "color-accent-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-accent-1"
+								}
+							],
+							"name": "colorAccent1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#ffeaef",
+							"editorType": "ColorPicker",
+							"label": "color-accent-1-lighten",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-accent-1-lighten"
+								}
+							],
+							"name": "colorAccent1Lighten",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#a7e204",
+							"editorType": "ColorPicker",
+							"label": "color-accent-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-accent-2"
+								}
+							],
+							"name": "colorAccent2",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#f0ffc6",
+							"editorType": "ColorPicker",
+							"label": "color-accent-2-lighten",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-accent-2-lighten"
+								}
+							],
+							"name": "colorAccent2Lighten",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#c70d95",
+							"editorType": "ColorPicker",
+							"label": "color-accent-3",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-accent-3"
+								}
+							],
+							"name": "colorAccent3",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#ffeaf9",
+							"editorType": "ColorPicker",
+							"label": "color-accent-3-lighten",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-accent-3-lighten"
+								}
+							],
+							"name": "colorAccent3Lighten",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#221874",
+							"editorType": "ColorPicker",
+							"label": "color-accent-4",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-accent-4"
+								}
+							],
+							"name": "colorAccent4",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#e9e8f1",
+							"editorType": "ColorPicker",
+							"label": "color-accent-4-lighten",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-accent-4-lighten"
+								}
+							],
+							"name": "colorAccent4Lighten",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#bc24eb",
+							"editorType": "ColorPicker",
+							"label": "color-accent-5",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-accent-5"
+								}
+							],
+							"name": "colorAccent5",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#f6daff",
+							"editorType": "ColorPicker",
+							"label": "color-accent-5-lighten",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-accent-5-lighten"
+								}
+							],
+							"name": "colorAccent5Lighten",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#1ce4b5",
+							"editorType": "ColorPicker",
+							"label": "color-accent-6",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-accent-6"
+								}
+							],
+							"name": "colorAccent6",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#defff7",
+							"editorType": "ColorPicker",
+							"label": "color-accent-6-lighten",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-accent-6-lighten"
+								}
+							],
+							"name": "colorAccent6Lighten",
+							"type": "String"
+						}
+					],
+					"label": "accents",
+					"name": "accents"
+				},
+				{
+					"frontendTokens": [
+						{
 							"defaultValue": "#5924eb",
 							"editorType": "ColorPicker",
 							"label": "color-action-primary-default",

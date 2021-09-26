@@ -1,0 +1,9 @@
+@mixin accent-color-variant($variant) {
+	.bg-accent-#{$variant} {
+		background-color: var(--color-accent-#{$variant}) !important;
+	}
+
+	.text-accent-#{$variant} {
+		color: var(--color-accent-#{$variant}) !important;
+	}
+}

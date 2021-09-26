@@ -1247,18 +1247,6 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "28px",
-							"label": "text-link-lg-line-height",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "text-link-lg-line-height"
-								}
-							],
-							"name": "textLinkLgLineHeight",
-							"type": "String"
-						},
-						{
 							"defaultValue": "1rem",
 							"label": "text-link-md-font-size",
 							"mappings": [
@@ -1271,18 +1259,6 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "24px",
-							"label": "text-link-md-line-height",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "text-link-md-line-height"
-								}
-							],
-							"name": "textLinkMdLineHeight",
-							"type": "String"
-						},
-						{
 							"defaultValue": "0.875rem",
 							"label": "text-link-sm-font-size",
 							"mappings": [
@@ -1292,6 +1268,30 @@
 								}
 							],
 							"name": "textLinkSmFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "28px",
+							"label": "text-link-lg-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-link-lg-line-height"
+								}
+							],
+							"name": "textLinkLgLineHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "24px",
+							"label": "text-link-md-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-link-md-line-height"
+								}
+							],
+							"name": "textLinkMdLineHeight",
 							"type": "String"
 						},
 						{
@@ -1325,18 +1325,6 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "24px",
-							"label": "text-paragraph-lg-line-height",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "text-paragraph-lg-line-height"
-								}
-							],
-							"name": "textParagraphLgLineHeight",
-							"type": "String"
-						},
-						{
 							"defaultValue": "1rem",
 							"label": "text-paragraph-font-size",
 							"mappings": [
@@ -1346,18 +1334,6 @@
 								}
 							],
 							"name": "textParagraphFontSize",
-							"type": "String"
-						},
-						{
-							"defaultValue": "24px",
-							"label": "text-paragraph-line-height",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "text-paragraph-line-height"
-								}
-							],
-							"name": "textParagraphLineHeight",
 							"type": "String"
 						},
 						{
@@ -1373,18 +1349,6 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "20px",
-							"label": "text-paragraph-sm-line-height",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "text-paragraph-sm-line-height"
-								}
-							],
-							"name": "textParagraphSmLineHeight",
-							"type": "String"
-						},
-						{
 							"defaultValue": "0.6875rem",
 							"label": "text-paragraph-xs-font-size",
 							"mappings": [
@@ -1397,18 +1361,6 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "20px",
-							"label": "text-paragraph-xs-line-height",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "text-paragraph-xs-line-height"
-								}
-							],
-							"name": "textParagraphXsLineHeight",
-							"type": "String"
-						},
-						{
 							"defaultValue": "0.5625rem",
 							"label": "text-paragraph-xxs-font-size",
 							"mappings": [
@@ -1418,6 +1370,54 @@
 								}
 							],
 							"name": "textParagraphXxsFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "24px",
+							"label": "text-paragraph-lg-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-paragraph-lg-line-height"
+								}
+							],
+							"name": "textParagraphLgLineHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "24px",
+							"label": "text-paragraph-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-paragraph-line-height"
+								}
+							],
+							"name": "textParagraphLineHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "20px",
+							"label": "text-paragraph-sm-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-paragraph-sm-line-height"
+								}
+							],
+							"name": "textParagraphSmLineHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "20px",
+							"label": "text-paragraph-xs-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-paragraph-xs-line-height"
+								}
+							],
+							"name": "textParagraphXsLineHeight",
 							"type": "String"
 						},
 						{

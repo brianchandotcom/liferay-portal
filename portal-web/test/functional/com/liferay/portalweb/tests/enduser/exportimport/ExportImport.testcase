@@ -139,6 +139,26 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-125446."
+	@priority = "4"
+	test CanBeRemainWhenChangedDisplayStyle {
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			portlet = "Export");
+
+		LexiconEntry.gotoAdd();
+
+		LAR.exportWithAssertionOnSuccess();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			portlet = "Export");
+
+		LexiconEntry.viewActiveDisplayStyle(displayStyle = "table");
+	}
+
 	@description = "This is a test for LPS-84223."
 	@priority = "3"
 	test DLLinkValidationInWebContent {

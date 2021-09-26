@@ -25,6 +25,15 @@
 	line-height: var(--text-paragraph-xxs-line-height);
 }
 
+// Small Caps
+
+.text-small-caps {
+	font-size: var(--text-small-caps-font-size);
+	letter-spacing: var(--text-small-caps-letter-spacing);
+	line-height: var(--text-small-caps-line-height);
+	text-transform: uppercase;
+}
+
 // Links
 
 .text-link-lg {

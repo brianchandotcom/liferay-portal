@@ -1361,6 +1361,48 @@
 				{
 					"frontendTokens": [
 						{
+							"defaultValue": "1.125rem",
+							"label": "text-small-caps-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-small-caps-font-size"
+								}
+							],
+							"name": "textSmallCapsFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.05em",
+							"label": "text-small-caps-letter-spacing",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-small-caps-letter-spacing"
+								}
+							],
+							"name": "textSmallCapsLetterSpacing",
+							"type": "String"
+						},
+						{
+							"defaultValue": "20px",
+							"label": "text-small-caps-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-small-caps-line-height"
+								}
+							],
+							"name": "textSmallCapsLineHeight",
+							"type": "String"
+						}
+					],
+					"label": "small-caps",
+					"name": "smallCaps"
+				},
+				{
+					"frontendTokens": [
+						{
 							"defaultValue": "1.5rem",
 							"label": "text-link-lg-font-size",
 							"mappings": [

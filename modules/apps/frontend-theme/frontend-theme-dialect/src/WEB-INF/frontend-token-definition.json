@@ -1154,6 +1154,77 @@
 					],
 					"label": "states",
 					"name": "states"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "#4d2ec9",
+							"editorType": "ColorPicker",
+							"label": "color-chart-1",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-chart-1"
+								}
+							],
+							"name": "colorChart1",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#fdcc4a",
+							"editorType": "ColorPicker",
+							"label": "color-chart-2",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-chart-2"
+								}
+							],
+							"name": "colorChart2",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#ad9ee9",
+							"editorType": "ColorPicker",
+							"label": "color-chart-3",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-chart-3"
+								}
+							],
+							"name": "colorChart3",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#fe8856",
+							"editorType": "ColorPicker",
+							"label": "color-chart-4",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-chart-4"
+								}
+							],
+							"name": "colorChart4",
+							"type": "String"
+						},
+						{
+							"defaultValue": "#002c62",
+							"editorType": "ColorPicker",
+							"label": "color-chart-5",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-chart-5"
+								}
+							],
+							"name": "colorChart5",
+							"type": "String"
+						}
+					],
+					"label": "charts",
+					"name": "charts"
 				}
 			],
 			"label": "dialect-colors",

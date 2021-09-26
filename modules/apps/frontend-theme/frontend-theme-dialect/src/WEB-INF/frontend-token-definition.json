@@ -3221,7 +3221,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "0 .5rem 1rem rgba(0, 0, 0, .15)",
+							"defaultValue": "var(--elevation-tight-3) rgba(0, 0, 0, .15)",
 							"label": "box-shadow",
 							"mappings": [
 								{
@@ -3233,7 +3233,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "0 .125rem .25rem rgba(0, 0, 0, .075)",
+							"defaultValue": "var(--elevation-tight-1) rgba(0, 0, 0, .075)",
 							"label": "box-shadow-sm",
 							"mappings": [
 								{
@@ -3245,7 +3245,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "0 1rem 3rem rgba(0, 0, 0, .175)",
+							"defaultValue": "var(--elevation-fluffy-3) rgba(0, 0, 0, .175)",
 							"label": "box-shadow-lg",
 							"mappings": [
 								{

@@ -1,43 +1,24 @@
 // Links
 
-.text-link {
-	font-weight: var(--text-link-font-weight);
-}
-
 .text-link-lg {
-	@extend .text-link;
-
 	font-size: var(--text-link-lg-font-size);
+	font-weight: var(--font-weight-bolder);
 	line-height: var(--text-link-lg-line-height);
 }
 
 .text-link-md {
-	@extend .text-link;
-
 	font-size: var(--text-link-md-font-size);
+	font-weight: var(--font-weight-bolder);
 	line-height: var(--text-link-md-line-height);
 }
 
 .text-link-sm {
-	@extend .text-link;
-
 	font-size: var(--text-link-sm-font-size);
+	font-weight: var(--font-weight-bolder);
 	line-height: var(--text-link-sm-line-height);
 }
 
 // Paragraphs
-
-.text-paragraph-light {
-	font-weight: var(--text-paragraph-font-weight-light);
-}
-
-.text-paragraph-regular {
-	font-weight: var(--text-paragraph-font-weight-regular);
-}
-
-.text-paragraph-heavy {
-	font-weight: var(--text-paragraph-font-weight-heavy);
-}
 
 .text-paragraph-lg {
 	font-size: var(--text-paragraph-lg-font-size);

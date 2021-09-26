@@ -1235,7 +1235,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "800",
+							"defaultValue": "var(--font-weight-bolder)",
 							"label": "text-link-font-weight",
 							"mappings": [
 								{
@@ -1325,7 +1325,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "300",
+							"defaultValue": "var(--font-weight-light)",
 							"label": "text-paragraph-font-weight-light",
 							"mappings": [
 								{
@@ -1337,7 +1337,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "500",
+							"defaultValue": "var(--font-weight-normal)",
 							"label": "text-paragraph-font-weight-regular",
 							"mappings": [
 								{
@@ -1349,7 +1349,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "800",
+							"defaultValue": "var(--font-weight-bolder)",
 							"label": "text-paragraph-font-weight-heavy",
 							"mappings": [
 								{
@@ -3521,7 +3521,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "400",
+							"defaultValue": "500",
 							"label": "font-weight-normal",
 							"mappings": [
 								{
@@ -3557,7 +3557,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "900",
+							"defaultValue": "800",
 							"label": "font-weight-bolder",
 							"mappings": [
 								{
@@ -3701,7 +3701,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "300",
+							"defaultValue": "var(--font-weight-light)",
 							"label": "display-1-weight",
 							"mappings": [
 								{
@@ -3713,7 +3713,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "300",
+							"defaultValue": "var(--font-weight-light)",
 							"label": "display-2-weight",
 							"mappings": [
 								{
@@ -3725,7 +3725,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "300",
+							"defaultValue": "var(--font-weight-light)",
 							"label": "display-3-weight",
 							"mappings": [
 								{
@@ -3737,7 +3737,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "300",
+							"defaultValue": "var(--font-weight-light)",
 							"label": "display-4-weight",
 							"mappings": [
 								{
@@ -3779,7 +3779,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "300",
+							"defaultValue": "var(--font-weight-light)",
 							"label": "lead-font-weight",
 							"mappings": [
 								{

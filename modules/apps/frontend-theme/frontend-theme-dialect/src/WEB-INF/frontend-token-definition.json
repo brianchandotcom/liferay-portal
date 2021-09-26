@@ -1235,84 +1235,6 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "1.5rem",
-							"label": "text-link-lg-font-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "text-link-lg-font-size"
-								}
-							],
-							"name": "textLinkLgFontSize",
-							"type": "String"
-						},
-						{
-							"defaultValue": "1rem",
-							"label": "text-link-md-font-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "text-link-md-font-size"
-								}
-							],
-							"name": "textLinkMdFontSize",
-							"type": "String"
-						},
-						{
-							"defaultValue": "0.875rem",
-							"label": "text-link-sm-font-size",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "text-link-sm-font-size"
-								}
-							],
-							"name": "textLinkSmFontSize",
-							"type": "String"
-						},
-						{
-							"defaultValue": "28px",
-							"label": "text-link-lg-line-height",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "text-link-lg-line-height"
-								}
-							],
-							"name": "textLinkLgLineHeight",
-							"type": "String"
-						},
-						{
-							"defaultValue": "24px",
-							"label": "text-link-md-line-height",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "text-link-md-line-height"
-								}
-							],
-							"name": "textLinkMdLineHeight",
-							"type": "String"
-						},
-						{
-							"defaultValue": "20px",
-							"label": "text-link-sm-line-height",
-							"mappings": [
-								{
-									"type": "cssVariable",
-									"value": "text-link-sm-line-height"
-								}
-							],
-							"name": "textLinkSmLineHeight",
-							"type": "String"
-						}
-					],
-					"label": "text-links",
-					"name": "textLinks"
-				},
-				{
-					"frontendTokens": [
-						{
 							"defaultValue": "1.25rem",
 							"label": "text-paragraph-lg-font-size",
 							"mappings": [
@@ -1435,6 +1357,84 @@
 					],
 					"label": "paragraphs",
 					"name": "paragraphs"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "1.5rem",
+							"label": "text-link-lg-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-link-lg-font-size"
+								}
+							],
+							"name": "textLinkLgFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "1rem",
+							"label": "text-link-md-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-link-md-font-size"
+								}
+							],
+							"name": "textLinkMdFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.875rem",
+							"label": "text-link-sm-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-link-sm-font-size"
+								}
+							],
+							"name": "textLinkSmFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "28px",
+							"label": "text-link-lg-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-link-lg-line-height"
+								}
+							],
+							"name": "textLinkLgLineHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "24px",
+							"label": "text-link-md-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-link-md-line-height"
+								}
+							],
+							"name": "textLinkMdLineHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "20px",
+							"label": "text-link-sm-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "text-link-sm-line-height"
+								}
+							],
+							"name": "textLinkSmLineHeight",
+							"type": "String"
+						}
+					],
+					"label": "text-links",
+					"name": "textLinks"
 				}
 			],
 			"label": "dialect-typography",

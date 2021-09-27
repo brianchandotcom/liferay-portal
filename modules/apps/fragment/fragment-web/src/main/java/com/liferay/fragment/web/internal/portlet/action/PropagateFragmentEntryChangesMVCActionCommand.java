@@ -49,7 +49,7 @@ public class PropagateFragmentEntryChangesMVCActionCommand
 			actionRequest, "rowIds");
 
 		for (long fragmentEntryLinkId : fragmentEntryLinkIds) {
-			_fragmentEntryLinkLocalService.updateLatestChanges(
+			_fragmentEntryLinkLocalService.updateLayoutWithLatestChanges(
 				fragmentEntryLinkId);
 		}
 	}

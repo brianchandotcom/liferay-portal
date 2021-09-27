@@ -65,6 +65,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -154,6 +155,15 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 					for (DDMFormFieldValue nameDDMFormFieldValue :
 							ddmFormFieldValues) {
+
+						if (_isLegacyDDMFormFieldValue(nameDDMFormFieldValue)) {
+							List<DDMFormFieldValue> nestedDDMFormFieldValues =
+								nameDDMFormFieldValue.
+									getNestedDDMFormFieldValues();
+
+							nameDDMFormFieldValue =
+								nestedDDMFormFieldValues.get(0);
+						}
 
 						Value nameValue = nameDDMFormFieldValue.getValue();
 
@@ -434,6 +444,22 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);
 		}
+	}
+
+	private boolean _isLegacyDDMFormFieldValue(
+		DDMFormFieldValue ddmFormFieldValue) {
+
+		List<DDMFormFieldValue> nestedDDMFormFieldValues =
+			ddmFormFieldValue.getNestedDDMFormFieldValues();
+
+		DDMFormFieldValue childDDMFormFieldValue = nestedDDMFormFieldValues.get(
+			0);
+
+		if (Objects.equals(childDDMFormFieldValue.getName(), "property")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

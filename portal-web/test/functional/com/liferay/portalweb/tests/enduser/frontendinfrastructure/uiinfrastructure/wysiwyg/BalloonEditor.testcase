@@ -270,7 +270,7 @@ definition {
 
 			AssertElementPresent(
 				key_textName = "${paragraphText}",
-				locator1 = "CKEditorBalloonEditorSample#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_BOLD");
+				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_CONTENT_BOLD");
 
 			BalloonEditor.toggleBalloonEditorContentStyle(
 				optionTool = "Bold",
@@ -289,7 +289,7 @@ definition {
 
 			AssertElementPresent(
 				key_textName = "${paragraphText}",
-				locator1 = "CKEditorBalloonEditorSample#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_ITALIC");
+				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_CONTENT_ITALIC");
 
 			BalloonEditor.toggleBalloonEditorContentStyle(
 				optionTool = "Italic",
@@ -308,7 +308,7 @@ definition {
 
 			AssertElementPresent(
 				key_textName = "${paragraphText}",
-				locator1 = "CKEditorBalloonEditorSample#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_UNDERLINE");
+				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_CONTENT_UNDERLINE");
 
 			BalloonEditor.toggleBalloonEditorContentStyle(
 				optionTool = "Underline",
@@ -327,7 +327,7 @@ definition {
 
 			AssertElementPresent(
 				key_textName = "${paragraphText}",
-				locator1 = "CKEditorBalloonEditorSample#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_BULLET_LIST");
+				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_CONTENT_BULLET_LIST");
 
 			BalloonEditor.toggleBalloonEditorContentStyle(
 				optionTool = "Bulleted",

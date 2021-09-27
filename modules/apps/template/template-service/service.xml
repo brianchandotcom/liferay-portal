@@ -30,7 +30,7 @@
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
 		<finder name="DDMTemplateId" return-type="TemplateEntry">
 			<finder-column name="ddmTemplateId" />

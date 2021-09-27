@@ -106,13 +106,15 @@ definition {
 	test ViewEventDateAndTimeInResourcesAvailability {
 		CalendarNavigator.gotoAddEvent();
 
+		CalendarEvent.editTitle(eventTitle = "Event Title");
+
 		CalendarEvent.gotoConfigureInvitations();
 
 		CalendarEvent.viewResourcesAvailability();
 
 		CalendarEvent.compareEventDateAndTimeToResourcesAvailabilityDateAndTime();
 
-		CalendarEvent.selectTimes(
+		CalendarEvent.setTimes(
 			endDateTime = "11:00 AM",
 			startDateTime = "08:00 AM");
 
@@ -120,13 +122,16 @@ definition {
 
 		CalendarEvent.setEndDateTomorrow();
 
-		CalendarEvent.selectTimes(
+		CalendarEvent.setTimes(
 			endDateTime = "07:00 AM",
 			startDateTime = "08:00 AM");
 
 		CalendarEvent.compareEventDateAndTimeToResourcesAvailabilityDateAndTime();
 
 		CalendarEvent.publish();
+
+
+		
 	}
 
 	@description = "This is a use case for LPS-55171."

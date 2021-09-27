@@ -237,107 +237,56 @@ definition {
 	@description = "Verify that a calendar event on draft can be approved"
 	@priority = "4"
 	test CalendarWithDraftStatusCanBecomeApproved {
-		Navigator.gotoPage(pageName = "Calendar Page");
-
 		CalendarNavigator.gotoAddEvent();
 
-		var eventTitle = "Test Event";
-		var eventType = "Regular";
-		var optionSet = "true";
-		var optionSetValue = "inviteResource";
-		var pageName = "Calendar Page";
-		var specificOptionSetValue = "Test Test1";
-		var workflow = "true";
+		CalendarEvent.editTitle(eventTitle = "Event Title Draft");
 
-		CalendarEvent.editTitle(eventTitle = "Test Event");
+		AssertClick(
+			locator1 = "Button#SAVE_AS_DRAFT",
+			value1 = "Save as Draft");
+		
+		Navigator.gotoPage(pageName = "Calendar Page");
 
-		AssertNotChecked(locator1 = "CalendarEditEvent#ALL_DAY_CHECKBOX");
-
-		AssertNotChecked(locator1 = "CalendarEditEvent#REPEAT_CHECKBOX");
-
-		var endDate = selenium.getElementValue("CalendarEditEvent#END_DATE");
-		var endDateTime = selenium.getElementValue("CalendarEditEvent#END_DATE_TIME");
-		var startDate = selenium.getElementValue("CalendarEditEvent#START_DATE");
-		var startDateTime = selenium.getElementValue("CalendarEditEvent#START_DATE_TIME");
-
-		CalendarEvent.selectCalendar(calendarName = "${calendarName}");
-
-		if ("${optionSet}" == "true") {
-			CalendarEvent._options(
-				optionSetValue = "inviteResource",
-				specificOptionSetValue = "Test Test");
-		}
-
-		if ("${resourcesAvailability}" == "true") {
-			CalendarEvent.viewResourcesAvailability();
-		}
-
-		if ("${reminders}" == "true") {
-			CalendarEvent.configureReminders(
-				duration1 = "${duration1}",
-				duration2 = "${duration2}",
-				number1 = "${number1}",
-				number2 = "${number2}");
-		}
-
-		if ("${workflow}" == "true") {
-			AssertClick(
-				locator1 = "Button#SAVE_AS_DRAFT",
-				value1 = "Save as Draft");
-
-			Alert.viewSuccessMessage();
-		}
-		else {
-			AssertClick(
-				locator1 = "Button#SAVE_AS_DRAFT",
-				value1 = "Save as Draft");
-		}
-
-		CalendarScheduler.selectSpecificEvent(eventTitle = "Test Event");
-
-		CalendarScheduler.gotoDetailsViaDialogBox();
+		CalendarEvent.viewDetails(
+			calendarName = "Liferay DXP",
+			eventTitle = "Event Title Draft",
+			eventType = "Regular");
 
 		CalendarEvent.viewStatusViaDetails(status = "Draft");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		CalendarNavigator.gotoEditEvent(
-			eventTitle = "Test Event",
-			eventType = "Regular");
+		CalendarNavigator.gotoEditEvent(eventTitle = "Event Title Draft");
 
 		AssertClick(
 			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
 			value1 = "Submit for Publication");
-
-		Alert.viewSuccessMessage();
-
-		AssertClick(
-			locator1 = "CalendarEditEvent#SAVE_CHANGES_BUTTON",
-			value1 = "Save changes.");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Test Event",
+			workflowAssetTitle = "Event Title Draft",
 			workflowAssetType = "Calendar Event",
 			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
-			workflowAssetTitle = "Test Event",
+			workflowAssetTitle = "Event Title Draft",
 			workflowAssetType = "Calendar Event",
 			workflowTask = "Review");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Click(
-			key_eventTitle = "Test Event",
-			locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC_ALL_DAY_2");
-
-		CalendarScheduler.gotoDetailsViaDialogBox();
+		CalendarEvent.viewDetails(
+			calendarName = "Liferay DXP",
+			eventTitle = "Event Title Draft",
+			eventType = "Regular");
 
 		CalendarEvent.viewStatusViaDetails(status = "Approved");
+
+
+		
 	}
 
 	@description = "Verify that the user can approve calendar events on Single Approver workflow"

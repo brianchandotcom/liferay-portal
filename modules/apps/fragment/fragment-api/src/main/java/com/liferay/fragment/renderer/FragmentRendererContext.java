@@ -32,6 +32,8 @@ public interface FragmentRendererContext {
 
 	public Optional<Map<String, Object>> getFieldValuesOptional();
 
+	public String getFragmentElementId();
+
 	public FragmentEntryLink getFragmentEntryLink();
 
 	public Locale getLocale();

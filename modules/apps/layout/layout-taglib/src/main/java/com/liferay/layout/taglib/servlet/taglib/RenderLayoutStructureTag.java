@@ -294,7 +294,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 						colTag.doStartTag();
 
 						_renderLayoutStructure(
-							layoutStructureItem.getChildrenItemIds(),
+							layoutStructureItem.getChildrenItemIds(), index,
 							renderLayoutStructureDisplayContext);
 
 						colTag.doEndTag();
@@ -578,7 +578,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 	}
 
 	private void _renderFragmentStyledLayoutStructureItem(
-			LayoutStructureItem layoutStructureItem,
+			int collectionElementIndex, LayoutStructureItem layoutStructureItem,
 			RenderLayoutStructureDisplayContext
 				renderLayoutStructureDisplayContext)
 		throws Exception {
@@ -646,7 +646,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 	}
 
 	private void _renderLayoutStructure(
-			List<String> childrenItemIds,
+			List<String> childrenItemIds, int collectionElementIndex,
 			RenderLayoutStructureDisplayContext
 				renderLayoutStructureDisplayContext)
 		throws Exception {
@@ -681,7 +681,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 						FragmentStyledLayoutStructureItem) {
 
 				_renderFragmentStyledLayoutStructureItem(
-					layoutStructureItem, renderLayoutStructureDisplayContext);
+					collectionElementIndex, layoutStructureItem,
+					renderLayoutStructureDisplayContext);
 			}
 			else if (layoutStructureItem instanceof
 						RowStyledLayoutStructureItem) {
@@ -692,6 +693,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			else {
 				_renderLayoutStructure(
 					layoutStructureItem.getChildrenItemIds(),
+					collectionElementIndex,
 					renderLayoutStructureDisplayContext);
 			}
 		}

@@ -115,6 +115,11 @@
 		<td>//label[contains(.,'${key_formFieldName}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>REPEATABLE_TOGGLE_SWITCH</td>
+		<td>//div[@data-field-name = 'repeatable']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

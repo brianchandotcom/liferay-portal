@@ -36,7 +36,8 @@ import org.osgi.annotation.versioning.ProviderType;
 				"setVisible('emailSubject', getValue('sendEmailNotification'))",
 				"setVisible('emailToAddress', getValue('sendEmailNotification'))",
 				"setVisible('objectDefinitionId', contains(getValue('storageType'), \"object\"))",
-				"setVisible('published', FALSE)"
+				"setVisible('published', FALSE)",
+				"setVisible('workflowDefinition', not(contains(getValue('storageType'), \"object\")))"
 			},
 			condition = "TRUE"
 		)

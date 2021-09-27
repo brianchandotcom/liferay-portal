@@ -1,5 +1,20 @@
 # Poshi Runner Change Log
 
+## 1.0.313
+
+### PQL
+
+* [POSHI-191](https://issues.liferay.com/browse/POSHI-191) - The @ignore attribute will only ignore a test if it is set to 'true'
+
+### Utils
+
+* [POSHI-180](https://issues.liferay.com/browse/POSHI-180) - As a test engineer, I would like to get a value in list from a specified index
+
+### WebDriver
+
+* [POSHI-167](https://issues.liferay.com/browse/POSHI-167) - Add right click method
+* [POSHI-185](https://issues.liferay.com/browse/POSHI-185) - Catch 'NoSuchWindowException' when taking screenshots
+
 ## 1.0.311
 
 ### Core

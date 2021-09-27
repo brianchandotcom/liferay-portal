@@ -42,26 +42,14 @@ definition {
 			fieldName = "articleCommentsEnabled",
 			fieldText = "Set this to true to enable comments for journal articles. This field has been set by a portal property and cannot be changed here.");
 
-		Navigator.openURL();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Web Content Page Test");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Web Content Page Test");
 
 		Navigator.gotoPage(pageName = "Web Content Page Test");
 
@@ -120,26 +108,14 @@ definition {
 
 		FormFields.viewCheckboxChecked(fieldName = "articleCommentsEnabled");
 
-		Navigator.openURL();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Web Content Page Test");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Web Content Page Test");
 
 		Navigator.gotoPage(pageName = "Web Content Page Test");
 

@@ -51,6 +51,11 @@ public class DefaultFragmentEntryProcessorContext
 	}
 
 	@Override
+	public String getFragmentElementId() {
+		return _fragmentElementId;
+	}
+
+	@Override
 	public HttpServletRequest getHttpServletRequest() {
 		return _httpServletRequest;
 	}
@@ -103,6 +108,10 @@ public class DefaultFragmentEntryProcessorContext
 		_fieldValues = fieldValues;
 	}
 
+	public void setFragmentElementId(String fragmentElementId) {
+		_fragmentElementId = fragmentElementId;
+	}
+
 	public void setPreviewClassNameId(long previewClassNameId) {
 		_previewClassNameId = previewClassNameId;
 	}
@@ -125,6 +134,7 @@ public class DefaultFragmentEntryProcessorContext
 
 	private Object _displayObject;
 	private Map<String, Object> _fieldValues;
+	private String _fragmentElementId;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 	private final Locale _locale;

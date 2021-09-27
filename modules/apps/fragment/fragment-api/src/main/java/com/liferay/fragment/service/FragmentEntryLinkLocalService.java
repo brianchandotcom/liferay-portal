@@ -599,6 +599,9 @@ public interface FragmentEntryLinkLocalService
 	public void updateLatestChanges(long fragmentEntryLinkId)
 		throws PortalException;
 
+	public void updateLayoutWithLatestChanges(long fragmentEntryLinkId)
+		throws PortalException;
+
 	@Override
 	@Transactional(enabled = false)
 	public CTPersistence<FragmentEntryLink> getCTPersistence();

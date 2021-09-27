@@ -888,6 +888,14 @@ public class FragmentEntryLinkLocalServiceWrapper
 	}
 
 	@Override
+	public void updateLayoutWithLatestChanges(long fragmentEntryLinkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_fragmentEntryLinkLocalService.updateLayoutWithLatestChanges(
+			fragmentEntryLinkId);
+	}
+
+	@Override
 	public CTPersistence<FragmentEntryLink> getCTPersistence() {
 		return _fragmentEntryLinkLocalService.getCTPersistence();
 	}

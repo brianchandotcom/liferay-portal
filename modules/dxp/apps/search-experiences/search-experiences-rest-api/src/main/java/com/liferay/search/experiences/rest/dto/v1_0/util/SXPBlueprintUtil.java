@@ -14,7 +14,6 @@
 
 package com.liferay.search.experiences.rest.dto.v1_0.util;
 
-import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
 /**
@@ -27,7 +26,7 @@ public class SXPBlueprintUtil {
 
 		return new SXPBlueprint() {
 			{
-				configuration = Configuration.toDTO(
+				configuration = ConfigurationUtil.toConfiguration(
 					sxpBlueprint.getConfigurationsJSON());
 				description = "";
 				id = sxpBlueprint.getSXPBlueprintId();

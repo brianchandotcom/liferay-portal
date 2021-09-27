@@ -14,10 +14,7 @@
 
 package com.liferay.search.experiences.internal.blueprint.search.request.body.contributor;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -56,11 +53,10 @@ public class SortSXPSearchRequestBodyContributor
 	implements SXPSearchRequestBodyContributor {
 
 	public SortSXPSearchRequestBodyContributor(
-		GeoBuilders geoBuilders, JSONFactory jsonFactory, Queries queries,
-		Scripts scripts, Sorts sorts) {
+		GeoBuilders geoBuilders, Queries queries, Scripts scripts,
+		Sorts sorts) {
 
 		_geoBuilders = geoBuilders;
-		_jsonFactory = jsonFactory;
 		_queries = queries;
 		_scripts = scripts;
 		_sorts = sorts;
@@ -84,8 +80,7 @@ public class SortSXPSearchRequestBodyContributor
 			return;
 		}
 
-		JSONArray jsonArray = _createJSONArray(
-			sortConfiguration.getSortsJSONArrayString());
+		JSONArray jsonArray = (JSONArray)sortConfiguration.getSortsJSONArray();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			searchRequestBuilder.addSort(
@@ -104,15 +99,6 @@ public class SortSXPSearchRequestBodyContributor
 		geoDistanceSort.addGeoLocationPoints(
 			_geoBuilders.geoLocationPoint(
 				jsonArray.getDouble(0), jsonArray.getDouble(1)));
-	}
-
-	private JSONArray _createJSONArray(String sortsJSONArrayString) {
-		try {
-			return _jsonFactory.createJSONArray(sortsJSONArrayString);
-		}
-		catch (JSONException jsonException) {
-			return ReflectionUtil.throwException(jsonException);
-		}
 	}
 
 	private Script _getScript(JSONObject jsonObject) {
@@ -402,7 +388,6 @@ public class SortSXPSearchRequestBodyContributor
 	}
 
 	private final GeoBuilders _geoBuilders;
-	private final JSONFactory _jsonFactory;
 	private final Queries _queries;
 	private final Scripts _scripts;
 	private final Sorts _sorts;

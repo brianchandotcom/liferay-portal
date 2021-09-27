@@ -150,14 +150,16 @@ if (liveLayout != null) {
 												</c:if>
 											</clay:col>
 
-											<clay:col
-												cssClass="staging-alert-container"
-												id='<%= liferayPortletResponse.getNamespace() + "layoutRevisionStatus" %>'
-											>
-												<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
+											<c:if test="<%= !layout.isTypeContent() %>">
+												<clay:col
+													cssClass="staging-alert-container"
+													id='<%= liferayPortletResponse.getNamespace() + "layoutRevisionStatus" %>'
+												>
+													<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
-												<liferay-util:include page="/view_layout_revision_status.jsp" servletContext="<%= application %>" />
-											</clay:col>
+													<liferay-util:include page="/view_layout_revision_status.jsp" servletContext="<%= application %>" />
+												</clay:col>
+											</c:if>
 
 											<clay:col
 												cssClass="col-auto staging-alert-container"

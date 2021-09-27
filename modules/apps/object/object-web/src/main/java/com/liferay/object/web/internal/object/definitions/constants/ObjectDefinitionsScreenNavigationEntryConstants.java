@@ -20,6 +20,8 @@ package com.liferay.object.web.internal.object.definitions.constants;
  */
 public class ObjectDefinitionsScreenNavigationEntryConstants {
 
+	public static final String CATEGORY_KEY_ACTIONS = "actions";
+
 	public static final String CATEGORY_KEY_DETAILS = "details";
 
 	public static final String CATEGORY_KEY_FIELDS = "fields";
@@ -29,6 +31,8 @@ public class ObjectDefinitionsScreenNavigationEntryConstants {
 	public static final String CATEGORY_KEY_OBJECTS = "objects";
 
 	public static final String CATEGORY_KEY_RELATIONSHIPS = "relationships";
+
+	public static final String ENTRY_KEY_ACTIONS = "actions";
 
 	public static final String ENTRY_KEY_DETAILS = "details";
 

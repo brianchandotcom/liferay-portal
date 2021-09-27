@@ -281,6 +281,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		defaultFragmentEntryProcessorContext.setFieldValues(
 			fieldValuesOptional.orElse(null));
 
+		defaultFragmentEntryProcessorContext.setFragmentElementId(
+			fragmentRendererContext.getFragmentElementId());
 		defaultFragmentEntryProcessorContext.setPreviewClassNameId(
 			fragmentRendererContext.getPreviewClassNameId());
 		defaultFragmentEntryProcessorContext.setPreviewClassPK(

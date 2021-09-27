@@ -699,6 +699,16 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		}
 	}
 
+	private void _renderLayoutStructure(
+			List<String> childrenItemIds,
+			RenderLayoutStructureDisplayContext
+				renderLayoutStructureDisplayContext)
+		throws Exception {
+
+		_renderLayoutStructure(
+			childrenItemIds, -1, renderLayoutStructureDisplayContext);
+	}
+
 	private void _renderRowStyledLayoutStructureItem(
 			LayoutStructureItem layoutStructureItem,
 			RenderLayoutStructureDisplayContext

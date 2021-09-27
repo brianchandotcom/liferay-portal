@@ -117,8 +117,8 @@
 </tr>
 <!--REVIEW ASSET-->
 <tr>
-	<td>ASSET_STATE_APPROVED</td>
-	<td>//div/span[contains(.,'State')]/..//div[(@class='panel-body') and contains(.,'Approved')]</td>
+	<td>ASSET_STATE</td>
+	<td>//div/span[contains(.,'State')]/..//div[(@class='panel-body') and contains(.,'${key_state}')]</td>
 	<td></td>
 </tr>
 <tr>

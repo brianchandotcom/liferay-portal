@@ -65,8 +65,6 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		).put(
 			"initialLabel", ddmFormFieldRenderingContext.getValue()
 		).put(
-			"initialValue", ddmFormFieldRenderingContext.getValue()
-		).put(
 			"inputName", ddmFormField.getName()
 		).put(
 			"labelKey", "id"

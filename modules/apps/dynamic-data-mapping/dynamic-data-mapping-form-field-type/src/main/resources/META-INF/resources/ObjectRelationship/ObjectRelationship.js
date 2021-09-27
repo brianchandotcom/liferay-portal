@@ -39,16 +39,15 @@ const LoadingWithDebounce = ({loading, render}) => {
 
 export function ObjectRelationship({
 	apiURL,
+	id,
+	initialLabel,
 	inputName,
 	labelKey = 'label',
-	initialLabel,
-	initialValue,
 	name,
 	onBlur = () => {},
 	onChange,
 	onFocus = () => {},
 	placeholder = Liferay.Language.get('search'),
-	predefinedValue,
 	readOnly,
 	required,
 	value,
@@ -57,9 +56,9 @@ export function ObjectRelationship({
 }) {
 	const [active, setActive] = useState(false);
 	const [networkStatus, setNetworkStatus] = useState(NETWORK_STATUS_LOADING);
+	const [search, setSearch] = useState(initialLabel || '');
 	const autocompleteRef = useRef();
 	const dropdownRef = useRef();
-	const mutatedRef = useRef(false);
 
 	useEffect(() => {
 		function handleClick(event) {
@@ -91,13 +90,11 @@ export function ObjectRelationship({
 		variables: {
 			page: 1,
 			pageSize: 10,
-			search: value,
+			search,
 		},
 	});
 
 	const loading = networkStatus < NETWORK_STATUS_UNUSED;
-
-	value = mutatedRef.current ? value : initialValue || predefinedValue;
 
 	return (
 		<FieldBase
@@ -109,13 +106,36 @@ export function ObjectRelationship({
 			{...otherProps}
 		>
 			<ClayAutocomplete ref={autocompleteRef}>
+				<input id={id} name={name} type="hidden" value={value || ''} />
 				<ClayAutocomplete.Input
 					name={inputName}
 					onBlur={onBlur}
 					onChange={(event) => {
-						mutatedRef.current = true;
+						const currentSearch = event.target.value;
 
-						onChange(event, event.target.value);
+						if (currentSearch === '') {
+							onChange({
+								target: {
+									value: '',
+								},
+							});
+						}
+						else {
+							const searchedItem = resource?.items?.find(
+								(item) =>
+									String(item[labelKey]) === currentSearch
+							);
+
+							onChange({
+								target: {
+									value: searchedItem
+										? String(searchedItem[valueKey])
+										: null,
+								},
+							});
+						}
+
+						setSearch(currentSearch);
 					}}
 					onFocus={(event) => {
 						onFocus(event);
@@ -127,7 +147,7 @@ export function ObjectRelationship({
 					placeholder={placeholder}
 					readOnly={readOnly}
 					required={required}
-					value={mutatedRef.current ? value : initialLabel}
+					value={search}
 				/>
 
 				<ClayAutocomplete.DropDown
@@ -151,13 +171,14 @@ export function ObjectRelationship({
 												key={item.id}
 												match={String(value)}
 												onClick={(event) => {
-													mutatedRef.current = true;
-
 													onChange(
 														event,
 														String(item[valueKey])
 													);
 													setActive(false);
+													setSearch(
+														String(item[labelKey])
+													);
 												}}
 												value={String(item[labelKey])}
 											/>

@@ -14,6 +14,7 @@
 
 package com.liferay.object.admin.rest.client.serdes.v1_0;
 
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectRelationship;
@@ -148,6 +149,29 @@ public class ObjectDefinitionSerDes {
 			sb.append(_escape(objectDefinition.getName()));
 
 			sb.append("\"");
+		}
+
+		if (objectDefinition.getObjectActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectActions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < objectDefinition.getObjectActions().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(objectDefinition.getObjectActions()[i]));
+
+				if ((i + 1) < objectDefinition.getObjectActions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (objectDefinition.getObjectFields() != null) {
@@ -348,6 +372,15 @@ public class ObjectDefinitionSerDes {
 			map.put("name", String.valueOf(objectDefinition.getName()));
 		}
 
+		if (objectDefinition.getObjectActions() == null) {
+			map.put("objectActions", null);
+		}
+		else {
+			map.put(
+				"objectActions",
+				String.valueOf(objectDefinition.getObjectActions()));
+		}
+
 		if (objectDefinition.getObjectFields() == null) {
 			map.put("objectFields", null);
 		}
@@ -475,6 +508,18 @@ public class ObjectDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "objectActions")) {
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setObjectActions(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ObjectActionSerDes.toDTO((String)object)
+						).toArray(
+							size -> new ObjectAction[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "objectFields")) {

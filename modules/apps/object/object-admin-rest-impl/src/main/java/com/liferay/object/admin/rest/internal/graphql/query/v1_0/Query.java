@@ -14,12 +14,14 @@
 
 package com.liferay.object.admin.rest.internal.graphql.query.v1_0;
 
+import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutColumn;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutTab;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
@@ -56,6 +58,14 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Query {
 
+	public static void setObjectActionResourceComponentServiceObjects(
+		ComponentServiceObjects<ObjectActionResource>
+			objectActionResourceComponentServiceObjects) {
+
+		_objectActionResourceComponentServiceObjects =
+			objectActionResourceComponentServiceObjects;
+	}
+
 	public static void setObjectDefinitionResourceComponentServiceObjects(
 		ComponentServiceObjects<ObjectDefinitionResource>
 			objectDefinitionResourceComponentServiceObjects) {
@@ -91,6 +101,45 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectAction(objectActionId: ___){actions, active, dateCreated, dateModified, id, name, objectActionExecutorKey, parameters}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ObjectAction objectAction(
+			@GraphQLName("objectActionId") Long objectActionId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectActionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectActionResource -> objectActionResource.getObjectAction(
+				objectActionId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitionObjectActions(objectDefinitionId: ___, page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ObjectActionPage objectDefinitionObjectActions(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("search") String search,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectActionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectActionResource -> new ObjectActionPage(
+				objectActionResource.getObjectDefinitionObjectActionsPage(
+					objectDefinitionId, search,
+					Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitions(page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -111,7 +160,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinition(objectDefinitionId: ___){actions, active, dateCreated, dateModified, id, label, name, objectFields, objectRelationships, panelAppOrder, panelCategoryKey, pluralLabel, scope, status, system}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinition(objectDefinitionId: ___){actions, active, dateCreated, dateModified, id, label, name, objectActions, objectFields, objectRelationships, panelAppOrder, panelCategoryKey, pluralLabel, scope, status, system}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectDefinition objectDefinition(
@@ -338,6 +387,39 @@ public class Query {
 
 	}
 
+	@GraphQLName("ObjectActionPage")
+	public class ObjectActionPage {
+
+		public ObjectActionPage(Page objectActionPage) {
+			actions = objectActionPage.getActions();
+
+			items = objectActionPage.getItems();
+			lastPage = objectActionPage.getLastPage();
+			page = objectActionPage.getPage();
+			pageSize = objectActionPage.getPageSize();
+			totalCount = objectActionPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<ObjectAction> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("ObjectDefinitionPage")
 	public class ObjectDefinitionPage {
 
@@ -490,6 +572,21 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			ObjectActionResource objectActionResource)
+		throws Exception {
+
+		objectActionResource.setContextAcceptLanguage(_acceptLanguage);
+		objectActionResource.setContextCompany(_company);
+		objectActionResource.setContextHttpServletRequest(_httpServletRequest);
+		objectActionResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		objectActionResource.setContextUriInfo(_uriInfo);
+		objectActionResource.setContextUser(_user);
+		objectActionResource.setGroupLocalService(_groupLocalService);
+		objectActionResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			ObjectDefinitionResource objectDefinitionResource)
 		throws Exception {
 
@@ -550,6 +647,8 @@ public class Query {
 		objectRelationshipResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private static ComponentServiceObjects<ObjectActionResource>
+		_objectActionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectDefinitionResource>
 		_objectDefinitionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectFieldResource>

@@ -708,6 +708,14 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("objectActions", additionalAssertFieldName)) {
+				if (objectDefinition.getObjectActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("objectFields", additionalAssertFieldName)) {
 				if (objectDefinition.getObjectFields() == null) {
 					valid = false;
@@ -937,6 +945,17 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						objectDefinition1.getName(),
 						objectDefinition2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("objectActions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectDefinition1.getObjectActions(),
+						objectDefinition2.getObjectActions())) {
 
 					return false;
 				}
@@ -1224,6 +1243,11 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("objectActions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("objectFields")) {

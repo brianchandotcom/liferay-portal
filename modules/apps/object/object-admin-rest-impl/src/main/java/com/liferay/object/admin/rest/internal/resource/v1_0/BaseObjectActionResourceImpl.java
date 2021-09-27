@@ -14,8 +14,8 @@
 
 package com.liferay.object.admin.rest.internal.resource.v1_0;
 
-import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
-import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -64,152 +64,42 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @javax.ws.rs.Path("/v1.0")
-public abstract class BaseObjectDefinitionResourceImpl
-	implements EntityModelResource, ObjectDefinitionResource,
-			   VulcanBatchEngineTaskItemDelegate<ObjectDefinition> {
+public abstract class BaseObjectActionResourceImpl
+	implements EntityModelResource, ObjectActionResource,
+			   VulcanBatchEngineTaskItemDelegate<ObjectAction> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-definitions'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "search"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "page"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "pageSize"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/object-definitions")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Page<ObjectDefinition> getObjectDefinitionsPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("search")
-			String search,
-			@javax.ws.rs.core.Context Pagination pagination)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions' -d $'{"active": ___, "label": ___, "name": ___, "objectActions": ___, "objectFields": ___, "objectRelationships": ___, "panelAppOrder": ___, "panelCategoryKey": ___, "pluralLabel": ___, "scope": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/object-definitions")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public ObjectDefinition postObjectDefinition(
-			ObjectDefinition objectDefinition)
-		throws Exception {
-
-		return new ObjectDefinition();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/batch'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
-	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/object-definitions/batch")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces("application/json")
-	@Override
-	public Response postObjectDefinitionBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.postImportTask(
-				ObjectDefinition.class.getName(), callbackURL, null, object)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/object-admin/v1.0/object-actions/{objectActionId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectDefinitionId"
+				name = "objectActionId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectAction")}
 	)
 	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/object-definitions/{objectDefinitionId}")
+	@javax.ws.rs.Path("/object-actions/{objectActionId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void deleteObjectDefinition(
+	public void deleteObjectAction(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("objectDefinitionId")
-			Long objectDefinitionId)
+			@javax.ws.rs.PathParam("objectActionId")
+			Long objectActionId)
 		throws Exception {
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/object-admin/v1.0/object-actions/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -220,16 +110,14 @@ public abstract class BaseObjectDefinitionResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectAction")}
 	)
 	@javax.ws.rs.Consumes("application/json")
 	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/object-definitions/batch")
+	@javax.ws.rs.Path("/object-actions/batch")
 	@javax.ws.rs.Produces("application/json")
 	@Override
-	public Response deleteObjectDefinitionBatch(
+	public Response deleteObjectActionBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -248,169 +136,142 @@ public abstract class BaseObjectDefinitionResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.deleteImportTask(
-				ObjectDefinition.class.getName(), callbackURL, object)
+				ObjectAction.class.getName(), callbackURL, object)
 		).build();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-actions/{objectActionId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectDefinitionId"
+				name = "objectActionId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectAction")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/object-definitions/{objectDefinitionId}")
+	@javax.ws.rs.Path("/object-actions/{objectActionId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ObjectDefinition getObjectDefinition(
+	public ObjectAction getObjectAction(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("objectDefinitionId")
-			Long objectDefinitionId)
+			@javax.ws.rs.PathParam("objectActionId")
+			Long objectActionId)
 		throws Exception {
 
-		return new ObjectDefinition();
+		return new ObjectAction();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}' -d $'{"active": ___, "label": ___, "name": ___, "objectActions": ___, "objectFields": ___, "objectRelationships": ___, "panelAppOrder": ___, "panelCategoryKey": ___, "pluralLabel": ___, "scope": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/object-admin/v1.0/object-actions/{objectActionId}' -d $'{"active": ___, "name": ___, "objectActionExecutorKey": ___, "parameters": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectDefinitionId"
+				name = "objectActionId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectAction")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/object-definitions/{objectDefinitionId}")
+	@javax.ws.rs.Path("/object-actions/{objectActionId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ObjectDefinition patchObjectDefinition(
+	public ObjectAction patchObjectAction(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("objectDefinitionId")
-			Long objectDefinitionId,
-			ObjectDefinition objectDefinition)
+			@javax.ws.rs.PathParam("objectActionId")
+			Long objectActionId,
+			ObjectAction objectAction)
 		throws Exception {
 
-		ObjectDefinition existingObjectDefinition = getObjectDefinition(
-			objectDefinitionId);
+		ObjectAction existingObjectAction = getObjectAction(objectActionId);
 
-		if (objectDefinition.getActions() != null) {
-			existingObjectDefinition.setActions(objectDefinition.getActions());
+		if (objectAction.getActions() != null) {
+			existingObjectAction.setActions(objectAction.getActions());
 		}
 
-		if (objectDefinition.getActive() != null) {
-			existingObjectDefinition.setActive(objectDefinition.getActive());
+		if (objectAction.getActive() != null) {
+			existingObjectAction.setActive(objectAction.getActive());
 		}
 
-		if (objectDefinition.getDateCreated() != null) {
-			existingObjectDefinition.setDateCreated(
-				objectDefinition.getDateCreated());
+		if (objectAction.getDateCreated() != null) {
+			existingObjectAction.setDateCreated(objectAction.getDateCreated());
 		}
 
-		if (objectDefinition.getDateModified() != null) {
-			existingObjectDefinition.setDateModified(
-				objectDefinition.getDateModified());
+		if (objectAction.getDateModified() != null) {
+			existingObjectAction.setDateModified(
+				objectAction.getDateModified());
 		}
 
-		if (objectDefinition.getLabel() != null) {
-			existingObjectDefinition.setLabel(objectDefinition.getLabel());
+		if (objectAction.getName() != null) {
+			existingObjectAction.setName(objectAction.getName());
 		}
 
-		if (objectDefinition.getName() != null) {
-			existingObjectDefinition.setName(objectDefinition.getName());
+		if (objectAction.getObjectActionExecutorKey() != null) {
+			existingObjectAction.setObjectActionExecutorKey(
+				objectAction.getObjectActionExecutorKey());
 		}
 
-		if (objectDefinition.getPanelAppOrder() != null) {
-			existingObjectDefinition.setPanelAppOrder(
-				objectDefinition.getPanelAppOrder());
+		if (objectAction.getParameters() != null) {
+			existingObjectAction.setParameters(objectAction.getParameters());
 		}
 
-		if (objectDefinition.getPanelCategoryKey() != null) {
-			existingObjectDefinition.setPanelCategoryKey(
-				objectDefinition.getPanelCategoryKey());
-		}
+		preparePatch(objectAction, existingObjectAction);
 
-		if (objectDefinition.getPluralLabel() != null) {
-			existingObjectDefinition.setPluralLabel(
-				objectDefinition.getPluralLabel());
-		}
-
-		if (objectDefinition.getScope() != null) {
-			existingObjectDefinition.setScope(objectDefinition.getScope());
-		}
-
-		if (objectDefinition.getSystem() != null) {
-			existingObjectDefinition.setSystem(objectDefinition.getSystem());
-		}
-
-		preparePatch(objectDefinition, existingObjectDefinition);
-
-		return putObjectDefinition(
-			objectDefinitionId, existingObjectDefinition);
+		return putObjectAction(objectActionId, existingObjectAction);
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}' -d $'{"active": ___, "label": ___, "name": ___, "objectActions": ___, "objectFields": ___, "objectRelationships": ___, "panelAppOrder": ___, "panelCategoryKey": ___, "pluralLabel": ___, "scope": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-actions/{objectActionId}' -d $'{"active": ___, "name": ___, "objectActionExecutorKey": ___, "parameters": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectDefinitionId"
+				name = "objectActionId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectAction")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/object-definitions/{objectDefinitionId}")
+	@javax.ws.rs.Path("/object-actions/{objectActionId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
 	@Override
-	public ObjectDefinition putObjectDefinition(
+	public ObjectAction putObjectAction(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("objectDefinitionId")
-			Long objectDefinitionId,
-			ObjectDefinition objectDefinition)
+			@javax.ws.rs.PathParam("objectActionId")
+			Long objectActionId,
+			ObjectAction objectAction)
 		throws Exception {
 
-		return new ObjectDefinition();
+		return new ObjectAction();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-actions/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -421,16 +282,14 @@ public abstract class BaseObjectDefinitionResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectAction")}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/object-definitions/batch")
+	@javax.ws.rs.Path("/object-actions/batch")
 	@javax.ws.rs.Produces("application/json")
 	@javax.ws.rs.PUT
 	@Override
-	public Response putObjectDefinitionBatch(
+	public Response putObjectActionBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -449,14 +308,60 @@ public abstract class BaseObjectDefinitionResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.putImportTask(
-				ObjectDefinition.class.getName(), callbackURL, object)
+				ObjectAction.class.getName(), callbackURL, object)
 		).build();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/publish'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-actions'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectDefinitionId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "search"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectAction")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/object-definitions/{objectDefinitionId}/object-actions")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<ObjectAction> getObjectDefinitionObjectActionsPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("objectDefinitionId")
+			Long objectDefinitionId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("search")
+			String search,
+			@javax.ws.rs.core.Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-actions' -d $'{"active": ___, "name": ___, "objectActionExecutorKey": ___, "parameters": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -467,46 +372,103 @@ public abstract class BaseObjectDefinitionResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectAction")}
 	)
-	@javax.ws.rs.Path("/object-definitions/{objectDefinitionId}/publish")
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/object-definitions/{objectDefinitionId}/object-actions")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void postObjectDefinitionPublish(
+	public ObjectAction postObjectDefinitionObjectAction(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("objectDefinitionId")
-			Long objectDefinitionId)
+			Long objectDefinitionId,
+			ObjectAction objectAction)
 		throws Exception {
+
+		return new ObjectAction();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-actions/batch'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectDefinitionId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectAction")}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.Path(
+		"/object-definitions/{objectDefinitionId}/object-actions/batch"
+	)
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces("application/json")
+	@Override
+	public Response postObjectDefinitionObjectActionBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("objectDefinitionId")
+			Long objectDefinitionId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.postImportTask(
+				ObjectAction.class.getName(), callbackURL, null, object)
+		).build();
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			java.util.Collection<ObjectDefinition> objectDefinitions,
+			java.util.Collection<ObjectAction> objectActions,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectDefinition, Exception>
-			objectDefinitionUnsafeConsumer =
-				objectDefinition -> postObjectDefinition(objectDefinition);
+		UnsafeConsumer<ObjectAction, Exception> objectActionUnsafeConsumer =
+			objectAction -> postObjectDefinitionObjectAction(
+				Long.parseLong((String)parameters.get("objectDefinitionId")),
+				objectAction);
 
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			objectDefinitionUnsafeConsumer.accept(objectDefinition);
+		for (ObjectAction objectAction : objectActions) {
+			objectActionUnsafeConsumer.accept(objectAction);
 		}
 	}
 
 	@Override
 	public void delete(
-			java.util.Collection<ObjectDefinition> objectDefinitions,
+			java.util.Collection<ObjectAction> objectActions,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			deleteObjectDefinition(objectDefinition.getId());
+		for (ObjectAction objectAction : objectActions) {
+			deleteObjectAction(objectAction.getId());
 		}
 	}
 
@@ -526,12 +488,14 @@ public abstract class BaseObjectDefinitionResourceImpl
 	}
 
 	@Override
-	public Page<ObjectDefinition> read(
+	public Page<ObjectAction> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getObjectDefinitionsPage(search, pagination);
+		return getObjectDefinitionObjectActionsPage(
+			Long.parseLong((String)parameters.get("objectDefinitionId")),
+			search, pagination);
 	}
 
 	@Override
@@ -558,16 +522,15 @@ public abstract class BaseObjectDefinitionResourceImpl
 
 	@Override
 	public void update(
-			java.util.Collection<ObjectDefinition> objectDefinitions,
+			java.util.Collection<ObjectAction> objectActions,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			putObjectDefinition(
-				objectDefinition.getId() != null ? objectDefinition.getId() :
-					Long.parseLong(
-						(String)parameters.get("objectDefinitionId")),
-				objectDefinition);
+		for (ObjectAction objectAction : objectActions) {
+			putObjectAction(
+				objectAction.getId() != null ? objectAction.getId() :
+					Long.parseLong((String)parameters.get("objectActionId")),
+				objectAction);
 		}
 	}
 
@@ -697,8 +660,7 @@ public abstract class BaseObjectDefinitionResourceImpl
 	}
 
 	protected void preparePatch(
-		ObjectDefinition objectDefinition,
-		ObjectDefinition existingObjectDefinition) {
+		ObjectAction objectAction, ObjectAction existingObjectAction) {
 	}
 
 	protected <T, R> List<R> transform(
@@ -746,6 +708,6 @@ public abstract class BaseObjectDefinitionResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseObjectDefinitionResourceImpl.class);
+		LogFactoryUtil.getLog(BaseObjectActionResourceImpl.class);
 
 }

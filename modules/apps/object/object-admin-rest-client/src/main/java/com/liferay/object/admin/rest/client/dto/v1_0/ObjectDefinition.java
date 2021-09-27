@@ -180,6 +180,27 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected String name;
 
+	public ObjectAction[] getObjectActions() {
+		return objectActions;
+	}
+
+	public void setObjectActions(ObjectAction[] objectActions) {
+		this.objectActions = objectActions;
+	}
+
+	public void setObjectActions(
+		UnsafeSupplier<ObjectAction[], Exception> objectActionsUnsafeSupplier) {
+
+		try {
+			objectActions = objectActionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ObjectAction[] objectActions;
+
 	public ObjectField[] getObjectFields() {
 		return objectFields;
 	}

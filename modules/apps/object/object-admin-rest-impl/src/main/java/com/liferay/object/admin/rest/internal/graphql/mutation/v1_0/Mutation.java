@@ -14,10 +14,12 @@
 
 package com.liferay.object.admin.rest.internal.graphql.mutation.v1_0;
 
+import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
@@ -50,6 +52,14 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
+	public static void setObjectActionResourceComponentServiceObjects(
+		ComponentServiceObjects<ObjectActionResource>
+			objectActionResourceComponentServiceObjects) {
+
+		_objectActionResourceComponentServiceObjects =
+			objectActionResourceComponentServiceObjects;
+	}
+
 	public static void setObjectDefinitionResourceComponentServiceObjects(
 		ComponentServiceObjects<ObjectDefinitionResource>
 			objectDefinitionResourceComponentServiceObjects) {
@@ -80,6 +90,102 @@ public class Mutation {
 
 		_objectRelationshipResourceComponentServiceObjects =
 			objectRelationshipResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	public boolean deleteObjectAction(
+			@GraphQLName("objectActionId") Long objectActionId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_objectActionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectActionResource -> objectActionResource.deleteObjectAction(
+				objectActionId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteObjectActionBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectActionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectActionResource ->
+				objectActionResource.deleteObjectActionBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
+	public ObjectAction patchObjectAction(
+			@GraphQLName("objectActionId") Long objectActionId,
+			@GraphQLName("objectAction") ObjectAction objectAction)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectActionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectActionResource -> objectActionResource.patchObjectAction(
+				objectActionId, objectAction));
+	}
+
+	@GraphQLField
+	public ObjectAction updateObjectAction(
+			@GraphQLName("objectActionId") Long objectActionId,
+			@GraphQLName("objectAction") ObjectAction objectAction)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectActionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectActionResource -> objectActionResource.putObjectAction(
+				objectActionId, objectAction));
+	}
+
+	@GraphQLField
+	public Response updateObjectActionBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectActionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectActionResource -> objectActionResource.putObjectActionBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
+	public ObjectAction createObjectDefinitionObjectAction(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("objectAction") ObjectAction objectAction)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectActionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectActionResource ->
+				objectActionResource.postObjectDefinitionObjectAction(
+					objectDefinitionId, objectAction));
+	}
+
+	@GraphQLField
+	public Response createObjectDefinitionObjectActionBatch(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectActionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectActionResource ->
+				objectActionResource.postObjectDefinitionObjectActionBatch(
+					objectDefinitionId, callbackURL, object));
 	}
 
 	@GraphQLField
@@ -502,6 +608,21 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			ObjectActionResource objectActionResource)
+		throws Exception {
+
+		objectActionResource.setContextAcceptLanguage(_acceptLanguage);
+		objectActionResource.setContextCompany(_company);
+		objectActionResource.setContextHttpServletRequest(_httpServletRequest);
+		objectActionResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		objectActionResource.setContextUriInfo(_uriInfo);
+		objectActionResource.setContextUser(_user);
+		objectActionResource.setGroupLocalService(_groupLocalService);
+		objectActionResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			ObjectDefinitionResource objectDefinitionResource)
 		throws Exception {
 
@@ -562,6 +683,8 @@ public class Mutation {
 		objectRelationshipResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private static ComponentServiceObjects<ObjectActionResource>
+		_objectActionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectDefinitionResource>
 		_objectDefinitionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectFieldResource>

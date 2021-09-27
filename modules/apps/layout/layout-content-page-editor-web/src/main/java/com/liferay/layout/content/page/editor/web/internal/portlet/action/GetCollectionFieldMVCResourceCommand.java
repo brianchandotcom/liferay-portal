@@ -18,6 +18,9 @@ import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.model.AssetListEntryModel;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
@@ -44,6 +47,7 @@ import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.LayoutObjectReferenceUtil;
+import com.liferay.layout.list.retriever.ClassedModelListObjectReference;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
@@ -76,6 +80,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
@@ -158,6 +163,29 @@ public class GetCollectionFieldMVCResourceCommand
 			resourceRequest, resourceResponse, jsonObject);
 	}
 
+	private Optional<AssetListEntry> _getAssetListEntryOptional(
+		ListObjectReference listObjectReference) {
+
+		// LPS-133832
+
+		if (listObjectReference instanceof ClassedModelListObjectReference) {
+			ClassedModelListObjectReference classedModelListObjectReference =
+				(ClassedModelListObjectReference)listObjectReference;
+
+			AssetListEntry assetListEntry =
+				_assetListEntryLocalService.fetchAssetListEntry(
+					classedModelListObjectReference.getClassPK());
+
+			if (assetListEntry == null) {
+				return Optional.empty();
+			}
+
+			return Optional.of(assetListEntry);
+		}
+
+		return Optional.empty();
+	}
+
 	private JSONObject _getCollectionFieldsJSONObject(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, int activePage,
@@ -227,7 +255,14 @@ public class GetCollectionFieldMVCResourceCommand
 
 				// LPS-111037
 
-				String itemType = listObjectReference.getItemType();
+				Optional<AssetListEntry> assetListEntryOptional =
+					_getAssetListEntryOptional(listObjectReference);
+
+				String itemType = assetListEntryOptional.map(
+					AssetListEntryModel::getAssetEntryType
+				).orElse(
+					listObjectReference.getItemType()
+				);
 
 				if (Objects.equals(
 						DLFileEntryConstants.getClassName(), itemType)) {
@@ -296,6 +331,15 @@ public class GetCollectionFieldMVCResourceCommand
 						httpServletRequest, itemType, namespace)
 				).put(
 					"items", jsonArray
+				).put(
+					"itemSubtype",
+					assetListEntryOptional.map(
+						AssetListEntry::getAssetEntrySubtype
+					).orElse(
+						null
+					)
+				).put(
+					"itemType", itemType
 				).put(
 					"length",
 					layoutListRetriever.getListCount(
@@ -502,6 +546,9 @@ public class GetCollectionFieldMVCResourceCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetCollectionFieldMVCResourceCommand.class);
+
+	@Reference
+	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;

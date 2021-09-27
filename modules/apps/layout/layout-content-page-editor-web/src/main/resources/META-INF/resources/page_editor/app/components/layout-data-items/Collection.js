@@ -26,7 +26,9 @@ import {useDisplayPagePreviewItem} from '../../contexts/DisplayPagePreviewItemCo
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import CollectionService from '../../services/CollectionService';
+import updateItemConfig from '../../thunks/updateItemConfig';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
+import isNullOrUndefined from '../../utils/isNullOrUndefined';
 import UnsafeHTML from '../UnsafeHTML';
 import CollectionPagination from './CollectionPagination';
 
@@ -251,11 +253,53 @@ const Collection = React.memo(
 					templateKey: collectionConfig.templateKey || null,
 				})
 					.then((response) => {
+						const {itemSubtype, itemType, ...collection} = response;
+
 						setCollection(
-							response.length > 0 && response.items?.length > 0
-								? response
-								: {...response, ...emptyCollection}
+							collection.length > 0 &&
+								collection.items?.length > 0
+								? collection
+								: {...collection, ...emptyCollection}
 						);
+
+						// LPS-133832
+						// Update itemType/itemSubtype if the user changes the type of the collection
+
+						const {
+							itemSubtype: previousItemSubtype,
+							itemType: previousItemType,
+						} = collectionConfig?.collection ?? {};
+
+						if (
+							(!isNullOrUndefined(itemType) &&
+								itemType !== previousItemType) ||
+							(!isNullOrUndefined(itemSubtype) &&
+								itemSubtype !== previousItemSubtype)
+						) {
+							const nextItemType = isNullOrUndefined(itemType)
+								? previousItemType
+								: itemType;
+
+							const nextItemSubtype = isNullOrUndefined(
+								itemSubtype
+							)
+								? previousItemSubtype
+								: itemSubtype;
+
+							dispatch(
+								updateItemConfig({
+									itemConfig: {
+										...collectionConfig,
+										collection: {
+											...collectionConfig.collection,
+											itemSubtype: nextItemSubtype,
+											itemType: nextItemType,
+										},
+									},
+									itemId: item.itemId,
+								})
+							);
+						}
 					})
 					.catch((error) => {
 						if (process.env.NODE_ENV === 'development') {
@@ -268,15 +312,10 @@ const Collection = React.memo(
 			}
 		}, [
 			activePage,
-			collectionConfig.collection,
-			collectionConfig.listItemStyle,
-			collectionConfig.listStyle,
-			collectionConfig.numberOfItems,
-			collectionConfig.numberOfItemsPerPage,
-			collectionConfig.paginationType,
-			collectionConfig.templateKey,
+			collectionConfig,
 			dispatch,
 			emptyCollection,
+			item.itemId,
 			itemClassNameId,
 			itemClassPK,
 			languageId,

@@ -68,19 +68,21 @@ definition {
 
 			ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
 		}
+
+		task ("Delete Pending All Users") {
+			ACSettings.deleteAllPendingUsers();
+		}
 	}
 
 	@description = "Automation ID: LRAC-9070 | Test Summary: Invite multiple users at a time"
 	@priority = "3"
 	test CanInviteMultipleUsers {
-		task ("go to user management and add multiple users") {
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
+		task ("go to user management and add multiple users") {
 			ACNavigation.goToSettings();
 
 			ACSettings.goToUserManagement();
-
-			var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com,user4@liferay.com";
 
 			ACSettings.addUser(userInvite = "${emailList}");
 
@@ -90,14 +92,16 @@ definition {
 				ACSettings.assertUserListEmail(userEmail = "${n}");
 			}
 		}
+
+		task ("Delete Pending All Users") {
+			ACSettings.deleteAllPendingUsers();
+		}
 	}
 
 	@description = "Automation ID: LRAC-9069 | Test Summary: Invite a single user"
 	@priority = "5"
 	test CanInviteSingleUser {
 		task ("go to user management and add user") {
-			ACProperties.switchProperty(propertyName = "${propertyName}");
-
 			ACNavigation.goToSettings();
 
 			ACSettings.goToUserManagement();
@@ -107,6 +111,10 @@ definition {
 			ACUtils.searchBar(searchItem = "user@liferay.com");
 
 			ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
+		}
+
+		task ("Delete Pending All Users") {
+			ACSettings.deleteAllPendingUsers();
 		}
 	}
 
@@ -175,6 +183,10 @@ definition {
 			ACUtils.searchBar(searchItem = "user@liferay.com");
 
 			ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
+		}
+
+		task ("Delete Pending All Users") {
+			ACSettings.deleteAllPendingUsers();
 		}
 	}
 

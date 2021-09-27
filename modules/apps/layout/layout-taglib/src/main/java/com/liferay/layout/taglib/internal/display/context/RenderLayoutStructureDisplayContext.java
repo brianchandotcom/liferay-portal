@@ -68,6 +68,7 @@ import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -94,6 +95,10 @@ public class RenderLayoutStructureDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public List<String> getCollectionStyledLayoutStructureItemIds() {
+		return _collectionStyledLayoutStructureItemIds;
 	}
 
 	public String getContainerLinkHref(
@@ -1141,6 +1146,8 @@ public class RenderLayoutStructureDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RenderLayoutStructureDisplayContext.class);
 
+	private final List<String> _collectionStyledLayoutStructureItemIds =
+		new ArrayList<>();
 	private final Map<String, Object> _fieldValues;
 	private JSONObject _frontendTokensJSONObject;
 	private final HttpServletRequest _httpServletRequest;

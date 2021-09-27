@@ -38,6 +38,7 @@ import com.liferay.object.service.base.ObjectEntryLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
+import com.liferay.object.util.ObjectEntryUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Expression;
@@ -58,7 +59,6 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -255,7 +255,8 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
 
 		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
-			objectEntry.getCompanyId(), _getGroupId(objectEntry),
+			objectEntry.getCompanyId(),
+			ObjectEntryUtil.getGroupId(objectEntry, _companyLocalService),
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
 
 		_deleteFromTable(
@@ -623,11 +624,12 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
-			userId, _getGroupId(objectEntry), objectEntry.getCreateDate(),
-			objectEntry.getModifiedDate(), objectDefinition.getClassName(),
-			objectEntry.getObjectEntryId(), objectEntry.getUuid(), 0,
-			assetCategoryIds, assetTagNames, true, visible, null, null, null,
-			null, ContentTypes.TEXT_PLAIN,
+			userId,
+			ObjectEntryUtil.getGroupId(objectEntry, _companyLocalService),
+			objectEntry.getCreateDate(), objectEntry.getModifiedDate(),
+			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
+			objectEntry.getUuid(), 0, assetCategoryIds, assetTagNames, true,
+			visible, null, null, null, null, ContentTypes.TEXT_PLAIN,
 			String.valueOf(objectEntry.getObjectEntryId()),
 			String.valueOf(objectEntry.getObjectEntryId()), null, null, null, 0,
 			0, priority);
@@ -749,23 +751,6 @@ public class ObjectEntryLocalServiceImpl
 			_objectFieldPersistence.findByODI_DTN(
 				objectDefinitionId, objectDefinition.getExtensionDBTableName()),
 			objectDefinition.getExtensionDBTableName());
-	}
-
-	private long _getGroupId(ObjectEntry objectEntry) throws PortalException {
-
-		// TODO If permission checking works with the group's company ID, then
-		// we should ensure it is always set and remove this workaround
-
-		long groupId = objectEntry.getGroupId();
-
-		if (groupId == 0) {
-			Company company = _companyLocalService.getCompany(
-				objectEntry.getCompanyId());
-
-			groupId = company.getGroupId();
-		}
-
-		return groupId;
 	}
 
 	private GroupByStep _getManyToManyRelatedObjectEntriesGroupByStep(
@@ -1354,9 +1339,10 @@ public class ObjectEntryLocalServiceImpl
 				objectEntry.getObjectDefinitionId());
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			objectEntry.getCompanyId(), _getGroupId(objectEntry), userId,
-			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
-			objectEntry, serviceContext);
+			objectEntry.getCompanyId(),
+			ObjectEntryUtil.getGroupId(objectEntry, _companyLocalService),
+			userId, objectDefinition.getClassName(),
+			objectEntry.getObjectEntryId(), objectEntry, serviceContext);
 	}
 
 	private void _updateTable(

@@ -9,18 +9,10 @@ definition {
 	setUp {
 		task ("Copy the token from AC") {
 			ACUtils.launchAC();
-
-			ACSettings.takeTokenFromAnalyticsCloud();
 		}
 
 		task ("Set up instance and sign in DXP") {
 			TestCase.setUpPortalInstance();
-
-			ACUtils.launchDXP();
-		}
-
-		task ("Connect the DXP to AC") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud();
 		}
 	}
 
@@ -179,17 +171,9 @@ definition {
 		// AC Refactor: Timing issues may happen on this test case
 		// AC Refactor ticket: LRAC-9439
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName();
-		}
-
-		task ("Switch the property in AC") {
+		task ("Go to settings and create a suppress request") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
-		}
-
-		task ("Go to settings and create a suppress request") {
 			ACNavigation.goToSettings();
 
 			ACSettings.createRequestLogByEmail(
@@ -241,16 +225,9 @@ definition {
 		// AC Refactor: Timing issues may happen on this test case
 		// AC Refactor ticket: LRAC-9438
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName();
-		}
-
-		task ("Switch the property in AC") {
+		task ("Go to settings and create a suppress request") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
-		}
-		task ("Go to settings and create a suppress request") {
 			ACNavigation.goToSettings();
 
 			ACSettings.createRequestLogByEmail(

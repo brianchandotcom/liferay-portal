@@ -55,6 +55,30 @@ export function liferayNavigate(url) {
 	}
 }
 
+export function getObjectFromPath(path, value) {
+	return path.reduceRight((item, key) => {
+		const formattedKey =
+			key === 'LANG' ? Liferay.ThemeDisplay.getLanguageId() : key;
+
+		return {
+			[formattedKey]: item,
+		};
+	}, value);
+}
+
+export function formatAutocompleteItem(id, idKey, label, labelKey) {
+	const idObj = getObjectFromPath(Array.isArray(idKey) ? idKey : [idKey], id);
+	const labelObj = getObjectFromPath(
+		Array.isArray(labelKey) ? labelKey : [labelKey],
+		label
+	);
+
+	return {
+		...idObj,
+		...labelObj,
+	};
+}
+
 export function getValueFromItem(item, fieldName) {
 	if (!fieldName || typeof item === 'string') {
 		return null;

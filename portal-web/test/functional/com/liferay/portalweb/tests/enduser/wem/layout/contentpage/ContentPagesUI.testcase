@@ -41,6 +41,7 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Test Content Page Name");
 		}
+
 		task ("Add a Heading fragment") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -54,9 +55,11 @@ definition {
 
 			PageEditor.clickPublish();
 		}
+
 		task ("Remove Heading fragment") {
 			PageEditor.removeFragment(fragmentName = "Heading");
 		}
+
 		task ("Assert the actions order for content pages") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 

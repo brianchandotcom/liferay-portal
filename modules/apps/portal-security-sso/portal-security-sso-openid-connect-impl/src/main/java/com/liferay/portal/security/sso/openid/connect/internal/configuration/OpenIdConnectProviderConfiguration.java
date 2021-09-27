@@ -87,10 +87,10 @@ public interface OpenIdConnectProviderConfiguration {
 	public String jwksURI();
 
 	@Meta.AD(
-		deflt = "", description = "expected-id-token-signing-alg-help",
-		name = "expected-id-token-signing-alg", required = false
+		deflt = "", description = "registered-id-token-signing-alg-help",
+		name = "registered-id-token-signing-alg", required = false
 	)
-	public String expectedIdTokenSigningAlg();
+	public String registeredIdTokenSigningAlg();
 
 	@Meta.AD(
 		deflt = "RS256", description = "id-token-signing-alg-values-help",

@@ -213,12 +213,13 @@ public class OpenIdConnectProviderRegistryImpl
 				new URL(openIdConnectProviderConfiguration.discoveryEndPoint()),
 				openIdConnectProviderConfiguration.
 					discoveryEndPointCacheInMillis(),
-				openIdConnectProviderConfiguration.expectedIdTokenSigningAlg());
+				openIdConnectProviderConfiguration.
+					registeredIdTokenSigningAlg());
 		}
 
 		return new OpenIdConnectMetadataFactoryImpl(
 			openIdConnectProviderConfiguration.providerName(),
-			openIdConnectProviderConfiguration.expectedIdTokenSigningAlg(),
+			openIdConnectProviderConfiguration.registeredIdTokenSigningAlg(),
 			openIdConnectProviderConfiguration.idTokenSigningAlgValues(),
 			openIdConnectProviderConfiguration.issuerURL(),
 			openIdConnectProviderConfiguration.subjectTypes(),

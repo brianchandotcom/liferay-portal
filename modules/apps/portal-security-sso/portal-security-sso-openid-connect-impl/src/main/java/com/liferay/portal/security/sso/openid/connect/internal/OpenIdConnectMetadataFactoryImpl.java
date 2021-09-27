@@ -52,7 +52,7 @@ public class OpenIdConnectMetadataFactoryImpl
 	implements OpenIdConnectMetadataFactory {
 
 	public OpenIdConnectMetadataFactoryImpl(
-			String providerName, String expectedIdTokenSigningAlg,
+			String providerName, String registeredIdTokenSigningAlg,
 			String[] idTokenSigningAlgValues, String issuerURL,
 			String[] subjectTypes, String jwksURL,
 			String authorizationEndPointURL, String tokenEndPointURL,
@@ -91,7 +91,7 @@ public class OpenIdConnectMetadataFactoryImpl
 				new URI(userInfoEndPointURL));
 
 			refreshClientMetadata(
-				expectedIdTokenSigningAlg, _oidcProviderMetadata);
+				registeredIdTokenSigningAlg, _oidcProviderMetadata);
 		}
 		catch (ParseException parseException) {
 			throw new OpenIdConnectServiceException.ProviderException(
@@ -118,13 +118,13 @@ public class OpenIdConnectMetadataFactoryImpl
 
 	public OpenIdConnectMetadataFactoryImpl(
 		String providerName, URL discoveryEndPointURL, long cacheInMilliseconds,
-		String expectedIdTokenSigningAlg) {
+		String registeredIdTokenSigningAlg) {
 
 		_providerName = providerName;
 		_discoveryEndPointURL = discoveryEndPointURL;
 		_cacheInMilliseconds = cacheInMilliseconds;
 
-		refreshClientMetadata(expectedIdTokenSigningAlg, null);
+		refreshClientMetadata(registeredIdTokenSigningAlg, null);
 	}
 
 	@Override
@@ -228,14 +228,14 @@ public class OpenIdConnectMetadataFactoryImpl
 	}
 
 	protected synchronized void refreshClientMetadata(
-		String expectedIdTokenSigningAlg,
+		String registeredIdTokenSigningAlg,
 		OIDCProviderMetadata oidcProviderMetadata) {
 
 		_oidcClientMetadata = new OIDCClientMetadata();
 
-		if (!Validator.isBlank(expectedIdTokenSigningAlg)) {
+		if (!Validator.isBlank(registeredIdTokenSigningAlg)) {
 			_oidcClientMetadata.setIDTokenJWSAlg(
-				JWSAlgorithm.parse(expectedIdTokenSigningAlg));
+				JWSAlgorithm.parse(registeredIdTokenSigningAlg));
 		}
 
 		if (oidcProviderMetadata == null) {

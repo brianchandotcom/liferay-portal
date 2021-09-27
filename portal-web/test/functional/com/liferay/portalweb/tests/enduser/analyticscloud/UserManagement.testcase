@@ -142,10 +142,14 @@ definition {
 
 			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
 
-			ACUtils.launchAC();
+			ACUtils.launchAC(emailAddress = "michelle.hoshi@faro.io");
 		}
 
 		task ("Assert that a data source is searchable and found") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDataSources();
+
 			ACUtils.searchBar(searchItem = "${dataSource}");
 
 			ACNavigation.openItem(itemName = "${dataSource}");
@@ -153,15 +157,16 @@ definition {
 			ACSettings.assertDataSourceStatus(status = "Active");
 		}
 
-		task ("Assert that a data source is searchable and found") {
+		task ("Assert that the data source was removed") {
 			ACSettings.goToDataSources();
 
 			ACSettings.deleteDataSource(dataSourceName = "${dataSource}");
 
-			AssertTextEquals(
-				key_listStatus = "Deletion in progress",
-				locator1 = "ACSettings#DATA_SOURCE_LIST_STATUS",
-				value1 = "Deletion in progress");
+			Refresh();
+
+			AssertElementNotPresent(
+				itemName = "${dataSource}",
+				locator1 = "ACSettings#ITEM_ON_LIST");
 		}
 	}
 

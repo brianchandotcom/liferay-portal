@@ -38,6 +38,8 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 
+		JSONUser.tearDownNonAdminUsers();
+
 		ACUtils.tearDownAC();
 	}
 
@@ -87,7 +89,9 @@ definition {
 				userLoginEmailAddress = "${name}@liferay.com",
 				userLoginFullName = "${name} ${name}");
 
-			Navigator.openURL();
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 
 			Pause(locator1 = "5000");
 		}

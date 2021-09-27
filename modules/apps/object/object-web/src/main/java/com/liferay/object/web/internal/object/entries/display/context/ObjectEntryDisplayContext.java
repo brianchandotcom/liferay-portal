@@ -125,16 +125,16 @@ public class ObjectEntryDisplayContext {
 
 		NavigationItemList navigationItemList = new NavigationItemList();
 
+		ObjectEntry objectEntry = getObjectEntry();
+
+		if (objectEntry == null) {
+			return navigationItemList;
+		}
+
 		ObjectLayoutTab currentObjectLayoutTab = getObjectLayoutTab();
 		LiferayPortletResponse liferayPortletResponse =
 			_objectRequestHelper.getLiferayPortletResponse();
-		ObjectEntry objectEntry = getObjectEntry();
-
-		long objectEntryId = 0;
-
-		if (objectEntry != null) {
-			objectEntryId = objectEntry.getObjectEntryId();
-		}
+		long objectEntryId = objectEntry.getObjectEntryId();
 
 		for (ObjectLayoutTab objectLayoutTab :
 				objectLayout.getObjectLayoutTabs()) {

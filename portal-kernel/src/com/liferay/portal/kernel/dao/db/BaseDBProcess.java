@@ -331,7 +331,7 @@ public abstract class BaseDBProcess implements DBProcess {
 				}
 			}
 
-			throw new SQLException("Invalid column index");
+			throw new SQLException("Invalid column index: " + columnIndex);
 		}
 
 		public <T> T get(String columnLabel) throws SQLException {
@@ -340,7 +340,7 @@ public abstract class BaseDBProcess implements DBProcess {
 			T value = (T)_columns.get(key);
 
 			if ((value == null) && !_columns.containsKey(key)) {
-				throw new SQLException("Invalid column name");
+				throw new SQLException("Invalid column label: " + columnLabel);
 			}
 
 			return value;

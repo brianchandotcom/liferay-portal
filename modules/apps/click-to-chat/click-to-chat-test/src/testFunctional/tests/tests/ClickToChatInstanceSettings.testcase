@@ -510,7 +510,7 @@ definition {
 
 	@description = "This is a test for LPS-129049. Verify LivePerson provider can be enabled and disabled."
 	@priority = "5"
-	test LivepersonCanBeEnabledAndDisabled {
+	test LivePersonCanBeEnabledAndDisabled {
 		property portal.acceptance = "true";
 
 		Select(
@@ -519,7 +519,7 @@ definition {
 
 		Select(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "Liveperson");
+			value1 = "LivePerson");
 
 		var clickToChatLivepersonPassword = PropsUtil.get("click.to.chat.liveperson.password");
 
@@ -547,7 +547,7 @@ definition {
 
 		Select(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "Liveperson");
+			value1 = "LivePerson");
 
 		var clickToChatLivepersonPassword = PropsUtil.get("click.to.chat.liveperson.password");
 
@@ -568,14 +568,14 @@ definition {
 
 	@description = "This is a test for LPS-133453. Verify LivePerson provider persistence after logout and login"
 	@priority = "5"
-	test LivepersonProviderKeepsEnabledAfterLogoutAndLogin {
+	test LivePersonProviderKeepsEnabledAfterLogoutAndLogin {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "Liveperson");
+			value1 = "LivePerson");
 
 		var clickToChatLivepersonPassword = PropsUtil.get("click.to.chat.liveperson.password");
 

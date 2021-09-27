@@ -33,6 +33,8 @@ public interface FragmentEntryProcessorContext {
 
 	public Optional<Map<String, Object>> getFieldValuesOptional();
 
+	public String getFragmentElementId();
+
 	public HttpServletRequest getHttpServletRequest();
 
 	public HttpServletResponse getHttpServletResponse();

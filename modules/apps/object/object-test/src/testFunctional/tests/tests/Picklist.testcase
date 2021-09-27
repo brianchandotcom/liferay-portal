@@ -85,7 +85,7 @@ definition {
 			picklistName = "Picklist Test",
 			picklistOption = "Delete");
 
-		Picklist.notAssertPicklist(picklistName = "Picklist Test");
+		Picklist.assertPicklistNotPresent(picklistName = "Picklist Test");
 	}
 
 	@description = "LPS-136595 - Verify it is possible to delete a Picklist item"

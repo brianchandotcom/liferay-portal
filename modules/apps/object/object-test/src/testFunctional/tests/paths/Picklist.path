@@ -21,22 +21,17 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>SAVE_PICKLIST_BUTTON</td>
-		<td>//button[@class='btn btn-primary']</td>
+		<td>VIEW_PICKLIST</td>
+		<td>//div[(@class='dnd-td')]//a[text()='${key_picklistName}']</td>
 		<td></td>
 	</tr>
 	<tr>
-		<td>CREATED_PICKLIST</td>
-		<td>//div[(@class='dnd-td')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>OPTIONS_PICKLIST</td>
+		<td>PICKLIST_KEBAB_MENU</td>
 		<td>//div[(@class='dnd-td') and contains(.,'${key_picklistName}')]/..//button[@class='dropdown-toggle component-action dropdown-toggle ml-1 btn btn-monospaced btn-unstyled']</td>
 		<td></td>
 	</tr>
 	<tr>
-		<td>SELECT_OPTIONS_PICKLIST</td>
+		<td>PICKLIST_KEBAB_MENU_OPTION</td>
 		<td>//button[(@class='dropdown-item') and contains(.,'${key_picklistOption}')]</td>
 		<td></td>
 	</tr>

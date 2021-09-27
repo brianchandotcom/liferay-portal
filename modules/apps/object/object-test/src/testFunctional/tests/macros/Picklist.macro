@@ -23,13 +23,19 @@ definition {
 			locator1 = "Picklist#ADD_PICKLIST_NAME",
 			value1 = "${picklistName}");
 
-		Click(locator1 = "Picklist#SAVE_PICKLIST_BUTTON");
+		Button.clickSave();
 	}
 
 	macro assertPicklist {
-		AssertTextEquals(
-			locator1 = "Picklist#CREATED_PICKLIST",
-			value1 = "${picklistName}");
+		var key_picklistName = "${picklistName}";
+
+		AssertElementPresent(locator1 = "Picklist#VIEW_PICKLIST");
+	}
+
+	macro assertPicklistNotPresent {
+		var key_picklistName = "${picklistName}";
+
+		AssertElementNotPresent(locator1 = "Picklist#VIEW_PICKLIST");
 	}
 
 	macro deleteAllPicklistsViaAPI {
@@ -46,21 +52,17 @@ definition {
 	}
 
 	macro gotoPicklists {
-		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=20123&p_p_auth=2D3BMbJI");
-	}
-
-	macro notAssertPicklist {
-		AssertElementNotPresent(locator1 = "Picklist#CREATED_PICKLIST");
+		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet");
 	}
 
 	macro optionsPicklist {
 		Click.javaScriptClick(
 			key_picklistName = "${picklistName}",
-			locator1 = "Picklist#OPTIONS_PICKLIST");
+			locator1 = "Picklist#PICKLIST_KEBAB_MENU");
 
 		Click.javaScriptClick(
 			key_picklistOption = "${picklistOption}",
-			locator1 = "Picklist#SELECT_OPTIONS_PICKLIST");
+			locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
 	}
 
 }

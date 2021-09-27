@@ -746,13 +746,24 @@ public class AccountEntryLocalServiceTest {
 		_assertSearchWithParams(
 			Collections.singletonList(businessAccountEntry),
 			_getLinkedHashMap(
-				"type", AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS));
+				"types",
+				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS}));
 		_assertSearchWithParams(
 			Collections.singletonList(personAccountEntry),
 			_getLinkedHashMap(
-				"type", AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON));
+				"types",
+				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON}));
 		_assertSearchWithParams(
-			Collections.emptyList(), _getLinkedHashMap("type", "invalidType"));
+			Arrays.asList(businessAccountEntry, personAccountEntry),
+			_getLinkedHashMap(
+				"types",
+				new String[] {
+					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
+				}));
+		_assertSearchWithParams(
+			Collections.emptyList(),
+			_getLinkedHashMap("types", new String[] {"invalidType"}));
 	}
 
 	@Test

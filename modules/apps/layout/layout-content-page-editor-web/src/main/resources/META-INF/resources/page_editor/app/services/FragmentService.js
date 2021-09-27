@@ -242,6 +242,7 @@ export default {
 	/**
 	 * Render the content of a fragmentEntryLink
 	 * @param {object} options
+	 * @param {string} options.collectionItemIndex Index of the collection item
 	 * @param {string} options.itemClassName Class name id of the collection item
 	 * @param {string} options.itemClassPK Class PK of the collection item
 	 * @param {string} options.fragmentEntryLinkId Id of the fragmentEntryLink
@@ -250,6 +251,7 @@ export default {
 	 * @param {string} options.segmentsExperienceId Experience id
 	 */
 	renderFragmentEntryLinkContent({
+		collectionItemIndex,
 		fragmentEntryLinkId,
 		itemClassName,
 		itemClassPK,
@@ -261,6 +263,7 @@ export default {
 			config.renderFragmentEntryURL,
 			{
 				body: {
+					collectionItemIndex,
 					fragmentEntryLinkId,
 					itemClassName,
 					itemClassPK,

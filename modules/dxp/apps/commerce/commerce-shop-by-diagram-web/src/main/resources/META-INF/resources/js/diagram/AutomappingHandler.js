@@ -19,7 +19,7 @@ class AutomappingHandler {
 		diagramWrapper,
 		zoomWrapper,
 		imageURL,
-		pinsCSSSelector,
+		pinsCSSSelectors,
 		updateLabels,
 		updateZoomState
 	) {
@@ -38,7 +38,7 @@ class AutomappingHandler {
 		this._printImage().then(() => {
 			this.rendered = true;
 			this._texts = this._diagramWrapper.querySelectorAll(
-				pinsCSSSelector
+				pinsCSSSelectors.join(',')
 			);
 
 			this._updatePinsState();

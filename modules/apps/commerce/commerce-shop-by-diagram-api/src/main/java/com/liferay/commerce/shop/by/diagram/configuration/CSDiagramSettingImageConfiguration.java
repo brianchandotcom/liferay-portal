@@ -32,7 +32,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CSDiagramSettingImageConfiguration {
 
 	@Meta.AD(
-		deflt = "[id*=MTEXT] > text", name = "image-css-selectors",
+		deflt = "#Livello_Testi > text,[id*=MTEXT] > text",
+		name = "image-css-selectors",
 		required = false
 	)
 	public String[] imageCSSSelectors();

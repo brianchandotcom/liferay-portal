@@ -36,7 +36,7 @@ CSDiagramSetting csDiagramSetting = csDiagramSettingDisplayContext.fetchCSDiagra
 			).put(
 				"isAdmin", true
 			).put(
-				"pinsCSSSelector", "#Livello_Testi > text, [id*=MTEXT] > text"
+				"pinsCSSSelectors", csDiagramSettingDisplayContext.getImageCSSSelectors()
 			).put(
 				"productId", cpDefinition.getCProductId()
 			).build()

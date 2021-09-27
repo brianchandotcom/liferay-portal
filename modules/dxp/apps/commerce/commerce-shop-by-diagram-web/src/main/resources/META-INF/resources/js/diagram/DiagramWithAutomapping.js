@@ -21,7 +21,7 @@ import {loadPins} from './utilities/data';
 import '../../css/diagram.scss';
 import Sequence from './components/Sequence';
 
-function DiagramWithAutomapping({imageURL, pinsCSSSelector, productId}) {
+function DiagramWithAutomapping({imageURL, pinsCSSSelectors, productId}) {
 	const svgRef = useRef(null);
 	const zoomHandlerRef = useRef(null);
 	const chartInstance = useRef(null);
@@ -91,7 +91,7 @@ function DiagramWithAutomapping({imageURL, pinsCSSSelector, productId}) {
 			svgRef.current,
 			zoomHandlerRef.current,
 			imageURL,
-			pinsCSSSelector,
+			pinsCSSSelectors,
 			updateLabels,
 			(scale) => {
 				setTooltipData(null);
@@ -99,7 +99,7 @@ function DiagramWithAutomapping({imageURL, pinsCSSSelector, productId}) {
 				updateCurrentZoom(scale);
 			}
 		);
-	}, [imageURL, pinsCSSSelector]);
+	}, [imageURL, pinsCSSSelectors]);
 
 	return (
 		<div className={classNames('shop-by-diagram', {expanded})}>
@@ -141,7 +141,7 @@ DiagramWithAutomapping.propTypes = {
 	diagramId: PropTypes.string.isRequired,
 	imageURL: PropTypes.string.isRequired,
 	isAdmin: PropTypes.bool.isRequired,
-	pinsCSSSelector: PropTypes.string.isRequired,
+	pinsCSSSelectors: PropTypes.array.isRequired,
 	productId: PropTypes.string.isRequired,
 };
 

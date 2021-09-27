@@ -19,21 +19,27 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.highlight.FieldConfig;
 import com.liferay.portal.search.internal.aggregation.AggregationsImpl;
 import com.liferay.portal.search.internal.filter.ComplexQueryPartBuilderFactoryImpl;
+import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
 import com.liferay.portal.search.internal.highlight.FieldConfigBuilderFactoryImpl;
 import com.liferay.portal.search.internal.highlight.HighlightBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderImpl;
 import com.liferay.portal.search.internal.query.QueriesImpl;
+import com.liferay.portal.search.internal.script.ScriptsImpl;
 import com.liferay.portal.search.internal.searcher.SearchRequestBuilderFactoryImpl;
+import com.liferay.portal.search.internal.sort.SortsImpl;
 import com.liferay.portal.search.query.WrapperQuery;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.HighlightSXPSearchRequestBodyContributor;
+import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SortSXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.rest.dto.v1_0.Aggregation;
 import com.liferay.search.experiences.rest.dto.v1_0.Avg;
 import com.liferay.search.experiences.rest.dto.v1_0.Cardinality;
@@ -44,6 +50,9 @@ import com.liferay.search.experiences.rest.dto.v1_0.HighlightField;
 import com.liferay.search.experiences.rest.dto.v1_0.Parameter;
 import com.liferay.search.experiences.rest.dto.v1_0.Query;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
+import com.liferay.search.experiences.rest.dto.v1_0.SortConfiguration;
+
+import java.io.InputStream;
 
 import java.util.Arrays;
 import java.util.List;
@@ -243,6 +252,33 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 			new String(wrapperQuery.getSource()));
 	}
 
+	@Test
+	public void testSort() {
+		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
+			_createSXPBlueprintSearchRequestEnhancer();
+
+		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
+
+		Configuration configuration = sxpBlueprint.getConfiguration();
+
+		configuration.setSortConfiguration(
+			new SortConfiguration() {
+				{
+					sortsArrayJSONString = _read(
+						"SXPBlueprintSearchRequestEnhancerTest.testSort.json");
+				}
+			});
+
+		sxpBlueprintSearchRequestEnhancer.enhance(
+			_searchRequestBuilder, sxpBlueprint);
+
+		SearchRequest searchRequest = _searchRequestBuilder.build();
+
+		List<Sort> sorts = searchRequest.getSorts();
+
+		Assert.assertEquals(sorts.toString(), 9, sorts.size());
+	}
+
 	private SXPBlueprint _createSXPBlueprint() {
 		return new SXPBlueprint() {
 			{
@@ -276,9 +312,26 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 				new HighlightSXPSearchRequestBodyContributor(
 					new FieldConfigBuilderFactoryImpl(),
 					new HighlightBuilderFactoryImpl(),
-					JSONFactoryUtil.getJSONFactory())));
+					JSONFactoryUtil.getJSONFactory()),
+				new SortSXPSearchRequestBodyContributor(
+					new GeoBuildersImpl(), JSONFactoryUtil.getJSONFactory(),
+					new QueriesImpl(), new ScriptsImpl(), new SortsImpl())));
 
 		return sxpBlueprintSearchRequestEnhancer;
+	}
+
+	private String _read(String resourceName) {
+		Class<?> clazz = getClass();
+
+		try (InputStream inputStream = clazz.getResourceAsStream(
+				resourceName)) {
+
+			return StringUtil.read(inputStream);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(
+				"Unable to load resource: " + resourceName, exception);
+		}
 	}
 
 	private final SearchRequestBuilder _searchRequestBuilder =

@@ -165,10 +165,10 @@ definition {
 				itemType = "Asset");
 		}
 
-		task ("Add the Test Information Template field") {
+		task ("Add a Title field") {
 			InformationTemplates.addField(
-				fieldName = "Test Information Template",
-				panelTitle = "Templates");
+				fieldName = "Title",
+				panelTitle = "Basic Information");
 		}
 
 		task ("Save the information template") {

@@ -18,7 +18,7 @@ import ClayDropDown from '@clayui/drop-down';
 import {useDebounce} from '@clayui/shared';
 import {FieldBase} from 'dynamic-data-mapping-form-field-type/FieldBase/ReactFieldBase.es';
 import {fetch} from 'frontend-js-web';
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 const NETWORK_STATUS_LOADING = 1;
 const NETWORK_STATUS_UNUSED = 4;
@@ -55,11 +55,33 @@ export function ObjectRelationship({
 	valueKey = 'value',
 	...otherProps
 }) {
-	const mutatedRef = React.useRef(false);
+	const [active, setActive] = useState(false);
+	const [networkStatus, setNetworkStatus] = useState(NETWORK_STATUS_LOADING);
+	const autocompleteRef = useRef();
+	const dropdownRef = useRef();
+	const mutatedRef = useRef(false);
 
-	const [networkStatus, setNetworkStatus] = React.useState(
-		NETWORK_STATUS_LOADING
-	);
+	useEffect(() => {
+		function handleClick(event) {
+			if (
+				autocompleteRef.current.contains(event.target) ||
+				event.target === dropdownRef.current.parentElement ||
+				(dropdownRef.current &&
+					dropdownRef.current.contains(event.target))
+			) {
+				return;
+			}
+
+			setActive(false);
+		}
+		if (active) {
+			document.addEventListener('mousedown', handleClick);
+		}
+
+		return () => {
+			document.removeEventListener('mousedown', handleClick);
+		};
+	}, [active]);
 
 	const {resource} = useResource({
 		fetch,
@@ -86,7 +108,7 @@ export function ObjectRelationship({
 			value={value}
 			{...otherProps}
 		>
-			<ClayAutocomplete>
+			<ClayAutocomplete ref={autocompleteRef}>
 				<ClayAutocomplete.Input
 					name={inputName}
 					onBlur={onBlur}
@@ -95,7 +117,13 @@ export function ObjectRelationship({
 
 						onChange(event, event.target.value);
 					}}
-					onFocus={onFocus}
+					onFocus={(event) => {
+						onFocus(event);
+						setActive(true);
+					}}
+					onKeyUp={(event) => {
+						setActive(event.keyCode !== 27);
+					}}
 					placeholder={placeholder}
 					readOnly={readOnly}
 					required={required}
@@ -103,37 +131,42 @@ export function ObjectRelationship({
 				/>
 
 				<ClayAutocomplete.DropDown
-					active={readOnly ? false : !!resource && !!value}
+					active={active && (readOnly ? false : !!resource)}
 				>
-					<ClayDropDown.ItemList>
-						<LoadingWithDebounce
-							loading={loading}
-							render={
-								<>
-									{resource?.items?.length === 0 && (
-										<ClayDropDown.Item className="disabled">
-											{Liferay.Language.get(
-												'no-results-found'
-											)}
-										</ClayDropDown.Item>
-									)}
-									{resource?.items?.map((item) => (
-										<ClayAutocomplete.Item
-											key={item.id}
-											match={String(value)}
-											onClick={(event) =>
-												onChange(
-													event,
-													String(item[valueKey])
-												)
-											}
-											value={String(item[labelKey])}
-										/>
-									))}
-								</>
-							}
-						/>
-					</ClayDropDown.ItemList>
+					<div ref={dropdownRef}>
+						<ClayDropDown.ItemList>
+							<LoadingWithDebounce
+								loading={loading}
+								render={
+									<>
+										{resource?.items?.length === 0 && (
+											<ClayDropDown.Item className="disabled">
+												{Liferay.Language.get(
+													'no-results-found'
+												)}
+											</ClayDropDown.Item>
+										)}
+										{resource?.items?.map((item) => (
+											<ClayAutocomplete.Item
+												key={item.id}
+												match={String(value)}
+												onClick={(event) => {
+													mutatedRef.current = true;
+
+													onChange(
+														event,
+														String(item[valueKey])
+													);
+													setActive(false);
+												}}
+												value={String(item[labelKey])}
+											/>
+										))}
+									</>
+								}
+							/>
+						</ClayDropDown.ItemList>
+					</div>
 				</ClayAutocomplete.DropDown>
 				{loading && <ClayAutocomplete.LoadingIndicator />}
 			</ClayAutocomplete>

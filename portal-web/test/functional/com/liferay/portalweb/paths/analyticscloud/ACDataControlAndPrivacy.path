@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>JOB_TYPE</td>
-	<td>//span[contains(@class,'checkbox-label') and contains(.,'${key_jobType}')]</td>
+	<td>//span[contains(@class,'checkbox-label') and contains(.,'${jobType}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -47,7 +47,17 @@
 </tr>
 <tr>
 	<td>REQUEST_LOG_TABLE</td>
-	<td>//tr[contains(@class,'clickable') and contains(.,'${key_emailAdress}')]/..//tr[contains(.,'${key_requestType}')]</td>
+	<td>//tr[contains(@class,'clickable') and contains(.,'${key_emailAdress}')]/..//tr[contains(.,'${jobType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_USER</td>
+	<td>//button[contains(@class,'text-truncate active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTED_USER</td>
+	<td>//div[contains(@class,'input-group-item')]//span[contains(@class,'label-item')]</td>
 	<td></td>
 </tr>
 </tbody>

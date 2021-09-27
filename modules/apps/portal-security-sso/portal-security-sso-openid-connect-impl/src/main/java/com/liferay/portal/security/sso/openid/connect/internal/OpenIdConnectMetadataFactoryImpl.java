@@ -90,8 +90,9 @@ public class OpenIdConnectMetadataFactoryImpl
 			_oidcProviderMetadata.setUserInfoEndpointURI(
 				new URI(userInfoEndPointURL));
 
-			refreshClientMetadata(
-				registeredIdTokenSigningAlg, _oidcProviderMetadata);
+			_initOpenIdConnectClientMetadata(registeredIdTokenSigningAlg);
+
+			refreshClientMetadata(_oidcProviderMetadata);
 		}
 		catch (ParseException parseException) {
 			throw new OpenIdConnectServiceException.ProviderException(
@@ -124,7 +125,7 @@ public class OpenIdConnectMetadataFactoryImpl
 		_discoveryEndPointURL = discoveryEndPointURL;
 		_cacheInMilliseconds = cacheInMilliseconds;
 
-		refreshClientMetadata(registeredIdTokenSigningAlg, null);
+		_initOpenIdConnectClientMetadata(registeredIdTokenSigningAlg);
 	}
 
 	@Override
@@ -185,8 +186,6 @@ public class OpenIdConnectMetadataFactoryImpl
 		stopWatch.start();
 
 		try {
-			JWSAlgorithm idTokenJWSAlg = _oidcClientMetadata.getIDTokenJWSAlg();
-
 			HTTPRequest httpRequest = new HTTPRequest(
 				HTTPRequest.Method.GET, _discoveryEndPointURL);
 
@@ -196,13 +195,7 @@ public class OpenIdConnectMetadataFactoryImpl
 
 			_oidcProviderMetadata = OIDCProviderMetadata.parse(jsonObject);
 
-			if (idTokenJWSAlg == null) {
-				refreshClientMetadata(null, _oidcProviderMetadata);
-			}
-			else {
-				refreshClientMetadata(
-					idTokenJWSAlg.getName(), _oidcProviderMetadata);
-			}
+			refreshClientMetadata(_oidcProviderMetadata);
 
 			_lastRefreshTimestamp = time;
 		}
@@ -227,9 +220,26 @@ public class OpenIdConnectMetadataFactoryImpl
 		}
 	}
 
+	/**
+	 * By specification, client metadata has nothing to with provider metadata,
+	 * but in order to minimize potential breaking changes, we will leave the
+	 * rest unchanged for now.
+	 */
 	protected synchronized void refreshClientMetadata(
-		String registeredIdTokenSigningAlg,
 		OIDCProviderMetadata oidcProviderMetadata) {
+
+		List<JWEAlgorithm> jweAlgorithms =
+			oidcProviderMetadata.getIDTokenJWEAlgs();
+
+		if (ListUtil.isNotEmpty(jweAlgorithms)) {
+			_oidcClientMetadata.setIDTokenJWEAlg(jweAlgorithms.get(0));
+		}
+
+		_oidcClientMetadata.setJWKSetURI(oidcProviderMetadata.getJWKSetURI());
+	}
+
+	private void _initOpenIdConnectClientMetadata(
+		String registeredIdTokenSigningAlg) {
 
 		_oidcClientMetadata = new OIDCClientMetadata();
 
@@ -246,19 +256,6 @@ public class OpenIdConnectMetadataFactoryImpl
 						"in configuration, using default RS256");
 			}
 		}
-
-		if (oidcProviderMetadata == null) {
-			return;
-		}
-
-		List<JWEAlgorithm> jweAlgorithms =
-			oidcProviderMetadata.getIDTokenJWEAlgs();
-
-		if (ListUtil.isNotEmpty(jweAlgorithms)) {
-			_oidcClientMetadata.setIDTokenJWEAlg(jweAlgorithms.get(0));
-		}
-
-		_oidcClientMetadata.setJWKSetURI(oidcProviderMetadata.getJWKSetURI());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

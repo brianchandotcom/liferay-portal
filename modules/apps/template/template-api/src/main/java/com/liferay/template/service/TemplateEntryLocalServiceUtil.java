@@ -311,6 +311,10 @@ public class TemplateEntryLocalServiceUtil {
 			orderByComparator);
 	}
 
+	public static List<TemplateEntry> getTemplateEntries(long[] groupIds) {
+		return getService().getTemplateEntries(groupIds);
+	}
+
 	/**
 	 * Returns all the template entries matching the UUID and company.
 	 *

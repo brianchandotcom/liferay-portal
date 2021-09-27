@@ -222,6 +222,11 @@ public class TemplateEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupIdArrayable() throws Exception {
+		_persistence.countByGroupId(new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testCountByDDMTemplateId() throws Exception {
 		_persistence.countByDDMTemplateId(RandomTestUtil.nextLong());
 

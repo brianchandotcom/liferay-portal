@@ -36,6 +36,7 @@ export const FormBusiness = ({form}) => {
 
 	useEffect(() => {
 		forceValidation();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const {selectedStep} = useStepWizard();

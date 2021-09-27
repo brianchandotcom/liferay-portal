@@ -35,6 +35,7 @@ export const FormProperty = ({form}) => {
 	};
 	useEffect(() => {
 		forceValidation();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const {onNext, onPrevious, onSave} = useFormActions(

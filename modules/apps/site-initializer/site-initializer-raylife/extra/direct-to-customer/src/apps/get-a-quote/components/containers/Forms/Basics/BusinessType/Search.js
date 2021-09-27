@@ -43,6 +43,7 @@ export const BusinessTypeSearch = ({form, setNewSelectedProduct}) => {
 		auxSearchToChange = form?.basics?.businessSearch;
 		onSearch(form?.basics?.businessSearch);
 		setIsLoading(true);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [form?.basics?.businessSearch]);
 
 	const onSearch = useCallback(

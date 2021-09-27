@@ -393,10 +393,6 @@ definition {
 
 		PortletEntry.selectAll();
 
-		AssertClick(
-			locator1 = "Button#SELECT_ALL",
-			value1 = "Select All");
-
 		Click(locator1 = "Icon#DELETE");
 
 		Alert.viewSuccessMessage();

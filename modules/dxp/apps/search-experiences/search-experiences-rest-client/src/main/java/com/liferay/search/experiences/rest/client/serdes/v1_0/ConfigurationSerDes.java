@@ -137,6 +137,16 @@ public class ConfigurationSerDes {
 			sb.append("]");
 		}
 
+		if (configuration.getSortConfiguration() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"sortConfiguration\": ");
+
+			sb.append(String.valueOf(configuration.getSortConfiguration()));
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -208,6 +218,15 @@ public class ConfigurationSerDes {
 			map.put("queries", String.valueOf(configuration.getQueries()));
 		}
 
+		if (configuration.getSortConfiguration() == null) {
+			map.put("sortConfiguration", null);
+		}
+		else {
+			map.put(
+				"sortConfiguration",
+				String.valueOf(configuration.getSortConfiguration()));
+		}
+
 		return map;
 	}
 
@@ -277,6 +296,13 @@ public class ConfigurationSerDes {
 						).toArray(
 							size -> new Query[size]
 						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "sortConfiguration")) {
+				if (jsonParserFieldValue != null) {
+					configuration.setSortConfiguration(
+						SortConfigurationSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

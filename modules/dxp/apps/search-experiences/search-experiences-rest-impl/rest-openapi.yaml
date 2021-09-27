@@ -173,6 +173,11 @@ components:
                                         type: boolean
                                 type: object
                             type: array
+                        sortConfiguration:
+                            properties:
+                                sortsArrayJSONString:
+                                    type: string
+                            type: object
                     type: object
                 description:
                     type: string

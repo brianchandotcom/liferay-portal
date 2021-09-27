@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>DROPDOWN_DIVIDER</td>
-	<td>xpath=(//div[contains(@class,'dropdown-menu show')]//li)[${index}][contains(@class,'dropdown-divider')]</td>
+	<td>xpath=(//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//li)[${index}][contains(@class,'dropdown-divider')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>DROPDOWN_MENU_ITEM_SPECIFIC</td>
-	<td>xpath=(//div[contains(@class,'dropdown-menu show')]//li)[${index}]</td>
+	<td>xpath=(//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//li)[${index}]</td>
 	<td></td>
 </tr>
 <tr>

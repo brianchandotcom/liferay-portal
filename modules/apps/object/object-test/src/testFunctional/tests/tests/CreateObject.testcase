@@ -247,12 +247,36 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify it is possible to create a Picklist field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCreatePicklistField {
 
-		// TODO LPS-139742 CanCreatePicklistField pending implementation
+		
+		Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
 
+		Picklist.addPicklistItemViaAPI(
+			itemKey = "0",
+			itemName = "Item Test",
+			picklistName = "Custom Picklist");
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Field Picklist",
+			fieldType = "Picklist",
+			fieldPicklist = "Custom Picklist");
+
+		ObjectAdmin.assertObjectField(
+			fieldLabel = "Field Picklist",
+			fieldType = "String");
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a String field"

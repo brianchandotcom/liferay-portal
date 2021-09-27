@@ -50,6 +50,12 @@ definition {
 			Check.checkToggleSwitch(locator1 = "ObjectAdmin#OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH");
 		}
 
+		if (isSet(fieldPicklist)) {
+			Select(
+				locator1 = "ObjectAdmin#OBJECT_FIELDS_PICKLIST",
+				value1 = "${fieldPicklist}");
+		}
+
 		Button.clickSave();
 	}
 

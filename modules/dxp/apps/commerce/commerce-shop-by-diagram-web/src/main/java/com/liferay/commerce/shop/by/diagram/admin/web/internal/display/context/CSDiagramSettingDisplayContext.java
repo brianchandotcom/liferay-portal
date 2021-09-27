@@ -169,6 +169,10 @@ public class CSDiagramSettingDisplayContext
 		}
 	}
 
+	public double getRadius() {
+		return _csDiagramSettingImageConfiguration.radius();
+	}
+
 	@Override
 	public String getScreenNavigationCategoryKey() {
 		CPType cpType = null;

@@ -11,6 +11,7 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
+import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 
@@ -19,26 +20,39 @@ import DiagramFooter from './components/DiagramFooter';
 import DiagramHeader from './components/DiagramHeader';
 import Tooltip from './components/Tooltip';
 import {DEFAULT_PINS_RADIUS} from './utilities/constants';
-import {loadPins} from './utilities/data';
+import {loadPins, updateGlobalPinsRadius} from './utilities/data';
 
 import '../../css/diagram.scss';
 
-function Diagram({imageURL, productId}) {
+const debouncedUpdatePinsRadius = debounce(updateGlobalPinsRadius, 800);
+
+function Diagram({
+	datasetDisplayId,
+	diagramId,
+	imageURL,
+	namespace,
+	pinsRadius: initialPinsRadius,
+	productId,
+}) {
 	const svgRef = useRef(null);
 	const zoomHandlerRef = useRef(null);
 	const wrapperRef = useRef(null);
 	const chartInstance = useRef(null);
 	const [pins, updatePins] = useState(null);
-	const [pinsRadius, updatePinsRadius] = useState(DEFAULT_PINS_RADIUS);
+	const [pinsRadius, updatePinsRadius] = useState(initialPinsRadius);
 	const [tooltipData, setTooltipData] = useState(false);
 	const [currentZoom, updateCurrentZoom] = useState(1);
 	const [expanded, updateExpanded] = useState(false);
+	const pinsRadiusInitialized = useRef(false);
 
 	useEffect(() => {
-
-		// call debounced radius update;
-
-	}, [pinsRadius]);
+		if (pinsRadiusInitialized.current) {
+			debouncedUpdatePinsRadius(diagramId, pinsRadius, namespace);
+		}
+		else {
+			pinsRadiusInitialized.current = true;
+		}
+	}, [pinsRadius, diagramId, namespace]);
 
 	useEffect(() => {
 		loadPins(productId).then(updatePins);
@@ -89,6 +103,7 @@ function Diagram({imageURL, productId}) {
 					<Tooltip
 						closeTooltip={() => setTooltipData(null)}
 						containerRef={wrapperRef}
+						datasetDisplayId={datasetDisplayId}
 						productId={productId}
 						readOnlySequence={false}
 						updatePins={updatePins}
@@ -108,10 +123,16 @@ function Diagram({imageURL, productId}) {
 	);
 }
 
+Diagram.defaultProps = {
+	pinsRadius: DEFAULT_PINS_RADIUS,
+};
+
 Diagram.propTypes = {
+	datasetDisplayId: PropTypes.string,
 	diagramId: PropTypes.string.isRequired,
 	imageURL: PropTypes.string.isRequired,
 	isAdmin: PropTypes.bool.isRequired,
+	pinsRadius: PropTypes.number,
 	productId: PropTypes.string.isRequired,
 };
 

@@ -53,7 +53,6 @@ export function calculateTooltipStyleFromTarget(target, containerRef) {
 
 export function formatMappedProduct(type, quantity, sequence, selectedProduct) {
 	const definition = {
-		quantity,
 		sequence,
 		type,
 	};
@@ -62,12 +61,14 @@ export function formatMappedProduct(type, quantity, sequence, selectedProduct) {
 		case 'sku':
 			return {
 				...definition,
+				quantity,
 				sku: selectedProduct.sku,
 				skuId: selectedProduct.id,
 			};
 		case 'external':
 			return {
 				...definition,
+				quantity,
 				sku: selectedProduct.sku,
 			};
 		case 'diagram':
@@ -80,23 +81,23 @@ export function formatMappedProduct(type, quantity, sequence, selectedProduct) {
 	}
 }
 
-export function getAbsolutePositions(x, y, wrapper) {
-	const {height, width} = wrapper.getBoundingClientRect();
+export function getAbsolutePositions(x, y, image, scale) {
+	const {height, width} = image.getBoundingClientRect();
 
-	return [(x / 100) * width, (y / 100) * height];
+	return [(x / 100) * (width / scale), (y / 100) * (height / scale)];
 }
 
-export function getPercentagePositions(x, y, wrapper) {
+export function getPercentagePositions(x, y, image) {
 	const {
-		height: wrapperHeight,
-		width: wrapperWidth,
-		x: wrapperX,
-		y: wrapperY,
-	} = wrapper.getBoundingClientRect();
+		height: imageHeight,
+		width: imageWidth,
+		x: imageX,
+		y: imageY,
+	} = image.getBoundingClientRect();
 
 	const percentagePositions = [
-		((x - wrapperX) / wrapperWidth) * 100,
-		((y - wrapperY) / wrapperHeight) * 100,
+		((x - imageX) / imageWidth) * 100,
+		((y - imageY) / imageHeight) * 100,
 	];
 
 	return percentagePositions;

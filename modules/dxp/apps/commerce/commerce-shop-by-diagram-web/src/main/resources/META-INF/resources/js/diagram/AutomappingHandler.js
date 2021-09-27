@@ -69,12 +69,6 @@ class AutomappingHandler {
 		this._d3zoomWrapper.attr('transform', d3event.transform);
 	}
 
-	updateZoom(scale) {
-		this._currentScale = scale;
-
-		this._animateZoom();
-	}
-
 	_animateZoom() {
 		const transition = this._d3diagramWrapper
 			.transition()
@@ -100,14 +94,6 @@ class AutomappingHandler {
 			});
 	}
 
-	updatePins(pins) {
-		this._pins = pins;
-
-		if (this.rendered) {
-			this._updatePinsState();
-		}
-	}
-
 	_updatePinsState() {
 		if (this._pins) {
 			const sequences = new Set(this._pins.map((pin) => pin.sequence));
@@ -125,6 +111,20 @@ class AutomappingHandler {
 				}
 			});
 		}
+	}
+
+	updatePins(pins) {
+		this._pins = pins;
+
+		if (this.rendered) {
+			this._updatePinsState();
+		}
+	}
+
+	updateZoom(scale) {
+		this._currentScale = scale;
+
+		this._animateZoom();
 	}
 }
 

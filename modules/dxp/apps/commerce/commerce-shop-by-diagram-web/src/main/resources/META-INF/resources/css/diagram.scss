@@ -1,6 +1,26 @@
 @import 'atlas-variables';
 
 .shop-by-diagram {
+	&.expanded {
+		bottom: 0;
+		display: flex;
+		flex-direction: column;
+		left: 0;
+		position: fixed;
+		right: 0;
+		top: 0;
+		z-index: 990;
+
+		.svg-wrapper {
+			height: 100%;
+		}
+
+		.view-wrapper {
+			flex-grow: 1;
+			height: auto;
+		}
+	}
+
 	svg .pin {
 		cursor: pointer;
 		fill: $gray-600;
@@ -10,9 +30,111 @@
 		}
 	}
 
-	.view-wrapper {
-		position: relative;
-		z-index: 1;
+	.diagram-tooltip {
+		background: $white;
+		border-radius: 3px;
+		box-shadow: 1px 6px 11px rgba(0, 0, 0, 0.1);
+		padding: $spacer;
+		position: absolute;
+		width: 400px;
+	}
+
+	.empty-pin-node {
+		.pin-node-background {
+			fill: $primary;
+			stroke: $primary;
+			stroke-width: 1;
+			transition: transform 0.1s ease, fill 0.1s ease;
+		}
+	}
+
+	.pin-foreground {
+		align-items: center;
+		color: $gray-600;
+		display: flex;
+		font-weight: 600;
+		justify-content: center;
+		left: 0;
+		pointer-events: none;
+		position: absolute;
+		top: 0;
+		z-index: 2;
+
+		&.highlighted {
+			z-index: 3;
+		}
+
+		&::before {
+			animation: 0.1s ease-out 0s 1 pinZoomIn forwards;
+			background-color: $white;
+			border-color: $warning;
+			border-radius: 50%;
+			border-style: solid;
+			border-width: var(--border-width);
+			bottom: -15%;
+			content: '';
+			left: -15%;
+			position: absolute;
+			right: -15%;
+			top: -15%;
+			z-index: -1;
+		}
+
+		&.mapped {
+			color: $primary;
+
+			&::before {
+				border-color: $primary;
+			}
+		}
+
+		&.hide::before {
+			animation: 0.1s ease-in 0s 1 pinZoomOut forwards;
+		}
+	}
+
+	.pin-node {
+		cursor: pointer;
+
+		&.active {
+			.pin-node-text {
+				fill: $warning;
+			}
+
+			.pin-node-background {
+				stroke: $warning;
+			}
+		}
+
+		&.drag-started {
+			cursor: grabbing;
+		}
+
+		&.dragging {
+			.pin-node-background {
+				transform: scale(1.3);
+			}
+		}
+
+		.pin-node-text {
+			fill: $primary;
+			paint-order: stroke;
+			stroke: $white;
+			stroke-linecap: round;
+			stroke-linejoin: round;
+			stroke-width: 1.5;
+		}
+
+		.pin-node-background {
+			fill: $white;
+			stroke: $primary;
+			stroke-width: 1;
+			transition: transform 0.1s ease, fill 0.1s ease;
+		}
+	}
+
+	.pin-radius-handler {
+		transition: transform 0.1s linear;
 	}
 
 	.svg-loader {
@@ -35,78 +157,9 @@
 		}
 	}
 
-	&.expanded {
-		bottom: 0;
-		display: flex;
-		flex-direction: column;
-		left: 0;
-		position: fixed;
-		right: 0;
-		top: 0;
-		z-index: 99999;
-
-		.view-wrapper {
-			flex-grow: 1;
-			height: auto;
-		}
-	}
-
-	.pin-radius-handler {
-		transition: transform 0.1s linear;
-	}
-}
-
-.diagram-tooltip {
-	background: $white;
-	border-radius: 3px;
-	box-shadow: 1px 6px 11px rgba(0, 0, 0, 0.1);
-	padding: $spacer;
-	position: absolute;
-	width: 400px;
-}
-
-.pin-foreground {
-	align-items: center;
-	color: $gray-600;
-	display: flex;
-	font-weight: 600;
-	justify-content: center;
-	left: 0;
-	pointer-events: none;
-	position: absolute;
-	top: 0;
-	z-index: 2;
-
-	&.highlighted {
-		z-index: 3;
-	}
-
-	&::before {
-		animation: 0.1s ease-out 0s 1 zoomIn forwards;
-		background-color: $white;
-		border-color: $warning;
-		border-radius: 50%;
-		border-style: solid;
-		border-width: var(--border-width);
-		bottom: -15%;
-		content: '';
-		left: -15%;
-		position: absolute;
-		right: -15%;
-		top: -15%;
-		z-index: -1;
-	}
-
-	&.mapped {
-		color: $primary;
-
-		&::before {
-			border-color: $primary;
-		}
-	}
-
-	&.hide::before {
-		animation: 0.1s ease-in 0s 1 zoomOut forwards;
+	.view-wrapper {
+		position: relative;
+		z-index: 1;
 	}
 }
 
@@ -114,7 +167,7 @@
 	opacity: 0.5;
 }
 
-@keyframes zoomIn {
+@keyframes pinZoomIn {
 	from {
 		opacity: 0.4;
 		transform: scale(0);
@@ -125,60 +178,11 @@
 	}
 }
 
-@keyframes zoomOut {
+@keyframes pinZoomOut {
 	from {
 		transform: scale(0);
 	}
 	to {
 		transform: scale(1);
-	}
-}
-
-.pin-node {
-	cursor: pointer;
-
-	&.active {
-		.pin-node-text {
-			fill: $warning;
-		}
-
-		.pin-node-background {
-			stroke: $warning;
-		}
-	}
-
-	&.drag-started {
-		cursor: grabbing;
-	}
-
-	&.dragging {
-		.pin-node-background {
-			transform: scale(1.3);
-		}
-	}
-
-	.pin-node-text {
-		fill: $primary;
-		stroke: $white;
-		stroke-linecap: round;
-		stroke-linejoin: round;
-		stroke-width: 1.5;
-		paint-order: stroke;
-	}
-
-	.pin-node-background {
-		fill: $white;
-		stroke: $primary;
-		stroke-width: 1;
-		transition: transform 0.1s ease, fill 0.1s ease;
-	}
-}
-
-.empty-pin-node {
-	.pin-node-background {
-		fill: $primary;
-		stroke-width: 1;
-		stroke: $primary;
-		transition: transform 0.1s ease, fill 0.1s ease;
 	}
 }

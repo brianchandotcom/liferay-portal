@@ -30,6 +30,8 @@ CSDiagramSetting csDiagramSetting = csDiagramSettingDisplayContext.fetchCSDiagra
 		module="js/diagram/DiagramWithAutomapping"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
+				"datasetDisplayId", CSDiagramDataSetConstants.CS_DIAGRAM_MAPPED_PRODUCTS_DATA_SET_KEY
+			).put(
 				"diagramId", csDiagramSetting.getCSDiagramSettingId()
 			).put(
 				"imageURL", csDiagramSettingDisplayContext.getImageURL()

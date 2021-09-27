@@ -38,7 +38,7 @@ function updateLabel(pinsRadius, updateButtonLabel) {
 	updateButtonLabel(label);
 }
 
-const debouncedUpdateLabel = debounce(updateLabel, 300);
+const debouncedUpdateLabel = debounce(updateLabel, 500);
 
 function DiagramHeader({pinsRadius, updatePinsRadius}) {
 	const [active, setActive] = useState(false);
@@ -56,9 +56,10 @@ function DiagramHeader({pinsRadius, updatePinsRadius}) {
 		<ClayManagementToolbar className="py-2">
 			<ClayManagementToolbar.ItemList>
 				<ClayManagementToolbar.Item>
-					<label className="mr-1">
+					<label className="mr-3">
 						{Liferay.Language.get('pin-size')}
 					</label>
+
 					<ClayDropDown
 						active={active}
 						className="my-auto"
@@ -83,6 +84,7 @@ function DiagramHeader({pinsRadius, updatePinsRadius}) {
 								>
 									{PINS_RADIUS_OPTIONS.small.label}
 								</ClayDropDown.Item>
+
 								<ClayDropDown.Item
 									active={mediumActive}
 									onClick={() =>
@@ -93,6 +95,7 @@ function DiagramHeader({pinsRadius, updatePinsRadius}) {
 								>
 									{PINS_RADIUS_OPTIONS.medium.label}
 								</ClayDropDown.Item>
+
 								<ClayDropDown.Item
 									active={largeActive}
 									onClick={() =>

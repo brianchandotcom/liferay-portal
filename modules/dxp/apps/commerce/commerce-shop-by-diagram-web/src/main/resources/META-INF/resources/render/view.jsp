@@ -24,32 +24,32 @@ CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 CSDiagramCPTypeDisplayContext csDiagramCPTypeDisplayContext = (CSDiagramCPTypeDisplayContext)request.getAttribute(CSDiagramWebKeys.CS_DIAGRAM_CP_TYPE_DISPLAY_CONTEXT);
 %>
 
-<div id="shop-by-diagram" />
-
-<react:component
-	module="js/Diagram"
-	props='<%=
-		HashMapBuilder.<String, Object>put(
-			"enablePanZoom", true
-		).put(
-			"enableResetZoom", true
-		).put(
-			"imageSettings",
-			JSONUtil.put(
-				"height", "500px"
+<div id="shop-by-diagram">
+	<react:component
+		module="js/Diagram"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"enablePanZoom", true
 			).put(
-				"width", "100%"
-			)
-		).put(
-			"imageURL", csDiagramCPTypeDisplayContext.getImageURL(cpCatalogEntry.getCPDefinitionId())
-		).put(
-			"isAdmin", false
-		).put(
-			"pinsEndpoint", "/o/headless-commerce-admin-catalog/v1.0/"
-		).put(
-			"productId", cpCatalogEntry.getCProductId()
-		).put(
-			"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
-		).build()
-	%>'
-/>
+				"enableResetZoom", true
+			).put(
+				"imageSettings",
+				JSONUtil.put(
+					"height", "500px"
+				).put(
+					"width", "100%"
+				)
+			).put(
+				"imageURL", csDiagramCPTypeDisplayContext.getImageURL(cpCatalogEntry.getCPDefinitionId())
+			).put(
+				"isAdmin", false
+			).put(
+				"pinsEndpoint", "/o/headless-commerce-admin-catalog/v1.0/"
+			).put(
+				"productId", cpCatalogEntry.getCProductId()
+			).put(
+				"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+			).build()
+		%>'
+	/>
+</div>

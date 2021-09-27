@@ -46,18 +46,33 @@ class DiagramHandler {
 		this._setTooltipData = setTooltipData;
 		this._updateZoomState = updateZoomState;
 		this._zoomWrapper = zoomWrapper;
-		this._handleZoom = this._handleZoom.bind(this);
+		this._handleClickOutside = this._handleClickOutside.bind(this);
+		this._handleDragEnded = this._handleDragEnded.bind(this);
 		this._handleDragStarted = this._handleDragStarted.bind(this);
 		this._handleDragging = this._handleDragging.bind(this);
-		this._handleDragEnded = this._handleDragEnded.bind(this);
-		this._handleImageClick = this._handleImageClick.bind(this);
 		this._handleEnter = this._handleEnter.bind(this);
 		this._handleExit = this._handleExit.bind(this);
+		this._handleImageClick = this._handleImageClick.bind(this);
 		this._handleUpdate = this._handleUpdate.bind(this);
+		this._handleZoom = this._handleZoom.bind(this);
 		this._pinsRadius = DEFAULT_PINS_RADIUS;
 
+		this._addListeners();
 		this._printImage();
 		this._addZoom();
+	}
+
+	_handleClickOutside(event) {
+		if (
+			!this._diagramWrapper.parentNode.contains(event.target) &&
+			!event.target.closest('.autocomplete-dropdown-menu')
+		) {
+			this._resetActivePinsState();
+		}
+	}
+
+	_addListeners() {
+		window.addEventListener('click', this._handleClickOutside);
 	}
 
 	_addZoom() {
@@ -86,7 +101,9 @@ class DiagramHandler {
 		this._d3zoomWrapper.attr('transform', d3event.transform);
 	}
 
-	cleanUp() {}
+	cleanUp() {
+		window.removeEventListener('click', this._handleClickOutside);
+	}
 
 	updateZoom(scale) {
 		this._currentScale = scale;
@@ -162,7 +179,12 @@ class DiagramHandler {
 			.attr('class', 'empty-pin-node')
 			.attr(
 				'transform',
-				`translate(${getAbsolutePositions(x, y, d3event.target)})`
+				`translate(${getAbsolutePositions(
+					x,
+					y,
+					d3event.target,
+					this._currentScale
+				)})`
 			)
 			.append('g')
 			.attr('class', 'pin-radius-handler')
@@ -188,11 +210,11 @@ class DiagramHandler {
 	updatePinsRadius(pinsRadius) {
 		this._pinsRadius = pinsRadius;
 
-		if (this._radiusHandlers) {
-			this._radiusHandlers.attr(
-				'transform',
-				`scale(${this._pinsRadius})`
-			);
+		if (this.imageRendered) {
+			this._d3zoomWrapper
+				.selectAll('.pin-node')
+				.select('.pin-radius-handler')
+				.attr('transform', `scale(${this._pinsRadius})`);
 		}
 	}
 
@@ -213,7 +235,8 @@ class DiagramHandler {
 					`translate(${getAbsolutePositions(
 						d.positionX,
 						d.positionY,
-						this._image.node()
+						this._image.node(),
+						this._currentScale
 					)})`
 			)
 			.call(
@@ -236,20 +259,18 @@ class DiagramHandler {
 				});
 			});
 
-		this._radiusHandlers = pinsWrapper
+		const radiusHandlers = pinsWrapper
 			.append('g')
 			.attr('class', 'pin-radius-handler')
-
 			.call((enter) => enter.transition(30).attr('y', 0))
-
 			.attr('transform', `scale(${this._pinsRadius})`);
 
-		this._radiusHandlers
+		radiusHandlers
 			.append('circle')
 			.attr('class', 'pin-node-background')
 			.attr('r', PINS_CIRCLE_RADIUS);
 
-		this._radiusHandlers
+		radiusHandlers
 			.append('text')
 			.attr('y', 5)
 			.attr('text-anchor', 'middle')
@@ -260,7 +281,7 @@ class DiagramHandler {
 	}
 
 	_handleUpdate(update) {
-		update.selectAll('pin-node-text').text((d) => d.sequence);
+		update.select('.pin-node-text').text((d) => d.sequence);
 
 		return update;
 	}

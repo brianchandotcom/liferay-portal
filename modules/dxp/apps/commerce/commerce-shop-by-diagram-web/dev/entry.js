@@ -17,10 +17,13 @@ import DiagramWithAutomapping from '../src/main/resources/META-INF/resources/js/
 render(
 	Diagram,
 	{
-		diagramId:'44860',
-		imageURL:'/documents/20123/0/login_portlet_splash.jpg/a43294b3-5a06-983b-21ba-b35622fe4887?version=1.0&t=1632754073054&download=true',
+		datasetDisplayId: 'test_id',
+		diagramId: '42908',
+		imageURL:
+			'/documents/20118/0/download.png/22b2e42d-9b2c-ae98-0f44-de5b79dc7cca?version=1.0&t=1633353975448&download=true',
 		isAdmin: true,
-		productId:'44841',
+		pinsRadius: 1.0,
+		productId: '42900',
 	},
 	document.getElementById('shop-by-diagram')
 );
@@ -28,14 +31,13 @@ render(
 render(
 	DiagramWithAutomapping,
 	{
-		diagramId: '44879',
-		imageURL: '/documents/20123/0/308056.svg/c134d3bf-3a1d-5850-a8d6-498096e79ffc?version=1.0&t=1632754810743&download=true',
+		datasetDisplayId: 'test_id',
+		diagramId: '44896',
+		imageURL:
+			'/documents/42923/0/308056.svg/fa9dcbf5-a06f-b3ba-d11b-e4cd28402758?version=1.0&t=1633361640529&download=true',
 		isAdmin: true,
-		pinsCSSSelectors: [
-		   '#Livello_Testi > text',
-		   '[id*=MTEXT] > text'
-		],
-		productId: '44862',
+		pinsCSSSelectors: ['#Livello_Testi > text', '[id*=MTEXT] > text'],
+		productId: '44878',
 	},
 	document.getElementById('shop-by-diagram-automapping')
 );

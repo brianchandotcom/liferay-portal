@@ -21,7 +21,12 @@ import Tooltip from './components/Tooltip';
 import {loadPins} from './utilities/data';
 
 import '../../css/diagram.scss';
-function DiagramWithAutomapping({imageURL, pinsCSSSelectors, productId}) {
+function DiagramWithAutomapping({
+	datasetDisplayId,
+	imageURL,
+	pinsCSSSelectors,
+	productId,
+}) {
 	const chartInstance = useRef(null);
 	const svgRef = useRef(null);
 	const wrapperRef = useRef(null);
@@ -130,6 +135,7 @@ function DiagramWithAutomapping({imageURL, pinsCSSSelectors, productId}) {
 					<Tooltip
 						closeTooltip={() => setTooltipData(null)}
 						containerRef={wrapperRef}
+						datasetDisplayId={datasetDisplayId}
 						productId={productId}
 						readOnlySequence={true}
 						updatePins={updatePins}
@@ -150,6 +156,7 @@ function DiagramWithAutomapping({imageURL, pinsCSSSelectors, productId}) {
 }
 
 DiagramWithAutomapping.propTypes = {
+	datasetDisplayId: PropTypes.string,
 	diagramId: PropTypes.string.isRequired,
 	imageURL: PropTypes.string.isRequired,
 	isAdmin: PropTypes.bool.isRequired,

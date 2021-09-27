@@ -35,6 +35,7 @@ CSDiagramType csDiagramType = csDiagramSettingDisplayContext.getCSDiagramType(ty
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateCSDiagramSetting" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
+		<aui:input name="radius" type="hidden" value="<%= (csDiagramSetting != null) ? csDiagramSetting.getRadius() : csDiagramSettingDisplayContext.getRadius() %>" />
 
 		<liferay-ui:error exception="<%= NoSuchCPAttachmentFileEntryException.class %>" message="please-select-an-existing-file" />
 		<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="please-select-an-existing-file" />
@@ -61,6 +62,7 @@ CSDiagramType csDiagramType = csDiagramSettingDisplayContext.getCSDiagramType(ty
 				</commerce-ui:panel>
 
 				<commerce-ui:panel
+					bodyClasses="p-0"
 					title='<%= LanguageUtil.get(resourceBundle, "diagram-mapping") %>'
 				>
 
@@ -111,6 +113,7 @@ CSDiagramType csDiagramType = csDiagramSettingDisplayContext.getCSDiagramType(ty
 				</commerce-ui:panel>
 
 				<commerce-ui:panel
+					bodyClasses="p-0"
 					elementClasses="flex-fill"
 					title='<%= LanguageUtil.get(resourceBundle, "mapped-products") %>'
 				>
@@ -122,7 +125,6 @@ CSDiagramType csDiagramType = csDiagramSettingDisplayContext.getCSDiagramType(ty
 						namespace="<%= liferayPortletResponse.getNamespace() %>"
 						pageNumber="<%= 1 %>"
 						portletURL="<%= csDiagramSettingDisplayContext.getPortletURL() %>"
-						style="stacked"
 					/>
 				</commerce-ui:panel>
 			</div>

@@ -75,3 +75,22 @@ export const savePin = (
 		method: pinId ? 'PATCH' : 'POST',
 	}).then((response) => response.json());
 };
+
+export const updateGlobalPinsRadius = (diagramId, radius, namespace) => {
+	const url = new URL(
+		`${PINS_ENDPOINT}/diagrams/${diagramId}`,
+		themeDisplay.getPortalURL()
+	);
+
+	return fetch(url, {
+		body: JSON.stringify({radius}),
+		headers: HEADERS,
+		method: 'PATCH',
+	}).then(() => {
+		const radiusInput = document.getElementById(`${namespace}radius`);
+
+		if (radiusInput) {
+			radiusInput.value = radius;
+		}
+	});
+};

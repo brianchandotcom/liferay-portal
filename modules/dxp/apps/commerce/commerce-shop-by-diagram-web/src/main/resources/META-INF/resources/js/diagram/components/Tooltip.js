@@ -14,6 +14,7 @@ import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {openToast} from 'frontend-js-web';
+import {UPDATE_DATASET_DISPLAY} from 'frontend-taglib-clay/data_set_display/utils/eventsDefinitions';
 import React, {
 	useEffect,
 	useLayoutEffect,
@@ -32,6 +33,7 @@ import {
 function Tooltip({
 	closeTooltip,
 	containerRef,
+	datasetDisplayId,
 	productId,
 	readOnlySequence,
 	selectedPin,
@@ -47,7 +49,7 @@ function Tooltip({
 	const [quantity, updateQuantity] = useState(
 		selectedPin?.mappedProduct.quantity || 1
 	);
-	const [linkedProduct, updateLinkedProduct] = useState(
+	const [mappedProduct, updateMappedProduct] = useState(
 		selectedPin?.mappedProduct || null
 	);
 	const [sequence, updateSequence] = useState(
@@ -67,10 +69,12 @@ function Tooltip({
 
 	useEffect(() => {
 		updateQuantity(selectedPin?.mappedProduct.quantity || 1);
-		updateSequence(selectedPin?.mappedProduct.sequence || '');
+		updateSequence(
+			selectedPin?.mappedProduct.sequence || sequenceProp || ''
+		);
 		updateType(selectedPin?.mappedProduct.type || DEFAULT_LINK_OPTION);
-		updateLinkedProduct(selectedPin?.mappedProduct || null);
-	}, [selectedPin]);
+		updateMappedProduct(selectedPin?.mappedProduct || null);
+	}, [selectedPin, sequenceProp]);
 
 	useLayoutEffect(() => {
 		function handleWindowClick(event) {
@@ -93,20 +97,20 @@ function Tooltip({
 	function _handleSubmit(event) {
 		event.preventDefault();
 
-		const mappedProduct = formatMappedProduct(
+		const productDetails = formatMappedProduct(
 			type,
 			quantity,
 			sequence,
-			linkedProduct
+			mappedProduct
 		);
 
-		const update = selectedPin?.id;
+		const update = Boolean(selectedPin?.id);
 
 		updateSaving(true);
 
 		savePin(
 			update ? selectedPin.id : null,
-			mappedProduct,
+			productDetails,
 			sequence,
 			x,
 			y,
@@ -120,7 +124,7 @@ function Tooltip({
 				updatePins((pins) => {
 					return update
 						? pins.map((pin) =>
-								pin.sequence === sequence ? newPin : pin
+								pin.id === selectedPin.id ? newPin : pin
 						  )
 						: [...pins, newPin];
 				});
@@ -135,6 +139,13 @@ function Tooltip({
 						: Liferay.Language.get('pin-created'),
 					type: 'success',
 				});
+			})
+			.then(() => {
+				if (datasetDisplayId) {
+					Liferay.fire(UPDATE_DATASET_DISPLAY, {
+						id: datasetDisplayId,
+					});
+				}
 			})
 			.catch((error) => {
 				openToast({
@@ -155,9 +166,9 @@ function Tooltip({
 					return;
 				}
 
-				updatePins((pins) => {
-					return pins.filter((pin) => pin.id !== selectedPin.id);
-				});
+				updatePins((pins) =>
+					pins.filter((pin) => pin.id !== selectedPin.id)
+				);
 
 				updateDeleting(false);
 
@@ -167,6 +178,13 @@ function Tooltip({
 					message: Liferay.Language.get('pin-deleted'),
 					type: 'success',
 				});
+			})
+			.then(() => {
+				if (datasetDisplayId) {
+					Liferay.fire(UPDATE_DATASET_DISPLAY, {
+						id: datasetDisplayId,
+					});
+				}
 			})
 			.catch((error) => {
 				openToast({
@@ -178,17 +196,16 @@ function Tooltip({
 			});
 	}
 
-	const LinkedProductFormGroup = useMemo(() => {
-		return React.memo(LINKING_OPTIONS[type].component);
-	}, [type]);
-
-	const loading = saving || deleting;
-
-	const disabled = !linkedProduct || !sequence || loading;
-
+	const LinkedProductFormGroup = useMemo(
+		() => React.memo(LINKING_OPTIONS[type].component),
+		[type]
+	);
 	const saveMessage = selectedPin
 		? Liferay.Language.get('update')
 		: Liferay.Language.get('save');
+	const loading = saving || deleting;
+
+	const disabled = !mappedProduct || !sequence || loading;
 
 	return (
 		<div className="diagram-tooltip" ref={tooltipRef} style={tooltipStyle}>
@@ -215,7 +232,7 @@ function Tooltip({
 					<ClaySelect
 						id="typeInput"
 						onChange={(event) => {
-							updateLinkedProduct(null);
+							updateMappedProduct(null);
 							updateType(event.target.value);
 						}}
 						value={type}
@@ -233,28 +250,30 @@ function Tooltip({
 				<div className="row">
 					<div className="col">
 						<LinkedProductFormGroup
-							updateValue={updateLinkedProduct}
-							value={linkedProduct}
+							updateValue={updateMappedProduct}
+							value={mappedProduct}
 						/>
 					</div>
 
-					<div className="col-3">
-						<ClayForm.Group>
-							<label htmlFor="quantityInput">
-								{Liferay.Language.get('quantity')}
-							</label>
+					{type !== 'diagram' && (
+						<div className="col-3">
+							<ClayForm.Group>
+								<label htmlFor="quantityInput">
+									{Liferay.Language.get('quantity')}
+								</label>
 
-							<ClayInput
-								id="quantityInput"
-								min={1}
-								onChange={(event) =>
-									updateQuantity(event.target.value)
-								}
-								type="number"
-								value={quantity}
-							/>
-						</ClayForm.Group>
-					</div>
+								<ClayInput
+									id="quantityInput"
+									min={1}
+									onChange={(event) =>
+										updateQuantity(event.target.value)
+									}
+									type="number"
+									value={quantity}
+								/>
+							</ClayForm.Group>
+						</div>
+					)}
 				</div>
 
 				<div className="d-flex justify-content-end mt-3">

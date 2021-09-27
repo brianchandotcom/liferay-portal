@@ -1,7 +1,7 @@
 definition {
 
 	macro addTable {
-		AssertElementPresent(locator1 = "CKEditor#INSERT_BTN");
+		VerifyElementPresent(locator1 = "CKEditor#INSERT_BTN");
 
 		Click(locator1 = "CKEditor#INSERT_BTN");
 
@@ -19,7 +19,7 @@ definition {
 	}
 
 	macro goToAddVideo {
-		AssertElementPresent(locator1 = "CKEditor#INSERT_BTN");
+		VerifyElementPresent(locator1 = "CKEditor#INSERT_BTN");
 
 		Click(locator1 = "CKEditor#INSERT_BTN");
 
@@ -29,7 +29,7 @@ definition {
 	macro toggleBalloonEditorContentStyle {
 		TripleClick(locator1 = "CKEditorBalloonEditorSample#BODY_TEXT");
 
-		WaitForElementPresent(
+		VerifyElementPresent(
 			key_titleName = "${optionTool}",
 			locator1 = "CKEditor#TOOLBAR_ANY_ITEM_BUTTON");
 

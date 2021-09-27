@@ -88,6 +88,12 @@ public class GetFragmentEntryLinkMVCResourceCommand
 			DefaultFragmentRendererContext defaultFragmentRendererContext =
 				new DefaultFragmentRendererContext(fragmentEntryLink);
 
+			int collectionItemIndex = ParamUtil.getInteger(
+				resourceRequest, "collectionItemIndex", -1);
+
+			defaultFragmentRendererContext.setCollectionElementIndex(
+				collectionItemIndex);
+
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)resourceRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);

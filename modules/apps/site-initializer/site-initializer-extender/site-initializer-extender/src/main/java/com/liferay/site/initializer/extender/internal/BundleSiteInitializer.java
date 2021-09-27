@@ -16,9 +16,8 @@ package com.liferay.site.initializer.extender.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
@@ -582,17 +581,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Group group = CommerceCatalogLocalServiceUtil.getCommerceCatalogGroup(
 			catalog.getId());
 
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.
-				fetchAssetVocabularyByExternalReferenceCode(
-					serviceContext.getCompanyId(),
-					commerceChannel.getExternalReferenceCode());
-
-		//TODO: Change the logic for filter with the Resource
-
 		_cpDefinitionsImporter.importCPDefinitions(
-			jsonArray, assetVocabulary.getName(), group.getGroupId(),
-			commerceChannel.getId(), commerceInventoryWarehouseIds,
+			jsonArray, group.getGroupId(), commerceChannel.getId(),
+			commerceInventoryWarehouseIds,
 			BundleSiteInitializer.class.getClassLoader(),
 			"/site-initializer/commerce-catalogs/catalogs/" +
 				StringUtil.replace(resourcePath, ".json", "/"),

@@ -390,6 +390,7 @@ definition {
 			PageEditor.editFragmentHTML(
 				editableId = "element-html",
 				fileName = "fragment_static_text.html",
+				filePath = "enduser/wem/layout/pagetemplate/masterspagetemplate",
 				fragmentName = "HTML");
 
 			PageEditor.addFragment(
@@ -728,9 +729,9 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			UploadCommonFile(
-				locator1 = "TextInput#FILE",
-				value1 = "master-page-invalid-value.zip");
+			UploadFileWithCustomPath.uploadArchiveFile(
+				fileName = "master-page-invalid-value.zip",
+				filePath = "enduser/wem/layout/pagetemplate/masterspagetemplate");
 
 			Button.clickImport();
 		}

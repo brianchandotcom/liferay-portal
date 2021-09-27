@@ -372,7 +372,7 @@ public class ObjectEntryDisplayContext {
 						setNestedDDMFormFields(nestedDDMFormFields);
 						setProperty(
 							"collapsible", objectLayoutBox.isCollapsable());
-						setProperty("rows", _getRows(nestedDDMFormFields));
+						setProperty("rows", _getRows(objectLayoutBox));
 						setReadOnly(false);
 						setRepeatable(false);
 						setRequired(false);
@@ -555,10 +555,9 @@ public class ObjectEntryDisplayContext {
 
 				objectFieldOptional.ifPresent(
 					objectField -> {
-						_objectLayoutColumnSizes.put(
-							objectField.getName(),
-							objectLayoutColumn.getSize());
-
+						_objectFieldNames.put(
+							objectLayoutColumn.getObjectFieldId(),
+							objectField.getName());
 						nestedDDMFormFields.add(_getDDMFormField(objectField));
 					});
 			}
@@ -584,20 +583,29 @@ public class ObjectEntryDisplayContext {
 			});
 	}
 
-	private String _getRows(List<DDMFormField> ddmFormFields) {
+	private String _getRows(ObjectLayoutBox objectLayoutBox) {
 		JSONArray rowsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		for (DDMFormField ddmFormField : ddmFormFields) {
-			rowsJSONArray.put(
-				JSONUtil.put(
-					"columns",
+		for (ObjectLayoutRow objectLayoutRow :
+				objectLayoutBox.getObjectLayoutRows()) {
+
+			JSONArray columnsJSONArray = JSONFactoryUtil.createJSONArray();
+
+			for (ObjectLayoutColumn objectLayoutColumn :
+					objectLayoutRow.getObjectLayoutColumns()) {
+
+				columnsJSONArray.put(
 					JSONUtil.put(
+						"fields",
 						JSONUtil.put(
-							"fields", JSONUtil.put(ddmFormField.getName())
-						).put(
-							"size",
-							_objectLayoutColumnSizes.get(ddmFormField.getName())
-						))));
+							_objectFieldNames.get(
+								objectLayoutColumn.getObjectFieldId()))
+					).put(
+						"size", objectLayoutColumn.getSize()
+					));
+			}
+
+			rowsJSONArray.put(JSONUtil.put("columns", columnsJSONArray));
 		}
 
 		return rowsJSONArray.toString();
@@ -665,8 +673,7 @@ public class ObjectEntryDisplayContext {
 	private ObjectEntry _objectEntry;
 	private final ObjectEntryService _objectEntryService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
-	private final Map<String, Integer> _objectLayoutColumnSizes =
-		new HashMap<>();
+	private final Map<Long, String> _objectFieldNames = new HashMap<>();
 	private final ObjectLayoutLocalService _objectLayoutLocalService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;

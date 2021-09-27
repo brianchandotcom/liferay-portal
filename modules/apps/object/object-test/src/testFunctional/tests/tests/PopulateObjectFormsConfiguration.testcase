@@ -383,9 +383,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
+		PopulateObjectFormsConfiguration.openForm();
 
 		FormsAdminNavigator.gotoAddForm();
 

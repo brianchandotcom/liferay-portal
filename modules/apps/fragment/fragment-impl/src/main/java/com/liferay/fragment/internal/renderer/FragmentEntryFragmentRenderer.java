@@ -158,21 +158,14 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 	private String _renderFragmentEntry(
 		long fragmentEntryId, String css, String html, String js,
-		String configuration, String namespace,
+		String configuration, String namespace, String fragmentElementId,
 		HttpServletRequest httpServletRequest) {
 
 		StringBundler sb = new StringBundler(18);
 
 		sb.append("<div id=\"");
 
-		StringBundler fragmentIdSB = new StringBundler(4);
-
-		fragmentIdSB.append("fragment-");
-		fragmentIdSB.append(fragmentEntryId);
-		fragmentIdSB.append("-");
-		fragmentIdSB.append(namespace);
-
-		sb.append(fragmentIdSB.toString());
+		sb.append(fragmentElementId);
 
 		sb.append("\" >");
 		sb.append(html);
@@ -222,7 +215,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			sb.append("var configuration = ");
 			sb.append(configuration);
 			sb.append("; var fragmentElement = document.querySelector('#");
-			sb.append(fragmentIdSB.toString());
+			sb.append(fragmentElementId);
 			sb.append("'); var fragmentNamespace = '");
 			sb.append(namespace);
 			sb.append("';");
@@ -336,7 +329,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		content = _renderFragmentEntry(
 			fragmentEntryLink.getFragmentEntryId(), css, html,
 			fragmentEntryLink.getJs(), configurationJSONObject.toString(),
-			fragmentEntryLink.getNamespace(), httpServletRequest);
+			fragmentEntryLink.getNamespace(),
+			fragmentRendererContext.getFragmentElementId(), httpServletRequest);
 
 		if (Objects.equals(
 				fragmentRendererContext.getMode(),

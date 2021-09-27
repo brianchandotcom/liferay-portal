@@ -23,7 +23,6 @@ import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentCo
 import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.DisplayStyle;
 import com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentConfiguration.SiteNavigationMenuSource;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -116,7 +115,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 			FragmentEntryLink fragmentEntryLink =
 				fragmentRendererContext.getFragmentEntryLink();
 
-			String fragmentId = _getFragmentId(fragmentEntryLink);
+			String fragmentId = fragmentRendererContext.getFragmentElementId();
 
 			printWriter.write("<div id=\"" + fragmentId + "\">");
 
@@ -214,12 +213,6 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 		navigationMenuTag.setDisplayDepth(
 			menuDisplayFragmentConfiguration.sublevels() + 1);
-	}
-
-	private String _getFragmentId(FragmentEntryLink fragmentEntryLink) {
-		return StringBundler.concat(
-			"fragment-", fragmentEntryLink.getFragmentEntryId(), "-",
-			fragmentEntryLink.getNamespace());
 	}
 
 	private NavigationMenuTag _getNavigationMenuTag(

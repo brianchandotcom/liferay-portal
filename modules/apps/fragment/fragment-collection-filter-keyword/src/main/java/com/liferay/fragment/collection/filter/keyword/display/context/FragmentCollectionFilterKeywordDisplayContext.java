@@ -18,7 +18,6 @@ import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -44,8 +43,7 @@ public class FragmentCollectionFilterKeywordDisplayContext {
 	}
 
 	public String getFragmentEntryLinkNamespace() {
-		return _fragmentEntryLink.getFragmentEntryLinkId() +
-			StringPool.UNDERLINE + _fragmentEntryLink.getNamespace();
+		return _fragmentRendererContext.getFragmentElementId();
 	}
 
 	public String getLabel() {

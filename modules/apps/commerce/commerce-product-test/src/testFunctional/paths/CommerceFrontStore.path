@@ -97,7 +97,7 @@
 </tr>
 <tr>
 	<td>MINI_COMPARE_ITEM_CUSTOM_IMAGE</td>
-	<td>//div[contains(@class,'mini-compare active')]//div[contains(@style,'${key_productName}')]</td>
+	<td>//div[contains(@class,'mini-compare active')]//div[contains(@style,'${key_productMediaId}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>MINI_COMPARE_ITEM_REMOVE_BUTTON</td>
-	<td>//div[contains(@class,'mini-compare active')]//div[contains(@style,'${key_productName}')]/../../..//button[contains(@class,'mini-compare-delete')]</td>
+	<td>//div[contains(@class,'mini-compare active')]//div[contains(@style,'${key_productMediaId}')]/../../..//button[contains(@class,'mini-compare-delete')]</td>
 	<td></td>
 </tr>
 <tr>

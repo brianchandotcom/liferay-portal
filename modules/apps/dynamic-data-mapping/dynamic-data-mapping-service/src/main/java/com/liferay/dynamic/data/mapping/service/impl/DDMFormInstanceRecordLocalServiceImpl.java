@@ -215,7 +215,9 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 			long storageId = ddmFormInstanceRecordVersion.getStorageId();
 
-			deleteStorage(storageId, storageType);
+			if (!StringUtil.equals(storageType, "object")) {
+				deleteStorage(storageId, storageType);
+			}
 
 			_ddmStorageLinkLocalService.deleteClassStorageLink(storageId);
 

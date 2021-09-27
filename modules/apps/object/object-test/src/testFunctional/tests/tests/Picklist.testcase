@@ -51,13 +51,13 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify it is possible to create a Picklist"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanCreatePicklist {
 		property portal.acceptance = "true";
 
-		// TODO LPS-139752 CanCreatePicklist pending implementation
-
+		Picklist.gotoPicklists();
+		Picklist.addPicklistViaUI(picklistName = "Picklist Test");
+		Picklist.viewPicklist(picklistName = "Picklist Test");
 	}
 
 	@description = "LPS-136595 - Verify it is possible to create an item for a Picklist"

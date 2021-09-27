@@ -1,0 +1,41 @@
+<html>
+<head>
+<title>Picklist</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Picklist</td></tr>
+</thead>
+
+<tbody>
+	<tr>
+		<td>ADD_PICKLIST_BUTTON</td>
+		<td>//button[@title='Add Picklist']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ADD_PICKLIST_NAME</td>
+		<td>//input[@id='listTypeDefinitionName']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SAVE_PICKLIST_BUTTON</td>
+		<td>//button[@class='btn btn-primary']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>CREATED_PICKLIST</td>
+		<td>//div[(@class='dnd-td')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OPTIONS_PICKLIST</td>
+		<td>//div[(@class='dnd-td') and contains(.,'test')]/..//button[@class='dropdown-toggle component-action dropdown-toggle ml-1 btn btn-monospaced btn-unstyled']</td>
+		<td></td>
+	</tr>
+</tbody>
+</table>
+</body>
+</html>

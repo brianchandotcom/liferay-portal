@@ -249,8 +249,6 @@ definition {
 	@description = "LPS-136595 - Verify it is possible to create a Picklist field"
 	@priority = "4"
 	test CanCreatePicklistField {
-
-		
 		Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
 
 		Picklist.addPicklistItemViaAPI(
@@ -271,8 +269,8 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Field Picklist",
-			fieldType = "Picklist",
-			fieldPicklist = "Custom Picklist");
+			fieldPicklist = "Custom Picklist",
+			fieldType = "Picklist");
 
 		ObjectAdmin.assertObjectField(
 			fieldLabel = "Field Picklist",

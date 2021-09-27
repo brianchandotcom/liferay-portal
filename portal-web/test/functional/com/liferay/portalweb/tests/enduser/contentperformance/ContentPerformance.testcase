@@ -1,0 +1,214 @@
+@component-name = "portal-ab-test"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Content Performance";
+
+	setUp {
+		task ("Go to DXP portal, login and create site") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Navigator.openURL();
+
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+	}
+
+    @description = "LPS-108856: When user opens Content Performance panel and AC is connected and synced, the Content Performance panel display all its functionalities"
+	@ignore = "true"
+	@priority = "5"
+	test CheckAllInfoDisplayed {
+
+		// TODO LPS-139239 CheckAllInfoDisplayed pending implementation
+
+	}
+
+	@description = "LPS-105215: Validate the Content Performance panel default time range is by week"
+	@ignore = "true"
+	@priority = "5"
+	test DefaultTimeRangeWeek {
+
+		// TODO LPS-139216 DefaultTimeRangeWeek pending implementation
+
+	}
+
+    @description = "LPS-108856: When user opens Content Performance panel and AC is not connected, a Dont show me this again button is displayed"
+	@ignore = "true"
+	@priority = "3"
+	test DontShowButton {
+
+		// TODO LPS-139239 DontShowButton pending implementation
+
+	}
+
+    @description = "LPS-105216: Validate that Free trial and dismiss buttons ARE NOT displayed when AC is enabled"
+	@ignore = "true"
+	@priority = "3"
+	test FreeTrialButtonNotPresent {
+
+		// TODO LPS-139217 FreeTrialButtonNotPresent pending implementation
+
+	}
+
+    @description = "LPS-105216: Validate that Free trial and dismiss buttons are displayed when AC is disabled"
+	@ignore = "true"
+	@priority = "5"
+	test FreeTrialButtonPresent {
+
+		// TODO LPS-139217 FreeTrialButtonPresent pending implementation
+
+	}
+
+    @description = "LPS-108068: When there is no views nor reads in the selected range or in the default view, the line of the graphic will be at 0"
+	@ignore = "true"
+	@priority = "3"
+	test GraphicLineNoViewsReads {
+
+		// TODO LPS-139236 GraphicLineNoViewsReads pending implementation
+
+	}
+
+    @description = "LPS-108856: When user clicks on Dont show me this again button, the Content Performance panel disappears"
+	@ignore = "true"
+	@priority = "5"
+	test HideContentPerformancePanel {
+
+		// TODO LPS-139239 HideContentPerformancePanel pending implementation
+
+	}
+
+    @description = "LPS-118006: When the DXP is not connected to AC, if the user clicks on the Metrics button, the sidebar panel shows up and displays a button titled Dont show me this again and a message informing the user that the panel will show up again if AC is connected"
+	@ignore = "true"
+	@priority = "4"
+	test MetricsInContentDashboardACDisabled {
+
+		// TODO LPS-139257 MetricsInContentDashboardACDisabled pending implementation
+
+	}
+
+    @description = "LPS-118006: When the DXP is connected to AC after the user has clicked the Don't show me this again button, the Metrics option is shown again, and the sidebar panel with instructions to sync, and without the Dont show me this again button shows up when the user clicks on it"
+	@ignore = "true"
+	@priority = "4"
+	test MetricsInContentDashboardACEnabled {
+
+		// TODO LPS-139257 MetricsInContentDashboardACEnabled pending implementation
+
+	}
+
+    @description = "LPS-113910: When the user selects the info option while the Content performance panel is open, the side panel shows the Info panel"
+	@ignore = "true"
+	@priority = "3"
+	test MetricsToInfoPanel {
+
+		// TODO LPS-139253 MetricsToInfoPanel pending implementation
+
+	}
+
+    @description = "LPS-113910: When the user has NOT permissions for editing and viewing the web content and the web content has a display page template associated, the View metrics option is not displayed"
+	@ignore = "true"
+	@priority = "4"
+	test MetricsUserWithoutPermissionsDPT {
+
+		// TODO LPS-139253 MetricsUserWithoutPermissionsDPT pending implementation
+
+	}
+
+    @description = "LPS-113910: When the user has permissions for editing and viewing the web content and the web content has NOT a display page template associated, the View metrics option is not displayed"
+	@ignore = "true"
+	@priority = "4"
+	test MetricsUserWithPermissionsNoDPT {
+
+		// TODO LPS-139253 MetricsUserWithPermissionsNoDPT pending implementation
+
+	}
+
+    @description = "LPS-113835: When the user with edit permissions edits the content of the display page, the Metrics button is shown"
+	@ignore = "true"
+	@priority = "4"
+	test MetricsWithEditPermissions {
+
+		// TODO LPS-139252 MetricsWithEditPermissions pending implementation
+
+	}
+
+    @description = "LPS-113835: When the user with edit permissions and no permissions to edit the page, the Metrics button is shown"
+	@ignore = "true"
+	@priority = "4"
+	test MetricsWithEditPermissionsNotEditPage {
+
+		// TODO LPS-139252 MetricsWithEditPermissionsNotEditPage pending implementation
+
+	}
+
+    @description = "LPS-113835: When the user has no permissions to edit the content of and has permission to edit the display page, the Metrics button is shown"
+	@ignore = "true"
+	@priority = "4"
+	test MetricsWithoutEditPermissionsYesEditPage {
+
+		// TODO LPS-139252 MetricsWithoutEditPermissionsYesEditPage pending implementation
+
+	}
+
+    @description = "LPS-113835: When the user has no permissions to edit the content of a display page, the Metrics button is not shown"
+	@ignore = "true"
+	@priority = "4"
+	test MetricsWithoutEditPermissions {
+
+		// TODO LPS-139252 MetricsWithoutEditPermissions pending implementation
+
+	}
+
+    @description = "LPS-111042: As a content writer I want to know the keywords driving traffic to my contents by different countries"
+	@ignore = "true"
+	@priority = "4"
+	test NoNavigationWithoutIncomingTraffic {
+
+		// TODO LPS-139248 NoNavigationWithoutIncomingTraffic pending implementation
+
+	}
+
+    @description = "LPS-108856: When user opens Content Performance panel and AC is connected but not synced, the Content Performance panel displays instructions to sync to AC (Dont show me this again button and the message is not displayed)"
+	@ignore = "true"
+	@priority = "3"
+	test NotSyncedPanel {
+
+		// TODO LPS-139239 NotSyncedPanel pending implementation
+
+	}
+
+    @description = "LPS-110920: When the user selects a language in the switcher, the title, the URL and the metrics change accordingly"
+	@ignore = "true"
+	@priority = "5"
+	test LanguageSelector {
+
+		// TODO LPS-139247 LanguageSelector pending implementation
+
+	}
+
+    @description = "LPS-110920: When the user selects a language in the switcher, it doesn't affect the user's language"
+	@ignore = "true"
+	@priority = "3"
+	test LanguageSelectorUserLanguage {
+
+		// TODO LPS-139247 LanguageSelectorUserLanguage pending implementation
+
+	}
+
+    @description = "LPS-109417: When the graphic shows the publication date, all previous dots will be 0"
+	@ignore = "true"
+	@priority = "5"
+	test PublicationDatePreviousSet0 {
+
+		// TODO LPS-139242 PublicationDatePreviousSet0 pending implementation
+
+	}
+
+}

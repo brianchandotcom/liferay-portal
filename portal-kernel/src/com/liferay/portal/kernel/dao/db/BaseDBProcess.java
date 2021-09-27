@@ -335,9 +335,11 @@ public abstract class BaseDBProcess implements DBProcess {
 		}
 
 		public <T> T get(String columnLabel) throws SQLException {
-			T value = (T)_columns.get(StringUtil.toLowerCase(columnLabel));
+			String key = StringUtil.toLowerCase(columnLabel);
 
-			if (value == null) {
+			T value = (T)_columns.get(key);
+
+			if ((value == null) && !_columns.containsKey(key)) {
 				throw new SQLException("Invalid column name");
 			}
 

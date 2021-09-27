@@ -654,7 +654,7 @@ definition {
 			dmDocumentTitle = "Edit this document two times",
 			groupName = "Guest");
 
-		DMDocument.updateMaximumFileSize(fieldValue = "2");
+		DMDocument.updateMaximumVersions(fieldValue = "2");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

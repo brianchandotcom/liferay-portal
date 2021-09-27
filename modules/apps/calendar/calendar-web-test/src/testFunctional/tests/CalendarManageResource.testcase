@@ -129,9 +129,6 @@ definition {
 		CalendarEvent.compareEventDateAndTimeToResourcesAvailabilityDateAndTime();
 
 		CalendarEvent.publish();
-
-
-		
 	}
 
 	@description = "This is a use case for LPS-55171."

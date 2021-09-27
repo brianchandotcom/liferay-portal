@@ -244,7 +244,7 @@ definition {
 		AssertClick(
 			locator1 = "Button#SAVE_AS_DRAFT",
 			value1 = "Save as Draft");
-		
+
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.viewDetails(
@@ -284,9 +284,6 @@ definition {
 			eventType = "Regular");
 
 		CalendarEvent.viewStatusViaDetails(status = "Approved");
-
-
-		
 	}
 
 	@description = "Verify that the user can approve calendar events on Single Approver workflow"

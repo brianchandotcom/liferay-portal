@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>ERROR_WARNING_BOX</td>
-	<td>//div[contains(@class, 'alert')]</td>
+	<td>//div[contains(@class, 'sidebar')] //div[contains(@class, 'alert')]</td>
 	<td></td>
 </tr>
 <tr>

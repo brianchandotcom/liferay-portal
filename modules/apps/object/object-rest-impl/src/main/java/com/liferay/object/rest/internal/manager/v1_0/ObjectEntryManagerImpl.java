@@ -140,8 +140,7 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 		if (objectEntry != null) {
 			return _toObjectEntry(
-				dtoConverterContext, objectDefinition,
-				_objectEntryLocalService.fetchObjectEntry(objectEntryId));
+				dtoConverterContext, objectDefinition, objectEntry);
 		}
 
 		return null;

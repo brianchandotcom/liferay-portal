@@ -1030,7 +1030,14 @@ definition {
 	macro removeOrganizationAsAssignee {
 		var key_assigneeName = "${assigneeName}";
 
-		Search.searchCP(searchTerm = "${assigneeName}");
+		if (isSet(accountName)) {
+			Search.searchPG(
+				portletName = "${accountName}",
+				searchTerm = "${assigneeName}");
+		}
+		else {
+			Search.searchCP(searchTerm = "${assigneeName}");
+		}
 
 		ClickNoError(
 			locator1 = "Icon#REMOVE_ASSIGNEE",

@@ -19,6 +19,12 @@ package com.liferay.portal.tools.sample.sql.builder;
  */
 public interface BenchmarksPropsKeys {
 
+	public static final String CP_OPTION_FACETS_PORTLET_ENABLED =
+		"sample.sql.cp.option.facets.portlet.enabled";
+
+	public static final String CP_SPECIFICATION_OPTION_FACETS_PORTLET_ENABLED =
+		"sample.sql.cp.specification.option.facets.portlet.enabled";
+
 	public static final String DB_TYPE = "sample.sql.db.type";
 
 	public static final String MAX_ASSET_CATEGORY_COUNT =

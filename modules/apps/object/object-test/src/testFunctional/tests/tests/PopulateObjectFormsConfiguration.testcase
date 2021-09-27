@@ -367,8 +367,6 @@ definition {
 	@description = "LPS-136456 - Verify that the Repeatable option is not available on a form when it is mapped to an object"
 	@priority = "4"
 	test RepeatableOptionNotAvailable {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -388,7 +386,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Forms");
-		
+
 		FormsAdminNavigator.gotoAddForm();
 
 		Form.editName(formName = "Form 1");
@@ -406,8 +404,6 @@ definition {
 		Form.gotoAdvancedTab();
 
 		AssertElementNotPresent(locator1 = "PopulateObjectFormsConfiguration#REPEATABLE_TOGGLE_SWITCH");
-
-
 	}
 
 	@description = "LPS-136456 - Verify that the Searchable option is not available on a form when it is mapped to an object"

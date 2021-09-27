@@ -16,6 +16,9 @@ package com.liferay.fragment.renderer;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.List;
@@ -40,6 +43,31 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 	@Override
 	public Optional<Map<String, Object>> getFieldValuesOptional() {
 		return Optional.ofNullable(_fieldValues);
+	}
+
+	@Override
+	public String getFragmentElementId() {
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("fragment-");
+		sb.append(_fragmentEntryLink.getFragmentEntryId());
+		sb.append("-");
+		sb.append(_fragmentEntryLink.getNamespace());
+
+		if (!ListUtil.isEmpty(_collectionStyledLayoutStructureItemIds)) {
+			sb.append("-");
+			sb.append(
+				ListUtil.toString(
+					_collectionStyledLayoutStructureItemIds, StringPool.BLANK,
+					StringPool.DASH));
+		}
+
+		if (_collectionElementIndex > -1) {
+			sb.append("-");
+			sb.append(_collectionElementIndex);
+		}
+
+		return sb.toString();
 	}
 
 	@Override

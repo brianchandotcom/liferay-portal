@@ -1026,15 +1026,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		Set<String> layoutsResourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/layouts");
+
+		if (SetUtil.isEmpty(layoutsResourcePaths)) {
+			return;
+		}
+
 		Set<String> resourcePaths = new TreeSet<>(
 			new NaturalOrderStringComparator());
 
-		resourcePaths.addAll(
-			_servletContext.getResourcePaths("/site-initializer/layouts"));
-
-		if (SetUtil.isEmpty(resourcePaths)) {
-			return;
-		}
+		resourcePaths.addAll(layoutsResourcePaths);
 
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith("/")) {

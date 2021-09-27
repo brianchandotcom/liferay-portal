@@ -32,7 +32,12 @@
 	</tr>
 	<tr>
 		<td>OPTIONS_PICKLIST</td>
-		<td>//div[(@class='dnd-td') and contains(.,'test')]/..//button[@class='dropdown-toggle component-action dropdown-toggle ml-1 btn btn-monospaced btn-unstyled']</td>
+		<td>//div[(@class='dnd-td') and contains(.,'${key_picklistName}')]/..//button[@class='dropdown-toggle component-action dropdown-toggle ml-1 btn btn-monospaced btn-unstyled']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_OPTIONS_PICKLIST</td>
+		<td>//button[(@class='dropdown-item') and contains(.,'${key_picklistOption}')]</td>
 		<td></td>
 	</tr>
 </tbody>

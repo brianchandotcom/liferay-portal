@@ -1,5 +1,15 @@
 definition {
 
+	macro optionsPicklist{
+		Click.javaScriptClick(locator1 = "Picklist#OPTIONS_PICKLIST",key_picklistName = "${picklistName}");
+	
+		Click.javaScriptClick(locator1 = "Picklist#SELECT_OPTIONS_PICKLIST",key_picklistOption = "${picklistOption}");
+	}
+
+	macro notAssertPicklist {
+		AssertElementNotPresent(locator1 = "Picklist#CREATED_PICKLIST");
+	}
+
 	macro gotoPicklists {
 		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=20123&p_p_auth=2D3BMbJI");
 	}
@@ -15,7 +25,7 @@ definition {
 		Click(locator1 = "Picklist#SAVE_PICKLIST_BUTTON");
 	}
 
-	macro viewPicklist{
+	macro assertPicklist{
 		AssertTextEquals(locator1 = "Picklist#CREATED_PICKLIST", value1 = "${picklistName}");
 	}
 

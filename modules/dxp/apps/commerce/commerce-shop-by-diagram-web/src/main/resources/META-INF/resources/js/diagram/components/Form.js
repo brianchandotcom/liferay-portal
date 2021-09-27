@@ -19,6 +19,7 @@ export function LinkedToCatalogProductFormGroup({updateValue, value}) {
 			<label htmlFor="linkedProductInput">
 				{Liferay.Language.get('sku')}
 			</label>
+
 			<Autocomplete
 				apiUrl="/o/headless-commerce-admin-catalog/v1.0/skus"
 				infiniteScrollMode={true}
@@ -42,6 +43,7 @@ export function LinkedToDiagramFormGroup({updateValue, value}) {
 			<label htmlFor="linkedProductInput">
 				{Liferay.Language.get('diagram')}
 			</label>
+
 			<Autocomplete
 				apiUrl="/o/headless-commerce-admin-catalog/v1.0/products?filter=(productType eq 'diagram')"
 				infiniteScrollMode={true}
@@ -69,6 +71,7 @@ export function LinkedToExternalProductFormGroup({updateValue, value}) {
 			<label htmlFor="linkedProductInput">
 				{Liferay.Language.get('label')}
 			</label>
+
 			<ClayInput
 				id="linkedProductInput"
 				onChange={(event) => updateValue({sku: event.target.value})}

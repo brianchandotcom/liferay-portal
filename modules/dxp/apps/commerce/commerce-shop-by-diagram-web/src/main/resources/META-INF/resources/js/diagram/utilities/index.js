@@ -37,6 +37,7 @@ export function formatMappedProduct(type, quantity, sequence, selectedProduct) {
 		quantity,
 		sequence,
 	};
+
 	switch (type) {
 		case 'sku':
 			return {

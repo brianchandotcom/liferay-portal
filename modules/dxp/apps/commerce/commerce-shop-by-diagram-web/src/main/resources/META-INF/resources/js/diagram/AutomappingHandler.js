@@ -37,13 +37,13 @@ class AutomappingHandler {
 
 		this._printImage().then(() => {
 			this.rendered = true;
-			this._labels = this._diagramWrapper.querySelectorAll(
+			this._texts = this._diagramWrapper.querySelectorAll(
 				pinsCSSSelector
 			);
 
 			this._updatePinsState();
 			this._addZoom();
-			this._updateLabels(this._labels);
+			this._updateLabels(this._texts);
 		});
 	}
 
@@ -111,7 +111,7 @@ class AutomappingHandler {
 		if (this._pins) {
 			const sequences = new Set(this._pins.map((pin) => pin.sequence));
 
-			this._labels.forEach((text) => {
+			this._texts.forEach((text) => {
 				text.classList.add('pin');
 
 				if (sequences.has(text.textContent)) {

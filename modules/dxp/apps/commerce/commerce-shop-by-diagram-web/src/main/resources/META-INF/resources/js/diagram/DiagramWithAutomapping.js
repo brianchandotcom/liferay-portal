@@ -50,6 +50,7 @@ function DiagramWithAutomapping({imageURL, pinsCSSSelector, productId}) {
 	useEffect(() => {
 		function handleClickOnLabel(event) {
 			const sequence = event.target.textContent;
+
 			const selectedPin = pins.find((pin) => pin.sequence === sequence);
 
 			setTooltipData({selectedPin, sequence, x: event.x, y: event.y});
@@ -107,6 +108,7 @@ function DiagramWithAutomapping({imageURL, pinsCSSSelector, productId}) {
 					<g className="zoom-handler" ref={zoomHandlerRef} />
 				</svg>
 			</div>
+
 			<DiagramFooter
 				chartInstance={chartInstance}
 				currentZoom={currentZoom}
@@ -114,10 +116,13 @@ function DiagramWithAutomapping({imageURL, pinsCSSSelector, productId}) {
 				updateCurrentZoom={updateCurrentZoom}
 				updateExpanded={updateExpanded}
 			/>
+
 			{highlightedText && (
 				<Sequence highlighted={true} source={highlightedText} />
 			)}
+
 			{selectedText && <Sequence source={selectedText} />}
+
 			{tooltipData && (
 				<Tooltip
 					closeTooltip={() => setTooltipData(null)}

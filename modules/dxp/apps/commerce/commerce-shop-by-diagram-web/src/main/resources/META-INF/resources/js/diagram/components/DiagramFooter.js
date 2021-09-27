@@ -50,9 +50,11 @@ function DiagramFooter({
 									symbol={expanded ? 'compress' : 'expand'}
 								/>
 							</span>
+
 							{Liferay.Language.get('expand')}
 						</ClayButton>
 					</ClayManagementToolbar.Item>
+
 					<ClayManagementToolbar.Item>
 						<ClayButtonWithIcon
 							className="ml-1"
@@ -74,6 +76,7 @@ function DiagramFooter({
 							symbol="hr"
 						/>
 					</ClayManagementToolbar.Item>
+
 					<ClayManagementToolbar.Item>
 						<ClaySelect
 							className="ml-1"
@@ -91,6 +94,7 @@ function DiagramFooter({
 							))}
 						</ClaySelect>
 					</ClayManagementToolbar.Item>
+
 					<ClayManagementToolbar.Item>
 						<ClayButtonWithIcon
 							className="ml-1"

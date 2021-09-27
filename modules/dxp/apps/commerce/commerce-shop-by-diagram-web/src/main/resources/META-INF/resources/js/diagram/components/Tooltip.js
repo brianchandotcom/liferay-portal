@@ -154,10 +154,13 @@ function Tooltip({
 				if (!isMounted()) {
 					return;
 				}
+
 				updatePins((pins) => {
 					return pins.filter((pin) => pin.id !== selectedPin.id);
 				});
+
 				updateDeleting(false);
+
 				closeTooltip();
 
 				openToast({
@@ -196,6 +199,7 @@ function Tooltip({
 					<label htmlFor="sequenceInput">
 						{Liferay.Language.get('position')}
 					</label>
+
 					<ClayInput
 						id="sequenceInput"
 						onChange={(event) => updateSequence(event.target.value)}
@@ -204,10 +208,12 @@ function Tooltip({
 						value={sequence}
 					/>
 				</ClayForm.Group>
+
 				<ClayForm.Group>
 					<label htmlFor="typeInput">
 						{Liferay.Language.get('type')}
 					</label>
+
 					<ClaySelect
 						id="typeInput"
 						onChange={(event) => {
@@ -225,6 +231,7 @@ function Tooltip({
 						))}
 					</ClaySelect>
 				</ClayForm.Group>
+
 				<div className="row">
 					<div className="col">
 						<LinkedProductFormGroup
@@ -234,11 +241,13 @@ function Tooltip({
 							}
 						/>
 					</div>
+
 					<div className="col-3">
 						<ClayForm.Group>
 							<label htmlFor="quantityInput">
 								{Liferay.Language.get('quantity')}
 							</label>
+
 							<ClayInput
 								id="quantityInput"
 								min={1}
@@ -251,6 +260,7 @@ function Tooltip({
 						</ClayForm.Group>
 					</div>
 				</div>
+
 				<div className="d-flex justify-content-end mt-3">
 					{selectedPin && (
 						<ClayButton
@@ -267,6 +277,7 @@ function Tooltip({
 							)}
 						</ClayButton>
 					)}
+
 					<ClayButton
 						className="mr-1"
 						displayType="secondary"
@@ -275,6 +286,7 @@ function Tooltip({
 					>
 						{Liferay.Language.get('cancel')}
 					</ClayButton>
+
 					<ClayButton disabled={disabled} type="submit">
 						{saving ? <ClayLoadingIndicator small /> : saveMessage}
 					</ClayButton>

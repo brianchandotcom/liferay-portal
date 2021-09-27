@@ -71,7 +71,9 @@ CSDiagramType csDiagramType = csDiagramSettingDisplayContext.getCSDiagramType(ty
 					else {
 					%>
 
-						<div class="p-3 text-center"><liferay-ui:message key="please-upload-a-file" /></div>
+						<div class="p-3 text-center">
+							<liferay-ui:message key="please-upload-a-file" />
+						</div>
 
 					<%
 					}

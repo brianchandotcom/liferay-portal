@@ -15,6 +15,7 @@ import React, {useMemo} from 'react';
 export default function Sequence({highlighted, source}) {
 	const style = useMemo(() => {
 		const {height, width, x, y} = source.getBoundingClientRect();
+
 		const backgroundSize = Math.max(height, width) + 4;
 
 		return {

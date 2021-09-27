@@ -188,7 +188,7 @@ definition {
 			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
 	}
 
-	@description = "This is a test for LPS-136793. It checks that a custom friendly URL for Blogs can be deleted and republished."
+	@description = "This is a test for LPS-136793 and LPS-139452. It checks that a custom friendly URL for Blogs can be deleted and republished."
 	@priority = "4"
 	test CanPublishDeletedCustomFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
@@ -196,8 +196,14 @@ definition {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
-			friendlyURL = "custom-url",
 			groupName = "Site Name (Staging)",
+			site = "false");
+
+		JSONBlog.updateEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name (Staging)",
+			newFriendlyURL = "custom-url",
 			site = "false");
 
 		Navigator.gotoStagedSitePage(

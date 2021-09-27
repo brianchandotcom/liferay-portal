@@ -65,7 +65,7 @@ definition {
 
 			SitePages.clickPageMenu(pageName = "Test Content Page Name");
 
-			MenuItem.viewOrder(menuItemList = "Edit,Translate,View,-,Discard Draft,Orphan Widgets,-,Copy Page,Export for Translation,Import Translation,-,Configure,Permissions,-,Delete");
+			MenuItem.viewOrder(menuItemList = "Edit,Translate,View,-,Preview Draft,Discard Draft,Orphan Widgets,-,Copy Page,Export for Translation,Import Translation,-,Configure,Permissions,-,Delete");
 		}
 	}
 

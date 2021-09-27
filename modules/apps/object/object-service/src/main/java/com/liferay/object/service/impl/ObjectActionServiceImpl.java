@@ -14,10 +14,17 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.model.ObjectAction;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.base.ObjectActionServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -30,4 +37,71 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
+
+	@Override
+	public ObjectAction addObjectAction(
+			long userId, long objectDefinitionId, boolean active, String name,
+			String objectActionExecutorKey,
+			UnicodeProperties parametersUnicodeProperties)
+		throws PortalException {
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
+
+		return objectActionLocalService.addObjectAction(
+			userId, objectDefinitionId, active, objectActionExecutorKey,
+			objectActionExecutorKey, parametersUnicodeProperties);
+	}
+
+	@Override
+	public ObjectAction deleteObjectAction(long objectActionId)
+		throws PortalException {
+
+		ObjectAction objectAction = objectActionPersistence.findByPrimaryKey(
+			objectActionId);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectAction.getObjectDefinitionId(),
+			ActionKeys.UPDATE);
+
+		return objectActionLocalService.deleteObjectAction(objectAction);
+	}
+
+	@Override
+	public ObjectAction getObjectAction(long objectActionId)
+		throws PortalException {
+
+		ObjectAction objectAction = objectActionPersistence.findByPrimaryKey(
+			objectActionId);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectAction.getObjectDefinitionId(),
+			ActionKeys.VIEW);
+
+		return objectActionLocalService.getObjectAction(objectActionId);
+	}
+
+	@Override
+	public ObjectAction updateObjectAction(
+			long objectActionId, boolean active, String name,
+			UnicodeProperties parametersUnicodeProperties)
+		throws PortalException {
+
+		ObjectAction objectAction = objectActionPersistence.findByPrimaryKey(
+			objectActionId);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectAction.getObjectActionId(),
+			ActionKeys.UPDATE);
+
+		return objectActionLocalService.updateObjectAction(
+			objectActionId, active, name, parametersUnicodeProperties);
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"
+	)
+	private ModelResourcePermission<ObjectDefinition>
+		_objectDefinitionModelResourcePermission;
+
 }

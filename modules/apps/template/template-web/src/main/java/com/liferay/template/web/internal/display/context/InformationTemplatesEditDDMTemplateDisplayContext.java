@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.template.model.TemplateEntry;
@@ -72,6 +73,10 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 	@Override
 	public String getTemplateSubtypeLabel() {
 		TemplateEntry templateEntry = _getTemplateEntry();
+
+		if (Validator.isNull(templateEntry.getInfoItemFormVariationKey())) {
+			return StringPool.BLANK;
+		}
 
 		return Optional.ofNullable(
 			_infoItemServiceTracker.getFirstInfoItemService(

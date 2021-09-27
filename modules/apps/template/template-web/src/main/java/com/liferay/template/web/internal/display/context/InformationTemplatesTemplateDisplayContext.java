@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalServiceUtil;
 import com.liferay.template.web.internal.security.permissions.resource.TemplateEntryPermission;
@@ -124,6 +125,10 @@ public class InformationTemplatesTemplateDisplayContext
 	}
 
 	public String getTemplateSubtypeLabel(TemplateEntry templateEntry) {
+		if (Validator.isNull(templateEntry.getInfoItemFormVariationKey())) {
+			return StringPool.BLANK;
+		}
+
 		return Optional.ofNullable(
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class,

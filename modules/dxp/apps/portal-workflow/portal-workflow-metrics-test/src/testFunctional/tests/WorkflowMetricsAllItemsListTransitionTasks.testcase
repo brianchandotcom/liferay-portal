@@ -624,6 +624,8 @@ definition {
 	@description = "LPS-108138 - Verify that the tasks on -Choose Transition Per Step- are grouped by versioned tasks -when there are changes in the workflow process-"
 	@priority = "4"
 	test TasksAreGroupedByVersionedTasks {
+		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsListTransitionTasks#TasksAreGroupedByVersionedTasks";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -650,7 +652,7 @@ definition {
 
 		KaleoDesigner.deleteNode(nodeNodeLabel = "update");
 
-		Click(locator1 = "Button#UPDATE");
+		Button.click(button = "Update");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

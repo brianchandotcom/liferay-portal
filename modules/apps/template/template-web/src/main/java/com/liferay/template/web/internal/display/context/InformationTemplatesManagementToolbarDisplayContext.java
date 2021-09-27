@@ -187,8 +187,6 @@ public class InformationTemplatesManagementToolbarDisplayContext
 				_infoItemServiceTracker.getInfoItemClassDetails(
 					TemplateInfoItemCapability.KEY)) {
 
-			JSONArray itemSubtypesJSONArray = JSONFactoryUtil.createJSONArray();
-
 			InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
 				_infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemFormVariationsProvider.class,
@@ -198,6 +196,13 @@ public class InformationTemplatesManagementToolbarDisplayContext
 				Collection<InfoItemFormVariation> infoItemFormVariations =
 					infoItemFormVariationsProvider.getInfoItemFormVariations(
 						_themeDisplay.getScopeGroupId());
+
+				if (infoItemFormVariations.isEmpty()) {
+					continue;
+				}
+
+				JSONArray itemSubtypesJSONArray =
+					JSONFactoryUtil.createJSONArray();
 
 				infoItemFormVariations = ListUtil.sort(
 					new ArrayList<>(infoItemFormVariations),
@@ -217,17 +222,26 @@ public class InformationTemplatesManagementToolbarDisplayContext
 							"value", infoItemFormVariation.getKey()
 						));
 				}
-			}
 
-			itemTypesJSONArray.put(
-				JSONUtil.put(
-					"label",
-					infoItemClassDetails.getLabel(_themeDisplay.getLocale())
-				).put(
-					"subtypes", itemSubtypesJSONArray
-				).put(
-					"value", infoItemClassDetails.getClassName()
-				));
+				itemTypesJSONArray.put(
+					JSONUtil.put(
+						"label",
+						infoItemClassDetails.getLabel(_themeDisplay.getLocale())
+					).put(
+						"subtypes", itemSubtypesJSONArray
+					).put(
+						"value", infoItemClassDetails.getClassName()
+					));
+			}
+			else {
+				itemTypesJSONArray.put(
+					JSONUtil.put(
+						"label",
+						infoItemClassDetails.getLabel(_themeDisplay.getLocale())
+					).put(
+						"value", infoItemClassDetails.getClassName()
+					));
+			}
 		}
 
 		return itemTypesJSONArray;

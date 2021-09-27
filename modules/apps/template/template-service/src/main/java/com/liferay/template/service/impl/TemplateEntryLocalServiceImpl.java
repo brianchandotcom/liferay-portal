@@ -94,6 +94,11 @@ public class TemplateEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<TemplateEntry> getTemplateEntries(long[] groupIds) {
+		return templateEntryPersistence.findByGroupId(groupIds);
+	}
+
+	@Override
 	public int getTemplateEntriesCount(long groupId) {
 		return templateEntryPersistence.countByGroupId(groupId);
 	}

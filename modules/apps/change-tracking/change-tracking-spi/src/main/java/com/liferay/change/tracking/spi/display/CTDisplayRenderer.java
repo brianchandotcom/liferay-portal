@@ -43,6 +43,11 @@ public interface CTDisplayRenderer<T> {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #renderPreview(DisplayContext)}
+	 */
+	@Deprecated
 	public default String getContent(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, Locale locale, T model)
@@ -181,5 +186,14 @@ public interface CTDisplayRenderer<T> {
 	 * @throws Exception if an exception occurred
 	 */
 	public void render(DisplayContext<T> displayContext) throws Exception;
+
+	public default String renderPreview(DisplayContext<T> displayContext)
+		throws Exception {
+
+		return getContent(
+			displayContext.getHttpServletRequest(),
+			displayContext.getHttpServletResponse(), displayContext.getLocale(),
+			displayContext.getModel());
+	}
 
 }

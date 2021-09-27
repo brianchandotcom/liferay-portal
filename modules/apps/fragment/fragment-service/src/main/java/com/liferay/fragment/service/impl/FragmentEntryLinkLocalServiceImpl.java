@@ -748,6 +748,25 @@ public class FragmentEntryLinkLocalServiceImpl
 		_updateFragmentEntryLinkLayout(fragmentEntryLink);
 	}
 
+	@Override
+	public void updateLayoutWithLatestChanges(long fragmentEntryLinkId)
+		throws PortalException {
+
+		FragmentEntryLink fragmentEntryLink =
+			fragmentEntryLinkPersistence.findByPrimaryKey(fragmentEntryLinkId);
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			fragmentEntryLinkPersistence.findByG_F_C_C(
+				fragmentEntryLink.getGroupId(),
+				fragmentEntryLink.getFragmentEntryId(),
+				fragmentEntryLink.getClassNameId(),
+				fragmentEntryLink.getClassPK());
+
+		for (FragmentEntryLink curFragmentEntryLink : fragmentEntryLinks) {
+			updateLatestChanges(curFragmentEntryLink.getFragmentEntryLinkId());
+		}
+	}
+
 	private String _getProcessedHTML(
 			FragmentEntryLink fragmentEntryLink, ServiceContext serviceContext)
 		throws PortalException {

@@ -102,7 +102,7 @@ public class SXPBlueprintSearchRequestEnhancer {
 			new QuerySXPSearchRequestBodyContributor(),
 			new SuggestSXPSearchRequestBodyContributor(),
 			new SortSXPSearchRequestBodyContributor(
-				_geoBuilders, _jsonFactory, _queries, _scripts, _sorts));
+				_geoBuilders, _queries, _scripts, _sorts));
 	}
 
 	private void _contributeSXPSearchRequestBodyContributors(

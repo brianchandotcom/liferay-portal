@@ -51,6 +51,7 @@ import com.liferay.search.experiences.rest.dto.v1_0.Parameter;
 import com.liferay.search.experiences.rest.dto.v1_0.Query;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SortConfiguration;
+import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 
 import java.io.InputStream;
 
@@ -74,7 +75,7 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testAggregations() {
+	public void testAggregations() throws Exception {
 		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
 			_createSXPBlueprintSearchRequestEnhancer();
 
@@ -123,10 +124,12 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 
 		Assert.assertEquals(
 			aggregationsMap.toString(), 2, aggregationsMap.size());
+
+		_assertDTOToStringAndBack(configuration);
 	}
 
 	@Test
-	public void testHighlight() {
+	public void testHighlight() throws Exception {
 		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
 			_createSXPBlueprintSearchRequestEnhancer();
 
@@ -171,10 +174,12 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 
 		Assert.assertArrayEquals(postTags, highlight.getPostTags());
 		Assert.assertArrayEquals(preTags, highlight.getPreTags());
+
+		_assertDTOToStringAndBack(configuration);
 	}
 
 	@Test
-	public void testParameters() {
+	public void testParameters() throws Exception {
 		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
 			_createSXPBlueprintSearchRequestEnhancer();
 
@@ -201,10 +206,12 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 		SearchRequest searchRequest = _searchRequestBuilder.build();
 
 		Assert.assertNull(searchRequest.getQueryString());
+
+		_assertDTOToStringAndBack(configuration);
 	}
 
 	@Test
-	public void testQueries() {
+	public void testQueries() throws Exception {
 		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
 			_createSXPBlueprintSearchRequestEnhancer();
 
@@ -250,10 +257,12 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 				"term", JSONUtil.put("status", 0)
 			).toString(),
 			new String(wrapperQuery.getSource()));
+
+		_assertDTOToStringAndBack(configuration);
 	}
 
 	@Test
-	public void testSort() {
+	public void testSort() throws Exception {
 		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
 			_createSXPBlueprintSearchRequestEnhancer();
 
@@ -264,8 +273,10 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 		configuration.setSortConfiguration(
 			new SortConfiguration() {
 				{
-					sortsJSONArrayString = _read(
-						"SXPBlueprintSearchRequestEnhancerTest.testSort.json");
+					sortsJSONArray = JSONFactoryUtil.createJSONArray(
+						_read(
+							"SXPBlueprintSearchRequestEnhancerTest.testSort." +
+								"json"));
 				}
 			});
 
@@ -277,6 +288,21 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 		List<Sort> sorts = searchRequest.getSorts();
 
 		Assert.assertEquals(sorts.toString(), 9, sorts.size());
+
+		_assertDTOToStringAndBack(configuration);
+	}
+
+	private void _assertDTOToStringAndBack(Configuration configuration1)
+		throws Exception {
+
+		Configuration configuration2 = ConfigurationUtil.toConfiguration(
+			configuration1.toString());
+
+		Assert.assertEquals(
+			JSONUtil.toString(
+				JSONFactoryUtil.createJSONObject(configuration1.toString())),
+			JSONUtil.toString(
+				JSONFactoryUtil.createJSONObject(configuration2.toString())));
 	}
 
 	private SXPBlueprint _createSXPBlueprint() {
@@ -314,8 +340,8 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 					new HighlightBuilderFactoryImpl(),
 					JSONFactoryUtil.getJSONFactory()),
 				new SortSXPSearchRequestBodyContributor(
-					new GeoBuildersImpl(), JSONFactoryUtil.getJSONFactory(),
-					new QueriesImpl(), new ScriptsImpl(), new SortsImpl())));
+					new GeoBuildersImpl(), new QueriesImpl(), new ScriptsImpl(),
+					new SortsImpl())));
 
 		return sxpBlueprintSearchRequestEnhancer;
 	}

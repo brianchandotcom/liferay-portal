@@ -175,8 +175,8 @@ components:
                             type: array
                         sortConfiguration:
                             properties:
-                                sortsJSONArrayString:
-                                    type: string
+                                sortsJSONArray:
+                                    type: object
                             type: object
                     type: object
                 description:

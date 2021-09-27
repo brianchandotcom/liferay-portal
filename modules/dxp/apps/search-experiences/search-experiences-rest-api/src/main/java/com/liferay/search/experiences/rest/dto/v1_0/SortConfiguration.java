@@ -35,6 +35,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -52,20 +54,21 @@ public class SortConfiguration implements Serializable {
 	}
 
 	@Schema
-	public String getSortsJSONArrayString() {
-		return sortsJSONArrayString;
+	@Valid
+	public Object getSortsJSONArray() {
+		return sortsJSONArray;
 	}
 
-	public void setSortsJSONArrayString(String sortsJSONArrayString) {
-		this.sortsJSONArrayString = sortsJSONArrayString;
+	public void setSortsJSONArray(Object sortsJSONArray) {
+		this.sortsJSONArray = sortsJSONArray;
 	}
 
 	@JsonIgnore
-	public void setSortsJSONArrayString(
-		UnsafeSupplier<String, Exception> sortsJSONArrayStringUnsafeSupplier) {
+	public void setSortsJSONArray(
+		UnsafeSupplier<Object, Exception> sortsJSONArrayUnsafeSupplier) {
 
 		try {
-			sortsJSONArrayString = sortsJSONArrayStringUnsafeSupplier.get();
+			sortsJSONArray = sortsJSONArrayUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -77,7 +80,7 @@ public class SortConfiguration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String sortsJSONArrayString;
+	protected Object sortsJSONArray;
 
 	@Override
 	public boolean equals(Object object) {
@@ -106,18 +109,14 @@ public class SortConfiguration implements Serializable {
 
 		sb.append("{");
 
-		if (sortsJSONArrayString != null) {
+		if (sortsJSONArray != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"sortsJSONArrayString\": ");
+			sb.append("\"sortsJSONArray\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(sortsJSONArrayString));
-
-			sb.append("\"");
+			sb.append(String.valueOf(sortsJSONArray));
 		}
 
 		sb.append("}");

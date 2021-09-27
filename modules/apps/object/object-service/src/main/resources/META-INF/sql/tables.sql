@@ -9,9 +9,9 @@ create table ObjectAction (
 	modifiedDate DATE null,
 	objectDefinitionId LONG,
 	active_ BOOLEAN,
-	objectActionTriggerKey VARCHAR(75) null,
-	parameters TEXT null,
-	type_ VARCHAR(75) null
+	name VARCHAR(75) null,
+	objectActionExecutorKey VARCHAR(75) null,
+	parameters TEXT null
 );
 
 create table ObjectDefinition (

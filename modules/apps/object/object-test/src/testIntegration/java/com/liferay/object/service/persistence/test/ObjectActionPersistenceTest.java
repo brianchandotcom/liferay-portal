@@ -140,12 +140,12 @@ public class ObjectActionPersistenceTest {
 
 		newObjectAction.setActive(RandomTestUtil.randomBoolean());
 
-		newObjectAction.setObjectActionTriggerKey(
+		newObjectAction.setName(RandomTestUtil.randomString());
+
+		newObjectAction.setObjectActionExecutorKey(
 			RandomTestUtil.randomString());
 
 		newObjectAction.setParameters(RandomTestUtil.randomString());
-
-		newObjectAction.setType(RandomTestUtil.randomString());
 
 		_objectActions.add(_persistence.update(newObjectAction));
 
@@ -179,13 +179,13 @@ public class ObjectActionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectAction.isActive(), newObjectAction.isActive());
 		Assert.assertEquals(
-			existingObjectAction.getObjectActionTriggerKey(),
-			newObjectAction.getObjectActionTriggerKey());
+			existingObjectAction.getName(), newObjectAction.getName());
+		Assert.assertEquals(
+			existingObjectAction.getObjectActionExecutorKey(),
+			newObjectAction.getObjectActionExecutorKey());
 		Assert.assertEquals(
 			existingObjectAction.getParameters(),
 			newObjectAction.getParameters());
-		Assert.assertEquals(
-			existingObjectAction.getType(), newObjectAction.getType());
 	}
 
 	@Test
@@ -207,14 +207,14 @@ public class ObjectActionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByO_A_OATK() throws Exception {
-		_persistence.countByO_A_OATK(
+	public void testCountByO_A_OAEK() throws Exception {
+		_persistence.countByO_A_OAEK(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "");
 
-		_persistence.countByO_A_OATK(
+		_persistence.countByO_A_OAEK(
 			0L, RandomTestUtil.randomBoolean(), "null");
 
-		_persistence.countByO_A_OATK(
+		_persistence.countByO_A_OAEK(
 			0L, RandomTestUtil.randomBoolean(), (String)null);
 	}
 
@@ -246,7 +246,8 @@ public class ObjectActionPersistenceTest {
 			"ObjectAction", "mvccVersion", true, "uuid", true, "objectActionId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "objectDefinitionId",
-			true, "active", true, "objectActionTriggerKey", true, "type", true);
+			true, "active", true, "name", true, "objectActionExecutorKey",
+			true);
 	}
 
 	@Test
@@ -485,11 +486,11 @@ public class ObjectActionPersistenceTest {
 
 		objectAction.setActive(RandomTestUtil.randomBoolean());
 
-		objectAction.setObjectActionTriggerKey(RandomTestUtil.randomString());
+		objectAction.setName(RandomTestUtil.randomString());
+
+		objectAction.setObjectActionExecutorKey(RandomTestUtil.randomString());
 
 		objectAction.setParameters(RandomTestUtil.randomString());
-
-		objectAction.setType(RandomTestUtil.randomString());
 
 		_objectActions.add(_persistence.update(objectAction));
 

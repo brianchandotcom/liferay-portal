@@ -240,19 +240,34 @@ public interface ObjectActionModel
 	public void setActive(boolean active);
 
 	/**
-	 * Returns the object action trigger key of this object action.
+	 * Returns the name of this object action.
 	 *
-	 * @return the object action trigger key of this object action
+	 * @return the name of this object action
 	 */
 	@AutoEscape
-	public String getObjectActionTriggerKey();
+	public String getName();
 
 	/**
-	 * Sets the object action trigger key of this object action.
+	 * Sets the name of this object action.
 	 *
-	 * @param objectActionTriggerKey the object action trigger key of this object action
+	 * @param name the name of this object action
 	 */
-	public void setObjectActionTriggerKey(String objectActionTriggerKey);
+	public void setName(String name);
+
+	/**
+	 * Returns the object action executor key of this object action.
+	 *
+	 * @return the object action executor key of this object action
+	 */
+	@AutoEscape
+	public String getObjectActionExecutorKey();
+
+	/**
+	 * Sets the object action executor key of this object action.
+	 *
+	 * @param objectActionExecutorKey the object action executor key of this object action
+	 */
+	public void setObjectActionExecutorKey(String objectActionExecutorKey);
 
 	/**
 	 * Returns the parameters of this object action.
@@ -268,21 +283,6 @@ public interface ObjectActionModel
 	 * @param parameters the parameters of this object action
 	 */
 	public void setParameters(String parameters);
-
-	/**
-	 * Returns the type of this object action.
-	 *
-	 * @return the type of this object action
-	 */
-	@AutoEscape
-	public String getType();
-
-	/**
-	 * Sets the type of this object action.
-	 *
-	 * @param type the type of this object action
-	 */
-	public void setType(String type);
 
 	@Override
 	public ObjectAction cloneWithOriginalValues();

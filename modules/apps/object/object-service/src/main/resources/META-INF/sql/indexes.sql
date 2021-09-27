@@ -1,4 +1,4 @@
-create index IX_684FC85D on ObjectAction (objectDefinitionId, active_, objectActionTriggerKey[$COLUMN_LENGTH:75$]);
+create index IX_85C0E3DA on ObjectAction (objectDefinitionId, active_, objectActionExecutorKey[$COLUMN_LENGTH:75$]);
 create index IX_BA9B4A2F on ObjectAction (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_5C293E0D on ObjectDefinition (companyId, active_, system_, status);

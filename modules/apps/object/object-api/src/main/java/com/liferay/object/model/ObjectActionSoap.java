@@ -43,9 +43,10 @@ public class ObjectActionSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setObjectDefinitionId(model.getObjectDefinitionId());
 		soapModel.setActive(model.isActive());
-		soapModel.setObjectActionTriggerKey(model.getObjectActionTriggerKey());
+		soapModel.setName(model.getName());
+		soapModel.setObjectActionExecutorKey(
+			model.getObjectActionExecutorKey());
 		soapModel.setParameters(model.getParameters());
-		soapModel.setType(model.getType());
 
 		return soapModel;
 	}
@@ -183,12 +184,20 @@ public class ObjectActionSoap implements Serializable {
 		_active = active;
 	}
 
-	public String getObjectActionTriggerKey() {
-		return _objectActionTriggerKey;
+	public String getName() {
+		return _name;
 	}
 
-	public void setObjectActionTriggerKey(String objectActionTriggerKey) {
-		_objectActionTriggerKey = objectActionTriggerKey;
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public String getObjectActionExecutorKey() {
+		return _objectActionExecutorKey;
+	}
+
+	public void setObjectActionExecutorKey(String objectActionExecutorKey) {
+		_objectActionExecutorKey = objectActionExecutorKey;
 	}
 
 	public String getParameters() {
@@ -197,14 +206,6 @@ public class ObjectActionSoap implements Serializable {
 
 	public void setParameters(String parameters) {
 		_parameters = parameters;
-	}
-
-	public String getType() {
-		return _type;
-	}
-
-	public void setType(String type) {
-		_type = type;
 	}
 
 	private long _mvccVersion;
@@ -217,8 +218,8 @@ public class ObjectActionSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _objectDefinitionId;
 	private boolean _active;
-	private String _objectActionTriggerKey;
+	private String _name;
+	private String _objectActionExecutorKey;
 	private String _parameters;
-	private String _type;
 
 }

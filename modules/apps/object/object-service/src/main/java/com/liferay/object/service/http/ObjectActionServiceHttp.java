@@ -14,13 +14,21 @@
 
 package com.liferay.object.service.http;
 
+import com.liferay.object.service.ObjectActionServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 /**
  * Provides the HTTP utility for the
- * <code>com.liferay.object.service.ObjectActionServiceUtil</code> service
+ * <code>ObjectActionServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * <code>com.liferay.portal.kernel.security.auth.HttpPrincipal</code> parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -42,4 +50,188 @@ package com.liferay.object.service.http;
  * @generated
  */
 public class ObjectActionServiceHttp {
+
+	public static com.liferay.object.model.ObjectAction addObjectAction(
+			HttpPrincipal httpPrincipal, long userId, long objectDefinitionId,
+			boolean active, String name, String objectActionExecutorKey,
+			com.liferay.portal.kernel.util.UnicodeProperties parameters)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectActionServiceUtil.class, "addObjectAction",
+				_addObjectActionParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, objectDefinitionId, active, name,
+				objectActionExecutorKey, parameters);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectAction)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.object.model.ObjectAction updateObjectAction(
+			HttpPrincipal httpPrincipal, long objectActionId, boolean active,
+			String name,
+			com.liferay.portal.kernel.util.UnicodeProperties parameters)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectActionServiceUtil.class, "updateObjectAction",
+				_updateObjectActionParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, objectActionId, active, name, parameters);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectAction)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.object.model.ObjectAction deleteObjectAction(
+			HttpPrincipal httpPrincipal, long objectActionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectActionServiceUtil.class, "deleteObjectAction",
+				_deleteObjectActionParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, objectActionId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectAction)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.object.model.ObjectAction getObjectAction(
+			HttpPrincipal httpPrincipal, long objectActionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectActionServiceUtil.class, "getObjectAction",
+				_getObjectActionParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, objectActionId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectAction)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ObjectActionServiceHttp.class);
+
+	private static final Class<?>[] _addObjectActionParameterTypes0 =
+		new Class[] {
+			long.class, long.class, boolean.class, String.class, String.class,
+			com.liferay.portal.kernel.util.UnicodeProperties.class
+		};
+	private static final Class<?>[] _updateObjectActionParameterTypes1 =
+		new Class[] {
+			long.class, boolean.class, String.class,
+			com.liferay.portal.kernel.util.UnicodeProperties.class
+		};
+	private static final Class<?>[] _deleteObjectActionParameterTypes2 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getObjectActionParameterTypes3 =
+		new Class[] {long.class};
+
 }

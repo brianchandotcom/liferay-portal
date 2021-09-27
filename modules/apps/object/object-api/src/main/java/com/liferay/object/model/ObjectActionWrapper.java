@@ -53,9 +53,9 @@ public class ObjectActionWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("objectDefinitionId", getObjectDefinitionId());
 		attributes.put("active", isActive());
-		attributes.put("objectActionTriggerKey", getObjectActionTriggerKey());
+		attributes.put("name", getName());
+		attributes.put("objectActionExecutorKey", getObjectActionExecutorKey());
 		attributes.put("parameters", getParameters());
-		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -122,23 +122,23 @@ public class ObjectActionWrapper
 			setActive(active);
 		}
 
-		String objectActionTriggerKey = (String)attributes.get(
-			"objectActionTriggerKey");
+		String name = (String)attributes.get("name");
 
-		if (objectActionTriggerKey != null) {
-			setObjectActionTriggerKey(objectActionTriggerKey);
+		if (name != null) {
+			setName(name);
+		}
+
+		String objectActionExecutorKey = (String)attributes.get(
+			"objectActionExecutorKey");
+
+		if (objectActionExecutorKey != null) {
+			setObjectActionExecutorKey(objectActionExecutorKey);
 		}
 
 		String parameters = (String)attributes.get("parameters");
 
 		if (parameters != null) {
 			setParameters(parameters);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
 		}
 	}
 
@@ -198,6 +198,26 @@ public class ObjectActionWrapper
 	}
 
 	/**
+	 * Returns the name of this object action.
+	 *
+	 * @return the name of this object action
+	 */
+	@Override
+	public String getName() {
+		return model.getName();
+	}
+
+	/**
+	 * Returns the object action executor key of this object action.
+	 *
+	 * @return the object action executor key of this object action
+	 */
+	@Override
+	public String getObjectActionExecutorKey() {
+		return model.getObjectActionExecutorKey();
+	}
+
+	/**
 	 * Returns the object action ID of this object action.
 	 *
 	 * @return the object action ID of this object action
@@ -205,16 +225,6 @@ public class ObjectActionWrapper
 	@Override
 	public long getObjectActionId() {
 		return model.getObjectActionId();
-	}
-
-	/**
-	 * Returns the object action trigger key of this object action.
-	 *
-	 * @return the object action trigger key of this object action
-	 */
-	@Override
-	public String getObjectActionTriggerKey() {
-		return model.getObjectActionTriggerKey();
 	}
 
 	/**
@@ -252,16 +262,6 @@ public class ObjectActionWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
-	}
-
-	/**
-	 * Returns the type of this object action.
-	 *
-	 * @return the type of this object action
-	 */
-	@Override
-	public String getType() {
-		return model.getType();
 	}
 
 	/**
@@ -370,6 +370,26 @@ public class ObjectActionWrapper
 	}
 
 	/**
+	 * Sets the name of this object action.
+	 *
+	 * @param name the name of this object action
+	 */
+	@Override
+	public void setName(String name) {
+		model.setName(name);
+	}
+
+	/**
+	 * Sets the object action executor key of this object action.
+	 *
+	 * @param objectActionExecutorKey the object action executor key of this object action
+	 */
+	@Override
+	public void setObjectActionExecutorKey(String objectActionExecutorKey) {
+		model.setObjectActionExecutorKey(objectActionExecutorKey);
+	}
+
+	/**
 	 * Sets the object action ID of this object action.
 	 *
 	 * @param objectActionId the object action ID of this object action
@@ -377,16 +397,6 @@ public class ObjectActionWrapper
 	@Override
 	public void setObjectActionId(long objectActionId) {
 		model.setObjectActionId(objectActionId);
-	}
-
-	/**
-	 * Sets the object action trigger key of this object action.
-	 *
-	 * @param objectActionTriggerKey the object action trigger key of this object action
-	 */
-	@Override
-	public void setObjectActionTriggerKey(String objectActionTriggerKey) {
-		model.setObjectActionTriggerKey(objectActionTriggerKey);
 	}
 
 	/**
@@ -417,16 +427,6 @@ public class ObjectActionWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	 * Sets the type of this object action.
-	 *
-	 * @param type the type of this object action
-	 */
-	@Override
-	public void setType(String type) {
-		model.setType(type);
 	}
 
 	/**

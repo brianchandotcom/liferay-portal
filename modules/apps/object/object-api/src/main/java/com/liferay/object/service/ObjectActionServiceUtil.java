@@ -14,6 +14,9 @@
 
 package com.liferay.object.service;
 
+import com.liferay.object.model.ObjectAction;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * Provides the remote service utility for ObjectAction. This utility wraps
  * <code>com.liferay.object.service.impl.ObjectActionServiceImpl</code> and is an
@@ -33,14 +36,45 @@ public class ObjectActionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectActionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectAction addObjectAction(
+			long userId, long objectDefinitionId, boolean active, String name,
+			String objectActionExecutorKey,
+			com.liferay.portal.kernel.util.UnicodeProperties parameters)
+		throws PortalException {
+
+		return getService().addObjectAction(
+			userId, objectDefinitionId, active, name, objectActionExecutorKey,
+			parameters);
+	}
+
+	public static ObjectAction deleteObjectAction(long objectActionId)
+		throws PortalException {
+
+		return getService().deleteObjectAction(objectActionId);
+	}
+
+	public static ObjectAction getObjectAction(long objectActionId)
+		throws PortalException {
+
+		return getService().getObjectAction(objectActionId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static ObjectAction updateObjectAction(
+			long objectActionId, boolean active, String name,
+			com.liferay.portal.kernel.util.UnicodeProperties parameters)
+		throws PortalException {
+
+		return getService().updateObjectAction(
+			objectActionId, active, name, parameters);
 	}
 
 	public static ObjectActionService getService() {

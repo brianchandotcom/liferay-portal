@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.Serializable;
 
@@ -63,6 +64,11 @@ public interface ObjectActionLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectActionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object action local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectActionLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectAction addObjectAction(
+			long userId, long objectDefinitionId, boolean active, String name,
+			String objectActionExecutorKey, UnicodeProperties parameters)
+		throws PortalException;
 
 	/**
 	 * Adds the object action to the database. Also notifies the appropriate model listeners.
@@ -286,6 +292,12 @@ public interface ObjectActionLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectAction updateObjectAction(
+			long objectActionId, boolean active, String name,
+			UnicodeProperties parameters)
 		throws PortalException;
 
 	/**

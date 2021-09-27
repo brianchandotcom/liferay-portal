@@ -12,11 +12,11 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="objectDefinitionId" type="long" />
 		<field name="active" type="boolean" />
-		<field name="objectActionTriggerKey" type="String" />
+		<field name="name" type="String" />
+		<field name="objectActionExecutorKey" type="String" />
 		<field name="parameters" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="type" type="String" />
 	</model>
 	<model name="com.liferay.object.model.ObjectDefinition">
 		<field name="mvccVersion" type="long" />

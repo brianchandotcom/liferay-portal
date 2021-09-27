@@ -14,9 +14,15 @@
 
 package com.liferay.object.service.http;
 
+import com.liferay.object.service.ObjectActionServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.object.service.ObjectActionServiceUtil</code> service
+ * <code>ObjectActionServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,44 @@ package com.liferay.object.service.http;
  */
 @Deprecated
 public class ObjectActionServiceSoap {
+
+	public static com.liferay.object.model.ObjectActionSoap deleteObjectAction(
+			long objectActionId)
+		throws RemoteException {
+
+		try {
+			com.liferay.object.model.ObjectAction returnValue =
+				ObjectActionServiceUtil.deleteObjectAction(objectActionId);
+
+			return com.liferay.object.model.ObjectActionSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.object.model.ObjectActionSoap getObjectAction(
+			long objectActionId)
+		throws RemoteException {
+
+		try {
+			com.liferay.object.model.ObjectAction returnValue =
+				ObjectActionServiceUtil.getObjectAction(objectActionId);
+
+			return com.liferay.object.model.ObjectActionSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ObjectActionServiceSoap.class);
+
 }

@@ -20,6 +20,7 @@ import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.MappingJsonFactory;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.service.CommerceAccountGroupLocalService;
 import com.liferay.commerce.account.service.CommerceAccountGroupRelLocalService;
@@ -78,7 +79,6 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -152,8 +152,7 @@ public class CPDefinitionsImporter {
 	}
 
 	public List<CPDefinition> importCPDefinitions(
-			JSONArray jsonArray, List<AssetCategory> assetCategories,
-			long catalogGroupId, long commerceChannelId,
+			JSONArray jsonArray, long catalogGroupId, long commerceChannelId,
 			long[] commerceInventoryWarehouseIds, ClassLoader classLoader,
 			String imageDependenciesPath, long scopeGroupId, long userId)
 		throws Exception {
@@ -164,8 +163,8 @@ public class CPDefinitionsImporter {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			CPDefinition cpDefinition = _importCPDefinition(
-				jsonArray.getJSONObject(i), assetCategories, catalogGroupId,
-				commerceChannelId, commerceInventoryWarehouseIds, classLoader,
+				jsonArray.getJSONObject(i), catalogGroupId, commerceChannelId,
+				commerceInventoryWarehouseIds, classLoader,
 				imageDependenciesPath, serviceContext);
 
 			cpDefinitions.add(cpDefinition);
@@ -357,8 +356,7 @@ public class CPDefinitionsImporter {
 	}
 
 	private CPDefinition _importCPDefinition(
-			JSONObject jsonObject, List<AssetCategory> assetCategories,
-			long catalogGroupId, long commerceChannelId,
+			JSONObject jsonObject, long catalogGroupId, long commerceChannelId,
 			long[] commerceInventoryWarehouseIds, ClassLoader classLoader,
 			String imageDependenciesPath, ServiceContext serviceContext)
 		throws Exception {
@@ -368,21 +366,21 @@ public class CPDefinitionsImporter {
 
 		// Categories
 
-		List<AssetCategory> filteredAssetCategories = new ArrayList<>();
+		List<AssetCategory> assetCategories = new ArrayList<>();
 
-		JSONArray categoriesJSONArray = jsonObject.getJSONArray("categories");
+		JSONArray categoriesJSONArray = jsonObject.getJSONArray(
+			"categoriesERC");
 
 		if (categoriesJSONArray != null) {
 			for (int i = 0; i < categoriesJSONArray.length(); i++) {
-				String externalReferenceCode = categoriesJSONArray.getString(i);
+				AssetCategory assetCategory =
+					_assAssetCategoryLocalService.
+						fetchAssetCategoryByExternalReferenceCode(
+							company.getCompanyId(),
+							categoriesJSONArray.getString(i));
 
-				for (AssetCategory assetCategory : assetCategories) {
-					if (StringUtil.equals(
-							assetCategory.getExternalReferenceCode(),
-							externalReferenceCode)) {
-
-						filteredAssetCategories.add(assetCategory);
-					}
+				if (assetCategory != null) {
+					assetCategories.add(assetCategory);
 				}
 			}
 		}
@@ -455,7 +453,7 @@ public class CPDefinitionsImporter {
 		}
 
 		long[] assetCategoryIds = ListUtil.toLongArray(
-			filteredAssetCategories, AssetCategory.CATEGORY_ID_ACCESSOR);
+			assetCategories, AssetCategory.CATEGORY_ID_ACCESSOR);
 
 		String[] assetTagNames = ArrayUtil.toStringArray(tagsJSONArray);
 
@@ -1364,6 +1362,9 @@ public class CPDefinitionsImporter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionsImporter.class);
+
+	@Reference
+	private AssetCategoryLocalService _assAssetCategoryLocalService;
 
 	@Reference
 	private AssetCategoriesImporter _assetCategoriesImporter;

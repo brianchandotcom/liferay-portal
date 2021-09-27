@@ -1393,13 +1393,10 @@ definition {
 			dmDocumentTitle = "Document_1.doc",
 			vocabularyName = "Topic");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		Click(
-			key_dmDocumentTitle = "Document_1.doc",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Edit");
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		Panel.expandPanel(panel = "Categorization");
 
@@ -1479,8 +1476,8 @@ definition {
 
 	@description = "This ensures that the user can view the document through related assets."
 	@priority = "3"
-	@refactorneeded
-	test ViewRelatedDocument {
+	@refactordone
+	test CanViewRelatedDocument {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.doc",
@@ -1495,13 +1492,10 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		Click(
-			key_dmDocumentTitle = "Document_2.jpg",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Edit");
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		RelatedAssets.selectAsset(
 			assetTitle = "Document_1.doc",

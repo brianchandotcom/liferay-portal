@@ -20,6 +20,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Organization;
@@ -127,6 +128,37 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 
 		_assertSearch(_getAllAccountEntries());
 	}
+
+	@Test
+	public void testShouldReturnAllAccountEntriesWithCompanyViewPermission()
+		throws Exception {
+
+		_assertSearch(Collections.emptyList());
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		RoleTestUtil.addResourcePermission(
+			role, AccountEntry.class.getName(), ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), ActionKeys.VIEW);
+
+		_userLocalService.addRoleUser(role.getRoleId(), _user.getUserId());
+
+		_assertSearch(_getAllAccountEntries());
+	}
+
+	@Test
+	public void testShouldReturnDirectMembershipAccountEntries()
+		throws Exception {
+
+		_assertSearch(Collections.emptyList());
+
+		AccountEntry accountEntry = _organizationAccountEntries.get(
+			_rootOrganization);
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry.getAccountEntryId(), _user.getUserId());
+
+		_assertSearch(Collections.singletonList(accountEntry));
 	}
 
 	@Test
@@ -292,6 +324,8 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 	@Inject
 	private AccountEntryService _accountEntryService;
 
+	@Inject
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	private Organization _organization;
 	private final Map<Organization, AccountEntry> _organizationAccountEntries =

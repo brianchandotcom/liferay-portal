@@ -156,6 +156,42 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Account Name");
 	}
 
+	@description = "This test asserts that an Account Admin can add and unassign organization to an account"
+	@priority = "5"
+	test AccountAdminCanUnassignOrganizationToAccount {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		JSONOrganization.addOrganization(
+			organizationName = "Organization for Account",
+			organizationSite = "true");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.assignOrganizations(
+			accountName = "Account Name",
+			assigneeName = "Organization for Account");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
+
+		Accounts.removeOrganizationAsAssignee(
+			accountName = "Account Name",
+			assigneeName = "Organization for Account");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		Accounts.viewNoAssignee(
+			accountName = "Account Name",
+			assigneeType = "Organizations");
+	}
+
 	@description = "This test asserts that a user can select an account from the list as the active account. Backend tests are covering functionality for account selection."
 	@priority = "4"
 	test CanSetActiveAccount {

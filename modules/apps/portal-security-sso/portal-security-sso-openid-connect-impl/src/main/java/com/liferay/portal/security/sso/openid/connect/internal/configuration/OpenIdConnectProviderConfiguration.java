@@ -39,18 +39,6 @@ public interface OpenIdConnectProviderConfiguration {
 	public String providerName();
 
 	@Meta.AD(
-		deflt = "", description = "open-id-connect-client-id-help",
-		name = "open-id-connect-client-id"
-	)
-	public String openIdConnectClientId();
-
-	@Meta.AD(
-		deflt = "", description = "open-id-connect-client-secret-help",
-		name = "open-id-connect-client-secret"
-	)
-	public String openIdConnectClientSecret();
-
-	@Meta.AD(
 		deflt = "openid email profile", description = "scopes-help",
 		name = "scopes"
 	)
@@ -87,12 +75,6 @@ public interface OpenIdConnectProviderConfiguration {
 	public String jwksURI();
 
 	@Meta.AD(
-		deflt = "", description = "registered-id-token-signing-alg-help",
-		name = "registered-id-token-signing-alg", required = false
-	)
-	public String registeredIdTokenSigningAlg();
-
-	@Meta.AD(
 		deflt = "RS256", description = "id-token-signing-alg-values-help",
 		name = "id-token-signing-alg-values", required = false
 	)
@@ -121,5 +103,23 @@ public interface OpenIdConnectProviderConfiguration {
 		name = "user-info-endpoint", required = false
 	)
 	public String userInfoEndPoint();
+
+	@Meta.AD(
+		deflt = "", description = "open-id-connect-client-id-help",
+		name = "open-id-connect-client-id"
+	)
+	public String openIdConnectClientId();
+
+	@Meta.AD(
+		deflt = "", description = "open-id-connect-client-secret-help",
+		name = "open-id-connect-client-secret"
+	)
+	public String openIdConnectClientSecret();
+
+	@Meta.AD(
+		deflt = "", description = "registered-id-token-signing-alg-help",
+		name = "registered-id-token-signing-alg", required = false
+	)
+	public String registeredIdTokenSigningAlg();
 
 }

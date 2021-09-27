@@ -183,6 +183,11 @@ definition {
 	@description = "Automation ID: LRAC-8893 | Test Summary: Able to unsuppress user"
 	@priority = "3"
 	test CanUnsuppressUser {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Timing issues may happen on this test case
+		// AC Refactor ticket: LRAC-9439
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName();
 		}
@@ -212,6 +217,8 @@ definition {
 			}
 		}
 
+		// Couldn't assert the list due to missing data.
+
 		task ("Unsuppress the user") {
 			Button.click(button = "Unsuppress");
 		}
@@ -238,6 +245,11 @@ definition {
 	@description = "Automation ID: LRAC-8892 | Test Summary: Suppressed user appears in Suppressed User List"
 	@priority = "5"
 	test SuppressedUserAppearsInSuppressedUserList {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Timing issues may happen on this test case
+		// AC Refactor ticket: LRAC-9438
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName();
 		}
@@ -264,6 +276,8 @@ definition {
 				Pause(locator1 = "5000");
 				Refresh();
 			}
+
+			// Couldn't assert the list due to missing data.
 
 			ACUtils.assertItemsName(itemList = "test@liferay.com");
 		}

@@ -526,7 +526,6 @@ definition {
 	@description = "LPS-89015 - Verify that the multi-select-fields allow to navigate from the input field to the dropdown list vertically by using up/down keys"
 	@priority = "2"
 	test MultiSelectFieldsAllowNavigationByUpDownKeys {
-
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
@@ -556,8 +555,6 @@ definition {
 		KeyPress.keyUp(
 			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE",
 			value1 = "\COMMAND");
-
-			
 	}
 
 	@description = "LPS-89015 - Verify that the multi-select-fields filter the dropdown list according to search terms"

@@ -300,11 +300,9 @@ definition {
 		}
 
 		task ("View selected page is linked to Banner Center fragment") {
-			var baseURL = PropsUtil.get("portal.url");
-
 			AssertVisible(
 				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_URL = "${baseURL}/web/test-site-name/test-grand-child-page-name",
+				key_URL = "/web/test-site-name/test-grand-child-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			PageEditor.clickPublish();
@@ -319,7 +317,7 @@ definition {
 		task ("Assert redirect to grandchild widget page") {
 			Click(
 				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_URL = "${baseURL}/web/test-site-name/test-grand-child-page-name",
+				key_URL = "/web/test-site-name/test-grand-child-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			AssertTextEquals(

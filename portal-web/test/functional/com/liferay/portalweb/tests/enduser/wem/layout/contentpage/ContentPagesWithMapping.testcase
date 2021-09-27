@@ -601,11 +601,9 @@ definition {
 		}
 
 		task ("View selected page is linked to Button fragment") {
-			var baseURL = PropsUtil.get("portal.url");
-
 			AssertVisible(
 				key_append = "//img[contains(@src,'data:image/png')]",
-				key_URL = "${baseURL}/web/test-site-name/test-public-page-name",
+				key_URL = "/web/test-site-name/test-public-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			PageEditor.clickPublish();
@@ -620,7 +618,7 @@ definition {
 		task ("Assert redirect to public widget page") {
 			Click(
 				key_append = "//img[contains(@src,'data:image/png')]",
-				key_URL = "${baseURL}/web/test-site-name/test-public-page-name",
+				key_URL = "/web/test-site-name/test-public-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			AssertTextEquals(
@@ -651,11 +649,9 @@ definition {
 		}
 
 		task ("View selected page is linked to Image fragment") {
-			var baseURL = PropsUtil.get("portal.url");
-
 			AssertVisible(
 				key_append = "//img[contains(@src,'data:image/png')]",
-				key_URL = "${baseURL}/group/test-site-name/test-private-page-name",
+				key_URL = "/group/test-site-name/test-private-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			PageEditor.clickPublish();
@@ -670,7 +666,7 @@ definition {
 		task ("Assert redirect to private widget page") {
 			Click(
 				key_append = "//img[contains(@src,'data:image/png')]",
-				key_URL = "${baseURL}/group/test-site-name/test-private-page-name",
+				key_URL = "/group/test-site-name/test-private-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			AssertTextEquals(
@@ -1587,11 +1583,9 @@ definition {
 		}
 
 		task ("View selected page is linked to Button fragment") {
-			var baseURL = PropsUtil.get("portal.url");
-
 			AssertVisible(
 				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_URL = "${baseURL}/web/test-site-name/test-widget-page-name",
+				key_URL = "/web/test-site-name/test-widget-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			PageEditor.clickPublish();
@@ -1612,14 +1606,14 @@ definition {
 		task ("View selected page is still linked to Button fragment") {
 			AssertVisible(
 				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_URL = "${baseURL}/web/test-site-name/test-widget-page-name",
+				key_URL = "/web/test-site-name/test-widget-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 		}
 
 		task ("Assert Not Found is shown") {
 			Click(
 				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_URL = "${baseURL}/web/test-site-name/test-widget-page-name",
+				key_URL = "/web/test-site-name/test-widget-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			AssertTextEquals(

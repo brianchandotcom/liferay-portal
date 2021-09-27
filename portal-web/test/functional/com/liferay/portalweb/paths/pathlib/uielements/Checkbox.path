@@ -57,17 +57,17 @@
 </tr>
 <tr>
 	<td>ANY_CHECKBOX</td>
-	<td>//label[contains(.,'${checkboxName}')]/input[@type='checkbox']</td>
+	<td>//label[contains(.,'${checkboxName}')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ANY_CHECKBOX_CHECKED</td>
-	<td>//label[contains(.,'${checkboxName}')]/input[@type='checkbox' and @checked]</td>
+	<td>//label[contains(.,'${checkboxName}')]//input[@type='checkbox' and @checked]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ANY_CHECKBOX_UNCHECKED</td>
-	<td>//label[contains(.,'${checkboxName}')]/input[@type='checkbox' and not(@checked)]</td>
+	<td>//label[contains(.,'${checkboxName}')]//input[@type='checkbox' and not(@checked)]</td>
 	<td></td>
 </tr>
 <tr>

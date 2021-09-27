@@ -56,7 +56,9 @@ definition {
 		property portal.acceptance = "true";
 
 		Picklist.gotoPicklists();
+
 		Picklist.addPicklistViaUI(picklistName = "Picklist Test");
+
 		Picklist.assertPicklist(picklistName = "Picklist Test");
 	}
 
@@ -76,10 +78,14 @@ definition {
 		property portal.acceptance = "true";
 
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
-		Picklist.gotoPicklists();
-		Picklist.optionsPicklist(picklistName = "Picklist Test", picklistOption = "Delete");
-		Picklist.notAssertPicklist(picklistName = "Picklist Test");
 
+		Picklist.gotoPicklists();
+
+		Picklist.optionsPicklist(
+			picklistName = "Picklist Test",
+			picklistOption = "Delete");
+
+		Picklist.notAssertPicklist(picklistName = "Picklist Test");
 	}
 
 	@description = "LPS-136595 - Verify it is possible to delete a Picklist item"

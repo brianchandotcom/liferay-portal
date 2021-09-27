@@ -68,7 +68,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 				ObjectActionExecutor objectActionExecutor =
 					bundleContext.getService(serviceReference);
 
-				emitter.emit(objectActionExecutor.getType());
+				emitter.emit(objectActionExecutor.getKey());
 			});
 	}
 
@@ -95,7 +95,8 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 		for (ObjectAction objectAction : objectActions) {
 			ObjectActionExecutor objectActionExecutor =
-				_serviceTrackerMap.getService(objectAction.getType());
+				_serviceTrackerMap.getService(
+					objectAction.getObjectActionExecutorKey());
 
 			objectActionExecutor.execute(
 				new ObjectActionRequest(

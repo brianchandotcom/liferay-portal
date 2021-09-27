@@ -54,7 +54,7 @@ public class AddObjectEntryObjectActionExecutorImpl
 	}
 
 	@Override
-	public String getType() {
+	public String getKey() {
 		return "addObjectEntry";
 	}
 

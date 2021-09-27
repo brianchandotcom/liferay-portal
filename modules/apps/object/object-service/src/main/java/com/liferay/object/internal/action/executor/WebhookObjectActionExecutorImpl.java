@@ -16,6 +16,7 @@ package com.liferay.object.internal.action.executor;
 
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.request.ObjectActionRequest;
+import com.liferay.object.internal.action.setting.WebhookObjectActionSettings;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -51,8 +52,13 @@ public class WebhookObjectActionExecutorImpl implements ObjectActionExecutor {
 	}
 
 	@Override
-	public String getType() {
+	public String getKey() {
 		return "webhook";
+	}
+
+	@Override
+	public Class<?> getSettings() {
+		return WebhookObjectActionSettings.class;
 	}
 
 	@Reference

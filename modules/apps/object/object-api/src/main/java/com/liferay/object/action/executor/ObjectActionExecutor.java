@@ -24,6 +24,10 @@ public interface ObjectActionExecutor {
 	public void execute(ObjectActionRequest objectActionRequest)
 		throws Exception;
 
-	public String getType();
+	public String getKey();
+
+	public default Class<?> getSettings() {
+		return null;
+	}
 
 }

@@ -52,7 +52,7 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 	}
 
 	@Override
-	public String getType() {
+	public String getKey() {
 		return "updateObjectEntry";
 	}
 

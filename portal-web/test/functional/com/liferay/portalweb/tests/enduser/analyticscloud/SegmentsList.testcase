@@ -190,12 +190,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8578 | Test Summary: Order the Segment List By Membership"
 	@priority = "4"
 	test OrderSegmentListByMembership {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: Error when search users in static segment happen on this ticket because of the bug
-		// AC Bug ticket : LRAC-9420
-		// AC Refactor ticket: LRAC-9421
-
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -250,8 +244,6 @@ definition {
 				ACSegments.createStaticSegment();
 
 				ACSegments.nameSegment(segmentName = "${segmentName}");
-
-				// Error when search users to add in the segment
 
 				if ("${segmentName}" == "Static Segment Test1") {
 					ACSegments.addStaticMultiMember(tableMember = "user1 user1,user2 user2,user3 user3");

@@ -1,0 +1,7 @@
+dependencies {
+	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testIntegrationCompile project(":apps:document-library:document-library-test-util")
+	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
+	testIntegrationCompile project(":dxp:apps:antivirus:antivirus-async-store")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

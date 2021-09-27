@@ -25,7 +25,6 @@ import com.liferay.object.rest.context.path.RESTContextPathResolverRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -111,6 +110,16 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
+		String apiURL = GetterUtil.getString(
+			ddmFormField.getProperty("apiURL"));
+
+		if (Validator.isNotNull(apiURL)) {
+			return apiURL;
+		}
+
+		apiURL = _portal.getPortalURL(
+			ddmFormFieldRenderingContext.getHttpServletRequest());
+
 		long objectDefinitionId = GetterUtil.getLong(
 			getValue(
 				GetterUtil.getString(
@@ -121,18 +130,8 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 				objectDefinitionId);
 
 		if (objectDefinition == null) {
-			return StringPool.BLANK;
-		}
-
-		String apiURL = GetterUtil.getString(
-			ddmFormField.getProperty("apiURL"));
-
-		if (Validator.isNotNull(apiURL)) {
 			return apiURL;
 		}
-
-		apiURL = _portal.getPortalURL(
-			ddmFormFieldRenderingContext.getHttpServletRequest());
 
 		RESTContextPathResolver restContextPathResolver =
 			_restContextPathResolverRegistry.getRESTContextPathResolver(

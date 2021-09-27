@@ -217,9 +217,7 @@ definition {
 
 			ACNavigation.switchTab(tabName = "Membership");
 
-			AssertElementPresent(
-				key_userName = "user1 user1",
-				locator1 = "ACSegments#SEGMENT_MEMBERS");
+			ACUtils.viewNameList(nameList = "user1 user1");
 		}
 	}
 

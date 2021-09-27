@@ -19,6 +19,7 @@ import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
+import com.liferay.account.service.AccountEntryServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,9 +30,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -126,26 +125,20 @@ public class AccountEntryDisplaySearchContainerFactory {
 		String type = ParamUtil.getString(liferayPortletRequest, "type");
 
 		if (Validator.isNotNull(type) && !type.equals("all")) {
-			params.put("type", type);
-
 			types = new String[] {type};
 		}
+
+		params.put("types", types);
 
 		BaseModelSearchResult<AccountEntry> baseModelSearchResult;
 
 		if (filterManageableAccountEntries) {
-			baseModelSearchResult = new BaseModelSearchResult<>(
-				AccountEntryLocalServiceUtil.getUserAccountEntries(
-					PortalUtil.getUserId(liferayPortletRequest), null, keywords,
-					types, _getStatus(navigation),
+			baseModelSearchResult =
+				AccountEntryServiceUtil.searchAccountEntries(
+					keywords, params,
 					accountEntryDisplaySearchContainer.getStart(),
-					accountEntryDisplaySearchContainer.getEnd(),
-					OrderByComparatorFactoryUtil.create(
-						"AccountEntry", orderByCol,
-						!_isReverseOrder(orderByType))),
-				AccountEntryLocalServiceUtil.getUserAccountEntriesCount(
-					PortalUtil.getUserId(liferayPortletRequest), null, keywords,
-					types, _getStatus(navigation)));
+					accountEntryDisplaySearchContainer.getDelta(), orderByCol,
+					_isReverseOrder(orderByType));
 		}
 		else {
 			baseModelSearchResult =

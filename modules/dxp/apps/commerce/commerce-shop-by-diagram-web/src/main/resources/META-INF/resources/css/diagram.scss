@@ -1,6 +1,8 @@
 @import 'atlas-variables';
 
 .shop-by-diagram {
+	position: relative;
+
 	svg .pin {
 		cursor: pointer;
 		fill: $gray-600;
@@ -27,6 +29,7 @@
 		position: fixed;
 		right: 0;
 		top: 0;
+		z-index: 99999;
 
 		.view-wrapper {
 			flex-grow: 1;
@@ -39,10 +42,8 @@
 	background: $white;
 	border-radius: 3px;
 	box-shadow: 1px 6px 11px rgba(0, 0, 0, 0.1);
-	left: 0;
 	padding: $spacer;
-	position: fixed;
-	top: 0;
+	position: absolute;
 	width: 400px;
 }
 
@@ -54,7 +55,7 @@
 	justify-content: center;
 	left: 0;
 	pointer-events: none;
-	position: fixed;
+	position: absolute;
 	top: 0;
 	z-index: 1;
 

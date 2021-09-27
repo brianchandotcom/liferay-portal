@@ -14,6 +14,20 @@ import Autocomplete from 'commerce-frontend-js/components/autocomplete/Autocompl
 import React from 'react';
 
 export function LinkedToCatalogProductFormGroup({updateValue, value}) {
+
+	/**
+	 * Product model doesn't match with MappedProduct.
+	 * When the product details come from pins APIs,
+	 * we need to align both the models in order
+	 * to provide consistent data to the Autocomplete
+	 */
+
+	const initialValue = value ? {...value} : null;
+
+	if (initialValue && initialValue.skuId) {
+		initialValue.productId = initialValue.skuId;
+	}
+
 	return (
 		<ClayForm.Group>
 			<label htmlFor="linkedProductInput">
@@ -23,13 +37,19 @@ export function LinkedToCatalogProductFormGroup({updateValue, value}) {
 			<Autocomplete
 				apiUrl="/o/headless-commerce-admin-catalog/v1.0/skus"
 				infiniteScrollMode={true}
-				initialLabel={value?.sku || ''}
-				initialValue={value || ''}
+				initialLabel={initialValue?.sku || ''}
+				initialValue={initialValue?.productId || ''}
 				inputName="skuInput"
-				itemsKey="id"
+				itemsKey="productId"
 				itemsLabel="sku"
-				onValueUpdated={(_sku, skuProduct) => {
-					updateValue(skuProduct);
+				onValueUpdated={(productId, skuProduct) => {
+					if (
+						(!productId && initialValue) ||
+						(!initialValue && productId) ||
+						(initialValue && productId !== initialValue.productId)
+					) {
+						updateValue(skuProduct);
+					}
 				}}
 				pageSize={10}
 			/>
@@ -38,6 +58,20 @@ export function LinkedToCatalogProductFormGroup({updateValue, value}) {
 }
 
 export function LinkedToDiagramFormGroup({updateValue, value}) {
+
+	/**
+	 * Product model doesn't match with MappedProduct.
+	 * When the product details come from pins APIs,
+	 * we need to align both the models in order
+	 * to provide consistent data to the Autocomplete
+	 */
+
+	const initialValue = value ? {...value} : null;
+
+	if (initialValue && !initialValue.name) {
+		initialValue.name = initialValue.productName;
+	}
+
 	return (
 		<ClayForm.Group>
 			<label htmlFor="linkedProductInput">
@@ -48,16 +82,24 @@ export function LinkedToDiagramFormGroup({updateValue, value}) {
 				apiUrl="/o/headless-commerce-admin-catalog/v1.0/products?filter=(productType eq 'diagram')"
 				infiniteScrollMode={true}
 				initialLabel={
-					value?.name
-						? value.name[Liferay.ThemeDisplay.getLanguageId()]
+					initialValue
+						? initialValue.name[
+								Liferay.ThemeDisplay.getLanguageId()
+						  ]
 						: ''
 				}
-				initialValue={value}
+				initialValue={initialValue?.productId || ''}
 				inputName="productNameInput"
 				itemsKey="productId"
 				itemsLabel={['name', 'LANG']}
-				onValueUpdated={(_productId, product) => {
-					updateValue(product);
+				onValueUpdated={(productId, product) => {
+					if (
+						(!productId && initialValue) ||
+						(!initialValue && productId) ||
+						(initialValue && productId !== initialValue.productId)
+					) {
+						updateValue(product);
+					}
 				}}
 				pageSize={10}
 			/>

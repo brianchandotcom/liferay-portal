@@ -9,53 +9,68 @@
  * distribution rights of the Software.
  */
 
-export function calculateTooltipStyle(x, y, tooltipRef) {
-	const {height, width} = tooltipRef.current.getBoundingClientRect();
+export function calculateTooltipStyle(source, containerRef) {
+	const {
+		height: sourceHeight,
+		left: sourceLeft,
+		top: sourceTop,
+		width: sourceWidth,
+	} = source.getBoundingClientRect();
 
-	const calcX = x < window.innerWidth / 2 ? x : x - width;
-	const calcY = y < window.innerHeight / 2 ? y : y - height;
+	const sourceRight = window.innerWidth - sourceLeft - sourceWidth;
+	const sourceBottom = window.innerHeight - sourceTop - sourceHeight;
 
-	return {
-		transform: `translate(${calcX}px, ${calcY}px)`,
-	};
-}
+	const {
+		height: containerHeight,
+		left: containerLeft,
+		top: containerTop,
+		width: containerWidth,
+	} = containerRef.current.getBoundingClientRect();
 
-export function getTypeFromSelectedPin(selectedPin) {
-	if (!selectedPin) {
-		return null;
+	const containerRight = window.innerWidth - containerLeft - containerWidth;
+	const containerBottom = window.innerHeight - containerTop - containerHeight;
+
+	const style = {};
+
+	if (sourceLeft + sourceWidth / 2 < window.innerWidth / 2) {
+		style.left = sourceLeft - containerLeft + sourceWidth;
+	}
+	else {
+		style.right = sourceRight - containerRight + sourceWidth;
 	}
 
-	if (selectedPin.mappedProduct.diagram) {
-		return 'diagram';
+	if (sourceTop + sourceHeight / 2 < window.innerHeight / 2) {
+		style.top = sourceTop - containerTop + sourceHeight;
+	}
+	else {
+		style.bottom = sourceBottom - containerBottom + sourceHeight;
 	}
 
-	return selectedPin.mappedProduct.id ? 'sku' : 'external';
+	return style;
 }
 
 export function formatMappedProduct(type, quantity, sequence, selectedProduct) {
 	const definition = {
 		quantity,
 		sequence,
+		type,
 	};
 
 	switch (type) {
 		case 'sku':
 			return {
 				...definition,
-				diagram: false,
 				sku: selectedProduct.sku,
 				skuId: selectedProduct.id,
 			};
 		case 'external':
 			return {
 				...definition,
-				diagram: false,
 				sku: selectedProduct.sku,
 			};
 		case 'diagram':
 			return {
 				...definition,
-				diagram: true,
 				productId: selectedProduct.productId,
 			};
 		default:

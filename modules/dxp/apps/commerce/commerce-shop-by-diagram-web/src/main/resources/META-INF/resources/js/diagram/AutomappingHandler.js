@@ -35,7 +35,7 @@ class AutomappingHandler {
 		this._handleZoom = this._handleZoom.bind(this);
 		this.rendered = false;
 
-		this._printImage().then(() => {
+		this._printSVGImage().then(() => {
 			this.rendered = true;
 			this._texts = this._diagramWrapper.querySelectorAll(
 				pinsCSSSelectors.join(',')
@@ -91,7 +91,7 @@ class AutomappingHandler {
 			.call(this._zoom.scaleTo, this._currentScale);
 	}
 
-	_printImage() {
+	_printSVGImage() {
 		return fetch(this._imageURL)
 			.then((response) => response.text())
 			.then((svgContent) => {

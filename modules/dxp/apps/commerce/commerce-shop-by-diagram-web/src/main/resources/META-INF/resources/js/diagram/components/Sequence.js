@@ -12,9 +12,21 @@
 import classNames from 'classnames';
 import React, {useMemo} from 'react';
 
-export default function Sequence({highlighted, source}) {
+export default function Sequence({containerRef, highlighted, source}) {
 	const style = useMemo(() => {
-		const {height, width, x, y} = source.getBoundingClientRect();
+		const {
+			height,
+			width,
+			x: sequenceX,
+			y: sequenceY,
+		} = source.getBoundingClientRect();
+		const {
+			x: parentX,
+			y: parentY,
+		} = containerRef.current.getBoundingClientRect();
+
+		const relativeX = sequenceX - parentX;
+		const relativeY = sequenceY - parentY;
 
 		const backgroundSize = Math.max(height, width) + 4;
 
@@ -22,11 +34,11 @@ export default function Sequence({highlighted, source}) {
 			'--border-width': `${backgroundSize / 10}px`,
 			fontSize: `${height}px`,
 			height: `${backgroundSize}px`,
-			left: `${x}px`,
-			top: `${y}px`,
+			left: `${relativeX}px`,
+			top: `${relativeY}px`,
 			width: `${backgroundSize}px`,
 		};
-	}, [source]);
+	}, [containerRef, source]);
 
 	return (
 		<span

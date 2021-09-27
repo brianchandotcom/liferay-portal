@@ -22,9 +22,10 @@ import '../../css/diagram.scss';
 import Sequence from './components/Sequence';
 
 function DiagramWithAutomapping({imageURL, pinsCSSSelectors, productId}) {
-	const svgRef = useRef(null);
-	const zoomHandlerRef = useRef(null);
 	const chartInstance = useRef(null);
+	const svgRef = useRef(null);
+	const wrapperRef = useRef(null);
+	const zoomHandlerRef = useRef(null);
 	const [pins, updatePins] = useState(null);
 	const [tooltipData, setTooltipData] = useState(false);
 	const [currentZoom, updateCurrentZoom] = useState(1);
@@ -53,7 +54,7 @@ function DiagramWithAutomapping({imageURL, pinsCSSSelectors, productId}) {
 
 			const selectedPin = pins.find((pin) => pin.sequence === sequence);
 
-			setTooltipData({selectedPin, sequence, x: event.x, y: event.y});
+			setTooltipData({selectedPin, sequence, source: event.target});
 			updateSelectedText(event.target);
 		}
 
@@ -102,7 +103,10 @@ function DiagramWithAutomapping({imageURL, pinsCSSSelectors, productId}) {
 	}, [imageURL, pinsCSSSelectors]);
 
 	return (
-		<div className={classNames('shop-by-diagram', {expanded})}>
+		<div
+			className={classNames('shop-by-diagram', {expanded})}
+			ref={wrapperRef}
+		>
 			<div className="bg-white border-bottom border-top p-2 view-wrapper">
 				<svg className="svg-wrapper" ref={svgRef}>
 					<g className="zoom-handler" ref={zoomHandlerRef} />
@@ -118,17 +122,24 @@ function DiagramWithAutomapping({imageURL, pinsCSSSelectors, productId}) {
 			/>
 
 			{highlightedText && (
-				<Sequence highlighted={true} source={highlightedText} />
+				<Sequence
+					containerRef={wrapperRef}
+					highlighted={true}
+					source={highlightedText}
+				/>
 			)}
 
-			{selectedText && <Sequence source={selectedText} />}
+			{selectedText && (
+				<Sequence containerRef={wrapperRef} source={selectedText} />
+			)}
 
 			{tooltipData && (
 				<Tooltip
 					closeTooltip={() => setTooltipData(null)}
+					containerRef={wrapperRef}
 					expanded={expanded}
 					productId={productId}
-					readOnlySequence={false}
+					readOnlySequence={true}
 					updatePins={updatePins}
 					{...tooltipData}
 				/>

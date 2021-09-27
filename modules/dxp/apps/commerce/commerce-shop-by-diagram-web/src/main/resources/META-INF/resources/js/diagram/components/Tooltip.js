@@ -24,37 +24,28 @@ import React, {
 
 import {DEFAULT_LINK_OPTION, LINKING_OPTIONS} from '../utilities/constants';
 import {deletePin, savePin} from '../utilities/data';
-import {
-	calculateTooltipStyle,
-	formatMappedProduct,
-	getTypeFromSelectedPin,
-} from '../utilities/index';
+import {calculateTooltipStyle, formatMappedProduct} from '../utilities/index';
 
 function Tooltip({
 	closeTooltip,
+	containerRef,
 	productId,
 	readOnlySequence,
 	selectedPin,
-	sequence: originalSequence,
+	sequence: initialSequence,
+	source,
 	updatePins,
-	x,
-	y,
 }) {
-	const originalType = useMemo(() => getTypeFromSelectedPin(selectedPin), [
-		selectedPin,
-	]);
-	const originalMappedProduct = useMemo(
-		() => selectedPin?.mappedProduct || null,
-		[selectedPin]
+	const [type, updateType] = useState(
+		selectedPin?.mappedProduct.type || DEFAULT_LINK_OPTION
 	);
-	const [type, updateType] = useState(null);
 	const [quantity, updateQuantity] = useState(
 		selectedPin?.mappedProduct || 1
 	);
 	const [linkedProduct, updateLinkedProduct] = useState(
 		selectedPin?.mappedProduct || null
 	);
-	const [sequence, updateSequence] = useState(originalSequence);
+	const [sequence, updateSequence] = useState(initialSequence);
 	const [saving, updateSaving] = useState(false);
 	const [deleting, updateDeleting] = useState(false);
 	const [tooltipStyle, updateTooltipStyle] = useState({});
@@ -62,17 +53,17 @@ function Tooltip({
 	const tooltipRef = useRef();
 
 	useLayoutEffect(() => {
-		const style = calculateTooltipStyle(x, y, tooltipRef);
+		const style = calculateTooltipStyle(source, containerRef);
 
 		updateTooltipStyle(style);
-	}, [x, y]);
+	}, [source, containerRef]);
 
 	useEffect(() => {
 		updateQuantity(selectedPin?.mappedProduct.quantity || 1);
-		updateSequence(originalSequence);
-		updateType(() => getTypeFromSelectedPin(selectedPin));
+		updateSequence(initialSequence);
+		updateType(selectedPin?.mappedProduct.type || DEFAULT_LINK_OPTION);
 		updateLinkedProduct(selectedPin?.mappedProduct || null);
-	}, [selectedPin, originalSequence]);
+	}, [selectedPin, initialSequence]);
 
 	useLayoutEffect(() => {
 		function handleWindowClick(event) {
@@ -96,13 +87,13 @@ function Tooltip({
 		event.preventDefault();
 
 		const mappedProduct = formatMappedProduct(
-			type || originalType || DEFAULT_LINK_OPTION,
+			type,
 			quantity,
 			sequence,
 			linkedProduct
 		);
 
-		const update = selectedPin?.id !== undefined;
+		const update = selectedPin?.id;
 
 		updateSaving(true);
 
@@ -179,10 +170,8 @@ function Tooltip({
 	}
 
 	const LinkedProductFormGroup = useMemo(() => {
-		const componentKey = type || originalType || DEFAULT_LINK_OPTION;
-
-		return React.memo(LINKING_OPTIONS[componentKey].component);
-	}, [originalType, type]);
+		return React.memo(LINKING_OPTIONS[type].component);
+	}, [type]);
 
 	const loading = saving || deleting;
 
@@ -220,7 +209,7 @@ function Tooltip({
 							updateLinkedProduct(null);
 							updateType(event.target.value);
 						}}
-						value={type || originalType || DEFAULT_LINK_OPTION}
+						value={type}
 					>
 						{['sku', 'diagram', 'external'].map((link) => (
 							<ClaySelect.Option
@@ -236,9 +225,7 @@ function Tooltip({
 					<div className="col">
 						<LinkedProductFormGroup
 							updateValue={updateLinkedProduct}
-							value={
-								!type ? originalMappedProduct : linkedProduct
-							}
+							value={linkedProduct}
 						/>
 					</div>
 

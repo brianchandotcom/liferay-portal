@@ -128,11 +128,9 @@ definition {
 
 		CommerceNavigator.gotoMiniCart();
 
-		Button.click(button = "Review Order");
+		Button.click(button = "View Details");
 
-		AssertVisible(locator1 = "CommerceAccelerators#ORDERS_SUBMIT_BUTTON");
-
-		Click(locator1 = "CommerceAccelerators#ORDERS_SUBMIT_BUTTON");
+		Button.click(button = "Submit");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -522,15 +520,9 @@ definition {
 
 		CommerceNavigator.gotoMiniCart();
 
-		Button.click(button = "Review Order");
+		Button.click(button = "View Details");
 
-		AssertElementPresent(
-			key_status = "Draft",
-			locator1 = "CommerceEntry#WORKFLOW_STATUS");
-
-		AssertVisible(locator1 = "CommerceAccelerators#ORDERS_SUBMIT_BUTTON");
-
-		Click(locator1 = "CommerceAccelerators#ORDERS_SUBMIT_BUTTON");
+		Button.click(button = "Submit");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
@@ -561,6 +553,8 @@ definition {
 			workflowAssetTitle = "Order",
 			workflowAssetType = "Commerce Order",
 			workflowTask = "Review");
+
+			
 	}
 
 	@description = "Verify that the user can view the Assigned to My Roles page in List View"

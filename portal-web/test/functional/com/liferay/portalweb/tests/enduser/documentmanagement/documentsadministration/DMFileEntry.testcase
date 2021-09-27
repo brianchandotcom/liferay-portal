@@ -497,7 +497,7 @@ definition {
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.mp4",
+			dmDocumentTitle = "Document_1",
 			groupName = "Guest",
 			mimeType = "video/mp4",
 			sourceFileName = "Document_1.mp4");

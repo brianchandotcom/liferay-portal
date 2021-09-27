@@ -749,6 +749,18 @@ definition {
 		Click(locator1 = "Button#BACK");
 	}
 
+	macro getFileEntryIDFromProductMedia {
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		var fileEntryId = selenium.getElementValue("CommerceEntry#FILE_ENTRY_ID_FROM_PRODUCT_MEDIA");
+
+		Click(locator1 = "Icon#CLOSE");
+
+		IFrame.selectTopFrame();
+
+		return "${fileEntryId}";
+	}
+
 	macro gotoBreadcrumb {
 		Click(
 			key_breadcrumb = "${breadcrumb}",

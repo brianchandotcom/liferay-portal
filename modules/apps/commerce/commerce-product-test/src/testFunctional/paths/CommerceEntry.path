@@ -787,11 +787,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DEFAULT_PRODUCT_IMAGE</td>
-	<td>//div[contains(@style,'default')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PRODUCT_CARD_DEFAULT_IMAGE</td>
 	<td>//img[@class='aspect-ratio-item-center-middle aspect-ratio-item-fluid aspect-ratio-item-vertical-fluid']//..//..//..//..//..//..//h2[contains(text(),'${key_productName}')]</td>
 	<td></td>

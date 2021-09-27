@@ -306,7 +306,7 @@ public abstract class BaseDBProcess implements DBProcess {
 
 	protected Connection connection;
 
-	protected class ResultRow {
+	protected static class ResultRow {
 
 		public ResultRow(ResultSet resultSet) throws SQLException {
 			ResultSetMetaData resultSetMetaData = resultSet.getMetaData();

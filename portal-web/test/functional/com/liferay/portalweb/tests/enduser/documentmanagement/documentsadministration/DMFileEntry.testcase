@@ -389,6 +389,8 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_3.doc");
 
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
 		PortletEntry.selectAll();
 
 		AssertClick(

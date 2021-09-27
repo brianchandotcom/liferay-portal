@@ -163,6 +163,13 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				renderLayoutStructureDisplayContext)
 		throws Exception {
 
+		List<String> collectionStyledLayoutStructureItemIds =
+			renderLayoutStructureDisplayContext.
+				getCollectionStyledLayoutStructureItemIds();
+
+		collectionStyledLayoutStructureItemIds.add(
+			layoutStructureItem.getItemId());
+
 		JspWriter jspWriter = pageContext.getOut();
 
 		CollectionStyledLayoutStructureItem
@@ -195,6 +202,9 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		if (ListUtil.isEmpty(collection)) {
 			_renderEmptyState(jspWriter);
+
+			collectionStyledLayoutStructureItemIds.remove(
+				collectionStyledLayoutStructureItemIds.size() - 1);
 
 			return;
 		}
@@ -399,6 +409,9 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		}
 
 		jspWriter.write("</div>");
+
+		collectionStyledLayoutStructureItemIds.remove(
+			collectionStyledLayoutStructureItemIds.size() - 1);
 	}
 
 	private void _renderColumnLayoutStructureItem(

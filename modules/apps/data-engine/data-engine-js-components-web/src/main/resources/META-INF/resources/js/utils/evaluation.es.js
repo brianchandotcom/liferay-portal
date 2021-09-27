@@ -62,14 +62,10 @@ export const mergePages = (
 	const sourceFieldsByName = new Map();
 	const sourceFieldsByFieldName = new Map();
 
-	sourcePagesVisitor.mapFields(
-		(field) => {
-			sourceFieldsByName.set(field.name, field);
-			sourceFieldsByFieldName.set(field.fieldName, field);
-		},
-		false,
-		true
-	);
+	sourcePagesVisitor.visitFields((field) => {
+		sourceFieldsByName.set(field.name, field);
+		sourceFieldsByFieldName.set(field.fieldName, field);
+	});
 
 	return newPagesVisitor.mapFields(
 		(field) => {

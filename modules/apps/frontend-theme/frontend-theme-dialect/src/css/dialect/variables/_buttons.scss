@@ -1,6 +1,6 @@
-$btn-border-radius-sm: 4px;
-$btn-border-radius: 6px;
-$btn-border-radius-lg: 8px;
+$btn-border-radius-sm: var(--border-radius-xs);
+$btn-border-radius: var(--border-radius-sm);
+$btn-border-radius-lg: var(--border-radius);
 
 $btn-font-size-sm: 0.875rem; // 14px
 $btn-font-size: 1rem; // 16px

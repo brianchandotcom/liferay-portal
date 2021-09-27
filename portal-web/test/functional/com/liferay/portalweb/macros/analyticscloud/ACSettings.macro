@@ -334,24 +334,13 @@ definition {
 	}
 
 	macro assertRequestLog {
-		for (var emailAdress : list "${emailAdresses}",) {
-			if ("${jobType}" == "Delete") {
-				AssertElementPresent(
-					key_emailAdress = "${emailAdress}",
-					key_requestType = "${jobType}",
-					locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE");
+		if ("${jobType}" == "Delete") {
+			AssertElementPresent(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE");
 
-				AssertElementPresent(
-					key_emailAdress = "${emailAdress}",
-					key_requestType = "Suppress",
-					locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE");
-			}
-			else {
-				AssertElementPresent(
-					key_emailAdress = "${emailAdress}",
-					key_requestType = "${jobType}",
-					locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE");
-			}
+			AssertElementPresent(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE");
+		}
+		else {
+			AssertElementPresent(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG_TABLE");
 		}
 	}
 
@@ -475,11 +464,7 @@ definition {
 
 		Click(locator1 = "ACDataControlAndPrivacy#CREATE_REQUEST");
 
-		for (var jobType : list "${jobTypes}") {
-			Click(
-				key_jobType = "${jobType}",
-				locator1 = "ACDataControlAndPrivacy#JOB_TYPE");
-		}
+		Click(locator1 = "ACDataControlAndPrivacy#JOB_TYPE");
 
 		Click(
 			key_fieldType = "Find by Email",
@@ -487,18 +472,15 @@ definition {
 
 		Click(locator1 = "ACDataControlAndPrivacy#FIND_BY_EMAIL_FIELD");
 
-		for (var emailAdress : list "${emailAdresses}") {
-			Type(
-				locator1 = "ACDataControlAndPrivacy#FIND_BY_EMAIL_FIELD",
-				value1 = "${emailAdress}");
-			Click(
-				key_emailAdress = "${emailAdress}",
-				locator1 = "ACDataControlAndPrivacy#FIND_EMAIL_FIELD");
-		}
+		Click(locator1 = "ACDataControlAndPrivacy#SELECT_USER");
+
+		var email = selenium.getText(locator1 = "ACDataControlAndPrivacy#SELECTED_USER");
 
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+
+		return "${email}";
 	}
 
 	@summary = "Deletes all data source"

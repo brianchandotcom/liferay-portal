@@ -600,7 +600,10 @@ public class RenderLayoutStructureTag extends IncludeTag {
 					renderLayoutStructureDisplayContext.
 						getDefaultFragmentRendererContext(
 							fragmentEntryLink,
-							fragmentStyledLayoutStructureItem.getItemId());
+							fragmentStyledLayoutStructureItem.getItemId(),
+							renderLayoutStructureDisplayContext.
+								getCollectionStyledLayoutStructureItemIds(),
+							collectionElementIndex);
 
 				jspWriter.write("<div class=\"");
 				jspWriter.write(

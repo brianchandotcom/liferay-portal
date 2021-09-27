@@ -148,7 +148,7 @@ definition {
 		for (var keyword : list "${userInvite}") {
 			Type(
 				locator1 = "ACSettings#KEYWORD_TEXTFIELD",
-				value1 = "${userInvite}");
+				value1 = "${keyword}");
 
 			KeyPress(
 				locator1 = "ACSettings#KEYWORD_TEXTFIELD",

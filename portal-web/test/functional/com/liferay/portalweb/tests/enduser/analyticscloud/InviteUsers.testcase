@@ -9,15 +9,7 @@ definition {
 	setUp {
 		ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
-
 		TestCase.setUpPortalInstance();
-
-		ACUtils.launchDXP();
-
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-
-		ACUtils.launchAC();
 	}
 
 	tearDown {
@@ -28,6 +20,7 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+
 		ACUtils.tearDownAC();
 	}
 

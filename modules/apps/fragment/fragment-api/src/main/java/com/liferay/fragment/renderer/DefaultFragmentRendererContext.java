@@ -18,6 +18,7 @@ import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -86,6 +87,17 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 		return _useCachedContent;
 	}
 
+	public void setCollectionElementIndex(int collectionElementIndex) {
+		_collectionElementIndex = collectionElementIndex;
+	}
+
+	public void setCollectionStyledLayoutStructureItemIds(
+		List<String> collectionStyledLayoutStructureItemIds) {
+
+		_collectionStyledLayoutStructureItemIds =
+			collectionStyledLayoutStructureItemIds;
+	}
+
 	public void setDisplayObject(Object object) {
 		_displayObject = object;
 	}
@@ -126,6 +138,8 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 		_useCachedContent = useCachedContent;
 	}
 
+	private int _collectionElementIndex;
+	private List<String> _collectionStyledLayoutStructureItemIds;
 	private Object _displayObject;
 	private Map<String, Object> _fieldValues;
 	private final FragmentEntryLink _fragmentEntryLink;

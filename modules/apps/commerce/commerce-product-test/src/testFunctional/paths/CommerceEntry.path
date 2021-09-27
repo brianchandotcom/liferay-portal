@@ -684,7 +684,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_CARD_CUSTOM_IMAGE</td>
-	<td>//span[contains(text(),'${key_itemName}')]/../../../../../../..//div[contains(@class,'product-card')]//div[contains(@style,'${key_itemImage}')]</td>
+	<td>//span[contains(text(),'${key_itemName}')]/../../../../../../..//div[contains(@class,'product-card')]//a//picture[@data-fileentryid="${key_fileEntryId}"]</td>
 	<td></td>
 </tr>
 <!--ATTACHMENT-->

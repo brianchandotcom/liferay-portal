@@ -310,18 +310,12 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 			getFirstInfoItemService(
 				InfoItemDetailsProvider.class, itemClassName, null);
 
-		InfoItemClassDetails infoItemClassDetails = null;
-
 		if (infoItemDetailsProvider != null) {
-			infoItemClassDetails =
-				infoItemDetailsProvider.getInfoItemClassDetails();
-		}
-		else {
-			infoItemClassDetails = new InfoItemClassDetails(
-				itemClassName, InfoLocalizedValue.modelResource(itemClassName));
+			return infoItemDetailsProvider.getInfoItemClassDetails();
 		}
 
-		return infoItemClassDetails;
+		return new InfoItemClassDetails(
+			itemClassName, InfoLocalizedValue.modelResource(itemClassName));
 	}
 
 	private ServiceTrackerMap<String, InfoItemCapability>

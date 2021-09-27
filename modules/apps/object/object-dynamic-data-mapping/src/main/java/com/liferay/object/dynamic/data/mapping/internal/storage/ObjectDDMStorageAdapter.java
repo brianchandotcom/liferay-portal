@@ -88,16 +88,16 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		throws StorageException {
 
 		try {
-			long objectDefinitionId =
+			long objectEntryId =
 				ddmStorageAdapterDeleteRequest.getPrimaryKey();
 
 			ObjectDefinition objectDefinition = _getObjectDefinition(
-				objectDefinitionId);
+				objectEntryId);
 
 			ObjectEntry objectEntry = _objectEntryManager.fetchObjectEntry(
 				_getDTOConverterContext(
 					null, null, LocaleUtil.getSiteDefault()),
-				objectDefinition, objectDefinitionId);
+				objectDefinition, objectEntryId);
 
 			if (objectEntry != null) {
 				_objectEntryManager.deleteObjectEntry(objectEntry.getId());
@@ -119,20 +119,20 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		try {
 			DDMForm ddmForm = ddmStorageAdapterGetRequest.getDDMForm();
 
-			long objectDefinitionId =
+			long objectEntryId =
 				ddmStorageAdapterGetRequest.getPrimaryKey();
 
 			ObjectDefinition objectDefinition = _getObjectDefinition(
-				objectDefinitionId);
+				objectEntryId);
 
 			return DDMStorageAdapterGetResponse.Builder.newBuilder(
 				_getDDMFormValues(
 					ddmForm,
 					_objectEntryManager.getObjectEntry(
 						_getDTOConverterContext(
-							objectDefinitionId, null,
+							objectEntryId, null,
 							ddmForm.getDefaultLocale()),
-						objectDefinition, objectDefinitionId))
+						objectDefinition, objectEntryId))
 			).build();
 		}
 		catch (Exception exception) {
@@ -266,11 +266,11 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			null, null, objectEntryId, locale, null, user);
 	}
 
-	private ObjectDefinition _getObjectDefinition(long objectDefinitionId)
+	private ObjectDefinition _getObjectDefinition(long objectEntryId)
 		throws PortalException {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryService.getObjectEntry(objectDefinitionId);
+			_objectEntryService.getObjectEntry(objectEntryId);
 
 		return _objectDefinitionLocalService.getObjectDefinition(
 			serviceBuilderObjectEntry.getObjectDefinitionId());

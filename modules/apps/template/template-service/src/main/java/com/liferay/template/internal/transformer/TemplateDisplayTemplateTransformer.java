@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.template.web.internal.portlet.template;
+package com.liferay.template.internal.transformer;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
@@ -128,7 +128,7 @@ public class TemplateDisplayTemplateTransformer {
 			protected String getErrorTemplateId(
 				String errorTemplatePropertyKey, String langType) {
 
-				return "com/liferay/template/web/internal/portlet/template" +
+				return "com/liferay/template/service/internal/transformer" +
 					"/dependencies/error.ftl";
 			}
 

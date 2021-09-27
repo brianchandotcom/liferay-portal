@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.template.web.internal.info.item.provider;
+package com.liferay.template.internal.info.item.provider;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -36,9 +36,9 @@ import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
+import com.liferay.template.internal.transformer.TemplateDisplayTemplateTransformer;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
-import com.liferay.template.web.internal.portlet.template.TemplateDisplayTemplateTransformer;
 
 import java.util.ArrayList;
 import java.util.Collections;

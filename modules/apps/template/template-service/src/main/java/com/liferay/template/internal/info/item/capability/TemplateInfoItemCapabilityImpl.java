@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.template.web.internal.info.item.capability;
+package com.liferay.template.internal.info.item.capability;
 
 import com.liferay.info.exception.CapabilityVerificationException;
 import com.liferay.info.item.InfoItemServiceVerifier;

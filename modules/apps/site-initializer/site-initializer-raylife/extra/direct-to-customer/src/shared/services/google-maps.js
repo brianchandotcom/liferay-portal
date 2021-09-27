@@ -2,20 +2,18 @@
 import '~/types';
 import {Loader} from '@googlemaps/js-api-loader';
 
-const {REACT_APP_GOOGLE_API = ''} = process.env;
-
 /**
  * @description Load google global variable asynchronously
  * @returns {void} Google Maps Autocomplete Instance
  */
-const setup = () => {
+const setup = (GOOGLE_API) => {
 	try {
-		if (!REACT_APP_GOOGLE_API) {
+		if (!GOOGLE_API) {
 			throw new Error('Google api key is not defined inside .env');
 		}
 
 		const googleMapsLoader = new Loader({
-			apiKey: REACT_APP_GOOGLE_API,
+			apiKey: GOOGLE_API,
 			libraries: ['places'],
 		});
 

@@ -14,8 +14,12 @@ const Application = () => (
 class Component extends WebComponent {
 	constructor() {
 		super(Application, StylesProvider);
+	}
 
-		GoogleMapsService.setup();
+	connectedCallback() {
+		GoogleMapsService.setup(this.getAttribute('GOOGLE_API'));
+
+		super.connectedCallback();
 	}
 }
 

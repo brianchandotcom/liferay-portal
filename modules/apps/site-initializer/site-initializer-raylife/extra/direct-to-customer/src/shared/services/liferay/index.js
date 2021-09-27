@@ -1,5 +1,5 @@
-import '~/types';
 import Axios from 'axios';
+import '~/types';
 
 import {LiferayAdapt} from './adapter';
 import {STORAGE_KEYS, Storage} from './storage';
@@ -7,9 +7,9 @@ import {STORAGE_KEYS, Storage} from './storage';
 const LiferayObjectAPI = 'o/c/raylifeapplications';
 
 const {
-	REACT_APP_LIFERAY_API = '',
-	REACT_APP_LIFERAY_AUTH_PASSWORD = '',
-	REACT_APP_LIFERAY_AUTH_USERNAME = '',
+	REACT_APP_LIFERAY_API = 'http://localhost:8080',
+	REACT_APP_LIFERAY_AUTH_PASSWORD = 'test',
+	REACT_APP_LIFERAY_AUTH_USERNAME = 'test@liferay.com',
 } = process.env;
 
 /**

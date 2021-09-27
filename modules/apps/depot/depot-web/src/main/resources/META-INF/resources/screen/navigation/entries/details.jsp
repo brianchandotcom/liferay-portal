@@ -41,6 +41,8 @@ DepotAdminDetailsDisplayContext depotAdminDetailsDisplayContext = (DepotAdminDet
 
 		<aui:input name="assetLibraryId" type="resource" value="<%= String.valueOf(depotAdminDetailsDisplayContext.getDepotEntryId()) %>" />
 
+		<aui:input name="groupId" type="resource" value="<%= String.valueOf(depotAdminDetailsDisplayContext.getGroupId()) %>" />
+
 		<aui:input name="name" placeholder="name" required="<%= true %>" value="<%= depotAdminDetailsDisplayContext.getDepotName(locale) %>" />
 
 		<aui:input name="description" placeholder="description" />

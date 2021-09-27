@@ -806,7 +806,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			ddmTemplateLocalService.getTemplate(
 				serviceContext.getScopeGroupId(),
-				_portal.getClassNameId(JournalArticle.class), ddmTemplateKey);
+				_portal.getClassNameId(DDMStructure.class), ddmTemplateKey);
 
 			Calendar calendar = CalendarFactoryUtil.getCalendar(
 				serviceContext.getTimeZone());

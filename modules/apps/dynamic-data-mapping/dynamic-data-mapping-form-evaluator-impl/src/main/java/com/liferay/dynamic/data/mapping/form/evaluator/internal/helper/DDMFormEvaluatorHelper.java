@@ -152,7 +152,7 @@ public class DDMFormEvaluatorHelper {
 			}
 		);
 
-		validateFields();
+		_validateFields();
 
 		_localizeNumericDDMFormFieldValues();
 
@@ -603,92 +603,6 @@ public class DDMFormEvaluatorHelper {
 		value.addString(locale, String.valueOf(newValue));
 	}
 
-	protected void validateFields() {
-		validateFieldsMarkedAsRequired();
-		validateFieldsWithConfirmationField();
-		validateFieldsWithDDMFormFieldValidation();
-		validateNumericFieldsWithInputMask();
-	}
-
-	protected void validateFieldsMarkedAsRequired() {
-		Set<Map.Entry<String, DDMFormField>> entrySet =
-			_ddmFormFieldsMap.entrySet();
-
-		Stream<Map.Entry<String, DDMFormField>> stream = entrySet.stream();
-
-		stream.flatMap(
-			entry -> _getDDMFormEvaluatorFieldContextKeysStream(entry.getKey())
-		).filter(
-			this::filterVisibleFieldsMarkedAsRequired
-		).filter(
-			this::isFieldEmpty
-		).forEach(
-			ddmFormEvaluatorFieldContextKey -> {
-				String requiredErrorMessage = LanguageUtil.get(
-					_resourceBundle, "this-field-is-required");
-
-				DDMFormField ddmFormField = _ddmFormFieldsMap.get(
-					ddmFormEvaluatorFieldContextKey.getName());
-
-				LocalizedValue localizedValue =
-					ddmFormField.getRequiredErrorMessage();
-
-				if (localizedValue != null) {
-					Map<Locale, String> values = localizedValue.getValues();
-
-					String value = values.get(
-						_ddmFormEvaluatorEvaluateRequest.getLocale());
-
-					if (Validator.isNotNull(value)) {
-						requiredErrorMessage = value;
-					}
-				}
-
-				setFieldAsInvalid(
-					ddmFormEvaluatorFieldContextKey, requiredErrorMessage);
-			}
-		);
-	}
-
-	protected void validateFieldsWithConfirmationField() {
-		Set<Map.Entry<String, DDMFormField>> entrySet =
-			_ddmFormFieldsMap.entrySet();
-
-		Stream<Map.Entry<String, DDMFormField>> stream = entrySet.stream();
-
-		stream.flatMap(
-			entry -> _getDDMFormEvaluatorFieldContextKeysStream(entry.getKey())
-		).filter(
-			this::isFieldWithConfirmationFieldAndVisible
-		).filter(
-			this::isConfirmationValueInvalid
-		).forEach(
-			ddmFormEvaluatorFieldContextKey -> setFieldAsInvalid(
-				ddmFormEvaluatorFieldContextKey, StringPool.BLANK)
-		);
-	}
-
-	protected void validateFieldsWithDDMFormFieldValidation() {
-		Collection<DDMFormField> ddmFormFields = _ddmFormFieldsMap.values();
-
-		Stream<DDMFormField> ddmFormFieldsStream = ddmFormFields.stream();
-
-		Map<DDMFormEvaluatorFieldContextKey, DDMFormFieldValidation>
-			ddmFormFieldValidations = ddmFormFieldsStream.filter(
-				this::filterFieldsWithDDMFormFieldValidation
-			).flatMap(
-				ddmFormField -> _getDDMFormEvaluatorFieldContextKeysStream(
-					ddmFormField.getName())
-			).collect(
-				Collectors.toMap(
-					Function.identity(), this::getDDMFormFieldValidation)
-			);
-
-		forEachEntry(
-			ddmFormFieldValidations,
-			this::validateFieldWithDDMFormFieldValidation);
-	}
-
 	protected void validateFieldWithDDMFormFieldValidation(
 		Map.Entry<DDMFormEvaluatorFieldContextKey, DDMFormFieldValidation>
 			entry) {
@@ -804,28 +718,6 @@ public class DDMFormEvaluatorHelper {
 		ddmFormEvaluatorExpressionObserver.updateFieldProperty(builder.build());
 	}
 
-	protected void validateNumericFieldsWithInputMask() {
-		Collection<DDMFormField> ddmFormFields = _ddmFormFieldsMap.values();
-
-		Stream<DDMFormField> stream = ddmFormFields.stream();
-
-		stream.filter(
-			this::_isIntegerNumericField
-		).flatMap(
-			ddmFormField -> _getDDMFormEvaluatorFieldContextKeysStream(
-				ddmFormField.getName())
-		).filter(
-			this::_filterVisibleFieldsWithInputMask
-		).filter(
-			this::_isValueWithInputMaskInvalid
-		).forEach(
-			ddmFormEvaluatorFieldContextKey -> setFieldAsInvalid(
-				ddmFormEvaluatorFieldContextKey,
-				LanguageUtil.get(
-					_resourceBundle, "input-format-is-not-satisfied"))
-		);
-	}
-
 	protected final DDMFormEvaluatorExpressionFieldAccessor
 		ddmFormEvaluatorDDMExpressionFieldAccessor;
 	protected DDMFormEvaluatorExpressionActionHandler
@@ -891,6 +783,27 @@ public class DDMFormEvaluatorHelper {
 
 	private boolean _isNumericField(DDMFormField ddmFormField) {
 		return Objects.equals(ddmFormField.getType(), "numeric");
+	}
+
+	private boolean _isObjectRelationshipFieldInvalid(
+		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
+
+		if (!getBooleanPropertyValue(
+				ddmFormEvaluatorFieldContextKey, "visible", true)) {
+
+			return false;
+		}
+
+		DDMFormField ddmFormField = _ddmFormFieldsMap.get(
+			ddmFormEvaluatorFieldContextKey.getName());
+
+		Object value = ddmFormField.getProperty("value");
+
+		if (value instanceof String) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isValueWithInputMaskInvalid(
@@ -1005,6 +918,135 @@ public class DDMFormEvaluatorHelper {
 					ddmFormFieldProperties.put("value", StringPool.BLANK);
 				}
 			});
+	}
+
+	private void _validateFields() {
+		_validateFieldsMarkedAsRequired();
+		_validateFieldsWithConfirmationField();
+		_validateFieldsWithDDMFormFieldValidation();
+		_validateNumericFieldsWithInputMask();
+		_validateObjectRelationshipFields();
+	}
+
+	private void _validateFieldsMarkedAsRequired() {
+		Set<Map.Entry<String, DDMFormField>> entrySet =
+			_ddmFormFieldsMap.entrySet();
+
+		Stream<Map.Entry<String, DDMFormField>> stream = entrySet.stream();
+
+		stream.flatMap(
+			entry -> _getDDMFormEvaluatorFieldContextKeysStream(entry.getKey())
+		).filter(
+			this::filterVisibleFieldsMarkedAsRequired
+		).filter(
+			this::isFieldEmpty
+		).forEach(
+			ddmFormEvaluatorFieldContextKey -> {
+				String requiredErrorMessage = LanguageUtil.get(
+					_resourceBundle, "this-field-is-required");
+
+				DDMFormField ddmFormField = _ddmFormFieldsMap.get(
+					ddmFormEvaluatorFieldContextKey.getName());
+
+				LocalizedValue localizedValue =
+					ddmFormField.getRequiredErrorMessage();
+
+				if (localizedValue != null) {
+					Map<Locale, String> values = localizedValue.getValues();
+
+					String value = values.get(
+						_ddmFormEvaluatorEvaluateRequest.getLocale());
+
+					if (Validator.isNotNull(value)) {
+						requiredErrorMessage = value;
+					}
+				}
+
+				setFieldAsInvalid(
+					ddmFormEvaluatorFieldContextKey, requiredErrorMessage);
+			}
+		);
+	}
+
+	private void _validateFieldsWithConfirmationField() {
+		Set<Map.Entry<String, DDMFormField>> entrySet =
+			_ddmFormFieldsMap.entrySet();
+
+		Stream<Map.Entry<String, DDMFormField>> stream = entrySet.stream();
+
+		stream.flatMap(
+			entry -> _getDDMFormEvaluatorFieldContextKeysStream(entry.getKey())
+		).filter(
+			this::isFieldWithConfirmationFieldAndVisible
+		).filter(
+			this::isConfirmationValueInvalid
+		).forEach(
+			ddmFormEvaluatorFieldContextKey -> setFieldAsInvalid(
+				ddmFormEvaluatorFieldContextKey, StringPool.BLANK)
+		);
+	}
+
+	private void _validateFieldsWithDDMFormFieldValidation() {
+		Collection<DDMFormField> ddmFormFields = _ddmFormFieldsMap.values();
+
+		Stream<DDMFormField> ddmFormFieldsStream = ddmFormFields.stream();
+
+		Map<DDMFormEvaluatorFieldContextKey, DDMFormFieldValidation>
+			ddmFormFieldValidations = ddmFormFieldsStream.filter(
+				this::filterFieldsWithDDMFormFieldValidation
+			).flatMap(
+				ddmFormField -> _getDDMFormEvaluatorFieldContextKeysStream(
+					ddmFormField.getName())
+			).collect(
+				Collectors.toMap(
+					Function.identity(), this::getDDMFormFieldValidation)
+			);
+
+		forEachEntry(
+			ddmFormFieldValidations,
+			this::validateFieldWithDDMFormFieldValidation);
+	}
+
+	private void _validateNumericFieldsWithInputMask() {
+		Collection<DDMFormField> ddmFormFields = _ddmFormFieldsMap.values();
+
+		Stream<DDMFormField> stream = ddmFormFields.stream();
+
+		stream.filter(
+			this::_isIntegerNumericField
+		).flatMap(
+			ddmFormField -> _getDDMFormEvaluatorFieldContextKeysStream(
+				ddmFormField.getName())
+		).filter(
+			this::_filterVisibleFieldsWithInputMask
+		).filter(
+			this::_isValueWithInputMaskInvalid
+		).forEach(
+			ddmFormEvaluatorFieldContextKey -> setFieldAsInvalid(
+				ddmFormEvaluatorFieldContextKey,
+				LanguageUtil.get(
+					_resourceBundle, "input-format-is-not-satisfied"))
+		);
+	}
+
+	private void _validateObjectRelationshipFields() {
+		Collection<DDMFormField> ddmFormFields = _ddmFormFieldsMap.values();
+
+		Stream<DDMFormField> stream = ddmFormFields.stream();
+
+		stream.filter(
+			ddmFormField -> Objects.equals(
+				ddmFormField.getType(), "object-relationship")
+		).flatMap(
+			ddmFormField -> _getDDMFormEvaluatorFieldContextKeysStream(
+				ddmFormField.getName())
+		).filter(
+			this::_isObjectRelationshipFieldInvalid
+		).forEach(
+			ddmFormEvaluatorFieldContextKey -> setFieldAsInvalid(
+				ddmFormEvaluatorFieldContextKey,
+				LanguageUtil.get(_resourceBundle, "the-field-value-is-invalid"))
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

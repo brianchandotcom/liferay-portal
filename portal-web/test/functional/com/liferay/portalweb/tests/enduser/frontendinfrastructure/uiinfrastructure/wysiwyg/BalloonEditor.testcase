@@ -160,9 +160,7 @@ definition {
 
 			Click(locator1 = "CKEditor#HYPERLINK_UNLINK");
 
-			AssertElementNotPresent(
-				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_HYPERLINK",
-				paragraph_number = "1");
+			AssertElementNotPresent(locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_HYPERLINK");
 		}
 
 		task ("Link") {
@@ -178,9 +176,7 @@ definition {
 
 			Click(locator1 = "CKEditor#CHK_BTN");
 
-			AssertVisible(
-				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_HYPERLINK",
-				paragraph_number = "1");
+			AssertVisible(locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_HYPERLINK");
 		}
 	}
 

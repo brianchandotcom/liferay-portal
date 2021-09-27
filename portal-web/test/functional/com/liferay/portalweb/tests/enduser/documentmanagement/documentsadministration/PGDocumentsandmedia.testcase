@@ -1419,8 +1419,8 @@ definition {
 
 	@description = "This ensures that a user can view the information about an image when navigating to info panel."
 	@priority = "4"
-	@refactorneeded
-	test ViewImageInfoPanel {
+	@refactordone
+	test CanViewImageFromInfoPanel {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",

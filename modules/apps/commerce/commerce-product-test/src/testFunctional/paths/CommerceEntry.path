@@ -535,6 +535,11 @@
 	<td>//div[contains(@class,'content')]//a[contains(.,'${key_contentType}') and contains(@class,'collapsed')]//span[contains(@class,'closed')]//*[name()='svg']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FILE_ENTRY_ID_FROM_PRODUCT_MEDIA</td>
+	<td>//input[@id="_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_fileEntryId"]</td>
+	<td></td>
+</tr>
 <!--CATALOGS-->
 <tr>
 	<td>CATALOGS_FORM</td>

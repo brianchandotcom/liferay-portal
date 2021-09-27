@@ -1,6 +1,7 @@
 {
 	"articleId": "COURSE-02",
 	"ddmStructureKey": "COURSE",
+	"ddmTemplateKey": "COURSE",
 	"folder": "Courses",
 	"name": "Product Management Bootcamp"
 }

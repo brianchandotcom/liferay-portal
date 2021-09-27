@@ -23,7 +23,7 @@
 							"direction": "[vertical]",
 							"displayStyle": "singleline",
 							"fieldNamespace": "",
-							"fieldReference": "Text89663410",
+							"fieldReference": "Title",
 							"hideField": false,
 							"indexType": "keyword",
 							"label": {
@@ -31,7 +31,7 @@
 							},
 							"labelAtStructureLevel": true,
 							"localizable": true,
-							"name": "Text89663410",
+							"name": "Title",
 							"nativeField": false,
 							"objectFieldName": "",
 							"placeholder": {

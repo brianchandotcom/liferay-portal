@@ -42,9 +42,7 @@
 	},
 	{
 		"ddmStructureKey": "CLAIM",
-		"tags": [
-			"closed"
-		],
+		"tags": ["closed"],
 		"title": "Closed Claims",
 		"unicodeProperties": {
 			"anyClassType": "anyClassTypeJournalArticleAssetRendererFactory",
@@ -86,9 +84,7 @@
 	},
 	{
 		"ddmStructureKey": "CLAIM",
-		"tags": [
-			"open"
-		],
+		"tags": ["open"],
 		"title": "Open Claims",
 		"unicodeProperties": {
 			"anyClassType": "anyClassTypeJournalArticleAssetRendererFactory",

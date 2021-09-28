@@ -92,10 +92,10 @@ public class SXPParameterDataCreator {
 			_addSXPParameter(
 				"size", parameters.get("size"), searchContext, sxpParameters);
 
-			_contribute(searchContext, sxpBlueprint, sxpParameters);
-
 			_addSXPParameters(parameters, searchContext, sxpParameters);
 		}
+
+		_contribute(searchContext, sxpBlueprint, sxpParameters);
 
 		return new SXPParameterData(keywords, sxpParameters);
 	}
@@ -235,8 +235,7 @@ public class SXPParameterDataCreator {
 	}
 
 	private SXPParameter _getDateSXPParameter(
-		String name, Object object, Parameter parameter,
-		SearchContext searchContext) {
+		String name, Object object, Parameter parameter, TimeZone timeZone) {
 
 		String value = _getString(null, object);
 
@@ -246,7 +245,6 @@ public class SXPParameterDataCreator {
 
 		LocalDate localDate = LocalDate.parse(
 			value, DateTimeFormatter.ofPattern(parameter.getDateFormat()));
-		TimeZone timeZone = searchContext.getTimeZone();
 
 		Calendar calendar = GregorianCalendar.from(
 			localDate.atStartOfDay(timeZone.toZoneId()));
@@ -478,7 +476,8 @@ public class SXPParameterDataCreator {
 		Parameter.ParameterType parameterType = parameter.getParameterType();
 
 		if (parameterType.equals(Parameter.ParameterType.DATE)) {
-			return _getDateSXPParameter(name, object, parameter, searchContext);
+			return _getDateSXPParameter(
+				name, object, parameter, searchContext.getTimeZone());
 		}
 		else if (parameterType.equals(Parameter.ParameterType.DOUBLE)) {
 			return _getDoubleSXPParameter(name, object, parameter);

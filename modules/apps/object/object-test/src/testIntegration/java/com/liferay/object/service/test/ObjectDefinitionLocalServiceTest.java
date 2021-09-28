@@ -17,6 +17,7 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
+import com.liferay.object.exception.InvalidObjectFieldException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
@@ -964,15 +965,55 @@ public class ObjectDefinitionLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap("Ables"),
 			objectDefinition.getPluralLabelMap());
 
+		// Object field id for description and title are invalid
+
+		try {
+			objectDefinition =
+				_objectDefinitionLocalService.updateCustomObjectDefinition(
+					objectDefinition.getObjectDefinitionId(),
+					objectDefinition.isActive(), 1,
+					LocalizedMapUtil.getLocalizedMap("Able"), "Able", null,
+					null, LocalizedMapUtil.getLocalizedMap("Ables"),
+					objectDefinition.getScope(), 2);
+
+			Assert.fail();
+		}
+		catch (InvalidObjectFieldException invalidObjectFieldException) {
+			Assert.assertNotNull(invalidObjectFieldException);
+		}
+
+		// Object field id for description and title are valid
+
+		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(), false, false, null,
+			LocalizedMapUtil.getLocalizedMap("Able"), "able", true, "String");
+
 		objectDefinition =
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
 				objectDefinition.getObjectDefinitionId(),
-				objectDefinition.isActive(),
+				objectDefinition.isActive(), objectField.getObjectFieldId(),
 				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
 				LocalizedMapUtil.getLocalizedMap("Ables"),
-				objectDefinition.getScope());
+				objectDefinition.getScope(), objectField.getObjectFieldId());
+
+		Assert.assertEquals(
+			objectField.getObjectFieldId(),
+			objectDefinition.getDescriptionObjectFieldId());
+		Assert.assertEquals(
+			objectField.getObjectFieldId(),
+			objectDefinition.getTitleObjectFieldId());
+
+		objectDefinition =
+			_objectDefinitionLocalService.updateCustomObjectDefinition(
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.isActive(), 0,
+				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
+				LocalizedMapUtil.getLocalizedMap("Ables"),
+				objectDefinition.getScope(), 0);
 
 		Assert.assertTrue(objectDefinition.isActive());
+		Assert.assertEquals(0, objectDefinition.getDescriptionObjectFieldId());
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Able"),
 			objectDefinition.getLabelMap());
@@ -980,13 +1021,14 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Ables"),
 			objectDefinition.getPluralLabelMap());
+		Assert.assertEquals(0, objectDefinition.getTitleObjectFieldId());
 
 		objectDefinition =
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
-				objectDefinition.getObjectDefinitionId(), false,
+				objectDefinition.getObjectDefinitionId(), false, 0,
 				LocalizedMapUtil.getLocalizedMap("Baker"), "Baker", null, null,
 				LocalizedMapUtil.getLocalizedMap("Bakers"),
-				objectDefinition.getScope());
+				objectDefinition.getScope(), 0);
 
 		Assert.assertFalse(objectDefinition.isActive());
 		Assert.assertEquals(
@@ -1003,10 +1045,10 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition =
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
-				objectDefinition.getObjectDefinitionId(), true,
+				objectDefinition.getObjectDefinitionId(), true, 0,
 				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie", null,
 				null, LocalizedMapUtil.getLocalizedMap("Charlies"),
-				objectDefinition.getScope());
+				objectDefinition.getScope(), 0);
 
 		Assert.assertTrue(objectDefinition.isActive());
 		Assert.assertEquals(

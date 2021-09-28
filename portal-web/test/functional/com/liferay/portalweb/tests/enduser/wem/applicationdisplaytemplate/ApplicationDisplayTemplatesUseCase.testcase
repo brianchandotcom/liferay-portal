@@ -36,6 +36,7 @@ definition {
 	@description = "View the widget template applied to Asset Publisher widget."
 	@priority = "3"
 	test ViewWidgetTemplateAppliedToAssetPublisher {
+		property portal.acceptance = "true";
 		property testray.component.names = "Asset Publisher,Content and Application Templates";
 
 		task ("Add an Asset Publisher to page") {

@@ -766,6 +766,8 @@ definition {
 	@description = "This is a test for LPS-113926. The user can filter collection items in Collection Display by keywords."
 	@priority = "5"
 	test FilterResultsOfCollectionDisplayByKeywords {
+		property portal.acceptance = "true";
+
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Levis 501",

@@ -406,8 +406,6 @@ definition {
 	@description = "LPS-136456 - Verify that the Searchable option is not available on a form when it is mapped to an object"
 	@priority = "4"
 	test SearchableOptionNotAvailable {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -441,8 +439,6 @@ definition {
 		Form.gotoAdvancedTab();
 
 		AssertElementNotPresent(locator1 = "PopulateObjectFormsConfiguration#ANY_SEARCHABLE_SECTION_TITLE");
-
-
 	}
 
 }

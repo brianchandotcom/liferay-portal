@@ -2,5 +2,6 @@
 	"/api/jsonws/assetcategory/search-categories-display?*": "/categories",
 	"/api/jsonws/assetcategoryproperty/get-category-properties?*": "/properties",
 	"/o/c/raylifeapplications/": "/applications",
+	"/o/c/quotecomparisons/": "/quotes",
 	"/o/headless-commerce-admin-catalog/v1.0/products?*": "/products"
 }

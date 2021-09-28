@@ -366,10 +366,8 @@
 		"total": 15
 	},
 	"products": {
-		"actions": {
-		},
-		"facets": [
-		],
+		"actions": {},
+		"facets": [],
 		"items": [
 			{
 				"actions": {
@@ -389,12 +387,9 @@
 				"active": true,
 				"catalog": {
 					"actions": {
-						"delete": {
-						},
-						"get": {
-						},
-						"update": {
-						}
+						"delete": {},
+						"get": {},
+						"update": {}
 					},
 					"currencyCode": "USD",
 					"defaultLanguageId": "en_US",
@@ -405,14 +400,12 @@
 				},
 				"catalogId": 41422,
 				"createDate": "2021-07-14T16:04:36Z",
-				"customFields": [
-				],
+				"customFields": [],
 				"description": {
 					"en_US": ""
 				},
 				"displayDate": "2021-07-14T16:04:00Z",
-				"expando": {
-				},
+				"expando": {},
 				"externalReferenceCode": "",
 				"id": 41450,
 				"metaDescription": {
@@ -448,8 +441,7 @@
 						"height": 0,
 						"id": 41454,
 						"manufacturerPartNumber": "",
-						"options": {
-						},
+						"options": {},
 						"price": 1000,
 						"productId": 41451,
 						"productName": {
@@ -464,8 +456,7 @@
 						"width": 0
 					}
 				],
-				"tags": [
-				],
+				"tags": [],
 				"thumbnail": "/o/commerce-media/default/?groupId=41423",
 				"urls": {
 					"en_US": "pet-store-insurance"
@@ -485,52 +476,30 @@
 	"properties": [
 		{
 			"attributeGetterFunctions": {
-				"categoryId": {
-				},
-				"categoryPropertyId": {
-				},
-				"companyId": {
-				},
-				"createDate": {
-				},
-				"ctCollectionId": {
-				},
-				"key": {
-				},
-				"modifiedDate": {
-				},
-				"mvccVersion": {
-				},
-				"userId": {
-				},
-				"userName": {
-				},
-				"value": {
-				}
+				"categoryId": {},
+				"categoryPropertyId": {},
+				"companyId": {},
+				"createDate": {},
+				"ctCollectionId": {},
+				"key": {},
+				"modifiedDate": {},
+				"mvccVersion": {},
+				"userId": {},
+				"userName": {},
+				"value": {}
 			},
 			"attributeSetterBiConsumers": {
-				"categoryId": {
-				},
-				"categoryPropertyId": {
-				},
-				"companyId": {
-				},
-				"createDate": {
-				},
-				"ctCollectionId": {
-				},
-				"key": {
-				},
-				"modifiedDate": {
-				},
-				"mvccVersion": {
-				},
-				"userId": {
-				},
-				"userName": {
-				},
-				"value": {
-				}
+				"categoryId": {},
+				"categoryPropertyId": {},
+				"companyId": {},
+				"createDate": {},
+				"ctCollectionId": {},
+				"key": {},
+				"modifiedDate": {},
+				"mvccVersion": {},
+				"userId": {},
+				"userName": {},
+				"value": {}
 			},
 			"cachedModel": false,
 			"categoryId": "41767",
@@ -582,52 +551,30 @@
 		},
 		{
 			"attributeGetterFunctions": {
-				"categoryId": {
-				},
-				"categoryPropertyId": {
-				},
-				"companyId": {
-				},
-				"createDate": {
-				},
-				"ctCollectionId": {
-				},
-				"key": {
-				},
-				"modifiedDate": {
-				},
-				"mvccVersion": {
-				},
-				"userId": {
-				},
-				"userName": {
-				},
-				"value": {
-				}
+				"categoryId": {},
+				"categoryPropertyId": {},
+				"companyId": {},
+				"createDate": {},
+				"ctCollectionId": {},
+				"key": {},
+				"modifiedDate": {},
+				"mvccVersion": {},
+				"userId": {},
+				"userName": {},
+				"value": {}
 			},
 			"attributeSetterBiConsumers": {
-				"categoryId": {
-				},
-				"categoryPropertyId": {
-				},
-				"companyId": {
-				},
-				"createDate": {
-				},
-				"ctCollectionId": {
-				},
-				"key": {
-				},
-				"modifiedDate": {
-				},
-				"mvccVersion": {
-				},
-				"userId": {
-				},
-				"userName": {
-				},
-				"value": {
-				}
+				"categoryId": {},
+				"categoryPropertyId": {},
+				"companyId": {},
+				"createDate": {},
+				"ctCollectionId": {},
+				"key": {},
+				"modifiedDate": {},
+				"mvccVersion": {},
+				"userId": {},
+				"userName": {},
+				"value": {}
 			},
 			"cachedModel": false,
 			"categoryId": "41767",
@@ -677,5 +624,146 @@
 				"value": "Office"
 			}
 		}
-	]
+	],
+	"quotes": {
+		"actions": {
+			"create": {
+				"method": "POST",
+				"href": "http://localhost:8080/o/c/quotecomparisons/"
+			}
+		},
+		"facets": [],
+		"items": [
+			{
+				"actions": {
+					"get": {
+						"method": "GET",
+						"href": "http://localhost:8080/o/c/quotecomparisons/48789"
+					},
+					"update": {
+						"method": "PUT",
+						"href": "http://localhost:8080/o/c/quotecomparisons/48789"
+					},
+					"delete": {
+						"method": "DELETE",
+						"href": "http://localhost:8080/o/c/quotecomparisons/48789"
+					}
+				},
+				"creator": {
+					"additionalName": "",
+					"contentType": "UserAccount",
+					"familyName": "Test",
+					"givenName": "Test",
+					"id": 20127,
+					"name": "Test Test"
+				},
+				"dateCreated": "2021-09-28T17:18:19Z",
+				"dateModified": "2021-09-28T17:18:20Z",
+				"externalReferenceCode": "",
+				"id": 48789,
+				"status": {
+					"code": 0,
+					"label": "approved",
+					"label_i18n": "Approved"
+				},
+				"promo": 241.0,
+				"perOccuranceLimit": 1000000,
+				"productRecallOrReplacement": false,
+				"price": 482.0,
+				"businessPersonalProperty": 50000.0,
+				"category": "basic",
+				"moneyAndSecurities": 0e-16,
+				"mostPopular": false,
+				"aggregateLimit": 2000000.0
+			},
+			{
+				"actions": {
+					"get": {
+						"method": "GET",
+						"href": "http://localhost:8080/o/c/quotecomparisons/48792"
+					},
+					"update": {
+						"method": "PUT",
+						"href": "http://localhost:8080/o/c/quotecomparisons/48792"
+					},
+					"delete": {
+						"method": "DELETE",
+						"href": "http://localhost:8080/o/c/quotecomparisons/48792"
+					}
+				},
+				"creator": {
+					"additionalName": "",
+					"contentType": "UserAccount",
+					"familyName": "Test",
+					"givenName": "Test",
+					"id": 20127,
+					"name": "Test Test"
+				},
+				"dateCreated": "2021-09-28T17:19:34Z",
+				"dateModified": "2021-09-28T17:19:34Z",
+				"externalReferenceCode": "",
+				"id": 48792,
+				"status": {
+					"code": 0,
+					"label": "approved",
+					"label_i18n": "Approved"
+				},
+				"promo": 359.0,
+				"perOccuranceLimit": 1000000,
+				"productRecallOrReplacement": true,
+				"price": 719.0,
+				"businessPersonalProperty": 50000.0,
+				"category": "standard",
+				"moneyAndSecurities": 0e-16,
+				"mostPopular": true,
+				"aggregateLimit": 2000000.0
+			},
+			{
+				"actions": {
+					"get": {
+						"method": "GET",
+						"href": "http://localhost:8080/o/c/quotecomparisons/48794"
+					},
+					"update": {
+						"method": "PUT",
+						"href": "http://localhost:8080/o/c/quotecomparisons/48794"
+					},
+					"delete": {
+						"method": "DELETE",
+						"href": "http://localhost:8080/o/c/quotecomparisons/48794"
+					}
+				},
+				"creator": {
+					"additionalName": "",
+					"contentType": "UserAccount",
+					"familyName": "Test",
+					"givenName": "Test",
+					"id": 20127,
+					"name": "Test Test"
+				},
+				"dateCreated": "2021-09-28T17:20:13Z",
+				"dateModified": "2021-09-28T17:20:13Z",
+				"externalReferenceCode": "",
+				"id": 48794,
+				"status": {
+					"code": 0,
+					"label": "approved",
+					"label_i18n": "Approved"
+				},
+				"promo": 862.5,
+				"perOccuranceLimit": 1000000,
+				"productRecallOrReplacement": true,
+				"price": 1225.0,
+				"businessPersonalProperty": 50000.0,
+				"category": "Premium",
+				"moneyAndSecurities": 0e-16,
+				"mostPopular": false,
+				"aggregateLimit": 2000000.0
+			}
+		],
+		"lastPage": 1,
+		"page": 1,
+		"pageSize": 20,
+		"totalCount": 3
+	}
 }

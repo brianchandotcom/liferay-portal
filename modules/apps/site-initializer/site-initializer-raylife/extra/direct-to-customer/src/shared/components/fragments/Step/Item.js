@@ -4,10 +4,15 @@ import React from 'react';
 
 import {ProgressRing} from '../ProgressRing';
 
-export const StepItem = ({children, onClick, percentage = 0, selected = false}) => {
+export const StepItem = ({
+	children,
+	onClick,
+	percentage = 0,
+	selected = false,
+}) => {
 	const completed = percentage === 100;
 	const partially = percentage !== 0;
-	
+
 	return (
 		<div
 			className={classNames('step-item', {
@@ -15,7 +20,7 @@ export const StepItem = ({children, onClick, percentage = 0, selected = false}) 
 				partially,
 				selected,
 			})}
-			onClick={partially && onClick}
+			onClick={partially ? onClick : undefined}
 		>
 			<i>
 				{partially && (

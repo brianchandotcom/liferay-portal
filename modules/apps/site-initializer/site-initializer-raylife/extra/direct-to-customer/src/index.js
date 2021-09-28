@@ -31,10 +31,10 @@ class DirectToCustomerWebComponent extends WebComponent {
 	connectedCallback() {
 		super.connectedCallback(StylesProvider);
 
-		const GOOGLE_API_KEY = this.getAttribute('GOOGLE_API');
+		const GOOGLES_PLACES_KEY = this.getAttribute('GOOGLES_PLACES_KEY');
 
-		if (GOOGLE_API_KEY) {
-			GoogleMapsService.setup(GOOGLE_API_KEY);
+		if (GOOGLES_PLACES_KEY) {
+			GoogleMapsService.setup(GOOGLES_PLACES_KEY);
 		}
 
 		ReactDOM.render(

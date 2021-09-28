@@ -8,10 +8,6 @@ import {Loader} from '@googlemaps/js-api-loader';
  */
 const setup = (GOOGLE_API) => {
 	try {
-		if (!GOOGLE_API) {
-			throw new Error('Google api key is not defined inside .env');
-		}
-
 		const googleMapsLoader = new Loader({
 			apiKey: GOOGLE_API,
 			libraries: ['places'],

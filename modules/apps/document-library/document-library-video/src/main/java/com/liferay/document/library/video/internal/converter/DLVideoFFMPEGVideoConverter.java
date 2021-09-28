@@ -30,13 +30,19 @@ import com.liferay.portal.util.PropsValues;
 
 import java.awt.image.BufferedImage;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -58,15 +64,23 @@ public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 		Properties videoProperties = PropsUtil.getProperties(
 			PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO, false);
 
+		File destinationFile = FileUtil.createTempFile(containerType);
+
 		return _runFFMPEGCommand(
-			String.format(
-				"ffmpeg -y -i %s -b:v %dk -vf scale=min(%d\\,iw):-2 -r %d",
-				file.getAbsolutePath(),
-				_getVideoBitRate(videoProperties, containerType) / 1000,
-				GetterUtil.getInteger(
-					PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH),
-				_getVideoFrameRate(videoProperties, containerType)),
-			containerType);
+			Arrays.asList(
+				"ffmpeg", "-y", "-i", file.getAbsolutePath(), "-b:v",
+				String.valueOf(
+					_getVideoBitRate(videoProperties, containerType)),
+				"-vf",
+				String.format(
+					"scale=min(%d\\,iw):-2",
+					GetterUtil.getInteger(
+						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH)),
+				"-r",
+				String.valueOf(
+					_getVideoFrameRate(videoProperties, containerType)),
+				destinationFile.getAbsolutePath()),
+			destinationFile);
 	}
 
 	@Override
@@ -74,13 +88,17 @@ public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 		throws Exception {
 
 		try {
+			File destinationFile = FileUtil.createTempFile(format);
+
 			return _runFFMPEGCommand(
-				String.format(
-					"ffmpeg -y -i %s -vf thumbnail,scale=%d:%d/dar -frames:v 1",
-					file.getAbsolutePath(),
-					PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH,
-					PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH),
-				format);
+				Arrays.asList(
+					"ffmpeg", "-y", "-i", file.getAbsolutePath(), "-vf",
+					String.format(
+						"thumbnail,scale=%d:%d/dar",
+						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH,
+						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH),
+					"-frames:v", "1", destinationFile.getAbsolutePath()),
+				destinationFile);
 		}
 		catch (Exception exception) {
 			String message = exception.getMessage();
@@ -125,6 +143,17 @@ public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 				DLVideoFFMPEGVideoConverterConfiguration.class, properties);
 	}
 
+	private void _consumeProcessInputStream(InputStream inputStream)
+		throws IOException {
+
+		BufferedReader bufferedReader = new BufferedReader(
+			new InputStreamReader(inputStream));
+
+		while (bufferedReader.ready()) {
+			bufferedReader.readLine();
+		}
+	}
+
 	private int _getVideoBitRate(
 		Properties videoProperties, String videoContainer) {
 
@@ -162,22 +191,36 @@ public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 		return numerator / denominator;
 	}
 
-	private InputStream _runFFMPEGCommand(String ffmpegCommand, String format)
+	private InputStream _runFFMPEGCommand(
+			List<String> ffmpegCommand, File destinationFile)
 		throws Exception {
 
-		File destinationFile = FileUtil.createTempFile(format);
+		ProcessBuilder processBuilder = new ProcessBuilder(ffmpegCommand);
 
-		Runtime runtime = Runtime.getRuntime();
+		processBuilder.redirectErrorStream(true);
 
-		Process process = runtime.exec(
-			ffmpegCommand + StringPool.SPACE +
-				destinationFile.getAbsolutePath());
+		Process process = processBuilder.start();
 
-		if (process.waitFor() != 0) {
-			throw new Exception(StringUtil.read(process.getErrorStream()));
+		InputStream inputStream = process.getInputStream();
+
+		while (true) {
+			try {
+				_consumeProcessInputStream(inputStream);
+
+				if (!process.waitFor(5, TimeUnit.SECONDS)) {
+					continue;
+				}
+
+				if (process.exitValue() != 0) {
+					throw new Exception(
+						StringUtil.read(process.getErrorStream()));
+				}
+
+				return new FileInputStream(destinationFile);
+			}
+			catch (InterruptedException interruptedException) {
+			}
 		}
-
-		return new FileInputStream(destinationFile);
 	}
 
 	private static final int _VIDEO_BIT_RATE_DEFAULT = 250000;

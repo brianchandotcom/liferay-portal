@@ -14,12 +14,18 @@
 
 package com.liferay.object.web.internal.object.definitions.display.context;
 
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTrigger;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
+import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
@@ -28,10 +34,12 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.taglib.servlet.PipingServletResponseFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,6 +48,7 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Marco Leo
@@ -47,13 +56,14 @@ import javax.servlet.http.HttpServletRequest;
 public class ObjectDefinitionsActionsDisplayContext {
 
 	public ObjectDefinitionsActionsDisplayContext(
-		HttpServletRequest httpServletRequest,
+		DDMFormRenderer ddmFormRenderer, HttpServletRequest httpServletRequest,
 		ObjectActionExecutorRegistry objectActionExecutorRegistry,
 		ObjectActionTriggerRegistry objectActionTriggerRegistry,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
 		JSONFactory jsonFactory) {
 
+		_ddmFormRenderer = ddmFormRenderer;
 		_objectActionExecutorRegistry = objectActionExecutorRegistry;
 		_objectActionTriggerRegistry = objectActionTriggerRegistry;
 		_objectDefinitionModelResourcePermission =
@@ -87,7 +97,7 @@ public class ObjectDefinitionsActionsDisplayContext {
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
 				"get", null, "sidePanel"),
 			new ClayDataSetActionDropdownItem(
-				"/o/object-admin/v1.0/object-action/{id}", "trash", "delete",
+				"/o/object-admin/v1.0/object-actions/{id}", "trash", "delete",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
 				"delete", "delete", "async"));
 	}
@@ -110,6 +120,21 @@ public class ObjectDefinitionsActionsDisplayContext {
 			});
 
 		return creationMenu;
+	}
+
+	public ObjectAction getObjectAction() {
+		HttpServletRequest httpServletRequest =
+			_objectRequestHelper.getRequest();
+
+		return (ObjectAction)httpServletRequest.getAttribute(
+			ObjectWebKeys.OBJECT_ACTION);
+	}
+
+	public ObjectActionExecutor getObjectActionExecutor() {
+		ObjectAction objectAction = getObjectAction();
+
+		return _objectActionExecutorRegistry.getObjectActionExecutor(
+			objectAction.getObjectActionExecutorKey());
 	}
 
 	public JSONArray getObjectActionExecutorsJSONArray() {
@@ -170,12 +195,45 @@ public class ObjectDefinitionsActionsDisplayContext {
 			_objectRequestHelper.getLiferayPortletResponse());
 	}
 
+	public String renderDDMForm(PageContext pageContext)
+		throws DDMFormRenderingException {
+
+		ObjectActionExecutor objectActionExecutor = getObjectActionExecutor();
+
+		DDMForm ddmForm = DDMFormFactory.create(
+			objectActionExecutor.getSettings());
+
+		DDMFormRenderingContext ddmFormRenderingContext =
+			new DDMFormRenderingContext();
+
+		ddmFormRenderingContext.setContainerId(
+			"editObjectActionExecutorSettings");
+
+		ddmFormRenderingContext.setHttpServletRequest(
+			_objectRequestHelper.getRequest());
+		ddmFormRenderingContext.setHttpServletResponse(
+			PipingServletResponseFactory.createPipingServletResponse(
+				pageContext));
+		ddmFormRenderingContext.setLocale(_objectRequestHelper.getLocale());
+
+		LiferayPortletResponse liferayPortletResponse =
+			_objectRequestHelper.getLiferayPortletResponse();
+
+		ddmFormRenderingContext.setPortletNamespace(
+			liferayPortletResponse.getNamespace());
+
+		ddmFormRenderingContext.setShowRequiredFieldsWarning(true);
+
+		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
+	}
+
 	private boolean _hasAddObjectActionPermission() throws Exception {
 		return _objectDefinitionModelResourcePermission.contains(
 			_objectRequestHelper.getPermissionChecker(),
 			getObjectDefinitionId(), ActionKeys.UPDATE);
 	}
 
+	private final DDMFormRenderer _ddmFormRenderer;
 	private final JSONFactory _jsonFactory;
 	private final ObjectActionExecutorRegistry _objectActionExecutorRegistry;
 	private final ObjectActionTriggerRegistry _objectActionTriggerRegistry;

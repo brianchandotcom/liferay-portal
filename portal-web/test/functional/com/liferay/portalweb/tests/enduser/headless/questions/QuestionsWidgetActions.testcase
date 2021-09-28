@@ -659,6 +659,16 @@ definition {
 			threadSubject = "Question1",
 			titleField = "Question1");
 
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			questionsTitle = "question1",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		AssertVisible(
+			key_answerBodyContent = "This is my answer",
+			locator1 = "Questions#ANSWER_BODY");
+
 		MessageboardsCategory.openToCategory(
 			categoryName = "Questions Test Category",
 			groupName = "Guest",
@@ -1529,6 +1539,10 @@ definition {
 			questionsTitle = "title-addquestion",
 			siteURLKey = "guest",
 			topicName = "questions-test-category");
+
+		AssertVisible(
+			key_answerBodyContent = "This is my answer",
+			locator1 = "Questions#ANSWER_BODY");
 
 		Questions.editAnswer(contentField = "Body AddAnswerTextEdit");
 

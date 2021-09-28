@@ -14,7 +14,7 @@
 
 import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import React, {useContext, useMemo, useRef, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
@@ -31,10 +31,7 @@ import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateIte
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import resizeColumns from '../../thunks/resizeColumns';
-import {
-	DragAndDropContext,
-	NotDraggableArea,
-} from '../../utils/drag-and-drop/useDragAndDrop';
+import {NotDraggableArea} from '../../utils/drag-and-drop/useDragAndDrop';
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import isItemEmpty from '../../utils/isItemEmpty';
@@ -90,7 +87,6 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 	const layoutData = useSelector((state) => state.layoutData);
 	const parentItem = layoutData.items[item.parentId];
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
-	const {setCanDrag} = useContext(DragAndDropContext);
 	const globalContext = useGlobalContext();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const [selectedColumn, setColumnSelected] = useState(null);
@@ -171,7 +167,6 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 	const handleMouseDown = (event) => {
 		setColumnSelected(item);
 		setResizing(true);
-		setCanDrag(false);
 
 		let columns = null;
 		const leftColumn =
@@ -377,8 +372,6 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 					})
 				).then(() => setUpdatedLayoutData(null));
 			}
-
-			setCanDrag(true);
 		},
 		false,
 		globalContext.document.body

@@ -20,7 +20,6 @@ import React, {
 	useMemo,
 	useReducer,
 	useRef,
-	useState,
 } from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
@@ -38,8 +37,6 @@ import {TARGET_POSITIONS} from './constants/targetPositions';
 import defaultComputeHover from './defaultComputeHover';
 
 export const initialDragDrop = {
-	canDrag: true,
-
 	dispatch: null,
 
 	layoutDataRef: {
@@ -47,8 +44,6 @@ export const initialDragDrop = {
 			items: [],
 		},
 	},
-
-	setCanDrag: () => {},
 
 	state: {
 
@@ -98,7 +93,7 @@ export const initialDragDrop = {
 	targetRefs: new Map(),
 };
 
-export const DragAndDropContext = React.createContext(initialDragDrop);
+const DragAndDropContext = React.createContext(initialDragDrop);
 
 export const NotDraggableArea = ({children}) => (
 	<div
@@ -114,17 +109,13 @@ export const NotDraggableArea = ({children}) => (
 
 export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
 	const getSourceItem = useCallback(() => sourceItem, [sourceItem]);
-	const {canDrag, dispatch, layoutDataRef, state} = useContext(
-		DragAndDropContext
-	);
+	const {dispatch, layoutDataRef, state} = useContext(DragAndDropContext);
 	const sourceRef = useRef(null);
 
 	const [{isDraggingSource}, handlerRef, previewRef] = useDrag({
 		begin() {
 			onBegin();
 		},
-
-		canDrag,
 
 		collect: (monitor) => ({
 			isDraggingSource: monitor.isDragging(),
@@ -274,8 +265,6 @@ export const DragAndDropContextProvider = ({children}) => {
 		items: [],
 	});
 
-	const [canDrag, setCanDrag] = useState(true);
-
 	const [state, reducerDispatch] = useReducer(
 		(state, nextState) =>
 			Object.keys(state).some((key) => state[key] !== nextState[key])
@@ -298,14 +287,12 @@ export const DragAndDropContextProvider = ({children}) => {
 
 	const dragAndDropContext = useMemo(
 		() => ({
-			canDrag,
 			dispatch,
 			layoutDataRef,
-			setCanDrag,
 			state,
 			targetRefs,
 		}),
-		[canDrag, dispatch, layoutDataRef, state, targetRefs, setCanDrag]
+		[dispatch, layoutDataRef, state, targetRefs]
 	);
 
 	return (

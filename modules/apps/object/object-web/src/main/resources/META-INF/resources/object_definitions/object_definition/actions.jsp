@@ -21,7 +21,7 @@ String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderRe
 
 ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
 
-ObjectDefinitionsRelationshipsDisplayContext objectDefinitionsRelationshipsDisplayContext = (ObjectDefinitionsRelationshipsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+ObjectDefinitionsActionsDisplayContext objectDefinitionsActionsDisplayContext = (ObjectDefinitionsActionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
@@ -30,11 +30,11 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 %>
 
 <clay:headless-data-set-display
-	apiURL="<%= objectDefinitionsRelationshipsDisplayContext.getAPIURL() %>"
-	clayDataSetActionDropdownItems="<%= objectDefinitionsRelationshipsDisplayContext.getClayDataSetActionDropdownItems() %>"
-	creationMenu="<%= objectDefinitionsRelationshipsDisplayContext.getCreationMenu() %>"
+	apiURL="<%= objectDefinitionsActionsDisplayContext.getAPIURL() %>"
+	clayDataSetActionDropdownItems="<%= objectDefinitionsActionsDisplayContext.getClayDataSetActionDropdownItems() %>"
+	creationMenu="<%= objectDefinitionsActionsDisplayContext.getCreationMenu() %>"
 	formId="fm"
-	id="<%= ObjectDefinitionsClayDataSetDisplayNames.OBJECT_RELATIONSHIPS %>"
+	id="<%= ObjectDefinitionsClayDataSetDisplayNames.OBJECT_ACTIONS %>"
 	itemsPerPage="<%= 20 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
@@ -42,12 +42,16 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 	style="fluid"
 />
 
-<div id="<portlet:namespace />AddObjectRelationship">
+<div id="<portlet:namespace />AddObjectAction">
 	<react:component
-		module="js/components/ModalAddObjectRelationship"
+		module="js/components/ModalAddObjectAction"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"apiURL", objectDefinitionsRelationshipsDisplayContext.getAPIURL()
+				"apiURL", objectDefinitionsActionsDisplayContext.getAPIURL()
+			).put(
+				"objectActionExecutors", objectDefinitionsActionsDisplayContext.getObjectActionExecutorJSONArray()
+			).put(
+				"objectActionTriggers", objectDefinitionsActionsDisplayContext.getObjectActionTriggerJSONArray()
 			).build()
 		%>'
 	/>

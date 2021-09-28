@@ -971,6 +971,12 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		Map<String, Portlet> portletsMap = new ConcurrentHashMap<>();
 
 		for (Portlet portlet : _portletsMap.values()) {
+			if ((portlet.getCompanyId() != CompanyConstants.SYSTEM) &&
+				(portlet.getCompanyId() != companyId)) {
+
+				continue;
+			}
+
 			portlet = (Portlet)portlet.clone();
 
 			portlet.setCompanyId(companyId);

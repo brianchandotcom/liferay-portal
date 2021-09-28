@@ -143,9 +143,9 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 		const inputIndexed = document.querySelector(
 			'#<portlet:namespace />indexed'
 		);
-		const inputIndexedTypeKeyword = getNode(
-			'inputIndexedTypeKeyword'
-		).querySelector('input');
+		const inputIndexedTypeKeyword = document
+			.querySelector('#<portlet:namespace />inputIndexedTypeKeyword')
+			.querySelector('input');
 		const inputIndexedTypeText = document
 			.querySelector('#<portlet:namespace />inputIndexedTypeText')
 			.querySelector('input');

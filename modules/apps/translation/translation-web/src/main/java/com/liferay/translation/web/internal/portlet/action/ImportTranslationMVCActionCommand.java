@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipReader;
@@ -49,11 +50,17 @@ import com.liferay.translation.service.TranslationEntryService;
 import com.liferay.translation.snapshot.TranslationSnapshot;
 import com.liferay.translation.snapshot.TranslationSnapshotProvider;
 import com.liferay.translation.url.provider.TranslationURLProvider;
+import com.liferay.translation.web.internal.display.context.ImportTranslationResultsDisplayContext;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -87,6 +94,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 			long classPK = ParamUtil.getLong(actionRequest, "classPK");
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
+			String title = ParamUtil.getString(actionRequest, "title");
 
 			String className = _portal.getClassName(classNameId);
 
@@ -107,6 +115,11 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				className, classPK, object,
 				themeDisplay.getPermissionChecker());
 
+			Map<String, String> failureEntries = new HashMap<>();
+			List<String> successEntries = new ArrayList<>();
+
+			String fileName = uploadPortletRequest.getFileName("file");
+
 			if (Objects.equals(
 					uploadPortletRequest.getContentType("file"),
 					ContentTypes.APPLICATION_ZIP)) {
@@ -116,7 +129,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 					_importZipFile(
 						actionRequest, groupId, className, classPK,
-						inputStream);
+						failureEntries, inputStream, successEntries);
 				}
 			}
 			else {
@@ -125,7 +138,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 					_importXLIFFFile(
 						actionRequest, groupId, className, classPK,
-						inputStream);
+						failureEntries, fileName, inputStream, successEntries);
 				}
 			}
 
@@ -223,25 +236,89 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 	private void _importXLIFFFile(
 			ActionRequest actionRequest, long groupId, String className,
-			long classPK, InputStream inputStream)
+			long classPK, Map<String, String> failureEntries, String fileName,
+			InputStream inputStream, List<String> successEntries)
 		throws IOException, PortalException {
 
-		TranslationSnapshot translationSnapshot =
-			_translationSnapshotProvider.getTranslationSnapshot(
-				groupId, new InfoItemReference(className, classPK),
-				inputStream);
+		try {
+			TranslationSnapshot translationSnapshot =
+				_translationSnapshotProvider.getTranslationSnapshot(
+					groupId, new InfoItemReference(className, classPK),
+					inputStream);
 
-		_translationEntryService.addOrUpdateTranslationEntry(
-			groupId,
-			_language.getLanguageId(translationSnapshot.getTargetLocale()),
-			new InfoItemReference(className, classPK),
-			translationSnapshot.getInfoItemFieldValues(),
-			ServiceContextFactory.getInstance(actionRequest));
+			_translationEntryService.addOrUpdateTranslationEntry(
+				groupId,
+				_language.getLanguageId(translationSnapshot.getTargetLocale()),
+				new InfoItemReference(className, classPK),
+				translationSnapshot.getInfoItemFieldValues(),
+				ServiceContextFactory.getInstance(actionRequest));
+
+			successEntries.add(fileName);
+		}
+		catch (XLIFFFileException xliffFileException) {
+			String message = xliffFileException.getMessage();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				themeDisplay.getLocale(), getClass());
+
+			if (xliffFileException instanceof
+					XLIFFFileException.MustBeSupportedLanguage) {
+
+				message = _language.get(
+					resourceBundle,
+					"the-xliff-file-has-an-unavailable-language-translation");
+			}
+			else if (xliffFileException instanceof
+						XLIFFFileException.MustBeValid) {
+
+				message = _language.get(
+					resourceBundle, "the-file-is-an-invalid-xliff-file");
+			}
+			else if (xliffFileException instanceof
+						XLIFFFileException.MustBeWellFormed) {
+
+				message = _language.get(
+					resourceBundle,
+					"the-xliff-file-does-not-have-all-needed-fields");
+			}
+			else if (xliffFileException instanceof
+						XLIFFFileException.MustHaveCorrectEncoding) {
+
+				message = _language.get(
+					resourceBundle,
+					"the-translation-file-has-an-incorrect-encoding.the-" +
+						"supported-encoding-format-is-utf-8");
+			}
+			else if (xliffFileException instanceof
+						XLIFFFileException.MustHaveValidId) {
+
+				message = _language.get(
+					resourceBundle, _getMustHaveValidIdMessage(className));
+			}
+			else if (xliffFileException instanceof
+						XLIFFFileException.MustHaveValidParameter) {
+
+				message = _language.get(
+					resourceBundle, "the-xliff-file-has-invalid-parameters");
+			}
+			else if (xliffFileException instanceof
+						XLIFFFileException.MustNotHaveMoreThanOne) {
+
+				message = _language.get(
+					resourceBundle, "the-xliff-file-is-invalid");
+			}
+
+			importErrors.put(uploadedFileName, message);
+		}
 	}
 
 	private void _importZipFile(
 			ActionRequest actionRequest, long groupId, String className,
-			long classPK, InputStream inputStream)
+			long classPK, Map<String, String> failureEntries,
+			InputStream inputStream, List<String> successEntries)
 		throws IOException, PortalException {
 
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(inputStream);
@@ -253,7 +330,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 					_importXLIFFFile(
 						actionRequest, groupId, className, classPK,
-						entryInputStream);
+						failureEntries, entry, entryInputStream,
+						successEntries);
 				}
 			}
 		}

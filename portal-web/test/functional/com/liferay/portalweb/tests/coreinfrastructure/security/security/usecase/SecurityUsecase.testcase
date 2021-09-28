@@ -266,6 +266,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "tika.mp3",
+			dmDocumentFilePath = "coreinfrastructure/security/security/usecase",
 			dmDocumentTitle = "DM Document Title");
 
 		AssertConsoleTextPresent(value1 = "java.io.IOException: Record size");
@@ -315,6 +316,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 		LAR.importPortlet(
 			failureExpected = "true",
+			filePath = "coreinfrastructure/security/security/usecase",
 			larFileName = "blogs-remote-code-execution.lar",
 			portletName = "Blogs",
 			uploadFrom = "dependencies");

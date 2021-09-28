@@ -34,6 +34,20 @@ definition {
 		MenuItem.click(menuItem = "Manage Collaborators");
 	}
 
+	macro openTosharedContent {
+
+		// You can use this navigation when you need to access the shared content quickly without checking the UI.
+
+		if ("${navTab}" == "Shared with Me") {
+			var incomingValue = "true";
+		}
+		else if ("${navTab}" == "Shared by Me") {
+			var incomingValue = "false";
+		}
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_sharing_web_portlet_SharedAssetsPortlet&p_p_state=maximized&p_p_mode=view&_com_liferay_sharing_web_portlet_SharedAssetsPortlet_incoming=false");
+	}
+
 	macro share {
 		IFrame.selectModalFrame();
 

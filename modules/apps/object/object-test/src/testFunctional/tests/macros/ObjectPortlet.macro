@@ -13,12 +13,9 @@ definition {
 	}
 
 	macro assertMenuItemColumn {
-		AssertElementPresent(locator1 = "ObjectPortlet#CHECK_UNCHECK_DROPDOWN_ITEM",
-			key_dropdowntItem = "${dropdowntItem}"
-		);
-
-
-
+		AssertElementPresent(
+			key_dropdowntItem = "${dropdowntItem}",
+			locator1 = "ObjectPortlet#CHECK_UNCHECK_DROPDOWN_ITEM");
 	}
 
 	macro changePagination {
@@ -58,13 +55,7 @@ definition {
 			locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD",
 			value1 = "${columnName}");
 
-		Click(
-			locator1 = "ObjectPortlet#COLUMN_ICON_SEARCH");
-
-		
-
-
-
+		Click(locator1 = "ObjectPortlet#COLUMN_ICON_SEARCH");
 	}
 
 	macro searchEntry {

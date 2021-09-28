@@ -195,7 +195,6 @@ definition {
 	@description = "LPS-135393 - Verify that is possible to search for a field on the dropdown to select the columns to be displayed on the auto-generated table on the Custom Object Portlet"
 	@priority = "3"
 	test CanSearchForFieldOnDropdownToSelectColumns {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -210,7 +209,6 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
-
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "text",
 			objectName = "CustomObject",
@@ -221,8 +219,6 @@ definition {
 		ObjectPortlet.searchColumn(columnName = "Field");
 
 		ObjectPortlet.assertMenuItemColumn(dropdowntItem = "Field");
-		
-
 	}
 
 	@description = "LPS-135393 - Verify that the columns ID, Field(s) and Workflow Status are displayed"

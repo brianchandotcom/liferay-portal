@@ -15,12 +15,14 @@
 package com.liferay.portal.file.install.deploy.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -297,29 +299,18 @@ public class FileInstallConfigTest {
 	}
 
 	@Test
-	public void testFactoryConfiguration() throws Exception {
-		String configurationPid = _CONFIGURATION_PID_PREFIX.concat(
-			".testFactoryConfiguration~default");
+	public void testFactoryConfigurationWithDash() throws Exception {
+		_testFactoryConfiguration(CharPool.DASH);
+	}
 
-		_configurationPath = Paths.get(
-			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
-			configurationPid.concat(".config"));
+	@Test
+	public void testFactoryConfigurationWithTiled() throws Exception {
+		_testFactoryConfiguration(CharPool.TILDE);
+	}
 
-		String testKey = "testKey";
-		String testValue = "\"testValue\"";
-
-		_configuration = _createFacotryConfiguration(
-			configurationPid,
-			StringBundler.concat(testKey, StringPool.EQUAL, testValue));
-
-		Assert.assertEquals(
-			_CONFIGURATION_PID_PREFIX.concat(".testFactoryConfiguration"),
-			_configuration.getFactoryPid());
-		Assert.assertEquals(configurationPid, _configuration.getPid());
-
-		Dictionary<String, Object> dictionary = _configuration.getProperties();
-
-		Assert.assertEquals("testValue", dictionary.get(testKey));
+	@Test
+	public void testFactoryConfigurationWithUnderline() throws Exception {
+		_testFactoryConfiguration(CharPool.UNDERLINE);
 	}
 
 	private Configuration _createConfiguration(
@@ -355,14 +346,11 @@ public class FileInstallConfigTest {
 			configurationPid, StringPool.QUESTION);
 	}
 
-	private Configuration _createFacotryConfiguration(
-			String configurationPid, String content)
+	private void _createFacotryConfiguration(
+			String factoryPid, UnsafeRunnable<Exception> runnable)
 		throws Exception {
 
 		CountDownLatch countDownLatch = new CountDownLatch(1);
-
-		String factoryPid = configurationPid.substring(
-			0, configurationPid.indexOf(CharPool.TILDE));
 
 		ServiceRegistration<ManagedServiceFactory> serviceRegistration =
 			_bundleContext.registerService(
@@ -390,22 +378,13 @@ public class FileInstallConfigTest {
 				MapUtil.singletonDictionary(Constants.SERVICE_PID, factoryPid));
 
 		try {
-			Files.write(
-				_configurationPath, content.getBytes(Charset.defaultCharset()));
+			runnable.run();
 
 			countDownLatch.await();
 		}
 		finally {
 			serviceRegistration.unregister();
 		}
-
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			"(service.factoryPid=" + factoryPid + ")");
-
-		Assert.assertEquals(
-			configurations.toString(), 1, configurations.length);
-
-		return configurations[0];
 	}
 
 	private void _deleteConfiguration() throws Exception {
@@ -416,6 +395,45 @@ public class FileInstallConfigTest {
 		if (_configuration != null) {
 			ConfigurationTestUtil.deleteConfiguration(_configuration);
 		}
+	}
+
+	private void _testFactoryConfiguration(char separator) throws Exception {
+		String factoryConfigurationName = StringBundler.concat(
+			StringUtil.randomId(), CharPool.DASH, StringUtil.randomId());
+
+		String factoryPid = _CONFIGURATION_PID_PREFIX.concat(
+			".testFactoryConfiguration");
+
+		_configurationPath = Paths.get(
+			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
+			StringBundler.concat(
+				factoryPid, separator, factoryConfigurationName, ".config"));
+
+		String testKey = "testKey";
+		String testValue = "testValue";
+
+		_createFacotryConfiguration(
+			factoryPid,
+			() -> {
+				String content = StringBundler.concat(
+					testKey, StringPool.EQUAL, StringPool.QUOTE, testValue,
+					StringPool.QUOTE);
+
+				Files.write(_configurationPath, content.getBytes());
+			});
+
+		_configuration = _configurationAdmin.getFactoryConfiguration(
+			factoryPid, factoryConfigurationName, StringPool.QUESTION);
+
+		Assert.assertEquals(factoryPid, _configuration.getFactoryPid());
+		Assert.assertEquals(
+			StringBundler.concat(
+				factoryPid, CharPool.TILDE, factoryConfigurationName),
+			_configuration.getPid());
+
+		Dictionary<String, Object> dictionary = _configuration.getProperties();
+
+		Assert.assertEquals("testValue", dictionary.get(testKey));
 	}
 
 	private static final String _CONFIGURATION_PID_PREFIX =

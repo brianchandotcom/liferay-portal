@@ -30,6 +30,27 @@ public class WorkspaceFactory {
 		return newWorkspace("liferay-jenkins-ee", "master");
 	}
 
+	public static Workspace newWorkspace(JSONObject workspaceJSONObject) {
+		String primaryRepositoryName = workspaceJSONObject.getString(
+			"primary_repository_name");
+		String primaryRepositoryDirName = workspaceJSONObject.getString(
+			"primary_repository_dir_name");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(primaryRepositoryName) ||
+			JenkinsResultsParserUtil.isNullOrEmpty(primaryRepositoryDirName)) {
+
+			throw new RuntimeException("Invalid JSONObject");
+		}
+
+		Workspace workspace = new DefaultWorkspace(workspaceJSONObject);
+
+		_workspaces.put(primaryRepositoryDirName, workspace);
+
+		return (Workspace)Proxy.newProxyInstance(
+			Workspace.class.getClassLoader(), new Class<?>[] {Workspace.class},
+			new MethodLogger(workspace));
+	}
+
 	public static Workspace newWorkspace(
 		String repositoryName, String upstreamBranchName) {
 

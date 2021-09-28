@@ -124,6 +124,16 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	}
 
 	@Override
+	public Workspace getWorkspace() {
+		if (!hasWorkspace()) {
+			throw new RuntimeException("Unable to find workspace");
+		}
+
+		return WorkspaceFactory.newWorkspace(
+			_jsonObject.getJSONObject("workspace"));
+	}
+
+	@Override
 	public WorkspaceGitRepository getWorkspaceGitRepository(String key) {
 		if (!hasWorkspaceGitRepository(key)) {
 			throw new RuntimeException(
@@ -152,6 +162,11 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 		JSONObject buildsJSONObject = _jsonObject.getJSONObject("properties");
 
 		return buildsJSONObject.has(key);
+	}
+
+	@Override
+	public boolean hasWorkspace() {
+		return _jsonObject.has("workspace");
 	}
 
 	@Override
@@ -190,6 +205,15 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 			propertiesJSONObject.put(key, _toJSONArray(properties));
 
 			_jsonObject.put("properties", propertiesJSONObject);
+
+			_writeJSONObjectFile();
+		}
+	}
+
+	@Override
+	public void putWorkspace(Workspace workspace) {
+		synchronized (_jsonObject) {
+			_jsonObject.put("workspace", workspace.getJSONObject());
 
 			_writeJSONObjectFile();
 		}

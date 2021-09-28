@@ -21,10 +21,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public abstract class BaseWorkspace implements Workspace {
+
+	@Override
+	public JSONObject getJSONObject() {
+		return _jsonObject;
+	}
 
 	@Override
 	public WorkspaceGitRepository getPrimaryWorkspaceGitRepository() {
@@ -39,19 +46,25 @@ public abstract class BaseWorkspace implements Workspace {
 
 		_workspaceGitRepositories = new HashMap<>();
 
+		String workspaceRepositoryDirNames = _jsonObject.getString(
+			"workspace_repository_dir_names");
+
 		if (JenkinsResultsParserUtil.isNullOrEmpty(
-				_workspaceRepositoryDirNames)) {
+				workspaceRepositoryDirNames)) {
 
 			return new ArrayList<>(_workspaceGitRepositories.values());
 		}
 
 		for (String workspaceRepositoryDirName :
-				_workspaceRepositoryDirNames.split(",")) {
+				workspaceRepositoryDirNames.split(",")) {
+
+			workspaceGitRepository workspaceGitRepository =
+				GitRepositoryFactory.getWorkspaceGitRepository(
+					workspaceRepositoryDirName);
 
 			_workspaceGitRepositories.put(
-				workspaceRepositoryDirName,
-				GitRepositoryFactory.getWorkspaceGitRepository(
-					workspaceRepositoryDirName));
+				workspaceGitRepository.getDirectoryName(),
+				workspaceGitRepository);
 		}
 
 		return new ArrayList<>(_workspaceGitRepositories.values());
@@ -77,6 +90,21 @@ public abstract class BaseWorkspace implements Workspace {
 		}
 	}
 
+	protected BaseWorkspace(JSONObject jsonObject) {
+		_jsonObject = jsonObject;
+
+		_validateKeys();
+
+		_primaryWorkspaceGitRepository =
+			GitRepositoryFactory.getWorkspaceGitRepository(
+				_jsonObject.getString("primary_repository_name"),
+				_jsonObject.getString("primary_upstream_branch_name"));
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		buildDatabase.putWorkspace(this);
+	}
+
 	protected BaseWorkspace(
 		String primaryRepositoryName, String upstreamBranchName) {
 
@@ -84,16 +112,38 @@ public abstract class BaseWorkspace implements Workspace {
 			GitRepositoryFactory.getWorkspaceGitRepository(
 				primaryRepositoryName, upstreamBranchName);
 
+		_jsonObject = new JSONObject();
+
+		_jsonObject.put(
+			"primary_repository_name",
+			_primaryWorkspaceGitRepository.getName());
+
+		_jsonObject.put(
+			"primary_repository_dir_name",
+			_primaryWorkspaceGitRepository.getDirectoryName());
+
+		_jsonObject.put(
+			"primary_upstream_branch_name",
+			_primaryWorkspaceGitRepository.getUpstreamBranchName());
+
 		try {
-			_workspaceRepositoryDirNames = JenkinsResultsParserUtil.getProperty(
-				JenkinsResultsParserUtil.getBuildProperties(),
-				"workspace.repository.dir.names",
-				workspaceGitRepository.getName(),
-				workspaceGitRepository.getUpstreamBranchName());
+			_jsonObject.put(
+				"workspace_repository_dir_names",
+				JenkinsResultsParserUtil.getProperty(
+					JenkinsResultsParserUtil.getBuildProperties(),
+					"workspace.repository.dir.names",
+					_primaryWorkspaceGitRepository.getName(),
+					_primaryWorkspaceGitRepository.getUpstreamBranchName()));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+
+		_validateKeys();
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		buildDatabase.putWorkspace(this);
 	}
 
 	protected WorkspaceGitRepository getWorkspaceGitRepository(
@@ -106,8 +156,21 @@ public abstract class BaseWorkspace implements Workspace {
 		return _workspaceGitRepositories.get(repositoryDirName);
 	}
 
+	private void _validateKeys() {
+		for (String requiredKey : _REQUIRED_KEYS) {
+			if (!_jsonObject.has(requiredKey)) {
+				throw new RuntimeException("Missing " + requiredKey);
+			}
+		}
+	}
+
+	private static final String[] _REQUIRED_KEYS = {
+		"primary_repository_name", "primary_repository_dir_name",
+		"primary_upstream_branch_name", "workspace_repository_dir_names"
+	};
+
+	private final JSONObject _jsonObject;
 	private final WorkspaceGitRepository _primaryWorkspaceGitRepository;
 	private Map<String, WorkspaceGitRepository> _workspaceGitRepositories;
-	private final String _workspaceRepositoryDirNames;
 
 }

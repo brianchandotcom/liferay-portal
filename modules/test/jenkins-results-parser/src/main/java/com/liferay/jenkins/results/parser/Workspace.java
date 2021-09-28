@@ -16,10 +16,14 @@ package com.liferay.jenkins.results.parser;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public interface Workspace {
+
+	public JSONObject getJSONObject();
 
 	public WorkspaceGitRepository getPrimaryWorkspaceGitRepository();
 

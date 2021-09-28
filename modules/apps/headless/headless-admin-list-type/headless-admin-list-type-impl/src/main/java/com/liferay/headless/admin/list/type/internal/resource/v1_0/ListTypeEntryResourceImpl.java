@@ -30,7 +30,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.util.Collections;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -62,7 +61,21 @@ public class ListTypeEntryResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			Collections.emptyMap(),
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.UPDATE, "postListTypeDefinitionListTypeEntry",
+					com.liferay.list.type.model.ListTypeDefinition.class.
+						getName(),
+					listTypeDefinitionId)
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getListTypeDefinitionListTypeEntriesPage",
+					com.liferay.list.type.model.ListTypeDefinition.class.
+						getName(),
+					listTypeDefinitionId)
+			).build(),
 			booleanQuery -> {
 			},
 			null, com.liferay.list.type.model.ListTypeEntry.class.getName(),
@@ -130,6 +143,18 @@ public class ListTypeEntryResourceImpl
 			"delete",
 			addAction(
 				ActionKeys.DELETE, "deleteListTypeEntry",
+				com.liferay.list.type.model.ListTypeDefinition.class.getName(),
+				serviceBuilderListTypeEntry.getListTypeDefinitionId())
+		).put(
+			"get",
+			addAction(
+				ActionKeys.VIEW, "getListTypeEntry",
+				com.liferay.list.type.model.ListTypeDefinition.class.getName(),
+				serviceBuilderListTypeEntry.getListTypeDefinitionId())
+		).put(
+			"update",
+			addAction(
+				ActionKeys.UPDATE, "putListTypeEntry",
 				com.liferay.list.type.model.ListTypeDefinition.class.getName(),
 				serviceBuilderListTypeEntry.getListTypeDefinitionId())
 		).build();

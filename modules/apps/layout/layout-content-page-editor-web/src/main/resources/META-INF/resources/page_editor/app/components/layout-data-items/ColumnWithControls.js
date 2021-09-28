@@ -14,7 +14,7 @@
 
 import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import React, {useCallback, useContext, useMemo, useRef, useState} from 'react';
+import React, {useContext, useMemo, useRef, useState} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
@@ -364,7 +364,7 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 
 	useEventListener(
 		'mouseup',
-		useCallback(() => {
+		() => {
 			if (resizeInfo.current) {
 				resizeInfo.current = null;
 				setColumnSelected(null);
@@ -379,15 +379,7 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 			}
 
 			setCanDrag(true);
-		}, [
-			dispatch,
-			layoutDataContext,
-			parentItem,
-			segmentsExperienceId,
-			setCanDrag,
-			setResizing,
-			setUpdatedLayoutData,
-		]),
+		},
 		false,
 		globalContext.document.body
 	);

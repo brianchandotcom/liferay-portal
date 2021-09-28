@@ -354,8 +354,9 @@ public class AssetEntryFinderImpl
 			sb.append("AssetEntry.classPK)");
 		}
 
-		if (orderByCol1.equals("viewCount") ||
-			orderByCol2.equals("viewCount")) {
+		if (!entryQuery.isExcludeZeroViewCount() &&
+			(orderByCol1.equals("viewCount") ||
+			 orderByCol2.equals("viewCount"))) {
 
 			sb.append(" LEFT JOIN ViewCountEntry ON ");
 			sb.append("(ViewCountEntry.companyId = AssetEntry.companyId) AND ");

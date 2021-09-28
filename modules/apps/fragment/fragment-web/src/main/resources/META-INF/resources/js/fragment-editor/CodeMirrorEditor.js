@@ -61,6 +61,7 @@ import React, {useEffect, useMemo, useRef} from 'react';
 
 const AUTOCOMPLETE_EXCLUDED_KEYS = new Set([
 	' ',
+	',',
 	';',
 	'Alt',
 	'AltGraph',

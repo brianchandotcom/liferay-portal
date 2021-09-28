@@ -24,6 +24,7 @@ definition {
 		property custom.properties = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_articleCommentsEnabled=B&quot;false&quot;";
 		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
 		property osgi.module.configurations = "articleCommentsEnabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SystemSettings#CanOverrideValueSetInConfigFile";
 
 		ApplicationsMenu.gotoPortlet(
@@ -70,7 +71,7 @@ definition {
 			locator1 = "Portlet#CONFIGURATION_CHECKBOX");
 	}
 
-	@priority = "5"
+	@priority = "4"
 	test CanOverrideValueWithoutConfigFile {
 		property custom.properties = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_articleCommentsEnabled=B&quot;false&quot;";
 		property test.name.skip.portal.instance = "SystemSettings#CanOverrideValueWithoutConfigFile";
@@ -92,7 +93,7 @@ definition {
 			fieldText = "Set this to true to enable comments for journal articles. This field has been set by a portal property and cannot be changed here.");
 	}
 
-	@priority = "5"
+	@priority = "4"
 	test CanUpdateConfigValueViaUI {
 		property test.name.skip.portal.instance = "SystemSettings#CanUpdateConfigValueViaUI";
 

@@ -29,6 +29,7 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
+		JSONUser.tearDownNonAdminUsers();
 
 		ACUtils.tearDownAC();
 	}
@@ -125,6 +126,8 @@ definition {
 
 		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 
+		Pause(locator1 = "5000");
+
 		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
@@ -160,6 +163,8 @@ definition {
 				siteName = "Site Name");
 
 			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+			Pause(locator1 = "5000");
 		}
 
 		ACUtils.closeAllSessionsAndWait();

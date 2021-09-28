@@ -20,24 +20,6 @@ package com.liferay.jenkins.results.parser;
 public abstract class BaseWorkspace implements Workspace {
 
 	@Override
-	public void addJenkinsWorkspaceGitRepository(String jenkinsGitHubURL) {
-		if (!JenkinsResultsParserUtil.isCINode() ||
-			(jenkinsGitHubURL == null)) {
-
-			return;
-		}
-
-		_jenkinsWorkspaceGitRepository =
-			WorkspaceUtil.getWorkspaceGitRepository(
-				JenkinsWorkspaceGitRepository.TYPE, jenkinsGitHubURL, "master");
-	}
-
-	@Override
-	public WorkspaceGitRepository getJenkinsWorkspaceGitRepository() {
-		return _jenkinsWorkspaceGitRepository;
-	}
-
-	@Override
 	public void setUp() {
 		setUpWorkspaceGitRepositories();
 
@@ -51,30 +33,14 @@ public abstract class BaseWorkspace implements Workspace {
 		tearDownWorkspaceGitRepositories();
 	}
 
-	protected void setUpJenkinsWorkspaceGitRepository() {
-		if (_jenkinsWorkspaceGitRepository != null) {
-			_jenkinsWorkspaceGitRepository.setUp();
-		}
-	}
-
 	protected void setUpWorkspaceGitRepositories() {
-		setUpJenkinsWorkspaceGitRepository();
 	}
 
 	protected abstract void setWorkspaceDefaultProperties();
 
-	protected void tearDownJenkinsWorkspaceGitRepository() {
-		if (_jenkinsWorkspaceGitRepository != null) {
-			_jenkinsWorkspaceGitRepository.tearDown();
-		}
-	}
-
 	protected void tearDownWorkspaceGitRepositories() {
-		tearDownJenkinsWorkspaceGitRepository();
 	}
 
 	protected abstract void writeWorkspaceGitRepositoryPropertiesFiles();
-
-	private WorkspaceGitRepository _jenkinsWorkspaceGitRepository;
 
 }

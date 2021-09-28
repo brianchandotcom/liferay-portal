@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -86,11 +87,33 @@ public class SkuCommerceMLForecastManagerImpl
 			int forecastLength, int start, int end)
 		throws PortalException {
 
+		return getMonthlyQuantitySkuCommerceMLForecasts(
+			companyId, new String[] {sku}, actualDate, historyLength,
+			forecastLength, 0, forecastLength + historyLength);
+	}
+
+	@Override
+	public List<SkuCommerceMLForecast> getMonthlyQuantitySkuCommerceMLForecasts(
+			long companyId, String[] skus, Date actualDate, int historyLength,
+			int forecastLength)
+		throws PortalException {
+
+		return getMonthlyQuantitySkuCommerceMLForecasts(
+			companyId, skus, actualDate, historyLength, forecastLength, 0,
+			forecastLength + historyLength);
+	}
+
+	@Override
+	public List<SkuCommerceMLForecast> getMonthlyQuantitySkuCommerceMLForecasts(
+			long companyId, String[] skus, Date actualDate, int historyLength,
+			int forecastLength, int start, int end)
+		throws PortalException {
+
 		return getSearchResults(
 			getSearchSearchRequest(
 				commerceMLIndexer.getIndexName(companyId),
 				_getMonthlyQuantityQuery(
-					sku, actualDate, historyLength, forecastLength),
+					skus, actualDate, historyLength, forecastLength),
 				start, end - start, getDefaultSort(true)));
 	}
 
@@ -100,11 +123,22 @@ public class SkuCommerceMLForecastManagerImpl
 			int forecastLength)
 		throws PortalException {
 
+		return getMonthlyQuantitySkuCommerceMLForecastsCount(
+			companyId, new String[] {sku}, actualDate, historyLength,
+			forecastLength);
+	}
+
+	@Override
+	public long getMonthlyQuantitySkuCommerceMLForecastsCount(
+			long companyId, String[] skus, Date actualDate, int historyLength,
+			int forecastLength)
+		throws PortalException {
+
 		return getCountResult(
 			getCountSearchRequest(
 				commerceMLIndexer.getIndexName(companyId),
 				_getMonthlyQuantityQuery(
-					sku, actualDate, historyLength, forecastLength)));
+					skus, actualDate, historyLength, forecastLength)));
 	}
 
 	@Override
@@ -139,7 +173,8 @@ public class SkuCommerceMLForecastManagerImpl
 	}
 
 	private Query _getMonthlyQuantityQuery(
-			String sku, Date actualDate, int historyLength, int forecastLength)
+			String[] sku, Date actualDate, int historyLength,
+			int forecastLength)
 		throws ParseException {
 
 		CommerceMLForecastPeriod commerceMLForecastPeriod =
@@ -159,7 +194,7 @@ public class SkuCommerceMLForecastManagerImpl
 		preBooleanFilter.add(
 			new TermsFilter(CommerceMLForecastField.SKU) {
 				{
-					addValue(sku);
+					addValues(ArrayUtil.toStringArray(sku));
 				}
 			},
 			BooleanClauseOccur.MUST);

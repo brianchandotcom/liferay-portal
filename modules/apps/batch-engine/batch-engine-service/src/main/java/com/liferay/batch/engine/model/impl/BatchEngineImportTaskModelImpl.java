@@ -85,7 +85,7 @@ public class BatchEngineImportTaskModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"batchSize", Types.BIGINT},
 		{"callbackURL", Types.VARCHAR}, {"className", Types.VARCHAR},
 		{"content", Types.BLOB}, {"contentType", Types.VARCHAR},
-		{"endTime", Types.TIMESTAMP}, {"errorMessage", Types.VARCHAR},
+		{"endTime", Types.TIMESTAMP}, {"errorMessage", Types.CLOB},
 		{"executeStatus", Types.VARCHAR}, {"fieldNameMapping", Types.CLOB},
 		{"operation", Types.VARCHAR}, {"parameters", Types.CLOB},
 		{"processedItemsCount", Types.INTEGER}, {"startTime", Types.TIMESTAMP},
@@ -110,7 +110,7 @@ public class BatchEngineImportTaskModelImpl
 		TABLE_COLUMNS_MAP.put("content", Types.BLOB);
 		TABLE_COLUMNS_MAP.put("contentType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("endTime", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("errorMessage", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("errorMessage", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("executeStatus", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fieldNameMapping", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("operation", Types.VARCHAR);
@@ -122,7 +122,7 @@ public class BatchEngineImportTaskModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BatchEngineImportTask (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,batchEngineImportTaskId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,batchSize LONG,callbackURL VARCHAR(75) null,className VARCHAR(255) null,content BLOB,contentType VARCHAR(75) null,endTime DATE null,errorMessage VARCHAR(1000) null,executeStatus VARCHAR(75) null,fieldNameMapping TEXT null,operation VARCHAR(75) null,parameters TEXT null,processedItemsCount INTEGER,startTime DATE null,taskItemDelegateName VARCHAR(75) null,totalItemsCount INTEGER)";
+		"create table BatchEngineImportTask (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,batchEngineImportTaskId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,batchSize LONG,callbackURL VARCHAR(75) null,className VARCHAR(255) null,content BLOB,contentType VARCHAR(75) null,endTime DATE null,errorMessage TEXT null,executeStatus VARCHAR(75) null,fieldNameMapping TEXT null,operation VARCHAR(75) null,parameters TEXT null,processedItemsCount INTEGER,startTime DATE null,taskItemDelegateName VARCHAR(75) null,totalItemsCount INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table BatchEngineImportTask";

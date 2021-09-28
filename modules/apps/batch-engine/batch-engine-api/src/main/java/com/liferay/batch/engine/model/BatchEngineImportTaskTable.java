@@ -73,9 +73,9 @@ public class BatchEngineImportTaskTable
 	public final Column<BatchEngineImportTaskTable, Date> endTime =
 		createColumn(
 			"endTime", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<BatchEngineImportTaskTable, String> errorMessage =
+	public final Column<BatchEngineImportTaskTable, Clob> errorMessage =
 		createColumn(
-			"errorMessage", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+			"errorMessage", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<BatchEngineImportTaskTable, String> executeStatus =
 		createColumn(
 			"executeStatus", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

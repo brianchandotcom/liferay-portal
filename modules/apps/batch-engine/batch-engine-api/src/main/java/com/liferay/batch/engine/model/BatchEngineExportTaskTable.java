@@ -70,9 +70,9 @@ public class BatchEngineExportTaskTable
 	public final Column<BatchEngineExportTaskTable, Date> endTime =
 		createColumn(
 			"endTime", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<BatchEngineExportTaskTable, String> errorMessage =
+	public final Column<BatchEngineExportTaskTable, Clob> errorMessage =
 		createColumn(
-			"errorMessage", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+			"errorMessage", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<BatchEngineExportTaskTable, String> fieldNames =
 		createColumn(
 			"fieldNames", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

@@ -243,7 +243,7 @@ public class BatchEngineExportTaskCacheModel
 		className = objectInput.readUTF();
 		contentType = objectInput.readUTF();
 		endTime = objectInput.readLong();
-		errorMessage = objectInput.readUTF();
+		errorMessage = (String)objectInput.readObject();
 		fieldNames = objectInput.readUTF();
 		executeStatus = objectInput.readUTF();
 		parameters = (Map<String, Serializable>)objectInput.readObject();
@@ -294,10 +294,10 @@ public class BatchEngineExportTaskCacheModel
 		objectOutput.writeLong(endTime);
 
 		if (errorMessage == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(errorMessage);
+			objectOutput.writeObject(errorMessage);
 		}
 
 		if (fieldNames == null) {

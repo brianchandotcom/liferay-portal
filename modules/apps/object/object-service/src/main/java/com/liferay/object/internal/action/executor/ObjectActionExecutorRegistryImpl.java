@@ -37,6 +37,22 @@ public class ObjectActionExecutorRegistryImpl
 	implements ObjectActionExecutorRegistry {
 
 	@Override
+	public ObjectActionExecutor getObjectActionExecutor(
+		String objectActionExecutorKey) {
+
+		ObjectActionExecutor objectActionExecutor =
+			_serviceTrackerMap.getService(objectActionExecutorKey);
+
+		if (objectActionExecutor == null) {
+			throw new IllegalArgumentException(
+				"No object action executor found with key " +
+					objectActionExecutorKey);
+		}
+
+		return objectActionExecutor;
+	}
+
+	@Override
 	public List<ObjectActionExecutor> getObjectActionExecutors() {
 		Collection<ObjectActionExecutor> objectActionExecutors =
 			_serviceTrackerMap.values();

@@ -23,10 +23,10 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 @DDMForm
 public interface WebhookObjectActionSettings {
 
-	@DDMFormField
+	@DDMFormField(label = "secret")
 	public String getSecret();
 
-	@DDMFormField
+	@DDMFormField(label = "url")
 	public String getURL();
 
 }

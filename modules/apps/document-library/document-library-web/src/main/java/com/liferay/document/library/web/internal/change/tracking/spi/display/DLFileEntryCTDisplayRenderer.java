@@ -16,6 +16,7 @@ package com.liferay.document.library.web.internal.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.store.Store;
@@ -104,13 +105,13 @@ public class DLFileEntryCTDisplayRenderer
 	}
 
 	@Override
-	protected void buildDisplay(DisplayBuilder<DLFileEntry> displayBuilder)
-		throws PortalException {
+	public void render(DisplayContext<DLFileEntry> displayContext)
+		throws Exception {
 
-		DLFileEntry dlFileEntry = displayBuilder.getModel();
+		DLFileEntry dlFileEntry = displayContext.getModel();
 
-		DLFileVersionCTDisplayRenderer.buildDisplay(
-			displayBuilder, dlFileEntry.getFileVersion());
+		displayContext.render(
+			displayContext.getLocale(), dlFileEntry.getFileVersion());
 	}
 
 	@Reference

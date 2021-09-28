@@ -14,9 +14,12 @@
 
 package com.liferay.change.tracking.web.internal.display;
 
+import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -35,11 +38,15 @@ public class DisplayContextImpl<T> implements DisplayContext<T> {
 
 	public DisplayContextImpl(
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, long ctEntryId, Locale locale,
-		T model, String type) {
+		HttpServletResponse httpServletResponse,
+		ClassNameLocalService classNameLocalService,
+		CTDisplayRendererRegistry ctDisplayRendererRegistry, long ctEntryId,
+		Locale locale, T model, String type) {
 
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
+		_classNameLocalService = classNameLocalService;
+		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 		_ctEntryId = ctEntryId;
 		_locale = locale;
 		_model = model;
@@ -110,6 +117,48 @@ public class DisplayContextImpl<T> implements DisplayContext<T> {
 		return _model;
 	}
 
+	@Override
+	public <M extends CTModel<M>> void render(Locale locale, M model)
+		throws Exception {
+
+		if (model == _model) {
+			throw new IllegalArgumentException();
+		}
+
+		CTDisplayRenderer<M> ctDisplayRenderer =
+			_ctDisplayRendererRegistry.getCTDisplayRenderer(
+				_classNameLocalService.getClassNameId(
+					model.getModelClassName()));
+
+		ctDisplayRenderer.render(
+			new DisplayContextImpl<>(
+				_httpServletRequest, _httpServletResponse,
+				_classNameLocalService, _ctDisplayRendererRegistry, _ctEntryId,
+				locale, model, _type));
+	}
+
+	@Override
+	public <M extends CTModel<M>> String renderPreview(Locale locale, M model)
+		throws Exception {
+
+		if (model == _model) {
+			throw new IllegalArgumentException();
+		}
+
+		CTDisplayRenderer<M> ctDisplayRenderer =
+			_ctDisplayRendererRegistry.getCTDisplayRenderer(
+				_classNameLocalService.getClassNameId(
+					model.getModelClassName()));
+
+		return ctDisplayRenderer.renderPreview(
+			new DisplayContextImpl<>(
+				_httpServletRequest, _httpServletResponse,
+				_classNameLocalService, _ctDisplayRendererRegistry, _ctEntryId,
+				locale, model, _type));
+	}
+
+	private final ClassNameLocalService _classNameLocalService;
+	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 	private final long _ctEntryId;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;

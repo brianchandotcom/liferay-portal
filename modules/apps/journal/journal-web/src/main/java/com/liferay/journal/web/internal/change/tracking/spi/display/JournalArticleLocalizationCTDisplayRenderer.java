@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.model.TranslationEntry;
@@ -102,13 +103,11 @@ public class JournalArticleLocalizationCTDisplayRenderer
 		JournalArticleLocalization journalArticleLocalization =
 			displayContext.getModel();
 
-		return JournalArticleCTDisplayRenderer.getJournalArticleContent(
+		return displayContext.renderPreview(
+			LocaleUtil.fromLanguageId(
+				journalArticleLocalization.getLanguageId()),
 			_journalArticleLocalService.getJournalArticle(
-				journalArticleLocalization.getArticlePK()),
-			_journalArticleLocalService,
-			journalArticleLocalization.getLanguageId(),
-			displayContext.getHttpServletRequest(),
-			displayContext.getHttpServletResponse());
+				journalArticleLocalization.getArticlePK()));
 	}
 
 	@Override

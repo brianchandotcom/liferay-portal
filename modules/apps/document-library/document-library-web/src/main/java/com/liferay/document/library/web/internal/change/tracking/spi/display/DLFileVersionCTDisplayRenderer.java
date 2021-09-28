@@ -30,8 +30,6 @@ import java.io.InputStream;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -45,28 +43,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DLFileVersionCTDisplayRenderer
 	extends BaseCTDisplayRenderer<DLFileVersion> {
-
-	public static void buildDisplay(
-		DisplayBuilder<?> displayBuilder, DLFileVersion dlFileVersion) {
-
-		displayBuilder.display(
-			"title", dlFileVersion.getTitle()
-		).display(
-			"description", dlFileVersion.getDescription()
-		).display(
-			"file-name", dlFileVersion.getFileName()
-		).display(
-			"extension", dlFileVersion.getExtension()
-		).display(
-			"mime-type", dlFileVersion.getMimeType()
-		).display(
-			"version", dlFileVersion.getVersion()
-		).display(
-			"size", dlFileVersion.getSize()
-		).display(
-			"download", getDownloadLink(displayBuilder, dlFileVersion), false
-		);
-	}
 
 	@Override
 	public DLFileVersion fetchLatestVersionedModel(
@@ -90,13 +66,6 @@ public class DLFileVersionCTDisplayRenderer
 		return store.getFileAsStream(
 			dlFileVersion.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName(), dlFileVersion.getVersion());
-	}
-
-	@Override
-	public String getEditURL(
-		HttpServletRequest httpServletRequest, DLFileVersion dlFileVersion) {
-
-		return null;
 	}
 
 	@Override
@@ -148,7 +117,25 @@ public class DLFileVersionCTDisplayRenderer
 
 	@Override
 	protected void buildDisplay(DisplayBuilder<DLFileVersion> displayBuilder) {
-		buildDisplay(displayBuilder, displayBuilder.getModel());
+		DLFileVersion dlFileVersion = displayBuilder.getModel();
+
+		displayBuilder.display(
+			"title", dlFileVersion.getTitle()
+		).display(
+			"description", dlFileVersion.getDescription()
+		).display(
+			"file-name", dlFileVersion.getFileName()
+		).display(
+			"extension", dlFileVersion.getExtension()
+		).display(
+			"mime-type", dlFileVersion.getMimeType()
+		).display(
+			"version", dlFileVersion.getVersion()
+		).display(
+			"size", dlFileVersion.getSize()
+		).display(
+			"download", getDownloadLink(displayBuilder, dlFileVersion), false
+		);
 	}
 
 	@Reference

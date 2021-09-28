@@ -44,7 +44,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -126,19 +125,8 @@ public class JournalArticleCTDisplayRenderer
 	public String renderPreview(DisplayContext<JournalArticle> displayContext)
 		throws Exception {
 
-		return getJournalArticleContent(
-			displayContext.getModel(), _journalArticleLocalService,
-			_language.getLanguageId(displayContext.getLocale()),
-			displayContext.getHttpServletRequest(),
-			displayContext.getHttpServletResponse());
-	}
-
-	protected static String getJournalArticleContent(
-			JournalArticle journalArticle,
-			JournalArticleLocalService journalArticleLocalService,
-			String languageId, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws PortalException {
+		HttpServletRequest httpServletRequest =
+			displayContext.getHttpServletRequest();
 
 		PortletRequest portletRequest =
 			(PortletRequest)httpServletRequest.getAttribute(
@@ -150,19 +138,22 @@ public class JournalArticleCTDisplayRenderer
 		PortletRequestModel portletRequestModel = new PortletRequestModel(
 			portletRequest, portletResponse);
 
+		JournalArticle journalArticle = displayContext.getModel();
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!journalArticleLocalService.isRenderable(
+		if (!_journalArticleLocalService.isRenderable(
 				journalArticle, portletRequestModel, themeDisplay)) {
 
 			throw new CompareVersionsException(journalArticle.getVersion());
 		}
 
 		JournalArticleDisplay journalArticleDisplay =
-			journalArticleLocalService.getArticleDisplay(
-				journalArticle, null, Constants.VIEW, languageId, 1,
+			_journalArticleLocalService.getArticleDisplay(
+				journalArticle, null, Constants.VIEW,
+				_language.getLanguageId(displayContext.getLocale()), 1,
 				portletRequestModel, themeDisplay);
 
 		return journalArticleDisplay.getContent();

@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -130,8 +131,9 @@ public class GetEntryRenderDataMVCResourceCommand
 
 			return ctDisplayRenderer.renderPreview(
 				new DisplayContextImpl<>(
-					httpServletRequest, httpServletResponse, ctEntryId, locale,
-					model, type));
+					httpServletRequest, httpServletResponse,
+					_classNameLocalService, _ctDisplayRendererRegistry,
+					ctEntryId, locale, model, type));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -665,8 +667,10 @@ public class GetEntryRenderDataMVCResourceCommand
 			for (String languageId : availableLanguageIds) {
 				String content = ctDisplayRenderer.renderPreview(
 					new DisplayContextImpl<>(
-						httpServletRequest, httpServletResponse, ctEntryId,
-						LocaleUtil.fromLanguageId(languageId), model, type));
+						httpServletRequest, httpServletResponse,
+						_classNameLocalService, _ctDisplayRendererRegistry,
+						ctEntryId, LocaleUtil.fromLanguageId(languageId), model,
+						type));
 
 				if (content != null) {
 					if (jsonObject == null) {
@@ -778,8 +782,9 @@ public class GetEntryRenderDataMVCResourceCommand
 
 			ctDisplayRenderer.render(
 				new DisplayContextImpl<>(
-					httpServletRequest, pipingServletResponse, ctEntryId,
-					locale, model, type));
+					httpServletRequest, pipingServletResponse,
+					_classNameLocalService, _ctDisplayRendererRegistry,
+					ctEntryId, locale, model, type));
 
 			StringBundler sb = unsyncStringWriter.getStringBundler();
 
@@ -800,8 +805,9 @@ public class GetEntryRenderDataMVCResourceCommand
 
 			ctDisplayRenderer.render(
 				new DisplayContextImpl<>(
-					httpServletRequest, pipingServletResponse, ctEntryId,
-					locale, model, type));
+					httpServletRequest, pipingServletResponse,
+					_classNameLocalService, _ctDisplayRendererRegistry,
+					ctEntryId, locale, model, type));
 
 			StringBundler sb = unsyncStringWriter.getStringBundler();
 
@@ -814,6 +820,9 @@ public class GetEntryRenderDataMVCResourceCommand
 
 	@Reference
 	private BasePersistenceRegistry _basePersistenceRegistry;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;

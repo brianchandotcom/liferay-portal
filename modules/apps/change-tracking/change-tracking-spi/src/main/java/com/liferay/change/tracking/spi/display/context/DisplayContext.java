@@ -14,6 +14,8 @@
 
 package com.liferay.change.tracking.spi.display.context;
 
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
+
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +36,7 @@ public interface DisplayContext<T> {
 
 	/**
 	 * Creates a download URL for use while rendering. This is only used for
-	 * {@link com.liferay.portal.kernel.model.change.tracking.CTModel}
+	 * {@link CTModel}
 	 * renderers.
 	 *
 	 * @param  key to be passed to {@link
@@ -68,5 +70,11 @@ public interface DisplayContext<T> {
 	 * @return the model to be rendered
 	 */
 	public T getModel();
+
+	public <M extends CTModel<M>> void render(Locale locale, M model)
+		throws Exception;
+
+	public <M extends CTModel<M>> String renderPreview(Locale locale, M model)
+		throws Exception;
 
 }

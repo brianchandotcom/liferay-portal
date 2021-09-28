@@ -23,6 +23,7 @@
 		<column name="objectDefinitionId" type="long" />
 		<column name="active" type="boolean" />
 		<column name="name" type="String" />
+		<column name="objectActionTriggerKey" type="String" />
 		<column name="objectActionExecutorKey" type="String" />
 		<column name="parameters" type="String" />
 

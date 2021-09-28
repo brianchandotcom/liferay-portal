@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -87,6 +88,24 @@ public class PortalImplAlternateURLTest {
 		TestPropsUtil.set(
 			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
 			GetterUtil.getString(_defaultPrependStyle));
+	}
+
+	@Test
+	public void testAlternativeVirtualHostDefaultPortalLocaleAlternateURL()
+		throws Exception {
+
+		_testAlternateURLWithVirtualHosts(
+			"test.com", null, null, LocaleUtil.US, StringPool.BLANK);
+	}
+
+	@Test
+	public void testAlternativeVirtualHostLocalizedSiteCustomSiteLocaleAlternateURL()
+		throws Exception {
+
+		_testAlternateURLWithVirtualHosts(
+			"test.com",
+			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY),
+			LocaleUtil.SPAIN, LocaleUtil.US, "/en");
 	}
 
 	@Test
@@ -191,6 +210,33 @@ public class PortalImplAlternateURLTest {
 		return themeDisplay;
 	}
 
+	private ThemeDisplay _getThemeDisplayWithVirtualHosts(
+			Group group, String portalURL)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+
+		LayoutSet layoutSet = group.getPublicLayoutSet();
+
+		layoutSet.setVirtualHostnames(
+			TreeMapBuilder.put(
+				"liferay.com", StringPool.BLANK
+			).put(
+				"test.com", LocaleUtil.US.toString()
+			).build());
+
+		themeDisplay.setLayoutSet(layoutSet);
+
+		themeDisplay.setPortalDomain(_http.getDomain(portalURL));
+		themeDisplay.setPortalURL(portalURL);
+		themeDisplay.setSiteGroupId(group.getGroupId());
+
+		return themeDisplay;
+	}
+
 	private void _testAlternateURL(
 			String portalDomain, Collection<Locale> groupAvailableLocales,
 			Locale groupDefaultLocale, Locale alternateLocale,
@@ -247,6 +293,68 @@ public class PortalImplAlternateURLTest {
 			_portal.getAlternateURL(
 				canonicalAssetPublisherContentURL,
 				_getThemeDisplay(_group, canonicalAssetPublisherContentURL),
+				alternateLocale, layout));
+	}
+
+	private void _testAlternateURLWithVirtualHosts(
+			String portalDomain, Collection<Locale> groupAvailableLocales,
+			Locale groupDefaultLocale, Locale alternateLocale,
+			String expectedI18nPath)
+		throws Exception {
+
+		_group = GroupTestUtil.addGroup();
+
+		_group = GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(), groupAvailableLocales, groupDefaultLocale);
+
+		Layout layout = LayoutTestUtil.addLayout(
+			_group.getGroupId(), "welcome", false);
+
+		String canonicalURL = _generateURL(
+			portalDomain, StringPool.BLANK, _group.getFriendlyURL(),
+			layout.getFriendlyURL());
+
+		String expectedAlternateURL = _generateURL(
+			portalDomain, expectedI18nPath, _group.getFriendlyURL(),
+			layout.getFriendlyURL());
+
+		Assert.assertEquals(
+			expectedAlternateURL,
+			_portal.getAlternateURL(
+				canonicalURL, _getThemeDisplay(_group, canonicalURL),
+				alternateLocale, layout));
+
+		String canonicalAssetPublisherContentURL =
+			_generateAssetPublisherContentURL(
+				portalDomain, StringPool.BLANK, _group.getFriendlyURL());
+
+		String expectedAssetPublisherContentAlternateURL =
+			_generateAssetPublisherContentURL(
+				portalDomain, expectedI18nPath, _group.getFriendlyURL());
+
+		Assert.assertEquals(
+			expectedAssetPublisherContentAlternateURL,
+			_portal.getAlternateURL(
+				canonicalAssetPublisherContentURL,
+				_getThemeDisplayWithVirtualHosts(
+					_group, canonicalAssetPublisherContentURL),
+				alternateLocale, layout));
+
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
+
+		Assert.assertEquals(
+			expectedAlternateURL,
+			_portal.getAlternateURL(
+				canonicalURL,
+				_getThemeDisplayWithVirtualHosts(_group, canonicalURL),
+				alternateLocale, layout));
+
+		Assert.assertEquals(
+			expectedAssetPublisherContentAlternateURL,
+			_portal.getAlternateURL(
+				canonicalAssetPublisherContentURL,
+				_getThemeDisplayWithVirtualHosts(
+					_group, canonicalAssetPublisherContentURL),
 				alternateLocale, layout));
 	}
 

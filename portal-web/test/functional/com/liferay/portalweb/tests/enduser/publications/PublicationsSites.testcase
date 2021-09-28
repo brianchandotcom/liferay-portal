@@ -63,8 +63,6 @@ definition {
 
 		Publications.gotoReviewChanges();
 
-		Publications.gotoReviewChanges();
-
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Site",
 			changeSite = "Site Name",

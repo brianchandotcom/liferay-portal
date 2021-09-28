@@ -108,26 +108,21 @@ public class CTDocumentServlet extends HttpServlet {
 
 		long ctCollectionId = ctCollection.getCtCollectionId();
 
-		if (CTConstants.TYPE_LATEST.equals(type)) {
-			if ((ctCollection.getStatus() !=
-					WorkflowConstants.STATUS_APPROVED) ||
-				(ctEntry.getChangeType() !=
-					CTConstants.CT_CHANGE_TYPE_DELETION)) {
+		if (CTConstants.TYPE_AFTER.equals(type) &&
+			(ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED)) {
 
-				ctCollectionId = _ctDisplayRendererRegistry.getCtCollectionId(
-					ctCollection, ctEntry);
-			}
+			ctCollectionId = _ctEntryLocalService.getCTRowCTCollectionId(
+				ctEntry);
 		}
-		else if (ctCollection.getStatus() ==
-					WorkflowConstants.STATUS_APPROVED) {
+		else if (CTConstants.TYPE_BEFORE.equals(type) &&
+				 (ctCollection.getStatus() !=
+					 WorkflowConstants.STATUS_APPROVED)) {
 
-			if (CTConstants.TYPE_BEFORE.equals(type)) {
-				ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
-			}
-			else {
-				ctCollectionId = _ctEntryLocalService.getCTRowCTCollectionId(
-					ctEntry);
-			}
+			ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+		}
+		else if (CTConstants.TYPE_LATEST.equals(type)) {
+			ctCollectionId = _ctDisplayRendererRegistry.getCtCollectionId(
+				ctCollection, ctEntry);
 		}
 
 		CTSQLModeThreadLocal.CTSQLMode ctSQLMode =

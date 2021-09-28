@@ -142,6 +142,12 @@ public class CTDisplayRendererRegistry {
 		throws PortalException {
 
 		if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			if (ctEntry.getChangeType() ==
+					CTConstants.CT_CHANGE_TYPE_DELETION) {
+
+				return ctCollection.getCtCollectionId();
+			}
+
 			return _ctEntryLocalService.getCTRowCTCollectionId(ctEntry);
 		}
 		else if (ctEntry.getChangeType() ==

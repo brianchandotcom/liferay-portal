@@ -1,0 +1,21 @@
+[
+	{
+		"cssURLs": "",
+		"elementURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/extra/direct-to-customer/js/2.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/extra/direct-to-customer/js/main.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/extra/direct-to-customer/js/runtime-main.js$]"
+		],
+		"htmlElementName": "liferay-direct-to-customer",
+		"name_i18n": {
+			"en_US": "Direct to Customer"
+		},
+		"portletCategoryName": "category.remote-apps",
+		"properties": {
+			"APPLICATION": "get-a-quote",
+			"GOOGLE_PLACES_KEY": "XXX"
+		},
+		"remoteAppEntryKey": "RAYLIFE-GET-A-QUOTE",
+		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:RAYLIFE-GET-A-QUOTE$]"
+	}
+]

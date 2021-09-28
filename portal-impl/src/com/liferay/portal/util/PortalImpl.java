@@ -8470,7 +8470,7 @@ public class PortalImpl implements Portal {
 			if (!virtualHostnames.isEmpty() &&
 				(canonicalURL || !virtualHostnames.containsKey(_LOCALHOST))) {
 
-				if (!controlPanel) {
+				if (!controlPanel || !privateLayoutSet) {
 					if (canonicalURL) {
 						String path = StringPool.BLANK;
 

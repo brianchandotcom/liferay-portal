@@ -8,6 +8,8 @@ definition {
 
 	setUp {
 		ACUtils.launchAC();
+
+		TestCase.setUpPortalInstance();
 	}
 
 	tearDown {
@@ -189,10 +191,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8789 | Test Summary: Delete a keyword block"
 	@priority = "3"
 	test DeleteKeywordBlock {
-		task ("Open AC") {
-			ACUtils.launchAC();
-		}
-
 		task ("Go to settings, definitions and definitions type") {
 			ACNavigation.goToSettings();
 
@@ -227,10 +225,6 @@ definition {
 	test DeleteKeywordUsingTheCheckBox {
 		var words = "ac keyword 1,ac keyword 2";
 
-		task ("Launch AC") {
-			ACUtils.launchAC();
-		}
-
 		task ("Go to settings, definitions and definitions type") {
 			ACNavigation.goToSettings();
 
@@ -262,10 +256,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8791 | Test Summary: Delete multiple keywords"
 	@priority = "3"
 	test DeleteMultipleKeywords {
-		task ("Open AC") {
-			ACUtils.launchAC();
-		}
-
 		task ("Go to settings, definitions and definitions type") {
 			ACNavigation.goToSettings();
 
@@ -364,8 +354,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8793 | Test Summary: Search for a blocked keyword"
 	@priority = "3"
 	test SearchForBlockedKeyword {
-		property portal.upstream = "nilo";
-		
 		var keywords = "test interest,ac keyword";
 
 		task ("Go to Interest session") {
@@ -402,7 +390,7 @@ definition {
 			ACUtils.searchBar(searchItem = "Should not be here");
 
 			ACUtils.viewNoResultsMessage(noResultMessage = "There are no Keywords found.");
-			
+
 			ACUtils.clearSearchBar();
 		}
 

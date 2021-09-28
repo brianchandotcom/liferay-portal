@@ -18,6 +18,11 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
+import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.service.CommercePriceEntryLocalServiceUtil;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.constants.CPField;
@@ -82,6 +87,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -827,6 +833,17 @@ public class CPDefinitionLocalServiceImpl
 				cpInstanceOptionValueRelLocalService.
 					updateCPInstanceOptionValueRel(newCPInstanceOptionValueRel);
 			}
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			_updateCommercePriceEntry(
+				newCPInstance, CommercePriceListConstants.TYPE_PRICE_LIST,
+				newCPInstance.getPrice(), serviceContext);
+
+			_updateCommercePriceEntry(
+				newCPInstance, CommercePriceListConstants.TYPE_PROMOTION,
+				newCPInstance.getPromoPrice(), serviceContext);
 
 			cpInstancePersistence.update(newCPInstance);
 		}
@@ -2614,6 +2631,36 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	private void _updateCommercePriceEntry(
+			CPInstance cpInstance, String type, BigDecimal price,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommercePriceList commercePriceList =
+			CommercePriceListLocalServiceUtil.
+				getCatalogBaseCommercePriceListByType(
+					cpInstance.getGroupId(), type);
+
+		CommercePriceEntry commercePriceEntry =
+			CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(
+				commercePriceList.getCommercePriceListId(),
+				cpInstance.getCPInstanceUuid());
+
+		if (commercePriceEntry == null) {
+			CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+			CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
+				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+				commercePriceList.getCommercePriceListId(), price, null,
+				serviceContext);
+		}
+		else {
+			CommercePriceEntryLocalServiceUtil.updateCommercePriceEntry(
+				commercePriceEntry.getCommercePriceEntryId(), price, null,
+				serviceContext);
+		}
 	}
 
 	private List<CPDefinitionLocalization> _updateCPDefinitionLocalizedFields(

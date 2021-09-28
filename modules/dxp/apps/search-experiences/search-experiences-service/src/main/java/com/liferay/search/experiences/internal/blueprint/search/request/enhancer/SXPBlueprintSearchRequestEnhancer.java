@@ -21,9 +21,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.aggregation.Aggregations;
-import com.liferay.portal.search.aggregation.metrics.CardinalityAggregation;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.highlight.FieldConfigBuilderFactory;
@@ -45,18 +43,11 @@ import com.liferay.search.experiences.internal.blueprint.search.request.body.con
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SortSXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SuggestSXPSearchRequestBodyContributor;
-import com.liferay.search.experiences.rest.dto.v1_0.Aggregation;
-import com.liferay.search.experiences.rest.dto.v1_0.Avg;
-import com.liferay.search.experiences.rest.dto.v1_0.Cardinality;
-import com.liferay.search.experiences.rest.dto.v1_0.Clause;
-import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
-import com.liferay.search.experiences.rest.dto.v1_0.General;
-import com.liferay.search.experiences.rest.dto.v1_0.Query;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
+import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -88,21 +79,9 @@ public class SXPBlueprintSearchRequestEnhancer {
 			_isIncludeResponseString(sxpParameterData)
 		);
 
-		Configuration configuration = sxpBlueprint.getConfiguration();
-
-		configuration = Configuration.toDTO(
-			String.valueOf(
-				SXPParameterParser.parse(
-					_createJSONObject(configuration.toString()),
-					sxpParameterData)));
-
-		_processAggregations(
-			configuration.getAggregations(), searchRequestBuilder);
-		_processGeneral(configuration.getGeneral(), searchRequestBuilder);
-		_processQueries(configuration.getQueries(), searchRequestBuilder);
-
 		_contributeSXPSearchRequestBodyContributors(
-			searchRequestBuilder, sxpBlueprint, sxpParameterData);
+			searchRequestBuilder, _expand(sxpBlueprint, sxpParameterData),
+			sxpParameterData);
 	}
 
 	@Activate
@@ -117,7 +96,8 @@ public class SXPBlueprintSearchRequestEnhancer {
 				_aggregations, _geoBuilders, highlightConverter, queryConverter,
 				scriptConverter, _sorts),
 			new HighlightSXPSearchRequestBodyContributor(highlightConverter),
-			new QuerySXPSearchRequestBodyContributor(),
+			new QuerySXPSearchRequestBodyContributor(
+				_complexQueryPartBuilderFactory, _queries),
 			new SuggestSXPSearchRequestBodyContributor(),
 			new SortSXPSearchRequestBodyContributor(
 				_geoBuilders, queryConverter, scriptConverter, _sorts));
@@ -161,6 +141,23 @@ public class SXPBlueprintSearchRequestEnhancer {
 		}
 	}
 
+	private SXPBlueprint _expand(
+		SXPBlueprint sxpBlueprint1, SXPParameterData sxpParameterData) {
+
+		SXPBlueprint sxpBlueprint2 = SXPBlueprint.toDTO(
+			String.valueOf(sxpBlueprint1));
+
+		sxpBlueprint2.setConfiguration(
+			ConfigurationUtil.toConfiguration(
+				String.valueOf(
+					SXPParameterParser.parse(
+						_createJSONObject(
+							String.valueOf(sxpBlueprint1.getConfiguration())),
+						sxpParameterData))));
+
+		return sxpBlueprint2;
+	}
+
 	private boolean _isExplain(SXPParameterData sxpParameterData) {
 		SXPParameter sxpParameter = sxpParameterData.getSXPParameterByName(
 			"system.explain");
@@ -183,116 +180,6 @@ public class SXPBlueprintSearchRequestEnhancer {
 		}
 
 		return GetterUtil.getBoolean(sxpParameter.getValue());
-	}
-
-	private void _processAggregations(
-		Map<String, Aggregation> aggregations,
-		SearchRequestBuilder searchRequestBuilder) {
-
-		if (MapUtil.isEmpty(aggregations)) {
-			return;
-		}
-
-		for (Map.Entry<String, Aggregation> entry : aggregations.entrySet()) {
-			searchRequestBuilder.addAggregation(
-				_toPortalSearchAggregation(entry.getValue(), entry.getKey()));
-		}
-	}
-
-	private void _processClause(
-		Clause clause, SearchRequestBuilder searchRequestBuilder) {
-
-		com.liferay.portal.search.query.Query query = _queries.wrapper(
-			clause.getQueryJSON());
-
-		if (query != null) {
-			searchRequestBuilder.addComplexQueryPart(
-				_complexQueryPartBuilderFactory.builder(
-				).occur(
-					clause.getOccur()
-				).query(
-					query
-				).build());
-		}
-	}
-
-	private void _processGeneral(
-		General general, SearchRequestBuilder searchRequestBuilder) {
-
-		if (general == null) {
-			return;
-		}
-
-		if (general.getApplyIndexerClauses() != null) {
-			searchRequestBuilder.withSearchContext(
-				searchContext -> searchContext.setAttribute(
-					"search.full.query.suppress.indexer.provided.clauses",
-					!general.getApplyIndexerClauses()));
-		}
-	}
-
-	private void _processQueries(
-		Query[] queries, SearchRequestBuilder searchRequestBuilder) {
-
-		if (ArrayUtil.isEmpty(queries)) {
-			return;
-		}
-
-		for (Query query : queries) {
-			if (!GetterUtil.getBoolean(query.getEnabled())) {
-				continue;
-			}
-
-			Clause[] clauses = query.getClauses();
-
-			if (ArrayUtil.isEmpty(clauses)) {
-				continue;
-			}
-
-			for (Clause clause : clauses) {
-				_processClause(clause, searchRequestBuilder);
-			}
-		}
-	}
-
-	private com.liferay.portal.search.aggregation.Aggregation
-		_toPortalSearchAggregation(Aggregation aggregation1, String name1) {
-
-		com.liferay.portal.search.aggregation.Aggregation
-			portalSearchAggregation = null;
-
-		if (aggregation1.getAvg() != null) {
-			Avg avg = aggregation1.getAvg();
-
-			portalSearchAggregation = _aggregations.avg(name1, avg.getField());
-		}
-		else if (aggregation1.getCardinality() != null) {
-			Cardinality cardinality = aggregation1.getCardinality();
-
-			CardinalityAggregation cardinalityAggregation =
-				_aggregations.cardinality(name1, cardinality.getField());
-
-			cardinalityAggregation.setPrecisionThreshold(
-				cardinality.getPrecision_threshold());
-
-			portalSearchAggregation = cardinalityAggregation;
-		}
-		else {
-			throw new IllegalArgumentException();
-		}
-
-		if (MapUtil.isEmpty(aggregation1.getAggs())) {
-			return portalSearchAggregation;
-		}
-
-		Map<String, Aggregation> aggs = aggregation1.getAggs();
-
-		for (Map.Entry<String, Aggregation> entry : aggs.entrySet()) {
-			portalSearchAggregation.addChildAggregation(
-				_toPortalSearchAggregation(entry.getValue(), entry.getKey()));
-		}
-
-		return portalSearchAggregation;
 	}
 
 	@Reference

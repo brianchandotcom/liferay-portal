@@ -750,7 +750,9 @@ definition {
 			entryContent = "Test Content 1",
 			entryTitle = "Test Blog 1");
 
-		Pause(locator1 = "62000");
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.assertSLAMetricsCalculated();
 
 		JSONBlog.addEntry(
 			entryContent = "Test Content 2",
@@ -774,6 +776,10 @@ definition {
 			portlet = "Metrics");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.waitForSLA(
+			key_expectedValue = "1",
+			key_status = "ONTIME");
 
 		Click(
 			key_tabName = "On Time",

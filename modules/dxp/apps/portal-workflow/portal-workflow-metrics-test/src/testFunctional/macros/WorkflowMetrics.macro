@@ -317,6 +317,16 @@ definition {
 			value1 = "Current Assignee");
 	}
 
+	macro assertSLAMetricsCalculated {
+		while (IsElementNotPresent(
+				locator1 = "WorkflowMetricsSLA#SLA_PROCESS_DATE_MESSAGE")) {
+			Pause(locator1 = "10000");
+			Refresh();
+		}
+
+		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_PROCESS_DATE_MESSAGE");
+	}
+
 	macro assertSlaPosition {
 		AssertElementPresent(
 			key_slaPosition = "${slaPosition}",

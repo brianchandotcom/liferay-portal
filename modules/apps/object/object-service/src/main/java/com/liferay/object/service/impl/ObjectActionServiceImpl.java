@@ -41,7 +41,7 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 	@Override
 	public ObjectAction addObjectAction(
 			long userId, long objectDefinitionId, boolean active, String name,
-			String objectActionExecutorKey,
+			String objectActionExecutorKey, String objectActionTriggerKey,
 			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException {
 
@@ -50,7 +50,8 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 
 		return objectActionLocalService.addObjectAction(
 			userId, objectDefinitionId, active, objectActionExecutorKey,
-			objectActionExecutorKey, parametersUnicodeProperties);
+			objectActionExecutorKey, objectActionTriggerKey,
+			parametersUnicodeProperties);
 	}
 
 	@Override

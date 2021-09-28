@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -100,13 +101,19 @@ public class ObjectActionResourceImpl
 			Long objectDefinitionId, ObjectAction objectAction)
 		throws Exception {
 
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
+
+		if (Validator.isNotNull(objectAction.getParameters())) {
+			unicodeProperties.putAll(
+				(Map<String, String>)objectAction.getParameters());
+		}
+
 		return _toObjectAction(
 			_objectActionService.addObjectAction(
 				contextUser.getUserId(), objectDefinitionId,
 				objectAction.getActive(), objectAction.getName(),
 				objectAction.getObjectActionExecutorKey(),
-				new UnicodeProperties(
-					(Map<String, String>)objectAction.getParameters(), true)));
+				objectAction.getObjectActionTriggerKey(), unicodeProperties));
 	}
 
 	@Override
@@ -152,6 +159,8 @@ public class ObjectActionResourceImpl
 				name = objectAction.getName();
 				objectActionExecutorKey =
 					objectAction.getObjectActionExecutorKey();
+				objectActionTriggerKey =
+					objectAction.getObjectActionTriggerKey();
 				parameters = objectAction.getParametersUnicodeProperties();
 			}
 		};

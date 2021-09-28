@@ -31,6 +31,8 @@ public interface Workspace {
 
 	public void setUp();
 
+	public void synchronizeToGitHubDev();
+
 	public void tearDown();
 
 }

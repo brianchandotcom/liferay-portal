@@ -82,6 +82,15 @@ public abstract class BaseWorkspace implements Workspace {
 	}
 
 	@Override
+	public void synchronizeToGitHubDev() {
+		for (WorkspaceGitRepository workspaceGitRepository :
+				getWorkspaceGitRepositories()) {
+
+			workspaceGitRepository.synchronizeToGitHubDev();
+		}
+	}
+
+	@Override
 	public void tearDown() {
 		for (WorkspaceGitRepository workspaceGitRepository :
 				getWorkspaceGitRepositories()) {

@@ -127,17 +127,19 @@ public class ObjectDefinitionServiceImpl
 	@Override
 	public ObjectDefinition updateCustomObjectDefinition(
 			Long objectDefinitionId, boolean active,
-			Map<Locale, String> labelMap, String name, String panelAppOrder,
-			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
-			String scope)
+			long descriptionObjectFieldId, Map<Locale, String> labelMap,
+			String name, String panelAppOrder, String panelCategoryKey,
+			Map<Locale, String> pluralLabelMap, String scope,
+			long titleObjectFieldId)
 		throws PortalException {
 
 		_objectDefinitionModelResourcePermission.check(
 			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
 
 		return _objectDefinitionLocalService.updateCustomObjectDefinition(
-			objectDefinitionId, active, labelMap, name, panelAppOrder,
-			panelCategoryKey, pluralLabelMap, scope);
+			objectDefinitionId, active, descriptionObjectFieldId, labelMap,
+			name, panelAppOrder, panelCategoryKey, pluralLabelMap, scope,
+			titleObjectFieldId);
 	}
 
 	@Reference

@@ -122,6 +122,7 @@ definition {
 			user = "Test Test");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test AddToEventRepeating {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

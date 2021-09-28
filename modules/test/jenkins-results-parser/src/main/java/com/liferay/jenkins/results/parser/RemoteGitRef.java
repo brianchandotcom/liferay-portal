@@ -27,6 +27,12 @@ public class RemoteGitRef
 		return name.compareTo(o.getName());
 	}
 
+	public String getHtmlURL() {
+		return JenkinsResultsParserUtil.combine(
+			"https://github.com/", getUsername(), "/", getRepositoryName(),
+			"/tree/", getName());
+	}
+
 	public RemoteGitRepository getRemoteGitRepository() {
 		return _remoteGitRepository;
 	}

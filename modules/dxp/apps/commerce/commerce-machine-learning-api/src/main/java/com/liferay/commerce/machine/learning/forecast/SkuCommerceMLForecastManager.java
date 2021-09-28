@@ -43,8 +43,23 @@ public interface SkuCommerceMLForecastManager {
 			int forecastLength, int start, int end)
 		throws PortalException;
 
+	public List<SkuCommerceMLForecast> getMonthlyQuantitySkuCommerceMLForecasts(
+			long companyId, String[] skus, Date actualDate, int historyLength,
+			int forecastLength)
+		throws PortalException;
+
+	public List<SkuCommerceMLForecast> getMonthlyQuantitySkuCommerceMLForecasts(
+			long companyId, String[] skus, Date actualDate, int historyLength,
+			int forecastLength, int start, int end)
+		throws PortalException;
+
 	public long getMonthlyQuantitySkuCommerceMLForecastsCount(
 			long companyId, String sku, Date actualDate, int historyLength,
+			int forecastLength)
+		throws PortalException;
+
+	public long getMonthlyQuantitySkuCommerceMLForecastsCount(
+			long companyId, String[] skus, Date actualDate, int historyLength,
 			int forecastLength)
 		throws PortalException;
 

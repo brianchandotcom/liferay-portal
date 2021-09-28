@@ -53,8 +53,7 @@ export const BusinessTypeSearch = ({form, setNewSelectedProduct}) => {
 				auxSearchToChange = searchTerm;
 			}
 			await reload(searchTerm);
-			setIsLoading(false);
-			if (searchTerm === '' || auxSearchToChange !== searchTerm) {
+			if (!searchTerm) {
 				if (
 					Storage.getItem(STORAGE_KEYS.BACK_TO_EDIT) &&
 					JSON.parse(Storage.getItem(STORAGE_KEYS.BACK_TO_EDIT))
@@ -67,7 +66,12 @@ export const BusinessTypeSearch = ({form, setNewSelectedProduct}) => {
 						AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section
 					);
 				}
+				setValue('basics.properties.businessClassCode', '');
+				setValue('basics.properties.naics', '');
+				setValue('basics.properties.segment', '');
+				setValue('basics.product', '');
 			}
+			setIsLoading(false);
 		}, 500),
 		[]
 	);

@@ -88,17 +88,25 @@ export const useStepWizard = () => {
 						);
 					}
 
-					if (Storage.getItem(STORAGE_KEYS.BASIC_STEP_CLICKED)) {
+					if (
+						(Storage.getItem(STORAGE_KEYS.BASIC_STEP_CLICKED) ||
+							form?.basics?.businessSearch) &&
+						!form?.basics?.businessCategoryId
+					) {
 						return setPercentage(
-							100,
+							state.selectedStep.percentage.basics,
 							AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section
 						);
 					} else {
+						if (form?.basics?.businessCategoryId) {
+							return setPercentage(
+								100,
+								AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section
+							);
+						}
+
 						return setPercentage(
-							calculatePercentage(
-								countCompletedFields(_fields?.basics || {}),
-								TOTAL_OF_FIELD.BASICS
-							),
+							state.selectedStep.percentage.basics,
 							AVAILABLE_STEPS.BASICS_BUSINESS_TYPE.section
 						);
 					}

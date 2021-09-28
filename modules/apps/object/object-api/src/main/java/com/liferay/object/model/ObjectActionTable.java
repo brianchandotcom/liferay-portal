@@ -57,6 +57,10 @@ public class ObjectActionTable extends BaseTable<ObjectActionTable> {
 		"active_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<ObjectActionTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectActionTable, String> objectActionTriggerKey =
+		createColumn(
+			"objectActionTriggerKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectActionTable, String> objectActionExecutorKey =
 		createColumn(
 			"objectActionExecutorKey", String.class, Types.VARCHAR,

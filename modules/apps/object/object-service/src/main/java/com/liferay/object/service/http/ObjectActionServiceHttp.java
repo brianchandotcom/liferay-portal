@@ -54,6 +54,7 @@ public class ObjectActionServiceHttp {
 	public static com.liferay.object.model.ObjectAction addObjectAction(
 			HttpPrincipal httpPrincipal, long userId, long objectDefinitionId,
 			boolean active, String name, String objectActionExecutorKey,
+			String objectActionTriggerKey,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				parametersUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -65,7 +66,8 @@ public class ObjectActionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, objectDefinitionId, active, name,
-				objectActionExecutorKey, parametersUnicodeProperties);
+				objectActionExecutorKey, objectActionTriggerKey,
+				parametersUnicodeProperties);
 
 			Object returnObj = null;
 
@@ -225,7 +227,7 @@ public class ObjectActionServiceHttp {
 	private static final Class<?>[] _addObjectActionParameterTypes0 =
 		new Class[] {
 			long.class, long.class, boolean.class, String.class, String.class,
-			com.liferay.portal.kernel.util.UnicodeProperties.class
+			String.class, com.liferay.portal.kernel.util.UnicodeProperties.class
 		};
 	private static final Class<?>[] _deleteObjectActionParameterTypes1 =
 		new Class[] {long.class};

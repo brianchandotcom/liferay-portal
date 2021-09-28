@@ -52,7 +52,7 @@ public interface ObjectActionService extends BaseService {
 	 */
 	public ObjectAction addObjectAction(
 			long userId, long objectDefinitionId, boolean active, String name,
-			String objectActionExecutorKey,
+			String objectActionExecutorKey, String objectActionTriggerKey,
 			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException;
 

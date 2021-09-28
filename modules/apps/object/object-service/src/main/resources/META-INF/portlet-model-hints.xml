@@ -13,6 +13,7 @@
 		<field name="objectDefinitionId" type="long" />
 		<field name="active" type="boolean" />
 		<field name="name" type="String" />
+		<field name="objectActionTriggerKey" type="String" />
 		<field name="objectActionExecutorKey" type="String" />
 		<field name="parameters" type="String">
 			<hint-collection name="CLOB" />

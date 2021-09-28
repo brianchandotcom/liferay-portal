@@ -77,7 +77,7 @@ public class ObjectActionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -101,6 +101,8 @@ public class ObjectActionCacheModel
 		sb.append(active);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", objectActionTriggerKey=");
+		sb.append(objectActionTriggerKey);
 		sb.append(", objectActionExecutorKey=");
 		sb.append(objectActionExecutorKey);
 		sb.append(", parameters=");
@@ -158,6 +160,13 @@ public class ObjectActionCacheModel
 			objectActionImpl.setName(name);
 		}
 
+		if (objectActionTriggerKey == null) {
+			objectActionImpl.setObjectActionTriggerKey("");
+		}
+		else {
+			objectActionImpl.setObjectActionTriggerKey(objectActionTriggerKey);
+		}
+
 		if (objectActionExecutorKey == null) {
 			objectActionImpl.setObjectActionExecutorKey("");
 		}
@@ -198,6 +207,7 @@ public class ObjectActionCacheModel
 
 		active = objectInput.readBoolean();
 		name = objectInput.readUTF();
+		objectActionTriggerKey = objectInput.readUTF();
 		objectActionExecutorKey = objectInput.readUTF();
 		parameters = (String)objectInput.readObject();
 	}
@@ -240,6 +250,13 @@ public class ObjectActionCacheModel
 			objectOutput.writeUTF(name);
 		}
 
+		if (objectActionTriggerKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(objectActionTriggerKey);
+		}
+
 		if (objectActionExecutorKey == null) {
 			objectOutput.writeUTF("");
 		}
@@ -266,6 +283,7 @@ public class ObjectActionCacheModel
 	public long objectDefinitionId;
 	public boolean active;
 	public String name;
+	public String objectActionTriggerKey;
 	public String objectActionExecutorKey;
 	public String parameters;
 

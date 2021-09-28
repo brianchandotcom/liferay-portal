@@ -44,6 +44,7 @@ public class ObjectActionSoap implements Serializable {
 		soapModel.setObjectDefinitionId(model.getObjectDefinitionId());
 		soapModel.setActive(model.isActive());
 		soapModel.setName(model.getName());
+		soapModel.setObjectActionTriggerKey(model.getObjectActionTriggerKey());
 		soapModel.setObjectActionExecutorKey(
 			model.getObjectActionExecutorKey());
 		soapModel.setParameters(model.getParameters());
@@ -192,6 +193,14 @@ public class ObjectActionSoap implements Serializable {
 		_name = name;
 	}
 
+	public String getObjectActionTriggerKey() {
+		return _objectActionTriggerKey;
+	}
+
+	public void setObjectActionTriggerKey(String objectActionTriggerKey) {
+		_objectActionTriggerKey = objectActionTriggerKey;
+	}
+
 	public String getObjectActionExecutorKey() {
 		return _objectActionExecutorKey;
 	}
@@ -219,6 +228,7 @@ public class ObjectActionSoap implements Serializable {
 	private long _objectDefinitionId;
 	private boolean _active;
 	private String _name;
+	private String _objectActionTriggerKey;
 	private String _objectActionExecutorKey;
 	private String _parameters;
 

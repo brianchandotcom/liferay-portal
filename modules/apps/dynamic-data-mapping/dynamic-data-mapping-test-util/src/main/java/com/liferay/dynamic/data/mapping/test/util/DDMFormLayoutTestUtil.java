@@ -143,6 +143,7 @@ public class DDMFormLayoutTestUtil {
 		).forEach(
 			ddmFormLayoutPage::addDDMFormLayoutRow
 		);
+
 		ddmFormLayoutPage.setDescription(
 			DDMFormValuesTestUtil.createLocalizedValue(
 				description, LocaleUtil.US));

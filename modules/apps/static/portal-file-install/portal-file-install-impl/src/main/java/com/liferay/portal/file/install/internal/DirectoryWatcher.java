@@ -966,6 +966,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 		synchronized (_processingFailures) {
 			files.addAll(_processingFailures);
+
 			_processingFailures.clear();
 		}
 

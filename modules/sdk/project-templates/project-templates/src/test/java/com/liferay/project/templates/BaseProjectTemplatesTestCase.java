@@ -977,6 +977,7 @@ public interface BaseProjectTemplatesTestCase {
 
 		if (debug) {
 			stdOutput = stringWriter.toString();
+
 			stringWriter.close();
 		}
 

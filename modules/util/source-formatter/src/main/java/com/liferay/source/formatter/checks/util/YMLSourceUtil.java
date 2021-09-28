@@ -138,6 +138,7 @@ public class YMLSourceUtil {
 				sb.setIndex(sb.index() - 1);
 
 				directives.add(sb.toString());
+
 				sb.setIndex(0);
 			}
 		}

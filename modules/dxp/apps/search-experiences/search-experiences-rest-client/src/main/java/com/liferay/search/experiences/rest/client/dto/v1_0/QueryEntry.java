@@ -15,7 +15,7 @@
 package com.liferay.search.experiences.rest.client.dto.v1_0;
 
 import com.liferay.search.experiences.rest.client.function.UnsafeSupplier;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.CardinalitySerDes;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.QueryEntrySerDes;
 
 import java.io.Serializable;
 
@@ -28,57 +28,57 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Cardinality implements Cloneable, Serializable {
+public class QueryEntry implements Cloneable, Serializable {
 
-	public static Cardinality toDTO(String json) {
-		return CardinalitySerDes.toDTO(json);
+	public static QueryEntry toDTO(String json) {
+		return QueryEntrySerDes.toDTO(json);
 	}
 
-	public String getField() {
-		return field;
+	public Clause[] getClauses() {
+		return clauses;
 	}
 
-	public void setField(String field) {
-		this.field = field;
+	public void setClauses(Clause[] clauses) {
+		this.clauses = clauses;
 	}
 
-	public void setField(
-		UnsafeSupplier<String, Exception> fieldUnsafeSupplier) {
+	public void setClauses(
+		UnsafeSupplier<Clause[], Exception> clausesUnsafeSupplier) {
 
 		try {
-			field = fieldUnsafeSupplier.get();
+			clauses = clausesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String field;
+	protected Clause[] clauses;
 
-	public Integer getPrecision_threshold() {
-		return precision_threshold;
+	public Boolean getEnabled() {
+		return enabled;
 	}
 
-	public void setPrecision_threshold(Integer precision_threshold) {
-		this.precision_threshold = precision_threshold;
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 
-	public void setPrecision_threshold(
-		UnsafeSupplier<Integer, Exception> precision_thresholdUnsafeSupplier) {
+	public void setEnabled(
+		UnsafeSupplier<Boolean, Exception> enabledUnsafeSupplier) {
 
 		try {
-			precision_threshold = precision_thresholdUnsafeSupplier.get();
+			enabled = enabledUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Integer precision_threshold;
+	protected Boolean enabled;
 
 	@Override
-	public Cardinality clone() throws CloneNotSupportedException {
-		return (Cardinality)super.clone();
+	public QueryEntry clone() throws CloneNotSupportedException {
+		return (QueryEntry)super.clone();
 	}
 
 	@Override
@@ -87,13 +87,13 @@ public class Cardinality implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Cardinality)) {
+		if (!(object instanceof QueryEntry)) {
 			return false;
 		}
 
-		Cardinality cardinality = (Cardinality)object;
+		QueryEntry queryEntry = (QueryEntry)object;
 
-		return Objects.equals(toString(), cardinality.toString());
+		return Objects.equals(toString(), queryEntry.toString());
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class Cardinality implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return CardinalitySerDes.toJSON(this);
+		return QueryEntrySerDes.toJSON(this);
 	}
 
 }

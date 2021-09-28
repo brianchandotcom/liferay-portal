@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.Cardinality;
+import com.liferay.search.experiences.rest.client.dto.v1_0.AggregationConfiguration;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,26 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class CardinalitySerDes {
+public class AggregationConfigurationSerDes {
 
-	public static Cardinality toDTO(String json) {
-		CardinalityJSONParser cardinalityJSONParser =
-			new CardinalityJSONParser();
+	public static AggregationConfiguration toDTO(String json) {
+		AggregationConfigurationJSONParser aggregationConfigurationJSONParser =
+			new AggregationConfigurationJSONParser();
 
-		return cardinalityJSONParser.parseToDTO(json);
+		return aggregationConfigurationJSONParser.parseToDTO(json);
 	}
 
-	public static Cardinality[] toDTOs(String json) {
-		CardinalityJSONParser cardinalityJSONParser =
-			new CardinalityJSONParser();
+	public static AggregationConfiguration[] toDTOs(String json) {
+		AggregationConfigurationJSONParser aggregationConfigurationJSONParser =
+			new AggregationConfigurationJSONParser();
 
-		return cardinalityJSONParser.parseToDTOs(json);
+		return aggregationConfigurationJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Cardinality cardinality) {
-		if (cardinality == null) {
+	public static String toJSON(
+		AggregationConfiguration aggregationConfiguration) {
+
+		if (aggregationConfiguration == null) {
 			return "null";
 		}
 
@@ -55,28 +57,18 @@ public class CardinalitySerDes {
 
 		sb.append("{");
 
-		if (cardinality.getField() != null) {
+		if (aggregationConfiguration.getAggs() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"field\": ");
+			sb.append("\"aggs\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(cardinality.getField()));
+			sb.append(_escape(aggregationConfiguration.getAggs()));
 
 			sb.append("\"");
-		}
-
-		if (cardinality.getPrecision_threshold() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"precision_threshold\": ");
-
-			sb.append(cardinality.getPrecision_threshold());
 		}
 
 		sb.append("}");
@@ -85,67 +77,53 @@ public class CardinalitySerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		CardinalityJSONParser cardinalityJSONParser =
-			new CardinalityJSONParser();
+		AggregationConfigurationJSONParser aggregationConfigurationJSONParser =
+			new AggregationConfigurationJSONParser();
 
-		return cardinalityJSONParser.parseToMap(json);
+		return aggregationConfigurationJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Cardinality cardinality) {
-		if (cardinality == null) {
+	public static Map<String, String> toMap(
+		AggregationConfiguration aggregationConfiguration) {
+
+		if (aggregationConfiguration == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (cardinality.getField() == null) {
-			map.put("field", null);
+		if (aggregationConfiguration.getAggs() == null) {
+			map.put("aggs", null);
 		}
 		else {
-			map.put("field", String.valueOf(cardinality.getField()));
-		}
-
-		if (cardinality.getPrecision_threshold() == null) {
-			map.put("precision_threshold", null);
-		}
-		else {
-			map.put(
-				"precision_threshold",
-				String.valueOf(cardinality.getPrecision_threshold()));
+			map.put("aggs", String.valueOf(aggregationConfiguration.getAggs()));
 		}
 
 		return map;
 	}
 
-	public static class CardinalityJSONParser
-		extends BaseJSONParser<Cardinality> {
+	public static class AggregationConfigurationJSONParser
+		extends BaseJSONParser<AggregationConfiguration> {
 
 		@Override
-		protected Cardinality createDTO() {
-			return new Cardinality();
+		protected AggregationConfiguration createDTO() {
+			return new AggregationConfiguration();
 		}
 
 		@Override
-		protected Cardinality[] createDTOArray(int size) {
-			return new Cardinality[size];
+		protected AggregationConfiguration[] createDTOArray(int size) {
+			return new AggregationConfiguration[size];
 		}
 
 		@Override
 		protected void setField(
-			Cardinality cardinality, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			AggregationConfiguration aggregationConfiguration,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "field")) {
+			if (Objects.equals(jsonParserFieldName, "aggs")) {
 				if (jsonParserFieldValue != null) {
-					cardinality.setField((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "precision_threshold")) {
-
-				if (jsonParserFieldValue != null) {
-					cardinality.setPrecision_threshold(
-						Integer.valueOf((String)jsonParserFieldValue));
+					aggregationConfiguration.setAggs(
+						(Object)jsonParserFieldValue);
 				}
 			}
 		}

@@ -52,34 +52,6 @@ public class General implements Serializable {
 	}
 
 	@Schema
-	public Boolean getApplyIndexerClauses() {
-		return applyIndexerClauses;
-	}
-
-	public void setApplyIndexerClauses(Boolean applyIndexerClauses) {
-		this.applyIndexerClauses = applyIndexerClauses;
-	}
-
-	@JsonIgnore
-	public void setApplyIndexerClauses(
-		UnsafeSupplier<Boolean, Exception> applyIndexerClausesUnsafeSupplier) {
-
-		try {
-			applyIndexerClauses = applyIndexerClausesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean applyIndexerClauses;
-
-	@Schema
 	public String[] getClauseContributorsExcludes() {
 		return clauseContributorsExcludes;
 	}
@@ -198,16 +170,6 @@ public class General implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		if (applyIndexerClauses != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"applyIndexerClauses\": ");
-
-			sb.append(applyIndexerClauses);
-		}
 
 		if (clauseContributorsExcludes != null) {
 			if (sb.length() > 1) {

@@ -81,16 +81,16 @@ public class ClauseSerDes {
 			sb.append("\"");
 		}
 
-		if (clause.getQueryJSON() != null) {
+		if (clause.getQuery() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"queryJSON\": ");
+			sb.append("\"query\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(clause.getQueryJSON()));
+			sb.append(_escape(clause.getQuery()));
 
 			sb.append("\"");
 		}
@@ -127,11 +127,11 @@ public class ClauseSerDes {
 			map.put("occur", String.valueOf(clause.getOccur()));
 		}
 
-		if (clause.getQueryJSON() == null) {
-			map.put("queryJSON", null);
+		if (clause.getQuery() == null) {
+			map.put("query", null);
 		}
 		else {
-			map.put("queryJSON", String.valueOf(clause.getQueryJSON()));
+			map.put("query", String.valueOf(clause.getQuery()));
 		}
 
 		return map;
@@ -164,9 +164,9 @@ public class ClauseSerDes {
 					clause.setOccur((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "queryJSON")) {
+			else if (Objects.equals(jsonParserFieldName, "query")) {
 				if (jsonParserFieldValue != null) {
-					clause.setQueryJSON((String)jsonParserFieldValue);
+					clause.setQuery((Object)jsonParserFieldValue);
 				}
 			}
 		}

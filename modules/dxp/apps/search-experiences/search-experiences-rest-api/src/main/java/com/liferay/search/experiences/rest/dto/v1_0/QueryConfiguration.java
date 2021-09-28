@@ -35,9 +35,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.Valid;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -46,31 +44,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Cardinality")
+@GraphQLName("QueryConfiguration")
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"field"})
-@XmlRootElement(name = "Cardinality")
-public class Cardinality implements Serializable {
+@XmlRootElement(name = "QueryConfiguration")
+public class QueryConfiguration implements Serializable {
 
-	public static Cardinality toDTO(String json) {
-		return ObjectMapperUtil.readValue(Cardinality.class, json);
+	public static QueryConfiguration toDTO(String json) {
+		return ObjectMapperUtil.readValue(QueryConfiguration.class, json);
 	}
 
 	@Schema
-	public String getField() {
-		return field;
+	public Boolean getApplyIndexerClauses() {
+		return applyIndexerClauses;
 	}
 
-	public void setField(String field) {
-		this.field = field;
+	public void setApplyIndexerClauses(Boolean applyIndexerClauses) {
+		this.applyIndexerClauses = applyIndexerClauses;
 	}
 
 	@JsonIgnore
-	public void setField(
-		UnsafeSupplier<String, Exception> fieldUnsafeSupplier) {
+	public void setApplyIndexerClauses(
+		UnsafeSupplier<Boolean, Exception> applyIndexerClausesUnsafeSupplier) {
 
 		try {
-			field = fieldUnsafeSupplier.get();
+			applyIndexerClauses = applyIndexerClausesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -82,26 +79,24 @@ public class Cardinality implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
-	protected String field;
+	protected Boolean applyIndexerClauses;
 
-	@DecimalMax("40000")
-	@DecimalMin("0")
 	@Schema
-	public Integer getPrecision_threshold() {
-		return precision_threshold;
+	@Valid
+	public QueryEntry[] getQueryEntries() {
+		return queryEntries;
 	}
 
-	public void setPrecision_threshold(Integer precision_threshold) {
-		this.precision_threshold = precision_threshold;
+	public void setQueryEntries(QueryEntry[] queryEntries) {
+		this.queryEntries = queryEntries;
 	}
 
 	@JsonIgnore
-	public void setPrecision_threshold(
-		UnsafeSupplier<Integer, Exception> precision_thresholdUnsafeSupplier) {
+	public void setQueryEntries(
+		UnsafeSupplier<QueryEntry[], Exception> queryEntriesUnsafeSupplier) {
 
 		try {
-			precision_threshold = precision_thresholdUnsafeSupplier.get();
+			queryEntries = queryEntriesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -113,7 +108,7 @@ public class Cardinality implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer precision_threshold;
+	protected QueryEntry[] queryEntries;
 
 	@Override
 	public boolean equals(Object object) {
@@ -121,13 +116,13 @@ public class Cardinality implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Cardinality)) {
+		if (!(object instanceof QueryConfiguration)) {
 			return false;
 		}
 
-		Cardinality cardinality = (Cardinality)object;
+		QueryConfiguration queryConfiguration = (QueryConfiguration)object;
 
-		return Objects.equals(toString(), cardinality.toString());
+		return Objects.equals(toString(), queryConfiguration.toString());
 	}
 
 	@Override
@@ -142,28 +137,34 @@ public class Cardinality implements Serializable {
 
 		sb.append("{");
 
-		if (field != null) {
+		if (applyIndexerClauses != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"field\": ");
+			sb.append("\"applyIndexerClauses\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(field));
-
-			sb.append("\"");
+			sb.append(applyIndexerClauses);
 		}
 
-		if (precision_threshold != null) {
+		if (queryEntries != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"precision_threshold\": ");
+			sb.append("\"queryEntries\": ");
 
-			sb.append(precision_threshold);
+			sb.append("[");
+
+			for (int i = 0; i < queryEntries.length; i++) {
+				sb.append(String.valueOf(queryEntries[i]));
+
+				if ((i + 1) < queryEntries.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");
@@ -173,7 +174,7 @@ public class Cardinality implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Cardinality",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration",
 		name = "x-class-name"
 	)
 	public String xClassName;

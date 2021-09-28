@@ -15,7 +15,7 @@
 package com.liferay.search.experiences.rest.client.dto.v1_0;
 
 import com.liferay.search.experiences.rest.client.function.UnsafeSupplier;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.AvgSerDes;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.AggregationConfigurationSerDes;
 
 import java.io.Serializable;
 
@@ -28,36 +28,34 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Avg implements Cloneable, Serializable {
+public class AggregationConfiguration implements Cloneable, Serializable {
 
-	public static Avg toDTO(String json) {
-		return AvgSerDes.toDTO(json);
+	public static AggregationConfiguration toDTO(String json) {
+		return AggregationConfigurationSerDes.toDTO(json);
 	}
 
-	public String getField() {
-		return field;
+	public Object getAggs() {
+		return aggs;
 	}
 
-	public void setField(String field) {
-		this.field = field;
+	public void setAggs(Object aggs) {
+		this.aggs = aggs;
 	}
 
-	public void setField(
-		UnsafeSupplier<String, Exception> fieldUnsafeSupplier) {
-
+	public void setAggs(UnsafeSupplier<Object, Exception> aggsUnsafeSupplier) {
 		try {
-			field = fieldUnsafeSupplier.get();
+			aggs = aggsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String field;
+	protected Object aggs;
 
 	@Override
-	public Avg clone() throws CloneNotSupportedException {
-		return (Avg)super.clone();
+	public AggregationConfiguration clone() throws CloneNotSupportedException {
+		return (AggregationConfiguration)super.clone();
 	}
 
 	@Override
@@ -66,13 +64,14 @@ public class Avg implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Avg)) {
+		if (!(object instanceof AggregationConfiguration)) {
 			return false;
 		}
 
-		Avg avg = (Avg)object;
+		AggregationConfiguration aggregationConfiguration =
+			(AggregationConfiguration)object;
 
-		return Objects.equals(toString(), avg.toString());
+		return Objects.equals(toString(), aggregationConfiguration.toString());
 	}
 
 	@Override
@@ -83,7 +82,7 @@ public class Avg implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return AvgSerDes.toJSON(this);
+		return AggregationConfigurationSerDes.toJSON(this);
 	}
 
 }

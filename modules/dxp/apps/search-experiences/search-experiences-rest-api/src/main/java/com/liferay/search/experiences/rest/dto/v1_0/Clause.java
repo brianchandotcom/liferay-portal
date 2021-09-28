@@ -35,6 +35,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -108,20 +110,21 @@ public class Clause implements Serializable {
 	protected String occur;
 
 	@Schema
-	public String getQueryJSON() {
-		return queryJSON;
+	@Valid
+	public Object getQuery() {
+		return query;
 	}
 
-	public void setQueryJSON(String queryJSON) {
-		this.queryJSON = queryJSON;
+	public void setQuery(Object query) {
+		this.query = query;
 	}
 
 	@JsonIgnore
-	public void setQueryJSON(
-		UnsafeSupplier<String, Exception> queryJSONUnsafeSupplier) {
+	public void setQuery(
+		UnsafeSupplier<Object, Exception> queryUnsafeSupplier) {
 
 		try {
-			queryJSON = queryJSONUnsafeSupplier.get();
+			query = queryUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -133,7 +136,7 @@ public class Clause implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String queryJSON;
+	protected Object query;
 
 	@Override
 	public boolean equals(Object object) {
@@ -190,18 +193,14 @@ public class Clause implements Serializable {
 			sb.append("\"");
 		}
 
-		if (queryJSON != null) {
+		if (query != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"queryJSON\": ");
+			sb.append("\"query\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(queryJSON));
-
-			sb.append("\"");
+			sb.append(String.valueOf(query));
 		}
 
 		sb.append("}");

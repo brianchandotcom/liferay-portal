@@ -14,9 +14,21 @@
 
 package com.liferay.search.experiences.rest.dto.v1_0.util;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.vulcan.util.ObjectMapperUtil;
+import com.liferay.search.experiences.rest.dto.v1_0.AggregationConfiguration;
+import com.liferay.search.experiences.rest.dto.v1_0.Clause;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
+import com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration;
+import com.liferay.search.experiences.rest.dto.v1_0.QueryEntry;
 import com.liferay.search.experiences.rest.dto.v1_0.SortConfiguration;
+
+import java.lang.reflect.Field;
+
+import java.util.Map;
 
 /**
  * @author André de Oliveira
@@ -24,18 +36,70 @@ import com.liferay.search.experiences.rest.dto.v1_0.SortConfiguration;
 public class ConfigurationUtil {
 
 	public static Configuration toConfiguration(String json) {
-		Configuration configuration = Configuration.toDTO(json);
+		Configuration configuration = _readValueUnsafe(
+			Configuration.class, json);
 
-		SortConfiguration sortConfiguration =
-			configuration.getSortConfiguration();
-
-		if (sortConfiguration != null) {
-			sortConfiguration.setSorts(
-				JSONFactoryUtil.createJSONArray(
-					(Object[])sortConfiguration.getSorts()));
-		}
+		_processAggregationConfiguration(
+			configuration.getAggregationConfiguration());
+		_processQueryConfiguration(configuration.getQueryConfiguration());
+		_processSortConfiguration(configuration.getSortConfiguration());
 
 		return configuration;
+	}
+
+	private static void _processAggregationConfiguration(
+		AggregationConfiguration aggregationConfiguration) {
+
+		if (aggregationConfiguration == null) {
+			return;
+		}
+
+		aggregationConfiguration.setAggs(
+			JSONFactoryUtil.createJSONObject(
+				(Map<?, ?>)aggregationConfiguration.getAggs()));
+	}
+
+	private static void _processQueryConfiguration(
+		QueryConfiguration queryConfiguration) {
+
+		if (queryConfiguration == null) {
+			return;
+		}
+
+		for (QueryEntry queryEntry : queryConfiguration.getQueryEntries()) {
+			for (Clause clause : queryEntry.getClauses()) {
+				clause.setQuery(
+					JSONFactoryUtil.createJSONObject(
+						(Map<?, ?>)clause.getQuery()));
+			}
+		}
+	}
+
+	private static void _processSortConfiguration(
+		SortConfiguration sortConfiguration) {
+
+		if (sortConfiguration == null) {
+			return;
+		}
+
+		sortConfiguration.setSorts(
+			JSONFactoryUtil.createJSONArray(
+				(Object[])sortConfiguration.getSorts()));
+	}
+
+	private static <T> T _readValueUnsafe(Class<?> clazz, String json) {
+		try {
+			Field field = ReflectionUtil.getDeclaredField(
+				ObjectMapperUtil.class, "_objectMapper");
+
+			ObjectMapper objectMapper = (ObjectMapper)field.get(
+				ObjectMapperUtil.class);
+
+			return (T)objectMapper.readValue(json, clazz);
+		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
 	}
 
 }

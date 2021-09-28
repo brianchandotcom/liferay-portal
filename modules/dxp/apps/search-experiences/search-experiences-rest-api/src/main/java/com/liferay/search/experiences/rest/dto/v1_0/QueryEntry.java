@@ -44,13 +44,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Query")
+@GraphQLName("QueryEntry")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Query")
-public class Query implements Serializable {
+@XmlRootElement(name = "QueryEntry")
+public class QueryEntry implements Serializable {
 
-	public static Query toDTO(String json) {
-		return ObjectMapperUtil.readValue(Query.class, json);
+	public static QueryEntry toDTO(String json) {
+		return ObjectMapperUtil.readValue(QueryEntry.class, json);
 	}
 
 	@Schema
@@ -116,13 +116,13 @@ public class Query implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Query)) {
+		if (!(object instanceof QueryEntry)) {
 			return false;
 		}
 
-		Query query = (Query)object;
+		QueryEntry queryEntry = (QueryEntry)object;
 
-		return Objects.equals(toString(), query.toString());
+		return Objects.equals(toString(), queryEntry.toString());
 	}
 
 	@Override
@@ -174,7 +174,7 @@ public class Query implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Query",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.QueryEntry",
 		name = "x-class-name"
 	)
 	public String xClassName;

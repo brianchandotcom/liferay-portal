@@ -14,8 +14,8 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.Clause;
-import com.liferay.search.experiences.rest.client.dto.v1_0.Query;
+import com.liferay.search.experiences.rest.client.dto.v1_0.QueryConfiguration;
+import com.liferay.search.experiences.rest.client.dto.v1_0.QueryEntry;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -32,22 +32,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class QuerySerDes {
+public class QueryConfigurationSerDes {
 
-	public static Query toDTO(String json) {
-		QueryJSONParser queryJSONParser = new QueryJSONParser();
+	public static QueryConfiguration toDTO(String json) {
+		QueryConfigurationJSONParser queryConfigurationJSONParser =
+			new QueryConfigurationJSONParser();
 
-		return queryJSONParser.parseToDTO(json);
+		return queryConfigurationJSONParser.parseToDTO(json);
 	}
 
-	public static Query[] toDTOs(String json) {
-		QueryJSONParser queryJSONParser = new QueryJSONParser();
+	public static QueryConfiguration[] toDTOs(String json) {
+		QueryConfigurationJSONParser queryConfigurationJSONParser =
+			new QueryConfigurationJSONParser();
 
-		return queryJSONParser.parseToDTOs(json);
+		return queryConfigurationJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Query query) {
-		if (query == null) {
+	public static String toJSON(QueryConfiguration queryConfiguration) {
+		if (queryConfiguration == null) {
 			return "null";
 		}
 
@@ -55,34 +57,37 @@ public class QuerySerDes {
 
 		sb.append("{");
 
-		if (query.getClauses() != null) {
+		if (queryConfiguration.getApplyIndexerClauses() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"clauses\": ");
+			sb.append("\"applyIndexerClauses\": ");
+
+			sb.append(queryConfiguration.getApplyIndexerClauses());
+		}
+
+		if (queryConfiguration.getQueryEntries() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"queryEntries\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < query.getClauses().length; i++) {
-				sb.append(String.valueOf(query.getClauses()[i]));
+			for (int i = 0; i < queryConfiguration.getQueryEntries().length;
+				 i++) {
 
-				if ((i + 1) < query.getClauses().length) {
+				sb.append(
+					String.valueOf(queryConfiguration.getQueryEntries()[i]));
+
+				if ((i + 1) < queryConfiguration.getQueryEntries().length) {
 					sb.append(", ");
 				}
 			}
 
 			sb.append("]");
-		}
-
-		if (query.getEnabled() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"enabled\": ");
-
-			sb.append(query.getEnabled());
 		}
 
 		sb.append("}");
@@ -91,67 +96,76 @@ public class QuerySerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		QueryJSONParser queryJSONParser = new QueryJSONParser();
+		QueryConfigurationJSONParser queryConfigurationJSONParser =
+			new QueryConfigurationJSONParser();
 
-		return queryJSONParser.parseToMap(json);
+		return queryConfigurationJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Query query) {
-		if (query == null) {
+	public static Map<String, String> toMap(
+		QueryConfiguration queryConfiguration) {
+
+		if (queryConfiguration == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (query.getClauses() == null) {
-			map.put("clauses", null);
+		if (queryConfiguration.getApplyIndexerClauses() == null) {
+			map.put("applyIndexerClauses", null);
 		}
 		else {
-			map.put("clauses", String.valueOf(query.getClauses()));
+			map.put(
+				"applyIndexerClauses",
+				String.valueOf(queryConfiguration.getApplyIndexerClauses()));
 		}
 
-		if (query.getEnabled() == null) {
-			map.put("enabled", null);
+		if (queryConfiguration.getQueryEntries() == null) {
+			map.put("queryEntries", null);
 		}
 		else {
-			map.put("enabled", String.valueOf(query.getEnabled()));
+			map.put(
+				"queryEntries",
+				String.valueOf(queryConfiguration.getQueryEntries()));
 		}
 
 		return map;
 	}
 
-	public static class QueryJSONParser extends BaseJSONParser<Query> {
+	public static class QueryConfigurationJSONParser
+		extends BaseJSONParser<QueryConfiguration> {
 
 		@Override
-		protected Query createDTO() {
-			return new Query();
+		protected QueryConfiguration createDTO() {
+			return new QueryConfiguration();
 		}
 
 		@Override
-		protected Query[] createDTOArray(int size) {
-			return new Query[size];
+		protected QueryConfiguration[] createDTOArray(int size) {
+			return new QueryConfiguration[size];
 		}
 
 		@Override
 		protected void setField(
-			Query query, String jsonParserFieldName,
+			QueryConfiguration queryConfiguration, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "clauses")) {
+			if (Objects.equals(jsonParserFieldName, "applyIndexerClauses")) {
 				if (jsonParserFieldValue != null) {
-					query.setClauses(
+					queryConfiguration.setApplyIndexerClauses(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "queryEntries")) {
+				if (jsonParserFieldValue != null) {
+					queryConfiguration.setQueryEntries(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
-							object -> ClauseSerDes.toDTO((String)object)
+							object -> QueryEntrySerDes.toDTO((String)object)
 						).toArray(
-							size -> new Clause[size]
+							size -> new QueryEntry[size]
 						));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "enabled")) {
-				if (jsonParserFieldValue != null) {
-					query.setEnabled((Boolean)jsonParserFieldValue);
 				}
 			}
 		}

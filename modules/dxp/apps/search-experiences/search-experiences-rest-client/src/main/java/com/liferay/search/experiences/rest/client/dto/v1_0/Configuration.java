@@ -56,27 +56,30 @@ public class Configuration implements Cloneable, Serializable {
 
 	protected Advanced advanced;
 
-	public Map<String, Aggregation> getAggregations() {
-		return aggregations;
+	public AggregationConfiguration getAggregationConfiguration() {
+		return aggregationConfiguration;
 	}
 
-	public void setAggregations(Map<String, Aggregation> aggregations) {
-		this.aggregations = aggregations;
+	public void setAggregationConfiguration(
+		AggregationConfiguration aggregationConfiguration) {
+
+		this.aggregationConfiguration = aggregationConfiguration;
 	}
 
-	public void setAggregations(
-		UnsafeSupplier<Map<String, Aggregation>, Exception>
-			aggregationsUnsafeSupplier) {
+	public void setAggregationConfiguration(
+		UnsafeSupplier<AggregationConfiguration, Exception>
+			aggregationConfigurationUnsafeSupplier) {
 
 		try {
-			aggregations = aggregationsUnsafeSupplier.get();
+			aggregationConfiguration =
+				aggregationConfigurationUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Map<String, Aggregation> aggregations;
+	protected AggregationConfiguration aggregationConfiguration;
 
 	public Facet getFacet() {
 		return facet;
@@ -161,26 +164,27 @@ public class Configuration implements Cloneable, Serializable {
 
 	protected Map<String, Parameter> parameters;
 
-	public Query[] getQueries() {
-		return queries;
+	public QueryConfiguration getQueryConfiguration() {
+		return queryConfiguration;
 	}
 
-	public void setQueries(Query[] queries) {
-		this.queries = queries;
+	public void setQueryConfiguration(QueryConfiguration queryConfiguration) {
+		this.queryConfiguration = queryConfiguration;
 	}
 
-	public void setQueries(
-		UnsafeSupplier<Query[], Exception> queriesUnsafeSupplier) {
+	public void setQueryConfiguration(
+		UnsafeSupplier<QueryConfiguration, Exception>
+			queryConfigurationUnsafeSupplier) {
 
 		try {
-			queries = queriesUnsafeSupplier.get();
+			queryConfiguration = queryConfigurationUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Query[] queries;
+	protected QueryConfiguration queryConfiguration;
 
 	public SortConfiguration getSortConfiguration() {
 		return sortConfiguration;

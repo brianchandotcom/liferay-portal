@@ -76,26 +76,26 @@ public class Clause implements Cloneable, Serializable {
 
 	protected String occur;
 
-	public String getQueryJSON() {
-		return queryJSON;
+	public Object getQuery() {
+		return query;
 	}
 
-	public void setQueryJSON(String queryJSON) {
-		this.queryJSON = queryJSON;
+	public void setQuery(Object query) {
+		this.query = query;
 	}
 
-	public void setQueryJSON(
-		UnsafeSupplier<String, Exception> queryJSONUnsafeSupplier) {
+	public void setQuery(
+		UnsafeSupplier<Object, Exception> queryUnsafeSupplier) {
 
 		try {
-			queryJSON = queryJSONUnsafeSupplier.get();
+			query = queryUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String queryJSON;
+	protected Object query;
 
 	@Override
 	public Clause clone() throws CloneNotSupportedException {

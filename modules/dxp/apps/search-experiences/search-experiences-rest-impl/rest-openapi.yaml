@@ -1,29 +1,5 @@
 components:
     schemas:
-        Aggregation:
-            properties:
-                aggs:
-                    additionalProperties:
-                        $ref: "#/components/schemas/Aggregation"
-                    type: object
-                avg:
-                    properties:
-                        field:
-                            type: string
-                    required:
-                        - field
-                    type: object
-                cardinality:
-                    properties:
-                        field:
-                            type: string
-                        precision_threshold:
-                            maximum: 40000
-                            minimum: 0
-                            type: integer
-                    required:
-                        - field
-                    type: object
         HighlightField:
             properties:
                 fragment_offset:
@@ -102,9 +78,10 @@ components:
                                         type: string
                                     type: array
                             type: object
-                        aggregations:
-                            additionalProperties:
-                                $ref: "#/components/schemas/Aggregation"
+                        aggregationConfiguration:
+                            properties:
+                                aggs:
+                                    type: object
                             type: object
                         facet:
                             properties:
@@ -113,8 +90,6 @@ components:
                             type: object
                         general:
                             properties:
-                                applyIndexerClauses:
-                                    type: boolean
                                 clauseContributorsExcludes:
                                     items:
                                         type: string
@@ -155,24 +130,29 @@ components:
                             additionalProperties:
                                 $ref: "#/components/schemas/Parameter"
                             type: object
-                        queries:
-                            items:
-                                properties:
-                                    clauses:
-                                        items:
-                                            properties:
-                                                context:
-                                                    type: string
-                                                occur:
-                                                    type: string
-                                                queryJSON:
-                                                    type: string
-                                            type: object
-                                        type: array
-                                    enabled:
-                                        type: boolean
-                                type: object
-                            type: array
+                        queryConfiguration:
+                            properties:
+                                applyIndexerClauses:
+                                    type: boolean
+                                queryEntries:
+                                    items:
+                                        properties:
+                                            clauses:
+                                                items:
+                                                    properties:
+                                                        context:
+                                                            type: string
+                                                        occur:
+                                                            type: string
+                                                        query:
+                                                            type: object
+                                                    type: object
+                                                type: array
+                                            enabled:
+                                                type: boolean
+                                        type: object
+                                    type: array
+                            type: object
                         sortConfiguration:
                             properties:
                                 sorts:

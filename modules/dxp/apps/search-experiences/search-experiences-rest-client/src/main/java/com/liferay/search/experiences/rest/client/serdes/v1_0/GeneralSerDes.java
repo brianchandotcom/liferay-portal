@@ -53,16 +53,6 @@ public class GeneralSerDes {
 
 		sb.append("{");
 
-		if (general.getApplyIndexerClauses() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"applyIndexerClauses\": ");
-
-			sb.append(general.getApplyIndexerClauses());
-		}
-
 		if (general.getClauseContributorsExcludes() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -157,15 +147,6 @@ public class GeneralSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (general.getApplyIndexerClauses() == null) {
-			map.put("applyIndexerClauses", null);
-		}
-		else {
-			map.put(
-				"applyIndexerClauses",
-				String.valueOf(general.getApplyIndexerClauses()));
-		}
-
 		if (general.getClauseContributorsExcludes() == null) {
 			map.put("clauseContributorsExcludes", null);
 		}
@@ -213,14 +194,8 @@ public class GeneralSerDes {
 			General general, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "applyIndexerClauses")) {
-				if (jsonParserFieldValue != null) {
-					general.setApplyIndexerClauses(
-						(Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "clauseContributorsExcludes")) {
+			if (Objects.equals(
+					jsonParserFieldName, "clauseContributorsExcludes")) {
 
 				if (jsonParserFieldValue != null) {
 					general.setClauseContributorsExcludes(

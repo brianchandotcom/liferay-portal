@@ -14,7 +14,8 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.Aggregation;
+import com.liferay.search.experiences.rest.client.dto.v1_0.Clause;
+import com.liferay.search.experiences.rest.client.dto.v1_0.QueryEntry;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -30,24 +32,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class AggregationSerDes {
+public class QueryEntrySerDes {
 
-	public static Aggregation toDTO(String json) {
-		AggregationJSONParser aggregationJSONParser =
-			new AggregationJSONParser();
+	public static QueryEntry toDTO(String json) {
+		QueryEntryJSONParser queryEntryJSONParser = new QueryEntryJSONParser();
 
-		return aggregationJSONParser.parseToDTO(json);
+		return queryEntryJSONParser.parseToDTO(json);
 	}
 
-	public static Aggregation[] toDTOs(String json) {
-		AggregationJSONParser aggregationJSONParser =
-			new AggregationJSONParser();
+	public static QueryEntry[] toDTOs(String json) {
+		QueryEntryJSONParser queryEntryJSONParser = new QueryEntryJSONParser();
 
-		return aggregationJSONParser.parseToDTOs(json);
+		return queryEntryJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Aggregation aggregation) {
-		if (aggregation == null) {
+	public static String toJSON(QueryEntry queryEntry) {
+		if (queryEntry == null) {
 			return "null";
 		}
 
@@ -55,34 +55,34 @@ public class AggregationSerDes {
 
 		sb.append("{");
 
-		if (aggregation.getAggs() != null) {
+		if (queryEntry.getClauses() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"aggs\": ");
+			sb.append("\"clauses\": ");
 
-			sb.append(_toJSON(aggregation.getAggs()));
+			sb.append("[");
+
+			for (int i = 0; i < queryEntry.getClauses().length; i++) {
+				sb.append(String.valueOf(queryEntry.getClauses()[i]));
+
+				if ((i + 1) < queryEntry.getClauses().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
-		if (aggregation.getAvg() != null) {
+		if (queryEntry.getEnabled() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"avg\": ");
+			sb.append("\"enabled\": ");
 
-			sb.append(String.valueOf(aggregation.getAvg()));
-		}
-
-		if (aggregation.getCardinality() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"cardinality\": ");
-
-			sb.append(String.valueOf(aggregation.getCardinality()));
+			sb.append(queryEntry.getEnabled());
 		}
 
 		sb.append("}");
@@ -91,79 +91,68 @@ public class AggregationSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		AggregationJSONParser aggregationJSONParser =
-			new AggregationJSONParser();
+		QueryEntryJSONParser queryEntryJSONParser = new QueryEntryJSONParser();
 
-		return aggregationJSONParser.parseToMap(json);
+		return queryEntryJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Aggregation aggregation) {
-		if (aggregation == null) {
+	public static Map<String, String> toMap(QueryEntry queryEntry) {
+		if (queryEntry == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (aggregation.getAggs() == null) {
-			map.put("aggs", null);
+		if (queryEntry.getClauses() == null) {
+			map.put("clauses", null);
 		}
 		else {
-			map.put("aggs", String.valueOf(aggregation.getAggs()));
+			map.put("clauses", String.valueOf(queryEntry.getClauses()));
 		}
 
-		if (aggregation.getAvg() == null) {
-			map.put("avg", null);
+		if (queryEntry.getEnabled() == null) {
+			map.put("enabled", null);
 		}
 		else {
-			map.put("avg", String.valueOf(aggregation.getAvg()));
-		}
-
-		if (aggregation.getCardinality() == null) {
-			map.put("cardinality", null);
-		}
-		else {
-			map.put(
-				"cardinality", String.valueOf(aggregation.getCardinality()));
+			map.put("enabled", String.valueOf(queryEntry.getEnabled()));
 		}
 
 		return map;
 	}
 
-	public static class AggregationJSONParser
-		extends BaseJSONParser<Aggregation> {
+	public static class QueryEntryJSONParser
+		extends BaseJSONParser<QueryEntry> {
 
 		@Override
-		protected Aggregation createDTO() {
-			return new Aggregation();
+		protected QueryEntry createDTO() {
+			return new QueryEntry();
 		}
 
 		@Override
-		protected Aggregation[] createDTOArray(int size) {
-			return new Aggregation[size];
+		protected QueryEntry[] createDTOArray(int size) {
+			return new QueryEntry[size];
 		}
 
 		@Override
 		protected void setField(
-			Aggregation aggregation, String jsonParserFieldName,
+			QueryEntry queryEntry, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "aggs")) {
+			if (Objects.equals(jsonParserFieldName, "clauses")) {
 				if (jsonParserFieldValue != null) {
-					aggregation.setAggs(
-						(Map)AggregationSerDes.toMap(
-							(String)jsonParserFieldValue));
+					queryEntry.setClauses(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ClauseSerDes.toDTO((String)object)
+						).toArray(
+							size -> new Clause[size]
+						));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "avg")) {
+			else if (Objects.equals(jsonParserFieldName, "enabled")) {
 				if (jsonParserFieldValue != null) {
-					aggregation.setAvg(
-						AvgSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "cardinality")) {
-				if (jsonParserFieldValue != null) {
-					aggregation.setCardinality(
-						CardinalitySerDes.toDTO((String)jsonParserFieldValue));
+					queryEntry.setEnabled((Boolean)jsonParserFieldValue);
 				}
 			}
 		}

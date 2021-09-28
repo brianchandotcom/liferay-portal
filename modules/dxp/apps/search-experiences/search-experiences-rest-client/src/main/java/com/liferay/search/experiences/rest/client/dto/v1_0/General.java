@@ -34,27 +34,6 @@ public class General implements Cloneable, Serializable {
 		return GeneralSerDes.toDTO(json);
 	}
 
-	public Boolean getApplyIndexerClauses() {
-		return applyIndexerClauses;
-	}
-
-	public void setApplyIndexerClauses(Boolean applyIndexerClauses) {
-		this.applyIndexerClauses = applyIndexerClauses;
-	}
-
-	public void setApplyIndexerClauses(
-		UnsafeSupplier<Boolean, Exception> applyIndexerClausesUnsafeSupplier) {
-
-		try {
-			applyIndexerClauses = applyIndexerClausesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Boolean applyIndexerClauses;
-
 	public String[] getClauseContributorsExcludes() {
 		return clauseContributorsExcludes;
 	}

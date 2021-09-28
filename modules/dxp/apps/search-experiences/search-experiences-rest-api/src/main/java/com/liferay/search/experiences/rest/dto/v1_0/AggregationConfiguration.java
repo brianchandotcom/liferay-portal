@@ -35,7 +35,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.Valid;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -44,31 +44,29 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Avg")
+@GraphQLName("AggregationConfiguration")
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"field"})
-@XmlRootElement(name = "Avg")
-public class Avg implements Serializable {
+@XmlRootElement(name = "AggregationConfiguration")
+public class AggregationConfiguration implements Serializable {
 
-	public static Avg toDTO(String json) {
-		return ObjectMapperUtil.readValue(Avg.class, json);
+	public static AggregationConfiguration toDTO(String json) {
+		return ObjectMapperUtil.readValue(AggregationConfiguration.class, json);
 	}
 
 	@Schema
-	public String getField() {
-		return field;
+	@Valid
+	public Object getAggs() {
+		return aggs;
 	}
 
-	public void setField(String field) {
-		this.field = field;
+	public void setAggs(Object aggs) {
+		this.aggs = aggs;
 	}
 
 	@JsonIgnore
-	public void setField(
-		UnsafeSupplier<String, Exception> fieldUnsafeSupplier) {
-
+	public void setAggs(UnsafeSupplier<Object, Exception> aggsUnsafeSupplier) {
 		try {
-			field = fieldUnsafeSupplier.get();
+			aggs = aggsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -80,8 +78,7 @@ public class Avg implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
-	protected String field;
+	protected Object aggs;
 
 	@Override
 	public boolean equals(Object object) {
@@ -89,13 +86,14 @@ public class Avg implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Avg)) {
+		if (!(object instanceof AggregationConfiguration)) {
 			return false;
 		}
 
-		Avg avg = (Avg)object;
+		AggregationConfiguration aggregationConfiguration =
+			(AggregationConfiguration)object;
 
-		return Objects.equals(toString(), avg.toString());
+		return Objects.equals(toString(), aggregationConfiguration.toString());
 	}
 
 	@Override
@@ -110,18 +108,14 @@ public class Avg implements Serializable {
 
 		sb.append("{");
 
-		if (field != null) {
+		if (aggs != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"field\": ");
+			sb.append("\"aggs\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(field));
-
-			sb.append("\"");
+			sb.append(String.valueOf(aggs));
 		}
 
 		sb.append("}");
@@ -131,7 +125,7 @@ public class Avg implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Avg",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.AggregationConfiguration",
 		name = "x-class-name"
 	)
 	public String xClassName;

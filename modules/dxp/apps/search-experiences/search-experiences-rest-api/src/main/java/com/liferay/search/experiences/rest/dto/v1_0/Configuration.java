@@ -84,21 +84,24 @@ public class Configuration implements Serializable {
 
 	@Schema
 	@Valid
-	public Map<String, Aggregation> getAggregations() {
-		return aggregations;
+	public AggregationConfiguration getAggregationConfiguration() {
+		return aggregationConfiguration;
 	}
 
-	public void setAggregations(Map<String, Aggregation> aggregations) {
-		this.aggregations = aggregations;
+	public void setAggregationConfiguration(
+		AggregationConfiguration aggregationConfiguration) {
+
+		this.aggregationConfiguration = aggregationConfiguration;
 	}
 
 	@JsonIgnore
-	public void setAggregations(
-		UnsafeSupplier<Map<String, Aggregation>, Exception>
-			aggregationsUnsafeSupplier) {
+	public void setAggregationConfiguration(
+		UnsafeSupplier<AggregationConfiguration, Exception>
+			aggregationConfigurationUnsafeSupplier) {
 
 		try {
-			aggregations = aggregationsUnsafeSupplier.get();
+			aggregationConfiguration =
+				aggregationConfigurationUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -110,7 +113,7 @@ public class Configuration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, Aggregation> aggregations;
+	protected AggregationConfiguration aggregationConfiguration;
 
 	@Schema
 	@Valid
@@ -229,20 +232,21 @@ public class Configuration implements Serializable {
 
 	@Schema
 	@Valid
-	public Query[] getQueries() {
-		return queries;
+	public QueryConfiguration getQueryConfiguration() {
+		return queryConfiguration;
 	}
 
-	public void setQueries(Query[] queries) {
-		this.queries = queries;
+	public void setQueryConfiguration(QueryConfiguration queryConfiguration) {
+		this.queryConfiguration = queryConfiguration;
 	}
 
 	@JsonIgnore
-	public void setQueries(
-		UnsafeSupplier<Query[], Exception> queriesUnsafeSupplier) {
+	public void setQueryConfiguration(
+		UnsafeSupplier<QueryConfiguration, Exception>
+			queryConfigurationUnsafeSupplier) {
 
 		try {
-			queries = queriesUnsafeSupplier.get();
+			queryConfiguration = queryConfigurationUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -254,7 +258,7 @@ public class Configuration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Query[] queries;
+	protected QueryConfiguration queryConfiguration;
 
 	@Schema
 	@Valid
@@ -323,14 +327,14 @@ public class Configuration implements Serializable {
 			sb.append(String.valueOf(advanced));
 		}
 
-		if (aggregations != null) {
+		if (aggregationConfiguration != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"aggregations\": ");
+			sb.append("\"aggregationConfiguration\": ");
 
-			sb.append(_toJSON(aggregations));
+			sb.append(String.valueOf(aggregationConfiguration));
 		}
 
 		if (facet != null) {
@@ -373,24 +377,14 @@ public class Configuration implements Serializable {
 			sb.append(_toJSON(parameters));
 		}
 
-		if (queries != null) {
+		if (queryConfiguration != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"queries\": ");
+			sb.append("\"queryConfiguration\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < queries.length; i++) {
-				sb.append(String.valueOf(queries[i]));
-
-				if ((i + 1) < queries.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(String.valueOf(queryConfiguration));
 		}
 
 		if (sortConfiguration != null) {

@@ -16,6 +16,7 @@ package com.liferay.frontend.taglib.clay.internal.jaxrs.context.provider;
 
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -23,8 +24,13 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -80,6 +86,19 @@ public class ThemeDisplayContextProvider
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		String acceptLanguage = httpServletRequest.getHeader("Accept-Language");
+
+		if (Validator.isNotNull(acceptLanguage)) {
+			List<Locale> locales = Locale.filter(
+				Locale.LanguageRange.parse(acceptLanguage),
+				_language.getCompanyAvailableLocales(
+					themeDisplay.getCompanyId()));
+
+			if (ListUtil.isNotEmpty(locales)) {
+				themeDisplay.setLocale(locales.get(0));
+			}
+		}
+
 		long plid = ParamUtil.getLong(httpServletRequest, "plid");
 
 		if (plid > 0) {
@@ -105,6 +124,9 @@ public class ThemeDisplayContextProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ThemeDisplayContextProvider.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

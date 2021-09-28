@@ -12,7 +12,7 @@
  * details.
  */
 
-import MarkerBase from 'map-common/js/MarkerBase.es';
+import MarkerBase from '@liferay/map-common/js/MarkerBase.es';
 
 /**
  * OpenStreetMapMarker

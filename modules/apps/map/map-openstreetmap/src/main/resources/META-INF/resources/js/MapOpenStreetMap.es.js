@@ -12,7 +12,7 @@
  * details.
  */
 
-import MapBase from 'map-common/js/MapBase.es';
+import MapBase from '@liferay/map-common/js/MapBase.es';
 import {Config} from 'metal-state';
 
 import OpenStreetMapDialog from './OpenStreetMapDialog.es';

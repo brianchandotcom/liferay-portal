@@ -54,6 +54,9 @@ module.exports = {
 					'@liferay/frontend-taglib': {
 						'/': '*',
 					},
+					'@liferay/map-common': {
+						'/': '*',
+					},
 					'asset-taglib': {
 						'/': '*',
 					},
@@ -262,9 +265,6 @@ module.exports = {
 					'item-selector-taglib': {
 						'/': '*',
 					},
-					'map-common': {
-						'/': '*',
-					},
 					'map-google-maps': {
 						'/': '*',
 					},
@@ -371,13 +371,5 @@ module.exports = {
 	global: {
 		check: CHECK_AND_FIX_GLOBS,
 		fix: CHECK_AND_FIX_GLOBS,
-		rules: {
-			'allowed-named-scope-exceptions': [
-
-				// LPS-129670: https://issues.liferay.com/browse/LPS-129670
-
-				'map-common',
-			],
-		},
 	},
 };

@@ -12,7 +12,7 @@
  * details.
  */
 
-import MapBase from 'map-common/js/MapBase.es';
+import MapBase from '@liferay/map-common/js/MapBase.es';
 
 import GoogleMapsDialog from './GoogleMapsDialog.es';
 import GoogleMapsGeoJSON from './GoogleMapsGeoJSON.es';

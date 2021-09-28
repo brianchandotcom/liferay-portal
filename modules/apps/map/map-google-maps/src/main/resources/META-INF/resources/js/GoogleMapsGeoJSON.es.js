@@ -12,7 +12,7 @@
  * details.
  */
 
-import GeoJSONBase from 'map-common/js/GeoJSONBase.es';
+import GeoJSONBase from '@liferay/map-common/js/GeoJSONBase.es';
 
 /**
  * GoogleMapsGeoJSON

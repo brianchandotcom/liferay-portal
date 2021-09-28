@@ -129,7 +129,7 @@
 			/>
 		</div>
 
-		<aui:script require="map-common/js/MapBase.es as MapBase">
+		<aui:script require="@liferay/map-common@6.0.3/js/MapBase.es as MapBase">
 			var geolocationField = {
 				init: function () {
 					Liferay.MapBase.get('<portlet:namespace /><%= name %>', (map) => {

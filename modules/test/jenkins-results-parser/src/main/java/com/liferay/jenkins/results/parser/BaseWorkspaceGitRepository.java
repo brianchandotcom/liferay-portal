@@ -53,7 +53,9 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	public String getGitHubDevBranchName() {
-		return getString("git_hub_dev_branch_name");
+		return GitHubDevSyncUtil.getCacheBranchName(
+			_getReceiverUsername(), _getSenderUsername(), _getSenderBranchSHA(),
+			_getUpstreamBranchSHA());
 	}
 
 	@Override
@@ -293,6 +295,19 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	@Override
+	public void synchronizeToGitHubDev() {
+		try {
+			GitHubDevSyncUtil.synchronizeToGitHubDev(
+				getGitWorkingDirectory(), _getReceiverUsername(),
+				_getSenderBranchName(), _getSenderUsername(),
+				_getSenderBranchSHA(), _getUpstreamBranchSHA());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	@Override
 	public void tearDown() {
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
@@ -337,10 +352,6 @@ public abstract class BaseWorkspaceGitRepository
 		super(jsonObject);
 
 		validateKeys(_REQUIRED_KEYS);
-
-		if (JenkinsResultsParserUtil.isCINode()) {
-			validateKeys(_CI_KEYS_REQUIRED);
-		}
 	}
 
 	protected BaseWorkspaceGitRepository(
@@ -348,8 +359,6 @@ public abstract class BaseWorkspaceGitRepository
 
 		super(
 			pullRequest.getGitHubRemoteGitRepositoryName(), upstreamBranchName);
-
-		_setGitHubURL(pullRequest.getHtmlURL());
 
 		LocalGitBranch localGitBranch =
 			GitHubDevSyncUtil.createCacheLocalGitBranch(
@@ -362,26 +371,20 @@ public abstract class BaseWorkspaceGitRepository
 
 		_setType();
 
+		_setGitHubURL(pullRequest.getHtmlURL());
+		_setReceiverUsername(pullRequest.getReceiverUsername());
+		_setSenderBranchName(pullRequest.getSenderBranchName());
+		_setSenderUsername(pullRequest.getSenderUsername());
+		_setSenderBranchSHA(pullRequest.getSenderSHA());
+		_setUpstreamBranchSHA(pullRequest.getUpstreamBranchSHA());
+
 		validateKeys(_REQUIRED_KEYS);
-
-		if (JenkinsResultsParserUtil.isCINode()) {
-			_setGitHubDevBranchName(
-				GitHubDevSyncUtil.getCacheBranchName(pullRequest));
-
-			validateKeys(_CI_KEYS_REQUIRED);
-		}
 	}
 
 	protected BaseWorkspaceGitRepository(
 		RemoteGitRef remoteGitRef, String upstreamBranchName) {
 
 		super(remoteGitRef.getRepositoryName(), upstreamBranchName);
-
-		_setGitHubURL(
-			JenkinsResultsParserUtil.combine(
-				"https://github.com/", remoteGitRef.getUsername(), "/",
-				remoteGitRef.getRepositoryName(), "/tree/",
-				remoteGitRef.getName()));
 
 		LocalGitBranch localGitBranch =
 			GitHubDevSyncUtil.createCacheLocalGitBranch(
@@ -394,14 +397,14 @@ public abstract class BaseWorkspaceGitRepository
 
 		_setType();
 
+		_setGitHubURL(remoteGitRef.getHtmlURL());
+		_setReceiverUsername(remoteGitRef.getUsername());
+		_setSenderBranchName(remoteGitRef.getName());
+		_setSenderUsername(remoteGitRef.getUsername());
+		_setSenderBranchSHA(remoteGitRef.getSHA());
+		_setUpstreamBranchSHA(remoteGitRef.getSHA());
+
 		validateKeys(_REQUIRED_KEYS);
-
-		if (JenkinsResultsParserUtil.isCINode()) {
-			_setGitHubDevBranchName(
-				GitHubDevSyncUtil.getCacheBranchName(remoteGitRef));
-
-			validateKeys(_CI_KEYS_REQUIRED);
-		}
 	}
 
 	protected String getBranchSHA() {
@@ -435,6 +438,26 @@ public abstract class BaseWorkspaceGitRepository
 
 	private String _getBranchName() {
 		return getString("branch_name");
+	}
+
+	private String _getReceiverUsername() {
+		return optString("receiver_username");
+	}
+
+	private String _getSenderBranchName() {
+		return optString("sender_branch_name");
+	}
+
+	private String _getSenderBranchSHA() {
+		return optString("sender_branch_sha");
+	}
+
+	private String _getSenderUsername() {
+		return optString("sender_username");
+	}
+
+	private String _getUpstreamBranchSHA() {
+		return optString("upstream_branch_sha");
 	}
 
 	private String _getWorkspaceJobPropertyName(String jobPropertyName) {
@@ -496,14 +519,6 @@ public abstract class BaseWorkspaceGitRepository
 		put("branch_name", branchName);
 	}
 
-	private void _setGitHubDevBranchName(String gitHubDevBranchName) {
-		if (gitHubDevBranchName == null) {
-			throw new RuntimeException("GitHub dev branch name is null");
-		}
-
-		put("git_hub_dev_branch_name", gitHubDevBranchName);
-	}
-
 	private void _setGitHubURL(String gitHubURL) {
 		if (gitHubURL == null) {
 			throw new RuntimeException("GitHub URL is null");
@@ -512,18 +527,56 @@ public abstract class BaseWorkspaceGitRepository
 		put("git_hub_url", gitHubURL);
 	}
 
+	private void _setReceiverUsername(String receiverUsername) {
+		if (receiverUsername == null) {
+			throw new RuntimeException("Receiver username is null");
+		}
+
+		put("receiver_username", receiverUsername);
+	}
+
+	private void _setSenderBranchName(String senderBranchName) {
+		if (senderBranchName == null) {
+			throw new RuntimeException("Sender branch name is null");
+		}
+
+		put("sender_branch_name", senderBranchName);
+	}
+
+	private void _setSenderBranchSHA(String senderBranchSHA) {
+		if (!JenkinsResultsParserUtil.isSHA(senderBranchSHA)) {
+			throw new RuntimeException("Sender branch SHA is invalid");
+		}
+
+		put("sender_branch_sha", senderBranchSHA);
+	}
+
+	private void _setSenderUsername(String senderUsername) {
+		if (senderUsername == null) {
+			throw new RuntimeException("Sender username is null");
+		}
+
+		put("sender_username", senderUsername);
+	}
+
 	private void _setType() {
 		put("type", getType());
 	}
 
-	private static final String[] _CI_KEYS_REQUIRED = {
-		"git_hub_dev_branch_name"
-	};
+	private void _setUpstreamBranchSHA(String upstreamBranchSHA) {
+		if (!JenkinsResultsParserUtil.isSHA(upstreamBranchSHA)) {
+			throw new RuntimeException("Upstream branch SHA is invalid");
+		}
+
+		put("upstream_branch_sha", upstreamBranchSHA);
+	}
 
 	private static final String _REGEX_SHA = "[0-9a-f]{7,40}";
 
 	private static final String[] _REQUIRED_KEYS = {
-		"branch_head_sha", "branch_name", "branch_sha", "git_hub_url", "type"
+		"branch_head_sha", "branch_name", "branch_sha", "git_hub_url",
+		"receiver_username", "sender_branch_name", "sender_branch_sha",
+		"sender_username", "upstream_branch_sha", "type"
 	};
 
 	private List<LocalGitCommit> _historicalLocalGitCommits;

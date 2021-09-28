@@ -15,7 +15,6 @@
 package com.liferay.jenkins.results.parser;
 
 import java.util.List;
-import java.util.Properties;
 
 /**
  * @author Michael Hashimoto
@@ -42,6 +41,8 @@ public interface WorkspaceGitRepository extends LocalGitRepository {
 	public void setUp();
 
 	public void storeCommitHistory(List<String> commitSHAs);
+
+	public void synchronizeToGitHubDev();
 
 	public void tearDown();
 

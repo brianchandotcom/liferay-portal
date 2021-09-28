@@ -3,8 +3,7 @@
 		"@clayui/button": "3.32.0",
 		"@clayui/icon": "3.32.0",
 		"asset-taglib": "*",
-		"frontend-js-web": "*",
-		"metal-state": "2.16.8"
+		"frontend-js-web": "*"
 	},
 	"name": "asset-list-web",
 	"scripts": {

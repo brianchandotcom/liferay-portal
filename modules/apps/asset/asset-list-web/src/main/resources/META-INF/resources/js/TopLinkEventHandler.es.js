@@ -12,29 +12,22 @@
  * details.
  */
 
-import {PortletBase, delegate} from 'frontend-js-web';
+import {delegate} from 'frontend-js-web';
 
-export default class TopLinkEventHandler extends PortletBase {
-	attached() {
-		this._delegateHandler = delegate(
-			document.body,
-			'click',
-			'a',
-			(event) => {
-				const openerWindow = Liferay.Util.getTop();
+export default function () {
+	const delegateHandler = delegate(document.body, 'click', 'a', (event) => {
+		const openerWindow = Liferay.Util.getTop();
 
-				if (openerWindow && event.delegateTarget.target === '_top') {
-					event.preventDefault();
+		if (openerWindow && event.delegateTarget.target === '_top') {
+			event.preventDefault();
 
-					openerWindow.Liferay.Util.navigate(
-						event.delegateTarget.href
-					);
-				}
-			}
-		);
-	}
+			openerWindow.Liferay.Util.navigate(event.delegateTarget.href);
+		}
+	});
 
-	dispose() {
-		this._delegateHandler.dispose();
-	}
+	return {
+		dispose() {
+			delegateHandler.dispose();
+		},
+	};
 }

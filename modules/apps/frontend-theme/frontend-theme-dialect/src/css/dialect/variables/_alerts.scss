@@ -1,0 +1,65 @@
+// Alert Variants
+
+$alert-primary-color: var(--color-brand-primary);
+$alert-primary-bg: var(--color-brand-primary-lighten-5);
+$alert-primary-border-color: transparent;
+$alert-primary-btn: (
+	border-color: $alert-primary-color,
+	hover-border-color: $alert-primary-color,
+);
+
+$alert-secondary-color: var(--color-brand-secondary);
+$alert-secondary-bg: var(--color-brand-secondary-lighten-5);
+$alert-secondary-border-color: transparent;
+$alert-secondary-btn: (
+	border-color: $alert-secondary-color,
+	hover-border-color: $alert-secondary-color,
+);
+
+$alert-success-color: var(--color-state-success);
+$alert-success-bg: var(--color-state-success-lighten);
+$alert-success-border-color: transparent;
+$alert-success-btn: (
+	border-color: $alert-success-color,
+	hover-border-color: $alert-success-color,
+);
+
+$alert-info-color: var(--color-state-info);
+$alert-info-bg: var(--color-state-info-lighten);
+$alert-info-border-color: transparent;
+$alert-info-btn: (
+	border-color: $alert-info-color,
+	hover-border-color: $alert-info-color,
+);
+
+$alert-warning-color: var(--color-state-warning);
+$alert-warning-bg: var(--color-state-warning-lighten);
+$alert-warning-border-color: transparent;
+$alert-warning-btn: (
+	border-color: $alert-warning-color,
+	hover-border-color: $alert-warning-color,
+);
+
+$alert-danger-color: var(--color-state-error);
+$alert-danger-bg: var(--color-state-error-lighten);
+$alert-danger-border-color: transparent;
+$alert-danger-btn: (
+	border-color: $alert-danger-color,
+	hover-border-color: $alert-danger-color,
+);
+
+$alert-light-color: var(--color-neutral-1);
+$alert-light-bg: var(--color-neutral-9);
+$alert-light-border-color: transparent;
+$alert-light-btn: (
+	border-color: $alert-light-color,
+	hover-border-color: $alert-light-color,
+);
+
+$alert-dark-color: var(--color-neutral-9);
+$alert-dark-bg: var(--color-neutral-1);
+$alert-dark-border-color: transparent;
+$alert-dark-btn: (
+	border-color: $alert-dark-color,
+	hover-border-color: $alert-dark-color,
+);

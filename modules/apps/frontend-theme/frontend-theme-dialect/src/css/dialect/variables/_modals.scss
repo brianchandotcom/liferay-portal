@@ -1,0 +1,42 @@
+$header-close: (
+	color: var(--color-action-neutral-default),
+	hover-color: var(--color-action-neutral-hover),
+	focus-color: var(--color-action-neutral-active),
+	disabled-color: var(--color-action-neutral-disabled),
+);
+
+// Modal Success
+
+$modal-success: (
+	header-bg: var(--color-state-success-lighten),
+	header-border-color: var(--color-state-success),
+	header-color: var(--color-state-success),
+	header-close: $header-close,
+);
+
+// Modal Info
+
+$modal-info: (
+	header-bg: var(--color-state-info-lighten),
+	header-border-color: var(--color-state-info),
+	header-color: var(--color-state-info),
+	header-close: $header-close,
+);
+
+// Modal Warning
+
+$modal-warning: (
+	header-bg: var(--color-state-warning-lighten),
+	header-border-color: var(--color-state-warning),
+	header-color: var(--color-state-warning),
+	header-close: $header-close,
+);
+
+// Modal Danger
+
+$modal-danger: (
+	header-bg: var(--color-state-error-lighten),
+	header-border-color: var(--color-state-error),
+	header-color: var(--color-state-error),
+	header-close: $header-close,
+);

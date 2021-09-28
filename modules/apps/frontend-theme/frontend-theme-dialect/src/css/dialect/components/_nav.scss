@@ -178,7 +178,9 @@
 		}
 
 		&.nav-inverted {
-			--nav-link-active-color: var(--color-action-primary-inverted-disabled);
+			--nav-link-active-color: var(
+				--color-action-primary-inverted-disabled
+			);
 			--nav-link-color: var(--color-action-primary-inverted-disabled);
 			--nav-link-hover-color: var(--color-action-primary-inverted);
 

@@ -60,7 +60,9 @@
 			--btn-default-background-color: var(--color-action-primary-default);
 			--btn-default-border-color: var(--color-action-primary-default);
 			--btn-default-color: var(--color-action-primary-inverted);
-			--btn-disabled-background-color: var(--color-action-primary-disabled);
+			--btn-disabled-background-color: var(
+				--color-action-primary-disabled
+			);
 			--btn-disabled-border-color: var(--color-action-primary-disabled);
 			--btn-hover-background-color: var(--color-action-primary-hover);
 			--btn-hover-border-color: var(--color-action-primary-hover);
@@ -68,7 +70,9 @@
 
 		&.btn-inverted {
 			--btn-active-color: var(--color-action-primary-active);
-			--btn-default-background-color: var(--color-action-primary-inverted);
+			--btn-default-background-color: var(
+				--color-action-primary-inverted
+			);
 			--btn-default-border-color: var(--color-action-primary-inverted);
 			--btn-default-color: var(--color-action-primary-default);
 			--btn-disabled-color: var(--color-action-primary-disabled);
@@ -81,10 +85,14 @@
 			--btn-active-background-color: var(--color-action-secondary-active);
 			--btn-active-border-color: var(--color-action-secondary-active);
 			--btn-active-color: var(--color-action-secondary-inverted);
-			--btn-default-background-color: var(--color-action-secondary-default);
+			--btn-default-background-color: var(
+				--color-action-secondary-default
+			);
 			--btn-default-border-color: var(--color-action-secondary-default);
 			--btn-default-color: var(--color-action-secondary-inverted);
-			--btn-disabled-background-color: var(--color-action-secondary-disabled);
+			--btn-disabled-background-color: var(
+				--color-action-secondary-disabled
+			);
 			--btn-disabled-border-color: var(--color-action-secondary-disabled);
 			--btn-hover-background-color: var(--color-action-secondary-hover);
 			--btn-hover-border-color: var(--color-action-secondary-hover);
@@ -92,7 +100,9 @@
 
 		&.btn-inverted {
 			--btn-active-color: var(--color-action-secondary-active);
-			--btn-default-background-color: var(--color-action-secondary-inverted);
+			--btn-default-background-color: var(
+				--color-action-secondary-inverted
+			);
 			--btn-default-border-color: var(--color-action-secondary-inverted);
 			--btn-default-color: var(--color-action-secondary-default);
 			--btn-disabled-color: var(--color-action-secondary-disabled);
@@ -108,7 +118,9 @@
 			--btn-default-background-color: var(--color-action-neutral-default);
 			--btn-default-border-color: var(--color-action-neutral-default);
 			--btn-default-color: var(--color-action-neutral-inverted);
-			--btn-disabled-background-color: var(--color-action-neutral-disabled);
+			--btn-disabled-background-color: var(
+				--color-action-neutral-disabled
+			);
 			--btn-disabled-border-color: var(--color-action-neutral-disabled);
 			--btn-hover-background-color: var(--color-action-neutral-hover);
 			--btn-hover-border-color: var(--color-action-neutral-hover);
@@ -116,7 +128,9 @@
 
 		&.btn-inverted {
 			--btn-active-color: var(--color-action-neutral-active);
-			--btn-default-background-color: var(--color-action-neutral-inverted);
+			--btn-default-background-color: var(
+				--color-action-neutral-inverted
+			);
 			--btn-default-border-color: var(--color-action-neutral-inverted);
 			--btn-default-color: var(--color-action-neutral-default);
 			--btn-disabled-color: var(--color-action-neutral-disabled);
@@ -166,10 +180,14 @@
 			--btn-active-background-color: var(--color-action-primary-inverted);
 			--btn-active-border-color: var(--color-action-primary-active);
 			--btn-active-color: var(--color-action-primary-active);
-			--btn-default-background-color: var(--color-action-primary-inverted);
+			--btn-default-background-color: var(
+				--color-action-primary-inverted
+			);
 			--btn-default-border-color: var(--color-action-primary-default);
 			--btn-default-color: var(--color-action-primary-default);
-			--btn-disabled-background-color: var(--color-action-primary-inverted);
+			--btn-disabled-background-color: var(
+				--color-action-primary-inverted
+			);
 			--btn-disabled-border-color: var(--color-action-primary-disabled);
 			--btn-disabled-color: var(--color-action-primary-disabled);
 			--btn-hover-background-color: var(--color-action-primary-inverted);
@@ -185,7 +203,9 @@
 				--color-action-primary-inverted-disabled
 			);
 			--btn-disabled-color: var(--color-action-primary-inverted-disabled);
-			--btn-hover-background-color: var(--color-action-primary-inverted-hover);
+			--btn-hover-background-color: var(
+				--color-action-primary-inverted-hover
+			);
 			--btn-hover-border-color: var(--color-action-primary-inverted);
 			--btn-hover-color: var(--color-action-primary-inverted);
 		}
@@ -193,16 +213,24 @@
 
 	&.btn-variant-secondary {
 		&:not(.btn-inverted) {
-			--btn-active-background-color: var(--color-action-secondary-inverted);
+			--btn-active-background-color: var(
+				--color-action-secondary-inverted
+			);
 			--btn-active-border-color: var(--color-action-secondary-active);
 			--btn-active-color: var(--color-action-secondary-active);
-			--btn-default-background-color: var(--color-action-secondary-inverted);
+			--btn-default-background-color: var(
+				--color-action-secondary-inverted
+			);
 			--btn-default-border-color: var(--color-action-secondary-default);
 			--btn-default-color: var(--color-action-secondary-default);
-			--btn-disabled-background-color: var(--color-action-secondary-inverted);
+			--btn-disabled-background-color: var(
+				--color-action-secondary-inverted
+			);
 			--btn-disabled-border-color: var(--color-action-secondary-disabled);
 			--btn-disabled-color: var(--color-action-secondary-disabled);
-			--btn-hover-background-color: var(--color-action-secondary-inverted);
+			--btn-hover-background-color: var(
+				--color-action-secondary-inverted
+			);
 			--btn-hover-border-color: var(--color-action-secondary-hover);
 			--btn-hover-color: var(--color-action-secondary-hover);
 		}
@@ -214,7 +242,9 @@
 			--btn-disabled-border-color: var(
 				--color-action-secondary-inverted-disabled
 			);
-			--btn-disabled-color: var(--color-action-secondary-inverted-disabled);
+			--btn-disabled-color: var(
+				--color-action-secondary-inverted-disabled
+			);
 			--btn-hover-background-color: var(
 				--color-action-secondary-inverted-hover
 			);
@@ -228,10 +258,14 @@
 			--btn-active-background-color: var(--color-action-neutral-inverted);
 			--btn-active-border-color: var(--color-action-neutral-active);
 			--btn-active-color: var(--color-action-neutral-active);
-			--btn-default-background-color: var(--color-action-neutral-inverted);
+			--btn-default-background-color: var(
+				--color-action-neutral-inverted
+			);
 			--btn-default-border-color: var(--color-action-neutral-default);
 			--btn-default-color: var(--color-action-neutral-default);
-			--btn-disabled-background-color: var(--color-action-neutral-inverted);
+			--btn-disabled-background-color: var(
+				--color-action-neutral-inverted
+			);
 			--btn-disabled-border-color: var(--color-action-neutral-disabled);
 			--btn-disabled-color: var(--color-action-neutral-disabled);
 			--btn-hover-background-color: var(--color-action-neutral-inverted);
@@ -247,7 +281,9 @@
 				--color-action-neutral-inverted-disabled
 			);
 			--btn-disabled-color: var(--color-action-neutral-inverted-disabled);
-			--btn-hover-background-color: var(--color-action-neutral-inverted-hover);
+			--btn-hover-background-color: var(
+				--color-action-neutral-inverted-hover
+			);
 			--btn-hover-border-color: var(--color-action-neutral-inverted);
 			--btn-hover-color: var(--color-action-neutral-inverted);
 		}
@@ -285,7 +321,9 @@
 			--btn-active-color: var(--color-action-primary-inverted);
 			--btn-default-color: var(--color-action-primary-inverted);
 			--btn-disabled-color: var(--color-action-primary-inverted-disabled);
-			--btn-hover-background-color: var(--color-action-primary-inverted-hover);
+			--btn-hover-background-color: var(
+				--color-action-primary-inverted-hover
+			);
 			--btn-hover-border-color: var(--color-action-primary-inverted);
 			--btn-hover-color: var(--color-action-primary-inverted);
 		}
@@ -293,7 +331,9 @@
 
 	&.btn-variant-secondary {
 		&:not(.btn-inverted) {
-			--btn-active-background-color: var(--color-action-secondary-inverted);
+			--btn-active-background-color: var(
+				--color-action-secondary-inverted
+			);
 			--btn-active-border-color: var(--color-action-secondary-active);
 			--btn-active-color: var(--color-action-secondary-active);
 			--btn-default-color: var(--color-action-secondary-default);
@@ -306,7 +346,9 @@
 			--btn-active-border-color: var(--color-action-secondary-inverted);
 			--btn-active-color: var(--color-action-secondary-inverted);
 			--btn-default-color: var(--color-action-secondary-inverted);
-			--btn-disabled-color: var(--color-action-secondary-inverted-disabled);
+			--btn-disabled-color: var(
+				--color-action-secondary-inverted-disabled
+			);
 			--btn-hover-background-color: var(
 				--color-action-secondary-inverted-hover
 			);
@@ -331,7 +373,9 @@
 			--btn-active-color: var(--color-action-neutral-inverted);
 			--btn-default-color: var(--color-action-neutral-inverted);
 			--btn-disabled-color: var(--color-action-neutral-inverted-disabled);
-			--btn-hover-background-color: var(--color-action-neutral-inverted-hover);
+			--btn-hover-background-color: var(
+				--color-action-neutral-inverted-hover
+			);
 			--btn-hover-border-color: var(--color-action-neutral-inverted);
 			--btn-hover-color: var(--color-action-neutral-inverted);
 		}
@@ -344,15 +388,18 @@
 	border-radius: $rounded-pill;
 
 	&.btn-variant-primary {
-		box-shadow: var(--elevation-tight-4) var(--color-action-primary-disabled);
+		box-shadow: var(--elevation-tight-4)
+			var(--color-action-primary-disabled);
 	}
 
 	&.btn-variant-secondary {
-		box-shadow: var(--elevation-tight-4) var(--color-action-secondary-disabled);
+		box-shadow: var(--elevation-tight-4)
+			var(--color-action-secondary-disabled);
 	}
 
 	&.btn-variant-neutral {
-		box-shadow: var(--elevation-tight-4) var(--color-action-neutral-disabled);
+		box-shadow: var(--elevation-tight-4)
+			var(--color-action-neutral-disabled);
 	}
 }
 

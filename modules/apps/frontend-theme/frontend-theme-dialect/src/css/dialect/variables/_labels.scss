@@ -1,1 +1,337 @@
 $label-border-radius: $border-radius-sm;
+
+// Label Variants
+
+$label-primary: (
+	border-color: var(--color-action-primary-default),
+	color: var(--color-action-primary-default),
+	hover: (
+		border-color: var(--color-action-primary-default),
+		color: var(--color-action-primary-hover),
+	),
+	focus: (
+		color: var(--color-action-primary-hover),
+	),
+	close: (
+		hover: (
+			color: var(--color-action-primary-hover),
+		),
+		focus: (
+			color: var(--color-action-primary-hover),
+		),
+	),
+);
+
+$label-secondary: (
+	border-color: var(--color-action-secondary-default),
+	color: var(--color-action-secondary-default),
+	hover: (
+		border-color: var(--color-action-secondary-default),
+		color: var(--color-action-secondary-hover),
+	),
+	focus: (
+		color: var(--color-action-secondary-hover),
+	),
+	close: (
+		hover: (
+			color: var(--color-action-secondary-hover),
+		),
+		focus: (
+			color: var(--color-action-secondary-hover),
+		),
+	),
+);
+
+$label-success: (
+	border-color: var(--color-state-success),
+	color: var(--color-state-success),
+	hover: (
+		border-color: var(--color-state-success),
+		color: var(--color-state-success),
+	),
+	focus: (
+		color: var(--color-state-success),
+	),
+	close: (
+		hover: (
+			color: var(--color-state-success),
+		),
+		focus: (
+			color: var(--color-state-success),
+		),
+	),
+);
+
+$label-info: (
+	border-color: var(--color-state-info),
+	color: var(--color-state-info),
+	hover: (
+		border-color: var(--color-state-info),
+		color: var(--color-state-info),
+	),
+	focus: (
+		color: var(--color-state-info),
+	),
+	close: (
+		hover: (
+			color: var(--color-state-info),
+		),
+		focus: (
+			color: var(--color-state-info),
+		),
+	),
+);
+
+$label-warning: (
+	border-color: var(--color-state-warning),
+	color: var(--color-state-warning),
+	hover: (
+		border-color: var(--color-state-warning),
+		color: var(--color-state-warning),
+	),
+	focus: (
+		color: var(--color-state-warning),
+	),
+	close: (
+		hover: (
+			color: var(--color-state-warning),
+		),
+		focus: (
+			color: var(--color-state-warning),
+		),
+	),
+);
+
+$label-danger: (
+	border-color: var(--color-state-error),
+	color: var(--color-state-error),
+	hover: (
+		border-color: var(--color-state-error),
+		color: var(--color-state-error),
+	),
+	focus: (
+		color: var(--color-state-error),
+	),
+	close: (
+		hover: (
+			color: var(--color-state-error),
+		),
+		focus: (
+			color: var(--color-state-error),
+		),
+	),
+);
+
+$label-light: (
+	background-color: var(--color-neutral-1),
+	border-color: var(--color-neutral-9),
+	color: var(--color-neutral-9),
+	hover: (
+		background-color: var(--color-neutral-1),
+		border-color: var(--color-neutral-9),
+		color: var(--color-neutral-9),
+	),
+	focus: (
+		color: var(--color-neutral-9),
+	),
+	close: (
+		hover: (
+			color: var(--color-neutral-7),
+		),
+		focus: (
+			color: var(--color-neutral-7),
+		),
+	),
+);
+
+$label-dark: (
+	background-color: var(--color-neutral-9),
+	border-color: var(--color-neutral-1),
+	color: var(--color-neutral-1),
+	hover: (
+		background-color: var(--color-neutral-9),
+		border-color: var(--color-neutral-1),
+		color: var(--color-neutral-1),
+	),
+	focus: (
+		color: var(--color-neutral-1),
+	),
+	close: (
+		hover: (
+			color: var(--color-neutral-0),
+		),
+		focus: (
+			color: var(--color-neutral-0),
+		),
+	),
+);
+
+// Label Inverse
+
+$label-inverse-primary: (
+	background-color: var(--color-action-primary-default),
+	border-color: var(--color-action-primary-default),
+	color: var(--color-action-primary-inverted),
+	hover: (
+		background-color: var(--color-action-primary-hover),
+		border-color: var(--color-action-primary-hover),
+		color: var(--color-action-primary-inverted),
+	),
+	link: (
+		hover: (
+			color: var(--color-action-primary-hover-lighten),
+		),
+	),
+	close: (
+		hover: (
+			color: var(--color-action-primary-hover-lighten),
+		),
+	),
+);
+
+$label-inverse-secondary: (
+	background-color: var(--color-action-secondary-default),
+	border-color: var(--color-action-secondary-default),
+	color: var(--color-action-secondary-inverted),
+	hover: (
+		background-color: var(--color-action-secondary-hover),
+		border-color: var(--color-action-secondary-hover),
+		color: var(--color-action-secondary-inverted),
+	),
+	link: (
+		hover: (
+			color: var(--color-action-secondary-hover-lighten),
+		),
+	),
+	close: (
+		hover: (
+			color: var(--color-action-secondary-hover-lighten),
+		),
+	),
+);
+
+$label-inverse-success: (
+	background-color: var(--color-state-success),
+	border-color: var(--color-state-success),
+	color: var(--color-neutral-10),
+	hover: (
+		background-color: var(--color-state-success),
+		border-color: var(--color-state-success),
+		color: var(--color-neutral-10),
+	),
+	link: (
+		hover: (
+			color: var(--color-state-success-lighten),
+		),
+	),
+	close: (
+		hover: (
+			color: var(--color-state-success-lighten),
+		),
+	),
+);
+
+$label-inverse-info: (
+	background-color: var(--color-state-info),
+	border-color: var(--color-state-info),
+	color: var(--color-neutral-10),
+	hover: (
+		background-color: var(--color-state-info),
+		border-color: var(--color-state-info),
+		color: var(--color-neutral-10),
+	),
+	link: (
+		hover: (
+			color: var(--color-state-info-lighten),
+		),
+	),
+	close: (
+		hover: (
+			color: var(--color-state-info-lighten),
+		),
+	),
+);
+
+$label-inverse-warning: (
+	background-color: var(--color-state-warning),
+	border-color: var(--color-state-warning),
+	color: var(--color-neutral-10),
+	hover: (
+		background-color: var(--color-state-warning),
+		border-color: var(--color-state-warning),
+		color: var(--color-neutral-10),
+	),
+	link: (
+		hover: (
+			color: var(--color-state-warning-lighten),
+		),
+	),
+	close: (
+		hover: (
+			color: var(--color-state-warning-lighten),
+		),
+	),
+);
+
+$label-inverse-danger: (
+	background-color: var(--color-state-error),
+	border-color: var(--color-state-error),
+	color: var(--color-neutral-10),
+	hover: (
+		background-color: var(--color-state-error),
+		border-color: var(--color-state-error),
+		color: var(--color-neutral-10),
+	),
+	link: (
+		hover: (
+			color: var(--color-state-error-lighten),
+		),
+	),
+	close: (
+		hover: (
+			color: var(--color-state-error-lighten),
+		),
+	),
+);
+
+$label-inverse-light: (
+	background-color: var(--color-neutral-9),
+	border-color: var(--color-neutral-9),
+	color: var(--color-neutral-1),
+	hover: (
+		background-color: var(--color-neutral-9),
+		border-color: var(--color-neutral-9),
+		color: var(--color-neutral-1),
+	),
+	link: (
+		hover: (
+			color: var(--color-neutral-3),
+		),
+	),
+	close: (
+		hover: (
+			color: var(--color-neutral-3),
+		),
+	),
+);
+
+$label-inverse-dark: (
+	background-color: var(--color-neutral-1),
+	border-color: var(--color-neutral-1),
+	color: var(--color-neutral-9),
+	hover: (
+		background-color: var(--color-neutral-1),
+		border-color: var(--color-neutral-1),
+		color: var(--color-neutral-9),
+	),
+	link: (
+		hover: (
+			color: var(--color-neutral-7),
+		),
+	),
+	close: (
+		hover: (
+			color: var(--color-neutral-7),
+		),
+	),
+);

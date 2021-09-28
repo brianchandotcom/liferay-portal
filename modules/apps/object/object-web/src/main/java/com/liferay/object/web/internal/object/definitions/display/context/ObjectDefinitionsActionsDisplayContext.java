@@ -16,10 +16,17 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.object.action.executor.ObjectActionExecutor;
+import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
+import com.liferay.object.action.trigger.ObjectActionTrigger;
+import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -37,17 +44,54 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Marco Leo
  */
-public class ObjectDefinitionsActionssDisplayContext {
+public class ObjectDefinitionsActionsDisplayContext {
 
-	public ObjectDefinitionsActionssDisplayContext(
+	public ObjectDefinitionsActionsDisplayContext(
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<ObjectDefinition>
-			objectDefinitionModelResourcePermission) {
+			objectDefinitionModelResourcePermission,
+		ObjectActionExecutorRegistry objectActionExecutorRegistry,
+		ObjectActionTriggerRegistry objectActionTriggerRegistry,
+		JSONFactory jsonFactory) {
 
-		_objectDefinitionModelResourcePermission =
-			objectDefinitionModelResourcePermission;
+		_objectDefinitionModelResourcePermission =			objectDefinitionModelResourcePermission;
+
+		_objectActionExecutorRegistry = objectActionExecutorRegistry;
+		_objectActionTriggerRegistry = objectActionTriggerRegistry;
+		_jsonFactory = jsonFactory;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
+	}
+
+	public JSONArray getObjectActionTriggerJSONArray() {
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
+		List<ObjectActionTrigger> objectActionTriggers =
+			_objectActionTriggerRegistry.getObjectActionTriggers(
+				objectDefinition.getClassName());
+
+		JSONArray objectActionTriggersJSONArray =
+			_jsonFactory.createJSONArray();
+
+		objectActionTriggers.forEach(
+			objectActionTrigger -> objectActionTriggersJSONArray.put(
+				JSONUtil.put("key", objectActionTrigger.getKey())));
+
+		return objectActionTriggersJSONArray;
+	}
+
+	public JSONArray getObjectActionExecutorJSONArray() {
+		List<ObjectActionExecutor> objectActionExecutors =
+			_objectActionExecutorRegistry.getObjectActionExecutors();
+
+		JSONArray objectActionExecutorJSONArray =
+			_jsonFactory.createJSONArray();
+
+		objectActionExecutors.forEach(
+			objectActionExecutor -> objectActionExecutorJSONArray.put(
+				JSONUtil.put("key", objectActionExecutor.getKey())));
+
+		return objectActionExecutorJSONArray;
 	}
 
 	public String getAPIURL() {
@@ -110,6 +154,14 @@ public class ObjectDefinitionsActionssDisplayContext {
 		return objectDefinition.getObjectDefinitionId();
 	}
 
+	public ObjectDefinition getObjectDefinition() {
+		HttpServletRequest httpServletRequest =
+			_objectRequestHelper.getRequest();
+
+		return (ObjectDefinition)httpServletRequest.getAttribute(
+			ObjectWebKeys.OBJECT_DEFINITION);
+	}
+
 	public PortletURL getPortletURL() throws PortletException {
 		return PortletURLUtil.clone(
 			PortletURLUtil.getCurrent(
@@ -127,5 +179,8 @@ public class ObjectDefinitionsActionssDisplayContext {
 	private final ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
 	private final ObjectRequestHelper _objectRequestHelper;
+	private final ObjectActionTriggerRegistry _objectActionTriggerRegistry;
+	private final JSONFactory _jsonFactory;
+	private final ObjectActionExecutorRegistry _objectActionExecutorRegistry;
 
 }

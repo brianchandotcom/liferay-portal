@@ -14,33 +14,100 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Michael Hashimoto
  */
 public abstract class BaseWorkspace implements Workspace {
 
 	@Override
+	public WorkspaceGitRepository getPrimaryWorkspaceGitRepository() {
+		return _primaryWorkspaceGitRepository;
+	}
+
+	@Override
+	public List<WorkspaceGitRepository> getWorkspaceGitRepositories() {
+		if (_workspaceGitRepositories != null) {
+			return new ArrayList<>(_workspaceGitRepositories.values());
+		}
+
+		_workspaceGitRepositories = new HashMap<>();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(
+				_workspaceRepositoryDirNames)) {
+
+			return new ArrayList<>(_workspaceGitRepositories.values());
+		}
+
+		for (String workspaceRepositoryDirName :
+				_workspaceRepositoryDirNames.split(",")) {
+
+			_workspaceGitRepositories.put(
+				workspaceRepositoryDirName,
+				GitRepositoryFactory.getWorkspaceGitRepository(
+					workspaceRepositoryDirName));
+		}
+
+		return new ArrayList<>(_workspaceGitRepositories.values());
+	}
+
+	@Override
 	public void setUp() {
-		setUpWorkspaceGitRepositories();
+		for (WorkspaceGitRepository workspaceGitRepository :
+				getWorkspaceGitRepositories()) {
 
-		setWorkspaceDefaultProperties();
+			workspaceGitRepository.setUp();
 
-		writeWorkspaceGitRepositoryPropertiesFiles();
+			workspaceGitRepository.writePropertiesFiles();
+		}
 	}
 
 	@Override
 	public void tearDown() {
-		tearDownWorkspaceGitRepositories();
+		for (WorkspaceGitRepository workspaceGitRepository :
+				getWorkspaceGitRepositories()) {
+
+			workspaceGitRepository.tearDown();
+		}
 	}
 
-	protected void setUpWorkspaceGitRepositories() {
+	protected BaseWorkspace(
+		String primaryRepositoryName, String upstreamBranchName) {
+
+		_primaryWorkspaceGitRepository =
+			GitRepositoryFactory.getWorkspaceGitRepository(
+				primaryRepositoryName, upstreamBranchName);
+
+		try {
+			_workspaceRepositoryDirNames = JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getBuildProperties(),
+				"workspace.repository.dir.names",
+				workspaceGitRepository.getName(),
+				workspaceGitRepository.getUpstreamBranchName());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
-	protected abstract void setWorkspaceDefaultProperties();
+	protected WorkspaceGitRepository getWorkspaceGitRepository(
+		String repositoryDirName) {
 
-	protected void tearDownWorkspaceGitRepositories() {
+		if (_workspaceGitRepositories == null) {
+			getWorkspaceGitRepositories();
+		}
+
+		return _workspaceGitRepositories.get(repositoryDirName);
 	}
 
-	protected abstract void writeWorkspaceGitRepositoryPropertiesFiles();
+	private final WorkspaceGitRepository _primaryWorkspaceGitRepository;
+	private Map<String, WorkspaceGitRepository> _workspaceGitRepositories;
+	private final String _workspaceRepositoryDirNames;
 
 }

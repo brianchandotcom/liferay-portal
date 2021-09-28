@@ -14,10 +14,16 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.List;
+
 /**
  * @author Michael Hashimoto
  */
 public interface Workspace {
+
+	public WorkspaceGitRepository getPrimaryWorkspaceGitRepository();
+
+	public List<WorkspaceGitRepository> getWorkspaceGitRepositories();
 
 	public void setUp();
 

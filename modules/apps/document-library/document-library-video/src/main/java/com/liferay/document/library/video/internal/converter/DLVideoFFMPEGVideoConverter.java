@@ -61,12 +61,12 @@ public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 	public InputStream generateVideoPreview(File file, String containerType)
 		throws Exception {
 
+		File destinationFile = FileUtil.createTempFile(containerType);
+
 		Properties videoProperties = PropsUtil.getProperties(
 			PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO, false);
 
-		File destinationFile = FileUtil.createTempFile(containerType);
-
-		return _runFFMPEGCommand(
+		_runFFMPEGCommand(
 			Arrays.asList(
 				"ffmpeg", "-y", "-i", file.getAbsolutePath(), "-b:v",
 				String.valueOf(
@@ -79,8 +79,9 @@ public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 				"-r",
 				String.valueOf(
 					_getVideoFrameRate(videoProperties, containerType)),
-				destinationFile.getAbsolutePath()),
-			destinationFile);
+				destinationFile.getAbsolutePath()));
+
+		return new FileInputStream(destinationFile);
 	}
 
 	@Override
@@ -90,15 +91,16 @@ public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 		try {
 			File destinationFile = FileUtil.createTempFile(format);
 
-			return _runFFMPEGCommand(
+			_runFFMPEGCommand(
 				Arrays.asList(
 					"ffmpeg", "-y", "-i", file.getAbsolutePath(), "-vf",
 					String.format(
 						"thumbnail,scale=%d:%d/dar",
 						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH,
 						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH),
-					"-frames:v", "1", destinationFile.getAbsolutePath()),
-				destinationFile);
+					"-frames:v", "1", destinationFile.getAbsolutePath()));
+
+			return new FileInputStream(destinationFile);
 		}
 		catch (Exception exception) {
 			String message = exception.getMessage();
@@ -191,8 +193,7 @@ public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 		return numerator / denominator;
 	}
 
-	private InputStream _runFFMPEGCommand(
-			List<String> ffmpegCommand, File destinationFile)
+	private void _runFFMPEGCommand(List<String> ffmpegCommand)
 		throws Exception {
 
 		ProcessBuilder processBuilder = new ProcessBuilder(ffmpegCommand);
@@ -216,7 +217,7 @@ public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 						StringUtil.read(process.getErrorStream()));
 				}
 
-				return new FileInputStream(destinationFile);
+				return;
 			}
 			catch (InterruptedException interruptedException) {
 			}

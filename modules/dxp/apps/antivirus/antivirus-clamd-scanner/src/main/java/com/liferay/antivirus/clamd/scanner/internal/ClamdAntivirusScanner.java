@@ -17,14 +17,18 @@ package com.liferay.antivirus.clamd.scanner.internal;
 import com.liferay.antivirus.clamd.scanner.internal.configuration.ClamdAntivirusScannerConfiguration;
 import com.liferay.document.library.kernel.antivirus.AntivirusScanner;
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
+import com.liferay.document.library.kernel.antivirus.AntivirusVirusFoundException;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import fi.solita.clamav.ClamAVClient;
+import fi.solita.clamav.ClamAVSizeLimitException;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.Map;
 
@@ -50,11 +54,17 @@ public class ClamdAntivirusScanner implements AntivirusScanner {
 	@Override
 	public void scan(byte[] bytes) throws AntivirusScannerException {
 		try {
-			if (!ClamAVClient.isCleanReply(_clamdClient.scan(bytes))) {
-				throw new AntivirusScannerException(
-					"Virus detected in byte array",
-					AntivirusScannerException.VIRUS_DETECTED);
+			byte[] reply = _clamdClient.scan(bytes);
+
+			if (!ClamAVClient.isCleanReply(reply)) {
+				throw new AntivirusVirusFoundException(
+					"Virus detected in byte array", _extractVirusName(reply));
 			}
+		}
+		catch (ClamAVSizeLimitException clamAVSizeLimitException) {
+			throw new AntivirusScannerException(
+				AntivirusScannerException.SIZE_LIMIT_EXCEEDED,
+				clamAVSizeLimitException);
 		}
 		catch (IOException ioException) {
 			throw new AntivirusScannerException(
@@ -65,11 +75,39 @@ public class ClamdAntivirusScanner implements AntivirusScanner {
 	@Override
 	public void scan(File file) throws AntivirusScannerException {
 		try (InputStream inputStream = new FileInputStream(file)) {
-			if (!ClamAVClient.isCleanReply(_clamdClient.scan(inputStream))) {
-				throw new AntivirusScannerException(
+			byte[] reply = _clamdClient.scan(inputStream);
+
+			if (!ClamAVClient.isCleanReply(reply)) {
+				throw new AntivirusVirusFoundException(
 					"Virus detected in " + file.getAbsolutePath(),
-					AntivirusScannerException.VIRUS_DETECTED);
+					_extractVirusName(reply));
 			}
+		}
+		catch (ClamAVSizeLimitException clamAVSizeLimitException) {
+			throw new AntivirusScannerException(
+				AntivirusScannerException.SIZE_LIMIT_EXCEEDED,
+				clamAVSizeLimitException);
+		}
+		catch (IOException ioException) {
+			throw new AntivirusScannerException(
+				AntivirusScannerException.PROCESS_FAILURE, ioException);
+		}
+	}
+
+	@Override
+	public void scan(InputStream inputStream) throws AntivirusScannerException {
+		try {
+			byte[] reply = _clamdClient.scan(inputStream);
+
+			if (!ClamAVClient.isCleanReply(reply)) {
+				throw new AntivirusVirusFoundException(
+					"Virus detected in stream", _extractVirusName(reply));
+			}
+		}
+		catch (ClamAVSizeLimitException clamAVSizeLimitException) {
+			throw new AntivirusScannerException(
+				AntivirusScannerException.SIZE_LIMIT_EXCEEDED,
+				clamAVSizeLimitException);
 		}
 		catch (IOException ioException) {
 			throw new AntivirusScannerException(
@@ -87,6 +125,13 @@ public class ClamdAntivirusScanner implements AntivirusScanner {
 			clamdAntivirusScannerConfiguration.hostname(),
 			clamdAntivirusScannerConfiguration.port(),
 			clamdAntivirusScannerConfiguration.timeout());
+	}
+
+	private String _extractVirusName(byte[] result) {
+		String reply = new String(result, StandardCharsets.US_ASCII);
+
+		return reply.substring(
+			"stream: ".length(), reply.length() - (" FOUND".length() + 1));
 	}
 
 	private ClamAVClient _clamdClient;

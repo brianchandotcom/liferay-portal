@@ -14,24 +14,21 @@
 
 package com.liferay.document.library.kernel.antivirus;
 
-import java.io.File;
-import java.io.InputStream;
-
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
- * @author Michael C. Han
  * @author Raymond Augé
  */
-@ProviderType
-public interface AntivirusScanner {
+public class AntivirusVirusFoundException extends AntivirusScannerException {
 
-	public boolean isActive();
+	public AntivirusVirusFoundException(String msg, String virusName) {
+		super(msg, AntivirusScannerException.VIRUS_DETECTED);
 
-	public void scan(byte[] bytes) throws AntivirusScannerException;
+		_virusName = virusName;
+	}
 
-	public void scan(File file) throws AntivirusScannerException;
+	public String getVirusName() {
+		return _virusName;
+	}
 
-	public void scan(InputStream inputStream) throws AntivirusScannerException;
+	private final String _virusName;
 
 }

@@ -401,6 +401,18 @@
 			<property name="description" value="Check the order of `instanceof` calls." />
 			<message key="instanceof.order" value="''{0}'' should come before ''{1}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.ItemBuilderCheck">
+			<property name="category" value="Miscellaneous" />
+			<property name="checkInline" value="true" />
+			<property name="description" value="Checks that `DropdownItemBuilder`, `LabelItemBuilder` or `NavigationItemBuilder` is used when possible." />
+			<property name="enforceBuilderNames" value="" />
+			<message key="builder.include" value="Include method call ''{0}'' ({1}) in ''{2}'' ({3})" />
+			<message key="builder.inline.1" value="Inline variable definition ''{0}'' ({1}) inside ''{2}'' ({3})" />
+			<message key="builder.inline.2" value="Inline variable definition ''{0}'' ({1}) and dependent statements ({2}) inside ''{3}'' ({4})" />
+			<message key="builder.use" value="Use ''{0}'' ({1}, {2})" />
+			<message key="builder.use.instead" value="Use ''{0}'' instead of new instance of ''{1}''" />
+			<message key="null.value.incorrect" value="Null values are not allowed in ''{0}''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ItemListBuilderCheck">
 			<property name="category" value="Miscellaneous" />
 			<property name="checkInline" value="true" />

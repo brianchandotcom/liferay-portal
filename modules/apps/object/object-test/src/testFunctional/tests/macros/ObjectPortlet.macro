@@ -12,6 +12,15 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_VALUE");
 	}
 
+	macro assertMenuItemColumn {
+		AssertElementPresent(locator1 = "ObjectPortlet#CHECK_UNCHECK_DROPDOWN_ITEM",
+			key_dropdowntItem = "${dropdowntItem}"
+		);
+
+
+
+	}
+
 	macro changePagination {
 		Click(locator1 = "ObjectPortlet#PAGINATION_ITEMS_PER_PAGE_SELECT");
 
@@ -38,6 +47,24 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
 
 		Click(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+	}
+
+	macro searchColumn {
+		Click(locator1 = "ObjectPortlet#ARROW_DOWN_ICON");
+
+		AssertElementPresent(locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD");
+
+		Type(
+			locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD",
+			value1 = "${columnName}");
+
+		Click(
+			locator1 = "ObjectPortlet#COLUMN_ICON_SEARCH");
+
+		
+
+
+
 	}
 
 	macro searchEntry {

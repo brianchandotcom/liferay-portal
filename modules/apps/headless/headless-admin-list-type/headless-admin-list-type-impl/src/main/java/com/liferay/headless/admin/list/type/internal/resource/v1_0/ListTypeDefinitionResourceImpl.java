@@ -18,6 +18,8 @@ import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.internal.dto.v1_0.util.ListTypeEntryUtil;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
+import com.liferay.list.type.constants.ListTypeActionKeys;
+import com.liferay.list.type.constants.ListTypeConstants;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -30,8 +32,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
-
-import java.util.Collections;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,7 +70,19 @@ public class ListTypeDefinitionResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			Collections.emptyMap(),
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					ListTypeActionKeys.ADD_LIST_TYPE_DEFINITION,
+					"postListTypeDefinition", ListTypeConstants.RESOURCE_NAME,
+					contextCompany.getCompanyId())
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getListTypeDefinitionsPage",
+					ListTypeConstants.RESOURCE_NAME,
+					contextCompany.getCompanyId())
+			).build(),
 			booleanQuery -> {
 			},
 			null,
@@ -137,6 +149,22 @@ public class ListTypeDefinitionResourceImpl
 							serviceBuilderListTypeDefinition.
 								getListTypeDefinitionId());
 					}
+				).put(
+					"get",
+					addAction(
+						ActionKeys.VIEW, "getListTypeDefinition",
+						com.liferay.list.type.model.ListTypeDefinition.class.
+							getName(),
+						serviceBuilderListTypeDefinition.
+							getListTypeDefinitionId())
+				).put(
+					"update",
+					addAction(
+						ActionKeys.UPDATE, "putListTypeDefinition",
+						com.liferay.list.type.model.ListTypeDefinition.class.
+							getName(),
+						serviceBuilderListTypeDefinition.
+							getListTypeDefinitionId())
 				).build();
 				dateCreated = serviceBuilderListTypeDefinition.getCreateDate();
 				dateModified =

@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -162,7 +163,8 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 
 		builder.withGroupId(1L);
 
-		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse;
+		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse =
+			null;
 
 		// LRQA-66927
 
@@ -171,15 +173,16 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 				builder.build());
 		}
 		catch (NullPointerException nullPointerException) {
-			_log.error(nullPointerException.getMessage());
-
 			String ddmFormEvaluatorString = null;
 
 			if (_ddmFormEvaluator != null) {
 				ddmFormEvaluatorString = _ddmFormEvaluator.toString();
 			}
 
-			_log.error("DDM form evaluator: " + ddmFormEvaluatorString);
+			StringBundler sb = new StringBundler();
+
+			sb.append("DDM form evaluator: ");
+			sb.append(ddmFormEvaluatorString);
 
 			List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
 
@@ -188,11 +191,11 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 					continue;
 				}
 
-				_log.error(
-					"DDM form rule condition: " + ddmFormRule.getCondition());
+				sb.append(", DDM form rule condition: ");
+				sb.append(ddmFormRule.getCondition());
 			}
 
-			return;
+			_log.error(sb.toString(), nullPointerException);
 		}
 
 		Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>

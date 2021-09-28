@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {LiferayService} from '~/shared/services/liferay';
 import ProductComparison from '../components/product-comparison';
 
-export const App = () => {
+const QuoteComparison = () => {
 	const [quotes, setQuotes] = useState([]);
 
 	useEffect(() => {
@@ -20,3 +20,5 @@ export const App = () => {
 		</div>
 	);
 };
+
+export default QuoteComparison;

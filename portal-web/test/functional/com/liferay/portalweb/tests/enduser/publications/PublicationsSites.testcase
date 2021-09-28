@@ -77,6 +77,8 @@ definition {
 		Navigator.openSitePage(
 			pageName = "Child Site Page",
 			siteName = "Child Site Name");
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 	}
 
 	@priority = "4"
@@ -111,6 +113,8 @@ definition {
 		Navigator.openSitePage(
 			pageName = "Site Page",
 			siteName = "Site Name");
+
+		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 	}
 
 }

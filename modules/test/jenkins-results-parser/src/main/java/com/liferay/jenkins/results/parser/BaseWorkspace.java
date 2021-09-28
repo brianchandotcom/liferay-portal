@@ -38,28 +38,10 @@ public abstract class BaseWorkspace implements Workspace {
 	}
 
 	@Override
-	public void setBuildData(BuildData buildData) {
-		_buildData = buildData;
-	}
-
-	@Override
-	public void setJob(Job job) {
-		_job = job;
-	}
-
-	@Override
 	public void setUp() {
 		setUpWorkspaceGitRepositories();
 
 		setWorkspaceDefaultProperties();
-
-		if (_buildData != null) {
-			setWorkspaceBuildDataProperties(_buildData);
-		}
-
-		if (_job != null) {
-			setWorkspaceJobProperties(_job);
-		}
 
 		writeWorkspaceGitRepositoryPropertiesFiles();
 	}
@@ -79,12 +61,7 @@ public abstract class BaseWorkspace implements Workspace {
 		setUpJenkinsWorkspaceGitRepository();
 	}
 
-	protected abstract void setWorkspaceBuildDataProperties(
-		BuildData buildData);
-
 	protected abstract void setWorkspaceDefaultProperties();
-
-	protected abstract void setWorkspaceJobProperties(Job job);
 
 	protected void tearDownJenkinsWorkspaceGitRepository() {
 		if (_jenkinsWorkspaceGitRepository != null) {
@@ -98,8 +75,6 @@ public abstract class BaseWorkspace implements Workspace {
 
 	protected abstract void writeWorkspaceGitRepositoryPropertiesFiles();
 
-	private BuildData _buildData;
 	private WorkspaceGitRepository _jenkinsWorkspaceGitRepository;
-	private Job _job;
 
 }

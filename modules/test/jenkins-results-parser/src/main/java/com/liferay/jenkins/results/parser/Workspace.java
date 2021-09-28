@@ -23,10 +23,6 @@ public interface Workspace {
 
 	public WorkspaceGitRepository getJenkinsWorkspaceGitRepository();
 
-	public void setBuildData(BuildData buildData);
-
-	public void setJob(Job job);
-
 	public void setUp();
 
 	public void tearDown();

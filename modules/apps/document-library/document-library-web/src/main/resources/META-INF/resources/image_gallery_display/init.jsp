@@ -47,6 +47,10 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			TrashCapability trashCapability = rootFolder.getRepositoryCapability(TrashCapability.class);
 
 			rootFolderInTrash = trashCapability.isInTrash(rootFolder);
+
+			if (rootFolderInTrash) {
+				rootFolderName = trashHelper.getOriginalTitle(rootFolder.getName());
+			}
 		}
 	}
 	catch (NoSuchFolderException nsfe) {

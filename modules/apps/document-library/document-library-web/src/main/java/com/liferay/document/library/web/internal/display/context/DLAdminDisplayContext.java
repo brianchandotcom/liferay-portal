@@ -79,6 +79,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.trash.TrashHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,12 +98,13 @@ public class DLAdminDisplayContext {
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		VersioningStrategy versioningStrategy) {
+		VersioningStrategy versioningStrategy, TrashHelper trashHelper) {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_versioningStrategy = versioningStrategy;
+		_trashHelper = trashHelper;
 
 		_dlRequestHelper = new DLRequestHelper(_httpServletRequest);
 
@@ -398,6 +400,11 @@ public class DLAdminDisplayContext {
 					rootFolder.getRepositoryCapability(TrashCapability.class);
 
 				_rootFolderInTrash = trashCapability.isInTrash(rootFolder);
+
+				if (_rootFolderInTrash) {
+					_rootFolderName = _trashHelper.getOriginalTitle(
+						rootFolder.getName());
+				}
 			}
 		}
 		catch (NoSuchFolderException noSuchFolderException) {
@@ -805,7 +812,6 @@ public class DLAdminDisplayContext {
 	private Folder _folder;
 	private long _folderId;
 	private final HttpServletRequest _httpServletRequest;
-	private boolean _rootFolderInTrash;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _navigation;
@@ -815,10 +821,12 @@ public class DLAdminDisplayContext {
 	private final PortalPreferences _portalPreferences;
 	private Long _repositoryId;
 	private long _rootFolderId;
+	private boolean _rootFolderInTrash;
 	private String _rootFolderName;
 	private boolean _rootFolderNotFound;
 	private SearchContainer<RepositoryEntry> _searchContainer;
 	private final ThemeDisplay _themeDisplay;
+	private final TrashHelper _trashHelper;
 	private final VersioningStrategy _versioningStrategy;
 
 }

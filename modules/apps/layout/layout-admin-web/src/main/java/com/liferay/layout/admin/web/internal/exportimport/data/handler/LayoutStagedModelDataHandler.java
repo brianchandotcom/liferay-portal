@@ -2782,7 +2782,11 @@ public class LayoutStagedModelDataHandler
 			typeSettingsUnicodeProperties.setProperty(
 				"collectionPK", String.valueOf(assetListEntryId));
 
-			layout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+			importedLayout = _layoutLocalService.getLayout(
+				importedLayout.getPlid());
+
+			importedLayout.setTypeSettingsProperties(
+				typeSettingsUnicodeProperties);
 
 			importedLayout = _layoutLocalService.updateLayout(importedLayout);
 		}

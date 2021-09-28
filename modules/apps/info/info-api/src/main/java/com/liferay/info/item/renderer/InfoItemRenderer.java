@@ -31,6 +31,10 @@ public interface InfoItemRenderer<T> extends Keyed {
 		return LanguageUtil.get(locale, getKey());
 	}
 
+	public default boolean isAvailable() {
+		return true;
+	}
+
 	public void render(
 		T t, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse);

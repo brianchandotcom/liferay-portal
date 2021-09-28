@@ -664,12 +664,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9022 | Test Summary: Search an Individual's Activities List"
 	@priority = "4"
 	test SearchIndividualsActivitiesList {
-		task ("Connect DXP to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
 		task ("Create a Document And Media") {
 			ACUtils.createDMAndAddToPage();
+		}
+
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Add a new user and sync the Contact Data") {
@@ -717,9 +717,9 @@ definition {
 
 			ACUtils.searchBar(searchItem = "pageViewed");
 
-			ACIndividualsDashboard.viewTimelineItem(itemName = "pageViewed");
+			ACIndividualsDashboard.viewTimelineItem(activityNameList = "pageViewed");
 
-			ACIndividualsDashboard.viewTimelineItemNotPresent(itemName = "documentPreviewed");
+			ACIndividualsDashboard.viewTimelineItemNotPresent(activityNameList = "documentPreviewed");
 		}
 	}
 
@@ -795,6 +795,7 @@ definition {
 			ACInterests.viewInterest(
 				interestTopic = "sports",
 				knownIndividuals = "true");
+
 			ACInterests.viewInterestNotPresent(interestTopic = "movies");
 		}
 	}

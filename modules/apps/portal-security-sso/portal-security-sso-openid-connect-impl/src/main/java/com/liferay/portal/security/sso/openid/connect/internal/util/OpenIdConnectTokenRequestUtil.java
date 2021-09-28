@@ -175,7 +175,9 @@ public class OpenIdConnectTokenRequestUtil {
 		}
 		catch (BadJOSEException | JOSEException exception) {
 			throw new OpenIdConnectServiceException.TokenException(
-				"Unable to validate tokens: " + exception.getMessage(),
+				StringBundler.concat(
+					"Unable to validate tokens for client \"", clientID, "\": ",
+					exception.getMessage()),
 				exception);
 		}
 		catch (MalformedURLException malformedURLException) {

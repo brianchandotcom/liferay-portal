@@ -22,33 +22,25 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-
-import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.mockito.Matchers;
-
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Rodrigo Paulino
  */
-@PrepareForTest(LanguageUtil.class)
 @RunWith(PowerMockRunner.class)
 public class CheckboxDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
 		_setUpJSONFactoryUtil();
-		_setUpLanguageUtil();
 	}
 
 	@Test
@@ -58,13 +50,13 @@ public class CheckboxDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		JSONObject processedJSONObject =
 			_checkboxDDMFormFieldTypeReportProcessor.process(
 				_mockDDMFormFieldValue("true"),
-				JSONUtil.put("values", JSONUtil.put("True", 1)), 0,
+				JSONUtil.put("values", JSONUtil.put("true", 1)), 0,
 				DDMFormInstanceReportConstants.EVENT_DELETE_RECORD_VERSION);
 
 		JSONObject valuesJSONObject = processedJSONObject.getJSONObject(
 			"values");
 
-		Assert.assertEquals(0, valuesJSONObject.getLong("True"));
+		Assert.assertEquals(0, valuesJSONObject.getLong("true"));
 	}
 
 	@Test
@@ -74,13 +66,13 @@ public class CheckboxDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		JSONObject processedJSONObject =
 			_checkboxDDMFormFieldTypeReportProcessor.process(
 				_mockDDMFormFieldValue("true"),
-				JSONUtil.put("values", JSONUtil.put("True", 1)), 0,
+				JSONUtil.put("values", JSONUtil.put("true", 1)), 0,
 				DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
 
 		JSONObject valuesJSONObject = processedJSONObject.getJSONObject(
 			"values");
 
-		Assert.assertEquals(2, valuesJSONObject.getLong("True"));
+		Assert.assertEquals(2, valuesJSONObject.getLong("true"));
 	}
 
 	@Test
@@ -100,7 +92,7 @@ public class CheckboxDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		JSONObject valuesJSONObject = processedJSONObject.getJSONObject(
 			"values");
 
-		Assert.assertEquals(1, valuesJSONObject.getLong("False"));
+		Assert.assertEquals(1, valuesJSONObject.getLong("false"));
 	}
 
 	@Test
@@ -116,7 +108,7 @@ public class CheckboxDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		JSONObject valuesJSONObject = processedJSONObject.getJSONObject(
 			"values");
 
-		Assert.assertEquals(1, valuesJSONObject.getLong("True"));
+		Assert.assertEquals(1, valuesJSONObject.getLong("true"));
 	}
 
 	private DDMFormFieldValue _mockDDMFormFieldValue(String value) {
@@ -152,22 +144,6 @@ public class CheckboxDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-	}
-
-	private void _setUpLanguageUtil() {
-		mockStatic(LanguageUtil.class);
-
-		when(
-			LanguageUtil.get(Matchers.any(Locale.class), Matchers.eq("false"))
-		).thenReturn(
-			"False"
-		);
-
-		when(
-			LanguageUtil.get(Matchers.any(Locale.class), Matchers.eq("true"))
-		).thenReturn(
-			"True"
-		);
 	}
 
 	private final CheckboxDDMFormFieldTypeReportProcessor

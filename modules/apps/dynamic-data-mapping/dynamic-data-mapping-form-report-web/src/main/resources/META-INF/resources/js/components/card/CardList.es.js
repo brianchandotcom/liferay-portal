@@ -70,7 +70,6 @@ const chartFactory = ({
 		}
 
 		case 'object-relationship':
-		case 'checkbox':
 		case 'radio':
 		case 'select': {
 			return (
@@ -80,7 +79,23 @@ const chartFactory = ({
 				/>
 			);
 		}
+		case 'checkbox': {
+			const newValues = {};
+			for (const [key, value] of Object.entries(values)) {
+				const newKey =
+					key === 'true'
+						? Liferay.Language.get('true')
+						: Liferay.Language.get('false');
+				newValues[newKey] = value;
+			}
 
+			return (
+				<PieChart
+					data={toDataArray(options, newValues)}
+					totalEntries={sumTotalValues}
+				/>
+			);
+		}
 		case 'address':
 		case 'city':
 		case 'color':

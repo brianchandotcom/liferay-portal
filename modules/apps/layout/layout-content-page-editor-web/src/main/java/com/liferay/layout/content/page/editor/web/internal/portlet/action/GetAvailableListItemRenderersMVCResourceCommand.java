@@ -91,6 +91,10 @@ public class GetAvailableListItemRenderersMVCResourceCommand
 					infoItemTemplatedRenderer.getInfoItemRendererTemplates(
 						itemType, itemSubtype, themeDisplay.getLocale());
 
+				if (infoItemRendererTemplates.isEmpty()) {
+					continue;
+				}
+
 				Collections.sort(
 					infoItemRendererTemplates,
 					Comparator.comparing(InfoItemRendererTemplate::getLabel));

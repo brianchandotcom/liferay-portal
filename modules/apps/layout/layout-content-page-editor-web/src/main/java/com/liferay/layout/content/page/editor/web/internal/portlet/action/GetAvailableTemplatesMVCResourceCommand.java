@@ -91,6 +91,10 @@ public class GetAvailableTemplatesMVCResourceCommand
 					infoItemTemplatedRenderer.getInfoItemRendererTemplates(
 						infoItemObject, themeDisplay.getLocale());
 
+				if (infoItemRendererTemplates.isEmpty()) {
+					continue;
+				}
+
 				Collections.sort(
 					infoItemRendererTemplates,
 					Comparator.comparing(InfoItemRendererTemplate::getLabel));

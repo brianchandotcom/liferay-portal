@@ -27,6 +27,8 @@ components:
                     type: string
                 objectActionExecutorKey:
                     type: string
+                objectActionTriggerKey:
+                    type: string
                 parameters:
                     additionalProperties: true
                     type: object

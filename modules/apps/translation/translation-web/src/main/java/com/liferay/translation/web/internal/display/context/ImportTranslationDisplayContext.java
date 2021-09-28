@@ -50,7 +50,7 @@ public class ImportTranslationDisplayContext {
 		_title = title;
 	}
 
-	public PortletURL getImportTranslationURL() {
+	public PortletURL getImportTranslationURL() throws PortalException {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
@@ -61,6 +61,8 @@ public class ImportTranslationDisplayContext {
 			"classPK", _classPK
 		).setParameter(
 			"groupId", _groupId
+		).setParameter(
+			"title", getTitle()
 		).buildPortletURL();
 	}
 

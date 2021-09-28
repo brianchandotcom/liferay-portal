@@ -54,6 +54,10 @@ public class TimeSXPParameterContributor implements SXPParameterContributor {
 
 		TimeZone timeZone = searchContext.getTimeZone();
 
+		if (timeZone == null) {
+			return;
+		}
+
 		LocalDateTime localDateTime = LocalDateTime.now(timeZone.toZoneId());
 
 		ZonedDateTime zonedDateTime = localDateTime.atZone(timeZone.toZoneId());

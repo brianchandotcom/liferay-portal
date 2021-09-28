@@ -23,11 +23,10 @@ import java.util.Map;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BasePortalTestBatch
-	<T extends PortalBatchBuildData, S extends PortalWorkspace>
-		extends BaseTestBatch<T, S> {
+public abstract class BasePortalTestBatch<T extends PortalBatchBuildData>
+	extends BaseTestBatch<T> {
 
-	protected BasePortalTestBatch(T batchBuildData, S workspace) {
+	protected BasePortalTestBatch(T batchBuildData, Workspace workspace) {
 		super(batchBuildData, workspace);
 	}
 
@@ -86,10 +85,10 @@ public abstract class BasePortalTestBatch
 	}
 
 	protected File getPrimaryPortalWorkspaceDirectory() {
-		PortalWorkspace portalWorkspace = getWorkspace();
+		Workspace workspace = getWorkspace();
 
 		WorkspaceGitRepository workspaceGitRepository =
-			portalWorkspace.getPrimaryPortalWorkspaceGitRepository();
+			workspace.getPrimaryWorkspaceGitRepository();
 
 		return workspaceGitRepository.getDirectory();
 	}

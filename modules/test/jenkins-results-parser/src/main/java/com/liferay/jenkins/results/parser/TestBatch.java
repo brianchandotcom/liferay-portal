@@ -17,7 +17,7 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public interface TestBatch<T extends BatchBuildData, S extends Workspace> {
+public interface TestBatch<T extends BatchBuildData> {
 
 	public void run();
 

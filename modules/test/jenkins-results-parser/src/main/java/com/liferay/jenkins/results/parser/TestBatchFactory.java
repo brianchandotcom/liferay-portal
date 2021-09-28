@@ -26,28 +26,25 @@ public class TestBatchFactory {
 
 		TestBatch testBatch = null;
 
-		if ((batchBuildData instanceof PortalBatchBuildData) &&
-			(workspace instanceof PortalWorkspace)) {
-
+		if (batchBuildData instanceof PortalBatchBuildData) {
 			PortalBatchBuildData portalBatchBuildData =
 				(PortalBatchBuildData)batchBuildData;
-			PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
 
 			String batchName = batchBuildData.getBatchName();
 
 			if (batchName.contains("functional")) {
 				testBatch = new FunctionalPortalTestBatch(
-					portalBatchBuildData, portalWorkspace);
+					portalBatchBuildData, workspace);
 			}
 			else if (batchName.contains("integration") ||
 					 batchName.contains("unit")) {
 
 				testBatch = new JunitPortalTestBatch(
-					portalBatchBuildData, portalWorkspace);
+					portalBatchBuildData, workspace);
 			}
 			else {
 				testBatch = new DefaultPortalTestBatch(
-					portalBatchBuildData, portalWorkspace);
+					portalBatchBuildData, workspace);
 			}
 		}
 

@@ -21,13 +21,12 @@ import java.util.Map;
  * @author Michael Hashimoto
  */
 public class JunitPortalTestBatch
-	extends BasePortalTestBatch<PortalBatchBuildData, PortalWorkspace> {
+	extends BasePortalTestBatch<PortalBatchBuildData> {
 
 	protected JunitPortalTestBatch(
-		PortalBatchBuildData portalBatchBuildData,
-		PortalWorkspace portalWorkspace) {
+		PortalBatchBuildData portalBatchBuildData, Workspace workspace) {
 
-		super(portalBatchBuildData, portalWorkspace);
+		super(portalBatchBuildData, workspace);
 	}
 
 	@Override

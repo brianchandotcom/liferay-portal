@@ -40,7 +40,7 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 				<ul class="tbar-nav">
 					<li class="tbar-item tbar-item-expand"></li>
 					<li class="tbar-item">
-						<div class="metadata-type-button-row tbar-section text-right">
+						<div class="tbar-section text-right">
 							<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
 
 							<aui:button cssClass="btn-sm mr-3" disabled="<%= translateDisplayContext.isSaveButtonDisabled() %>" id="saveDraftBtn" primary="<%= false %>" type="submit" value="<%= translateDisplayContext.getSaveButtonLabel() %>" />

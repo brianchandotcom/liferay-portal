@@ -121,7 +121,7 @@ exports[`Translate renders with auto-translate disabled 1`] = `
             class="tbar-item"
           >
             <div
-              class="metadata-type-button-row tbar-section text-right"
+              class="tbar-section text-right"
             >
               <div
                 class="btn-group"
@@ -553,7 +553,7 @@ exports[`Translate renders with auto-translate enabled 1`] = `
             class="tbar-item"
           >
             <div
-              class="metadata-type-button-row tbar-section text-right"
+              class="tbar-section text-right"
             >
               <div
                 class="btn-group"
@@ -1115,7 +1115,7 @@ exports[`Translate renders with experiences selector 1`] = `
             class="tbar-item"
           >
             <div
-              class="metadata-type-button-row tbar-section text-right"
+              class="tbar-section text-right"
             >
               <div
                 class="btn-group"

@@ -112,7 +112,7 @@ const TransLateActionBar = ({
 						</>
 					)}
 					<li className="tbar-item">
-						<div className="metadata-type-button-row tbar-section text-right">
+						<div className="tbar-section text-right">
 							<ClayButton.Group spaced>
 								<ClayLink
 									button={{small: true}}

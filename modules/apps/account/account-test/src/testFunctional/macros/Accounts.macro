@@ -1147,6 +1147,22 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro unassignMultipleOrganizations {
+		Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
+
+		for (var organizationNumber : list "${organizationNumber}") {
+			LexiconEntry.selectEntry(rowEntry = "Organization ${organizationNumber}");
+		}
+
+		ClickNoError(
+			key_text = "times-circle",
+			locator1 = "Icon#ANY");
+
+		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to remove the selected organizations?");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro viewAccountDetails {
 		LexiconEntry.gotoEntry(rowEntry = "${accountName}");
 

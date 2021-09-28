@@ -35,6 +35,11 @@ public class RemoteAppServiceUpgrade implements UpgradeStepRegistrator {
 			"1.0.1", "2.0.0",
 			new com.liferay.remote.app.internal.upgrade.v2_0_0.
 				RemoteAppEntryUpgradeProcess());
+
+		registry.register(
+			"2.0.0", "2.1.0",
+			new com.liferay.remote.app.internal.upgrade.v2_1_0.
+				ResourcePermissionsUpgradeProcess());
 	}
 
 }

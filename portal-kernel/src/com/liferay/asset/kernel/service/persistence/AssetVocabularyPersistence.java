@@ -1496,57 +1496,57 @@ public interface AssetVocabularyPersistence
 	public int filterCountByG_V(long[] groupIds, int[] visibilityTypes);
 
 	/**
-	 * Returns the asset vocabulary where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchVocabularyException</code> if it could not be found.
+	 * Returns the asset vocabulary where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchVocabularyException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
 	 * @return the matching asset vocabulary
 	 * @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
 	 */
-	public AssetVocabulary findByC_ERC(
-			long companyId, String externalReferenceCode)
+	public AssetVocabulary findByG_ERC(
+			long groupId, String externalReferenceCode)
 		throws NoSuchVocabularyException;
 
 	/**
-	 * Returns the asset vocabulary where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the asset vocabulary where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
 	 * @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	 */
-	public AssetVocabulary fetchByC_ERC(
-		long companyId, String externalReferenceCode);
+	public AssetVocabulary fetchByG_ERC(
+		long groupId, String externalReferenceCode);
 
 	/**
-	 * Returns the asset vocabulary where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the asset vocabulary where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	 */
-	public AssetVocabulary fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache);
+	public AssetVocabulary fetchByG_ERC(
+		long groupId, String externalReferenceCode, boolean useFinderCache);
 
 	/**
-	 * Removes the asset vocabulary where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the asset vocabulary where groupId = &#63; and externalReferenceCode = &#63; from the database.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
 	 * @return the asset vocabulary that was removed
 	 */
-	public AssetVocabulary removeByC_ERC(
-			long companyId, String externalReferenceCode)
+	public AssetVocabulary removeByG_ERC(
+			long groupId, String externalReferenceCode)
 		throws NoSuchVocabularyException;
 
 	/**
-	 * Returns the number of asset vocabularies where companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of asset vocabularies where groupId = &#63; and externalReferenceCode = &#63;.
 	 *
-	 * @param companyId the company ID
+	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
 	 * @return the number of matching asset vocabularies
 	 */
-	public int countByC_ERC(long companyId, String externalReferenceCode);
+	public int countByG_ERC(long groupId, String externalReferenceCode);
 
 	/**
 	 * Caches the asset vocabulary in the entity cache if it is enabled.

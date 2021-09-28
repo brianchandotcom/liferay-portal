@@ -274,18 +274,18 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the asset vocabulary with the matching external reference code and company.
+	 * Returns the asset vocabulary with the matching external reference code and group.
 	 *
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @param externalReferenceCode the asset vocabulary's external reference code
 	 * @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	 */
 	@Override
 	public AssetVocabulary fetchAssetVocabularyByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		long groupId, String externalReferenceCode) {
 
-		return assetVocabularyPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return assetVocabularyPersistence.fetchByG_ERC(
+			groupId, externalReferenceCode);
 	}
 
 	/**
@@ -294,27 +294,27 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 	@Deprecated
 	@Override
 	public AssetVocabulary fetchAssetVocabularyByReferenceCode(
-		long companyId, String externalReferenceCode) {
+		long groupId, String externalReferenceCode) {
 
 		return fetchAssetVocabularyByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			groupId, externalReferenceCode);
 	}
 
 	/**
-	 * Returns the asset vocabulary with the matching external reference code and company.
+	 * Returns the asset vocabulary with the matching external reference code and group.
 	 *
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @param externalReferenceCode the asset vocabulary's external reference code
 	 * @return the matching asset vocabulary
 	 * @throws PortalException if a matching asset vocabulary could not be found
 	 */
 	@Override
 	public AssetVocabulary getAssetVocabularyByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			long groupId, String externalReferenceCode)
 		throws PortalException {
 
-		return assetVocabularyPersistence.findByC_ERC(
-			companyId, externalReferenceCode);
+		return assetVocabularyPersistence.findByG_ERC(
+			groupId, externalReferenceCode);
 	}
 
 	/**

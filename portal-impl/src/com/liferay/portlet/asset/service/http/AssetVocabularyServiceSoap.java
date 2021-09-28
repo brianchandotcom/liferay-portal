@@ -180,6 +180,38 @@ public class AssetVocabularyServiceSoap {
 		}
 	}
 
+	public static com.liferay.asset.kernel.model.AssetVocabularySoap
+			addVocabulary(
+				String externalReferenceCode, long groupId, String name,
+				String title, String[] titleMapLanguageIds,
+				String[] titleMapValues, String[] descriptionMapLanguageIds,
+				String[] descriptionMapValues, String settings,
+				int visibilityType,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+				titleMapLanguageIds, titleMapValues);
+			Map<Locale, String> descriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					descriptionMapLanguageIds, descriptionMapValues);
+
+			com.liferay.asset.kernel.model.AssetVocabulary returnValue =
+				AssetVocabularyServiceUtil.addVocabulary(
+					externalReferenceCode, groupId, name, title, titleMap,
+					descriptionMap, settings, visibilityType, serviceContext);
+
+			return com.liferay.asset.kernel.model.AssetVocabularySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.asset.kernel.model.AssetVocabularySoap[]
 			deleteVocabularies(
 				long[] vocabularyIds,

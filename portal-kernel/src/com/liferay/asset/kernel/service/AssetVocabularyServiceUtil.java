@@ -82,6 +82,19 @@ public class AssetVocabularyServiceUtil {
 			serviceContext);
 	}
 
+	public static AssetVocabulary addVocabulary(
+			String externalReferenceCode, long groupId, String name,
+			String title, Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, String settings,
+			int visibilityType,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addVocabulary(
+			externalReferenceCode, groupId, name, title, titleMap,
+			descriptionMap, settings, visibilityType, serviceContext);
+	}
+
 	public static List<AssetVocabulary> deleteVocabularies(
 			long[] vocabularyIds,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

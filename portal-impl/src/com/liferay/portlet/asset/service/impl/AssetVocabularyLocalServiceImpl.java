@@ -157,8 +157,8 @@ public class AssetVocabularyLocalServiceImpl
 		throws PortalException {
 
 		return assetVocabularyLocalService.addVocabulary(
-			null, userId, groupId, title, titleMap, descriptionMap, settings,
-			visibilityType, serviceContext);
+			null, userId, groupId, name, title, titleMap, descriptionMap,
+			settings, visibilityType, serviceContext);
 	}
 
 	@Override

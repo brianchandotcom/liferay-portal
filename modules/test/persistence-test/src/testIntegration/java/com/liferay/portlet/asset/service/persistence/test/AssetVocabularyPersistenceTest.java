@@ -292,12 +292,12 @@ public class AssetVocabularyPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_ERC() throws Exception {
-		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+	public void testCountByG_ERC() throws Exception {
+		_persistence.countByG_ERC(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByC_ERC(0L, "null");
+		_persistence.countByG_ERC(0L, "null");
 
-		_persistence.countByC_ERC(0L, (String)null);
+		_persistence.countByG_ERC(0L, (String)null);
 	}
 
 	@Test
@@ -627,10 +627,10 @@ public class AssetVocabularyPersistenceTest {
 				new Class<?>[] {String.class}, "name"));
 
 		Assert.assertEquals(
-			Long.valueOf(assetVocabulary.getCompanyId()),
+			Long.valueOf(assetVocabulary.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				assetVocabulary, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			assetVocabulary.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(

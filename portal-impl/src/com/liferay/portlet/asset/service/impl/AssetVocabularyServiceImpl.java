@@ -106,6 +106,22 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 	}
 
 	@Override
+	public AssetVocabulary addVocabulary(
+			String externalReferenceCode, long groupId, String name,
+			String title, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String settings,
+			int visibilityType, ServiceContext serviceContext)
+		throws PortalException {
+
+		AssetCategoriesPermission.check(
+			getPermissionChecker(), groupId, ActionKeys.ADD_VOCABULARY);
+
+		return assetVocabularyLocalService.addVocabulary(
+			externalReferenceCode, getUserId(), groupId, name, title, titleMap,
+			descriptionMap, settings, visibilityType, serviceContext);
+	}
+
+	@Override
 	public List<AssetVocabulary> deleteVocabularies(
 			long[] vocabularyIds, ServiceContext serviceContext)
 		throws PortalException {

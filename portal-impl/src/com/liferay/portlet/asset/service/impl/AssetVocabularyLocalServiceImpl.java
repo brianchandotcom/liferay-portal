@@ -15,11 +15,13 @@
 package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.asset.kernel.exception.DuplicateVocabularyException;
+import com.liferay.asset.kernel.exception.DuplicateVocabularyExternalReferenceCodeException;
 import com.liferay.asset.kernel.exception.VocabularyNameException;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -141,12 +143,37 @@ public class AssetVocabularyLocalServiceImpl
 			null, serviceContext);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AssetVocabulary addVocabulary(
 			long userId, long groupId, String name, String title,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			String settings, int visibilityType, ServiceContext serviceContext)
+		throws PortalException {
+
+		return assetVocabularyLocalService.addVocabulary(
+			null, userId, groupId, title, titleMap, descriptionMap, settings,
+			visibilityType, serviceContext);
+	}
+
+	@Override
+	public AssetVocabulary addVocabulary(
+			long userId, long groupId, String name, String title,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String settings, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addVocabulary(
+			userId, groupId, name, title, titleMap, descriptionMap, settings,
+			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC, serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public AssetVocabulary addVocabulary(
+			String externalReferenceCode, long userId, long groupId,
+			String name, String title, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String settings,
+			int visibilityType, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Vocabulary
@@ -164,10 +191,17 @@ public class AssetVocabularyLocalServiceImpl
 
 		long vocabularyId = counterLocalService.increment();
 
+		if (Validator.isNull(externalReferenceCode)) {
+			externalReferenceCode = String.valueOf(vocabularyId);
+		}
+
+		_validateExternalReferenceCode(externalReferenceCode, groupId);
+
 		AssetVocabulary vocabulary = assetVocabularyPersistence.create(
 			vocabularyId);
 
 		vocabulary.setUuid(serviceContext.getUuid());
+		vocabulary.setExternalReferenceCode(externalReferenceCode);
 		vocabulary.setGroupId(groupId);
 		vocabulary.setCompanyId(user.getCompanyId());
 		vocabulary.setUserId(user.getUserId());
@@ -202,18 +236,6 @@ public class AssetVocabularyLocalServiceImpl
 		}
 
 		return vocabulary;
-	}
-
-	@Override
-	public AssetVocabulary addVocabulary(
-			long userId, long groupId, String name, String title,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String settings, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addVocabulary(
-			userId, groupId, name, title, titleMap, descriptionMap, settings,
-			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC, serviceContext);
 	}
 
 	@Override
@@ -632,6 +654,22 @@ public class AssetVocabularyLocalServiceImpl
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		AssetVocabulary assetVocabulary =
+			assetVocabularyPersistence.fetchByG_ERC(
+				groupId, externalReferenceCode);
+
+		if (assetVocabulary != null) {
+			throw new DuplicateVocabularyExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate vocabulary external reference code ",
+					externalReferenceCode, " in group ", groupId));
+		}
 	}
 
 }

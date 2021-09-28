@@ -244,6 +244,14 @@ public class ConfigurationFileInstaller implements FileInstaller {
 
 		int index = pid.indexOf(CharPool.TILDE);
 
+		if (index <= 0) {
+			index = pid.indexOf(CharPool.UNDERLINE);
+
+			if (index <= 0) {
+				index = pid.indexOf(CharPool.DASH);
+			}
+		}
+
 		if (index > 0) {
 			String name = pid.substring(index + 1);
 

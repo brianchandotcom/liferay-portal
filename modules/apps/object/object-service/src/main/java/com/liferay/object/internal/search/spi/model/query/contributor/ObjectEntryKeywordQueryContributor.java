@@ -102,7 +102,8 @@ public class ObjectEntryKeywordQueryContributor
 			if (!Validator.isBlank(token)) {
 				try {
 					booleanQuery.add(
-						new TermQueryImpl(Field.ENTRY_CLASS_PK, token),
+						new WildcardQueryImpl(
+							Field.ENTRY_CLASS_PK, token + StringPool.STAR),
 						BooleanClauseOccur.SHOULD);
 
 					String titleField =

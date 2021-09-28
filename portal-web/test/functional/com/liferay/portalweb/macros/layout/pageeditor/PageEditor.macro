@@ -1627,34 +1627,6 @@ definition {
 
 				Button.clickApply();
 			}
-
-			if (isSet(selectAssetList)) {
-				PageEditor.gotoEllipsisMenuItemInItemSelector(
-					fieldLabel = "Collection",
-					menuItem = "Edit Collection");
-
-				Click(
-					key_text = "Select",
-					locator1 = "Button#ANY");
-
-				Click(
-					key_assetType = "${assetType}",
-					locator1 = "AssetLists#ASSET_TYPE_DROPDOWN_ITEM");
-
-				SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-				for (var assetName : list "${selectAssetList}") {
-					LexiconEntry.selectEntry(rowEntry = "${assetName}");
-				}
-
-				SelectFrameTop();
-
-				Button.clickAdd();
-
-				Alert.viewSuccessMessage();
-
-				Click(locator1 = "Icon#BACK");
-			}
 		}
 		else {
 			WaitForElementPresent(

@@ -1342,27 +1342,23 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9225 | Test Summary: Create a Web Behavior Segment of Viewing a Page"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentViewingPage {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: Timing issues may happen on this test case
-		// AC Refactor ticket: LRAC-9405
-		// AC Fix ticket: LRAC-9285
-
-		Navigator.openURL();
+		var username = "ac";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
+		var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+
 		JSONUser.addUser(
-			userEmailAddress = "ac@liferay.com",
-			userFirstName = "ac",
-			userLastName = "ac",
-			userScreenName = "ac");
+			userEmailAddress = "${username}@liferay.com",
+			userFirstName = "${username}",
+			userLastName = "${username}",
+			userScreenName = "${username}");
 
 		ACDXPSettings.syncNewContactData();
 
 		User.logoutAndLoginPG(
-			userLoginEmailAddress = "ac@liferay.com",
-			userLoginFullName = "ac ac");
+			userLoginEmailAddress = "${username}@liferay.com",
+			userLoginFullName = "${username} ${username}");
 
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
@@ -1387,7 +1383,7 @@ definition {
 		ACSegments.editWebBehaviorCriterion(
 			indexField = "1",
 			occurenceNumber = "4",
-			searchTerm = "AC Page - Site Name - Liferay DXP");
+			searchTerm = "AC Page - Site Name - ${dataSource}");
 
 		ACSegments.saveSegment();
 
@@ -1397,7 +1393,7 @@ definition {
 			locator1 = "ACSegments#NO_MEMBER_TITLE",
 			value1 = "There are no items found.");
 
-		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
+		ACUtils.launchDXP(userEmailAddress = "${username}@liferay.com");
 
 		for (var n : list "1,2,3,4") {
 			Navigator.gotoSitePage(
@@ -1413,19 +1409,11 @@ definition {
 
 		ACNavigation.goToSegments();
 
-		ACSegments.editSegment(searchTerm = "Dynamic Segment Test");
-
-		ACSegments.editWebBehaviorCriterion(
-			indexField = "1",
-			timeOption = "ever");
-
-		ACSegments.saveSegment();
+		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		// Couldn't assert the user due to missing data.
-
-		ACUtils.viewNameList(nameList = "ac ac");
+		ACUtils.viewNameList(nameList = "${username} ${username}");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9226 | Test Summary: Create a Web Behavior Segment of Viewing a Web Content"

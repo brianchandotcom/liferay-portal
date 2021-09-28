@@ -1572,12 +1572,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8473 | Test Summary: Filter the Segment 'Add Members' Modal"
 	@priority = "3"
 	test CanSearchUserInAddMembersModal {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: A button to reload appears when users are searched because of a bug.
-		// AC Bug ticket: LRAC-9420
-		// AC Refactor ticket: LRAC-9428
-
 		task ("Add one more user with a given birth date") {
 			JSONUser.addUser(
 				userEmailAddress = "user1@liferay.com",
@@ -1637,9 +1631,7 @@ definition {
 		}
 
 		task ("View only the userea shown in modal") {
-			AssertVisible(
-				key_nameList = "userfn userln",
-				locator1 = "ACUtils#NAME_LIST");
+			ACUtils.viewNameList(nameList = "userfn userln");
 
 			AssertElementNotPresent(
 				key_nameList = "user1 user1",
@@ -1653,9 +1645,7 @@ definition {
 		}
 
 		task ("View only the user1 shown in modal") {
-			AssertVisible(
-				key_nameList = "user1 user1",
-				locator1 = "ACUtils#NAME_LIST");
+			ACUtils.viewNameList(nameList = "user1 user1");
 
 			AssertElementNotPresent(
 				key_nameList = "userfn userln",

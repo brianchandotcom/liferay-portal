@@ -78,7 +78,7 @@ public class ObjectDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,6 +96,10 @@ public class ObjectDefinitionCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", descriptionObjectFieldId=");
+		sb.append(descriptionObjectFieldId);
+		sb.append(", titleObjectFieldId=");
+		sb.append(titleObjectFieldId);
 		sb.append(", active=");
 		sb.append(active);
 		sb.append(", dbTableName=");
@@ -167,6 +171,9 @@ public class ObjectDefinitionCacheModel
 			objectDefinitionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		objectDefinitionImpl.setDescriptionObjectFieldId(
+			descriptionObjectFieldId);
+		objectDefinitionImpl.setTitleObjectFieldId(titleObjectFieldId);
 		objectDefinitionImpl.setActive(active);
 
 		if (dbTableName == null) {
@@ -263,6 +270,10 @@ public class ObjectDefinitionCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
+		descriptionObjectFieldId = objectInput.readLong();
+
+		titleObjectFieldId = objectInput.readLong();
+
 		active = objectInput.readBoolean();
 		dbTableName = objectInput.readUTF();
 		label = objectInput.readUTF();
@@ -308,6 +319,10 @@ public class ObjectDefinitionCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(descriptionObjectFieldId);
+
+		objectOutput.writeLong(titleObjectFieldId);
 
 		objectOutput.writeBoolean(active);
 
@@ -396,6 +411,8 @@ public class ObjectDefinitionCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long descriptionObjectFieldId;
+	public long titleObjectFieldId;
 	public boolean active;
 	public String dbTableName;
 	public String label;

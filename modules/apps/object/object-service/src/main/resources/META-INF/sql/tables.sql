@@ -23,6 +23,8 @@ create table ObjectDefinition (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	descriptionObjectFieldId LONG,
+	titleObjectFieldId LONG,
 	active_ BOOLEAN,
 	dbTableName VARCHAR(75) null,
 	label STRING null,

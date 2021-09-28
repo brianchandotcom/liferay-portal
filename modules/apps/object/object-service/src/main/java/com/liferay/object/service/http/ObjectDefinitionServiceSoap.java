@@ -228,7 +228,8 @@ public class ObjectDefinitionServiceSoap {
 
 	public static com.liferay.object.model.ObjectDefinitionSoap
 			updateCustomObjectDefinition(
-				Long objectDefinitionId, boolean active,
+				Long objectDefinitionId, long descriptionObjectFieldId,
+				long titleObjectFieldId, boolean active,
 				String[] labelMapLanguageIds, String[] labelMapValues,
 				String name, String panelAppOrder, String panelCategoryKey,
 				String[] pluralLabelMapLanguageIds,
@@ -244,7 +245,8 @@ public class ObjectDefinitionServiceSoap {
 
 			com.liferay.object.model.ObjectDefinition returnValue =
 				ObjectDefinitionServiceUtil.updateCustomObjectDefinition(
-					objectDefinitionId, active, labelMap, name, panelAppOrder,
+					objectDefinitionId, descriptionObjectFieldId,
+					titleObjectFieldId, active, labelMap, name, panelAppOrder,
 					panelCategoryKey, pluralLabelMap, scope);
 
 			return com.liferay.object.model.ObjectDefinitionSoap.toSoapModel(

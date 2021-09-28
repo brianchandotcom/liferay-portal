@@ -370,6 +370,7 @@ public class ObjectDefinitionServiceHttp {
 	public static com.liferay.object.model.ObjectDefinition
 			updateCustomObjectDefinition(
 				HttpPrincipal httpPrincipal, Long objectDefinitionId,
+				long descriptionObjectFieldId, long titleObjectFieldId,
 				boolean active,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
 				String panelAppOrder, String panelCategoryKey,
@@ -384,8 +385,9 @@ public class ObjectDefinitionServiceHttp {
 				_updateCustomObjectDefinitionParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, objectDefinitionId, active, labelMap, name,
-				panelAppOrder, panelCategoryKey, pluralLabelMap, scope);
+				methodKey, objectDefinitionId, descriptionObjectFieldId,
+				titleObjectFieldId, active, labelMap, name, panelAppOrder,
+				panelCategoryKey, pluralLabelMap, scope);
 
 			Object returnObj = null;
 
@@ -441,8 +443,9 @@ public class ObjectDefinitionServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateCustomObjectDefinitionParameterTypes8 = new Class[] {
-			Long.class, boolean.class, java.util.Map.class, String.class,
-			String.class, String.class, java.util.Map.class, String.class
+			Long.class, long.class, long.class, boolean.class,
+			java.util.Map.class, String.class, String.class, String.class,
+			java.util.Map.class, String.class
 		};
 
 }

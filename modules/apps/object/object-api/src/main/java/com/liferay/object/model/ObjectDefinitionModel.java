@@ -209,6 +209,34 @@ public interface ObjectDefinitionModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the description object field ID of this object definition.
+	 *
+	 * @return the description object field ID of this object definition
+	 */
+	public long getDescriptionObjectFieldId();
+
+	/**
+	 * Sets the description object field ID of this object definition.
+	 *
+	 * @param descriptionObjectFieldId the description object field ID of this object definition
+	 */
+	public void setDescriptionObjectFieldId(long descriptionObjectFieldId);
+
+	/**
+	 * Returns the title object field ID of this object definition.
+	 *
+	 * @return the title object field ID of this object definition
+	 */
+	public long getTitleObjectFieldId();
+
+	/**
+	 * Sets the title object field ID of this object definition.
+	 *
+	 * @param titleObjectFieldId the title object field ID of this object definition
+	 */
+	public void setTitleObjectFieldId(long titleObjectFieldId);
+
+	/**
 	 * Returns the active of this object definition.
 	 *
 	 * @return the active of this object definition

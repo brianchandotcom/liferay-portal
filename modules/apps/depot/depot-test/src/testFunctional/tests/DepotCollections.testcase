@@ -170,10 +170,6 @@ definition {
 		property minimum.slave.ram = "24";
 		property test.name.skip.portal.instance = "DepotCollections#CanBePublishedViaRemoteStaging";
 
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
 		Depot.remoteStagingSetUp(
 			depotName = "Test Depot Name",
 			remotePort = "9080",

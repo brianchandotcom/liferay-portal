@@ -40,50 +40,35 @@ definition {
 
 	@description = "This test is skipping portal instance setup due to LPS-75168"
 	@priority = "4"
-	@refactorneeded
-	test ViewNewSiteMember {
-		property test.name.skip.portal.instance = "InviteMembers#ViewNewSiteMember";
+	@refactordone
+	test CanViewNewSiteMember {
+		property test.name.skip.portal.instance = "InviteMembers#CanViewNewSiteMember";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page 1");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Site Name",
+			layoutName = "Site Page 1",
+			widgetName = "Invite Members");
 
-		SitePages.addPublicPage(pageName = "Site Page 1");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page 1",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Invite Members");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
+		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 		LexiconCard.viewCardNotPresent(card = "userfn userln");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			pageName = "Site Page 1",
 			siteName = "Site Name");
 
 		InviteMembers.inviteMembers(inviteUserFullName = "userfn userln");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Pause(locator1 = "1000");
-
-		AssertVisible(locator1 = "Notifications#PROFILE_BADGE_COUNT");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -97,19 +82,11 @@ definition {
 
 		Notifications.viewNoRequest();
 
-		User.logoutPG();
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page 1",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
+		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 		Site.viewMemberCP(
 			userFirstName = "userfn",

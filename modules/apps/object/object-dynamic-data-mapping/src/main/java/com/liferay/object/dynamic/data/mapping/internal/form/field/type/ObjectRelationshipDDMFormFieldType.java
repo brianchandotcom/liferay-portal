@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.icon=relationship",
 		"ddm.form.field.type.label=object-relationship-field-type-label",
 		"ddm.form.field.type.name=object-relationship",
-		"ddm.form.field.type.scope="
+		"ddm.form.field.type.system=true"
 	},
 	service = DDMFormFieldType.class
 )

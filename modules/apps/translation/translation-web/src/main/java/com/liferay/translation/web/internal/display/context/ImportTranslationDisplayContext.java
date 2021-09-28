@@ -17,10 +17,8 @@ package com.liferay.translation.web.internal.display.context;
 import com.liferay.info.item.provider.InfoItemWorkflowProvider;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -64,16 +62,6 @@ public class ImportTranslationDisplayContext {
 		).setParameter(
 			"title", getTitle()
 		).buildPortletURL();
-	}
-
-	public String getMustHaveValidIdMessage() {
-		String className = PortalUtil.getClassName(_classNameId);
-
-		if (className.equals(Layout.class.getName())) {
-			return "the-translation-file-does-not-correspond-to-this-page";
-		}
-
-		return "the-translation-file-does-not-correspond-to-this-web-content";
 	}
 
 	public String getPublishButtonLabel() throws PortalException {

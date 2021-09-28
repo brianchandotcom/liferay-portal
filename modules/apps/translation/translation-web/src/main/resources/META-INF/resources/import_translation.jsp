@@ -60,14 +60,6 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 			<clay:sheet
 				cssClass="translation-import-body-form"
 			>
-				<liferay-ui:error exception="<%= XLIFFFileException.MustBeSupportedLanguage.class %>" message="the-xliff-file-has-an-unavailable-language-translation" />
-				<liferay-ui:error exception="<%= XLIFFFileException.MustBeValid.class %>" message="the-file-is-an-invalid-xliff-file" />
-				<liferay-ui:error exception="<%= XLIFFFileException.MustBeWellFormed.class %>" message="the-xliff-file-does-not-have-all-needed-fields" />
-				<liferay-ui:error exception="<%= XLIFFFileException.MustHaveCorrectEncoding.class %>" message="the-translation-file-has-an-incorrect-encoding.the-supported-encoding-format-is-utf-8" />
-				<liferay-ui:error exception="<%= XLIFFFileException.MustHaveValidId.class %>" message="<%= importTranslationDisplayContext.getMustHaveValidIdMessage() %>" />
-				<liferay-ui:error exception="<%= XLIFFFileException.MustHaveValidParameter.class %>" message="the-xliff-file-has-invalid-parameters" />
-				<liferay-ui:error exception="<%= XLIFFFileException.MustNotHaveMoreThanOne.class %>" message="the-xliff-file-is-invalid" />
-
 				<div>
 					<react:component
 						module="js/ImportTranslation.es"

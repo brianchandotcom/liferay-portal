@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Joseph Duffy
  */
-public class BatchEngineTaskUpgradeProcess extends UpgradeProcess {
+public class ErrorMessageUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

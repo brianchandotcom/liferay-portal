@@ -25,12 +25,18 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsUtil;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -49,21 +55,28 @@ public class DLAudioFFMPEGAudioConverter implements AudioConverter {
 	public InputStream generateAudioPreview(File file, String format)
 		throws Exception {
 
+		File destinationFile = FileUtil.createTempFile(format);
+
 		Properties audioProperties = PropsUtil.getProperties(
 			PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO, false);
 
-		return _runFFMPEGCommand(
-			String.format(
-				"ffmpeg -y -i %s -b:a %d -ar %d", file.getAbsolutePath(),
-				_getProperty(
-					audioProperties,
-					PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO_BIT_RATE, format,
-					_AUDIO_BIT_RATE_DEFAULT),
-				_getProperty(
-					audioProperties,
-					PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO_SAMPLE_RATE, format,
-					_AUDIO_SAMPLE_RATE_DEFAULT)),
-			format);
+		_runFFMPEGCommand(
+			Arrays.asList(
+				"ffmpeg", "-y", "-i", file.getAbsolutePath(), "-b:a",
+				String.valueOf(
+					_getProperty(
+						audioProperties,
+						PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO_BIT_RATE, format,
+						_AUDIO_BIT_RATE_DEFAULT)),
+				"-ar",
+				String.valueOf(
+					_getProperty(
+						audioProperties,
+						PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO_SAMPLE_RATE,
+						format, _AUDIO_SAMPLE_RATE_DEFAULT)),
+				destinationFile.getAbsolutePath()));
+
+		return new FileInputStream(destinationFile);
 	}
 
 	@Override
@@ -79,6 +92,17 @@ public class DLAudioFFMPEGAudioConverter implements AudioConverter {
 				DLAudioFFMPEGAudioConverterConfiguration.class, properties);
 	}
 
+	private void _consumeProcessInputStream(InputStream inputStream)
+		throws IOException {
+
+		BufferedReader bufferedReader = new BufferedReader(
+			new InputStreamReader(inputStream));
+
+		while (bufferedReader.ready()) {
+			bufferedReader.readLine();
+		}
+	}
+
 	private int _getProperty(
 		Properties audioProperties, String name, String audioContainer,
 		int defaultValue) {
@@ -91,22 +115,35 @@ public class DLAudioFFMPEGAudioConverter implements AudioConverter {
 			defaultValue);
 	}
 
-	private InputStream _runFFMPEGCommand(String ffmpegCommand, String format)
+	private void _runFFMPEGCommand(List<String> ffmpegCommand)
 		throws Exception {
 
-		File destinationFile = FileUtil.createTempFile(format);
+		ProcessBuilder processBuilder = new ProcessBuilder(ffmpegCommand);
 
-		Runtime runtime = Runtime.getRuntime();
+		processBuilder.redirectErrorStream(true);
 
-		Process process = runtime.exec(
-			ffmpegCommand + StringPool.SPACE +
-				destinationFile.getAbsolutePath());
+		Process process = processBuilder.start();
 
-		if (process.waitFor() != 0) {
-			throw new Exception(StringUtil.read(process.getErrorStream()));
+		InputStream inputStream = process.getInputStream();
+
+		while (true) {
+			try {
+				_consumeProcessInputStream(inputStream);
+
+				if (!process.waitFor(5, TimeUnit.SECONDS)) {
+					continue;
+				}
+
+				if (process.exitValue() != 0) {
+					throw new Exception(
+						StringUtil.read(process.getErrorStream()));
+				}
+
+				return;
+			}
+			catch (InterruptedException interruptedException) {
+			}
 		}
-
-		return new FileInputStream(destinationFile);
 	}
 
 	private static final int _AUDIO_BIT_RATE_DEFAULT = 64000;

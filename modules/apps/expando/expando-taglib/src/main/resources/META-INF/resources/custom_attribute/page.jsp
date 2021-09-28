@@ -316,47 +316,16 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 								/>
 							</div>
 
-							<aui:script require="@liferay/map-common@6.0.3/js/MapBase.es as MapBase">
-								var geolocationField = {
-									init: function () {
-										Liferay.MapBase.get(
-											'<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + mapDisplayName + "--" %>',
-											(map) => {
-												map.on(
-													'positionChange',
-													geolocationField.onPositionChange,
-													geolocationField
-												);
-											}
-										);
-									},
-									onPositionChange: function (event) {
-										var inputName =
-											'<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + HtmlUtil.escapeJS(name) + "--" %>';
-										var inputNode = document.querySelector('[name="' + inputName + '"]');
-
-										var location = event.newVal.location;
-
-										if (inputNode) {
-											inputNode.setAttribute(
-												'value',
-												JSON.stringify({
-													latitude: location.lat,
-													longitude: location.lng,
-												})
-											);
-										}
-
-										var locationNode = document.getElementById(inputName + 'Location');
-
-										if (locationNode) {
-											locationNode.innerHTML = event.newVal.address;
-										}
-									},
-								};
-
-								geolocationField.init();
-							</aui:script>
+							<liferay-frontend:component
+								context='<%=
+									HashMapBuilder.<String, Object>put(
+										"inputName", portletDisplay.getNamespace() + "ExpandoAttribute--" + HtmlUtil.escapeJS(name) + "--"
+									).put(
+										"mapName", portletDisplay.getNamespace() + "ExpandoAttribute--" + mapDisplayName + "--"
+									).build()
+								%>'
+								module="js/GeoLocationField"
+							/>
 
 							<aui:input name='<%= "ExpandoAttribute--" + name + "--" %>' type="hidden" value="<%= HtmlUtil.escape(value.toString()) %>" />
 						</c:when>

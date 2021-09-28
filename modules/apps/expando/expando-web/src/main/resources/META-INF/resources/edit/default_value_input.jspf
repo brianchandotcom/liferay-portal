@@ -129,43 +129,16 @@
 			/>
 		</div>
 
-		<aui:script require="@liferay/map-common@6.0.3/js/MapBase.es as MapBase">
-			var geolocationField = {
-				init: function () {
-					Liferay.MapBase.get('<portlet:namespace /><%= name %>', (map) => {
-						map.on(
-							'positionChange',
-							geolocationField.onPositionChange,
-							geolocationField
-						);
-					});
-				},
-				onPositionChange: function (event) {
-					var inputName = '<portlet:namespace /><%= name %>';
-					var inputNode = document.querySelector('[name="' + inputName + '"]');
-
-					var location = event.newVal.location;
-
-					if (inputNode) {
-						inputNode.setAttribute(
-							'value',
-							JSON.stringify({
-								latitude: location.lat,
-								longitude: location.lng,
-							})
-						);
-					}
-
-					var locationNode = document.getElementById(inputName + 'Location');
-
-					if (locationNode) {
-						locationNode.innerHTML = event.newVal.address;
-					}
-				},
-			};
-
-			geolocationField.init();
-		</aui:script>
+		<liferay-frontend:component
+			context='<%=
+				HashMapBuilder.<String, Object>put(
+					"inputName", "<portlet:namespace /><%= name %>"
+				).put(
+					"mapName", "<portlet:namespace /><%= name %>"
+				).build()
+			%>'
+			module="js/GeoLocationField"
+		/>
 
 		<aui:input name="<%= name %>" type="hidden" value="<%= value.toString() %>" />
 	</c:when>

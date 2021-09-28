@@ -217,11 +217,13 @@ public class AssetVocabularyStagedModelDataHandler
 			serviceContext.setUuid(vocabulary.getUuid());
 
 			importedVocabulary = _assetVocabularyLocalService.addVocabulary(
-				userId, portletDataContext.getScopeGroupId(), StringPool.BLANK,
+				vocabulary.getExternalReferenceCode(), userId,
+				portletDataContext.getScopeGroupId(), StringPool.BLANK,
+				vocabulary.getTitle(),
 				getVocabularyTitleMap(
 					portletDataContext.getScopeGroupId(), vocabulary, name),
 				vocabulary.getDescriptionMap(), vocabulary.getSettings(),
-				serviceContext);
+				vocabulary.getVisibilityType(), serviceContext);
 		}
 		else {
 			String name = getVocabularyName(

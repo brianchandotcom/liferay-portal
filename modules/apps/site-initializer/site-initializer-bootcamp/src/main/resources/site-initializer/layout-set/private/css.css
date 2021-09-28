@@ -1,0 +1,88 @@
+/*----- TYPOGRAPHY -----*/
+
+/*Crimson Text*/
+
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&display=swap');
+
+/*Montserrat*/
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap');
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: inherit;
+	color: inherit;
+	line-height: 1.1;
+}
+
+/*-----GENERAL-----*/
+
+body {
+	line-height: 1.5;
+}
+
+a,
+a:hover {
+	color: var(--primary);
+}
+
+/*-----COMPONENTS-----*/
+
+/*Buttons*/
+
+.btn {
+	border-radius: 0;
+	font-family: var(--font-family-sans-serif);
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: var(--font-weight-bolder);
+	color: inherit;
+}
+
+.link-arrow {
+	margin-left: var(--spacer);
+}
+
+.btn-nm {
+	font-size: var(--font-size-sm);
+	padding: var(--spacer) var(--spacer-4);
+	font-size: 11px;
+}
+
+.btn-lg {
+	padding: var(--spacer) var(--spacer-4);
+	font-size: 13px;
+}
+
+/*Form Controls*/
+
+.form-control {
+	border-radius: 0;
+	font-family: var(--font-family-sans-serif);
+	border: var(--white);
+	background-color: var(--white);
+	height: auto;
+}
+
+.form-control-nm {
+	font-size: var(--font-size-sm);
+	padding: var(--spacer) var(--spacer-5);
+}
+
+.form-control-lg {
+	padding: var(--spacer) var(--spacer-5);
+}
+
+.ddm-field {
+	font-family: var(--font-family-sans-serif);
+}
+
+.ddm-label,
+.lfr-ddm-legend,
+.lfr-ddm-checkbox-multiple {
+	font-family: var(--font-family-sans-serif);
+}

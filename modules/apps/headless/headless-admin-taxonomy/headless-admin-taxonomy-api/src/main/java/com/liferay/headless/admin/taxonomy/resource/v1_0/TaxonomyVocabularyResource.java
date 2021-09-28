@@ -95,6 +95,19 @@ public interface TaxonomyVocabularyResource {
 			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteSiteTaxonomyVocabularyByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public TaxonomyVocabulary getSiteTaxonomyVocabularyByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public TaxonomyVocabulary putSiteTaxonomyVocabularyByExternalReferenceCode(
+			Long siteId, String externalReferenceCode,
+			TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception;
+
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteTaxonomyVocabularyPermissionsPage(
 				Long siteId, String roleNames)

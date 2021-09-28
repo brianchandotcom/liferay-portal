@@ -16,4 +16,28 @@
 
 <%@ include file="/init.jsp" %>
 
-<div></div>
+<%
+CSDiagramSettingDisplayContext csDiagramSettingDisplayContext = (CSDiagramSettingDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+CPDefinition cpDefinition = csDiagramSettingDisplayContext.getCPDefinition();
+CSDiagramSetting csDiagramSetting = csDiagramSettingDisplayContext.fetchCSDiagramSetting();
+%>
+
+<div>
+	<span aria-hidden="true" class="loading-animation"></span>
+
+	<react:component
+		module="js/diagram/Diagram"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"diagramId", csDiagramSetting.getCSDiagramSettingId()
+			).put(
+				"imageURL", csDiagramSettingDisplayContext.getImageURL()
+			).put(
+				"isAdmin", true
+			).put(
+				"productId", cpDefinition.getCProductId()
+			).build()
+		%>'
+	/>
+</div>

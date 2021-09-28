@@ -9,16 +9,18 @@
  * distribution rights of the Software.
  */
 
-export function calculateTooltipStyle(source, containerRef) {
-	const {
-		height: sourceHeight,
-		left: sourceLeft,
-		top: sourceTop,
-		width: sourceWidth,
-	} = source.getBoundingClientRect();
+import {DRAG_AND_DROP_THRESHOLD} from './constants';
 
-	const sourceRight = window.innerWidth - sourceLeft - sourceWidth;
-	const sourceBottom = window.innerHeight - sourceTop - sourceHeight;
+export function calculateTooltipStyleFromTarget(target, containerRef) {
+	const {
+		height: targetHeight,
+		left: targetLeft,
+		top: targetTop,
+		width: targetWidth,
+	} = target.getBoundingClientRect();
+
+	const targetRight = window.innerWidth - targetLeft - targetWidth;
+	const targetBottom = window.innerHeight - targetTop - targetHeight;
 
 	const {
 		height: containerHeight,
@@ -32,18 +34,18 @@ export function calculateTooltipStyle(source, containerRef) {
 
 	const style = {};
 
-	if (sourceLeft + sourceWidth / 2 < window.innerWidth / 2) {
-		style.left = sourceLeft - containerLeft + sourceWidth;
+	if (targetLeft + targetWidth / 2 < window.innerWidth / 2) {
+		style.left = targetLeft - containerLeft + targetWidth;
 	}
 	else {
-		style.right = sourceRight - containerRight + sourceWidth;
+		style.right = targetRight - containerRight + targetWidth;
 	}
 
-	if (sourceTop + sourceHeight / 2 < window.innerHeight / 2) {
-		style.top = sourceTop - containerTop + sourceHeight;
+	if (targetTop + targetHeight / 2 < window.innerHeight / 2) {
+		style.top = targetTop - containerTop + targetHeight;
 	}
 	else {
-		style.bottom = sourceBottom - containerBottom + sourceHeight;
+		style.bottom = targetBottom - containerBottom + targetHeight;
 	}
 
 	return style;
@@ -76,4 +78,37 @@ export function formatMappedProduct(type, quantity, sequence, selectedProduct) {
 		default:
 			throw new Error(`Type ${type} not supported`);
 	}
+}
+
+export function getAbsolutePositions(x, y, wrapper) {
+	const {height, width} = wrapper.getBoundingClientRect();
+
+	return [(x / 100) * width, (y / 100) * height];
+}
+
+export function getPercentagePositions(x, y, wrapper) {
+	const {
+		height: wrapperHeight,
+		width: wrapperWidth,
+		x: wrapperX,
+		y: wrapperY,
+	} = wrapper.getBoundingClientRect();
+
+	const percentagePositions = [
+		((x - wrapperX) / wrapperWidth) * 100,
+		((y - wrapperY) / wrapperHeight) * 100,
+	];
+
+	return percentagePositions;
+}
+
+export function isPinMoving(startX, startY, currentX, currentY) {
+	if (
+		Math.abs(startX - currentX) > DRAG_AND_DROP_THRESHOLD ||
+		Math.abs(startY - currentY) > DRAG_AND_DROP_THRESHOLD
+	) {
+		return true;
+	}
+
+	return false;
 }

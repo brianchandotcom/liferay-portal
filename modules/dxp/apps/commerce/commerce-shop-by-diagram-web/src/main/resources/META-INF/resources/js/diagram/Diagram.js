@@ -14,96 +14,67 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 
-import AutomappingHandler from './AutomappingHandler';
+import DiagramHandler from './DiagramHandler';
 import DiagramFooter from './components/DiagramFooter';
-import Sequence from './components/Sequence';
+import DiagramHeader from './components/DiagramHeader';
 import Tooltip from './components/Tooltip';
+import {DEFAULT_PINS_RADIUS} from './utilities/constants';
 import {loadPins} from './utilities/data';
 
 import '../../css/diagram.scss';
-function DiagramWithAutomapping({imageURL, pinsCSSSelectors, productId}) {
-	const chartInstance = useRef(null);
+
+function Diagram({imageURL, productId}) {
 	const svgRef = useRef(null);
-	const wrapperRef = useRef(null);
 	const zoomHandlerRef = useRef(null);
+	const wrapperRef = useRef(null);
+	const chartInstance = useRef(null);
 	const [pins, updatePins] = useState(null);
+	const [pinsRadius, updatePinsRadius] = useState(DEFAULT_PINS_RADIUS);
 	const [tooltipData, setTooltipData] = useState(false);
 	const [currentZoom, updateCurrentZoom] = useState(1);
 	const [expanded, updateExpanded] = useState(false);
-	const [labels, updateLabels] = useState([]);
-	const [selectedText, updateSelectedText] = useState(null);
-	const [highlightedText, updateHighlightedText] = useState(null);
+
+	useEffect(() => {
+
+		// call debounced radius update;
+
+	}, [pinsRadius]);
 
 	useEffect(() => {
 		loadPins(productId).then(updatePins);
 	}, [productId]);
 
 	useEffect(() => {
-		chartInstance.current?.updatePins(pins);
+		if (pins) {
+			chartInstance.current?.updatePins(pins);
+		}
 	}, [pins]);
 
 	useEffect(() => {
-		if (!tooltipData) {
-			updateSelectedText(null);
-		}
-	}, [tooltipData]);
-
-	useEffect(() => {
-		function handleClickOnLabel({target}) {
-			const sequence = target.textContent;
-
-			const selectedPin = pins.find((pin) => pin.sequence === sequence);
-
-			setTooltipData({selectedPin, sequence, target});
-			updateSelectedText(target);
-		}
-
-		function handleMouseEnterOnLabel(event) {
-			updateHighlightedText(event.target);
-		}
-
-		function handleMouseLeaveOnLabel() {
-			updateHighlightedText(null);
-		}
-
-		labels.forEach((label) => {
-			label.addEventListener('click', handleClickOnLabel);
-			label.addEventListener('mouseenter', handleMouseEnterOnLabel);
-			label.addEventListener('mouseleave', handleMouseLeaveOnLabel);
-		});
-
-		return () => {
-			labels.forEach((label) => {
-				label.removeEventListener('click', handleClickOnLabel);
-				label.removeEventListener(
-					'mouseenter',
-					handleMouseEnterOnLabel
-				);
-				label.removeEventListener(
-					'mouseleave',
-					handleMouseLeaveOnLabel
-				);
-			});
-		};
-	}, [labels, pins]);
+		chartInstance.current?.updatePinsRadius(pinsRadius);
+	}, [pinsRadius]);
 
 	useLayoutEffect(() => {
-		chartInstance.current = new AutomappingHandler(
+		chartInstance.current = new DiagramHandler(
 			svgRef.current,
 			zoomHandlerRef.current,
 			imageURL,
-			pinsCSSSelectors,
-			updateLabels,
-			(scale) => {
-				setTooltipData(null);
-
-				updateCurrentZoom(scale);
-			}
+			updateCurrentZoom,
+			setTooltipData
 		);
-	}, [imageURL, pinsCSSSelectors]);
+
+		return () => {
+			chartInstance.current.cleanUp();
+		};
+	}, [imageURL]);
 
 	return (
 		<div className={classNames('shop-by-diagram', {expanded})}>
+			<DiagramHeader
+				pinsRadius={pinsRadius}
+				updatePinsRadius={updatePinsRadius}
+			/>
+
 			<div
 				className="bg-white border-bottom border-top view-wrapper"
 				ref={wrapperRef}
@@ -114,24 +85,12 @@ function DiagramWithAutomapping({imageURL, pinsCSSSelectors, productId}) {
 					<g className="zoom-handler" ref={zoomHandlerRef} />
 				</svg>
 
-				{highlightedText && (
-					<Sequence
-						containerRef={wrapperRef}
-						highlighted={true}
-						target={highlightedText}
-					/>
-				)}
-
-				{selectedText && (
-					<Sequence containerRef={wrapperRef} target={selectedText} />
-				)}
-
 				{tooltipData && (
 					<Tooltip
 						closeTooltip={() => setTooltipData(null)}
 						containerRef={wrapperRef}
 						productId={productId}
-						readOnlySequence={true}
+						readOnlySequence={false}
 						updatePins={updatePins}
 						{...tooltipData}
 					/>
@@ -149,12 +108,11 @@ function DiagramWithAutomapping({imageURL, pinsCSSSelectors, productId}) {
 	);
 }
 
-DiagramWithAutomapping.propTypes = {
+Diagram.propTypes = {
 	diagramId: PropTypes.string.isRequired,
 	imageURL: PropTypes.string.isRequired,
 	isAdmin: PropTypes.bool.isRequired,
-	pinsCSSSelectors: PropTypes.array.isRequired,
 	productId: PropTypes.string.isRequired,
 };
 
-export default DiagramWithAutomapping;
+export default Diagram;

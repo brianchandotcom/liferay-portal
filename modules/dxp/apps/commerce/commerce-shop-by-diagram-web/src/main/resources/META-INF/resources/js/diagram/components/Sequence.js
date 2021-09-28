@@ -12,14 +12,15 @@
 import classNames from 'classnames';
 import React, {useMemo} from 'react';
 
-export default function Sequence({containerRef, highlighted, source}) {
+export default function Sequence({containerRef, highlighted, target}) {
 	const style = useMemo(() => {
 		const {
 			height,
 			width,
 			x: sequenceX,
 			y: sequenceY,
-		} = source.getBoundingClientRect();
+		} = target.getBoundingClientRect();
+
 		const {
 			x: parentX,
 			y: parentY,
@@ -38,17 +39,17 @@ export default function Sequence({containerRef, highlighted, source}) {
 			top: `${relativeY}px`,
 			width: `${backgroundSize}px`,
 		};
-	}, [containerRef, source]);
+	}, [containerRef, target]);
 
 	return (
 		<span
 			className={classNames('pin-foreground', {
 				highlighted,
-				mapped: source._mapped,
+				mapped: target._mapped,
 			})}
 			style={style}
 		>
-			{source.textContent}
+			{target.textContent}
 		</span>
 	);
 }

@@ -96,6 +96,7 @@ class AutomappingHandler {
 			.then((response) => response.text())
 			.then((svgContent) => {
 				this._d3zoomWrapper.html(svgContent);
+				this._diagramWrapper.classList.add('rendered');
 			});
 	}
 
@@ -116,13 +117,11 @@ class AutomappingHandler {
 
 				if (sequences.has(text.textContent)) {
 					text.classList.add('mapped');
-
 					text._mapped = true;
 				}
 				else {
 					text.classList.remove('mapped');
-
-					text._mapped = undefined;
+					text._mapped = false;
 				}
 			});
 		}

@@ -41,12 +41,12 @@ export const deletePin = (pinId) => {
 };
 
 export const savePin = (
-	productId,
 	pinId,
 	mappedProduct,
 	sequence,
 	positionX,
-	positionY
+	positionY,
+	productId
 ) => {
 	const baseURL = pinId
 		? `${PINS_ENDPOINT}/pins/${pinId}`
@@ -54,13 +54,23 @@ export const savePin = (
 
 	const url = new URL(baseURL, themeDisplay.getPortalURL());
 
+	const body = {};
+
+	if (mappedProduct) {
+		body.mappedProduct = mappedProduct;
+	}
+
+	if (positionX || positionY) {
+		body.positionX = positionX;
+		body.positionY = positionY;
+	}
+
+	if (sequence) {
+		body.sequence = sequence;
+	}
+
 	return fetch(url, {
-		body: JSON.stringify({
-			mappedProduct,
-			positionX,
-			positionY,
-			sequence,
-		}),
+		body: JSON.stringify(body),
 		headers: HEADERS,
 		method: pinId ? 'PATCH' : 'POST',
 	}).then((response) => response.json());

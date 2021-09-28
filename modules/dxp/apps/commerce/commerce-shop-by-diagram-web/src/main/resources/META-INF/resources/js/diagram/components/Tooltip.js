@@ -24,7 +24,10 @@ import React, {
 
 import {DEFAULT_LINK_OPTION, LINKING_OPTIONS} from '../utilities/constants';
 import {deletePin, savePin} from '../utilities/data';
-import {calculateTooltipStyle, formatMappedProduct} from '../utilities/index';
+import {
+	calculateTooltipStyleFromTarget,
+	formatMappedProduct,
+} from '../utilities/index';
 
 function Tooltip({
 	closeTooltip,
@@ -32,20 +35,24 @@ function Tooltip({
 	productId,
 	readOnlySequence,
 	selectedPin,
-	sequence: initialSequence,
-	source,
+	sequence: sequenceProp,
+	target,
 	updatePins,
+	x,
+	y,
 }) {
 	const [type, updateType] = useState(
 		selectedPin?.mappedProduct.type || DEFAULT_LINK_OPTION
 	);
 	const [quantity, updateQuantity] = useState(
-		selectedPin?.mappedProduct || 1
+		selectedPin?.mappedProduct.quantity || 1
 	);
 	const [linkedProduct, updateLinkedProduct] = useState(
 		selectedPin?.mappedProduct || null
 	);
-	const [sequence, updateSequence] = useState(initialSequence);
+	const [sequence, updateSequence] = useState(
+		sequenceProp || selectedPin?.sequence || ''
+	);
 	const [saving, updateSaving] = useState(false);
 	const [deleting, updateDeleting] = useState(false);
 	const [tooltipStyle, updateTooltipStyle] = useState({});
@@ -53,17 +60,17 @@ function Tooltip({
 	const tooltipRef = useRef();
 
 	useLayoutEffect(() => {
-		const style = calculateTooltipStyle(source, containerRef);
+		const style = calculateTooltipStyleFromTarget(target, containerRef);
 
 		updateTooltipStyle(style);
-	}, [source, containerRef]);
+	}, [target, containerRef]);
 
 	useEffect(() => {
 		updateQuantity(selectedPin?.mappedProduct.quantity || 1);
-		updateSequence(initialSequence);
+		updateSequence(selectedPin?.mappedProduct.sequence || '');
 		updateType(selectedPin?.mappedProduct.type || DEFAULT_LINK_OPTION);
 		updateLinkedProduct(selectedPin?.mappedProduct || null);
-	}, [selectedPin, initialSequence]);
+	}, [selectedPin]);
 
 	useLayoutEffect(() => {
 		function handleWindowClick(event) {
@@ -98,10 +105,12 @@ function Tooltip({
 		updateSaving(true);
 
 		savePin(
-			productId,
 			update ? selectedPin.id : null,
 			mappedProduct,
-			sequence
+			sequence,
+			x,
+			y,
+			productId
 		)
 			.then((newPin) => {
 				if (!isMounted()) {
@@ -175,7 +184,7 @@ function Tooltip({
 
 	const loading = saving || deleting;
 
-	const disabled = !linkedProduct || !sequence.length || loading;
+	const disabled = !linkedProduct || !sequence || loading;
 
 	const saveMessage = selectedPin
 		? Liferay.Language.get('update')

@@ -226,7 +226,7 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 					items.length > 0 &&
 					items.map((item) => (
 						<ClayAutocomplete.Item
-							key={String(item[props.itemsKey])}
+							key={item.id || String(item[props.itemsKey])}
 							onClick={() => {
 								updateSelectedItem(item);
 								setActive(false);

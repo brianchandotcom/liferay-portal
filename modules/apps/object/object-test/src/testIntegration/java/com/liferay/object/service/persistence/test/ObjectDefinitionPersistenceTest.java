@@ -146,6 +146,9 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setClassName(RandomTestUtil.randomString());
 
+		newObjectDefinition.setDescriptionObjectFieldId(
+			RandomTestUtil.nextLong());
+
 		newObjectDefinition.setName(RandomTestUtil.randomString());
 
 		newObjectDefinition.setPanelAppOrder(RandomTestUtil.randomString());
@@ -162,6 +165,8 @@ public class ObjectDefinitionPersistenceTest {
 		newObjectDefinition.setScope(RandomTestUtil.randomString());
 
 		newObjectDefinition.setSystem(RandomTestUtil.randomBoolean());
+
+		newObjectDefinition.setTitleObjectFieldId(RandomTestUtil.nextLong());
 
 		newObjectDefinition.setVersion(RandomTestUtil.nextInt());
 
@@ -208,6 +213,9 @@ public class ObjectDefinitionPersistenceTest {
 			existingObjectDefinition.getClassName(),
 			newObjectDefinition.getClassName());
 		Assert.assertEquals(
+			existingObjectDefinition.getDescriptionObjectFieldId(),
+			newObjectDefinition.getDescriptionObjectFieldId());
+		Assert.assertEquals(
 			existingObjectDefinition.getName(), newObjectDefinition.getName());
 		Assert.assertEquals(
 			existingObjectDefinition.getPanelAppOrder(),
@@ -230,6 +238,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.isSystem(),
 			newObjectDefinition.isSystem());
+		Assert.assertEquals(
+			existingObjectDefinition.getTitleObjectFieldId(),
+			newObjectDefinition.getTitleObjectFieldId());
 		Assert.assertEquals(
 			existingObjectDefinition.getVersion(),
 			newObjectDefinition.getVersion());
@@ -327,10 +338,11 @@ public class ObjectDefinitionPersistenceTest {
 			"objectDefinitionId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"active", true, "dbTableName", true, "label", true, "className",
-			true, "name", true, "panelAppOrder", true, "panelCategoryKey", true,
+			true, "descriptionObjectFieldId", true, "name", true,
+			"panelAppOrder", true, "panelCategoryKey", true,
 			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
-			"pluralLabel", true, "scope", true, "system", true, "version", true,
-			"status", true);
+			"pluralLabel", true, "scope", true, "system", true,
+			"titleObjectFieldId", true, "version", true, "status", true);
 	}
 
 	@Test
@@ -641,6 +653,8 @@ public class ObjectDefinitionPersistenceTest {
 
 		objectDefinition.setClassName(RandomTestUtil.randomString());
 
+		objectDefinition.setDescriptionObjectFieldId(RandomTestUtil.nextLong());
+
 		objectDefinition.setName(RandomTestUtil.randomString());
 
 		objectDefinition.setPanelAppOrder(RandomTestUtil.randomString());
@@ -657,6 +671,8 @@ public class ObjectDefinitionPersistenceTest {
 		objectDefinition.setScope(RandomTestUtil.randomString());
 
 		objectDefinition.setSystem(RandomTestUtil.randomBoolean());
+
+		objectDefinition.setTitleObjectFieldId(RandomTestUtil.nextLong());
 
 		objectDefinition.setVersion(RandomTestUtil.nextInt());
 

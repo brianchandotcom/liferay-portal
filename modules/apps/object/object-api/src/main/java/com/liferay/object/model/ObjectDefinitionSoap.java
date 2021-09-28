@@ -45,6 +45,8 @@ public class ObjectDefinitionSoap implements Serializable {
 		soapModel.setDBTableName(model.getDBTableName());
 		soapModel.setLabel(model.getLabel());
 		soapModel.setClassName(model.getClassName());
+		soapModel.setDescriptionObjectFieldId(
+			model.getDescriptionObjectFieldId());
 		soapModel.setName(model.getName());
 		soapModel.setPanelAppOrder(model.getPanelAppOrder());
 		soapModel.setPanelCategoryKey(model.getPanelCategoryKey());
@@ -54,6 +56,7 @@ public class ObjectDefinitionSoap implements Serializable {
 		soapModel.setPluralLabel(model.getPluralLabel());
 		soapModel.setScope(model.getScope());
 		soapModel.setSystem(model.isSystem());
+		soapModel.setTitleObjectFieldId(model.getTitleObjectFieldId());
 		soapModel.setVersion(model.getVersion());
 		soapModel.setStatus(model.getStatus());
 
@@ -217,6 +220,14 @@ public class ObjectDefinitionSoap implements Serializable {
 		_className = className;
 	}
 
+	public long getDescriptionObjectFieldId() {
+		return _descriptionObjectFieldId;
+	}
+
+	public void setDescriptionObjectFieldId(long descriptionObjectFieldId) {
+		_descriptionObjectFieldId = descriptionObjectFieldId;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -285,6 +296,14 @@ public class ObjectDefinitionSoap implements Serializable {
 		_system = system;
 	}
 
+	public long getTitleObjectFieldId() {
+		return _titleObjectFieldId;
+	}
+
+	public void setTitleObjectFieldId(long titleObjectFieldId) {
+		_titleObjectFieldId = titleObjectFieldId;
+	}
+
 	public int getVersion() {
 		return _version;
 	}
@@ -313,6 +332,7 @@ public class ObjectDefinitionSoap implements Serializable {
 	private String _dbTableName;
 	private String _label;
 	private String _className;
+	private long _descriptionObjectFieldId;
 	private String _name;
 	private String _panelAppOrder;
 	private String _panelCategoryKey;
@@ -321,6 +341,7 @@ public class ObjectDefinitionSoap implements Serializable {
 	private String _pluralLabel;
 	private String _scope;
 	private boolean _system;
+	private long _titleObjectFieldId;
 	private int _version;
 	private int _status;
 

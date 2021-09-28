@@ -18,6 +18,7 @@
 			<validator name="required" />
 		</field>
 		<field name="className" type="String" />
+		<field name="descriptionObjectFieldId" type="long" />
 		<field name="name" type="String" />
 		<field name="panelAppOrder" type="String" />
 		<field name="panelCategoryKey" type="String" />
@@ -28,6 +29,7 @@
 		</field>
 		<field name="scope" type="String" />
 		<field name="system" type="boolean" />
+		<field name="titleObjectFieldId" type="long" />
 		<field name="version" type="int" />
 		<field name="status" type="int" />
 	</model>

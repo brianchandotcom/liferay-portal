@@ -55,6 +55,8 @@ public class ObjectDefinitionWrapper
 		attributes.put("dbTableName", getDBTableName());
 		attributes.put("label", getLabel());
 		attributes.put("className", getClassName());
+		attributes.put(
+			"descriptionObjectFieldId", getDescriptionObjectFieldId());
 		attributes.put("name", getName());
 		attributes.put("panelAppOrder", getPanelAppOrder());
 		attributes.put("panelCategoryKey", getPanelCategoryKey());
@@ -64,6 +66,7 @@ public class ObjectDefinitionWrapper
 		attributes.put("pluralLabel", getPluralLabel());
 		attributes.put("scope", getScope());
 		attributes.put("system", isSystem());
+		attributes.put("titleObjectFieldId", getTitleObjectFieldId());
 		attributes.put("version", getVersion());
 		attributes.put("status", getStatus());
 
@@ -144,6 +147,13 @@ public class ObjectDefinitionWrapper
 			setClassName(className);
 		}
 
+		Long descriptionObjectFieldId = (Long)attributes.get(
+			"descriptionObjectFieldId");
+
+		if (descriptionObjectFieldId != null) {
+			setDescriptionObjectFieldId(descriptionObjectFieldId);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -191,6 +201,12 @@ public class ObjectDefinitionWrapper
 
 		if (system != null) {
 			setSystem(system);
+		}
+
+		Long titleObjectFieldId = (Long)attributes.get("titleObjectFieldId");
+
+		if (titleObjectFieldId != null) {
+			setTitleObjectFieldId(titleObjectFieldId);
 		}
 
 		Integer version = (Integer)attributes.get("version");
@@ -269,6 +285,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the description object field ID of this object definition.
+	 *
+	 * @return the description object field ID of this object definition
+	 */
+	@Override
+	public long getDescriptionObjectFieldId() {
+		return model.getDescriptionObjectFieldId();
 	}
 
 	@Override
@@ -574,6 +600,16 @@ public class ObjectDefinitionWrapper
 	}
 
 	/**
+	 * Returns the title object field ID of this object definition.
+	 *
+	 * @return the title object field ID of this object definition
+	 */
+	@Override
+	public long getTitleObjectFieldId() {
+		return model.getTitleObjectFieldId();
+	}
+
+	/**
 	 * Returns the user ID of this object definition.
 	 *
 	 * @return the user ID of this object definition
@@ -716,6 +752,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setDBTableName(String dbTableName) {
 		model.setDBTableName(dbTableName);
+	}
+
+	/**
+	 * Sets the description object field ID of this object definition.
+	 *
+	 * @param descriptionObjectFieldId the description object field ID of this object definition
+	 */
+	@Override
+	public void setDescriptionObjectFieldId(long descriptionObjectFieldId) {
+		model.setDescriptionObjectFieldId(descriptionObjectFieldId);
 	}
 
 	/**
@@ -967,6 +1013,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setSystem(boolean system) {
 		model.setSystem(system);
+	}
+
+	/**
+	 * Sets the title object field ID of this object definition.
+	 *
+	 * @param titleObjectFieldId the title object field ID of this object definition
+	 */
+	@Override
+	public void setTitleObjectFieldId(long titleObjectFieldId) {
+		model.setTitleObjectFieldId(titleObjectFieldId);
 	}
 
 	/**

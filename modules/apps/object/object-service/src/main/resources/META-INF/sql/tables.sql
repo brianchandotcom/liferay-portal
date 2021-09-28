@@ -11,6 +11,7 @@ create table ObjectDefinition (
 	dbTableName VARCHAR(75) null,
 	label STRING null,
 	className VARCHAR(75) null,
+	descriptionObjectFieldId LONG,
 	name VARCHAR(75) null,
 	panelAppOrder VARCHAR(75) null,
 	panelCategoryKey VARCHAR(75) null,
@@ -19,6 +20,7 @@ create table ObjectDefinition (
 	pluralLabel STRING null,
 	scope VARCHAR(75) null,
 	system_ BOOLEAN,
+	titleObjectFieldId LONG,
 	version INTEGER,
 	status INTEGER
 );

@@ -61,6 +61,10 @@ public class ObjectDefinitionTable extends BaseTable<ObjectDefinitionTable> {
 		"label", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, String> className = createColumn(
 		"className", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectDefinitionTable, Long> descriptionObjectFieldId =
+		createColumn(
+			"descriptionObjectFieldId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, String> panelAppOrder =
@@ -85,6 +89,10 @@ public class ObjectDefinitionTable extends BaseTable<ObjectDefinitionTable> {
 		"scope", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, Boolean> system = createColumn(
 		"system_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<ObjectDefinitionTable, Long> titleObjectFieldId =
+		createColumn(
+			"titleObjectFieldId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, Integer> version = createColumn(
 		"version", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, Integer> status = createColumn(

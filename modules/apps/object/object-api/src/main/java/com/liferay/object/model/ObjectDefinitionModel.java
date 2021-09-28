@@ -359,6 +359,20 @@ public interface ObjectDefinitionModel
 	public void setClassName(String className);
 
 	/**
+	 * Returns the description object field ID of this object definition.
+	 *
+	 * @return the description object field ID of this object definition
+	 */
+	public long getDescriptionObjectFieldId();
+
+	/**
+	 * Sets the description object field ID of this object definition.
+	 *
+	 * @param descriptionObjectFieldId the description object field ID of this object definition
+	 */
+	public void setDescriptionObjectFieldId(long descriptionObjectFieldId);
+
+	/**
 	 * Returns the name of this object definition.
 	 *
 	 * @return the name of this object definition
@@ -569,6 +583,20 @@ public interface ObjectDefinitionModel
 	 * @param system the system of this object definition
 	 */
 	public void setSystem(boolean system);
+
+	/**
+	 * Returns the title object field ID of this object definition.
+	 *
+	 * @return the title object field ID of this object definition
+	 */
+	public long getTitleObjectFieldId();
+
+	/**
+	 * Sets the title object field ID of this object definition.
+	 *
+	 * @param titleObjectFieldId the title object field ID of this object definition
+	 */
+	public void setTitleObjectFieldId(long titleObjectFieldId);
 
 	/**
 	 * Returns the version of this object definition.

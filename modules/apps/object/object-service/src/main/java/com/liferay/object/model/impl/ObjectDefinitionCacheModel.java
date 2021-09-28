@@ -78,7 +78,7 @@ public class ObjectDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -104,6 +104,8 @@ public class ObjectDefinitionCacheModel
 		sb.append(label);
 		sb.append(", className=");
 		sb.append(className);
+		sb.append(", descriptionObjectFieldId=");
+		sb.append(descriptionObjectFieldId);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", panelAppOrder=");
@@ -120,6 +122,8 @@ public class ObjectDefinitionCacheModel
 		sb.append(scope);
 		sb.append(", system=");
 		sb.append(system);
+		sb.append(", titleObjectFieldId=");
+		sb.append(titleObjectFieldId);
 		sb.append(", version=");
 		sb.append(version);
 		sb.append(", status=");
@@ -190,6 +194,9 @@ public class ObjectDefinitionCacheModel
 			objectDefinitionImpl.setClassName(className);
 		}
 
+		objectDefinitionImpl.setDescriptionObjectFieldId(
+			descriptionObjectFieldId);
+
 		if (name == null) {
 			objectDefinitionImpl.setName("");
 		}
@@ -241,6 +248,7 @@ public class ObjectDefinitionCacheModel
 		}
 
 		objectDefinitionImpl.setSystem(system);
+		objectDefinitionImpl.setTitleObjectFieldId(titleObjectFieldId);
 		objectDefinitionImpl.setVersion(version);
 		objectDefinitionImpl.setStatus(status);
 
@@ -267,6 +275,8 @@ public class ObjectDefinitionCacheModel
 		dbTableName = objectInput.readUTF();
 		label = objectInput.readUTF();
 		className = objectInput.readUTF();
+
+		descriptionObjectFieldId = objectInput.readLong();
 		name = objectInput.readUTF();
 		panelAppOrder = objectInput.readUTF();
 		panelCategoryKey = objectInput.readUTF();
@@ -276,6 +286,8 @@ public class ObjectDefinitionCacheModel
 		scope = objectInput.readUTF();
 
 		system = objectInput.readBoolean();
+
+		titleObjectFieldId = objectInput.readLong();
 
 		version = objectInput.readInt();
 
@@ -332,6 +344,8 @@ public class ObjectDefinitionCacheModel
 			objectOutput.writeUTF(className);
 		}
 
+		objectOutput.writeLong(descriptionObjectFieldId);
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -383,6 +397,8 @@ public class ObjectDefinitionCacheModel
 
 		objectOutput.writeBoolean(system);
 
+		objectOutput.writeLong(titleObjectFieldId);
+
 		objectOutput.writeInt(version);
 
 		objectOutput.writeInt(status);
@@ -400,6 +416,7 @@ public class ObjectDefinitionCacheModel
 	public String dbTableName;
 	public String label;
 	public String className;
+	public long descriptionObjectFieldId;
 	public String name;
 	public String panelAppOrder;
 	public String panelCategoryKey;
@@ -408,6 +425,7 @@ public class ObjectDefinitionCacheModel
 	public String pluralLabel;
 	public String scope;
 	public boolean system;
+	public long titleObjectFieldId;
 	public int version;
 	public int status;
 

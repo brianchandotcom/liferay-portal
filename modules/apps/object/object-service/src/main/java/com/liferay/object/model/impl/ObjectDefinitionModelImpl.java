@@ -90,12 +90,13 @@ public class ObjectDefinitionModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"active_", Types.BOOLEAN}, {"dbTableName", Types.VARCHAR},
 		{"label", Types.VARCHAR}, {"className", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"panelAppOrder", Types.VARCHAR},
-		{"panelCategoryKey", Types.VARCHAR},
+		{"descriptionObjectFieldId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"panelAppOrder", Types.VARCHAR}, {"panelCategoryKey", Types.VARCHAR},
 		{"pkObjectFieldDBColumnName", Types.VARCHAR},
 		{"pkObjectFieldName", Types.VARCHAR}, {"pluralLabel", Types.VARCHAR},
 		{"scope", Types.VARCHAR}, {"system_", Types.BOOLEAN},
-		{"version", Types.INTEGER}, {"status", Types.INTEGER}
+		{"titleObjectFieldId", Types.BIGINT}, {"version", Types.INTEGER},
+		{"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -114,6 +115,7 @@ public class ObjectDefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("dbTableName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("label", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("className", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("descriptionObjectFieldId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("panelAppOrder", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("panelCategoryKey", Types.VARCHAR);
@@ -122,12 +124,13 @@ public class ObjectDefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("pluralLabel", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("scope", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("titleObjectFieldId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,dbTableName VARCHAR(75) null,label STRING null,className VARCHAR(75) null,name VARCHAR(75) null,panelAppOrder VARCHAR(75) null,panelCategoryKey VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,pluralLabel STRING null,scope VARCHAR(75) null,system_ BOOLEAN,version INTEGER,status INTEGER)";
+		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,dbTableName VARCHAR(75) null,label STRING null,className VARCHAR(75) null,descriptionObjectFieldId LONG,name VARCHAR(75) null,panelAppOrder VARCHAR(75) null,panelCategoryKey VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,pluralLabel STRING null,scope VARCHAR(75) null,system_ BOOLEAN,titleObjectFieldId LONG,version INTEGER,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectDefinition";
 
@@ -220,6 +223,8 @@ public class ObjectDefinitionModelImpl
 		model.setDBTableName(soapModel.getDBTableName());
 		model.setLabel(soapModel.getLabel());
 		model.setClassName(soapModel.getClassName());
+		model.setDescriptionObjectFieldId(
+			soapModel.getDescriptionObjectFieldId());
 		model.setName(soapModel.getName());
 		model.setPanelAppOrder(soapModel.getPanelAppOrder());
 		model.setPanelCategoryKey(soapModel.getPanelCategoryKey());
@@ -229,6 +234,7 @@ public class ObjectDefinitionModelImpl
 		model.setPluralLabel(soapModel.getPluralLabel());
 		model.setScope(soapModel.getScope());
 		model.setSystem(soapModel.isSystem());
+		model.setTitleObjectFieldId(soapModel.getTitleObjectFieldId());
 		model.setVersion(soapModel.getVersion());
 		model.setStatus(soapModel.getStatus());
 
@@ -448,6 +454,13 @@ public class ObjectDefinitionModelImpl
 			"className",
 			(BiConsumer<ObjectDefinition, String>)
 				ObjectDefinition::setClassName);
+		attributeGetterFunctions.put(
+			"descriptionObjectFieldId",
+			ObjectDefinition::getDescriptionObjectFieldId);
+		attributeSetterBiConsumers.put(
+			"descriptionObjectFieldId",
+			(BiConsumer<ObjectDefinition, Long>)
+				ObjectDefinition::setDescriptionObjectFieldId);
 		attributeGetterFunctions.put("name", ObjectDefinition::getName);
 		attributeSetterBiConsumers.put(
 			"name",
@@ -491,6 +504,12 @@ public class ObjectDefinitionModelImpl
 		attributeSetterBiConsumers.put(
 			"system",
 			(BiConsumer<ObjectDefinition, Boolean>)ObjectDefinition::setSystem);
+		attributeGetterFunctions.put(
+			"titleObjectFieldId", ObjectDefinition::getTitleObjectFieldId);
+		attributeSetterBiConsumers.put(
+			"titleObjectFieldId",
+			(BiConsumer<ObjectDefinition, Long>)
+				ObjectDefinition::setTitleObjectFieldId);
 		attributeGetterFunctions.put("version", ObjectDefinition::getVersion);
 		attributeSetterBiConsumers.put(
 			"version",
@@ -860,6 +879,21 @@ public class ObjectDefinitionModelImpl
 
 	@JSON
 	@Override
+	public long getDescriptionObjectFieldId() {
+		return _descriptionObjectFieldId;
+	}
+
+	@Override
+	public void setDescriptionObjectFieldId(long descriptionObjectFieldId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_descriptionObjectFieldId = descriptionObjectFieldId;
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -1132,6 +1166,21 @@ public class ObjectDefinitionModelImpl
 
 	@JSON
 	@Override
+	public long getTitleObjectFieldId() {
+		return _titleObjectFieldId;
+	}
+
+	@Override
+	public void setTitleObjectFieldId(long titleObjectFieldId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_titleObjectFieldId = titleObjectFieldId;
+	}
+
+	@JSON
+	@Override
 	public int getVersion() {
 		return _version;
 	}
@@ -1332,6 +1381,8 @@ public class ObjectDefinitionModelImpl
 		objectDefinitionImpl.setDBTableName(getDBTableName());
 		objectDefinitionImpl.setLabel(getLabel());
 		objectDefinitionImpl.setClassName(getClassName());
+		objectDefinitionImpl.setDescriptionObjectFieldId(
+			getDescriptionObjectFieldId());
 		objectDefinitionImpl.setName(getName());
 		objectDefinitionImpl.setPanelAppOrder(getPanelAppOrder());
 		objectDefinitionImpl.setPanelCategoryKey(getPanelCategoryKey());
@@ -1341,6 +1392,7 @@ public class ObjectDefinitionModelImpl
 		objectDefinitionImpl.setPluralLabel(getPluralLabel());
 		objectDefinitionImpl.setScope(getScope());
 		objectDefinitionImpl.setSystem(isSystem());
+		objectDefinitionImpl.setTitleObjectFieldId(getTitleObjectFieldId());
 		objectDefinitionImpl.setVersion(getVersion());
 		objectDefinitionImpl.setStatus(getStatus());
 
@@ -1377,6 +1429,8 @@ public class ObjectDefinitionModelImpl
 			this.<String>getColumnOriginalValue("label"));
 		objectDefinitionImpl.setClassName(
 			this.<String>getColumnOriginalValue("className"));
+		objectDefinitionImpl.setDescriptionObjectFieldId(
+			this.<Long>getColumnOriginalValue("descriptionObjectFieldId"));
 		objectDefinitionImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
 		objectDefinitionImpl.setPanelAppOrder(
@@ -1393,6 +1447,8 @@ public class ObjectDefinitionModelImpl
 			this.<String>getColumnOriginalValue("scope"));
 		objectDefinitionImpl.setSystem(
 			this.<Boolean>getColumnOriginalValue("system_"));
+		objectDefinitionImpl.setTitleObjectFieldId(
+			this.<Long>getColumnOriginalValue("titleObjectFieldId"));
 		objectDefinitionImpl.setVersion(
 			this.<Integer>getColumnOriginalValue("version"));
 		objectDefinitionImpl.setStatus(
@@ -1541,6 +1597,9 @@ public class ObjectDefinitionModelImpl
 			objectDefinitionCacheModel.className = null;
 		}
 
+		objectDefinitionCacheModel.descriptionObjectFieldId =
+			getDescriptionObjectFieldId();
+
 		objectDefinitionCacheModel.name = getName();
 
 		String name = objectDefinitionCacheModel.name;
@@ -1602,6 +1661,8 @@ public class ObjectDefinitionModelImpl
 		}
 
 		objectDefinitionCacheModel.system = isSystem();
+
+		objectDefinitionCacheModel.titleObjectFieldId = getTitleObjectFieldId();
 
 		objectDefinitionCacheModel.version = getVersion();
 
@@ -1712,6 +1773,7 @@ public class ObjectDefinitionModelImpl
 	private String _label;
 	private String _labelCurrentLanguageId;
 	private String _className;
+	private long _descriptionObjectFieldId;
 	private String _name;
 	private String _panelAppOrder;
 	private String _panelCategoryKey;
@@ -1721,6 +1783,7 @@ public class ObjectDefinitionModelImpl
 	private String _pluralLabelCurrentLanguageId;
 	private String _scope;
 	private boolean _system;
+	private long _titleObjectFieldId;
 	private int _version;
 	private int _status;
 
@@ -1765,6 +1828,8 @@ public class ObjectDefinitionModelImpl
 		_columnOriginalValues.put("dbTableName", _dbTableName);
 		_columnOriginalValues.put("label", _label);
 		_columnOriginalValues.put("className", _className);
+		_columnOriginalValues.put(
+			"descriptionObjectFieldId", _descriptionObjectFieldId);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("panelAppOrder", _panelAppOrder);
 		_columnOriginalValues.put("panelCategoryKey", _panelCategoryKey);
@@ -1774,6 +1839,7 @@ public class ObjectDefinitionModelImpl
 		_columnOriginalValues.put("pluralLabel", _pluralLabel);
 		_columnOriginalValues.put("scope", _scope);
 		_columnOriginalValues.put("system_", _system);
+		_columnOriginalValues.put("titleObjectFieldId", _titleObjectFieldId);
 		_columnOriginalValues.put("version", _version);
 		_columnOriginalValues.put("status", _status);
 	}
@@ -1825,25 +1891,29 @@ public class ObjectDefinitionModelImpl
 
 		columnBitmasks.put("className", 2048L);
 
-		columnBitmasks.put("name", 4096L);
+		columnBitmasks.put("descriptionObjectFieldId", 4096L);
 
-		columnBitmasks.put("panelAppOrder", 8192L);
+		columnBitmasks.put("name", 8192L);
 
-		columnBitmasks.put("panelCategoryKey", 16384L);
+		columnBitmasks.put("panelAppOrder", 16384L);
 
-		columnBitmasks.put("pkObjectFieldDBColumnName", 32768L);
+		columnBitmasks.put("panelCategoryKey", 32768L);
 
-		columnBitmasks.put("pkObjectFieldName", 65536L);
+		columnBitmasks.put("pkObjectFieldDBColumnName", 65536L);
 
-		columnBitmasks.put("pluralLabel", 131072L);
+		columnBitmasks.put("pkObjectFieldName", 131072L);
 
-		columnBitmasks.put("scope", 262144L);
+		columnBitmasks.put("pluralLabel", 262144L);
 
-		columnBitmasks.put("system_", 524288L);
+		columnBitmasks.put("scope", 524288L);
 
-		columnBitmasks.put("version", 1048576L);
+		columnBitmasks.put("system_", 1048576L);
 
-		columnBitmasks.put("status", 2097152L);
+		columnBitmasks.put("titleObjectFieldId", 2097152L);
+
+		columnBitmasks.put("version", 4194304L);
+
+		columnBitmasks.put("status", 8388608L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

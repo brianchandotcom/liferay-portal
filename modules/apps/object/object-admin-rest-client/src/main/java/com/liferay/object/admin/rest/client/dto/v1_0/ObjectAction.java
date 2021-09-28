@@ -182,6 +182,28 @@ public class ObjectAction implements Cloneable, Serializable {
 
 	protected String objectActionExecutorKey;
 
+	public String getObjectActionTriggerKey() {
+		return objectActionTriggerKey;
+	}
+
+	public void setObjectActionTriggerKey(String objectActionTriggerKey) {
+		this.objectActionTriggerKey = objectActionTriggerKey;
+	}
+
+	public void setObjectActionTriggerKey(
+		UnsafeSupplier<String, Exception>
+			objectActionTriggerKeyUnsafeSupplier) {
+
+		try {
+			objectActionTriggerKey = objectActionTriggerKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String objectActionTriggerKey;
+
 	public Map<String, ?> getParameters() {
 		return parameters;
 	}

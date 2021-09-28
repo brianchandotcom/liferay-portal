@@ -254,6 +254,35 @@ public class ObjectAction implements Serializable {
 	protected String objectActionExecutorKey;
 
 	@Schema
+	public String getObjectActionTriggerKey() {
+		return objectActionTriggerKey;
+	}
+
+	public void setObjectActionTriggerKey(String objectActionTriggerKey) {
+		this.objectActionTriggerKey = objectActionTriggerKey;
+	}
+
+	@JsonIgnore
+	public void setObjectActionTriggerKey(
+		UnsafeSupplier<String, Exception>
+			objectActionTriggerKeyUnsafeSupplier) {
+
+		try {
+			objectActionTriggerKey = objectActionTriggerKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String objectActionTriggerKey;
+
+	@Schema
 	@Valid
 	public Map<String, ?> getParameters() {
 		return parameters;
@@ -394,6 +423,20 @@ public class ObjectAction implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(objectActionExecutorKey));
+
+			sb.append("\"");
+		}
+
+		if (objectActionTriggerKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectActionTriggerKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectActionTriggerKey));
 
 			sb.append("\"");
 		}

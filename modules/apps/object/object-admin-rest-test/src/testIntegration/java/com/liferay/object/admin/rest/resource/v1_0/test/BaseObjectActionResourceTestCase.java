@@ -183,6 +183,7 @@ public abstract class BaseObjectActionResourceTestCase {
 
 		objectAction.setName(regex);
 		objectAction.setObjectActionExecutorKey(regex);
+		objectAction.setObjectActionTriggerKey(regex);
 
 		String json = ObjectActionSerDes.toJSON(objectAction);
 
@@ -192,6 +193,7 @@ public abstract class BaseObjectActionResourceTestCase {
 
 		Assert.assertEquals(regex, objectAction.getName());
 		Assert.assertEquals(regex, objectAction.getObjectActionExecutorKey());
+		Assert.assertEquals(regex, objectAction.getObjectActionTriggerKey());
 	}
 
 	@Test
@@ -642,6 +644,16 @@ public abstract class BaseObjectActionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"objectActionTriggerKey", additionalAssertFieldName)) {
+
+				if (objectAction.getObjectActionTriggerKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("parameters", additionalAssertFieldName)) {
 				if (objectAction.getParameters() == null) {
 					valid = false;
@@ -811,6 +823,19 @@ public abstract class BaseObjectActionResourceTestCase {
 				if (!Objects.deepEquals(
 						objectAction1.getObjectActionExecutorKey(),
 						objectAction2.getObjectActionExecutorKey())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectActionTriggerKey", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectAction1.getObjectActionTriggerKey(),
+						objectAction2.getObjectActionTriggerKey())) {
 
 					return false;
 				}
@@ -1022,6 +1047,14 @@ public abstract class BaseObjectActionResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("objectActionTriggerKey")) {
+			sb.append("'");
+			sb.append(String.valueOf(objectAction.getObjectActionTriggerKey()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("parameters")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1077,6 +1110,8 @@ public abstract class BaseObjectActionResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				objectActionExecutorKey = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				objectActionTriggerKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}
 		};

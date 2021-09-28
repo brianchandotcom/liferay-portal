@@ -101,7 +101,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectAction(objectActionId: ___){actions, active, dateCreated, dateModified, id, name, objectActionExecutorKey, parameters}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectAction(objectActionId: ___){actions, active, dateCreated, dateModified, id, name, objectActionTriggerKey, objectActionExecutorKey, parameters}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectAction objectAction(

@@ -149,6 +149,20 @@ public class ObjectActionSerDes {
 			sb.append("\"");
 		}
 
+		if (objectAction.getObjectActionTriggerKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectActionTriggerKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectAction.getObjectActionTriggerKey()));
+
+			sb.append("\"");
+		}
+
 		if (objectAction.getParameters() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -236,6 +250,15 @@ public class ObjectActionSerDes {
 				String.valueOf(objectAction.getObjectActionExecutorKey()));
 		}
 
+		if (objectAction.getObjectActionTriggerKey() == null) {
+			map.put("objectActionTriggerKey", null);
+		}
+		else {
+			map.put(
+				"objectActionTriggerKey",
+				String.valueOf(objectAction.getObjectActionTriggerKey()));
+		}
+
 		if (objectAction.getParameters() == null) {
 			map.put("parameters", null);
 		}
@@ -304,6 +327,14 @@ public class ObjectActionSerDes {
 
 				if (jsonParserFieldValue != null) {
 					objectAction.setObjectActionExecutorKey(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "objectActionTriggerKey")) {
+
+				if (jsonParserFieldValue != null) {
+					objectAction.setObjectActionTriggerKey(
 						(String)jsonParserFieldValue);
 				}
 			}

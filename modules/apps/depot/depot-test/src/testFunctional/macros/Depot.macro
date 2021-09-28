@@ -583,7 +583,7 @@ definition {
 			depotName = "${depotName}",
 			portlet = "Asset Library Settings");
 
-		var depotID = selenium.getElementValue("//input[contains(@id,'assetLibraryId')]");
+		var depotID = selenium.getElementValue("//input[contains(@id,'groupId')]");
 
 		return "${depotID}";
 	}

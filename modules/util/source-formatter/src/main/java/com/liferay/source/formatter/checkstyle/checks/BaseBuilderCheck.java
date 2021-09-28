@@ -134,20 +134,11 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 		DetailAST identDetailAST = assignValueDetailAST.findFirstToken(
 			TokenTypes.IDENT);
 
-		if (identDetailAST == null) {
-			return null;
+		if (identDetailAST != null) {
+			return identDetailAST.getText();
 		}
 
-		DetailAST elistDetailAST = assignValueDetailAST.findFirstToken(
-			TokenTypes.ELIST);
-
-		if ((elistDetailAST == null) ||
-			(elistDetailAST.getFirstChild() != null)) {
-
-			return null;
-		}
-
-		return identDetailAST.getText();
+		return null;
 	}
 
 	protected Map<String, String[][]> getReservedKeywordsMap() {
@@ -443,7 +434,8 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 
 					if ((!allowNullValues() &&
 						 _isNullValueExpression(childDetailAST)) ||
-						containsVariableName(childDetailAST, variableName)) {
+						containsVariableName(
+							childDetailAST, variableName, true)) {
 
 						return;
 					}
@@ -452,7 +444,9 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 				}
 			}
 
-			if (containsVariableName(nextSiblingDetailAST, variableName)) {
+			if (containsVariableName(
+					nextSiblingDetailAST, variableName, true)) {
+
 				return;
 			}
 		}
@@ -591,8 +585,6 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 		List<String> variableNames = _getVariableNames(
 			parentDetailAST, "get.*");
 
-		variableNames.add(variableName);
-
 		String[] builderMethodNames = builderInformation.getMethodNames();
 
 		DetailAST nextSiblingDetailAST = parentDetailAST.getNextSibling();
@@ -614,9 +606,15 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 				return;
 			}
 
+			if (containsVariableName(
+					nextSiblingDetailAST, variableName, false)) {
+
+				return;
+			}
+
 			for (String curVariableName : variableNames) {
 				if (containsVariableName(
-						nextSiblingDetailAST, curVariableName)) {
+						nextSiblingDetailAST, curVariableName, true)) {
 
 					return;
 				}

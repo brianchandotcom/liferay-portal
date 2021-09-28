@@ -103,7 +103,9 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 					fullIdent2.getLineNo(), "JSONUtil.put");
 			}
 
-			if (containsVariableName(nextSiblingDetailAST, variableName)) {
+			if (containsVariableName(
+					nextSiblingDetailAST, variableName, true)) {
+
 				return;
 			}
 		}

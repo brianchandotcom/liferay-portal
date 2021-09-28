@@ -27,7 +27,7 @@ import java.util.Objects;
 public abstract class BaseChainedMethodCheck extends BaseCheck {
 
 	protected boolean containsVariableName(
-		DetailAST detailAST, String variableName) {
+		DetailAST detailAST, String variableName, boolean allowGetters) {
 
 		List<DetailAST> identDetailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.IDENT);
@@ -39,7 +39,7 @@ public abstract class BaseChainedMethodCheck extends BaseCheck {
 
 			DetailAST nextSiblingDetailAST = identDetailAST.getNextSibling();
 
-			if ((nextSiblingDetailAST != null) &&
+			if (allowGetters && (nextSiblingDetailAST != null) &&
 				(nextSiblingDetailAST.getType() == TokenTypes.IDENT)) {
 
 				String s = nextSiblingDetailAST.getText();

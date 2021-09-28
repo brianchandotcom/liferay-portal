@@ -75,6 +75,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
@@ -128,6 +129,11 @@ public class JenkinsResultsParserUtil {
 		URL_CACHE + "/liferay-portal/build.properties",
 		URL_CACHE + "/liferay-portal/ci.properties",
 		URL_CACHE + "/liferay-portal/test.properties"
+	};
+
+	public static final String[] URLS_GIT_DIRECTORIES_JSON_DEFAULT = {
+		URL_CACHE + "/liferay-jenkins-ee/git-directories.json",
+		URL_CACHE + "/liferay-jenkins-ee/git-working-directories.json"
 	};
 
 	public static final String[] URLS_JENKINS_PROPERTIES_DEFAULT = {
@@ -1547,6 +1553,32 @@ public class JenkinsResultsParserUtil {
 		return excludedFiles;
 	}
 
+	public static String getGitDirectoryName(
+		String repositoryName, String upstreamBranchName) {
+
+		JSONArray gitDirectoriesJSONArray = _getGitDirectoriesJSONArray();
+
+		for (int i = 0; i < gitDirectoriesJSONArray.length(); i++) {
+			JSONObject gitDirectoryJSONObject =
+				gitDirectoriesJSONArray.getJSONObject(i);
+
+			if ((gitDirectoryJSONObject == JSONObject.NULL) ||
+				!Objects.equals(
+					repositoryName,
+					gitDirectoryJSONObject.getString("repository")) ||
+				!Objects.equals(
+					upstreamBranchName,
+					gitDirectoryJSONObject.getString("branch"))) {
+
+				continue;
+			}
+
+			return gitDirectoryJSONObject.getString("name");
+		}
+
+		return null;
+	}
+
 	public static String getGitHubAPIRateLimitStatusMessage() {
 		try {
 			JSONObject jsonObject = toJSONObject(
@@ -1604,6 +1636,28 @@ public class JenkinsResultsParserUtil {
 
 	public static DateFormat getGitHubDateFormat() {
 		return _gitHubDateFormat;
+	}
+
+	public static String getGitRepositoryName(String gitDirectoryName) {
+		JSONObject gitDirectoryJSONObject = _getGitDirectoryJSONObject(
+			gitDirectoryName);
+
+		if (gitDirectoryJSONObject == null) {
+			return null;
+		}
+
+		return gitDirectoryJSONObject.getString("repository");
+	}
+
+	public static String getGitUpstreamBranchName(String gitDirectoryName) {
+		JSONObject gitDirectoryJSONObject = _getGitDirectoryJSONObject(
+			gitDirectoryName);
+
+		if (gitDirectoryJSONObject == null) {
+			return null;
+		}
+
+		return gitDirectoryJSONObject.getString("branch");
 	}
 
 	public static String[] getGlobsFromProperty(String globProperty) {
@@ -4483,6 +4537,57 @@ public class JenkinsResultsParserUtil {
 		return join(",", propertyValues);
 	}
 
+	private static synchronized JSONArray _getGitDirectoriesJSONArray() {
+		if (_gitDirectoriesJSONArray != null) {
+			return _gitDirectoriesJSONArray;
+		}
+
+		_gitDirectoriesJSONArray = new JSONArray();
+
+		for (String url : URLS_GIT_DIRECTORIES_JSON_DEFAULT) {
+			JSONArray jsonArray;
+
+			try {
+				jsonArray = toJSONArray(getLocalURL(url), false);
+			}
+			catch (IOException ioException) {
+				continue;
+			}
+
+			if (jsonArray == null) {
+				continue;
+			}
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				_gitDirectoriesJSONArray.put(jsonArray.get(i));
+			}
+		}
+
+		return _gitDirectoriesJSONArray;
+	}
+
+	private static JSONObject _getGitDirectoryJSONObject(
+		String gitDirectoryName) {
+
+		JSONArray gitDirectoriesJSONArray = _getGitDirectoriesJSONArray();
+
+		for (int i = 0; i < gitDirectoriesJSONArray.length(); i++) {
+			JSONObject gitDirectoryJSONObject =
+				gitDirectoriesJSONArray.getJSONObject(i);
+
+			if ((gitDirectoryJSONObject == JSONObject.NULL) ||
+				!gitDirectoryName.equals(
+					gitDirectoryJSONObject.getString("name"))) {
+
+				continue;
+			}
+
+			return gitDirectoryJSONObject;
+		}
+
+		return null;
+	}
+
 	private static String _getGitHubAPIRateLimitStatusMessage(
 		int limit, int remaining, long reset) {
 
@@ -4867,6 +4972,7 @@ public class JenkinsResultsParserUtil {
 	private static Long _currentTimeMillisDelta;
 	private static final Pattern _dockerFilePattern = Pattern.compile(
 		".*FROM (?<dockerImageName>[^\\s]+)( AS builder)?\\n[\\s\\S]*");
+	private static JSONArray _gitDirectoriesJSONArray;
 	private static final DateFormat _gitHubDateFormat = new SimpleDateFormat(
 		"yyyy-MM-dd'T'HH:mm:ss");
 	private static final Pattern _javaVersionPattern = Pattern.compile(

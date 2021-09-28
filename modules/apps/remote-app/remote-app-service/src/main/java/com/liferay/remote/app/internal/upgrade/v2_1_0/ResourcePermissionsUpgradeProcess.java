@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.remote.app.model.RemoteAppEntry;
 
 import java.sql.PreparedStatement;
@@ -72,7 +71,7 @@ public class ResourcePermissionsUpgradeProcess extends UpgradeProcess {
 				preparedStatement.setLong(
 					5, ResourceConstants.SCOPE_INDIVIDUAL);
 				preparedStatement.setString(
-					6, GetterUtil.getString(remoteAppEntryId));
+					6, String.valueOf(remoteAppEntryId));
 				preparedStatement.setLong(7, remoteAppEntryId);
 				preparedStatement.setLong(8, ownerRole.getRoleId());
 				preparedStatement.setLong(9, userId);
@@ -85,7 +84,7 @@ public class ResourcePermissionsUpgradeProcess extends UpgradeProcess {
 				preparedStatement.setLong(
 					16, ResourceConstants.SCOPE_INDIVIDUAL);
 				preparedStatement.setString(
-					17, GetterUtil.getString(remoteAppEntryId));
+					17, String.valueOf(remoteAppEntryId));
 				preparedStatement.setLong(18, remoteAppEntryId);
 				preparedStatement.setLong(19, guestRole.getRoleId());
 				preparedStatement.setLong(20, 0);

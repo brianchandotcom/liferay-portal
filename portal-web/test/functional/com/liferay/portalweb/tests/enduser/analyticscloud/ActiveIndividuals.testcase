@@ -34,6 +34,8 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			JSONUser.tearDownNonAdminUsers();
 		}
 
 		ACUtils.tearDownAC();
@@ -63,11 +65,15 @@ definition {
 				userLoginEmailAddress = "ac@liferay.com",
 				userLoginFullName = "ac ac");
 
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
+			for (var n : list "1,2,3,4") {
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
 
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
+				DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+			}
 		}
 
 		task ("Close all sessions") {
@@ -107,10 +113,11 @@ definition {
 
 		task ("Assert chart popover date formatted") {
 			var formattedDate = ACIndividualsDashboard.getChartPopoverDate();
+			var formattedDate = StringUtil.extractFirst("${formattedDate}",",");
 
 			ACUtils.assertDatePattern(
 				date = "${formattedDate}",
-				format = "yyyy MMM dd");
+				format = "MMM d");
 		}
 	}
 
@@ -138,11 +145,15 @@ definition {
 				userLoginEmailAddress = "ac@liferay.com",
 				userLoginFullName = "ac ac");
 
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
+			for (var n : list "1,2,3,4") {
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
 
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
+				DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+			}
 		}
 
 		task ("Close all sessions") {
@@ -196,7 +207,8 @@ definition {
 
 		task ("Get the last 24 hours Date") {
 			var previousDay = DateUtil.getFormattedDate("-1", "d");
-			var previousDate = "${displayDateMonth} ${previousDay}, ${displayDateYear}";
+			var previousMonth = DateUtil.getFormattedDate("-1", "MMMM");
+			var previousDate = "${previousMonth} ${previousDay}, ${displayDateYear}";
 		}
 
 		task ("Assert the display time range") {

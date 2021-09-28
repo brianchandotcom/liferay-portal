@@ -959,14 +959,56 @@ public class ObjectDefinitionLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap("Ables"),
 			objectDefinition.getPluralLabelMap());
 
+		// Object field id for description and title are invalid
+
+		try {
+			objectDefinition =
+				_objectDefinitionLocalService.updateCustomObjectDefinition(
+					objectDefinition.getObjectDefinitionId(), 1, 2,
+					objectDefinition.isActive(),
+					LocalizedMapUtil.getLocalizedMap("Able"), "Able", null,
+					null, LocalizedMapUtil.getLocalizedMap("Ables"),
+					objectDefinition.getScope());
+
+			Assert.fail();
+		}
+		catch (NoSuchObjectFieldException noSuchObjectFieldException) {
+			Assert.assertNotNull(noSuchObjectFieldException);
+		}
+
+		// Object field id for description and title are valid
+
+		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(), false, false, null,
+			LocalizedMapUtil.getLocalizedMap("Able"), "able", true, "String");
+
 		objectDefinition =
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
 				objectDefinition.getObjectDefinitionId(),
+				objectField.getObjectFieldId(), objectField.getObjectFieldId(),
 				objectDefinition.isActive(),
 				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
 				LocalizedMapUtil.getLocalizedMap("Ables"),
 				objectDefinition.getScope());
 
+		Assert.assertEquals(
+			objectField.getObjectFieldId(),
+			objectDefinition.getDescriptionObjectFieldId());
+		Assert.assertEquals(
+			objectField.getObjectFieldId(),
+			objectDefinition.getTitleObjectFieldId());
+
+		objectDefinition =
+			_objectDefinitionLocalService.updateCustomObjectDefinition(
+				objectDefinition.getObjectDefinitionId(), 0, 0,
+				objectDefinition.isActive(),
+				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
+				LocalizedMapUtil.getLocalizedMap("Ables"),
+				objectDefinition.getScope());
+
+		Assert.assertEquals(0, objectDefinition.getDescriptionObjectFieldId());
+		Assert.assertEquals(0, objectDefinition.getTitleObjectFieldId());
 		Assert.assertTrue(objectDefinition.isActive());
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Able"),
@@ -978,7 +1020,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition =
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
-				objectDefinition.getObjectDefinitionId(), false,
+				objectDefinition.getObjectDefinitionId(), 0, 0, false,
 				LocalizedMapUtil.getLocalizedMap("Baker"), "Baker", null, null,
 				LocalizedMapUtil.getLocalizedMap("Bakers"),
 				objectDefinition.getScope());
@@ -998,7 +1040,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition =
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
-				objectDefinition.getObjectDefinitionId(), true,
+				objectDefinition.getObjectDefinitionId(), 0, 0, true,
 				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie", null,
 				null, LocalizedMapUtil.getLocalizedMap("Charlies"),
 				objectDefinition.getScope());

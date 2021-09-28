@@ -21,6 +21,10 @@ import org.json.JSONObject;
  */
 public class DefaultWorkspace extends BaseWorkspace {
 
+	protected DefaultWorkspace(JSONObject jsonObject) {
+		super(jsonObject);
+	}
+
 	protected DefaultWorkspace(
 		String primaryRepositoryName, String upstreamBranchName) {
 

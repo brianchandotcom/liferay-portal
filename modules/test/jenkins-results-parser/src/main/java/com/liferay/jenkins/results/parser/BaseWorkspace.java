@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import org.json.JSONObject;
 
@@ -55,12 +57,33 @@ public abstract class BaseWorkspace implements Workspace {
 			return new ArrayList<>(_workspaceGitRepositories.values());
 		}
 
-		for (String workspaceRepositoryDirName :
+		List<Callable<WorkspaceGitRepository>> callables = new ArrayList<>();
+
+		for (final String workspaceRepositoryDirName :
 				workspaceRepositoryDirNames.split(",")) {
 
-			workspaceGitRepository workspaceGitRepository =
-				GitRepositoryFactory.getWorkspaceGitRepository(
-					workspaceRepositoryDirName);
+			Callable<WorkspaceGitRepository> callable =
+				new Callable<WorkspaceGitRepository>() {
+
+					@Override
+					public WorkspaceGitRepository call() {
+						return GitRepositoryFactory.getWorkspaceGitRepository(
+							workspaceRepositoryDirName);
+					}
+
+				};
+
+			callables.add(callable);
+		}
+
+		ParallelExecutor<WorkspaceGitRepository> parallelExecutor =
+			new ParallelExecutor<>(callables, threadPoolExecutor);
+
+		List<WorkspaceGitRepository> workspaceGitRepositories =
+			parallelExecutor.execute();
+
+		for (WorkspaceGitRepository workspaceGitRepository :
+				workspaceGitRepositories) {
 
 			_workspaceGitRepositories.put(
 				workspaceGitRepository.getDirectoryName(),
@@ -72,31 +95,90 @@ public abstract class BaseWorkspace implements Workspace {
 
 	@Override
 	public void setUp() {
-		for (WorkspaceGitRepository workspaceGitRepository :
+		List<Callable<Object>> callables = new ArrayList<>();
+
+		for (final WorkspaceGitRepository workspaceGitRepository :
 				getWorkspaceGitRepositories()) {
 
-			workspaceGitRepository.setUp();
+			Callable<Object> callable = new Callable<Object>() {
 
-			workspaceGitRepository.writePropertiesFiles();
+				@Override
+				public Object call() {
+					workspaceGitRepository.setUp();
+
+					workspaceGitRepository.writePropertiesFiles();
+
+					return null;
+				}
+
+			};
+
+			callables.add(callable);
 		}
+
+		ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
+			callables, threadPoolExecutor);
+
+		parallelExecutor.execute();
 	}
 
 	@Override
 	public void synchronizeToGitHubDev() {
-		for (WorkspaceGitRepository workspaceGitRepository :
+		List<Callable<Object>> callables = new ArrayList<>();
+
+		for (final WorkspaceGitRepository workspaceGitRepository :
 				getWorkspaceGitRepositories()) {
 
-			workspaceGitRepository.synchronizeToGitHubDev();
+			Callable<Object> callable = new Callable<Object>() {
+
+				@Override
+				public Object call() {
+					workspaceGitRepository.synchronizeToGitHubDev();
+
+					return null;
+				}
+
+			};
+
+			callables.add(callable);
 		}
+
+		ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
+			callables, threadPoolExecutor);
+
+		parallelExecutor.execute();
 	}
 
 	@Override
 	public void tearDown() {
-		for (WorkspaceGitRepository workspaceGitRepository :
+		List<Callable<Object>> callables = new ArrayList<>();
+
+		for (final WorkspaceGitRepository workspaceGitRepository :
 				getWorkspaceGitRepositories()) {
 
-			workspaceGitRepository.tearDown();
+			Callable<Object> callable = new Callable<Object>() {
+
+				@Override
+				public Object call() {
+					try {
+						workspaceGitRepository.tearDown();
+					}
+					catch (Exception exception) {
+						exception.printStackTrace();
+					}
+
+					return null;
+				}
+
+			};
+
+			callables.add(callable);
 		}
+
+		ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
+			callables, threadPoolExecutor);
+
+		parallelExecutor.execute();
 	}
 
 	protected BaseWorkspace(JSONObject jsonObject) {
@@ -164,6 +246,9 @@ public abstract class BaseWorkspace implements Workspace {
 
 		return _workspaceGitRepositories.get(repositoryDirName);
 	}
+
+	protected static final ThreadPoolExecutor threadPoolExecutor =
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(16, true);
 
 	private void _validateKeys() {
 		for (String requiredKey : _REQUIRED_KEYS) {

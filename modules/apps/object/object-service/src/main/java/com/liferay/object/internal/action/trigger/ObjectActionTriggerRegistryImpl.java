@@ -42,7 +42,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Marco Leo
  */
-@Component(service = ObjectActionTriggerRegistryImpl.class)
+@Component(service = ObjectActionTriggerRegistry.class)
 public class ObjectActionTriggerRegistryImpl
 	implements ObjectActionTriggerRegistry {
 

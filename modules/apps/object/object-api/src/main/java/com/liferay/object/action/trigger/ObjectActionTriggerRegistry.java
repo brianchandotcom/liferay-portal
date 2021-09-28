@@ -16,9 +16,12 @@ package com.liferay.object.action.trigger;
 
 import java.util.List;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Marco Leo
  */
+@ProviderType
 public interface ObjectActionTriggerRegistry {
 
 	public List<ObjectActionTrigger> getObjectActionTriggers(String className);

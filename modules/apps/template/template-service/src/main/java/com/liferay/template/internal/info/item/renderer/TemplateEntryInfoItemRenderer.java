@@ -20,6 +20,8 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 import com.liferay.template.internal.transformer.TemplateDisplayTemplateTransformer;
@@ -57,6 +59,20 @@ public class TemplateEntryInfoItemRenderer<T> implements InfoItemRenderer<T> {
 			_templateEntry.getDDMTemplateId());
 
 		return ddmTemplate.getName(locale);
+	}
+
+	@Override
+	public boolean isAvailable() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if ((serviceContext == null) ||
+			(serviceContext.getScopeGroupId() != _templateEntry.getGroupId())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

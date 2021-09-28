@@ -101,7 +101,7 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			for (var interests : list "${pageNameList}") {
+			for (var interests : list "site,sports,technology") {
 				ACInterests.viewInterests(interestName = "${interests}");
 			}
 		}

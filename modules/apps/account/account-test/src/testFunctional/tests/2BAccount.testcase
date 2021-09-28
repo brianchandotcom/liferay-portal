@@ -156,6 +156,42 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Account Name");
 	}
 
+	@description = "This test asserts that an Account Admin can add and unassign organization in bulk"
+	@priority = "5"
+	test AccountAdminCanUnassignOrganizationsInBulk {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		for (var organizationNumber : list "1,2,3,4") {
+			JSONOrganization.addOrganization(
+				organizationName = "Organization ${organizationNumber}",
+				organizationSite = "true");
+		}
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.assignMultipleOrganizations(
+			accountName = "Account Name",
+			organizationNumber = "1,3,4");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+		Accounts.unassignMultipleOrganizations(
+			accountName = "Account Name",
+			organizationNumber = "1,3,4");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		Accounts.viewNoAssignee(
+			accountName = "Account Name",
+			assigneeType = "Organizations");
+	}
+
 	@description = "This test asserts that an Account Admin can add and unassign organization to an account"
 	@priority = "5"
 	test AccountAdminCanUnassignOrganizationToAccount {

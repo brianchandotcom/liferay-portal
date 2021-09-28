@@ -208,6 +208,8 @@ public class GitUtil {
 	public static List<RemoteGitRef> getRemoteGitRefs(
 		String remoteGitBranchName, File workingDirectory, String remoteURL) {
 
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+
 		if (!isValidRemoteURL(remoteURL)) {
 			throw new IllegalArgumentException(
 				"Invalid remote url " + remoteURL);
@@ -273,8 +275,12 @@ public class GitUtil {
 		}
 
 		System.out.println(
-			"getRemoteGitRefs found " + remoteGitRefs.size() + " refs at " +
-				remoteURL + ".");
+			JenkinsResultsParserUtil.combine(
+				"getRemoteGitRefs found ", String.valueOf(remoteGitRefs.size()),
+				" refs at ", remoteURL, " in ",
+				JenkinsResultsParserUtil.toDurationString(
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - start),
+				"."));
 
 		return remoteGitRefs;
 	}

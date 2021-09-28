@@ -28,6 +28,8 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			JSONUser.tearDownNonAdminUsers();
 		}
 
 		ACUtils.tearDownAC();
@@ -1154,30 +1156,23 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9224 | Test Summary: Create a Web Behavior Segment of Viewing Document & Media in a Topic"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentViewingDM {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: Issues with segment members may happen on this test case
-		// AC Refactor ticket: LRAC-9404
-		// AC Fix ticket: LRAC-9285
-		// AC Bug ticket : LRAC-9412
+		var username = "ac";
 
 		ACUtils.createDMAndAddToPage();
-
-		Navigator.openURL();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
-			userEmailAddress = "ac@liferay.com",
-			userFirstName = "ac",
-			userLastName = "ac",
-			userScreenName = "ac");
+			userEmailAddress = "${username}@liferay.com",
+			userFirstName = "${username}",
+			userLastName = "${username}",
+			userScreenName = "${username}");
 
 		ACDXPSettings.syncNewContactData();
 
 		User.logoutAndLoginPG(
-			userLoginEmailAddress = "ac@liferay.com",
-			userLoginFullName = "ac ac");
+			userLoginEmailAddress = "${username}@liferay.com",
+			userLoginFullName = "${username} ${username}");
 
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
@@ -1200,7 +1195,7 @@ definition {
 		ACSegments.addSegmentField(segmentField = "Viewed Document & Media");
 
 		ACSegments.selectDocument(
-			documentTitle = "Document_1.jpg",
+			documentTitle = "DM AC Title",
 			indexField = "1");
 
 		ACSegments.setOccurence(occurenceNumber = "4");
@@ -1213,7 +1208,7 @@ definition {
 			locator1 = "ACSegments#NO_MEMBER_TITLE",
 			value1 = "There are no items found.");
 
-		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
+		ACUtils.launchDXP(userEmailAddress = "${username}@liferay.com");
 
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
@@ -1225,9 +1220,9 @@ definition {
 				siteName = "Site Name");
 
 			DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
-		}
 
-		Pause(locator1 = "10000");
+			Pause(locator1 = "5000");
+		}
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -1239,9 +1234,7 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		// Couldn't assert the user due to missing data.
-
-		ACUtils.viewNameList(nameList = "ac ac");
+		ACUtils.viewNameList(nameList = "${username} ${username}");
 	}
 
 	@description = "Create a segment with behavior of viewing a form"

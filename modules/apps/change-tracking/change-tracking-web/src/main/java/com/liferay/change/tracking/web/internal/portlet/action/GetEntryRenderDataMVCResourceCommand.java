@@ -326,25 +326,25 @@ public class GetEntryRenderDataMVCResourceCommand
 								availableLanguageIds, leftCtCollectionId,
 								ctDisplayRenderer, ctEntryId, leftCTSQLMode,
 								httpServletRequest, httpServletResponse,
-								leftModel, CTConstants.TYPE_AFTER);
+								leftModel, CTConstants.TYPE_LATEST);
 						leftLocalizedRenderJSONObject =
 							_getLocalizedRenderJSONObject(
 								availableLanguageIds, httpServletRequest,
 								httpServletResponse, leftCtCollectionId,
 								ctDisplayRenderer, ctEntryId, leftCTSQLMode,
-								leftModel, CTConstants.TYPE_AFTER);
+								leftModel, CTConstants.TYPE_LATEST);
 					}
 					else {
 						leftContent = _getContent(
 							leftCtCollectionId, ctDisplayRenderer, ctEntryId,
 							leftCTSQLMode, httpServletRequest,
 							httpServletResponse, themeDisplay.getLocale(),
-							leftModel, CTConstants.TYPE_AFTER);
+							leftModel, CTConstants.TYPE_LATEST);
 						leftRender = _getRender(
 							httpServletRequest, httpServletResponse,
 							leftCtCollectionId, ctDisplayRenderer, ctEntryId,
 							leftCTSQLMode, themeDisplay.getLocale(), leftModel,
-							CTConstants.TYPE_AFTER);
+							CTConstants.TYPE_LATEST);
 					}
 				}
 			}
@@ -467,25 +467,25 @@ public class GetEntryRenderDataMVCResourceCommand
 								availableLanguageIds, ctCollectionId,
 								ctDisplayRenderer, ctEntryId, ctSQLMode,
 								httpServletRequest, httpServletResponse,
-								rightModel, CTConstants.TYPE_AFTER);
+								rightModel, CTConstants.TYPE_LATEST);
 						rightLocalizedRenderJSONObject =
 							_getLocalizedRenderJSONObject(
 								availableLanguageIds, httpServletRequest,
 								httpServletResponse, ctCollectionId,
 								ctDisplayRenderer, ctEntryId, ctSQLMode,
-								rightModel, CTConstants.TYPE_AFTER);
+								rightModel, CTConstants.TYPE_LATEST);
 					}
 					else {
 						rightContent = _getContent(
 							ctCollectionId, ctDisplayRenderer, ctEntryId,
 							ctSQLMode, httpServletRequest, httpServletResponse,
 							themeDisplay.getLocale(), rightModel,
-							CTConstants.TYPE_AFTER);
+							CTConstants.TYPE_LATEST);
 						rightRender = _getRender(
 							httpServletRequest, httpServletResponse,
 							ctCollectionId, ctDisplayRenderer, ctEntryId,
 							ctSQLMode, themeDisplay.getLocale(), rightModel,
-							CTConstants.TYPE_AFTER);
+							CTConstants.TYPE_LATEST);
 					}
 				}
 			}

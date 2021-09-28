@@ -33,4 +33,6 @@ public interface CTConstants {
 
 	public static final String TYPE_BEFORE = "before";
 
+	public static final String TYPE_LATEST = "latest";
+
 }

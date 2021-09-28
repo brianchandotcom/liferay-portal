@@ -634,11 +634,14 @@ definition {
 
 	@description = "This is a use case for LRQA-48777."
 	test EditApplicationScopesAndViewLanguageKeys {
-		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~default.config";
 		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;true&quot;";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "OAuth2#EditApplicationScopesAndViewLanguageKeys";
+
+		FileInstall.deployFileOnServer(
+			filePath = "coreinfrastructure/security/oauth2",
+			liferayDependencyJars = "com.liferay.oauth2.provider.scope.sample.qa.jar");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -1190,8 +1193,11 @@ definition {
 
 	@description = "This is a use case for LRQA-48773."
 	test UpdateScopeBundlePrefixes {
-		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 		property test.name.skip.portal.instance = "OAuth2#UpdateScopeBundlePrefixes";
+
+		FileInstall.deployFileOnServer(
+			filePath = "coreinfrastructure/security/oauth2",
+			liferayDependencyJars = "com.liferay.oauth2.provider.scope.sample.qa.jar");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",
@@ -1252,10 +1258,13 @@ definition {
 
 	@description = "This is a use case for LRQA-40999."
 	test UpdateScopeMappings {
-		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~liferay~oauth2~scope~sample~qa~app.config";
 		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything.read,everything.write&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;false&quot;";
 		property test.name.skip.portal.instance = "OAuth2#UpdateScopeMappings";
+
+		FileInstall.deployFileOnServer(
+			filePath = "coreinfrastructure/security/oauth2",
+			liferayDependencyJars = "com.liferay.oauth2.provider.scope.sample.qa.jar");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -1391,7 +1400,9 @@ definition {
 			applicationName = "Analytics Cloud",
 			checkGlobalScope = "Everything");
 
-		FileInstall.deployFileOnServer(liferayDependencyJars = "com.liferay.oauth2.provider.sample.jar");
+		FileInstall.deployFileOnServer(
+			filePath = "coreinfrastructure/security/oauth2",
+			liferayDependencyJars = "com.liferay.oauth2.provider.sample.jar");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",

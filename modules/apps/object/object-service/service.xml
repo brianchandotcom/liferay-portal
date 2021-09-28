@@ -50,6 +50,8 @@
 
 		<!-- Other fields -->
 
+		<column name="descriptionObjectFieldId" type="long" />
+		<column name="titleObjectFieldId" type="long" />
 		<column name="active" type="boolean" />
 		<column method-name="DBTableName" name="dbTableName" type="String" />
 		<column localized="true" name="label" type="String" />

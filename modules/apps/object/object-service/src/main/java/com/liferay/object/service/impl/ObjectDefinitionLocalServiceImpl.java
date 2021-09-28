@@ -17,6 +17,7 @@ package com.liferay.object.service.impl;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
+import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
@@ -514,7 +515,8 @@ public class ObjectDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition updateCustomObjectDefinition(
-			Long objectDefinitionId, boolean active,
+			Long objectDefinitionId, long descriptionObjectFieldId,
+			long titleObjectFieldId, boolean active,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
 			String scope)
@@ -528,8 +530,9 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		return _updateObjectDefinition(
-			objectDefinition, active, null, labelMap, name, panelAppOrder,
-			panelCategoryKey, null, null, pluralLabelMap, scope);
+			objectDefinition, descriptionObjectFieldId, titleObjectFieldId,
+			active, null, labelMap, name, panelAppOrder, panelCategoryKey, null,
+			null, pluralLabelMap, scope);
 	}
 
 	@Activate
@@ -635,8 +638,8 @@ public class ObjectDefinitionLocalServiceImpl
 				if (system) {
 					_objectFieldLocalService.addSystemObjectField(
 						userId, objectDefinition.getObjectDefinitionId(),
-						objectField.getDBColumnName(), objectField.getIndexed(),
-						objectField.getIndexedAsKeyword(),
+						objectField.getDBColumnName(), objectField.isIndexed(),
+						objectField.isIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
 						objectField.getLabelMap(), objectField.getName(),
 						objectField.isRequired(), objectField.getType());
@@ -645,8 +648,8 @@ public class ObjectDefinitionLocalServiceImpl
 					_objectFieldLocalService.addCustomObjectField(
 						userId, objectField.getListTypeDefinitionId(),
 						objectDefinition.getObjectDefinitionId(),
-						objectField.getIndexed(),
-						objectField.getIndexedAsKeyword(),
+						objectField.isIndexed(),
+						objectField.isIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
 						objectField.getLabelMap(), objectField.getName(),
 						objectField.isRequired(), objectField.getType());
@@ -802,18 +805,23 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private ObjectDefinition _updateObjectDefinition(
-			ObjectDefinition objectDefinition, boolean active,
-			String dbTableName, Map<Locale, String> labelMap, String name,
-			String panelAppOrder, String panelCategoryKey,
-			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			Map<Locale, String> pluralLabelMap, String scope)
+			ObjectDefinition objectDefinition, long descriptionObjectFieldId,
+			long titleObjectFieldId, boolean active, String dbTableName,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, String pkObjectFieldDBColumnName,
+			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
+			String scope)
 		throws PortalException {
 
 		boolean originalActive = objectDefinition.isActive();
 
 		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
+		_validateObjectFieldId(objectDefinition, descriptionObjectFieldId);
 		_validatePluralLabel(pluralLabelMap, LocaleUtil.getSiteDefault());
+		_validateObjectFieldId(objectDefinition, titleObjectFieldId);
 
+		objectDefinition.setDescriptionObjectFieldId(descriptionObjectFieldId);
+		objectDefinition.setTitleObjectFieldId(titleObjectFieldId);
 		objectDefinition.setActive(active);
 		objectDefinition.setPanelAppOrder(panelAppOrder);
 		objectDefinition.setPanelCategoryKey(panelCategoryKey);
@@ -939,6 +947,23 @@ public class ObjectDefinitionLocalServiceImpl
 
 			throw new DuplicateObjectDefinitionException(
 				"Duplicate name " + name);
+		}
+	}
+
+	private void _validateObjectFieldId(
+			ObjectDefinition objectDefinition, long objectFieldId)
+		throws PortalException {
+
+		if (objectFieldId > 0) {
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				objectFieldId);
+
+			if ((objectField == null) ||
+				(objectField.getObjectDefinitionId() !=
+					objectDefinition.getObjectDefinitionId())) {
+
+				throw new NoSuchObjectFieldException();
+			}
 		}
 	}
 

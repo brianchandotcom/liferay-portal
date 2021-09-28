@@ -126,7 +126,8 @@ public class ObjectDefinitionServiceImpl
 
 	@Override
 	public ObjectDefinition updateCustomObjectDefinition(
-			Long objectDefinitionId, boolean active,
+			Long objectDefinitionId, long descriptionObjectFieldId,
+			long titleObjectFieldId, boolean active,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
 			String scope)
@@ -136,8 +137,9 @@ public class ObjectDefinitionServiceImpl
 			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
 
 		return _objectDefinitionLocalService.updateCustomObjectDefinition(
-			objectDefinitionId, active, labelMap, name, panelAppOrder,
-			panelCategoryKey, pluralLabelMap, scope);
+			objectDefinitionId, descriptionObjectFieldId, titleObjectFieldId,
+			active, labelMap, name, panelAppOrder, panelCategoryKey,
+			pluralLabelMap, scope);
 	}
 
 	@Reference

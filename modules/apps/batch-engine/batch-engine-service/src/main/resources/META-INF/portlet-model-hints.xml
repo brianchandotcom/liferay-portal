@@ -17,7 +17,7 @@
 		<field name="contentType" type="String" />
 		<field name="endTime" type="Date" />
 		<field name="errorMessage" type="String">
-			<hint name="max-length">1000</hint>
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="fieldNames" type="String">
 			<hint name="max-length">1000</hint>
@@ -44,7 +44,7 @@
 		<field name="contentType" type="String" />
 		<field name="endTime" type="Date" />
 		<field name="errorMessage" type="String">
-			<hint name="max-length">1000</hint>
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="executeStatus" type="String" />
 		<field name="fieldNameMapping" type="Map" />

@@ -642,8 +642,8 @@ definition {
 		DepotNavigator.gotoPortlet(portlet = "Staging");
 
 		Depot.activateStaging(
-			groupID = "${groupID}",
 			depotName = "${depotName}",
+			groupID = "${groupID}",
 			remotePort = "${remotePort}",
 			remoteStaging = "true");
 	}

@@ -29,6 +29,8 @@ public interface LocalGitRepository extends GitRepository {
 
 	public File getDirectory();
 
+	public String getDirectoryName();
+
 	public GitWorkingDirectory getGitWorkingDirectory();
 
 	public List<LocalGitCommit> getRangeLocalGitCommits(

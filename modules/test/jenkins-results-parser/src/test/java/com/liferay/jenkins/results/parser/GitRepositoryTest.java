@@ -17,8 +17,6 @@ package com.liferay.jenkins.results.parser;
 import com.liferay.jenkins.results.parser.util.TestPropertiesUtil;
 import com.liferay.jenkins.results.parser.util.TestPropertiesValues;
 
-import java.util.Properties;
-
 import org.junit.BeforeClass;
 
 /**
@@ -29,16 +27,6 @@ public class GitRepositoryTest extends Test {
 	@BeforeClass
 	public static void setUpClass() {
 		TestPropertiesUtil.printProperties();
-
-		Properties repositoryProperties = new Properties();
-
-		repositoryProperties.put(
-			JenkinsResultsParserUtil.combine(
-				"repository.dir[", NAME_REPOSITORY, "][",
-				NAME_REPOSITORY_UPSTREAM_BRANCH, "]"),
-			FILE_PATH_REPOSITORY);
-
-		BaseGitRepository.setRepositoryProperties(repositoryProperties);
 	}
 
 	protected static final String FILE_PATH_REPOSITORY =

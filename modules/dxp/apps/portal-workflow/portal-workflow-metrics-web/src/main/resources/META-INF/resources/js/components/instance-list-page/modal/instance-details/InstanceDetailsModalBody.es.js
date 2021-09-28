@@ -13,13 +13,16 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import ClayModal from '@clayui/modal';
-import React from 'react';
+import ClayLink from '@clayui/link';
+import ClayModal, {useModal} from '@clayui/modal';
+import WorkflowInstanceTracker from '@liferay/portal-workflow-instance-tracker-web/js/components/WorkflowInstanceTracker';
+import React, {useContext, useState} from 'react';
 
 import ContentView from '../../../../shared/components/content-view/ContentView.es';
 import RetryButton from '../../../../shared/components/list/RetryButton.es';
 import {remainingTimeFormat} from '../../../../shared/util/duration.es';
 import moment from '../../../../shared/util/moment.es';
+import {AppContext} from '../../../AppContext.es';
 
 function Body({
 	assetTitle,
@@ -34,6 +37,7 @@ function Body({
 	slaResults = [],
 	taskNames = [],
 }) {
+	const {workflowInstanceTrackerEnabled} = useContext(AppContext);
 	const SLAs = {notStarted: [], open: [], resolved: []};
 
 	slaResults.forEach((result) => {
@@ -69,141 +73,184 @@ function Body({
 		loadingProps: {className: 'py-8'},
 	};
 
+	const [showInstanceTrackerModal, setShowInstanceTrackerModal] = useState(
+		false
+	);
+
+	const {observer} = useModal({
+		onClose: () => {
+			setShowInstanceTrackerModal(false);
+		},
+	});
+
 	return (
-		<ClayModal.Body>
-			<ContentView {...statesProps}>
-				<Body.SectionTitle>
-					{Liferay.Language.get('due-date-by-sla')}
-				</Body.SectionTitle>
+		<>
+			<ClayModal.Body>
+				<ContentView {...statesProps}>
+					<Body.SectionTitle>
+						{Liferay.Language.get('due-date-by-sla')}
+					</Body.SectionTitle>
 
-				{slaResults.length === 0 && (
-					<p>
-						<span className="font-weight-medium text-muted">
-							{Liferay.Language.get(
-								'no-sla-records-for-this-item'
+					{slaResults.length === 0 && (
+						<p>
+							<span className="font-weight-medium text-muted">
+								{Liferay.Language.get(
+									'no-sla-records-for-this-item'
+								)}
+							</span>
+						</p>
+					)}
+
+					{SLAs.open.length > 0 && (
+						<Body.SectionSubTitle>
+							{`${Liferay.Language.get('open').toUpperCase()} (${
+								SLAs.open.length
+							})`}
+						</Body.SectionSubTitle>
+					)}
+
+					{SLAs.open.map((item) => (
+						<Body.SLAResultItem key={item.id} {...item} />
+					))}
+
+					{SLAs.resolved.length > 0 && (
+						<Body.SectionSubTitle>
+							{`${Liferay.Language.get(
+								'resolved'
+							).toUpperCase()} (${SLAs.resolved.length})`}
+						</Body.SectionSubTitle>
+					)}
+
+					{SLAs.resolved.map((item) => (
+						<Body.SLAResultItem key={item.id} {...item} />
+					))}
+
+					{SLAs.notStarted.length > 0 && (
+						<Body.SectionSubTitle>
+							{`${Liferay.Language.get(
+								'not-started'
+							).toUpperCase()} (${SLAs.notStarted.length})`}
+						</Body.SectionSubTitle>
+					)}
+
+					{SLAs.notStarted.map((item) => (
+						<Body.SLAResultItem key={item.id} {...item} />
+					))}
+
+					<Body.SectionTitle className="mt-5">
+						{Liferay.Language.get('process-details')}
+					</Body.SectionTitle>
+
+					<Body.SectionAttribute
+						description={Liferay.Language.get('process-status')}
+						detail={
+							<>
+								{completed
+									? Liferay.Language.get('completed')
+									: Liferay.Language.get('pending')}
+
+								{workflowInstanceTrackerEnabled && (
+									<ClayLink
+										className="ml-1"
+										onClick={() =>
+											setShowInstanceTrackerModal(true)
+										}
+									>
+										(
+										{Liferay.Language.get('track-workflow')}
+										)
+									</ClayLink>
+								)}
+							</>
+						}
+					/>
+
+					<Body.SectionAttribute
+						description={Liferay.Language.get('created-by')}
+						detail={creator ? creator.name : ''}
+					/>
+
+					{dateCreated && (
+						<Body.SectionAttribute
+							description={Liferay.Language.get('creation-date')}
+							detail={moment
+								.utc(dateCreated)
+								.format(Liferay.Language.get('mmm-dd-yyyy-lt'))}
+						/>
+					)}
+
+					<Body.SectionAttribute
+						description={Liferay.Language.get('asset-type')}
+						detail={assetType}
+					/>
+
+					<Body.SectionAttribute
+						description={Liferay.Language.get('asset-title')}
+						detail={assetTitle}
+					/>
+
+					{!completed && (
+						<Body.SectionAttribute
+							description={Liferay.Language.get('current-step')}
+							detail={taskNames.join(', ')}
+						/>
+					)}
+
+					{completed && dateCompletion && (
+						<Body.SectionAttribute
+							description={Liferay.Language.get('end-date')}
+							detail={moment
+								.utc(dateCompletion)
+								.format(Liferay.Language.get('mmm-dd-yyyy-lt'))}
+						/>
+					)}
+
+					{!completed && (
+						<Body.SectionAttribute
+							description={Liferay.Language.get(
+								'current-assignee'
 							)}
+							detail={assignees
+								.map((user) => user.name)
+								.join(', ')}
+						/>
+					)}
+
+					<ClayButton
+						className="mb-1 mt-3"
+						data-tooltip-align="bottom"
+						data-tooltip-delay="0"
+						displayType="secondary"
+						onClick={() =>
+							window.open(
+								`/group/control_panel/manage/-/workflow_instance/view/${id}`,
+								'_blank'
+							)
+						}
+						small
+						title={Liferay.Language.get('open-page-in-a-new-tab')}
+					>
+						{Liferay.Language.get('go-to-submission-page')}
+
+						<span className="inline-item inline-item-after">
+							<ClayIcon symbol="shortcut" />
 						</span>
-					</p>
-				)}
+					</ClayButton>
+				</ContentView>
+			</ClayModal.Body>
 
-				{SLAs.open.length > 0 && (
-					<Body.SectionSubTitle>
-						{`${Liferay.Language.get('open').toUpperCase()} (${
-							SLAs.open.length
-						})`}
-					</Body.SectionSubTitle>
-				)}
+			{showInstanceTrackerModal && (
+				<ClayModal observer={observer} size="full-screen">
+					<ClayModal.Header>
+						{Liferay.Language.get('track-workflow')}
+					</ClayModal.Header>
 
-				{SLAs.open.map((item) => (
-					<Body.SLAResultItem key={item.id} {...item} />
-				))}
-
-				{SLAs.resolved.length > 0 && (
-					<Body.SectionSubTitle>
-						{`${Liferay.Language.get('resolved').toUpperCase()} (${
-							SLAs.resolved.length
-						})`}
-					</Body.SectionSubTitle>
-				)}
-
-				{SLAs.resolved.map((item) => (
-					<Body.SLAResultItem key={item.id} {...item} />
-				))}
-
-				{SLAs.notStarted.length > 0 && (
-					<Body.SectionSubTitle>
-						{`${Liferay.Language.get(
-							'not-started'
-						).toUpperCase()} (${SLAs.notStarted.length})`}
-					</Body.SectionSubTitle>
-				)}
-
-				{SLAs.notStarted.map((item) => (
-					<Body.SLAResultItem key={item.id} {...item} />
-				))}
-
-				<Body.SectionTitle className="mt-5">
-					{Liferay.Language.get('process-details')}
-				</Body.SectionTitle>
-
-				<Body.SectionAttribute
-					description={Liferay.Language.get('process-status')}
-					detail={
-						completed
-							? Liferay.Language.get('completed')
-							: Liferay.Language.get('pending')
-					}
-				/>
-
-				<Body.SectionAttribute
-					description={Liferay.Language.get('created-by')}
-					detail={creator ? creator.name : ''}
-				/>
-
-				{dateCreated && (
-					<Body.SectionAttribute
-						description={Liferay.Language.get('creation-date')}
-						detail={moment
-							.utc(dateCreated)
-							.format(Liferay.Language.get('mmm-dd-yyyy-lt'))}
-					/>
-				)}
-
-				<Body.SectionAttribute
-					description={Liferay.Language.get('asset-type')}
-					detail={assetType}
-				/>
-
-				<Body.SectionAttribute
-					description={Liferay.Language.get('asset-title')}
-					detail={assetTitle}
-				/>
-
-				{!completed && (
-					<Body.SectionAttribute
-						description={Liferay.Language.get('current-step')}
-						detail={taskNames.join(', ')}
-					/>
-				)}
-
-				{completed && dateCompletion && (
-					<Body.SectionAttribute
-						description={Liferay.Language.get('end-date')}
-						detail={moment
-							.utc(dateCompletion)
-							.format(Liferay.Language.get('mmm-dd-yyyy-lt'))}
-					/>
-				)}
-
-				{!completed && (
-					<Body.SectionAttribute
-						description={Liferay.Language.get('current-assignee')}
-						detail={assignees.map((user) => user.name).join(', ')}
-					/>
-				)}
-
-				<ClayButton
-					className="mb-1 mt-3"
-					data-tooltip-align="bottom"
-					data-tooltip-delay="0"
-					displayType="secondary"
-					onClick={() =>
-						window.open(
-							`/group/control_panel/manage/-/workflow_instance/view/${id}`,
-							'_blank'
-						)
-					}
-					small
-					title={Liferay.Language.get('open-page-in-a-new-tab')}
-				>
-					{Liferay.Language.get('go-to-submission-page')}
-
-					<span className="inline-item inline-item-after">
-						<ClayIcon symbol="shortcut" />
-					</span>
-				</ClayButton>
-			</ContentView>
-		</ClayModal.Body>
+					<ClayModal.Body>
+						<WorkflowInstanceTracker workflowInstanceId={id} />
+					</ClayModal.Body>
+				</ClayModal>
+			)}
+		</>
 	);
 }
 

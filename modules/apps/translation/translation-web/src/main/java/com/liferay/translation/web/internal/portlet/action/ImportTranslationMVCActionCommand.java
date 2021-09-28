@@ -22,6 +22,7 @@ import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -50,7 +51,6 @@ import com.liferay.translation.service.TranslationEntryService;
 import com.liferay.translation.snapshot.TranslationSnapshot;
 import com.liferay.translation.snapshot.TranslationSnapshotProvider;
 import com.liferay.translation.url.provider.TranslationURLProvider;
-import com.liferay.translation.web.internal.display.context.ImportTranslationResultsDisplayContext;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,6 +66,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -151,6 +152,21 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				MultiSessionMessages.add(
 					actionRequest, portletResource + "requestProcessed");
 			}
+
+			actionRequest.setAttribute(
+				WebKeys.REDIRECT,
+				_getRedirect(
+					classNameId, classPK, groupId, actionResponse, fileName,
+					ParamUtil.getString(actionRequest, "redirect"), title));
+
+			HttpServletRequest httpServletRequest =
+				_portal.getOriginalServletRequest(
+					_portal.getHttpServletRequest(actionRequest));
+
+			HttpSession httpSession = httpServletRequest.getSession();
+
+			httpSession.setAttribute("failureEntries", failureEntries);
+			httpSession.setAttribute("successEntries", successEntries);
 		}
 		catch (Exception exception) {
 			try {
@@ -232,6 +248,38 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, className, classPK, ActionKeys.UPDATE);
 		}
+	}
+
+	private String _getMustHaveValidIdMessage(String className) {
+		if (className.equals(Layout.class.getName())) {
+			return "the-translation-file-does-not-correspond-to-this-page";
+		}
+
+		return "the-translation-file-does-not-correspond-to-this-web-content";
+	}
+
+	private String _getRedirect(
+		long classNameId, long classPK, long groupId,
+		ActionResponse actionResponse, String fileName, String redirect,
+		String title) {
+
+		return PortletURLBuilder.createRenderURL(
+			_portal.getLiferayPortletResponse(actionResponse)
+		).setMVCRenderCommandName(
+			"/translation/import_translation_results"
+		).setRedirect(
+			redirect
+		).setParameter(
+			"classNameId", classNameId
+		).setParameter(
+			"classPK", classPK
+		).setParameter(
+			"fileName", fileName
+		).setParameter(
+			"groupId", groupId
+		).setParameter(
+			"title", title
+		).buildString();
 	}
 
 	private void _importXLIFFFile(

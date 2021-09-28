@@ -141,7 +141,7 @@ definition {
 
 	@description = "This is a test for LPS-125446."
 	@priority = "4"
-	test CanBeRemainWhenChangedDisplayStyle {
+	test DisplayStyleCanRemainAfterNavigation {
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			portlet = "Export");

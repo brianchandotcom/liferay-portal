@@ -134,13 +134,13 @@ public class ObjectDefinitionResourceImpl
 		return _toObjectDefinition(
 			_objectDefinitionService.updateCustomObjectDefinition(
 				objectDefinitionId,
-				GetterUtil.getBoolean(objectDefinition.getActive(), true),
+				GetterUtil.getBoolean(objectDefinition.getActive(), true), 0,
 				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
 				objectDefinition.getName(), objectDefinition.getPanelAppOrder(),
 				objectDefinition.getPanelCategoryKey(),
 				LocalizedMapUtil.getLocalizedMap(
 					objectDefinition.getPluralLabel()),
-				objectDefinition.getScope()));
+				objectDefinition.getScope(), 0));
 	}
 
 	private ObjectDefinition _toObjectDefinition(

@@ -55,16 +55,10 @@ if (portletTitleBasedNavigation) {
 
 			<%
 			for (WikiNode curNode : nodes) {
-				String cssClass = StringPool.BLANK;
-
-				if (curNode.getNodeId() == node.getNodeId()) {
-					cssClass = "active";
-				}
-
 				PortletURL viewPageURL = wikiURLHelper.getViewFrontPagePageURL(curNode);
 			%>
 
-				<aui:nav-item cssClass="<%= cssClass %>" href="<%= viewPageURL.toString() %>" label="<%= HtmlUtil.escape(curNode.getName()) %>" />
+				<aui:nav-item href="<%= viewPageURL.toString() %>" label="<%= HtmlUtil.escape(curNode.getName()) %>" selected="<%= curNode.getNodeId() == node.getNodeId() %>" />
 
 			<%
 			}

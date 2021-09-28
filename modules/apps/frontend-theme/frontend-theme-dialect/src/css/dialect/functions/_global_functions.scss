@@ -1,0 +1,7 @@
+@function darken($color, $amount) {
+	@if type-of($color) == color {
+		@return adjust-color($color, $lightness: -$amount);
+	}
+
+	@return $color;
+}

@@ -15,7 +15,7 @@
 package com.liferay.object.internal.search.spi.model.index.contributor;
 
 import com.liferay.object.model.ObjectAction;
-import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
@@ -49,7 +49,7 @@ public class ObjectActionModelIndexerWriterContributor
 	public BatchIndexingActionable getBatchIndexingActionable() {
 		return dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				_objectFieldLocalService.getIndexableActionableDynamicQuery());
+				_objectActionLocalService.getIndexableActionableDynamicQuery());
 	}
 
 	@Override
@@ -62,6 +62,6 @@ public class ObjectActionModelIndexerWriterContributor
 		dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
+	private ObjectActionLocalService _objectActionLocalService;
 
 }

@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false,
-	property = "model.class.name=com.liferay.commerce.price.list.model.CommercePriceList",
+	property = "dto.class.name=com.liferay.commerce.price.list.model.CommercePriceList",
 	service = {DTOConverter.class, PriceListDTOConverter.class}
 )
 public class PriceListDTOConverter

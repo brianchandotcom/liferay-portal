@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false,
-	property = "model.class.name=ProductSubscriptionConfiguration",
+	property = "dto.class.name=ProductSubscriptionConfiguration",
 	service = {
 		DTOConverter.class, ProductSubscriptionConfigurationDTOConverter.class
 	}

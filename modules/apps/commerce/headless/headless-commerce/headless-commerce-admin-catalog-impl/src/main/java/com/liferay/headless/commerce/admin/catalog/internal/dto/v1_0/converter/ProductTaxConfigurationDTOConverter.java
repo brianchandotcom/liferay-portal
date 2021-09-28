@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	enabled = false, property = "model.class.name=ProductTaxConfiguration",
+	enabled = false, property = "dto.class.name=ProductTaxConfiguration",
 	service = {DTOConverter.class, ProductTaxConfigurationDTOConverter.class}
 )
 public class ProductTaxConfigurationDTOConverter

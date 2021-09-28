@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false,
-	property = "model.class.name=com.liferay.commerce.shop.by.diagram.model.CSDiagramPin",
+	property = "dto.class.name=com.liferay.commerce.shop.by.diagram.model.CSDiagramPin",
 	service = {DTOConverter.class, PinDTOConverter.class}
 )
 public class PinDTOConverter implements DTOConverter<CSDiagramEntry, Pin> {

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	enabled = false, property = "model.class.name=AssetCategory",
+	enabled = false, property = "dto.class.name=AssetCategory",
 	service = {CategoryDTOConverter.class, DTOConverter.class}
 )
 public class CategoryDTOConverter

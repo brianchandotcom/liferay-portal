@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false,
-	property = "model.class.name=com.liferay.commerce.model.CommerceShipment",
+	property = "dto.class.name=com.liferay.commerce.model.CommerceShipment",
 	service = {DTOConverter.class, ShipmentDTOConverter.class}
 )
 public class ShipmentDTOConverter

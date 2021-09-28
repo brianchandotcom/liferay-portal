@@ -20,7 +20,6 @@ import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
@@ -40,6 +39,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUt
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -112,7 +113,8 @@ public class SelectAssetDisplayPageDisplayContext {
 			return _assetDisplayPageId;
 		}
 
-		_assetDisplayPageId = 0L;
+		_assetDisplayPageId = ParamUtil.getLong(
+			_httpServletRequest, "assetDisplayPageId");
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			_getAssetDisplayPageEntry();
@@ -222,14 +224,9 @@ public class SelectAssetDisplayPageDisplayContext {
 			return null;
 		}
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			_classNameId, _classPK);
-
-		if (assetEntry == null) {
-			return null;
-		}
-
-		return assetEntry.getLayoutUuid();
+		return BeanParamUtil.getString(
+			AssetEntryLocalServiceUtil.fetchEntry(_classNameId, _classPK),
+			_httpServletRequest, "layoutUuid", null);
 	}
 
 	public String getSpecificAssetDisplayPageName() throws Exception {

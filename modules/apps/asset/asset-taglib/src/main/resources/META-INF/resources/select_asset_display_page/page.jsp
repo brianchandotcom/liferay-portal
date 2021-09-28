@@ -16,9 +16,9 @@
 
 <%@ include file="/select_asset_display_page/init.jsp" %>
 
-<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= selectAssetDisplayPageDisplayContext.getLayoutUuid() %>" />
+<aui:input id="pagesContainerInput" name="layoutUuid" type="hidden" value="<%= selectAssetDisplayPageDisplayContext.getLayoutUuid() %>" />
 
-<aui:input id="assetDisplayPageIdInput" ignoreRequestValue="<%= true %>" name="assetDisplayPageId" type="hidden" value="<%= selectAssetDisplayPageDisplayContext.getAssetDisplayPageId() %>" />
+<aui:input id="assetDisplayPageIdInput" name="assetDisplayPageId" type="hidden" value="<%= selectAssetDisplayPageDisplayContext.getAssetDisplayPageId() %>" />
 
 <aui:select label="display-page-template" name="displayPageType" title="display-page-template-type" value="<%= selectAssetDisplayPageDisplayContext.getAssetDisplayPageType() %>">
 	<aui:option label="default" value="<%= AssetDisplayPageConstants.TYPE_DEFAULT %>" />

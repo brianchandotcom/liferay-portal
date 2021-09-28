@@ -16,7 +16,8 @@ const sub = Liferay.Util.sub;
 
 const DEFAULT_BALLOON_EDITOR_CONFIG = {
 	extraAllowedContent: '*',
-	extraPlugins: 'itemselector,stylescombo,ballooneditor,videoembed',
+	extraPlugins:
+		'itemselector,stylescombo,ballooneditor,videoembed,insertbutton',
 	removePlugins: 'contextmenu,link,liststyle,tabletools',
 	stylesSet: [
 		{

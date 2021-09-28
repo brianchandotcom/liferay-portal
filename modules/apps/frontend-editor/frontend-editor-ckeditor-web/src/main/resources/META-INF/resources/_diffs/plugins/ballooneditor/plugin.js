@@ -309,7 +309,6 @@
 			'balloonpanel',
 			'balloontoolbar',
 			'imagealt',
-			'insertbutton',
 			'linktoolbar',
 			'tabletoolbar',
 			'toolbarbuttons',

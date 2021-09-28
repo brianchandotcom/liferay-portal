@@ -766,13 +766,13 @@ definition {
 
 		OpenGraph.viewPreviewImage(imageName = "Document_2.jpg");
 
-		var depotID = Depot.getDepotID(depotName = "Remote Depot");
+		var groupID = Depot.getGroupID(depotName = "Remote Depot");
 
 		User.logoutPG();
 
 		Navigator.openSpecificURL(url = "http://localhost:9080/web/remote-site/test-page");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="http://localhost:9080/documents/${depotID}/0/Document_2.jpg''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="http://localhost:9080/documents/${groupID}/0/Document_2.jpg''');
 
 		User.loginPG(
 			nodePort = "8080",
@@ -826,13 +826,13 @@ definition {
 
 		OpenGraph.viewNoPreviewImage(imageName = "Document_2.jpg");
 
-		var depotID = Depot.getDepotID(depotName = "Remote Depot");
+		var groupID = Depot.getGroupID(depotName = "Remote Depot");
 
 		User.logoutPG();
 
 		Navigator.openSpecificURL(url = "http://localhost:9080/web/remote-site/test-page");
 
-		OpenGraph.viewNoOpenGraphProperties(ogPropertyList = '''og:image" content="http://localhost:9080/documents/${depotID}/0/Document_2.jpg"''');
+		OpenGraph.viewNoOpenGraphProperties(ogPropertyList = '''og:image" content="http://localhost:9080/documents/${groupID}/0/Document_2.jpg"''');
 	}
 
 	@description = "This ensures that video shortcut in depot can be deleted and republished in Blogs when enabling remote staging."
@@ -1953,13 +1953,13 @@ definition {
 
 		OpenGraph.viewPreviewImage(imageName = "Document_1.jpg");
 
-		var depotID = Depot.getDepotID(depotName = "Remote Depot");
+		var groupID = Depot.getGroupID(depotName = "Remote Depot");
 
 		User.logoutPG();
 
 		Navigator.openSpecificURL(url = "http://localhost:9080/web/remote-site/test-page");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="http://localhost:9080/documents/${depotID}/0/Document_1.jpg''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="http://localhost:9080/documents/${groupID}/0/Document_1.jpg''');
 
 		User.loginPG(
 			nodePort = "8080",
@@ -2003,13 +2003,13 @@ definition {
 
 		OpenGraph.viewPreviewImage(imageName = "Document_2.jpg");
 
-		var depotID = Depot.getDepotID(depotName = "Remote Depot");
+		var groupID = Depot.getGroupID(depotName = "Remote Depot");
 
 		User.logoutPG();
 
 		Navigator.openSpecificURL(url = "http://localhost:9080/web/remote-site/test-page");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="http://localhost:9080/documents/${depotID}/0/Document_2.jpg''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="http://localhost:9080/documents/${groupID}/0/Document_2.jpg''');
 	}
 
 	@description = "This ensures that the image in depot can be replaced and republished in web content when enabling remote staging."

@@ -1801,9 +1801,7 @@ definition {
 				value1 = "${maxNumberOfItemsPerPage}");
 		}
 
-		if (!(isSet(configureWithoutAutoSave))) {
-			PageEditor.waitForAutoSave();
-		}
+		PageEditor.waitForAutoSave();
 	}
 
 	macro editCollectionFilter {

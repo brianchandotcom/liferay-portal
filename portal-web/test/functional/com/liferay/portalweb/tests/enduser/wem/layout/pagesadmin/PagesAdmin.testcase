@@ -293,15 +293,6 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("Select the Web Content under manual collection") {
-			PageEditor.editCollectionDisplay(
-				assetType = "Basic Web Content",
-				configureWithoutAutoSave = "true",
-				fragmentName = "Collection Display",
-				selectAssetList = "Web Content Title",
-				selectedName = "Manual Collection");
-		}
-
 		task ("Assert the web content article is shown in Collection Display") {
 			AssertVisible(
 				key_colPosition = "1",

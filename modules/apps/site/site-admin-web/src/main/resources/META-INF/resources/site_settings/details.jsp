@@ -164,50 +164,24 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 
 	<aui:input inlineLabel="right" label="allow-manual-membership-management" labelCssClass="simple-toggle-switch" name="manualMembership" type="toggle-switch" value="<%= manualMembership %>" />
 
-	<aui:script use="aui-base">
-		A.one('#<portlet:namespace />changeParentSiteLink').on('click', (event) => {
-			Liferay.Util.openSelectionModal({
-				onSelect: function (event) {
-					A.one('#<portlet:namespace />parentSiteTitle').val(
-						event.entityname + ' (' + event.grouptype + ')'
-					);
-
-					A.one(
-						'#<portlet:namespace />parentGroupSearchContainerPrimaryKeys'
-					).val(event.entityid);
-
-					A.one(
-						'#<portlet:namespace />membershipRestrictionContainer'
-					).show();
-				},
-				selectEventName: '<portlet:namespace />selectGroup',
-				title: '<liferay-ui:message arguments="site" key="select-x" />',
-
-				<%
-				PortletURL groupSelectorURL = PortletURLBuilder.create(
+	<liferay-frontend:component
+		componentId='<%= liferayPortletResponse.getNamespace() + "details" %>'
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"defaultParentGroupId", GroupConstants.DEFAULT_PARENT_GROUP_ID
+			).put(
+				"eventName", liferayPortletResponse.getNamespace() + "selectGroup"
+			).put(
+				"groupId", siteGroup.getGroupId()
+			).put(
+				"portletURL",
+				PortletURLBuilder.create(
 					PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE)
-				).setParameter(
-					"eventName", liferayPortletResponse.getNamespace() + "selectGroup"
-				).setParameter(
-					"groupId", siteGroup.getGroupId()
-				).setParameter(
-					"includeCurrentGroup", false
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildPortletURL();
-				%>
-
-				url: '<%= groupSelectorURL.toString() %>',
-			});
-		});
-
-		A.one('#<portlet:namespace />clearParentSiteLink').on('click', (event) => {
-			A.one('#<portlet:namespace />parentSiteTitle').val('');
-			A.one('#<portlet:namespace />parentGroupSearchContainerPrimaryKeys').val(
-				'<%= GroupConstants.DEFAULT_PARENT_GROUP_ID %>'
-			);
-
-			A.one('#<portlet:namespace />membershipRestrictionContainer').hide();
-		});
-	</aui:script>
+				).buildString()
+			).put(
+				"windowState", LiferayWindowState.POP_UP.toString()
+			).build()
+		%>'
+		module="js/site/Details"
+	/>
 </c:if>

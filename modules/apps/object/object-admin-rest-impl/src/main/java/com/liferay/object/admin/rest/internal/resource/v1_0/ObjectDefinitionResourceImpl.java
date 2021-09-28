@@ -133,7 +133,7 @@ public class ObjectDefinitionResourceImpl
 
 		return _toObjectDefinition(
 			_objectDefinitionService.updateCustomObjectDefinition(
-				objectDefinitionId,
+				objectDefinitionId, 0, 0,
 				GetterUtil.getBoolean(objectDefinition.getActive(), true),
 				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
 				objectDefinition.getName(), objectDefinition.getPanelAppOrder(),

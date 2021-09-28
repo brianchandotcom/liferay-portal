@@ -48,7 +48,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = "2",
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -674,6 +674,10 @@ definition {
 		DMDocument.editCmdPG(
 			dmDocumentTitle = "Untitled",
 			dmDocumentTitleEdit = "Edited Google Document With Workflow");
+
+		ScrollWebElementIntoView(
+			key_text = "Submit for Publication",
+			locator1 = "Button#ANY");
 
 		Button.clickSubmitForPublication();
 

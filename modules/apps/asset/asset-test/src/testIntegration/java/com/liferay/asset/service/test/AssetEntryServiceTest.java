@@ -216,6 +216,24 @@ public class AssetEntryServiceTest {
 		validateAssetEntries(expectedAssetEntries, actualAssetEntries);
 	}
 
+	@Test
+	public void testGetTopViewedEntries() throws Exception {
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), new Date(), "testClass");
+
+		ViewCountManagerUtil.incrementViewCount(
+			assetEntry.getCompanyId(),
+			ClassNameLocalServiceUtil.getClassNameId(AssetEntry.class),
+			assetEntry.getEntryId(), 2);
+
+		List<AssetEntry> topViewEntries =
+			AssetEntryLocalServiceUtil.getTopViewedEntries(
+				"testClass", false, -1, -1);
+
+		Assert.assertEquals(
+			topViewEntries.toString(), 1, topViewEntries.size());
+	}
+
 	protected List<AssetEntry> createAssetEntries() throws Exception {
 		Calendar calendar = CalendarFactoryUtil.getCalendar();
 

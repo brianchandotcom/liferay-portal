@@ -45,26 +45,16 @@ definition {
 			var entrySubtitle = "";
 		}
 
-		if (isSet(groupName)) {
-			var serviceContext = JSONBlogSetter.setServiceContext(
-				assetCategoryIds = "${assetCategoryIds}",
-				assetTagNames = "${assetTagNames}",
-				groupName = "${groupName}",
-				serviceContext = "${serviceContext}",
-				site = "${site}",
-				workflowAction = "${workflowAction}");
-		}
-		else {
-			var serviceContext = JSONBlogSetter.setServiceContext(
-				assetCategoryIds = "${assetCategoryIds}",
-				assetTagNames = "${assetTagNames}",
-				groupName = "Guest",
-				serviceContext = "${serviceContext}",
-				workflowAction = "${workflowAction}");
+		if (!(isSet(guestPermissions))) {
+			var guestPermissions = "true";
 		}
 
 		if (!(isSet(friendlyURL))) {
 			var friendlyURL = "";
+		}
+
+		if (!(isSet(groupName))) {
+			var groupName = "Guest";
 		}
 
 		if (!(isSet(userEmailAddress))) {
@@ -74,6 +64,15 @@ definition {
 		if (!(isSet(userPassword))) {
 			var userPassword = "test";
 		}
+
+		var serviceContext = JSONBlogSetter.setServiceContext(
+			addGuestPermissions = "${guestPermissions}",
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			groupName = "${groupName}",
+			serviceContext = "${serviceContext}",
+			site = "${site}",
+			workflowAction = "${workflowAction}");
 
 		if (isSet(displayDate)) {
 			var displayDateMinute = DateUtil.getFormattedCurrentDate("m");

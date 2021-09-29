@@ -10,7 +10,7 @@ definition {
 		if (!(isSet(serviceContext))) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGroupPermissions = "true",
-				addGuestPermissions = "true",
+				addGuestPermissions = "${addGuestPermissions}",
 				assetCategoryIds = "${assetCategoryIds}",
 				assetTagNames = "${assetTagNames}",
 				groupName = "${groupName}",

@@ -813,32 +813,29 @@ This is part of an ongoing effort to consolidate SSO support and increase focus 
 
 ---------------------------------------
 
-### Name attribute of `clay:select` is now namespaced
-
-- **Date:** 2021-Sep-09
-- **JIRA Ticket:** LPS-139131
+### Namespaced the clay:select Tag's name Attribute for Printing
+- **Date:** 2021-Sep-15
+- **JIRA Ticket:** [LPS-139131](https://issues.liferay.com/browse/LPS-139131)
 
 #### What changed?
 
-The attribute `name` of `clay:select` is now namespaced by default when printed out using the portlet namespace
-when available.
+The attribute `name` of `clay:select` now includes the portlet namespace (if available) by default when printed.
 
 #### Who is affected?
 
-Everyone using `clay:select` and relying on the `name` attribute to handle data server-side.
+This affects everyone who uses `clay:select` and its `name` attribute to handle data server-side.
 
 #### How should I update my code?
 
-If you were namespacing the attribute on your own using `liferayPortletResponse.getNamespace() + NAME_VALUE`
-to prefix the name attribute value, you should be able to simply drop that and use `name="NAME_VALUE"` directly.
+If you have been namespacing the attribute on your own by prefixing `liferayPortletResponse.getNamespace() + NAME_VALUE`
+to the value, drop that prefix and use `name="NAME_VALUE"` directly.
 
-If you want full control (or the namespaced version doesn't match your needs), you can revert back to the old
+If you want full control (or the namespaced version is insufficient), you can revert back to the old
 behaviour by also passing `useNamespace="<%= Boolean.FALSE %>"` to the tag.
 
 #### Why was this change made?
 
-This change was made to better match the current behaviour of `aui:select` and facilitate a future migration as
-well as simplify current usage of the `clay:select` tag.
+This change was made to better match the current `aui:select` tag behaviour, facilitate a future migration to the `clay:select` tag, and simplify current `clay:select` tag usage.
 
 ---------------------------------------
 

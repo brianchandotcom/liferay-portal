@@ -47,6 +47,12 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 					<aui:select disabled="<%= true %>" name="object" required="<%= true %>">
 						<aui:option label="<%= objectDefinition.getShortName() %>" selected="<%= true %>" value="<%= objectDefinition.getObjectDefinitionId() %>" />
 					</aui:select>
+
+					<aui:select name="deleteType" required="<%= true %>">
+						<aui:option label="cascade" selected='<%= Objects.equals(objectRelationship.getDeletionType(), "cascade") %>' value="cascade" />
+						<aui:option label="disassociate" selected='<%= Objects.equals(objectRelationship.getDeletionType(), "disassociate") %>' value="disassociate" />
+						<aui:option label="prevent" selected='<%= Objects.equals(objectRelationship.getDeletionType(), "prevent") %>' value="prevent" />
+					</aui:select>
 				</div>
 			</div>
 
@@ -65,6 +71,8 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 			"input[id^='<portlet:namespace />'][type='hidden']"
 		);
 
+		const deleteType = document.getElementById("<portlet:namespace />deleteType");
+
 		const localizedLabels = Array(...localizedInputs).reduce(
 			(prev, cur, index) => {
 				if (cur.value) {
@@ -82,6 +90,7 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 			{
 				body: JSON.stringify({
 					label: localizedLabels,
+					deleteType: deleteType.value
 				}),
 				headers: new Headers({
 					Accept: 'application/json',

@@ -240,7 +240,7 @@ const ExportTranslation = ({
 				};
 
 				if (selectedExperiencesIds.length) {
-					params.selectedExperiencesIds = selectedExperiencesIds.join(
+					params.segmentsExperienceIds = selectedExperiencesIds.join(
 						','
 					);
 				}

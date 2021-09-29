@@ -86,6 +86,44 @@ public class ObjectRelationship implements Serializable {
 	protected Map<String, Map<String, String>> actions;
 
 	@Schema
+	@Valid
+	public DeleteType getDeleteType() {
+		return deleteType;
+	}
+
+	@JsonIgnore
+	public String getDeleteTypeAsString() {
+		if (deleteType == null) {
+			return null;
+		}
+
+		return deleteType.toString();
+	}
+
+	public void setDeleteType(DeleteType deleteType) {
+		this.deleteType = deleteType;
+	}
+
+	@JsonIgnore
+	public void setDeleteType(
+		UnsafeSupplier<DeleteType, Exception> deleteTypeUnsafeSupplier) {
+
+		try {
+			deleteType = deleteTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected DeleteType deleteType;
+
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -295,6 +333,20 @@ public class ObjectRelationship implements Serializable {
 			sb.append(_toJSON(actions));
 		}
 
+		if (deleteType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deleteType\": ");
+
+			sb.append("\"");
+
+			sb.append(deleteType);
+
+			sb.append("\"");
+		}
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -374,6 +426,44 @@ public class ObjectRelationship implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("DeleteType")
+	public static enum DeleteType {
+
+		CASCADE("cascade"), DISASSOCIATE("disassociate"), PREVENT("prevent");
+
+		@JsonCreator
+		public static DeleteType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (DeleteType deleteType : values()) {
+				if (Objects.equals(deleteType.getValue(), value)) {
+					return deleteType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private DeleteType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	@GraphQLName("Type")
 	public static enum Type {

@@ -57,6 +57,35 @@ public class ObjectRelationship implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
+	public DeleteType getDeleteType() {
+		return deleteType;
+	}
+
+	public String getDeleteTypeAsString() {
+		if (deleteType == null) {
+			return null;
+		}
+
+		return deleteType.toString();
+	}
+
+	public void setDeleteType(DeleteType deleteType) {
+		this.deleteType = deleteType;
+	}
+
+	public void setDeleteType(
+		UnsafeSupplier<DeleteType, Exception> deleteTypeUnsafeSupplier) {
+
+		try {
+			deleteType = deleteTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected DeleteType deleteType;
+
 	public Long getId() {
 		return id;
 	}
@@ -214,6 +243,39 @@ public class ObjectRelationship implements Cloneable, Serializable {
 
 	public String toString() {
 		return ObjectRelationshipSerDes.toJSON(this);
+	}
+
+	public static enum DeleteType {
+
+		CASCADE("cascade"), DISASSOCIATE("disassociate"), PREVENT("prevent");
+
+		public static DeleteType create(String value) {
+			for (DeleteType deleteType : values()) {
+				if (Objects.equals(deleteType.getValue(), value) ||
+					Objects.equals(deleteType.name(), value)) {
+
+					return deleteType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private DeleteType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 	public static enum Type {

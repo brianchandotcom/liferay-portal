@@ -261,6 +261,34 @@ definition {
 			locator1 = "Publications#CONFLICTING_CHANGES_DIFF_IFRAME_TITLE");
 	}
 
+	macro inviteUsers {
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Click(
+			key_publicationName = "${publicationName}",
+			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
+
+		ClickNoError(
+			key_menuItem = "Invite Users",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+
+		for (var keyword : list "${userInvite}") {
+			Type(
+				locator1 = "Publications#KEYWORD_TEXTFIELD",
+				value1 = "${keyword}");
+
+			KeyPress(
+				locator1 = "Publications#KEYWORD_TEXTFIELD",
+				value1 = "\ENTER");
+		}
+
+		Button.clickNoError(button = "Send");
+
+		AssertConfirm(value1 = "You are inviting user ${userInvite} who does not have access to Publications. This user will be assigned the Publications User role to gain access to Publications.");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro publishPublication {
 		Click(locator1 = "Publications#PUBLISH_BUTTON");
 

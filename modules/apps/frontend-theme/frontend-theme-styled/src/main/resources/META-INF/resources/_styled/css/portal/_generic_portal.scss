@@ -28,38 +28,6 @@
 	}
 }
 
-.definition-of-terms {
-	dd:after {
-		clear: both;
-		content: '';
-		display: block;
-		height: 0;
-		visibility: hidden;
-	}
-
-	dl {
-		margin-left: 0;
-
-		@include media-breakpoint-down(sm) {
-			margin-left: 10px;
-		}
-	}
-
-	dt {
-		color: #333;
-		font-weight: normal;
-		margin-bottom: 2em;
-		width: 100%;
-		width: 25em;
-		word-break: break-word;
-
-		@include media-breakpoint-up(sm) {
-			float: left;
-			width: auto;
-		}
-	}
-}
-
 .lfr-code {
 	background: #fff;
 	border: 1px solid transparent;

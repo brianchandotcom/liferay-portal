@@ -17,11 +17,21 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 const addLabel = (myArray) => {
-	myArray.map((elem) => {
-		elem.label = elem.key;
+	let myArrayWithLabel = [];
+	myArray.forEach((elem) => {
+		myArrayWithLabel.push({...elem, label: elem.value});
 	});
 
-	return myArray;
+	return myArrayWithLabel;
+};
+
+const addFakeSiteId = (vocabularies) => {
+	let myArrayWithSiteId = [];
+	vocabularies.forEach((elem) => {
+		myArrayWithSiteId.push({...elem, site: Math.floor(Math.random() * 3)});
+	});
+
+	return myArrayWithSiteId;
 };
 
 const VocabulariesSelectionBox = ({
@@ -31,20 +41,37 @@ const VocabulariesSelectionBox = ({
 	rightList,
 }) => {
 	const [items, setItems] = useState([
-		addLabel(leftList),
-		addLabel(rightList),
+		addFakeSiteId(addLabel(leftList)),
+		addFakeSiteId(addLabel(rightList)),
 	]);
 
 	const [leftElements, rightElements] = items;
 
-	// useEffect(() => {
+	useEffect(() => {
+		let selectedVocabulaboriesFromNonGlobalSite = rightElements.filter(
+			(elem) => elem.site !== 0
+		);
 
-	// TODO: disable options that are not selectable
-	// document.querySelector(
-	// 	`option[value='${leftElements[0].value}']`
-	// ).disabled = true;
+		// Enable all available options
+		document.querySelector(
+			'.vocabularies-selection option'
+		).disabled = false;
 
-	// });
+		// Disable options that are not selectable
+		if (selectedVocabulaboriesFromNonGlobalSite.length) {
+			leftElements.forEach((elem) => {
+				if (
+					elem.site !== 0 &&
+					elem.site !==
+						selectedVocabulaboriesFromNonGlobalSite[0].site
+				) {
+					document.querySelector(
+						`option[value='${elem.value}']`
+					).disabled = true;
+				}
+			});
+		}
+	});
 
 	return (
 		<ClayDualListBox

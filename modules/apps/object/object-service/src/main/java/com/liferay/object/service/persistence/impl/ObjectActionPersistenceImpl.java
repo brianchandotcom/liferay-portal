@@ -1206,30 +1206,30 @@ public class ObjectActionPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"objectAction.companyId = ?";
 
-	private FinderPath _finderPathWithPaginationFindByO_A_OAEK;
-	private FinderPath _finderPathWithoutPaginationFindByO_A_OAEK;
-	private FinderPath _finderPathCountByO_A_OAEK;
+	private FinderPath _finderPathWithPaginationFindByO_A_OATK;
+	private FinderPath _finderPathWithoutPaginationFindByO_A_OATK;
+	private FinderPath _finderPathCountByO_A_OATK;
 
 	/**
-	 * Returns all the object actions where objectDefinitionId = &#63; and active = &#63; and objectActionExecutorKey = &#63;.
+	 * Returns all the object actions where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
 	 *
 	 * @param objectDefinitionId the object definition ID
 	 * @param active the active
-	 * @param objectActionExecutorKey the object action executor key
+	 * @param objectActionTriggerKey the object action trigger key
 	 * @return the matching object actions
 	 */
 	@Override
-	public List<ObjectAction> findByO_A_OAEK(
+	public List<ObjectAction> findByO_A_OATK(
 		long objectDefinitionId, boolean active,
-		String objectActionExecutorKey) {
+		String objectActionTriggerKey) {
 
-		return findByO_A_OAEK(
-			objectDefinitionId, active, objectActionExecutorKey,
+		return findByO_A_OATK(
+			objectDefinitionId, active, objectActionTriggerKey,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the object actions where objectDefinitionId = &#63; and active = &#63; and objectActionExecutorKey = &#63;.
+	 * Returns a range of all the object actions where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionModelImpl</code>.
@@ -1237,23 +1237,23 @@ public class ObjectActionPersistenceImpl
 	 *
 	 * @param objectDefinitionId the object definition ID
 	 * @param active the active
-	 * @param objectActionExecutorKey the object action executor key
+	 * @param objectActionTriggerKey the object action trigger key
 	 * @param start the lower bound of the range of object actions
 	 * @param end the upper bound of the range of object actions (not inclusive)
 	 * @return the range of matching object actions
 	 */
 	@Override
-	public List<ObjectAction> findByO_A_OAEK(
-		long objectDefinitionId, boolean active, String objectActionExecutorKey,
+	public List<ObjectAction> findByO_A_OATK(
+		long objectDefinitionId, boolean active, String objectActionTriggerKey,
 		int start, int end) {
 
-		return findByO_A_OAEK(
-			objectDefinitionId, active, objectActionExecutorKey, start, end,
+		return findByO_A_OATK(
+			objectDefinitionId, active, objectActionTriggerKey, start, end,
 			null);
 	}
 
 	/**
-	 * Returns an ordered range of all the object actions where objectDefinitionId = &#63; and active = &#63; and objectActionExecutorKey = &#63;.
+	 * Returns an ordered range of all the object actions where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionModelImpl</code>.
@@ -1261,24 +1261,24 @@ public class ObjectActionPersistenceImpl
 	 *
 	 * @param objectDefinitionId the object definition ID
 	 * @param active the active
-	 * @param objectActionExecutorKey the object action executor key
+	 * @param objectActionTriggerKey the object action trigger key
 	 * @param start the lower bound of the range of object actions
 	 * @param end the upper bound of the range of object actions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching object actions
 	 */
 	@Override
-	public List<ObjectAction> findByO_A_OAEK(
-		long objectDefinitionId, boolean active, String objectActionExecutorKey,
+	public List<ObjectAction> findByO_A_OATK(
+		long objectDefinitionId, boolean active, String objectActionTriggerKey,
 		int start, int end, OrderByComparator<ObjectAction> orderByComparator) {
 
-		return findByO_A_OAEK(
-			objectDefinitionId, active, objectActionExecutorKey, start, end,
+		return findByO_A_OATK(
+			objectDefinitionId, active, objectActionTriggerKey, start, end,
 			orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the object actions where objectDefinitionId = &#63; and active = &#63; and objectActionExecutorKey = &#63;.
+	 * Returns an ordered range of all the object actions where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionModelImpl</code>.
@@ -1286,7 +1286,7 @@ public class ObjectActionPersistenceImpl
 	 *
 	 * @param objectDefinitionId the object definition ID
 	 * @param active the active
-	 * @param objectActionExecutorKey the object action executor key
+	 * @param objectActionTriggerKey the object action trigger key
 	 * @param start the lower bound of the range of object actions
 	 * @param end the upper bound of the range of object actions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1294,12 +1294,12 @@ public class ObjectActionPersistenceImpl
 	 * @return the ordered range of matching object actions
 	 */
 	@Override
-	public List<ObjectAction> findByO_A_OAEK(
-		long objectDefinitionId, boolean active, String objectActionExecutorKey,
+	public List<ObjectAction> findByO_A_OATK(
+		long objectDefinitionId, boolean active, String objectActionTriggerKey,
 		int start, int end, OrderByComparator<ObjectAction> orderByComparator,
 		boolean useFinderCache) {
 
-		objectActionExecutorKey = Objects.toString(objectActionExecutorKey, "");
+		objectActionTriggerKey = Objects.toString(objectActionTriggerKey, "");
 
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1308,16 +1308,16 @@ public class ObjectActionPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByO_A_OAEK;
+				finderPath = _finderPathWithoutPaginationFindByO_A_OATK;
 				finderArgs = new Object[] {
-					objectDefinitionId, active, objectActionExecutorKey
+					objectDefinitionId, active, objectActionTriggerKey
 				};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByO_A_OAEK;
+			finderPath = _finderPathWithPaginationFindByO_A_OATK;
 			finderArgs = new Object[] {
-				objectDefinitionId, active, objectActionExecutorKey, start, end,
+				objectDefinitionId, active, objectActionTriggerKey, start, end,
 				orderByComparator
 			};
 		}
@@ -1333,8 +1333,8 @@ public class ObjectActionPersistenceImpl
 					if ((objectDefinitionId !=
 							objectAction.getObjectDefinitionId()) ||
 						(active != objectAction.isActive()) ||
-						!objectActionExecutorKey.equals(
-							objectAction.getObjectActionExecutorKey())) {
+						!objectActionTriggerKey.equals(
+							objectAction.getObjectActionTriggerKey())) {
 
 						list = null;
 
@@ -1357,19 +1357,19 @@ public class ObjectActionPersistenceImpl
 
 			sb.append(_SQL_SELECT_OBJECTACTION_WHERE);
 
-			sb.append(_FINDER_COLUMN_O_A_OAEK_OBJECTDEFINITIONID_2);
+			sb.append(_FINDER_COLUMN_O_A_OATK_OBJECTDEFINITIONID_2);
 
-			sb.append(_FINDER_COLUMN_O_A_OAEK_ACTIVE_2);
+			sb.append(_FINDER_COLUMN_O_A_OATK_ACTIVE_2);
 
-			boolean bindObjectActionExecutorKey = false;
+			boolean bindObjectActionTriggerKey = false;
 
-			if (objectActionExecutorKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_O_A_OAEK_OBJECTACTIONEXECUTORKEY_3);
+			if (objectActionTriggerKey.isEmpty()) {
+				sb.append(_FINDER_COLUMN_O_A_OATK_OBJECTACTIONTRIGGERKEY_3);
 			}
 			else {
-				bindObjectActionExecutorKey = true;
+				bindObjectActionTriggerKey = true;
 
-				sb.append(_FINDER_COLUMN_O_A_OAEK_OBJECTACTIONEXECUTORKEY_2);
+				sb.append(_FINDER_COLUMN_O_A_OATK_OBJECTACTIONTRIGGERKEY_2);
 			}
 
 			if (orderByComparator != null) {
@@ -1395,8 +1395,8 @@ public class ObjectActionPersistenceImpl
 
 				queryPos.add(active);
 
-				if (bindObjectActionExecutorKey) {
-					queryPos.add(objectActionExecutorKey);
+				if (bindObjectActionTriggerKey) {
+					queryPos.add(objectActionTriggerKey);
 				}
 
 				list = (List<ObjectAction>)QueryUtil.list(
@@ -1420,24 +1420,24 @@ public class ObjectActionPersistenceImpl
 	}
 
 	/**
-	 * Returns the first object action in the ordered set where objectDefinitionId = &#63; and active = &#63; and objectActionExecutorKey = &#63;.
+	 * Returns the first object action in the ordered set where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
 	 *
 	 * @param objectDefinitionId the object definition ID
 	 * @param active the active
-	 * @param objectActionExecutorKey the object action executor key
+	 * @param objectActionTriggerKey the object action trigger key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object action
 	 * @throws NoSuchObjectActionException if a matching object action could not be found
 	 */
 	@Override
-	public ObjectAction findByO_A_OAEK_First(
+	public ObjectAction findByO_A_OATK_First(
 			long objectDefinitionId, boolean active,
-			String objectActionExecutorKey,
+			String objectActionTriggerKey,
 			OrderByComparator<ObjectAction> orderByComparator)
 		throws NoSuchObjectActionException {
 
-		ObjectAction objectAction = fetchByO_A_OAEK_First(
-			objectDefinitionId, active, objectActionExecutorKey,
+		ObjectAction objectAction = fetchByO_A_OATK_First(
+			objectDefinitionId, active, objectActionTriggerKey,
 			orderByComparator);
 
 		if (objectAction != null) {
@@ -1454,8 +1454,8 @@ public class ObjectActionPersistenceImpl
 		sb.append(", active=");
 		sb.append(active);
 
-		sb.append(", objectActionExecutorKey=");
-		sb.append(objectActionExecutorKey);
+		sb.append(", objectActionTriggerKey=");
+		sb.append(objectActionTriggerKey);
 
 		sb.append("}");
 
@@ -1463,21 +1463,21 @@ public class ObjectActionPersistenceImpl
 	}
 
 	/**
-	 * Returns the first object action in the ordered set where objectDefinitionId = &#63; and active = &#63; and objectActionExecutorKey = &#63;.
+	 * Returns the first object action in the ordered set where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
 	 *
 	 * @param objectDefinitionId the object definition ID
 	 * @param active the active
-	 * @param objectActionExecutorKey the object action executor key
+	 * @param objectActionTriggerKey the object action trigger key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object action, or <code>null</code> if a matching object action could not be found
 	 */
 	@Override
-	public ObjectAction fetchByO_A_OAEK_First(
-		long objectDefinitionId, boolean active, String objectActionExecutorKey,
+	public ObjectAction fetchByO_A_OATK_First(
+		long objectDefinitionId, boolean active, String objectActionTriggerKey,
 		OrderByComparator<ObjectAction> orderByComparator) {
 
-		List<ObjectAction> list = findByO_A_OAEK(
-			objectDefinitionId, active, objectActionExecutorKey, 0, 1,
+		List<ObjectAction> list = findByO_A_OATK(
+			objectDefinitionId, active, objectActionTriggerKey, 0, 1,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1488,24 +1488,24 @@ public class ObjectActionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object action in the ordered set where objectDefinitionId = &#63; and active = &#63; and objectActionExecutorKey = &#63;.
+	 * Returns the last object action in the ordered set where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
 	 *
 	 * @param objectDefinitionId the object definition ID
 	 * @param active the active
-	 * @param objectActionExecutorKey the object action executor key
+	 * @param objectActionTriggerKey the object action trigger key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object action
 	 * @throws NoSuchObjectActionException if a matching object action could not be found
 	 */
 	@Override
-	public ObjectAction findByO_A_OAEK_Last(
+	public ObjectAction findByO_A_OATK_Last(
 			long objectDefinitionId, boolean active,
-			String objectActionExecutorKey,
+			String objectActionTriggerKey,
 			OrderByComparator<ObjectAction> orderByComparator)
 		throws NoSuchObjectActionException {
 
-		ObjectAction objectAction = fetchByO_A_OAEK_Last(
-			objectDefinitionId, active, objectActionExecutorKey,
+		ObjectAction objectAction = fetchByO_A_OATK_Last(
+			objectDefinitionId, active, objectActionTriggerKey,
 			orderByComparator);
 
 		if (objectAction != null) {
@@ -1522,8 +1522,8 @@ public class ObjectActionPersistenceImpl
 		sb.append(", active=");
 		sb.append(active);
 
-		sb.append(", objectActionExecutorKey=");
-		sb.append(objectActionExecutorKey);
+		sb.append(", objectActionTriggerKey=");
+		sb.append(objectActionTriggerKey);
 
 		sb.append("}");
 
@@ -1531,28 +1531,28 @@ public class ObjectActionPersistenceImpl
 	}
 
 	/**
-	 * Returns the last object action in the ordered set where objectDefinitionId = &#63; and active = &#63; and objectActionExecutorKey = &#63;.
+	 * Returns the last object action in the ordered set where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
 	 *
 	 * @param objectDefinitionId the object definition ID
 	 * @param active the active
-	 * @param objectActionExecutorKey the object action executor key
+	 * @param objectActionTriggerKey the object action trigger key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object action, or <code>null</code> if a matching object action could not be found
 	 */
 	@Override
-	public ObjectAction fetchByO_A_OAEK_Last(
-		long objectDefinitionId, boolean active, String objectActionExecutorKey,
+	public ObjectAction fetchByO_A_OATK_Last(
+		long objectDefinitionId, boolean active, String objectActionTriggerKey,
 		OrderByComparator<ObjectAction> orderByComparator) {
 
-		int count = countByO_A_OAEK(
-			objectDefinitionId, active, objectActionExecutorKey);
+		int count = countByO_A_OATK(
+			objectDefinitionId, active, objectActionTriggerKey);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<ObjectAction> list = findByO_A_OAEK(
-			objectDefinitionId, active, objectActionExecutorKey, count - 1,
+		List<ObjectAction> list = findByO_A_OATK(
+			objectDefinitionId, active, objectActionTriggerKey, count - 1,
 			count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1563,24 +1563,24 @@ public class ObjectActionPersistenceImpl
 	}
 
 	/**
-	 * Returns the object actions before and after the current object action in the ordered set where objectDefinitionId = &#63; and active = &#63; and objectActionExecutorKey = &#63;.
+	 * Returns the object actions before and after the current object action in the ordered set where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
 	 *
 	 * @param objectActionId the primary key of the current object action
 	 * @param objectDefinitionId the object definition ID
 	 * @param active the active
-	 * @param objectActionExecutorKey the object action executor key
+	 * @param objectActionTriggerKey the object action trigger key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next object action
 	 * @throws NoSuchObjectActionException if a object action with the primary key could not be found
 	 */
 	@Override
-	public ObjectAction[] findByO_A_OAEK_PrevAndNext(
+	public ObjectAction[] findByO_A_OATK_PrevAndNext(
 			long objectActionId, long objectDefinitionId, boolean active,
-			String objectActionExecutorKey,
+			String objectActionTriggerKey,
 			OrderByComparator<ObjectAction> orderByComparator)
 		throws NoSuchObjectActionException {
 
-		objectActionExecutorKey = Objects.toString(objectActionExecutorKey, "");
+		objectActionTriggerKey = Objects.toString(objectActionTriggerKey, "");
 
 		ObjectAction objectAction = findByPrimaryKey(objectActionId);
 
@@ -1591,15 +1591,15 @@ public class ObjectActionPersistenceImpl
 
 			ObjectAction[] array = new ObjectActionImpl[3];
 
-			array[0] = getByO_A_OAEK_PrevAndNext(
+			array[0] = getByO_A_OATK_PrevAndNext(
 				session, objectAction, objectDefinitionId, active,
-				objectActionExecutorKey, orderByComparator, true);
+				objectActionTriggerKey, orderByComparator, true);
 
 			array[1] = objectAction;
 
-			array[2] = getByO_A_OAEK_PrevAndNext(
+			array[2] = getByO_A_OATK_PrevAndNext(
 				session, objectAction, objectDefinitionId, active,
-				objectActionExecutorKey, orderByComparator, false);
+				objectActionTriggerKey, orderByComparator, false);
 
 			return array;
 		}
@@ -1611,9 +1611,9 @@ public class ObjectActionPersistenceImpl
 		}
 	}
 
-	protected ObjectAction getByO_A_OAEK_PrevAndNext(
+	protected ObjectAction getByO_A_OATK_PrevAndNext(
 		Session session, ObjectAction objectAction, long objectDefinitionId,
-		boolean active, String objectActionExecutorKey,
+		boolean active, String objectActionTriggerKey,
 		OrderByComparator<ObjectAction> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
@@ -1629,19 +1629,19 @@ public class ObjectActionPersistenceImpl
 
 		sb.append(_SQL_SELECT_OBJECTACTION_WHERE);
 
-		sb.append(_FINDER_COLUMN_O_A_OAEK_OBJECTDEFINITIONID_2);
+		sb.append(_FINDER_COLUMN_O_A_OATK_OBJECTDEFINITIONID_2);
 
-		sb.append(_FINDER_COLUMN_O_A_OAEK_ACTIVE_2);
+		sb.append(_FINDER_COLUMN_O_A_OATK_ACTIVE_2);
 
-		boolean bindObjectActionExecutorKey = false;
+		boolean bindObjectActionTriggerKey = false;
 
-		if (objectActionExecutorKey.isEmpty()) {
-			sb.append(_FINDER_COLUMN_O_A_OAEK_OBJECTACTIONEXECUTORKEY_3);
+		if (objectActionTriggerKey.isEmpty()) {
+			sb.append(_FINDER_COLUMN_O_A_OATK_OBJECTACTIONTRIGGERKEY_3);
 		}
 		else {
-			bindObjectActionExecutorKey = true;
+			bindObjectActionTriggerKey = true;
 
-			sb.append(_FINDER_COLUMN_O_A_OAEK_OBJECTACTIONEXECUTORKEY_2);
+			sb.append(_FINDER_COLUMN_O_A_OATK_OBJECTACTIONTRIGGERKEY_2);
 		}
 
 		if (orderByComparator != null) {
@@ -1717,8 +1717,8 @@ public class ObjectActionPersistenceImpl
 
 		queryPos.add(active);
 
-		if (bindObjectActionExecutorKey) {
-			queryPos.add(objectActionExecutorKey);
+		if (bindObjectActionTriggerKey) {
+			queryPos.add(objectActionTriggerKey);
 		}
 
 		if (orderByComparator != null) {
@@ -1740,20 +1740,20 @@ public class ObjectActionPersistenceImpl
 	}
 
 	/**
-	 * Removes all the object actions where objectDefinitionId = &#63; and active = &#63; and objectActionExecutorKey = &#63; from the database.
+	 * Removes all the object actions where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63; from the database.
 	 *
 	 * @param objectDefinitionId the object definition ID
 	 * @param active the active
-	 * @param objectActionExecutorKey the object action executor key
+	 * @param objectActionTriggerKey the object action trigger key
 	 */
 	@Override
-	public void removeByO_A_OAEK(
+	public void removeByO_A_OATK(
 		long objectDefinitionId, boolean active,
-		String objectActionExecutorKey) {
+		String objectActionTriggerKey) {
 
 		for (ObjectAction objectAction :
-				findByO_A_OAEK(
-					objectDefinitionId, active, objectActionExecutorKey,
+				findByO_A_OATK(
+					objectDefinitionId, active, objectActionTriggerKey,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
 			remove(objectAction);
@@ -1761,24 +1761,24 @@ public class ObjectActionPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of object actions where objectDefinitionId = &#63; and active = &#63; and objectActionExecutorKey = &#63;.
+	 * Returns the number of object actions where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
 	 *
 	 * @param objectDefinitionId the object definition ID
 	 * @param active the active
-	 * @param objectActionExecutorKey the object action executor key
+	 * @param objectActionTriggerKey the object action trigger key
 	 * @return the number of matching object actions
 	 */
 	@Override
-	public int countByO_A_OAEK(
+	public int countByO_A_OATK(
 		long objectDefinitionId, boolean active,
-		String objectActionExecutorKey) {
+		String objectActionTriggerKey) {
 
-		objectActionExecutorKey = Objects.toString(objectActionExecutorKey, "");
+		objectActionTriggerKey = Objects.toString(objectActionTriggerKey, "");
 
-		FinderPath finderPath = _finderPathCountByO_A_OAEK;
+		FinderPath finderPath = _finderPathCountByO_A_OATK;
 
 		Object[] finderArgs = new Object[] {
-			objectDefinitionId, active, objectActionExecutorKey
+			objectDefinitionId, active, objectActionTriggerKey
 		};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
@@ -1788,19 +1788,19 @@ public class ObjectActionPersistenceImpl
 
 			sb.append(_SQL_COUNT_OBJECTACTION_WHERE);
 
-			sb.append(_FINDER_COLUMN_O_A_OAEK_OBJECTDEFINITIONID_2);
+			sb.append(_FINDER_COLUMN_O_A_OATK_OBJECTDEFINITIONID_2);
 
-			sb.append(_FINDER_COLUMN_O_A_OAEK_ACTIVE_2);
+			sb.append(_FINDER_COLUMN_O_A_OATK_ACTIVE_2);
 
-			boolean bindObjectActionExecutorKey = false;
+			boolean bindObjectActionTriggerKey = false;
 
-			if (objectActionExecutorKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_O_A_OAEK_OBJECTACTIONEXECUTORKEY_3);
+			if (objectActionTriggerKey.isEmpty()) {
+				sb.append(_FINDER_COLUMN_O_A_OATK_OBJECTACTIONTRIGGERKEY_3);
 			}
 			else {
-				bindObjectActionExecutorKey = true;
+				bindObjectActionTriggerKey = true;
 
-				sb.append(_FINDER_COLUMN_O_A_OAEK_OBJECTACTIONEXECUTORKEY_2);
+				sb.append(_FINDER_COLUMN_O_A_OATK_OBJECTACTIONTRIGGERKEY_2);
 			}
 
 			String sql = sb.toString();
@@ -1818,8 +1818,8 @@ public class ObjectActionPersistenceImpl
 
 				queryPos.add(active);
 
-				if (bindObjectActionExecutorKey) {
-					queryPos.add(objectActionExecutorKey);
+				if (bindObjectActionTriggerKey) {
+					queryPos.add(objectActionTriggerKey);
 				}
 
 				count = (Long)query.uniqueResult();
@@ -1837,19 +1837,19 @@ public class ObjectActionPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_O_A_OAEK_OBJECTDEFINITIONID_2 =
+	private static final String _FINDER_COLUMN_O_A_OATK_OBJECTDEFINITIONID_2 =
 		"objectAction.objectDefinitionId = ? AND ";
 
-	private static final String _FINDER_COLUMN_O_A_OAEK_ACTIVE_2 =
+	private static final String _FINDER_COLUMN_O_A_OATK_ACTIVE_2 =
 		"objectAction.active = ? AND ";
 
 	private static final String
-		_FINDER_COLUMN_O_A_OAEK_OBJECTACTIONEXECUTORKEY_2 =
-			"objectAction.objectActionExecutorKey = ?";
+		_FINDER_COLUMN_O_A_OATK_OBJECTACTIONTRIGGERKEY_2 =
+			"objectAction.objectActionTriggerKey = ?";
 
 	private static final String
-		_FINDER_COLUMN_O_A_OAEK_OBJECTACTIONEXECUTORKEY_3 =
-			"(objectAction.objectActionExecutorKey IS NULL OR objectAction.objectActionExecutorKey = '')";
+		_FINDER_COLUMN_O_A_OATK_OBJECTACTIONTRIGGERKEY_3 =
+			"(objectAction.objectActionTriggerKey IS NULL OR objectAction.objectActionTriggerKey = '')";
 
 	public ObjectActionPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -2449,37 +2449,37 @@ public class ObjectActionPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
-		_finderPathWithPaginationFindByO_A_OAEK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByO_A_OAEK",
+		_finderPathWithPaginationFindByO_A_OATK = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByO_A_OATK",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			},
 			new String[] {
-				"objectDefinitionId", "active_", "objectActionExecutorKey"
+				"objectDefinitionId", "active_", "objectActionTriggerKey"
 			},
 			true);
 
-		_finderPathWithoutPaginationFindByO_A_OAEK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByO_A_OAEK",
+		_finderPathWithoutPaginationFindByO_A_OATK = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByO_A_OATK",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
 			new String[] {
-				"objectDefinitionId", "active_", "objectActionExecutorKey"
+				"objectDefinitionId", "active_", "objectActionTriggerKey"
 			},
 			true);
 
-		_finderPathCountByO_A_OAEK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByO_A_OAEK",
+		_finderPathCountByO_A_OATK = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByO_A_OATK",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
 			new String[] {
-				"objectDefinitionId", "active_", "objectActionExecutorKey"
+				"objectDefinitionId", "active_", "objectActionTriggerKey"
 			},
 			false);
 	}

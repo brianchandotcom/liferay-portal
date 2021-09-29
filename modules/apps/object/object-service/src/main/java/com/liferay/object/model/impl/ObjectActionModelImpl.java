@@ -139,7 +139,7 @@ public class ObjectActionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTACTIONEXECUTORKEY_COLUMN_BITMASK = 4L;
+	public static final long OBJECTACTIONTRIGGERKEY_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
@@ -692,15 +692,6 @@ public class ObjectActionModelImpl
 		_objectActionExecutorKey = objectActionExecutorKey;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public String getOriginalObjectActionExecutorKey() {
-		return getColumnOriginalValue("objectActionExecutorKey");
-	}
-
 	@JSON
 	@Override
 	public String getObjectActionTriggerKey() {
@@ -719,6 +710,15 @@ public class ObjectActionModelImpl
 		}
 
 		_objectActionTriggerKey = objectActionTriggerKey;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalObjectActionTriggerKey() {
+		return getColumnOriginalValue("objectActionTriggerKey");
 	}
 
 	@JSON

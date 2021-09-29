@@ -242,6 +242,11 @@ public interface ObjectDefinitionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectDefinition fetchObjectDefinition(long companyId, String name);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectDefinition fetchObjectDefinitionByClassName(
+			long companyId, String className)
+		throws PortalException;
+
 	/**
 	 * Returns the object definition with the matching UUID and company.
 	 *

@@ -81,7 +81,9 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 
 		long previousScopeGroupId = portletDataContext.getScopeGroupId();
 
-		if (displayStyleGroupId != portletDataContext.getScopeGroupId()) {
+		if ((displayStyleGroupId != 0) &&
+			(displayStyleGroupId != portletDataContext.getScopeGroupId())) {
+
 			portletDataContext.setScopeGroupId(displayStyleGroupId);
 		}
 

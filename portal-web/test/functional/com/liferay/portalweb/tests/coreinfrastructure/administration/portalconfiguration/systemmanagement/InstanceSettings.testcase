@@ -881,13 +881,7 @@ definition {
 			OSGiConfigFileBaseDir = "${tempFileDirectory}",
 			OSGiConfigFileName = "${tempFileName}");
 
-		Portlet.shutdownServer();
-
-		Portlet.startServer();
-
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
-
-		User.firstLoginPG();
+		Pause(locator = "20000");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",

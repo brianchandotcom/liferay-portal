@@ -200,11 +200,23 @@ public class ObjectDefinitionsActionsDisplayContext {
 
 		ObjectActionExecutor objectActionExecutor = getObjectActionExecutor();
 
+		if (Validator.isNull(objectActionExecutor.getSettings())) {
+			return "";
+		}
+
+		ObjectAction objectAction = getObjectAction();
+
 		DDMForm ddmForm = DDMFormFactory.create(
 			objectActionExecutor.getSettings());
 
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
+
+		DDMFormValues ddmFormValues = _getDDMFormValues(ddmForm, objectAction);
+
+		if (ddmFormValues != null) {
+			ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
+		}
 
 		ddmFormRenderingContext.setContainerId(
 			"editObjectActionExecutorSettings");
@@ -224,6 +236,52 @@ public class ObjectDefinitionsActionsDisplayContext {
 		ddmFormRenderingContext.setShowRequiredFieldsWarning(true);
 
 		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
+	}
+
+	private DDMFormValues _getDDMFormValues(
+		DDMForm ddmForm, ObjectAction objectAction) {
+
+		UnicodeProperties parametersUnicodeProperties =
+			objectAction.getParametersUnicodeProperties();
+
+		if (parametersUnicodeProperties.isEmpty()) {
+			return null;
+		}
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.addAvailableLocale(_objectRequestHelper.getLocale());
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(false);
+
+		ddmFormValues.setDDMFormFieldValues(
+			TransformUtil.transform(
+				ddmFormFieldsMap.values(),
+				ddmFormField -> {
+					DDMFormFieldValue ddmFormFieldValue =
+						new DDMFormFieldValue();
+
+					ddmFormFieldValue.setName(ddmFormField.getName());
+
+					Serializable serializable = parametersUnicodeProperties.get(
+						ddmFormField.getName());
+
+					if (serializable == null) {
+						ddmFormFieldValue.setValue(
+							new UnlocalizedValue(GetterUtil.DEFAULT_STRING));
+					}
+					else {
+						ddmFormFieldValue.setValue(
+							new UnlocalizedValue(String.valueOf(serializable)));
+					}
+
+					return ddmFormFieldValue;
+				}));
+
+		ddmFormValues.setDefaultLocale(_objectRequestHelper.getLocale());
+
+		return ddmFormValues;
 	}
 
 	private boolean _hasAddObjectActionPermission() throws Exception {

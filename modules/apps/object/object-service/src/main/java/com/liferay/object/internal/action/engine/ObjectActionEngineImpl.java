@@ -82,11 +82,19 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			Map<String, Serializable> parameters)
 		throws Exception {
 
+		if (userId == 0) {
+			return;
+		}
+
 		User user = _userLocalService.getUser(userId);
 
 		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinitionByClassName(
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 				user.getCompanyId(), className);
+
+		if (objectDefinition != null) {
+			return;
+		}
 
 		List<ObjectAction> objectActions =
 			_objectActionLocalService.getObjectActions(

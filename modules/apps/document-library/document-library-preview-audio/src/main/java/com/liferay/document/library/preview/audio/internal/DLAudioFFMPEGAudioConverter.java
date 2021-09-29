@@ -136,7 +136,10 @@ public class DLAudioFFMPEGAudioConverter implements AudioConverter {
 
 				if (process.exitValue() != 0) {
 					throw new Exception(
-						StringUtil.read(process.getErrorStream()));
+						StringBundler.concat(
+							"FFMPEG command ",
+							StringUtil.merge(ffmpegCommand, StringPool.SPACE),
+							" failed with exit status ", process.exitValue()));
 				}
 
 				return;

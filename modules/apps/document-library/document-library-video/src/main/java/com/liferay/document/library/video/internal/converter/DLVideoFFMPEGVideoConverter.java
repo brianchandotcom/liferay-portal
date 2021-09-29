@@ -105,9 +105,7 @@ public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 		catch (Exception exception) {
 			String message = exception.getMessage();
 
-			if (message.contains(
-					"Output file #0 does not contain any stream")) {
-
+			if (message.contains("FFMPEG command")) {
 				BufferedImage bufferedImage = new BufferedImage(
 					PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH,
 					PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT,
@@ -214,7 +212,10 @@ public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 
 				if (process.exitValue() != 0) {
 					throw new Exception(
-						StringUtil.read(process.getErrorStream()));
+						StringBundler.concat(
+							"FFMPEG command ",
+							StringUtil.merge(ffmpegCommand, StringPool.SPACE),
+							" failed with exit status ", process.exitValue()));
 				}
 
 				return;

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
-import java.util.Optional;
 
 /**
  * @author Tina Tian
@@ -107,15 +106,8 @@ public class MessageBusThreadLocalUtil {
 			GroupThreadLocal.setGroupId(groupId);
 		}
 
-		PermissionChecker permissionChecker = Optional.ofNullable(
-			message.get("permissionChecker")
-		).filter(
-			PermissionChecker.class::isInstance
-		).map(
-			PermissionChecker.class::cast
-		).orElse(
-			null
-		);
+		PermissionChecker permissionChecker = _getPermissionChecker(
+			message.get("permissionChecker"));
 
 		String principalName = message.getString("principalName");
 
@@ -156,6 +148,14 @@ public class MessageBusThreadLocalUtil {
 		if (themeDisplayLocale != null) {
 			LocaleThreadLocal.setThemeDisplayLocale(themeDisplayLocale);
 		}
+	}
+
+	private static PermissionChecker _getPermissionChecker(Object object) {
+		if (object instanceof PermissionChecker) {
+			return (PermissionChecker)object;
+		}
+
+		return null;
 	}
 
 }

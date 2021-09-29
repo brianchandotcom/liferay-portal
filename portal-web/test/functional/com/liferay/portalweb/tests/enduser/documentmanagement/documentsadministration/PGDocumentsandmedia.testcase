@@ -305,19 +305,20 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
-	test EditSubFolder {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
+	@refactordone
+	test CanEditSubFolder {
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM SubFolder Description",
+			dmFolderName = "DM SubFolder Name",
+			groupName = "Guest",
+			parentFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMFolder.addPG(
-			dmFolderDescription = "DM SubFolder Description",
-			dmFolderName = "DM SubFolder Name");
 
 		DMFolder.editPG(
 			dmFolderDescriptionEdit = "DM SubFolder Description Edit",
@@ -326,18 +327,20 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test MoveDocumentWithSlashesInTitle {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+	@refactordone
+	test CanMoveDocumentWithSlashesInTitle {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "/D/M/Document Title",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
-		DMDocument.addPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "/D/M/Document Title");
-
-		DMFolder.addPG(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.moveToFolderPG(
 			dmDocumentTitle = "/D/M/Document Title",
@@ -351,17 +354,17 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test MoveFolderDocumentDuplicateToFolder {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
+	@refactordone
+	test CannotMoveToFolderWithDuplicateTitle {
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder1 Description",
-			dmFolderName = "DM Folder1 Name");
+			dmFolderName = "DM Folder1 Name",
+			groupName = "Guest");
 
-		DMFolder.addPG(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder2 Description",
-			dmFolderName = "DM Folder2 Name");
+			dmFolderName = "DM Folder2 Name",
+			groupName = "Guest");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -389,10 +392,10 @@ definition {
 			dmFolderName = "DM Folder2 Name");
 	}
 
-	@description = "This case covers the folder name of a document can be viewed in the info panel and navigate to it."
+	@description = "This validates that the location of the document accurately displays after it is moved from one folder to another."
 	@priority = "4"
-	@refactorneeded
-	test MoveFolderDocumentToFolder {
+	@refactordone
+	test CanMoveDocumentFromOneFolderToAnother {
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder1 Description",
 			dmFolderName = "DM Folder1 Name",
@@ -415,16 +418,6 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder1 Name");
 
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			dmFolderName = "DM Folder1 Name",
-			locationFieldName = "true");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder1 Name");
-
 		DMDocument.moveToFolderPG(
 			dmDocumentTitle = "DM Document Title",
 			dmFolderName = "DM Folder2 Name");
@@ -441,8 +434,8 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
-	test RemovePortlet {
+	@refactordone
+	test CanRemovePortlet {
 		property portal.acceptance = "true";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -451,52 +444,33 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test RevertVersionFolderDocumentFile {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
-
+	@refactordone
+	test CanRevertFile {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			folderName = "DM Folder Name",
 			groupName = "Guest",
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.editPG(
 			dmDocumentFileEdit = "Document_2.doc",
-			dmDocumentTitle = "DM Document Title");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+			dmDocumentTitle = "DM Document Title Version 2");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitle = "DM Document Title Version 2",
 			dmDocumentVersionNumber = "2.0");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title");
 
 		DMDocument.revertPG(
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentVersionNumber = "1.0");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",

@@ -38,8 +38,11 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 					<aui:input name="name" required="<%= true %>" value="<%= objectAction.getName() %>" />
 
 					<aui:input disabled="<%= true %>" label="when" name="objectActionTriggerKey" value="<%= objectAction.getObjectActionTriggerKey() %>" />
-
 					<aui:input disabled="<%= true %>" label="then" name="objectActionExecutorKey" value="<%= objectAction.getObjectActionExecutorKey() %>" />
+
+					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
+						<aui:input label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= objectAction.isActive() %>" />
+					</aui:field-wrapper>
 
 					<%= objectDefinitionsActionsDisplayContext.renderDDMForm(pageContext) %>
 				</div>
@@ -56,27 +59,36 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 
 <script>
 	function <portlet:namespace />saveObjectAction() {
-		const localizedInputs = document.querySelectorAll(
-			"input[id^='<portlet:namespace />'][type='hidden']"
+		const active = document.getElementById('<portlet:namespace />active');
+
+		const name = document.getElementById('<portlet:namespace />name');
+
+		debugger;
+
+		var values = {};
+
+		const DDMFormInstance = Liferay.component(
+			'editObjectActionExecutorSettings'
 		);
 
-		const localizedLabels = Array(...localizedInputs).reduce(
-			(prev, cur, index) => {
-				if (cur.value) {
-					prev[cur.id.replace('<portlet:namespace />label_', '')] =
-						cur.value;
-				}
+		if (DDMFormInstance) {
+			const current = DDMFormInstance.reactComponentRef.current;
 
-				return prev;
-			},
-			{}
-		);
+			const fields = current.getFields();
+
+			values = fields.reduce(
+				(obj, cur) => Object.assign(obj, {[cur.fieldName]: cur.value}),
+				{}
+			);
+		}
 
 		Liferay.Util.fetch(
 			'/o/object-admin/v1.0/object-actions/<%= objectAction.getObjectActionId() %>',
 			{
 				body: JSON.stringify({
-					label: localizedLabels,
+					active: active.checked,
+					name: name.value,
+					parameters: values,
 				}),
 				headers: new Headers({
 					Accept: 'application/json',
@@ -92,7 +104,7 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 				else if (response.ok) {
 					Liferay.Util.openToast({
 						message:
-							'<%= LanguageUtil.get(request, "the-object-relationship-was-updated-successfully") %>',
+							'<%= LanguageUtil.get(request, "the-object-action-was-updated-successfully") %>',
 						type: 'success',
 					});
 

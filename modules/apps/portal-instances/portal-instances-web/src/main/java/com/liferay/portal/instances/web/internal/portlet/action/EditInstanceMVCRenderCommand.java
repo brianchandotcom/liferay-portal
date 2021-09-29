@@ -15,7 +15,6 @@
 package com.liferay.portal.instances.web.internal.portlet.action;
 
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
-import com.liferay.portal.instances.web.internal.constants.PortalInstancesWebKeys;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -56,10 +54,6 @@ public class EditInstanceMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			renderRequest.setAttribute(
-				PortalInstancesWebKeys.SITE_INITIALIZER_REGISTRY,
-				_siteInitializerRegistry);
-
 			getInstance(renderRequest);
 		}
 		catch (Exception exception) {
@@ -97,8 +91,5 @@ public class EditInstanceMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SiteInitializerRegistry _siteInitializerRegistry;
 
 }

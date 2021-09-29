@@ -15,10 +15,17 @@
 package com.liferay.portal.instances.web.internal.portlet;
 
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
+import com.liferay.portal.instances.web.internal.constants.PortalInstancesWebKeys;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.site.initializer.SiteInitializerRegistry;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,11 +56,26 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class PortalInstancesPortlet extends MVCPortlet {
 
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			PortalInstancesWebKeys.SITE_INITIALIZER_REGISTRY,
+			_siteInitializerRegistry);
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.portal.instances.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {
 	}
+
+	@Reference
+	private SiteInitializerRegistry _siteInitializerRegistry;
 
 }

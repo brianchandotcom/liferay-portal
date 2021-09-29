@@ -351,12 +351,6 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		return list;
 	}
 
-	private WorkspaceGitRepository _getWorkspaceGitRepository() {
-		Workspace workspace = getWorkspace();
-
-		return workspace.getPrimaryWorkspaceGitRepository();
-	}
-
 	private void _validateBuildParameterJenkinsGitHubURL() {
 		String jenkinsGitHubURL = getBuildParameter(
 			_NAME_BUILD_PARAMETER_JENKINS_GITHUB_URL);

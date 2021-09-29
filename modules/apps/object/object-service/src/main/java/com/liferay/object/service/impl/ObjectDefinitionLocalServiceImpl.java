@@ -797,7 +797,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		for (ObjectEntry objectEntry : objectEntries) {
 			WorkflowHandlerRegistryUtil.startWorkflowInstance(
-				objectEntry.getCompanyId(), objectEntry.getGroupId(),
+				objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(),
 				objectEntry.getUserId(), objectDefinition.getClassName(),
 				objectEntry.getObjectEntryId(), objectEntry,
 				ServiceContextThreadLocal.getServiceContext());

@@ -106,8 +106,8 @@ public class AssetVocabularyLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetVocabularyLocalService.addVocabulary(
-			userId, groupId, name, title, titleMap, descriptionMap, settings,
-			visibilityType, serviceContext);
+			null, userId, groupId, name, title, titleMap, descriptionMap,
+			settings, visibilityType, serviceContext);
 	}
 
 	@Override

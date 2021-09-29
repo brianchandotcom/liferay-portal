@@ -110,7 +110,7 @@ public class AssetVocabularyLocalServiceUtil {
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().addVocabulary(
+		return getService().addVocabulary(null,
 			userId, groupId, name, title, titleMap, descriptionMap, settings,
 			visibilityType, serviceContext);
 	}

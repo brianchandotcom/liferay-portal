@@ -117,7 +117,7 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 		serviceContext.setAddGuestPermissions(true);
 
 		_assetVocabularyLocalService.addVocabulary(
-			defaultUser.getUserId(), company.getGroupId(), name,
+			null, defaultUser.getUserId(), company.getGroupId(), name,
 			StringPool.BLANK, titleMap, Collections.emptyMap(),
 			assetVocabularySettingsHelper.toString(), visibilityType,
 			serviceContext);

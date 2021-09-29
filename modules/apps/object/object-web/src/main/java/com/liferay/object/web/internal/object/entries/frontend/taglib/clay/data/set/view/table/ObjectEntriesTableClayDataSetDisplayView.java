@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Objects;
@@ -46,6 +47,10 @@ public class ObjectEntriesTableClayDataSetDisplayView
 		idClayTableSchemaField.setContentRenderer("actionLink");
 
 		for (ObjectField objectField : objectFields) {
+			if (Validator.isNotNull(objectField.getRelationshipType())) {
+				continue;
+			}
+
 			ClayTableSchemaField clayTableSchemaField =
 				clayTableSchemaBuilder.addClayTableSchemaField(
 					objectField.getName(),

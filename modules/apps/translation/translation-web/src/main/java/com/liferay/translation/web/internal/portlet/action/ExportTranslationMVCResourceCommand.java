@@ -89,10 +89,21 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 			for (long classPK :
 					_getClassPKs(resourceRequest, segmentsExperienceIds)) {
 
-				_addZipEntry(
-					zipWriter, className, classPK, exportMimeType,
-					sourceLanguageId, targetLanguageIds,
-					_portal.getLocale(resourceRequest));
+				if ((classPK == SegmentsExperienceConstants.ID_DEFAULT) &&
+					className.equals(SegmentsExperience.class.getName())) {
+
+					_addZipEntry(
+						zipWriter, _getModelClassName(resourceRequest),
+						_getModelClassPK(resourceRequest), exportMimeType,
+						sourceLanguageId, targetLanguageIds,
+						_portal.getLocale(resourceRequest));
+				}
+				else {
+					_addZipEntry(
+						zipWriter, className, classPK, exportMimeType,
+						sourceLanguageId, targetLanguageIds,
+						_portal.getLocale(resourceRequest));
+				}
 			}
 
 			try (InputStream inputStream = new FileInputStream(

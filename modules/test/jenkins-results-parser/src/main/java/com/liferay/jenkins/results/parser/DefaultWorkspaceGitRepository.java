@@ -19,27 +19,19 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class OtherPortalWorkspaceGitRepository
-	extends BasePortalWorkspaceGitRepository {
+public class DefaultWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 
-	public static final String TYPE = "portal.other";
-
-	@Override
-	public String getType() {
-		return TYPE;
-	}
-
-	protected OtherPortalWorkspaceGitRepository(JSONObject jsonObject) {
+	protected DefaultWorkspaceGitRepository(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 
-	protected OtherPortalWorkspaceGitRepository(
+	protected DefaultWorkspaceGitRepository(
 		PullRequest pullRequest, String upstreamBranchName) {
 
 		super(pullRequest, upstreamBranchName);
 	}
 
-	protected OtherPortalWorkspaceGitRepository(
+	protected DefaultWorkspaceGitRepository(
 		RemoteGitRef remoteGitRef, String upstreamBranchName) {
 
 		super(remoteGitRef, upstreamBranchName);

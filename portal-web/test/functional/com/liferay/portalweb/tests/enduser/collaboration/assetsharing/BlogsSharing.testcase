@@ -25,11 +25,10 @@ definition {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			guestPermissions = "false");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 	}
 
 	tearDown {
@@ -43,71 +42,10 @@ definition {
 		}
 	}
 
-	@description = "This test asserts that proper notifications are sent based on sharing permissions granted."
-	@priority = "5"
-	@refactorneeded
-	test AssertNotifications {
-		property portal.acceptance = "true";
-
-		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
-
-		Asset.share(
-			sharingPermissions = "View",
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
-
-		Asset.share(
-			sharingPermissions = "Update",
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
-
-		Asset.share(
-			sharingPermissions = "Comment",
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Notifications.viewBadgeCount(notificationCount = "3");
-
-		Notifications.gotoNotifications();
-
-		Notifications.viewNewSharedContent(
-			contentSharingPermission = "viewing",
-			contentTitle = "Blogs Entry Title",
-			ownerName = "Test Test");
-
-		Notifications.gotoNotifications();
-
-		Notifications.viewNewSharedContent(
-			contentSharingPermission = "updating",
-			contentTitle = "Blogs Entry Title",
-			ownerName = "Test Test");
-
-		Notifications.gotoNotifications();
-
-		Notifications.viewNewSharedContent(
-			contentSharingPermission = "commenting",
-			contentTitle = "Blogs Entry Title",
-			ownerName = "Test Test");
-	}
-
 	@description = "This case ensures that sharing permissions can be updated through Shared by Me."
 	@priority = "4"
-	@refactorneeded
-	test ChangePermissionsViaSharedByMe {
+	@refactordone
+	test CanChangePermissionsViaSharedByMe {
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 
 		Asset.share(
@@ -116,11 +54,9 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
-
-		NavItem.click(navItem = "Shared by Me");
+		Asset.openTosharedContent(
+			navTab = "Shared by Me",
+			siteURLKey = "guest");
 
 		Asset.gotoManageCollaboratorsViaSharedByMe(contentTitle = "Blogs Entry Title");
 
@@ -128,15 +64,18 @@ definition {
 			selectPermission = "Can View",
 			userName = "userfn userln");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		Notifications.viewBadgeCount(notificationCount = "2");
 
 		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "viewing",
+			contentTitle = "Blogs Entry Title",
+			ownerName = "Test Test");
 
 		Notifications.viewNewSharedContent(
 			contentSharingPermission = "updating",
@@ -150,10 +89,43 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This test ensures that when a blog entry that was shared is deleted, it cannot be accessed."
+	@priority = "5"
+	@refactordone
+	test CannotViewDeletedEntryViaNotification {
+		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
+
+		Asset.share(
+			noAutocomplete = "true",
+			sharingPermissions = "Update",
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		JSONBlog.moveEntryToTrash(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		AssertTextEquals(
+			locator1 = "Sharing#NOTIFICATIONS_DELETE_ENTRY_TITLE",
+			value1 = "Notification no longer applies.");
+
+		AssertTextEquals(
+			locator1 = "Sharing#NOTIFICATIONS_DELETE_ENTRY_CONTENT",
+			value1 = "Notification for Sharing was deleted.");
+	}
+
 	@description = "This test ensures a user can only comment on a blog entry once it is shared with him."
 	@priority = "5"
-	@refactorneeded
-	test ShareWithCommentPermissions {
+	@refactordone
+	test CanShareWithCommentPermissions {
 		property portal.acceptance = "true";
 
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
@@ -163,11 +135,9 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -185,12 +155,17 @@ definition {
 			entryTitle = "Blogs Entry Title");
 
 		Comments.addPG(entryComment = "test");
+
+		Comments.viewPG(
+			commentCount = "1",
+			entryComment = "test",
+			userFullName = "userfn userln");
 	}
 
 	@description = "This test ensures a user can update a blog entry once it is shared with him."
 	@priority = "5"
-	@refactorneeded
-	test ShareWithUpdatePermissions {
+	@refactordone
+	test CanShareWithUpdatePermissions {
 		property portal.acceptance = "true";
 
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
@@ -200,11 +175,9 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -233,40 +206,35 @@ definition {
 			entryTitle = "Blogs Entry Title Edit");
 	}
 
-	@description = "This test ensures that when a blog entry that was shared is deleted, it cannot be accessed."
+	@description = "This test asserts that proper notifications are sent based on sharing permissions granted."
 	@priority = "5"
-	@refactorneeded
-	test ViewDeletedEntry {
-		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
+	@refactordone
+	test CanViewSharingNotifications {
+		property portal.acceptance = "true";
 
-		Asset.share(
-			noAutocomplete = "true",
-			sharingPermissions = "Update",
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
+		for (var sharingPermissions : list "View,Update,Comment") {
+			BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+			Asset.share(
+				sharingPermissions = "${sharingPermissions}",
+				userEmailAddress = "userea@liferay.com",
+				userName = "userfn userln");
+		}
 
-		BlogsNavigator.moveToRecycleBinCP(
-			assetType = "Blogs Entry",
-			entryTitle = "Blogs Entry Title");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		User.logoutPG();
+		Notifications.viewBadgeCount(notificationCount = "3");
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		for (var contentSharingPermission : list "viewing,updating,commenting") {
+			Notifications.gotoNotifications();
 
-		Notifications.viewBadgeCount(notificationCount = "1");
-
-		Notifications.gotoNotifications();
-
-		AssertTextEquals(
-			locator1 = "Sharing#NOTIFICATIONS_DELETE_ENTRY_TITLE",
-			value1 = "Notification no longer applies.");
-		AssertTextEquals(
-			locator1 = "Sharing#NOTIFICATIONS_DELETE_ENTRY_CONTENT",
-			value1 = "Notification for Sharing was deleted.");
+			Notifications.viewNewSharedContent(
+				contentSharingPermission = "${contentSharingPermission}",
+				contentTitle = "Blogs Entry Title",
+				ownerName = "Test Test");
+		}
 	}
 
 	@description = "This case ensures that the latest sharing permissions set for a user persists across all notification entries."

@@ -193,11 +193,7 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	public void setBranchSHA(String branchSHA) {
-		if (branchSHA == null) {
-			throw new RuntimeException("Branch SHA is null");
-		}
-
-		if (!branchSHA.matches(_REGEX_SHA)) {
+		if (!JenkinsResultsParserUtil.isSHA(branchSHA)) {
 			throw new RuntimeException("Branch SHA is invalid");
 		}
 
@@ -500,11 +496,7 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	private void _setBranchHeadSHA(String branchHeadSHA) {
-		if (branchHeadSHA == null) {
-			throw new RuntimeException("Branch head SHA is null");
-		}
-
-		if (!branchHeadSHA.matches(_REGEX_SHA)) {
+		if (!JenkinsResultsParserUtil.isSHA(branchHeadSHA)) {
 			throw new RuntimeException("Branch head SHA is invalid");
 		}
 
@@ -570,8 +562,6 @@ public abstract class BaseWorkspaceGitRepository
 
 		put("upstream_branch_sha", upstreamBranchSHA);
 	}
-
-	private static final String _REGEX_SHA = "[0-9a-f]{7,40}";
 
 	private static final String[] _REQUIRED_KEYS = {
 		"branch_head_sha", "branch_name", "branch_sha", "git_hub_url",

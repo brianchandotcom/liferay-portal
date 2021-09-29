@@ -309,7 +309,8 @@ public class ObjectRelationshipServiceTest {
 			objectRelationship =
 				_objectRelationshipService.updateObjectRelationship(
 					objectRelationship.getObjectRelationshipId(),
-					LocalizedMapUtil.getLocalizedMap("Baker"));
+					LocalizedMapUtil.getLocalizedMap("Baker"),
+					objectRelationship.getDeletionType());
 		}
 		finally {
 			if (objectRelationship != null) {

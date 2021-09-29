@@ -1058,3 +1058,28 @@
 		position: relative;
 	}
 }
+
+.definition-of-terms {
+	dt {
+		color: $dark;
+		font-weight: normal;
+		margin-bottom: 2em;
+		width: 25em;
+		word-break: break-word;
+	}
+
+	@include media-breakpoint-up(sm) {
+		dt {
+			float: left;
+			width: auto;
+		}
+
+		dd:after {
+			clear: both;
+			content: '';
+			display: block;
+			height: 0;
+			visibility: hidden;
+		}
+	}
+}

@@ -24,9 +24,9 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 public interface WebhookObjectActionSettings {
 
 	@DDMFormField(label = "secret")
-	public String getSecret();
+	public String secret();
 
 	@DDMFormField(label = "url")
-	public String getURL();
+	public String url();
 
 }

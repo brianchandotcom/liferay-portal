@@ -1373,6 +1373,50 @@ definition {
 			locator1 = "PageEditor#ENTRY_COVER_IMAGE");
 	}
 
+	@description = "This ensures that the user can create a document with the topic from the Global site."
+	@priority = "4"
+	@refactordone
+	test CanViewDocumentWithTopics {
+		JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Apple",
+			vocabularyName = "Topic");
+
+		JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Dragon Fruit",
+			vocabularyName = "Topic");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			categoryName = "Apple",
+			dmDocumentDescription = "Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document_1.doc",
+			vocabularyName = "Topic");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.addCategory(
+			categoryName = "Dragon Fruit",
+			vocabularyName = "Topic");
+
+		Button.clickPublish();
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewCategories(categoryNameList = "Apple,Dragon Fruit");
+	}
+
 	@description = "This test ensures that the user can view an expired document."
 	@priority = "5"
 	test CanViewExpiredDocument {
@@ -1471,6 +1515,27 @@ definition {
 			dmDocumentTitle = "Document_5.txt");
 	}
 
+	@description = "This ensures that a user can view the information about an image when navigating to info panel."
+	@priority = "4"
+	@refactordone
+	test CanViewImageFromInfoPanel {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentExtension = "jpg",
+			dmDocumentFileTypeInfo = "Image",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "Basic Document");
+	}
+
 	@description = "This ensures that the document title can be displayed correctly in the different views."
 	@priority = "5"
 	@refactordone
@@ -1500,6 +1565,74 @@ definition {
 		DMDocument.viewCP(
 			dmDocumentFileName = "Document_2.doc",
 			dmDocumentTitle = "Document_2");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanViewOlderVersion {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.editPG(
+			dmDocumentDescriptionEdit = "DM Document Description Edited",
+			dmDocumentTitle = "DM Document Title");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description Edited",
+			dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewOlderVersionPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentVersionNumber = "1.0");
+	}
+
+	@description = "This ensures that the user can view the document through related assets."
+	@priority = "3"
+	@refactordone
+	test CanViewRelatedDocument {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		RelatedAssets.selectAsset(
+			assetTitle = "Document_1.doc",
+			assetType = "Basic Document");
+
+		Button.clickPublish();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoRelatedAssetPG(
+			assetTitle = "Document_2.jpg",
+			dmDocumentTitle = "Document_1.doc");
+
+		AssertVisible(
+			key_dmDocumentFileName = "Document_2.jpg",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
 	}
 
 	@description = "This test covers LPS-101667. It makes sure that the file size can be displayed correctly in the different versions after editing the document file."

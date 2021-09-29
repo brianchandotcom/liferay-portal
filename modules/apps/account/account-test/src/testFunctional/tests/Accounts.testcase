@@ -314,17 +314,13 @@ definition {
 			Accounts.viewAssignee(assigneeName = "Organization ${organizationNumber}");
 		}
 
-		for (var organizationNumber : list "1,3") {
-			LexiconEntry.selectEntry(rowEntry = "Organization ${organizationNumber}");
-		}
+		Accounts.openAccountsAdmin();
 
-		ClickNoError(
-			key_text = "times-circle",
-			locator1 = "Icon#ANY");
+		LexiconEntry.gotoEntry(rowEntry = "Account with Organization");
 
-		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to remove the selected organizations?");
-
-		Alert.viewSuccessMessage();
+		Accounts.unassignMultipleOrganizations(
+			accountName = "Account Name",
+			organizationNumber = "1,3");
 
 		for (var organizationNumber : list "1,3") {
 			LexiconEntry.viewNoEntry(rowEntry = "Organization ${organizationNumber}");

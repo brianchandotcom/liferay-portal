@@ -589,6 +589,10 @@ definition {
 				userScreenName = "Mariasn");
 		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
 		task ("Sign in with the new user to visit the site pages") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "randy.smith@liferay.com",
@@ -629,6 +633,7 @@ definition {
 			ACUtils.searchBar(searchItem = "Randy");
 
 			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Randy Smith");
+
 			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "Maria Rau");
 		}
 
@@ -636,6 +641,7 @@ definition {
 			ACUtils.searchBar(searchItem = "Rau");
 
 			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Maria Rau");
+
 			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "Randy Smith");
 		}
 
@@ -643,6 +649,7 @@ definition {
 			ACUtils.searchBar(searchItem = "Randy Smith");
 
 			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Randy Smith");
+
 			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "Maria Rau");
 		}
 
@@ -650,6 +657,7 @@ definition {
 			ACUtils.searchBar(searchItem = "maria.rau@liferay.com");
 
 			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Maria Rau");
+
 			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "Randy Smith");
 		}
 
@@ -657,6 +665,7 @@ definition {
 			ACUtils.searchBar(searchItem = "Teacher");
 
 			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Maria Rau");
+
 			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "Randy Smith");
 		}
 	}

@@ -419,7 +419,7 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click(
-			fieldLabel = "${fieldLabel}",
+			key_fieldLabel = "${fieldLabel}",
 			key_index = "${index}",
 			key_text = "Select",
 			locator1 = "DataEngineRenderer#BUTTON_LABEL_INDEXED");

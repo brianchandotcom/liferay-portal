@@ -129,6 +129,30 @@ definition {
 
 	@priority = "5"
 	@refactordone
+	test CanDeleteDocumentInFolder {
+		property portal.acceptance = "true";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMFolder.addPG(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.deletePG(dmDocumentTitle = "DM Document Title");
+	}
+
+	@priority = "5"
+	@refactordone
 	test CanDeleteFolderWithDocument {
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -194,6 +218,28 @@ definition {
 		DMFolder.viewCP(dmFolderName = "DM Folder Name Name");
 	}
 
+	@priority = "5"
+	@refactordone
+	test CanEditSubFolder {
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM SubFolder Description",
+			dmFolderName = "DM SubFolder Name",
+			groupName = "Guest",
+			parentFolderName = "DM Folder Name");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMFolder.editPG(
+			dmFolderDescriptionEdit = "DM SubFolder Description Edit",
+			dmFolderName = "DM SubFolder Name",
+			dmFolderNameEdit = "DM SubFolder Name Edit");
+	}
+
 	@description = "This case ensures that a document can be viewed after being moved into a folder."
 	@priority = "5"
 	@refactordone
@@ -229,6 +275,33 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			dmFolderName = "DM Folder Name",
 			locationFieldName = "true");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanMoveDocumentWithSlashesInTitle {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "/D/M/Document Title",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.moveToFolderPG(
+			dmDocumentTitle = "/D/M/Document Title",
+			dmFolderName = "DM Folder Name");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "/D/M/Document Title");
 	}
 
 	@priority = "4"

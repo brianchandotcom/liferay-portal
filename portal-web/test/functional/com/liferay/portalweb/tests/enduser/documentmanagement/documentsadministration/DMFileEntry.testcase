@@ -456,6 +456,24 @@ definition {
 		DMDocument.viewDefault();
 	}
 
+	@priority = "4"
+	@refactordone
+	test CanDeleteDocumentInSitePage {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "/D/M/Document Title",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.deletePG(dmDocumentTitle = "/D/M/Document Title");
+
+		DMDocument.viewDefault();
+	}
+
 	@description = "This case covers LPS-110213. It ensures that a document file can be downloaded after moving it between folders."
 	@priority = "5"
 	@refactordone
@@ -757,6 +775,74 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "This validates that the location of the document accurately displays after it is moved from one folder to another."
+	@priority = "4"
+	@refactordone
+	test CanMoveFromOneFolderToAnother {
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder1 Description",
+			dmFolderName = "DM Folder1 Name",
+			groupName = "Guest");
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder2 Description",
+			dmFolderName = "DM Folder2 Name",
+			groupName = "Guest");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder1 Name",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder1 Name");
+
+		DMDocument.moveToFolderPG(
+			dmDocumentTitle = "DM Document Title",
+			dmFolderName = "DM Folder2 Name");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder2 Name");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			dmFolderName = "DM Folder2 Name",
+			locationFieldName = "true");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanMoveWithSlashesInTitle {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "/D/M/Document Title",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.moveToFolderPG(
+			dmDocumentTitle = "/D/M/Document Title",
+			dmFolderName = "DM Folder Name");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "/D/M/Document Title");
+	}
+
 	@priority = "4"
 	@refactordone
 	test CannotAddDocumentWithDuplicateName {
@@ -788,6 +874,45 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMPortlet.viewDefaultPG();
+	}
+
+	@priority = "4"
+	@refactordone
+	test CannotMoveToFolderWithDuplicateTitle {
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder1 Description",
+			dmFolderName = "DM Folder1 Name",
+			groupName = "Guest");
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder2 Description",
+			dmFolderName = "DM Folder2 Name",
+			groupName = "Guest");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder1 Name",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder2 Name",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder1 Name");
+
+		DMDocument.moveToFolderPG(
+			dmDocumentTitle = "DM Document Title",
+			dmDuplicateDocument = "true",
+			dmFolderName = "DM Folder2 Name");
 	}
 
 	@description = "This is a test for LPS-91751. It ensures that a user cannot preview a file with size that exceeds the preview limit."
@@ -1106,6 +1231,41 @@ definition {
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Approved",
 			dmDocumentTitle = "Document_5.txt");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanRevertToOriginal {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.editPG(
+			dmDocumentFileEdit = "Document_2.doc",
+			dmDocumentTitle = "DM Document Title Version 2");
+
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title Version 2",
+			dmDocumentVersionNumber = "2.0");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.revertPG(
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentVersionNumber = "1.0");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentVersionNumber = "3.0");
 	}
 
 	@description = "This test ensures that the user can review a document when the date is changed."

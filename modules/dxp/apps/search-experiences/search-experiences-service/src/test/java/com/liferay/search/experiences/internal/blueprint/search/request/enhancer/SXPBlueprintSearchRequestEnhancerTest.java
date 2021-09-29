@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.highlight.FieldConfig;
 import com.liferay.portal.search.internal.aggregation.AggregationsImpl;
@@ -38,24 +39,20 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
-import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.HighlightSXPSearchRequestBodyContributor;
-import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SortSXPSearchRequestBodyContributor;
-import com.liferay.search.experiences.rest.dto.v1_0.Aggregation;
-import com.liferay.search.experiences.rest.dto.v1_0.Avg;
-import com.liferay.search.experiences.rest.dto.v1_0.Cardinality;
+import com.liferay.search.experiences.rest.dto.v1_0.AggregationConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.Clause;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.Highlight;
 import com.liferay.search.experiences.rest.dto.v1_0.HighlightField;
 import com.liferay.search.experiences.rest.dto.v1_0.Parameter;
-import com.liferay.search.experiences.rest.dto.v1_0.Query;
+import com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration;
+import com.liferay.search.experiences.rest.dto.v1_0.QueryEntry;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SortConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 
 import java.io.InputStream;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -75,7 +72,7 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testAggregations() throws Exception {
+	public void testAggregationConfiguration() throws Exception {
 		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
 			_createSXPBlueprintSearchRequestEnhancer();
 
@@ -83,47 +80,26 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
 
-		configuration.setAggregations(
-			HashMapBuilder.put(
-				RandomTestUtil.randomString(),
-				() -> {
-					Aggregation aggregation = new Aggregation();
-
-					Avg avg = new Avg();
-
-					avg.setField(RandomTestUtil.randomString());
-
-					aggregation.setAvg(avg);
-
-					return aggregation;
+		configuration.setAggregationConfiguration(
+			new AggregationConfiguration() {
+				{
+					aggs = JSONFactoryUtil.createJSONObject(
+						_read(
+							"SXPBlueprintSearchRequestEnhancerTest." +
+								"testAggregationConfiguration.json"));
 				}
-			).put(
-				RandomTestUtil.randomString(),
-				() -> {
-					Aggregation aggregation = new Aggregation();
-
-					Cardinality cardinality = new Cardinality();
-
-					cardinality.setField(RandomTestUtil.randomString());
-					cardinality.setPrecision_threshold(
-						RandomTestUtil.randomInt());
-
-					aggregation.setCardinality(cardinality);
-
-					return aggregation;
-				}
-			).build());
+			});
 
 		sxpBlueprintSearchRequestEnhancer.enhance(
 			_searchRequestBuilder, sxpBlueprint);
 
 		SearchRequest searchRequest = _searchRequestBuilder.build();
 
-		Map<String, com.liferay.portal.search.aggregation.Aggregation>
-			aggregationsMap = searchRequest.getAggregationsMap();
+		Map<String, Aggregation> aggregationsMap =
+			searchRequest.getAggregationsMap();
 
 		Assert.assertEquals(
-			aggregationsMap.toString(), 2, aggregationsMap.size());
+			aggregationsMap.toString(), 10, aggregationsMap.size());
 
 		_assert(configuration);
 	}
@@ -211,7 +187,7 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 	}
 
 	@Test
-	public void testQueries() throws Exception {
+	public void testQueryConfiguration() throws Exception {
 		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
 			_createSXPBlueprintSearchRequestEnhancer();
 
@@ -219,22 +195,26 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
 
-		configuration.setQueries(
-			new Query[] {
-				new Query() {
-					{
-						clauses = new Clause[] {
-							new Clause() {
-								{
-									occur = "must_not";
-									queryJSON = JSONUtil.put(
-										"term", JSONUtil.put("status", 0)
-									).toString();
-								}
+		configuration.setQueryConfiguration(
+			new QueryConfiguration() {
+				{
+					queryEntries = new QueryEntry[] {
+						new QueryEntry() {
+							{
+								clauses = new Clause[] {
+									new Clause() {
+										{
+											occur = "must_not";
+											query = JSONUtil.put(
+												"term",
+												JSONUtil.put("status", 0));
+										}
+									}
+								};
+								enabled = true;
 							}
-						};
-						enabled = true;
-					}
+						}
+					};
 				}
 			});
 
@@ -253,16 +233,17 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 		WrapperQuery wrapperQuery = (WrapperQuery)complexQueryPart.getQuery();
 
 		Assert.assertEquals(
-			JSONUtil.put(
-				"term", JSONUtil.put("status", 0)
-			).toString(),
-			new String(wrapperQuery.getSource()));
+			_formatJSON(
+				JSONUtil.put(
+					"term", JSONUtil.put("status", 0)
+				).toString()),
+			_formatJSON(new String(wrapperQuery.getSource())));
 
 		_assert(configuration);
 	}
 
 	@Test
-	public void testSort() throws Exception {
+	public void testSortConfiguration() throws Exception {
 		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
 			_createSXPBlueprintSearchRequestEnhancer();
 
@@ -275,8 +256,8 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 				{
 					sorts = JSONFactoryUtil.createJSONArray(
 						_read(
-							"SXPBlueprintSearchRequestEnhancerTest.testSort." +
-								"json"));
+							"SXPBlueprintSearchRequestEnhancerTest." +
+								"testSortConfiguration.json"));
 				}
 			});
 
@@ -297,10 +278,8 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 			configuration1.toString());
 
 		Assert.assertEquals(
-			JSONUtil.toString(
-				JSONFactoryUtil.createJSONObject(configuration1.toString())),
-			JSONUtil.toString(
-				JSONFactoryUtil.createJSONObject(configuration2.toString())));
+			_formatJSON(configuration1.toString()),
+			_formatJSON(configuration2.toString()));
 	}
 
 	private SXPBlueprint _createSXPBlueprint() {
@@ -325,23 +304,34 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 			"_complexQueryPartBuilderFactory",
 			new ComplexQueryPartBuilderFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
+			sxpBlueprintSearchRequestEnhancer, "_fieldConfigBuilderFactory",
+			new FieldConfigBuilderFactoryImpl());
+		ReflectionTestUtil.setFieldValue(
+			sxpBlueprintSearchRequestEnhancer, "_geoBuilders",
+			new GeoBuildersImpl());
+		ReflectionTestUtil.setFieldValue(
+			sxpBlueprintSearchRequestEnhancer, "_highlightBuilderFactory",
+			new HighlightBuilderFactoryImpl());
+		ReflectionTestUtil.setFieldValue(
+			sxpBlueprintSearchRequestEnhancer, "_jsonFactory",
+			JSONFactoryUtil.getJSONFactory());
+		ReflectionTestUtil.setFieldValue(
 			sxpBlueprintSearchRequestEnhancer, "_queries", new QueriesImpl());
+		ReflectionTestUtil.setFieldValue(
+			sxpBlueprintSearchRequestEnhancer, "_scripts", new ScriptsImpl());
+		ReflectionTestUtil.setFieldValue(
+			sxpBlueprintSearchRequestEnhancer, "_sorts", new SortsImpl());
 		ReflectionTestUtil.setFieldValue(
 			sxpBlueprintSearchRequestEnhancer, "_sxpParameterDataCreator",
 			new SXPParameterDataCreator());
-		ReflectionTestUtil.setFieldValue(
-			sxpBlueprintSearchRequestEnhancer,
-			"_sxpSearchRequestBodyContributors",
-			Arrays.asList(
-				new HighlightSXPSearchRequestBodyContributor(
-					new FieldConfigBuilderFactoryImpl(),
-					new HighlightBuilderFactoryImpl(),
-					JSONFactoryUtil.getJSONFactory()),
-				new SortSXPSearchRequestBodyContributor(
-					new GeoBuildersImpl(), new QueriesImpl(), new ScriptsImpl(),
-					new SortsImpl())));
+
+		sxpBlueprintSearchRequestEnhancer.activate();
 
 		return sxpBlueprintSearchRequestEnhancer;
+	}
+
+	private String _formatJSON(String string) throws Exception {
+		return JSONUtil.toString(JSONFactoryUtil.createJSONObject(string));
 	}
 
 	private String _read(String resourceName) {

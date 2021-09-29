@@ -39,9 +39,11 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.RenderRequestFactory;
@@ -147,8 +149,8 @@ public class AddCollectionItemProductNavigationControlMenuEntry
 					assetEntryQuery.getClassTypeIds(),
 					assetEntryQuery.getAllCategoryIds(), allTagNames,
 					_getRedirect(
-						liferayPortletResponse, themeDisplay.getURLCurrent(),
-						collectionPK));
+						collectionPK, httpServletRequest,
+						liferayPortletResponse, themeDisplay));
 
 			httpServletRequest.setAttribute(
 				CollectionPageLayoutTypeControllerWebKeys.
@@ -247,8 +249,17 @@ public class AddCollectionItemProductNavigationControlMenuEntry
 	}
 
 	private String _getRedirect(
-		LiferayPortletResponse liferayPortletResponse, String currentURL,
-		long assetListEntryId) {
+			long assetListEntryId, HttpServletRequest httpServletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		String currentURL = _http.addParameter(
+			_portal.getLayoutRelativeURL(
+				themeDisplay.getLayout(), themeDisplay),
+			"p_l_mode",
+			ParamUtil.getString(
+				httpServletRequest, "p_l_mode", Constants.VIEW));
 
 		return _http.addParameter(
 			PortletURLBuilder.createActionURL(

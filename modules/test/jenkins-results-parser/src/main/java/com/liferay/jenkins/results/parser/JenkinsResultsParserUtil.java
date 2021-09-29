@@ -2932,6 +2932,16 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static boolean isSHA(String sha) {
+		if (sha == null) {
+			return false;
+		}
+
+		Matcher matcher = _shaPattern.matcher(sha);
+
+		return matcher.find();
+	}
+
 	public static boolean isWindows() {
 		return SystemUtils.IS_OS_WINDOWS;
 	}
@@ -5003,6 +5013,8 @@ public class JenkinsResultsParserUtil {
 	private static final Pattern _remoteURLAuthorityPattern3 = Pattern.compile(
 		"https?://(mirrors/|mirrors.dlc.liferay.com/|mirrors.lax.liferay.com/" +
 			")?((files|releases).liferay.com)");
+	private static final Pattern _shaPattern = Pattern.compile(
+		"[0-9a-f]{7,40}");
 
 	private static final File _sshDir = new File(
 		JenkinsResultsParserUtil._userHomeDir, ".ssh") {

@@ -15,11 +15,13 @@
 							"value": {
 								"fragmentImage": {
 									"url": {
-										"value_i18n": {}
+										"value_i18n": {
+										}
 									}
 								},
 								"fragmentLink": {
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								}
 							}
 						}
@@ -123,18 +125,21 @@
 					"fragment": {
 						"key": "bootcamp-footer"
 					},
-					"fragmentConfig": {},
+					"fragmentConfig": {
+					},
 					"fragmentFields": [
 						{
 							"id": "imageLogoFooter",
 							"value": {
 								"fragmentImage": {
 									"url": {
-										"value_i18n": {}
+										"value_i18n": {
+										}
 									}
 								},
 								"fragmentLink": {
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								}
 							}
 						},
@@ -143,11 +148,13 @@
 							"value": {
 								"fragmentImage": {
 									"url": {
-										"value_i18n": {}
+										"value_i18n": {
+										}
 									}
 								},
 								"fragmentLink": {
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								}
 							}
 						},
@@ -156,11 +163,13 @@
 							"value": {
 								"fragmentImage": {
 									"url": {
-										"value_i18n": {}
+										"value_i18n": {
+										}
 									}
 								},
 								"fragmentLink": {
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								}
 							}
 						},
@@ -168,7 +177,8 @@
 							"id": "footerText",
 							"value": {
 								"fragmentLink": {
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								}
 							}
 						},
@@ -177,11 +187,13 @@
 							"value": {
 								"fragmentImage": {
 									"url": {
-										"value_i18n": {}
+										"value_i18n": {
+										}
 									}
 								},
 								"fragmentLink": {
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								}
 							}
 						},
@@ -194,7 +206,8 @@
 											"value": "#"
 										}
 									},
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								}
 							}
 						},
@@ -207,7 +220,8 @@
 											"value": "#"
 										}
 									},
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								}
 							}
 						},
@@ -220,7 +234,8 @@
 											"value": "#"
 										}
 									},
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								}
 							}
 						},
@@ -229,11 +244,13 @@
 							"value": {
 								"fragmentImage": {
 									"url": {
-										"value_i18n": {}
+										"value_i18n": {
+										}
 									}
 								},
 								"fragmentLink": {
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								}
 							}
 						},
@@ -246,7 +263,8 @@
 											"value": "#"
 										}
 									},
-									"value_i18n": {}
+									"value_i18n": {
+									}
 								}
 							}
 						}

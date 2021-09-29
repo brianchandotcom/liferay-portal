@@ -14,8 +14,8 @@ h3,
 h4,
 h5,
 h6 {
-	font-weight: inherit;
 	color: inherit;
+	font-weight: inherit;
 	line-height: 1.1;
 }
 
@@ -36,11 +36,11 @@ a:hover {
 
 .btn {
 	border-radius: 0;
-	font-family: var(--font-family-sans-serif);
-	text-transform: uppercase;
-	letter-spacing: 1px;
-	font-weight: var(--font-weight-bolder);
 	color: inherit;
+	font-family: var(--font-family-sans-serif);
+	font-weight: var(--font-weight-bolder);
+	letter-spacing: 1px;
+	text-transform: uppercase;
 }
 
 .link-arrow {
@@ -49,22 +49,22 @@ a:hover {
 
 .btn-nm {
 	font-size: var(--font-size-sm);
-	padding: var(--spacer) var(--spacer-4);
 	font-size: 11px;
+	padding: var(--spacer) var(--spacer-4);
 }
 
 .btn-lg {
-	padding: var(--spacer) var(--spacer-4);
 	font-size: 13px;
+	padding: var(--spacer) var(--spacer-4);
 }
 
 /*Form Controls*/
 
 .form-control {
+	background-color: var(--white);
+	border: var(--white);
 	border-radius: 0;
 	font-family: var(--font-family-sans-serif);
-	border: var(--white);
-	background-color: var(--white);
 	height: auto;
 }
 

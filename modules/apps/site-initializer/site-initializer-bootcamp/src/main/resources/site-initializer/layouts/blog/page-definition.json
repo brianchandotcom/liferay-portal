@@ -40,7 +40,8 @@
 						"pageElements": [
 							{
 								"definition": {
-									"collectionItemConfig": {}
+									"collectionItemConfig": {
+									}
 								},
 								"pageElements": [
 									{
@@ -67,7 +68,8 @@
 																	}
 																}
 															},
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														},
 														"text": {
 															"mapping": {

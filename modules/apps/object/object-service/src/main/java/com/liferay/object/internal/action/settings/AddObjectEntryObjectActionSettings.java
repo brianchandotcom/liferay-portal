@@ -20,11 +20,19 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 
 /**
  * @author Marco Leo
  */
-@DDMForm
+@DDMForm(
+	rules = {
+		@DDMFormRule(
+			actions = "setPropertyValue('objectFieldName', 'objectDefinitionId', getValue('objectDefinitionId'))",
+			condition = "TRUE"
+		)
+	}
+)
 @DDMFormLayout(
 	paginationMode = com.liferay.dynamic.data.mapping.model.DDMFormLayout.SINGLE_PAGE_MODE,
 	value = {

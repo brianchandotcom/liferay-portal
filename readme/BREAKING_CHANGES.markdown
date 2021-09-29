@@ -791,13 +791,13 @@ Centralized language keys are easier to manage.
 
 ---------------------------------------
 
+### Moved the CAS SSO Modules to the portal-security-sso-cas Project
+- **Date:** 2021-Sep-15
 - **JIRA Ticket:** [LPS-88905](https://issues.liferay.com/browse/LPS-88905)
 
 #### What changed?
 
-CAS SSO modules have been moved from the `portal-security-sso` project
-to a new project named `portal-security-sso-cas`.
-This new projects is deprecated and available to download from Liferay Marketplace.
+The CAS SSO modules were moved from the `portal-security-sso` project to a new project named `portal-security-sso-cas`. The new project is deprecated but is available to download from Liferay Marketplace.
 
 #### Who is affected?
 
@@ -805,12 +805,11 @@ This affects anyone using CAS SSO as an authentication system.
 
 #### How should I update my code?
 
-If you want to continue using CAS SSO as an authentication system, you must
-download the corresponding module from Liferay Marketplace.
+If you want to continue using CAS SSO as an authentication system, you must download the corresponding app from Liferay Marketplace.
 
 #### Why was this change made?
 
-This is part of an on-going effort to consolidate SSO support and increased focus on open standards.
+This is part of an ongoing effort to consolidate SSO support and increase focus on open standards.
 
 ---------------------------------------
 

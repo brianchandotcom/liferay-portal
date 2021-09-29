@@ -142,6 +142,32 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	@Override
+	public void setGitHubURL(String gitHubURL) {
+		if (PullRequest.isValidGitHubPullRequestURL(gitHubURL)) {
+			PullRequest pullRequest = new PullRequest(gitHubURL);
+
+			_setGitHubURL(pullRequest.getHtmlURL());
+			_setReceiverUsername(pullRequest.getReceiverUsername());
+			_setSenderBranchName(pullRequest.getSenderBranchName());
+			_setSenderUsername(pullRequest.getSenderUsername());
+			_setSenderBranchSHA(pullRequest.getSenderSHA());
+			_setUpstreamBranchSHA(pullRequest.getUpstreamBranchSHA());
+		}
+		else if (GitUtil.isValidGitHubRefURL(gitHubURL)) {
+			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(gitHubURL);
+
+			_setGitHubURL(remoteGitRef.getHtmlURL());
+			_setReceiverUsername(remoteGitRef.getUsername());
+			_setSenderBranchName(remoteGitRef.getName());
+			_setSenderUsername(remoteGitRef.getUsername());
+			_setSenderBranchSHA(remoteGitRef.getSHA());
+			_setUpstreamBranchSHA(remoteGitRef.getSHA());
+		}
+
+		validateKeys(_REQUIRED_KEYS);
+	}
+
+	@Override
 	public void setUp() {
 		System.out.println(toString());
 

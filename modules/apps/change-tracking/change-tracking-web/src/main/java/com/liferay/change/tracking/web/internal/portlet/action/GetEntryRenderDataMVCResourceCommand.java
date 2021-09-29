@@ -116,32 +116,6 @@ public class GetEntryRenderDataMVCResourceCommand
 		}
 	}
 
-	private <T extends BaseModel<T>> String _getContent(
-		long ctCollectionId, CTDisplayRenderer<T> ctDisplayRenderer,
-		long ctEntryId, CTSQLModeThreadLocal.CTSQLMode ctSQLMode,
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, Locale locale, T model,
-		String type) {
-
-		try (SafeCloseable safeCloseable1 =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollectionId);
-			SafeCloseable safeCloseable2 =
-				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(ctSQLMode)) {
-
-			return ctDisplayRenderer.renderPreview(
-				new DisplayContextImpl<>(
-					httpServletRequest, httpServletResponse,
-					_classNameLocalService, _ctDisplayRendererRegistry,
-					ctEntryId, locale, model, type));
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return null;
-		}
-	}
-
 	private <T extends BaseModel<T>> JSONObject _getCTEntryRenderDataJSONObject(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 			long ctEntryId)
@@ -183,8 +157,8 @@ public class GetEntryRenderDataMVCResourceCommand
 		String editURL = null;
 		JSONObject localizedTitlesJSONObject =
 			JSONFactoryUtil.createJSONObject();
-		String rightContent = null;
-		JSONObject rightLocalizedContentJSONObject = null;
+		String rightPreview = null;
+		JSONObject rightLocalizedPreviewJSONObject = null;
 		JSONObject rightLocalizedRenderJSONObject = null;
 		String rightRender = null;
 		T rightModel = null;
@@ -237,8 +211,8 @@ public class GetEntryRenderDataMVCResourceCommand
 								rightModel, ctEntry.getModelClassNameId()));
 					}
 
-					rightLocalizedContentJSONObject =
-						_getLocalizedContentJSONObject(
+					rightLocalizedPreviewJSONObject =
+						_getLocalizedPreviewJSONObject(
 							availableLanguageIds, ctCollectionId,
 							ctDisplayRenderer, ctEntryId, ctSQLMode,
 							httpServletRequest, httpServletResponse, rightModel,
@@ -251,7 +225,7 @@ public class GetEntryRenderDataMVCResourceCommand
 							CTConstants.TYPE_AFTER);
 				}
 				else {
-					rightContent = _getContent(
+					rightPreview = _getPreview(
 						ctCollectionId, ctDisplayRenderer, ctEntryId, ctSQLMode,
 						httpServletRequest, httpServletResponse,
 						themeDisplay.getLocale(), rightModel,
@@ -275,8 +249,8 @@ public class GetEntryRenderDataMVCResourceCommand
 			_ctDisplayRendererRegistry.getCTSQLMode(
 				leftCtCollectionId, ctEntry);
 
-		String leftContent = null;
-		JSONObject leftLocalizedContentJSONObject = null;
+		String leftPreview = null;
+		JSONObject leftLocalizedPreviewJSONObject = null;
 		JSONObject leftLocalizedRenderJSONObject = null;
 		T leftModel = null;
 		String leftRender = null;
@@ -323,8 +297,8 @@ public class GetEntryRenderDataMVCResourceCommand
 						_language.get(httpServletRequest, "publication"), ")");
 
 					if (ArrayUtil.isNotEmpty(availableLanguageIds)) {
-						leftLocalizedContentJSONObject =
-							_getLocalizedContentJSONObject(
+						leftLocalizedPreviewJSONObject =
+							_getLocalizedPreviewJSONObject(
 								availableLanguageIds, leftCtCollectionId,
 								ctDisplayRenderer, ctEntryId, leftCTSQLMode,
 								httpServletRequest, httpServletResponse,
@@ -337,7 +311,7 @@ public class GetEntryRenderDataMVCResourceCommand
 								leftModel, CTConstants.TYPE_LATEST);
 					}
 					else {
-						leftContent = _getContent(
+						leftPreview = _getPreview(
 							leftCtCollectionId, ctDisplayRenderer, ctEntryId,
 							leftCTSQLMode, httpServletRequest,
 							httpServletResponse, themeDisplay.getLocale(),
@@ -384,8 +358,8 @@ public class GetEntryRenderDataMVCResourceCommand
 								leftModel, ctEntry.getModelClassNameId()));
 					}
 
-					leftLocalizedContentJSONObject =
-						_getLocalizedContentJSONObject(
+					leftLocalizedPreviewJSONObject =
+						_getLocalizedPreviewJSONObject(
 							availableLanguageIds, leftCtCollectionId,
 							ctDisplayRenderer, ctEntryId, leftCTSQLMode,
 							httpServletRequest, httpServletResponse, leftModel,
@@ -398,7 +372,7 @@ public class GetEntryRenderDataMVCResourceCommand
 							leftModel, CTConstants.TYPE_BEFORE);
 				}
 				else {
-					leftContent = _getContent(
+					leftPreview = _getPreview(
 						leftCtCollectionId, ctDisplayRenderer, ctEntryId,
 						leftCTSQLMode, httpServletRequest, httpServletResponse,
 						themeDisplay.getLocale(), leftModel,
@@ -464,8 +438,8 @@ public class GetEntryRenderDataMVCResourceCommand
 						_language.get(httpServletRequest, "deleted"), ")");
 
 					if (ArrayUtil.isNotEmpty(availableLanguageIds)) {
-						rightLocalizedContentJSONObject =
-							_getLocalizedContentJSONObject(
+						rightLocalizedPreviewJSONObject =
+							_getLocalizedPreviewJSONObject(
 								availableLanguageIds, ctCollectionId,
 								ctDisplayRenderer, ctEntryId, ctSQLMode,
 								httpServletRequest, httpServletResponse,
@@ -478,7 +452,7 @@ public class GetEntryRenderDataMVCResourceCommand
 								rightModel, CTConstants.TYPE_LATEST);
 					}
 					else {
-						rightContent = _getContent(
+						rightPreview = _getPreview(
 							ctCollectionId, ctDisplayRenderer, ctEntryId,
 							ctSQLMode, httpServletRequest, httpServletResponse,
 							themeDisplay.getLocale(), rightModel,
@@ -504,9 +478,9 @@ public class GetEntryRenderDataMVCResourceCommand
 			jsonObject.put("editURL", editURL);
 		}
 
-		if (leftLocalizedContentJSONObject != null) {
+		if (leftLocalizedPreviewJSONObject != null) {
 			jsonObject.put(
-				"leftLocalizedContent", leftLocalizedContentJSONObject);
+				"leftLocalizedPreview", leftLocalizedPreviewJSONObject);
 		}
 
 		if (leftLocalizedRenderJSONObject != null) {
@@ -514,8 +488,8 @@ public class GetEntryRenderDataMVCResourceCommand
 				"leftLocalizedRender", leftLocalizedRenderJSONObject);
 		}
 
-		if (leftContent != null) {
-			jsonObject.put("leftContent", leftContent);
+		if (leftPreview != null) {
+			jsonObject.put("leftPreview", leftPreview);
 		}
 
 		if (leftRender != null) {
@@ -526,13 +500,13 @@ public class GetEntryRenderDataMVCResourceCommand
 			jsonObject.put("leftTitle", leftTitle);
 		}
 
-		if (rightContent != null) {
-			jsonObject.put("rightContent", rightContent);
+		if (rightPreview != null) {
+			jsonObject.put("rightPreview", rightPreview);
 		}
 
-		if (rightLocalizedContentJSONObject != null) {
+		if (rightLocalizedPreviewJSONObject != null) {
 			jsonObject.put(
-				"rightLocalizedContent", rightLocalizedContentJSONObject);
+				"rightLocalizedPreview", rightLocalizedPreviewJSONObject);
 		}
 
 		if (rightLocalizedRenderJSONObject != null) {
@@ -548,42 +522,42 @@ public class GetEntryRenderDataMVCResourceCommand
 			jsonObject.put("rightTitle", rightTitle);
 		}
 
-		if (ctDisplayRenderer.showPreviewDiff() && (leftContent != null) &&
-			(rightContent != null)) {
+		if (ctDisplayRenderer.showPreviewDiff() && (leftPreview != null) &&
+			(rightPreview != null)) {
 
 			jsonObject.put(
-				"unifiedContent",
+				"unifiedPreview",
 				DiffHtmlUtil.diff(
-					new UnsyncStringReader(leftContent),
-					new UnsyncStringReader(rightContent)));
+					new UnsyncStringReader(leftPreview),
+					new UnsyncStringReader(rightPreview)));
 		}
 
 		if (ctDisplayRenderer.showPreviewDiff() &&
-			(leftLocalizedContentJSONObject != null) &&
-			(rightLocalizedContentJSONObject != null)) {
+			(leftLocalizedPreviewJSONObject != null) &&
+			(rightLocalizedPreviewJSONObject != null)) {
 
-			JSONObject unifiedLocalizedContentJSONObject =
+			JSONObject unifiedLocalizedPreviewJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
 			for (String languageId : availableLanguageIds) {
-				String leftLocalizedContent =
-					leftLocalizedContentJSONObject.getString(languageId);
-				String rightLocalizedContent =
-					rightLocalizedContentJSONObject.getString(languageId);
+				String leftLocalizedPreview =
+					leftLocalizedPreviewJSONObject.getString(languageId);
+				String rightLocalizedPreview =
+					rightLocalizedPreviewJSONObject.getString(languageId);
 
-				if ((leftLocalizedContent != null) &&
-					(rightLocalizedContent != null)) {
+				if ((leftLocalizedPreview != null) &&
+					(rightLocalizedPreview != null)) {
 
-					unifiedLocalizedContentJSONObject.put(
+					unifiedLocalizedPreviewJSONObject.put(
 						languageId,
 						DiffHtmlUtil.diff(
-							new UnsyncStringReader(leftLocalizedContent),
-							new UnsyncStringReader(rightLocalizedContent)));
+							new UnsyncStringReader(leftLocalizedPreview),
+							new UnsyncStringReader(rightLocalizedPreview)));
 				}
 			}
 
 			jsonObject.put(
-				"unifiedLocalizedContent", unifiedLocalizedContentJSONObject);
+				"unifiedLocalizedPreview", unifiedLocalizedPreviewJSONObject);
 		}
 
 		if ((leftLocalizedRenderJSONObject != null) &&
@@ -649,7 +623,7 @@ public class GetEntryRenderDataMVCResourceCommand
 		);
 	}
 
-	private <T extends BaseModel<T>> JSONObject _getLocalizedContentJSONObject(
+	private <T extends BaseModel<T>> JSONObject _getLocalizedPreviewJSONObject(
 		String[] availableLanguageIds, long ctCollectionId,
 		CTDisplayRenderer<T> ctDisplayRenderer, long ctEntryId,
 		CTSQLModeThreadLocal.CTSQLMode ctSQLMode,
@@ -665,19 +639,19 @@ public class GetEntryRenderDataMVCResourceCommand
 				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(ctSQLMode)) {
 
 			for (String languageId : availableLanguageIds) {
-				String content = ctDisplayRenderer.renderPreview(
+				String preview = ctDisplayRenderer.renderPreview(
 					new DisplayContextImpl<>(
 						httpServletRequest, httpServletResponse,
 						_classNameLocalService, _ctDisplayRendererRegistry,
 						ctEntryId, LocaleUtil.fromLanguageId(languageId), model,
 						type));
 
-				if (content != null) {
+				if (preview != null) {
 					if (jsonObject == null) {
 						jsonObject = JSONFactoryUtil.createJSONObject();
 					}
 
-					jsonObject.put(languageId, content);
+					jsonObject.put(languageId, preview);
 				}
 			}
 
@@ -710,6 +684,32 @@ public class GetEntryRenderDataMVCResourceCommand
 		}
 
 		return jsonObject;
+	}
+
+	private <T extends BaseModel<T>> String _getPreview(
+		long ctCollectionId, CTDisplayRenderer<T> ctDisplayRenderer,
+		long ctEntryId, CTSQLModeThreadLocal.CTSQLMode ctSQLMode,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Locale locale, T model,
+		String type) {
+
+		try (SafeCloseable safeCloseable1 =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollectionId);
+			SafeCloseable safeCloseable2 =
+				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(ctSQLMode)) {
+
+			return ctDisplayRenderer.renderPreview(
+				new DisplayContextImpl<>(
+					httpServletRequest, httpServletResponse,
+					_classNameLocalService, _ctDisplayRendererRegistry,
+					ctEntryId, locale, model, type));
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return null;
+		}
 	}
 
 	private <T extends BaseModel<T>> JSONObject

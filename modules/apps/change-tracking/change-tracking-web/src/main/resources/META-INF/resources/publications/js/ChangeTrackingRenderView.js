@@ -138,8 +138,8 @@ export default ({
 	const CHANGE_TYPE_DELETED = 'deleted';
 	const CHANGE_TYPE_MODIFIED = 'modified';
 	const CHANGE_TYPE_PRODUCTION = 'production';
-	const CONTENT_TYPE_DATA = 'data';
-	const CONTENT_TYPE_DISPLAY = 'display';
+	const CONTENT_TYPE_RENDER = 'data';
+	const CONTENT_TYPE_PREVIEW = 'display';
 	const VIEW_LEFT = 'VIEW_LEFT';
 	const VIEW_RIGHT = 'VIEW_RIGHT';
 	const VIEW_SPLIT = 'VIEW_SPLIT';
@@ -148,7 +148,7 @@ export default ({
 	const [loading, setLoading] = useState(false);
 	const [selectedLocale, setSelectedLocale] = useState(defaultLocale);
 	const [state, setState] = useState({
-		contentType: CONTENT_TYPE_DISPLAY,
+		contentType: CONTENT_TYPE_PREVIEW,
 		renderData: null,
 		view: VIEW_UNIFIED,
 	});
@@ -163,7 +163,7 @@ export default ({
 		if (cachedData && cachedData.changeType) {
 			if (cachedData.changeType === CHANGE_TYPE_PRODUCTION) {
 				setState({
-					contentType: CONTENT_TYPE_DATA,
+					contentType: CONTENT_TYPE_RENDER,
 					renderData: cachedData,
 					view: VIEW_LEFT,
 				});
@@ -174,7 +174,7 @@ export default ({
 			}
 
 			const newState = {
-				contentType: CONTENT_TYPE_DISPLAY,
+				contentType: CONTENT_TYPE_PREVIEW,
 				renderData: cachedData,
 				view: VIEW_UNIFIED,
 			};
@@ -182,22 +182,22 @@ export default ({
 			if (
 				!Object.prototype.hasOwnProperty.call(
 					cachedData,
-					'leftContent'
+					'leftPreview'
 				) &&
 				!Object.prototype.hasOwnProperty.call(
 					cachedData,
-					'leftLocalizedContent'
+					'leftLocalizedPreview'
 				) &&
 				!Object.prototype.hasOwnProperty.call(
 					cachedData,
-					'rightContent'
+					'rightPreview'
 				) &&
 				!Object.prototype.hasOwnProperty.call(
 					cachedData,
-					'rightLocalizedContent'
+					'rightLocalizedPreview'
 				)
 			) {
-				newState.contentType = CONTENT_TYPE_DATA;
+				newState.contentType = CONTENT_TYPE_RENDER;
 			}
 
 			if (
@@ -213,7 +213,7 @@ export default ({
 
 			if (
 				newState.view === VIEW_UNIFIED &&
-				((newState.contentType === CONTENT_TYPE_DATA &&
+				((newState.contentType === CONTENT_TYPE_RENDER &&
 					!Object.prototype.hasOwnProperty.call(
 						cachedData,
 						'unifiedRender'
@@ -222,14 +222,14 @@ export default ({
 						cachedData,
 						'unifiedLocalizedRender'
 					)) ||
-					(newState.contentType === CONTENT_TYPE_DISPLAY &&
+					(newState.contentType === CONTENT_TYPE_PREVIEW &&
 						!Object.prototype.hasOwnProperty.call(
 							cachedData,
-							'unifiedContent'
+							'unifiedPreview'
 						) &&
 						!Object.prototype.hasOwnProperty.call(
 							cachedData,
-							'unifiedLocalizedContent'
+							'unifiedLocalizedPreview'
 						)))
 			) {
 				newState.view = VIEW_SPLIT;
@@ -265,7 +265,7 @@ export default ({
 				}
 
 				const newState = {
-					contentType: CONTENT_TYPE_DISPLAY,
+					contentType: CONTENT_TYPE_PREVIEW,
 					renderData: json,
 					view: VIEW_UNIFIED,
 				};
@@ -273,22 +273,22 @@ export default ({
 				if (
 					!Object.prototype.hasOwnProperty.call(
 						json,
-						'leftContent'
+						'leftPreview'
 					) &&
 					!Object.prototype.hasOwnProperty.call(
 						json,
-						'leftLocalizedContent'
+						'leftLocalizedPreview'
 					) &&
 					!Object.prototype.hasOwnProperty.call(
 						json,
-						'rightContent'
+						'rightPreview'
 					) &&
 					!Object.prototype.hasOwnProperty.call(
 						json,
-						'rightLocalizedContent'
+						'rightLocalizedPreview'
 					)
 				) {
-					newState.contentType = CONTENT_TYPE_DATA;
+					newState.contentType = CONTENT_TYPE_RENDER;
 				}
 
 				if (!Object.prototype.hasOwnProperty.call(json, 'leftTitle')) {
@@ -302,7 +302,7 @@ export default ({
 
 				if (
 					newState.view === VIEW_UNIFIED &&
-					((newState.contentType === CONTENT_TYPE_DATA &&
+					((newState.contentType === CONTENT_TYPE_RENDER &&
 						!Object.prototype.hasOwnProperty.call(
 							json,
 							'unifiedRender'
@@ -311,14 +311,14 @@ export default ({
 							json,
 							'unifiedLocalizedRender'
 						)) ||
-						(newState.contentType === CONTENT_TYPE_DISPLAY &&
+						(newState.contentType === CONTENT_TYPE_PREVIEW &&
 							!Object.prototype.hasOwnProperty.call(
 								json,
-								'unifiedContent'
+								'unifiedPreview'
 							) &&
 							!Object.prototype.hasOwnProperty.call(
 								json,
-								'unifiedLocalizedContent'
+								'unifiedLocalizedPreview'
 							)))
 				) {
 					newState.view = VIEW_SPLIT;
@@ -389,9 +389,9 @@ export default ({
 		return Liferay.Language.get('unified-view');
 	};
 
-	const renderContentLeft = () => {
+	const renderPreviewLeft = () => {
 		if (
-			state.contentType === CONTENT_TYPE_DATA &&
+			state.contentType === CONTENT_TYPE_RENDER &&
 			Object.prototype.hasOwnProperty.call(state.renderData, 'leftRender')
 		) {
 			return (
@@ -403,7 +403,7 @@ export default ({
 			);
 		}
 		else if (
-			state.contentType === CONTENT_TYPE_DATA &&
+			state.contentType === CONTENT_TYPE_RENDER &&
 			Object.prototype.hasOwnProperty.call(
 				state.renderData,
 				'leftLocalizedRender'
@@ -429,17 +429,17 @@ export default ({
 			);
 		}
 		else if (
-			state.contentType === CONTENT_TYPE_DISPLAY &&
+			state.contentType === CONTENT_TYPE_PREVIEW &&
 			Object.prototype.hasOwnProperty.call(
 				state.renderData,
-				'leftContent'
+				'leftPreview'
 			)
 		) {
-			if (state.renderData.leftContent) {
+			if (state.renderData.leftPreview) {
 				return (
 					<div
 						dangerouslySetInnerHTML={{
-							__html: state.renderData.leftContent,
+							__html: state.renderData.leftPreview,
 						}}
 					/>
 				);
@@ -452,18 +452,18 @@ export default ({
 			);
 		}
 		else if (
-			state.contentType === CONTENT_TYPE_DISPLAY &&
+			state.contentType === CONTENT_TYPE_PREVIEW &&
 			Object.prototype.hasOwnProperty.call(
 				state.renderData,
-				'leftLocalizedContent'
+				'leftLocalizedPreview'
 			)
 		) {
-			if (state.renderData.leftLocalizedContent[currentLocale.label]) {
+			if (state.renderData.leftLocalizedPreview[currentLocale.label]) {
 				return (
 					<div
 						dangerouslySetInnerHTML={{
 							__html:
-								state.renderData.leftLocalizedContent[
+								state.renderData.leftLocalizedPreview[
 									currentLocale.label
 								],
 						}}
@@ -507,9 +507,9 @@ export default ({
 		);
 	};
 
-	const renderContentRight = () => {
+	const renderPreviewRight = () => {
 		if (
-			state.contentType === CONTENT_TYPE_DATA &&
+			state.contentType === CONTENT_TYPE_RENDER &&
 			Object.prototype.hasOwnProperty.call(
 				state.renderData,
 				'rightRender'
@@ -524,7 +524,7 @@ export default ({
 			);
 		}
 		else if (
-			state.contentType === CONTENT_TYPE_DATA &&
+			state.contentType === CONTENT_TYPE_RENDER &&
 			Object.prototype.hasOwnProperty.call(
 				state.renderData,
 				'rightLocalizedRender'
@@ -550,17 +550,17 @@ export default ({
 			);
 		}
 		else if (
-			state.contentType === CONTENT_TYPE_DISPLAY &&
+			state.contentType === CONTENT_TYPE_PREVIEW &&
 			Object.prototype.hasOwnProperty.call(
 				state.renderData,
-				'rightContent'
+				'rightPreview'
 			)
 		) {
-			if (state.renderData.rightContent) {
+			if (state.renderData.rightPreview) {
 				return (
 					<div
 						dangerouslySetInnerHTML={{
-							__html: state.renderData.rightContent,
+							__html: state.renderData.rightPreview,
 						}}
 					/>
 				);
@@ -573,18 +573,18 @@ export default ({
 			);
 		}
 		else if (
-			state.contentType === CONTENT_TYPE_DISPLAY &&
+			state.contentType === CONTENT_TYPE_PREVIEW &&
 			Object.prototype.hasOwnProperty.call(
 				state.renderData,
-				'rightLocalizedContent'
+				'rightLocalizedPreview'
 			)
 		) {
-			if (state.renderData.rightLocalizedContent[currentLocale.label]) {
+			if (state.renderData.rightLocalizedPreview[currentLocale.label]) {
 				return (
 					<div
 						dangerouslySetInnerHTML={{
 							__html:
-								state.renderData.rightLocalizedContent[
+								state.renderData.rightLocalizedPreview[
 									currentLocale.label
 								],
 						}}
@@ -611,9 +611,9 @@ export default ({
 		);
 	};
 
-	const renderContentUnified = () => {
+	const renderPreviewUnified = () => {
 		if (
-			state.contentType === CONTENT_TYPE_DATA &&
+			state.contentType === CONTENT_TYPE_RENDER &&
 			Object.prototype.hasOwnProperty.call(
 				state.renderData,
 				'unifiedRender'
@@ -630,7 +630,7 @@ export default ({
 			);
 		}
 		else if (
-			state.contentType === CONTENT_TYPE_DATA &&
+			state.contentType === CONTENT_TYPE_RENDER &&
 			Object.prototype.hasOwnProperty.call(
 				state.renderData,
 				'unifiedLocalizedRender'
@@ -658,18 +658,18 @@ export default ({
 			);
 		}
 		else if (
-			state.contentType === CONTENT_TYPE_DISPLAY &&
+			state.contentType === CONTENT_TYPE_PREVIEW &&
 			Object.prototype.hasOwnProperty.call(
 				state.renderData,
-				'unifiedContent'
+				'unifiedPreview'
 			)
 		) {
-			if (state.renderData.unifiedContent) {
+			if (state.renderData.unifiedPreview) {
 				return (
 					<div className="taglib-diff-html">
 						<div
 							dangerouslySetInnerHTML={{
-								__html: state.renderData.unifiedContent,
+								__html: state.renderData.unifiedPreview,
 							}}
 						/>
 					</div>
@@ -683,19 +683,19 @@ export default ({
 			);
 		}
 		else if (
-			state.contentType === CONTENT_TYPE_DISPLAY &&
+			state.contentType === CONTENT_TYPE_PREVIEW &&
 			Object.prototype.hasOwnProperty.call(
 				state.renderData,
-				'unifiedLocalizedContent'
+				'unifiedLocalizedPreview'
 			)
 		) {
-			if (state.renderData.unifiedLocalizedContent[currentLocale.label]) {
+			if (state.renderData.unifiedLocalizedPreview[currentLocale.label]) {
 				return (
 					<div className="taglib-diff-html">
 						<div
 							dangerouslySetInnerHTML={{
 								__html:
-									state.renderData.unifiedLocalizedContent[
+									state.renderData.unifiedLocalizedPreview[
 										currentLocale.label
 									],
 							}}
@@ -887,7 +887,7 @@ export default ({
 		const items = [];
 
 		if (
-			(state.contentType === CONTENT_TYPE_DATA &&
+			(state.contentType === CONTENT_TYPE_RENDER &&
 				(Object.prototype.hasOwnProperty.call(
 					state.renderData,
 					'unifiedRender'
@@ -896,14 +896,14 @@ export default ({
 						state.renderData,
 						'unifiedLocalizedRender'
 					))) ||
-			(state.contentType === CONTENT_TYPE_DISPLAY &&
+			(state.contentType === CONTENT_TYPE_PREVIEW &&
 				(Object.prototype.hasOwnProperty.call(
 					state.renderData,
-					'unifiedContent'
+					'unifiedPreview'
 				) ||
 					Object.prototype.hasOwnProperty.call(
 						state.renderData,
-						'unifiedLocalizedContent'
+						'unifiedLocalizedPreview'
 					)))
 		) {
 			pushItem(items, VIEW_UNIFIED);
@@ -1019,20 +1019,20 @@ export default ({
 					{(state.view === VIEW_LEFT ||
 						state.view === VIEW_SPLIT) && (
 						<td className="publications-render-view-content">
-							{renderContentLeft()}
+							{renderPreviewLeft()}
 						</td>
 					)}
 
 					{(state.view === VIEW_RIGHT ||
 						state.view === VIEW_SPLIT) && (
 						<td className="publications-render-view-content">
-							{renderContentRight()}
+							{renderPreviewRight()}
 						</td>
 					)}
 
 					{state.view === VIEW_UNIFIED && (
 						<td className="publications-render-view-content">
-							{renderContentUnified()}
+							{renderPreviewUnified()}
 						</td>
 					)}
 				</tr>
@@ -1066,26 +1066,26 @@ export default ({
 								<ClayNavigationBar.Item
 									active={
 										state.contentType ===
-										CONTENT_TYPE_DISPLAY
+										CONTENT_TYPE_PREVIEW
 									}
 								>
 									<ClayLink
 										className={
 											!Object.prototype.hasOwnProperty.call(
 												state.renderData,
-												'leftContent'
+												'leftPreview'
 											) &&
 											!Object.prototype.hasOwnProperty.call(
 												state.renderData,
-												'leftLocalizedContent'
+												'leftLocalizedPreview'
 											) &&
 											!Object.prototype.hasOwnProperty.call(
 												state.renderData,
-												'rightContent'
+												'rightPreview'
 											) &&
 											!Object.prototype.hasOwnProperty.call(
 												state.renderData,
-												'rightLocalizedContent'
+												'rightLocalizedPreview'
 											)
 												? 'nav-link btn-link disabled'
 												: 'nav-link'
@@ -1098,15 +1098,15 @@ export default ({
 												state.renderData &&
 												!Object.prototype.hasOwnProperty.call(
 													state.renderData,
-													'unifiedContent'
+													'unifiedPreview'
 												) &&
 												!Object.prototype.hasOwnProperty.call(
 													state.renderData,
-													'unifiedLocalizedContent'
+													'unifiedLocalizedPreview'
 												)
 											) {
 												setState({
-													contentType: CONTENT_TYPE_DISPLAY,
+													contentType: CONTENT_TYPE_PREVIEW,
 													renderData:
 														state.renderData,
 													view: VIEW_SPLIT,
@@ -1116,25 +1116,25 @@ export default ({
 											}
 
 											setContentType(
-												CONTENT_TYPE_DISPLAY
+												CONTENT_TYPE_PREVIEW
 											);
 										}}
 										title={
 											!Object.prototype.hasOwnProperty.call(
 												state.renderData,
-												'leftContent'
+												'leftPreview'
 											) &&
 											!Object.prototype.hasOwnProperty.call(
 												state.renderData,
-												'leftLocalizedContent'
+												'leftLocalizedPreview'
 											) &&
 											!Object.prototype.hasOwnProperty.call(
 												state.renderData,
-												'rightContent'
+												'rightPreview'
 											) &&
 											!Object.prototype.hasOwnProperty.call(
 												state.renderData,
-												'rightLocalizedContent'
+												'rightLocalizedPreview'
 											)
 												? Liferay.Language.get(
 														'item-does-not-have-a-content-display'
@@ -1147,14 +1147,15 @@ export default ({
 								</ClayNavigationBar.Item>
 								<ClayNavigationBar.Item
 									active={
-										state.contentType === CONTENT_TYPE_DATA
+										state.contentType ===
+										CONTENT_TYPE_RENDER
 									}
 								>
 									<ClayLink
 										className="nav-link"
 										displayType="unstyled"
 										onClick={() =>
-											setContentType(CONTENT_TYPE_DATA)
+											setContentType(CONTENT_TYPE_RENDER)
 										}
 									>
 										{Liferay.Language.get('data')}

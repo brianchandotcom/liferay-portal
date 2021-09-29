@@ -130,6 +130,7 @@
 		</div>
 
 		<liferay-frontend:component
+			componentId="GeoLocationField"
 			context='<%=
 				HashMapBuilder.<String, Object>put(
 					"inputName", "<portlet:namespace /><%= name %>"

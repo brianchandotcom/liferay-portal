@@ -75,7 +75,7 @@ public class GoogleMapsMapProvider extends BaseJSPMapProvider {
 	@Override
 	protected void prepareRequest(HttpServletRequest httpServletRequest) {
 		String resolvedModuleName = _npmResolver.resolveModuleName(
-			"map-google-maps/js/MapGoogleMaps.es");
+			"@liferay/map-google-maps/js/MapGoogleMaps.es");
 
 		httpServletRequest.setAttribute(
 			"liferay-map:map:bootstrapRequire",

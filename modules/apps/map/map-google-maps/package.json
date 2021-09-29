@@ -3,7 +3,7 @@
 		"@liferay/map-common": "*",
 		"metal-state": "2.16.8"
 	},
-	"name": "map-google-maps",
+	"name": "@liferay/map-google-maps",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",

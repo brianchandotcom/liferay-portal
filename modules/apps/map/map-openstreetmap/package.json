@@ -3,7 +3,7 @@
 		"@liferay/map-common": "*",
 		"metal-state": "2.16.8"
 	},
-	"name": "map-openstreetmap",
+	"name": "@liferay/map-openstreetmap",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",

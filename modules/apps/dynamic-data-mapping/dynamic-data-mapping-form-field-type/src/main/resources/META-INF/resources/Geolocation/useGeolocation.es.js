@@ -12,10 +12,10 @@
  * details.
  */
 
+import MapGoogleMaps from '@liferay/map-google-maps/js/MapGoogleMaps.es';
+import MapOpenStreetMap from '@liferay/map-openstreetmap/js/MapOpenStreetMap.es';
 import {parseName} from 'data-engine-js-components-web';
 import Leaflet from 'leaflet';
-import MapGoogleMaps from 'map-google-maps/js/MapGoogleMaps.es';
-import MapOpenStreetMap from 'map-openstreetmap/js/MapOpenStreetMap.es';
 import {useCallback, useEffect, useRef} from 'react';
 
 export const MAP_PROVIDER = {

@@ -57,6 +57,12 @@ module.exports = {
 					'@liferay/map-common': {
 						'/': '*',
 					},
+					'@liferay/map-google-maps': {
+						'/': '*',
+					},
+					'@liferay/map-openstreetmap': {
+						'/': '*',
+					},
 					'asset-taglib': {
 						'/': '*',
 					},
@@ -263,12 +269,6 @@ module.exports = {
 						'clay-tooltip': '*',
 					},
 					'item-selector-taglib': {
-						'/': '*',
-					},
-					'map-google-maps': {
-						'/': '*',
-					},
-					'map-openstreetmap': {
 						'/': '*',
 					},
 				},

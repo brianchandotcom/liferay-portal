@@ -251,7 +251,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 		ImportTask importTask = _importTaskResource.postImportTask(
 			batchPlannerPlan.getInternalClassName(), null, null,
-			"batch-planner-plan-" + batchPlannerPlan.getBatchPlannerPlanId(),
+			null,
 			MultipartBody.of(
 				Collections.singletonMap(
 					"file",

@@ -16,7 +16,6 @@ import React, {useContext} from 'react';
 
 const INITIAL_STATE = {
 	resizing: false,
-	setCustomRow: () => null,
 	setResizing: () => null,
 	setUpdatedLayoutData: () => null,
 	updatedLayoutData: null,

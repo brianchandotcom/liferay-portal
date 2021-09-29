@@ -32,7 +32,6 @@ const ITEM_CONFIG = {
 const RESIZE_CONTEXT_STATE = {
 	customRow: false,
 	resizing: false,
-	setCustomRow: () => null,
 	setResizing: () => null,
 	setUpdatedLayoutData: () => null,
 	updatedLayoutData: null,

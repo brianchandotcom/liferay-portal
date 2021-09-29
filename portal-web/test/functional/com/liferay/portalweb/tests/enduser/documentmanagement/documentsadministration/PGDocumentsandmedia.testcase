@@ -261,29 +261,6 @@ definition {
 
 	@priority = "5"
 	@refactorneeded
-	test CanDeleteSubFolder {
-		JSONDocument.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Guest");
-
-		JSONDocument.addFolder(
-			dmFolderDescription = "DM SubFolder Description",
-			dmFolderName = "DM SubFolder Name",
-			groupName = "Guest",
-			parentFolderName = "DM Folder Name");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		Refresh();
-
-		DMFolder.deletePG(dmFolderName = "DM SubFolder Name");
-	}
-
-	@priority = "5"
-	@refactorneeded
 	test DownloadDocumentWithSlashesInTitleViaDocumentView {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -324,46 +301,6 @@ definition {
 			dmDocumentFileName = "DM Document File Name Edit.doc",
 			dmDocumentTitle = "DM Document Title Edit",
 			dmDocumentVersionNumber = "1.1");
-	}
-
-	@priority = "5"
-	@refactorneeded
-	test EditDocumentType {
-		property testray.component.names = "Training";
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
-
-		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.edit(
-			dmDocumentTypeDescriptionEdit = "DM Document Type Description Edit",
-			dmDocumentTypeName = "DM Document Type Name",
-			dmDocumentTypeNameEdit = "DM Document Type Name Edit");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
-
-		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type Name Edit");
 	}
 
 	@description = "This test edits a document inside a folder. It also asserts a major version increment since the change involved changing the actual file."

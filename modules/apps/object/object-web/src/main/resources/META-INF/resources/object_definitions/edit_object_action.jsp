@@ -74,10 +74,36 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 
 			const fields = current.getFields();
 
-			values = fields.reduce(
-				(obj, cur) => Object.assign(obj, {[cur.fieldName]: cur.value}),
-				{}
-			);
+			values = fields
+				.map((field) => {
+					const {fieldName, type, value} = field;
+
+					if (type === 'object_field' || type === 'select') {
+						let newValue = value;
+
+						if (newValue && typeof newValue === 'string') {
+							try {
+								newValue = JSON.parse(newValue);
+							}
+							catch (error) {}
+						}
+
+						if (Array.isArray(newValue)) {
+							newValue = newValue[0];
+						}
+
+						return {
+							fieldName,
+							value: newValue,
+						};
+					}
+
+					return field;
+				})
+				.reduce(
+					(obj, cur) => Object.assign(obj, {[cur.fieldName]: cur.value}),
+					{}
+				);
 		}
 
 		Liferay.Util.fetch(

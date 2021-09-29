@@ -14,6 +14,7 @@
 
 package com.liferay.object.web.internal.object.definitions.display.context;
 
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.taglib.servlet.PipingServletResponseFactory;
@@ -313,7 +315,10 @@ public class ObjectDefinitionsActionsDisplayContext {
 					}
 					else {
 						ddmFormFieldValue.setValue(
-							new UnlocalizedValue(String.valueOf(serializable)));
+							new UnlocalizedValue(
+								_getValue(
+									ddmFormField.getType(),
+									String.valueOf(serializable))));
 					}
 
 					return ddmFormFieldValue;
@@ -322,6 +327,18 @@ public class ObjectDefinitionsActionsDisplayContext {
 		ddmFormValues.setDefaultLocale(_objectRequestHelper.getLocale());
 
 		return ddmFormValues;
+	}
+
+	private String _getValue(String type, String value) {
+		if (StringUtil.equals(type, DDMFormFieldTypeConstants.OBJECT_FIELD) ||
+			StringUtil.equals(type, DDMFormFieldTypeConstants.SELECT)) {
+
+			return JSONUtil.putAll(
+				StringUtil.split(value)
+			).toString();
+		}
+
+		return value;
 	}
 
 	private boolean _hasAddObjectActionPermission() throws Exception {

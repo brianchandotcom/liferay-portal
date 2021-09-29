@@ -29,8 +29,6 @@ public interface WorkspaceGitRepository extends LocalGitRepository {
 
 	public List<LocalGitCommit> getHistoricalLocalGitCommits();
 
-	public String getType();
-
 	public Properties getWorkspaceJobProperties(String propertyType, Job job);
 
 	public List<List<LocalGitCommit>> partitionLocalGitCommits(

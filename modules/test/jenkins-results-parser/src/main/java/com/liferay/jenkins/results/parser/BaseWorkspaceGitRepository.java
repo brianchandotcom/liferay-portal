@@ -336,8 +336,6 @@ public abstract class BaseWorkspaceGitRepository
 		super(
 			pullRequest.getGitHubRemoteGitRepositoryName(), upstreamBranchName);
 
-		_setType();
-
 		_setGitHubURL(pullRequest.getHtmlURL());
 		_setReceiverUsername(pullRequest.getReceiverUsername());
 		_setSenderBranchName(pullRequest.getSenderBranchName());
@@ -352,8 +350,6 @@ public abstract class BaseWorkspaceGitRepository
 		RemoteGitRef remoteGitRef, String upstreamBranchName) {
 
 		super(remoteGitRef.getRepositoryName(), upstreamBranchName);
-
-		_setType();
 
 		_setGitHubURL(remoteGitRef.getHtmlURL());
 		_setReceiverUsername(remoteGitRef.getUsername());
@@ -386,15 +382,6 @@ public abstract class BaseWorkspaceGitRepository
 		}
 
 		return _localGitBranch;
-	}
-
-	@Override
-	protected void put(String key, Object value) {
-		super.put(key, value);
-
-		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
-
-		buildDatabase.putWorkspaceGitRepository(getType(), this);
 	}
 
 	protected void setProperties(String filePath, Properties properties) {
@@ -651,10 +638,6 @@ public abstract class BaseWorkspaceGitRepository
 		put("sender_username", senderUsername);
 	}
 
-	private void _setType() {
-		put("type", getType());
-	}
-
 	private void _setUpstreamBranchSHA(String upstreamBranchSHA) {
 		if (!JenkinsResultsParserUtil.isSHA(upstreamBranchSHA)) {
 			throw new RuntimeException("Upstream branch SHA is invalid");
@@ -665,7 +648,7 @@ public abstract class BaseWorkspaceGitRepository
 
 	private static final String[] _REQUIRED_KEYS = {
 		"git_hub_url", "receiver_username", "sender_branch_name",
-		"sender_branch_sha", "sender_username", "upstream_branch_sha", "type"
+		"sender_branch_sha", "sender_username", "upstream_branch_sha"
 	};
 
 	private String _branchName;

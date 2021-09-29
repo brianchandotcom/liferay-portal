@@ -1,0 +1,13 @@
+@import 'cadmin-variables';
+@import 'variables';
+
+html#{$cadmin-selector} {
+	.cadmin {
+		.vocabularies-selection {
+			option:disabled {
+				color: $cadmin-gray-500;
+				cursor: default;
+			}
+		}
+	}
+}

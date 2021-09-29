@@ -304,40 +304,6 @@ definition {
 			dmDocumentVersionNumber = "1.1");
 	}
 
-	@description = "This test edits a document inside a folder. It also asserts a major version increment since the change involved changing the actual file."
-	@priority = "4"
-	@refactorneeded
-	test EditFolderDocumentFile {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			folderName = "DM Folder Name",
-			groupName = "Guest",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.editPG(
-			dmDocumentFileEdit = "Document_2.doc",
-			dmDocumentTitle = "DM Document Title");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.viewAllPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentVersionNumber = "2.0");
-	}
-
 	@priority = "5"
 	@refactorneeded
 	test EditSubFolder {

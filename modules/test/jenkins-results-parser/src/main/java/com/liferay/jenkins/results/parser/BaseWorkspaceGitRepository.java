@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.Stack;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -91,64 +90,6 @@ public abstract class BaseWorkspaceGitRepository
 		}
 
 		return _historicalLocalGitCommits;
-	}
-
-	@Override
-	public Properties getWorkspaceJobProperties(String propertyType, Job job) {
-		Properties jobProperties = job.getJobProperties();
-
-		Set<String> workspaceJobPropertyNames = new HashSet<>();
-
-		for (String jobPropertyName : jobProperties.stringPropertyNames()) {
-			if (!jobPropertyName.startsWith(propertyType)) {
-				continue;
-			}
-
-			String workspaceJobPropertyName = _getWorkspaceJobPropertyName(
-				jobPropertyName);
-
-			if (workspaceJobPropertyName == null) {
-				continue;
-			}
-
-			workspaceJobPropertyNames.add(workspaceJobPropertyName);
-		}
-
-		Properties workspaceJobProperties = new Properties();
-
-		for (String workspaceJobPropertyName : workspaceJobPropertyNames) {
-			String workspaceJobPropertyValue =
-				JenkinsResultsParserUtil.getProperty(
-					jobProperties, propertyType, workspaceJobPropertyName,
-					getUpstreamBranchName());
-
-			if ((workspaceJobPropertyValue == null) &&
-				(job instanceof TestSuiteJob)) {
-
-				TestSuiteJob testSuiteJob = (TestSuiteJob)job;
-
-				workspaceJobPropertyValue =
-					JenkinsResultsParserUtil.getProperty(
-						jobProperties, propertyType, workspaceJobPropertyName,
-						testSuiteJob.getTestSuiteName());
-			}
-
-			if ((workspaceJobPropertyValue == null) &&
-				JenkinsResultsParserUtil.isWindows()) {
-
-				workspaceJobPropertyValue =
-					JenkinsResultsParserUtil.getProperty(
-						jobProperties, propertyType, workspaceJobPropertyName,
-						"windows");
-			}
-
-			if (workspaceJobPropertyValue != null) {
-				workspaceJobProperties.put(
-					workspaceJobPropertyName, workspaceJobPropertyValue);
-			}
-		}
-
-		return workspaceJobProperties;
 	}
 
 	@Override
@@ -315,13 +256,6 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	public void writePropertiesFiles() {
-		for (Map.Entry<String, Properties> entry :
-				_propertiesFilesMap.entrySet()) {
-
-			JenkinsResultsParserUtil.writePropertiesFile(
-				new File(getDirectory(), entry.getKey()), entry.getValue(),
-				true);
-		}
 	}
 
 	protected BaseWorkspaceGitRepository(JSONObject jsonObject) {
@@ -382,18 +316,6 @@ public abstract class BaseWorkspaceGitRepository
 		}
 
 		return _localGitBranch;
-	}
-
-	protected void setProperties(String filePath, Properties properties) {
-		if (!_propertiesFilesMap.containsKey(filePath)) {
-			_propertiesFilesMap.put(filePath, new Properties());
-		}
-
-		Properties fileProperties = _propertiesFilesMap.get(filePath);
-
-		fileProperties.putAll(properties);
-
-		_propertiesFilesMap.put(filePath, fileProperties);
 	}
 
 	private LocalGitBranch _createPullRequestLocalGitBranch() {
@@ -555,45 +477,6 @@ public abstract class BaseWorkspaceGitRepository
 		return _upstreamRemoteGitRef;
 	}
 
-	private String _getWorkspaceJobPropertyName(String jobPropertyName) {
-		Stack<Integer> stack = new Stack<>();
-
-		Integer start = null;
-		Integer end = null;
-
-		for (int i = 0; i < jobPropertyName.length(); i++) {
-			char c = jobPropertyName.charAt(i);
-
-			if (c == '[') {
-				stack.push(i);
-
-				if (start == null) {
-					start = i;
-				}
-			}
-
-			if (c == ']') {
-				if (start == null) {
-					continue;
-				}
-
-				stack.pop();
-
-				if (stack.isEmpty()) {
-					end = i;
-
-					break;
-				}
-			}
-		}
-
-		if ((start != null) && (end != null)) {
-			return jobPropertyName.substring(start + 1, end);
-		}
-
-		return null;
-	}
-
 	private boolean _isPullRequest() {
 		return !Objects.equals(_getSenderBranchSHA(), _getUpstreamBranchSHA());
 	}
@@ -655,7 +538,6 @@ public abstract class BaseWorkspaceGitRepository
 	private String _branchSHA;
 	private List<LocalGitCommit> _historicalLocalGitCommits;
 	private LocalGitBranch _localGitBranch;
-	private final Map<String, Properties> _propertiesFilesMap = new HashMap<>();
 	private RemoteGitRef _senderRemoteGitRef;
 	private RemoteGitRef _upstreamRemoteGitRef;
 

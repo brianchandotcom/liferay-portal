@@ -18,13 +18,6 @@
 
 <%
 DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDisplayContext(liferayPortletRequest, liferayPortletResponse);
-
-boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
-
-if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() && Validator.isNotNull(dlViewEntriesDisplayContext.getRedirect())) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(dlViewEntriesDisplayContext.getRedirect());
-}
 %>
 
 <div class="document-container" id="<portlet:namespace />entriesContainer">

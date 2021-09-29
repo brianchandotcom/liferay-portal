@@ -42,7 +42,14 @@ public class WorkspaceFactory {
 			throw new RuntimeException("Invalid JSONObject");
 		}
 
-		Workspace workspace = new DefaultWorkspace(workspaceJSONObject);
+		Workspace workspace;
+
+		if (primaryRepositoryName.matches("liferay-portal(-ee)?")) {
+			workspace = new PortalWorkspace(workspaceJSONObject);
+		}
+		else {
+			workspace = new DefaultWorkspace(workspaceJSONObject);
+		}
 
 		_workspaces.put(primaryRepositoryDirName, workspace);
 
@@ -63,7 +70,13 @@ public class WorkspaceFactory {
 			return workspace;
 		}
 
-		workspace = new DefaultWorkspace(repositoryName, upstreamBranchName);
+		if (repositoryName.matches("liferay-portal(-ee)?")) {
+			workspace = new PortalWorkspace(repositoryName, upstreamBranchName);
+		}
+		else {
+			workspace = new DefaultWorkspace(
+				repositoryName, upstreamBranchName);
+		}
 
 		_workspaces.put(gitDirectoryName, workspace);
 

@@ -93,7 +93,7 @@ public class ObjectActionLocalServiceImpl
 	public List<ObjectAction> getObjectActions(
 		long objectDefinitionId, String objectActionTriggerKey) {
 
-		return objectActionPersistence.findByO_A_OAEK(
+		return objectActionPersistence.findByO_A_OATK(
 			objectDefinitionId, true, objectActionTriggerKey);
 	}
 

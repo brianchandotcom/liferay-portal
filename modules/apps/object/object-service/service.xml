@@ -29,10 +29,10 @@
 
 		<!-- Finder methods -->
 
-		<finder name="O_A_OAEK" return-type="Collection">
+		<finder name="O_A_OATK" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="active" />
-			<finder-column name="objectActionExecutorKey" />
+			<finder-column name="objectActionTriggerKey" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectDefinition" remote-service="true" uuid="true">

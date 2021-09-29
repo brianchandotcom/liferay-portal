@@ -1277,28 +1277,67 @@ definition {
 			value1 = "Shared Content");
 
 		if ("${contentSharingPermission}" == "View") {
-			AssertElementNotPresent(locator1 = "Button#EDIT");
+			AssertElementNotPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+			if (!(isSet(shareable))) {
+				AssertElementNotPresent(locator1 = "Notifications#NOTIFICATIONS_PORTLET_VERTICAL_ELLIPSIS");
+			}
+			else {
+				MouseOver.mouseOverNotVisible(locator1 = "Notifications#NOTIFICATIONS_PORTLET_VERTICAL_ELLIPSIS");
+
+				Click(locator1 = "Notifications#NOTIFICATIONS_PORTLET_VERTICAL_ELLIPSIS");
+
+				MenuItem.viewNotPresent(menuItem = "Edit");
+
+				MenuItem.viewPresent(menuItem = "Share");
+			}
 		}
 
 		else if ("${contentSharingPermission}" == "Comment") {
-			AssertElementNotPresent(locator1 = "Button#EDIT");
-		}
-
-		else {
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			AssertElementPresent(locator1 = "CKEditor#BODY");
 
 			SelectFrame(value1 = "relative=top");
+
+			if (!(isSet(shareable))) {
+				AssertElementNotPresent(locator1 = "Notifications#NOTIFICATIONS_PORTLET_VERTICAL_ELLIPSIS");
+			}
+			else {
+				MouseOver.mouseOverNotVisible(locator1 = "Notifications#NOTIFICATIONS_PORTLET_VERTICAL_ELLIPSIS");
+
+				Click(locator1 = "Notifications#NOTIFICATIONS_PORTLET_VERTICAL_ELLIPSIS");
+
+				MenuItem.viewNotPresent(menuItem = "Edit");
+
+				MenuItem.viewPresent(menuItem = "Share");
+			}
 		}
 
-		var key_entryTitle = "${entryTitle}";
+		else if (("${contentSharingPermission}" == "Update")) {
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+			AssertElementPresent(locator1 = "CKEditor#BODY");
+
+			SelectFrame(value1 = "relative=top");
+
+			MouseOver.mouseOverNotVisible(locator1 = "Notifications#NOTIFICATIONS_PORTLET_VERTICAL_ELLIPSIS");
+
+			Click(locator1 = "Notifications#NOTIFICATIONS_PORTLET_VERTICAL_ELLIPSIS");
+
+			MenuItem.viewPresent(menuItem = "Edit");
+
+			if (isSet(shareable)) {
+				MenuItem.viewPresent(menuItem = "Share");
+			}
+		}
 
 		AssertTextEquals(
 			locator1 = "Sharing#BLOGS_CONTENT",
 			value1 = "${entryContent}");
 
 		AssertTextEquals(
+			key_entryTitle = "${entryTitle}",
 			locator1 = "Sharing#BLOGS_TITLE",
 			value1 = "${entryTitle}");
 	}

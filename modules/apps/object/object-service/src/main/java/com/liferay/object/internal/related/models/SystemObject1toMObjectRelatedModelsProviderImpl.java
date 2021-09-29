@@ -87,7 +87,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 			_objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
 
-		List<BaseModel> relatedModels = (List<BaseModel>)getRelatedModels(
+		List<T> relatedModels = getRelatedModels(
 			groupId, objectRelationshipId, primaryKey, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 

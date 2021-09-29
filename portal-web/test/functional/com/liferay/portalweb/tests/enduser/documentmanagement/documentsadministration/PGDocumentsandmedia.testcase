@@ -250,13 +250,14 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test AddFolderImage {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
+	@refactordone
+	test CanAddImageInFolder {
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 

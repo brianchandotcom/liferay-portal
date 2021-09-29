@@ -92,7 +92,7 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 			objectActionId);
 
 		_objectDefinitionModelResourcePermission.check(
-			getPermissionChecker(), objectAction.getObjectActionId(),
+			getPermissionChecker(), objectAction.getObjectDefinitionId(),
 			ActionKeys.UPDATE);
 
 		return objectActionLocalService.updateObjectAction(

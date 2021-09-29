@@ -223,6 +223,31 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	@Override
+	public void deleteObjectRelationshipMappingTableValues(
+			long objectRelationshipId, long primaryKey1)
+		throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			objectRelationshipLocalService.getObjectRelationship(
+				objectRelationshipId);
+
+		if (Objects.equals(
+				objectRelationship.getType(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+			ObjectDefinition objectDefinition1 =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectRelationship.getObjectDefinitionId1());
+
+			runSQL(
+				StringBundler.concat(
+					"delete from ", objectRelationship.getDBTableName(),
+					"where ", objectDefinition1.getPKObjectFieldDBColumnName(),
+					" = ", primaryKey1));
+		}
+	}
+
+	@Override
 	public ObjectRelationship fetchObjectRelationshipByObjectFieldId2(
 		long objectFieldId2) {
 

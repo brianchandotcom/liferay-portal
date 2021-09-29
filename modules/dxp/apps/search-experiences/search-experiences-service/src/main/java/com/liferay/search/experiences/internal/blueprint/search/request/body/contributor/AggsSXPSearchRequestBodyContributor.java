@@ -15,7 +15,6 @@
 package com.liferay.search.experiences.internal.blueprint.search.request.body.contributor;
 
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.geolocation.GeoBuilders;
@@ -26,6 +25,8 @@ import com.liferay.search.experiences.internal.blueprint.aggregation.Aggregation
 import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConverter;
 import com.liferay.search.experiences.internal.blueprint.query.QueryConverter;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
+import com.liferay.search.experiences.rest.dto.v1_0.AggregationConfiguration;
+import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
 import java.util.Iterator;
@@ -50,15 +51,18 @@ public class AggsSXPSearchRequestBodyContributor
 	public void contribute(
 		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint) {
 
-		// TODO Replace with real JSON
+		Configuration configuration = sxpBlueprint.getConfiguration();
 
-		JSONObject jsonObject = JSONUtil.put("test", "test");
+		AggregationConfiguration aggregationConfiguration =
+			configuration.getAggregationConfiguration();
 
-		if (jsonObject == null) {
+		if (aggregationConfiguration == null) {
 			return;
 		}
 
-		_processAggregations(jsonObject, null, searchRequestBuilder);
+		_processAggregations(
+			(JSONObject)aggregationConfiguration.getAggs(), null,
+			searchRequestBuilder);
 	}
 
 	@Override

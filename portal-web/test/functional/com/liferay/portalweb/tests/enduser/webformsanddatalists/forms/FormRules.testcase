@@ -1036,7 +1036,7 @@ definition {
 
 		FormRules.configureConditionOptions(
 			conditionField = "Text Field 1",
-			conditionOperator = "Is not empty",
+			conditionOperator = "Is Not Empty",
 			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(

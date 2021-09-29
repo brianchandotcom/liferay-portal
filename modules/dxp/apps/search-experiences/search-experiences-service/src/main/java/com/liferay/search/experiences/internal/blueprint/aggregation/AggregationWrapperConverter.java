@@ -15,6 +15,7 @@
 package com.liferay.search.experiences.internal.blueprint.aggregation;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -112,6 +113,7 @@ public class AggregationWrapperConverter {
 
 		_aggregations = aggregations;
 		_geoBuilders = geoBuilders;
+		_highlightConverter = highlightConverter;
 		_queryConverter = queryConverter;
 		_scriptConverter = scriptConverter;
 		_sorts = sorts;
@@ -250,12 +252,14 @@ public class AggregationWrapperConverter {
 			else if (object instanceof PipelineAggregation) {
 				return new AggregationWrapper((PipelineAggregation)object);
 			}
+
+			throw new RuntimeException(
+				StringBundler.concat(
+					"Unexpected return ", jsonObject, " -> ", object));
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
 		}
-
-		throw new IllegalArgumentException();
 	}
 
 	@FunctionalInterface
@@ -473,6 +477,10 @@ public class AggregationWrapperConverter {
 	private void _setScript(
 		Consumer<Script> consumer, JSONObject jsonObject, String key) {
 
+		if (!jsonObject.has(key)) {
+			return;
+		}
+
 		consumer.accept(_scriptConverter.toScript(jsonObject.get(key)));
 	}
 
@@ -492,7 +500,7 @@ public class AggregationWrapperConverter {
 		AvgAggregation avgAggregation = _aggregations.avg(
 			name, jsonObject.getString("field"));
 
-		_setString(avgAggregation::setMissing, jsonObject, "missing");
+		_setObject(avgAggregation::setMissing, jsonObject, "missing");
 		_setScript(avgAggregation::setScript, jsonObject, "script");
 
 		return avgAggregation;
@@ -603,7 +611,7 @@ public class AggregationWrapperConverter {
 		CardinalityAggregation cardinalityAggregation =
 			_aggregations.cardinality(name, jsonObject.getString("field"));
 
-		_setString(cardinalityAggregation::setMissing, jsonObject, "missing");
+		_setObject(cardinalityAggregation::setMissing, jsonObject, "missing");
 		_setInteger(
 			cardinalityAggregation::setPrecisionThreshold, jsonObject,
 			"precision_threshold");
@@ -1320,9 +1328,12 @@ public class AggregationWrapperConverter {
 		}
 
 		_setInteger(topHitsAggregation::setFrom, jsonObject, "from");
-		topHitsAggregation.setHighlight(
-			_highlightConverter.toHighlight(
-				jsonObject.getJSONObject("highlight")));
+
+		if (jsonObject.has("highlight")) {
+			topHitsAggregation.setHighlight(
+				_highlightConverter.toHighlight(
+					jsonObject.getJSONObject("highlight")));
+		}
 
 		JSONArray scriptFieldsJSONArray = jsonObject.getJSONArray(
 			"script_fields");
@@ -1406,7 +1417,7 @@ public class AggregationWrapperConverter {
 	private final Map<String, ConvertFunction> _convertFunctions =
 		new HashMap<>();
 	private final GeoBuilders _geoBuilders;
-	private HighlightConverter _highlightConverter;
+	private final HighlightConverter _highlightConverter;
 	private final QueryConverter _queryConverter;
 	private final ScriptConverter _scriptConverter;
 	private final Scripts _scripts;

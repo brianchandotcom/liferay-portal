@@ -41,7 +41,7 @@ public class ScriptConverter {
 			return _toScript((String)object);
 		}
 
-		throw null;
+		throw new IllegalArgumentException();
 	}
 
 	private void _processScriptOptions(

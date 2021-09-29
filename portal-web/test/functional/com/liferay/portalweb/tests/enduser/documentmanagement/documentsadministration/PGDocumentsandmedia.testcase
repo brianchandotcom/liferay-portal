@@ -273,7 +273,8 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
+	@refactordone
+	@uittest
 	test CanEditDocument {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

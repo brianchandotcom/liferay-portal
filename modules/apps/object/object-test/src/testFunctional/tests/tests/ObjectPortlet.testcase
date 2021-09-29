@@ -310,11 +310,29 @@ definition {
 	}
 
 	@description = "LPS-135393 - Verify if the empty state is displayed when there is no entry on the Custom Object Portlet"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test EmptyStateIsDisplayedWhenNoEntry {
 
-		// TODO LPS-EmptyStateIsDisplayedWhenNoEntry TBD pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No items were found.");
 
 	}
 

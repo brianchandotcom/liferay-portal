@@ -12,10 +12,12 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_OBJECT_DEFINITION</action-key>
+				<action-key>EXTEND_SYSTEM_OBJECT</action-key>
 				<action-key>PUBLISH_OBJECT_DEFINITION</action-key>
 			</supports>
 			<guest-unsupported>
 				<action-key>ADD_OBJECT_DEFINITION</action-key>
+				<action-key>EXTEND_SYSTEM_OBJECT</action-key>
 				<action-key>PUBLISH_OBJECT_DEFINITION</action-key>
 			</guest-unsupported>
 		</permissions>

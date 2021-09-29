@@ -827,11 +827,11 @@ If you have been namespacing the attribute on your own by prefixing `liferayPort
 to the value, drop that prefix and use `name="NAME_VALUE"` directly.
 
 If you want full control (or the namespaced version is insufficient), you can revert back to the old
-behaviour by also passing `useNamespace="<%= Boolean.FALSE %>"` to the tag.
+behavior by also passing `useNamespace="<%= Boolean.FALSE %>"` to the tag.
 
 ### Why was this change made?
 
-This change was made to better match the current `aui:select` tag behaviour, facilitate a future migration to the `clay:select` tag, and simplify current `clay:select` tag usage.
+This change was made to better match the current `aui:select` tag behavior, facilitate a future migration to the `clay:select` tag, and simplify current `clay:select` tag usage.
 
 ---------------------------------------
 

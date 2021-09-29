@@ -231,8 +231,8 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test AddFolderNameSymbol {
+	@refactordone
+	test CannotAddSpecialCharacterToName {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMFolder.addPG(

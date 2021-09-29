@@ -218,12 +218,12 @@ definition {
 		PortletEntry.inputDescription(description = "Test Description");
 
 		Button.clickSave();
-		
+
 		AssertClick(
 			key_workflowInstanceName = "Test Name",
 			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
 			value1 = "Test Name");
-		
+
 		Click(locator1 = "Button#PLUS");
 
 		PortletEntry.inputTitle(title = "Test Title");
@@ -257,7 +257,6 @@ definition {
 			workflowTask = "Review");
 
 		Alert.viewSuccessMessage();
-
 	}
 
 	@description = "This is a test for LRQA-69570. Verify that a new page with the same name can't be created while the page is on Review."

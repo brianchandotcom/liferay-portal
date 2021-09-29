@@ -205,11 +205,58 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69554. Verify that the user can Submit for Publication a Wiki Page with assigned Workflow. "
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSubmitWikiPage {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Wiki");
 
-		// TODO LRQA-69554 CanSubmitWikiPage pending implementation
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputName(name = "Test Name");
+
+		PortletEntry.inputDescription(description = "Test Description");
+
+		Button.clickSave();
+		
+		AssertClick(
+			key_workflowInstanceName = "Test Name",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			value1 = "Test Name");
+		
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputTitle(title = "Test Title");
+
+		SelectFrame.selectFrameNoLoading(
+			key_title = "Rich Text Editor",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "Test Content");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "TextArea#ANY_LABELED");
+
+		AssertClick(
+			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
+			value1 = "Submit for Publication");
+
+		Alert.viewSuccessMessage();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Test Title",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Test Title",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review");
+
+		Alert.viewSuccessMessage();
 
 	}
 

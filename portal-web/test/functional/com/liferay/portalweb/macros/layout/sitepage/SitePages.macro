@@ -454,8 +454,13 @@ definition {
 		key_friendlyURL = "";
 		var friendlyURL = selenium.getElementValue(
 			locator1 = "SitePages#FRIENDLY_URL");
+		var baseURL = "${baseURL}";
 
-		var URL = "http://localhost:8080/web/guest${friendlyURL}";
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var URL = "${baseURL}/web/guest${friendlyURL}";
 
 		return "${URL}";
 	}

@@ -274,52 +274,6 @@ definition {
 		DMDocument.viewPG(dmDocumentTitle = "DM Document Title");
 	}
 
-	@priority = "4"
-	@refactorneeded
-	test UnlockDocumentInFolder {
-		JSONDocument.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Guest");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			folderName = "DM Folder Name",
-			groupName = "Guest",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.checkoutPG(dmDocumentTitle = "DM Document Title");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.viewCheckedoutPG(
-			dmDocumentTitle = "DM Document Title",
-			status = "Draft");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.checkinPG(dmDocumentTitle = "DM Document Title");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.viewAllPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentVersionNumber = "2.0");
-	}
-
 	@description = "This test covers LPS-91595. It ensures that the document selection persists when navigating through the pagination in the DM widget."
 	@priority = "4"
 	@refactorneeded

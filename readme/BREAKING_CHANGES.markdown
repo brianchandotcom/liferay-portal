@@ -12,7 +12,7 @@ Here are some of the types of changes documented in this file:
 * Execution requirements: Java version, J2EE Version, browser versions, etc.
 * Deprecations or end of support: For example, warning that a certain feature or API will be dropped in an upcoming version.
 
-*This document has been reviewed through the breaking change entry at commit `defe666e35a2`.*
+*This document has been reviewed through the breaking change entry at commit `6e818a6b84c5`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -30,8 +30,8 @@ Here is the template to use for each breaking change (note how it ends with a ho
 
 ```
 ### Title
-- **Date:**
-- **JIRA Ticket:**
+- **Date: YYYY-MMM-DD**
+- **JIRA Ticket: [LPS-1234](https://issues.liferay.com/browse/LPS-1234)**
 
 #### What changed?
 

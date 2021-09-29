@@ -839,24 +839,24 @@ This change was made to better match the current `aui:select` tag behaviour, fac
 
 ---------------------------------------
 
+### Removed the Core Registry-API and Registry-Impl modules
+- **Date:** 2021-Sep-28
 - **JIRA Ticket:** [LPS-138126](https://issues.liferay.com/browse/LPS-138126)
 
 #### What changed?
 
-Registry-API and Registry-Impl modules have been removed.
+The core Registry-API (`registry-api`) and Registry-Impl (`registry-impl`) modules have been removed.
 
 #### Who is affected?
 
-This affects anyone using Registry-API.
+This affects anyone using the Registry-API.
 
 #### How should I update my code?
 
-Now you can get access to system bundle's org.osgi.framework.BundleConext through
-com.liferay.portal.kernel.module.util.SystemBundleUtil.getBundleContext(). Then you
-will have full access to native OSGi API.
+Access the native OSGi API using the system bundle's `org.osgi.framework.BundleContext`. Get the context by calling the `com.liferay.portal.kernel.module.util.SystemBundleUtil.getBundleContext()` method.
 
 #### Why was this change made?
 
-This grants you access to native OSGi API rather than using the bridged Registry-API.
+The native OSGi API makes the bridged API unnecessary.
 
 ---------------------------------------

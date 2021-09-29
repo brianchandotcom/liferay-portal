@@ -41,8 +41,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "Test",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "Test");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
@@ -119,8 +118,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "Commerce Account",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "Commerce Account");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
@@ -170,8 +168,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "Commerce Account",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "Commerce Account");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
@@ -242,8 +239,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "Test Test",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "Test Test");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
@@ -313,8 +309,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "Test Test",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "Test Test");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
@@ -357,8 +352,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "Commerce Account",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "Commerce Account");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
@@ -403,8 +397,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "Commerce Account",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "Commerce Account");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
@@ -501,8 +494,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "Commerce Account",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "Commerce Account");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
@@ -742,8 +734,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "First Account",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "First Account");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
@@ -954,8 +945,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "Commerce Account",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "Commerce Account");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
@@ -1015,8 +1005,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "Commerce Account",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "Commerce Account");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
@@ -1054,8 +1043,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "Test Test",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "Test Test");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 

@@ -852,16 +852,14 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "Account1",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "Account1");
 
 		ApplicationsMenu.gotoSite(site = "Site1");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "Account2",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "Account2");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Pricing",
@@ -1397,20 +1395,17 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "Commerce Account 1",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "Commerce Account 1");
 
 		Click(locator1 = "Link#BACK");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "Commerce Account 2",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "Commerce Account 2");
 
 		Click(locator1 = "Link#BACK");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "Commerce Account 3",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "Commerce Account 3");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Pricing",
@@ -2154,8 +2149,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "Commerce Account",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "Commerce Account");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 

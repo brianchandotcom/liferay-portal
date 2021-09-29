@@ -101,23 +101,7 @@ definition {
 	}
 
 	macro createNewAccountViaFront {
-		Click.mouseDownMouseUp(
-			key_text = "Add Account",
-			locator1 = "Button#ANY");
-
-		Pause(locator1 = "2000");
-
-		Type(
-			locator1 = "TextInput#NAME",
-			value1 = "${accountName}");
-
-		Click(
-			key_userEmailAddress = "${adminEmailAddress}",
-			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADD_MODAL_PLUS_BUTTON");
-
-		Click(
-			key_button = "Create Account",
-			locator1 = "CommerceAccelerators#ANY_BUTTON");
+		Accounts.addBusinessAccount(accountName = "${accountName}");
 	}
 
 	macro createNewOrderFromAccountSelectorDropdown {
@@ -127,13 +111,7 @@ definition {
 	}
 
 	macro deactivateCommerceAccountViaFront {
-		Click(
-			key_entryName = "${accountName}",
-			locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
-
-		CommerceEntry.clickNoError(menuItem = "Deactivate");
-
-		Alert.viewSuccessMessage();
+		Accounts.deactivateAccount(accountName = "${accountName}");
 	}
 
 	macro gotoMiniumProductDetailsPage {
@@ -143,38 +121,17 @@ definition {
 	}
 
 	macro inviteNewMemberWithRoleToAccount {
-		Click(
-			key_text = "Invite user",
-			locator1 = "Button#ANY");
+		Accounts.addNewUserToBusinessAccount(
+			accountName = "${accountName}",
+			userEmailAddress = "${emailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}");
 
-		Type(
-			key_fieldLabel = "Name or Email",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${emailAddress}");
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "${role}",
+			accountUserName = "${emailAddress}");
 
-		Click(
-			key_userEmailAddress = "${emailAddress}",
-			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADD_MODAL_PLUS_BUTTON");
-
-		Click(
-			key_button = "Invite user",
-			locator1 = "CommerceAccelerators#ANY_BUTTON");
-
-		Click(
-			key_memberEmailAddress = "${emailAddress}",
-			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_MEMBER_ACTIONS_DROPDOWN");
-
-		CommerceEntry.clickNoError(menuItem = "View");
-
-		Click(locator1 = "CommerceAccelerators#ROLES_BUTTON");
-
-		Click(
-			key_role = "${role}",
-			locator1 = "CommerceAccelerators#ROLES_MODAL_ROLE_CHECKBOX");
-
-		Click(
-			key_button = "Done",
-			locator1 = "CommerceAccelerators#ANY_BUTTON");
 	}
 
 	macro reviewOrder {

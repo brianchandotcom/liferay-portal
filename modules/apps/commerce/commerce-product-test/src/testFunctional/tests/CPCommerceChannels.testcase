@@ -1445,8 +1445,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "new Account",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "new Account");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -2092,8 +2091,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "new Account",
-			adminEmailAddress = "test@liferay.com");
+			accountName = "new Account");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

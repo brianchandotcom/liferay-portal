@@ -100,7 +100,11 @@ public class GitRepositoryFactory {
 				"https://github.com/liferay/", gitRepositoryName, "/tree/",
 				gitUpstreamBranchName));
 
-		if (gitRepositoryName.matches("liferay-portal(-ee)?")) {
+		if (gitRepositoryName.matches("liferay-plugins(-ee)?")) {
+			workspaceGitRepository = new PluginsWorkspaceGitRepository(
+				remoteGitRef, gitUpstreamBranchName);
+		}
+		else if (gitRepositoryName.matches("liferay-portal(-ee)?")) {
 			workspaceGitRepository = new PortalWorkspaceGitRepository(
 				remoteGitRef, gitUpstreamBranchName);
 		}
@@ -142,6 +146,10 @@ public class GitRepositoryFactory {
 
 		if (repositoryName == null) {
 			throw new RuntimeException("Invalid JSONObject " + jsonObject);
+		}
+		else if (repositoryName.matches("liferay-plugins(-ee)?")) {
+			workspaceGitRepository = new PluginsWorkspaceGitRepository(
+				jsonObject);
 		}
 		else if (repositoryName.matches("liferay-portal(-ee)?")) {
 			workspaceGitRepository = new PortalWorkspaceGitRepository(

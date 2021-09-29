@@ -67,6 +67,11 @@
 	<td>//div[@class='forms-navigation-bar']//button[contains(@class,'nav-link') and .='${key_navigationBarItem}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FORMS_DROPDOWN_MENU_ITEM</td>
+	<td>//ul[@class ='dropdown-menu dropdown-menu-left-side']//li[contains(text(),'key_itemName')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

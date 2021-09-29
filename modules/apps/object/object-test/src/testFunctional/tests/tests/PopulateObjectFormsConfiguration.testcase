@@ -321,12 +321,55 @@ definition {
 	}
 
 	@description = "LPS-136456 - Verify that it is not possible to view forms entries when it is mapped to an object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotViewFormsEntries {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-139749 CannotViewFormsEntries pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		PopulateObjectFormsConfiguration.openFormSettings();
+
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
+
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Custom Field");
+
+		PopulateObjectFormsConfiguration.saveFormObject();
+
+		AssertElementNotPresent(
+			locator1 = "FormsAdmin#FORMS_NAVIGATION_BAR_ITEM",
+			value1 = "Entries");
+
+		Navigator.gotoBack();
+
+		Click(
+			key_rowIndexNumber = "1",
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
+
+		AssertElementNotPresent(
+			key_itemName = "Entries",
+			locator1 = "FormsAdmin#FORMS_DROPDOWN_MENU_ITEM");
+
+			
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to select Object as a Storage Type"

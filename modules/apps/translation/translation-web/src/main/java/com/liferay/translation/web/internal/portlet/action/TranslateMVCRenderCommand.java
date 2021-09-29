@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
-import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.translation.constants.TranslationActionKeys;
 import com.liferay.translation.constants.TranslationConstants;
 import com.liferay.translation.constants.TranslationPortletKeys;
@@ -51,6 +50,7 @@ import com.liferay.translation.service.TranslationEntryLocalService;
 import com.liferay.translation.translator.Translator;
 import com.liferay.translation.web.internal.configuration.FFLayoutExperienceSelectorConfiguration;
 import com.liferay.translation.web.internal.display.context.TranslateDisplayContext;
+import com.liferay.translation.web.internal.util.TranslationRequestUtil;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -98,10 +98,11 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				renderRequest, "segmentsExperienceId",
 				SegmentsExperienceConstants.ID_DEFAULT);
 
-			String className = _getClassName(
+			String className = TranslationRequestUtil.getClassName(
 				renderRequest, segmentsExperienceId);
 
-			long classPK = _getClassPK(renderRequest, segmentsExperienceId);
+			long classPK = TranslationRequestUtil.getClassPK(
+				renderRequest, segmentsExperienceId);
 
 			Object object = _getInfoItem(className, classPK);
 
@@ -164,8 +165,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					() ->
 						(_translator != null) &&
 						_translator.isEnabled(themeDisplay.getCompanyId()),
-					_getModelClassName(renderRequest),
-					_getModelClassPK(renderRequest),
+					TranslationRequestUtil.getModelClassName(renderRequest),
+					TranslationRequestUtil.getModelClassPK(renderRequest),
 					_ffLayoutExperienceSelectorConfiguration, infoForm,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse), object,
@@ -221,26 +222,6 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		);
 	}
 
-	private String _getClassName(
-		RenderRequest renderRequest, long segmentsExperienceId) {
-
-		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
-			return SegmentsExperience.class.getName();
-		}
-
-		return _getModelClassName(renderRequest);
-	}
-
-	private long _getClassPK(
-		RenderRequest renderRequest, long segmentsExperienceId) {
-
-		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
-			return segmentsExperienceId;
-		}
-
-		return _getModelClassPK(renderRequest);
-	}
-
 	private String _getDefaultTargetLanguageId(
 		List<String> availableTargetLanguageIds) {
 
@@ -264,8 +245,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				() ->
 					(_translator != null) &&
 					_translator.isEnabled(themeDisplay.getCompanyId()),
-				_getModelClassName(renderRequest),
-				_getModelClassPK(renderRequest),
+				TranslationRequestUtil.getModelClassName(renderRequest),
+				TranslationRequestUtil.getModelClassPK(renderRequest),
 				_ffLayoutExperienceSelectorConfiguration, null,
 				_portal.getLiferayPortletRequest(renderRequest),
 				_portal.getLiferayPortletResponse(renderResponse), null,
@@ -294,15 +275,6 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 			return null;
 		}
-	}
-
-	private String _getModelClassName(RenderRequest renderRequest) {
-		return _portal.getClassName(
-			ParamUtil.getLong(renderRequest, "classNameId"));
-	}
-
-	private long _getModelClassPK(RenderRequest renderRequest) {
-		return ParamUtil.getLong(renderRequest, "classPK");
 	}
 
 	private <T> InfoItemFieldValues _getSourceInfoItemFieldValues(

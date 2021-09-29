@@ -24,7 +24,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -38,6 +37,7 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
+import com.liferay.translation.web.internal.util.TranslationRequestUtil;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -74,7 +74,7 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 			long[] segmentsExperienceIds = ParamUtil.getLongValues(
 				resourceRequest, "segmentsExperienceIds");
 
-			String className = _getClassName(
+			String className = TranslationRequestUtil.getClassName(
 				resourceRequest, segmentsExperienceIds);
 
 			String exportMimeType = ParamUtil.getString(
@@ -87,15 +87,18 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
 			for (long classPK :
-					_getClassPKs(resourceRequest, segmentsExperienceIds)) {
+					TranslationRequestUtil.getClassPKs(
+						resourceRequest, segmentsExperienceIds)) {
 
 				if ((classPK == SegmentsExperienceConstants.ID_DEFAULT) &&
 					className.equals(SegmentsExperience.class.getName())) {
 
 					_addZipEntry(
-						zipWriter, _getModelClassName(resourceRequest),
-						_getModelClassPK(resourceRequest), exportMimeType,
-						sourceLanguageId, targetLanguageIds,
+						zipWriter,
+						TranslationRequestUtil.getModelClassName(
+							resourceRequest),
+						TranslationRequestUtil.getModelClassPK(resourceRequest),
+						exportMimeType, sourceLanguageId, targetLanguageIds,
 						_portal.getLocale(resourceRequest));
 				}
 				else {
@@ -112,9 +115,10 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 				PortletResponseUtil.sendFile(
 					resourceRequest, resourceResponse,
 					_getZipFileName(
-						_getModelClassName(resourceRequest),
-						_getModelClassPK(resourceRequest), sourceLanguageId,
-						_portal.getLocale(resourceRequest)),
+						TranslationRequestUtil.getModelClassName(
+							resourceRequest),
+						TranslationRequestUtil.getModelClassPK(resourceRequest),
+						sourceLanguageId, _portal.getLocale(resourceRequest)),
 					inputStream, ContentTypes.APPLICATION_ZIP);
 			}
 
@@ -173,44 +177,6 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 						LocaleUtil.fromLanguageId(sourceLanguageId),
 						LocaleUtil.fromLanguageId(targetLanguageId)));
 		}
-	}
-
-	private String _getClassName(
-		ResourceRequest resourceRequest, long[] segmentsExperienceIds) {
-
-		if (ArrayUtil.isEmpty(segmentsExperienceIds) ||
-			((segmentsExperienceIds.length == 1) &&
-			 (segmentsExperienceIds[0] ==
-				 SegmentsExperienceConstants.ID_DEFAULT))) {
-
-			return _portal.getClassName(
-				ParamUtil.getLong(resourceRequest, "classNameId"));
-		}
-
-		return SegmentsExperience.class.getName();
-	}
-
-	private long[] _getClassPKs(
-		ResourceRequest resourceRequest, long[] segmentsExperienceIds) {
-
-		if (ArrayUtil.isEmpty(segmentsExperienceIds) ||
-			((segmentsExperienceIds.length == 1) &&
-			 (segmentsExperienceIds[0] ==
-				 SegmentsExperienceConstants.ID_DEFAULT))) {
-
-			return new long[] {ParamUtil.getLong(resourceRequest, "classPK")};
-		}
-
-		return segmentsExperienceIds;
-	}
-
-	private String _getModelClassName(ResourceRequest resourceRequest) {
-		return _portal.getClassName(
-			ParamUtil.getLong(resourceRequest, "classNameId"));
-	}
-
-	private long _getModelClassPK(ResourceRequest resourceRequest) {
-		return ParamUtil.getLong(resourceRequest, "classPK");
 	}
 
 	private InfoFieldValue<Object> _getTitleInfoFieldValue(

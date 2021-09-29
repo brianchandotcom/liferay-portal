@@ -34,14 +34,13 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
-import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.service.TranslationEntryService;
+import com.liferay.translation.web.internal.util.TranslationRequestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +66,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		try {
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
@@ -77,10 +75,10 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "segmentsExperienceId",
 				SegmentsExperienceConstants.ID_DEFAULT);
 
-			String className = _getClassName(
+			String className = TranslationRequestUtil.getClassName(
 				actionRequest, segmentsExperienceId);
-
-			long classPK = _getClassPK(actionRequest, segmentsExperienceId);
+			long classPK = TranslationRequestUtil.getClassPK(
+				actionRequest, segmentsExperienceId);
 
 			InfoItemReference infoItemReference = new InfoItemReference(
 				className, classPK);
@@ -125,27 +123,6 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 			actionResponse.setRenderParameter(
 				"mvcRenderCommandName", "/translation/translate");
 		}
-	}
-
-	private String _getClassName(
-		ActionRequest actionRequest, long segmentsExperienceId) {
-
-		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
-			return SegmentsExperience.class.getName();
-		}
-
-		return _portal.getClassName(
-			ParamUtil.getLong(actionRequest, "classNameId"));
-	}
-
-	private long _getClassPK(
-		ActionRequest actionRequest, long segmentsExperienceId) {
-
-		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
-			return segmentsExperienceId;
-		}
-
-		return ParamUtil.getLong(actionRequest, "classPK");
 	}
 
 	private <T> List<InfoField> _getInfoFields(String className, T object) {
@@ -230,9 +207,6 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private TranslationEntryService _translationEntryService;

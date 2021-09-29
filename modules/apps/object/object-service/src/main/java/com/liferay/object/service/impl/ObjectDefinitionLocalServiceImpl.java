@@ -34,6 +34,7 @@ import com.liferay.object.model.impl.ObjectDefinitionImpl;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.base.ObjectDefinitionLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
@@ -427,7 +428,7 @@ public class ObjectDefinitionLocalServiceImpl
 				_bundleContext, _dynamicQueryBatchIndexingActionableFactory,
 				_listTypeEntryLocalService, _modelSearchRegistrarHelper, this,
 				_objectEntryLocalService, _objectFieldLocalService,
-				_objectScopeProviderRegistry,
+				_objectRelationshipLocalService, _objectScopeProviderRegistry,
 				_persistedModelLocalServiceRegistry, _resourceActions,
 				_workflowStatusModelPreFilterContributor));
 
@@ -1042,6 +1043,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private ObjectFieldPersistence _objectFieldPersistence;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;

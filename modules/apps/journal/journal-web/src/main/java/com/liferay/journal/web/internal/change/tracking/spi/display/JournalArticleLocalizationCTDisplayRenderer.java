@@ -104,10 +104,10 @@ public class JournalArticleLocalizationCTDisplayRenderer
 			displayContext.getModel();
 
 		return displayContext.renderPreview(
-			LocaleUtil.fromLanguageId(
-				journalArticleLocalization.getLanguageId()),
 			_journalArticleLocalService.getJournalArticle(
-				journalArticleLocalization.getArticlePK()));
+				journalArticleLocalization.getArticlePK()),
+			LocaleUtil.fromLanguageId(
+				journalArticleLocalization.getLanguageId()));
 	}
 
 	@Override

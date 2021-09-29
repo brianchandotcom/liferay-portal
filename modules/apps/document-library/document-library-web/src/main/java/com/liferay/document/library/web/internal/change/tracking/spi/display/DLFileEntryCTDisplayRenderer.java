@@ -111,7 +111,7 @@ public class DLFileEntryCTDisplayRenderer
 		DLFileEntry dlFileEntry = displayContext.getModel();
 
 		displayContext.render(
-			displayContext.getLocale(), dlFileEntry.getFileVersion());
+			dlFileEntry.getFileVersion(), displayContext.getLocale());
 	}
 
 	@Override
@@ -121,7 +121,7 @@ public class DLFileEntryCTDisplayRenderer
 		DLFileEntry dlFileEntry = displayContext.getModel();
 
 		return displayContext.renderPreview(
-			displayContext.getLocale(), dlFileEntry.getFileVersion());
+			dlFileEntry.getFileVersion(), displayContext.getLocale());
 	}
 
 	@Reference(policyOption = ReferencePolicyOption.GREEDY)

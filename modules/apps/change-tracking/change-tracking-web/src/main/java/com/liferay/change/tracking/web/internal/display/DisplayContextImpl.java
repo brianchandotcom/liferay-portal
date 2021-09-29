@@ -18,7 +18,7 @@ import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -118,43 +118,44 @@ public class DisplayContextImpl<T> implements DisplayContext<T> {
 	}
 
 	@Override
-	public <M extends CTModel<M>> void render(Locale locale, M model)
+	public <M extends BaseModel<M>> void render(M baseModel, Locale locale)
 		throws Exception {
 
-		if (model == _model) {
+		if (baseModel == _model) {
 			throw new IllegalArgumentException();
 		}
 
 		CTDisplayRenderer<M> ctDisplayRenderer =
 			_ctDisplayRendererRegistry.getCTDisplayRenderer(
 				_classNameLocalService.getClassNameId(
-					model.getModelClassName()));
+					baseModel.getModelClassName()));
 
 		ctDisplayRenderer.render(
 			new DisplayContextImpl<>(
 				_httpServletRequest, _httpServletResponse,
 				_classNameLocalService, _ctDisplayRendererRegistry, _ctEntryId,
-				locale, model, _type));
+				locale, baseModel, _type));
 	}
 
 	@Override
-	public <M extends CTModel<M>> String renderPreview(Locale locale, M model)
+	public <M extends BaseModel<M>> String renderPreview(
+			M baseModel, Locale locale)
 		throws Exception {
 
-		if (model == _model) {
+		if (baseModel == _model) {
 			throw new IllegalArgumentException();
 		}
 
 		CTDisplayRenderer<M> ctDisplayRenderer =
 			_ctDisplayRendererRegistry.getCTDisplayRenderer(
 				_classNameLocalService.getClassNameId(
-					model.getModelClassName()));
+					baseModel.getModelClassName()));
 
 		return ctDisplayRenderer.renderPreview(
 			new DisplayContextImpl<>(
 				_httpServletRequest, _httpServletResponse,
 				_classNameLocalService, _ctDisplayRendererRegistry, _ctEntryId,
-				locale, model, _type));
+				locale, baseModel, _type));
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

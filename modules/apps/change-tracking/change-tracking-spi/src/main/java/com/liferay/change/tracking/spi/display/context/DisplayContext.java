@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.spi.display.context;
 
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.model.BaseModel;
 
 import java.util.Locale;
 
@@ -71,10 +71,11 @@ public interface DisplayContext<T> {
 	 */
 	public T getModel();
 
-	public <M extends CTModel<M>> void render(Locale locale, M model)
+	public <M extends BaseModel<M>> void render(M baseModel, Locale locale)
 		throws Exception;
 
-	public <M extends CTModel<M>> String renderPreview(Locale locale, M model)
+	public <M extends BaseModel<M>> String renderPreview(
+			M baseModel, Locale locale)
 		throws Exception;
 
 }

@@ -401,7 +401,7 @@ definition {
 			pageName = "Form Page 1",
 			sitePageType = "Widget Page");
 
-		var friendlyURL = SitePages.getFriendlyUrl();
+		var friendlyURL = SitePages.getFriendlyURL();
 
 		FormsAdmin.addForm();
 

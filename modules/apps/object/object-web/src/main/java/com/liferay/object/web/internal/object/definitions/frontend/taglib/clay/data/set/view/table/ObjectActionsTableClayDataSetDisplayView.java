@@ -46,6 +46,11 @@ public class ObjectActionsTableClayDataSetDisplayView
 
 		clayTableSchemaField.setContentRenderer("actionLink");
 
+		ClayTableSchemaField activeClayTableSchemaField =
+			clayTableSchemaBuilder.addClayTableSchemaField("active", "active");
+
+		activeClayTableSchemaField.setContentRenderer("boolean");
+
 		return clayTableSchemaBuilder.build();
 	}
 

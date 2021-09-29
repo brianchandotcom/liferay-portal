@@ -167,7 +167,9 @@ definition {
 
 		ServerAdministration.openServerAdmin();
 
-		var script = TestCase.getFileContent(fileName = "convertWidgetPages.groovy");
+		var script = TestCase.getFileContent(
+			fileName = "convertWidgetPages.groovy",
+			filePath = "enduser/wem/layout/pagesadmin");
 
 		ServerAdministration.executeScript(
 			language = "Groovy",
@@ -359,7 +361,9 @@ definition {
 		task ("Execute grooy script to bulk convert all widget pages") {
 			ServerAdministration.openServerAdmin();
 
-			var script = TestCase.getFileContent(fileName = "convertWidgetPages.groovy");
+			var script = TestCase.getFileContent(
+				fileName = "convertWidgetPages.groovy",
+				filePath = "enduser/wem/layout/pagesadmin");
 
 			ServerAdministration.executeScript(
 				language = "Groovy",
@@ -516,7 +520,9 @@ definition {
 
 		ServerAdministration.openServerAdmin();
 
-		var script = TestCase.getFileContent(fileName = "convertWidgetPages.groovy");
+		var script = TestCase.getFileContent(
+			fileName = "convertWidgetPages.groovy",
+			filePath = "enduser/wem/layout/pagesadmin");
 
 		ServerAdministration.executeScript(
 			language = "Groovy",
@@ -694,7 +700,8 @@ definition {
 
 		AppManager.uploadApp(
 			appName = "custom-layout-layouttpl",
-			warFileName = "custom-layout-layouttpl.war");
+			warFileName = "custom-layout-layouttpl.war",
+			warFilePath = "enduser/wem/layout/pagesadmin");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -789,7 +796,8 @@ definition {
 
 		AppManager.uploadApp(
 			appName = "custom-layout-layouttpl",
-			warFileName = "custom-layout-layouttpl.war");
+			warFileName = "custom-layout-layouttpl.war",
+			warFilePath = "enduser/wem/layout/pagesadmin");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -895,7 +903,8 @@ definition {
 
 		AppManager.uploadApp(
 			appName = "custom-layout-layouttpl",
-			warFileName = "custom-layout-layouttpl.war");
+			warFileName = "custom-layout-layouttpl.war",
+			warFilePath = "enduser/wem/layout/pagesadmin");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

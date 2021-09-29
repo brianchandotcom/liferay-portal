@@ -35,9 +35,16 @@ definition {
 
 		AssertElementPresent(locator1 = "TextInput#FILE");
 
-		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			locator1 = "TextInput#FILE",
-			value1 = "${warFileName}");
+		if (isSet(warFilePath)) {
+			UploadFileWithCustomPath.uploadArchiveFile(
+				fileName = "${warFileName}",
+				filePath = "${warFilePath}");
+		}
+		else {
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = "${warFileName}");
+		}
 
 		Button.clickInstall();
 

@@ -1,0 +1,108 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"marginBottom": "6",
+						"marginTop": "6"
+					},
+					"layout": {
+						"align": "Center",
+						"borderWidth": 0,
+						"contentDisplay": "FlexColumn",
+						"justify": "Center",
+						"marginBottom": 6,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 6,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "bootcamp-heading"
+							},
+							"fragmentConfig": {
+								"displayLevel": "0",
+								"headingLevel": "h1"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+											"value_i18n": {}
+										},
+										"text": {
+											"mapping": {
+												"fieldKey": "title",
+												"itemReference": {
+													"contextSource": "DisplayPageItem"
+												}
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginBottom": "5",
+								"textAlign": "center",
+								"width": "700px"
+							}
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "bootcamp-image"
+							},
+							"fragmentConfig": {
+								"imageSize": "w-100"
+							},
+							"fragmentFields": [
+								{
+									"id": "image-square",
+									"value": {
+										"fragmentImage": {
+											"url": {
+												"mapping": {
+													"fieldKey": "Image25779272",
+													"itemReference": {
+														"contextSource": "DisplayPageItem"
+													}
+												}
+											}
+										},
+										"fragmentLink": {
+											"value_i18n": {}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"width": "700px"
+							}
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "main"
+		}
+	}
+}

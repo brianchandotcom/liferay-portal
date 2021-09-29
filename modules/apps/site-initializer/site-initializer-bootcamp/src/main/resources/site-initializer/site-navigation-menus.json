@@ -9,6 +9,10 @@
 			{
 				"friendlyURL": "/contact",
 				"privateLayout": false
+			},
+			{
+				"friendlyURL": "/blog",
+				"privateLayout": false
 			}
 		]
 	}

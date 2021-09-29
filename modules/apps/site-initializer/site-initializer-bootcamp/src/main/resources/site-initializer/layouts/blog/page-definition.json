@@ -1,0 +1,107 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"marginBottom": "6",
+						"marginTop": "6"
+					},
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 6,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 6,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"collectionConfig": {
+								"collectionReference": {
+									"className": "com.liferay.asset.list.model.AssetListEntry",
+									"classPK": "[$ASSET_LIST_ENTRY_ID:BLOG-ENTRIES$]"
+								},
+								"collectionType": "Collection"
+							},
+							"listItemStyle": "",
+							"listStyle": "",
+							"numberOfColumns": 1,
+							"numberOfItems": 5,
+							"numberOfItemsPerPage": 5,
+							"templateKey": ""
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"collectionItemConfig": {}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "bootcamp-heading"
+											},
+											"fragmentConfig": {
+												"displayLevel": "0",
+												"headingLevel": "h3"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"mapping": {
+																		"fieldKey": "displayPageURL",
+																		"itemReference": {
+																			"contextSource": "CollectionItem"
+																		}
+																	}
+																}
+															},
+															"value_i18n": {}
+														},
+														"text": {
+															"mapping": {
+																"fieldKey": "title",
+																"itemReference": {
+																	"contextSource": "CollectionItem"
+																}
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginBottom": "3"
+											}
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "CollectionItem"
+							}
+						],
+						"type": "Collection"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "main"
+		}
+	}
+}

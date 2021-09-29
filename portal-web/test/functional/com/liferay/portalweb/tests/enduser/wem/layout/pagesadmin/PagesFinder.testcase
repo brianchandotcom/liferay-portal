@@ -243,6 +243,99 @@ definition {
 		PagesFinder.navigateToPage(pageName = "Test Public Page");
 	}
 
+	@description = "Users cannot see the preview draft option for a content page when the page has not draft."
+	@priority = "5"
+	test CannotPreviewDraftContentPageWhenDraftNonExistent {
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Navigate to Test Site Name") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
+		}
+
+		task ("Access to the Page Tree") {
+			PagesFinder.goToFindAPage();
+		}
+
+		task ("View the page name doesn't have asterisk icon in Page Tree") {
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Page Name");
+		}
+
+		task ("View the Preview Draft action not shown") {
+			Click.mouseOverClick(
+				key_pageName = "Test Page Name",
+				locator1 = "PagesFinder#PAGE_ELLIPSIS_ICON");
+
+			MenuItem.viewNotVisible(menuItem = "Preview Draft");
+		}
+
+		task ("Add a Button fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Discard the draft in Pages admin") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PageEditor.clickDiscardDraft(pageName = "Test Page Name");
+		}
+
+		task ("Access to the Page Tree") {
+			ProductMenuHelper.openProductMenu();
+
+			Click(locator1 = "ProductMenu#GO_TO_SITES_LINK");
+		}
+
+		task ("View the page name doesn't have asterisk icon in Page Tree") {
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Page Name");
+		}
+
+		task ("View the Preview Draft action not shown") {
+			Click.mouseOverClick(
+				key_pageName = "Test Page Name",
+				locator1 = "PagesFinder#PAGE_ELLIPSIS_ICON");
+
+			MenuItem.viewNotVisible(menuItem = "Preview Draft");
+		}
+
+		task ("Add a Heading fragment to page then pubilsh") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Access to the Page Tree") {
+			PagesFinder.goToFindAPage();
+		}
+
+		task ("View the page name doesn't have asterisk icon in Page Tree") {
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Page Name");
+		}
+
+		task ("View the Preview Draft action not shown") {
+			Click.mouseOverClick(
+				key_pageName = "Test Page Name",
+				locator1 = "PagesFinder#PAGE_ELLIPSIS_ICON");
+
+			MenuItem.viewNotVisible(menuItem = "Preview Draft");
+		}
+	}
+
 	@description = "This is the test for LPS-116618. Configure page via Page Tree panel."
 	@priority = "4"
 	test ConfigurePageViaPageFinder {

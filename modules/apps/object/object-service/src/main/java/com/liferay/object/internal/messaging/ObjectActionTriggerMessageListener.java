@@ -30,17 +30,20 @@ import java.io.Serializable;
  */
 public class ObjectActionTriggerMessageListener extends BaseMessageListener {
 
+	public ObjectActionTriggerMessageListener(
+		String className, ObjectActionEngine objectActionEngine,
+		String objectActionTriggerKey) {
+
+		_className = className;
+		_objectActionEngine = objectActionEngine;
+		_objectActionTriggerKey = objectActionTriggerKey;
+	}
+
 	@Override
 	protected void doReceive(Message message) {
 		long companyId = GetterUtil.getLong(message.get("companyId"));
 
 		if (companyId < 0) {
-			return;
-		}
-
-		// TODO Throwing NPE on 54 on CI
-
-		if (_objectActionEngine == null) {
 			return;
 		}
 
@@ -66,7 +69,7 @@ public class ObjectActionTriggerMessageListener extends BaseMessageListener {
 		ObjectActionTriggerMessageListener.class);
 
 	private String _className;
-	private ObjectActionEngine _objectActionEngine;
+	private final ObjectActionEngine _objectActionEngine;
 	private String _objectActionTriggerKey;
 
 }

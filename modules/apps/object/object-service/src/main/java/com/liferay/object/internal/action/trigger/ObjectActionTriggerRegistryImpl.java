@@ -14,6 +14,7 @@
 
 package com.liferay.object.internal.action.trigger;
 
+import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.trigger.ObjectActionTrigger;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
@@ -37,6 +38,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -126,7 +128,9 @@ public class ObjectActionTriggerRegistryImpl
 				"object.action.trigger.key", destination.getName()
 			).build());
 		_bundleContext.registerService(
-			MessageListener.class, new ObjectActionTriggerMessageListener(),
+			MessageListener.class,
+			new ObjectActionTriggerMessageListener(
+				className, _objectActionEngine, destination.getName()),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"destination.name", destination.getName()
 			).put(
@@ -173,6 +177,10 @@ public class ObjectActionTriggerRegistryImpl
 	private BundleContext _bundleContext;
 	private ServiceTrackerMap<String, List<Destination>>
 		_destinationServiceTrackerMap;
+
+	@Reference
+	private ObjectActionEngine _objectActionEngine;
+
 	private ServiceTrackerMap<String, List<ObjectActionTrigger>>
 		_objectActionTriggerServiceTrackerMap;
 

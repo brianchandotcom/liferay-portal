@@ -113,7 +113,8 @@ public class ObjectRelationshipServiceImpl
 
 	@Override
 	public ObjectRelationship updateObjectRelationship(
-			long objectRelationshipId, Map<Locale, String> labelMap)
+			long objectRelationshipId, Map<Locale, String> labelMap,
+			String deletionType)
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =
@@ -125,7 +126,7 @@ public class ObjectRelationshipServiceImpl
 			ActionKeys.UPDATE);
 
 		return objectRelationshipLocalService.updateObjectRelationship(
-			objectRelationshipId, labelMap);
+			objectRelationshipId, labelMap, deletionType);
 	}
 
 	@Reference(

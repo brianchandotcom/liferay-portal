@@ -19,7 +19,6 @@ definition {
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
-
 	}
 
 	tearDown {
@@ -661,6 +660,22 @@ definition {
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
 		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "document_1_Edit.jpg");
+	}
+
+	@priority = "5"
+	@refactordone
+	test CanDownloadWithSpecialCharactersInTitle {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "/D/M/@!# Title",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.downloadPG(dmDocumentTitle = "/D/M/@!# Title");
+
+		DMDocument.assertFileNameFromTempFolder(downloadedFileName = "/D/M/Document Title");
 	}
 
 	@description = "This test edits the title and description of a document. It asserts minor version increment because only its metadata was updated."

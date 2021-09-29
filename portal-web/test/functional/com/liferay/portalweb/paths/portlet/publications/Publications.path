@@ -96,6 +96,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>KEYWORD_TEXTFIELD</td>
+	<td>//*[@class='form-control-inset']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_OUT_OF_DATE_STATUS</td>
 	<td>//a[contains(.,'${key_publicationName}')]//span/span[contains(.,'Out of Date')]</td>
 	<td></td>

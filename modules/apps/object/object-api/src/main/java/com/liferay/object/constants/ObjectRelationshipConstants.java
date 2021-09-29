@@ -19,6 +19,12 @@ package com.liferay.object.constants;
  */
 public class ObjectRelationshipConstants {
 
+	public static final String DELETION_TYPE_CASCADE = "cascade";
+
+	public static final String DELETION_TYPE_DISASSOCIATE = "disassociate";
+
+	public static final String DELETION_TYPE_PREVENT = "prevent";
+
 	public static final String TYPE_MANY_TO_MANY = "many_to_many";
 
 	public static final String TYPE_ONE_TO_MANY = "one_to_many";

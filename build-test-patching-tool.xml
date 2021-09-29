@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-test-patching-tool" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<macrodef name="patching-tool-command">
+		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
+		<attribute name="patching.tool.command.args" />
+
+		<sequential>
+			<antcall target="prepare-patching-tool" />
+
+			<echo file="${app.server.parent.dir}/.liferay-home">liferay.home=${liferay.home}</echo>
+
+			<exec dir="${app.server.parent.dir}/patching-tool" executable="/bin/bash" outputproperty="patching.tool.content.out">
+				<arg line="patching-tool${file.suffix.bat} @{patching.tool.command.args}" />
+			</exec>
+
+			<echo message="${patching.tool.content.out}" />
+
+			<if>
+				<contains string="${patching.tool.content.out}" substring="The command has failed." />
+				<then>
+					<fail message="FAILED. patching-tool @{patching.tool.command.args} validate failed." />
+				</then>
+				<else>
+					<echo message="PASSED. patching-tool @{patching.tool.command.args} validate passed." />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<target name="patching-tool-auto-discovery">
+		<patching-tool-command
+			patching.tool.command.args="auto-discovery"
+		/>
+	</target>
+
+	<target name="patching-tool-info">
+		<patching-tool-command
+			patching.tool.command.args="info"
+		/>
+	</target>
+</project>

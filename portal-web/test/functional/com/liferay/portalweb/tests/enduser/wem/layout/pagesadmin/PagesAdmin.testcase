@@ -1091,6 +1091,38 @@ definition {
 			privacy = "Public Pages");
 	}
 
+	@description = "Users can preview draft for a collection page from Pages admin when they exist."
+	@priority = "3"
+	test PreviewDraftCollectionPage {
+		task ("Add a collection page based on Highest Rated Assets collection provider") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicCollectionPage(
+				collectionName = "Highest Rated Assets",
+				pageName = "Test Page Name",
+				tabName = "Collection Providers");
+		}
+
+		task ("Navigate to the Pages admin") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Preview the draft collection page in a new tab") {
+			SitePages.gotoPageMenuItem(
+				menuItem = "Preview Draft",
+				pageName = "Test Page Name");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Highest Rated Assets");
+		}
+	}
+
 	@description = "Users can preview draft for a content page from Pages admin when they exist."
 	@priority = "5"
 	test PreviewDraftContentPage {

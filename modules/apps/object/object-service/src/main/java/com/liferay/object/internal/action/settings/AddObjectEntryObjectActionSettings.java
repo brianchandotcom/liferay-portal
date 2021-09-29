@@ -16,11 +16,32 @@ package com.liferay.object.internal.action.settings;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 
 /**
  * @author Marco Leo
  */
 @DDMForm
+@DDMFormLayout(
+	paginationMode = com.liferay.dynamic.data.mapping.model.DDMFormLayout.SINGLE_PAGE_MODE,
+	value = {
+		@DDMFormLayoutPage(
+			{
+				@DDMFormLayoutRow(
+					{
+						@DDMFormLayoutColumn(
+							size = 12,
+							value = {"objectDefinitionId", "objectFieldName"}
+						)
+					}
+				)
+			}
+		)
+	}
+)
 public interface AddObjectEntryObjectActionSettings {
 
 	@DDMFormField(

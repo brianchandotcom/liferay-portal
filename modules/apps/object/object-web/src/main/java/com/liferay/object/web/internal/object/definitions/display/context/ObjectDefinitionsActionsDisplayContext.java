@@ -19,10 +19,12 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.action.executor.ObjectActionExecutor;
@@ -241,6 +243,9 @@ public class ObjectDefinitionsActionsDisplayContext {
 		DDMForm ddmForm = DDMFormFactory.create(
 			objectActionExecutor.getSettings());
 
+		DDMFormLayout ddmFormLayout = DDMFormLayoutFactory.create(
+			objectActionExecutor.getSettings());
+
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
@@ -269,7 +274,8 @@ public class ObjectDefinitionsActionsDisplayContext {
 
 		ddmFormRenderingContext.setShowRequiredFieldsWarning(true);
 
-		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
+		return _ddmFormRenderer.render(
+			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 	}
 
 	private DDMFormValues _getDDMFormValues(

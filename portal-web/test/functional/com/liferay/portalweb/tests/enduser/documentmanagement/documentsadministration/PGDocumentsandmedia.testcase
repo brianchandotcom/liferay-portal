@@ -414,35 +414,6 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test DeleteDocumentType {
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
-
-		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.delete(dmDocumentTypeName = "DM Document Type Name");
-	}
-
-	@priority = "4"
-	@refactorneeded
 	test DeleteDocumentWithSlashesInTitle {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

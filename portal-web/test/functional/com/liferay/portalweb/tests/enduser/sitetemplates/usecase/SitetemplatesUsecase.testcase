@@ -217,6 +217,8 @@ definition {
 			portlet = "Site Templates");
 
 		LAR.importPortlet(
+			compressedFile = "true",
+			filePath = "enduser/sitetemplates/usecase",
 			importSchemaVersionMismatching = "true",
 			larFileName = "class-site-template-7.0.lar",
 			uploadFrom = "dependencies");

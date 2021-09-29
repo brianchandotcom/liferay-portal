@@ -18,6 +18,10 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -39,10 +43,17 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.taglib.servlet.PipingServletResponseFactory;
+
+import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -146,7 +157,19 @@ public class ObjectDefinitionsActionsDisplayContext {
 
 		objectActionExecutors.forEach(
 			objectActionExecutor -> objectActionExecutorsJSONArray.put(
-				JSONUtil.put("key", objectActionExecutor.getKey())));
+				JSONUtil.put(
+					"description",
+					LanguageUtil.get(
+						_objectRequestHelper.getLocale(),
+						objectActionExecutor.getKey() + "-help")
+				).put(
+					"key", objectActionExecutor.getKey()
+				).put(
+					"label",
+					LanguageUtil.get(
+						_objectRequestHelper.getLocale(),
+						objectActionExecutor.getKey())
+				)));
 
 		return objectActionExecutorsJSONArray;
 	}
@@ -163,7 +186,19 @@ public class ObjectDefinitionsActionsDisplayContext {
 
 		objectActionTriggers.forEach(
 			objectActionTrigger -> objectActionTriggersJSONArray.put(
-				JSONUtil.put("key", objectActionTrigger.getKey())));
+				JSONUtil.put(
+					"description",
+					LanguageUtil.get(
+						_objectRequestHelper.getLocale(),
+						objectActionTrigger.getKey() + "-help")
+				).put(
+					"key", objectActionTrigger.getKey()
+				).put(
+					"label",
+					LanguageUtil.get(
+						_objectRequestHelper.getLocale(),
+						objectActionTrigger.getKey())
+				)));
 
 		return objectActionTriggersJSONArray;
 	}

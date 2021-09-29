@@ -19,10 +19,14 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 	objectActionTriggers: TObjectActionTrigger[];
 }
 declare type TObjectActionTrigger = {
+	description: string;
 	key: string;
+	label: string;
 };
 declare type TObjectActionExecutor = {
+	description: string;
 	key: string;
+	label: string;
 };
 declare const ModalWithProvider: React.FC<IProps>;
 export default ModalWithProvider;

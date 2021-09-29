@@ -27,11 +27,15 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 type TObjectActionTrigger = {
+	description: string;
 	key: string;
+	label: string;
 };
 
 type TObjectActionExecutor = {
+	description: string;
 	key: string;
+	label: string;
 };
 
 type TFormState = {
@@ -150,10 +154,10 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 							required
 							value={formState.objectActionTrigger.key}
 						>
-							{({key}) => (
+							{({description, label}) => (
 								<>
-									<div>{key}</div>
-									<span className="text-small">{key}</span>
+									<div>{label}</div>
+									<span className="text-small">{description}</span>
 								</>
 							)}
 						</CustomSelect>
@@ -172,10 +176,10 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 							required
 							value={formState.objectActionExecutor.key}
 						>
-							{({key}) => (
+							{({description, label}) => (
 								<>
-									<div>{key}</div>
-									<span className="text-small">{key}</span>
+									<div>{label}</div>
+									<span className="text-small">{description}</span>
 								</>
 							)}
 						</CustomSelect>

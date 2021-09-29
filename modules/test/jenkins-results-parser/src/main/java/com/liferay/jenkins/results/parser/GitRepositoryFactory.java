@@ -172,8 +172,6 @@ public class GitRepositoryFactory {
 				jsonObject);
 		}
 
-		workspaceGitRepository = new DefaultWorkspaceGitRepository(jsonObject);
-
 		_workspaceGitRepositories.put(gitDirectoryName, workspaceGitRepository);
 
 		return workspaceGitRepository;

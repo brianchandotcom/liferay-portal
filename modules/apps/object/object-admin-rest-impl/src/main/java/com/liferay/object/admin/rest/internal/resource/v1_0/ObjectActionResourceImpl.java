@@ -147,6 +147,7 @@ public class ObjectActionResourceImpl
 						ActionKeys.UPDATE, "putObjectAction", permissionName,
 						objectAction.getObjectDefinitionId())
 				).build();
+				active = objectAction.isActive();
 				dateCreated = objectAction.getCreateDate();
 				dateModified = objectAction.getModifiedDate();
 				id = objectAction.getObjectActionId();

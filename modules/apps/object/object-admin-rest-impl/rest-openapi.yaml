@@ -234,6 +234,9 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                deleteType:
+                    enum: [cascade, disassociate, prevent]
+                    type: string
                 id:
                     format: int64
                     readOnly: true

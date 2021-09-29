@@ -15,10 +15,10 @@
 import React, {useContext} from 'react';
 
 const INITIAL_STATE = {
+	nextColumnSizes: {},
 	resizing: false,
+	setNextColumnSizes: () => {},
 	setResizing: () => null,
-	setUpdatedLayoutData: () => null,
-	updatedLayoutData: null,
 };
 
 const ResizeContext = React.createContext(INITIAL_STATE);
@@ -33,19 +33,18 @@ const useSetResizing = () => {
 	return useContext(ResizeContext).setResizing;
 };
 
-const useSetUpdatedLayoutData = () => {
-	return useContext(ResizeContext).setUpdatedLayoutData;
+const useSetNextColumnSizes = () => {
+	return useContext(ResizeContext).setNextColumnSizes;
 };
 
-const useUpdatedLayoutData = () => {
-	return useContext(ResizeContext).updatedLayoutData;
+const useNextColumnSizes = () => {
+	return useContext(ResizeContext).nextColumnSizes;
 };
 
 export {
-	ResizeContext,
 	ResizeContextProvider,
 	useResizing,
 	useSetResizing,
-	useSetUpdatedLayoutData,
-	useUpdatedLayoutData,
+	useNextColumnSizes,
+	useSetNextColumnSizes,
 };

@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
-import {useUpdatedLayoutData} from '../../contexts/ResizeContext';
+import {useNextColumnSizes} from '../../contexts/ResizeContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
@@ -31,16 +31,11 @@ const Column = React.forwardRef(({children, className, item}, ref) => {
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
-	const updatedLayoutData = useUpdatedLayoutData();
+	const nextColumnSizes = useNextColumnSizes();
 
-	const itemConfig = updatedLayoutData
-		? updatedLayoutData.items[item.itemId].config
-		: item.config;
-
-	const columnSize = getResponsiveColumnSize(
-		itemConfig,
-		selectedViewportSize
-	);
+	const columnSize =
+		nextColumnSizes?.[item.itemId] ||
+		getResponsiveColumnSize(item.config, selectedViewportSize);
 
 	const columnContent =
 		canUpdatePageStructure || canUpdateItemConfiguration ? (

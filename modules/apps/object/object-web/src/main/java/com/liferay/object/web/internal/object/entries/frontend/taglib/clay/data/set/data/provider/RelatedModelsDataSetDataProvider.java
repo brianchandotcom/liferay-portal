@@ -25,7 +25,10 @@ import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.util.ObjectEntryUtil;
 import com.liferay.object.web.internal.object.entries.constants.ObjectEntriesClayDataSetDisplayNames;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
@@ -84,7 +87,9 @@ public class RelatedModelsDataSetDataProvider
 				pagination.getStartPosition(), pagination.getEndPosition()),
 			objectEntry -> new RelatedModel(
 				objectEntry.getObjectEntryId(),
-				String.valueOf(objectEntry.getObjectEntryId())));
+				ObjectEntryUtil.getTitleValue(
+					objectDefinition, objectEntry, _objectEntryLocalService,
+					_objectFieldLocalService)));
 	}
 
 	@Override
@@ -121,6 +126,12 @@ public class RelatedModelsDataSetDataProvider
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private ObjectRelatedModelsProviderRegistry

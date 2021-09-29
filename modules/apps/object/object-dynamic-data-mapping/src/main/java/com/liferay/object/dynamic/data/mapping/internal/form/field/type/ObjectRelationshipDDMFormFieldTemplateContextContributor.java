@@ -20,11 +20,16 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
 import com.liferay.object.rest.context.path.RESTContextPathResolverRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.util.ObjectEntryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -38,6 +43,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,11 +69,11 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		return HashMapBuilder.<String, Object>put(
 			"apiURL", _getAPIURL(ddmFormField, ddmFormFieldRenderingContext)
 		).put(
-			"initialLabel", ddmFormFieldRenderingContext.getValue()
+			"initialLabel", _getInitialLabel(ddmFormFieldRenderingContext)
 		).put(
 			"inputName", ddmFormField.getName()
 		).put(
-			"labelKey", "id"
+			"labelKey", _getLabelKey(ddmFormField)
 		).put(
 			"placeholder",
 			() -> {
@@ -118,14 +124,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		apiURL = _portal.getPortalURL(
 			ddmFormFieldRenderingContext.getHttpServletRequest());
 
-		long objectDefinitionId = GetterUtil.getLong(
-			getValue(
-				GetterUtil.getString(
-					ddmFormField.getProperty("objectDefinitionId"))));
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				objectDefinitionId);
+		ObjectDefinition objectDefinition = _getObjectDefinition(ddmFormField);
 
 		if (objectDefinition == null) {
 			return apiURL;
@@ -171,11 +170,63 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		}
 	}
 
+	private String _getInitialLabel(
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		if (!Objects.equals(ddmFormFieldRenderingContext.getValue(), "")) {
+			ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+				Long.valueOf(ddmFormFieldRenderingContext.getValue()));
+
+			if (objectEntry != null) {
+				return ObjectEntryUtil.getTitleValue(
+					_objectDefinitionLocalService.fetchObjectDefinition(
+						objectEntry.getObjectDefinitionId()),
+					objectEntry, _objectEntryLocalService,
+					_objectFieldLocalService);
+			}
+		}
+
+		return ddmFormFieldRenderingContext.getValue();
+	}
+
+	private String _getLabelKey(DDMFormField ddmFormField) {
+		ObjectDefinition objectDefinition = _getObjectDefinition(ddmFormField);
+
+		if ((objectDefinition != null) &&
+			(objectDefinition.getTitleObjectFieldId() > 0)) {
+
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				objectDefinition.getTitleObjectFieldId());
+
+			if (objectField != null) {
+				return objectField.getName();
+			}
+		}
+
+		return "id";
+	}
+
+	private ObjectDefinition _getObjectDefinition(DDMFormField ddmFormField) {
+		long objectDefinitionId = GetterUtil.getLong(
+			getValue(
+				GetterUtil.getString(
+					ddmFormField.getProperty("objectDefinitionId"))));
+
+		return _objectDefinitionLocalService.fetchObjectDefinition(
+			objectDefinitionId);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectRelationshipDDMFormFieldTemplateContextContributor.class);
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;

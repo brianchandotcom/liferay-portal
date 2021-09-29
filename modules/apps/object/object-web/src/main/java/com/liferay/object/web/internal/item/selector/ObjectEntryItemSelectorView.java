@@ -27,6 +27,8 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.util.ObjectEntryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -67,6 +69,7 @@ public class ObjectEntryItemSelectorView
 		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
+		ObjectFieldLocalService objectFieldLocalService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		Portal portal) {
 
@@ -75,6 +78,7 @@ public class ObjectEntryItemSelectorView
 		_objectDefinition = objectDefinition;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
+		_objectFieldLocalService = objectFieldLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_portal = portal;
 	}
@@ -126,6 +130,7 @@ public class ObjectEntryItemSelectorView
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 	private final Portal _portal;
 
@@ -190,12 +195,14 @@ public class ObjectEntryItemSelectorView
 
 		@Override
 		public String getSubtitle(Locale locale) {
-			return _objectDefinition.getLabel(locale);
+			return String.valueOf(_objectEntry.getObjectEntryId());
 		}
 
 		@Override
 		public String getTitle(Locale locale) {
-			return String.valueOf(_objectEntry.getObjectEntryId());
+			return ObjectEntryUtil.getTitleValue(
+				_objectDefinition, _objectEntry, _objectEntryLocalService,
+				_objectFieldLocalService);
 		}
 
 		@Override

@@ -91,13 +91,13 @@ public class ImageDDMFormFieldValueAccessor
 
 	@Override
 	public boolean isEmpty(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
-		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
-
 		JSONObject jsonObject = getValue(ddmFormFieldValue, locale);
 
-		if ((GetterUtil.getBoolean(
-				ddmFormField.getProperty("requiredDescription")) &&
-			 Validator.isNull(jsonObject.getString("description"))) ||
+		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+
+		if ((Validator.isNull(jsonObject.getString("description")) &&
+			 GetterUtil.getBoolean(
+				 ddmFormField.getProperty("requiredDescription"))) ||
 			Validator.isNull(jsonObject.getString("url"))) {
 
 			return true;

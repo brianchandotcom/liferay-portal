@@ -48,6 +48,55 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-102179. It ensures that the user can create a shortcut using a file from a different site after setting the root folder."
+	@priority = "5"
+	@refactordone
+	test CanReferenceDocumentFromOtherSiteAfterSettingRootFolder {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "Test Folder",
+			groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		DMDocument.setRootFolder(dmRootFolderName = "Test Folder");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		DMDocument.addDMShortcutPG(
+			dmDocumentTitle = "DM Document Title",
+			siteName = "${siteName}");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		DMDocument.viewPG(dmDocumentTitle = "DM Document Title");
+	}
+
 	@priority = "5"
 	@refactordone
 	test CanRemovePortlet {

@@ -268,31 +268,17 @@ definition {
 			Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation");
 		}
 
-		task ("Assert the workflow status is Ready for Publish Process") {
-			Pause(locator1 = "3000");
-
-			AssertTextEquals(
-				locator1 = "Staging#WORKFLOW_STATUS",
-				value1 = "Ready for Publish Process");
-		}
-
 		task ("Publish to Live") {
 			Staging.gotoPublishToLive();
 
 			Staging.publishToLive();
 		}
 
-		task ("Assert the workflow status is In Live") {
+		task ("Navigate to the public content page in the live site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Public Content Page Name",
 				siteName = "Test Site Name Staging");
 
-			AssertTextEquals(
-				locator1 = "Staging#WORKFLOW_STATUS",
-				value1 = "In Live");
-		}
-
-		task ("Navigate to the public content page in the live site") {
 			Click(locator1 = "Staging#LIVE_BUTTON");
 		}
 
@@ -318,7 +304,10 @@ definition {
 		}
 
 		task ("Navigate to the private content page in the staging site") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/test-site-name-staging/private-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Private Content Page Name",
+				privateLayout = "true",
+				siteName = "Test Site Name Staging");
 		}
 
 		task ("Assert the Button fragment is shown") {
@@ -342,29 +331,18 @@ definition {
 			Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation");
 		}
 
-		task ("Assert the workflow status is Ready for Publish Process") {
-			Pause(locator1 = "3000");
-
-			AssertTextEquals(
-				locator1 = "Staging#WORKFLOW_STATUS",
-				value1 = "Ready for Publish Process");
-		}
-
 		task ("Publish to Live") {
 			Staging.gotoPublishToLive();
 
 			Staging.publishToLive();
 		}
 
-		task ("Assert the workflow status is In Live") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "group/test-site-name-staging/private-content-page-name");
-
-			AssertTextEquals(
-				locator1 = "Staging#WORKFLOW_STATUS",
-				value1 = "In Live");
-		}
-
 		task ("Navigate to the private content page in the live site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Private Content Page Name",
+				privateLayout = "true",
+				siteName = "Test Site Name Staging");
+
 			Click(locator1 = "Staging#LIVE_BUTTON");
 		}
 

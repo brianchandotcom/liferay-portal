@@ -24,7 +24,15 @@ definition {
 			var pageFriendlyUrl = ContentPagesNavigator._convertNameToKey(name = "${pageName}");
 		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${pageFriendlyUrl}?p_l_mode=edit");
+		if ("${privateLayout}" == "true") {
+			var type = "group";
+		}
+
+		else {
+			var type = "web";
+		}
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "${type}/${siteURLKey}/${pageFriendlyUrl}?p_l_mode=edit");
 
 		PageEditor.assertFragmentSidebarLoaded();
 	}
@@ -38,12 +46,20 @@ definition {
 			var pageFriendlyUrl = ContentPagesNavigator._convertNameToKey(name = "${pageName}");
 		}
 
-		if (isSet(locale)) {
-			Navigator.openWithAppendToBaseURL(urlAppend = "${locale}/web/${siteURLKey}/${pageFriendlyUrl}");
+		if ("${privateLayout}" == "true") {
+			var type = "group";
 		}
 
 		else {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${pageFriendlyUrl}");
+			var type = "web";
+		}
+
+		if (isSet(locale)) {
+			Navigator.openWithAppendToBaseURL(urlAppend = "${locale}/${type}/${siteURLKey}/${pageFriendlyUrl}");
+		}
+
+		else {
+			Navigator.openWithAppendToBaseURL(urlAppend = "${type}/${siteURLKey}/${pageFriendlyUrl}");
 		}
 	}
 

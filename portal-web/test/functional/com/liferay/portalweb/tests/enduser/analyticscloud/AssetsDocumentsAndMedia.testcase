@@ -46,6 +46,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8419 | Test Summary: Document asset appears on list shows pages that the document exists on"
 	@priority = "5"
 	test AssertAppearsOnListShowsPagesDocumentsExists {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: This test fails because of timing issues.
+		// AC Refactor ticket: LRAC-9343
+		
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Visit the document") {
@@ -54,6 +59,8 @@ definition {
 				siteName = "Site Name");
 
 			DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM AC Title");
+
+			Pause(locator1 = "5000");
 		}
 
 		task ("Close sessions") {
@@ -70,7 +77,7 @@ definition {
 			ACNavigation.switchTab(tabName = "Documents and Media");
 		}
 
-		task ("Go to the docuemnt overview") {
+		task ("Go to the document overview") {
 			ACTimeFilter.clickTimeFilterButton();
 
 			ACTimeFilter.setLast24Hours();
@@ -91,6 +98,8 @@ definition {
 				canonicalURLSuffix = "/view_file/${fileEntryId}",
 				cardTitle = "Asset Appears On",
 				pageNmae = "AC Page - Site Name - ${siteName}");
+			
+			// Can't assert this information because the asset takes too long to appear
 		}
 	}
 

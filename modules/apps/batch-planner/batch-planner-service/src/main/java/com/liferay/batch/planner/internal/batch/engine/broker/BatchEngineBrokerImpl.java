@@ -174,7 +174,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 			if (GetterUtil.getBoolean(
 					_getBatchPlannerPolicyValue(
-						batchPlannerPolicies, "hasColumnHeaders"))) {
+						batchPlannerPolicies, "containsHeaders"))) {
 
 				line = bufferedReader.readLine();
 			}
@@ -250,8 +250,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		File file = _getJSONLFile(batchPlannerPlan.getBatchPlannerPlanId());
 
 		ImportTask importTask = _importTaskResource.postImportTask(
-			batchPlannerPlan.getInternalClassName(), null, null,
-			null,
+			batchPlannerPlan.getInternalClassName(), null, null, null,
 			MultipartBody.of(
 				Collections.singletonMap(
 					"file",

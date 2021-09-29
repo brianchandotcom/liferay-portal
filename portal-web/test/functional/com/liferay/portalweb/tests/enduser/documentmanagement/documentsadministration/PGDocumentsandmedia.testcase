@@ -231,15 +231,12 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
-	test AddFolderDocuments {
-		property testray.component.names = "Training";
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
+	@refactordone
+	test CanAddDocumentInFolder {
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -249,27 +246,7 @@ definition {
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "Document_1.doc");
 
-		DMDocument.addPG(
-			dmDocumentFile = "Document_2.doc",
-			dmDocumentTitle = "Document_2.doc");
-
-		DMDocument.addPG(
-			dmDocumentFile = "Document_3.doc",
-			dmDocumentTitle = "Document_3.doc");
-
 		DMDocument.viewPG(dmDocumentTitle = "Document_1.doc");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.viewPG(dmDocumentTitle = "Document_2.doc");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.viewPG(dmDocumentTitle = "Document_3.doc");
 	}
 
 	@priority = "4"

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.internal.util;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
@@ -839,7 +840,8 @@ public class DDMImpl implements DDM {
 			);
 
 			if (Objects.equals(
-					ddmFormField.getType(), DDMFormFieldType.IMAGE)) {
+					ddmFormField.getType(),
+					DDMFormFieldTypeConstants.DDM_IMAGE)) {
 
 				jsonObject.put(
 					"requiredDescription",

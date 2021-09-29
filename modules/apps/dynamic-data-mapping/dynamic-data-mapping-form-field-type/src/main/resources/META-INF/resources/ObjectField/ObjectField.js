@@ -12,13 +12,16 @@
  * details.
  */
 
+import {useResource} from '@clayui/data-provider';
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import {useFormState} from 'data-engine-js-components-web';
 import {getFields} from 'data-engine-js-components-web/js/utils/fields.es';
 import {
 	getObjectFieldName,
 	getSelectedValue,
 } from 'data-engine-js-components-web/js/utils/objectFields';
-import React, {useMemo} from 'react';
+import {fetch} from 'frontend-js-web';
+import React, {useEffect, useMemo} from 'react';
 
 import Select from '../Select/Select.es';
 
@@ -136,10 +139,71 @@ const ObjectField = ({
 	);
 };
 
-const ObjectFieldWrapper = (props) => {
+const ObjectDefinitionObjectField = ({
+	label,
+	objectDefinitionId,
+	onChange,
+	readOnly,
+	spritemap,
+	value = {},
+	visible,
+}) => {
+	const {refetch, resource} = useResource({
+		fetch,
+		fetchPolicy: 'cache-first',
+		link: `${window.location.origin}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}`,
+	});
+
+	const previousObjectDefinitionId = usePrevious(objectDefinitionId);
+
+	useEffect(() => {
+		if (
+			objectDefinitionId &&
+			objectDefinitionId !== previousObjectDefinitionId
+		) {
+			refetch();
+		}
+	}, [objectDefinitionId, previousObjectDefinitionId, refetch]);
+
+	const options =
+		resource?.objectFields?.map(({label, name}) => {
+			return {
+				label:
+					label[
+						formatLanguageId(themeDisplay.getDefaultLanguageId())
+					] ?? name,
+				value: name,
+			};
+		}) || [];
+
+	return (
+		<Select
+			label={label}
+			name="selectedObjectField"
+			onChange={onChange}
+			options={options}
+			readOnly={readOnly}
+			showEmptyOption={!!options.length}
+			spritemap={spritemap}
+			value={value}
+			visible={visible}
+		/>
+	);
+};
+
+const ObjectFieldWrapper = ({objectDefinitionId, ...props}) => {
 	const {objectFields} = useFormState();
 
 	if (!objectFields?.length) {
+		if (objectDefinitionId) {
+			return (
+				<ObjectDefinitionObjectField
+					objectDefinitionId={objectDefinitionId}
+					{...props}
+				/>
+			);
+		}
+
 		return null;
 	}
 

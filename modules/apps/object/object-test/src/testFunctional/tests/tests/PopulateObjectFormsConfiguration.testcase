@@ -27,7 +27,6 @@ definition {
 	test CannotChangeRequiredOption {
 		property portal.acceptance = "true";
 
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -59,7 +58,6 @@ definition {
 		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Custom Field");
 
 		PopulateObjectFormsConfiguration.viewRequiredFieldOptionDesabled();
-
 	}
 
 	@description = "LPS-133365 - Verify if it's not possible to map a Object field with a Form field of a different type"

@@ -41,9 +41,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>CANCEL_VARIANT_NAME_BUTTON</td>
-    <td>//*[contains(@class,'btn btn-secondary') and contains(text(),'Cancel')]</td>
-    <td></td>
+	<td>CANCEL_VARIANT_NAME_BUTTON</td>
+	<td>//*[contains(@class,'btn btn-secondary') and contains(text(),'Cancel')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>CREATE_VARIANT_BUTTON</td>

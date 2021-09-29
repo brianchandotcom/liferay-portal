@@ -44,9 +44,9 @@ definition {
 			var index = ${index} + 1;
 
 			AssertElementPresent(
-			name = "${variantNames}",
-			key_index = "${index}",
-			locator1 = "ABTest#REVIEW_VARIANTS_ANALYTICS_CLOUD");
+				key_index = "${index}",
+				locator1 = "ABTest#REVIEW_VARIANTS_ANALYTICS_CLOUD",
+				name = "${variantNames}");
 		}
 
 		Close(locator1 = "title=Tests - Analytics Cloud");
@@ -106,7 +106,7 @@ definition {
 			value = "${value}");
 	}
 
-	macro editVariantName   {
+	macro editVariantName {
 		if (!(isSet(key_index))) {
 			key_index = "1";
 		}
@@ -162,9 +162,9 @@ definition {
 			var index = ${index} + 1;
 
 			AssertElementPresent(
-			name = "${variantNames}",
-			key_index = "${index}",
-			locator1 = "ABTest#VARIANT_NAME");
+				key_index = "${index}",
+				locator1 = "ABTest#VARIANT_NAME",
+				name = "${variantNames}");
 		}
 	}
 

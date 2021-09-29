@@ -99,29 +99,29 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test AssertEditDeleteVarianOptions {
-        task ("Create AB test and create variant") {
-            ABTest.createABTest(
-                goal = "Bounce Rate",
-                testTitle = "AB test title");
+		task ("Create AB test and create variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-            ABTest.createVariant(variantName = "Variant name");
-        }
+			ABTest.createVariant(variantName = "Variant name");
+		}
 
-        task ("Open the three dots menu for the variant and assert Edit and Delete appear") {
-            Click(
+		task ("Open the three dots menu for the variant and assert Edit and Delete appear") {
+			Click(
 				key_index = "1",
 				locator1 = "ABTest#VARIANT_DROPDOWN");
-            
-            AssertElementPresent(locator1 = "ABTest#DELETE_VARIANT_BUTTON");
 
-            AssertElementPresent(locator1 = "ABTest#EDIT_VARIANT_BUTTON");
-        }
+			AssertElementPresent(locator1 = "ABTest#DELETE_VARIANT_BUTTON");
 
-        task ("Run and terminate the AB test") {
-            ABTest.runTest();
+			AssertElementPresent(locator1 = "ABTest#EDIT_VARIANT_BUTTON");
+		}
 
-            ABTest.terminateTest();
-        }
+		task ("Run and terminate the AB test") {
+			ABTest.runTest();
+
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-97194: Validate if the goal input test for the AB Test appears when the user tries to edit one AB Test"
@@ -319,14 +319,14 @@ definition {
 				password = "test");
 
 			AssertElementPresent(
-			name = "Variant name 2",
-			key_index = "2",
-			locator1 = "ABTest#REVIEW_VARIANTS_ANALYTICS_CLOUD");
+				key_index = "2",
+				locator1 = "ABTest#REVIEW_VARIANTS_ANALYTICS_CLOUD",
+				name = "Variant name 2");
 
 			AssertElementNotPresent(
-			name = "Variant name",
-			key_index = "3",
-			locator1 = "ABTest#REVIEW_VARIANTS_ANALYTICS_CLOUD");
+				key_index = "3",
+				locator1 = "ABTest#REVIEW_VARIANTS_ANALYTICS_CLOUD",
+				name = "Variant name");
 		}
 
 		task ("Go back to DXP") {
@@ -529,29 +529,29 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CreateVariantSameName {
-        task ("Create AB test") {
-            ABTest.createABTest(
-                goal = "Bounce Rate",
-                testTitle = "AB test title");
-        }
-        
-        task ("Create two variants whith the same name and view success message") {
-            ABTest.createVariant(variantName = "Variant name");
+		task ("Create AB test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+		}
 
-            ABTest.createVariant(variantName = "Variant name");
+		task ("Create two variants whith the same name and view success message") {
+			ABTest.createVariant(variantName = "Variant name");
 
-            Alert.viewSuccessMessage();
+			ABTest.createVariant(variantName = "Variant name");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Assert that variants where created") {
 			ABTest.viewVariantName(variantNames = "Variant name,Variant name");
 		}
 
-        task ("Run and terminate the AB test") {
-            ABTest.runTest();
+		task ("Run and terminate the AB test") {
+			ABTest.runTest();
 
-            ABTest.terminateTest();
-        }
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-104203: Validate if in the AB Test, when the user delete the clickable element that was set, the warning alert appears"
@@ -611,7 +611,7 @@ definition {
 			ABTest.createVariant(variantName = "Variant name");
 		}
 
-		task("Delete variant") {
+		task ("Delete variant") {
 			ABTest.deleteVariant();
 		}
 
@@ -643,24 +643,24 @@ definition {
 		}
 
 		task ("Try to delete variant") {
-            Click(
+			Click(
 				key_index = "1",
 				locator1 = "ABTest#VARIANT_DROPDOWN");
 
 			ClickNoError(locator1 = "ABTest#DELETE_VARIANT_BUTTON");
 
-        	Confirm.dismissAlert();
+			Confirm.dismissAlert();
 		}
 
 		task ("Assert that variant is not deleted") {
 			ABTest.viewVariantName(variantNames = "Variant name");
 		}
 
-        task ("Run and terminate the AB test") {
-            ABTest.runTest();
+		task ("Run and terminate the AB test") {
+			ABTest.runTest();
 
-            ABTest.terminateTest();
-        }
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-101341: Validate if an alert appears when the user tries to delete an experience with an AB Test in a draft mode, the user should be able to delete the experience"
@@ -732,8 +732,7 @@ definition {
 		}
 
 		task ("Edit variant") {
-			ABTest.viewVariantName(
-				variantNames = "Variant name,Variant name 2");
+			ABTest.viewVariantName(variantNames = "Variant name,Variant name 2");
 
 			ABTest.editVariantName(key_index = "2");
 
@@ -747,8 +746,7 @@ definition {
 		}
 
 		task ("Assert that variant name is changed") {
-			ABTest.viewVariantName(
-				variantNames = "Variant name,Variant name 3");
+			ABTest.viewVariantName(variantNames = "Variant name,Variant name 3");
 		}
 
 		task ("Run and terminate AB Test") {
@@ -823,13 +821,12 @@ definition {
 				testTitle = "AB test title");
 
 			ABTest.createVariant(variantName = "Variant name");
-			
+
 			ABTest.createVariant(variantName = "Variant name 2");
 		}
 
 		task ("Edit variant") {
-			ABTest.viewVariantName(
-				variantNames = "Variant name,Variant name 2");
+			ABTest.viewVariantName(variantNames = "Variant name,Variant name 2");
 
 			ABTest.editVariantName(key_index = "2");
 
@@ -843,8 +840,7 @@ definition {
 		}
 
 		task ("Assert that variant name is changed") {
-			ABTest.viewVariantName(
-				variantNames = "Variant name,Variant name");
+			ABTest.viewVariantName(variantNames = "Variant name,Variant name");
 		}
 
 		task ("Run and terminate AB Test") {

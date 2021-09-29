@@ -9,6 +9,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
 	}
 
 	tearDown {
@@ -18,7 +20,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Site.tearDownCP();
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
@@ -29,13 +31,11 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		JSONGroup.addGroup(groupName = "Site Name");
-
 		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
+			groupName = "Test Site Name",
 			layoutName = "Home");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
@@ -46,25 +46,25 @@ definition {
 			pageTranslation = "es_ES",
 			pageTranslationName = "Casa");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = "Test Site Name");
 
 		Page.viewTranslationsPG(
 			defaultLanguageLocalizationMessage = "Display the page in English (United States).",
 			pageName = "Casa",
 			preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
-			sitePageURL = "${portalURL}/es/web/site-name/home",
+			sitePageURL = "${portalURL}/es/web/test-site-name/home",
 			translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain).");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = "Test Site Name");
 
 		Page.localizedPG(pageLocale = "Display the page in English (United States)");
 
 		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
+			groupName = "Test Site Name",
 			layoutName = "Blog Page",
 			parentLayoutName = "Home");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
@@ -76,13 +76,13 @@ definition {
 			pageTranslation = "es_ES",
 			pageTranslationName = "Blog Página");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = "Test Site Name");
 
 		Page.viewTranslationsPG(
 			childPageName = "Blog Página",
 			defaultLanguageLocalizationMessage = "Display the page in English (United States).",
 			preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
-			sitePageURL = "${portalURL}/es/web/site-name/blog-page",
+			sitePageURL = "${portalURL}/es/web/test-site-name/blog-page",
 			translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain).");
 	}
 

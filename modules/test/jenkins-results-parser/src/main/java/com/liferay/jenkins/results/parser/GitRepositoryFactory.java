@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.File;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -97,12 +95,19 @@ public class GitRepositoryFactory {
 				"Could not find git directory name " + gitDirectoryName);
 		}
 
-		workspaceGitRepository = new DefaultWorkspaceGitRepository(
-			GitUtil.getRemoteGitRef(
-				JenkinsResultsParserUtil.combine(
-					"https://github.com/liferay/", gitRepositoryName, "/tree/",
-					gitUpstreamBranchName)),
-			gitUpstreamBranchName);
+		RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
+			JenkinsResultsParserUtil.combine(
+				"https://github.com/liferay/", gitRepositoryName, "/tree/",
+				gitUpstreamBranchName));
+
+		if (gitRepositoryName.matches("liferay-portal(-ee)?")) {
+			workspaceGitRepository = new PortalWorkspaceGitRepository(
+				remoteGitRef, gitUpstreamBranchName);
+		}
+		else {
+			workspaceGitRepository = new DefaultWorkspaceGitRepository(
+				remoteGitRef, gitUpstreamBranchName);
+		}
 
 		_workspaceGitRepositories.put(gitDirectoryName, workspaceGitRepository);
 
@@ -137,6 +142,14 @@ public class GitRepositoryFactory {
 
 		if (repositoryName == null) {
 			throw new RuntimeException("Invalid JSONObject " + jsonObject);
+		}
+		else if (repositoryName.matches("liferay-portal(-ee)?")) {
+			workspaceGitRepository = new PortalWorkspaceGitRepository(
+				jsonObject);
+		}
+		else {
+			workspaceGitRepository = new DefaultWorkspaceGitRepository(
+				jsonObject);
 		}
 
 		workspaceGitRepository = new DefaultWorkspaceGitRepository(jsonObject);

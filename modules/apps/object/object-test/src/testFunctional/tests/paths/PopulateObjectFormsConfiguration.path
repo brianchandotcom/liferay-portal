@@ -125,6 +125,11 @@
 		<td>//div[@data-field-name = 'repeatable']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>REQUIRED_FIELD_OPTION_DESABLED</td>
+		<td>//label[@class = 'toggle-switch' and contains(text(),'Required Field')]//label[@class = 'toggle-switch simple-toggle-switch disabled']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

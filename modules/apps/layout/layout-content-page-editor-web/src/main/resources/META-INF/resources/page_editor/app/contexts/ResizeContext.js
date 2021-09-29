@@ -26,27 +26,27 @@ const ResizeContext = React.createContext(INITIAL_STATE);
 
 const ResizeContextProvider = ResizeContext.Provider;
 
-const useResizeContext = () => {
+const useResizing = () => {
 	return useContext(ResizeContext).resizing;
 };
 
-const useSetResizeContext = () => {
+const useSetResizing = () => {
 	return useContext(ResizeContext).setResizing;
 };
 
-const useSetUpdatedLayoutDataContext = () => {
+const useSetUpdatedLayoutData = () => {
 	return useContext(ResizeContext).setUpdatedLayoutData;
 };
 
-const useUpdatedLayoutDataContext = () => {
+const useUpdatedLayoutData = () => {
 	return useContext(ResizeContext).updatedLayoutData;
 };
 
 export {
 	ResizeContext,
 	ResizeContextProvider,
-	useResizeContext,
-	useSetResizeContext,
-	useSetUpdatedLayoutDataContext,
-	useUpdatedLayoutDataContext,
+	useResizing,
+	useSetResizing,
+	useSetUpdatedLayoutData,
+	useUpdatedLayoutData,
 };

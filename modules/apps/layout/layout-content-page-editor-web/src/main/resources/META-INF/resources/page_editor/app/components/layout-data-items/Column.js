@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
-import {useUpdatedLayoutDataContext} from '../../contexts/ResizeContext';
+import {useUpdatedLayoutData} from '../../contexts/ResizeContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
@@ -31,7 +31,7 @@ const Column = React.forwardRef(({children, className, item}, ref) => {
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
-	const updatedLayoutData = useUpdatedLayoutDataContext();
+	const updatedLayoutData = useUpdatedLayoutData();
 
 	const itemConfig = updatedLayoutData
 		? updatedLayoutData.items[item.itemId].config

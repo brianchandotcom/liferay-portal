@@ -53,7 +53,7 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 
 	@Override
 	public String getKey() {
-		return "updateObjectEntry";
+		return "update-object-entry";
 	}
 
 	@Reference

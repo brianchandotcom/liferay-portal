@@ -55,7 +55,8 @@ public class AddObjectEntryObjectActionExecutorImpl
 
 	@Override
 	public String getKey() {
-		return "addObjectEntry";
+		return "add-object-entry";
+	}
 	}
 
 	@Reference

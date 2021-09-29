@@ -18,31 +18,34 @@ package com.liferay.jenkins.results.parser;
  * @author Michael Hashimoto
  */
 public abstract class PortalTopLevelBuildRunner
-	<T extends PortalTopLevelBuildData, S extends PortalWorkspace>
-		extends TopLevelBuildRunner<T, S> {
+	<T extends PortalTopLevelBuildData>
+		extends TopLevelBuildRunner<T> {
+
+	@Override
+	public Workspace getWorkspace() {
+		if (_workspace != null) {
+			return _workspace;
+		}
+
+		T portalTopLevelBuildData = getBuildData();
+
+		_workspace = WorkspaceFactory.newWorkspace(
+			portalTopLevelBuildData.getPortalGitHubRepositoryName(),
+			portalTopLevelBuildData.getPortalUpstreamBranchName());
+
+		WorkspaceGitRepository workspaceGitRepository =
+			_workspace.getPrimaryWorkspaceGitRepository();
+
+		workspaceGitRepository.setGitHubURL(
+			portalTopLevelBuildData.getPortalGitHubURL());
+
+		return _workspace;
+	}
 
 	protected PortalTopLevelBuildRunner(T portalTopLevelBuildData) {
 		super(portalTopLevelBuildData);
 	}
 
-	@Override
-	protected void initWorkspace() {
-		T portalTopLevelBuildData = getBuildData();
-
-		Workspace topLevelWorkspace = WorkspaceFactory.newTopLevelWorkspace(
-			portalTopLevelBuildData.getPortalGitHubURL(),
-			portalTopLevelBuildData.getPortalUpstreamBranchName());
-
-		if (!(topLevelWorkspace instanceof PortalWorkspace)) {
-			throw new RuntimeException("Invalid workspace");
-		}
-
-		if (JenkinsResultsParserUtil.isCINode()) {
-			topLevelWorkspace.addJenkinsWorkspaceGitRepository(
-				portalTopLevelBuildData.getJenkinsGitHubURL());
-		}
-
-		setWorkspace((S)topLevelWorkspace);
-	}
+	private Workspace _workspace;
 
 }

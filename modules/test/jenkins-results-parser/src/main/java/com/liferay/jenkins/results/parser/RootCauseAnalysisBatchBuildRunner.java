@@ -21,9 +21,8 @@ import java.util.Map;
 /**
  * @author Michael Hashimoto
  */
-public class RootCauseAnalysisBatchBuildRunner
-	<T extends PortalBatchBuildData, S extends PortalWorkspace>
-		extends PortalBatchBuildRunner<T, S> {
+public class RootCauseAnalysisBatchBuildRunner<T extends PortalBatchBuildData>
+	extends PortalBatchBuildRunner<T> {
 
 	protected RootCauseAnalysisBatchBuildRunner(T portalBatchBuildData) {
 		super(portalBatchBuildData);
@@ -39,13 +38,13 @@ public class RootCauseAnalysisBatchBuildRunner
 			return;
 		}
 
-		PortalWorkspace portalWorkspace = getWorkspace();
+		Workspace workspace = getWorkspace();
 
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
-			portalWorkspace.getPrimaryPortalWorkspaceGitRepository();
+		WorkspaceGitRepository workspaceGitRepository =
+			workspace.getPrimaryWorkspaceGitRepository();
 
 		GitWorkingDirectory gitWorkingDirectory =
-			portalWorkspaceGitRepository.getGitWorkingDirectory();
+			workspaceGitRepository.getGitWorkingDirectory();
 
 		for (String portalCherryPickSHA : portalCherryPickSHAs) {
 			gitWorkingDirectory.cherryPick(portalCherryPickSHA);

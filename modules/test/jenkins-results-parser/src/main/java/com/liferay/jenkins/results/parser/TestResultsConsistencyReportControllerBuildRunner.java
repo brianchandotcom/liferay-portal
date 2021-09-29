@@ -34,7 +34,18 @@ import org.apache.commons.lang3.tuple.Pair;
  */
 public class TestResultsConsistencyReportControllerBuildRunner
 	<S extends BaseBuildData>
-		extends BaseBuildRunner<S, Workspace> {
+		extends BaseBuildRunner<S> {
+
+	@Override
+	public Workspace getWorkspace() {
+		if (_workspace != null) {
+			return _workspace;
+		}
+
+		_workspace = WorkspaceFactory.newWorkspace();
+
+		return _workspace;
+	}
 
 	@Override
 	public void run() {
@@ -72,11 +83,6 @@ public class TestResultsConsistencyReportControllerBuildRunner
 
 		return JenkinsResultsParserUtil.combine(
 			mostAvailableMasterURL, "/job/test-results-consistency-report");
-	}
-
-	@Override
-	protected void initWorkspace() {
-		setWorkspace(WorkspaceFactory.newSimpleWorkspace());
 	}
 
 	protected void invokeTestSuiteBuilds() {
@@ -364,5 +370,6 @@ public class TestResultsConsistencyReportControllerBuildRunner
 		Pattern.compile("(?<testSuite>[^\\(]*)\\((?<branchName>[^\\)]*)\\)");
 
 	private List<Pair<String, String>> _selectedTestSuiteBranchNamePairs;
+	private Workspace _workspace;
 
 }

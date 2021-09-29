@@ -24,10 +24,10 @@ import java.util.regex.Pattern;
  */
 public class BuildRunnerFactory {
 
-	public static BuildRunner<?, ?> newBuildRunner(BuildData buildData) {
+	public static BuildRunner<?> newBuildRunner(BuildData buildData) {
 		String jobName = buildData.getJobName();
 
-		BuildRunner<?, ?> buildRunner = null;
+		BuildRunner<?> buildRunner = null;
 
 		if (jobName.equals("root-cause-analysis-tool")) {
 			buildRunner = new RootCauseAnalysisToolTopLevelBuildRunner(
@@ -65,7 +65,7 @@ public class BuildRunnerFactory {
 			throw new RuntimeException("Invalid build data " + buildData);
 		}
 
-		return (BuildRunner<?, ?>)Proxy.newProxyInstance(
+		return (BuildRunner<?>)Proxy.newProxyInstance(
 			BuildRunner.class.getClassLoader(),
 			new Class<?>[] {BuildRunner.class}, new MethodLogger(buildRunner));
 	}

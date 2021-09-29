@@ -29,8 +29,7 @@ import org.dom4j.Element;
  * @author Michael Hashimoto
  */
 public class RootCauseAnalysisToolTopLevelBuildRunner
-	extends PortalTopLevelBuildRunner
-		<PortalTopLevelBuildData, PortalWorkspace> {
+	extends PortalTopLevelBuildRunner<PortalTopLevelBuildData> {
 
 	protected RootCauseAnalysisToolTopLevelBuildRunner(
 		PortalTopLevelBuildData portalTopLevelBuildData) {
@@ -41,9 +40,9 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 	@Override
 	protected Element getJenkinsReportElement() {
 		PortalTopLevelBuildData portalTopLevelBuildData = getBuildData();
-		PortalWorkspace portalWorkspace = getWorkspace();
+		Workspace workspace = getWorkspace();
 
-		if (portalWorkspace == null) {
+		if (workspace == null) {
 			return Dom4JUtil.getNewElement(
 				"html", null,
 				Dom4JUtil.getNewElement(
@@ -59,7 +58,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		rootCauseAnalysisToolBuild.setDownstreamBuildDataList(
 			portalTopLevelBuildData.getDownstreamBuildDataList());
 		rootCauseAnalysisToolBuild.setWorkspaceGitRepository(
-			portalWorkspace.getPrimaryPortalWorkspaceGitRepository());
+			workspace.getPrimaryWorkspaceGitRepository());
 
 		return super.getJenkinsReportElement();
 	}
@@ -97,13 +96,13 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 	protected void setUpWorkspace() {
 		super.setUpWorkspace();
 
-		PortalWorkspace portalWorkspace = getWorkspace();
+		Workspace workspace = getWorkspace();
 
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
-			portalWorkspace.getPrimaryPortalWorkspaceGitRepository();
+		WorkspaceGitRepository workspaceGitRepository =
+			workspace.getPrimaryWorkspaceGitRepository();
 
 		GitWorkingDirectory gitWorkingDirectory =
-			portalWorkspaceGitRepository.getGitWorkingDirectory();
+			workspaceGitRepository.getGitWorkingDirectory();
 
 		List<String> portalBranchSHAs = _getPortalBranchSHAs();
 
@@ -153,7 +152,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		commitSHAs.addAll(portalCherryPickSHAs);
 
 		try {
-			portalWorkspaceGitRepository.storeCommitHistory(commitSHAs);
+			workspaceGitRepository.storeCommitHistory(commitSHAs);
 		}
 		catch (Exception exception) {
 			failBuildRunner("Failed to store the commit history", exception);
@@ -250,8 +249,10 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		if ((portalBranchSHAsString == null) ||
 			portalBranchSHAsString.isEmpty()) {
 
+			Workspace workspace = getWorkspace();
+
 			WorkspaceGitRepository workspaceGitRepository =
-				_getWorkspaceGitRepository();
+				workspace.getPrimaryWorkspaceGitRepository();
 
 			GitWorkingDirectory gitWorkingDirectory =
 				workspaceGitRepository.getGitWorkingDirectory();
@@ -266,8 +267,10 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		Matcher matcher = _compareURLPattern.matcher(portalBranchSHAsString);
 
 		if (matcher.find()) {
+			Workspace workspace = getWorkspace();
+
 			WorkspaceGitRepository workspaceGitRepository =
-				_getWorkspaceGitRepository();
+				workspace.getPrimaryWorkspaceGitRepository();
 
 			List<LocalGitCommit> rangeLocalGitCommits = new ArrayList<>();
 
@@ -349,9 +352,9 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 	}
 
 	private WorkspaceGitRepository _getWorkspaceGitRepository() {
-		PortalWorkspace portalWorkspace = getWorkspace();
+		Workspace workspace = getWorkspace();
 
-		return portalWorkspace.getPrimaryPortalWorkspaceGitRepository();
+		return workspace.getPrimaryWorkspaceGitRepository();
 	}
 
 	private void _validateBuildParameterJenkinsGitHubURL() {

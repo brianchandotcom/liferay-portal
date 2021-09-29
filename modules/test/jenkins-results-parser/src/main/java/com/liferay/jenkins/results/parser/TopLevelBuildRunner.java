@@ -33,9 +33,8 @@ import org.dom4j.Element;
 /**
  * @author Michael Hashimoto
  */
-public abstract class TopLevelBuildRunner
-	<T extends TopLevelBuildData, S extends Workspace>
-		extends BaseBuildRunner<T, S> {
+public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
+	extends BaseBuildRunner<T> {
 
 	@Override
 	public void run() {
@@ -178,6 +177,15 @@ public abstract class TopLevelBuildRunner
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	@Override
+	protected void setUpWorkspace() {
+		Workspace workspace = getWorkspace();
+
+		workspace.setUp();
+
+		workspace.synchronizeToGitHubDev();
 	}
 
 	protected void updateJenkinsReport() {

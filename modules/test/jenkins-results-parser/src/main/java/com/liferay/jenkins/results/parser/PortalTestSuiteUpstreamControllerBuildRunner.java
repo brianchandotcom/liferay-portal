@@ -31,7 +31,18 @@ import java.util.Properties;
  */
 public class PortalTestSuiteUpstreamControllerBuildRunner
 	<S extends PortalTestSuiteUpstreamControllerBuildData>
-		extends BaseBuildRunner<S, Workspace> {
+		extends BaseBuildRunner<S> {
+
+	@Override
+	public Workspace getWorkspace() {
+		if (_workspace != null) {
+			return _workspace;
+		}
+
+		_workspace = WorkspaceFactory.newWorkspace();
+
+		return _workspace;
+	}
 
 	@Override
 	public void run() {
@@ -100,11 +111,6 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 					testSuite,
 				ioException);
 		}
-	}
-
-	@Override
-	protected void initWorkspace() {
-		setWorkspace(WorkspaceFactory.newSimpleWorkspace());
 	}
 
 	protected void invokeTestSuiteBuilds() {
@@ -415,5 +421,6 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 	private final List<String> _invokedTestSuiteNames = new ArrayList<>();
 	private List<String> _selectedTestSuiteNames;
+	private Workspace _workspace;
 
 }

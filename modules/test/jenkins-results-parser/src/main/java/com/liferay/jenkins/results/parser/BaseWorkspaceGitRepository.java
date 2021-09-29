@@ -324,6 +324,10 @@ public abstract class BaseWorkspaceGitRepository
 		super(jsonObject);
 
 		validateKeys(_REQUIRED_KEYS);
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		buildDatabase.putWorkspaceGitRepository(getDirectoryName(), this);
 	}
 
 	protected BaseWorkspaceGitRepository(
@@ -340,6 +344,10 @@ public abstract class BaseWorkspaceGitRepository
 		_setUpstreamBranchSHA(pullRequest.getUpstreamBranchSHA());
 
 		validateKeys(_REQUIRED_KEYS);
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		buildDatabase.putWorkspaceGitRepository(getDirectoryName(), this);
 	}
 
 	protected BaseWorkspaceGitRepository(
@@ -355,6 +363,10 @@ public abstract class BaseWorkspaceGitRepository
 		_setUpstreamBranchSHA(remoteGitRef.getSHA());
 
 		validateKeys(_REQUIRED_KEYS);
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		buildDatabase.putWorkspaceGitRepository(getDirectoryName(), this);
 	}
 
 	protected String getBranchSHA() {

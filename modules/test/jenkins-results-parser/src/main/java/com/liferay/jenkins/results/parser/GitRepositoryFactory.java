@@ -85,6 +85,18 @@ public class GitRepositoryFactory {
 			return workspaceGitRepository;
 		}
 
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		workspaceGitRepository = buildDatabase.getWorkspaceGitRepository(
+			gitDirectoryName);
+
+		if (workspaceGitRepository != null) {
+			_workspaceGitRepositories.put(
+				gitDirectoryName, workspaceGitRepository);
+
+			return workspaceGitRepository;
+		}
+
 		String gitRepositoryName =
 			JenkinsResultsParserUtil.getGitRepositoryName(gitDirectoryName);
 		String gitUpstreamBranchName =

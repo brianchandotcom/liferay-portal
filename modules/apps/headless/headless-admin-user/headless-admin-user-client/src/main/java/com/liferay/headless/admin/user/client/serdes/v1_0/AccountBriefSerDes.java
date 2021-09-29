@@ -57,6 +57,20 @@ public class AccountBriefSerDes {
 
 		sb.append("{");
 
+		if (accountBrief.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(accountBrief.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (accountBrief.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -120,6 +134,15 @@ public class AccountBriefSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (accountBrief.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(accountBrief.getExternalReferenceCode()));
+		}
+
 		if (accountBrief.getId() == null) {
 			map.put("id", null);
 		}
@@ -162,7 +185,13 @@ public class AccountBriefSerDes {
 			AccountBrief accountBrief, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+				if (jsonParserFieldValue != null) {
+					accountBrief.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					accountBrief.setId(
 						Long.valueOf((String)jsonParserFieldValue));

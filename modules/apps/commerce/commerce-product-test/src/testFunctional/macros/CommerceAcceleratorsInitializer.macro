@@ -131,7 +131,6 @@ definition {
 		Accounts.addAssigneeToRoleViaUsersTab(
 			accountRoleTitle = "${role}",
 			accountUserName = "${emailAddress}");
-
 	}
 
 	macro reviewOrder {

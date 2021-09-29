@@ -304,18 +304,15 @@ definition {
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "account1");
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "account1");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "account2");
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "account2");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "account3");
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "account3");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Pricing",
@@ -540,13 +537,11 @@ definition {
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "account1");
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "account1");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-			accountName = "account2");
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "account2");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Pricing",

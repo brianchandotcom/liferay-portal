@@ -96,8 +96,8 @@ public class ObjectRelationshipResourceImpl
 		return _toObjectRelationship(
 			_objectRelationshipService.updateObjectRelationship(
 				objectRelationshipId,
-				LocalizedMapUtil.getLocalizedMap(
-					objectRelationship.getLabel())));
+				LocalizedMapUtil.getLocalizedMap(objectRelationship.getLabel()),
+				objectRelationship.getDeleteTypeAsString()));
 	}
 
 	private ObjectRelationship _toObjectRelationship(
@@ -113,6 +113,8 @@ public class ObjectRelationshipResourceImpl
 							getName(),
 						objectRelationship.getObjectDefinitionId1())
 				).build();
+				deleteType = ObjectRelationship.DeleteType.create(
+					objectRelationship.getDeletionType());
 				id = objectRelationship.getObjectRelationshipId();
 				label = LocalizedMapUtil.getI18nMap(
 					objectRelationship.getLabelMap());

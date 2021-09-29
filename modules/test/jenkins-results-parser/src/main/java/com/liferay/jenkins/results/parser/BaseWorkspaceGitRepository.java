@@ -250,8 +250,26 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	public String toString() {
-		return JenkinsResultsParserUtil.combine(
-			getGitHubURL(), " - ", getBranchSHA());
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(getDirectory());
+		sb.append(" - ");
+		sb.append(getGitHubURL());
+		sb.append(" - ");
+		sb.append(_getSenderBranchName());
+		sb.append(" (");
+		sb.append(_getSenderBranchSHA(), 0, 7);
+		sb.append(")");
+
+		if (_isPullRequest()) {
+			sb.append(" - ");
+			sb.append(getUpstreamBranchName());
+			sb.append(" (");
+			sb.append(_getUpstreamBranchSHA(), 0, 7);
+			sb.append(")");
+		}
+
+		return sb.toString();
 	}
 
 	@Override

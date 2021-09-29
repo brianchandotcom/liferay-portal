@@ -409,6 +409,47 @@ definition {
 		for (var accountNumber : list "1,2") {
 			LexiconEntry.viewNoEntry(rowEntry = "Business ${accountNumber}");
 		}
+
+	@description = "This test asserts that an Account Admin can remove a user from an account."
+	@priority = "5"
+	test CanRemoveUserFromAccount {
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ACCOUNT_ENTRY",
+			resourceName = "com.liferay.account",
+			roleTitle = "Account Administrator",
+			roleType = "account");
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Manage Users",
+			rowEntry = "Account Name");
+
+		Accounts.addNewUserToBusinessAccount(
+			accountName = "Account Name",
+			assigneeName = "user1",
+			userEmailAddress = "user1@liferay.com",
+			userFirstName = "user1",
+			userLastName = "user1",
+			userScreenName = "user1");
+
+		AssertElementPresent(
+			key_tab = "Users",
+			locator1 = "NavTab#ACTIVE_TAB_LINK");
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Remove",
+			rowEntry = "user1 user1");
+
+		AssertConfirm(value1 = "Are you sure you want to remove this user?");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		Search.searchPG(
+			portletName = "Account Management",
+			searchTerm = "Account Name");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Manage Users");
+
+		LexiconEntry.viewNoEntry(rowEntry = "user1");
 	}
 
 	@description = "This test asserts that a user can select an account from the list as the active account. Backend tests are covering functionality for account selection."

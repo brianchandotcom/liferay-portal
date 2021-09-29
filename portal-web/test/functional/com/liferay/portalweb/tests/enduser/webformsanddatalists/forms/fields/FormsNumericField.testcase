@@ -1080,6 +1080,158 @@ definition {
 			fieldValue = "E.g +12 (34) 1234-1234");
 	}
 
+	@description = "LRQA-70003 - Verify that input mask on decimal can be translated"
+	@priority = "5"
+	test InputMaskOnDecimalCanBeTranslated {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric",
+			formPageNumber = "0");
+
+		FormFields.editNumericType(numericType = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		FormFields.setInputMaskOnDecimal(
+			decimalSeparator = "0,00",
+			prefix = "ABC",
+			thousandsSeparator = "1 000");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "0,00");
+
+		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+		FormFields.setInputMaskOnDecimal(
+			decimalSeparator = "0.00",
+			prefix = "123");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "0.00");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishCopyURLLink();
+
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(
+			publishedFormPublicURL = "${publishedFormPublicURL}"
+		);
+
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "0,00");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "1000");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+
+		FormPortlet.changeLocale(locale = "português-Brasil");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "0.00");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "1000");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
+	}
+
+	@description = "LRQA-70003 - Verify if the decimal input mask is working in the rules"
+	@priority = "5"
+	test InputMaskOnDecimalWorkingOnRules {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Numeric 1");
+
+		FormFields.editNumericType(numericType = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		FormFields.viewDisabledSelectOption(
+			fieldName = "Thousands Separator",
+			optionValue = "1.000");
+
+		MenuItem.click(menuItem = "1,000");
+
+		FormFields.viewDisabledSelectOption(
+			fieldName = "Decimal Separator",
+			optionValue = "0,00");
+
+		Type(
+			locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX",
+			value1 = "a");
+
+		FormFields.viewOptionSelected(optionSelected = "prefix");
+
+		FormFields.setInputMaskOnDecimal(prefix = "123456789$");
+
+		FormViewBuilder.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Numeric 2");
+
+		FormFields.editNumericType(numericType = "Decimal");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Numeric 1",
+			conditionFieldValue = "1000",
+			conditionOperator = "Is Equal To",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Numeric 2");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		Form.validateNoFieldLabel(fieldLabel = "Numeric 2");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "0.00");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "1000");
+
+		FormFields.viewLabel(
+			fieldLabel = "Numeric 2",
+			fieldName = "Numeric 2");
+	}
+
 	@description = "Verify that input mask on integers can be translated"
 	@priority = "5"
 	test InputMaskOnIntegersCanBeTranslated {

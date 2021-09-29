@@ -50,7 +50,7 @@ definition {
 
 		// AC Refactor: This test fails because of timing issues.
 		// AC Refactor ticket: LRAC-9343
-		
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Visit the document") {
@@ -98,8 +98,9 @@ definition {
 				canonicalURLSuffix = "/view_file/${fileEntryId}",
 				cardTitle = "Asset Appears On",
 				pageNmae = "AC Page - Site Name - ${siteName}");
-			
+
 			// Can't assert this information because the asset takes too long to appear
+
 		}
 	}
 
@@ -766,6 +767,8 @@ definition {
 
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
 		}
+
+		Pause(locator1 = "5000");
 
 		ACUtils.closeAllSessionsAndWait();
 

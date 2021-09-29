@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	immediate = true,
+	enabled = false,
 	property = "object.scope.provider.key=" + ObjectDefinitionConstants.SCOPE_DEPOT,
 	service = ObjectScopeProvider.class
 )

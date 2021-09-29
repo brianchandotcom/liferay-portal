@@ -877,7 +877,7 @@ definition {
 
 		var tempFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration_*.config");
 
-		OSGiConfig.deployOSGiConfigFile(
+		OSGiConfig.copyOSGiConfigFile(
 			OSGiConfigFileBaseDir = "${tempFileDirectory}",
 			OSGiConfigFileName = "${tempFileName}");
 

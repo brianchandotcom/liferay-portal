@@ -145,7 +145,7 @@ definition {
 			entryComment = "WC WebContent Content Comment",
 			userFullName = "Test Test (You)");
 
-		OSGiConfig.deployOSGiConfigs(
+		OSGiConfig.deployOSGiConfigFile(
 			OSGiConfigFileName = "com.liferay.journal.configuration.JournalServiceConfiguration.config",
 			OSGiConfigs = "articleCommentsEnabled=B&quot;false&quot;");
 

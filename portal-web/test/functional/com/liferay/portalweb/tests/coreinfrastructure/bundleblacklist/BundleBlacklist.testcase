@@ -191,7 +191,7 @@ definition {
 
 		var tempFileDirectory = selenium.getOutputDirName();
 
-		OSGiConfig.deployOSGiConfigFile(
+		OSGiConfig.copyOSGiConfigFile(
 			OSGiConfigFileBaseDir = "${tempFileDirectory}",
 			OSGiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
 

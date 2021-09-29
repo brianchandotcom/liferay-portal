@@ -15,13 +15,17 @@
 package com.liferay.object.internal.related.models;
 
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.exception.ObjectRelationshipDeleteException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Marco Leo
@@ -32,12 +36,42 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 
 	public ObjectEntryMtoMObjectRelatedModelsProviderImpl(
 		ObjectDefinition objectDefinition,
-		ObjectEntryLocalService objectEntryLocalService) {
+		ObjectEntryLocalService objectEntryLocalService,
+		ObjectRelationshipLocalService objectRelationshipLocalService) {
 
 		_objectEntryLocalService = objectEntryLocalService;
+		_objectRelationshipLocalService = objectRelationshipLocalService;
 
 		_className = objectDefinition.getClassName();
-		_objectDefinitionId = objectDefinition.getObjectDefinitionId();
+	}
+
+	@Override
+	public void deleteModel(
+			long userId, long groupId, long objectRelationshipId,
+			long primaryKey)
+		throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				objectRelationshipId);
+
+		if (Objects.equals(
+				objectRelationship.getDeletionType(),
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE) ||
+			Objects.equals(
+				objectRelationship.getDeletionType(),
+				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE)) {
+
+			_objectRelationshipLocalService.
+				deleteObjectRelationshipMappingTableValues(
+					objectRelationshipId, primaryKey);
+		}
+		else if (Objects.equals(
+					objectRelationship.getDeletionType(),
+					ObjectRelationshipConstants.DELETION_TYPE_PREVENT)) {
+
+			throw new ObjectRelationshipDeleteException();
+		}
 	}
 
 	public String getClassName() {
@@ -67,7 +101,8 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 	}
 
 	private final String _className;
-	private final long _objectDefinitionId;
 	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectRelationshipLocalService
+		_objectRelationshipLocalService;
 
 }

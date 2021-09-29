@@ -265,9 +265,26 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getExtensionDBTableName(), objectDefinition,
 			objectEntry);
 
+		deleteRelatedEntries(objectEntry.getGroupId(), objectDefinition.getObjectDefinitionId(), objectEntry.getPrimaryKey());
+
+		Indexer<ObjectEntry> indexer = IndexerRegistryUtil.getIndexer(
+			objectDefinition.getClassName());
+
+		indexer.delete(objectEntry);
+
+		return objectEntry;
+	}
+
+	@Override
+	public void deleteRelatedEntries(long groupId, long objectDefinitionId, long primaryKey)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
 		List<ObjectRelationship> objectRelationships =
 			_objectRelationshipPersistence.findByObjectDefinitionId1(
-				objectDefinition.getObjectDefinitionId());
+				objectDefinitionId);
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
 			ObjectRelatedModelsProvider objectRelatedModelsProvider =
@@ -277,17 +294,11 @@ public class ObjectEntryLocalServiceImpl
 						objectRelationship.getType());
 
 			objectRelatedModelsProvider.deleteModel(
-				PrincipalThreadLocal.getUserId(), objectEntry.getGroupId(),
+				PrincipalThreadLocal.getUserId(), groupId,
 				objectRelationship.getObjectRelationshipId(),
-				objectEntry.getPrimaryKey());
+				primaryKey);
 		}
 
-		Indexer<ObjectEntry> indexer = IndexerRegistryUtil.getIndexer(
-			objectDefinition.getClassName());
-
-		indexer.delete(objectEntry);
-
-		return objectEntry;
 	}
 
 	@Override

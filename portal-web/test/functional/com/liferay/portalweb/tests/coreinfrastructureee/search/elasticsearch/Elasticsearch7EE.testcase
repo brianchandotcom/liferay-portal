@@ -28,53 +28,6 @@ definition {
 		}
 	}
 
-	test HotDeployLearningToRankApp {
-		property hot.deploy.osgi.app.includes = "portal-search-learning-to-rank";
-		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7EE#HotDeployLearningToRankApp";
-
-		var appName = "Liferay Enterprise Search Learning to Rank";
-
-		AssertConsoleTextNotPresent(value1 = "The portal instance needs to be restarted");
-
-		AssertConsoleTextPresent(value1 = "STARTED ${appName}");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Search",
-			configurationName = "Learning to Rank",
-			configurationScope = "System Scope");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "App Manager");
-
-		AppManager.viewApp(
-			appName = "${appName}",
-			appStatus = "Active",
-			searchTerm = "Learning");
-
-		AppManager.deactivateApp(appName = "${appName}");
-
-		AppManager.viewApp(
-			appName = "${appName}",
-			appStatus = "Resolved",
-			searchTerm = "Learning");
-
-		AssertConsoleTextPresent(value1 = "STOPPED com.liferay.portal.search.learning.to.rank");
-
-		AppManager.activateApp(appName = "${appName}");
-
-		AssertConsoleTextPresent(value1 = "STARTED com.liferay.portal.search.learning.to.rank");
-
-		AssertConsoleTextNotPresent(value1 = "The portal instance needs to be restarted");
-	}
-
 	@priority = "5"
 	test LearningToRankSmoke {
 		property elastic.override.version = "7.13.4";

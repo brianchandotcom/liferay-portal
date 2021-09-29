@@ -422,45 +422,6 @@ definition {
 	}
 
 	@priority = "3"
-	test HotDeployApp {
-		property hot.deploy.osgi.app.includes = "portal-search-elasticsearch-cross-cluster-replication";
-		property osgi.app.includes = "";
-		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "CrossClusterReplicationES7#HotDeployApp";
-
-		var appName = "Liferay Enterprise Search Cross-Cluster Replication";
-
-		AssertConsoleTextNotPresent(value1 = "The portal instance needs to be restarted");
-
-		AssertConsoleTextPresent(value1 = "STARTED ${appName}");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "App Manager");
-
-		AppManager.viewApp(
-			appName = "${appName}",
-			appStatus = "Active",
-			searchTerm = "Replication");
-
-		AppManager.deactivateApp(appName = "${appName}");
-
-		AppManager.viewApp(
-			appName = "${appName}",
-			appStatus = "Resolved",
-			searchTerm = "Replication");
-
-		AssertConsoleTextPresent(value1 = "STOPPED com.liferay.portal.search.elasticsearch.cross.cluster.replication.impl");
-
-		AppManager.activateApp(appName = "${appName}");
-
-		AssertConsoleTextPresent(value1 = "STARTED com.liferay.portal.search.elasticsearch.cross.cluster.replication.impl");
-
-		AssertConsoleTextNotPresent(value1 = "The portal instance needs to be restarted");
-	}
-
-	@priority = "3"
 	test SearchWithResultRankings {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#SearchWithResultRankings";
 

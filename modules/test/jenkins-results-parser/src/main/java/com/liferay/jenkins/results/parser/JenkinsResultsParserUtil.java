@@ -2373,6 +2373,42 @@ public class JenkinsResultsParserUtil {
 		return getProperty(properties, basePropertyName, true, opts);
 	}
 
+	public static List<String> getPropertyOptions(String propertyName) {
+		List<String> propertyOptions = new ArrayList<>();
+
+		Stack<Integer> stack = new Stack<>();
+
+		Integer start = null;
+
+		for (int i = 0; i < propertyName.length(); i++) {
+			char c = propertyName.charAt(i);
+
+			if (c == '[') {
+				stack.push(i);
+
+				if (start == null) {
+					start = i;
+				}
+
+				continue;
+			}
+
+			if ((c != ']') || (start == null)) {
+				continue;
+			}
+
+			stack.pop();
+
+			if (stack.isEmpty()) {
+				propertyOptions.add(propertyName.substring(start + 1, i));
+
+				start = null;
+			}
+		}
+
+		return propertyOptions;
+	}
+
 	public static String getRandomGitHubDevNodeHostname() {
 		return getRandomGitHubDevNodeHostname(null);
 	}

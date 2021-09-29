@@ -20,10 +20,11 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 
@@ -37,8 +38,21 @@ public abstract class BaseWorkspaceGitRepository
 	extends BaseLocalGitRepository implements WorkspaceGitRepository {
 
 	@Override
+	public void addPropertyOption(String propertyOption) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(propertyOption)) {
+			return;
+		}
+
+		_propertyOptions.add(propertyOption);
+	}
+
+	@Override
 	public String getFileContent(String filePath) {
 		File file = new File(getDirectory(), filePath);
+
+		if (!file.exists()) {
+			return null;
+		}
 
 		try {
 			String fileContent = JenkinsResultsParserUtil.read(file);
@@ -165,6 +179,10 @@ public abstract class BaseWorkspaceGitRepository
 		}
 
 		validateKeys(_REQUIRED_KEYS);
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		buildDatabase.putWorkspaceGitRepository(getDirectoryName(), this);
 	}
 
 	@Override
@@ -362,6 +380,64 @@ public abstract class BaseWorkspaceGitRepository
 		return _localGitBranch;
 	}
 
+	protected Properties getProperties(String propertyType) {
+		Properties buildProperties = new Properties();
+
+		Map<String, String> envMap = System.getenv();
+
+		for (Map.Entry<String, String> envEntry : envMap.entrySet()) {
+			buildProperties.setProperty(
+				"env." + envEntry.getKey(), envEntry.getValue());
+		}
+
+		buildProperties.putAll(System.getenv());
+
+		try {
+			buildProperties.putAll(
+				JenkinsResultsParserUtil.getBuildProperties());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		Properties properties = new Properties();
+
+		for (String buildPropertyName : buildProperties.stringPropertyNames()) {
+			if (!buildPropertyName.startsWith(propertyType)) {
+				continue;
+			}
+
+			List<String> buildPropertyOptions =
+				JenkinsResultsParserUtil.getPropertyOptions(buildPropertyName);
+
+			if (buildPropertyOptions.isEmpty()) {
+				continue;
+			}
+
+			String propertyName = buildPropertyOptions.get(0);
+
+			List<String> propertyOptions = new ArrayList<>();
+
+			propertyOptions.add(propertyName);
+
+			propertyOptions.addAll(_getPropertyOptions());
+
+			propertyOptions.removeAll(Collections.singleton(null));
+
+			String propertyValue = JenkinsResultsParserUtil.getProperty(
+				buildProperties, propertyType,
+				propertyOptions.toArray(new String[0]));
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(propertyValue)) {
+				continue;
+			}
+
+			properties.put(propertyName, propertyValue);
+		}
+
+		return properties;
+	}
+
 	private LocalGitBranch _createPullRequestLocalGitBranch() {
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
@@ -475,6 +551,18 @@ public abstract class BaseWorkspaceGitRepository
 		return _branchName;
 	}
 
+	private Set<String> _getPropertyOptions() {
+		Set<String> propertyOptions = new HashSet<>(_propertyOptions);
+
+		propertyOptions.add(getUpstreamBranchName());
+
+		if (JenkinsResultsParserUtil.isWindows()) {
+			propertyOptions.add("windows");
+		}
+
+		return propertyOptions;
+	}
+
 	private String _getReceiverUsername() {
 		return optString("receiver_username");
 	}
@@ -582,6 +670,7 @@ public abstract class BaseWorkspaceGitRepository
 	private String _branchSHA;
 	private List<LocalGitCommit> _historicalLocalGitCommits;
 	private LocalGitBranch _localGitBranch;
+	private final Set<String> _propertyOptions = new HashSet<>();
 	private RemoteGitRef _senderRemoteGitRef;
 	private RemoteGitRef _upstreamRemoteGitRef;
 

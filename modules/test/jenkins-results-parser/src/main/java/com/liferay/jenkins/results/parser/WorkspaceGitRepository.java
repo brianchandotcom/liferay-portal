@@ -21,6 +21,8 @@ import java.util.List;
  */
 public interface WorkspaceGitRepository extends LocalGitRepository {
 
+	public void addPropertyOption(String propertyOption);
+
 	public String getFileContent(String filePath);
 
 	public String getGitHubDevBranchName();

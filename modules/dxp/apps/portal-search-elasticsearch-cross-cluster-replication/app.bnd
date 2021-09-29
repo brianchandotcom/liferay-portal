@@ -1,15 +1,15 @@
 Liferay-Releng-App-Description: %liferay-releng-app-description
 Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Enterprise Search Cross-Cluster Replication
-Liferay-Releng-Bundle: false
+Liferay-Releng-Bundle: true
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:
 Liferay-Releng-Deprecated: false
-Liferay-Releng-Fix-Delivery-Method:
+Liferay-Releng-Fix-Delivery-Method: core
 Liferay-Releng-Labs: false
 Liferay-Releng-Marketplace: true
-Liferay-Releng-Portal-Required: false
+Liferay-Releng-Portal-Required: true
 Liferay-Releng-Public: ${liferay.releng.public}
-Liferay-Releng-Restart-Required: false
-Liferay-Releng-Suite:
+Liferay-Releng-Restart-Required: true
+Liferay-Releng-Suite: foundation
 Liferay-Releng-Support-Url: http://www.liferay.com
 Liferay-Releng-Supported: ${liferay.releng.supported}

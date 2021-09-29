@@ -76,6 +76,19 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 			</clay:col>
 		</clay:row>
 
+		<clay:row>
+			<clay:col
+				md="6"
+			>
+				<clay:checkbox
+					checked="<%= true %>"
+					id='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
+					label="contains-headers"
+					name='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
+				/>
+			</clay:col>
+		</clay:row>
+
 		<clay:content-section>
 			<clay:row
 				cssClass="plan-mappings"

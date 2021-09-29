@@ -95,14 +95,6 @@ const getLocalizedValue = ({
 	}
 };
 
-const getLocalizedPages = (pages, defaultLanguageId, editingLanguageId) => {
-	const settingsVisitor = new PagesVisitor(pages);
-
-	return settingsVisitor.mapFields((field) =>
-		localizeField(field, defaultLanguageId, editingLanguageId)
-	);
-};
-
 const updateFieldLanguage = ({
 	availableLanguageIds,
 	dataSourceType,
@@ -114,15 +106,35 @@ const updateFieldLanguage = ({
 	settingsContext,
 	type,
 }) => {
+	const settingsVisitor = new PagesVisitor(settingsContext.pages);
+
+	const currentOptions = settingsVisitor.findField(
+		({fieldName}) => fieldName === 'options'
+	)?.value[editingLanguageId];
+
+	const pages = settingsVisitor.mapFields((field) => {
+		const updatedField = localizeField(
+			field,
+			defaultLanguageId,
+			editingLanguageId
+		);
+
+		if (
+			field.fieldName === 'predefinedValue' &&
+			currentOptions?.length > 1 &&
+			currentOptions[0].edited
+		) {
+			return {...updatedField, options: currentOptions};
+		}
+
+		return updatedField;
+	});
+
 	const newSettingsContext = {
 		...settingsContext,
 		availableLanguageIds,
 		defaultLanguageId,
-		pages: getLocalizedPages(
-			settingsContext.pages,
-			defaultLanguageId,
-			editingLanguageId
-		),
+		pages,
 	};
 
 	const newField = {

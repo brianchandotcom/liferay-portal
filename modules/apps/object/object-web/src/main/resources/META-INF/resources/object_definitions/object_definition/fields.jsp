@@ -32,7 +32,7 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 <clay:headless-data-set-display
 	apiURL="<%= objectDefinitionsFieldsDisplayContext.getAPIURL() %>"
 	clayDataSetActionDropdownItems="<%= objectDefinitionsFieldsDisplayContext.getClayDataSetActionDropdownItems() %>"
-	creationMenu="<%= objectDefinitionsFieldsDisplayContext.getCreationMenu() %>"
+	creationMenu="<%= objectDefinitionsFieldsDisplayContext.getCreationMenu(objectDefinition) %>"
 	formId="fm"
 	id="<%= ObjectDefinitionsClayDataSetDisplayNames.OBJECT_FIELDS %>"
 	itemsPerPage="<%= 20 %>"

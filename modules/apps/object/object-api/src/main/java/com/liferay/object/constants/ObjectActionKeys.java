@@ -23,6 +23,8 @@ public class ObjectActionKeys {
 
 	public static final String ADD_OBJECT_ENTRY = "ADD_OBJECT_ENTRY";
 
+	public static final String EXTEND_SYSTEM_OBJECT = "EXTEND_SYSTEM_OBJECT";
+
 	public static final String PUBLISH_OBJECT_DEFINITION =
 		"PUBLISH_OBJECT_DEFINITION";
 

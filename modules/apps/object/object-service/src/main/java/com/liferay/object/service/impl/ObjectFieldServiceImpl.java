@@ -14,6 +14,8 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.base.ObjectFieldServiceBaseImpl;
@@ -22,6 +24,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.util.Locale;
 import java.util.Map;
@@ -52,9 +55,16 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		_objectDefinitionModelResourcePermission.check(
-			getPermissionChecker(), objectDefinition.getObjectDefinitionId(),
-			ActionKeys.UPDATE);
+		if (objectDefinition.isSystem()) {
+			_portletResourcePermission.check(
+				getPermissionChecker(), null,
+				ObjectActionKeys.EXTEND_SYSTEM_OBJECT);
+		}
+		else {
+			_objectDefinitionModelResourcePermission.check(
+				getPermissionChecker(),
+				objectDefinition.getObjectDefinitionId(), ActionKeys.UPDATE);
+		}
 
 		return objectFieldLocalService.addCustomObjectField(
 			getUserId(), listTypeDefinitionId, objectDefinitionId, indexed,
@@ -116,5 +126,8 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
+
+	@Reference(target = "(resource.name=" + ObjectConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 }

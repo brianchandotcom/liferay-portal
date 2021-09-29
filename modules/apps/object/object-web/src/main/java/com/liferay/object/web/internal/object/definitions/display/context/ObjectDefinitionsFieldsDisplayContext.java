@@ -16,6 +16,7 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.util.Arrays;
 import java.util.List;
@@ -81,10 +83,15 @@ public class ObjectDefinitionsFieldsDisplayContext {
 				"delete", "delete", "async"));
 	}
 
-	public CreationMenu getCreationMenu() throws PortalException {
+	public CreationMenu getCreationMenu(ObjectDefinition objectDefinition)
+		throws PortalException {
+
 		CreationMenu creationMenu = new CreationMenu();
 
-		if (!_hasAddObjectFieldPermission()) {
+		if ((objectDefinition.isSystem() &&
+			 !_hasExtendSystemObjectPermission()) ||
+			!_hasAddObjectFieldPermission()) {
+
 			return creationMenu;
 		}
 
@@ -123,6 +130,16 @@ public class ObjectDefinitionsFieldsDisplayContext {
 		return _objectDefinitionModelResourcePermission.contains(
 			_objectRequestHelper.getPermissionChecker(),
 			getObjectDefinitionId(), ActionKeys.UPDATE);
+	}
+
+	private boolean _hasExtendSystemObjectPermission() throws PortalException {
+		PortletResourcePermission portletResourcePermission =
+			_objectDefinitionModelResourcePermission.
+				getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
+			_objectRequestHelper.getPermissionChecker(), null,
+			ObjectActionKeys.EXTEND_SYSTEM_OBJECT);
 	}
 
 	private final ModelResourcePermission<ObjectDefinition>

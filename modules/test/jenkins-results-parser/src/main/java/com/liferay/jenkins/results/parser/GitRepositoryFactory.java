@@ -87,10 +87,10 @@ public class GitRepositoryFactory {
 
 		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
 
-		workspaceGitRepository = buildDatabase.getWorkspaceGitRepository(
-			gitDirectoryName);
+		if (buildDatabase.hasWorkspaceGitRepository(gitDirectoryName)) {
+			workspaceGitRepository = buildDatabase.getWorkspaceGitRepository(
+				gitDirectoryName);
 
-		if (workspaceGitRepository != null) {
 			_workspaceGitRepositories.put(
 				gitDirectoryName, workspaceGitRepository);
 

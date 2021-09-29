@@ -47,13 +47,6 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 			"liferay-portal-ee", getUpstreamBranchName() + "-private");
 	}
 
-	@Override
-	public void setUp() {
-		super.setUp();
-
-		setUpPortalProfile();
-	}
-
 	public void setUpPortalProfile() {
 		String upstreamBranchName = getUpstreamBranchName();
 

@@ -1,0 +1,102 @@
+@component-name = "portal-publications"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Publications";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONPublications.enablePublications();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ApplicationsMenu.gotoPortlet(
+				category = "Publications",
+				panel = "Applications",
+				portlet = "Settings");
+
+			Publications.disablePublications();
+		}
+	}
+
+	@priority = "5"
+	test InviteUserAsViewer {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Guest",
+			roleTitle = "Site Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		Publications.inviteUsers(
+			publicationName = "Publication Name",
+			userInvite = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Notifications.gotoNotifications();
+
+		AssertElementPresent(
+			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+			value1 = "Test Test has invited you to work on Publication Name as a Viewer.");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		AssertElementPresent(
+			key_publicationName = "Publication Name",
+			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
+
+		Publications.assertViewerPermissions();
+	}
+
+}

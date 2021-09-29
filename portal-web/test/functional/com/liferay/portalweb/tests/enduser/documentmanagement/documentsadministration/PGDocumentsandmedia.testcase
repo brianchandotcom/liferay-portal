@@ -230,47 +230,6 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
-	@priority = "5"
-	@refactordone
-	test CanAddDocumentInFolder {
-		JSONDocument.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Guest");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.addPG(
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document_1.doc");
-
-		DMDocument.viewPG(dmDocumentTitle = "Document_1.doc");
-	}
-
-	@priority = "4"
-	@refactordone
-	test CanAddImageInFolder {
-		JSONDocument.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Guest");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.addPG(
-			dmDocumentDescription = "DM Image Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Image Title");
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Image Description",
-			dmDocumentTitle = "DM Image Title");
-	}
-
 	@priority = "4"
 	@refactorneeded
 	test AddFolderImages {

@@ -308,6 +308,8 @@ public class StyleBookEntryZipProcessorImpl
 
 		String frontendTokensValues = StringPool.BLANK;
 
+		boolean defaultStyleBookEntry = false;
+
 		String styleBookEntryContent = _getContent(zipFile, fileName);
 
 		if (Validator.isNotNull(styleBookEntryContent)) {
@@ -315,6 +317,10 @@ public class StyleBookEntryZipProcessorImpl
 				JSONFactoryUtil.createJSONObject(styleBookEntryContent);
 
 			name = styleBookEntryJSONObject.getString("name");
+
+			defaultStyleBookEntry = styleBookEntryJSONObject.getBoolean(
+				"defaultStyleBookEntry", false);
+
 			frontendTokensValues = _getStyleBookEntryContent(
 				zipFile, fileName,
 				styleBookEntryJSONObject.getString("frontendTokensValuesPath"));
@@ -325,6 +331,11 @@ public class StyleBookEntryZipProcessorImpl
 
 		if (styleBookEntry == null) {
 			return;
+		}
+
+		if (defaultStyleBookEntry) {
+			_styleBookEntryEntryService.updateDefaultStyleBookEntry(
+				styleBookEntry.getStyleBookEntryId(), true);
 		}
 
 		if (Validator.isNotNull(styleBookEntryContent)) {

@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>ANY_MENU_ITEM</td>
-	<td>xpath=(//div | //li)[contains(@class,'open') or contains(@class,'show')]//*[normalize-space(text())='${key_menuItem}']</td>
+	<td>xpath=(//div | //li)[contains(@class,'open') or contains(@class,'show')]//*[normalize-space(text())="${key_menuItem}"]</td>
 	<td></td>
 </tr>
 <tr>

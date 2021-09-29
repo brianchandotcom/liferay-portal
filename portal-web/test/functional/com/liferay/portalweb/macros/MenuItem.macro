@@ -18,6 +18,12 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
+	macro viewNotVisible {
+		AssertNotVisible(
+			key_menuItem = "${menuItem}",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+	}
+
 	macro viewOrder {
 		var key_index = "1";
 

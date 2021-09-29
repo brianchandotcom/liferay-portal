@@ -795,12 +795,6 @@ public class FragmentEntryLinkLocalServiceUtil {
 		getService().updateLatestChanges(fragmentEntryLinkId);
 	}
 
-	public static void updateLayoutWithLatestChanges(long fragmentEntryLinkId)
-		throws PortalException {
-
-		getService().updateLayoutWithLatestChanges(fragmentEntryLinkId);
-	}
-
 	public static FragmentEntryLinkLocalService getService() {
 		return _service;
 	}

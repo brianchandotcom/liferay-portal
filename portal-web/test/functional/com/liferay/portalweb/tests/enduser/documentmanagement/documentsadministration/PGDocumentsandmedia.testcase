@@ -232,53 +232,6 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test AddFolderImages {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.addPG(
-			dmDocumentDescription = "DM Image Description 1",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Image 1 Title");
-
-		DMDocument.addPG(
-			dmDocumentDescription = "DM Image Description 2",
-			dmDocumentFile = "Document_2.jpg",
-			dmDocumentTitle = "DM Image 2 Title");
-
-		DMDocument.addPG(
-			dmDocumentDescription = "DM Image Description 3",
-			dmDocumentFile = "Document_3.jpg",
-			dmDocumentTitle = "DM Image 3 Title");
-
-		DMDocument.viewAllPG(
-			dmDocumentDescription = "DM Image Description 1",
-			dmDocumentTitle = "DM Image 1 Title");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.viewAllPG(
-			dmDocumentDescription = "DM Image Description 2",
-			dmDocumentTitle = "DM Image 2 Title");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.viewAllPG(
-			dmDocumentDescription = "DM Image Description 3",
-			dmDocumentTitle = "DM Image 3 Title");
-	}
-
-	@priority = "4"
-	@refactorneeded
 	test AddFolderNameSymbol {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

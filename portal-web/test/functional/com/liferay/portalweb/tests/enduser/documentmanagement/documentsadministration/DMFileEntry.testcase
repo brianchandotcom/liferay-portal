@@ -9,6 +9,17 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
 	}
 
 	tearDown {
@@ -74,6 +85,27 @@ definition {
 			dmDocumentVersionNumber = "1.1");
 	}
 
+	@description = "This test covers LPS-96652. It ensures that the PDF file can be added after enabling text extraction."
+	@priority = "4"
+	@refactordone
+	test CanAddPDFAfterEnablingTextExtraction {
+		property custom.properties = "text.extraction.fork.process.enabled=true${line.separator}text.extraction.fork.process.mime.types=application/x-tika-ooxml,application/pdf";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.pdf",
+			dmDocumentTitle = "Document_1.pdf");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.ExceptionInInitializerError");
+
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.pdf",
+			dmDocumentType = "Basic Document");
+	}
+
 	@description = "This test covers LPS-124959. It ensures that a user can upload documents with a document type via multiple upload."
 	@priority = "4"
 	@refactordone
@@ -101,6 +133,25 @@ definition {
 
 			DMDocument.viewDocumentTypePG(dateValue = "01/01/2022");
 		}
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanCancelCheckout {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkoutPG(dmDocumentTitle = "DM Document Title");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.cancelCheckoutPG(dmDocumentTitle = "DM Document Title");
 	}
 
 	@description = "This test ensures that the document type of a published basic document can be changed."
@@ -706,6 +757,39 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
+	@priority = "4"
+	@refactordone
+	test CannotAddDocumentWithDuplicateName {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocument = "Duplicate",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CannotAddSpecialCharacterToName {
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMFolder.addPG(
+			dmFolder = "Invalid",
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name?");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMPortlet.viewDefaultPG();
+	}
+
 	@description = "This is a test for LPS-91751. It ensures that a user cannot preview a file with size that exceeds the preview limit."
 	@priority = "4"
 	@refactordone
@@ -961,6 +1045,26 @@ definition {
 		DMDocument.expandInfo();
 
 		AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL");
+	}
+
+	@description = "This test ensures that a document with special characters in its title can be published successfully."
+	@priority = "5"
+	@refactordone
+	test CanPublishTitleWithSpecialCharacters {
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = '''/\<>:"?|*''');
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = '''/\<>:"?|*''',
+			escapedTitle = '''/\&lt;&gt;:&#34;?|*''',
+			specialCharacters = "true");
 	}
 
 	@description = "This test ensures that the user can republish an expired document after disabling expiration date."

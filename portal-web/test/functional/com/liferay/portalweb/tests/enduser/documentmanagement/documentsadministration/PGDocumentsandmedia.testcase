@@ -202,192 +202,6 @@ definition {
 			dmDocumentType = "Basic Document");
 	}
 
-	@priority = "4"
-	@refactordone
-	test CannotAddDocumentWithDuplicateName {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Documents and Media Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Documents and Media Page",
-			widgetName = "Documents and Media");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.addPG(
-			dmDocument = "Duplicate",
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
-	}
-
-	@priority = "4"
-	@refactordone
-	test CannotAddSpecialCharacterToName {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
-			dmFolder = "Invalid",
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name?");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMPortlet.viewDefaultPG();
-	}
-
-	@description = "This test covers LPS-96652. It ensures that the PDF file can be added after enabling text extraction."
-	@priority = "4"
-	@refactordone
-	test CanAddPDFAfterEnablingTextExtraction {
-		property custom.properties = "text.extraction.fork.process.enabled=true${line.separator}text.extraction.fork.process.mime.types=application/x-tika-ooxml,application/pdf";
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.addPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.pdf",
-			dmDocumentTitle = "Document_1.pdf");
-
-		AssertConsoleTextNotPresent(value1 = "java.lang.ExceptionInInitializerError");
-
-		DMDocument.viewAllPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.pdf",
-			dmDocumentType = "Basic Document");
-	}
-
-	@description = "We only need one test to cover performing actions in a subfolder. The rest of the subfolder cases will be covered at the folder level."
-	@priority = "4"
-	@refactordone
-	test CanAddImageInSubFolder {
-		JSONDocument.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Guest");
-
-		JSONDocument.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM SubFolder Name",
-			groupName = "Guest",
-			parentFolderName = "DM Folder Name");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder Name");
-
-		DMDocument.addPG(
-			dmDocumentDescription = "DM Image Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Image Title");
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Image Description",
-			dmDocumentTitle = "DM Image Title");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test CanAddMultipleSubFolders {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "Folder Name");
-
-		DMNavigator.gotoFolder(dmFolderName = "Folder Name");
-
-		DMFolder.viewPG(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "Folder Name");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "Folder Name");
-
-		DMFolder.addPG(
-			dmFolderDescription = "DM Subfolder1 Description",
-			dmFolderName = "Subfolder1 Name");
-
-		DMNavigator.gotoFolder(dmFolderName = "Subfolder1 Name");
-
-		DMFolder.viewPG(dmFolderName = "Subfolder1 Name");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "Folder Name");
-
-		DMFolder.addPG(
-			dmFolderDescription = "DM Subfolder2 Description",
-			dmFolderName = "Subfolder2 Name");
-
-		DMNavigator.gotoFolder(dmFolderName = "Subfolder2 Name");
-
-		DMFolder.viewPG(dmFolderName = "Subfolder2 Name");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoFolder(dmFolderName = "Folder Name");
-
-		DMFolder.addPG(
-			dmFolderDescription = "DM Subfolder3 Description",
-			dmFolderName = "Subfolder3 Name");
-
-		DMNavigator.gotoFolder(dmFolderName = "Subfolder3 Name");
-
-		DMFolder.viewPG(dmFolderName = "Subfolder3 Name");
-	}
-
-	@description = "This test ensures that a document with forbidden characters in the title can be published successfully."
-	@priority = "5"
-	@refactordone
-	test CanPublishTitleWithSpecialCharacters {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.addPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = '''/\<>:"?|*''');
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = '''/\<>:"?|*''',
-			escapedTitle = '''/\&lt;&gt;:&#34;?|*''',
-			specialCharacters = "true");
-	}
-
-	@priority = "4"
-	@refactordone
-	test CanCancelCheckout {
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.checkoutPG(dmDocumentTitle = "DM Document Title");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.cancelCheckoutPG(dmDocumentTitle = "DM Document Title");
-	}
-
 	@priority = "5"
 	@refactordone
 	test CanDeleteDocumentInFolder {
@@ -447,42 +261,17 @@ definition {
 
 	@priority = "5"
 	@refactorneeded
-	test CanDeleteFolderWithDocument {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description 1",
-			dmDocumentTitle = "DM Document Title 1",
-			folderName = "DM Folder Name",
-			groupName = "Guest",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
-
-		Navigator.openURL();
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.deletePG(dmFolderName = "DM Folder Name");
-	}
-
-	@priority = "5"
-	@refactorneeded
 	test CanDeleteSubFolder {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMFolder.addPG(
-			dmFolderDescription = "DM Subfolder Description",
-			dmFolderName = "DM Subfolder Name");
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM SubFolder Description",
+			dmFolderName = "DM SubFolder Name",
+			groupName = "Guest",
+			parentFolderName = "DM Folder Name");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -490,7 +279,7 @@ definition {
 
 		Refresh();
 
-		DMFolder.deletePG(dmFolderName = "DM Subfolder Name");
+		DMFolder.deletePG(dmFolderName = "DM SubFolder Name");
 	}
 
 	@priority = "5"

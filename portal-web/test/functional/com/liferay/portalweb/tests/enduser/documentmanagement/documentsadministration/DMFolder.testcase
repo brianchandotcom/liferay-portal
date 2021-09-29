@@ -67,6 +67,112 @@ definition {
 			dmDocumentTitle = "DM Image Title");
 	}
 
+	@description = "We only need one test to cover performing actions in a subfolder. The rest of the subfolder cases will be covered at the folder level."
+	@priority = "4"
+	@refactordone
+	test CanAddImageInSubFolder {
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM SubFolder Description",
+			dmFolderName = "DM SubFolder Name",
+			groupName = "Guest",
+			parentFolderName = "DM Folder Name");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder Name");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Image Title");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentTitle = "DM Image Title");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanAddMultipleSubFolders {
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM SubFolder1 Description",
+			dmFolderName = "DM SubFolder1 Name",
+			groupName = "Guest",
+			parentFolderName = "DM Folder Name");
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM SubFolder2 Description",
+			dmFolderName = "DM SubFolder2 Name",
+			groupName = "Guest",
+			parentFolderName = "DM Folder Name");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMFolder.viewPG(dmFolderName = "DM SubFolder1 Name");
+
+		DMFolder.viewPG(dmFolderName = "DM SubFolder2 Name");
+	}
+
+	@priority = "5"
+	@refactordone
+	test CanDeleteFolderWithDocument {
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description 1",
+			dmDocumentTitle = "DM Document Title 1",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMFolder.deletePG(dmFolderName = "DM Folder Name");
+	}
+
+	@priority = "5"
+	@refactorneeded
+	test CanDeleteSubFolder {
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM SubFolder Description",
+			dmFolderName = "DM SubFolder Name",
+			groupName = "Guest",
+			parentFolderName = "DM Folder Name");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		Refresh();
+
+		DMFolder.deletePG(dmFolderName = "DM SubFolder Name");
+	}
+
 	@priority = "5"
 	@refactordone
 	test CanEditFolder {

@@ -540,13 +540,11 @@ AUI.add(
 
 					const toastRootElement = toast?.parentElement;
 
-					instance._banner.destroy();
+					Liferay.destroyComponent(TOAST_ID);
 
 					if (toastRootElement) {
 						toastRootElement.remove();
 					}
-
-					Liferay.component(TOAST_ID, null);
 
 					instance._banner = false;
 				},

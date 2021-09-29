@@ -79,6 +79,9 @@ public class AssetVocabularyStagedModelDataHandlerTest
 		AssetVocabulary importedVocabulary =
 			(AssetVocabulary)importedStagedModel;
 
+		Assert.assertEquals(
+			vocabulary.getExternalReferenceCode(),
+			importedVocabulary.getExternalReferenceCode());
 		Assert.assertEquals(vocabulary.getName(), importedVocabulary.getName());
 		Assert.assertEquals(
 			vocabulary.getTitle(LocaleUtil.getDefault()),

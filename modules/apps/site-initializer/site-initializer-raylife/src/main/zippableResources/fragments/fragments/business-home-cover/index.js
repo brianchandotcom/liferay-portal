@@ -13,16 +13,6 @@
  * details.
  */
 
-const getCurrentSiteName = () => {
-	const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
-	const pathSplit = pathname.split('/').filter(Boolean);
-
-	return {
-		pathname,
-		siteName: pathSplit[pathSplit.length - 1],
-	};
-};
-
 async function fetchGraphQL(body) {
 	const response = await fetch(`${window.location.origin}/o/graphql`, {
 		body: JSON.stringify(body),
@@ -55,8 +45,6 @@ const continueQuoteButton = fragmentElement.querySelector('#continue-quote');
 const getQuoteForm = fragmentElement.querySelector('#get-quote-form');
 const zipContainer = fragmentElement.querySelector('#zip-container');
 const productContainer = fragmentElement.querySelector('#product-container');
-
-const currentSiteName = getCurrentSiteName();
 
 retrieveQuoteButton.onclick = function () {
 	retrieveQuoteContainer.classList.add('d-none', 'invisible');
@@ -119,10 +107,13 @@ getQuoteForm.onsubmit = function (event) {
 		if (!formProps.product) {
 			productContainer.classList.add('has-error');
 		}
-	} else {
+	}
+	else {
 		localStorage.setItem('raylife-product', JSON.stringify(formProps));
 
-		window.location.href = `${currentSiteName.pathname}/get-a-quote`;
+		const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
+
+		window.location.href = `${pathname}/get-a-quote`;
 	}
 };
 
@@ -136,9 +127,7 @@ fragmentElement.querySelector('#zip').onkeypress = (event) => {
 	try {
 		const response = await fetchGraphQL({
 			query: `{
-			taxonomyVocabularies(filter: "name eq '${
-				currentSiteName.siteName
-			}'", siteKey: "${themeDisplay.getCompanyGroupId()}") {
+			taxonomyVocabularies(filter: "name eq 'Raylife'", siteKey: "${themeDisplay.getCompanyGroupId()}") {
 				items {
 					id
 					name
@@ -153,17 +142,19 @@ fragmentElement.querySelector('#zip').onkeypress = (event) => {
 		}
 	`,
 		});
+		const product = fragmentElement.querySelector('#product');
 
 		const taxonomyVocabularies =
 			response?.taxonomyVocabularies?.items[0]?.taxonomyCategories
 				?.items || [];
 
-		const product = fragmentElement.querySelector('#product');
-
-		taxonomyVocabularies.forEach((category) => {
-			product.add(new Option(category.name, category.id));
+		taxonomyVocabularies.forEach((taxonomyVocabulary) => {
+			product.add(
+				new Option(taxonomyVocabulary.name, taxonomyVocabulary.id)
+			);
 		});
-	} catch (error) {
+	}
+	catch (error) {
 		console.error(error.message);
 	}
 })();

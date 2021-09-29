@@ -6,11 +6,7 @@ import {STORAGE_KEYS, Storage} from './storage';
 
 const LiferayObjectAPI = 'o/c/raylifeapplications';
 
-const {
-	REACT_APP_LIFERAY_API = 'http://localhost:8080',
-	REACT_APP_LIFERAY_AUTH_PASSWORD = 'test',
-	REACT_APP_LIFERAY_AUTH_USERNAME = 'test@liferay.com',
-} = process.env;
+const {REACT_APP_LIFERAY_API = window.location.origin} = process.env;
 
 /**
  * @param {DataForm}  data Basics form object
@@ -174,10 +170,6 @@ const _patchBasicsFormApplication = (payload, id) => {
 };
 
 const LiferayAPI = Axios.create({
-	auth: {
-		password: REACT_APP_LIFERAY_AUTH_PASSWORD,
-		username: REACT_APP_LIFERAY_AUTH_USERNAME,
-	},
 	baseURL: REACT_APP_LIFERAY_API,
 	headers: {
 		'x-csrf-token': getLiferayAuthenticationToken(),
@@ -185,6 +177,7 @@ const LiferayAPI = Axios.create({
 });
 
 async function GraphQLFetch(body) {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(`${REACT_APP_LIFERAY_API}/o/graphql`, {
 		body: JSON.stringify(body),
 		headers: {
@@ -200,8 +193,8 @@ async function GraphQLFetch(body) {
 }
 
 export const LiferayService = {
-	LiferayAPI,
 	GraphQLFetch,
+	LiferayAPI,
 	createOrUpdateRaylifeApplication,
 	getBusinessTypes,
 	getCategoryProperties,

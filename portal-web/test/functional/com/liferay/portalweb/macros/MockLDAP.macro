@@ -3,10 +3,22 @@ definition {
 	macro selectJsonFile {
 		Navigator.gotoNavTab(navTab = "${tabName}");
 
-		UploadCommonFile(
-			key_tab = "${tabName}",
-			locator1 = "MockLDAP#BROWSE_BUTTON",
-			value1 = "${fileName}");
+		if (isSet(filePath)) {
+			var testBaseDirName = PropsUtil.get("test.base.dir.name");
+			var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
+			var filePath = "${testBaseDirName}tests/${filePath}/${testDependenciesDirName}/${fileName}";
+
+			UploadFile(
+				key_tab = "${tabName}",
+				locator1 = "MockLDAP#BROWSE_BUTTON",
+				value1 = "${filePath}");
+		}
+		else {
+			UploadCommonFile(
+				key_tab = "${tabName}",
+				locator1 = "MockLDAP#BROWSE_BUTTON",
+				value1 = "${fileName}");
+		}
 
 		AssertClick(
 			key_tab = "${tabName}",

@@ -157,6 +157,15 @@ public class ObjectEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteRelatedEntries(
+			long groupId, long objectDefinitionId, long primaryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectEntryLocalService.deleteRelatedEntries(
+			groupId, objectDefinitionId, primaryKey);
+	}
+
+	@Override
 	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
 		return _objectEntryLocalService.dslQuery(dslQuery);
 	}

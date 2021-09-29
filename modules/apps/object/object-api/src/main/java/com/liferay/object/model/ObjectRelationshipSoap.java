@@ -48,6 +48,7 @@ public class ObjectRelationshipSoap implements Serializable {
 		soapModel.setLabel(model.getLabel());
 		soapModel.setName(model.getName());
 		soapModel.setType(model.getType());
+		soapModel.setDeletionType(model.getDeletionType());
 
 		return soapModel;
 	}
@@ -230,6 +231,14 @@ public class ObjectRelationshipSoap implements Serializable {
 		_type = type;
 	}
 
+	public String getDeletionType() {
+		return _deletionType;
+	}
+
+	public void setDeletionType(String deletionType) {
+		_deletionType = deletionType;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _objectRelationshipId;
@@ -245,5 +254,6 @@ public class ObjectRelationshipSoap implements Serializable {
 	private String _label;
 	private String _name;
 	private String _type;
+	private String _deletionType;
 
 }

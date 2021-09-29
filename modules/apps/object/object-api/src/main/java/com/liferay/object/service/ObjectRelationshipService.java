@@ -79,7 +79,8 @@ public interface ObjectRelationshipService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public ObjectRelationship updateObjectRelationship(
-			long objectRelationshipId, Map<Locale, String> labelMap)
+			long objectRelationshipId, Map<Locale, String> labelMap,
+			String deletionType)
 		throws PortalException;
 
 }

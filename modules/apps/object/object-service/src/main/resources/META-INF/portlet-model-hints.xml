@@ -174,5 +174,6 @@
 		<field localized="true" name="label" type="String" />
 		<field name="name" type="String" />
 		<field name="type" type="String" />
+		<field name="deletionType" type="String" />
 	</model>
 </model-hints>

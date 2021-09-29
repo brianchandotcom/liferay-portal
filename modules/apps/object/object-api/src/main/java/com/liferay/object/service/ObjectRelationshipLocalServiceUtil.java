@@ -140,6 +140,14 @@ public class ObjectRelationshipLocalServiceUtil {
 		return getService().deleteObjectRelationship(objectRelationship);
 	}
 
+	public static void deleteObjectRelationshipMappingTableValues(
+			long objectRelationshipId, long primaryKey1)
+		throws PortalException {
+
+		getService().deleteObjectRelationshipMappingTableValues(
+			objectRelationshipId, primaryKey1);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -365,11 +373,12 @@ public class ObjectRelationshipLocalServiceUtil {
 	}
 
 	public static ObjectRelationship updateObjectRelationship(
-			long objectRelationshipId, Map<java.util.Locale, String> labelMap)
+			long objectRelationshipId, Map<java.util.Locale, String> labelMap,
+			String deletionType)
 		throws PortalException {
 
 		return getService().updateObjectRelationship(
-			objectRelationshipId, labelMap);
+			objectRelationshipId, labelMap, deletionType);
 	}
 
 	/**

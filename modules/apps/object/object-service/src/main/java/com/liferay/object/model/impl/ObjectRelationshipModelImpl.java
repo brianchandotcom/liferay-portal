@@ -92,7 +92,8 @@ public class ObjectRelationshipModelImpl
 		{"objectDefinitionId1", Types.BIGINT},
 		{"objectDefinitionId2", Types.BIGINT}, {"objectFieldId2", Types.BIGINT},
 		{"dbTableName", Types.VARCHAR}, {"label", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"type_", Types.VARCHAR}
+		{"name", Types.VARCHAR}, {"type_", Types.VARCHAR},
+		{"deletionType", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -114,10 +115,11 @@ public class ObjectRelationshipModelImpl
 		TABLE_COLUMNS_MAP.put("label", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("deletionType", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectRelationship (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectRelationshipId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId1 LONG,objectDefinitionId2 LONG,objectFieldId2 LONG,dbTableName VARCHAR(75) null,label STRING null,name VARCHAR(75) null,type_ VARCHAR(75) null)";
+		"create table ObjectRelationship (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectRelationshipId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId1 LONG,objectDefinitionId2 LONG,objectFieldId2 LONG,dbTableName VARCHAR(75) null,label STRING null,name VARCHAR(75) null,type_ VARCHAR(75) null,deletionType VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectRelationship";
 
@@ -226,6 +228,7 @@ public class ObjectRelationshipModelImpl
 		model.setLabel(soapModel.getLabel());
 		model.setName(soapModel.getName());
 		model.setType(soapModel.getType());
+		model.setDeletionType(soapModel.getDeletionType());
 
 		return model;
 	}
@@ -468,6 +471,12 @@ public class ObjectRelationshipModelImpl
 			"type",
 			(BiConsumer<ObjectRelationship, String>)
 				ObjectRelationship::setType);
+		attributeGetterFunctions.put(
+			"deletionType", ObjectRelationship::getDeletionType);
+		attributeSetterBiConsumers.put(
+			"deletionType",
+			(BiConsumer<ObjectRelationship, String>)
+				ObjectRelationship::setDeletionType);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -908,6 +917,26 @@ public class ObjectRelationshipModelImpl
 		return getColumnOriginalValue("type_");
 	}
 
+	@JSON
+	@Override
+	public String getDeletionType() {
+		if (_deletionType == null) {
+			return "";
+		}
+		else {
+			return _deletionType;
+		}
+	}
+
+	@Override
+	public void setDeletionType(String deletionType) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_deletionType = deletionType;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -1054,6 +1083,7 @@ public class ObjectRelationshipModelImpl
 		objectRelationshipImpl.setLabel(getLabel());
 		objectRelationshipImpl.setName(getName());
 		objectRelationshipImpl.setType(getType());
+		objectRelationshipImpl.setDeletionType(getDeletionType());
 
 		objectRelationshipImpl.resetOriginalValues();
 
@@ -1095,6 +1125,8 @@ public class ObjectRelationshipModelImpl
 			this.<String>getColumnOriginalValue("name"));
 		objectRelationshipImpl.setType(
 			this.<String>getColumnOriginalValue("type_"));
+		objectRelationshipImpl.setDeletionType(
+			this.<String>getColumnOriginalValue("deletionType"));
 
 		return objectRelationshipImpl;
 	}
@@ -1256,6 +1288,14 @@ public class ObjectRelationshipModelImpl
 			objectRelationshipCacheModel.type = null;
 		}
 
+		objectRelationshipCacheModel.deletionType = getDeletionType();
+
+		String deletionType = objectRelationshipCacheModel.deletionType;
+
+		if ((deletionType != null) && (deletionType.length() == 0)) {
+			objectRelationshipCacheModel.deletionType = null;
+		}
+
 		return objectRelationshipCacheModel;
 	}
 
@@ -1364,6 +1404,7 @@ public class ObjectRelationshipModelImpl
 	private String _labelCurrentLanguageId;
 	private String _name;
 	private String _type;
+	private String _deletionType;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1410,6 +1451,7 @@ public class ObjectRelationshipModelImpl
 		_columnOriginalValues.put("label", _label);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("type_", _type);
+		_columnOriginalValues.put("deletionType", _deletionType);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1463,6 +1505,8 @@ public class ObjectRelationshipModelImpl
 		columnBitmasks.put("name", 8192L);
 
 		columnBitmasks.put("type_", 16384L);
+
+		columnBitmasks.put("deletionType", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -78,7 +78,7 @@ public class ObjectRelationshipCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -110,6 +110,8 @@ public class ObjectRelationshipCacheModel
 		sb.append(name);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", deletionType=");
+		sb.append(deletionType);
 		sb.append("}");
 
 		return sb.toString();
@@ -186,6 +188,13 @@ public class ObjectRelationshipCacheModel
 			objectRelationshipImpl.setType(type);
 		}
 
+		if (deletionType == null) {
+			objectRelationshipImpl.setDeletionType("");
+		}
+		else {
+			objectRelationshipImpl.setDeletionType(deletionType);
+		}
+
 		objectRelationshipImpl.resetOriginalValues();
 
 		return objectRelationshipImpl;
@@ -214,6 +223,7 @@ public class ObjectRelationshipCacheModel
 		label = objectInput.readUTF();
 		name = objectInput.readUTF();
 		type = objectInput.readUTF();
+		deletionType = objectInput.readUTF();
 	}
 
 	@Override
@@ -276,6 +286,13 @@ public class ObjectRelationshipCacheModel
 		else {
 			objectOutput.writeUTF(type);
 		}
+
+		if (deletionType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(deletionType);
+		}
 	}
 
 	public long mvccVersion;
@@ -293,5 +310,6 @@ public class ObjectRelationshipCacheModel
 	public String label;
 	public String name;
 	public String type;
+	public String deletionType;
 
 }

@@ -138,6 +138,10 @@ public interface ObjectRelationshipLocalService
 			ObjectRelationship objectRelationship)
 		throws PortalException;
 
+	public void deleteObjectRelationshipMappingTableValues(
+			long objectRelationshipId, long primaryKey1)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */
@@ -312,7 +316,8 @@ public interface ObjectRelationshipLocalService
 		throws PortalException;
 
 	public ObjectRelationship updateObjectRelationship(
-			long objectRelationshipId, Map<Locale, String> labelMap)
+			long objectRelationshipId, Map<Locale, String> labelMap,
+			String deletionType)
 		throws PortalException;
 
 	/**

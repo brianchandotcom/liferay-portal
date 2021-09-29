@@ -84,11 +84,12 @@ public class ObjectRelationshipServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectRelationship updateObjectRelationship(
 			long objectRelationshipId,
-			java.util.Map<java.util.Locale, String> labelMap)
+			java.util.Map<java.util.Locale, String> labelMap,
+			String deletionType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectRelationshipService.updateObjectRelationship(
-			objectRelationshipId, labelMap);
+			objectRelationshipId, labelMap, deletionType);
 	}
 
 	@Override

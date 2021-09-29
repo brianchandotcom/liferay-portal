@@ -58,6 +58,7 @@ public class ObjectRelationshipWrapper
 		attributes.put("label", getLabel());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
+		attributes.put("deletionType", getDeletionType());
 
 		return attributes;
 	}
@@ -154,6 +155,12 @@ public class ObjectRelationshipWrapper
 		if (type != null) {
 			setType(type);
 		}
+
+		String deletionType = (String)attributes.get("deletionType");
+
+		if (deletionType != null) {
+			setDeletionType(deletionType);
+		}
 	}
 
 	@Override
@@ -199,6 +206,16 @@ public class ObjectRelationshipWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the deletion type of this object relationship.
+	 *
+	 * @return the deletion type of this object relationship
+	 */
+	@Override
+	public String getDeletionType() {
+		return model.getDeletionType();
 	}
 
 	/**
@@ -455,6 +472,16 @@ public class ObjectRelationshipWrapper
 	@Override
 	public void setDBTableName(String dbTableName) {
 		model.setDBTableName(dbTableName);
+	}
+
+	/**
+	 * Sets the deletion type of this object relationship.
+	 *
+	 * @param deletionType the deletion type of this object relationship
+	 */
+	@Override
+	public void setDeletionType(String deletionType) {
+		model.setDeletionType(deletionType);
 	}
 
 	/**

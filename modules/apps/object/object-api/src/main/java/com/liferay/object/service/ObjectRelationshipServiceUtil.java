@@ -80,11 +80,12 @@ public class ObjectRelationshipServiceUtil {
 	}
 
 	public static ObjectRelationship updateObjectRelationship(
-			long objectRelationshipId, Map<java.util.Locale, String> labelMap)
+			long objectRelationshipId, Map<java.util.Locale, String> labelMap,
+			String deletionType)
 		throws PortalException {
 
 		return getService().updateObjectRelationship(
-			objectRelationshipId, labelMap);
+			objectRelationshipId, labelMap, deletionType);
 	}
 
 	public static ObjectRelationshipService getService() {

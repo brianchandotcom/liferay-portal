@@ -149,6 +149,10 @@ public interface ObjectEntryLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public void deleteRelatedEntries(
+			long groupId, long objectDefinitionId, long primaryKey)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 

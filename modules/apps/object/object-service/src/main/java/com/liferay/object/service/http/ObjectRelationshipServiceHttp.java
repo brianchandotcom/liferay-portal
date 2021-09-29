@@ -224,7 +224,8 @@ public class ObjectRelationshipServiceHttp {
 	public static com.liferay.object.model.ObjectRelationship
 			updateObjectRelationship(
 				HttpPrincipal httpPrincipal, long objectRelationshipId,
-				java.util.Map<java.util.Locale, String> labelMap)
+				java.util.Map<java.util.Locale, String> labelMap,
+				String deletionType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -233,7 +234,7 @@ public class ObjectRelationshipServiceHttp {
 				_updateObjectRelationshipParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, objectRelationshipId, labelMap);
+				methodKey, objectRelationshipId, labelMap, deletionType);
 
 			Object returnObj = null;
 
@@ -278,6 +279,6 @@ public class ObjectRelationshipServiceHttp {
 	private static final Class<?>[] _getObjectRelationshipsParameterTypes3 =
 		new Class[] {long.class, int.class, int.class};
 	private static final Class<?>[] _updateObjectRelationshipParameterTypes4 =
-		new Class[] {long.class, java.util.Map.class};
+		new Class[] {long.class, java.util.Map.class, String.class};
 
 }

@@ -76,6 +76,9 @@ public class ObjectRelationshipTable
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectRelationshipTable, String> type = createColumn(
 		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectRelationshipTable, String> deletionType =
+		createColumn(
+			"deletionType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private ObjectRelationshipTable() {
 		super("ObjectRelationship", ObjectRelationshipTable::new);

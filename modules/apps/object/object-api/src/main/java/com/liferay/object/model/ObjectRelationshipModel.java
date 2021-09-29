@@ -394,6 +394,21 @@ public interface ObjectRelationshipModel
 	 */
 	public void setType(String type);
 
+	/**
+	 * Returns the deletion type of this object relationship.
+	 *
+	 * @return the deletion type of this object relationship
+	 */
+	@AutoEscape
+	public String getDeletionType();
+
+	/**
+	 * Sets the deletion type of this object relationship.
+	 *
+	 * @param deletionType the deletion type of this object relationship
+	 */
+	public void setDeletionType(String deletionType);
+
 	@Override
 	public String[] getAvailableLanguageIds();
 

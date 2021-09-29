@@ -352,7 +352,7 @@ definition {
 	@description = "This test ensures that a document with forbidden characters in the title can be published successfully."
 	@priority = "5"
 	@refactordone
-	test CanAllowTitleWithForbiddenCharacters {
+	test CanPublishTitleWithSpecialCharacters {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addPG(
@@ -365,8 +365,8 @@ definition {
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = '''/\<>:"?|*''',
-			escapedDocumentTitle = '''/\&lt;&gt;:&#34;?|*''',
-			titleWithForbiddenCharacters = "true");
+			escapedTitle = '''/\&lt;&gt;:&#34;?|*''',
+			specialCharacters = "true");
 	}
 
 	@priority = "4"

@@ -92,11 +92,9 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				<div class="form-group">
 					<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= dlAdminDisplayContext.getRootFolderName() %>" />
 
-					<c:if test="<%= dlAdminDisplayContext.isRootFolderInTrash() %>">
-						<div class="alert alert-warning">
-							<liferay-ui:message key="the-selected-root-folder-is-in-the-recycle-bin-please-remove-it-or-select-another-one" />
-						</div>
-					</c:if>
+					<div class="alert alert-warning <%= dlAdminDisplayContext.isRootFolderInTrash() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootFolderInTrash">
+						<liferay-ui:message key="the-selected-root-folder-is-in-the-recycle-bin-please-remove-it-or-select-another-one" />
+					</div>
 
 					<aui:button name="selectFolderButton" value="select" />
 
@@ -156,6 +154,12 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 								};
 
 								Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+
+								var rootFolderInTrashWarning = document.querySelector(
+									'#<portlet:namespace />rootFolderInTrash'
+								);
+
+								rootFolderInTrashWarning.classList.add('hide');
 							},
 							selectEventName:
 								'_<%= HtmlUtil.escapeJS(dlRequestHelper.getPortletResource()) %>_selectFolder',

@@ -40,10 +40,17 @@ definition {
 	test AssertLongPublicationProcessMessage {
 		property test.name.skip.portal.instance = "RemoteStaging#AssertLongPublicationProcessMessage";
 
-		Clustering.runGroovyScript(
-			longTimeRun = "true",
-			nodePort = "8080",
-			scriptFile = "create-300-web-content-articles.groovy");
+		ServerAdministration.openServerAdmin();
+
+		var script = TestCase.getFileContent(
+			fileName = "create-300-web-content-articles.groovy",
+			filePath = "enduser/staging/usecase");
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${script}");
+
+		Pause(locator1 = "60000");
 
 		Staging.openStagingAdmin(siteURLKey = "site-name");
 

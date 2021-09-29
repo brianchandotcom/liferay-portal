@@ -454,6 +454,7 @@ definition {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		LAR.importPortlet(
+			filePath = "enduser/staging/usecase",
 			importSchemaVersionMismatching = "true",
 			larFileName = "7.0.10.14_webcontent.lar",
 			portletName = "Web Content",

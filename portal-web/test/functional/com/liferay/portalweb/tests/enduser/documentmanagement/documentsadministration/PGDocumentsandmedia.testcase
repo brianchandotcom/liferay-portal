@@ -247,8 +247,8 @@ definition {
 
 	@description = "This test covers LPS-96652. It ensures that the PDF file can be added after enabling text extraction."
 	@priority = "4"
-	@refactorneeded
-	test AddPDFAfterEnablingTextExtraction {
+	@refactordone
+	test CanAddPDFAfterEnablingTextExtraction {
 		property custom.properties = "text.extraction.fork.process.enabled=true${line.separator}text.extraction.fork.process.mime.types=application/x-tika-ooxml,application/pdf";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -266,7 +266,7 @@ definition {
 			dmDocumentType = "Basic Document");
 	}
 
-	@description = "We only need one test to cover adding something in a subfolder. The rest of the subfolder cases will be covered at the folder level."
+	@description = "We only need one test to cover performing actions in a subfolder. The rest of the subfolder cases will be covered at the folder level."
 	@priority = "4"
 	@refactordone
 	test CanAddImageInSubFolder {
@@ -299,7 +299,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test AddSubFolders {
+	test CanAddMultipleSubFolders {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMFolder.addPG(
@@ -351,8 +351,8 @@ definition {
 
 	@description = "This test ensures that a document with forbidden characters in the title can be published successfully."
 	@priority = "5"
-	@refactorneeded
-	test AllowTitleWithForbiddenCharacters {
+	@refactordone
+	test CanAllowTitleWithForbiddenCharacters {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addPG(
@@ -370,8 +370,8 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test CancelCheckout {
+	@refactordone
+	test CanCancelCheckout {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -389,8 +389,8 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
-	test DeleteDocumentInFolder {
+	@refactordone
+	test CanDeleteDocumentInFolder {
 		property portal.acceptance = "true";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -414,7 +414,7 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test DeleteDocumentWithSlashesInTitle {
+	test CanDeleteDocumentInSitePage {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addPG(
@@ -447,7 +447,7 @@ definition {
 
 	@priority = "5"
 	@refactorneeded
-	test DeleteFolderWithDocument {
+	test CanDeleteFolderWithDocument {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMFolder.addPG(
@@ -471,7 +471,7 @@ definition {
 
 	@priority = "5"
 	@refactorneeded
-	test DeleteSubFolder {
+	test CanDeleteSubFolder {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMFolder.addPG(
@@ -508,7 +508,7 @@ definition {
 
 	@priority = "5"
 	@refactorneeded
-	test EditDocument {
+	test CanEditDocument {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addPG(

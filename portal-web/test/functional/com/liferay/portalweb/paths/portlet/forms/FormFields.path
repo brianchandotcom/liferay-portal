@@ -830,7 +830,7 @@
 </tr>
 <tr>
 	<td>SWITCH_NOT_VISIBLE</td>
-	<td>//div[contains(@class,'form-group hide')]//span[contains(text(),'${key_switchOption}')]</td>
+	<td>//div[contains(@class,'form-group hide')]//label[contains(text(),'${key_switchOption}')]</td>
 	<td></td>
 </tr>
 <tr>

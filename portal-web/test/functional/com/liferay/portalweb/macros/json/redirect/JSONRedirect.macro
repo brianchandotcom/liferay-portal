@@ -84,4 +84,32 @@ definition {
 		return "${redirectEntryId}";
 	}
 
+	@summary = "This calls the JSON WS API to update an entry"
+	macro updateEntry {
+		var redirectEntryId = JSONRedirect.getRedirectEntryId(
+			groupName = "${groupName}",
+			destinationURL = "${destinationURL}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var destinationURL = StringUtil.replace("${destinationURL}", ":", "%3A");
+
+		if (!(isSet(permanent))) {
+			var permanent = "false";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/redirect.redirectentry/update-redirect-entry \
+				-u test@liferay.com:test \
+				-d redirectEntryId=${redirectEntryId} \
+				-d destinationURL=${destinationURL} \
+				-d expirationDate=${expirationDate} \
+				-d permanent=${permanent} \
+				-d sourceURL=${sourceURL}
+
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 }

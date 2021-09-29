@@ -193,9 +193,7 @@ public class JSPStylingCheck extends BaseStylingCheck {
 	private static final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
 		"\n\t*<%\\!?\n+\t*%>(\n|\\Z)");
 	private static final Pattern _incorrectBacktickPattern = Pattern.compile(
-		StringBundler.concat(
-			StringPool.GRAVE_ACCENT, "((.(?!\\{.+\\}))*)",
-			StringPool.GRAVE_ACCENT));
+		"`((.(?!\\{.+\\}))*)`");
 	private static final Pattern _incorrectClosingTagPattern = Pattern.compile(
 		"\n(\t*)\t((?!<\\w).)* />\n");
 	private static final Pattern _incorrectLineBreakPattern1 = Pattern.compile(

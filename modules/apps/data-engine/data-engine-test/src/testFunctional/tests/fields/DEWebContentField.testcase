@@ -107,7 +107,7 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		DERenderer.clearImageField(fieldLabel = "Web Content");
+		DERenderer.clearDataOnField(fieldLabel = "Web Content");
 
 		Button.clickPublish();
 

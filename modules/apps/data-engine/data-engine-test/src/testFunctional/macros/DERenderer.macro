@@ -212,7 +212,7 @@ definition {
 			value1 = "${contentName}");
 	}
 
-	macro clearImageField {
+	macro clearDataOnField {
 		if (!(isSet(index))) {
 			var index = "1";
 		}

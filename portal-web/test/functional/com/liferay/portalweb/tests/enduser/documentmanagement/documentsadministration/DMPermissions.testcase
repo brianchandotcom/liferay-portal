@@ -1632,7 +1632,11 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/d/${dmFileEntryID}");
 
-		Alert.viewErrorMessage(errorMessage = "You do not have the required permissions to view the content of this page.");
+		AssertElementNotPresent(
+			key_dmDocumentTitle = "DM Document Title",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+
+		User.viewLoggedOutPG();
 	}
 
 	@description = "This ensures that the user can create document viewable only by the owner."

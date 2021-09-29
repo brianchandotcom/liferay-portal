@@ -28,46 +28,6 @@
 	}
 }
 
-.lfr-code {
-	background: #fff;
-	border: 1px solid transparent;
-	border-color: #777;
-	font-family: monospace;
-	overflow: hidden;
-	overflow-wrap: normal;
-	overflow-x: auto;
-	white-space: pre;
-	word-break: normal;
-	word-wrap: normal;
-
-	table {
-		table-layout: auto;
-		width: 100%;
-
-		tr td {
-			&.lines,
-			&.line-numbers {
-				border-width: 0;
-			}
-
-			&.line-numbers {
-				background: #fafafa;
-				border-right-width: 1px;
-				color: #aaa;
-				cursor: default;
-				padding: 0 8px;
-				text-align: right;
-				text-shadow: 1px 1px #fff;
-
-				@include user-select(none);
-
-				vertical-align: top;
-				width: 1%;
-			}
-		}
-	}
-}
-
 .popup-alert-notice .countdown-timer {
 	font-size: 1.1em;
 	font-weight: bold;

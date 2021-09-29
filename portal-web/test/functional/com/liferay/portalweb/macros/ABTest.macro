@@ -23,6 +23,35 @@ definition {
 		Close(locator1 = "title=Tests - Analytics Cloud");
 	}
 
+	macro checkVariantAnalyticsCloud {
+		var index = "1";
+
+		if (IsElementPresent(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON")) {
+			ABTest.runTest();
+		}
+
+		Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
+
+		SelectWindow(locator1 = "name=undefined");
+
+		if (IsElementPresent(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_USER_LOGIN_FIELD")) {
+			AnalyticsCloud.loginAnalyticsCloud(
+				emailAddress = "test@liferay.com",
+				password = "test");
+		}
+
+		for (var variantNames : list "${variantNames}") {
+			var index = ${index} + 1;
+
+			AssertElementPresent(
+			name = "${variantNames}",
+			key_index = "${index}",
+			locator1 = "ABTest#REVIEW_VARIANTS_ANALYTICS_CLOUD");
+		}
+
+		Close(locator1 = "title=Tests - Analytics Cloud");
+	}
+
 	macro createABTest {
 		while (IsElementNotPresent(locator1 = "ABTest#CREATE_TEST_BUTTON")) {
 			Click(locator1 = "ABTest#AB_TEST_BUTTON");
@@ -56,6 +85,10 @@ definition {
 	}
 
 	macro deleteVariant {
+		if (!(isSet(key_index))) {
+			key_index = "1";
+		}
+
 		Click(locator1 = "ABTest#VARIANT_DROPDOWN");
 
 		ClickNoError(locator1 = "ABTest#DELETE_VARIANT_BUTTON");
@@ -71,6 +104,16 @@ definition {
 		Click(
 			locator1 = "ABTest#KEBAB_OPTIONS_AB_TEST",
 			value = "${value}");
+	}
+
+	macro editVariantName   {
+		if (!(isSet(key_index))) {
+			key_index = "1";
+		}
+
+		Click(locator1 = "ABTest#VARIANT_DROPDOWN");
+
+		Click(locator1 = "ABTest#EDIT_VARIANT_BUTTON");
 	}
 
 	macro runTest {
@@ -110,6 +153,19 @@ definition {
 		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to terminate this test?");
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro viewVariantName {
+		var index = "1";
+
+		for (var variantNames : list "${variantNames}") {
+			var index = ${index} + 1;
+
+			AssertElementPresent(
+			name = "${variantNames}",
+			key_index = "${index}",
+			locator1 = "ABTest#VARIANT_NAME");
+		}
 	}
 
 	macro writeId {

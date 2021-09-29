@@ -99,9 +99,29 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test AssertEditDeleteVarianOptions {
+        task ("Create AB test and create variant") {
+            ABTest.createABTest(
+                goal = "Bounce Rate",
+                testTitle = "AB test title");
 
-		// TODO LPS-137480 AssertEditDeleteVarianOptions pending implementation
+            ABTest.createVariant(variantName = "Variant name");
+        }
 
+        task ("Open the three dots menu for the variant and assert Edit and Delete appear") {
+            Click(
+				key_index = "1",
+				locator1 = "ABTest#VARIANT_DROPDOWN");
+            
+            AssertElementPresent(locator1 = "ABTest#DELETE_VARIANT_BUTTON");
+
+            AssertElementPresent(locator1 = "ABTest#EDIT_VARIANT_BUTTON");
+        }
+
+        task ("Run and terminate the AB test") {
+            ABTest.runTest();
+
+            ABTest.terminateTest();
+        }
 	}
 
 	@description = "LPS-97194: Validate if the goal input test for the AB Test appears when the user tries to edit one AB Test"
@@ -246,27 +266,121 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CheckVariantAddedInAC {
+		task ("Create AB test and create variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		// TODO LPS-137480 CheckVariantAddedInAC pending implementation
+			ABTest.createVariant(variantName = "Variant name");
+		}
 
+		task ("Check the info is correct in Analytics Cloud and run the test") {
+			ABTest.checkVariantAnalyticsCloud(variantNames = "Variant name");
+		}
+
+		task ("Go back to DXP") {
+			Navigator.openURL();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Terminate the AB test") {
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-97195: Validate if the variant for A/B Test that was deleted on Liferay portal is visible in the Analytics Cloud"
 	@ignore = "true"
 	@priority = "4"
 	test CheckVariantDeletedInAC {
+		task ("Create AB test and create 2 variants") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		// TODO LPS-137480 CheckVariantDeletedInAC pending implementation
+			ABTest.createVariant(variantName = "Variant name");
 
+			ABTest.createVariant(variantName = "Variant name 2");
+		}
+
+		task ("Delete one variant and run AB Test") {
+			ABTest.deleteVariant();
+
+			ABTest.runTest();
+		}
+
+		task ("Check that exist only one variant in Analytics Cloud") {
+			Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
+
+			SelectWindow(locator1 = "name=undefined");
+
+			AnalyticsCloud.loginAnalyticsCloud(
+				emailAddress = "test@liferay.com",
+				password = "test");
+
+			AssertElementPresent(
+			name = "Variant name 2",
+			key_index = "2",
+			locator1 = "ABTest#REVIEW_VARIANTS_ANALYTICS_CLOUD");
+
+			AssertElementNotPresent(
+			name = "Variant name",
+			key_index = "3",
+			locator1 = "ABTest#REVIEW_VARIANTS_ANALYTICS_CLOUD");
+		}
+
+		task ("Go back to DXP") {
+			Navigator.openURL();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Terminate the AB test") {
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-97195: Validate if the variant for A/B Test that was edited on Liferay portal is visible in the Analytics Cloud"
 	@ignore = "true"
 	@priority = "4"
 	test CheckVariantEditedInAC {
+		task ("Create AB test and create variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		// TODO LPS-137480 CheckVariantEditedInAC pending implementation
+			ABTest.createVariant(variantName = "Variant name");
+		}
 
+		task ("Edit variant") {
+			ABTest.editVariantName();
+
+			Click(locator1 = "ABTest#VARIANT_NAME_FIELD");
+
+			Type(
+				locator1 = "ABTest#VARIANT_NAME_FIELD",
+				value1 = "Variant name 2");
+
+			Click(locator1 = "ABTest#SAVE_VARIANT_NAME_BUTTON");
+		}
+
+		task ("Assert that variant name is changed in DXP and run the test") {
+			ABTest.viewVariantName(variantNames = "Variant name 2");
+		}
+
+		task ("Check the info is correct in Analytics Cloud") {
+			ABTest.checkVariantAnalyticsCloud(variantNames = "Variant name 2");
+		}
+
+		task ("Go back to DXP") {
+			Navigator.openURL();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Terminate the AB test") {
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-119475: When a user has selected an element and clicks on the x icon within the ID box, the ID box gets empty and the Change clickable element button changes into Select clickable element"
@@ -415,9 +529,29 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CreateVariantSameName {
+        task ("Create AB test") {
+            ABTest.createABTest(
+                goal = "Bounce Rate",
+                testTitle = "AB test title");
+        }
+        
+        task ("Create two variants whith the same name and view success message") {
+            ABTest.createVariant(variantName = "Variant name");
 
-		// TODO LPS-137480 CreateVariantSameName pending implementation
+            ABTest.createVariant(variantName = "Variant name");
 
+            Alert.viewSuccessMessage();
+		}
+
+		task ("Assert that variants where created") {
+			ABTest.viewVariantName(variantNames = "Variant name,Variant name");
+		}
+
+        task ("Run and terminate the AB test") {
+            ABTest.runTest();
+
+            ABTest.terminateTest();
+        }
 	}
 
 	@description = "LPS-104203: Validate if in the AB Test, when the user delete the clickable element that was set, the warning alert appears"
@@ -469,18 +603,64 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test DeleteVariant {
+		task ("Create AB test and create variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		// TODO LPS-137480 DeleteVariant pending implementation
+			ABTest.createVariant(variantName = "Variant name");
+		}
 
+		task("Delete variant") {
+			ABTest.deleteVariant();
+		}
+
+		task ("Assert that there is no variant") {
+			AssertTextEquals(
+				locator1 = "ABTest#REVIEW_NO_HAVE_VARIANTS",
+				value1 = "Create at least one variant to run the test.");
+		}
+
+		task ("Run and terminate AB Test") {
+			ABTest.createVariant(variantName = "Variant name");
+
+			ABTest.runTest();
+
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-97195: Validate if the user not will delete a variant for A/B Test, if when he will delete and he presses the cancel button"
 	@ignore = "true"
 	@priority = "4"
 	test DeleteVariantCancel {
+		task ("Create AB test and create variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		// TODO LPS-137480 DeleteVariantCancel pending implementation
+			ABTest.createVariant(variantName = "Variant name");
+		}
 
+		task ("Try to delete variant") {
+            Click(
+				key_index = "1",
+				locator1 = "ABTest#VARIANT_DROPDOWN");
+
+			ClickNoError(locator1 = "ABTest#DELETE_VARIANT_BUTTON");
+
+        	Confirm.dismissAlert();
+		}
+
+		task ("Assert that variant is not deleted") {
+			ABTest.viewVariantName(variantNames = "Variant name");
+		}
+
+        task ("Run and terminate the AB test") {
+            ABTest.runTest();
+
+            ABTest.terminateTest();
+        }
 	}
 
 	@description = "LPS-101341: Validate if an alert appears when the user tries to delete an experience with an AB Test in a draft mode, the user should be able to delete the experience"
@@ -541,18 +721,78 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test EditVariant {
+		task ("Create AB test and create variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		// TODO LPS-137480 EditVariant pending implementation
+			ABTest.createVariant(variantName = "Variant name");
 
+			ABTest.createVariant(variantName = "Variant name 2");
+		}
+
+		task ("Edit variant") {
+			ABTest.viewVariantName(
+				variantNames = "Variant name,Variant name 2");
+
+			ABTest.editVariantName(key_index = "2");
+
+			Click(locator1 = "ABTest#VARIANT_NAME_FIELD");
+
+			Type(
+				locator1 = "ABTest#VARIANT_NAME_FIELD",
+				value1 = "Variant name 3");
+
+			Click(locator1 = "ABTest#SAVE_VARIANT_NAME_BUTTON");
+		}
+
+		task ("Assert that variant name is changed") {
+			ABTest.viewVariantName(
+				variantNames = "Variant name,Variant name 3");
+		}
+
+		task ("Run and terminate AB Test") {
+			ABTest.runTest();
+
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-97195: Validate if the user can cancel the creation of one variant for A/B Test, and the data that he inputs during the creation is discarded"
 	@ignore = "true"
 	@priority = "3"
 	test EditVariantCancel {
+		task ("Create AB test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+		}
 
-		// TODO LPS-137480 EditVariantCancel pending implementation
+		task ("Try to create variant") {
+			Click(locator1 = "ABTest#CREATE_VARIANT_BUTTON");
 
+			Click(locator1 = "ABTest#VARIANT_NAME_FIELD");
+
+			Type(
+				locator1 = "ABTest#VARIANT_NAME_FIELD",
+				value1 = "Variant name");
+
+			Click(locator1 = "ABTest#CANCEL_VARIANT_NAME_BUTTON");
+		}
+
+		task ("Assert the variant has not been created") {
+			AssertTextEquals(
+				locator1 = "ABTest#REVIEW_NO_HAVE_VARIANTS",
+				value1 = "Create at least one variant to run the test.");
+		}
+
+		task ("Run and terminate AB Test") {
+			ABTest.createVariant(variantName = "Variant name");
+
+			ABTest.runTest();
+
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-99349: Validate if the user can edit the variant for A/B Test content with success"
@@ -577,9 +817,41 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test EditVariantSameName {
+		task ("Create AB test and create variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		// TODO LPS-137480 EditVariantSameName pending implementation
+			ABTest.createVariant(variantName = "Variant name");
+			
+			ABTest.createVariant(variantName = "Variant name 2");
+		}
 
+		task ("Edit variant") {
+			ABTest.viewVariantName(
+				variantNames = "Variant name,Variant name 2");
+
+			ABTest.editVariantName(key_index = "2");
+
+			Click(locator1 = "ABTest#VARIANT_NAME_FIELD");
+
+			Type(
+				locator1 = "ABTest#VARIANT_NAME_FIELD",
+				value1 = "Variant name");
+
+			Click(locator1 = "ABTest#SAVE_VARIANT_NAME_BUTTON");
+		}
+
+		task ("Assert that variant name is changed") {
+			ABTest.viewVariantName(
+				variantNames = "Variant name,Variant name");
+		}
+
+		task ("Run and terminate AB Test") {
+			ABTest.runTest();
+
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-119475: When a user clicks on the "eye" button, by click or by ID, the page scrolls if needed and shows the selected element highlighted"

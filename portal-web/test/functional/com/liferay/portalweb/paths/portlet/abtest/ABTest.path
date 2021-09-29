@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>CANCEL_VARIANT_NAME_BUTTON</td>
+    <td>//*[contains(@class,'btn btn-secondary') and contains(text(),'Cancel')]</td>
+    <td></td>
+</tr>
+<tr>
 	<td>CREATE_VARIANT_BUTTON</td>
 	<td>//*[contains(@class,'btn btn-secondary') and contains(text(),'Create Variant')]</td>
 	<td></td>
@@ -48,6 +53,11 @@
 <tr>
 	<td>DELETE_VARIANT_BUTTON</td>
 	<td>//div[@class='dropdown-menu show']//button[contains(@class, 'dropdown-item') and contains(text(), 'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_VARIANT_BUTTON</td>
+	<td>//div[@class='dropdown-menu show']//button[contains(@class, 'dropdown-item') and contains(text(), 'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -78,6 +88,16 @@
 <tr>
 	<td>REVIEW_AND_RUN_TEST_BUTTON</td>
 	<td>//button[contains(@class,'btn-primary') and contains(text(),'Review and Run Test')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVIEW_NO_HAVE_VARIANTS</td>
+	<td>//p[contains(@class,'mb-2') and contains(text(),'Create at least one variant to run the test.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVIEW_VARIANTS_ANALYTICS_CLOUD</td>
+	<td>//div[@class='analytics-variant-card-table']//tr[${key_index}]//*[contains(@class,'table-cell-expanded') and h5[contains(text(),'${name}')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -127,7 +147,7 @@
 </tr>
 <tr>
 	<td>VARIANT_DROPDOWN</td>
-	<td>//div[@class='autofit-col']//*[contains(@class, 'dropdown-toggle btn-monospaced btn btn-outline-borderless btn-outline-secondary')]</td>
+	<td>xpath=(//div[@class='autofit-col']//*[contains(@class, 'dropdown-toggle btn-monospaced btn btn-outline-borderless btn-outline-secondary')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -143,6 +163,11 @@
 <tr>
 	<td>VIEW_DATA_ANALYTICS_CLOUD_BUTTON</td>
 	<td>//*[contains(@class,'btn-secondary') and contains(text(),'View Data in Analytics Cloud')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VARIANT_NAME</td>
+	<td>//ul[contains(@class,'list-group show-quick-actions-on-hover')]//li[${key_index}]//*[text()='${name}']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -41,6 +41,8 @@ Map<String, Object> data = HashMapBuilder.<String, Object>put(
 
 				<%
 				AssetPublisherAddItemHolder assetPublisherAddItemHolder = assetPublisherAddItemHolders.get(0);
+
+				PortletURL portletURL = assetPublisherAddItemHolder.getPortletURL();
 				%>
 
 				<liferay-ui:icon
@@ -50,11 +52,7 @@ Map<String, Object> data = HashMapBuilder.<String, Object>put(
 					markupView="lexicon"
 					message="<%= label %>"
 					url="<%=
-						PortletURLBuilder.create(
-							assetPublisherAddItemHolder.getPortletURL()
-						).setRedirect(
-							currentURL
-						).buildString()
+						portletURL.toString()
 					%>"
 				/>
 			</c:when>
@@ -70,11 +68,7 @@ Map<String, Object> data = HashMapBuilder.<String, Object>put(
 
 					<%
 					for (AssetPublisherAddItemHolder assetPublisherAddItemHolder : assetPublisherAddItemHolders) {
-						PortletURL portletURL = PortletURLBuilder.create(
-							assetPublisherAddItemHolder.getPortletURL()
-						).setRedirect(
-							currentURL
-						).buildPortletURL();
+						PortletURL portletURL = assetPublisherAddItemHolder.getPortletURL();
 					%>
 
 						<liferay-ui:icon

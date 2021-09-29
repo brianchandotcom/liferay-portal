@@ -273,29 +273,6 @@ definition {
 
 	@priority = "4"
 	@refactorneeded
-	test AddFolderImageDuplicate {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMFolder.addPG(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.addPG(
-			dmDocumentDescription = "DM Image Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Image Title");
-
-		DMDocument.addPG(
-			dmDocument = "Duplicate",
-			dmDocumentDescription = "DM Image Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Image Title");
-	}
-
-	@priority = "4"
-	@refactorneeded
 	test AddFolderImages {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

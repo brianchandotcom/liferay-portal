@@ -104,7 +104,7 @@ definition {
 				var n = ${n} + 1;
 			}
 
-			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name 1");
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name 1*");
 		}
 
 		task ("Add a Collection Page based on Highest Rated Assets via Pages Tree Panel") {
@@ -137,7 +137,7 @@ definition {
 				var n = ${n} + 1;
 			}
 
-			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name 2");
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name 2*");
 		}
 	}
 

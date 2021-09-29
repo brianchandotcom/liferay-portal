@@ -755,7 +755,7 @@ definition {
 
 		ControlMenu.viewHeaderTitle(headerTitle = "Content Collection Page Name");
 
-		PagesFinder.viewPageNameInPagesFinder(pageName = "Content Collection Page Name");
+		PagesFinder.viewPageNameInPagesFinder(pageName = "Content Collection Page Name*");
 	}
 
 	@description = "This is for LPS-110108. The hovered item shows Add Page quick action and a Kebab menu with the actions available for that item. Clicking on item title navigates to the content."
@@ -1250,7 +1250,7 @@ definition {
 
 		PagesFinder.goToFindAPage();
 
-		PagesFinder.viewPageNameInPagesFinder(pageName = "Content Collection Page Name");
+		PagesFinder.viewPageNameInPagesFinder(pageName = "Content Collection Page Name*");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 

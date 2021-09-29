@@ -653,7 +653,7 @@ public class GroupImpl extends GroupBaseImpl {
 	@Override
 	public String getScopeSimpleName(ThemeDisplay themeDisplay) {
 		if (isDepot()) {
-			return themeDisplay.translate("asset-library");
+			return themeDisplay.translate("asset-library-group");
 		}
 
 		if (getGroupId() == themeDisplay.getCompanyGroupId()) {

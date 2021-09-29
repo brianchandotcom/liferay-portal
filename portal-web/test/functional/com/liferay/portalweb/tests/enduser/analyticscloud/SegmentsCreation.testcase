@@ -1335,6 +1335,12 @@ definition {
 			ACSegments.saveSegment();
 		}
 
+		task ("Return the segment list and access the segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+		}
+
 		task ("Navigate to Membership tab") {
 			ACNavigation.switchTab(tabName = "Membership");
 		}

@@ -67,9 +67,9 @@ User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
 				String userDisplayText = LanguageUtil.format(request, "x-modified-x-ago", new Object[] {messageUserName, modifiedDateDescription});
 				%>
 
-				<h5 class="message-user-display text-default" title="<%= HtmlUtil.escapeAttribute(userDisplayText) %>">
+				<span class="message-user-display text-default" title="<%= HtmlUtil.escapeAttribute(userDisplayText) %>">
 					<%= HtmlUtil.escape(userDisplayText) %>
-				</h5>
+				</span>
 
 				<h4 title="<%= HtmlUtil.escape(message.getSubject()) %>">
 					<c:choose>

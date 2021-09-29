@@ -45,19 +45,17 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 		<liferay-ui:search-container-column-text
 			colspan="<%= 2 %>"
 		>
-			<h4>
-				<aui:a href="<%= rowURL.toString() %>">
-					<%= curCategory.getName() %>
-				</aui:a>
+			<aui:a href="<%= rowURL.toString() %>">
+				<%= curCategory.getName() %>
+			</aui:a>
 
-				<c:if test='<%= Objects.equals(curCategory.getDisplayStyle(), "question") %>'>
-					<aui:icon cssClass="icon-monospaced" image="question-circle" markupView="lexicon" message="question" />
-				</c:if>
-			</h4>
+			<c:if test='<%= Objects.equals(curCategory.getDisplayStyle(), "question") %>'>
+				<aui:icon cssClass="icon-monospaced" image="question-circle" markupView="lexicon" message="question" />
+			</c:if>
 
-			<h5 class="text-default">
+			<span class="text-default">
 				<%= curCategory.getDescription() %>
-			</h5>
+			</span>
 
 			<%
 			int subcategoriesCount = categoryDisplay.getSubcategoriesCount(curCategory);

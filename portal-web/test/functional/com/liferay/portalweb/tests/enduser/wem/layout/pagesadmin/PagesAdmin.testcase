@@ -1091,6 +1091,85 @@ definition {
 			privacy = "Public Pages");
 	}
 
+	@description = "Users can preview draft for a content page from Pages admin when they exist."
+	@priority = "5"
+	test PreviewDraftContentPage {
+		task ("Add a public content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Public Page Name",
+				type = "content");
+		}
+
+		task ("Add a private content page") {
+			JSONLayout.addPrivateLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Private Page Name",
+				type = "content");
+		}
+
+		task ("Add a Button fragment to public page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Public Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Add a Heading fragment to private page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Private Page Name",
+				privateLayout = "true",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Navigate to the Pages admin") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Preview the draft public content page") {
+			SitePages.gotoPageMenuItem(
+				menuItem = "Preview Draft",
+				pageName = "Test Public Page Name");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Public Page Name");
+
+			AssertTextEquals(
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Go Somewhere");
+		}
+
+		task ("Close the new tab and select the original tab") {
+			Navigator.closeWindow();
+		}
+
+		task ("Preview the draft private content page") {
+			SitePages.togglePrivacy(privacy = "Private Pages");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "Preview Draft",
+				pageName = "Test Private Page Name");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Private Page Name");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Heading Example");
+		}
+	}
+
 	@description = "This is a test for LPS-76825. A user can search for a page from pages admin."
 	@priority = "5"
 	test SearchPages {

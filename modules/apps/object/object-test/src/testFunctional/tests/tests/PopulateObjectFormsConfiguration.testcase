@@ -368,8 +368,6 @@ definition {
 		AssertElementNotPresent(
 			key_itemName = "Entries",
 			locator1 = "FormsAdmin#FORMS_DROPDOWN_MENU_ITEM");
-
-			
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to select Object as a Storage Type"

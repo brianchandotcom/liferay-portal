@@ -254,9 +254,13 @@ public class OpenIdConnectMetadataFactoryImpl
 		}
 		else {
 			if (_log.isWarnEnabled()) {
+				JWSAlgorithm idTokenJWSAlg =
+					_oidcClientMetadata.getIDTokenJWSAlg();
+
 				_log.warn(
 					"No registered Id Token signing algorithm was specified " +
-						"in configuration, using default RS256");
+						"in configuration, using default " +
+							idTokenJWSAlg.getName());
 			}
 		}
 	}

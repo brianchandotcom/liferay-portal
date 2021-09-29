@@ -66,6 +66,11 @@ components:
                 Represents an account's basic information, to be embedded in other resources. This resource's ID can be
                 used to query the account's complete information.
             properties:
+                externalReferenceCode:
+                    description:
+                        The account's external reference code.
+                    readOnly: true
+                    type: string
                 id:
                     description:
                         The account's ID.

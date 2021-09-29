@@ -247,6 +247,7 @@ public class UserResourceDTOConverter
 
 		return new AccountBrief() {
 			{
+				externalReferenceCode = accountEntry.getExternalReferenceCode();
 				id = accountEntry.getAccountEntryId();
 				name = accountEntry.getName();
 				roleBriefs = TransformUtil.transformToArray(

@@ -1,3 +1,4 @@
+/* eslint-disable @liferay/portal/no-global-fetch */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,6 +12,31 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
+const getCurrentSiteName = () => {
+	const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
+	const pathSplit = pathname.split('/').filter(Boolean);
+
+	return {
+		pathname,
+		siteName: pathSplit[pathSplit.length - 1],
+	};
+};
+
+async function fetchGraphQL(body) {
+	const response = await fetch(`${window.location.origin}/o/graphql`, {
+		body: JSON.stringify(body),
+		headers: {
+			'Content-Type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+		method: 'POST',
+	});
+
+	const {data} = await response.json();
+
+	return data;
+}
 
 const retrieveQuoteContainer = fragmentElement.querySelector('#retrieve-quote');
 const newQuoteContainer = fragmentElement.querySelector('#new-quote');
@@ -29,6 +55,8 @@ const continueQuoteButton = fragmentElement.querySelector('#continue-quote');
 const getQuoteForm = fragmentElement.querySelector('#get-quote-form');
 const zipContainer = fragmentElement.querySelector('#zip-container');
 const productContainer = fragmentElement.querySelector('#product-container');
+
+const currentSiteName = getCurrentSiteName();
 
 retrieveQuoteButton.onclick = function () {
 	retrieveQuoteContainer.classList.add('d-none', 'invisible');
@@ -76,6 +104,10 @@ getQuoteForm.onsubmit = function (event) {
 	zipContainer.classList.remove('has-error');
 	productContainer.classList.remove('has-error');
 
+	if (localStorage.getItem('raylife-back-to-edit')) {
+		localStorage.removeItem('raylife-back-to-edit');
+	}
+
 	if (
 		!formProps.zip ||
 		formProps.zip.length !== maxCharactersZIP ||
@@ -87,11 +119,10 @@ getQuoteForm.onsubmit = function (event) {
 		if (!formProps.product) {
 			productContainer.classList.add('has-error');
 		}
-	}
-	else {
-		document.cookie = 'raylife-zip=' + formProps.zip;
-		document.cookie = 'raylife-product=' + formProps.product;
-		window.location.href = '/web/raylife/get-a-quote';
+	} else {
+		localStorage.setItem('raylife-product', JSON.stringify(formProps));
+
+		window.location.href = `${currentSiteName.pathname}/get-a-quote`;
 	}
 };
 
@@ -101,24 +132,38 @@ fragmentElement.querySelector('#zip').onkeypress = (event) => {
 	return !(charCode > 31 && (charCode < 48 || charCode > 57));
 };
 
-Liferay.Service(
-	'/assetcategory/search-categories-display',
-	{
-		'+sort': 'com.liferay.portal.kernel.search.Sort',
-		'sort.fieldName': 'name',
-		'sort.type': 6,
-		end: 50,
-		groupIds: 0,
-		parentCategoryIds: 0,
-		start: 0,
-		title: '',
-		vocabularyIds: null,
-	},
-	(response) => {
+(async () => {
+	try {
+		const response = await fetchGraphQL({
+			query: `{
+			taxonomyVocabularies(filter: "name eq '${
+				currentSiteName.siteName
+			}'", siteKey: "${themeDisplay.getCompanyGroupId()}") {
+				items {
+					id
+					name
+					taxonomyCategories(sort: "name:asc") {
+						items {
+							id
+							name
+						}
+					}
+				}
+			}
+		}
+	`,
+		});
+
+		const taxonomyVocabularies =
+			response?.taxonomyVocabularies?.items[0]?.taxonomyCategories
+				?.items || [];
+
 		const product = fragmentElement.querySelector('#product');
 
-		response.categories.forEach((category) => {
-			product.add(new Option(category.name, category.categoryId));
+		taxonomyVocabularies.forEach((category) => {
+			product.add(new Option(category.name, category.id));
 		});
+	} catch (error) {
+		console.error(error.message);
 	}
-);
+})();

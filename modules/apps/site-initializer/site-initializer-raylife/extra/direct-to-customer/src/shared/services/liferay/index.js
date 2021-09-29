@@ -40,7 +40,8 @@ const getBusinessTypes = async (filter = '') => {
 
 	const normalizedFilter = filter.toLowerCase().replace(/\\/g, '');
 
-	const productParentId = Storage.getItem(STORAGE_KEYS.PRODUCT);
+	const productParentId = JSON.parse(Storage.getItem(STORAGE_KEYS.PRODUCT))
+		?.product;
 
 	const assetCategories = await _getAssetCategoriesByParentId(
 		productParentId,
@@ -123,26 +124,20 @@ const _getProductsByCategoryId = async () => {
  * @returns {Promise<AssetCategoryResponse[]>}  Array of matched categories
  */
 const _getAssetCategoriesByParentId = async (id, normalizedFilter) => {
-	const {
-		data: {categories},
-	} = await LiferayAPI.get(
-		'/api/jsonws/assetcategory/search-categories-display',
-		{
-			params: {
-				'+sort': 'com.liferay.portal.kernel.search.Sort',
-				end: 50,
-				groupIds: 0,
-				parentCategoryIds: id,
-				'sort.fieldName': 'name',
-				'sort.type': 6,
-				start: 0,
-				title: normalizedFilter,
-				vocabularyIds: '',
-			},
-		}
-	);
+	const {taxonomyCategoryTaxonomyCategories} = await GraphQLFetch({
+		query: `{
+			taxonomyCategoryTaxonomyCategories
+			(parentTaxonomyCategoryId: "${id}", sort: "name:asc", filter: "contains(name, '${normalizedFilter}')") {
+			items {
+				description
+				id
+				name
+			}
+	  	}
+		}`,
+	});
 
-	return categories;
+	return taxonomyCategoryTaxonomyCategories?.items || [];
 };
 
 /**
@@ -189,8 +184,24 @@ const LiferayAPI = Axios.create({
 	},
 });
 
+async function GraphQLFetch(body) {
+	const response = await fetch(`${REACT_APP_LIFERAY_API}/o/graphql`, {
+		body: JSON.stringify(body),
+		headers: {
+			'Content-Type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+		method: 'POST',
+	});
+
+	const {data} = await response.json();
+
+	return data;
+}
+
 export const LiferayService = {
 	LiferayAPI,
+	GraphQLFetch,
 	createOrUpdateRaylifeApplication,
 	getBusinessTypes,
 	getCategoryProperties,

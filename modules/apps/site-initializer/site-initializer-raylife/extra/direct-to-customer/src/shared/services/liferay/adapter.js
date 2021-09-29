@@ -8,11 +8,11 @@ const _formatCommerceProductPrice = (price) => parseInt(price, 10);
  * @param {AssetCategoryResponse[]}  data Array of matched categories
  * @returns {BusinessType[]} Array of business types
  */
-const adaptToBusinessType = (data = []) =>
-	data.map(({categoryId, descriptionCurrentValue, titleCurrentValue}) => ({
-		description: descriptionCurrentValue,
-		id: categoryId,
-		title: titleCurrentValue,
+const adaptToBusinessType = (data) =>
+	data.map(({description, id, name}) => ({
+		description,
+		id,
+		title: name,
 	}));
 
 /**

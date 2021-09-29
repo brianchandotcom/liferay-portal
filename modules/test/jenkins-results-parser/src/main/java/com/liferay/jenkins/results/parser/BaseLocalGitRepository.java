@@ -17,7 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -64,6 +63,11 @@ public abstract class BaseLocalGitRepository
 	@Override
 	public File getDirectory() {
 		return getFile("directory");
+	}
+
+	@Override
+	public String getDirectoryName() {
+		return getString("directory_name");
 	}
 
 	@Override
@@ -139,74 +143,51 @@ public abstract class BaseLocalGitRepository
 	protected BaseLocalGitRepository(String name, String upstreamBranchName) {
 		super(name);
 
-		_setDirectory(upstreamBranchName);
+		if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+			throw new IllegalArgumentException("Upstream branch name is null");
+		}
+
+		_setDirectoryName(upstreamBranchName);
 		_setUpstreamBranchName(upstreamBranchName);
+
+		File directory = new File(
+			JenkinsResultsParserUtil.getBaseGitRepositoryDir(),
+			getDirectoryName());
+
+		if (!directory.exists()) {
+			throw new IllegalArgumentException("Could not find " + directory);
+		}
+
+		_setDirectory(directory);
 
 		validateKeys(_KEYS_REQUIRED);
 	}
 
-	protected String getDefaultRelativeGitRepositoryDirPath(
-		String upstreamBranchName) {
-
-		return getName();
+	private void _setDirectory(File directory) {
+		put("directory", JenkinsResultsParserUtil.getCanonicalPath(directory));
 	}
 
-	private void _setDirectory(String upstreamBranchName) {
-		File directory = null;
+	private void _setDirectoryName(String upstreamBranchName) {
+		String gitDirectoryName = JenkinsResultsParserUtil.getGitDirectoryName(
+			getName(), upstreamBranchName);
 
-		String repositoryDirPath = JenkinsResultsParserUtil.getProperty(
-			getRepositoryProperties(), "repository.dir", getName(),
-			upstreamBranchName);
-
-		if (repositoryDirPath != null) {
-			directory = new File(repositoryDirPath);
+		if (JenkinsResultsParserUtil.isNullOrEmpty(gitDirectoryName)) {
+			gitDirectoryName = getName();
 		}
 
-		if ((directory == null) || !directory.exists()) {
-			directory = new File(
-				JenkinsResultsParserUtil.getBaseGitRepositoryDir(),
-				getDefaultRelativeGitRepositoryDirPath(upstreamBranchName));
-		}
-
-		try {
-			put(
-				"directory",
-				JenkinsResultsParserUtil.getCanonicalPath(directory));
-		}
-		catch (RuntimeException runtimeException) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to find Git repository directory.\n",
-					"Please set this location in repository.dir[", getName(),
-					"][", getUpstreamBranchName(),
-					"] in repository.properties."),
-				runtimeException);
-		}
+		put("directory_name", gitDirectoryName);
 	}
 
 	private void _setUpstreamBranchName(String upstreamBranchName) {
-		if ((upstreamBranchName == null) || upstreamBranchName.isEmpty()) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
 			throw new IllegalArgumentException("Upstream branch name is null");
-		}
-
-		String upstreamBranchNamesString = JenkinsResultsParserUtil.getProperty(
-			getRepositoryProperties(), "upstream.branch.names", getName());
-
-		if (upstreamBranchNamesString != null) {
-			List<String> upstreamBranchNames = Arrays.asList(
-				upstreamBranchNamesString.split(","));
-
-			if (!upstreamBranchNames.contains(upstreamBranchName)) {
-				throw new IllegalArgumentException(
-					"Invalid upstream branch name: " + upstreamBranchName);
-			}
 		}
 
 		put("upstream_branch_name", upstreamBranchName);
 	}
 
 	private static final String[] _KEYS_REQUIRED = {
-		"directory", "upstream_branch_name"
+		"directory", "directory_name", "upstream_branch_name"
 	};
 
 	private GitWorkingDirectory _gitWorkingDirectory;

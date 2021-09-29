@@ -841,10 +841,9 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ExportedFactoryConfigurationCanBeImported {
-		property portal.acceptance = "sharry";
+		property portal.acceptance = "true";
 
 		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
 		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.1");
@@ -876,7 +875,7 @@ definition {
 			fail("FAIL! Cannot find the configuration file exported from edit page for single factory.");
 		}
 
-		var tempFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~*.config");
+		var tempFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration_*.config");
 
 		OSGiConfig.deployOSGiConfigFile(
 			OSGiConfigFileBaseDir = "${tempFileDirectory}",
@@ -1077,7 +1076,6 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test SingleFactoryConfigurationCanBeExported {
 		var openIDConnectClientID = PropsUtil.get("google.client.id.1");

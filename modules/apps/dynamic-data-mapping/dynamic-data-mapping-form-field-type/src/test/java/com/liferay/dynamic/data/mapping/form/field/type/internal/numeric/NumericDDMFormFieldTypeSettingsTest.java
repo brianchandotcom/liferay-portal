@@ -149,6 +149,8 @@ public class NumericDDMFormFieldTypeSettingsTest
 		Assert.assertTrue(inputMaskFormatDDMFormField.isRequired());
 		Assert.assertNotNull(inputMaskFormatDDMFormField.getLabel());
 		Assert.assertNotNull(
+			inputMaskFormatDDMFormField.getProperty("invalidCharacters"));
+		Assert.assertNotNull(
 			inputMaskFormatDDMFormField.getProperty("placeholder"));
 		Assert.assertNotNull(
 			inputMaskFormatDDMFormField.getProperty("tooltip"));

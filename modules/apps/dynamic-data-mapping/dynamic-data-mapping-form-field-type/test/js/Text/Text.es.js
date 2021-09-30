@@ -361,14 +361,14 @@ describe('Field Text', () => {
 		expect(onChange).toHaveBeenCalled();
 	});
 
-	it('normalizes the field reference if it contains invalid characters', () => {
+	it('normalizes the field if it contains invalid characters', () => {
 		const onChange = jest.fn();
 
 		const {container} = render(
 			<TextWithProvider
 				{...defaultTextConfig}
-				fieldName="fieldReference"
 				key="input"
+				normalizeField={true}
 				onChange={onChange}
 			/>
 		);
@@ -388,13 +388,13 @@ describe('Field Text', () => {
 		expect(input.value).toEqual('FieldReference');
 	});
 
-	it('normalizes the value of the Format field if it contains invalid characters', () => {
+	it('normalizes the value of the field if it contains invalid characters', () => {
 		const onChange = jest.fn();
 
 		const {container} = render(
 			<TextWithProvider
 				{...defaultTextConfig}
-				fieldName="inputMaskFormat"
+				invalidCharacters="[1-8]"
 				key="input"
 				onChange={onChange}
 			/>

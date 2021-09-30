@@ -165,10 +165,10 @@ public class AssetListEntryStagedModelDataHandler
 				portletDataContext, importedAssetListEntry);
 		}
 
-		importedAssetListEntry.setAssetEntryType(
-			assetListEntry.getAssetEntryType());
 		importedAssetListEntry.setAssetEntrySubtype(
 			_getAssetEntrySubtype(assetListEntry, portletDataContext));
+		importedAssetListEntry.setAssetEntryType(
+			assetListEntry.getAssetEntryType());
 
 		importedAssetListEntry =
 			_assetListEntryLocalService.updateAssetListEntry(

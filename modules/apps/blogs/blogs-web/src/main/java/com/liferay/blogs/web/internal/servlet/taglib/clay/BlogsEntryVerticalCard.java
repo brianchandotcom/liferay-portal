@@ -16,6 +16,7 @@ package com.liferay.blogs.web.internal.servlet.taglib.clay;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.web.internal.constants.BlogsWebConstants;
+import com.liferay.blogs.web.internal.release.feature.flag.DisableBlogsSubtitleReleaseFeatureFlag;
 import com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission;
 import com.liferay.blogs.web.internal.servlet.taglib.util.BlogsEntryActionDropdownItemsProvider;
 import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
@@ -25,6 +26,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.release.feature.flag.ReleaseFeatureFlagRegistryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -121,6 +123,12 @@ public class BlogsEntryVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getSubtitle() {
+		if (ReleaseFeatureFlagRegistryUtil.isEnabled(
+				DisableBlogsSubtitleReleaseFeatureFlag.class)) {
+
+			return null;
+		}
+
 		Date modifiedDate = _blogsEntry.getModifiedDate();
 
 		String modifiedDateDescription = LanguageUtil.getTimeDescription(

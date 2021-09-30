@@ -21,6 +21,7 @@
 <%
 String userId = request.getRemoteUser();
 String currentURL = PortalUtil.getCurrentURL(request);
+String message = null;
 
 if (exception instanceof PrincipalException) {
 	_log.warn("User ID " + userId);
@@ -28,7 +29,13 @@ if (exception instanceof PrincipalException) {
 	_log.warn("Referer " + request.getHeader("Referer"));
 	_log.warn("Remote address " + request.getRemoteAddr());
 
-	_log.warn(exception, exception);
+	if (exception != null) {
+		_log.warn(exception, exception);
+		message = exception.getMessage();
+	}
+	else {
+		_log.warn("Exception object not available");
+	}
 }
 else {
 	_log.error("User ID " + userId);
@@ -36,10 +43,14 @@ else {
 	_log.error("Referer " + request.getHeader("Referer"));
 	_log.error("Remote address " + request.getRemoteAddr());
 
-	_log.error(exception, exception);
+	if (exception != null) {
+		_log.error(exception, exception);
+		message = exception.getMessage();
+	}
+	else {
+		_log.error("Exception object not available");
+	}
 }
-
-String message = exception.getMessage();
 %>
 
 <center>
@@ -52,7 +63,7 @@ String message = exception.getMessage();
 					<c:choose>
 						<c:when test="<%= exception instanceof PrincipalException %>">
 							<liferay-ui:message key="you-do-not-have-permission-to-view-this-page" />
-						</c:when>
+						</c:when>x
 						<c:otherwise>
 							<liferay-ui:message key="an-unexpected-system-error-occurred" />
 						</c:otherwise>

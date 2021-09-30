@@ -133,7 +133,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 
 				<liferay-ui:search-container-column-text
 					name="type"
-					value="<%= LanguageUtil.get(resourceBundle, entry.getType()) %>"
+					value="<%= HtmlUtil.escape(LanguageUtil.get(resourceBundle, entry.getType())) %>"
 				/>
 
 				<liferay-ui:search-container-column-date

@@ -413,11 +413,11 @@ definition {
 	@description = "This test asserts that an Account Admin can remove a user from an account."
 	@priority = "5"
 	test CanRemoveUserFromAccount {
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ADD_ACCOUNT_ENTRY",
-			resourceName = "com.liferay.account",
-			roleTitle = "Account Administrator",
-			roleType = "account");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
 
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Manage Users",
@@ -431,15 +431,39 @@ definition {
 			userLastName = "user1",
 			userScreenName = "user1");
 
+		Accounts.setAddAccountEntryPermissions(
+			roleTitle = "Reg Role Name",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Manage Users",
+			rowEntry = "Account Name");
+
+		Accounts.addNewUserToBusinessAccount(
+			accountName = "Account Name",
+			assigneeName = "user2",
+			userEmailAddress = "user2@liferay.com",
+			userFirstName = "user2",
+			userLastName = "user2",
+			userScreenName = "user2");
+
 		AssertElementPresent(
 			key_tab = "Users",
 			locator1 = "NavTab#ACTIVE_TAB_LINK");
 
-		LexiconEntry.gotoEntryMenuItemNoError(
-			menuItem = "Remove",
-			rowEntry = "user1 user1");
+		for (var users : list "user1 user1,user2 user2") {
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Remove",
+				rowEntry = "${users}");
 
-		AssertConfirm(value1 = "Are you sure you want to remove this user?");
+			AssertConfirm(value1 = "Are you sure you want to remove this user?");
+		}
 
 		Navigator.gotoPage(pageName = "2B Account Page");
 
@@ -450,6 +474,8 @@ definition {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Manage Users");
 
 		LexiconEntry.viewNoEntry(rowEntry = "user1");
+
+		LexiconEntry.viewNoEntry(rowEntry = "user2");
 	}
 
 	@description = "This test asserts that a user can select an account from the list as the active account. Backend tests are covering functionality for account selection."

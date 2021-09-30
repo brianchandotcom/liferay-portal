@@ -37,13 +37,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ACCOUNTS_RESOURCE_PERMISSIONS_ACCOUNT_SELECT_ALL</td>
-	<td>//h4[contains(.,'Resource Permissions')]//following::input[contains(@name,'allRowIds')][1]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ACCOUNTS_RESOURCE_PERMISSIONS_ACCOUNT_ENTRY_SELECT_ALL</td>
-	<td>//h4[contains(.,'Resource Permissions')]//following::input[contains(@name,'allRowIds')][2]</td>
+	<td>//h4[contains(.,'Resource Permissions')]//following::input[contains(@name,'allRowIds')][1]</td>
 	<td></td>
 </tr>
 <tr>

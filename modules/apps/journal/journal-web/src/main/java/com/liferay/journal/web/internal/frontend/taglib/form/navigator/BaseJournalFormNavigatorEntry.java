@@ -55,7 +55,7 @@ public abstract class BaseJournalFormNavigatorEntry
 		return LanguageUtil.get(locale, getKey());
 	}
 
-	protected boolean isDepotOrGlobalSite(JournalArticle article) {
+	protected boolean isGlobalScopeOrDepotArticle(JournalArticle article) {
 		Group group = null;
 
 		if ((article != null) && (article.getId() > 0)) {

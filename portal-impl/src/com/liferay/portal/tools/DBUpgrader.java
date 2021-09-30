@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.module.util.ServiceLatch;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.release.feature.flag.ReleaseFeatureFlag;
+import com.liferay.portal.kernel.release.feature.flag.ReleaseFeatureFlagRegistryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -156,6 +158,8 @@ public class DBUpgrader {
 	public static void upgrade(ApplicationContext applicationContext)
 		throws Exception {
 
+		int previousBuildNumber = _getReleaseColumnValue("buildNumber");
+
 		StartupHelperUtil.setUpgrading(true);
 
 		_upgradePortal();
@@ -163,6 +167,8 @@ public class DBUpgrader {
 		DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
 
 		_upgradeModules(applicationContext);
+
+		_upgradeReleaseFeatureFlags(previousBuildNumber);
 
 		if (applicationContext == null) {
 			DependencyManagerSyncUtil.sync();
@@ -406,6 +412,19 @@ public class DBUpgrader {
 		_checkClassNamesAndResourceActions();
 
 		verify();
+	}
+
+	private static void _upgradeReleaseFeatureFlags(int previousBuildNumber)
+		throws Exception {
+
+		for (ReleaseFeatureFlag releaseFeatureFlag :
+				ReleaseFeatureFlagRegistryUtil.getReleaseFeatureFlags()) {
+
+			if (releaseFeatureFlag.getThreshold() > previousBuildNumber) {
+				ReleaseFeatureFlagRegistryUtil.setEnabled(
+					releaseFeatureFlag, false);
+			}
+		}
 	}
 
 	private static final Version _VERSION_7010 = new Version(0, 0, 6);

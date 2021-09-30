@@ -545,7 +545,7 @@ definition {
 			workflowAssetTitle = "FrontPage",
 			workflowAssetType = "Wiki Page",
 			workflowTask = "Review");
-		
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Wiki");
@@ -558,8 +558,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
 			value1 = "Approved");
-		
-
 	}
 
 	@description = "This is a test for LRQA-69569. Verify that a page isn't added to the Wiki on Reject. "

@@ -191,6 +191,13 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 	}
 
 	private String _getLabelKey(DDMFormField ddmFormField) {
+		String labelKey = GetterUtil.getString(
+			ddmFormField.getProperty("labelKey"));
+
+		if (Validator.isNotNull(labelKey)) {
+			return labelKey;
+		}
+
 		ObjectDefinition objectDefinition = _getObjectDefinition(ddmFormField);
 
 		if ((objectDefinition != null) &&

@@ -16,8 +16,9 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
+import useControlledState from '../../../core/hooks/useControlledState';
 import {useStyleBook} from '../../../plugins/page-design-options/hooks/useStyleBook';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {useId} from '../../utils/useId';
@@ -74,7 +75,7 @@ export const SelectField = ({
 							? Array.isArray(value)
 								? defaultValue
 								: [defaultValue]
-							: null
+							: []
 					}
 				/>
 			) : (
@@ -99,7 +100,7 @@ const MultiSelect = ({
 	options,
 	value,
 }) => {
-	const [nextValue, setNextValue] = useState(value || []);
+	const [nextValue, setNextValue] = useControlledState(value);
 
 	let label = Liferay.Language.get('select');
 
@@ -137,10 +138,6 @@ const MultiSelect = ({
 			type: 'checkbox',
 		};
 	});
-
-	useEffect(() => {
-		setNextValue(value || []);
-	}, [value]);
 
 	const [active, setActive] = useState(false);
 
@@ -181,11 +178,7 @@ const SingleSelect = ({
 	options,
 	value,
 }) => {
-	const [nextValue, setNextValue] = useState(value);
-
-	useEffect(() => {
-		setNextValue((prevValue) => value || prevValue);
-	}, [value]);
+	const [nextValue, setNextValue] = useControlledState(value);
 
 	return (
 		<ClaySelectWithOption

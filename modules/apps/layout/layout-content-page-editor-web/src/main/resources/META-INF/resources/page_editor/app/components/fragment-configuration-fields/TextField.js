@@ -14,18 +14,15 @@
 
 import ClayForm, {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
+import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 
 export const TextField = ({field, onValueSelect, value}) => {
 	const [errorMessage, setErrorMessage] = useState('');
 
-	const [nextValue, setNextValue] = useState(value);
-
-	useEffect(() => {
-		setNextValue(value);
-	}, [value]);
+	const [nextValue, setNextValue] = useControlledState(value);
 
 	const {additionalProps = {}, type = 'text'} = parseTypeOptions(
 		field.typeOptions

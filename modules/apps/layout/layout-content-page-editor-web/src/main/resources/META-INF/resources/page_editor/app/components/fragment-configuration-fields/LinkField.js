@@ -23,6 +23,7 @@ import React, {useEffect, useState} from 'react';
 import CurrentLanguageFlag from '../../../common/components/CurrentLanguageFlag';
 import {LayoutSelector} from '../../../common/components/LayoutSelector';
 import MappingSelector from '../../../common/components/MappingSelector';
+import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {useGetFieldValue} from '../../contexts/CollectionItemContext';
@@ -62,9 +63,11 @@ export const TARGET_OPTIONS = {
 
 export default function LinkField({field, onValueSelect, value}) {
 	const getFieldValue = useGetFieldValue();
-	const [nextValue, setNextValue] = useState({});
-	const [nextHref, setNextHref] = useState('');
-	const [openNewTab, setOpenNewTab] = useState('');
+	const [nextHref, setNextHref] = useControlledState(value.href || '');
+	const [nextValue, setNextValue] = useControlledState(value || {});
+	const [openNewTab, setOpenNewTab] = useControlledState(
+		value.target === '_blank' || ''
+	);
 
 	const [mappedHrefPreview, setMappedHrefPreview] = useState(null);
 	const languageId = useSelector(selectLanguageId);
@@ -72,10 +75,6 @@ export default function LinkField({field, onValueSelect, value}) {
 	const [source, setSource] = useState(SOURCE_OPTION_MANUAL);
 
 	useEffect(() => {
-		setNextValue(value);
-		setNextHref(value.href);
-		setOpenNewTab(value.target === '_blank');
-
 		if (isMappedToLayout(value)) {
 			setSource(SOURCE_OPTION_FROM_LAYOUT);
 		}

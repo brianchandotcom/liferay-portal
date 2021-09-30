@@ -15,22 +15,21 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
+import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {useSelector} from '../../contexts/StoreContext';
 
 export const CheckboxField = ({field, onValueSelect, value}) => {
-	const [nextValue, setNextValue] = useState(value);
+	const [nextValue, setNextValue] = useControlledState(value);
 
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
 
 	const customValues = field.typeOptions?.customValues;
-
-	useEffect(() => setNextValue(value), [value]);
 
 	return (
 		<ClayForm.Group className="mt-1">

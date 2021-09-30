@@ -1807,6 +1807,24 @@ catch (Exception e) {
 		}
 	}
 
+	@description = "This is a test for LPS-128196. View the URL when there is an Asset Publisher in a page."
+	@priority = "3"
+	test ViewURLWhenPageHasAssetPublisher {
+		task ("Navigate to the page with Asset Publisher") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
+
+			Click(
+				key_pageName = "Asset Publisher Page",
+				locator1 = "Home#PAGE");
+		}
+
+		task ("View the URL") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			AssertLocation(value1 = "${baseURL}/web/test-site-name/asset-publisher-page");
+		}
+	}
+
 	@description = "View the web content author."
 	@priority = "3"
 	@uitest

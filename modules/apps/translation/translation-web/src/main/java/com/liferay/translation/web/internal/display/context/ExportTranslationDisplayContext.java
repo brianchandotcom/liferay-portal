@@ -16,6 +16,7 @@ package com.liferay.translation.web.internal.display.context;
 
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -306,18 +308,21 @@ public class ExportTranslationDisplayContext {
 	}
 
 	private String _getExportTranslationURLString() {
-		ResourceURL exportTranslationURL =
+		LiferayPortletURL liferayPortletURL =
 			_liferayPortletResponse.createResourceURL(
 				TranslationPortletKeys.TRANSLATION);
 
-		exportTranslationURL.setParameter("groupId", String.valueOf(_groupId));
-		exportTranslationURL.setParameter(
-			"classNameId", String.valueOf(_classNameId));
-		exportTranslationURL.setParameter("classPK", String.valueOf(_classPK));
+		liferayPortletURL.setResourceID("/translation/export_translation");
 
-		exportTranslationURL.setResourceID("/translation/export_translation");
-
-		return exportTranslationURL.toString();
+		return PortletURLBuilder.create(
+			liferayPortletURL
+		).setParameter(
+			"classNameId", _classNameId
+		).setParameter(
+			"classPK", _classPK
+		).setParameter(
+			"groupId", _groupId
+		).buildString();
 	}
 
 	private JSONArray _getLocalesJSONArray(

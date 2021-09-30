@@ -16,6 +16,7 @@ package com.liferay.portal.web.internal.session.replication;
 
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -39,7 +40,16 @@ public class SessionReplicationHttpServletRequest
 			return null;
 		}
 
-		return new SessionReplicationHttpSessionWrapper(httpSession);
+		httpSession = new SessionReplicationHttpSessionWrapper(httpSession);
+
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)getRequest();
+
+		ServletContext servletContext = httpServletRequest.getServletContext();
+
+		servletContext.setAttribute(httpSession.getId(), httpSession);
+
+		return httpSession;
 	}
 
 	@Override

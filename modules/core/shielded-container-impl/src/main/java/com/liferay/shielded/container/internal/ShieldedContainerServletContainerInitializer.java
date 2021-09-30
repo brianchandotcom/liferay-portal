@@ -62,7 +62,8 @@ public class ShieldedContainerServletContainerInitializer
 
 		servletContextDelegate.setProxiedServletContext(servletContext);
 
-		servletContext.addListener(ShieldedContainerHttpSessionListener.class);
+		servletContext.addListener(
+			new ShieldedContainerHttpSessionListener(servletContext));
 
 		ServiceLoader<ShieldedContainerInitializer> serviceLoader =
 			ServiceLoader.load(

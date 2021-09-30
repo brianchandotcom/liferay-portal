@@ -14,6 +14,7 @@
 
 package com.liferay.shielded.container.internal.session;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
@@ -23,6 +24,10 @@ import javax.servlet.http.HttpSessionListener;
  */
 public class ShieldedContainerHttpSessionListener
 	implements HttpSessionListener {
+
+	public ShieldedContainerHttpSessionListener(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
 
 	@Override
 	public void sessionCreated(HttpSessionEvent httpSessionEvent) {
@@ -35,6 +40,11 @@ public class ShieldedContainerHttpSessionListener
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
+		HttpSession httpSession = httpSessionEvent.getSession();
+
+		_servletContext.removeAttribute(httpSession.getId());
 	}
+
+	private final ServletContext _servletContext;
 
 }

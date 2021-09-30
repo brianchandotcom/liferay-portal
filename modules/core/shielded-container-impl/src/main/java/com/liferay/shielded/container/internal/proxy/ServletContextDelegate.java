@@ -121,7 +121,8 @@ public class ServletContextDelegate {
 		}
 
 		InvocationHandler invocationHandler =
-			new ContextClassLoaderInvocationHandler(_classLoader, t);
+			new EventListenerInvocationHandler(
+				_proxiedServletContext, _classLoader, t);
 
 		if (interfaceClasses.contains(HttpSessionListener.class)) {
 			invocationHandler = new HttpSessionListenerInvocationHandlerWrapper(

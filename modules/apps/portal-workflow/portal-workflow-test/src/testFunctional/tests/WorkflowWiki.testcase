@@ -528,7 +528,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
 			value1 = "Pending");
-
 	}
 
 	@description = "This is a test for LRQA-69557. Verify that the Front Page status are displayed correctly on approve. "

@@ -14,7 +14,6 @@
 
 package com.liferay.site.initializer.extender.internal;
 
-import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
@@ -71,8 +70,7 @@ import org.osgi.framework.ServiceRegistration;
 public class SiteInitializerRegistrar {
 
 	public SiteInitializerRegistrar(
-		AssetListEntryLocalService assetListEntryLocalService,
-		AssetVocabularyLocalService assetVocabularyLocalService, Bundle bundle,
+		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		BundleContext bundleContext,
 		CatalogResource.Factory catalogResourceFactory,
 		ChannelResource.Factory channelResourceFactory,
@@ -116,7 +114,6 @@ public class SiteInitializerRegistrar {
 		UserLocalService userLocalService) {
 
 		_assetListEntryLocalService = assetListEntryLocalService;
-		_assetVocabularyLocalService = assetVocabularyLocalService;
 		_bundle = bundle;
 		_bundleContext = bundleContext;
 		_catalogResourceFactory = catalogResourceFactory;
@@ -175,9 +172,9 @@ public class SiteInitializerRegistrar {
 		_serviceRegistration = _bundleContext.registerService(
 			SiteInitializer.class,
 			new BundleSiteInitializer(
-				_assetListEntryLocalService, _assetVocabularyLocalService,
-				_bundle, _catalogResourceFactory, _channelResourceFactory,
-				_commerceAccountRoleHelper, _commerceCurrencyLocalService,
+				_assetListEntryLocalService, _bundle, _catalogResourceFactory,
+				_channelResourceFactory, _commerceAccountRoleHelper,
+				_commerceCurrencyLocalService,
 				_commerceInventoryWarehousesImporter, _cpDefinitionsImporter,
 				_cpFileImporter, _cpMeasurementUnitLocalService,
 				_ddmStructureLocalService, _ddmTemplateLocalService,
@@ -208,7 +205,6 @@ public class SiteInitializerRegistrar {
 	}
 
 	private final AssetListEntryLocalService _assetListEntryLocalService;
-	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final Bundle _bundle;
 	private final BundleContext _bundleContext;
 	private final CatalogResource.Factory _catalogResourceFactory;

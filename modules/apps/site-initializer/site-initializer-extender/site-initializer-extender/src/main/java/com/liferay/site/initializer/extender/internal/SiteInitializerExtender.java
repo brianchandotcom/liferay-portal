@@ -14,7 +14,6 @@
 
 package com.liferay.site.initializer.extender.internal;
 
-import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
@@ -94,10 +93,9 @@ public class SiteInitializerExtender
 
 		SiteInitializerExtension siteInitializerExtension =
 			new SiteInitializerExtension(
-				_assetListEntryLocalService, _assetVocabularyLocalService,
-				bundle, _bundleContext, _catalogResourceFactory,
-				_channelResourceFactory, _commerceAccountRoleHelper,
-				_commerceCurrencyLocalService,
+				_assetListEntryLocalService, bundle, _bundleContext,
+				_catalogResourceFactory, _channelResourceFactory,
+				_commerceAccountRoleHelper, _commerceCurrencyLocalService,
 				_commerceInventoryWarehousesImporter, _cpDefinitionsImporter,
 				_cpFileImporter, _cpMeasurementUnitLocalService,
 				_ddmStructureLocalService, _ddmTemplateLocalService,
@@ -156,9 +154,6 @@ public class SiteInitializerExtender
 
 	@Reference
 	private AssetListEntryLocalService _assetListEntryLocalService;
-
-	@Reference
-	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	private BundleContext _bundleContext;
 	private BundleTracker<?> _bundleTracker;

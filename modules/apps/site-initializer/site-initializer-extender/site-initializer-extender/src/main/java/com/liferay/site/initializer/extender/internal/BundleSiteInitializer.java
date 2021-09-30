@@ -17,8 +17,6 @@ package com.liferay.site.initializer.extender.internal;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
@@ -162,8 +160,7 @@ import org.osgi.framework.wiring.BundleWiring;
 public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
-		AssetListEntryLocalService assetListEntryLocalService,
-		AssetVocabularyLocalService assetVocabularyLocalService, Bundle bundle,
+		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		CatalogResource.Factory catalogResourceFactory,
 		ChannelResource.Factory channelResourceFactory,
 		CommerceAccountRoleHelper commerceAccountRoleHelper,
@@ -206,7 +203,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		UserLocalService userLocalService) {
 
 		_assetListEntryLocalService = assetListEntryLocalService;
-		_assetVocabularyLocalService = assetVocabularyLocalService;
 		_bundle = bundle;
 		_catalogResourceFactory = catalogResourceFactory;
 		_channelResourceFactory = channelResourceFactory;
@@ -591,23 +587,23 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		Group group = CommerceCatalogLocalServiceUtil.getCommerceCatalogGroup(
 			catalog.getId());
-		
+
 		TaxonomyVocabularyResource.Builder taxonomyVocabularyResourceBuilder =
-				_taxonomyVocabularyResourceFactory.create();
+			_taxonomyVocabularyResourceFactory.create();
 
 		TaxonomyVocabularyResource taxonomyVocabularyResource =
 			taxonomyVocabularyResourceBuilder.user(
 				serviceContext.fetchUser()
 			).build();
-		
+
 		Group global = _groupLocalService.getCompanyGroup(
-				serviceContext.getCompanyId());
-		
-		TaxonomyVocabulary existingTaxonomyVocabulary = 
-				taxonomyVocabularyResource
-					.getSiteTaxonomyVocabularyByExternalReferenceCode(
-							global.getGroupId(), 
-							commerceChannel.getExternalReferenceCode());
+			serviceContext.getCompanyId());
+
+		TaxonomyVocabulary existingTaxonomyVocabulary =
+			taxonomyVocabularyResource.
+				getSiteTaxonomyVocabularyByExternalReferenceCode(
+					global.getGroupId(),
+					commerceChannel.getExternalReferenceCode());
 
 		_cpDefinitionsImporter.importCPDefinitions(
 			jsonArray, existingTaxonomyVocabulary.getName(), group.getGroupId(),
@@ -1875,7 +1871,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 	private final AssetListEntryLocalService _assetListEntryLocalService;
-	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final Bundle _bundle;
 	private final CatalogResource.Factory _catalogResourceFactory;
 	private final ChannelResource.Factory _channelResourceFactory;

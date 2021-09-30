@@ -14,7 +14,6 @@
 
 package com.liferay.site.initializer.extender.internal;
 
-import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
@@ -72,8 +71,7 @@ import org.osgi.framework.BundleContext;
 public class SiteInitializerExtension {
 
 	public SiteInitializerExtension(
-		AssetListEntryLocalService assetListEntryLocalService,
-		AssetVocabularyLocalService assetVocabularyLocalService, Bundle bundle,
+		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		BundleContext bundleContext,
 		CatalogResource.Factory catalogResourceFactory,
 		ChannelResource.Factory channelResourceFactory,
@@ -122,8 +120,8 @@ public class SiteInitializerExtension {
 
 		_component.setImplementation(
 			new SiteInitializerRegistrar(
-				assetListEntryLocalService, assetVocabularyLocalService, bundle,
-				bundleContext, catalogResourceFactory, channelResourceFactory,
+				assetListEntryLocalService, bundle, bundleContext,
+				catalogResourceFactory, channelResourceFactory,
 				commerceAccountRoleHelper, commerceCurrencyLocalService,
 				commerceInventoryWarehousesImporter, cpDefinitionsImporter,
 				cpFileImporter, cpMeasurementUnitLocalService,

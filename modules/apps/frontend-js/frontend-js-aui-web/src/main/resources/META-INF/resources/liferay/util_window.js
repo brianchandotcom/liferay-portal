@@ -93,9 +93,9 @@ AUI.add(
 					},
 				},
 			},
-
+			// eslint-disable-next-line @liferay/aui/no-modal
 			EXTENDS: A.Modal,
-
+			// eslint-disable-next-line @liferay/aui/no-modal
 			NAME: A.Modal.NAME,
 
 			prototype: {},

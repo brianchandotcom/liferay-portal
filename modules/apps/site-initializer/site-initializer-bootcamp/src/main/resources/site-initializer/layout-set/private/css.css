@@ -14,8 +14,8 @@ h3,
 h4,
 h5,
 h6 {
-	color: inherit;
 	font-weight: inherit;
+	color: inherit;
 	line-height: 1.1;
 }
 
@@ -34,37 +34,42 @@ a:hover {
 
 /*Buttons*/
 
-.btn {
+.bootcamp-btn.btn {
 	border-radius: 0;
-	color: inherit;
 	font-family: var(--font-family-sans-serif);
 	font-weight: var(--font-weight-bolder);
 	letter-spacing: 1px;
+	padding: var(--spacer-2) var(--spacer-4);
 	text-transform: uppercase;
 }
 
-.link-arrow {
-	margin-left: var(--spacer);
+.bootcamp-btn.btn-lg {
+	font-size: 12px;
 }
 
-.btn-nm {
-	font-size: var(--font-size-sm);
+.bootcamp-btn.btn-link {
+	padding: 0;
+}
+
+.bootcamp-btn.btn-link a {
+	color: inherit;
+}
+
+.bootcamp-btn.btn-nm {
 	font-size: 11px;
-	padding: var(--spacer) var(--spacer-4);
 }
 
-.btn-lg {
-	font-size: 13px;
-	padding: var(--spacer) var(--spacer-4);
+.bootcamp-btn .link-arrow {
+	margin-left: var(--spacer-2);
 }
 
 /*Form Controls*/
 
 .form-control {
-	background-color: var(--white);
-	border: var(--white);
 	border-radius: 0;
 	font-family: var(--font-family-sans-serif);
+	border: var(--white);
+	background-color: var(--white);
 	height: auto;
 }
 

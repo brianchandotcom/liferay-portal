@@ -245,25 +245,6 @@ public abstract class BaseDBProcess implements DBProcess {
 	}
 
 	protected void processConcurrently(
-			PreparedStatement preparedStatement,
-			UnsafeConsumer<ResultRow, Exception> unsafeConsumer,
-			String exceptionMessage)
-		throws Exception {
-
-		try (ResultSet resultSet = preparedStatement.executeQuery()) {
-			_processConcurrently(
-				() -> {
-					if (resultSet.next()) {
-						return new ResultRow(resultSet);
-					}
-
-					return null;
-				},
-				unsafeConsumer, exceptionMessage);
-		}
-	}
-
-	protected void processConcurrently(
 			String sqlQuery,
 			UnsafeConsumer<ResultRow, Exception> unsafeConsumer,
 			String exceptionMessage)

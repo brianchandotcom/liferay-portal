@@ -70,37 +70,30 @@ public class AssetDisplayPageEntryUpgradeProcess extends UpgradeProcess {
 			JournalArticle.class);
 		User user = company.getDefaultUser();
 
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				SQLTransformer.transform(
-					StringBundler.concat(
-						"select JournalArticle.groupId, ",
-						"JournalArticle.resourcePrimKey, AssetEntry.classUuid ",
-						"from JournalArticle inner join AssetEntry on ( ",
-						"AssetEntry.classNameId = ? and AssetEntry.classPK = ",
-						"JournalArticle.resourcePrimKey ) inner join Group_ ",
-						"on (Group_.groupId = JournalArticle.groupId and ",
-						"Group_.liveGroupId ", stagingGroups ? "" : "!",
-						"= 0) where JournalArticle.companyId = ? and ",
-						"JournalArticle.layoutUuid is not null and ",
-						"JournalArticle.layoutUuid != '' and ",
-						"Group_.remoteStagingGroupCount = 0 and not exists ( ",
-						"select 1 from AssetDisplayPageEntry where ",
-						"AssetDisplayPageEntry.groupId = ",
-						"JournalArticle.groupId and ",
-						"AssetDisplayPageEntry.classNameId = ? and ",
-						"AssetDisplayPageEntry.classPK = ",
-						"JournalArticle.resourcePrimKey) group by ",
-						"JournalArticle.groupId, ",
-						"JournalArticle.resourcePrimKey, ",
-						"AssetEntry.classUuid")))) {
-
-			preparedStatement.setLong(1, journalArticleClassNameId);
-			preparedStatement.setLong(2, company.getCompanyId());
-			preparedStatement.setLong(3, journalArticleClassNameId);
-
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			processConcurrently(
-				preparedStatement,
+				StringBundler.concat(
+					"select JournalArticle.groupId, ",
+					"JournalArticle.resourcePrimKey, AssetEntry.classUuid ",
+					"from JournalArticle inner join AssetEntry on ( ",
+					"AssetEntry.classNameId = ", journalArticleClassNameId,
+					" and AssetEntry.classPK = JournalArticle.resourcePrimKey ",
+					") inner join Group_ on (Group_.groupId = ",
+					"JournalArticle.groupId and Group_.liveGroupId ",
+					stagingGroups ? "" : "!",
+					"= 0) where JournalArticle.companyId = ",
+					company.getCompanyId(),
+					" and JournalArticle.layoutUuid is not null and ",
+					"JournalArticle.layoutUuid != '' and ",
+					"Group_.remoteStagingGroupCount = 0 and not exists ( ",
+					"select 1 from AssetDisplayPageEntry where ",
+					"AssetDisplayPageEntry.groupId = JournalArticle.groupId ",
+					"and AssetDisplayPageEntry.classNameId = ",
+					journalArticleClassNameId,
+					" and AssetDisplayPageEntry.classPK = ",
+					"JournalArticle.resourcePrimKey) group by ",
+					"JournalArticle.groupId, JournalArticle.resourcePrimKey, ",
+					"AssetEntry.classUuid"),
 				resultRow -> {
 					long groupId = resultRow.get("groupId");
 					long resourcePrimKey = resultRow.get("resourcePrimKey");

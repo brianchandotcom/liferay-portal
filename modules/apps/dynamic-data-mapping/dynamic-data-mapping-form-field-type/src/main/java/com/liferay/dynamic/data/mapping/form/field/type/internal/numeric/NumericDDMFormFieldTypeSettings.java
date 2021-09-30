@@ -176,6 +176,7 @@ public interface NumericDDMFormFieldTypeSettings
 	@DDMFormField(
 		dataType = "string", label = "%format",
 		properties = {
+			"invalidCharacters=[1-8]",
 			"placeholder=%input-mask-format-placeholder",
 			"tooltip=%an-input-mask-helps-to-ensure-a-predefined-format"
 		},

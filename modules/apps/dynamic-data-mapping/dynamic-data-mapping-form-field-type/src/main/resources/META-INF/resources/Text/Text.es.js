@@ -29,10 +29,12 @@ const Text = ({
 	editingLanguageId,
 	fieldName,
 	id,
+	invalidCharacters,
 	localizable,
 	localizedValue,
 	maxLength,
 	name,
+	normalizeField,
 	onBlur,
 	onChange,
 	onFocus,
@@ -70,7 +72,7 @@ const Text = ({
 
 	useEffect(() => {
 		if (
-			fieldName === 'fieldReference' &&
+			normalizeField &&
 			inputRef.current &&
 			inputRef.current.value !== initialValue &&
 			(inputRef.current.value === '' || shouldUpdateValue)
@@ -82,6 +84,7 @@ const Text = ({
 		initialValue,
 		inputRef,
 		fieldName,
+		normalizeField,
 		onChange,
 		setValue,
 		shouldUpdateValue,
@@ -98,7 +101,7 @@ const Text = ({
 			maxLength={maxLength}
 			name={name}
 			onBlur={(event) => {
-				if (fieldName == 'fieldReference') {
+				if (normalizeField) {
 					onBlur({target: {value: initialValue}});
 				}
 				else {
@@ -108,11 +111,13 @@ const Text = ({
 			onChange={(event) => {
 				const {value} = event.target;
 
-				if (fieldName === 'fieldReference' || fieldName === 'name') {
+				if (normalizeField) {
 					event.target.value = normalizeFieldName(value);
 				}
-				else if (fieldName === 'inputMaskFormat') {
-					event.target.value = value.replace(/[1-8]/g, '');
+				else if (invalidCharacters) {
+					const regex = new RegExp(invalidCharacters, 'g');
+
+					event.target.value = value.replace(regex, '');
 				}
 
 				setValue(event.target.value);
@@ -346,11 +351,13 @@ const Main = ({
 	displayStyle = 'singleline',
 	fieldName,
 	id,
+	invalidCharacters = '',
 	locale,
 	localizable,
 	localizedValue = {},
 	maxLength,
 	name,
+	normalizeField = false,
 	onBlur,
 	onChange,
 	onFocus,
@@ -390,10 +397,12 @@ const Main = ({
 				editingLanguageId={locale}
 				fieldName={fieldName}
 				id={fieldDetailsId}
+				invalidCharacters={invalidCharacters}
 				localizable={localizable}
 				localizedValue={localizedValue}
 				maxLength={maxLength}
 				name={name}
+				normalizeField={normalizeField}
 				onBlur={onBlur}
 				onChange={onChange}
 				onFocus={onFocus}

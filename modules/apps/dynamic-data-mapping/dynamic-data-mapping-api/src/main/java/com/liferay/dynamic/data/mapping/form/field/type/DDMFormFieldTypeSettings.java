@@ -55,14 +55,18 @@ public interface DDMFormFieldTypeSettings {
 
 	@DDMFormField(
 		label = "%field-reference",
-		properties = "tooltip=%field-reference-serves-as-a-frienldy-identifier"
+		properties = {
+			"normalizeField=true",
+			"tooltip=%field-reference-serves-as-a-frienldy-identifier"
+		}
 	)
 	public default String fieldReference() {
 		return StringPool.BLANK;
 	}
 
 	@DDMFormField(
-		label = "%field-name", required = true, visibilityExpression = "FALSE"
+		label = "%field-name", properties = "normalizeField=true",
+		required = true, visibilityExpression = "FALSE"
 	)
 	public String name();
 

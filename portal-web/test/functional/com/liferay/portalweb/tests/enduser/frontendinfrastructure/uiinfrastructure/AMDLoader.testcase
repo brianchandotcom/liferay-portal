@@ -39,32 +39,12 @@ definition {
 			fieldName = "Log Level",
 			selectOption = "Warn");
 
-		var logLevel = AMDLoader.getAMDLoaderLogLevel();
+		for (var logLevelOptionName : list "Off,Error,Info,Debug,Warn") {
+			var logLevelOption = "${logLevelOptionName}";
 
-		if ("${logLevel}" != "warn") {
-			fail("AMD log level isn't set to Warn in JS console.");
-		}
+			AMDLoader.setLogLevelOption(selectOption = "${logLevelOption}");
 
-		for (var logLevelOptionName : list "Off,Error,Info,Debug") {
-			var logLevelOptionNameLowercase = StringUtil.lowerCase("${logLevelOptionName}");
-
-			SystemSettings.selectOptionSetting(
-				fieldName = "Log Level",
-				selectOption = "${logLevelOptionName}");
-
-			SystemSettings.saveConfiguration();
-
-			Refresh();
-
-			FormFields.viewSelectOption(
-				fieldName = "Log Level",
-				selectOption = "${logLevelOptionName}");
-
-			var logLevel = AMDLoader.getAMDLoaderLogLevel();
-
-			if ("${logLevel}" != "${logLevelOptionNameLowercase}") {
-				fail("AMD log level isn't set to ${logLevelOptionName} in JS console.");
-			}
+			AMDLoader.confirmLogLevelOptionSetCorrectly(selectOption = "${logLevelOption}");
 		}
 	}
 

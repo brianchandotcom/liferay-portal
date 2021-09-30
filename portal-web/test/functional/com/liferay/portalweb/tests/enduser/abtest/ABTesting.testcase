@@ -1023,7 +1023,7 @@ definition {
 		}
 
 		task ("Assert the test status is not running") {
-				AssertTextEquals(
+			AssertTextEquals(
 				locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON",
 				value1 = "Review and Run Test");
 		}
@@ -1060,15 +1060,15 @@ definition {
 			ABTest.viewInfoItems(values = "34,33,33,95");
 
 			AssertElementPresent(
-			key_name = "Estimated Time to Declare Winner",
-			key_value = "N/A",
-			locator1 = "ABTest#VIEW_ESTIMATED_TIME",
-			value1 = "N/A");
+				key_name = "Estimated Time to Declare Winner",
+				key_value = "N/A",
+				locator1 = "ABTest#VIEW_ESTIMATED_TIME",
+				value1 = "N/A");
 		}
 
 		task ("Terminate AB Test") {
 			Click(locator1 = "ABTest#RUN_TEST_BUTTON");
-			
+
 			ABTest.terminateTest();
 		}
 	}

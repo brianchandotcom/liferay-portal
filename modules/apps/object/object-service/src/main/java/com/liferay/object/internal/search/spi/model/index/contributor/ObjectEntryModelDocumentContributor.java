@@ -99,10 +99,60 @@ public class ObjectEntryModelDocumentContributor
 		sb.append(StringPool.COMMA_AND_SPACE);
 	}
 
+	private void _contribute(Document document, ObjectEntry objectEntry)
+		throws Exception {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Document " + document);
+			_log.debug("Object entry " + objectEntry);
+		}
+
+		document.addKeyword(
+			"objectDefinitionId", objectEntry.getObjectDefinitionId());
+		document.add(
+			new Field("objectEntryTitle", objectEntry.getTitleValue()));
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		document.addKeyword(
+			"objectDefinitionName", objectDefinition.getShortName());
+
+		FieldArray fieldArray = (FieldArray)document.getField(
+			"nestedFieldArray");
+
+		if (fieldArray == null) {
+			fieldArray = new FieldArray("nestedFieldArray");
+
+			document.add(fieldArray);
+		}
+
+		Map<String, Serializable> values = _objectEntryLocalService.getValues(
+			objectEntry.getObjectEntryId());
+
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				objectEntry.getObjectDefinitionId());
+
+		StringBundler sb = new StringBundler(objectFields.size() * 4);
+
+		for (ObjectField objectField : objectFields) {
+			_contribute(fieldArray, objectEntry, objectField, sb, values);
+		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		document.add(new Field("objectEntryContent", sb.toString()));
+
+		document.remove(Field.USER_NAME);
+	}
+
 	private void _contribute(
-		Document document, FieldArray fieldArray, ObjectEntry objectEntry,
-		ObjectField objectField, StringBundler sb, String titleFieldPrefix,
-		Map<String, Serializable> values) {
+		FieldArray fieldArray, ObjectEntry objectEntry, ObjectField objectField,
+		StringBundler sb, Map<String, Serializable> values) {
 
 		if (!objectField.isIndexed()) {
 			return;
@@ -124,23 +174,6 @@ public class ObjectEntryModelDocumentContributor
 
 		String objectFieldName = objectField.getName();
 		String valueString = String.valueOf(value);
-
-		if ((titleFieldPrefix != null) &&
-			objectFieldName.startsWith(titleFieldPrefix)) {
-
-			if (!Validator.isBlank(objectField.getIndexedLanguageId())) {
-				document.add(
-					new Field(
-						"objectEntryTitle_" +
-							objectField.getIndexedLanguageId(),
-						valueString));
-			}
-			else {
-				document.add(new Field("objectEntryTitle", valueString));
-			}
-
-			document.add(new Field("titleFieldPrefix", titleFieldPrefix));
-		}
 
 		if (objectField.isIndexedAsKeyword()) {
 			_addField(
@@ -217,71 +250,6 @@ public class ObjectEntryModelDocumentContributor
 						"\" with unsupported value ", value));
 			}
 		}
-	}
-
-	private void _contribute(Document document, ObjectEntry objectEntry)
-		throws Exception {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Document " + document);
-			_log.debug("Object entry " + objectEntry);
-		}
-
-		document.addKeyword(
-			"objectDefinitionId", objectEntry.getObjectDefinitionId());
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-
-		document.addKeyword(
-			"objectDefinitionName", objectDefinition.getShortName());
-
-		String titleFieldPrefix = "title";
-
-		// TODO
-
-		//String titleFieldPrefix = objectDefinition.getTitleFieldPrefix();
-
-		if (titleFieldPrefix == null) {
-
-			// TODO If no title field prefix is defined by the user, build a
-			// title from a set of rules
-
-			String title = "This is a title";
-
-			document.add(new Field("objectEntryTitle", title));
-		}
-
-		FieldArray fieldArray = (FieldArray)document.getField(
-			"nestedFieldArray");
-
-		if (fieldArray == null) {
-			fieldArray = new FieldArray("nestedFieldArray");
-
-			document.add(fieldArray);
-		}
-
-		Map<String, Serializable> values = _objectEntryLocalService.getValues(
-			objectEntry.getObjectEntryId());
-
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectEntry.getObjectDefinitionId());
-
-		StringBundler sb = new StringBundler(objectFields.size() * 4);
-
-		for (ObjectField objectField : objectFields) {
-			_contribute(
-				document, fieldArray, objectEntry, objectField, sb,
-				titleFieldPrefix, values);
-		}
-
-		if (sb.index() > 0) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		document.add(new Field("objectEntryContent", sb.toString()));
 	}
 
 	private String _getDateString(Object value) {

@@ -102,16 +102,14 @@ public class ObjectEntryKeywordQueryContributor
 			if (!Validator.isBlank(token)) {
 				try {
 					booleanQuery.add(
-						new WildcardQueryImpl(
-							Field.ENTRY_CLASS_PK, token + StringPool.STAR),
+						new TermQueryImpl(Field.ENTRY_CLASS_PK, token),
 						BooleanClauseOccur.SHOULD);
 
-					String titleField =
-						"objectEntryTitle_" +
-							LocaleUtil.toLanguageId(searchContext.getLocale());
+					String titleField = "objectEntryTitle";
 
 					booleanQuery.add(
-						new MatchQuery(titleField, token),
+						new WildcardQueryImpl(
+							titleField, token + StringPool.STAR),
 						BooleanClauseOccur.SHOULD);
 
 					QueryConfig queryConfig = searchContext.getQueryConfig();

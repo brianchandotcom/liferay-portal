@@ -42,9 +42,11 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			rootFolderName = StringPool.BLANK;
 		}
 
-		TrashCapability trashCapability = rootFolder.getRepositoryCapability(TrashCapability.class);
+		if (rootFolder.isRepositoryCapabilityProvided(TrashCapability.class)) {
+			TrashCapability trashCapability = rootFolder.getRepositoryCapability(TrashCapability.class);
 
-		rootFolderInTrash = trashCapability.isInTrash(rootFolder);
+			rootFolderInTrash = trashCapability.isInTrash(rootFolder);
+		}
 	}
 	catch (NoSuchFolderException nsfe) {
 		rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;

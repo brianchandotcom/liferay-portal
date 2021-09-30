@@ -387,10 +387,14 @@ public class DLAdminDisplayContext {
 				_rootFolderName = StringPool.BLANK;
 			}
 
-			TrashCapability trashCapability =
-				rootFolder.getRepositoryCapability(TrashCapability.class);
+			if (rootFolder.isRepositoryCapabilityProvided(
+					TrashCapability.class)) {
 
-			_rootFolderInTrash = trashCapability.isInTrash(rootFolder);
+				TrashCapability trashCapability =
+					rootFolder.getRepositoryCapability(TrashCapability.class);
+
+				_rootFolderInTrash = trashCapability.isInTrash(rootFolder);
+			}
 		}
 		catch (NoSuchFolderException noSuchFolderException) {
 			_rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;

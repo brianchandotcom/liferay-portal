@@ -491,11 +491,43 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69560. Verify that the Front Page status changes after edit. "
-	@ignore = "Test Stub"
 	@priority = "3"
 	test WikiFrontPageStatusChangesOnEdit {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Wiki");
 
-		// TODO LRQA-69560 WikiFrontPageStatusChangesOnEdit pending implementation
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputName(name = "Test Name");
+
+		PortletEntry.inputDescription(description = "Test Description");
+
+		Button.clickSave();
+
+		AssertClick(
+			key_workflowInstanceName = "Test Name",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			value1 = "Test Name");
+
+		AssertTextEquals(
+			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
+			value1 = "Approved");
+
+		AssertClick(
+			key_workflowInstanceName = "FrontPage",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			value1 = "FrontPage");
+
+		WikiPage.viewFrontPageDefaultCP(wikiPageTitle = "FrontPage");
+
+		WikiPage.addFrontPageWithWorkflowPG(wikiPageContent = "Front Page Wiki Content");
+
+		Navigator.gotoBack();
+
+		AssertTextEquals(
+			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
+			value1 = "Pending");
 
 	}
 

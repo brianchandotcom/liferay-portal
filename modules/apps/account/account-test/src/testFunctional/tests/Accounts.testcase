@@ -941,8 +941,6 @@ definition {
 
 			Check(locator1 = "RolesPermissions#ACCOUNTS_APPLICATION_PERMISSIONS_SELECT_ALL");
 
-			Check(locator1 = "RolesPermissions#ACCOUNTS_RESOURCE_PERMISSIONS_ACCOUNT_SELECT_ALL");
-
 			Check(locator1 = "RolesPermissions#ACCOUNTS_RESOURCE_PERMISSIONS_ACCOUNT_ENTRY_SELECT_ALL");
 
 			Button.clickSave();

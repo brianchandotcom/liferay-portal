@@ -12,15 +12,15 @@
 }
 
 .link-arrow {
-	margin-left: 16px;
+	margin-left: var(--spacer-2);
 }
 
 .link-lg {
-	font-size: 15px;
+	font-size: 12px;
 	padding: 0;
 }
 
 .link-nm {
-	font-size: 13px;
+	font-size: 11px;
 	padding: 0;
 }

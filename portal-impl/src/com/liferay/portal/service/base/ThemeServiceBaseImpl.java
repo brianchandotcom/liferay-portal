@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.ThemeService;
 import com.liferay.portal.kernel.service.ThemeServiceUtil;
-import com.liferay.portal.kernel.service.persistence.PluginSettingPersistence;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -115,95 +114,6 @@ public abstract class ThemeServiceBaseImpl
 		this.counterLocalService = counterLocalService;
 	}
 
-	/**
-	 * Returns the layout template local service.
-	 *
-	 * @return the layout template local service
-	 */
-	public com.liferay.portal.kernel.service.LayoutTemplateLocalService
-		getLayoutTemplateLocalService() {
-
-		return layoutTemplateLocalService;
-	}
-
-	/**
-	 * Sets the layout template local service.
-	 *
-	 * @param layoutTemplateLocalService the layout template local service
-	 */
-	public void setLayoutTemplateLocalService(
-		com.liferay.portal.kernel.service.LayoutTemplateLocalService
-			layoutTemplateLocalService) {
-
-		this.layoutTemplateLocalService = layoutTemplateLocalService;
-	}
-
-	/**
-	 * Returns the plugin setting local service.
-	 *
-	 * @return the plugin setting local service
-	 */
-	public com.liferay.portal.kernel.service.PluginSettingLocalService
-		getPluginSettingLocalService() {
-
-		return pluginSettingLocalService;
-	}
-
-	/**
-	 * Sets the plugin setting local service.
-	 *
-	 * @param pluginSettingLocalService the plugin setting local service
-	 */
-	public void setPluginSettingLocalService(
-		com.liferay.portal.kernel.service.PluginSettingLocalService
-			pluginSettingLocalService) {
-
-		this.pluginSettingLocalService = pluginSettingLocalService;
-	}
-
-	/**
-	 * Returns the plugin setting remote service.
-	 *
-	 * @return the plugin setting remote service
-	 */
-	public com.liferay.portal.kernel.service.PluginSettingService
-		getPluginSettingService() {
-
-		return pluginSettingService;
-	}
-
-	/**
-	 * Sets the plugin setting remote service.
-	 *
-	 * @param pluginSettingService the plugin setting remote service
-	 */
-	public void setPluginSettingService(
-		com.liferay.portal.kernel.service.PluginSettingService
-			pluginSettingService) {
-
-		this.pluginSettingService = pluginSettingService;
-	}
-
-	/**
-	 * Returns the plugin setting persistence.
-	 *
-	 * @return the plugin setting persistence
-	 */
-	public PluginSettingPersistence getPluginSettingPersistence() {
-		return pluginSettingPersistence;
-	}
-
-	/**
-	 * Sets the plugin setting persistence.
-	 *
-	 * @param pluginSettingPersistence the plugin setting persistence
-	 */
-	public void setPluginSettingPersistence(
-		PluginSettingPersistence pluginSettingPersistence) {
-
-		this.pluginSettingPersistence = pluginSettingPersistence;
-	}
-
 	public void afterPropertiesSet() {
 		_setServiceUtilService(themeService);
 	}
@@ -273,26 +183,5 @@ public abstract class ThemeServiceBaseImpl
 	)
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.LayoutTemplateLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.LayoutTemplateLocalService
-		layoutTemplateLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.PluginSettingLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.PluginSettingLocalService
-		pluginSettingLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.PluginSettingService.class
-	)
-	protected com.liferay.portal.kernel.service.PluginSettingService
-		pluginSettingService;
-
-	@BeanReference(type = PluginSettingPersistence.class)
-	protected PluginSettingPersistence pluginSettingPersistence;
 
 }

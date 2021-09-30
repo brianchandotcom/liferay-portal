@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.ReleasePersistence;
 import com.liferay.portal.kernel.service.persistence.ServiceComponentFinder;
 import com.liferay.portal.kernel.service.persistence.ServiceComponentPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -470,47 +469,6 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 		this.counterLocalService = counterLocalService;
 	}
 
-	/**
-	 * Returns the release local service.
-	 *
-	 * @return the release local service
-	 */
-	public com.liferay.portal.kernel.service.ReleaseLocalService
-		getReleaseLocalService() {
-
-		return releaseLocalService;
-	}
-
-	/**
-	 * Sets the release local service.
-	 *
-	 * @param releaseLocalService the release local service
-	 */
-	public void setReleaseLocalService(
-		com.liferay.portal.kernel.service.ReleaseLocalService
-			releaseLocalService) {
-
-		this.releaseLocalService = releaseLocalService;
-	}
-
-	/**
-	 * Returns the release persistence.
-	 *
-	 * @return the release persistence
-	 */
-	public ReleasePersistence getReleasePersistence() {
-		return releasePersistence;
-	}
-
-	/**
-	 * Sets the release persistence.
-	 *
-	 * @param releasePersistence the release persistence
-	 */
-	public void setReleasePersistence(ReleasePersistence releasePersistence) {
-		this.releasePersistence = releasePersistence;
-	}
-
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.portal.kernel.model.ServiceComponent",
@@ -599,15 +557,6 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	)
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.ReleaseLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ReleaseLocalService
-		releaseLocalService;
-
-	@BeanReference(type = ReleasePersistence.class)
-	protected ReleasePersistence releasePersistence;
 
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry

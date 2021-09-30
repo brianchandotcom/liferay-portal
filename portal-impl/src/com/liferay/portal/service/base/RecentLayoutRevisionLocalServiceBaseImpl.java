@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.RecentLayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.RecentLayoutRevisionLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.LayoutRevisionPersistence;
 import com.liferay.portal.kernel.service.persistence.RecentLayoutRevisionPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -468,49 +467,6 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 		this.counterLocalService = counterLocalService;
 	}
 
-	/**
-	 * Returns the layout revision local service.
-	 *
-	 * @return the layout revision local service
-	 */
-	public com.liferay.portal.kernel.service.LayoutRevisionLocalService
-		getLayoutRevisionLocalService() {
-
-		return layoutRevisionLocalService;
-	}
-
-	/**
-	 * Sets the layout revision local service.
-	 *
-	 * @param layoutRevisionLocalService the layout revision local service
-	 */
-	public void setLayoutRevisionLocalService(
-		com.liferay.portal.kernel.service.LayoutRevisionLocalService
-			layoutRevisionLocalService) {
-
-		this.layoutRevisionLocalService = layoutRevisionLocalService;
-	}
-
-	/**
-	 * Returns the layout revision persistence.
-	 *
-	 * @return the layout revision persistence
-	 */
-	public LayoutRevisionPersistence getLayoutRevisionPersistence() {
-		return layoutRevisionPersistence;
-	}
-
-	/**
-	 * Sets the layout revision persistence.
-	 *
-	 * @param layoutRevisionPersistence the layout revision persistence
-	 */
-	public void setLayoutRevisionPersistence(
-		LayoutRevisionPersistence layoutRevisionPersistence) {
-
-		this.layoutRevisionPersistence = layoutRevisionPersistence;
-	}
-
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.portal.kernel.model.RecentLayoutRevision",
@@ -597,15 +553,6 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	)
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.LayoutRevisionLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.LayoutRevisionLocalService
-		layoutRevisionLocalService;
-
-	@BeanReference(type = LayoutRevisionPersistence.class)
-	protected LayoutRevisionPersistence layoutRevisionPersistence;
 
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry

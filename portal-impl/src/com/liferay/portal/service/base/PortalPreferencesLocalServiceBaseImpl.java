@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.PortalPreferenceValuePersistence;
 import com.liferay.portal.kernel.service.persistence.PortalPreferencesPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -450,53 +449,6 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 		this.counterLocalService = counterLocalService;
 	}
 
-	/**
-	 * Returns the portal preference value local service.
-	 *
-	 * @return the portal preference value local service
-	 */
-	public com.liferay.portal.kernel.service.PortalPreferenceValueLocalService
-		getPortalPreferenceValueLocalService() {
-
-		return portalPreferenceValueLocalService;
-	}
-
-	/**
-	 * Sets the portal preference value local service.
-	 *
-	 * @param portalPreferenceValueLocalService the portal preference value local service
-	 */
-	public void setPortalPreferenceValueLocalService(
-		com.liferay.portal.kernel.service.PortalPreferenceValueLocalService
-			portalPreferenceValueLocalService) {
-
-		this.portalPreferenceValueLocalService =
-			portalPreferenceValueLocalService;
-	}
-
-	/**
-	 * Returns the portal preference value persistence.
-	 *
-	 * @return the portal preference value persistence
-	 */
-	public PortalPreferenceValuePersistence
-		getPortalPreferenceValuePersistence() {
-
-		return portalPreferenceValuePersistence;
-	}
-
-	/**
-	 * Sets the portal preference value persistence.
-	 *
-	 * @param portalPreferenceValuePersistence the portal preference value persistence
-	 */
-	public void setPortalPreferenceValuePersistence(
-		PortalPreferenceValuePersistence portalPreferenceValuePersistence) {
-
-		this.portalPreferenceValuePersistence =
-			portalPreferenceValuePersistence;
-	}
-
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.portal.kernel.model.PortalPreferences",
@@ -583,16 +535,6 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	)
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.PortalPreferenceValueLocalService.class
-	)
-	protected
-		com.liferay.portal.kernel.service.PortalPreferenceValueLocalService
-			portalPreferenceValueLocalService;
-
-	@BeanReference(type = PortalPreferenceValuePersistence.class)
-	protected PortalPreferenceValuePersistence portalPreferenceValuePersistence;
 
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry

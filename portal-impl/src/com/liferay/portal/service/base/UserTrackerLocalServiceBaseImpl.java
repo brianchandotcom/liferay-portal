@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.UserTrackerLocalService;
 import com.liferay.portal.kernel.service.UserTrackerLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.UserTrackerPathPersistence;
 import com.liferay.portal.kernel.service.persistence.UserTrackerPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -439,49 +438,6 @@ public abstract class UserTrackerLocalServiceBaseImpl
 		this.counterLocalService = counterLocalService;
 	}
 
-	/**
-	 * Returns the user tracker path local service.
-	 *
-	 * @return the user tracker path local service
-	 */
-	public com.liferay.portal.kernel.service.UserTrackerPathLocalService
-		getUserTrackerPathLocalService() {
-
-		return userTrackerPathLocalService;
-	}
-
-	/**
-	 * Sets the user tracker path local service.
-	 *
-	 * @param userTrackerPathLocalService the user tracker path local service
-	 */
-	public void setUserTrackerPathLocalService(
-		com.liferay.portal.kernel.service.UserTrackerPathLocalService
-			userTrackerPathLocalService) {
-
-		this.userTrackerPathLocalService = userTrackerPathLocalService;
-	}
-
-	/**
-	 * Returns the user tracker path persistence.
-	 *
-	 * @return the user tracker path persistence
-	 */
-	public UserTrackerPathPersistence getUserTrackerPathPersistence() {
-		return userTrackerPathPersistence;
-	}
-
-	/**
-	 * Sets the user tracker path persistence.
-	 *
-	 * @param userTrackerPathPersistence the user tracker path persistence
-	 */
-	public void setUserTrackerPathPersistence(
-		UserTrackerPathPersistence userTrackerPathPersistence) {
-
-		this.userTrackerPathPersistence = userTrackerPathPersistence;
-	}
-
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.portal.kernel.model.UserTracker",
@@ -566,15 +522,6 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	)
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.UserTrackerPathLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserTrackerPathLocalService
-		userTrackerPathLocalService;
-
-	@BeanReference(type = UserTrackerPathPersistence.class)
-	protected UserTrackerPathPersistence userTrackerPathPersistence;
 
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry

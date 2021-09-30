@@ -14,14 +14,11 @@
 
 package com.liferay.portal.service.base;
 
-import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationFinder;
-import com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -54,8 +51,6 @@ import com.liferay.portal.kernel.service.persistence.TeamFinder;
 import com.liferay.portal.kernel.service.persistence.TeamPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserGroupFinder;
-import com.liferay.portal.kernel.service.persistence.UserGroupGroupRoleFinder;
-import com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -1060,29 +1055,6 @@ public abstract class UserGroupLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the resource local service.
-	 *
-	 * @return the resource local service
-	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
-		return resourceLocalService;
-	}
-
-	/**
-	 * Sets the resource local service.
-	 *
-	 * @param resourceLocalService the resource local service
-	 */
-	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
-		this.resourceLocalService = resourceLocalService;
-	}
-
-	/**
 	 * Returns the team local service.
 	 *
 	 * @return the team local service
@@ -1196,207 +1168,6 @@ public abstract class UserGroupLocalServiceBaseImpl
 	 */
 	public void setUserFinder(UserFinder userFinder) {
 		this.userFinder = userFinder;
-	}
-
-	/**
-	 * Returns the expando row local service.
-	 *
-	 * @return the expando row local service
-	 */
-	public com.liferay.expando.kernel.service.ExpandoRowLocalService
-		getExpandoRowLocalService() {
-
-		return expandoRowLocalService;
-	}
-
-	/**
-	 * Sets the expando row local service.
-	 *
-	 * @param expandoRowLocalService the expando row local service
-	 */
-	public void setExpandoRowLocalService(
-		com.liferay.expando.kernel.service.ExpandoRowLocalService
-			expandoRowLocalService) {
-
-		this.expandoRowLocalService = expandoRowLocalService;
-	}
-
-	/**
-	 * Returns the expando row persistence.
-	 *
-	 * @return the expando row persistence
-	 */
-	public ExpandoRowPersistence getExpandoRowPersistence() {
-		return expandoRowPersistence;
-	}
-
-	/**
-	 * Sets the expando row persistence.
-	 *
-	 * @param expandoRowPersistence the expando row persistence
-	 */
-	public void setExpandoRowPersistence(
-		ExpandoRowPersistence expandoRowPersistence) {
-
-		this.expandoRowPersistence = expandoRowPersistence;
-	}
-
-	/**
-	 * Returns the export import local service.
-	 *
-	 * @return the export import local service
-	 */
-	public com.liferay.exportimport.kernel.service.ExportImportLocalService
-		getExportImportLocalService() {
-
-		return exportImportLocalService;
-	}
-
-	/**
-	 * Sets the export import local service.
-	 *
-	 * @param exportImportLocalService the export import local service
-	 */
-	public void setExportImportLocalService(
-		com.liferay.exportimport.kernel.service.ExportImportLocalService
-			exportImportLocalService) {
-
-		this.exportImportLocalService = exportImportLocalService;
-	}
-
-	/**
-	 * Returns the export import configuration local service.
-	 *
-	 * @return the export import configuration local service
-	 */
-	public com.liferay.exportimport.kernel.service.
-		ExportImportConfigurationLocalService
-			getExportImportConfigurationLocalService() {
-
-		return exportImportConfigurationLocalService;
-	}
-
-	/**
-	 * Sets the export import configuration local service.
-	 *
-	 * @param exportImportConfigurationLocalService the export import configuration local service
-	 */
-	public void setExportImportConfigurationLocalService(
-		com.liferay.exportimport.kernel.service.
-			ExportImportConfigurationLocalService
-				exportImportConfigurationLocalService) {
-
-		this.exportImportConfigurationLocalService =
-			exportImportConfigurationLocalService;
-	}
-
-	/**
-	 * Returns the export import configuration persistence.
-	 *
-	 * @return the export import configuration persistence
-	 */
-	public ExportImportConfigurationPersistence
-		getExportImportConfigurationPersistence() {
-
-		return exportImportConfigurationPersistence;
-	}
-
-	/**
-	 * Sets the export import configuration persistence.
-	 *
-	 * @param exportImportConfigurationPersistence the export import configuration persistence
-	 */
-	public void setExportImportConfigurationPersistence(
-		ExportImportConfigurationPersistence
-			exportImportConfigurationPersistence) {
-
-		this.exportImportConfigurationPersistence =
-			exportImportConfigurationPersistence;
-	}
-
-	/**
-	 * Returns the export import configuration finder.
-	 *
-	 * @return the export import configuration finder
-	 */
-	public ExportImportConfigurationFinder
-		getExportImportConfigurationFinder() {
-
-		return exportImportConfigurationFinder;
-	}
-
-	/**
-	 * Sets the export import configuration finder.
-	 *
-	 * @param exportImportConfigurationFinder the export import configuration finder
-	 */
-	public void setExportImportConfigurationFinder(
-		ExportImportConfigurationFinder exportImportConfigurationFinder) {
-
-		this.exportImportConfigurationFinder = exportImportConfigurationFinder;
-	}
-
-	/**
-	 * Returns the user group group role local service.
-	 *
-	 * @return the user group group role local service
-	 */
-	public com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService
-		getUserGroupGroupRoleLocalService() {
-
-		return userGroupGroupRoleLocalService;
-	}
-
-	/**
-	 * Sets the user group group role local service.
-	 *
-	 * @param userGroupGroupRoleLocalService the user group group role local service
-	 */
-	public void setUserGroupGroupRoleLocalService(
-		com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService
-			userGroupGroupRoleLocalService) {
-
-		this.userGroupGroupRoleLocalService = userGroupGroupRoleLocalService;
-	}
-
-	/**
-	 * Returns the user group group role persistence.
-	 *
-	 * @return the user group group role persistence
-	 */
-	public UserGroupGroupRolePersistence getUserGroupGroupRolePersistence() {
-		return userGroupGroupRolePersistence;
-	}
-
-	/**
-	 * Sets the user group group role persistence.
-	 *
-	 * @param userGroupGroupRolePersistence the user group group role persistence
-	 */
-	public void setUserGroupGroupRolePersistence(
-		UserGroupGroupRolePersistence userGroupGroupRolePersistence) {
-
-		this.userGroupGroupRolePersistence = userGroupGroupRolePersistence;
-	}
-
-	/**
-	 * Returns the user group group role finder.
-	 *
-	 * @return the user group group role finder
-	 */
-	public UserGroupGroupRoleFinder getUserGroupGroupRoleFinder() {
-		return userGroupGroupRoleFinder;
-	}
-
-	/**
-	 * Sets the user group group role finder.
-	 *
-	 * @param userGroupGroupRoleFinder the user group group role finder
-	 */
-	public void setUserGroupGroupRoleFinder(
-		UserGroupGroupRoleFinder userGroupGroupRoleFinder) {
-
-		this.userGroupGroupRoleFinder = userGroupGroupRoleFinder;
 	}
 
 	public void afterPropertiesSet() {
@@ -1513,12 +1284,6 @@ public abstract class UserGroupLocalServiceBaseImpl
 	protected GroupFinder groupFinder;
 
 	@BeanReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.ResourceLocalService
-		resourceLocalService;
-
-	@BeanReference(
 		type = com.liferay.portal.kernel.service.TeamLocalService.class
 	)
 	protected com.liferay.portal.kernel.service.TeamLocalService
@@ -1541,47 +1306,6 @@ public abstract class UserGroupLocalServiceBaseImpl
 
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
-
-	@BeanReference(
-		type = com.liferay.expando.kernel.service.ExpandoRowLocalService.class
-	)
-	protected com.liferay.expando.kernel.service.ExpandoRowLocalService
-		expandoRowLocalService;
-
-	@BeanReference(type = ExpandoRowPersistence.class)
-	protected ExpandoRowPersistence expandoRowPersistence;
-
-	@BeanReference(
-		type = com.liferay.exportimport.kernel.service.ExportImportLocalService.class
-	)
-	protected com.liferay.exportimport.kernel.service.ExportImportLocalService
-		exportImportLocalService;
-
-	@BeanReference(
-		type = com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService.class
-	)
-	protected com.liferay.exportimport.kernel.service.
-		ExportImportConfigurationLocalService
-			exportImportConfigurationLocalService;
-
-	@BeanReference(type = ExportImportConfigurationPersistence.class)
-	protected ExportImportConfigurationPersistence
-		exportImportConfigurationPersistence;
-
-	@BeanReference(type = ExportImportConfigurationFinder.class)
-	protected ExportImportConfigurationFinder exportImportConfigurationFinder;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService
-		userGroupGroupRoleLocalService;
-
-	@BeanReference(type = UserGroupGroupRolePersistence.class)
-	protected UserGroupGroupRolePersistence userGroupGroupRolePersistence;
-
-	@BeanReference(type = UserGroupGroupRoleFinder.class)
-	protected UserGroupGroupRoleFinder userGroupGroupRoleFinder;
 
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry

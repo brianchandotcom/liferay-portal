@@ -862,3 +862,19 @@ $section-header-bg: #cce6f7;
 		}
 	}
 }
+
+.lfr-token {
+	background-color: $primary-l3;
+	border: 1px solid $primary-l1;
+	color: $dark-l2;
+	cursor: pointer;
+	display: inline-block;
+	line-height: 1;
+	margin: 0.1em 0.2em;
+	padding: 0.3em 0.5em;
+	text-decoration: none;
+
+	&:hover {
+		background-color: $primary-l2;
+	}
+}

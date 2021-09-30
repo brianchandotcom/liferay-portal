@@ -32,20 +32,3 @@
 	font-size: 1.1em;
 	font-weight: bold;
 }
-
-.lfr-token {
-	background-color: #b3daef;
-	border: 1px solid transparent;
-	border-color: #5fa8ff;
-	color: #444;
-	cursor: pointer;
-	display: inline-block;
-	line-height: 1;
-	margin: 0.1em 0.2em;
-	padding: 0.3em 0.5em;
-	text-decoration: none;
-
-	&:hover {
-		background-color: #d1e5ef;
-	}
-}

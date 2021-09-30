@@ -322,14 +322,14 @@ definition {
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		for (var n : list "1,2,3,4") {
+		for (var n : list "1,2,3") {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
 
-			Pause(locator1 = "3000");
+			Pause(locator1 = "5000");
 		}
 
 		ACUtils.closeAllSessionsAndWait();
@@ -341,12 +341,10 @@ definition {
 		ACNavigation.goToIndividuals();
 
 		var displayDateDay = DateUtil.getCurrentDate();
-		var displayMonth = DateUtil.getCurrentMonth();
 		var displayDateMonth = DateUtil.getCurrentMonthName();
 		var displayDateYear = DateUtil.getCurrentYear();
 		var previousDay = DateUtil.getFormattedDate("-1", "d");
 		var previousMonth = DateUtil.getFormattedDate("-1", "MMMM");
-		var previousYear = DateUtil.getFormattedDate("-1", "yyyy");
 
 		ACTimeFilter.setCustomRange(
 			endDay = "${displayDateDay}",
@@ -354,7 +352,7 @@ definition {
 			endYear = "${displayDateYear}",
 			startDay = "${previousDay}",
 			startMonth = "${previousMonth}",
-			startYear = "${previousYear}");
+			startYear = "${displayDateYear}");
 
 		AssertElementPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
 	}

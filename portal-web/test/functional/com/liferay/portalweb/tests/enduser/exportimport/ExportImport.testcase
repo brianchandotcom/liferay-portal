@@ -1853,7 +1853,7 @@ definition {
 		LAR.importPortlet(
 			cannotImport = "true",
 			compressedFile = "true",
-			filePath = "enduser\exportimport",
+			filePath = "enduser/exportimport",
 			larFileName = "bookmarks-corrupted.portlet.lar",
 			uploadFrom = "dependencies");
 	}

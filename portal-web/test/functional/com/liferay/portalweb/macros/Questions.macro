@@ -452,6 +452,8 @@ definition {
 			key_text = "Update Your Question",
 			locator1 = "Button#ANY");
 
+		Refresh();
+
 		AssertVisible(
 			key_questionTitle = "${titleFieldEdit}",
 			locator1 = "Questions#QUESTIONS_DETAILS_TITLE");

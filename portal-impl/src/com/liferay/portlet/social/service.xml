@@ -88,19 +88,6 @@
 			<finder-column name="type" />
 			<finder-column name="receiverUserId" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="Layout" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="SocialActivityCounter" package-path="com.liferay.portlet.social" />
-		<reference entity="SocialActivityInterpreter" package-path="com.liferay.portlet.social" />
-		<reference entity="SocialActivityLimit" package-path="com.liferay.portlet.social" />
-		<reference entity="SocialActivitySet" package-path="com.liferay.portlet.social" />
-		<reference entity="SocialActivitySetting" package-path="com.liferay.portlet.social" />
 	</entity>
 	<entity local-service="true" name="SocialActivityAchievement" remote-service="false">
 
@@ -150,11 +137,6 @@
 			<finder-column name="userId" />
 			<finder-column name="firstInGroup" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="SocialActivityCounter" package-path="com.liferay.portlet.social" />
 	</entity>
 	<entity local-service="true" name="SocialActivityCounter" remote-service="false">
 
@@ -214,22 +196,8 @@
 			<finder-column name="ownerType" />
 			<finder-column name="endPeriod" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="SocialActivityLimit" package-path="com.liferay.portlet.social" />
-		<reference entity="SocialActivitySetting" package-path="com.liferay.portlet.social" />
 	</entity>
 	<entity local-service="true" name="SocialActivityInterpreter" remote-service="false" tx-manager="none">
-
-		<!-- References -->
-
-		<reference entity="SocialActivity" package-path="com.liferay.portlet.social" />
-		<reference entity="SocialActivitySet" package-path="com.liferay.portlet.social" />
 	</entity>
 	<entity local-service="true" name="SocialActivityLimit" remote-service="false">
 
@@ -274,10 +242,6 @@
 			<finder-column name="activityType" />
 			<finder-column name="activityCounterName" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="SocialActivitySet" remote-service="false">
 
@@ -340,10 +304,6 @@
 			<finder-column name="classPK" />
 			<finder-column name="type" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="SocialActivity" package-path="com.liferay.portlet.social" />
 	</entity>
 	<entity local-service="true" name="SocialActivitySetting" remote-service="true">
 
@@ -390,11 +350,6 @@
 			<finder-column name="activityType" />
 			<finder-column name="name" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="Group" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="SocialRelation" remote-service="false" uuid="true">
 
@@ -448,10 +403,6 @@
 			<finder-column name="userId2" />
 			<finder-column name="type" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="SocialRequest" remote-service="true" uuid="true">
 
@@ -529,12 +480,6 @@
 			<finder-column name="receiverUserId" />
 			<finder-column name="status" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="SocialRequestInterpreter" package-path="com.liferay.portlet.social" />
 	</entity>
 	<entity local-service="true" name="SocialRequestInterpreter" remote-service="false" tx-manager="none" />
 	<exceptions>

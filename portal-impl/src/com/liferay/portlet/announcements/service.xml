@@ -33,10 +33,6 @@
 			<finder-column name="userId" />
 			<finder-column name="type" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="AnnouncementsEntry" remote-service="true" uuid="true">
 
@@ -100,19 +96,6 @@
 			<finder-column name="classPK" />
 			<finder-column name="alert" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="Company" package-path="com.liferay.portal" />
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="Organization" package-path="com.liferay.portal" />
-		<reference entity="Resource" package-path="com.liferay.portal" />
-		<reference entity="Role" package-path="com.liferay.portal" />
-		<reference entity="Team" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="UserGroup" package-path="com.liferay.portal" />
-		<reference entity="AnnouncementsDelivery" package-path="com.liferay.portlet.announcements" />
-		<reference entity="AnnouncementsFlag" package-path="com.liferay.portlet.announcements" />
 	</entity>
 	<entity local-service="true" name="AnnouncementsFlag" remote-service="true">
 

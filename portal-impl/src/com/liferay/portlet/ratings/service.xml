@@ -39,10 +39,6 @@
 			<finder-column name="classPK" />
 			<finder-column name="score" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 	</entity>
 	<entity local-service="true" name="RatingsStats" remote-service="false">
 

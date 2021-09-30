@@ -61,22 +61,8 @@
 			<finder-column name="type" />
 			<finder-column name="status" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
 	<entity local-service="true" name="Staging" remote-service="true">
-
-		<!-- References -->
-
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="Layout" package-path="com.liferay.portal" />
-		<reference entity="LayoutRevision" package-path="com.liferay.portal" />
-		<reference entity="LayoutSetBranch" package-path="com.liferay.portal" />
-		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
-		<reference entity="PortletPreferenceValue" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
 		<exception>LARFile</exception>

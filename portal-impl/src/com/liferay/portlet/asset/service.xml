@@ -88,13 +88,6 @@
 			<finder-column name="name" />
 			<finder-column name="vocabularyId" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="Resource" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="AssetVocabulary" package-path="com.liferay.portlet.asset" />
 	</entity>
 	<entity deprecated="true" local-service="true" name="AssetCategoryProperty" remote-service="true">
 
@@ -225,13 +218,7 @@
 
 		<!-- References -->
 
-		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="AssetCategory" package-path="com.liferay.portlet.asset" />
-		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
-		<reference entity="SocialActivityCounter" package-path="com.liferay.portlet.social" />
 	</entity>
 	<entity local-service="true" name="AssetLink" remote-service="false">
 
@@ -284,12 +271,6 @@
 			<finder-column name="entryId2" />
 			<finder-column name="type" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="SystemEvent" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 	</entity>
 	<entity local-service="true" name="AssetTag" remote-service="true" uuid="true">
 
@@ -344,9 +325,6 @@
 
 		<!-- References -->
 
-		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 	</entity>
 	<entity external-reference-code="true" local-service="true" name="AssetVocabulary" remote-service="true" uuid="true">
@@ -402,14 +380,6 @@
 			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column arrayable-operator="OR" name="visibilityType" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="Resource" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="AssetCategory" package-path="com.liferay.portlet.asset" />
 	</entity>
 	<exceptions>
 		<exception>AssetCategory</exception>

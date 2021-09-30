@@ -4,32 +4,8 @@
 <service-builder api-package-path="com.liferay.document.library.kernel" auto-import-default-references="false" change-tracking-enabled="true" mvcc-enabled="true" package-path="com.liferay.portlet.documentlibrary">
 	<namespace>DL</namespace>
 	<entity local-service="true" name="DLApp" remote-service="true">
-
-		<!-- References -->
-
-		<reference entity="Repository" package-path="com.liferay.portal" />
-		<reference entity="DLAppHelper" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
 	<entity local-service="true" name="DLAppHelper" remote-service="false">
-
-		<!-- References -->
-
-		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
-		<reference entity="AssetCategory" package-path="com.liferay.portlet.asset" />
-		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
-		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
-		<reference entity="DLApp" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFileEntry" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFileShortcut" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFileVersion" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
-		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
-		<reference entity="TrashVersion" package-path="com.liferay.portlet.trash" />
 	</entity>
 	<entity external-reference-code="group" human-name="document library file entry" local-service="true" name="DLFileEntry" remote-service="true" trash-enabled="true" uad-dir-path="../modules/apps/document-library/document-library-uad/src/main/java" uad-package-path="com.liferay.document.library" uuid="true">
 
@@ -161,27 +137,7 @@
 
 		<!-- References -->
 
-		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="Company" package-path="com.liferay.portal" />
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="Image" package-path="com.liferay.portal" />
-		<reference entity="Organization" package-path="com.liferay.portal" />
-		<reference entity="Repository" package-path="com.liferay.portal" />
-		<reference entity="Resource" package-path="com.liferay.portal" />
-		<reference entity="Role" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="UserGroup" package-path="com.liferay.portal" />
-		<reference entity="WebDAVProps" package-path="com.liferay.portal" />
-		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="DLAppHelper" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFileEntryMetadata" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFileEntryType" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFileVersion" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
-		<reference entity="ExpandoTable" package-path="com.liferay.portlet.expando" />
-		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 	</entity>
 	<entity human-name="document library file entry metadata" local-service="true" name="DLFileEntryMetadata" remote-service="false" uuid="true">
 
@@ -212,11 +168,6 @@
 			<finder-column name="DDMStructureId" />
 			<finder-column name="fileVersionId" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="DLFileEntryType" package-path="com.liferay.portlet.documentlibrary" />
 	</entity>
 	<entity human-name="document library file entry type" local-service="true" name="DLFileEntryType" remote-service="true" uad-dir-path="../modules/apps/document-library/document-library-uad/src/main/java" uad-package-path="com.liferay.document.library" uuid="true">
 
@@ -265,14 +216,6 @@
 
 		<!-- References -->
 
-		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="Resource" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="WorkflowDefinitionLink" package-path="com.liferay.portal" />
-		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
-		<reference entity="DLAppHelper" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFileEntry" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFileVersion" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />
 	</entity>
 	<entity human-name="document library file shortcut" local-service="true" name="DLFileShortcut" remote-service="true" trash-enabled="true" uad-dir-path="../modules/apps/document-library/document-library-uad/src/main/java" uad-package-path="com.liferay.document.library" uuid="true">
@@ -336,14 +279,7 @@
 
 		<!-- References -->
 
-		<reference entity="Resource" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
-		<reference entity="DLApp" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
-		<reference entity="TrashVersion" package-path="com.liferay.portlet.trash" />
 	</entity>
 	<entity human-name="document library file version" local-service="true" name="DLFileVersion" remote-service="true" uuid="true">
 
@@ -429,11 +365,6 @@
 			<finder-column name="title" />
 			<finder-column name="version" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="DLFileEntry" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />
 	</entity>
 	<entity human-name="document library folder" local-service="true" name="DLFolder" remote-service="true" trash-enabled="true" uad-dir-path="../modules/apps/document-library/document-library-uad/src/main/java" uad-package-path="com.liferay.document.library" uuid="true">
 
@@ -569,20 +500,8 @@
 
 		<!-- References -->
 
-		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="Repository" package-path="com.liferay.portal" />
-		<reference entity="Resource" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="WebDAVProps" package-path="com.liferay.portal" />
-		<reference entity="WorkflowDefinitionLink" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="DLFileEntry" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileEntryType" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFileShortcut" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFileVersion" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
-		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 	</entity>
 	<entity local-service="true" name="DLTrash" remote-service="true">
 	</entity>

@@ -56,7 +56,7 @@ definition {
 		task ("Add a Web Content Display to page and display a web content") {
 			ACUtils.createWCAndAddToPage(
 				layoutName = "WebContent",
-				webContentContent = '''<div data-analytics-asset-type="custom" data-analytics-asset-id="analytics-portal" data-analytics-asset-category="AC" data-analytics-asset-title="Custom Asset Analytics Cloud">%0A<h1> What's your favorite portal? </h1>%0A</div>''',
+				webContentContent = '''<div data-analytics-asset-type="custom" data-analytics-asset-id="analytics-portal" data-analytics-asset-category="AC" data-analytics-asset-title="Custom Asset Analytics Cloud">%0A<h1> What'\''s your favorite portal? </h1>%0A</div>''',
 				webContentTitle = "Custom Asset AC Title");
 		}
 

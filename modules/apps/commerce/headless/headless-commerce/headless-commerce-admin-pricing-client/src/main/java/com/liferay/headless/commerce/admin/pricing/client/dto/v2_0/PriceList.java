@@ -501,6 +501,30 @@ public class PriceList implements Cloneable, Serializable {
 
 	protected PriceListDiscount[] priceListDiscounts;
 
+	public PriceListOrderType[] getPriceListOrderTypes() {
+		return priceListOrderTypes;
+	}
+
+	public void setPriceListOrderTypes(
+		PriceListOrderType[] priceListOrderTypes) {
+
+		this.priceListOrderTypes = priceListOrderTypes;
+	}
+
+	public void setPriceListOrderTypes(
+		UnsafeSupplier<PriceListOrderType[], Exception>
+			priceListOrderTypesUnsafeSupplier) {
+
+		try {
+			priceListOrderTypes = priceListOrderTypesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected PriceListOrderType[] priceListOrderTypes;
+
 	public PriceModifier[] getPriceModifiers() {
 		return priceModifiers;
 	}

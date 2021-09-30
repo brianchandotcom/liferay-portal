@@ -930,6 +930,16 @@ public abstract class BaseDiscountResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"discountOrderTypes", additionalAssertFieldName)) {
+
+				if (discount.getDiscountOrderTypes() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"discountProductGroups", additionalAssertFieldName)) {
 
 				if (discount.getDiscountProductGroups() == null) {
@@ -1297,6 +1307,19 @@ public abstract class BaseDiscountResourceTestCase {
 				if (!Objects.deepEquals(
 						discount1.getDiscountChannels(),
 						discount2.getDiscountChannels())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"discountOrderTypes", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						discount1.getDiscountOrderTypes(),
+						discount2.getDiscountOrderTypes())) {
 
 					return false;
 				}
@@ -1701,6 +1724,11 @@ public abstract class BaseDiscountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("discountChannels")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("discountOrderTypes")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

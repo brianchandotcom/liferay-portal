@@ -334,6 +334,36 @@ public class Discount implements Serializable {
 
 	@Schema
 	@Valid
+	public DiscountOrderType[] getDiscountOrderTypes() {
+		return discountOrderTypes;
+	}
+
+	public void setDiscountOrderTypes(DiscountOrderType[] discountOrderTypes) {
+		this.discountOrderTypes = discountOrderTypes;
+	}
+
+	@JsonIgnore
+	public void setDiscountOrderTypes(
+		UnsafeSupplier<DiscountOrderType[], Exception>
+			discountOrderTypesUnsafeSupplier) {
+
+		try {
+			discountOrderTypes = discountOrderTypesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected DiscountOrderType[] discountOrderTypes;
+
+	@Schema
+	@Valid
 	public DiscountProductGroup[] getDiscountProductGroups() {
 		return discountProductGroups;
 	}
@@ -1166,6 +1196,26 @@ public class Discount implements Serializable {
 				sb.append(String.valueOf(discountChannels[i]));
 
 				if ((i + 1) < discountChannels.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (discountOrderTypes != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discountOrderTypes\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < discountOrderTypes.length; i++) {
+				sb.append(String.valueOf(discountOrderTypes[i]));
+
+				if ((i + 1) < discountOrderTypes.length) {
 					sb.append(", ");
 				}
 			}

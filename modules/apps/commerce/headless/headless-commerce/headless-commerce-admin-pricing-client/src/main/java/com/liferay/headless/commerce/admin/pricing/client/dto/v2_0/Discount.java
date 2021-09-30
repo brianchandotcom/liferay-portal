@@ -234,6 +234,28 @@ public class Discount implements Cloneable, Serializable {
 
 	protected DiscountChannel[] discountChannels;
 
+	public DiscountOrderType[] getDiscountOrderTypes() {
+		return discountOrderTypes;
+	}
+
+	public void setDiscountOrderTypes(DiscountOrderType[] discountOrderTypes) {
+		this.discountOrderTypes = discountOrderTypes;
+	}
+
+	public void setDiscountOrderTypes(
+		UnsafeSupplier<DiscountOrderType[], Exception>
+			discountOrderTypesUnsafeSupplier) {
+
+		try {
+			discountOrderTypes = discountOrderTypesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected DiscountOrderType[] discountOrderTypes;
+
 	public DiscountProductGroup[] getDiscountProductGroups() {
 		return discountProductGroups;
 	}

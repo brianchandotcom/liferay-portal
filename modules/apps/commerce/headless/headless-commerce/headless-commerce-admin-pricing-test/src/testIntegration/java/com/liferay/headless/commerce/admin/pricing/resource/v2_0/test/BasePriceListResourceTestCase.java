@@ -1046,6 +1046,16 @@ public abstract class BasePriceListResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"priceListOrderTypes", additionalAssertFieldName)) {
+
+				if (priceList.getPriceListOrderTypes() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("priceModifiers", additionalAssertFieldName)) {
 				if (priceList.getPriceModifiers() == null) {
 					valid = false;
@@ -1420,6 +1430,19 @@ public abstract class BasePriceListResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"priceListOrderTypes", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						priceList1.getPriceListOrderTypes(),
+						priceList2.getPriceListOrderTypes())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("priceModifiers", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						priceList1.getPriceModifiers(),
@@ -1760,6 +1783,11 @@ public abstract class BasePriceListResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priceListDiscounts")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("priceListOrderTypes")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

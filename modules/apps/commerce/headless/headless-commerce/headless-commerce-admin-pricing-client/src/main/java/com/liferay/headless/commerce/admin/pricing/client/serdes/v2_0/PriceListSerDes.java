@@ -20,6 +20,7 @@ import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PriceListAcco
 import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PriceListAccountGroup;
 import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PriceListChannel;
 import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PriceListDiscount;
+import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PriceListOrderType;
 import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PriceModifier;
 import com.liferay.headless.commerce.admin.pricing.client.json.BaseJSONParser;
 
@@ -374,6 +375,29 @@ public class PriceListSerDes {
 			sb.append("]");
 		}
 
+		if (priceList.getPriceListOrderTypes() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceListOrderTypes\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < priceList.getPriceListOrderTypes().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(priceList.getPriceListOrderTypes()[i]));
+
+				if ((i + 1) < priceList.getPriceListOrderTypes().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (priceList.getPriceModifiers() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -626,6 +650,15 @@ public class PriceListSerDes {
 				String.valueOf(priceList.getPriceListDiscounts()));
 		}
 
+		if (priceList.getPriceListOrderTypes() == null) {
+			map.put("priceListOrderTypes", null);
+		}
+		else {
+			map.put(
+				"priceListOrderTypes",
+				String.valueOf(priceList.getPriceListOrderTypes()));
+		}
+
 		if (priceList.getPriceModifiers() == null) {
 			map.put("priceModifiers", null);
 		}
@@ -843,6 +876,21 @@ public class PriceListSerDes {
 								(String)object)
 						).toArray(
 							size -> new PriceListDiscount[size]
+						));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "priceListOrderTypes")) {
+
+				if (jsonParserFieldValue != null) {
+					priceList.setPriceListOrderTypes(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> PriceListOrderTypeSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new PriceListOrderType[size]
 						));
 				}
 			}

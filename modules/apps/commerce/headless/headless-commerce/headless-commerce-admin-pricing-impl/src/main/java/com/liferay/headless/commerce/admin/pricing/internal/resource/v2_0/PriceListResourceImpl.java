@@ -28,11 +28,13 @@ import com.liferay.commerce.price.list.model.CommercePriceListAccountRel;
 import com.liferay.commerce.price.list.model.CommercePriceListChannelRel;
 import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel;
 import com.liferay.commerce.price.list.model.CommercePriceListDiscountRel;
+import com.liferay.commerce.price.list.model.CommercePriceListOrderTypeRel;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListChannelRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListDiscountRelService;
+import com.liferay.commerce.price.list.service.CommercePriceListOrderTypeRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.commerce.pricing.model.CommercePriceModifier;
@@ -43,12 +45,14 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceEntry;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceList;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListAccount;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListAccountGroup;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListChannel;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListDiscount;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListOrderType;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceModifier;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.TierPrice;
 import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.PriceListDTOConverter;
@@ -57,6 +61,7 @@ import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.PriceListA
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.PriceListAccountUtil;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.PriceListChannelUtil;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.PriceListDiscountUtil;
+import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.PriceListOrderTypeUtil;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.PriceModifierUtil;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.TierPriceUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceListResource;
@@ -426,6 +431,30 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 			}
 		}
 
+		// Price list order types
+
+		PriceListOrderType[] priceListOrderTypes =
+			priceList.getPriceListOrderTypes();
+
+		if (priceListOrderTypes != null) {
+			for (PriceListOrderType priceListOrderType : priceListOrderTypes) {
+				CommercePriceListOrderTypeRel commercePriceListOrderTypeRel =
+					_commercePriceListOrderTypeRelService.
+						fetchCommercePriceListOrderTypeRel(
+							commercePriceList.getCommercePriceListId(),
+							priceListOrderType.getOrderTypeId());
+
+				if (commercePriceListOrderTypeRel != null) {
+					continue;
+				}
+
+				PriceListOrderTypeUtil.addCommercePriceListOrderTypeRel(
+					_commerceOrderTypeService,
+					_commercePriceListOrderTypeRelService, priceListOrderType,
+					commercePriceList, _serviceContextHelper);
+			}
+		}
+
 		// Price modifiers
 
 		PriceModifier[] priceModifiers = priceList.getPriceModifiers();
@@ -609,6 +638,9 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 	private CommerceDiscountService _commerceDiscountService;
 
 	@Reference
+	private CommerceOrderTypeService _commerceOrderTypeService;
+
+	@Reference
 	private CommercePriceEntryService _commercePriceEntryService;
 
 	@Reference
@@ -626,6 +658,10 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 	@Reference
 	private CommercePriceListDiscountRelService
 		_commercePriceListDiscountRelService;
+
+	@Reference
+	private CommercePriceListOrderTypeRelService
+		_commercePriceListOrderTypeRelService;
 
 	@Reference
 	private CommercePriceListService _commercePriceListService;

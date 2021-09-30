@@ -22,10 +22,12 @@ import com.liferay.commerce.discount.exception.NoSuchDiscountException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountAccountRel;
 import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupRel;
+import com.liferay.commerce.discount.model.CommerceDiscountOrderTypeRel;
 import com.liferay.commerce.discount.model.CommerceDiscountRel;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.service.CommerceDiscountAccountRelService;
 import com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGroupRelService;
+import com.liferay.commerce.discount.service.CommerceDiscountOrderTypeRelService;
 import com.liferay.commerce.discount.service.CommerceDiscountRelService;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
@@ -37,11 +39,13 @@ import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Discount;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountAccount;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountAccountGroup;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountCategory;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountChannel;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountOrderType;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountProduct;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountProductGroup;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountRule;
@@ -51,6 +55,7 @@ import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.DiscountAc
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.DiscountAccountUtil;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.DiscountCategoryUtil;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.DiscountChannelUtil;
+import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.DiscountOrderTypeUtil;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.DiscountProductGroupUtil;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.DiscountProductUtil;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.DiscountRuleUtil;
@@ -484,6 +489,30 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 			}
 		}
 
+		// Discount order types
+
+		DiscountOrderType[] discountOrderTypes =
+			discount.getDiscountOrderTypes();
+
+		if (discountOrderTypes != null) {
+			for (DiscountOrderType discountOrderType : discountOrderTypes) {
+				CommerceDiscountOrderTypeRel commerceDiscountOrderTypeRel =
+					_commerceDiscountOrderTypeRelService.
+						fetchCommerceDiscountOrderTypeRel(
+							commerceDiscount.getCommerceDiscountId(),
+							discountOrderType.getOrderTypeId());
+
+				if (commerceDiscountOrderTypeRel == null) {
+					continue;
+				}
+
+				DiscountOrderTypeUtil.addCommerceDiscountOrderTypeRel(
+					commerceDiscount, _commerceDiscountOrderTypeRelService,
+					_commerceOrderTypeService, discountOrderType,
+					_serviceContextHelper);
+			}
+		}
+
 		// Discount product groups
 
 		DiscountProductGroup[] discountProductGroups =
@@ -597,6 +626,10 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 		_commerceDiscountCommerceAccountGroupRelService;
 
 	@Reference
+	private CommerceDiscountOrderTypeRelService
+		_commerceDiscountOrderTypeRelService;
+
+	@Reference
 	private CommerceDiscountRelService _commerceDiscountRelService;
 
 	@Reference
@@ -604,6 +637,9 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 
 	@Reference
 	private CommerceDiscountService _commerceDiscountService;
+
+	@Reference
+	private CommerceOrderTypeService _commerceOrderTypeService;
 
 	@Reference
 	private CommercePricingClassService _commercePricingClassService;

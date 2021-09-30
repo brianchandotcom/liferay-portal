@@ -39,7 +39,7 @@ definition {
 
 		Click(locator1 = "Button#SUBMIT");
 
-		Alert.viewErrorMessage(errorMessage = "Staging is enabled for at least one site in the current virtual instance. Publications and staging cannot be used together.");
+		Alert.viewErrorMessage(errorMessage = "Staging is enabled for at least one site or asset library in the current virtual instance. Publications and staging cannot be used together.");
 	}
 
 	@priority = "5"

@@ -165,6 +165,10 @@ components:
                     items:
                         $ref: "#/components/schemas/DiscountChannel"
                     type: array
+                discountOrderTypes:
+                    items:
+                        $ref: "#/components/schemas/DiscountOrderType"
+                    type: array
                 discountProductGroups:
                     items:
                         $ref: "#/components/schemas/DiscountProductGroup"
@@ -852,6 +856,10 @@ components:
                 priceListDiscounts:
                     items:
                         $ref: "#/components/schemas/PriceListDiscount"
+                    type: array
+                priceListOrderTypes:
+                    items:
+                        $ref: "#/components/schemas/PriceListOrderType"
                     type: array
                 priceModifiers:
                     items:

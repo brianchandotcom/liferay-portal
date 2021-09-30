@@ -15,6 +15,7 @@
 package com.liferay.batch.planner.web.internal.portlet.action;
 
 import com.liferay.batch.planner.batch.engine.broker.BatchEngineBroker;
+import com.liferay.batch.planner.configuration.BatchPlannerConfiguration;
 import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
@@ -22,7 +23,9 @@ import com.liferay.batch.planner.service.BatchPlannerMappingService;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.batch.planner.service.BatchPlannerPolicyService;
 import com.liferay.batch.planner.service.persistence.BatchPlannerMappingUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -34,16 +37,23 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
+import java.io.InputStream;
 
 import java.net.URI;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -51,6 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Beslic
  */
 @Component(
+	configurationPid = "com.liferay.batch.planner.configuration.BatchPlannerConfiguration",
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + BatchPlannerPortletKeys.BATCH_PLANNER,
@@ -60,6 +71,16 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditImportBatchPlannerPlanMVCActionCommand
 	extends BaseTransactionalMVCActionCommand {
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		BatchPlannerConfiguration batchPlannerConfiguration =
+			ConfigurableUtil.createConfigurable(
+				BatchPlannerConfiguration.class, properties);
+
+		_temporaryBatchPlannerDirectory =
+			batchPlannerConfiguration.temporaryDirectory();
+	}
 
 	@Override
 	protected void doTransactionalCommand(
@@ -92,12 +113,8 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 		UploadPortletRequest uploadPortletRequest =
 			_portal.getUploadPortletRequest(actionRequest);
 
-		File importFile = FileUtil.createTempFile(externalType);
-
-		FileUtil.copyFile(
-			FileUtil.createTempFile(
-				uploadPortletRequest.getFileAsStream("importFile")),
-			importFile);
+		File importFile = _toBatchPlannerFile(
+			externalType, uploadPortletRequest.getFileAsStream("importFile"));
 
 		URI importFileURI = importFile.toURI();
 
@@ -187,6 +204,31 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 		return true;
 	}
 
+	private File _toBatchPlannerFile(
+			String externalType, InputStream inputStream)
+		throws Exception {
+
+		UUID uuid = UUID.randomUUID();
+
+		Path batchPlannerFilePath = Paths.get(
+			_temporaryBatchPlannerDirectory, "import",
+			StringBundler.concat(
+				uuid.toString(), StringPool.PERIOD, externalType));
+
+		File tempFile = FileUtil.createTempFile(inputStream);
+
+		try {
+			File file = batchPlannerFilePath.toFile();
+
+			FileUtil.copyFile(tempFile, file);
+
+			return file;
+		}
+		finally {
+			tempFile.delete();
+		}
+	}
+
 	private void _updateBatchPlannerPlan(ActionRequest actionRequest)
 		throws Exception {
 
@@ -233,5 +275,7 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	private String _temporaryBatchPlannerDirectory;
 
 }

@@ -169,7 +169,7 @@ export function ObjectRelationship({
 										{resource?.items?.map((item) => (
 											<ClayAutocomplete.Item
 												key={item.id}
-												match={String(value)}
+												match={String(search)}
 												onClick={(event) => {
 													onChange(
 														event,

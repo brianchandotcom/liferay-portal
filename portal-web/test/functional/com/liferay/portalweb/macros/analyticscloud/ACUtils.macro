@@ -60,6 +60,10 @@ definition {
 			var pattern = "[A-Z][a-z][a-z]\s\d+\s-\s\d+";
 		}
 
+		if ("${format}" == "MMM d - MMM d") {
+			var pattern = "[A-Z][a-z][a-z]\s\d+\s-\s[A-Z][a-z][a-z]\s\d+";
+		}
+
 		if ("${format}" == "yyyy MMM dd") {
 			var pattern = "\d\d\d\d\s[A-Z][a-z][a-z]\s\d+";
 		}

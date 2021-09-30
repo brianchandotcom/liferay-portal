@@ -27,13 +27,10 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Accounts Name",
-			accountEntryType = "Business");
-
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.viewEntryName(rowEntry = "Accounts Name");
+		Upgrade.addAndViewBusinessAccount(
+			accountEntryName = "Account Name",
+			accountEntryType = "Business",
+			rowEntry = "Account Name");
 	}
 
 }

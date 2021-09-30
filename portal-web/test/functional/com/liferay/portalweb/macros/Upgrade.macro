@@ -1,5 +1,15 @@
 definition {
 
+	macro addAndViewBusinessAccount {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "${accountEntryName}",
+			accountEntryType = "${accountEntryType}");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.viewEntryName(rowEntry = "${accountEntryName}");
+	}
+
 	macro addAndEditTranslations {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 

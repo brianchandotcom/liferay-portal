@@ -109,6 +109,8 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
 		}
 
 		task ("Close sessions") {
@@ -157,11 +159,22 @@ definition {
 				interval = "W");
 		}
 
-		task ("View the format of recharts xAxis ticks is MMM d - d") {
+		task ("View the format of recharts xAxis ticks is MMM d - MMM d") {
 			var date = ACCards.getAxisTick(
 				axis = "xAxis",
 				cardName = "Individual Events");
 
+			ACUtils.assertDatePattern(
+				date = "${date}",
+				format = "MMM d - MMM d");
+		}
+
+		task ("View the format of recharts xAxis ticks is MMM d - d") {
+			var date = ACCards.getAxisTick(
+				index = "2",
+				axis = "xAxis",
+				cardName = "Individual Events");
+			
 			ACUtils.assertDatePattern(
 				date = "${date}",
 				format = "MMM d - d");

@@ -500,11 +500,65 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69557. Verify that the Front Page status are displayed correctly on approve. "
-	@ignore = "Test Stub"
 	@priority = "3"
 	test WikiPageApprovedStatus {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Wiki");
 
-		// TODO LRQA-69557 WikiPageApprovedStatus pending implementation
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputName(name = "Test Name");
+
+		PortletEntry.inputDescription(description = "Test Description");
+
+		Button.clickSave();
+
+		AssertClick(
+			key_workflowInstanceName = "Test Name",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			value1 = "Test Name");
+
+		AssertClick(
+			key_workflowInstanceName = "FrontPage",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			value1 = "FrontPage");
+
+		WikiPage.viewFrontPageDefaultCP(wikiPageTitle = "FrontPage");
+
+		WikiPage.addFrontPageWithWorkflowPG(wikiPageContent = "Front Page Wiki Content");
+
+		Navigator.gotoBack();
+
+		AssertTextEquals(
+			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
+			value1 = "Pending");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "FrontPage",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "FrontPage",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review");
+		
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Wiki");
+
+		AssertClick(
+			key_workflowInstanceName = "Test Name",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			value1 = "Test Name");
+
+		AssertTextEquals(
+			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
+			value1 = "Approved");
+		
 
 	}
 

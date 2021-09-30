@@ -262,6 +262,8 @@ definition {
 	@uitest
 	test DeleteInformationTemplate {
 		task ("Add an information template for Document and Basic Document") {
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+
 			InformationTemplates.addCP(
 				informationTemplateName = "Test Information Template",
 				itemSubtype = "Basic Document",

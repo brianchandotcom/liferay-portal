@@ -152,9 +152,9 @@ AUI.add(
 
 					instance._addInputsFromData(data);
 
-					var companyIds = document.getElementById(
+					var companyIds = document.getElementsByName(
 						instance.ns('companyIds')
-					).value;
+					)[0].value;
 
 					if (!companyIds) {
 						this._showError(

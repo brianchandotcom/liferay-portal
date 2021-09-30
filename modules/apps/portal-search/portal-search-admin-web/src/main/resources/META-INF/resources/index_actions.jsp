@@ -93,8 +93,7 @@ page import="java.util.Map" %>
 		cssClass="container-fluid-max-xl container-form-lg search-admin-index-actions-container"
 		id='<%= liferayPortletResponse.getNamespace() + "adminSearchAdminIndexActionsPanel" %>'
 	>
-		<clay:row
-		>
+		<clay:row>
 			<clay:col
 				size="4"
 			>

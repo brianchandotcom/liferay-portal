@@ -280,9 +280,14 @@ function InstanceSelector({selected, setSelected, virtualInstances}) {
 	);
 }
 
-function ExecutionScope({portletNamespace, virtualInstances = []}) {
-	const [selected, setSelected] = useState([]);
-	const [scope, setScope] = useState(SCOPES.ALL);
+function ExecutionScope({
+	initialCompanyIds = [],
+	initialScope,
+	portletNamespace,
+	virtualInstances = [],
+}) {
+	const [selected, setSelected] = useState(initialCompanyIds);
+	const [scope, setScope] = useState(initialScope || SCOPES.ALL);
 
 	return (
 		<div className="execution-scope-sheet sheet sheet-lg">
@@ -302,6 +307,7 @@ function ExecutionScope({portletNamespace, virtualInstances = []}) {
 			</h2>
 
 			<ClayRadioGroup
+				name={`${portletNamespace}scope`}
 				onSelectedValueChange={(newScope) => setScope(newScope)}
 				selectedValue={scope}
 			>
@@ -325,8 +331,6 @@ function ExecutionScope({portletNamespace, virtualInstances = []}) {
 			)}
 
 			<input
-				className="field form-control"
-				id={`${portletNamespace}companyIds`}
 				name={`${portletNamespace}companyIds`}
 				type="hidden"
 				value={

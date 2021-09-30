@@ -26,12 +26,17 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Olivia Yu
@@ -39,13 +44,16 @@ import javax.portlet.RenderResponse;
 public class IndexActionsDisplayBuilder {
 
 	public IndexActionsDisplayBuilder(
-		Language language, Portal portal, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		Http http, Language language, Portal portal,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_http = http;
 		_language = language;
 		_portal = portal;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_httpServletRequest = portal.getHttpServletRequest(renderRequest);
 	}
 
 	public IndexActionsDisplayContext build() {
@@ -59,8 +67,21 @@ public class IndexActionsDisplayBuilder {
 
 	protected Map<String, Object> getData() {
 		return HashMapBuilder.<String, Object>put(
+			"initialCompanyIds", getInitialCompanyIds()
+		).put(
+			"initialScope", getInitialScope()
+		).put(
 			"virtualInstances", getVirtualInstancesJSONArray()
 		).build();
+	}
+
+	protected long[] getInitialCompanyIds() {
+		return StringUtil.split(
+			ParamUtil.getString(_httpServletRequest, "companyIds"), 0L);
+	}
+
+	protected String getInitialScope() {
+		return ParamUtil.getString(_httpServletRequest, "scope");
 	}
 
 	protected JSONArray getVirtualInstancesJSONArray() {
@@ -73,9 +94,7 @@ public class IndexActionsDisplayBuilder {
 				JSONUtil.put(
 					"id", CompanyConstants.SYSTEM
 				).put(
-					"name",
-					_language.get(
-						_portal.getHttpServletRequest(_renderRequest), "system")
+					"name", _language.get(_httpServletRequest, "system")
 				));
 		}
 
@@ -105,6 +124,8 @@ public class IndexActionsDisplayBuilder {
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexActionsDisplayBuilder.class);
 
+	private final Http _http;
+	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;

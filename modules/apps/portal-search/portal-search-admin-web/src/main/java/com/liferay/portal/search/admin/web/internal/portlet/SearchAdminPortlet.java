@@ -135,7 +135,7 @@ public class SearchAdminPortlet extends MVCPortlet {
 		else {
 			IndexActionsDisplayBuilder indexActionsDisplayBuilder =
 				new IndexActionsDisplayBuilder(
-					_language, _portal, renderRequest, renderResponse);
+					_http, _language, _portal, renderRequest, renderResponse);
 
 			renderRequest.setAttribute(
 				SearchAdminWebKeys.INDEX_ACTIONS_DISPLAY_CONTEXT,

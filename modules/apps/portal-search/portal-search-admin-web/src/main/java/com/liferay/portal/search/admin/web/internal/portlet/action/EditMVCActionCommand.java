@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.admin.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
@@ -30,6 +32,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -91,8 +94,6 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
 		if (cmd.equals("reindex")) {
 			reindex(actionRequest);
 
@@ -104,6 +105,19 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		else if (cmd.equals("reindexIndexReindexer")) {
 			reindexIndexReindexer(actionRequest);
 		}
+
+		long[] companyIds = ParamUtil.getLongValues(
+			actionRequest, "companyIds");
+		String scope = ParamUtil.getString(actionRequest, "scope");
+
+		String namespace = actionResponse.getNamespace();
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		redirect = _http.setParameter(
+			redirect, namespace + "companyIds",
+			_getCompanyIdsString(companyIds));
+		redirect = _http.setParameter(redirect, namespace + "scope", scope);
 
 		sendRedirect(actionRequest, actionResponse, redirect);
 	}
@@ -233,8 +247,26 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		_indexReindexers.remove(clazz.getName());
 	}
 
+	private String _getCompanyIdsString(long[] companyIds) {
+		StringBundler sb = new StringBundler(companyIds.length * 2);
+
+		for (long companyId : companyIds) {
+			sb.append(companyId);
+			sb.append(StringPool.COMMA);
+		}
+
+		if (companyIds.length > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
+	}
+
 	@Reference
 	private BackgroundTaskManager _backgroundTaskManager;
+
+	@Reference
+	private Http _http;
 
 	private final Map<String, IndexReindexer> _indexReindexers =
 		new ConcurrentHashMap<>();

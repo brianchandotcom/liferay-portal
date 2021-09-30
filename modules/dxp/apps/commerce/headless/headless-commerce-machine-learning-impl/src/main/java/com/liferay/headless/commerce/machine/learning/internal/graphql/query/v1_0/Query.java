@@ -16,8 +16,10 @@ package com.liferay.headless.commerce.machine.learning.internal.graphql.query.v1
 
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.AccountCategoryForecast;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.AccountForecast;
+import com.liferay.headless.commerce.machine.learning.dto.v1_0.SkuForecast;
 import com.liferay.headless.commerce.machine.learning.resource.v1_0.AccountCategoryForecastResource;
 import com.liferay.headless.commerce.machine.learning.resource.v1_0.AccountForecastResource;
+import com.liferay.headless.commerce.machine.learning.resource.v1_0.SkuForecastResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -65,6 +67,14 @@ public class Query {
 
 		_accountForecastResourceComponentServiceObjects =
 			accountForecastResourceComponentServiceObjects;
+	}
+
+	public static void setSkuForecastResourceComponentServiceObjects(
+		ComponentServiceObjects<SkuForecastResource>
+			skuForecastResourceComponentServiceObjects) {
+
+		_skuForecastResourceComponentServiceObjects =
+			skuForecastResourceComponentServiceObjects;
 	}
 
 	/**
@@ -116,6 +126,30 @@ public class Query {
 				accountForecastResource.getAccountForecastsByMonthlyRevenuePage(
 					accountIds, forecastLength, forecastStartDate,
 					historyLength, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {skuForecastsByMonthlyRevenue(forecastLength: ___, forecastStartDate: ___, historyLength: ___, page: ___, pageSize: ___, skus: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Get the forecast points")
+	public SkuForecastPage skuForecastsByMonthlyRevenue(
+			@GraphQLName("forecastLength") Integer forecastLength,
+			@GraphQLName("forecastStartDate") Date forecastStartDate,
+			@GraphQLName("historyLength") Integer historyLength,
+			@GraphQLName("skus") String[] skus,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_skuForecastResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			skuForecastResource -> new SkuForecastPage(
+				skuForecastResource.getSkuForecastsByMonthlyRevenuePage(
+					forecastLength, forecastStartDate, historyLength, skus,
+					Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLName("AccountCategoryForecastPage")
@@ -184,6 +218,39 @@ public class Query {
 
 	}
 
+	@GraphQLName("SkuForecastPage")
+	public class SkuForecastPage {
+
+		public SkuForecastPage(Page skuForecastPage) {
+			actions = skuForecastPage.getActions();
+
+			items = skuForecastPage.getItems();
+			lastPage = skuForecastPage.getLastPage();
+			page = skuForecastPage.getPage();
+			pageSize = skuForecastPage.getPageSize();
+			totalCount = skuForecastPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<SkuForecast> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -237,10 +304,26 @@ public class Query {
 		accountForecastResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			SkuForecastResource skuForecastResource)
+		throws Exception {
+
+		skuForecastResource.setContextAcceptLanguage(_acceptLanguage);
+		skuForecastResource.setContextCompany(_company);
+		skuForecastResource.setContextHttpServletRequest(_httpServletRequest);
+		skuForecastResource.setContextHttpServletResponse(_httpServletResponse);
+		skuForecastResource.setContextUriInfo(_uriInfo);
+		skuForecastResource.setContextUser(_user);
+		skuForecastResource.setGroupLocalService(_groupLocalService);
+		skuForecastResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<AccountCategoryForecastResource>
 		_accountCategoryForecastResourceComponentServiceObjects;
 	private static ComponentServiceObjects<AccountForecastResource>
 		_accountForecastResourceComponentServiceObjects;
+	private static ComponentServiceObjects<SkuForecastResource>
+		_skuForecastResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

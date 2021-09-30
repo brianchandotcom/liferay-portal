@@ -18,6 +18,7 @@ import com.liferay.headless.commerce.machine.learning.internal.graphql.mutation.
 import com.liferay.headless.commerce.machine.learning.internal.graphql.query.v1_0.Query;
 import com.liferay.headless.commerce.machine.learning.resource.v1_0.AccountCategoryForecastResource;
 import com.liferay.headless.commerce.machine.learning.resource.v1_0.AccountForecastResource;
+import com.liferay.headless.commerce.machine.learning.resource.v1_0.SkuForecastResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
 import javax.annotation.Generated;
@@ -43,6 +44,8 @@ public class ServletDataImpl implements ServletData {
 			_accountCategoryForecastResourceComponentServiceObjects);
 		Query.setAccountForecastResourceComponentServiceObjects(
 			_accountForecastResourceComponentServiceObjects);
+		Query.setSkuForecastResourceComponentServiceObjects(
+			_skuForecastResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -67,5 +70,9 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<AccountForecastResource>
 		_accountForecastResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SkuForecastResource>
+		_skuForecastResourceComponentServiceObjects;
 
 }

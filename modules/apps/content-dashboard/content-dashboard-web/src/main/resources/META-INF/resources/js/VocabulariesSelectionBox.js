@@ -16,10 +16,10 @@ import {ClayDualListBox} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-const addLabel = (myArray) => {
+const transformToDualListBoxProperties = (myArray) => {
 	let myArrayWithLabel = [];
 	myArray.forEach((elem) => {
-		myArrayWithLabel.push({...elem, label: elem.value});
+		myArrayWithLabel.push({...elem, label: elem.value, value: elem.key});
 	});
 
 	return myArrayWithLabel;
@@ -37,12 +37,13 @@ const addFakeSiteId = (vocabularies) => {
 const VocabulariesSelectionBox = ({
 	leftBoxName,
 	leftList,
+	portletNamespace,
 	rightBoxName,
 	rightList,
 }) => {
 	const [items, setItems] = useState([
-		addFakeSiteId(addLabel(leftList)),
-		addFakeSiteId(addLabel(rightList)),
+		addFakeSiteId(transformToDualListBoxProperties(leftList)),
+		addFakeSiteId(transformToDualListBoxProperties(rightList)),
 	]);
 
 	const [leftElements, rightElements] = items;
@@ -85,7 +86,7 @@ const VocabulariesSelectionBox = ({
 			}}
 			onItemsChange={setItems}
 			right={{
-				id: rightBoxName,
+				id: `${portletNamespace}${rightBoxName}`,
 				label: Liferay.Language.get('in-use'),
 			}}
 		/>
@@ -93,9 +94,10 @@ const VocabulariesSelectionBox = ({
 };
 
 VocabulariesSelectionBox.propTypes = {
-	leftBoxName: PropTypes.string,
+	leftBoxName: PropTypes.string.isRequired,
 	leftList: PropTypes.array.isRequired,
-	rightBoxName: PropTypes.string,
+	portletNamespace: PropTypes.string.isRequired,
+	rightBoxName: PropTypes.string.isRequired,
 	rightList: PropTypes.array.isRequired,
 };
 

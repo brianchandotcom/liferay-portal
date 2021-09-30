@@ -856,3 +856,25 @@ Access the native OSGi API using the system bundle's `org.osgi.framework.BundleC
 The native OSGi API makes the bridged API unnecessary.
 
 ---------------------------------------
+
+## Remove support for Web Content in Document Types
+- ** Date:** 2021-Sep-30
+- ** JIRA Ticket:** [LPS-139710](https://issues.liferay.com/browse/LPS-139710)
+
+### What changed?
+
+Support for Web Content fields in Document Types has been removed.
+
+### Who is affected?
+
+Anyone with Document Types that contain Web Content field types.
+
+### How should I update my code?
+
+Remove all references to this field type to avoid issues.
+
+### Why was this change made?
+
+This is an accidental feature, included in Documents and Media with no clear use case behind it. Additionally, it is causing circularity problems when linking together Web Contents and Documents when staging is enabled.
+
+---------------------------------------

@@ -62,6 +62,19 @@ definition {
 		}
 	}
 
+	macro setAddAccountEntryPermissions {
+		JSONRole.addRegularRole(roleTitle = "${roleTitle}");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ACCOUNT_ENTRY",
+			resourceName = "90",
+			roleTitle = "${roleTitle}");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "${roleTitle}",
+			userEmailAddress = "${userEmailAddress}");
+	}
+
 	macro addAccountWithDomain {
 		LexiconEntry.gotoAdd();
 

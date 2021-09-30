@@ -493,7 +493,8 @@ public class ParameterSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "defaultValueFloat")) {
 				if (jsonParserFieldValue != null) {
-					parameter.setDefaultValueFloat((Float)jsonParserFieldValue);
+					parameter.setDefaultValueFloat(
+						Float.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(
@@ -550,7 +551,8 @@ public class ParameterSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "maxValueFloat")) {
 				if (jsonParserFieldValue != null) {
-					parameter.setMaxValueFloat((Float)jsonParserFieldValue);
+					parameter.setMaxValueFloat(
+						Float.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "maxValueInteger")) {
@@ -573,7 +575,8 @@ public class ParameterSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "minValueFloat")) {
 				if (jsonParserFieldValue != null) {
-					parameter.setMinValueFloat((Float)jsonParserFieldValue);
+					parameter.setMinValueFloat(
+						Float.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "minValueInteger")) {

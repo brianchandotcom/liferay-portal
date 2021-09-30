@@ -73,6 +73,9 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		).put(
 			"labelKey", _getLabelKey(ddmFormField)
 		).put(
+			"objectDefinitionId",
+			GetterUtil.getLong(ddmFormField.getProperty("objectDefinitionId"))
+		).put(
 			"placeholder",
 			() -> {
 				LocalizedValue localizedValue =

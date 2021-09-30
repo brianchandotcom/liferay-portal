@@ -201,7 +201,6 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.viewDefaultMyWorkflowTasksCP();
-
 	}
 
 	@description = "This is a test for LRQA-69554. Verify that the user can Submit for Publication a Wiki Page with assigned Workflow. "

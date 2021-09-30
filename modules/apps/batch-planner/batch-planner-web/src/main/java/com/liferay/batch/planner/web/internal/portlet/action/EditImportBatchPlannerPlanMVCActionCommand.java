@@ -34,12 +34,17 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.URI;
+
+import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.UUID;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -92,12 +97,8 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 		UploadPortletRequest uploadPortletRequest =
 			_portal.getUploadPortletRequest(actionRequest);
 
-		File importFile = FileUtil.createTempFile(externalType);
-
-		FileUtil.copyFile(
-			FileUtil.createTempFile(
-				uploadPortletRequest.getFileAsStream("importFile")),
-			importFile);
+		File importFile = _toBatchPlannerFile(
+			externalType, uploadPortletRequest.getFileAsStream("importFile"));
 
 		URI importFileURI = importFile.toURI();
 
@@ -185,6 +186,28 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 		}
 
 		return true;
+	}
+
+	private File _toBatchPlannerFile(
+			String externalType, InputStream inputStream)
+		throws Exception {
+
+		UUID uuid = UUID.randomUUID();
+
+		File file = FileUtil.createTempFile(uuid.toString(), externalType);
+
+		try {
+			Files.copy(inputStream, file.toPath());
+
+			return file;
+		}
+		catch (IOException ioException) {
+			if (file.exists()) {
+				file.delete();
+			}
+
+			throw ioException;
+		}
 	}
 
 	private void _updateBatchPlannerPlan(ActionRequest actionRequest)

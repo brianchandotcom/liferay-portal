@@ -108,6 +108,14 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 			{}
 		);
 
+		if (!localizedNames[themeDisplay.getDefaultLanguageId()]) {
+			Liferay.Util.openToast({
+				message: Liferay.Language.get('name-must-not-be-empty'),
+				type: 'danger',
+			});
+			return;
+		}
+
 		Liferay.Util.fetch(
 			'/o/headless-admin-list-type/v1.0/list-type-definitions/<%= listTypeDefinition.getListTypeDefinitionId() %>',
 			{

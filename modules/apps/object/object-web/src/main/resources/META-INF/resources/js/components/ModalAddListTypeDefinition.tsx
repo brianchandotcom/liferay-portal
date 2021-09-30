@@ -14,11 +14,11 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
-import RequiredMask from './form/RequiredMask';
+import Input from './form/Input';
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
@@ -40,6 +40,7 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({apiURL}) => {
 		},
 	});
 	const [error, setError] = useState<string>('');
+	const [nameError, setNameError] = useState<string>('');
 
 	const {observer, onClose} = useModal({
 		onClose: () => setVisibleModal(false),
@@ -47,6 +48,12 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({apiURL}) => {
 
 	const handleSaveListTypeDefinition = async () => {
 		const {name_i18n} = formState;
+
+		if (name_i18n[defaultLanguageId] === '') {
+			setNameError(Liferay.Language.get('required'));
+
+			return;
+		}
 
 		const response = await Liferay.Util.fetch(apiURL, {
 			body: JSON.stringify({
@@ -102,15 +109,12 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({apiURL}) => {
 						)}
 
 						<ClayForm.Group>
-							<label htmlFor="listTypeDefinitionName">
-								{Liferay.Language.get('name')}
-
-								<RequiredMask />
-							</label>
-
-							<ClayInput
+							<Input
+								error={nameError}
 								id="listTypeDefinitionName"
-								onChange={({target: {value}}) => {
+								label={Liferay.Language.get('name')}
+								name="name"
+								onChange={({target: {value}}: any) => {
 									setFormState({
 										...formState,
 										name_i18n: {
@@ -119,8 +123,9 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({apiURL}) => {
 									});
 
 									error && setError('');
+									value != '' && setNameError('');
 								}}
-								type="text"
+								required
 								value={formState.name_i18n[defaultLanguageId]}
 							/>
 						</ClayForm.Group>

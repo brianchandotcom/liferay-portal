@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import React from 'react';
 
 import AddNewTabButton from './AddNewTabButton';
@@ -22,6 +23,15 @@ import './LayoutScreen.scss';
 const LayoutScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	return (
 		<div className="layout-tab">
+			<ClayAlert
+				displayType="info"
+				title={`${Liferay.Language.get('info')}:`}
+			>
+				{Liferay.Language.get(
+					'only-the-first-tab-will-be-used-when-creating-a-new-entry-the-remaining-Tabs-can-be-accessed-while-updating-the-entry'
+				)}
+			</ClayAlert>
+
 			<AddNewTabButton />
 
 			<ObjectLayoutTabs />

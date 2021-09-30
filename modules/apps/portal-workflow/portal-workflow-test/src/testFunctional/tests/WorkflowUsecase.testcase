@@ -306,7 +306,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "workflow_definition_legal_marketing.xml",
+			workflowDefinitionFile = "legal-marketing-workflow-definition.xml",
 			workflowDefinitionTitle = "Double Approver Definition");
 
 		ApplicationsMenu.gotoPortlet(
@@ -471,7 +471,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "workflow_definition_category_specific.xml",
+			workflowDefinitionFile = "category-specific-workflow-definition.xml",
 			workflowDefinitionTitle = "Category Specific");
 
 		Workflow.viewDefinition(
@@ -802,7 +802,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "workflow_definition_1.xml",
+			workflowDefinitionFile = "1-workflow-definition.xml",
 			workflowDefinitionTitle = "New Uploaded Definition");
 
 		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "New Uploaded Definition");

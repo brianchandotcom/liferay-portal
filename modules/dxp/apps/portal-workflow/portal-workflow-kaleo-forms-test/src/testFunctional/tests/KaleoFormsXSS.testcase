@@ -17,7 +17,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "workflow_definition_xss.xml",
+			workflowDefinitionFile = "xss-workflow-definition.xml",
 			workflowDefinitionTitle = '''<script>alert(123);</script>''');
 
 		Navigator.openURL();

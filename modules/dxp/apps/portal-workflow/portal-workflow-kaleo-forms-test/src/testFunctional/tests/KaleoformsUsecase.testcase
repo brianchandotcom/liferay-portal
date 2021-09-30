@@ -2118,7 +2118,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "workflow_definition_1.xml",
+			workflowDefinitionFile = "1-workflow-definition.xml",
 			workflowDefinitionTitle = "Uploaded Definition");
 
 		Workflow.viewDefinition(
@@ -3037,7 +3037,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "workflow_definition_1.xml",
+			workflowDefinitionFile = "1-workflow-definition.xml",
 			workflowDefinitionTitle = "Uploaded Definition");
 
 		Workflow.viewDefinition(workflowDefinitionName = "Uploaded Definition");
@@ -3194,7 +3194,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "workflow_definition_1.xml",
+			workflowDefinitionFile = "1-workflow-definition.xml",
 			workflowDefinitionTitle = "Uploaded Definition");
 
 		Workflow.viewDefinition(workflowDefinitionName = "Uploaded Definition");

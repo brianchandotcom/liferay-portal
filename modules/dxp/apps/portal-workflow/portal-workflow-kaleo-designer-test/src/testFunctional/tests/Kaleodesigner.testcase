@@ -436,7 +436,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "workflow_definition_task_timers.xml",
+			workflowDefinitionFile = "task-timers-workflow-definition.xml",
 			workflowDefinitionFilePath = "dxp/apps/portal-workflow/portal-workflow-kaleo-designer-test",
 			workflowDefinitionTitle = "New Workflow Definition Title");
 

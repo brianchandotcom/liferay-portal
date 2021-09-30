@@ -131,7 +131,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "workflow_definition_1.xml",
+			workflowDefinitionFile = "1-workflow-definition.xml",
 			workflowDefinitionTitle = "New Uploaded Definition");
 
 		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
@@ -230,7 +230,7 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
-			workflowDefinitionFile = "workflow_definition_2.xml",
+			workflowDefinitionFile = "2-workflow-definition.xml",
 			workflowDefinitionTitle = "Manuel Task");
 
 		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");

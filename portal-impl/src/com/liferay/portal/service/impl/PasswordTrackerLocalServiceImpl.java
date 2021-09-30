@@ -14,11 +14,14 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.PasswordTracker;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
+import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.service.base.PasswordTrackerLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -40,7 +43,7 @@ public class PasswordTrackerLocalServiceImpl
 	public boolean isSameAsCurrentPassword(long userId, String newClearTextPwd)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userPersistence.findByPrimaryKey(userId);
 
 		String currentPwd = user.getPassword();
 
@@ -67,7 +70,7 @@ public class PasswordTrackerLocalServiceImpl
 		throws PortalException {
 
 		PasswordPolicy passwordPolicy =
-			passwordPolicyLocalService.getPasswordPolicyByUserId(userId);
+			_passwordPolicyLocalService.getPasswordPolicyByUserId(userId);
 
 		if ((passwordPolicy == null) || !passwordPolicy.isHistory()) {
 			return true;
@@ -105,7 +108,7 @@ public class PasswordTrackerLocalServiceImpl
 		throws PortalException {
 
 		PasswordPolicy passwordPolicy =
-			passwordPolicyLocalService.getPasswordPolicyByUserId(userId);
+			_passwordPolicyLocalService.getPasswordPolicyByUserId(userId);
 
 		if ((passwordPolicy != null) && passwordPolicy.isHistory()) {
 			long passwordTrackerId = counterLocalService.increment();
@@ -120,5 +123,11 @@ public class PasswordTrackerLocalServiceImpl
 			passwordTrackerPersistence.update(passwordTracker);
 		}
 	}
+
+	@BeanReference(type = PasswordPolicyLocalService.class)
+	private PasswordPolicyLocalService _passwordPolicyLocalService;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

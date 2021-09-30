@@ -14,10 +14,12 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PluginSetting;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.service.base.PluginSettingServiceBaseImpl;
 
 /**
@@ -31,7 +33,7 @@ public class PluginSettingServiceImpl extends PluginSettingServiceBaseImpl {
 			boolean active)
 		throws PortalException {
 
-		if (!roleLocalService.hasUserRole(
+		if (!_roleLocalService.hasUserRole(
 				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
 
 			throw new PrincipalException();
@@ -40,5 +42,8 @@ public class PluginSettingServiceImpl extends PluginSettingServiceBaseImpl {
 		return pluginSettingLocalService.updatePluginSetting(
 			companyId, pluginId, pluginType, roles, active);
 	}
+
+	@BeanReference(type = RoleLocalService.class)
+	private RoleLocalService _roleLocalService;
 
 }

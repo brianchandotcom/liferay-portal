@@ -14,13 +14,17 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
+import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.DuplicateUserGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -48,7 +52,9 @@ import com.liferay.portal.kernel.search.reindexer.ReindexerBridge;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.exportimport.UserGroupImportTransactionThreadLocal;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -224,7 +230,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		// Resources
 
-		resourceLocalService.addResources(
+		_resourceLocalService.addResources(
 			companyId, 0, userId, UserGroup.class.getName(),
 			userGroup.getUserGroupId(), false, false, false);
 
@@ -281,7 +287,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		// Expando
 
-		expandoRowLocalService.deleteRows(userGroup.getUserGroupId());
+		_expandoRowLocalService.deleteRows(userGroup.getUserGroupId());
 
 		// Group
 
@@ -289,12 +295,12 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		// User group roles
 
-		userGroupGroupRoleLocalService.deleteUserGroupGroupRolesByUserGroupId(
+		_userGroupGroupRoleLocalService.deleteUserGroupGroupRolesByUserGroupId(
 			userGroup.getUserGroupId());
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			userGroup.getCompanyId(), UserGroup.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, userGroup.getUserGroupId());
 
@@ -828,7 +834,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			teamPersistence.removeUserGroups(team.getTeamId(), userGroupIds);
 		}
 
-		userGroupGroupRoleLocalService.deleteUserGroupGroupRoles(
+		_userGroupGroupRoleLocalService.deleteUserGroupGroupRoles(
 			userGroupIds, groupId);
 
 		groupPersistence.removeUserGroups(groupId, userGroupIds);
@@ -958,13 +964,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 						parameterMap);
 
 			ExportImportConfiguration exportImportConfiguration =
-				exportImportConfigurationLocalService.
+				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
 						user.getUserId(),
 						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 						exportLayoutSettingsMap);
 
-			files[0] = exportImportLocalService.exportLayoutsAsFile(
+			files[0] = _exportImportLocalService.exportLayoutsAsFile(
 				exportImportConfiguration);
 		}
 
@@ -978,13 +984,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 						parameterMap);
 
 			ExportImportConfiguration exportImportConfiguration =
-				exportImportConfigurationLocalService.
+				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
 						user.getUserId(),
 						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 						exportLayoutSettingsMap);
 
-			files[1] = exportImportLocalService.exportLayoutsAsFile(
+			files[1] = _exportImportLocalService.exportLayoutsAsFile(
 				exportImportConfiguration);
 		}
 
@@ -1062,13 +1068,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 						user, groupId, true, null, parameterMap);
 
 			ExportImportConfiguration exportImportConfiguration =
-				exportImportConfigurationLocalService.
+				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
 						user.getUserId(),
 						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
 						importLayoutSettingsMap);
 
-			exportImportLocalService.importLayouts(
+			_exportImportLocalService.importLayouts(
 				exportImportConfiguration, privateLayoutsFile);
 		}
 
@@ -1079,13 +1085,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 						user, groupId, false, null, parameterMap);
 
 			ExportImportConfiguration exportImportConfiguration =
-				exportImportConfigurationLocalService.
+				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
 						user.getUserId(),
 						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
 						importLayoutSettingsMap);
 
-			exportImportLocalService.importLayouts(
+			_exportImportLocalService.importLayouts(
 				exportImportConfiguration, publicLayoutsFile);
 		}
 	}
@@ -1222,5 +1228,21 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		ServiceProxyFactory.newServiceTrackedInstance(
 			ReindexerBridge.class, UserGroupLocalServiceImpl.class,
 			"_reindexerBridge", false);
+
+	@BeanReference(type = ExpandoRowLocalService.class)
+	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@BeanReference(type = ExportImportConfigurationLocalService.class)
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
+
+	@BeanReference(type = ExportImportLocalService.class)
+	private ExportImportLocalService _exportImportLocalService;
+
+	@BeanReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@BeanReference(type = UserGroupGroupRoleLocalService.class)
+	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
 
 }

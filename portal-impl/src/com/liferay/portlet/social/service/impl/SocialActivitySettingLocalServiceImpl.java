@@ -16,6 +16,7 @@ package com.liferay.portlet.social.service.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
@@ -27,6 +28,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portlet.social.service.base.SocialActivitySettingLocalServiceBaseImpl;
 import com.liferay.social.kernel.model.SocialActivityCounterDefinition;
@@ -52,7 +55,7 @@ public class SocialActivitySettingLocalServiceImpl
 
 		SocialActivitySetting activitySetting =
 			socialActivitySettingPersistence.fetchByG_C_A_N(
-				groupId, classNameLocalService.getClassNameId(className), 0,
+				groupId, _classNameLocalService.getClassNameId(className), 0,
 				name);
 
 		if (activitySetting != null) {
@@ -168,7 +171,7 @@ public class SocialActivitySettingLocalServiceImpl
 			long groupId, String className, boolean enabled)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
+		long classNameId = _classNameLocalService.getClassNameId(className);
 
 		SocialActivitySetting activitySetting =
 			socialActivitySettingPersistence.fetchByG_C_A_N(
@@ -176,7 +179,7 @@ public class SocialActivitySettingLocalServiceImpl
 				SocialActivitySettingConstants.NAME_ENABLED);
 
 		if (activitySetting == null) {
-			Group group = groupLocalService.getGroup(groupId);
+			Group group = _groupLocalService.getGroup(groupId);
 
 			long activitySettingId = counterLocalService.increment();
 
@@ -201,7 +204,7 @@ public class SocialActivitySettingLocalServiceImpl
 			SocialActivityCounterDefinition activityCounterDefinition)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
+		long classNameId = _classNameLocalService.getClassNameId(className);
 
 		SocialActivityDefinition defaultActivityDefinition =
 			SocialConfigurationUtil.getActivityDefinition(
@@ -231,7 +234,7 @@ public class SocialActivitySettingLocalServiceImpl
 			activitySetting.setValue(toJSON(activityCounterDefinition));
 		}
 		else {
-			Group group = groupLocalService.getGroup(groupId);
+			Group group = _groupLocalService.getGroup(groupId);
 
 			long activitySettingId = counterLocalService.increment();
 
@@ -258,7 +261,7 @@ public class SocialActivitySettingLocalServiceImpl
 			long groupId, String className, long classPK, boolean enabled)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
+		long classNameId = _classNameLocalService.getClassNameId(className);
 		String name = _PREFIX_CLASS_PK.concat(String.valueOf(classPK));
 
 		SocialActivitySetting activitySetting =
@@ -266,7 +269,7 @@ public class SocialActivitySettingLocalServiceImpl
 				groupId, classNameId, 0, name);
 
 		if (activitySetting == null) {
-			Group group = groupLocalService.getGroup(groupId);
+			Group group = _groupLocalService.getGroup(groupId);
 
 			long activitySettingId = counterLocalService.increment();
 
@@ -384,7 +387,7 @@ public class SocialActivitySettingLocalServiceImpl
 		long groupId, String className, int activityType) {
 
 		return socialActivitySettingPersistence.findByG_C_A(
-			groupId, classNameLocalService.getClassNameId(className),
+			groupId, _classNameLocalService.getClassNameId(className),
 			activityType);
 	}
 
@@ -417,5 +420,11 @@ public class SocialActivitySettingLocalServiceImpl
 		_activityDefinitionsPortalCache = PortalCacheHelperUtil.getPortalCache(
 			PortalCacheManagerNames.MULTI_VM,
 			SocialActivitySettingLocalServiceImpl.class.getName());
+
+	@BeanReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(type = GroupLocalService.class)
+	private GroupLocalService _groupLocalService;
 
 }

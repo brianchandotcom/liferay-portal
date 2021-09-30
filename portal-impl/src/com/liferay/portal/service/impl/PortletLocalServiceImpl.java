@@ -70,7 +70,12 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -188,7 +193,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 	@Override
 	public void checkPortlet(Portlet portlet) throws PortalException {
-		resourcePermissionLocalService.initPortletDefaultPermissions(portlet);
+		_resourcePermissionLocalService.initPortletDefaultPermissions(portlet);
 
 		initPortletAddToPagePermissions(portlet);
 	}
@@ -240,12 +245,12 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			companyId, rootPortletId, ResourceConstants.SCOPE_INDIVIDUAL,
 			PortletPermissionUtil.getPrimaryKey(plid, portletId));
 
 		List<PortletPreferences> portletPreferencesList =
-			portletPreferencesLocalService.getPortletPreferences(
+			_portletPreferencesLocalService.getPortletPreferences(
 				plid, portletId);
 
 		Portlet portlet = getPortletById(companyId, portletId);
@@ -284,7 +289,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				}
 			}
 			else {
-				portletPreferencesLocalService.deletePortletPreferences(
+				_portletPreferencesLocalService.deletePortletPreferences(
 					portletPreferences.getPortletPreferencesId());
 			}
 		}
@@ -341,7 +346,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			clearCache();
 		}
 
-		companyLocalService.forEachCompanyId(
+		_companyLocalService.forEachCompanyId(
 			companyId -> {
 				_deployRemotePortlet(companyId, portlet, categoryNames);
 
@@ -372,7 +377,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		throws PortalException {
 
 		long[] companyIds = ListUtil.toLongArray(
-			companyLocalService.getCompanies(false), Company::getCompanyId);
+			_companyLocalService.getCompanies(false), Company::getCompanyId);
 
 		deployRemotePortlet(
 			companyIds, portlet, categoryNames, eagerDestroy, true);
@@ -1215,7 +1220,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					continue;
 				}
 
-				Role role = roleLocalService.fetchRole(
+				Role role = _roleLocalService.fetchRole(
 					portlet.getCompanyId(), roleName);
 
 				if (role == null) {
@@ -1231,7 +1236,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					continue;
 				}
 
-				resourcePermissionLocalService.addResourcePermission(
+				_resourcePermissionLocalService.addResourcePermission(
 					portlet.getCompanyId(), portlet.getRootPortletId(),
 					ResourceConstants.SCOPE_COMPANY,
 					String.valueOf(portlet.getCompanyId()), role.getRoleId(),
@@ -2842,11 +2847,26 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	private static final Map<Long, Map<String, Portlet>> _portletsMaps =
 		new ConcurrentHashMap<>();
 
+	@BeanReference(type = CompanyLocalService.class)
+	private CompanyLocalService _companyLocalService;
+
 	private final AtomicReference<String[]> _friendlyURLMapperRootPortletIds =
 		new AtomicReference<>(new String[0]);
 
 	@BeanReference(type = LayoutLocalService.class)
 	private LayoutLocalService _layoutLocalService;
+
+	@BeanReference(type = PortletPreferencesLocalService.class)
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@BeanReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@BeanReference(type = ResourcePermissionLocalService.class)
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@BeanReference(type = RoleLocalService.class)
+	private RoleLocalService _roleLocalService;
 
 	private ServiceTracker<FriendlyURLMapper, String[]> _serviceTracker;
 

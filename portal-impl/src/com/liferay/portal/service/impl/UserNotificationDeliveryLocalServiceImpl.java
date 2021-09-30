@@ -14,12 +14,14 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.NoSuchUserNotificationDeliveryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.service.base.UserNotificationDeliveryLocalServiceBaseImpl;
 
 /**
@@ -34,7 +36,7 @@ public class UserNotificationDeliveryLocalServiceImpl
 			int notificationType, int deliveryType, boolean deliver)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userPersistence.findByPrimaryKey(userId);
 
 		long userNotificationDeliveryId = counterLocalService.increment();
 
@@ -124,5 +126,8 @@ public class UserNotificationDeliveryLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserNotificationDeliveryLocalServiceImpl.class);
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

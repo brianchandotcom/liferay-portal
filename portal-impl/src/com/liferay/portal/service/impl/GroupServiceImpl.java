@@ -16,9 +16,12 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -1016,10 +1019,10 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			Group oldGroup = group;
 
 			List<AssetCategory> oldAssetCategories =
-				assetCategoryLocalService.getCategories(
+				_assetCategoryLocalService.getCategories(
 					Group.class.getName(), groupId);
 
-			List<AssetTag> oldAssetTags = assetTagLocalService.getTags(
+			List<AssetTag> oldAssetTags = _assetTagLocalService.getTags(
 				Group.class.getName(), groupId);
 
 			ExpandoBridge oldExpandoBridge = oldGroup.getExpandoBridge();
@@ -1133,5 +1136,11 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupServiceImpl.class);
+
+	@BeanReference(type = AssetCategoryLocalService.class)
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@BeanReference(type = AssetTagLocalService.class)
+	private AssetTagLocalService _assetTagLocalService;
 
 }

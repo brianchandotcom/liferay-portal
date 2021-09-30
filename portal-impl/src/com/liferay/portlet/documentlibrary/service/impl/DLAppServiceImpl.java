@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.exception.FileEntryLockException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
+import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.comparator.FolderNameComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifiedDateComparator;
@@ -57,6 +58,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.persistence.RepositoryPersistence;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -72,6 +74,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
+import com.liferay.trash.kernel.service.TrashEntryService;
 
 import java.io.File;
 import java.io.IOException;
@@ -519,7 +522,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Folder folder = repository.addFolder(
 			getUserId(), parentFolderId, name, description, serviceContext);
 
-		dlAppHelperLocalService.addFolder(getUserId(), folder, serviceContext);
+		_dlAppHelperLocalService.addFolder(getUserId(), folder, serviceContext);
 
 		return folder;
 	}
@@ -627,7 +630,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		dlAppHelperLocalService.cancelCheckOut(
+		_dlAppHelperLocalService.cancelCheckOut(
 			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
 			draftFileVersion, serviceContext);
 	}
@@ -673,7 +676,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
-		dlAppHelperLocalService.updateFileEntry(
+		_dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, null, fileVersion,
 			fileVersion.getFileVersionId());
 	}
@@ -716,7 +719,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
-		dlAppHelperLocalService.updateFileEntry(
+		_dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, null, fileVersion,
 			fileVersion.getFileVersionId());
 	}
@@ -754,7 +757,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
-		dlAppHelperLocalService.updateFileEntry(
+		_dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, null, fileVersion, fileEntryId);
 	}
 
@@ -798,7 +801,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
-		dlAppHelperLocalService.updateFileEntry(
+		_dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, null, fileVersion, fileEntryId);
 
 		return fileEntry;
@@ -829,7 +832,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Folder destFolder = repository.addFolder(
 			getUserId(), parentFolderId, name, description, serviceContext);
 
-		dlAppHelperLocalService.addFolder(
+		_dlAppHelperLocalService.addFolder(
 			getUserId(), destFolder, serviceContext);
 
 		copyFolder(repository, srcFolder, destFolder, serviceContext);
@@ -848,7 +851,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = repositoryProvider.getFileEntryRepository(
 			fileEntryId);
 
-		dlAppHelperLocalService.deleteFileEntry(
+		_dlAppHelperLocalService.deleteFileEntry(
 			repository.getFileEntry(fileEntryId));
 
 		repository.deleteFileEntry(fileEntryId);
@@ -869,7 +872,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getRepository(repositoryId);
 
-		dlAppHelperLocalService.deleteFileEntry(
+		_dlAppHelperLocalService.deleteFileEntry(
 			repository.getFileEntry(folderId, title));
 
 		repository.deleteFileEntry(folderId, title);
@@ -943,7 +946,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				TrashCapability.class);
 
 			if (trashCapability.isInTrash(folder)) {
-				trashEntryService.deleteEntry(
+				_trashEntryService.deleteEntry(
 					DLFolderConstants.getClassName(), folder.getFolderId());
 
 				return;
@@ -954,12 +957,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			0, folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		for (FileEntry fileEntry : fileEntries) {
-			dlAppHelperLocalService.deleteFileEntry(fileEntry);
+			_dlAppHelperLocalService.deleteFileEntry(fileEntry);
 		}
 
 		repository.deleteFolder(folderId);
 
-		dlAppHelperLocalService.deleteFolder(folder);
+		_dlAppHelperLocalService.deleteFolder(folder);
 	}
 
 	/**
@@ -985,7 +988,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				TrashCapability.class);
 
 			if (trashCapability.isInTrash(folder)) {
-				trashEntryService.deleteEntry(
+				_trashEntryService.deleteEntry(
 					DLFolderConstants.getClassName(), folder.getFolderId());
 
 				return;
@@ -1424,7 +1427,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		}
 
 		List<com.liferay.portal.kernel.model.Repository> repositories =
-			repositoryPersistence.findByGroupId(groupId);
+			_repositoryPersistence.findByGroupId(groupId);
 
 		for (com.liferay.portal.kernel.model.Repository repository :
 				repositories) {
@@ -2562,7 +2565,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
-		dlAppHelperLocalService.updateFileEntry(
+		_dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
 			serviceContext);
 	}
@@ -2926,7 +2929,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			description, changeLog, dlVersionNumberIncrease, file,
 			expirationDate, reviewDate, serviceContext);
 
-		dlAppHelperLocalService.updateFileEntry(
+		_dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, null, fileEntry.getLatestFileVersion(),
 			serviceContext);
 
@@ -3073,7 +3076,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			description, changeLog, dlVersionNumberIncrease, inputStream, size,
 			expirationDate, reviewDate, serviceContext);
 
-		dlAppHelperLocalService.updateFileEntry(
+		_dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, null, fileEntry.getLatestFileVersion(),
 			serviceContext);
 
@@ -3164,7 +3167,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
-		dlAppHelperLocalService.updateFileEntry(
+		_dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
 			serviceContext);
 
@@ -3215,7 +3218,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
-		dlAppHelperLocalService.updateFileEntry(
+		_dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
 			serviceContext);
 
@@ -3304,7 +3307,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			folderId, name, description, serviceContext);
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			dlAppHelperLocalService.updateFolder(
+			_dlAppHelperLocalService.updateFolder(
 				getUserId(), folder, serviceContext);
 		}
 
@@ -3407,7 +3410,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				FileVersion destinationFileVersion =
 					destinationFileEntry.getFileVersion();
 
-				dlAppHelperLocalService.updateFileEntry(
+				_dlAppHelperLocalService.updateFileEntry(
 					getUserId(), destinationFileEntry, null,
 					destinationFileVersion, serviceContext);
 			}
@@ -3436,7 +3439,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				getUserId(), parentFolderId, folder.getName(),
 				folder.getDescription(), serviceContext);
 
-			dlAppHelperLocalService.addFolder(
+			_dlAppHelperLocalService.addFolder(
 				getUserId(), newFolder, serviceContext);
 
 			copyFolderDependencies(
@@ -3494,7 +3497,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 					srcSubfolder.getName(), srcSubfolder.getDescription(),
 					serviceContext);
 
-				dlAppHelperLocalService.addFolder(
+				_dlAppHelperLocalService.addFolder(
 					getUserId(), destSubfolder, serviceContext);
 
 				folders.offer(new Folder[] {srcSubfolder, destSubfolder});
@@ -3561,7 +3564,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 					currentFolder.getName(), currentFolder.getDescription(),
 					serviceContext);
 
-				dlAppHelperLocalService.addFolder(
+				_dlAppHelperLocalService.addFolder(
 					getUserId(), newFolder, serviceContext);
 
 				copyFolderDependencies(
@@ -3577,7 +3580,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			dlAppHelperLocalService.deleteFileEntry(
+			_dlAppHelperLocalService.deleteFileEntry(
 				fromRepository.getFileEntry(oldFileEntryId));
 
 			fromRepository.deleteFileEntry(oldFileEntryId);
@@ -3587,7 +3590,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 			toRepository.deleteFileEntry(newFileEntryId);
 
-			dlAppHelperLocalService.deleteFileEntry(fileEntry);
+			_dlAppHelperLocalService.deleteFileEntry(fileEntry);
 
 			throw portalException;
 		}
@@ -3690,5 +3693,15 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			PortletResourcePermissionFactory.getInstance(
 				DLAppServiceImpl.class, "_portletResourcePermission",
 				DLConstants.RESOURCE_NAME);
+
+	@BeanReference(type = DLAppHelperLocalService.class)
+	private DLAppHelperLocalService _dlAppHelperLocalService;
+
+	@BeanReference(type = RepositoryPersistence.class)
+	private RepositoryPersistence _repositoryPersistence;
+
+	@BeanReference(type = TrashEntryService.class)
+	@SuppressWarnings("deprecation")
+	private TrashEntryService _trashEntryService;
 
 }

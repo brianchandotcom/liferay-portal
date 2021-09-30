@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.exception.AvailableLocaleException;
 import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
@@ -27,6 +28,9 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.VirtualHost;
+import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
+import com.liferay.portal.kernel.service.persistence.GroupPersistence;
+import com.liferay.portal.kernel.service.persistence.LayoutSetPersistence;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
@@ -152,7 +156,7 @@ public class VirtualHostLocalServiceImpl
 	public List<VirtualHost> updateVirtualHosts(
 		long companyId, long layoutSetId, TreeMap<String, String> hostnames) {
 
-		LayoutSet layoutSet = layoutSetPersistence.fetchByPrimaryKey(
+		LayoutSet layoutSet = _layoutSetPersistence.fetchByPrimaryKey(
 			layoutSetId);
 
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
@@ -225,7 +229,7 @@ public class VirtualHostLocalServiceImpl
 
 		virtualHostPersistence.cacheResult(virtualHosts);
 
-		Company company = companyPersistence.fetchByPrimaryKey(companyId);
+		Company company = _companyPersistence.fetchByPrimaryKey(companyId);
 
 		if (company != null) {
 			TransactionCommitCallbackUtil.registerCallback(
@@ -236,23 +240,23 @@ public class VirtualHostLocalServiceImpl
 					return null;
 				});
 
-			companyPersistence.clearCache(company);
+			_companyPersistence.clearCache(company);
 		}
 
 		if ((layoutSet == null) &&
 			Validator.isNotNull(PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME)) {
 
-			Group group = groupPersistence.fetchByC_GK(
+			Group group = _groupPersistence.fetchByC_GK(
 				companyId, PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
 
 			if (group != null) {
-				layoutSet = layoutSetPersistence.fetchByG_P(
+				layoutSet = _layoutSetPersistence.fetchByG_P(
 					group.getGroupId(), false);
 			}
 		}
 
 		if (layoutSet != null) {
-			layoutSetPersistence.clearCache(layoutSet);
+			_layoutSetPersistence.clearCache(layoutSet);
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
@@ -268,5 +272,14 @@ public class VirtualHostLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		VirtualHostLocalServiceImpl.class);
+
+	@BeanReference(type = CompanyPersistence.class)
+	private CompanyPersistence _companyPersistence;
+
+	@BeanReference(type = GroupPersistence.class)
+	private GroupPersistence _groupPersistence;
+
+	@BeanReference(type = LayoutSetPersistence.class)
+	private LayoutSetPersistence _layoutSetPersistence;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.LayoutBranchNameException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutBranchException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,7 +27,13 @@ import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutRevisionConstants;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
+import com.liferay.portal.kernel.service.RecentLayoutBranchLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.persistence.LayoutRevisionPersistence;
+import com.liferay.portal.kernel.service.persistence.LayoutSetBranchPersistence;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.LayoutBranchLocalServiceBaseImpl;
@@ -47,10 +54,10 @@ public class LayoutBranchLocalServiceImpl
 
 		// Layout branch
 
-		User user = userPersistence.findByPrimaryKey(
+		User user = _userPersistence.findByPrimaryKey(
 			serviceContext.getUserId());
 		LayoutSetBranch layoutSetBranch =
-			layoutSetBranchPersistence.findByPrimaryKey(layoutSetBranchId);
+			_layoutSetBranchPersistence.findByPrimaryKey(layoutSetBranchId);
 
 		validate(0, layoutSetBranchId, plid, name);
 
@@ -73,7 +80,7 @@ public class LayoutBranchLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addResources(
+		_resourceLocalService.addResources(
 			layoutBranch.getCompanyId(), layoutBranch.getGroupId(),
 			layoutBranch.getUserId(), LayoutBranch.class.getName(),
 			layoutBranch.getLayoutBranchId(), false, true, false);
@@ -92,7 +99,7 @@ public class LayoutBranchLocalServiceImpl
 		throws PortalException {
 
 		LayoutRevision layoutRevision =
-			layoutRevisionPersistence.findByPrimaryKey(layoutRevisionId);
+			_layoutRevisionPersistence.findByPrimaryKey(layoutRevisionId);
 
 		LayoutBranch layoutBranch = addLayoutBranch(
 			layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid(),
@@ -100,7 +107,7 @@ public class LayoutBranchLocalServiceImpl
 
 		serviceContext.setAttribute("major", Boolean.TRUE.toString());
 
-		layoutRevisionLocalService.addLayoutRevision(
+		_layoutRevisionLocalService.addLayoutRevision(
 			layoutBranch.getUserId(), layoutRevision.getLayoutSetBranchId(),
 			layoutBranch.getLayoutBranchId(),
 			LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, false,
@@ -123,11 +130,11 @@ public class LayoutBranchLocalServiceImpl
 		LayoutBranch layoutBranch = layoutBranchPersistence.findByPrimaryKey(
 			layoutBranchId);
 
-		layoutRevisionLocalService.deleteLayoutRevisions(
+		_layoutRevisionLocalService.deleteLayoutRevisions(
 			layoutBranch.getLayoutSetBranchId(), layoutBranchId,
 			layoutBranch.getPlid());
 
-		recentLayoutBranchLocalService.deleteRecentLayoutBranches(
+		_recentLayoutBranchLocalService.deleteRecentLayoutBranches(
 			layoutBranch.getLayoutBranchId());
 
 		return deleteLayoutBranch(layoutBranch);
@@ -243,5 +250,23 @@ public class LayoutBranchLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutBranchLocalServiceImpl.class);
+
+	@BeanReference(type = LayoutRevisionLocalService.class)
+	private LayoutRevisionLocalService _layoutRevisionLocalService;
+
+	@BeanReference(type = LayoutRevisionPersistence.class)
+	private LayoutRevisionPersistence _layoutRevisionPersistence;
+
+	@BeanReference(type = LayoutSetBranchPersistence.class)
+	private LayoutSetBranchPersistence _layoutSetBranchPersistence;
+
+	@BeanReference(type = RecentLayoutBranchLocalService.class)
+	private RecentLayoutBranchLocalService _recentLayoutBranchLocalService;
+
+	@BeanReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

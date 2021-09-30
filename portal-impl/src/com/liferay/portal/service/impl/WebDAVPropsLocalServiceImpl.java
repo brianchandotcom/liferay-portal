@@ -14,8 +14,10 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.WebDAVProps;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.service.base.WebDAVPropsLocalServiceBaseImpl;
 
@@ -30,7 +32,7 @@ public class WebDAVPropsLocalServiceImpl
 	@Override
 	public void deleteWebDAVProps(String className, long classPK) {
 		WebDAVProps webDAVProps = webDAVPropsPersistence.fetchByC_C(
-			classNameLocalService.getClassNameId(className), classPK);
+			_classNameLocalService.getClassNameId(className), classPK);
 
 		if (webDAVProps != null) {
 			webDAVPropsPersistence.remove(webDAVProps);
@@ -41,7 +43,7 @@ public class WebDAVPropsLocalServiceImpl
 	public WebDAVProps getWebDAVProps(
 		long companyId, String className, long classPK) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
+		long classNameId = _classNameLocalService.getClassNameId(className);
 
 		WebDAVProps webDAVProps = webDAVPropsPersistence.fetchByC_C(
 			classNameId, classPK);
@@ -78,5 +80,8 @@ public class WebDAVPropsLocalServiceImpl
 
 		webDAVPropsPersistence.update(webDAVProps);
 	}
+
+	@BeanReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
 
 }

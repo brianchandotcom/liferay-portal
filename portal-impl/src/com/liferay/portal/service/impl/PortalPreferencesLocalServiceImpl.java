@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.internal.service.util.PortalPreferencesCacheUtil;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -26,6 +27,8 @@ import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.PortalPreferenceValueLocalService;
+import com.liferay.portal.kernel.service.persistence.PortalPreferenceValuePersistence;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.PortalPreferencesLocalServiceBaseImpl;
 import com.liferay.portlet.PortalPreferenceKey;
@@ -116,7 +119,7 @@ public class PortalPreferencesLocalServiceImpl
 	public PortalPreferences deletePortalPreferences(long portalPreferencesId)
 		throws PortalException {
 
-		portalPreferenceValuePersistence.removeByPortalPreferencesId(
+		_portalPreferenceValuePersistence.removeByPortalPreferencesId(
 			portalPreferencesId);
 
 		return super.deletePortalPreferences(portalPreferencesId);
@@ -127,7 +130,7 @@ public class PortalPreferencesLocalServiceImpl
 	public PortalPreferences deletePortalPreferences(
 		PortalPreferences portalPreferences) {
 
-		portalPreferenceValuePersistence.removeByPortalPreferencesId(
+		_portalPreferenceValuePersistence.removeByPortalPreferencesId(
 			portalPreferences.getPortalPreferencesId());
 
 		return super.deletePortalPreferences(portalPreferences);
@@ -160,7 +163,7 @@ public class PortalPreferencesLocalServiceImpl
 
 		PortalPreferencesImpl portalPreferencesImpl =
 			(PortalPreferencesImpl)
-				portalPreferenceValueLocalService.getPortalPreferences(
+				_portalPreferenceValueLocalService.getPortalPreferences(
 					portalPreferences, false);
 
 		return new PortalPreferencesWrapper(portalPreferencesImpl);
@@ -216,7 +219,7 @@ public class PortalPreferencesLocalServiceImpl
 			portalPreferenceValuesMap =
 				PortalPreferenceValueLocalServiceImpl.
 					getPortalPreferenceValuesMap(
-						portalPreferenceValuePersistence,
+						_portalPreferenceValuePersistence,
 						portalPreferencesModel.getPortalPreferencesId(), true);
 		}
 
@@ -271,7 +274,7 @@ public class PortalPreferencesLocalServiceImpl
 			for (PortalPreferenceValue portalPreferenceValue :
 					portalPreferenceValues) {
 
-				portalPreferenceValuePersistence.remove(portalPreferenceValue);
+				_portalPreferenceValuePersistence.remove(portalPreferenceValue);
 			}
 		}
 
@@ -313,13 +316,14 @@ public class PortalPreferencesLocalServiceImpl
 
 						portalPreferenceValue.setValue(value);
 
-						portalPreferenceValuePersistence.update(
+						_portalPreferenceValuePersistence.update(
 							portalPreferenceValue);
 					}
 				}
 				else {
 					PortalPreferenceValue portalPreferenceValue =
-						portalPreferenceValuePersistence.create(++batchCounter);
+						_portalPreferenceValuePersistence.create(
+							++batchCounter);
 
 					portalPreferenceValue.setPortalPreferencesId(
 						portalPreferences.getPortalPreferencesId());
@@ -329,13 +333,13 @@ public class PortalPreferencesLocalServiceImpl
 						portalPreferenceKey.getNamespace());
 					portalPreferenceValue.setValue(value);
 
-					portalPreferenceValuePersistence.update(
+					_portalPreferenceValuePersistence.update(
 						portalPreferenceValue);
 				}
 			}
 
 			for (int i = newValues.length; i < oldSize; i++) {
-				portalPreferenceValuePersistence.remove(
+				_portalPreferenceValuePersistence.remove(
 					portalPreferenceValues.get(i));
 			}
 		}
@@ -346,6 +350,13 @@ public class PortalPreferencesLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalPreferencesLocalServiceImpl.class);
+
+	@BeanReference(type = PortalPreferenceValueLocalService.class)
+	private PortalPreferenceValueLocalService
+		_portalPreferenceValueLocalService;
+
+	@BeanReference(type = PortalPreferenceValuePersistence.class)
+	private PortalPreferenceValuePersistence _portalPreferenceValuePersistence;
 
 	private static class PortalPreference {
 

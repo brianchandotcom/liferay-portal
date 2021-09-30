@@ -16,7 +16,10 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
@@ -648,10 +651,10 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 		Organization oldOrganization = organization;
 
 		List<AssetCategory> oldAssetCategories =
-			assetCategoryLocalService.getCategories(
+			_assetCategoryLocalService.getCategories(
 				Organization.class.getName(), organizationId);
 
-		List<AssetTag> oldAssetTags = assetTagLocalService.getTags(
+		List<AssetTag> oldAssetTags = _assetTagLocalService.getTags(
 			Organization.class.getName(), organizationId);
 
 		ExpandoBridge oldExpandoBridge = oldOrganization.getExpandoBridge();
@@ -703,5 +706,11 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 			countryId, statusId, comments, true, null, site, null, null, null,
 			null, null, serviceContext);
 	}
+
+	@BeanReference(type = AssetCategoryLocalService.class)
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@BeanReference(type = AssetTagLocalService.class)
+	private AssetTagLocalService _assetTagLocalService;
 
 }

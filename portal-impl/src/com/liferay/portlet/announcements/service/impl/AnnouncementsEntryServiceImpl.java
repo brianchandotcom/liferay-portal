@@ -15,6 +15,7 @@
 package com.liferay.portlet.announcements.service.impl;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -24,6 +25,8 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
@@ -85,10 +88,10 @@ public class AnnouncementsEntryServiceImpl
 			}
 
 			if (className.equals(Role.class.getName())) {
-				Role role = roleLocalService.getRole(classPK);
+				Role role = _roleLocalService.getRole(classPK);
 
 				if (role.isTeam()) {
-					Team team = teamLocalService.getTeam(role.getClassPK());
+					Team team = _teamLocalService.getTeam(role.getClassPK());
 
 					if (!GroupPermissionUtil.contains(
 							permissionChecker, team.getGroupId(),
@@ -160,5 +163,11 @@ public class AnnouncementsEntryServiceImpl
 			entryId, title, content, url, type, displayDate, expirationDate,
 			priority);
 	}
+
+	@BeanReference(type = RoleLocalService.class)
+	private RoleLocalService _roleLocalService;
+
+	@BeanReference(type = TeamLocalService.class)
+	private TeamLocalService _teamLocalService;
 
 }

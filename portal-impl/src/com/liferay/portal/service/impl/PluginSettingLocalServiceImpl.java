@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,6 +23,9 @@ import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.model.PluginSetting;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.LayoutTemplateLocalService;
+import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -70,11 +74,11 @@ public class PluginSettingLocalServiceImpl
 		Plugin plugin = null;
 
 		if (pluginType.equals(Plugin.TYPE_LAYOUT_TEMPLATE)) {
-			plugin = layoutTemplateLocalService.getLayoutTemplate(
+			plugin = _layoutTemplateLocalService.getLayoutTemplate(
 				pluginId, false, null);
 		}
 		else if (pluginType.equals(Plugin.TYPE_THEME)) {
-			plugin = themeLocalService.getTheme(companyId, pluginId);
+			plugin = _themeLocalService.getTheme(companyId, pluginId);
 		}
 
 		if ((plugin == null) || (plugin.getDefaultPluginSetting() == null)) {
@@ -94,7 +98,7 @@ public class PluginSettingLocalServiceImpl
 		long userId, String pluginId, String pluginType) {
 
 		try {
-			User user = userPersistence.findByPrimaryKey(userId);
+			User user = _userPersistence.findByPrimaryKey(userId);
 
 			PluginSetting pluginSetting = getPluginSetting(
 				user.getCompanyId(), pluginId, pluginType);
@@ -143,5 +147,14 @@ public class PluginSettingLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PluginSettingLocalServiceImpl.class);
+
+	@BeanReference(type = LayoutTemplateLocalService.class)
+	private LayoutTemplateLocalService _layoutTemplateLocalService;
+
+	@BeanReference(type = ThemeLocalService.class)
+	private ThemeLocalService _themeLocalService;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

@@ -15,6 +15,8 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
+import com.liferay.announcements.kernel.service.AnnouncementsDeliveryService;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredUserException;
@@ -50,6 +52,7 @@ import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPo
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PasswordPolicyPermissionUtil;
@@ -59,6 +62,8 @@ import com.liferay.portal.kernel.service.permission.TeamPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserGroupRolePermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
+import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
+import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -2618,7 +2623,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		List<UserGroupRole> oldSiteUserGroupRoles = new ArrayList<>();
 
 		List<UserGroupRole> oldUserGroupRoles =
-			userGroupRolePersistence.findByUserId(userId);
+			_userGroupRolePersistence.findByUserId(userId);
 
 		for (UserGroupRole oldUserGroupRole : oldUserGroupRoles) {
 			Role role = oldUserGroupRole.getRole();
@@ -2986,7 +2991,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		List<UserGroupRole> oldSiteUserGroupRoles = new ArrayList<>();
 
 		List<UserGroupRole> oldUserGroupRoles =
-			userGroupRolePersistence.findByUserId(userId);
+			_userGroupRolePersistence.findByUserId(userId);
 
 		for (UserGroupRole oldUserGroupRole : oldUserGroupRoles) {
 			Role role = oldUserGroupRole.getRole();
@@ -3293,7 +3298,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			long[] userGroupIds, ServiceContext serviceContext)
 		throws PortalException {
 
-		Company company = companyPersistence.findByPrimaryKey(companyId);
+		Company company = _companyPersistence.findByPrimaryKey(companyId);
 
 		if (groupIds != null) {
 			checkGroups(0, groupIds);
@@ -3611,7 +3616,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			// Add back any user group roles that the administrator does not
 			// have the rights to remove or that have a mandatory membership
 
-			oldUserGroupRoles = userGroupRoleLocalService.getUserGroupRoles(
+			oldUserGroupRoles = _userGroupRoleLocalService.getUserGroupRoles(
 				userId);
 
 			for (UserGroupRole oldUserGroupRole : oldUserGroupRoles) {
@@ -3704,7 +3709,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		for (AnnouncementsDelivery announcementsDelivery :
 				announcementsDeliveries) {
 
-			announcementsDeliveryService.updateDelivery(
+			_announcementsDeliveryService.updateDelivery(
 				userId, announcementsDelivery.getType(),
 				announcementsDelivery.isEmail(), announcementsDelivery.isSms());
 		}
@@ -3714,7 +3719,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		throws PortalException {
 
 		if (!user.hasCompanyMx() && user.hasCompanyMx(emailAddress)) {
-			Company company = companyPersistence.findByPrimaryKey(
+			Company company = _companyPersistence.findByPrimaryKey(
 				user.getCompanyId());
 
 			if (company.isStrangers() && !company.isStrangersWithMx()) {
@@ -3837,5 +3842,17 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserServiceImpl.class);
+
+	@BeanReference(type = AnnouncementsDeliveryService.class)
+	private AnnouncementsDeliveryService _announcementsDeliveryService;
+
+	@BeanReference(type = CompanyPersistence.class)
+	private CompanyPersistence _companyPersistence;
+
+	@BeanReference(type = UserGroupRoleLocalService.class)
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@BeanReference(type = UserGroupRolePersistence.class)
+	private UserGroupRolePersistence _userGroupRolePersistence;
 
 }

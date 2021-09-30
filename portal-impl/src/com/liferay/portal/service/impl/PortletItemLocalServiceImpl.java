@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.NoSuchPortletItemException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletItemNameException;
@@ -22,6 +23,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.PortletItemLocalServiceBaseImpl;
 
@@ -39,7 +42,7 @@ public class PortletItemLocalServiceImpl
 			String className)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userPersistence.findByPrimaryKey(userId);
 
 		validate(name);
 
@@ -54,7 +57,7 @@ public class PortletItemLocalServiceImpl
 		portletItem.setName(name);
 		portletItem.setPortletId(portletId);
 		portletItem.setClassNameId(
-			classNameLocalService.getClassNameId(className));
+			_classNameLocalService.getClassNameId(className));
 
 		return portletItemPersistence.update(portletItem);
 	}
@@ -66,13 +69,13 @@ public class PortletItemLocalServiceImpl
 
 		return portletItemPersistence.findByG_N_P_C(
 			groupId, name, portletId,
-			classNameLocalService.getClassNameId(className));
+			_classNameLocalService.getClassNameId(className));
 	}
 
 	@Override
 	public List<PortletItem> getPortletItems(long groupId, String className) {
 		return portletItemPersistence.findByG_C(
-			groupId, classNameLocalService.getClassNameId(className));
+			groupId, _classNameLocalService.getClassNameId(className));
 	}
 
 	@Override
@@ -81,7 +84,7 @@ public class PortletItemLocalServiceImpl
 
 		return portletItemPersistence.findByG_P_C(
 			groupId, portletId,
-			classNameLocalService.getClassNameId(className));
+			_classNameLocalService.getClassNameId(className));
 	}
 
 	@Override
@@ -93,7 +96,7 @@ public class PortletItemLocalServiceImpl
 		PortletItem portletItem = null;
 
 		try {
-			User user = userPersistence.findByPrimaryKey(userId);
+			User user = _userPersistence.findByPrimaryKey(userId);
 
 			portletItem = getPortletItem(
 				groupId, name, portletId, PortletPreferences.class.getName());
@@ -128,5 +131,11 @@ public class PortletItemLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletItemLocalServiceImpl.class);
+
+	@BeanReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

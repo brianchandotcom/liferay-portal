@@ -14,13 +14,17 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portlet.social.service.base.SocialRequestLocalServiceBaseImpl;
 import com.liferay.social.kernel.exception.RequestUserIdException;
 import com.liferay.social.kernel.model.SocialRequest;
 import com.liferay.social.kernel.model.SocialRequestConstants;
+import com.liferay.social.kernel.service.SocialRequestInterpreterLocalService;
 
 import java.util.List;
 
@@ -59,8 +63,8 @@ public class SocialRequestLocalServiceImpl
 			String extraData, long receiverUserId)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
-		User receiverUser = userPersistence.findByPrimaryKey(receiverUserId);
+		User user = _userPersistence.findByPrimaryKey(userId);
+		User receiverUser = _userPersistence.findByPrimaryKey(receiverUserId);
 		long now = System.currentTimeMillis();
 
 		if ((userId == receiverUserId) || user.isDefaultUser() ||
@@ -70,7 +74,7 @@ public class SocialRequestLocalServiceImpl
 			throw new RequestUserIdException();
 		}
 
-		long classNameId = classNameLocalService.getClassNameId(className);
+		long classNameId = _classNameLocalService.getClassNameId(className);
 
 		SocialRequest request = socialRequestPersistence.fetchByU_C_C_T_R(
 			userId, classNameId, classPK, type, receiverUserId);
@@ -334,7 +338,7 @@ public class SocialRequestLocalServiceImpl
 		long userId, String className, long classPK, int type, int status) {
 
 		int count = socialRequestPersistence.countByU_C_C_T_S(
-			userId, classNameLocalService.getClassNameId(className), classPK,
+			userId, _classNameLocalService.getClassNameId(className), classPK,
 			type, status);
 
 		if (count <= 0) {
@@ -365,7 +369,7 @@ public class SocialRequestLocalServiceImpl
 		long receiverUserId, int status) {
 
 		SocialRequest socialRequest = socialRequestPersistence.fetchByU_C_C_T_R(
-			userId, classNameLocalService.getClassNameId(className), classPK,
+			userId, _classNameLocalService.getClassNameId(className), classPK,
 			type, receiverUserId);
 
 		if ((socialRequest == null) || (socialRequest.getStatus() != status)) {
@@ -381,10 +385,10 @@ public class SocialRequestLocalServiceImpl
 	 * <p>
 	 * If the status is updated to {@link SocialRequestConstants#STATUS_CONFIRM}
 	 * then {@link
-	 * com.liferay.social.kernel.service.SocialRequestInterpreterLocalService#processConfirmation(
+	 * SocialRequestInterpreterLocalService#processConfirmation(
 	 * SocialRequest, ThemeDisplay)} is called. If the status is updated to
 	 * {@link SocialRequestConstants#STATUS_IGNORE} then {@link
-	 * com.liferay.social.kernel.service.SocialRequestInterpreterLocalService#processRejection(
+	 * SocialRequestInterpreterLocalService#processRejection(
 	 * SocialRequest, ThemeDisplay)} is called.
 	 * </p>
 	 *
@@ -407,15 +411,25 @@ public class SocialRequestLocalServiceImpl
 		request = socialRequestPersistence.update(request);
 
 		if (status == SocialRequestConstants.STATUS_CONFIRM) {
-			socialRequestInterpreterLocalService.processConfirmation(
+			_socialRequestInterpreterLocalService.processConfirmation(
 				request, themeDisplay);
 		}
 		else if (status == SocialRequestConstants.STATUS_IGNORE) {
-			socialRequestInterpreterLocalService.processRejection(
+			_socialRequestInterpreterLocalService.processRejection(
 				request, themeDisplay);
 		}
 
 		return request;
 	}
+
+	@BeanReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(type = SocialRequestInterpreterLocalService.class)
+	private SocialRequestInterpreterLocalService
+		_socialRequestInterpreterLocalService;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

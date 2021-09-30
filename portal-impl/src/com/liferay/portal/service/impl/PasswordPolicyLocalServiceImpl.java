@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.DuplicatePasswordPolicyException;
 import com.liferay.portal.kernel.exception.PasswordPolicyNameException;
@@ -28,7 +29,13 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.PasswordPolicyRelLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.persistence.PasswordPolicyRelPersistence;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -59,7 +66,7 @@ public class PasswordPolicyLocalServiceImpl
 
 		// Password policy
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userPersistence.findByPrimaryKey(userId);
 
 		validate(0, user.getCompanyId(), name);
 
@@ -111,7 +118,7 @@ public class PasswordPolicyLocalServiceImpl
 			ownerId = 0;
 		}
 
-		resourceLocalService.addResources(
+		_resourceLocalService.addResources(
 			user.getCompanyId(), 0, ownerId, PasswordPolicy.class.getName(),
 			passwordPolicy.getPasswordPolicyId(), false, false, false);
 
@@ -134,7 +141,7 @@ public class PasswordPolicyLocalServiceImpl
 		}
 
 		addPasswordPolicy(
-			userLocalService.getDefaultUserId(companyId), true,
+			_userLocalService.getDefaultUserId(companyId), true,
 			defaultPasswordPolicyName, defaultPasswordPolicyName,
 			PropsValues.PASSWORDS_DEFAULT_POLICY_CHANGEABLE,
 			PropsValues.PASSWORDS_DEFAULT_POLICY_CHANGE_REQUIRED,
@@ -202,12 +209,12 @@ public class PasswordPolicyLocalServiceImpl
 
 		// Password policy relations
 
-		passwordPolicyRelLocalService.deletePasswordPolicyRels(
+		_passwordPolicyRelLocalService.deletePasswordPolicyRels(
 			passwordPolicy.getPasswordPolicyId());
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			passwordPolicy.getCompanyId(), PasswordPolicy.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			passwordPolicy.getPasswordPolicyId());
@@ -254,13 +261,13 @@ public class PasswordPolicyLocalServiceImpl
 			return getDefaultPasswordPolicy(companyId);
 		}
 
-		long classNameId = classNameLocalService.getClassNameId(
+		long classNameId = _classNameLocalService.getClassNameId(
 			Organization.class.getName());
 
 		PasswordPolicyRel passwordPolicyRel = null;
 
 		for (long organizationId : organizationIds) {
-			passwordPolicyRel = passwordPolicyRelPersistence.fetchByC_C(
+			passwordPolicyRel = _passwordPolicyRelPersistence.fetchByC_C(
 				classNameId, organizationId);
 
 			if (passwordPolicyRel != null) {
@@ -288,18 +295,18 @@ public class PasswordPolicyLocalServiceImpl
 				user.getCompanyId(), true);
 		}
 
-		long classNameId = classNameLocalService.getClassNameId(
+		long classNameId = _classNameLocalService.getClassNameId(
 			User.class.getName());
 
 		PasswordPolicyRel passwordPolicyRel =
-			passwordPolicyRelPersistence.fetchByC_C(
+			_passwordPolicyRelPersistence.fetchByC_C(
 				classNameId, user.getUserId());
 
 		if (passwordPolicyRel != null) {
 			return getPasswordPolicy(passwordPolicyRel.getPasswordPolicyId());
 		}
 
-		long[] organizationIds = userPersistence.getOrganizationPrimaryKeys(
+		long[] organizationIds = _userPersistence.getOrganizationPrimaryKeys(
 			user.getUserId());
 
 		if (organizationIds.length == 0) {
@@ -316,7 +323,7 @@ public class PasswordPolicyLocalServiceImpl
 		throws PortalException {
 
 		return getPasswordPolicyByUser(
-			userPersistence.findByPrimaryKey(userId));
+			_userPersistence.findByPrimaryKey(userId));
 	}
 
 	@Override
@@ -405,5 +412,23 @@ public class PasswordPolicyLocalServiceImpl
 				"{passwordPolicyId=" + passwordPolicyId + "}");
 		}
 	}
+
+	@BeanReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(type = PasswordPolicyRelLocalService.class)
+	private PasswordPolicyRelLocalService _passwordPolicyRelLocalService;
+
+	@BeanReference(type = PasswordPolicyRelPersistence.class)
+	private PasswordPolicyRelPersistence _passwordPolicyRelPersistence;
+
+	@BeanReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@BeanReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

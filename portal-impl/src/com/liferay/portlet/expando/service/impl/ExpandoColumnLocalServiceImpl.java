@@ -26,11 +26,13 @@ import com.liferay.expando.kernel.model.adapter.StagedExpandoColumn;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
@@ -407,7 +409,7 @@ public class ExpandoColumnLocalServiceImpl
 		);
 
 		try {
-			systemEventLocalService.addSystemEvent(
+			_systemEventLocalService.addSystemEvent(
 				stagedExpandoColumn.getCompanyId(),
 				stagedModelType.getClassName(),
 				stagedExpandoColumn.getPrimaryKey(), StringPool.BLANK, null,
@@ -539,5 +541,8 @@ public class ExpandoColumnLocalServiceImpl
 
 		return value;
 	}
+
+	@BeanReference(type = SystemEventLocalService.class)
+	private SystemEventLocalService _systemEventLocalService;
 
 }

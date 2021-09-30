@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portlet.social.service.base.SocialRelationLocalServiceBaseImpl;
 import com.liferay.social.kernel.exception.RelationUserIdException;
 import com.liferay.social.kernel.model.SocialRelation;
@@ -72,8 +74,8 @@ public class SocialRelationLocalServiceImpl
 			throw new RelationUserIdException();
 		}
 
-		User user1 = userPersistence.findByPrimaryKey(userId1);
-		User user2 = userPersistence.findByPrimaryKey(userId2);
+		User user1 = _userPersistence.findByPrimaryKey(userId1);
+		User user2 = _userPersistence.findByPrimaryKey(userId2);
 
 		if (user1.getCompanyId() != user2.getCompanyId()) {
 			throw new RelationUserIdException();
@@ -392,13 +394,13 @@ public class SocialRelationLocalServiceImpl
 			return false;
 		}
 
-		User user1 = userPersistence.fetchByPrimaryKey(userId1);
+		User user1 = _userPersistence.fetchByPrimaryKey(userId1);
 
 		if ((user1 == null) || user1.isDefaultUser()) {
 			return false;
 		}
 
-		User user2 = userPersistence.fetchByPrimaryKey(userId2);
+		User user2 = _userPersistence.fetchByPrimaryKey(userId2);
 
 		if ((user2 == null) || user2.isDefaultUser()) {
 			return false;
@@ -406,5 +408,8 @@ public class SocialRelationLocalServiceImpl
 
 		return !hasRelation(userId1, userId2, type);
 	}
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

@@ -17,11 +17,13 @@ package com.liferay.portlet.announcements.service.impl;
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.announcements.kernel.model.AnnouncementsEntryConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portlet.announcements.service.base.AnnouncementsDeliveryLocalServiceBaseImpl;
 
 import java.util.ArrayList;
@@ -37,7 +39,7 @@ public class AnnouncementsDeliveryLocalServiceImpl
 	public AnnouncementsDelivery addUserDelivery(long userId, String type)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userPersistence.findByPrimaryKey(userId);
 
 		long deliveryId = counterLocalService.increment();
 
@@ -158,5 +160,8 @@ public class AnnouncementsDeliveryLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnnouncementsDeliveryLocalServiceImpl.class);
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

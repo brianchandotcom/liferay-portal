@@ -14,9 +14,11 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.service.base.ResourcePermissionServiceBaseImpl;
 
 import java.util.Map;
@@ -78,7 +80,7 @@ public class ResourcePermissionServiceImpl
 			String primKey, long roleId, String actionId)
 		throws PortalException {
 
-		permissionService.checkPermission(
+		_permissionService.checkPermission(
 			groupId, Role.class.getName(), roleId);
 
 		resourcePermissionLocalService.addResourcePermission(
@@ -111,7 +113,7 @@ public class ResourcePermissionServiceImpl
 			String primKey, long roleId, String actionId)
 		throws PortalException {
 
-		permissionService.checkPermission(
+		_permissionService.checkPermission(
 			groupId, Role.class.getName(), roleId);
 
 		resourcePermissionLocalService.removeResourcePermission(
@@ -138,7 +140,7 @@ public class ResourcePermissionServiceImpl
 			String actionId)
 		throws PortalException {
 
-		permissionService.checkPermission(
+		_permissionService.checkPermission(
 			groupId, Role.class.getName(), roleId);
 
 		resourcePermissionLocalService.removeResourcePermissions(
@@ -175,7 +177,7 @@ public class ResourcePermissionServiceImpl
 			long roleId, String[] actionIds)
 		throws PortalException {
 
-		permissionService.checkPermission(groupId, name, primKey);
+		_permissionService.checkPermission(groupId, name, primKey);
 
 		resourcePermissionLocalService.setResourcePermissions(
 			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
@@ -211,11 +213,14 @@ public class ResourcePermissionServiceImpl
 			Map<Long, String[]> roleIdsToActionIds)
 		throws PortalException {
 
-		permissionService.checkPermission(groupId, name, primKey);
+		_permissionService.checkPermission(groupId, name, primKey);
 
 		resourcePermissionLocalService.setResourcePermissions(
 			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
 			roleIdsToActionIds);
 	}
+
+	@BeanReference(type = PermissionService.class)
+	private PermissionService _permissionService;
 
 }

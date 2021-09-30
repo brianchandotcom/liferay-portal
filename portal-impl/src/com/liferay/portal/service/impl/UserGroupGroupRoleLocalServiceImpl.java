@@ -14,10 +14,13 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
+import com.liferay.portal.kernel.service.persistence.RolePersistence;
+import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
 import com.liferay.portal.service.base.UserGroupGroupRoleLocalServiceBaseImpl;
 
 import java.util.List;
@@ -194,13 +197,19 @@ public class UserGroupGroupRoleLocalServiceImpl
 			long userGroupId, long groupId, String roleName)
 		throws PortalException {
 
-		UserGroup userGroup = userGroupPersistence.findByPrimaryKey(
+		UserGroup userGroup = _userGroupPersistence.findByPrimaryKey(
 			userGroupId);
 
-		Role role = rolePersistence.findByC_N(
+		Role role = _rolePersistence.findByC_N(
 			userGroup.getCompanyId(), roleName);
 
 		return hasUserGroupGroupRole(userGroupId, groupId, role.getRoleId());
 	}
+
+	@BeanReference(type = RolePersistence.class)
+	private RolePersistence _rolePersistence;
+
+	@BeanReference(type = UserGroupPersistence.class)
+	private UserGroupPersistence _userGroupPersistence;
 
 }

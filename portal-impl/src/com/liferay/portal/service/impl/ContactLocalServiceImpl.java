@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.ContactBirthdayException;
 import com.liferay.portal.kernel.exception.ContactClassNameException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,6 +23,11 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.EmailAddressLocalService;
+import com.liferay.portal.kernel.service.PhoneLocalService;
+import com.liferay.portal.kernel.service.WebsiteLocalService;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -58,7 +64,7 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 			String skypeSn, String twitterSn, String jobTitle)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userPersistence.findByPrimaryKey(userId);
 
 		Date birthday = PortalUtil.getDate(
 			birthdayMonth, birthdayDay, birthdayYear,
@@ -104,25 +110,25 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 
 		// Addresses
 
-		addressLocalService.deleteAddresses(
+		_addressLocalService.deleteAddresses(
 			contact.getCompanyId(), Contact.class.getName(),
 			contact.getContactId());
 
 		// Email addresses
 
-		emailAddressLocalService.deleteEmailAddresses(
+		_emailAddressLocalService.deleteEmailAddresses(
 			contact.getCompanyId(), Contact.class.getName(),
 			contact.getContactId());
 
 		// Phone
 
-		phoneLocalService.deletePhones(
+		_phoneLocalService.deletePhones(
 			contact.getCompanyId(), Contact.class.getName(),
 			contact.getContactId());
 
 		// Website
 
-		websiteLocalService.deleteWebsites(
+		_websiteLocalService.deleteWebsites(
 			contact.getCompanyId(), Contact.class.getName(),
 			contact.getContactId());
 
@@ -233,5 +239,20 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 			throw new ContactBirthdayException("Birthday is in the future");
 		}
 	}
+
+	@BeanReference(type = AddressLocalService.class)
+	private AddressLocalService _addressLocalService;
+
+	@BeanReference(type = EmailAddressLocalService.class)
+	private EmailAddressLocalService _emailAddressLocalService;
+
+	@BeanReference(type = PhoneLocalService.class)
+	private PhoneLocalService _phoneLocalService;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
+
+	@BeanReference(type = WebsiteLocalService.class)
+	private WebsiteLocalService _websiteLocalService;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,6 +31,9 @@ import com.liferay.social.kernel.model.SocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivitySet;
 import com.liferay.social.kernel.model.impl.SocialActivityInterpreterImpl;
 import com.liferay.social.kernel.model.impl.SocialRequestInterpreterImpl;
+import com.liferay.social.kernel.service.SocialActivityLocalService;
+import com.liferay.social.kernel.service.SocialActivitySetLocalService;
+import com.liferay.social.kernel.service.persistence.SocialActivityPersistence;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -136,7 +140,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 			SocialActivity mirrorActivity = null;
 
 			try {
-				mirrorActivity = socialActivityLocalService.getActivity(
+				mirrorActivity = _socialActivityLocalService.getActivity(
 					activity.getMirrorActivityId());
 			}
 			catch (Exception exception) {
@@ -242,7 +246,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 	@Override
 	public void updateActivitySet(long activityId) throws PortalException {
 		if (!PropsValues.SOCIAL_ACTIVITY_SETS_BUNDLING_ENABLED) {
-			socialActivitySetLocalService.addActivitySet(activityId);
+			_socialActivitySetLocalService.addActivitySet(activityId);
 
 			return;
 		}
@@ -253,7 +257,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 
 		if (activityInterpreters != null) {
 			SocialActivity activity =
-				socialActivityPersistence.findByPrimaryKey(activityId);
+				_socialActivityPersistence.findByPrimaryKey(activityId);
 
 			String className = PortalUtil.getClassName(
 				activity.getClassNameId());
@@ -282,6 +286,15 @@ public class SocialActivityInterpreterLocalServiceImpl
 		SystemBundleUtil.getBundleContext();
 	private ServiceTracker<SocialActivityInterpreter, SocialActivityInterpreter>
 		_serviceTracker;
+
+	@BeanReference(type = SocialActivityLocalService.class)
+	private SocialActivityLocalService _socialActivityLocalService;
+
+	@BeanReference(type = SocialActivityPersistence.class)
+	private SocialActivityPersistence _socialActivityPersistence;
+
+	@BeanReference(type = SocialActivitySetLocalService.class)
+	private SocialActivitySetLocalService _socialActivitySetLocalService;
 
 	private class SocialActivityInterpreterServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

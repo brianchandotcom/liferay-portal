@@ -17,7 +17,10 @@ package com.liferay.portlet.documentlibrary.service.impl;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.util.comparator.DLFileVersionVersionComparator;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -136,8 +139,8 @@ public class DLFileVersionLocalServiceImpl
 
 		boolean excludeWorkingCopy = true;
 
-		if (dlFileEntryLocalService.isFileEntryCheckedOut(fileEntryId)) {
-			excludeWorkingCopy = !dlFileEntryLocalService.hasFileEntryLock(
+		if (_dlFileEntryLocalService.isFileEntryCheckedOut(fileEntryId)) {
+			excludeWorkingCopy = !_dlFileEntryLocalService.hasFileEntryLock(
 				userId, fileEntryId);
 		}
 
@@ -146,7 +149,7 @@ public class DLFileVersionLocalServiceImpl
 
 	@Override
 	public void rebuildTree(long companyId) throws PortalException {
-		dlFolderLocalService.rebuildTree(companyId);
+		_dlFolderLocalService.rebuildTree(companyId);
 	}
 
 	@Override
@@ -185,5 +188,11 @@ public class DLFileVersionLocalServiceImpl
 
 		actionableDynamicQuery.performActions();
 	}
+
+	@BeanReference(type = DLFileEntryLocalService.class)
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@BeanReference(type = DLFolderLocalService.class)
+	private DLFolderLocalService _dlFolderLocalService;
 
 }

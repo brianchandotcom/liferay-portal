@@ -16,11 +16,15 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.NoSuchWorkflowInstanceLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -53,7 +57,7 @@ public class WorkflowInstanceLinkLocalServiceImpl
 			long classPK, long workflowInstanceId)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userPersistence.findByPrimaryKey(userId);
 
 		long workflowInstanceLinkId = counterLocalService.increment();
 
@@ -65,7 +69,7 @@ public class WorkflowInstanceLinkLocalServiceImpl
 		workflowInstanceLink.setUserId(userId);
 		workflowInstanceLink.setUserName(user.getFullName());
 		workflowInstanceLink.setClassNameId(
-			classNameLocalService.getClassNameId(className));
+			_classNameLocalService.getClassNameId(className));
 		workflowInstanceLink.setClassPK(classPK);
 		workflowInstanceLink.setWorkflowInstanceId(workflowInstanceId);
 
@@ -184,7 +188,7 @@ public class WorkflowInstanceLinkLocalServiceImpl
 	public List<WorkflowInstanceLink> getWorkflowInstanceLinks(
 		long companyId, long groupId, String className, long classPK) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
+		long classNameId = _classNameLocalService.getClassNameId(className);
 
 		int count = workflowInstanceLinkPersistence.countByG_C_C(
 			groupId, companyId, classNameId);
@@ -257,7 +261,7 @@ public class WorkflowInstanceLinkLocalServiceImpl
 		}
 
 		if (userId == 0) {
-			userId = userLocalService.getDefaultUserId(companyId);
+			userId = _userLocalService.getDefaultUserId(companyId);
 		}
 
 		WorkflowHandler<?> workflowHandler =
@@ -335,5 +339,14 @@ public class WorkflowInstanceLinkLocalServiceImpl
 				).build());
 		}
 	}
+
+	@BeanReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

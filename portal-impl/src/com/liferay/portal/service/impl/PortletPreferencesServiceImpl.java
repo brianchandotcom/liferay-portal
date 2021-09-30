@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -46,7 +48,7 @@ public class PortletPreferencesServiceImpl
 	public void deleteArchivedPreferences(long portletItemId)
 		throws PortalException {
 
-		PortletItem portletItem = portletItemLocalService.getPortletItem(
+		PortletItem portletItem = _portletItemLocalService.getPortletItem(
 			portletItemId);
 
 		GroupPermissionUtil.check(
@@ -60,7 +62,7 @@ public class PortletPreferencesServiceImpl
 		portletPreferencesLocalService.deletePortletPreferences(
 			ownerId, ownerType, plid, portletItem.getPortletId());
 
-		portletItemLocalService.deletePortletItem(portletItemId);
+		_portletItemLocalService.deletePortletItem(portletItemId);
 	}
 
 	@Override
@@ -71,7 +73,7 @@ public class PortletPreferencesServiceImpl
 
 		restoreArchivedPreferences(
 			groupId, layout, portletId,
-			portletItemLocalService.getPortletItem(portletItemId),
+			_portletItemLocalService.getPortletItem(portletItemId),
 			jxPortletPreferences);
 	}
 
@@ -104,7 +106,7 @@ public class PortletPreferencesServiceImpl
 			javax.portlet.PortletPreferences jxPortletPreferences)
 		throws PortalException {
 
-		PortletItem portletItem = portletItemLocalService.getPortletItem(
+		PortletItem portletItem = _portletItemLocalService.getPortletItem(
 			groupId, name, portletId, PortletPreferences.class.getName());
 
 		restoreArchivedPreferences(
@@ -121,7 +123,7 @@ public class PortletPreferencesServiceImpl
 			getPermissionChecker(), groupId, 0, portletId,
 			ActionKeys.CONFIGURATION);
 
-		PortletItem portletItem = portletItemLocalService.updatePortletItem(
+		PortletItem portletItem = _portletItemLocalService.updatePortletItem(
 			userId, groupId, name, portletId,
 			PortletPreferences.class.getName());
 
@@ -186,5 +188,8 @@ public class PortletPreferencesServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletPreferencesServiceImpl.class);
+
+	@BeanReference(type = PortletItemLocalService.class)
+	private PortletItemLocalService _portletItemLocalService;
 
 }

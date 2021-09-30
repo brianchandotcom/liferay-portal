@@ -20,6 +20,7 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -36,7 +37,11 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -70,7 +75,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 
 		Country country = countryPersistence.create(countryId);
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		country.setCompanyId(user.getCompanyId());
 		country.setUserId(user.getUserId());
@@ -113,7 +118,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 
 		// Addresses
 
-		addressLocalService.deleteCountryAddresses(country.getCountryId());
+		_addressLocalService.deleteCountryAddresses(country.getCountryId());
 
 		// Organizations
 
@@ -121,7 +126,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 
 		// Regions
 
-		regionLocalService.deleteCountryRegions(country.getCountryId());
+		_regionLocalService.deleteCountryRegions(country.getCountryId());
 
 		return country;
 	}
@@ -373,7 +378,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 
 	private void _updateOrganizations(long countryId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
-			organizationLocalService.getActionableDynamicQuery();
+			_organizationLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
@@ -387,10 +392,22 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 				organization.setCountryId(0);
 				organization.setRegionId(0);
 
-				organizationLocalService.updateOrganization(organization);
+				_organizationLocalService.updateOrganization(organization);
 			});
 
 		actionableDynamicQuery.performActions();
 	}
+
+	@BeanReference(type = AddressLocalService.class)
+	private AddressLocalService _addressLocalService;
+
+	@BeanReference(type = OrganizationLocalService.class)
+	private OrganizationLocalService _organizationLocalService;
+
+	@BeanReference(type = RegionLocalService.class)
+	private RegionLocalService _regionLocalService;
+
+	@BeanReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

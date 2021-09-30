@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
@@ -26,6 +27,9 @@ import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.Users_UserGroupsTable;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.persistence.GroupPersistence;
+import com.liferay.portal.kernel.service.persistence.RolePersistence;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.service.base.UserGroupRoleLocalServiceBaseImpl;
 
 import java.util.ArrayList;
@@ -84,10 +88,10 @@ public class UserGroupRoleLocalServiceImpl
 			userGroupRoles.add(userGroupRole);
 		}
 
-		Group group = groupPersistence.fetchByPrimaryKey(groupId);
+		Group group = _groupPersistence.fetchByPrimaryKey(groupId);
 
 		if (group.isRegularSite()) {
-			groupPersistence.addUser(groupId, userId);
+			_groupPersistence.addUser(groupId, userId);
 		}
 
 		return userGroupRoles;
@@ -106,10 +110,10 @@ public class UserGroupRoleLocalServiceImpl
 			userGroupRoles.add(userGroupRole);
 		}
 
-		Group group = groupPersistence.fetchByPrimaryKey(groupId);
+		Group group = _groupPersistence.fetchByPrimaryKey(groupId);
 
 		if (group.isRegularSite()) {
-			groupPersistence.addUsers(groupId, userIds);
+			_groupPersistence.addUsers(groupId, userIds);
 		}
 
 		return userGroupRoles;
@@ -158,7 +162,7 @@ public class UserGroupRoleLocalServiceImpl
 	public void deleteUserGroupRoles(
 		long[] userIds, long groupId, int roleType) {
 
-		List<Role> roles = rolePersistence.findByT_S(
+		List<Role> roles = _rolePersistence.findByT_S(
 			roleType, StringPool.BLANK);
 
 		for (long userId : userIds) {
@@ -269,7 +273,7 @@ public class UserGroupRoleLocalServiceImpl
 		}
 
 		if (inherit) {
-			count = rolePersistence.dslQueryCount(
+			count = _rolePersistence.dslQueryCount(
 				DSLQueryFactoryUtil.count(
 				).from(
 					RoleTable.INSTANCE
@@ -311,9 +315,9 @@ public class UserGroupRoleLocalServiceImpl
 			long userId, long groupId, String roleName, boolean inherit)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userPersistence.findByPrimaryKey(userId);
 
-		Role role = rolePersistence.fetchByC_N(user.getCompanyId(), roleName);
+		Role role = _rolePersistence.fetchByC_N(user.getCompanyId(), roleName);
 
 		if (role == null) {
 			return false;
@@ -332,5 +336,14 @@ public class UserGroupRoleLocalServiceImpl
 
 		return userGroupRolePersistence.update(userGroupRole);
 	}
+
+	@BeanReference(type = GroupPersistence.class)
+	private GroupPersistence _groupPersistence;
+
+	@BeanReference(type = RolePersistence.class)
+	private RolePersistence _rolePersistence;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

@@ -14,8 +14,10 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.service.base.TicketLocalServiceBaseImpl;
@@ -34,8 +36,8 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 		String extraInfo, Date expirationDate, ServiceContext serviceContext) {
 
 		ticketPersistence.removeByC_C_C_T(
-			companyId, classNameLocalService.getClassNameId(className), classPK,
-			type);
+			companyId, _classNameLocalService.getClassNameId(className),
+			classPK, type);
 
 		return addTicket(
 			companyId, className, classPK, type, extraInfo, expirationDate,
@@ -53,7 +55,7 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 
 		ticket.setCompanyId(companyId);
 		ticket.setCreateDate(new Date());
-		ticket.setClassNameId(classNameLocalService.getClassNameId(className));
+		ticket.setClassNameId(_classNameLocalService.getClassNameId(className));
 		ticket.setClassPK(classPK);
 		ticket.setKey(PortalUUIDUtil.generate());
 		ticket.setType(type);
@@ -66,7 +68,7 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 	@Override
 	public void deleteTickets(long companyId, String className, long classPK) {
 		ticketPersistence.removeByC_C_C(
-			companyId, classNameLocalService.getClassNameId(className),
+			companyId, _classNameLocalService.getClassNameId(className),
 			classPK);
 	}
 
@@ -85,7 +87,7 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 		long companyId, String className, long classPK) {
 
 		return ticketPersistence.findByC_C_C(
-			companyId, classNameLocalService.getClassNameId(className),
+			companyId, _classNameLocalService.getClassNameId(className),
 			classPK);
 	}
 
@@ -94,14 +96,14 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 		long companyId, String className, long classPK, int type) {
 
 		return ticketPersistence.findByC_C_C_T(
-			companyId, classNameLocalService.getClassNameId(className), classPK,
-			type);
+			companyId, _classNameLocalService.getClassNameId(className),
+			classPK, type);
 	}
 
 	@Override
 	public List<Ticket> getTickets(String className, long classPK, int type) {
 		return ticketPersistence.findByC_C_T(
-			classNameLocalService.getClassNameId(className), classPK, type);
+			_classNameLocalService.getClassNameId(className), classPK, type);
 	}
 
 	@Override
@@ -112,7 +114,7 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 
 		Ticket ticket = ticketPersistence.findByPrimaryKey(ticketId);
 
-		ticket.setClassNameId(classNameLocalService.getClassNameId(className));
+		ticket.setClassNameId(_classNameLocalService.getClassNameId(className));
 		ticket.setClassPK(classPK);
 		ticket.setType(type);
 		ticket.setExtraInfo(extraInfo);
@@ -120,5 +122,8 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 
 		return ticketPersistence.update(ticket);
 	}
+
+	@BeanReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.service.base.PortletServiceBaseImpl;
 
 import java.util.List;
@@ -68,7 +70,7 @@ public class PortletServiceImpl extends PortletServiceBaseImpl {
 			long companyId, String portletId, String roles, boolean active)
 		throws PortalException {
 
-		if (!roleLocalService.hasUserRole(
+		if (!_roleLocalService.hasUserRole(
 				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
 
 			throw new PrincipalException();
@@ -77,5 +79,8 @@ public class PortletServiceImpl extends PortletServiceBaseImpl {
 		return portletLocalService.updatePortlet(
 			companyId, portletId, roles, active);
 	}
+
+	@BeanReference(type = RoleLocalService.class)
+	private RoleLocalService _roleLocalService;
 
 }

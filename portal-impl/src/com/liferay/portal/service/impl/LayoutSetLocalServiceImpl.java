@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.exception.LayoutSetVirtualHostException;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
@@ -30,7 +31,14 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutSetStagingHandler;
 import com.liferay.portal.kernel.model.VirtualHost;
+import com.liferay.portal.kernel.service.ImageLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.VirtualHostLocalService;
+import com.liferay.portal.kernel.service.persistence.GroupPersistence;
+import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
+import com.liferay.portal.kernel.service.persistence.LayoutSetBranchPersistence;
+import com.liferay.portal.kernel.service.persistence.VirtualHostPersistence;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -68,7 +76,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	public LayoutSet addLayoutSet(long groupId, boolean privateLayout)
 		throws PortalException {
 
-		Group group = groupPersistence.findByPrimaryKey(groupId);
+		Group group = _groupPersistence.findByPrimaryKey(groupId);
 
 		Date date = new Date();
 
@@ -93,7 +101,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			long groupId, boolean privateLayout, ServiceContext serviceContext)
 		throws PortalException {
 
-		Group group = groupPersistence.findByPrimaryKey(groupId);
+		Group group = _groupPersistence.findByPrimaryKey(groupId);
 
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
 			groupId, privateLayout);
@@ -102,7 +110,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		serviceContext.setAttribute("updatePageCount", Boolean.FALSE);
 
-		layoutLocalService.deleteLayouts(
+		_layoutLocalService.deleteLayouts(
 			groupId, privateLayout, serviceContext);
 
 		// Logo
@@ -111,7 +119,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			!group.isSite()) {
 
 			try {
-				imageLocalService.deleteImage(layoutSet.getLogoId());
+				_imageLocalService.deleteImage(layoutSet.getLogoId());
 			}
 			catch (NoSuchImageException noSuchImageException) {
 				if (_log.isWarnEnabled()) {
@@ -139,7 +147,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		// Virtual host
 
-		virtualHostPersistence.removeByC_L(
+		_virtualHostPersistence.removeByC_L(
 			layoutSet.getCompanyId(), layoutSet.getLayoutSetId());
 	}
 
@@ -153,11 +161,11 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		virtualHostname = StringUtil.toLowerCase(
 			StringUtil.trim(virtualHostname));
 
-		VirtualHost virtualHost = virtualHostPersistence.fetchByHostname(
+		VirtualHost virtualHost = _virtualHostPersistence.fetchByHostname(
 			virtualHostname);
 
 		if ((virtualHost == null) && virtualHostname.contains("xn--")) {
-			virtualHost = virtualHostPersistence.fetchByHostname(
+			virtualHost = _virtualHostPersistence.fetchByHostname(
 				IDN.toUnicode(virtualHostname));
 		}
 
@@ -193,12 +201,12 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		VirtualHost virtualHost = null;
 
 		try {
-			virtualHost = virtualHostPersistence.findByHostname(
+			virtualHost = _virtualHostPersistence.findByHostname(
 				virtualHostname);
 		}
 		catch (NoSuchVirtualHostException noSuchVirtualHostException) {
 			if (virtualHostname.contains("xn--")) {
-				virtualHost = virtualHostPersistence.findByHostname(
+				virtualHost = _virtualHostPersistence.findByHostname(
 					IDN.toUnicode(virtualHostname));
 			}
 			else {
@@ -226,7 +234,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 	@Override
 	public int getPageCount(long groupId, boolean privateLayout) {
-		return layoutPersistence.countByG_P(groupId, privateLayout);
+		return _layoutPersistence.countByG_P(groupId, privateLayout);
 	}
 
 	/**
@@ -286,7 +294,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		layoutSetBranch.setLayoutSetPrototypeLinkEnabled(
 			layoutSetPrototypeLinkEnabled);
 
-		layoutSetBranchPersistence.update(layoutSetBranch);
+		_layoutSetBranchPersistence.update(layoutSetBranch);
 	}
 
 	@Override
@@ -313,7 +321,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		PortalUtil.updateImageId(
 			layoutSetBranch, hasLogo, bytes, "logoId", 0, 0, 0);
 
-		layoutSetBranchPersistence.update(layoutSetBranch);
+		_layoutSetBranchPersistence.update(layoutSetBranch);
 
 		return layoutSet;
 	}
@@ -412,7 +420,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		layoutSetBranch.setColorSchemeId(colorSchemeId);
 		layoutSetBranch.setCss(css);
 
-		layoutSetBranchPersistence.update(layoutSetBranch);
+		_layoutSetBranchPersistence.update(layoutSetBranch);
 
 		return layoutSet;
 	}
@@ -459,7 +467,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		layoutSetBranch.setSettingsProperties(settingsUnicodeProperties);
 
-		layoutSetBranchPersistence.update(layoutSetBranch);
+		_layoutSetBranchPersistence.update(layoutSetBranch);
 
 		return layoutSet;
 	}
@@ -481,12 +489,12 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			groupId, privateLayout);
 
 		if (!virtualHostnames.isEmpty()) {
-			virtualHostLocalService.updateVirtualHosts(
+			_virtualHostLocalService.updateVirtualHosts(
 				layoutSet.getCompanyId(), layoutSet.getLayoutSetId(),
 				virtualHostnames);
 		}
 		else {
-			virtualHostPersistence.removeByC_L(
+			_virtualHostPersistence.removeByC_L(
 				layoutSet.getCompanyId(), layoutSet.getLayoutSetId());
 
 			layoutSetPersistence.clearCache(layoutSet);
@@ -528,12 +536,12 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			layoutSet.setLogoId(liveLayoutSet.getLogoId());
 
 			if (liveLayoutSet.isLogo()) {
-				Image logoImage = imageLocalService.getImage(
+				Image logoImage = _imageLocalService.getImage(
 					liveLayoutSet.getLogoId());
 
 				long logoId = counterLocalService.increment();
 
-				imageLocalService.updateImage(
+				_imageLocalService.updateImage(
 					layoutSet.getCompanyId(), logoId, logoImage.getTextObj(),
 					logoImage.getType(), logoImage.getHeight(),
 					logoImage.getWidth(), logoImage.getSize());
@@ -598,5 +606,26 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSetLocalServiceImpl.class);
+
+	@BeanReference(type = GroupPersistence.class)
+	private GroupPersistence _groupPersistence;
+
+	@BeanReference(type = ImageLocalService.class)
+	private ImageLocalService _imageLocalService;
+
+	@BeanReference(type = LayoutLocalService.class)
+	private LayoutLocalService _layoutLocalService;
+
+	@BeanReference(type = LayoutPersistence.class)
+	private LayoutPersistence _layoutPersistence;
+
+	@BeanReference(type = LayoutSetBranchPersistence.class)
+	private LayoutSetBranchPersistence _layoutSetBranchPersistence;
+
+	@BeanReference(type = VirtualHostLocalService.class)
+	private VirtualHostLocalService _virtualHostLocalService;
+
+	@BeanReference(type = VirtualHostPersistence.class)
+	private VirtualHostPersistence _virtualHostPersistence;
 
 }

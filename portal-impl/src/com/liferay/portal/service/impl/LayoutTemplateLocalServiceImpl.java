@@ -17,6 +17,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.DummyWriter;
 import com.liferay.portal.kernel.log.Log;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTemplateConstants;
 import com.liferay.portal.kernel.model.PluginSetting;
 import com.liferay.portal.kernel.plugin.PluginPackage;
+import com.liferay.portal.kernel.service.PluginSettingLocalService;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -319,7 +321,7 @@ public class LayoutTemplateLocalServiceImpl
 			}
 
 			PluginSetting pluginSetting =
-				pluginSettingLocalService.getDefaultPluginSetting();
+				_pluginSettingLocalService.getDefaultPluginSetting();
 
 			layoutTemplateModel.setPluginPackage(pluginPackage);
 			layoutTemplateModel.setServletContext(servletContext);
@@ -615,5 +617,8 @@ public class LayoutTemplateLocalServiceImpl
 		new LinkedHashMap<>();
 	private static final Map<String, LayoutTemplate> _warStandard =
 		new HashMap<>();
+
+	@BeanReference(type = PluginSettingLocalService.class)
+	private PluginSettingLocalService _pluginSettingLocalService;
 
 }

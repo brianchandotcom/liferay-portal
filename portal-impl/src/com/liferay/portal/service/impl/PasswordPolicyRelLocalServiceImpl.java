@@ -16,11 +16,13 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.NoSuchPasswordPolicyRelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PasswordPolicyRel;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.service.base.PasswordPolicyRelLocalServiceBaseImpl;
 
 import java.util.List;
@@ -36,7 +38,7 @@ public class PasswordPolicyRelLocalServiceImpl
 	public PasswordPolicyRel addPasswordPolicyRel(
 		long passwordPolicyId, String className, long classPK) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
+		long classNameId = _classNameLocalService.getClassNameId(className);
 
 		PasswordPolicyRel passwordPolicyRel =
 			passwordPolicyRelPersistence.fetchByC_C(classNameId, classPK);
@@ -76,7 +78,7 @@ public class PasswordPolicyRelLocalServiceImpl
 
 		PasswordPolicyRel passwordPolicyRel =
 			passwordPolicyRelPersistence.fetchByC_C(
-				classNameLocalService.getClassNameId(className), classPK);
+				_classNameLocalService.getClassNameId(className), classPK);
 
 		if ((passwordPolicyRel != null) &&
 			(passwordPolicyRel.getPasswordPolicyId() == passwordPolicyId)) {
@@ -90,7 +92,7 @@ public class PasswordPolicyRelLocalServiceImpl
 		try {
 			PasswordPolicyRel passwordPolicyRel =
 				passwordPolicyRelPersistence.findByC_C(
-					classNameLocalService.getClassNameId(className), classPK);
+					_classNameLocalService.getClassNameId(className), classPK);
 
 			deletePasswordPolicyRel(passwordPolicyRel);
 		}
@@ -132,7 +134,7 @@ public class PasswordPolicyRelLocalServiceImpl
 		String className, long classPK) {
 
 		return passwordPolicyRelPersistence.fetchByC_C(
-			classNameLocalService.getClassNameId(className), classPK);
+			_classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override
@@ -140,7 +142,7 @@ public class PasswordPolicyRelLocalServiceImpl
 			long passwordPolicyId, String className, long classPK)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
+		long classNameId = _classNameLocalService.getClassNameId(className);
 
 		PasswordPolicyRel passwordPolicyRel =
 			passwordPolicyRelPersistence.fetchByC_C(classNameId, classPK);
@@ -165,7 +167,7 @@ public class PasswordPolicyRelLocalServiceImpl
 		throws PortalException {
 
 		return passwordPolicyRelPersistence.findByC_C(
-			classNameLocalService.getClassNameId(className), classPK);
+			_classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	@Override
@@ -174,7 +176,7 @@ public class PasswordPolicyRelLocalServiceImpl
 
 		PasswordPolicyRel passwordPolicyRel =
 			passwordPolicyRelPersistence.fetchByC_C(
-				classNameLocalService.getClassNameId(className), classPK);
+				_classNameLocalService.getClassNameId(className), classPK);
 
 		if ((passwordPolicyRel != null) &&
 			(passwordPolicyRel.getPasswordPolicyId() == passwordPolicyId)) {
@@ -187,5 +189,8 @@ public class PasswordPolicyRelLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PasswordPolicyRelLocalServiceImpl.class);
+
+	@BeanReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
 
 }

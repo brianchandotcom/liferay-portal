@@ -14,11 +14,14 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portlet.social.service.base.SocialActivityAchievementLocalServiceBaseImpl;
 import com.liferay.social.kernel.model.SocialAchievement;
 import com.liferay.social.kernel.model.SocialActivityAchievement;
+import com.liferay.social.kernel.service.SocialActivityCounterLocalService;
 
 import java.util.List;
 
@@ -42,7 +45,7 @@ public class SocialActivityAchievementLocalServiceImpl
 			return;
 		}
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userPersistence.findByPrimaryKey(userId);
 
 		long activityAchievementId = counterLocalService.increment();
 
@@ -65,7 +68,7 @@ public class SocialActivityAchievementLocalServiceImpl
 
 		socialActivityAchievementPersistence.update(activityAchievement);
 
-		socialActivityCounterLocalService.incrementUserAchievementCounter(
+		_socialActivityCounterLocalService.incrementUserAchievementCounter(
 			userId, groupId);
 	}
 
@@ -122,5 +125,12 @@ public class SocialActivityAchievementLocalServiceImpl
 	public int getUserAchievementsCount(long userId, long groupId) {
 		return socialActivityAchievementPersistence.countByG_U(groupId, userId);
 	}
+
+	@BeanReference(type = SocialActivityCounterLocalService.class)
+	private SocialActivityCounterLocalService
+		_socialActivityCounterLocalService;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

@@ -15,11 +15,13 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.Resource;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -130,7 +132,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			AuditedModel auditedModel, ServiceContext serviceContext)
 		throws PortalException {
 
-		resourcePermissionLocalService.addModelResourcePermissions(
+		_resourcePermissionLocalService.addModelResourcePermissions(
 			auditedModel, serviceContext);
 	}
 
@@ -140,7 +142,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			long primKey, ModelPermissions modelPermissions)
 		throws PortalException {
 
-		resourcePermissionLocalService.addModelResourcePermissions(
+		_resourcePermissionLocalService.addModelResourcePermissions(
 			companyId, groupId, userId, name, String.valueOf(primKey),
 			modelPermissions);
 	}
@@ -166,7 +168,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			long primKey, String[] groupPermissions, String[] guestPermissions)
 		throws PortalException {
 
-		resourcePermissionLocalService.addModelResourcePermissions(
+		_resourcePermissionLocalService.addModelResourcePermissions(
 			companyId, groupId, userId, name, String.valueOf(primKey),
 			groupPermissions, guestPermissions);
 	}
@@ -177,7 +179,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			String primKey, ModelPermissions modelPermissions)
 		throws PortalException {
 
-		resourcePermissionLocalService.addModelResourcePermissions(
+		_resourcePermissionLocalService.addModelResourcePermissions(
 			companyId, groupId, userId, name, primKey, modelPermissions);
 	}
 
@@ -203,7 +205,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			String[] guestPermissions)
 		throws PortalException {
 
-		resourcePermissionLocalService.addModelResourcePermissions(
+		_resourcePermissionLocalService.addModelResourcePermissions(
 			companyId, groupId, userId, name, primKey, groupPermissions,
 			guestPermissions);
 	}
@@ -233,7 +235,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			boolean addGuestPermissions)
 		throws PortalException {
 
-		resourcePermissionLocalService.addResourcePermissions(
+		_resourcePermissionLocalService.addResourcePermissions(
 			companyId, groupId, userId, name, String.valueOf(primKey),
 			portletActions, addGroupPermissions, addGuestPermissions);
 	}
@@ -263,7 +265,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			boolean addGuestPermissions)
 		throws PortalException {
 
-		resourcePermissionLocalService.addResourcePermissions(
+		_resourcePermissionLocalService.addResourcePermissions(
 			companyId, groupId, userId, name, primKey, portletActions,
 			addGroupPermissions, addGuestPermissions);
 	}
@@ -284,7 +286,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			long companyId, long groupId, String name, boolean portletActions)
 		throws PortalException {
 
-		resourcePermissionLocalService.addResourcePermissions(
+		_resourcePermissionLocalService.addResourcePermissions(
 			companyId, groupId, 0, name, null, portletActions, false, false);
 	}
 
@@ -293,7 +295,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			long companyId, String name, long oldPrimKey, long newPrimKey)
 		throws PortalException {
 
-		resourcePermissionLocalService.copyModelResourcePermissions(
+		_resourcePermissionLocalService.copyModelResourcePermissions(
 			companyId, name, oldPrimKey, newPrimKey);
 	}
 
@@ -308,7 +310,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	public void deleteResource(AuditedModel auditedModel, int scope)
 		throws PortalException {
 
-		resourcePermissionLocalService.deleteResourcePermissions(
+		_resourcePermissionLocalService.deleteResourcePermissions(
 			auditedModel.getCompanyId(), auditedModel.getModelClassName(),
 			scope, String.valueOf(auditedModel.getPrimaryKeyObj()));
 	}
@@ -328,7 +330,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			long companyId, String name, int scope, long primKey)
 		throws PortalException {
 
-		resourcePermissionLocalService.deleteResourcePermissions(
+		_resourcePermissionLocalService.deleteResourcePermissions(
 			companyId, name, scope, primKey);
 	}
 
@@ -347,7 +349,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			long companyId, String name, int scope, String primKey)
 		throws PortalException {
 
-		resourcePermissionLocalService.deleteResourcePermissions(
+		_resourcePermissionLocalService.deleteResourcePermissions(
 			companyId, name, scope, primKey);
 	}
 
@@ -403,7 +405,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		stopWatch.start();
 
 		boolean hasUserPermissions =
-			resourcePermissionLocalService.hasResourcePermission(
+			_resourcePermissionLocalService.hasResourcePermission(
 				resources, roleIds, actionId);
 
 		if (_log.isDebugEnabled()) {
@@ -429,7 +431,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			AuditedModel auditedModel, ServiceContext serviceContext)
 		throws PortalException {
 
-		resourcePermissionLocalService.updateModelResourcePermissions(
+		_resourcePermissionLocalService.updateModelResourcePermissions(
 			auditedModel, serviceContext);
 	}
 
@@ -450,7 +452,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			ModelPermissions modelPermissions)
 		throws PortalException {
 
-		resourcePermissionLocalService.updateResourcePermissions(
+		_resourcePermissionLocalService.updateResourcePermissions(
 			companyId, groupId, name, String.valueOf(primKey),
 			modelPermissions);
 	}
@@ -473,7 +475,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			String[] groupPermissions, String[] guestPermissions)
 		throws PortalException {
 
-		resourcePermissionLocalService.updateResourcePermissions(
+		_resourcePermissionLocalService.updateResourcePermissions(
 			companyId, groupId, name, primKey, groupPermissions,
 			guestPermissions);
 	}
@@ -495,7 +497,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			ModelPermissions modelPermissions)
 		throws PortalException {
 
-		resourcePermissionLocalService.updateResourcePermissions(
+		_resourcePermissionLocalService.updateResourcePermissions(
 			companyId, groupId, name, primKey, modelPermissions);
 	}
 
@@ -517,7 +519,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			String[] groupPermissions, String[] guestPermissions)
 		throws PortalException {
 
-		resourcePermissionLocalService.updateResourcePermissions(
+		_resourcePermissionLocalService.updateResourcePermissions(
 			companyId, groupId, name, primKey, groupPermissions,
 			guestPermissions);
 	}
@@ -540,11 +542,14 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		long companyId, String name, int scope, String primKey,
 		String newPrimKey) {
 
-		resourcePermissionLocalService.updateResourcePermissions(
+		_resourcePermissionLocalService.updateResourcePermissions(
 			companyId, name, scope, primKey, newPrimKey);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ResourceLocalServiceImpl.class);
+
+	@BeanReference(type = ResourcePermissionLocalService.class)
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

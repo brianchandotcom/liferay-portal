@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.NoSuchLayoutPrototypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredLayoutPrototypeException;
@@ -28,7 +29,13 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -58,7 +65,7 @@ public class LayoutPrototypeLocalServiceImpl
 
 		// Layout prototype
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userPersistence.findByPrimaryKey(userId);
 		Date date = new Date();
 
 		long layoutPrototypeId = counterLocalService.increment();
@@ -80,7 +87,7 @@ public class LayoutPrototypeLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addResources(
+		_resourceLocalService.addResources(
 			companyId, 0, userId, LayoutPrototype.class.getName(),
 			layoutPrototype.getLayoutPrototypeId(), false, true, false);
 
@@ -89,7 +96,7 @@ public class LayoutPrototypeLocalServiceImpl
 		String friendlyURL =
 			"/template-" + layoutPrototype.getLayoutPrototypeId();
 
-		Group group = groupLocalService.addGroup(
+		Group group = _groupLocalService.addGroup(
 			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			LayoutPrototype.class.getName(),
 			layoutPrototype.getLayoutPrototypeId(),
@@ -100,7 +107,7 @@ public class LayoutPrototypeLocalServiceImpl
 		if (GetterUtil.getBoolean(
 				serviceContext.getAttribute("addDefaultLayout"), true)) {
 
-			layoutLocalService.addLayout(
+			_layoutLocalService.addLayout(
 				userId, group.getGroupId(), true,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 				layoutPrototype.getNameMap(), null, null, null, null,
@@ -126,7 +133,7 @@ public class LayoutPrototypeLocalServiceImpl
 		// Group
 
 		if (!CompanyThreadLocal.isDeleteInProcess()) {
-			int count = layoutPersistence.countByC_L(
+			int count = _layoutPersistence.countByC_L(
 				layoutPrototype.getCompanyId(), layoutPrototype.getUuid());
 
 			if (count > 0) {
@@ -140,11 +147,11 @@ public class LayoutPrototypeLocalServiceImpl
 			}
 		}
 
-		groupLocalService.deleteGroup(layoutPrototype.getGroup());
+		_groupLocalService.deleteGroup(layoutPrototype.getGroup());
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			layoutPrototype.getCompanyId(), LayoutPrototype.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			layoutPrototype.getLayoutPrototypeId());
@@ -171,7 +178,7 @@ public class LayoutPrototypeLocalServiceImpl
 	public void deleteNondefaultLayoutPrototypes(long companyId)
 		throws PortalException {
 
-		long defaultUserId = userLocalService.getDefaultUserId(companyId);
+		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
 
 		List<LayoutPrototype> layoutPrototypes =
 			layoutPrototypePersistence.findByCompanyId(companyId);
@@ -283,9 +290,27 @@ public class LayoutPrototypeLocalServiceImpl
 
 		layout.setNameMap(nameMap);
 
-		layoutPersistence.update(layout);
+		_layoutPersistence.update(layout);
 
 		return layoutPrototype;
 	}
+
+	@BeanReference(type = GroupLocalService.class)
+	private GroupLocalService _groupLocalService;
+
+	@BeanReference(type = LayoutLocalService.class)
+	private LayoutLocalService _layoutLocalService;
+
+	@BeanReference(type = LayoutPersistence.class)
+	private LayoutPersistence _layoutPersistence;
+
+	@BeanReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@BeanReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

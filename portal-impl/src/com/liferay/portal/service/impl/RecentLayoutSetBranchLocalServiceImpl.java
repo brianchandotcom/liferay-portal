@@ -14,9 +14,11 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.RecentLayoutSetBranch;
+import com.liferay.portal.kernel.service.persistence.LayoutSetBranchPersistence;
 import com.liferay.portal.service.base.RecentLayoutSetBranchLocalServiceBaseImpl;
 
 /**
@@ -32,7 +34,7 @@ public class RecentLayoutSetBranchLocalServiceImpl
 		throws PortalException {
 
 		LayoutSetBranch layoutSetBranch =
-			layoutSetBranchPersistence.findByPrimaryKey(layoutSetBranchId);
+			_layoutSetBranchPersistence.findByPrimaryKey(layoutSetBranchId);
 
 		RecentLayoutSetBranch recentLayoutSetBranch =
 			recentLayoutSetBranchPersistence.create(
@@ -64,5 +66,8 @@ public class RecentLayoutSetBranchLocalServiceImpl
 
 		return recentLayoutSetBranchPersistence.fetchByU_L(userId, layoutSetId);
 	}
+
+	@BeanReference(type = LayoutSetBranchPersistence.class)
+	private LayoutSetBranchPersistence _layoutSetBranchPersistence;
 
 }

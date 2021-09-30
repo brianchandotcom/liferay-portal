@@ -14,13 +14,17 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.WebsiteURLException;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.Website;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.service.base.WebsiteLocalServiceBaseImpl;
 
@@ -39,8 +43,8 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 			long typeId, boolean primary, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
-		long classNameId = classNameLocalService.getClassNameId(className);
+		User user = _userPersistence.findByPrimaryKey(userId);
+		long classNameId = _classNameLocalService.getClassNameId(className);
 
 		validate(
 			0, user.getCompanyId(), classNameId, classPK, url, typeId, primary);
@@ -83,7 +87,7 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 	@Override
 	public void deleteWebsites(long companyId, String className, long classPK) {
 		List<Website> websites = websitePersistence.findByC_C_C(
-			companyId, classNameLocalService.getClassNameId(className),
+			companyId, _classNameLocalService.getClassNameId(className),
 			classPK);
 
 		for (Website website : websites) {
@@ -101,7 +105,7 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 		long companyId, String className, long classPK) {
 
 		return websitePersistence.findByC_C_C(
-			companyId, classNameLocalService.getClassNameId(className),
+			companyId, _classNameLocalService.getClassNameId(className),
 			classPK);
 	}
 
@@ -161,10 +165,19 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 			classPK = website.getClassPK();
 		}
 
-		listTypeLocalService.validate(
+		_listTypeLocalService.validate(
 			typeId, classNameId, ListTypeConstants.WEBSITE);
 
 		validate(websiteId, companyId, classNameId, classPK, primary);
 	}
+
+	@BeanReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(type = ListTypeLocalService.class)
+	private ListTypeLocalService _listTypeLocalService;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

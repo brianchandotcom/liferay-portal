@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBContext;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.kernel.service.configuration.servlet.ServletServiceContextComponentConfiguration;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
@@ -273,7 +275,7 @@ public class ServiceComponentLocalServiceImpl
 
 			String servletContextName = upgradeStepHolder._servletContextName;
 
-			Release release = releaseLocalService.fetchRelease(
+			Release release = _releaseLocalService.fetchRelease(
 				upgradeStepHolder._servletContextName);
 
 			if ((release != null) &&
@@ -300,16 +302,16 @@ public class ServiceComponentLocalServiceImpl
 
 					});
 
-				releaseLocalService.updateRelease(
+				_releaseLocalService.updateRelease(
 					servletContextName, "0.0.1", "0.0.0");
 
-				release = releaseLocalService.fetchRelease(servletContextName);
+				release = _releaseLocalService.fetchRelease(servletContextName);
 
 				int buildNumber = upgradeStepHolder._buildNumber;
 
 				release.setBuildNumber(buildNumber);
 
-				releaseLocalService.updateRelease(release);
+				_releaseLocalService.updateRelease(release);
 			}
 			catch (Exception exception) {
 				_log.error(exception, exception);
@@ -606,6 +608,10 @@ public class ServiceComponentLocalServiceImpl
 
 	private final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
+
+	@BeanReference(type = ReleaseLocalService.class)
+	private ReleaseLocalService _releaseLocalService;
+
 	private volatile Map<String, ServiceComponent> _serviceComponents;
 	private final ServiceTracker<UpgradeStep, UpgradeStepHolder>
 		_upgradeStepServiceTracker;

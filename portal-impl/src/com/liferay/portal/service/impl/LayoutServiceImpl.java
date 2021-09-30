@@ -17,7 +17,9 @@ package com.liferay.portal.service.impl;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,10 +45,13 @@ import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.PluginSettingLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -441,7 +446,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public long getControlPanelLayoutPlid() throws PortalException {
-		Group group = groupLocalService.fetchGroup(
+		Group group = _groupLocalService.fetchGroup(
 			CompanyThreadLocal.getCompanyId(), GroupConstants.CONTROL_PANEL);
 
 		List<Layout> layouts = layoutLocalService.getLayouts(
@@ -499,7 +504,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		String scopeGroupLayoutUuid = null;
 
-		Group scopeGroup = groupLocalService.getGroup(scopeGroupId);
+		Group scopeGroup = _groupLocalService.getGroup(scopeGroupId);
 
 		if (scopeGroup.isLayout()) {
 			Layout scopeGroupLayout = layoutLocalService.getLayout(
@@ -975,7 +980,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			TimeZone.getTimeZone(
 				MapUtil.getString(parameterMap, "timeZoneId")));
 
-		User user = userPersistence.findByPrimaryKey(getUserId());
+		User user = _userPersistence.findByPrimaryKey(getUserId());
 
 		Map<String, Serializable> publishLayoutLocalSettingsMap =
 			ExportImportConfigurationSettingsMapFactoryUtil.
@@ -984,7 +989,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 					layoutIds, parameterMap);
 
 		ExportImportConfiguration exportImportConfiguration =
-			exportImportConfigurationLocalService.
+			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
 					getUserId(), description,
 					ExportImportConfigurationConstants.
@@ -1045,7 +1050,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			TimeZone.getTimeZone(
 				MapUtil.getString(parameterMap, "timeZoneId")));
 
-		User user = userPersistence.findByPrimaryKey(getUserId());
+		User user = _userPersistence.findByPrimaryKey(getUserId());
 
 		Map<String, Serializable> publishLayoutRemoteSettingsMap =
 			ExportImportConfigurationSettingsMapFactoryUtil.
@@ -1056,7 +1061,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 					user.getLocale(), user.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
-			exportImportConfigurationLocalService.
+			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
 					getUserId(), description,
 					ExportImportConfigurationConstants.
@@ -1263,7 +1268,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			ActionKeys.UPDATE);
 
 		if (Validator.isNotNull(themeId)) {
-			pluginSettingLocalService.checkPermission(
+			_pluginSettingLocalService.checkPermission(
 				getUserId(), themeId, Plugin.TYPE_THEME);
 		}
 
@@ -1520,5 +1525,18 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutServiceImpl.class);
+
+	@BeanReference(type = ExportImportConfigurationLocalService.class)
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
+
+	@BeanReference(type = GroupLocalService.class)
+	private GroupLocalService _groupLocalService;
+
+	@BeanReference(type = PluginSettingLocalService.class)
+	private PluginSettingLocalService _pluginSettingLocalService;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

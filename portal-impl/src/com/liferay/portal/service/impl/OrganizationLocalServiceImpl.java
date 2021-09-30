@@ -14,8 +14,11 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.DuplicateOrganizationException;
@@ -51,7 +54,19 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.search.reindexer.ReindexerBridge;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.EmailAddressLocalService;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
+import com.liferay.portal.kernel.service.PasswordPolicyRelLocalService;
+import com.liferay.portal.kernel.service.PhoneLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.WebsiteLocalService;
+import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
+import com.liferay.portal.kernel.service.persistence.CountryPersistence;
+import com.liferay.portal.kernel.service.persistence.RegionPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.tree.TreeModelTasksAdapter;
@@ -306,10 +321,10 @@ public class OrganizationLocalServiceImpl
 
 		// Role
 
-		Role role = roleLocalService.getRole(
+		Role role = _roleLocalService.getRole(
 			organization.getCompanyId(), RoleConstants.ORGANIZATION_OWNER);
 
-		userGroupRoleLocalService.addUserGroupRoles(
+		_userGroupRoleLocalService.addUserGroupRoles(
 			userId, group.getGroupId(), new long[] {role.getRoleId()});
 
 		// Resources
@@ -347,7 +362,7 @@ public class OrganizationLocalServiceImpl
 	public void addOrganizationResources(long userId, Organization organization)
 		throws PortalException {
 
-		resourceLocalService.addResources(
+		_resourceLocalService.addResources(
 			organization.getCompanyId(), 0, userId,
 			Organization.class.getName(), organization.getOrganizationId(),
 			false, false, false);
@@ -400,7 +415,7 @@ public class OrganizationLocalServiceImpl
 	public void addPasswordPolicyOrganizations(
 		long passwordPolicyId, long[] organizationIds) {
 
-		passwordPolicyRelLocalService.addPasswordPolicyRels(
+		_passwordPolicyRelLocalService.addPasswordPolicyRels(
 			passwordPolicyId, Organization.class.getName(), organizationIds);
 	}
 
@@ -475,39 +490,39 @@ public class OrganizationLocalServiceImpl
 
 		// Asset
 
-		assetEntryLocalService.deleteEntry(
+		_assetEntryLocalService.deleteEntry(
 			Organization.class.getName(), organization.getOrganizationId());
 
 		// Addresses
 
-		addressLocalService.deleteAddresses(
+		_addressLocalService.deleteAddresses(
 			organization.getCompanyId(), Organization.class.getName(),
 			organization.getOrganizationId());
 
 		// Email addresses
 
-		emailAddressLocalService.deleteEmailAddresses(
+		_emailAddressLocalService.deleteEmailAddresses(
 			organization.getCompanyId(), Organization.class.getName(),
 			organization.getOrganizationId());
 
 		// Expando
 
-		expandoRowLocalService.deleteRows(organization.getOrganizationId());
+		_expandoRowLocalService.deleteRows(organization.getOrganizationId());
 
 		// Password policy relation
 
-		passwordPolicyRelLocalService.deletePasswordPolicyRel(
+		_passwordPolicyRelLocalService.deletePasswordPolicyRel(
 			Organization.class.getName(), organization.getOrganizationId());
 
 		// Phone
 
-		phoneLocalService.deletePhones(
+		_phoneLocalService.deletePhones(
 			organization.getCompanyId(), Organization.class.getName(),
 			organization.getOrganizationId());
 
 		// Website
 
-		websiteLocalService.deleteWebsites(
+		_websiteLocalService.deleteWebsites(
 			organization.getCompanyId(), Organization.class.getName(),
 			organization.getOrganizationId());
 
@@ -525,7 +540,7 @@ public class OrganizationLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			organization.getCompanyId(), Organization.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			organization.getOrganizationId());
@@ -999,7 +1014,7 @@ public class OrganizationLocalServiceImpl
 			userPersistence.getOrganizationPrimaryKeys(userId));
 
 		List<UserGroupRole> userGroupRoles =
-			userGroupRoleLocalService.getUserGroupRoles(userId);
+			_userGroupRoleLocalService.getUserGroupRoles(userId);
 
 		for (UserGroupRole userGroupRole : userGroupRoles) {
 			Role role = userGroupRole.getRole();
@@ -1050,7 +1065,7 @@ public class OrganizationLocalServiceImpl
 			getUserOrganizations(userId));
 
 		List<UserGroupRole> userGroupRoles =
-			userGroupRoleLocalService.getUserGroupRoles(userId);
+			_userGroupRoleLocalService.getUserGroupRoles(userId);
 
 		for (UserGroupRole userGroupRole : userGroupRoles) {
 			Role role = userGroupRole.getRole();
@@ -1086,7 +1101,7 @@ public class OrganizationLocalServiceImpl
 	public boolean hasPasswordPolicyOrganization(
 		long passwordPolicyId, long organizationId) {
 
-		return passwordPolicyRelLocalService.hasPasswordPolicyRel(
+		return _passwordPolicyRelLocalService.hasPasswordPolicyRel(
 			passwordPolicyId, Organization.class.getName(), organizationId);
 	}
 
@@ -1880,7 +1895,7 @@ public class OrganizationLocalServiceImpl
 	public void unsetPasswordPolicyOrganizations(
 		long passwordPolicyId, long[] organizationIds) {
 
-		passwordPolicyRelLocalService.deletePasswordPolicyRels(
+		_passwordPolicyRelLocalService.deletePasswordPolicyRels(
 			passwordPolicyId, Organization.class.getName(), organizationIds);
 	}
 
@@ -1901,12 +1916,12 @@ public class OrganizationLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		Company company = companyPersistence.findByPrimaryKey(
+		Company company = _companyPersistence.findByPrimaryKey(
 			user.getCompanyId());
 
 		Group companyGroup = company.getGroup();
 
-		assetEntryLocalService.updateEntry(
+		_assetEntryLocalService.updateEntry(
 			userId, companyGroup.getGroupId(), null, null,
 			Organization.class.getName(), organization.getOrganizationId(),
 			organization.getUuid(), 0, assetCategoryIds, assetTagNames, true,
@@ -2185,7 +2200,7 @@ public class OrganizationLocalServiceImpl
 		String regionCode = null;
 
 		if (regionId != null) {
-			Region region = regionPersistence.fetchByPrimaryKey(regionId);
+			Region region = _regionPersistence.fetchByPrimaryKey(regionId);
 
 			regionCode = region.getRegionCode();
 		}
@@ -2193,7 +2208,7 @@ public class OrganizationLocalServiceImpl
 		String countryName = null;
 
 		if (countryId != null) {
-			Country country = countryPersistence.fetchByPrimaryKey(countryId);
+			Country country = _countryPersistence.fetchByPrimaryKey(countryId);
 
 			countryName = country.getName();
 		}
@@ -2487,10 +2502,10 @@ public class OrganizationLocalServiceImpl
 			type);
 
 		if (countryRequired || (countryId > 0)) {
-			countryPersistence.findByPrimaryKey(countryId);
+			_countryPersistence.findByPrimaryKey(countryId);
 		}
 
-		listTypeLocalService.validate(
+		_listTypeLocalService.validate(
 			statusId, ListTypeConstants.ORGANIZATION_STATUS);
 	}
 
@@ -2535,5 +2550,47 @@ public class OrganizationLocalServiceImpl
 		ServiceProxyFactory.newServiceTrackedInstance(
 			UserFileUploadsSettings.class, OrganizationLocalServiceImpl.class,
 			"_userFileUploadsSettings", false);
+
+	@BeanReference(type = AddressLocalService.class)
+	private AddressLocalService _addressLocalService;
+
+	@BeanReference(type = AssetEntryLocalService.class)
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@BeanReference(type = CompanyPersistence.class)
+	private CompanyPersistence _companyPersistence;
+
+	@BeanReference(type = CountryPersistence.class)
+	private CountryPersistence _countryPersistence;
+
+	@BeanReference(type = EmailAddressLocalService.class)
+	private EmailAddressLocalService _emailAddressLocalService;
+
+	@BeanReference(type = ExpandoRowLocalService.class)
+	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@BeanReference(type = ListTypeLocalService.class)
+	private ListTypeLocalService _listTypeLocalService;
+
+	@BeanReference(type = PasswordPolicyRelLocalService.class)
+	private PasswordPolicyRelLocalService _passwordPolicyRelLocalService;
+
+	@BeanReference(type = PhoneLocalService.class)
+	private PhoneLocalService _phoneLocalService;
+
+	@BeanReference(type = RegionPersistence.class)
+	private RegionPersistence _regionPersistence;
+
+	@BeanReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@BeanReference(type = RoleLocalService.class)
+	private RoleLocalService _roleLocalService;
+
+	@BeanReference(type = UserGroupRoleLocalService.class)
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@BeanReference(type = WebsiteLocalService.class)
+	private WebsiteLocalService _websiteLocalService;
 
 }

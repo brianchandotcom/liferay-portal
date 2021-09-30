@@ -14,12 +14,14 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.persistence.LayoutSetBranchPersistence;
 import com.liferay.portal.service.base.LayoutRevisionServiceBaseImpl;
 
 /**
@@ -40,7 +42,7 @@ public class LayoutRevisionServiceImpl extends LayoutRevisionServiceBaseImpl {
 		throws PortalException {
 
 		LayoutSetBranch layoutSetBranch =
-			layoutSetBranchPersistence.findByPrimaryKey(layoutSetBranchId);
+			_layoutSetBranchPersistence.findByPrimaryKey(layoutSetBranchId);
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), layoutSetBranch.getGroupId(),
@@ -52,5 +54,8 @@ public class LayoutRevisionServiceImpl extends LayoutRevisionServiceBaseImpl {
 			description, keywords, robots, typeSettings, iconImage, iconImageId,
 			themeId, colorSchemeId, css, serviceContext);
 	}
+
+	@BeanReference(type = LayoutSetBranchPersistence.class)
+	private LayoutSetBranchPersistence _layoutSetBranchPersistence;
 
 }

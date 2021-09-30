@@ -29,6 +29,7 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.staging.StagingURLHelperUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -56,6 +57,12 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.RemoteAuthException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
+import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
+import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -120,7 +127,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		}
 
 		LayoutSetBranch layoutSetBranch =
-			layoutSetBranchLocalService.fetchLayoutSetBranch(
+			_layoutSetBranchLocalService.fetchLayoutSetBranch(
 				targetGroupId, false,
 				LayoutSetBranchConstants.MASTER_BRANCH_NAME);
 
@@ -139,7 +146,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			ExportImportDateUtil.clearLastPublishDate(targetGroupId, false);
 		}
 
-		layoutSetBranch = layoutSetBranchLocalService.fetchLayoutSetBranch(
+		layoutSetBranch = _layoutSetBranchLocalService.fetchLayoutSetBranch(
 			targetGroupId, true, LayoutSetBranchConstants.MASTER_BRANCH_NAME);
 
 		if (branchingPrivate && (layoutSetBranch == null)) {
@@ -286,12 +293,12 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		if (liveGroup.hasStagingGroup()) {
 			Group stagingGroup = liveGroup.getStagingGroup();
 
-			groupLocalService.deleteGroup(stagingGroup.getGroupId());
+			_groupLocalService.deleteGroup(stagingGroup.getGroupId());
 
 			liveGroup.clearStagingGroup();
 		}
 
-		groupLocalService.updateGroup(
+		_groupLocalService.updateGroup(
 			liveGroup.getGroupId(), typeSettingsUnicodeProperties.toString());
 	}
 
@@ -350,7 +357,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 				typeSettingsUnicodeProperties, serviceContext);
 		}
 
-		groupLocalService.updateGroup(
+		_groupLocalService.updateGroup(
 			liveGroup.getGroupId(), typeSettingsUnicodeProperties.toString());
 
 		if (hasStagingGroup) {
@@ -388,7 +395,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			long remoteGroupId, ServiceContext serviceContext)
 		throws PortalException {
 
-		groupLocalService.validateRemote(
+		_groupLocalService.validateRemote(
 			stagingGroup.getGroupId(), remoteAddress, remotePort,
 			remotePathContext, secureConnection, remoteGroupId);
 
@@ -468,7 +475,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 				typeSettingsUnicodeProperties, serviceContext);
 		}
 
-		groupLocalService.updateGroup(
+		_groupLocalService.updateGroup(
 			stagingGroup.getGroupId(),
 			typeSettingsUnicodeProperties.toString());
 
@@ -624,18 +631,18 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			serviceContext.setWorkflowAction(WorkflowConstants.STATUS_APPROVED);
 
 			LayoutSetBranch layoutSetBranch =
-				layoutSetBranchLocalService.addLayoutSetBranch(
+				_layoutSetBranchLocalService.addLayoutSetBranch(
 					userId, groupId, privateLayout,
 					LayoutSetBranchConstants.MASTER_BRANCH_NAME, description,
 					true, LayoutSetBranchConstants.ALL_BRANCHES,
 					serviceContext);
 
 			List<LayoutRevision> layoutRevisions =
-				layoutRevisionLocalService.getLayoutRevisions(
+				_layoutRevisionLocalService.getLayoutRevisions(
 					layoutSetBranch.getLayoutSetBranchId(), false);
 
 			for (LayoutRevision layoutRevision : layoutRevisions) {
-				layoutRevisionLocalService.updateStatus(
+				_layoutRevisionLocalService.updateStatus(
 					userId, layoutRevision.getLayoutRevisionId(),
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
 			}
@@ -654,7 +661,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			long userId, Group liveGroup, ServiceContext serviceContext)
 		throws PortalException {
 
-		Group stagingGroup = groupLocalService.addGroup(
+		Group stagingGroup = _groupLocalService.addGroup(
 			userId, liveGroup.getParentGroupId(), liveGroup.getClassName(),
 			liveGroup.getClassPK(), liveGroup.getGroupId(),
 			liveGroup.getNameMap(), liveGroup.getDescriptionMap(),
@@ -684,7 +691,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 				"languageId",
 				LocaleUtil.toLanguageId(LocaleUtil.getDefault())));
 
-		return groupLocalService.updateGroup(
+		return _groupLocalService.updateGroup(
 			stagingGroup.getGroupId(),
 			stagingTypeSettingsUnicodeProperties.toString());
 	}
@@ -697,7 +704,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		Map<Long, LayoutRevision> layoutRevisions = new HashMap<>();
 
 		List<LayoutSetBranch> layoutSetBranches =
-			layoutSetBranchLocalService.getLayoutSetBranches(
+			_layoutSetBranchLocalService.getLayoutSetBranches(
 				groupId, privateLayout);
 
 		boolean publishedToLive = false;
@@ -729,7 +736,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			}
 
 			List<LayoutRevision> headLayoutRevisions =
-				layoutRevisionLocalService.getLayoutRevisions(
+				_layoutRevisionLocalService.getLayoutRevisions(
 					layoutSetBranch.getLayoutSetBranchId(), true);
 
 			for (LayoutRevision headLayoutRevision : headLayoutRevisions) {
@@ -761,7 +768,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			updateLayoutWithLayoutRevision(layoutRevision);
 		}
 
-		layoutSetBranchLocalService.deleteLayoutSetBranches(
+		_layoutSetBranchLocalService.deleteLayoutSetBranches(
 			groupId, privateLayout, true);
 	}
 
@@ -1099,7 +1106,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		try {
 			StagingAdvicesThreadLocal.setEnabled(false);
 
-			layout = layoutLocalService.fetchLayout(layoutRevision.getPlid());
+			layout = _layoutLocalService.fetchLayout(layoutRevision.getPlid());
 		}
 		finally {
 			StagingAdvicesThreadLocal.setEnabled(
@@ -1124,25 +1131,25 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		layout.setColorSchemeId(layoutRevision.getColorSchemeId());
 		layout.setCss(layoutRevision.getCss());
 
-		return layoutLocalService.updateLayout(layout);
+		return _layoutLocalService.updateLayout(layout);
 	}
 
 	protected void updatePortletPreferences(
 		LayoutRevision layoutRevision, Layout layout) {
 
-		portletPreferencesLocalService.deletePortletPreferencesByPlid(
+		_portletPreferencesLocalService.deletePortletPreferencesByPlid(
 			layout.getPlid());
 
 		List<PortletPreferences> portletPreferencesList =
-			portletPreferencesLocalService.getPortletPreferencesByPlid(
+			_portletPreferencesLocalService.getPortletPreferencesByPlid(
 				layoutRevision.getLayoutRevisionId());
 
 		for (PortletPreferences portletPreferences : portletPreferencesList) {
 			javax.portlet.PortletPreferences jxPortletPreferences =
-				portletPreferenceValueLocalService.getPreferences(
+				_portletPreferenceValueLocalService.getPreferences(
 					portletPreferences);
 
-			portletPreferencesLocalService.addPortletPreferences(
+			_portletPreferencesLocalService.addPortletPreferences(
 				layoutRevision.getCompanyId(), portletPreferences.getOwnerId(),
 				portletPreferences.getOwnerType(), layout.getPlid(),
 				portletPreferences.getPortletId(), null,
@@ -1242,5 +1249,24 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagingLocalServiceImpl.class);
+
+	@BeanReference(type = GroupLocalService.class)
+	private GroupLocalService _groupLocalService;
+
+	@BeanReference(type = LayoutLocalService.class)
+	private LayoutLocalService _layoutLocalService;
+
+	@BeanReference(type = LayoutRevisionLocalService.class)
+	private LayoutRevisionLocalService _layoutRevisionLocalService;
+
+	@BeanReference(type = LayoutSetBranchLocalService.class)
+	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
+
+	@BeanReference(type = PortletPreferencesLocalService.class)
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@BeanReference(type = PortletPreferenceValueLocalService.class)
+	private PortletPreferenceValueLocalService
+		_portletPreferenceValueLocalService;
 
 }

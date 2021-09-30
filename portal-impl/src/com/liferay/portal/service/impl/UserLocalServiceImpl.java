@@ -14,6 +14,9 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.mail.kernel.template.MailTemplate;
@@ -110,8 +113,30 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
+import com.liferay.portal.kernel.service.BrowserTrackerLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ContactLocalService;
+import com.liferay.portal.kernel.service.ImageLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.MembershipRequestLocalService;
+import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
+import com.liferay.portal.kernel.service.PasswordPolicyRelLocalService;
+import com.liferay.portal.kernel.service.PasswordTrackerLocalService;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.RecentLayoutBranchLocalService;
+import com.liferay.portal.kernel.service.RecentLayoutRevisionLocalService;
+import com.liferay.portal.kernel.service.RecentLayoutSetBranchLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.TicketLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserIdMapperLocalService;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
+import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
+import com.liferay.portal.kernel.service.persistence.ContactPersistence;
+import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -156,7 +181,11 @@ import com.liferay.portal.security.pwd.RegExpToolkit;
 import com.liferay.portal.service.base.UserLocalServiceBaseImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.social.kernel.model.SocialRelation;
+import com.liferay.social.kernel.service.SocialActivityLocalService;
+import com.liferay.social.kernel.service.SocialRequestLocalService;
+import com.liferay.social.kernel.service.persistence.SocialRelationPersistence;
 import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
@@ -264,7 +293,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		boolean sendEmail = false;
 		ServiceContext serviceContext = new ServiceContext();
 
-		Company company = companyLocalService.getCompany(companyId);
+		Company company = _companyLocalService.getCompany(companyId);
 
 		serviceContext.setPathMain(PortalUtil.getPathMain());
 		serviceContext.setPortalURL(company.getPortalURL(0));
@@ -309,7 +338,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			StringPool.NEW_LINE, PropsValues.ADMIN_DEFAULT_GROUP_NAMES);
 
 		for (String defaultGroupName : defaultGroupNames) {
-			Company company = companyPersistence.findByPrimaryKey(
+			Company company = _companyPersistence.findByPrimaryKey(
 				user.getCompanyId());
 
 			if (StringUtil.equalsIgnoreCase(
@@ -646,7 +675,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				contact.getJabberSn(), contact.getSkypeSn(),
 				contact.getTwitterSn(), jobTitle, user.getGroupIds(),
 				user.getOrganizationIds(), user.getRoleIds(),
-				userGroupRoleLocalService.getUserGroupRoles(user.getUserId()),
+				_userGroupRoleLocalService.getUserGroupRoles(user.getUserId()),
 				user.getUserGroupIds(), serviceContext);
 		}
 
@@ -663,10 +692,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	@Override
 	public void addPasswordPolicyUsers(long passwordPolicyId, long[] userIds) {
 		_checkPasswordReset(
-			passwordPolicyLocalService.fetchPasswordPolicy(passwordPolicyId),
+			_passwordPolicyLocalService.fetchPasswordPolicy(passwordPolicyId),
 			userIds);
 
-		passwordPolicyRelLocalService.addPasswordPolicyRels(
+		_passwordPolicyRelLocalService.addPasswordPolicyRels(
 			passwordPolicyId, User.class.getName(), userIds);
 	}
 
@@ -1257,7 +1286,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			creatorUserName = creatorUser.getFullName();
 		}
 
-		Contact contact = contactPersistence.create(user.getContactId());
+		Contact contact = _contactPersistence.create(user.getContactId());
 
 		contact.setCompanyId(user.getCompanyId());
 		contact.setUserId(creatorUserId);
@@ -1276,7 +1305,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			getBirthday(birthdayMonth, birthdayDay, birthdayYear));
 		contact.setJobTitle(jobTitle);
 
-		contactPersistence.update(contact, serviceContext);
+		_contactPersistence.update(contact, serviceContext);
 
 		// Group
 
@@ -1334,7 +1363,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Resources
 
-		resourceLocalService.addResources(
+		_resourceLocalService.addResources(
 			companyId, 0, creatorUserId, User.class.getName(), user.getUserId(),
 			false, false, false);
 
@@ -1749,7 +1778,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
-		Company company = companyPersistence.findByPrimaryKey(companyId);
+		Company company = _companyPersistence.findByPrimaryKey(companyId);
 
 		handleAuthenticationFailure(
 			userName, company.getAuthType(), user,
@@ -1968,7 +1997,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 			else {
 				PasswordPolicy passwordPolicy =
-					passwordPolicyLocalService.getPasswordPolicy(
+					_passwordPolicyLocalService.getPasswordPolicy(
 						user.getCompanyId(), user.getOrganizationIds());
 
 				password = PwdToolkitUtil.generate(passwordPolicy);
@@ -2007,7 +2036,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return;
 		}
 
-		Company company = companyPersistence.findByPrimaryKey(
+		Company company = _companyPersistence.findByPrimaryKey(
 			user.getCompanyId());
 
 		if (company.isStrangersVerify() && (user.getLdapServerId() < 0)) {
@@ -2034,7 +2063,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long companyId, String name, String password)
 		throws PortalException {
 
-		Company company = companyPersistence.findByPrimaryKey(companyId);
+		Company company = _companyPersistence.findByPrimaryKey(companyId);
 
 		try {
 			name = Encryptor.decrypt(company.getKeyObj(), name);
@@ -2126,7 +2155,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Browser tracker
 
-		browserTrackerLocalService.deleteUserBrowserTracker(user.getUserId());
+		_browserTrackerLocalService.deleteUserBrowserTracker(user.getUserId());
 
 		// Group
 
@@ -2143,7 +2172,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		// Portrait
 
 		try {
-			imageLocalService.deleteImage(user.getPortraitId());
+			_imageLocalService.deleteImage(user.getPortraitId());
 		}
 		catch (NoSuchImageException noSuchImageException) {
 			if (_log.isWarnEnabled()) {
@@ -2155,65 +2184,65 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Password policy relation
 
-		passwordPolicyRelLocalService.deletePasswordPolicyRel(
+		_passwordPolicyRelLocalService.deletePasswordPolicyRel(
 			User.class.getName(), user.getUserId());
 
 		// Old passwords
 
-		passwordTrackerLocalService.deletePasswordTrackers(user.getUserId());
+		_passwordTrackerLocalService.deletePasswordTrackers(user.getUserId());
 
 		// External user ids
 
-		userIdMapperLocalService.deleteUserIdMappers(user.getUserId());
+		_userIdMapperLocalService.deleteUserIdMappers(user.getUserId());
 
 		// Announcements
 
-		announcementsDeliveryLocalService.deleteDeliveries(user.getUserId());
+		_announcementsDeliveryLocalService.deleteDeliveries(user.getUserId());
 
 		// Asset
 
-		assetEntryLocalService.deleteEntry(
+		_assetEntryLocalService.deleteEntry(
 			User.class.getName(), user.getUserId());
 
 		// Expando
 
-		expandoRowLocalService.deleteRows(user.getUserId());
+		_expandoRowLocalService.deleteRows(user.getUserId());
 
 		// Membership requests
 
-		membershipRequestLocalService.deleteMembershipRequestsByUserId(
+		_membershipRequestLocalService.deleteMembershipRequestsByUserId(
 			user.getUserId());
 
 		// Portal preferences
 
 		PortalPreferences portalPreferences =
-			portalPreferencesLocalService.fetchPortalPreferences(
+			_portalPreferencesLocalService.fetchPortalPreferences(
 				user.getUserId(), PortletKeys.PREFS_OWNER_TYPE_USER);
 
 		if (portalPreferences != null) {
-			portalPreferencesLocalService.deletePortalPreferences(
+			_portalPreferencesLocalService.deletePortalPreferences(
 				portalPreferences);
 		}
 
 		// Portlet preferences
 
-		portletPreferencesLocalService.deletePortletPreferencesByOwnerId(
+		_portletPreferencesLocalService.deletePortletPreferencesByOwnerId(
 			user.getUserId());
 
 		// Ratings
 
-		ratingsStatsLocalService.deleteStats(
+		_ratingsStatsLocalService.deleteStats(
 			User.class.getName(), user.getUserId());
 
 		// Social
 
-		socialActivityLocalService.deleteUserActivities(user.getUserId());
-		socialRequestLocalService.deleteReceiverUserRequests(user.getUserId());
-		socialRequestLocalService.deleteUserRequests(user.getUserId());
+		_socialActivityLocalService.deleteUserActivities(user.getUserId());
+		_socialRequestLocalService.deleteReceiverUserRequests(user.getUserId());
+		_socialRequestLocalService.deleteUserRequests(user.getUserId());
 
 		// Ticket
 
-		ticketLocalService.deleteTickets(
+		_ticketLocalService.deleteTickets(
 			user.getCompanyId(), User.class.getName(), user.getUserId());
 
 		// Mail
@@ -2222,29 +2251,30 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Contact
 
-		Contact contact = contactLocalService.fetchContact(user.getContactId());
+		Contact contact = _contactLocalService.fetchContact(
+			user.getContactId());
 
 		if (contact != null) {
-			contactLocalService.deleteContact(contact);
+			_contactLocalService.deleteContact(contact);
 		}
 
 		// Group roles
 
-		userGroupRoleLocalService.deleteUserGroupRolesByUserId(
+		_userGroupRoleLocalService.deleteUserGroupRolesByUserId(
 			user.getUserId());
 
 		// Recent layouts
 
-		recentLayoutBranchLocalService.deleteUserRecentLayoutBranches(
+		_recentLayoutBranchLocalService.deleteUserRecentLayoutBranches(
 			user.getUserId());
-		recentLayoutRevisionLocalService.deleteUserRecentLayoutRevisions(
+		_recentLayoutRevisionLocalService.deleteUserRecentLayoutRevisions(
 			user.getUserId());
-		recentLayoutSetBranchLocalService.deleteUserRecentLayoutSetBranches(
+		_recentLayoutSetBranchLocalService.deleteUserRecentLayoutSetBranches(
 			user.getUserId());
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			user.getCompanyId(), User.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, user.getUserId());
 
@@ -2254,7 +2284,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Workflow
 
-		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			user.getCompanyId(), 0, User.class.getName(), user.getUserId());
 
 		return user;
@@ -2289,7 +2319,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		Company company = companyPersistence.findByPrimaryKey(
+		Company company = _companyPersistence.findByPrimaryKey(
 			user.getCompanyId());
 
 		try {
@@ -2753,12 +2783,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
 			List<SocialRelation> socialRelations =
-				socialRelationPersistence.findByU1_T(
+				_socialRelationPersistence.findByU1_T(
 					userId, socialRelationType);
 
 			if (socialRelationTypeComparator.equals(StringPool.NOT_EQUAL)) {
 				socialRelations = ListUtil.remove(
-					socialRelationPersistence.findByUserId1(userId),
+					_socialRelationPersistence.findByUserId1(userId),
 					socialRelations);
 			}
 
@@ -3162,7 +3192,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public boolean hasPasswordPolicyUser(long passwordPolicyId, long userId) {
-		return passwordPolicyRelLocalService.hasPasswordPolicyRel(
+		return _passwordPolicyRelLocalService.hasPasswordPolicyRel(
 			passwordPolicyId, User.class.getName(), userId);
 	}
 
@@ -3927,7 +3957,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return;
 		}
 
-		Ticket ticket = ticketLocalService.addDistinctTicket(
+		Ticket ticket = _ticketLocalService.addDistinctTicket(
 			user.getCompanyId(), User.class.getName(), user.getUserId(),
 			TicketConstants.TYPE_EMAIL_ADDRESS, emailAddress, null,
 			serviceContext);
@@ -3939,7 +3969,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		long plid = serviceContext.getPlid();
 
 		if (plid > 0) {
-			Layout layout = layoutLocalService.fetchLayout(plid);
+			Layout layout = _layoutLocalService.fetchLayout(plid);
 
 			if (layout != null) {
 				Group group = layout.getGroup();
@@ -3974,7 +4004,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String body = _getLocalizedValue(
 			localizedBodyMap, user.getLocale(), LocaleUtil.getDefault());
 
-		Company company = companyLocalService.getCompany(user.getCompanyId());
+		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
 		MailTemplateContextBuilder mailTemplateContextBuilder =
 			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
@@ -4033,7 +4063,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Company company = companyPersistence.findByPrimaryKey(companyId);
+		Company company = _companyPersistence.findByPrimaryKey(companyId);
 
 		if (!company.isSendPasswordResetLink()) {
 			throw new SendPasswordException.MustBeEnabled(company);
@@ -4059,7 +4089,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					(passwordPolicy.getResetTicketMaxAge() * 1000));
 		}
 
-		Ticket ticket = ticketLocalService.addDistinctTicket(
+		Ticket ticket = _ticketLocalService.addDistinctTicket(
 			companyId, User.class.getName(), user.getUserId(),
 			TicketConstants.TYPE_PASSWORD, null, expirationDate,
 			serviceContext);
@@ -4242,9 +4272,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long groupId, long[] userIds, ServiceContext serviceContext)
 		throws PortalException {
 
-		userGroupRoleLocalService.deleteUserGroupRoles(
+		_userGroupRoleLocalService.deleteUserGroupRoles(
 			userIds, groupId, RoleConstants.TYPE_DEPOT);
-		userGroupRoleLocalService.deleteUserGroupRoles(
+		_userGroupRoleLocalService.deleteUserGroupRoles(
 			userIds, groupId, RoleConstants.TYPE_SITE);
 
 		unsetGroupTeamsUsers(groupId, userIds);
@@ -4282,7 +4312,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Group group = organization.getGroup();
 
-		userGroupRoleLocalService.deleteUserGroupRoles(
+		_userGroupRoleLocalService.deleteUserGroupRoles(
 			userIds, group.getGroupId());
 
 		organizationPersistence.removeUsers(organizationId, userIds);
@@ -4317,7 +4347,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		try {
 			_checkPasswordReset(
-				passwordPolicyLocalService.getDefaultPasswordPolicy(companyId),
+				_passwordPolicyLocalService.getDefaultPasswordPolicy(companyId),
 				userIds);
 		}
 		catch (PortalException portalException) {
@@ -4326,7 +4356,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
-		passwordPolicyRelLocalService.deletePasswordPolicyRels(
+		_passwordPolicyRelLocalService.deletePasswordPolicyRels(
 			passwordPolicyId, User.class.getName(), userIds);
 	}
 
@@ -4449,12 +4479,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User owner = userPersistence.findByPrimaryKey(userId);
 
-		Company company = companyPersistence.findByPrimaryKey(
+		Company company = _companyPersistence.findByPrimaryKey(
 			owner.getCompanyId());
 
 		Group companyGroup = company.getGroup();
 
-		assetEntryLocalService.updateEntry(
+		_assetEntryLocalService.updateEntry(
 			userId, companyGroup.getGroupId(), user.getCreateDate(),
 			user.getModifiedDate(), User.class.getName(), user.getUserId(),
 			user.getUuid(), 0, assetCategoryIds, assetTagNames, true, false,
@@ -4513,7 +4543,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		contact.setEmailAddress(user.getEmailAddress());
 
-		contactPersistence.update(contact);
+		_contactPersistence.update(contact);
 
 		return user;
 	}
@@ -4544,7 +4574,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		validateEmailAddress(user, emailAddress1, emailAddress2);
 
-		Company company = companyPersistence.findByPrimaryKey(
+		Company company = _companyPersistence.findByPrimaryKey(
 			user.getCompanyId());
 
 		if (company.isStrangersVerify() &&
@@ -4564,7 +4594,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			contact.setEmailAddress(user.getEmailAddress());
 
-			contactPersistence.update(contact);
+			_contactPersistence.update(contact);
 		}
 
 		return user;
@@ -4792,7 +4822,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			contact.setBirthday(birthday);
 			contact.setJobTitle(jobTitle);
 
-			contactPersistence.update(contact, serviceContext);
+			_contactPersistence.update(contact, serviceContext);
 
 			// Indexer
 
@@ -4936,12 +4966,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		user = userPersistence.update(user);
 
-		Contact contact = contactPersistence.findByPrimaryKey(
+		Contact contact = _contactPersistence.findByPrimaryKey(
 			user.getContactId());
 
 		contact.setJobTitle(jobTitle);
 
-		contactPersistence.update(contact);
+		_contactPersistence.update(contact);
 
 		return user;
 	}
@@ -5536,7 +5566,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		Company company = companyPersistence.findByPrimaryKey(
+		Company company = _companyPersistence.findByPrimaryKey(
 			user.getCompanyId());
 
 		if (!PropsValues.USERS_EMAIL_ADDRESS_REQUIRED &&
@@ -5632,10 +5662,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		long contactId = user.getContactId();
 
-		Contact contact = contactPersistence.fetchByPrimaryKey(contactId);
+		Contact contact = _contactPersistence.fetchByPrimaryKey(contactId);
 
 		if (contact == null) {
-			contact = contactPersistence.create(contactId);
+			contact = _contactPersistence.create(contactId);
 
 			contact.setCompanyId(user.getCompanyId());
 			contact.setUserName(StringPool.BLANK);
@@ -5661,7 +5691,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		contact.setTwitterSn(twitterSn);
 		contact.setJobTitle(jobTitle);
 
-		user.setContact(contactPersistence.update(contact, serviceContext));
+		user.setContact(_contactPersistence.update(contact, serviceContext));
 
 		// Group
 
@@ -5680,7 +5710,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		// depending on the site default user associations.
 
 		List<UserGroupRole> previousUserGroupRoles =
-			userGroupRolePersistence.findByUserId(userId);
+			_userGroupRolePersistence.findByUserId(userId);
 
 		updateGroups(userId, groupIds, false);
 		updateOrganizations(userId, organizationIds, false);
@@ -5707,7 +5737,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Announcements
 
-		announcementsDeliveryLocalService.getUserDeliveries(user.getUserId());
+		_announcementsDeliveryLocalService.getUserDeliveries(user.getUserId());
 
 		// Asset
 
@@ -5838,7 +5868,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public void verifyEmailAddress(String ticketKey) throws PortalException {
-		Ticket ticket = ticketLocalService.getTicket(ticketKey);
+		Ticket ticket = _ticketLocalService.getTicket(ticketKey);
 
 		if (ticket.isExpired() ||
 			(ticket.getType() != TicketConstants.TYPE_EMAIL_ADDRESS)) {
@@ -5869,14 +5899,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			contact.setEmailAddress(user.getEmailAddress());
 
-			contactPersistence.update(contact);
+			_contactPersistence.update(contact);
 		}
 
 		user.setEmailAddressVerified(true);
 
 		userPersistence.update(user);
 
-		ticketLocalService.deleteTicket(ticket);
+		_ticketLocalService.deleteTicket(ticket);
 	}
 
 	protected void addDefaultRolesAndTeams(long groupId, long[] userIds)
@@ -5938,7 +5968,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				long[] userRoleIds = ArrayUtil.toArray(
 					userRoleIdsSet.toArray(new Long[0]));
 
-				userGroupRoleLocalService.addUserGroupRoles(
+				_userGroupRoleLocalService.addUserGroupRoles(
 					userId, groupId, userRoleIds);
 			}
 		}
@@ -6562,7 +6592,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				PropsKeys.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY);
 		}
 		else {
-			Ticket ticket = ticketLocalService.addDistinctTicket(
+			Ticket ticket = _ticketLocalService.addDistinctTicket(
 				user.getCompanyId(), User.class.getName(), user.getUserId(),
 				TicketConstants.TYPE_PASSWORD, null, null, serviceContext);
 
@@ -6571,7 +6601,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long plid = serviceContext.getPlid();
 
 			if (plid > 0) {
-				Layout layout = layoutLocalService.fetchLayout(plid);
+				Layout layout = _layoutLocalService.fetchLayout(plid);
 
 				if (layout != null) {
 					Group group = layout.getGroup();
@@ -6846,14 +6876,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			oldEncPwd = PasswordEncryptorUtil.encrypt(user.getPassword());
 		}
 
-		passwordTrackerLocalService.trackPassword(user.getUserId(), oldEncPwd);
+		_passwordTrackerLocalService.trackPassword(user.getUserId(), oldEncPwd);
 	}
 
 	protected void unsetUserGroups(long userId, long[] groupIds)
 		throws PortalException {
 
 		List<UserGroupRole> userGroupRoles =
-			userGroupRolePersistence.findByUserId(userId);
+			_userGroupRolePersistence.findByUserId(userId);
 
 		for (UserGroupRole userGroupRole : userGroupRoles) {
 			if (ArrayUtil.contains(groupIds, userGroupRole.getGroupId())) {
@@ -6863,7 +6893,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				if ((role.getType() == RoleConstants.TYPE_DEPOT) ||
 					(role.getType() == RoleConstants.TYPE_SITE)) {
 
-					userGroupRolePersistence.remove(userGroupRole);
+					_userGroupRolePersistence.remove(userGroupRole);
 				}
 			}
 		}
@@ -6910,7 +6940,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			groupIds[i] = organization.getGroupId();
 		}
 
-		userGroupRoleLocalService.deleteUserGroupRoles(userId, groupIds);
+		_userGroupRoleLocalService.deleteUserGroupRoles(userId, groupIds);
 
 		organizationLocalService.deleteUserOrganizations(
 			userId, organizationIds);
@@ -7005,7 +7035,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				userGroupRoles.remove(userGroupRole);
 			}
 			else {
-				userGroupRoleLocalService.deleteUserGroupRole(userGroupRole);
+				_userGroupRoleLocalService.deleteUserGroupRole(userGroupRole);
 			}
 		}
 
@@ -7054,7 +7084,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				validGroupIds, userGroupRole.getGroupId());
 
 			if (count >= 0) {
-				userGroupRoleLocalService.addUserGroupRole(userGroupRole);
+				_userGroupRoleLocalService.addUserGroupRole(userGroupRole);
 			}
 		}
 	}
@@ -7075,7 +7105,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		if (!autoPassword) {
 			PasswordPolicy passwordPolicy =
-				passwordPolicyLocalService.getDefaultPasswordPolicy(companyId);
+				_passwordPolicyLocalService.getDefaultPasswordPolicy(companyId);
 
 			PwdToolkitUtil.validate(
 				companyId, 0, password1, password2, passwordPolicy);
@@ -7151,7 +7181,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	protected void validateCompanyMaxUsers(long companyId)
 		throws PortalException {
 
-		Company company = companyPersistence.findByPrimaryKey(companyId);
+		Company company = _companyPersistence.findByPrimaryKey(companyId);
 
 		if (company.isSystem() || (company.getMaxUsers() == 0)) {
 			return;
@@ -7308,7 +7338,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		PasswordPolicy passwordPolicy =
-			passwordPolicyLocalService.getPasswordPolicyByUserId(userId);
+			_passwordPolicyLocalService.getPasswordPolicyByUserId(userId);
 
 		PwdToolkitUtil.validate(
 			companyId, userId, password1, password2, passwordPolicy);
@@ -7457,13 +7487,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	private void _invalidateTicket(User user) throws PortalException {
-		List<Ticket> tickets = ticketLocalService.getTickets(
+		List<Ticket> tickets = _ticketLocalService.getTickets(
 			user.getCompanyId(), User.class.getName(), user.getUserId(),
 			TicketConstants.TYPE_PASSWORD);
 
 		for (Ticket ticket : tickets) {
 			if (!ticket.isExpired()) {
-				ticketLocalService.updateTicket(
+				_ticketLocalService.updateTicket(
 					ticket.getTicketId(), User.class.getName(),
 					user.getUserId(), TicketConstants.TYPE_PASSWORD,
 					ticket.getExtraInfo(), new Date());
@@ -7504,7 +7534,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					toUser.getLocale(), mailTemplateContext),
 				true);
 
-			Company company = companyLocalService.getCompany(
+			Company company = _companyLocalService.getCompany(
 				toUser.getCompanyId());
 
 			mailMessage.setMessageId(
@@ -7526,7 +7556,81 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			UserFileUploadsSettings.class, UserLocalServiceImpl.class,
 			"_userFileUploadsSettings", false);
 
+	@BeanReference(type = AnnouncementsDeliveryLocalService.class)
+	private AnnouncementsDeliveryLocalService
+		_announcementsDeliveryLocalService;
+
+	@BeanReference(type = AssetEntryLocalService.class)
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@BeanReference(type = BrowserTrackerLocalService.class)
+	private BrowserTrackerLocalService _browserTrackerLocalService;
+
+	@BeanReference(type = CompanyLocalService.class)
+	private CompanyLocalService _companyLocalService;
+
+	@BeanReference(type = CompanyPersistence.class)
+	private CompanyPersistence _companyPersistence;
+
+	@BeanReference(type = ContactLocalService.class)
+	private ContactLocalService _contactLocalService;
+
+	@BeanReference(type = ContactPersistence.class)
+	private ContactPersistence _contactPersistence;
+
 	private final Map<Long, User> _defaultUsers = new ConcurrentHashMap<>();
+
+	@BeanReference(type = ExpandoRowLocalService.class)
+	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@BeanReference(type = ImageLocalService.class)
+	private ImageLocalService _imageLocalService;
+
+	@BeanReference(type = LayoutLocalService.class)
+	private LayoutLocalService _layoutLocalService;
+
+	@BeanReference(type = MembershipRequestLocalService.class)
+	private MembershipRequestLocalService _membershipRequestLocalService;
+
+	@BeanReference(type = PasswordPolicyLocalService.class)
+	private PasswordPolicyLocalService _passwordPolicyLocalService;
+
+	@BeanReference(type = PasswordPolicyRelLocalService.class)
+	private PasswordPolicyRelLocalService _passwordPolicyRelLocalService;
+
+	@BeanReference(type = PasswordTrackerLocalService.class)
+	private PasswordTrackerLocalService _passwordTrackerLocalService;
+
+	@BeanReference(type = PortalPreferencesLocalService.class)
+	private PortalPreferencesLocalService _portalPreferencesLocalService;
+
+	@BeanReference(type = PortletPreferencesLocalService.class)
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@BeanReference(type = RatingsStatsLocalService.class)
+	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@BeanReference(type = RecentLayoutBranchLocalService.class)
+	private RecentLayoutBranchLocalService _recentLayoutBranchLocalService;
+
+	@BeanReference(type = RecentLayoutRevisionLocalService.class)
+	private RecentLayoutRevisionLocalService _recentLayoutRevisionLocalService;
+
+	@BeanReference(type = RecentLayoutSetBranchLocalService.class)
+	private RecentLayoutSetBranchLocalService
+		_recentLayoutSetBranchLocalService;
+
+	@BeanReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@BeanReference(type = SocialActivityLocalService.class)
+	private SocialActivityLocalService _socialActivityLocalService;
+
+	@BeanReference(type = SocialRelationPersistence.class)
+	private SocialRelationPersistence _socialRelationPersistence;
+
+	@BeanReference(type = SocialRequestLocalService.class)
+	private SocialRequestLocalService _socialRequestLocalService;
 
 	private final PortalCacheMapSynchronizeUtil.Synchronizer
 		<Serializable, Serializable> _synchronizer =
@@ -7550,5 +7654,20 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				}
 
 			};
+
+	@BeanReference(type = TicketLocalService.class)
+	private TicketLocalService _ticketLocalService;
+
+	@BeanReference(type = UserGroupRoleLocalService.class)
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@BeanReference(type = UserGroupRolePersistence.class)
+	private UserGroupRolePersistence _userGroupRolePersistence;
+
+	@BeanReference(type = UserIdMapperLocalService.class)
+	private UserIdMapperLocalService _userIdMapperLocalService;
+
+	@BeanReference(type = WorkflowInstanceLinkLocalService.class)
+	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

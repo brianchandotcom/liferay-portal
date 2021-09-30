@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.image.SpriteProcessor;
 import com.liferay.portal.kernel.image.SpriteProcessorUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -27,6 +28,8 @@ import com.liferay.portal.kernel.model.PortletDecorator;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.plugin.Version;
+import com.liferay.portal.kernel.service.LayoutTemplateLocalService;
+import com.liferay.portal.kernel.service.PluginSettingLocalService;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.theme.PortletDecoratorFactoryUtil;
@@ -334,7 +337,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 			_themes.remove(themeId);
 
-			layoutTemplateLocalService.uninstallLayoutTemplates(themeId);
+			_layoutTemplateLocalService.uninstallLayoutTemplates(themeId);
 		}
 
 		_themesPool.clear();
@@ -704,7 +707,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 			theme.setTimestamp(timestamp);
 
 			PluginSetting pluginSetting =
-				pluginSettingLocalService.getDefaultPluginSetting();
+				_pluginSettingLocalService.getDefaultPluginSetting();
 
 			theme.setPluginPackage(pluginPackage);
 			theme.setDefaultPluginSetting(pluginSetting);
@@ -831,7 +834,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 					"standard");
 
 				if (standardElement != null) {
-					layoutTemplateLocalService.readLayoutTemplate(
+					_layoutTemplateLocalService.readLayoutTemplate(
 						servletContextName, servletContext, null,
 						standardElement, true, themeId, pluginPackage);
 				}
@@ -840,7 +843,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 					"custom");
 
 				if (customElement != null) {
-					layoutTemplateLocalService.readLayoutTemplate(
+					_layoutTemplateLocalService.readLayoutTemplate(
 						servletContextName, servletContext, null, customElement,
 						false, themeId, pluginPackage);
 				}
@@ -929,5 +932,11 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 	private static final Map<String, Theme> _themes = new ConcurrentHashMap<>();
 	private static final Map<Long, Map<String, Theme>> _themesPool =
 		new ConcurrentHashMap<>();
+
+	@BeanReference(type = LayoutTemplateLocalService.class)
+	private LayoutTemplateLocalService _layoutTemplateLocalService;
+
+	@BeanReference(type = PluginSettingLocalService.class)
+	private PluginSettingLocalService _pluginSettingLocalService;
 
 }

@@ -15,9 +15,11 @@
 package com.liferay.portlet.social.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -27,6 +29,10 @@ import com.liferay.portal.kernel.messaging.async.Async;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portlet.social.service.base.SocialActivityLocalServiceBaseImpl;
 import com.liferay.portlet.social.util.SocialActivityHierarchyEntry;
@@ -35,6 +41,14 @@ import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.social.kernel.model.SocialActivityDefinition;
 import com.liferay.social.kernel.model.SocialActivityTable;
+import com.liferay.social.kernel.service.SocialActivityCounterLocalService;
+import com.liferay.social.kernel.service.SocialActivityInterpreterLocalService;
+import com.liferay.social.kernel.service.SocialActivitySetLocalService;
+import com.liferay.social.kernel.service.SocialActivitySettingLocalService;
+import com.liferay.social.kernel.service.persistence.SocialActivityCounterPersistence;
+import com.liferay.social.kernel.service.persistence.SocialActivityLimitPersistence;
+import com.liferay.social.kernel.service.persistence.SocialActivitySetPersistence;
+import com.liferay.social.kernel.service.persistence.SocialActivitySettingPersistence;
 
 import java.util.Date;
 import java.util.List;
@@ -108,14 +122,14 @@ public class SocialActivityLocalServiceImpl
 			return;
 		}
 
-		User user = userPersistence.findByPrimaryKey(userId);
-		long classNameId = classNameLocalService.getClassNameId(className);
+		User user = _userPersistence.findByPrimaryKey(userId);
+		long classNameId = _classNameLocalService.getClassNameId(className);
 
 		if (groupId > 0) {
-			Group group = groupLocalService.getGroup(groupId);
+			Group group = _groupLocalService.getGroup(groupId);
 
 			if (group.isLayout()) {
-				Layout layout = layoutLocalService.getLayout(
+				Layout layout = _layoutLocalService.getLayout(
 					group.getClassPK());
 
 				groupId = layout.getGroupId();
@@ -145,7 +159,7 @@ public class SocialActivityLocalServiceImpl
 		activity.setExtraData(extraData);
 		activity.setReceiverUserId(receiverUserId);
 
-		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			className, classPK);
 
 		activity.setAssetEntry(assetEntry);
@@ -252,11 +266,11 @@ public class SocialActivityLocalServiceImpl
 				socialActivityPersistence.update(mirrorActivity);
 			}
 
-			socialActivityInterpreterLocalService.updateActivitySet(
+			_socialActivityInterpreterLocalService.updateActivitySet(
 				activity.getActivityId());
 		}
 
-		socialActivityCounterLocalService.addActivityCounters(activity);
+		_socialActivityCounterLocalService.addActivityCounters(activity);
 	}
 
 	/**
@@ -286,7 +300,7 @@ public class SocialActivityLocalServiceImpl
 		SocialActivity socialActivity =
 			socialActivityPersistence.fetchByG_U_CD_C_C_T_R(
 				groupId, userId, createDate.getTime(),
-				classNameLocalService.getClassNameId(className), classPK, type,
+				_classNameLocalService.getClassNameId(className), classPK, type,
 				receiverUserId);
 
 		if (socialActivity != null) {
@@ -322,7 +336,7 @@ public class SocialActivityLocalServiceImpl
 		throws PortalException {
 
 		int count = socialActivityPersistence.countByG_U_C_C_T_R(
-			groupId, userId, classNameLocalService.getClassNameId(className),
+			groupId, userId, _classNameLocalService.getClassNameId(className),
 			classPK, type, receiverUserId);
 
 		if (count > 0) {
@@ -346,15 +360,15 @@ public class SocialActivityLocalServiceImpl
 
 	@Override
 	public void deleteActivities(long groupId) {
-		socialActivitySetPersistence.removeByGroupId(groupId);
+		_socialActivitySetPersistence.removeByGroupId(groupId);
 
 		socialActivityPersistence.removeByGroupId(groupId);
 
-		socialActivityCounterPersistence.removeByGroupId(groupId);
+		_socialActivityCounterPersistence.removeByGroupId(groupId);
 
-		socialActivityLimitPersistence.removeByGroupId(groupId);
+		_socialActivityLimitPersistence.removeByGroupId(groupId);
 
-		socialActivitySettingPersistence.removeByGroupId(groupId);
+		_socialActivitySettingPersistence.removeByGroupId(groupId);
 	}
 
 	/**
@@ -369,7 +383,7 @@ public class SocialActivityLocalServiceImpl
 		throws PortalException {
 
 		deleteActivities(
-			classNameLocalService.getClassNameId(className), classPK);
+			_classNameLocalService.getClassNameId(className), classPK);
 	}
 
 	/**
@@ -392,7 +406,7 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public void deleteActivity(SocialActivity activity) throws PortalException {
-		socialActivitySetLocalService.decrementActivityCount(
+		_socialActivitySetLocalService.decrementActivityCount(
 			activity.getActivitySetId());
 
 		socialActivityPersistence.remove(activity);
@@ -423,7 +437,7 @@ public class SocialActivityLocalServiceImpl
 				userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (SocialActivity activity : activities) {
-			socialActivitySetLocalService.decrementActivityCount(
+			_socialActivitySetLocalService.decrementActivityCount(
 				activity.getActivitySetId());
 
 			socialActivityPersistence.remove(activity);
@@ -433,13 +447,13 @@ public class SocialActivityLocalServiceImpl
 			userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (SocialActivity activity : activities) {
-			socialActivitySetLocalService.decrementActivityCount(
+			_socialActivitySetLocalService.decrementActivityCount(
 				activity.getActivitySetId());
 
 			socialActivityPersistence.remove(activity);
 		}
 
-		socialActivityCounterLocalService.deleteActivityCounters(
+		_socialActivityCounterLocalService.deleteActivityCounters(
 			User.class.getName(), userId);
 	}
 
@@ -448,7 +462,7 @@ public class SocialActivityLocalServiceImpl
 		String className, long classPK, int type) {
 
 		return socialActivityPersistence.fetchByC_C_T_First(
-			classNameLocalService.getClassNameId(className), classPK, type,
+			_classNameLocalService.getClassNameId(className), classPK, type,
 			null);
 	}
 
@@ -545,7 +559,7 @@ public class SocialActivityLocalServiceImpl
 				companyId
 			).and(
 				SocialActivityTable.INSTANCE.classNameId.eq(
-					classNameLocalService.getClassNameId(className))
+					_classNameLocalService.getClassNameId(className))
 			)
 		).limit(
 			start, end
@@ -581,7 +595,7 @@ public class SocialActivityLocalServiceImpl
 		int end) {
 
 		return getActivities(
-			mirrorActivityId, classNameLocalService.getClassNameId(className),
+			mirrorActivityId, _classNameLocalService.getClassNameId(className),
 			classPK, start, end);
 	}
 
@@ -607,7 +621,7 @@ public class SocialActivityLocalServiceImpl
 		String className, int start, int end) {
 
 		return getActivities(
-			classNameLocalService.getClassNameId(className), start, end);
+			_classNameLocalService.getClassNameId(className), start, end);
 	}
 
 	/**
@@ -638,7 +652,7 @@ public class SocialActivityLocalServiceImpl
 
 		return socialActivityPersistence.countByG_U_CD_C_C_T_R(
 			groupId, userId, createDate.getTime(),
-			classNameLocalService.getClassNameId(className), classPK, type,
+			_classNameLocalService.getClassNameId(className), classPK, type,
 			receiverUserId);
 	}
 
@@ -678,7 +692,7 @@ public class SocialActivityLocalServiceImpl
 				companyId
 			).and(
 				SocialActivityTable.INSTANCE.classNameId.eq(
-					classNameLocalService.getClassNameId(className))
+					_classNameLocalService.getClassNameId(className))
 			)
 		);
 
@@ -700,7 +714,7 @@ public class SocialActivityLocalServiceImpl
 		long mirrorActivityId, String className, long classPK) {
 
 		return getActivitiesCount(
-			mirrorActivityId, classNameLocalService.getClassNameId(className),
+			mirrorActivityId, _classNameLocalService.getClassNameId(className),
 			classPK);
 	}
 
@@ -714,7 +728,7 @@ public class SocialActivityLocalServiceImpl
 	@Override
 	public int getActivitiesCount(String className) {
 		return getActivitiesCount(
-			classNameLocalService.getClassNameId(className));
+			_classNameLocalService.getClassNameId(className));
 	}
 
 	/**
@@ -1143,12 +1157,12 @@ public class SocialActivityLocalServiceImpl
 	protected void deleteActivities(long classNameId, long classPK)
 		throws PortalException {
 
-		socialActivitySetLocalService.decrementActivityCount(
+		_socialActivitySetLocalService.decrementActivityCount(
 			classNameId, classPK);
 
 		socialActivityPersistence.removeByC_C(classNameId, classPK);
 
-		socialActivityCounterLocalService.deleteActivityCounters(
+		_socialActivityCounterLocalService.deleteActivityCounters(
 			classNameId, classPK);
 	}
 
@@ -1162,7 +1176,7 @@ public class SocialActivityLocalServiceImpl
 		}
 
 		SocialActivityDefinition activityDefinition =
-			socialActivitySettingLocalService.getActivityDefinition(
+			_socialActivitySettingLocalService.getActivityDefinition(
 				activity.getGroupId(), activity.getClassName(),
 				activity.getType());
 
@@ -1176,5 +1190,47 @@ public class SocialActivityLocalServiceImpl
 
 		return false;
 	}
+
+	@BeanReference(type = AssetEntryLocalService.class)
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@BeanReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(type = GroupLocalService.class)
+	private GroupLocalService _groupLocalService;
+
+	@BeanReference(type = LayoutLocalService.class)
+	private LayoutLocalService _layoutLocalService;
+
+	@BeanReference(type = SocialActivityCounterLocalService.class)
+	private SocialActivityCounterLocalService
+		_socialActivityCounterLocalService;
+
+	@BeanReference(type = SocialActivityCounterPersistence.class)
+	private SocialActivityCounterPersistence _socialActivityCounterPersistence;
+
+	@BeanReference(type = SocialActivityInterpreterLocalService.class)
+	private SocialActivityInterpreterLocalService
+		_socialActivityInterpreterLocalService;
+
+	@BeanReference(type = SocialActivityLimitPersistence.class)
+	private SocialActivityLimitPersistence _socialActivityLimitPersistence;
+
+	@BeanReference(type = SocialActivitySetLocalService.class)
+	private SocialActivitySetLocalService _socialActivitySetLocalService;
+
+	@BeanReference(type = SocialActivitySetPersistence.class)
+	private SocialActivitySetPersistence _socialActivitySetPersistence;
+
+	@BeanReference(type = SocialActivitySettingLocalService.class)
+	private SocialActivitySettingLocalService
+		_socialActivitySettingLocalService;
+
+	@BeanReference(type = SocialActivitySettingPersistence.class)
+	private SocialActivitySettingPersistence _socialActivitySettingPersistence;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

@@ -15,6 +15,8 @@
 package com.liferay.portlet.ratings.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -96,7 +98,7 @@ public class RatingsEntryLocalServiceImpl
 
 		// Social
 
-		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			className, classPK);
 
 		if (assetEntry != null) {
@@ -237,7 +239,7 @@ public class RatingsEntryLocalServiceImpl
 
 		// Social
 
-		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			className, classPK);
 
 		if (assetEntry != null) {
@@ -258,5 +260,8 @@ public class RatingsEntryLocalServiceImpl
 				"Score " + score + " is not a value between 0 and 1");
 		}
 	}
+
+	@BeanReference(type = AssetEntryLocalService.class)
+	private AssetEntryLocalService _assetEntryLocalService;
 
 }

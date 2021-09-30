@@ -40,7 +40,14 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -76,7 +83,7 @@ public class MembershipRequestLocalServiceImpl
 
 		validateSiteMembershipPolicy(userId, groupId);
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userPersistence.findByPrimaryKey(userId);
 
 		validate(comments);
 
@@ -194,7 +201,7 @@ public class MembershipRequestLocalServiceImpl
 			membershipRequest.setReplierUserId(replierUserId);
 		}
 		else {
-			long defaultUserId = userLocalService.getDefaultUserId(
+			long defaultUserId = _userLocalService.getDefaultUserId(
 				membershipRequest.getCompanyId());
 
 			membershipRequest.setReplierUserId(defaultUserId);
@@ -208,7 +215,7 @@ public class MembershipRequestLocalServiceImpl
 		if ((statusId == MembershipRequestConstants.STATUS_APPROVED) &&
 			addUserToGroup) {
 
-			userLocalService.addGroupUsers(
+			_userLocalService.addGroupUsers(
 				membershipRequest.getGroupId(),
 				new long[] {membershipRequest.getUserId()});
 		}
@@ -226,16 +233,16 @@ public class MembershipRequestLocalServiceImpl
 
 		Set<Long> userIds = new LinkedHashSet<>();
 
-		Group group = groupLocalService.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 		String modelResource = Group.class.getName();
 
 		List<Role> roles = ListUtil.copy(
 			ResourceActionsUtil.getRoles(
 				group.getCompanyId(), group, modelResource, null));
 
-		roles.addAll(roleLocalService.getTeamRoles(groupId));
+		roles.addAll(_roleLocalService.getTeamRoles(groupId));
 
-		Resource resource = resourceLocalService.getResource(
+		Resource resource = _resourceLocalService.getResource(
 			group.getCompanyId(), modelResource,
 			ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(groupId));
 
@@ -261,11 +268,11 @@ public class MembershipRequestLocalServiceImpl
 				roleName.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR) ||
 				roleName.equals(RoleConstants.ORGANIZATION_OWNER)) {
 
-				Role curRole = roleLocalService.getRole(
+				Role curRole = _roleLocalService.getRole(
 					group.getCompanyId(), roleName);
 
 				List<UserGroupRole> userGroupRoles =
-					userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
+					_userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
 						groupId, curRole.getRoleId());
 
 				for (UserGroupRole userGroupRole : userGroupRoles) {
@@ -290,7 +297,7 @@ public class MembershipRequestLocalServiceImpl
 				currentCompanyActions.contains(ActionKeys.ASSIGN_MEMBERS)) {
 
 				List<UserGroupRole> currentUserGroupRoles =
-					userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
+					_userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
 						groupId, role.getRoleId());
 
 				for (UserGroupRole userGroupRole : currentUserGroupRoles) {
@@ -308,8 +315,8 @@ public class MembershipRequestLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
-		User requestUser = userPersistence.findByPrimaryKey(
+		User user = _userPersistence.findByPrimaryKey(userId);
+		User requestUser = _userPersistence.findByPrimaryKey(
 			membershipRequest.getUserId());
 
 		String fromName = PrefsPropsUtil.getStringFromNames(
@@ -345,7 +352,7 @@ public class MembershipRequestLocalServiceImpl
 			statusKey = "pending";
 		}
 
-		Company company = companyLocalService.getCompany(user.getCompanyId());
+		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
 		MailTemplateContextBuilder mailTemplateContextBuilder =
 			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
@@ -371,7 +378,7 @@ public class MembershipRequestLocalServiceImpl
 			"[$REQUEST_USER_NAME$]",
 			HtmlUtil.escape(requestUser.getFullName()));
 
-		Group group = groupLocalService.getGroup(
+		Group group = _groupLocalService.getGroup(
 			membershipRequest.getGroupId());
 
 		mailTemplateContextBuilder.put(
@@ -428,7 +435,7 @@ public class MembershipRequestLocalServiceImpl
 					groupId, " and user ", userId));
 		}
 
-		Group group = groupLocalService.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
 		if (!group.isManualMembership() ||
 			(group.getType() != GroupConstants.TYPE_SITE_RESTRICTED) ||
@@ -466,7 +473,7 @@ public class MembershipRequestLocalServiceImpl
 					toUser.getLocale(), mailTemplateContext),
 				true);
 
-			Company company = companyLocalService.getCompany(
+			Company company = _companyLocalService.getCompany(
 				toUser.getCompanyId());
 
 			mailMessage.setMessageId(
@@ -480,5 +487,26 @@ public class MembershipRequestLocalServiceImpl
 			throw new SystemException(ioException);
 		}
 	}
+
+	@BeanReference(type = CompanyLocalService.class)
+	private CompanyLocalService _companyLocalService;
+
+	@BeanReference(type = GroupLocalService.class)
+	private GroupLocalService _groupLocalService;
+
+	@BeanReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@BeanReference(type = RoleLocalService.class)
+	private RoleLocalService _roleLocalService;
+
+	@BeanReference(type = UserGroupRoleLocalService.class)
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@BeanReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

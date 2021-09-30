@@ -14,10 +14,12 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.PluginSettingLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.base.LayoutSetServiceBaseImpl;
@@ -129,7 +131,7 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.MANAGE_LAYOUTS);
 
-		pluginSettingLocalService.checkPermission(
+		_pluginSettingLocalService.checkPermission(
 			getUserId(), themeId, Plugin.TYPE_THEME);
 
 		return layoutSetLocalService.updateLookAndFeel(
@@ -160,5 +162,8 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 		return layoutSetLocalService.updateVirtualHosts(
 			groupId, privateLayout, virtualHostnames);
 	}
+
+	@BeanReference(type = PluginSettingLocalService.class)
+	private PluginSettingLocalService _pluginSettingLocalService;
 
 }

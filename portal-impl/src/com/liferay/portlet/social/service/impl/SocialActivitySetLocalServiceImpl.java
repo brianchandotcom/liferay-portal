@@ -14,10 +14,12 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.social.service.base.SocialActivitySetLocalServiceBaseImpl;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivitySet;
+import com.liferay.social.kernel.service.persistence.SocialActivityPersistence;
 import com.liferay.social.kernel.util.comparator.SocialActivitySetModifiedDateComparator;
 
 import java.util.List;
@@ -34,7 +36,7 @@ public class SocialActivitySetLocalServiceImpl
 
 		// Activity set
 
-		SocialActivity activity = socialActivityPersistence.findByPrimaryKey(
+		SocialActivity activity = _socialActivityPersistence.findByPrimaryKey(
 			activityId);
 
 		long activitySetId = counterLocalService.increment();
@@ -58,7 +60,7 @@ public class SocialActivitySetLocalServiceImpl
 
 		activity.setActivitySetId(activitySetId);
 
-		socialActivityPersistence.update(activity);
+		_socialActivityPersistence.update(activity);
 
 		return activitySet;
 	}
@@ -93,7 +95,7 @@ public class SocialActivitySetLocalServiceImpl
 	public void decrementActivityCount(long classNameId, long classPK)
 		throws PortalException {
 
-		List<SocialActivity> activities = socialActivityPersistence.findByC_C(
+		List<SocialActivity> activities = _socialActivityPersistence.findByC_C(
 			classNameId, classPK);
 
 		for (SocialActivity activity : activities) {
@@ -233,7 +235,7 @@ public class SocialActivitySetLocalServiceImpl
 		SocialActivitySet activitySet =
 			socialActivitySetPersistence.findByPrimaryKey(activitySetId);
 
-		SocialActivity activity = socialActivityPersistence.findByPrimaryKey(
+		SocialActivity activity = _socialActivityPersistence.findByPrimaryKey(
 			activityId);
 
 		activitySet.setUserId(activity.getUserId());
@@ -247,7 +249,10 @@ public class SocialActivitySetLocalServiceImpl
 
 		activity.setActivitySetId(activitySetId);
 
-		socialActivityPersistence.update(activity);
+		_socialActivityPersistence.update(activity);
 	}
+
+	@BeanReference(type = SocialActivityPersistence.class)
+	private SocialActivityPersistence _socialActivityPersistence;
 
 }

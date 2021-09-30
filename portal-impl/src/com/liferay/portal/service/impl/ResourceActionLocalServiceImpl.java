@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -28,6 +29,9 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
@@ -222,19 +226,19 @@ public class ResourceActionLocalServiceImpl
 			}
 
 			if (guestBitwiseValue > 0) {
-				resourcePermissionLocalService.addResourcePermissions(
+				_resourcePermissionLocalService.addResourcePermissions(
 					name, RoleConstants.GUEST,
 					ResourceConstants.SCOPE_INDIVIDUAL, guestBitwiseValue);
 			}
 
 			if (ownerBitwiseValue > 0) {
-				resourcePermissionLocalService.addResourcePermissions(
+				_resourcePermissionLocalService.addResourcePermissions(
 					name, RoleConstants.OWNER,
 					ResourceConstants.SCOPE_INDIVIDUAL, ownerBitwiseValue);
 			}
 
 			if (siteMemberBitwiseValue > 0) {
-				resourcePermissionLocalService.addResourcePermissions(
+				_resourcePermissionLocalService.addResourcePermissions(
 					name, RoleConstants.SITE_MEMBER,
 					ResourceConstants.SCOPE_INDIVIDUAL, siteMemberBitwiseValue);
 			}
@@ -261,10 +265,10 @@ public class ResourceActionLocalServiceImpl
 				dynamicQuery.add(nameProperty.eq(name));
 			};
 
-		companyLocalService.forEachCompanyId(
+		_companyLocalService.forEachCompanyId(
 			companyId -> {
 				ActionableDynamicQuery actionableDynamicQuery =
-					resourcePermissionLocalService.getActionableDynamicQuery();
+					_resourcePermissionLocalService.getActionableDynamicQuery();
 
 				actionableDynamicQuery.setAddCriteriaMethod(addCriteriaMethod);
 				actionableDynamicQuery.setCompanyId(companyId);
@@ -279,7 +283,7 @@ public class ResourceActionLocalServiceImpl
 							resourcePermission.setViewActionId(
 								(actionIds % 2) == 1);
 
-							resourcePermissionPersistence.update(
+							_resourcePermissionPersistence.update(
 								resourcePermission);
 						}
 					});
@@ -342,5 +346,14 @@ public class ResourceActionLocalServiceImpl
 
 	private static final Map<String, ResourceAction> _resourceActions =
 		new ConcurrentHashMap<>();
+
+	@BeanReference(type = CompanyLocalService.class)
+	private CompanyLocalService _companyLocalService;
+
+	@BeanReference(type = ResourcePermissionLocalService.class)
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@BeanReference(type = ResourcePermissionPersistence.class)
+	private ResourcePermissionPersistence _resourcePermissionPersistence;
 
 }

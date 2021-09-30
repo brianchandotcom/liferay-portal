@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portlet.social.service.base.SocialActivityLimitLocalServiceBaseImpl;
@@ -43,7 +45,7 @@ public class SocialActivityLimitLocalServiceImpl
 			return activityLimit;
 		}
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userPersistence.findByPrimaryKey(userId);
 
 		long activityLimitId = counterLocalService.increment();
 
@@ -70,5 +72,8 @@ public class SocialActivityLimitLocalServiceImpl
 			groupId, userId, classNameId, classPK, activityType,
 			activityCounterName);
 	}
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

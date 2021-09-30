@@ -15,6 +15,7 @@
 package com.liferay.portlet.social.service.impl;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -22,12 +23,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.social.service.base.SocialActivityServiceBaseImpl;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
 import com.liferay.social.kernel.model.impl.SocialActivityInterpreterImpl;
+import com.liferay.social.kernel.service.SocialActivityInterpreterLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,7 +139,7 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 		List<SocialActivity> activities =
 			socialActivityLocalService.getActivities(
 				mirrorActivityId,
-				classNameLocalService.getClassNameId(className), classPK, 0,
+				_classNameLocalService.getClassNameId(className), classPK, 0,
 				end + PropsValues.SOCIAL_ACTIVITY_FILTER_SEARCH_LIMIT);
 
 		return filterActivities(activities, start, end);
@@ -167,7 +170,7 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 
 		List<SocialActivity> activities =
 			socialActivityLocalService.getActivities(
-				classNameLocalService.getClassNameId(className), 0,
+				_classNameLocalService.getClassNameId(className), 0,
 				end + PropsValues.SOCIAL_ACTIVITY_FILTER_SEARCH_LIMIT);
 
 		return filterActivities(activities, start, end);
@@ -218,7 +221,7 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 		long mirrorActivityId, String className, long classPK) {
 
 		return getActivitiesCount(
-			mirrorActivityId, classNameLocalService.getClassNameId(className),
+			mirrorActivityId, _classNameLocalService.getClassNameId(className),
 			classPK);
 	}
 
@@ -231,7 +234,7 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	@Override
 	public int getActivitiesCount(String className) {
 		return getActivitiesCount(
-			classNameLocalService.getClassNameId(className));
+			_classNameLocalService.getClassNameId(className));
 	}
 
 	/**
@@ -246,7 +249,7 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 			activityId);
 
 		List<SocialActivityInterpreter> activityInterpreters =
-			socialActivityInterpreterLocalService.getActivityInterpreters(
+			_socialActivityInterpreterLocalService.getActivityInterpreters(
 				StringPool.BLANK);
 
 		if (!hasPermission(activity, activityInterpreters)) {
@@ -383,7 +386,7 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 			mirrorActivityId);
 
 		List<SocialActivityInterpreter> activityInterpreters =
-			socialActivityInterpreterLocalService.getActivityInterpreters(
+			_socialActivityInterpreterLocalService.getActivityInterpreters(
 				StringPool.BLANK);
 
 		if (!hasPermission(activity, activityInterpreters)) {
@@ -752,7 +755,7 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 		List<SocialActivity> filteredActivities = new ArrayList<>();
 
 		List<SocialActivityInterpreter> activityInterpreters =
-			socialActivityInterpreterLocalService.getActivityInterpreters(
+			_socialActivityInterpreterLocalService.getActivityInterpreters(
 				StringPool.BLANK);
 
 		for (SocialActivity activity : activities) {
@@ -820,5 +823,12 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SocialActivityServiceImpl.class);
+
+	@BeanReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(type = SocialActivityInterpreterLocalService.class)
+	private SocialActivityInterpreterLocalService
+		_socialActivityInterpreterLocalService;
 
 }

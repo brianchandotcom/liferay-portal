@@ -17,6 +17,7 @@ package com.liferay.portlet.exportimport.service.impl;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -44,6 +46,7 @@ import com.liferay.portlet.exportimport.service.base.ExportImportConfigurationLo
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.kernel.service.TrashEntryLocalService;
 
 import java.io.Serializable;
 
@@ -99,7 +102,7 @@ public class ExportImportConfigurationLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userPersistence.findByPrimaryKey(userId);
 
 		long exportImportConfigurationId = counterLocalService.increment();
 
@@ -309,7 +312,7 @@ public class ExportImportConfigurationLocalServiceImpl
 			userId, exportImportConfiguration.getExportImportConfigurationId(),
 			WorkflowConstants.STATUS_IN_TRASH);
 
-		trashEntryLocalService.addTrashEntry(
+		_trashEntryLocalService.addTrashEntry(
 			userId, exportImportConfiguration.getGroupId(),
 			ExportImportConfiguration.class.getName(),
 			exportImportConfiguration.getExportImportConfigurationId(), null,
@@ -333,7 +336,7 @@ public class ExportImportConfigurationLocalServiceImpl
 				RestoreEntryException.INVALID_STATUS);
 		}
 
-		TrashEntry trashEntry = trashEntryLocalService.getEntry(
+		TrashEntry trashEntry = _trashEntryLocalService.getEntry(
 			ExportImportConfiguration.class.getName(),
 			exportImportConfigurationId);
 
@@ -341,7 +344,7 @@ public class ExportImportConfigurationLocalServiceImpl
 			userId, exportImportConfiguration.getExportImportConfigurationId(),
 			trashEntry.getStatus());
 
-		trashEntryLocalService.deleteEntry(
+		_trashEntryLocalService.deleteEntry(
 			ExportImportConfiguration.class.getName(),
 			exportImportConfiguration.getExportImportConfigurationId());
 
@@ -413,7 +416,7 @@ public class ExportImportConfigurationLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userPersistence.findByPrimaryKey(userId);
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationPersistence.findByPrimaryKey(
@@ -439,7 +442,7 @@ public class ExportImportConfigurationLocalServiceImpl
 			long userId, long exportImportConfigurationId, int status)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userPersistence.findByPrimaryKey(userId);
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationPersistence.findByPrimaryKey(
@@ -491,5 +494,12 @@ public class ExportImportConfigurationLocalServiceImpl
 
 		return searchContext;
 	}
+
+	@BeanReference(type = TrashEntryLocalService.class)
+	@SuppressWarnings("deprecation")
+	private TrashEntryLocalService _trashEntryLocalService;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

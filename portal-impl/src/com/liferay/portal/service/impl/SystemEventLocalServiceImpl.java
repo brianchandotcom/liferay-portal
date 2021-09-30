@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,6 +26,10 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
+import com.liferay.portal.kernel.service.persistence.GroupPersistence;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntry;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
@@ -56,13 +61,13 @@ public class SystemEventLocalServiceImpl
 		String userName = StringPool.BLANK;
 
 		if (userId > 0) {
-			User user = userPersistence.findByPrimaryKey(userId);
+			User user = _userPersistence.findByPrimaryKey(userId);
 
 			companyId = user.getCompanyId();
 			userName = user.getFullName();
 		}
 		else if (groupId > 0) {
-			Group group = groupPersistence.findByPrimaryKey(groupId);
+			Group group = _groupPersistence.findByPrimaryKey(groupId);
 
 			companyId = group.getCompanyId();
 		}
@@ -146,7 +151,7 @@ public class SystemEventLocalServiceImpl
 	@Override
 	public boolean validateGroup(long groupId) throws PortalException {
 		if (groupId > 0) {
-			Group group = groupLocalService.getGroup(groupId);
+			Group group = _groupLocalService.getGroup(groupId);
 
 			if (group.hasStagingGroup() && !group.isStagedRemotely()) {
 				return false;
@@ -184,7 +189,7 @@ public class SystemEventLocalServiceImpl
 		}
 
 		if (!CompanyThreadLocal.isDeleteInProcess()) {
-			Company company = companyPersistence.findByPrimaryKey(companyId);
+			Company company = _companyPersistence.findByPrimaryKey(companyId);
 
 			Group companyGroup = company.getGroup();
 
@@ -260,5 +265,17 @@ public class SystemEventLocalServiceImpl
 
 		return systemEventPersistence.update(systemEvent);
 	}
+
+	@BeanReference(type = CompanyPersistence.class)
+	private CompanyPersistence _companyPersistence;
+
+	@BeanReference(type = GroupLocalService.class)
+	private GroupLocalService _groupLocalService;
+
+	@BeanReference(type = GroupPersistence.class)
+	private GroupPersistence _groupPersistence;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

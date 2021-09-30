@@ -19,8 +19,8 @@
 <%@ page isErrorPage="true" %>
 
 <%
-String userId = request.getRemoteUser();
 String currentURL = PortalUtil.getCurrentURL(request);
+String userId = request.getRemoteUser();
 String message = null;
 
 if (exception instanceof PrincipalException) {

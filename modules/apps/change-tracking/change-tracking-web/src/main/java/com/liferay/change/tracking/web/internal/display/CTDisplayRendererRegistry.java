@@ -160,7 +160,7 @@ public class CTDisplayRendererRegistry {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends BaseModel<T>> CTDisplayRenderer<T> getCTDisplayRenderer(
+	public <T extends BaseModel<?>> CTDisplayRenderer<T> getCTDisplayRenderer(
 		long modelClassNameId) {
 
 		CTDisplayRenderer<T> ctDisplayRenderer =
@@ -218,7 +218,7 @@ public class CTDisplayRendererRegistry {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends BaseModel<T>> CTDisplayRenderer<T> getDefaultRenderer() {
+	public <T extends BaseModel<?>> CTDisplayRenderer<T> getDefaultRenderer() {
 		return (CTDisplayRenderer<T>)_defaultCTDisplayRenderer;
 	}
 

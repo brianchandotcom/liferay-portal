@@ -71,11 +71,9 @@ public interface DisplayContext<T> {
 	 */
 	public T getModel();
 
-	public <M extends BaseModel<M>> void render(M baseModel, Locale locale)
-		throws Exception;
+	public void render(BaseModel<?> baseModel, Locale locale) throws Exception;
 
-	public <M extends BaseModel<M>> String renderPreview(
-			M baseModel, Locale locale)
+	public String renderPreview(BaseModel<?> baseModel, Locale locale)
 		throws Exception;
 
 }

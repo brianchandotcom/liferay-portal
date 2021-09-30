@@ -118,28 +118,19 @@ public class DisplayContextImpl<T> implements DisplayContext<T> {
 	}
 
 	@Override
-	public <M extends BaseModel<M>> void render(M baseModel, Locale locale)
-		throws Exception {
-
-		if (baseModel == _model) {
-			throw new IllegalArgumentException();
-		}
-
-		CTDisplayRenderer<M> ctDisplayRenderer =
-			_ctDisplayRendererRegistry.getCTDisplayRenderer(
-				_classNameLocalService.getClassNameId(
-					baseModel.getModelClassName()));
-
-		ctDisplayRenderer.render(
-			new DisplayContextImpl<>(
-				_httpServletRequest, _httpServletResponse,
-				_classNameLocalService, _ctDisplayRendererRegistry, _ctEntryId,
-				locale, baseModel, _type));
+	public void render(BaseModel<?> baseModel, Locale locale) throws Exception {
+		_render(baseModel, locale, false);
 	}
 
 	@Override
-	public <M extends BaseModel<M>> String renderPreview(
-			M baseModel, Locale locale)
+	public String renderPreview(BaseModel<?> baseModel, Locale locale)
+		throws Exception {
+
+		return _render(baseModel, locale, true);
+	}
+
+	private <M extends BaseModel<?>> String _render(
+			M baseModel, Locale locale, boolean preview)
 		throws Exception {
 
 		if (baseModel == _model) {
@@ -151,11 +142,20 @@ public class DisplayContextImpl<T> implements DisplayContext<T> {
 				_classNameLocalService.getClassNameId(
 					baseModel.getModelClassName()));
 
-		return ctDisplayRenderer.renderPreview(
-			new DisplayContextImpl<>(
-				_httpServletRequest, _httpServletResponse,
-				_classNameLocalService, _ctDisplayRendererRegistry, _ctEntryId,
-				locale, baseModel, _type));
+		DisplayContext<M> displayContext = new DisplayContextImpl<>(
+			_httpServletRequest, _httpServletResponse, _classNameLocalService,
+			_ctDisplayRendererRegistry, _ctEntryId, locale, baseModel, _type);
+
+		String result = null;
+
+		if (preview) {
+			result = ctDisplayRenderer.renderPreview(displayContext);
+		}
+		else {
+			ctDisplayRenderer.render(displayContext);
+		}
+
+		return result;
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

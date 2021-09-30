@@ -495,7 +495,7 @@ public class TranslateDisplayContext {
 
 		boolean addedDefault = false;
 
-		HashMap<String, String> defaultExperience = HashMapBuilder.put(
+		Map<String, String> defaultExperience = HashMapBuilder.put(
 			"label",
 			SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
 				_themeDisplay.getLocale())

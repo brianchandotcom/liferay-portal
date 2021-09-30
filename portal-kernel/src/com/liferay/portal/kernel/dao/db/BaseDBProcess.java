@@ -241,10 +241,10 @@ public abstract class BaseDBProcess implements DBProcess {
 		db.process(unsafeConsumer);
 	}
 
-	protected <T> void processConcurrently(
+	protected void processConcurrently(
 			String sqlQuery,
-			UnsafeFunction<ResultSet, T, Exception> unsafeFunction,
-			UnsafeConsumer<T, Exception> unsafeConsumer,
+			UnsafeFunction<ResultSet, Object[], Exception> unsafeFunction,
+			UnsafeConsumer<Object[], Exception> unsafeConsumer,
 			String exceptionMessage)
 		throws Exception {
 

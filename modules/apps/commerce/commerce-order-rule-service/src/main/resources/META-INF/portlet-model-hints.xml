@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry">
+		<field name="externalReferenceCode" type="String" />
+		<field name="commerceOrderRuleEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="active" type="boolean" />
+		<field name="description" type="String" />
+		<field name="name" type="String" />
+		<field name="priority" type="int" />
+		<field name="type" type="String" />
+		<field name="typeSettings" type="String" />
+	</model>
+	<model name="com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRel">
+		<field name="commerceOrderRuleEntryRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="commerceOrderRuleEntryId" type="long" />
+	</model>
+</model-hints>

@@ -17,7 +17,9 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -102,7 +104,12 @@ public class ObjectRelationshipResourceImpl
 	}
 
 	private ObjectRelationship _toObjectRelationship(
-		com.liferay.object.model.ObjectRelationship objectRelationship) {
+			com.liferay.object.model.ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		com.liferay.object.model.ObjectDefinition objectDefinition2 =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId2());
 
 		return new ObjectRelationship() {
 			{
@@ -124,11 +131,15 @@ public class ObjectRelationshipResourceImpl
 					objectRelationship.getObjectDefinitionId1();
 				objectDefinitionId2 =
 					objectRelationship.getObjectDefinitionId2();
+				objectDefinitionName2 = objectDefinition2.getShortName();
 				type = ObjectRelationship.Type.create(
 					objectRelationship.getType());
 			}
 		};
 	}
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectRelationshipService _objectRelationshipService;

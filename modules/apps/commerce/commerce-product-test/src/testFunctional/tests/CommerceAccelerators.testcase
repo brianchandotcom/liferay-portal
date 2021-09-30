@@ -614,7 +614,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
 
 		CommerceAcceleratorsInitializer.reviewOrder(
-			orderAuthor = "buyer@liferay.com",
+			orderAuthor = "Buyer User",
 			productName = "ABS Sensor",
 			productPrice = "100.00",
 			productQuantity = "2",
@@ -624,7 +624,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 
 		CommerceAcceleratorsInitializer.reviewOrder(
-			orderAuthor = "buyer@liferay.com",
+			orderAuthor = "Buyer User",
 			productName = "ABS Sensor",
 			productPrice = "100.00",
 			productQuantity = "2",
@@ -761,7 +761,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
 
 		CommerceAcceleratorsInitializer.reviewOrder(
-			orderAuthor = "buyer@liferay.com",
+			orderAuthor = "Buyer User",
 			productName = "ABS Sensor",
 			productPrice = "100.00",
 			productQuantity = "2",
@@ -771,7 +771,7 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 
 		CommerceAcceleratorsInitializer.reviewOrder(
-			orderAuthor = "buyer@liferay.com",
+			orderAuthor = "Buyer User",
 			productName = "ABS Sensor",
 			productPrice = "100.00",
 			productQuantity = "2",

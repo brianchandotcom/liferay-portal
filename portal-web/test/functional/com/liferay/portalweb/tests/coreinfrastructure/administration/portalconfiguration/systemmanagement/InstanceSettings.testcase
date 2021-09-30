@@ -881,12 +881,20 @@ definition {
 			OSGiConfigFileBaseDir = "${tempFileDirectory}",
 			OSGiConfigFileName = "${tempFileName}");
 
-		Pause(locator = "20000");
+		Pause(locator = "60000");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
 			configurationName = "OpenID Connect Provider Connection",
 			configurationScope = "Virtual Instance Scope");
+
+		while (IsElementNotPresent(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME", key_rowEntry = "Google")) {
+			Pause(locator1 = "1000");
+
+			Refresh();
+
+			echo("Refreshed Page");
+		}
 
 		LexiconEntry.viewEntryName(rowEntry = "Google");
 

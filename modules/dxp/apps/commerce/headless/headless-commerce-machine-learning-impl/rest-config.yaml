@@ -5,4 +5,7 @@ application:
     className: "HeadlessCommerceMachineLEarningApplication"
     name: "Liferay.Headless.Commerce.Machine.Learning"
 author: "Riccardo Ferrari"
+clientDir: "../headless-commerce-machine-learning-client/src/main/java"
+forcePredictableSchemaPropertyName: false
 liferayEnterpriseApp: true
+testDir: "../headless-commerce-machine-learning-test/src/testIntegration/java"

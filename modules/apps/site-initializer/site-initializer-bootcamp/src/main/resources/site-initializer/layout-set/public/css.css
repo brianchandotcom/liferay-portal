@@ -14,8 +14,8 @@ h3,
 h4,
 h5,
 h6 {
-	font-weight: inherit;
 	color: inherit;
+	font-weight: inherit;
 	line-height: 1.1;
 }
 
@@ -66,10 +66,10 @@ a:hover {
 /*Form Controls*/
 
 .form-control {
+	background-color: var(--white);
+	border: var(--white);
 	border-radius: 0;
 	font-family: var(--font-family-sans-serif);
-	border: var(--white);
-	background-color: var(--white);
 	height: auto;
 }
 

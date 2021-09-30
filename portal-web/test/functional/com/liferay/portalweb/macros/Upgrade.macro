@@ -1,15 +1,5 @@
 definition {
 
-	macro addAndViewBusinessAccount {
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "${accountEntryName}",
-			accountEntryType = "${accountEntryType}");
-
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.viewEntryName(rowEntry = "${accountEntryName}");
-	}
-
 	macro addAndEditTranslations {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
@@ -45,6 +35,25 @@ definition {
 			webContentTitle = "Título del contenido web de WC");
 
 		PortletEntry.publish();
+	}
+
+	macro addAndViewBusinessAccount {
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		Accounts.addBusinessAccount(
+			accountDescription = "${accountDescription}",
+			accountName = "${accountName}",
+			accountTaxID = "${accountTaxID}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		LexiconEntry.viewEntryName(rowEntry = "${accountName}");
 	}
 
 	macro addAutoTaggedBlogsEntry {

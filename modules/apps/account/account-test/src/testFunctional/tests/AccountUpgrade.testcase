@@ -28,9 +28,9 @@ definition {
 		property portal.version = "6.2.10.21";
 
 		Upgrade.addAndViewBusinessAccount(
-			accountEntryName = "Account Name",
-			accountEntryType = "Business",
-			rowEntry = "Account Name");
+			accountDescription = "Adding Account after upgrade",
+			accountName = "Account Name",
+			accountTaxID = "L-123456");
 	}
 
 }

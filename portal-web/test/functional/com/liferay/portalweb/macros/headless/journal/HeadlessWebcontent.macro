@@ -1,0 +1,39 @@
+definition {
+
+	@summary = "Add a web content article with title '${title}' and content '${content}' based on Basic Web Content via Headless"
+	macro addBasicWebContent {
+		Variables.assertDefined(parameterList = "${content},${groupName},${title}");
+
+		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+
+		if (isSet(folderName)) {
+			var folderId = JSONWebcontentSetter.setFolderId(
+				folderName = "${folderName}",
+				groupId = "${groupId}");
+		}
+
+		var globalGroupId = JSONWebcontentSetter.setGroupId(groupName = "Global", site = "true");
+
+		var classNameId = JSONClassname._getClassNameId(value = "com.liferay.journal.model.JournalArticle");
+
+		var structureId = JSONDDMstructure._getStructureId(
+			classNameId = "${classNameId}",
+			groupId = "${globalGroupId}",
+			structureName = "Basic Web Content");
+
+		if ("${source}" != "true") {
+			var content = '''<p>${content}</p>''';
+		}
+
+		HeadlessWebcontentAPI._addWebContent(
+			content = "${content}",
+			description = "${description}",
+			folderId = "${folderId}",
+			groupId = "${groupId}",
+			structureId = "${structureId}",
+			title = "${title}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+	}
+
+}

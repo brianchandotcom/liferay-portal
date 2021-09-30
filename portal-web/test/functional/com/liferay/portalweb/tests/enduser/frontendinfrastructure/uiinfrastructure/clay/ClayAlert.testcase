@@ -22,7 +22,7 @@ definition {
 
 	@description = "Verify toast message popup can be closed manually"
 	@priority = "3"
-	@refactorneeded
+	@refactordone
 	test ToastMessageCanBeClosedManually {
 		property test.name.skip.portal.instance = "ClayAlert#ToastMessageCanBeClosedManually";
 
@@ -37,7 +37,7 @@ definition {
 
 	@description = "Verify toast message popup will close automatically"
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test ToastMessageCanCloseAutomatically {
 		property test.name.skip.portal.instance = "ClayAlert#ToastMessageCanCloseAutomatically";
 

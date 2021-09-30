@@ -1,0 +1,12 @@
+.quote-comparison {
+	display: flex;
+	flex-wrap: wrap;
+	font-family: $font-family !important;
+	padding: 20px;
+
+	#quote-comparison {
+		.quote-content {
+			height: 547px;
+		}
+	}
+}

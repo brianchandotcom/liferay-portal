@@ -1,6 +1,8 @@
 @import 'variables';
-
 @import 'global';
+
+@import 'apps/selected-quote';
+@import 'apps/quote-comparison';
 
 @import 'components/fragments/badges';
 @import 'components/fragments/button';
@@ -12,3 +14,4 @@
 @import 'components/fragments/switch';
 @import 'components/fragments/typography';
 @import 'components/template';
+@import 'components/quote-comparison';

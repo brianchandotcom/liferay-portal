@@ -1,0 +1,27 @@
+.quote-info {
+	padding: 20px;
+
+	h1 {
+		color: $neutral-darker;
+	}
+
+	h3 {
+		color: $neutral-dark;
+	}
+
+	.application-id {
+		margin-top: 30px;
+		font-weight: bold;
+	}
+
+	#quote-comparison {
+		height: 504px;
+		margin-left: 0;
+		margin-top: 24px;
+
+		button {
+			padding-top: 0 !important;
+			margin-bottom: 18px;
+		}
+	}
+}

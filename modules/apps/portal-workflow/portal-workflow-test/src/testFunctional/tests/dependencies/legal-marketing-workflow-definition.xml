@@ -11,7 +11,22 @@
 	<state>
 		<name>created</name>
 		<metadata>
-			<![CDATA[{"transitions":{"Market Review":{"xy":[-46,-12]}},"xy":[62,51]}]]>
+			<![CDATA[
+				{
+					"transitions": {
+						"Market Review": {
+							"xy": [
+								-46,
+								-12
+							]
+						}
+					},
+					"xy": [
+						62,
+						51
+					]
+				}
+			]]>
 		</metadata>
 		<initial>true</initial>
 		<transitions>
@@ -25,7 +40,28 @@
 	<task>
 		<name>update</name>
 		<metadata>
-			<![CDATA[{"transitions":{"Resubmit":{"bendpoints":[[427,40]],"xy":[-27,11]}},"xy":[530,36]}]]>
+			<![CDATA[
+				{
+					"transitions": {
+						"Resubmit": {
+							"bendpoints": [
+								[
+									427,
+									40
+								]
+							],
+							"xy": [
+								-27,
+								11
+							]
+						}
+					},
+					"xy": [
+						530,
+						36
+					]
+				}
+			]]>
 		</metadata>
 		<actions>
 			<notification>
@@ -51,7 +87,28 @@
 	<task>
 		<name>marketing-review</name>
 		<metadata>
-			<![CDATA[{"transitions":{"Marketing Approved":{"xy":[-1,-29]},"Marketing Denied":{"xy":[-34,-1]}},"xy":[260,36]}]]>
+			<![CDATA[
+				{
+					"transitions": {
+						"Marketing Approved": {
+							"xy": [
+								-1,
+								-29
+							]
+						},
+						"Marketing Denied": {
+							"xy": [
+								-34,
+								-1
+							]
+						}
+					},
+					"xy": [
+						260,
+						36
+					]
+				}
+			]]>
 		</metadata>
 		<actions>
 			<notification>
@@ -115,7 +172,14 @@
 	<task>
 		<name>legal-review</name>
 		<metadata>
-			<![CDATA[{"xy":[260,270]}]]>
+			<![CDATA[
+				{
+					"xy": [
+						260,
+						270
+					]
+				}
+			]]>
 		</metadata>
 		<actions>
 			<notification>
@@ -180,7 +244,12 @@
 		<name>approved</name>
 		<metadata>
 			<![CDATA[
-				{"xy":[540,285]}
+				{
+					"xy": [
+						540,
+						285
+					]
+				}
 			]]>
 		</metadata>
 		<actions>
@@ -188,8 +257,8 @@
 				<name>approve</name>
 				<script>
 					<![CDATA[
-						import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
 						import com.liferay.portal.kernel.workflow.WorkflowConstants;
+						import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
 
 						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);
 					]]>

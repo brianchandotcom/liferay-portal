@@ -22,6 +22,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -33,11 +34,15 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.RenderRequestFactory;
 import com.liferay.portlet.RenderResponseFactory;
+import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuPortletKeys;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.context.RequestContextMapper;
 
@@ -45,6 +50,7 @@ import java.util.List;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.WindowState;
 
@@ -108,7 +114,9 @@ public class AssetHelperUtil {
 			assetListEntry.getGroupId(), assetEntryQuery.getClassNameIds(),
 			assetEntryQuery.getClassTypeIds(),
 			assetEntryQuery.getAllCategoryIds(), allTagNames,
-			themeDisplay.getURLCurrent());
+			_getRedirect(
+				assetListEntry.getAssetListEntryId(), httpServletRequest,
+				themeDisplay));
 	}
 
 	@Reference(unbind = "-")
@@ -202,6 +210,35 @@ public class AssetHelperUtil {
 				httpServletResponse, liferayRenderRequest));
 
 		return liferayRenderRequest;
+	}
+
+	private static String _getRedirect(
+			long assetListEntryId, HttpServletRequest httpServletRequest,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		String currentURL = HttpUtil.addParameter(
+			_portal.getLayoutRelativeURL(
+				themeDisplay.getLayout(), themeDisplay),
+			"p_l_mode", Constants.EDIT);
+
+		return HttpUtil.addParameter(
+			PortletURLBuilder.create(
+				PortalUtil.getControlPanelPortletURL(
+					httpServletRequest,
+					ProductNavigationControlMenuPortletKeys.
+						PRODUCT_NAVIGATION_CONTROL_MENU,
+					PortletRequest.ACTION_PHASE)
+			).setActionName(
+				"/control_menu/add_collection_item"
+			).setRedirect(
+				currentURL
+			).setParameter(
+				"assetListEntryId", assetListEntryId
+			).buildString(),
+			"portletResource",
+			ProductNavigationControlMenuPortletKeys.
+				PRODUCT_NAVIGATION_CONTROL_MENU);
 	}
 
 	private static AssetHelper _assetHelper;

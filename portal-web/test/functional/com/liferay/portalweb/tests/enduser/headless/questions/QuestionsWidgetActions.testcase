@@ -659,11 +659,14 @@ definition {
 			threadSubject = "Question1",
 			titleField = "Question1");
 
-		Questions.openToQuestionDetails(
+		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			questionsTitle = "question1",
 			siteURLKey = "guest",
 			topicName = "questions-test-category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Question1");
 
 		AssertVisible(
 			key_answerBodyContent = "This is my answer",
@@ -1534,15 +1537,14 @@ definition {
 			threadSubject = "Title AddQuestionEdit",
 			titleField = "Title AddQuestionEdit");
 
-		Questions.openToQuestionDetails(
+		Questions.openToQuestionsTopic(
 			layoutName = "questions-page",
-			questionsTitle = "title-addquestion",
 			siteURLKey = "guest",
 			topicName = "questions-test-category");
 
-		AssertVisible(
-			key_answerBodyContent = "This is my answer",
-			locator1 = "Questions#ANSWER_BODY");
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestionEdit");
 
 		Questions.editAnswer(contentField = "Body AddAnswerTextEdit");
 

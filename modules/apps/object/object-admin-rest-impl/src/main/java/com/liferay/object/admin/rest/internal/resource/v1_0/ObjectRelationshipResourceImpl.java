@@ -106,6 +106,10 @@ public class ObjectRelationshipResourceImpl
 			com.liferay.object.model.ObjectRelationship objectRelationship)
 		throws Exception {
 
+		com.liferay.object.model.ObjectDefinition objectDefinition1 =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
+
 		com.liferay.object.model.ObjectDefinition objectDefinition2 =
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2());
@@ -114,11 +118,17 @@ public class ObjectRelationshipResourceImpl
 			{
 				actions = HashMapBuilder.put(
 					"delete",
-					addAction(
-						ActionKeys.DELETE, "deleteObjectRelationship",
-						com.liferay.object.model.ObjectDefinition.class.
-							getName(),
-						objectRelationship.getObjectDefinitionId1())
+					() -> {
+						if (objectDefinition1.isApproved()) {
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.DELETE, "deleteObjectRelationship",
+							com.liferay.object.model.ObjectDefinition.class.
+								getName(),
+							objectRelationship.getObjectDefinitionId1());
+					}
 				).build();
 				deleteType = ObjectRelationship.DeleteType.create(
 					objectRelationship.getDeletionType());

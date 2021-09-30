@@ -13,5 +13,6 @@
  */
 
 module.exports = {
-	extends: ['@liferay/eslint-config/metal'],
+	extends: ['plugin:@liferay/metal'],
+	plugins: ['@liferay'],
 };

@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
@@ -94,7 +95,9 @@ public class SiteInitializerRegistrar {
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		Portal portal, RemoteAppEntryLocalService remoteAppEntryLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
-		RoleLocalService roleLocalService, SettingsFactory settingsFactory,
+		RoleLocalService roleLocalService,
+		SAPEntryLocalService sapEntryLocalService,
+		SettingsFactory settingsFactory,
 		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService,
@@ -138,6 +141,7 @@ public class SiteInitializerRegistrar {
 		_remoteAppEntryLocalService = remoteAppEntryLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
+		_sapEntryLocalService = sapEntryLocalService;
 		_settingsFactory = settingsFactory;
 		_siteNavigationMenuItemLocalService =
 			siteNavigationMenuItemLocalService;
@@ -176,7 +180,7 @@ public class SiteInitializerRegistrar {
 				_layoutSetLocalService, _objectDefinitionResourceFactory,
 				_portal, _remoteAppEntryLocalService,
 				_resourcePermissionLocalService, _roleLocalService,
-				_servletContext, _settingsFactory,
+				_sapEntryLocalService, _servletContext, _settingsFactory,
 				_siteNavigationMenuItemLocalService,
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService,
@@ -226,6 +230,7 @@ public class SiteInitializerRegistrar {
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;
 	private final RoleLocalService _roleLocalService;
+	private final SAPEntryLocalService _sapEntryLocalService;
 	private ServiceRegistration<?> _serviceRegistration;
 	private ServletContext _servletContext;
 	private final SettingsFactory _settingsFactory;

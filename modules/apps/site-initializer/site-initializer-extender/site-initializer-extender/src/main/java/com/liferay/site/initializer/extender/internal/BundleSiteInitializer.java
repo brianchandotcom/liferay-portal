@@ -109,6 +109,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.security.service.access.policy.model.SAPEntry;
+import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -180,8 +182,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		Portal portal, RemoteAppEntryLocalService remoteAppEntryLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
-		RoleLocalService roleLocalService, ServletContext servletContext,
-		SettingsFactory settingsFactory,
+		RoleLocalService roleLocalService,
+		SAPEntryLocalService sapEntryLocalService,
+		ServletContext servletContext, SettingsFactory settingsFactory,
 		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService,
@@ -224,6 +227,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_remoteAppEntryLocalService = remoteAppEntryLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
+		_sapEntryLocalService = sapEntryLocalService;
 		_servletContext = servletContext;
 		_settingsFactory = settingsFactory;
 		_siteNavigationMenuItemLocalService =
@@ -292,6 +296,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addFragmentEntries(serviceContext);
 			_addLayoutPageTemplates(serviceContext);
 			_addObjectDefinitions(serviceContext);
+			_addSAPEntries(serviceContext);
 			_addStyleBookEntries(serviceContext);
 			_addTaxonomyVocabularies(serviceContext);
 			_updateLayoutSets(serviceContext);
@@ -1266,6 +1271,55 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_jsonFactory.createJSONArray(json), serviceContext);
 	}
 
+	private void _addSAPEntries(ServiceContext serviceContext)
+		throws Exception {
+
+		String json = _read("/site-initializer/sap-entries.json");
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
+				serviceContext.getCompanyId(), jsonObject.getString("name"));
+
+			if (sapEntry == null) {
+				_sapEntryLocalService.addSAPEntry(
+					serviceContext.getUserId(),
+					StringUtil.merge(
+						JSONUtil.toStringArray(
+							jsonObject.getJSONArray(
+								"allowedServiceSignatures")),
+						StringPool.NEW_LINE),
+					jsonObject.getBoolean("defaultSAPEntry", true),
+					jsonObject.getBoolean("enabled", true),
+					jsonObject.getString("name"),
+					_toMap(jsonObject.getString("title_i18n")), serviceContext);
+			}
+			else {
+				sapEntry.setAllowedServiceSignatures(
+					StringUtil.merge(
+						JSONUtil.toStringArray(
+							jsonObject.getJSONArray(
+								"allowedServiceSignatures")),
+						StringPool.NEW_LINE));
+				sapEntry.setDefaultSAPEntry(
+					jsonObject.getBoolean("defaultSAPEntry", true));
+				sapEntry.setEnabled(jsonObject.getBoolean("enabled", true));
+				sapEntry.setName(jsonObject.getString("name"));
+				sapEntry.setTitleMap(
+					_toMap(jsonObject.getString("title_i18n")));
+
+				_sapEntryLocalService.updateSAPEntry(sapEntry);
+			}
+		}
+	}
+
 	private void _addSiteNavigationMenuItems(
 			JSONArray jsonArray, SiteNavigationMenu siteNavigationMenu,
 			ServiceContext serviceContext)
@@ -1775,6 +1829,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;
 	private final RoleLocalService _roleLocalService;
+	private final SAPEntryLocalService _sapEntryLocalService;
 	private final ServletContext _servletContext;
 	private final SettingsFactory _settingsFactory;
 	private final SiteNavigationMenuItemLocalService

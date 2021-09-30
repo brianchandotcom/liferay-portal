@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
@@ -105,7 +106,8 @@ public class SiteInitializerExtender
 				_layoutSetLocalService, _objectDefinitionResourceFactory,
 				_portal, _remoteAppEntryLocalService,
 				_resourcePermissionLocalService, _roleLocalService,
-				_settingsFactory, _siteNavigationMenuItemLocalService,
+				_sapEntryLocalService, _settingsFactory,
+				_siteNavigationMenuItemLocalService,
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService,
 				_structuredContentFolderResourceFactory,
@@ -235,6 +237,9 @@ public class SiteInitializerExtender
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SAPEntryLocalService _sapEntryLocalService;
 
 	@Reference
 	private SettingsFactory _settingsFactory;

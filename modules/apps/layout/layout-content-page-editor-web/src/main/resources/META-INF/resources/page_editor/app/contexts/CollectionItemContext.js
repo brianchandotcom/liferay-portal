@@ -29,9 +29,6 @@ import {useDispatch} from './StoreContext';
 const defaultFromControlsId = (itemId) => itemId;
 const defaultToControlsId = (controlId) => controlId;
 
-const DISPLAY_PAGE_CONTENT_FRAGMENT_ENTRY_KEY =
-	'com.liferay.fragment.internal.renderer.LayoutDisplayObjectFragmentRenderer';
-
 export const INITIAL_STATE = {
 	collectionConfig: null,
 	collectionId: null,
@@ -83,7 +80,6 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 		collectionContent = {},
 		content,
 		editableValues,
-		fragmentEntryKey,
 		fragmentEntryLinkId,
 	} = fragmentEntryLink;
 
@@ -103,12 +99,13 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 		classPK: displayPagePreviewItemClassPK,
 	} = useDisplayPagePreviewItem()?.data || {};
 
-	const [itemClassName, itemClassPK] =
-		fragmentEntryKey === DISPLAY_PAGE_CONTENT_FRAGMENT_ENTRY_KEY &&
-		displayPagePreviewItemClassName &&
-		displayPagePreviewItemClassPK
-			? [displayPagePreviewItemClassName, displayPagePreviewItemClassPK]
-			: [collectionItemClassName, collectionItemClassPK];
+	const withinCollection = !isNullOrUndefined(
+		collectionItemContext.collectionItem
+	);
+
+	const [itemClassName, itemClassPK] = withinCollection
+		? [collectionItemClassName, collectionItemClassPK]
+		: [displayPagePreviewItemClassName, displayPagePreviewItemClassPK];
 
 	const previousEditableValues = usePrevious(editableValues);
 	const previousLanguageId = usePrevious(languageId);
@@ -122,11 +119,18 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 			) ?? false;
 
 		if (
-			(!isNullOrUndefined(previousEditableValues) &&
-				editableValues !== previousEditableValues) ||
-			itemClassName !== previousItemClassName ||
-			itemClassPK !== previousItemClassPK ||
-			(hasLocalizable && languageId !== previousLanguageId)
+			shouldRenderFragmentEntryLink({
+				editableValues,
+				hasLocalizable,
+				itemClassName,
+				itemClassPK,
+				languageId,
+				previousEditableValues,
+				previousItemClassName,
+				previousItemClassPK,
+				previousLanguageId,
+				withinCollection,
+			})
 		) {
 			FragmentService.renderFragmentEntryLinkContent({
 				fragmentEntryLinkId,
@@ -159,6 +163,7 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 		previousItemClassPK,
 		previousLanguageId,
 		segmentsExperienceId,
+		withinCollection,
 	]);
 
 	return (
@@ -166,6 +171,53 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 			? collectionContent[collectionContentId]
 			: null) || content
 	);
+};
+
+const shouldRenderFragmentEntryLink = ({
+	editableValues,
+	hasLocalizable,
+	itemClassName,
+	itemClassPK,
+	languageId,
+	previousEditableValues,
+	previousItemClassName,
+	previousItemClassPK,
+	previousLanguageId,
+	withinCollection,
+}) => {
+
+	// For normal fragments we need to render again if the change the locale
+	// and the fragment have some localizable configuration fields
+
+	if (hasLocalizable && previousLanguageId !== languageId) {
+		return true;
+	}
+
+	// For fragments inside a collection, we need to render when previousItemClassName or previousItemClassPK
+	// is undefined. This happens when the collection is render at the first time or when changing the "preview with"
+	// to none. When setting the item to none the component is unmounted, which means that we cannot rely on
+	// the usePrevious hook values. Also we need to render when editable values change
+
+	if (
+		withinCollection &&
+		(isNullOrUndefined(previousItemClassName) ||
+			isNullOrUndefined(previousItemClassPK) ||
+			(!isNullOrUndefined(editableValues) &&
+				previousEditableValues !== editableValues))
+	) {
+		return true;
+	}
+
+	//  For any other case we need to render when the className or classPK changes
+
+	if (
+		previousItemClassName !== itemClassName &&
+		previousItemClassPK !== itemClassPK
+	) {
+		return true;
+	}
+
+	return false;
 };
 
 const useGetFieldValue = () => {

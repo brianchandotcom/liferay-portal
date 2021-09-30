@@ -307,7 +307,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addStyleBookEntries(serviceContext);
 			_addTaxonomyVocabularies(serviceContext);
 
-			_addCommerceStructure(serviceContext);
+			_addCPDefinitions(serviceContext);
 
 			_updateLayoutSets(serviceContext);
 
@@ -554,7 +554,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.getScopeGroupId(), serviceContext.getUserId());
 	}
 
-	private void _addCommerceStructure(ServiceContext serviceContext)
+	private void _addCPDefinitions(ServiceContext serviceContext)
 		throws Exception {
 
 		Channel commerceChannel = _addCommerceChannel(serviceContext);
@@ -585,7 +585,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
-		Group group = CommerceCatalogLocalServiceUtil.getCommerceCatalogGroup(
+		Group catalogGroup = CommerceCatalogLocalServiceUtil.getCommerceCatalogGroup(
 			catalog.getId());
 
 		TaxonomyVocabularyResource.Builder taxonomyVocabularyResourceBuilder =
@@ -596,17 +596,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		Group global = _groupLocalService.getCompanyGroup(
+		Group globalGroup = _groupLocalService.getCompanyGroup(
 			serviceContext.getCompanyId());
 
-		TaxonomyVocabulary existingTaxonomyVocabulary =
+		TaxonomyVocabulary taxonomyVocabulary =
 			taxonomyVocabularyResource.
 				getSiteTaxonomyVocabularyByExternalReferenceCode(
-					global.getGroupId(),
+					globalGroup.getGroupId(),
 					commerceChannel.getExternalReferenceCode());
 
 		_cpDefinitionsImporter.importCPDefinitions(
-			jsonArray, existingTaxonomyVocabulary.getName(), group.getGroupId(),
+			jsonArray, taxonomyVocabulary.getName(), catalogGroup.getGroupId(),
 			commerceChannel.getId(), commerceInventoryWarehouseIds,
 			BundleSiteInitializer.class.getClassLoader(),
 			"/site-initializer/commerce-catalogs/" +

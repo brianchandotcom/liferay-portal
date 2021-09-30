@@ -133,6 +133,16 @@ import org.osgi.service.component.annotations.Reference;
 	</#if>
 </#list>
 
+<#list entity.entityColumns as entityColumn>
+	<#if entityColumn.isCollection() && entityColumn.isMappingManyToMany()>
+		<#assign referenceEntity = serviceBuilder.getEntity(entityColumn.entityName) />
+
+		<#if !referenceEntities?seq_contains(referenceEntity) && referenceEntity.hasEntityColumns() && referenceEntity.hasPersistence()>
+			import ${referenceEntity.apiPackagePath}.service.persistence.${referenceEntity.name}Persistence;
+		</#if>
+	</#if>
+</#list>
+
 <#if stringUtil.equals(sessionTypeName, "Local")>
 /**
  * Provides the base implementation for the ${entity.humanName} local service.
@@ -2105,6 +2115,26 @@ import org.osgi.service.component.annotations.Reference;
 				</#if>
 
 				protected ${referenceEntity.name}Finder ${referenceEntity.variableName}Finder;
+			</#if>
+		</#if>
+	</#list>
+
+	<#list entity.entityColumns as entityColumn>
+		<#if entityColumn.isCollection() && entityColumn.isMappingManyToMany()>
+			<#assign referenceEntity = serviceBuilder.getEntity(entityColumn.entityName) />
+
+			<#if !referenceEntities?seq_contains(referenceEntity) && referenceEntity.hasEntityColumns() && referenceEntity.hasPersistence()>
+				<#if !dependencyInjectorDS || (referenceEntity.apiPackagePath == apiPackagePath)>
+					<#if dependencyInjectorDS>
+						@Reference
+					<#elseif osgiModule && (referenceEntity.apiPackagePath != apiPackagePath)>
+						@ServiceReference(type = ${referenceEntity.name}Persistence.class)
+					<#else>
+						@BeanReference(type = ${referenceEntity.name}Persistence.class)
+					</#if>
+
+					protected ${referenceEntity.name}Persistence ${referenceEntity.variableName}Persistence;
+				</#if>
 			</#if>
 		</#if>
 	</#list>

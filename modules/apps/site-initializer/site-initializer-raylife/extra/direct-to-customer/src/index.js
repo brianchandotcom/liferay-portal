@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 
 import GetAQuote from '~/apps/get-a-quote/pages/GetAQuote';
 import QuoteComparison from '~/apps/quote-comparison/pages/QuoteComparison';
-import StylesProvider from '~/apps/quote-comparison/styles/index.scss';
 import SelectedQuote from '~/apps/selected-quote/pages/SelectedQuote';
 import {WebComponent} from '~/shared/WebComponent';
 import ClayIconProvider from '~/shared/context/ClayIconProvider';
 import {GoogleMapsService} from '~/shared/services/google-maps';
+import SharedStyle from '~/shared/styles/index.scss';
 
 const DirectToCustomer = ({application}) => {
 	const SearchParams = new URLSearchParams(window.location.search);
@@ -29,7 +29,7 @@ const DirectToCustomer = ({application}) => {
 
 class DirectToCustomerWebComponent extends WebComponent {
 	connectedCallback() {
-		super.connectedCallback(StylesProvider);
+		super.connectedCallback(SharedStyle);
 
 		const GOOGLE_PLACES_KEY = this.getAttribute('GOOGLE_PLACES_KEY');
 

@@ -6,7 +6,6 @@ import {Steps} from '~/apps/get-a-quote/components/containers/Steps';
 import {useStepWizard} from '~/apps/get-a-quote/hooks/useStepWizard';
 import {useTriggerContext} from '~/apps/get-a-quote/hooks/useTriggerContext';
 import {AVAILABLE_STEPS} from '~/apps/get-a-quote/utils/constants';
-import Style from '~/shared/styles/provider.scss';
 import {Providers} from '../Providers';
 
 const QuoteApp = () => {
@@ -53,8 +52,11 @@ const QuoteApp = () => {
 
 const GetAQuote = () => (
 	<Providers>
+<<<<<<< HEAD
 		<style>{Style}</style>
 
+=======
+>>>>>>> aa648eaff470 (LPS-140107 Use Shared Style)
 		<QuoteApp />
 	</Providers>
 );

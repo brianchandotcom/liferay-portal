@@ -6237,6 +6237,47 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
+	<target name="patching-tool-jdk8">
+		<run-batch-test>
+			<test-action>
+				<database-test-run-test database.type="mysql" stop.app.server="true">
+					<test-action>
+						<local name="junit.failure.count" />
+						<local name="junit.failure.message" />
+
+						<trycatch property="junit.failure.message">
+							<try>
+								<for keepgoing="true" list="patching-tool-auto-discovery,patching-tool-info" param="patchingtool.test.target">
+									<sequential>
+										<ant antfile="${project.dir}/build-test-patching-tool.xml" target="@{patchingtool.test.target}" />
+									</sequential>
+								</for>
+							</try>
+							<finally>
+								<condition else="0" property="junit.failure.count" value="1">
+									<isset property="junit.failure.message" />
+								</condition>
+
+								<get-junit-failure-message-element />
+
+								<generate-backend-batch-junit-report
+									junit.failure.count="${junit.failure.count}"
+									junit.failure.message.element="${junit.failure.message.element}"
+									test.class.name="PatchingTool"
+									test.command.name="patchingTool"
+								/>
+							</finally>
+						</trycatch>
+					</test-action>
+				</database-test-run-test>
+			</test-action>
+
+			<test-set-up>
+				<setup-test-environment />
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="plugins-compile-jdk8">
 		<run-batch-test>
 			<test-action>

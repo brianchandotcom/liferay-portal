@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
@@ -148,10 +149,6 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 		InfoFieldValue<Object> infoFieldValue = _getTitleInfoFieldValue(
 			infoItemFieldValuesProvider, object);
 
-		String escapedTitle = StringUtil.removeSubstrings(
-			(String)infoFieldValue.getValue(locale),
-			PropsValues.DL_CHAR_BLACKLIST);
-
 		Optional<TranslationInfoItemFieldValuesExporter>
 			exportFileFormatOptional =
 				_translationInfoItemFieldValuesExporterTracker.
@@ -166,10 +163,9 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 
 		for (String targetLanguageId : targetLanguageIds) {
 			zipWriter.addEntry(
-				StringBundler.concat(
-					StringPool.FORWARD_SLASH, escapedTitle, StringPool.DASH,
-					sourceLanguageId, StringPool.DASH, targetLanguageId,
-					".xlf"),
+				_getXLIFFFileName(
+					className, classPK, (String)infoFieldValue.getValue(locale),
+					sourceLanguageId, targetLanguageId, locale),
 				translationInfoItemFieldValuesExporter.
 					exportInfoItemFieldValues(
 						infoItemFieldValuesProvider.getInfoItemFieldValues(
@@ -191,6 +187,33 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 		}
 
 		return infoItemFieldValuesProvider.getInfoFieldValue(object, "name");
+	}
+
+	private String _getXLIFFFileName(
+			String className, long classPK, String title,
+			String sourceLanguageId, String targetLanguageId, Locale locale)
+		throws PortalException {
+
+		String suffix = StringPool.BLANK;
+
+		if (className.equals(SegmentsExperience.class.getName()) &&
+			(classPK != SegmentsExperienceConstants.ID_DEFAULT)) {
+
+			SegmentsExperience segmentsExperience =
+				_segmentsExperienceLocalService.getSegmentsExperience(classPK);
+
+			suffix = StringBundler.concat(
+				StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
+				segmentsExperience.getName(locale),
+				StringPool.CLOSE_PARENTHESIS);
+		}
+
+		return StringBundler.concat(
+			StringPool.FORWARD_SLASH,
+			StringUtil.removeSubstrings(
+				title + suffix, PropsValues.DL_CHAR_BLACKLIST),
+			StringPool.DASH, sourceLanguageId, StringPool.DASH,
+			targetLanguageId, ".xlf");
 	}
 
 	private String _getZipFileName(
@@ -224,6 +247,9 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
 	private TranslationInfoItemFieldValuesExporterTracker

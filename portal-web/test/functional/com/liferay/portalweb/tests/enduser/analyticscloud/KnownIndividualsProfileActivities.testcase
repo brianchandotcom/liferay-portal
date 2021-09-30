@@ -174,7 +174,7 @@ definition {
 				index = "2",
 				axis = "xAxis",
 				cardName = "Individual Events");
-			
+
 			ACUtils.assertDatePattern(
 				date = "${date}",
 				format = "MMM d - d");

@@ -164,8 +164,19 @@ definition {
 				interval = "W");
 		}
 
+		task ("View the format of recharts xAxis ticks is MMM d - MMM d") {
+			var date = ACCards.getAxisTick(
+				axis = "xAxis",
+				cardName = "${propertyName} Activities");
+
+			ACUtils.assertDatePattern(
+				date = "${date}",
+				format = "MMM d - MMM d");
+		}
+
 		task ("View the format of recharts xAxis ticks is MMM d - d") {
 			var date = ACCards.getAxisTick(
+				index = "2",
 				axis = "xAxis",
 				cardName = "${propertyName} Activities");
 

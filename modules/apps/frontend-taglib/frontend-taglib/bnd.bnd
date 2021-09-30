@@ -6,7 +6,6 @@ Export-Package:\
 	com.liferay.frontend.taglib.servlet.taglib.base,\
 	com.liferay.frontend.taglib.servlet.taglib.util
 Liferay-JS-Config: /META-INF/resources/config.js
-Liferay-JS-Submodules-Bridge: frontend-taglib/translation_manager/TranslationManager.es
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\

@@ -1972,7 +1972,9 @@ definition {
 	}
 
 	macro viewSwitchChecked {
-		FormFields.viewCheckboxChecked(fieldName = "${fieldName}");
+		AssertChecked.assertCheckedNotVisible(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#SWITCH");
 	}
 
 	macro viewSwitchLabel {

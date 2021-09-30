@@ -690,7 +690,7 @@ definition {
 
 		FormFields.enableSwitch(fieldName = "Inline");
 
-		FormViewBuilder.validateInlineOptionIsSetOn();
+		FormFields.viewSwitchChecked(fieldName = "Inline");
 
 		Form.save();
 

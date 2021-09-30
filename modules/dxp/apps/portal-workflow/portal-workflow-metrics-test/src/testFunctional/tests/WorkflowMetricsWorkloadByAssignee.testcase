@@ -90,7 +90,7 @@ definition {
 
 		UploadFileWithCustomPath.uploadFile(
 			fileName = "これは写真です.jpg",
-			filePath = "enduser\documentmanagement\documentsadministration");
+			filePath = "enduser/documentmanagement/documentsadministration");
 
 		Pause(locator1 = "3000");
 

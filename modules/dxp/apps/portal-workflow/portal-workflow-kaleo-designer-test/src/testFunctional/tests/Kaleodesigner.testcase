@@ -437,6 +437,7 @@ definition {
 
 		Workflow.uploadDefinition(
 			workflowDefinitionFile = "workflow_definition_task_timers.xml",
+			workflowDefinitionFilePath = "dxp/apps/portal-workflow/portal-workflow-kaleo-designer-test",
 			workflowDefinitionTitle = "New Workflow Definition Title");
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition Title");

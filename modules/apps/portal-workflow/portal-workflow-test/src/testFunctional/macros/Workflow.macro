@@ -1068,9 +1068,27 @@ definition {
 			KaleoDesigner.viewSourceXMLTab();
 		}
 
-		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			locator1 = "TextInput#FILE",
-			value1 = "${workflowDefinitionFile}");
+		var projectDir = PropsUtil.get("project.dir");
+
+		if (isSet(workflowDefinitionFilePath)) {
+			UploadFile(
+				locator1 = "TextInput#FILE",
+				value1 = "${projectDir}/modules/${workflowDefinitionFilePath}/src/testFunctional/tests/dependencies/${workflowDefinitionFile}");
+		}
+		else {
+			var fileExists = FileUtil.exists("${projectDir}/modules/dxp/apps/portal-workflow/portal-workflow-metrics-test/src/testFunctional/tests/dependencies/${workflowDefinitionFile}");
+
+			if ("${fileExists}" == "true") {
+				UploadFile(
+					locator1 = "TextInput#FILE",
+					value1 = "${projectDir}/modules/dxp/apps/portal-workflow/portal-workflow-metrics-test/src/testFunctional/tests/dependencies/${workflowDefinitionFile}");
+			}
+			else {
+				UploadFile(
+					locator1 = "TextInput#FILE",
+					value1 = "${projectDir}/modules/apps/portal-workflow/portal-workflow-test/src/testFunctional/tests/dependencies/${workflowDefinitionFile}");
+			}
+		}
 
 		Alert.viewSuccessMessageText(successMessage = "Definition imported successfully.");
 

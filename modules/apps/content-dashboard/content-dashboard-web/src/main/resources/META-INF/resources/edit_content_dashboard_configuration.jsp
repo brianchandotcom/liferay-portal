@@ -61,11 +61,12 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 					componentData.put("rightBoxName", "currentAssetVocabularyNames");
 					componentData.put("rightList", JSONFactoryUtil.createJSONArray(currentVocabularies));
 					%>
-
-					<react:component
-						module="js/VocabulariesSelectionBox"
-						props="<%= componentData %>"
-					/>
+					<div>
+						<react:component
+							module="js/VocabulariesSelectionBox"
+							props="<%= componentData %>"
+						/>
+					</div>
 				</aui:field-wrapper>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>

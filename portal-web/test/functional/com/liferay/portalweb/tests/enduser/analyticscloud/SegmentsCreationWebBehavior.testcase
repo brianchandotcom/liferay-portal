@@ -640,8 +640,6 @@ definition {
 	test CanCreateWebBehaviorSegmentUsingBetween {
 		ACUtils.createWCAndAddToPage();
 
-		Navigator.openURL();
-
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
@@ -656,9 +654,13 @@ definition {
 			userLoginEmailAddress = "ac@liferay.com",
 			userLoginFullName = "ac ac");
 
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
+		for (var n : list "1,2,3") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
+		}
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -684,7 +686,7 @@ definition {
 			indexField = "1",
 			month = "${staticMonth}",
 			month2 = "${staticMonth2}",
-			occurenceNumber = "4",
+			occurenceNumber = "6",
 			searchTerm = "Web Content AC Title",
 			timeOption = "between",
 			year = "${staticYear}",
@@ -704,6 +706,8 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
 		}
 
 		ACUtils.closeAllSessionsAndWait();
@@ -716,9 +720,7 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		AssertElementPresent(
-			key_userName = "ac ac",
-			locator1 = "ACSegments#SEGMENT_MEMBERS");
+		ACUtils.viewNameList(nameList = "ac ac");
 	}
 
 	@description = "Add segment using a web behavior 'ever' done"

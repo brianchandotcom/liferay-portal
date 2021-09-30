@@ -304,7 +304,7 @@ else {
 	}
 </aui:script>
 
-<aui:script require="users-admin-web/js/actions.es as actions">
+<aui:script require='<%= npmResolvedPackageName + "/js/actions.es as actions" %>'>
 	window['<portlet:namespace />openSelectUsersDialog'] = function (
 		organizationId
 	) {

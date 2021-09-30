@@ -17,7 +17,6 @@ package com.liferay.commerce.currency.internal.model.listener;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
-import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,18 +25,17 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Marco Leo
  */
-@Component(
-	enabled = false, immediate = true,
-	service = PortalInstanceLifecycleListener.class
-)
 public class PortalInstanceLifecycleListenerImpl
 	extends BasePortalInstanceLifecycleListener {
+
+	public PortalInstanceLifecycleListenerImpl(
+		CommerceCurrencyLocalService commerceCurrencyLocalService) {
+
+		_commerceCurrencyLocalService = commerceCurrencyLocalService;
+	}
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
@@ -70,7 +68,6 @@ public class PortalInstanceLifecycleListenerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalInstanceLifecycleListenerImpl.class);
 
-	@Reference
-	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 }

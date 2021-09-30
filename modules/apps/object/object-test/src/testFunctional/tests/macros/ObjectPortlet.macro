@@ -25,6 +25,16 @@ definition {
 		}
 	}
 
+	macro assertNoFieldsWereFound {
+		AssertTextEquals(
+			locator1 = "ObjectPortlet#NO_FIELDS_WERE_FOUND_MESSAGE",
+			value1 = "No fields were found."
+		);
+
+
+		
+	}
+
 	macro changePagination {
 		Click(locator1 = "ObjectPortlet#PAGINATION_ITEMS_PER_PAGE_SELECT");
 
@@ -51,6 +61,24 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
 
 		Click(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+	}
+
+	macro searchColumn {
+		Click(locator1 = "ObjectPortlet#ARROW_DOWN_ICON");
+
+		AssertElementPresent(locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD");
+
+		Type(
+			locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD",
+			value1 = "${columnName}");
+
+		Click(
+			locator1 = "ObjectPortlet#COLUMN_ICON_SEARCH");
+
+
+
+
+
 	}
 
 	macro searchEntry {

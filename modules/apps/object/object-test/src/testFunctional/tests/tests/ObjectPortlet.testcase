@@ -301,11 +301,37 @@ definition {
 	}
 
 	@description = "LPS-135393 - Verify the empty state when searching for a value that does not exist on the dropdown to select the columns to be displayed on the auto-generated table on the Custom Object Portlet"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test EmptyStateDisplayedForSearchOnDropdownToSelectColumns {
 
-		// TODO LPS-138965 EmptyStateDisplayedForSearchOnDropdownToSelectColumns pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "text",
+			objectName = "CustomObject",
+			value = "Test text");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.searchColumn(columnName = "test");
+		
+
+		ObjectPortlet.assertNoFieldsWereFound();
+
+
 
 	}
 

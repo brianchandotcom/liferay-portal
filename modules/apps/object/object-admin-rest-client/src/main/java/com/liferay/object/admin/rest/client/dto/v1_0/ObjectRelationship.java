@@ -187,6 +187,27 @@ public class ObjectRelationship implements Cloneable, Serializable {
 
 	protected Long objectDefinitionId2;
 
+	public String getObjectDefinitionName2() {
+		return objectDefinitionName2;
+	}
+
+	public void setObjectDefinitionName2(String objectDefinitionName2) {
+		this.objectDefinitionName2 = objectDefinitionName2;
+	}
+
+	public void setObjectDefinitionName2(
+		UnsafeSupplier<String, Exception> objectDefinitionName2UnsafeSupplier) {
+
+		try {
+			objectDefinitionName2 = objectDefinitionName2UnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String objectDefinitionName2;
+
 	public Type getType() {
 		return type;
 	}

@@ -183,6 +183,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		ObjectRelationship objectRelationship = randomObjectRelationship();
 
 		objectRelationship.setName(regex);
+		objectRelationship.setObjectDefinitionName2(regex);
 
 		String json = ObjectRelationshipSerDes.toJSON(objectRelationship);
 
@@ -191,6 +192,8 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		objectRelationship = ObjectRelationshipSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, objectRelationship.getName());
+		Assert.assertEquals(
+			regex, objectRelationship.getObjectDefinitionName2());
 	}
 
 	@Test
@@ -673,6 +676,16 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"objectDefinitionName2", additionalAssertFieldName)) {
+
+				if (objectRelationship.getObjectDefinitionName2() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (objectRelationship.getType() == null) {
 					valid = false;
@@ -856,6 +869,19 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"objectDefinitionName2", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectRelationship1.getObjectDefinitionName2(),
+						objectRelationship2.getObjectDefinitionName2())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						objectRelationship1.getType(),
@@ -1001,6 +1027,15 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("objectDefinitionName2")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(objectRelationship.getObjectDefinitionName2()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("type")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1054,6 +1089,8 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				objectDefinitionId1 = RandomTestUtil.randomLong();
 				objectDefinitionId2 = RandomTestUtil.randomLong();
+				objectDefinitionName2 = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 			}
 		};
 	}

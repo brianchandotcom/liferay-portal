@@ -28,11 +28,7 @@ definition {
 	macro assertNoFieldsWereFound {
 		AssertTextEquals(
 			locator1 = "ObjectPortlet#NO_FIELDS_WERE_FOUND_MESSAGE",
-			value1 = "No fields were found."
-		);
-
-
-		
+			value1 = "No fields were found.");
 	}
 
 	macro changePagination {
@@ -72,13 +68,7 @@ definition {
 			locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD",
 			value1 = "${columnName}");
 
-		Click(
-			locator1 = "ObjectPortlet#COLUMN_ICON_SEARCH");
-
-
-
-
-
+		Click(locator1 = "ObjectPortlet#COLUMN_ICON_SEARCH");
 	}
 
 	macro searchEntry {

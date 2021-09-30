@@ -46,11 +46,9 @@ public class ObjectRelationshipsTableClayDataSetDisplayView
 
 		clayTableSchemaField.setContentRenderer("actionLink");
 
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"objectDefinitionName2", "related-object");
 		clayTableSchemaBuilder.addClayTableSchemaField("type", "type");
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"objectDefinitionId1", "objectDefinitionId1");
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"objectDefinitionId2", "objectDefinitionId2");
 
 		return clayTableSchemaBuilder.build();
 	}

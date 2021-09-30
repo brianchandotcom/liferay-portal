@@ -137,7 +137,7 @@ definition {
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account 1");
 
-		Click(locator1 = "Link#BACK");
+		Navigator.gotoBack();
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account 2");
 
@@ -279,7 +279,7 @@ definition {
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "First Account");
 
-		Click(locator1 = "Link#BACK");
+		Navigator.gotoBack();
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Second Account");
 
@@ -369,11 +369,11 @@ definition {
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account 1");
 
-		Click(locator1 = "Link#BACK");
+		Navigator.gotoBack();
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account 2");
 
-		Click(locator1 = "Link#BACK");
+		Navigator.gotoBack();
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account 3");
 

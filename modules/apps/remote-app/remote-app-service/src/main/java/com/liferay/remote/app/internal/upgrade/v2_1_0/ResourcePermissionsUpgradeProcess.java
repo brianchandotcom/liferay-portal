@@ -68,20 +68,20 @@ public class ResourcePermissionsUpgradeProcess extends UpgradeProcess {
 				preparedStatement.setLong(2, increment());
 				preparedStatement.setLong(3, companyId);
 				preparedStatement.setString(4, RemoteAppEntry.class.getName());
-				preparedStatement.setLong(
-					5, ResourceConstants.SCOPE_INDIVIDUAL);
+				preparedStatement.setInt(5, ResourceConstants.SCOPE_INDIVIDUAL);
 				preparedStatement.setString(
 					6, String.valueOf(remoteAppEntryId));
 				preparedStatement.setLong(7, remoteAppEntryId);
 				preparedStatement.setLong(8, ownerRole.getRoleId());
 				preparedStatement.setLong(9, userId);
 				preparedStatement.setLong(10, 15);
-				preparedStatement.setLong(11, 1);
+				preparedStatement.setBoolean(11, true);
+
 				preparedStatement.setLong(12, mvccVersion);
 				preparedStatement.setLong(13, increment());
 				preparedStatement.setLong(14, companyId);
 				preparedStatement.setString(15, RemoteAppEntry.class.getName());
-				preparedStatement.setLong(
+				preparedStatement.setInt(
 					16, ResourceConstants.SCOPE_INDIVIDUAL);
 				preparedStatement.setString(
 					17, String.valueOf(remoteAppEntryId));
@@ -89,7 +89,7 @@ public class ResourcePermissionsUpgradeProcess extends UpgradeProcess {
 				preparedStatement.setLong(19, guestRole.getRoleId());
 				preparedStatement.setLong(20, 0);
 				preparedStatement.setLong(21, 1);
-				preparedStatement.setLong(22, 1);
+				preparedStatement.setBoolean(22, true);
 
 				preparedStatement.addBatch();
 			}

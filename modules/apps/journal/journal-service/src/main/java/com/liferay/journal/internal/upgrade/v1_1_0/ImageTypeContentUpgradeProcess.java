@@ -60,14 +60,19 @@ public class ImageTypeContentUpgradeProcess extends UpgradeProcess {
 					"and JournalArticle.articleId = ",
 					"JournalArticleImage.articleId and JournalArticle.version ",
 					"= JournalArticleImage.version)"),
-				resultRow -> {
-					long articleImageId = resultRow.get(1);
-					long groupId = resultRow.get(2);
-					long companyId = resultRow.get(3);
-					long resourcePrimKey = resultRow.get(4);
+				resultSet -> new Object[] {
+					resultSet.getLong(1), resultSet.getLong(2),
+					resultSet.getLong(3), resultSet.getLong(4),
+					resultSet.getLong(5)
+				},
+				values -> {
+					long articleImageId = (Long)values[0];
+					long groupId = (Long)values[1];
+					long companyId = (Long)values[2];
+					long resourcePrimKey = (Long)values[3];
 
 					long userId = PortalUtil.getValidUserId(
-						companyId, resultRow.get(5));
+						companyId, (Long)values[4]);
 
 					long folderId =
 						_journalArticleImageUpgradeHelper.getFolderId(

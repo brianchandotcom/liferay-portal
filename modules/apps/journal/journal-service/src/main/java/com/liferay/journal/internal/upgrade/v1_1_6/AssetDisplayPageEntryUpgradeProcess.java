@@ -94,11 +94,16 @@ public class AssetDisplayPageEntryUpgradeProcess extends UpgradeProcess {
 					"JournalArticle.resourcePrimKey) group by ",
 					"JournalArticle.groupId, JournalArticle.resourcePrimKey, ",
 					"AssetEntry.classUuid"),
-				resultRow -> {
-					long groupId = resultRow.get("groupId");
-					long resourcePrimKey = resultRow.get("resourcePrimKey");
+				resultSet -> new Object[] {
+					resultSet.getLong("groupId"),
+					resultSet.getLong("resourcePrimKey"),
+					resultSet.getString("classUuid")
+				},
+				values -> {
+					long groupId = (Long)values[0];
+					long resourcePrimKey = (Long)values[1];
 
-					String journalArticleUuid = resultRow.get("classUuid");
+					String journalArticleUuid = (String)values[2];
 
 					try {
 						ServiceContext serviceContext = new ServiceContext();

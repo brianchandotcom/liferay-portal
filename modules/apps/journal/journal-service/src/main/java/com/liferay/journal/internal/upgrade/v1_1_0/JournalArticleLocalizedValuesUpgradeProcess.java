@@ -112,13 +112,18 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 			processConcurrently(
 				"select id_, companyId, title, description, " +
 					"defaultLanguageId from JournalArticle",
-				resultRow -> {
-					long id = resultRow.get(1);
-					long companyId = resultRow.get(2);
+				resultSet -> new Object[] {
+					resultSet.getLong(1), resultSet.getLong(2),
+					resultSet.getString(3), resultSet.getString(4),
+					resultSet.getString(5)
+				},
+				values -> {
+					long id = (Long)values[0];
+					long companyId = (Long)values[1];
 
-					String title = resultRow.get(3);
-					String description = resultRow.get(4);
-					String defaultLanguageId = resultRow.get(5);
+					String title = (String)values[2];
+					String description = (String)values[3];
+					String defaultLanguageId = (String)values[4];
 
 					Map<Locale, String> titleMap = _getLocalizationMap(
 						title, defaultLanguageId);
@@ -255,11 +260,15 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 					"select id_, groupId, ", columnName,
 					" from JournalArticle where defaultLanguageId is null or ",
 					"defaultLanguageId = ''"),
-				resultRow -> {
-					String columnValue = resultRow.get(3);
+				resultSet -> new Object[] {
+					resultSet.getLong(1), resultSet.getLong(2),
+					resultSet.getString(3)
+				},
+				values -> {
+					String columnValue = (String)values[2];
 
 					if (Validator.isXml(columnValue) || strictUpdate) {
-						long groupId = resultRow.get(2);
+						long groupId = (Long)values[1];
 
 						Locale defaultSiteLocale = defaultSiteLocales.get(
 							groupId);
@@ -271,7 +280,7 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 							defaultSiteLocales.put(groupId, defaultSiteLocale);
 						}
 
-						long id = resultRow.get(1);
+						long id = (Long)values[0];
 
 						String defaultLanguageId =
 							LocalizationUtil.getDefaultLanguageId(

@@ -54,13 +54,18 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 		processConcurrently(
 			"select id_, groupId, content, DDMStructureKey from " +
 				"JournalArticle where ctCollectionId = 0",
-			resultRow -> {
-				long id = resultRow.get("id_");
-				long groupId = resultRow.get("groupId");
+			resultSet -> new Object[] {
+				resultSet.getLong("id_"), resultSet.getLong("groupId"),
+				resultSet.getString("content"),
+				resultSet.getString("DDMStructureKey")
+			},
+			values -> {
+				long id = (Long)values[0];
+				long groupId = (Long)values[1];
 
-				String content = resultRow.get("content");
+				String content = (String)values[2];
 
-				String ddmStructureKey = resultRow.get("DDMStructureKey");
+				String ddmStructureKey = (String)values[3];
 
 				DDMStructure ddmStructure =
 					_ddmStructureLocalService.getStructure(

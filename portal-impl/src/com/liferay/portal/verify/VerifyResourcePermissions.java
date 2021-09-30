@@ -163,11 +163,15 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			processConcurrently(
 				_getVerifyResourcedModelSQL(
 					false, verifiableResourcedModel, role),
-				resultRow -> {
-					long primKey = resultRow.get(
-						verifiableResourcedModel.getPrimaryKeyColumnName());
-					long ownerId = resultRow.get(
-						verifiableResourcedModel.getUserIdColumnName());
+				resultSet -> new Object[] {
+					resultSet.getLong(
+						verifiableResourcedModel.getPrimaryKeyColumnName()),
+					resultSet.getLong(
+						verifiableResourcedModel.getUserIdColumnName())
+				},
+				values -> {
+					long primKey = (Long)values[0];
+					long ownerId = (Long)values[1];
 
 					long companyId = role.getCompanyId();
 					long roleId = role.getRoleId();

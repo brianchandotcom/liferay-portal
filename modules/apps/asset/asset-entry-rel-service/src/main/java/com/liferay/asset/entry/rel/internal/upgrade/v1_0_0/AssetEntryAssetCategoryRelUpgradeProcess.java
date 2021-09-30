@@ -28,9 +28,12 @@ public class AssetEntryAssetCategoryRelUpgradeProcess extends UpgradeProcess {
 	protected void addAssetEntryAssetCategoryRels() throws Exception {
 		processConcurrently(
 			"select entryId, categoryId from AssetEntries_AssetCategories",
-			resultRow -> {
-				long assetEntryId = resultRow.get("entryId");
-				long assetCategoryId = resultRow.get("categoryId");
+			resultSet -> new Object[] {
+				resultSet.getLong("entryId"), resultSet.getLong("categoryId")
+			},
+			values -> {
+				long assetEntryId = (Long)values[0];
+				long assetCategoryId = (Long)values[1];
 
 				try {
 					runSQL(

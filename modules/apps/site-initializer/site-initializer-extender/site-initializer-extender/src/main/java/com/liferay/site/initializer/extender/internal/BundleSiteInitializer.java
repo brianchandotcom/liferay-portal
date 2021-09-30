@@ -310,7 +310,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					documentsStringUtilReplaceValues, serviceContext);
 
 			_addLayouts(
-				_assetListEntryLocalService,
+				_assetListEntryLocalService, documentsStringUtilReplaceValues,
 				remoteAppEntryIdsStringUtilReplaceValues, serviceContext);
 		}
 		catch (Exception exception) {
@@ -717,6 +717,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			jsonObject.put("alt", StringPool.BLANK);
 
 			documentsStringUtilReplaceValues.put(
+				"DOCUMENT_FILE_ENTRY_ID:" + key,
+				String.valueOf(fileEntry.getFileEntryId()));
+
+			documentsStringUtilReplaceValues.put(
 				"DOCUMENT_JSON:" + key, jsonObject.toString());
 
 			documentsStringUtilReplaceValues.put(
@@ -855,6 +859,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private void _addLayout(
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
+			Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues,
 			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
@@ -886,10 +891,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
+		HashMap<String, String> stringUtilReplaceValues = HashMapBuilder.putAll(
+			assetListEntryIdsStringUtilReplaceValues
+		).putAll(
+			documentsStringUtilReplaceValues
+		).putAll(
+			remoteAppEntryIdsStringUtilReplaceValues
+		).build();
+
 		json = StringUtil.replace(
-			json, "\"[$", "$]\"", assetListEntryIdsStringUtilReplaceValues);
-		json = StringUtil.replace(
-			json, "[$", "$]", remoteAppEntryIdsStringUtilReplaceValues);
+			json, "\"[$", "$]\"", stringUtilReplaceValues);
 
 		JSONObject pageDefinitionJSONObject = JSONFactoryUtil.createJSONObject(
 			json);
@@ -1023,6 +1034,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private void _addLayouts(
 			AssetListEntryLocalService assetListEntryLocalService,
+			Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -1061,6 +1073,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			if (resourcePath.endsWith("/")) {
 				_addLayout(
 					assetListEntryIdsStringUtilReplaceValues,
+					documentsStringUtilReplaceValues,
 					remoteAppEntryIdsStringUtilReplaceValues, resourcePath,
 					serviceContext);
 			}

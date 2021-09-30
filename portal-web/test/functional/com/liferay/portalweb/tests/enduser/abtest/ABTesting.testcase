@@ -96,7 +96,6 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if, in the list of the variant for A/B Test, the user have the options to edit the name and delete"
-	@ignore = "true"
 	@priority = "3"
 	test AssertEditDeleteVarianOptions {
 		task ("Create AB test and create variant") {
@@ -263,7 +262,6 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the variant for A/B Test that was added on Liferay portal is visible in the Analytics Cloud"
-	@ignore = "true"
 	@priority = "5"
 	test CheckVariantAddedInAC {
 		task ("Create AB test and create variant") {
@@ -290,7 +288,6 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the variant for A/B Test that was deleted on Liferay portal is visible in the Analytics Cloud"
-	@ignore = "true"
 	@priority = "4"
 	test CheckVariantDeletedInAC {
 		task ("Create AB test and create 2 variants") {
@@ -341,7 +338,6 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the variant for A/B Test that was edited on Liferay portal is visible in the Analytics Cloud"
-	@ignore = "true"
 	@priority = "4"
 	test CheckVariantEditedInAC {
 		task ("Create AB test and create variant") {
@@ -526,7 +522,6 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the user can create a variant for A/B Test with the same name that already exists with success"
-	@ignore = "true"
 	@priority = "4"
 	test CreateVariantSameName {
 		task ("Create AB test") {
@@ -600,7 +595,6 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if a message will appear asking if the user wants to delete a variant for A/B Test and he can delete with success"
-	@ignore = "true"
 	@priority = "4"
 	test DeleteVariant {
 		task ("Create AB test and create variant") {
@@ -631,7 +625,6 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the user not will delete a variant for A/B Test, if when he will delete and he presses the cancel button"
-	@ignore = "true"
 	@priority = "4"
 	test DeleteVariantCancel {
 		task ("Create AB test and create variant") {
@@ -718,7 +711,6 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the user can edit a variant for A/B Test with success"
-	@ignore = "true"
 	@priority = "5"
 	test EditVariant {
 		task ("Create AB test and create variant") {
@@ -757,7 +749,6 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the user can cancel the creation of one variant for A/B Test, and the data that he inputs during the creation is discarded"
-	@ignore = "true"
 	@priority = "3"
 	test EditVariantCancel {
 		task ("Create AB test") {
@@ -812,7 +803,6 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the user can edit a variant for A/B Test with the same name that already exists with success"
-	@ignore = "true"
 	@priority = "3"
 	test EditVariantSameName {
 		task ("Create AB test and create variant") {
@@ -986,39 +976,129 @@ definition {
 	}
 
 	@description = "LPS-97196: Validate if when the user is in the "Review and Start Test" screen, all data is discarded after the user clicks on cancel button"
-	@ignore = "true"
 	@priority = "4"
 	test ReviewAndStartCancel {
+		task ("Create AB test, create variant and delete variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		// TODO LPS-137483 ReviewAndStartCancel pending implementation
+			ABTest.createVariant(variantName = "Variant name");
+		}
 
+		task ("Click on Review and Start Test Button and click cancel button") {
+			Click(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
+
+			Click(locator1 = "ABTest#CANCEL_VARIANT_NAME_BUTTON");
+		}
+
+		task ("Assert the test status is not running") {
+			AssertTextEquals(
+				locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON",
+				value1 = "Review and Run Test");
+		}
+
+		task ("Run and terminate AB Test") {
+			ABTest.runTest();
+
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-97196: Validate if when the user is in the "Review and Start Test" screen, all data is discarded after the user clicks in closed button"
-	@ignore = "true"
 	@priority = "3"
 	test ReviewAndStartClose {
+		task ("Create AB test, create variant and delete variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		// TODO LPS-137483 ReviewAndStartClose pending implementation
+			ABTest.createVariant(variantName = "Variant name");
+		}
 
+		task ("Click on Review and Start Test Button and click close button") {
+			Click(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
+
+			Click(locator1 = "ABTest#CLOSE_BUTTON");
+		}
+
+		task ("Assert the test status is not running") {
+				AssertTextEquals(
+				locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON",
+				value1 = "Review and Run Test");
+		}
+
+		task ("Run and terminate AB Test") {
+			ABTest.runTest();
+
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-97196: Validate if all the information configured in the "Review and Start Test" screen appears correctly after the user clicks on the Run button"
-	@ignore = "true"
 	@priority = "5"
 	test ReviewAndStartRunCheckInfo {
+		task ("Create AB test, create variant and delete variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		// TODO LPS-137483 ReviewAndStartRunCheckInfo pending implementation
+			ABTest.createVariant(variantName = "Variant name");
 
+			ABTest.createVariant(variantName = "Variant name 2");
+		}
+
+		task ("Click on Review and Start Test Button") {
+			Click(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
+		}
+
+		task ("Assert itens at Review and Run Test page") {
+			ABTest.viewInfoItems(values = "Control,Variant name,Variant name 2,Confidence Level Required");
+		}
+
+		task ("Assert percentage values and Estimated Time to Declare Winner at Review and Run Test page") {
+			ABTest.viewInfoItems(values = "34,33,33,95");
+
+			AssertElementPresent(
+			key_name = "Estimated Time to Declare Winner",
+			key_value = "N/A",
+			locator1 = "ABTest#VIEW_ESTIMATED_TIME",
+			value1 = "N/A");
+		}
+
+		task ("Terminate AB Test") {
+			Click(locator1 = "ABTest#RUN_TEST_BUTTON");
+			
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-97196: Validate if when the user is in the "Review and Start Test" screen, the sum of all traffic split options should be 100%"
-	@ignore = "true"
 	@priority = "4"
 	test ReviewAndStartSum100 {
+		task ("Create AB test, create variant and delete variant") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		// TODO LPS-137483 ReviewAndStartSum100 pending implementation
+			ABTest.createVariant(variantName = "Variant name");
 
+			ABTest.createVariant(variantName = "Variant name 2");
+		}
+
+		task ("Click on Review and Start Test Button") {
+			Click(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
+		}
+
+		task ("Assert the sum values should be 100") {
+			ABTest.viewInfoItems(values = "34,33,33");
+
+			Click(locator1 = "ABTest#RUN_TEST_BUTTON");
+		}
+
+		task ("Terminate AB Test") {
+			ABTest.terminateTest();
+		}
 	}
 
 	@description = "LPS-119475: When a user has selected an element, the Select clickable element button changes into Change clickable element, and the elements are highlighted"

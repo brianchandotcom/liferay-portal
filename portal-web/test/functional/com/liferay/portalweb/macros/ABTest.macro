@@ -168,6 +168,20 @@ definition {
 		}
 	}
 
+	macro viewInfoItems {
+		var index = "0";
+
+		for (var values : list "${values}") {
+			var index = ${index} + 1;
+
+		AssertElementPresent(
+			key_index = "${index}",
+			key_value = "${values}",
+			locator1 = "ABTest#VIEW_INFO_ITEMS",
+			value1 = "${values}");
+		}
+	}
+	
 	macro writeId {
 		Click(locator1 = "ABTest#ELEMENT_ID_INPUT");
 

@@ -15,6 +15,7 @@
 package com.liferay.list.type.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.list.type.exception.ListTypeDefinitionNameException;
 import com.liferay.list.type.exception.RequiredListTypeDefinitionException;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
@@ -65,6 +66,23 @@ public class ListTypeDefinitionLocalServiceTest {
 		Assert.assertNotNull(
 			_listTypeDefinitionLocalService.fetchListTypeDefinition(
 				listTypeDefinition.getListTypeDefinitionId()));
+
+		// Name is null
+
+		try {
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				TestPropsValues.getUserId(),
+				Collections.singletonMap(LocaleUtil.US, ""));
+
+			Assert.fail();
+		}
+		catch (ListTypeDefinitionNameException
+					listTypeDefinitionNameException) {
+
+			Assert.assertEquals(
+				"Name is null for locale " + LocaleUtil.US.getDisplayName(),
+				listTypeDefinitionNameException.getMessage());
+		}
 	}
 
 	@Test

@@ -1374,7 +1374,7 @@ definition {
 	macro viewSelectedAccount {
 		Search.searchPG(
 			portletName = "Account Management",
-			searchTerm = "${selectedAccount}");
+			searchTerm = "${selectedAccountSearchTerm}");
 
 		LexiconEntry.viewEntryName(rowEntry = "${selectedAccount}");
 
@@ -1386,7 +1386,7 @@ definition {
 
 		Search.searchPG(
 			portletName = "Account Management",
-			searchTerm = "${previousAccount}");
+			searchTerm = "${previousAccountSearchTerm}");
 
 		LexiconEntry.viewEntryName(rowEntry = "${previousAccount}");
 

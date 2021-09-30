@@ -71,11 +71,17 @@ definition {
 	@description = "This test adds the Add Account Entry permission to Account Admin and assert user can add an account."
 	@priority = "5"
 	test AccountAdminCanAddAccount {
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ADD_ACCOUNT_ENTRY",
-			resourceName = "com.liferay.account",
-			roleTitle = "Account Administrator",
-			roleType = "account");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Accounts.setAddAccountEntryPermissions(
+			roleTitle = "Reg Role Name",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "2B Account Page");
 
@@ -300,11 +306,17 @@ definition {
 	@description = "This test asserts that a user can select an account from the list as the active account. Backend tests are covering functionality for account selection."
 	@priority = "4"
 	test CanSetActiveAccount {
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ADD_ACCOUNT_ENTRY",
-			resourceName = "com.liferay.account",
-			roleTitle = "Account Administrator",
-			roleType = "account");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Accounts.setAddAccountEntryPermissions(
+			roleTitle = "Reg Role Name",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "2B Account Page");
 
@@ -340,17 +352,23 @@ definition {
 	@description = "This test filters Accounts by status."
 	@priority = "4"
 	test FilterByStatus {
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ADD_ACCOUNT_ENTRY",
-			resourceName = "com.liferay.account",
-			roleTitle = "Account Administrator",
-			roleType = "account");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Accounts.setAddAccountEntryPermissions(
+			roleTitle = "Reg Role Name",
+			userEmailAddress = "userea@liferay.com");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "DELETE",
 			resourceName = "com.liferay.account.model.AccountEntry",
 			roleTitle = "Account Administrator",
 			roleType = "account");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "2B Account Page");
 

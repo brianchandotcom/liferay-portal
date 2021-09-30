@@ -929,7 +929,7 @@
 												"classPKReferences": {
 													"en_US": {
 														"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-														"classPK": 79908
+														"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/logos.svg$]"
 													}
 												},
 												"fragmentImageConfiguration": {
@@ -1135,7 +1135,7 @@
 																"classPKReferences": {
 																	"en_US": {
 																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																		"classPK": 75085
+																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/method_01.jpg$]"
 																	}
 																},
 																"fragmentImageConfiguration": {
@@ -1563,7 +1563,7 @@
 																"classPKReferences": {
 																	"en_US": {
 																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																		"classPK": 75063
+																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/method_02.jpg$]"
 																	}
 																},
 																"fragmentImageConfiguration": {
@@ -1665,7 +1665,7 @@
 																"classPKReferences": {
 																	"en_US": {
 																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																		"classPK": 75074
+																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/method_03.jpg$]"
 																	}
 																},
 																"fragmentImageConfiguration": {
@@ -1970,7 +1970,7 @@
 																		"classPKReferences": {
 																			"en_US": {
 																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": 77982
+																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/form_3.jpg$]"
 																			}
 																		},
 																		"fragmentImageConfiguration": {

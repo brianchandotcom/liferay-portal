@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
+import ProductComparison from '~/shared/components/product-comparison';
 import {LiferayService} from '~/shared/services/liferay';
-import ProductComparison from '../components/product-comparison';
 
 const QuoteComparison = () => {
 	const [quotes, setQuotes] = useState([]);
@@ -12,12 +12,23 @@ const QuoteComparison = () => {
 			.catch((error) => console.error(error.message));
 	}, []);
 
+	const onClickPurchase = () => {};
+
+	const onClickPolicyDetails = () => {};
+
 	return (
-		<div className="quote-comparison">
-			{quotes.map((quote, index) => (
-				<ProductComparison key={index} {...quote} />
-			))}
-		</div>
+		<>
+			<div className="quote-comparison">
+				{quotes.map((quote, index) => (
+					<ProductComparison
+						key={index}
+						onClickPolicyDetails={onClickPolicyDetails}
+						onClickPurchase={onClickPurchase}
+						product={quote}
+					/>
+				))}
+			</div>
+		</>
 	);
 };
 

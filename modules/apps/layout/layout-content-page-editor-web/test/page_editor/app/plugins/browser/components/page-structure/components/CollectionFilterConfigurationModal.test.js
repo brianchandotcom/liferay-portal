@@ -134,20 +134,18 @@ describe('CollectionFilterConfigurationModal', () => {
 
 		const titleInput = getByLabelText('Title');
 
-		await act(async () => {
-			userEvent.type(titleInput, 'This is a test');
-		});
+		userEvent.type(titleInput, 'This is a test');
 
 		await act(async () => {
 			fireEvent.blur(titleInput);
 		});
 
-		await act(async () => {
-			userEvent.click(getByLabelText('Tag'));
-			userEvent.click(getByLabelText('tag1'));
-		});
+		userEvent.click(getByLabelText('Tag'));
+		userEvent.click(getByLabelText('tag1'));
 
-		userEvent.click(getByText(document.body, 'apply'));
+		act(() => {
+			userEvent.click(getByText(document.body, 'apply'));
+		});
 
 		expect(handleConfigurationChanged).toBeCalledWith(
 			expect.objectContaining({
@@ -163,9 +161,7 @@ describe('CollectionFilterConfigurationModal', () => {
 
 		const titleInput = getByLabelText('Title');
 
-		await act(async () => {
-			userEvent.type(titleInput, 'This is a test');
-		});
+		userEvent.type(titleInput, 'This is a test');
 
 		await act(async () => {
 			fireEvent.blur(titleInput);
@@ -181,9 +177,7 @@ describe('CollectionFilterConfigurationModal', () => {
 
 		const titleInput = getByLabelText('Title');
 
-		await act(async () => {
-			userEvent.type(titleInput, 'This is a test');
-		});
+		userEvent.type(titleInput, 'This is a test');
 
 		await act(async () => {
 			fireEvent.blur(titleInput);

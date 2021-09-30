@@ -225,7 +225,6 @@ export default function ItemSelector({
 								trigger={
 									<ClayButtonWithIcon
 										aria-label={selectContentButtonLabel}
-										className="page-editor__item-selector__content-button"
 										displayType="secondary"
 										small
 										symbol={selectContentButtonIcon}
@@ -238,7 +237,6 @@ export default function ItemSelector({
 						<ClayInput.GroupItem shrink>
 							<ClayButtonWithIcon
 								aria-label={selectContentButtonLabel}
-								className="page-editor__item-selector__content-button"
 								displayType="secondary"
 								onClick={openModal}
 								small
@@ -263,7 +261,6 @@ export default function ItemSelector({
 										Liferay.Language.get('view-x-options'),
 										label
 									)}
-									className="page-editor__item-selector__content-button"
 									displayType="secondary"
 									small
 									symbol="ellipsis-v"

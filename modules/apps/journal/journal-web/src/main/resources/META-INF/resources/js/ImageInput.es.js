@@ -67,7 +67,6 @@ export default function ImageInput({name, portletNamespace, previewURL}) {
 
 						<ClayInput.GroupItem shrink>
 							<ClayButtonWithIcon
-								className="page-editor__item-selector__content-button"
 								displayType="secondary"
 								onClick={() => inputRef.current?.click()}
 								small

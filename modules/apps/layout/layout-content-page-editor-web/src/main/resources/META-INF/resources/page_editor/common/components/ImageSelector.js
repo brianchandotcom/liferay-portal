@@ -67,7 +67,6 @@ export function ImageSelector({
 					</ClayInput.GroupItem>
 					<ClayInput.GroupItem shrink>
 						<ClayButtonWithIcon
-							className="page-editor__item-selector__content-button"
 							displayType="secondary"
 							onClick={() =>
 								openImageSelector((image) => {
@@ -88,7 +87,6 @@ export function ImageSelector({
 						<>
 							<ClayInput.GroupItem shrink>
 								<ClayButtonWithIcon
-									className="page-editor__item-selector__content-button"
 									displayType="secondary"
 									onClick={onClearButtonPressed}
 									small

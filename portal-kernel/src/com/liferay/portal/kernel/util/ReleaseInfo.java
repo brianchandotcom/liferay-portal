@@ -86,7 +86,7 @@ public class ReleaseInfo {
 
 	public static final int RELEASE_7_4_12_BUILD_NUMBER = 7412;
 
-	public static final int RELEASE_7_4_90_BUILD_NUMBER = 7490;
+	public static final int RELEASE_7_4_13_BUILD_NUMBER = 7413;
 
 	public static Date getBuildDate() {
 		DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);

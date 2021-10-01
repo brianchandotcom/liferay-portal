@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -304,8 +305,6 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			successEntries.add(fileName);
 		}
 		catch (XLIFFFileException xliffFileException) {
-			String message = xliffFileException.getMessage();
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
@@ -313,53 +312,21 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getLocale(), getClass());
 
 			if (xliffFileException instanceof
-					XLIFFFileException.MustBeSupportedLanguage) {
+					XLIFFFileException.MustHaveValidId) {
 
-				message = _language.get(
-					resourceBundle,
-					"the-xliff-file-has-an-unavailable-language-translation");
+				failureEntries.put(
+					fileName,
+					_language.get(
+						resourceBundle, _getMustHaveValidIdMessage(className)));
 			}
-			else if (xliffFileException instanceof
-						XLIFFFileException.MustBeValid) {
-
-				message = _language.get(
-					resourceBundle, "the-file-is-an-invalid-xliff-file");
+			else {
+				failureEntries.put(
+					fileName,
+					_language.get(
+						resourceBundle,
+						_exceptionMessageMap.get(
+							xliffFileException.getClass())));
 			}
-			else if (xliffFileException instanceof
-						XLIFFFileException.MustBeWellFormed) {
-
-				message = _language.get(
-					resourceBundle,
-					"the-xliff-file-does-not-have-all-needed-fields");
-			}
-			else if (xliffFileException instanceof
-						XLIFFFileException.MustHaveCorrectEncoding) {
-
-				message = _language.get(
-					resourceBundle,
-					"the-translation-file-has-an-incorrect-encoding.the-" +
-						"supported-encoding-format-is-utf-8");
-			}
-			else if (xliffFileException instanceof
-						XLIFFFileException.MustHaveValidId) {
-
-				message = _language.get(
-					resourceBundle, _getMustHaveValidIdMessage(className));
-			}
-			else if (xliffFileException instanceof
-						XLIFFFileException.MustHaveValidParameter) {
-
-				message = _language.get(
-					resourceBundle, "the-xliff-file-has-invalid-parameters");
-			}
-			else if (xliffFileException instanceof
-						XLIFFFileException.MustNotHaveMoreThanOne) {
-
-				message = _language.get(
-					resourceBundle, "the-xliff-file-is-invalid");
-			}
-
-			importErrors.put(uploadedFileName, message);
 		}
 	}
 
@@ -387,6 +354,28 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			zipReader.close();
 		}
 	}
+
+	private static final Map<Class<?>, String> _exceptionMessageMap =
+		HashMapBuilder.<Class<?>, String>put(
+			XLIFFFileException.MustBeSupportedLanguage.class,
+			"the-xliff-file-has-an-unavailable-language-translation"
+		).put(
+			XLIFFFileException.MustBeValid.class,
+			"the-file-is-an-invalid-xliff-file"
+		).put(
+			XLIFFFileException.MustBeWellFormed.class,
+			"the-xliff-file-does-not-have-all-needed-fields"
+		).put(
+			XLIFFFileException.MustHaveCorrectEncoding.class,
+			"the-translation-file-has-an-incorrect-encoding.the-supported-" +
+				"encoding-format-is-utf-8"
+		).put(
+			XLIFFFileException.MustHaveValidParameter.class,
+			"the-xliff-file-has-invalid-parameters"
+		).put(
+			XLIFFFileException.MustNotHaveMoreThanOne.class,
+			"the-xliff-file-is-invalid"
+		).build();
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

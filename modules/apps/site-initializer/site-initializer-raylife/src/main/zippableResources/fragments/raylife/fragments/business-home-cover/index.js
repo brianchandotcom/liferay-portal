@@ -1,3 +1,4 @@
+/* eslint-disable @liferay/portal/no-global-fetch */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,6 +12,19 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
+ const fetchHeadless = async (url) => {
+	const response = await fetch(`${window.location.origin}/${url}`, {
+		headers: {
+			'Content-Type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+	});
+
+	const data = await response.json();
+
+	return data;
+};
 
 const retrieveQuoteContainer = fragmentElement.querySelector('#retrieve-quote');
 const newQuoteContainer = fragmentElement.querySelector('#new-quote');
@@ -91,13 +105,11 @@ getQuoteForm.onsubmit = function (event) {
 		if (!formProps.product) {
 			productContainer.classList.add('has-error');
 		}
-	} else {
-		const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
+	}
+	else {
+		localStorage.setItem('raylife-product', JSON.stringify(formProps));
 
-		localStorage.setItem(
-			'raylife-business-home',
-			JSON.stringify(formProps)
-		);
+		const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
 
 		window.location.href = `${pathname}/get-a-quote`;
 	}
@@ -109,24 +121,29 @@ fragmentElement.querySelector('#zip').onkeypress = (event) => {
 	return !(charCode > 31 && (charCode < 48 || charCode > 57));
 };
 
-Liferay.Service(
-	'/assetcategory/search-categories-display',
-	{
-		'+sort': 'com.liferay.portal.kernel.search.Sort',
-		'sort.fieldName': 'name',
-		'sort.type': 6,
-		end: 50,
-		groupIds: 0,
-		parentCategoryIds: 0,
-		start: 0,
-		title: '',
-		vocabularyIds: null,
-	},
-	(response) => {
+(async () => {
+	try {
+		const taxonomyVocabularies = await fetchHeadless(
+			`/o/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getCompanyGroupId()}/taxonomy-vocabularies?filter=name eq 'Raylife'`
+		);
+
+		if (!taxonomyVocabularies?.items[0]) {
+			return console.error('No Taxonomy Vocabulary found');
+		}
+
+		const taxonomyCategories = await fetchHeadless(
+			`/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabularies.items[0].id}/taxonomy-categories`
+		);
+
 		const product = fragmentElement.querySelector('#product');
 
-		response.categories.forEach((category) => {
-			product.add(new Option(category.name, category.categoryId));
+		taxonomyCategories?.items.forEach((taxonomyVocabulary) => {
+			product.add(
+				new Option(taxonomyVocabulary.name, taxonomyVocabulary.id)
+			);
 		});
 	}
-);
+	catch (error) {
+		console.error(error.message);
+	}
+})();

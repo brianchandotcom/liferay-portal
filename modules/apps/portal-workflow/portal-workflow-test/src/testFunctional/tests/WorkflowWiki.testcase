@@ -754,8 +754,6 @@ definition {
 			key_workflowInstanceName = "Test Title",
 			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
 			value1 = "Test Title");
-
-
 	}
 
 	@description = "This is a test for LRQA-69558. Verify that the Front Page status are displayed correctly on reject process."

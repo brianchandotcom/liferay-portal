@@ -370,8 +370,8 @@ function serializeRequestInfo(resource: RequestInfo): StructuredClonable {
 	serialized.credentials = resource.credentials;
 	serialized.destination = resource.destination;
 	serialized.integrity = resource.integrity;
-	serialized.isHistoryNavigation = resource.isHistoryNavigation;
-	serialized.isReloadNavigation = resource.isReloadNavigation;
+	serialized.isHistoryNavigation = (resource as any).isHistoryNavigation;
+	serialized.isReloadNavigation = (resource as any).isReloadNavigation;
 	serialized.keepalive = resource.keepalive;
 	serialized.method = resource.method;
 	serialized.mode = resource.mode;

@@ -252,6 +252,10 @@ definition {
 			accountName = "Account Name",
 			organizationNumber = "1,3,4");
 
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
 		Navigator.gotoPage(pageName = "2B Account Page");
 
 		LexiconEntry.gotoEntry(rowEntry = "Account Name");
@@ -285,6 +289,10 @@ definition {
 		Accounts.assignOrganizations(
 			accountName = "Account Name",
 			assigneeName = "Organization for Account");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "2B Account Page");
 
@@ -564,6 +572,8 @@ definition {
 			rowStatus = "Active");
 	}
 
+	@description = "This test filters Accounts by Account Type."
+	@priority = "3"
 	test FilterByType {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",

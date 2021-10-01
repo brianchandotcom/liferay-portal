@@ -431,10 +431,6 @@ definition {
 			userLastName = "user1",
 			userScreenName = "user1");
 
-		Accounts.setAddAccountEntryPermissions(
-			roleTitle = "Reg Role Name",
-			userEmailAddress = "userea@liferay.com");
-
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");

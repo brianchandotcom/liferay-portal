@@ -287,7 +287,6 @@ definition {
 		AssertElementPresent(
 			key_errorMessage = "There is already a page with the specified title.",
 			locator1 = "WorkflowTransitionModal#TRANSITION_ERROR_MESSAGE");
-
 	}
 
 	@priority = "4"

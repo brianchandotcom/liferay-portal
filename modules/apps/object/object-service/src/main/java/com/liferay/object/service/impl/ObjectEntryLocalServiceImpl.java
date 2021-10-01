@@ -985,7 +985,7 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 
-		return valueString;
+		return GetterUtil.getString(valueString);
 	}
 
 	private Map<String, Serializable> _getValues(

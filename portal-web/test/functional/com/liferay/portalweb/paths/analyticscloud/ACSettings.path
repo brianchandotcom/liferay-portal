@@ -161,7 +161,7 @@
 </tr>
 <tr>
 	<td>ITEM_ON_LIST</td>
-	<td>//*[contains(@class,'text-truncate') and contains(text(),'${itemName}')]</td>
+	<td>//*[contains(@class,'text-truncate')and text()='${itemName}']</td>
 	<td></td>
 </tr>
 <tr>

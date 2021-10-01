@@ -17,25 +17,26 @@ definition {
 
 		Navigator.openURL();
 
-		// ProductMenu.gotoPortlet(
-		// 	category = "Configuration",
-		// 	panel = "Site Administration",
-		// 	portlet = "Workflow");
+		//ProductMenu.gotoPortlet(
+		//	category = "Configuration",
+		//	panel = "Site Administration",
+		//	portlet = "Workflow");
 
-		// Workflow.configureWorkflow(
-		// 	workflowDefinition = "Single Approver",
-		// 	workflowResourceValue = "Wiki Page");
+		//Workflow.configureWorkflow(
+		//	workflowDefinition = "Single Approver",
+		//	workflowResourceValue = "Wiki Page");
 
-		// ProductMenu.gotoPortlet(
-		// 	category = "Site Builder",
-		// 	panel = "Site Administration",
-		// 	portlet = "Pages");
+		//ProductMenu.gotoPortlet(
+		//	category = "Site Builder",
+		//	panel = "Site Administration",
+		//	portlet = "Pages");
 
-		// SitePages.addPublicPage(pageName = "Wiki Page");
+		//SitePages.addPublicPage(pageName = "Wiki Page");
 
-		// Navigator.gotoPage(pageName = "Wiki Page");
+		//Navigator.gotoPage(pageName = "Wiki Page");
 
-		// Portlet.addPG(portletName = "Wiki");
+		//Portlet.addPG(portletName = "Wiki");
+
 	}
 
 	tearDown {
@@ -384,9 +385,9 @@ definition {
 	@priority = "3"
 	test WikiChildPageStatusOnReject {
 		ApplicationsMenu.gotoPortlet(
-            category = "Workflow",
-            panel = "Applications",
-            portlet = "Process Builder");
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Configuration");
 
@@ -418,7 +419,7 @@ definition {
 		WikiPage.addFrontPageWithWorkflowPG(wikiPageContent = "Front Page Content");
 
 		Navigator.gotoBack();
-		
+
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Add Child Page");
 
 		PortletEntry.inputTitle(title = "Child Page Test");
@@ -436,7 +437,7 @@ definition {
 		WikiPage.submitForPublication();
 
 		Refresh();
-		
+
 		AssertTextEquals(
 			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_STATUS",
 			value1 = "Pending");
@@ -459,7 +460,7 @@ definition {
 			workflowAssetTitle = "FrontPage",
 			workflowAssetType = "Wiki Page",
 			workflowTask = "Review");
-		
+
 		Workflow.rejectTaskByActions(
 			workflowAssetTitle = "Child Page Test",
 			workflowAssetType = "Wiki Page",
@@ -476,9 +477,8 @@ definition {
 			value1 = "Main");
 
 		AssertElementNotPresent(
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			key_domainName = "Child Page Test");
-
+			key_domainName = "Child Page Test",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE");
 	}
 
 	@description = "This is a test for LRQA-68568. Verify that the Front Page content doesn't change on reject. "

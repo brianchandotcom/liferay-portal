@@ -1,37 +1,10 @@
-import Axios from 'axios';
 import '~/types';
 
 import {LiferayAdapt} from './adapter';
+import LiferayFetchAPI, {getLiferayAuthenticationToken} from './api';
 import {STORAGE_KEYS, Storage} from './storage';
 
-const {REACT_APP_LIFERAY_API = window.location.origin} = process.env;
-
 const LiferayObjectAPI = 'o/c/raylifeapplications';
-
-const baseFetch = async (url, {body, method = 'GET'} = {}) => {
-	const liferayAPIUrl = new URL(`${REACT_APP_LIFERAY_API}/${url}`);
-
-	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const response = await fetch(liferayAPIUrl, {
-		...(body && {body: JSON.stringify(body)}),
-		headers: {
-			'Content-Type': 'application/json',
-			'x-csrf-token': getLiferayAuthenticationToken(),
-		},
-		method,
-	});
-
-	const data = await response.json();
-
-	return {data};
-};
-
-const LiferayFetchAPI = {
-	delete: (url) => baseFetch(url, {method: 'DELETE'}),
-	get: (url) => baseFetch(url),
-	post: (url, options) => baseFetch(url, {...options, method: 'POST'}),
-	put: (url, options) => baseFetch(url, {...options, method: 'PUT'}),
-};
 
 /**
  * @param {DataForm}  data Basics form object
@@ -100,16 +73,16 @@ const getLiferayGroupId = () => {
 };
 
 /**
- * @returns {string} Liferay Authentication Token
+ * @returns {string} Liferay Scope Group Id
  */
-const getLiferayAuthenticationToken = () => {
+const getScopeGroupId = () => {
 	try {
 		// eslint-disable-next-line no-undef
-		const token = Liferay.authToken;
+		const scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
 
-		return token;
+		return scopeGroupId;
 	} catch (error) {
-		console.warn('Not able to find Liferay auth token\n', error);
+		console.warn('Not able to find Liferay Scope Group Id\n', error);
 
 		return '';
 	}
@@ -135,7 +108,7 @@ const getLiferaySiteName = () => {
 const _getProductsByCategoryId = async () => {
 	const URL = `/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=skus,catalog&page=1&pageSize=50`;
 
-	const {data} = await LiferayAPI.get(URL);
+	const {data} = await LiferayFetchAPI.get(URL);
 
 	return data;
 };
@@ -154,51 +127,26 @@ const _getAssetCategoriesByParentId = async (id, normalizedFilter) => {
 };
 
 /**
- * @param {string} id - Parent category Id of asset categories
- * @returns {Promise<CategoryPropertyResponse[]>}  Array of matched categories
- */
-const getCategoryProperties = async (id) => {
-	const {data} = await LiferayAPI.get(
-		'/api/jsonws/assetcategoryproperty/get-category-properties',
-		{
-			params: {
-				entryId: id,
-			},
-		}
-	);
-
-	return data;
-};
-
-/**
  * @param {BasicsFormApplicationRequest} payload - Payload used to create the application
- * @returns {Promise<any>}  Axios Response
+ * @returns {Promise<any>}  Fetch Response
  */
-const _postBasicsFormApplication = (payload) => {
-	return LiferayAPI.post(LiferayObjectAPI, payload);
-};
+const _postBasicsFormApplication = (body) =>
+	LiferayFetchAPI.post(`${LiferayObjectAPI}/scopes/${getScopeGroupId()}`, {
+		body,
+	});
 
 /**
  * @param {BasicsFormApplicationRequest} payload - Payload used to update existing application
- * @returns {Promise<any>}  Axios Response
+ * @returns {Promise<any>}  Fetch Response
  */
-const _patchBasicsFormApplication = (payload, id) => {
-	return LiferayAPI.patch(`${LiferayObjectAPI}/${id}`, payload);
+const _patchBasicsFormApplication = (body, id) => {
+	return LiferayFetchAPI.patch(`${LiferayObjectAPI}/${id}`, {body});
 };
 
-const LiferayAPI = Axios.create({
-	baseURL: REACT_APP_LIFERAY_API,
-	headers: {
-		'x-csrf-token': getLiferayAuthenticationToken(),
-	},
-});
-
 export const LiferayService = {
-	LiferayAPI,
 	LiferayFetchAPI,
 	createOrUpdateRaylifeApplication,
 	getBusinessTypes,
-	getCategoryProperties,
 	getLiferayAuthenticationToken,
 	getLiferayGroupId,
 	getLiferaySiteName,

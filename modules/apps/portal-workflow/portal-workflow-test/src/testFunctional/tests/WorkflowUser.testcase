@@ -25,6 +25,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LRQA-69712. Verify that the user can approve a new account by Notifications. "
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanApproveByNotifications {
+
+		// TODO LRQA-69712 CanApproveByNotifications pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69708. Verify that the user can delete a new account when there is a Workflow assigned. "
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteUser {
+
+		// TODO LRQA-69708 CanDeleteUser pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69710. Verify that the user can see the actual state of the user in the workflow process after approve. "
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSeeStateAfterApprove {
+
+		// TODO LRQA-69710 CanSeeStateAfterApprove pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69711. Verify that the user can see the actual state of the user in the workflow process after reject. "
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSeeStateAfterReject {
+
+		// TODO LRQA-69711 CanSeeStateAfterReject pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69709. Verify that the user can see the actual state of the user in the workflow process before assigning to itself. "
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSeeStateBeforeAssign {
+
+		// TODO LRQA-69709 CanSeeStateBeforeAssign pending implementation
+
+	}
+
 	@priority = "5"
 	test CreateNewUserAccount {
 		property portal.acceptance = "true";

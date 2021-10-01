@@ -30,6 +30,7 @@ long rootFolderId = dlPortletInstanceSettings.getRootFolderId();
 String rootFolderName = StringPool.BLANK;
 
 boolean rootFolderInTrash = false;
+boolean rootFolderNotFound = false;
 
 if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	try {
@@ -50,6 +51,8 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	}
 	catch (NoSuchFolderException nsfe) {
 		rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		rootFolderNotFound = true;
 	}
 }
 

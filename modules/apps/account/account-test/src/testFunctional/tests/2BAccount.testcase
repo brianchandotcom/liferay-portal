@@ -303,6 +303,60 @@ definition {
 			assigneeType = "Organizations");
 	}
 
+	@description = "This test sets the Allowed Account Type to only Business and assert that only Business Accounts display in Account Management Widget."
+	@priority = "4"
+	test CanOnlyViewBusinessAccountsWhenAllowedAccountTypeIsBusiness {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "test test");
+
+		for (var accountNumber : list "1,2") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Business ${accountNumber}",
+				accountEntryType = "Business");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Business ${accountNumber}");
+
+			Accounts.assignUsers(
+				accountName = "Business ${accountNumber}",
+				assigneeName = "userfn");
+		}
+
+		for (var accountNumber : list "3,4") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Person ${accountNumber}",
+				accountEntryType = "Person");
+
+			Accounts.openAccountsAdmin();
+
+			Accounts.gotoEdit(accountName = "Person ${accountNumber}");
+
+			Accounts.assignExistingUserToPersonAccount(accountUserName = "userfn");
+		}
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ApplicationsMenu.gotoSite(site = "${siteName}");
+
+		Accounts.setAllowedAccountTypeInSiteSettings(allowedType = "Business");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		for (var accountNumber : list "1,2") {
+			LexiconEntry.viewEntryName(rowEntry = "Business ${accountNumber}");
+		}
+
+		for (var accountNumber : list "3,4") {
+			LexiconEntry.viewNoEntry(rowEntry = "Person ${accountNumber}");
+		}
+	}
+
 	@description = "This test asserts that a user can select an account from the list as the active account. Backend tests are covering functionality for account selection."
 	@priority = "4"
 	test CanSetActiveAccount {

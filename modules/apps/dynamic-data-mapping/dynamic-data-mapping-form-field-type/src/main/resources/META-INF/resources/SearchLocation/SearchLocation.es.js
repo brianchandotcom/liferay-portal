@@ -153,6 +153,14 @@ const Main = ({
 	const parsedValue = parse(value, {});
 
 	useEffect(() => {
+		window.gm_authFailure = function () {
+			Liferay.Util.openToast({
+				message: 'Google API - Auth Error, contact the support',
+				title: Liferay.Language.get('error'),
+				type: 'danger',
+			});
+		};
+
 		if (settingsContext) {
 			const options = SettingsContext.getSettingsContextProperty(
 				settingsContext,

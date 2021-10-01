@@ -38,7 +38,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8387 | Test Summary: Blogs asset appears on list shows pages that the blog exists on"
 	@priority = "5"
 	test AssertAppearsOnListShowsPagesBlogExists {
-		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		// AC Refactor: It is not possible to perform the assert because this test presents timing problems.
 		// AC Refactor ticket: LRAC-9341

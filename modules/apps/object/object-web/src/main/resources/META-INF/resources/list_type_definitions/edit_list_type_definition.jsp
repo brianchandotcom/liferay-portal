@@ -86,6 +86,10 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 </div>
 
 <script>
+	function normalizeLanguageId(languageId) {
+		return languageId.replace('_', '-');
+	}
+
 	function <portlet:namespace />saveListTypeDefinition() {
 		const localizedInputs = document.querySelectorAll(
 			"input[id^='<portlet:namespace />'][type='hidden']"
@@ -94,13 +98,12 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 		const localizedNames = Array(...localizedInputs).reduce(
 			(prev, cur, index) => {
 				if (cur.value) {
-					const language = cur.id.replace(
+					const languageId = cur.id.replace(
 						'<portlet:namespace />name_',
 						''
 					);
-					const formattedLanguage = language.replace('_', '-');
 
-					prev[formattedLanguage] = cur.value;
+					prev[normalizeLanguageId(languageId)] = cur.value;
 				}
 
 				return prev;
@@ -108,7 +111,11 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 			{}
 		);
 
-		if (!localizedNames[themeDisplay.getDefaultLanguageId()]) {
+		if (
+			!localizedNames[
+				normalizeLanguageId(themeDisplay.getDefaultLanguageId())
+			]
+		) {
 			Liferay.Util.openToast({
 				message: Liferay.Language.get('name-must-not-be-empty'),
 				type: 'danger',

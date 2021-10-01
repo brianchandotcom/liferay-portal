@@ -68,26 +68,42 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 				keyProperty="userId"
 				modelVar="accountUser"
 			>
+				<portlet:renderURL var="rowURL">
+					<portlet:param name="p_u_i_d" value="<%= String.valueOf(accountUser.getUserId()) %>" />
+					<portlet:param name="mvcPath" value="/account_users_admin/edit_account_user.jsp" />
+					<portlet:param name="backURL" value="<%= currentURL %>" />
+				</portlet:renderURL>
+
+				<%
+				if (!portletName.equals(AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT) || !UserPermissionUtil.contains(permissionChecker, accountUser.getUserId(), ActionKeys.UPDATE)) {
+					rowURL = null;
+				}
+				%>
+
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
+					href="<%= rowURL %>"
 					name="name"
 					property="name"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
+					href="<%= rowURL %>"
 					name="email-address"
 					property="emailAddress"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
+					href="<%= rowURL %>"
 					name="job-title"
 					property="jobTitle"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
+					href="<%= rowURL %>"
 					name="account-roles"
 					value="<%= accountUser.getAccountRoleNamesString(accountEntryDisplay.getAccountEntryId(), locale) %>"
 				/>

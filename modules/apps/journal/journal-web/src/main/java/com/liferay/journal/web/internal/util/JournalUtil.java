@@ -336,6 +336,7 @@ public class JournalUtil {
 			if (contains(item)) {
 				if (!item.equals(peek())) {
 					remove(item);
+
 					super.push(item);
 				}
 			}

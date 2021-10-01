@@ -459,6 +459,7 @@ public class InvokerPortletImpl
 			}
 			else if ((response.getTime() < now) && (_expCache > 0)) {
 				invokeHeader(headerRequest, headerResponse);
+
 				response.setContent(bufferCacheServletResponse.getString());
 			}
 			else {

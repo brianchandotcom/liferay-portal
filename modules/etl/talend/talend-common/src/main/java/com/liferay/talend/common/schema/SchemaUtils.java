@@ -290,6 +290,7 @@ public class SchemaUtils {
 				field.name(), field.schema(), field.doc(), field.defaultVal());
 
 			_copyFieldProperties(field.getObjectProps(), newField);
+
 			copiedFieldList.add(newField);
 		}
 	}

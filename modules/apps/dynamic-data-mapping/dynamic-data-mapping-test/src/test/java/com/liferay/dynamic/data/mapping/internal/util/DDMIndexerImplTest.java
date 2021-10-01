@@ -86,6 +86,7 @@ public class DDMIndexerImplTest {
 	public void setUp() throws Exception {
 		ddmFixture.setUp();
 		documentFixture.setUp();
+
 		setUpPortalUtil();
 		setUpPropsUtil();
 

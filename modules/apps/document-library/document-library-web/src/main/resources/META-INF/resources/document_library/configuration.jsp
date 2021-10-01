@@ -179,6 +179,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 								<portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" />
 								<portlet:param name="folderId" value="<%= dlAdminDisplayContext.isRootFolderInTrash() ? String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) : String.valueOf(dlAdminDisplayContext.getRootFolderId()) %>" />
 								<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
+								<portlet:param name="selectedFolderId" value="<%= String.valueOf(dlAdminDisplayContext.getRootFolderId()) %>" />
 								<portlet:param name="showMountFolder" value="<%= Boolean.FALSE.toString() %>" />
 							</liferay-portlet:renderURL>
 

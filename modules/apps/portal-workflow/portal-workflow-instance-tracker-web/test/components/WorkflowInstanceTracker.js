@@ -19,96 +19,75 @@ import React from 'react';
 import WorkflowInstanceTracker from '../../src/main/resources/META-INF/resources/js/components/WorkflowInstanceTracker';
 import EventObserver from '../../src/main/resources/META-INF/resources/js/util/EventObserver';
 
-jest.mock('axios', () => {
-	const workflowInstanceData = {
-		state: 'Review',
-		workflowDefinitionName: 'Single Approver',
-	};
-
-	const visitedNodes = {
-		items: [
-			{
-				state: 'review',
-			},
-			{
-				state: 'created',
-			},
-		],
-	};
-
-	const WorkflowDefinitionData = {
-		name: 'Single Approver',
-		nodes: [
-			{
-				label: 'Approved',
-				name: 'approved',
-				type: 'TERMINAL_STATE',
-			},
-			{
-				label: 'Created',
-				name: 'created',
-				type: 'INITIAL_STATE',
-			},
-			{
-				label: 'Review',
-				name: 'review',
-				type: 'TASK',
-			},
-			{
-				label: 'Update',
-				name: 'update',
-				type: 'TASK',
-			},
-		],
-		title: 'Single Approver',
-		transitions: [
-			{
-				label: 'Review',
-				name: 'review',
-				sourceNodeName: 'created',
-				targetNodeName: 'review',
-			},
-			{
-				label: 'Approve',
-				name: 'approve',
-				sourceNodeName: 'review',
-				targetNodeName: 'approved',
-			},
-			{
-				label: 'Reject',
-				name: 'reject',
-				sourceNodeName: 'review',
-				targetNodeName: 'update',
-			},
-			{
-				label: 'Resubmit',
-				name: 'resubmit',
-				sourceNodeName: 'update',
-				targetNodeName: 'review',
-			},
-		],
-	};
-
-	return {
-		all: (promises) => Promise.all(promises),
-		create: jest.fn(() => ({
-			get: jest
-				.fn()
-				.mockResolvedValueOnce({data: workflowInstanceData})
-				.mockResolvedValueOnce({data: visitedNodes})
-				.mockResolvedValueOnce({data: WorkflowDefinitionData}),
-		})),
-		defaults: {
-			headers: {
-				common: {
-					'Accept-Language': null,
-				},
-			},
-			params: {},
+const visitedNodes = {
+	items: [
+		{
+			state: 'review',
 		},
-		spread: (callback) => (array) => callback?.apply(null, array),
-	};
-});
+		{
+			state: 'created',
+		},
+	],
+};
+
+const workflowDefinitionData = {
+	name: 'Single Approver',
+	nodes: [
+		{
+			label: 'Approved',
+			name: 'approved',
+			type: 'TERMINAL_STATE',
+		},
+		{
+			label: 'Created',
+			name: 'created',
+			type: 'INITIAL_STATE',
+		},
+		{
+			label: 'Review',
+			name: 'review',
+			type: 'TASK',
+		},
+		{
+			label: 'Update',
+			name: 'update',
+			type: 'TASK',
+		},
+	],
+	title: 'Single Approver',
+	transitions: [
+		{
+			label: 'Review',
+			name: 'review',
+			sourceNodeName: 'created',
+			targetNodeName: 'review',
+		},
+		{
+			label: 'Approve',
+			name: 'approve',
+			sourceNodeName: 'review',
+			targetNodeName: 'approved',
+		},
+		{
+			label: 'Reject',
+			name: 'reject',
+			sourceNodeName: 'review',
+			targetNodeName: 'update',
+		},
+		{
+			label: 'Resubmit',
+			name: 'resubmit',
+			sourceNodeName: 'update',
+			targetNodeName: 'review',
+		},
+	],
+};
+
+const workflowInstanceData = {
+	currentNodeNames: ['review'],
+	workflowDefinitionName: 'Single Approver',
+	workflowDefinitionVersion: '1',
+};
 
 window.ResizeObserver =
 	window.ResizeObserver ||
@@ -135,6 +114,10 @@ describe('The WorkflowInstanceTracker component should', () => {
 	let container, queryAllByText, queryByText;
 
 	beforeAll(async () => {
+		fetch.mockResponseOnce(JSON.stringify(workflowInstanceData));
+		fetch.mockResponseOnce(JSON.stringify(visitedNodes));
+		fetch.mockResponseOnce(JSON.stringify(workflowDefinitionData));
+
 		window.SVGElement.prototype.getBBox = () => ({});
 
 		const renderResult = render(<WorkflowInstanceTracker />);
@@ -152,10 +135,10 @@ describe('The WorkflowInstanceTracker component should', () => {
 		delete window.SVGElement.prototype.getBBox;
 	});
 
-	it('Be rendered with nodes and transitions, but with transition labels hidden', () => {
+	it('Be rendered with nodes, transitions and currentNodes, but with transition labels hidden', () => {
 		expect(container.querySelector('.react-flow__nodes')).toBeTruthy();
 		expect(container.querySelector('.react-flow__edges')).toBeTruthy();
-		expect(queryAllByText('Review')).toHaveLength(1);
+		expect(queryAllByText('Review')).toHaveLength(2);
 		expect(queryByText('Approve')).toBeFalsy();
 		expect(queryByText('Reject')).toBeFalsy();
 		expect(queryByText('Resubmit')).toBeFalsy();
@@ -167,7 +150,7 @@ describe('The WorkflowInstanceTracker component should', () => {
 			'notify'
 		).mockImplementation(() => () => jest.fn());
 
-		const reviewNode = queryByText('Review');
+		const reviewNode = queryAllByText('Review')[0];
 
 		expect(reviewNode).toBeTruthy();
 

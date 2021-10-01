@@ -82,11 +82,9 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 							<liferay-ui:message key="the-selected-root-folder-is-in-the-recycle-bin-please-remove-it-or-select-another-one" />
 						</div>
 
-						<c:if test="<%= rootFolderNotFound %>">
-							<div class="alert alert-warning">
-								<liferay-ui:message key="the-selected-root-folder-cannot-be-found-please-select-another-one" />
-							</div>
-						</c:if>
+						<div class="alert alert-warning <%= rootFolderNotFound ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootFolderNotFound">
+							<liferay-ui:message key="the-selected-root-folder-cannot-be-found-please-select-another-one" />
+						</div>
 
 						<aui:button name="openFolderSelectorButton" value="select" />
 
@@ -133,6 +131,12 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					);
 
 					rootFolderInTrashWarning.classList.add('hide');
+
+					var rootFolderNotFoundWarning = document.querySelector(
+						'#<portlet:namespace />rootFolderNotFound'
+					);
+
+					rootFolderNotFoundWarning.classList.add('hide');
 				},
 				selectEventName:
 					'_<%= HtmlUtil.escapeJS(igRequestHelper.getPortletResource()) %>_selectFolder',

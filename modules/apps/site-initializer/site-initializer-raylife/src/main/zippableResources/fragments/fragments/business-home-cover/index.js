@@ -13,20 +13,18 @@
  * details.
  */
 
-async function fetchGraphQL(body) {
-	const response = await fetch(`${window.location.origin}/o/graphql`, {
-		body: JSON.stringify(body),
+const fetchHeadless = async (url) => {
+	const response = await fetch(`${window.location.origin}/${url}`, {
 		headers: {
 			'Content-Type': 'application/json',
 			'x-csrf-token': Liferay.authToken,
 		},
-		method: 'POST',
 	});
 
-	const {data} = await response.json();
+	const data = await response.json();
 
 	return data;
-}
+};
 
 const retrieveQuoteContainer = fragmentElement.querySelector('#retrieve-quote');
 const newQuoteContainer = fragmentElement.querySelector('#new-quote');
@@ -107,8 +105,7 @@ getQuoteForm.onsubmit = function (event) {
 		if (!formProps.product) {
 			productContainer.classList.add('has-error');
 		}
-	}
-	else {
+	} else {
 		localStorage.setItem('raylife-product', JSON.stringify(formProps));
 
 		const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
@@ -125,36 +122,26 @@ fragmentElement.querySelector('#zip').onkeypress = (event) => {
 
 (async () => {
 	try {
-		const response = await fetchGraphQL({
-			query: `{
-			taxonomyVocabularies(filter: "name eq 'Raylife'", siteKey: "${themeDisplay.getCompanyGroupId()}") {
-				items {
-					id
-					name
-					taxonomyCategories(sort: "name:asc") {
-						items {
-							id
-							name
-						}
-					}
-				}
-			}
+		const taxonomyVocabularies = await fetchHeadless(
+			`/o/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getCompanyGroupId()}/taxonomy-vocabularies?filter=name eq 'Raylife'`
+		);
+
+		if (!taxonomyVocabularies?.items[0]) {
+			return console.error('No Taxonomy Vocabulary found');
 		}
-	`,
-		});
+
+		const taxonomyCategories = await fetchHeadless(
+			`/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabularies.items[0].id}/taxonomy-categories`
+		);
+
 		const product = fragmentElement.querySelector('#product');
 
-		const taxonomyVocabularies =
-			response?.taxonomyVocabularies?.items[0]?.taxonomyCategories
-				?.items || [];
-
-		taxonomyVocabularies.forEach((taxonomyVocabulary) => {
+		taxonomyCategories?.items.forEach((taxonomyVocabulary) => {
 			product.add(
 				new Option(taxonomyVocabulary.name, taxonomyVocabulary.id)
 			);
 		});
-	}
-	catch (error) {
+	} catch (error) {
 		console.error(error.message);
 	}
 })();

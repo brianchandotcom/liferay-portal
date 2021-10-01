@@ -59,6 +59,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -122,27 +123,10 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 			String fileName = uploadPortletRequest.getFileName("file");
 
-			if (Objects.equals(
-					uploadPortletRequest.getContentType("file"),
-					ContentTypes.APPLICATION_ZIP)) {
-
-				try (InputStream inputStream =
-						uploadPortletRequest.getFileAsStream("file")) {
-
-					_importZipFile(
-						actionRequest, groupId, className, classPK,
-						failureEntries, inputStream, successEntries);
-				}
-			}
-			else {
-				try (InputStream inputStream =
-						uploadPortletRequest.getFileAsStream("file")) {
-
-					_importXLIFFFile(
-						actionRequest, groupId, className, classPK,
-						failureEntries, fileName, inputStream, successEntries);
-				}
-			}
+			_processUploadedFile(
+				classPK, groupId, className, actionRequest, failureEntries,
+				fileName, themeDisplay.getLocale(), successEntries,
+				uploadPortletRequest);
 
 			String portletResource = ParamUtil.getString(
 				actionRequest, "portletResource");
@@ -285,31 +269,83 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 	private void _importXLIFFFile(
 			ActionRequest actionRequest, long groupId, String className,
-			long classPK, Map<String, String> failureEntries, String fileName,
-			InputStream inputStream, List<String> successEntries)
+			long classPK, InputStream inputStream)
+		throws IOException, PortalException {
+
+		TranslationSnapshot translationSnapshot =
+			_translationSnapshotProvider.getTranslationSnapshot(
+				groupId, new InfoItemReference(className, classPK),
+				inputStream);
+
+		_translationEntryService.addOrUpdateTranslationEntry(
+			groupId,
+			_language.getLanguageId(translationSnapshot.getTargetLocale()),
+			new InfoItemReference(className, classPK),
+			translationSnapshot.getInfoItemFieldValues(),
+			ServiceContextFactory.getInstance(actionRequest));
+	}
+
+	private void _processUploadedFile(
+			long classPK, long groupId, String className,
+			ActionRequest actionRequest, Map<String, String> failureEntries,
+			String fileName, Locale locale, List<String> successEntries,
+			UploadPortletRequest uploadPortletRequest)
+		throws IOException, PortalException {
+
+		if (Objects.equals(
+				uploadPortletRequest.getContentType("file"),
+				ContentTypes.APPLICATION_ZIP)) {
+
+			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+					"file")) {
+
+				ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
+					inputStream);
+
+				try {
+					for (String entry : zipReader.getEntries()) {
+						try (InputStream entryInputStream =
+								zipReader.getEntryAsInputStream(entry)) {
+
+							_processXLIFFFile(
+								classPK, groupId, className, actionRequest,
+								failureEntries, entry, entryInputStream, locale,
+								successEntries);
+						}
+					}
+				}
+				finally {
+					zipReader.close();
+				}
+			}
+		}
+		else {
+			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+					"file")) {
+
+				_processXLIFFFile(
+					classPK, groupId, className, actionRequest, failureEntries,
+					fileName, inputStream, locale, successEntries);
+			}
+		}
+	}
+
+	private void _processXLIFFFile(
+			long classPK, long groupId, String className,
+			ActionRequest actionRequest, Map<String, String> failureEntries,
+			String fileName, InputStream inputStream, Locale locale,
+			List<String> successEntries)
 		throws IOException, PortalException {
 
 		try {
-			TranslationSnapshot translationSnapshot =
-				_translationSnapshotProvider.getTranslationSnapshot(
-					groupId, new InfoItemReference(className, classPK),
-					inputStream);
-
-			_translationEntryService.addOrUpdateTranslationEntry(
-				groupId,
-				_language.getLanguageId(translationSnapshot.getTargetLocale()),
-				new InfoItemReference(className, classPK),
-				translationSnapshot.getInfoItemFieldValues(),
-				ServiceContextFactory.getInstance(actionRequest));
+			_importXLIFFFile(
+				actionRequest, groupId, className, classPK, inputStream);
 
 			successEntries.add(fileName);
 		}
 		catch (XLIFFFileException xliffFileException) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				themeDisplay.getLocale(), getClass());
+				locale, getClass());
 
 			if (xliffFileException instanceof
 					XLIFFFileException.MustHaveValidId) {
@@ -327,31 +363,6 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 						_exceptionMessageMap.get(
 							xliffFileException.getClass())));
 			}
-		}
-	}
-
-	private void _importZipFile(
-			ActionRequest actionRequest, long groupId, String className,
-			long classPK, Map<String, String> failureEntries,
-			InputStream inputStream, List<String> successEntries)
-		throws IOException, PortalException {
-
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(inputStream);
-
-		try {
-			for (String entry : zipReader.getEntries()) {
-				try (InputStream entryInputStream =
-						zipReader.getEntryAsInputStream(entry)) {
-
-					_importXLIFFFile(
-						actionRequest, groupId, className, classPK,
-						failureEntries, entry, entryInputStream,
-						successEntries);
-				}
-			}
-		}
-		finally {
-			zipReader.close();
 		}
 	}
 

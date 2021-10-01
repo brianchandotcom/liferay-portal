@@ -106,7 +106,9 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					</clay:col>
 				</clay:row>
 
-				<clay:row>
+				<clay:row
+					cssClass="hide"
+				>
 					<clay:col
 						md="11"
 					>

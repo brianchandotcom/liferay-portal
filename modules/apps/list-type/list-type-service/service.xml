@@ -57,6 +57,7 @@
 		<exception>DuplicateListTypeEntry</exception>
 		<exception>ListTypeDefinitionName</exception>
 		<exception>ListTypeEntryKey</exception>
+		<exception>ListTypeEntryName</exception>
 		<exception>RequiredListTypeDefinition</exception>
 	</exceptions>
 </service-builder>

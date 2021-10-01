@@ -16,6 +16,7 @@ package com.liferay.list.type.service.impl;
 
 import com.liferay.list.type.exception.DuplicateListTypeEntryException;
 import com.liferay.list.type.exception.ListTypeEntryKeyException;
+import com.liferay.list.type.exception.ListTypeEntryNameException;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.base.ListTypeEntryLocalServiceBaseImpl;
 import com.liferay.list.type.service.persistence.ListTypeDefinitionPersistence;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -52,6 +54,7 @@ public class ListTypeEntryLocalServiceImpl
 		throws PortalException {
 
 		_validate(listTypeDefinitionId, key);
+		_validateName(nameMap, LocaleUtil.getSiteDefault());
 
 		ListTypeEntry listTypeEntry = listTypeEntryPersistence.create(
 			counterLocalService.increment());
@@ -95,6 +98,8 @@ public class ListTypeEntryLocalServiceImpl
 			long listTypeEntryId, Map<Locale, String> nameMap)
 		throws PortalException {
 
+		_validateName(nameMap, LocaleUtil.getSiteDefault());
+
 		ListTypeEntry listTypeEntry = listTypeEntryPersistence.findByPrimaryKey(
 			listTypeEntryId);
 
@@ -126,6 +131,16 @@ public class ListTypeEntryLocalServiceImpl
 
 		if (listTypeEntry != null) {
 			throw new DuplicateListTypeEntryException("Duplicate key " + key);
+		}
+	}
+
+	private void _validateName(
+			Map<Locale, String> nameMap, Locale defaultLocale)
+		throws PortalException {
+
+		if ((nameMap == null) || Validator.isNull(nameMap.get(defaultLocale))) {
+			throw new ListTypeEntryNameException(
+				"Name is null for locale " + defaultLocale.getDisplayName());
 		}
 	}
 

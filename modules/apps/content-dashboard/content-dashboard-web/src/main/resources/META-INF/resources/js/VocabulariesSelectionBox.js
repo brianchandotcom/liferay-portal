@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 const transformToDualListBoxProperties = (myArray) => {
-	let myArrayWithLabel = [];
+	const myArrayWithLabel = [];
 	myArray.forEach((elem) => {
 		myArrayWithLabel.push({...elem, label: elem.value, value: elem.key});
 	});
@@ -26,7 +26,7 @@ const transformToDualListBoxProperties = (myArray) => {
 };
 
 const addFakeSiteId = (vocabularies) => {
-	let myArrayWithSiteId = [];
+	const myArrayWithSiteId = [];
 	vocabularies.forEach((elem) => {
 		myArrayWithSiteId.push({...elem, site: Math.floor(Math.random() * 3)});
 	});
@@ -49,16 +49,18 @@ const VocabulariesSelectionBox = ({
 	const [leftElements, rightElements] = items;
 
 	useEffect(() => {
-		let selectedVocabulaboriesFromNonGlobalSite = rightElements.filter(
+		const selectedVocabulaboriesFromNonGlobalSite = rightElements.filter(
 			(elem) => elem.site !== 0
 		);
 
 		// Enable all available options
+
 		document.querySelector(
 			'.vocabularies-selection option'
 		).disabled = false;
 
 		// Disable options that are not selectable
+
 		if (selectedVocabulaboriesFromNonGlobalSite.length) {
 			leftElements.forEach((elem) => {
 				if (

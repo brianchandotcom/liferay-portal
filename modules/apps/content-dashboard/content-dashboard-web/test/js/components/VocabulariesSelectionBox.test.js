@@ -122,6 +122,7 @@ describe('VocabulariesSelectionBox', () => {
 		expect(selectedVocabulariesAfterLTR.length).toBe(1);
 
 		// Region  vocabulary must be disabled now becasue is from another site
+
 		const disabledVocabularies = container.querySelectorAll(
 			"#availableAssetVocabularyNames option[value='extension']:disabled"
 		);
@@ -151,6 +152,7 @@ describe('VocabulariesSelectionBox', () => {
 
 		// There must be no disbled vocabularies because we have only one vocabulary selected
 		// and it is from Global site
+
 		const disabledVocabularies = container.querySelectorAll(
 			"#availableAssetVocabularyNames option[value='extension']:disabled"
 		);

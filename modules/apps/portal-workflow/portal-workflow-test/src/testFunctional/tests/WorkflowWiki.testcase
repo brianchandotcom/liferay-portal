@@ -543,12 +543,57 @@ definition {
 			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE");
 	}
 
-	@description = "This is a test for LRQA-68568. Verify that the Front Page content doesn't change on reject. "
-	@ignore = "Test Stub"
+	@description = "This is a test for LRQA-68568. Verify that the Front Page content doesn't change on reject."
 	@priority = "3"
 	test WikiFrontPageContentDoesntChangeOnReject {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Wiki");
 
-		// TODO LRQA-68568 WikiFrontPageContentDoesntChangeOnReject pending implementation
+		AssertClick(
+			key_workflowInstanceName = "Main",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			value1 = "Main");
+
+		AssertClick(
+			key_workflowInstanceName = "FrontPage",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			value1 = "FrontPage");
+
+		WikiPage.viewFrontPageDefaultCP(wikiPageTitle = "FrontPage");
+
+		WikiPage.addFrontPageWithWorkflowPG(wikiPageContent = "Front Page Wiki Content");
+
+		Navigator.gotoBack();
+
+		AssertElementPresent(
+			key_status = "Pending",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "FrontPage",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review");
+		
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "FrontPage",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Wiki");
+
+		AssertClick(
+			key_workflowInstanceName = "Main",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			value1 = "Main");
+
+		AssertElementPresent(
+			key_status = "Pending",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
 
 	}
 

@@ -72,6 +72,8 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(
 			new Version(13, 1, 0), new UpgradeAssetVocabulary());
+
+		upgradeProcesses.put(new Version(13, 1, 1), new UpgradeAssetCategory());
 	}
 
 }

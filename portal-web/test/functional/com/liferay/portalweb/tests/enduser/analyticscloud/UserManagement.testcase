@@ -164,9 +164,7 @@ definition {
 
 			Refresh();
 
-			AssertElementNotPresent(
-				itemName = "${dataSource}",
-				locator1 = "ACSettings#ITEM_ON_LIST");
+			ACUtils.assertItemsNameNotPresent(itemList = "${dataSource}");
 		}
 	}
 

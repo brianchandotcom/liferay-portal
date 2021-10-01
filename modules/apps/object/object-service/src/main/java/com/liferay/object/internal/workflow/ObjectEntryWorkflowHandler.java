@@ -18,7 +18,10 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -49,6 +52,23 @@ public class ObjectEntryWorkflowHandler
 	@Override
 	public String getClassName() {
 		return _objectDefinition.getClassName();
+	}
+
+	@Override
+	public String getTitle(long classPK, Locale locale) {
+		try {
+			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+				classPK);
+
+			return objectEntry.getTitleValue();
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException, portalException);
+			}
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -86,6 +106,9 @@ public class ObjectEntryWorkflowHandler
 		return _objectEntryLocalService.updateStatus(
 			userId, classPK, status, serviceContext);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntryWorkflowHandler.class);
 
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntryLocalService _objectEntryLocalService;

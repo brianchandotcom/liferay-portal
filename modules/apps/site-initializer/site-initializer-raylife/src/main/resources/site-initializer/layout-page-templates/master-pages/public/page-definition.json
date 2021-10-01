@@ -59,7 +59,7 @@
 							"widgetConfig": {
 								"displayDepth": "0",
 								"displayStyle": "ddmTemplate_NAVBAR-BLANK-FTL",
-								"displayStyleGroupId": "[$GROUP_ID$]",
+								"displayStyleGroupId": "[$SCOPE_GROUP_ID$]",
 								"expandedLevels": "auto",
 								"rootMenuItemLevel": "0",
 								"rootMenuItemType": "absolute",

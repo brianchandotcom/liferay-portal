@@ -1,0 +1,18 @@
+.quote-comparison H1 {
+	font-size: 37px;
+	font-weight: 800;
+	line-height: 40px;
+	text-align: center;
+}
+
+.quote-comparison H1 span:first-of-type {
+	color: #4D85FF;
+}
+
+.quote-comparison p { 
+	color: #606167;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 24px;
+	text-align: center;
+}

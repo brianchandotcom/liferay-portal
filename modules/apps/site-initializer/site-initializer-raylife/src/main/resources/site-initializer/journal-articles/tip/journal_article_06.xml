@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="viretmub" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Business Owners Policy]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="ivhhkvql" name="subtitle" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[A BOP protects business owners against:]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="ieffjpqx" name="actionList" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<ul><li>Property Damage</li><li>Peril</li><li>Business Interruption</li><li>Liability</li></ul>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="iesijpqx" name="description" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p> While coverages vary among insurance providers, businesses can opt-in for additional coverage, such as crime, spoilage of merchandise, forgery, fidelity, and more.<br /> <br /> If you have questions or need help click the chat button in the bottom right to chat with an Agent.</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="tjcakpfv" name="titleIcon" type="image">
+		<dynamic-content language-id="en_US">
+			<![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/help_circle_full.svg$]]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="tjcafeqv" name="listIcon" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/gray_check.svg$]]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="tytxcafv" name="backIcon" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="ieffjpqx" name="externalLink" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p><a href="https://www.liferay.com/home" target="_blank">Learn More</a></p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="tjcafpqv" name="externalLinkIcon" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/launch_rounded.svg$]]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="txfghpqv" name="pageOptions" type="checkbox_multiple">
+		<dynamic-content language-id="en_US"><![CDATA[dismissible]]></dynamic-content>
+	</dynamic-element>
+</root>

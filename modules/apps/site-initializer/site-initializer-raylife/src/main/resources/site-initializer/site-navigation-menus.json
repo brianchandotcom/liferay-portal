@@ -1,26 +1,5 @@
 [
 	{
-		"name": "Customer Portal Menu",
-		"pages": [
-			{
-				"friendlyURL": "/dashboard",
-				"privateLayout": true
-			},
-			{
-				"friendlyURL": "/documents",
-				"privateLayout": true
-			},
-			{
-				"friendlyURL": "/policies",
-				"privateLayout": true
-			},
-			{
-				"friendlyURL": "/claims",
-				"privateLayout": true
-			}
-		]
-	},
-	{
 		"name": "Public Menu",
 		"pages": [
 			{

@@ -1,0 +1,61 @@
+.get-in-touch h1 {
+	font-weight: var(--display1-weight);
+}
+
+.get-in-touch p {
+	color: var(--gray-700);
+}
+
+.get-in-touch ul {
+	list-style-type: none;
+	padding: 0px;
+}
+
+.get-in-touch .btn-content-agent {
+	background-color: white;
+	border: solid 1px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 700;
+	padding: 7px 16px;
+	text-align: center;
+}
+
+.get-in-touch .btn-back-color {
+	border-color: #7d7e85;
+	color: #7d7e85;
+	margin-bottom: 20px;
+}
+
+.get-in-touch .btn-call-color {
+	border-color: #4c85ff;
+	color: #4c85ff;
+}
+
+.get-in-touch .content-agent-text-adictional {
+	color: #606167;
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.get-in-touch .content-agent-text-chat {
+	color: #4c85ff;
+	font-size: 13px;
+	margin-bottom: 0px;
+}
+
+.get-in-touch .content-agent-text-your-application {
+	border-radius: 4px;
+	background-color: #c2eadd;
+	color: #08aa72;
+	font-size: 24px;
+	font-weight: 700;
+	padding: 8px;
+	text-align: center;
+}
+
+.get-in-touch .content-agent-margin {
+	margin-bottom: 200px;
+	margin-top: 45px;
+}

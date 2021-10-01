@@ -1,0 +1,8 @@
+{
+	"configurationPath": "index.json",
+	"jsPath": "index.js",
+	"htmlPath": "index.html",
+	"cssPath": "index.css",
+	"name": "Tip Container",
+	"type": "component"
+}

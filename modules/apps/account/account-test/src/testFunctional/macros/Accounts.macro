@@ -1089,6 +1089,39 @@ definition {
 			userEmailAddress = "${userEmailAddress}");
 	}
 
+	macro setAllowedAccountTypeInSiteSettings {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Site Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Accounts",
+			configurationName = "Accounts",
+			configurationScope = "Site Scope");
+
+		Click(locator1 = "FormFields#FIELD_ADD_REMOVE");
+
+		Click(
+			key_fieldName = "Allowed Account Types",
+			locator1 = "FormFields#SELECT_FIELD");
+
+		AssertClick(
+			key_selectOption = "${allowedType}",
+			locator1 = "FormFields#SELECT_FIELD_OPTIONS_LIST",
+			value1 = "${allowedType}");
+
+		if (IsElementPresent(locator1 = "Button#SAVE")) {
+			AssertClick(
+				locator1 = "Button#SAVE",
+				value1 = "Save");
+		}
+		else if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			AssertClick(
+				locator1 = "Button#UPDATE",
+				value1 = "Update");
+		}
+	}
+
 	macro setDefaultBillingAddress {
 		AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_HEADING");
 

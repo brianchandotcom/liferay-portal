@@ -21,6 +21,7 @@ import com.liferay.petra.executor.PortalExecutorConfig;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -61,9 +62,20 @@ public class GraphWalkerPortalExecutor {
 			return;
 		}
 
+		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
+
 		if (waitForCompletion) {
 			NoticeableFuture<?> noticeableFuture =
-				_noticeableExecutorService.submit(() -> _walk(pathElement));
+				_noticeableExecutorService.submit(
+					() -> {
+						try (SafeCloseable safeCloseable =
+								CTCollectionThreadLocal.
+									setCTCollectionIdWithSafeCloseable(
+										ctCollectionId)) {
+
+							_walk(pathElement);
+						}
+					});
 
 			try {
 				noticeableFuture.get();
@@ -76,7 +88,16 @@ public class GraphWalkerPortalExecutor {
 			}
 		}
 		else {
-			_noticeableExecutorService.submit(() -> _walk(pathElement));
+			_noticeableExecutorService.submit(
+				() -> {
+					try (SafeCloseable safeCloseable =
+							CTCollectionThreadLocal.
+								setCTCollectionIdWithSafeCloseable(
+									ctCollectionId)) {
+
+						_walk(pathElement);
+					}
+				});
 		}
 	}
 

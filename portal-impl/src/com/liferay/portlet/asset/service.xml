@@ -215,10 +215,6 @@
 			<finder-column name="publishDate" />
 			<finder-column name="expirationDate" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 	</entity>
 	<entity local-service="true" name="AssetLink" remote-service="false">
 
@@ -322,10 +318,6 @@
 			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 	</entity>
 	<entity external-reference-code="group" local-service="true" name="AssetVocabulary" remote-service="true" uuid="true">
 

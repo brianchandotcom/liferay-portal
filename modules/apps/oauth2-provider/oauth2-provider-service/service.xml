@@ -126,10 +126,6 @@
 			<finder-column name="oAuth2ApplicationId"></finder-column>
 			<finder-column name="rememberDeviceContent"></finder-column>
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="OAuth2ScopeGrant" package-path="com.liferay.oauth2.provider" />
 	</entity>
 	<entity json-enabled="false" local-service="true" name="OAuth2ScopeGrant" remote-service="false">
 
@@ -165,10 +161,6 @@
 			<finder-column name="bundleSymbolicName" />
 			<finder-column name="scope" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="OAuth2Authorization" package-path="com.liferay.oauth2.provider" />
 	</entity>
 	<exceptions>
 		<exception>DuplicateOAuth2ApplicationClientId</exception>

@@ -213,10 +213,6 @@
 			<finder-column name="groupId" />
 			<finder-column name="fileEntryTypeKey" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />
 	</entity>
 	<entity human-name="document library file shortcut" local-service="true" name="DLFileShortcut" remote-service="true" trash-enabled="true" uad-dir-path="../modules/apps/document-library/document-library-uad/src/main/java" uad-package-path="com.liferay.document.library" uuid="true">
 
@@ -501,7 +497,6 @@
 		<!-- References -->
 
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="DLFileEntryType" package-path="com.liferay.portlet.documentlibrary" />
 	</entity>
 	<entity local-service="true" name="DLTrash" remote-service="true">
 	</entity>

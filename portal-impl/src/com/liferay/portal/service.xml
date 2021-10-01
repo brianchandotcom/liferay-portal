@@ -536,13 +536,6 @@
 			<finder-column name="site" />
 			<finder-column name="inheritContent" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="Organization" package-path="com.liferay.portal" />
-		<reference entity="Role" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="UserGroup" package-path="com.liferay.portal" />
 	</entity>
 	<entity change-tracking-enabled="true" local-service="true" name="Image" remote-service="true">
 
@@ -1265,11 +1258,6 @@
 			<finder-column name="parentOrganizationId" />
 			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity deprecated="true" local-service="false" name="OrgGroupRole" remote-service="false">
 
@@ -2221,11 +2209,6 @@
 			<finder-column arrayable-operator="OR" name="classPK" />
 			<finder-column name="type" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="ServiceComponent" remote-service="false">
 
@@ -2405,11 +2388,6 @@
 			<finder-column name="groupId" />
 			<finder-column name="name" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="UserGroup" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="Theme" remote-service="true" tx-manager="none">
 	</entity>
@@ -2588,14 +2566,6 @@
 			<finder-column name="defaultUser" />
 			<finder-column name="status" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="Organization" package-path="com.liferay.portal" />
-		<reference entity="Role" package-path="com.liferay.portal" />
-		<reference entity="Team" package-path="com.liferay.portal" />
-		<reference entity="UserGroup" package-path="com.liferay.portal" />
 	</entity>
 	<entity change-tracking-enabled="true" external-reference-code="true" local-service="true" name="UserGroup" remote-service="true" uad-application-name="User Groups Admin" uad-dir-path="../modules/apps/user-groups-admin/user-groups-admin-uad/src/main/java" uad-package-path="com.liferay.user.groups.admin" uuid="true">
 
@@ -2652,12 +2622,6 @@
 			<finder-column name="companyId" />
 			<finder-column name="parentUserGroupId" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="Team" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity change-tracking-enabled="true" local-service="true" name="UserGroupGroupRole" remote-service="true">
 

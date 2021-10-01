@@ -4,9 +4,34 @@ import '~/types';
 import {LiferayAdapt} from './adapter';
 import {STORAGE_KEYS, Storage} from './storage';
 
+const {REACT_APP_LIFERAY_API = window.location.origin} = process.env;
+
 const LiferayObjectAPI = 'o/c/raylifeapplications';
 
-const {REACT_APP_LIFERAY_API = window.location.origin} = process.env;
+const baseFetch = async (url, {body, method = 'GET'} = {}) => {
+	const liferayAPIUrl = new URL(`${REACT_APP_LIFERAY_API}/${url}`);
+
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(liferayAPIUrl, {
+		...(body && {body: JSON.stringify(body)}),
+		headers: {
+			'Content-Type': 'application/json',
+			'x-csrf-token': getLiferayAuthenticationToken(),
+		},
+		method,
+	});
+
+	const data = await response.json();
+
+	return {data};
+};
+
+const LiferayFetchAPI = {
+	delete: (url) => baseFetch(url, {method: 'DELETE'}),
+	get: (url) => baseFetch(url),
+	post: (url, options) => baseFetch(url, {...options, method: 'POST'}),
+	put: (url, options) => baseFetch(url, {...options, method: 'PUT'}),
+};
 
 /**
  * @param {DataForm}  data Basics form object
@@ -120,20 +145,12 @@ const _getProductsByCategoryId = async () => {
  * @returns {Promise<AssetCategoryResponse[]>}  Array of matched categories
  */
 const _getAssetCategoriesByParentId = async (id, normalizedFilter) => {
-	const {taxonomyCategoryTaxonomyCategories} = await GraphQLFetch({
-		query: `{
-			taxonomyCategoryTaxonomyCategories
-			(parentTaxonomyCategoryId: "${id}", sort: "name:asc", filter: "contains(name, '${normalizedFilter}')") {
-			items {
-				description
-				id
-				name
-			}
-	  	}
-		}`,
-	});
+	const filter = `filter=contains(name, '${normalizedFilter}')`;
+	const {data} = await LiferayFetchAPI.get(
+		`o/headless-admin-taxonomy/v1.0/taxonomy-categories/${id}/taxonomy-categories?${filter}`
+	);
 
-	return taxonomyCategoryTaxonomyCategories?.items || [];
+	return data?.items || [];
 };
 
 /**
@@ -176,25 +193,9 @@ const LiferayAPI = Axios.create({
 	},
 });
 
-async function GraphQLFetch(body) {
-	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const response = await fetch(`${REACT_APP_LIFERAY_API}/o/graphql`, {
-		body: JSON.stringify(body),
-		headers: {
-			'Content-Type': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-		method: 'POST',
-	});
-
-	const {data} = await response.json();
-
-	return data;
-}
-
 export const LiferayService = {
-	GraphQLFetch,
 	LiferayAPI,
+	LiferayFetchAPI,
 	createOrUpdateRaylifeApplication,
 	getBusinessTypes,
 	getCategoryProperties,

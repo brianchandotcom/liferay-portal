@@ -697,12 +697,64 @@ definition {
 			value1 = "Approved");
 	}
 
-	@description = "This is a test for LRQA-69569. Verify that a page isn't added to the Wiki on Reject. "
-	@ignore = "Test Stub"
+	@description = "This is a test for LRQA-69569. Verify that a page isn't added to the Wiki on Reject."
 	@priority = "3"
 	test WikiPageNotAddedOnReject {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Wiki");
 
-		// TODO LRQA-69569 WikiPageNotAddedOnReject pending implementation
+		AssertClick(
+			key_workflowInstanceName = "Main",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			value1 = "Main");
+
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputTitle(title = "Test Title");
+
+		SelectFrame.selectFrameNoLoading(
+			key_title = "Rich Text Editor",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "Test Content");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "TextArea#ANY_LABELED");
+
+		AssertClick(
+			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
+			value1 = "Submit for Publication");
+
+		Alert.viewSuccessMessage();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Test Title",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review");
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "Test Title",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Wiki");
+
+		AssertClick(
+			key_workflowInstanceName = "Main",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			value1 = "Main");
+
+		AssertElementNotPresent(
+			key_workflowInstanceName = "Test Title",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			value1 = "Test Title");
+
 
 	}
 

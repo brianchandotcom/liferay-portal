@@ -156,8 +156,10 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			_batchPlannerPlanLocalService.getBatchPlannerPlan(
 				batchPlannerPlanId);
 
-		try (FileReader fileReader = new FileReader(
-				new File(new URI(batchPlannerPlan.getExternalURL())));
+		File batchPlannerPlanFile = new File(
+			new URI(batchPlannerPlan.getExternalURL()));
+
+		try (FileReader fileReader = new FileReader(batchPlannerPlanFile);
 			FileWriter fileWriter = new FileWriter(jsonlFile)) {
 
 			List<BatchPlannerPolicy> batchPlannerPolicies =
@@ -207,6 +209,9 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 			throw exception;
 		}
+		finally {
+			FileUtil.delete(batchPlannerPlanFile);
+		}
 	}
 
 	private void _submitExportTask(BatchPlannerPlan batchPlannerPlan)
@@ -249,20 +254,26 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 		File file = _getJSONLFile(batchPlannerPlan.getBatchPlannerPlanId());
 
-		ImportTask importTask = _importTaskResource.postImportTask(
-			batchPlannerPlan.getInternalClassName(), null, null, null,
-			MultipartBody.of(
-				Collections.singletonMap(
-					"file",
-					new BinaryFile(
-						"application/json", file.getName(),
-						new FileInputStream(file), file.length())),
-				null, Collections.emptyMap()));
+		try {
+			ImportTask importTask = _importTaskResource.postImportTask(
+				batchPlannerPlan.getInternalClassName(), null, null, null,
+				MultipartBody.of(
+					Collections.singletonMap(
+						"file",
+						new BinaryFile(
+							"application/json", file.getName(),
+							new FileInputStream(file), file.length())),
+					null, Collections.emptyMap()));
 
-		_batchPlannerLogLocalService.addBatchPlannerLog(
-			batchPlannerPlan.getUserId(),
-			batchPlannerPlan.getBatchPlannerPlanId(), null,
-			String.valueOf(importTask.getId()), null, (int)file.length(), 1);
+			_batchPlannerLogLocalService.addBatchPlannerLog(
+				batchPlannerPlan.getUserId(),
+				batchPlannerPlan.getBatchPlannerPlanId(), null,
+				String.valueOf(importTask.getId()), null, (int)file.length(),
+				1);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
 	}
 
 	private Map<Integer, BatchPlannerMapping> _toBatchPlannerMappingsMap(

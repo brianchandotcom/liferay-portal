@@ -15,6 +15,7 @@
 package com.liferay.account.admin.web.internal.servlet.taglib.util;
 
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -22,11 +23,13 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -56,6 +59,34 @@ public class AccountUserActionDropdownItemsProvider {
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
 		return DropdownItemListBuilder.add(
+			() -> {
+				if (Objects.equals(
+						PortalUtil.getPortletId(_httpServletRequest),
+						AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT) &&
+					UserPermissionUtil.contains(
+						_permissionChecker, _accountUserId,
+						ActionKeys.UPDATE)) {
+
+					return true;
+				}
+
+				return false;
+			},
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						_renderResponse
+					).setMVCPath(
+						"/account_users_admin/edit_account_user.jsp"
+					).setBackURL(
+						_themeDisplay.getURLCurrent()
+					).setParameter(
+						"p_u_i_d", _accountUserId
+					).buildString());
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "edit"));
+			}
+		).add(
 			() -> AccountEntryPermission.contains(
 				_permissionChecker, _accountEntryId, ActionKeys.MANAGE_USERS),
 			dropdownItem -> {

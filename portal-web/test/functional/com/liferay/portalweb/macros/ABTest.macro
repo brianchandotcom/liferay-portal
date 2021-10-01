@@ -116,6 +116,16 @@ definition {
 		Click(locator1 = "ABTest#EDIT_VARIANT_BUTTON");
 	}
 
+	macro openABTestInAC {
+        Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
+
+        SelectWindow(locator1 = "name=undefined");
+
+        AnalyticsCloud.loginAnalyticsCloud(
+            emailAddress = "test@liferay.com",
+            password = "test");
+    }
+
 	macro runTest {
 		Click(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
 
@@ -125,6 +135,12 @@ definition {
 			Click(locator1 = "ABTest#OK_BUTTON");
 		}
 	}
+
+	macro statusABTestInAC {
+        AssertTextEquals(
+            locator1 = "ABTest#LABEL_ITEM_STATUS",
+            value1 = "${status}");
+    }
 
 	macro selectElementID {
 		Click(locator1 = "ABTest#SELECT_CLICKABLE_ELEMENT_BUTTON");
@@ -182,4 +198,11 @@ definition {
 		}
 	}
 
+	macro writeId {
+		Click(locator1 = "ABTest#ELEMENT_ID_INPUT");
+
+		Type(
+			locator1 = "ABTest#ELEMENT_ID_INPUT",
+			value1 = "${elementId}");
+	}
 }

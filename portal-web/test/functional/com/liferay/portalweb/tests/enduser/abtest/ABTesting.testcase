@@ -256,9 +256,32 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CheckTestChangesInAC {
+        task ("Create AB test, create variant and run the test") {
+            ABTest.createABTest(
+                goal = "Bounce Rate",
+                testTitle = "AB test title");
 
-		// TODO LPS-137406 CheckTestChangesInAC pending implementation
+            ABTest.createVariant(variantName = "Variant name");
 
+            ABTest.runTest();
+        }
+
+        task ("Check the info is correct in Analytics Cloud") {
+            ABTest.openABTestInAC();
+
+            ABTest.statusABTestInAC(status = "Test Is Running");
+			//div[contains(@class, 'card-header d-flex justify-content-between')]//h3[contains(text(), '${status}')]
+        }
+
+        task ("Go back to DXP") {
+            Navigator.openURL();
+
+            Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+        }
+
+        task ("Terminate the AB test") {
+            ABTest.terminateTest();
+        }
 	}
 
 	@description = "LPS-97195: Validate if the variant for A/B Test that was added on Liferay portal is visible in the Analytics Cloud"

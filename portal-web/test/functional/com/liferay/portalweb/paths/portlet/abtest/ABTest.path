@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>LABEL_ITEM_STATUS</td>
+    <td>//div[contains(@class, 'card-header d-flex justify-content-between')]//h3[contains(text(), '${status}')]</td>
+    <td></td>
+</tr>
+<tr>
 	<td>OK_BUTTON</td>
 	<td>//*[contains(@class,'btn btn-primary') and text()='OK']</td>
 	<td></td>
@@ -98,6 +103,11 @@
 <tr>
 	<td>REVIEW_NO_HAVE_VARIANTS</td>
 	<td>//p[contains(@class,'mb-2') and contains(text(),'Create at least one variant to run the test.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVIEW_VARIANTS_PERCENTAGE</td>
+	<td>//label[contains(@class,'form-group-autofit')][${key_index}]//*[contains(text(),'${key_value}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -179,6 +189,11 @@
 	<td>VIEW_ESTIMATED_TIME</td>
 	<td>//div[contains(@class,'d-flex')]//label[contains(text(),'${key_name}')]/parent::div/following-sibling::p//span[contains(text(),'${key_value}')]</td>
 	<td></td>
+</tr>
+<tr>
+    <td>VIEW_TEST_STATUS_ANALYTICS_CLOUD</td>
+    <td>//h3[contains(.,'t') and contains(text(),'${status}')]</td>
+    <td></td>
 </tr>
 <tr>
 	<td>VARIANT_NAME</td>

@@ -36,9 +36,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8433 | Test Summary: Form appears on card shows the pages that the form appears on"
-	@ignore = "true"
 	@priority = "5"
 	test AssertAppearsOnListShowsPagesFormsExists {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: It is not possible to perform the assert because this test presents timing problems.
+		// AC Refactor ticket: LRAC-9467
+
 		task ("Submit the form") {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
@@ -82,6 +86,9 @@ definition {
 		}
 
 		task ("Assert appears on metric") {
+
+			// This data takes too long to appear
+
 			var portalURL = PropsUtil.get("portal.url");
 			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

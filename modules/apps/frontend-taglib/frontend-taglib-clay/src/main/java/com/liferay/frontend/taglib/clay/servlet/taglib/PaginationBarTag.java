@@ -292,7 +292,7 @@ public class PaginationBarTag extends BaseContainerTag {
 				pageNumberItems, 1, Math.max(leftIndex, 1));
 
 			if (leftItems.length > 1) {
-				_processEllispis(pageContext);
+				_processEllipsis(pageContext);
 			}
 			else {
 				int leftItem = leftItems[0];
@@ -320,7 +320,7 @@ public class PaginationBarTag extends BaseContainerTag {
 				pageNumberItems, rightIndex, Math.max(lastIndex, rightIndex));
 
 			if (rightItems.length > 1) {
-				_processEllispis(pageContext);
+				_processEllipsis(pageContext);
 			}
 			else if (rightItems.length == 1) {
 				int rightItem = rightItems[0];
@@ -355,7 +355,7 @@ public class PaginationBarTag extends BaseContainerTag {
 		return SKIP_BODY;
 	}
 
-	private void _processEllispis(PageContext pageContext) throws Exception {
+	private void _processEllipsis(PageContext pageContext) throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
 		jspWriter.write("<li class=\"dropdown page-item\">");

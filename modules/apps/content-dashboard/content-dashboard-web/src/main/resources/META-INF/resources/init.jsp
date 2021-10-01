@@ -38,7 +38,6 @@ page import="com.liferay.content.dashboard.web.internal.item.ContentDashboardIte
 page import="com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype" %><%@
 page import="com.liferay.info.item.InfoItemReference" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@

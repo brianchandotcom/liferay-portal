@@ -17,6 +17,9 @@ package com.liferay.content.dashboard.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -25,16 +28,14 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.ActionURL;
@@ -71,7 +72,7 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 		).buildActionURL();
 	}
 
-	public List<KeyValuePair> getAvailableVocabularyNames() {
+	public JSONArray getAvailableVocabularyJSONArray() {
 		String[] assetVocabularyNames = ArrayUtil.clone(_assetVocabularyNames);
 
 		Arrays.sort(assetVocabularyNames);
@@ -90,16 +91,17 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 			}
 		).filter(
 			Objects::nonNull
-		).map(
-			this::_toKeyValuePair
 		).sorted(
-			new KeyValuePairComparator(false, true)
+			Comparator.comparing(
+				this::_getAssetVocabularyLabel, String.CASE_INSENSITIVE_ORDER)
+		).map(
+			this::_toJSONObject
 		).collect(
-			Collectors.toList()
+			JSONUtil.createCollector()
 		);
 	}
 
-	public List<KeyValuePair> getCurrentVocabularyNames() {
+	public JSONArray getCurrentVocabularyJSONArray() {
 		return Stream.of(
 			_assetVocabularyNames
 		).map(
@@ -109,9 +111,9 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 		).filter(
 			Objects::nonNull
 		).map(
-			this::_toKeyValuePair
+			this::_toJSONObject
 		).collect(
-			Collectors.toList()
+			JSONUtil.createCollector()
 		);
 	}
 
@@ -171,10 +173,14 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 		).toArray();
 	}
 
-	private KeyValuePair _toKeyValuePair(AssetVocabulary assetVocabulary) {
-		return new KeyValuePair(
-			assetVocabulary.getName(),
-			HtmlUtil.escape(_getAssetVocabularyLabel(assetVocabulary)));
+	private JSONObject _toJSONObject(AssetVocabulary assetVocabulary) {
+		return JSONUtil.put(
+			"label", HtmlUtil.escape(_getAssetVocabularyLabel(assetVocabulary))
+		).put(
+			"site", assetVocabulary.getGroupId()
+		).put(
+			"value", assetVocabulary.getName()
+		);
 	}
 
 	private List<AssetVocabulary> _assetVocabularies;

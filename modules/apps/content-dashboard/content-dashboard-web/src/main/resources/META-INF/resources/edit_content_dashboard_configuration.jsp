@@ -57,11 +57,11 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 								HashMapBuilder.<String, Object>put(
 									"leftBoxName", "availableAssetVocabularyNames"
 								).put(
-									"leftList", JSONFactoryUtil.createJSONArray(contentDashboardAdminConfigurationDisplayContext.getAvailableVocabularyNames())
+									"leftList", contentDashboardAdminConfigurationDisplayContext.getAvailableVocabularyJSONArray()
 								).put(
 									"rightBoxName", "currentAssetVocabularyNames"
 								).put(
-									"rightList", JSONFactoryUtil.createJSONArray(contentDashboardAdminConfigurationDisplayContext.getCurrentVocabularyNames())
+									"rightList", contentDashboardAdminConfigurationDisplayContext.getCurrentVocabularyJSONArray()
 								).build()
 							%>'
 						/>

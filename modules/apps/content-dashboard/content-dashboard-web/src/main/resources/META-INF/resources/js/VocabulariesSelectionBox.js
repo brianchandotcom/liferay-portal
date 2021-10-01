@@ -16,24 +16,6 @@ import {ClayDualListBox} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-const transformToDualListBoxProperties = (myArray) => {
-	const myArrayWithLabel = [];
-	myArray.forEach((elem) => {
-		myArrayWithLabel.push({...elem, label: elem.value, value: elem.key});
-	});
-
-	return myArrayWithLabel;
-};
-
-const addFakeSiteId = (vocabularies) => {
-	const myArrayWithSiteId = [];
-	vocabularies.forEach((elem) => {
-		myArrayWithSiteId.push({...elem, site: Math.floor(Math.random() * 3)});
-	});
-
-	return myArrayWithSiteId;
-};
-
 const VocabulariesSelectionBox = ({
 	leftBoxName,
 	leftList,
@@ -41,10 +23,7 @@ const VocabulariesSelectionBox = ({
 	rightBoxName,
 	rightList,
 }) => {
-	const [items, setItems] = useState([
-		addFakeSiteId(transformToDualListBoxProperties(leftList)),
-		addFakeSiteId(transformToDualListBoxProperties(rightList)),
-	]);
+	const [items, setItems] = useState([leftList, rightList]);
 
 	const [leftElements, rightElements] = items;
 

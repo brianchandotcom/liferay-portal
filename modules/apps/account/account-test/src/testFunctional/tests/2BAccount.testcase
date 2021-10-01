@@ -417,6 +417,7 @@ definition {
 		for (var accountNumber : list "1,2") {
 			LexiconEntry.viewNoEntry(rowEntry = "Business ${accountNumber}");
 		}
+	}
 
 	@description = "This test asserts that an Account Admin can remove a user from an account."
 	@priority = "5"

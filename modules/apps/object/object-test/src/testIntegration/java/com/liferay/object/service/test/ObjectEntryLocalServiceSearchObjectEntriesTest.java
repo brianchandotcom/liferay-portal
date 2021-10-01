@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -394,6 +395,28 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	}
 
 	@Test
+	public void testSearchByTitleValue() throws Exception {
+		_addObjectDefinition(
+			ObjectFieldUtil.createObjectField(
+				false, false, null, "Alpha", "alpha", false, "String"));
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"alpha", RandomTestUtil.randomString()
+			).put(
+				"beta", RandomTestUtil.randomString()
+			).build());
+
+		String titleValue = objectEntry.getTitleValue();
+
+		Assert.assertTrue(Validator.isNotNull(titleValue));
+
+		int endIndex = RandomTestUtil.randomInt(0, titleValue.length());
+
+		_assertKeywords(titleValue.substring(0, endIndex), 1);
+	}
+
+	@Test
 	public void testString() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
@@ -479,6 +502,10 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Arrays.asList(objectField));
 
+		_objectDefinition.setTitleObjectFieldId(_getTitleObjectFieldId());
+
+		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+
 		_objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
@@ -500,6 +527,15 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 				0, _objectDefinition.getObjectDefinitionId(), keywords, 0, 20);
 
 		Assert.assertEquals(count, baseModelSearchResult.getLength());
+	}
+
+	private long _getTitleObjectFieldId() throws Exception {
+		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(), false, false, null,
+			LocalizedMapUtil.getLocalizedMap("Beta"), "beta", false, "String");
+
+		return objectField.getObjectFieldId();
 	}
 
 	@DeleteAfterTestRun

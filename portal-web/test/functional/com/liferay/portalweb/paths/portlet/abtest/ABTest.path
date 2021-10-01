@@ -86,9 +86,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>LABEL_ITEM_STATUS</td>
-    <td>//div[contains(@class, 'card-header d-flex justify-content-between')]//h3[contains(text(), '${status}')]</td>
-    <td></td>
+	<td>LABEL_ITEM_STATUS</td>
+	<td>//div[contains(@class, 'card-header d-flex justify-content-between')]//h3[contains(text(), '${status}')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>OK_BUTTON</td>
@@ -191,9 +191,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>VIEW_TEST_STATUS_ANALYTICS_CLOUD</td>
-    <td>//h3[contains(.,'t') and contains(text(),'${status}')]</td>
-    <td></td>
+	<td>VIEW_TEST_STATUS_ANALYTICS_CLOUD</td>
+	<td>//h3[contains(.,'t') and contains(text(),'${status}')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>VARIANT_NAME</td>

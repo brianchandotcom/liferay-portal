@@ -117,14 +117,14 @@ definition {
 	}
 
 	macro openABTestInAC {
-        Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
+		Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
 
-        SelectWindow(locator1 = "name=undefined");
+		SelectWindow(locator1 = "name=undefined");
 
-        AnalyticsCloud.loginAnalyticsCloud(
-            emailAddress = "test@liferay.com",
-            password = "test");
-    }
+		AnalyticsCloud.loginAnalyticsCloud(
+			emailAddress = "test@liferay.com",
+			password = "test");
+	}
 
 	macro runTest {
 		Click(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
@@ -135,12 +135,6 @@ definition {
 			Click(locator1 = "ABTest#OK_BUTTON");
 		}
 	}
-
-	macro statusABTestInAC {
-        AssertTextEquals(
-            locator1 = "ABTest#LABEL_ITEM_STATUS",
-            value1 = "${status}");
-    }
 
 	macro selectElementID {
 		Click(locator1 = "ABTest#SELECT_CLICKABLE_ELEMENT_BUTTON");
@@ -154,6 +148,12 @@ definition {
 		AssertTextEquals(
 			locator1 = "ABTest#TARGET_LABEL",
 			value1 = "Target");
+	}
+
+	macro statusABTestInAC {
+		AssertTextEquals(
+			locator1 = "ABTest#LABEL_ITEM_STATUS",
+			value1 = "${status}");
 	}
 
 	macro terminateTest {
@@ -205,4 +205,5 @@ definition {
 			locator1 = "ABTest#ELEMENT_ID_INPUT",
 			value1 = "${elementId}");
 	}
+
 }

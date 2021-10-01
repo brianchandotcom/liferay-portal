@@ -576,7 +576,7 @@ definition {
 			workflowAssetTitle = "FrontPage",
 			workflowAssetType = "Wiki Page",
 			workflowTask = "Review");
-		
+
 		Workflow.rejectTaskByActions(
 			workflowAssetTitle = "FrontPage",
 			workflowAssetType = "Wiki Page",
@@ -594,7 +594,6 @@ definition {
 		AssertElementPresent(
 			key_status = "Pending",
 			locator1 = "CommerceEntry#WORKFLOW_STATUS");
-
 	}
 
 	@description = "This is a test for LRQA-69560. Verify that the Front Page status changes after edit. "

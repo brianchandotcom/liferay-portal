@@ -177,6 +177,7 @@ AUI.add(
 		var DocumentLibraryUpload = A.Component.create({
 			ATTRS: {
 				appViewEntryTemplates: {
+					// eslint-disable-next-line @liferay/aui/no-one
 					validator: A.one,
 					value: {},
 				},
@@ -202,6 +203,7 @@ AUI.add(
 				},
 
 				entriesContainer: {
+					// eslint-disable-next-line @liferay/aui/no-one
 					validator: A.one,
 					value: {},
 				},
@@ -327,7 +329,7 @@ AUI.add(
 
 				_bindDragDropUI() {
 					var instance = this;
-
+					// eslint-disable-next-line @liferay/aui/no-one
 					var docElement = A.one(DOC.documentElement);
 
 					var entriesContainer = instance._entriesContainer;
@@ -571,12 +573,14 @@ AUI.add(
 
 						instance._removeEmptyResultsMessage(searchContainer);
 
-						var searchContainerWrapper = A.one(
+						var searchContainerWrapper = document.querySelector(
 							'div.lfr-search-container-wrapper'
 						);
 
 						if (searchContainerWrapper) {
-							searchContainerWrapper.show();
+							searchContainerWrapper.style.display = 'block';
+
+							searchContainerWrapper.classList.remove('hide');
 						}
 					}
 
@@ -1184,12 +1188,14 @@ AUI.add(
 				_removeEmptyResultsMessage(searchContainer) {
 					var id = searchContainer.getAttribute('id');
 
-					var emptyResultsMessage = A.one(
-						'#' + id + 'EmptyResultsMessage'
+					var emptyResultsMessage = document.getElementById(
+						`${id}EmptyResultsMessage`
 					);
 
 					if (emptyResultsMessage) {
-						emptyResultsMessage.hide();
+						emptyResultsMessage.style.display = 'none';
+
+						emptyResultsMessage.classList.remove('hide');
 					}
 				},
 

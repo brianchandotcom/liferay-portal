@@ -54,6 +54,7 @@ export const FormProperty = ({form}) => {
 					name={setFormPath('doOwnBuildingAtAddress')}
 					rules={{required: true}}
 				/>
+
 				<NumberControlledInput
 					control={control}
 					label="How many stories is this building?"
@@ -66,6 +67,7 @@ export const FormProperty = ({form}) => {
 						required: 'This field is required',
 					}}
 				/>
+
 				<SquareFeatControlledInput
 					control={control}
 					label="How many square feet of the building does your business occupy?"
@@ -92,6 +94,7 @@ export const FormProperty = ({form}) => {
 						required: 'This field is required',
 					}}
 				/>
+
 				<SquareFeatControlledInput
 					control={control}
 					label="How many total square feet is the building?"
@@ -100,6 +103,7 @@ export const FormProperty = ({form}) => {
 						required: 'This field is required',
 					}}
 				/>
+
 				<YearControlledInput
 					control={control}
 					label="What year was the building constructed?"
@@ -120,6 +124,7 @@ export const FormProperty = ({form}) => {
 						required: 'This field is required',
 					}}
 				/>
+
 				<ControlledSwitch
 					control={control}
 					label="Is this the primary location where you conduct business?"
@@ -179,6 +184,7 @@ export const FormProperty = ({form}) => {
 					/>
 				)}
 			</div>
+
 			<CardFormActionsWithSave
 				isValid={isValid}
 				onNext={onNext}

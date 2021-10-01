@@ -167,7 +167,7 @@ export default function LinkField({field, onValueSelect, value}) {
 				<LayoutSelector
 					mappedLayout={nextValue?.layout}
 					onLayoutSelect={(layout) => {
-						if (layout && Object.keys(layout).length) {
+						if (layout && !!Object.keys(layout).length) {
 							handleChange({layout});
 						}
 						else {

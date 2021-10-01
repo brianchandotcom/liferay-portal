@@ -25,6 +25,7 @@ export const Select = React.forwardRef(
 					</Label>
 				)}
 				<ClayIcon className="select-icon" symbol="caret-bottom" />
+
 				<select
 					{...props}
 					className="input"

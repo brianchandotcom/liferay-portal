@@ -169,6 +169,7 @@ export const BusinessTypeSearch = ({form, setNewSelectedProduct}) => {
 						Search
 					</button>
 				</SearchInput>
+
 				<p className="paragraph">
 					i.e. Coffee shop, Plumber, Drop Shipping, Landscape, etc
 				</p>

@@ -95,7 +95,7 @@ const Email = ({
 										}
 
 										if (
-											newItems.length &&
+											!!newItems.length &&
 											isEmailAddressValid(
 												newItems[newItems.length - 1]
 													?.label

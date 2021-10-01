@@ -83,7 +83,7 @@ function TooltipSummaryRenderer({itemData, options, value}) {
 	return (
 		<>
 			{value}
-			{tooltipTableRows.length && (
+			{!!tooltipTableRows.length && (
 				<span
 					className="tooltip-provider"
 					data-title-set-as-html

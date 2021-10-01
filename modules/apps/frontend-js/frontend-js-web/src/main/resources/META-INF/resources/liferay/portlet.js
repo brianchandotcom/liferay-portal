@@ -523,7 +523,7 @@
 					var handle = portlet.on(events, () => {
 						Util.portletTitleEdit({
 							doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-							// eslint-disable-next-line @liferay/liferay/no-abbreviations
+							// eslint-disable-next-line @liferay/no-abbreviations
 							obj: portlet,
 							plid: themeDisplay.getPlid(),
 							portletId,

@@ -275,7 +275,12 @@ function TrafficSourcesCustomTooltip(props) {
 	return (
 		<div className="custom-tooltip">
 			<p className="mb-1 mt-0">
-				<b>{payload.length && payload[0].payload.title}</b>
+				<b>
+				{
+					// eslint-disable-next-line @liferay/no-length-jsx-expression
+					payload.length && payload[0].payload.title
+				}
+				</b>
 			</p>
 
 			<ul className="list-unstyled mb-0">

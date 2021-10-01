@@ -25,7 +25,7 @@ try {
 }
 catch (error) {
 	throw new Error(
-		'@liferay/npm-scripts is not installed; please run "ant setup-sdk"',
+		'@liferay/npm-scripts is not installed; please run "ant setup-sdk"'
 	);
 }
 

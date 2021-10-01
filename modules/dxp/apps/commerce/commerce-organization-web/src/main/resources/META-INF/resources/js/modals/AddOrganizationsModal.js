@@ -115,7 +115,7 @@ export default function AddOrganizationModal({
 
 			<ClayModal.Body>
 				<ClayForm.Group
-					className={classNames(errors.length && 'has-error')}
+					className={classNames(!!errors.length && 'has-error')}
 				>
 					<label htmlFor="addNewOrganization">
 						{Liferay.Language.get('name') + ' '}

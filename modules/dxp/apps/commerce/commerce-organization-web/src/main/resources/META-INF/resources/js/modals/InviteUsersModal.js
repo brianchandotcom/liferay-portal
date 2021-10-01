@@ -101,7 +101,7 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 
 			<ClayModal.Body>
 				<ClayForm.Group
-					className={classNames(errors.length && 'has-error')}
+					className={classNames(!!errors.length && 'has-error')}
 				>
 					<label htmlFor="inviteUsersEmailInput">
 						{Liferay.Language.get('emails')}
@@ -133,7 +133,7 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 				</ClayForm.Group>
 
 				<ClayForm.Group
-					className={classNames(errors.length && 'has-error')}
+					className={classNames(!!errors.length && 'has-error')}
 				>
 					<label htmlFor="inviteUsersRoleInput">
 						{Liferay.Language.get('roles')}

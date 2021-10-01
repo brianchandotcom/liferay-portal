@@ -12,7 +12,5 @@
  * details.
  */
 
-/// <reference types="react" />
-
 declare const AddNewTabButton: () => JSX.Element;
 export default AddNewTabButton;

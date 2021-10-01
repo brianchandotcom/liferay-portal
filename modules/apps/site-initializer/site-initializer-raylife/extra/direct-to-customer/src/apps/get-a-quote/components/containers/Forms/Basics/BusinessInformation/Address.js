@@ -53,11 +53,13 @@ export const BusinessInformationAddress = () => {
 					name={setFormPath('address')}
 					rules={{required: 'Business address is required.'}}
 				/>
+
 				<Input
 					{...register(setFormPath('addressApt'))}
 					label="&nbsp;"
 					placeholder="Apt/Suite (optional)"
 				/>
+
 				<div
 					className="content-row"
 					style={{
@@ -81,6 +83,7 @@ export const BusinessInformationAddress = () => {
 						}}
 					/>
 				</div>
+
 				<div className="content-row">
 					<ZIPControlledInput
 						control={control}

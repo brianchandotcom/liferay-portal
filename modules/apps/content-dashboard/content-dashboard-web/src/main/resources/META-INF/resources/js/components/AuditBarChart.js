@@ -318,7 +318,7 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 							cursor={{fill: 'transparent'}}
 							tooltip={tooltip}
 						/>
-						{bars.length &&
+						{!!bars.length &&
 							bars.map((bar, index) => {
 								return (
 									<Bar

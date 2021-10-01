@@ -84,17 +84,21 @@ const ProductComparison = ({
 		<div className="quote-content">
 			<div className="quote-header">
 				<div className="title">{category}</div>
+
 				<div className="value">
 					&#36;{price}
 					<div>/yr</div>
 				</div>
+
 				<div className="subtitle">
 					Get covered for <span>&#36;{promo} today</span>
 				</div>
 			</div>
+
 			<div className="quote-body">
 				<ListItems {...otherValues} />
 			</div>
+
 			<div className="quote-footer">
 				<div className="d-flex justify-content-center">
 					<button
@@ -108,6 +112,7 @@ const ProductComparison = ({
 						PURCHASE THIS POLICY
 					</button>
 				</div>
+
 				<div className="d-flex justify-content-center">
 					<button id="details" type="button">
 						Policy Details

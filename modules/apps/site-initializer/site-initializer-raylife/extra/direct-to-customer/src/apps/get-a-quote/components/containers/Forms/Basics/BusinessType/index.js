@@ -42,6 +42,7 @@ export const FormBasicBusinessType = ({form}) => {
 					setNewSelectedProduct={setNewSelectedProduct}
 				/>
 			</div>
+
 			<CardFormActionsWithSave
 				isValid={!!form?.basics?.businessCategoryId}
 				onNext={goToNextForm}

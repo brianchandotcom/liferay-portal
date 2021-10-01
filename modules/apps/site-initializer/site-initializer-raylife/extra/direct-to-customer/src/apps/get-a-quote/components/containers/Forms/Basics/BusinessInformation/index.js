@@ -75,6 +75,7 @@ export const FormBasicBusinessInformation = ({form}) => {
 							required: 'First name is required.',
 						}}
 					/>
+
 					<ControlledInput
 						control={control}
 						inputProps={{
@@ -87,6 +88,7 @@ export const FormBasicBusinessInformation = ({form}) => {
 						}}
 					/>
 				</div>
+
 				<EmailControlledInput
 					control={control}
 					label="Business Email"
@@ -95,6 +97,7 @@ export const FormBasicBusinessInformation = ({form}) => {
 						required: 'Email is required.',
 					}}
 				/>
+
 				<PhoneControlledInput
 					control={control}
 					label="Phone"
@@ -103,13 +106,16 @@ export const FormBasicBusinessInformation = ({form}) => {
 						required: 'Phone number is required.',
 					}}
 				/>
+
 				<WebsiteControlledInput
 					control={control}
 					label="Business Website (optional)"
 					name={setFormPath('business.website')}
 				/>
+
 				<BusinessInformationAddress />
 			</div>
+
 			<CardFormActionsWithSave
 				isValid={isValid}
 				onNext={onNext}

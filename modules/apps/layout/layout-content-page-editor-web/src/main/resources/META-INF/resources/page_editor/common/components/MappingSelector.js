@@ -459,12 +459,12 @@ function MappingFieldSelect({fieldType, fields, onValueSelect, value}) {
 
 			<ClaySelect
 				aria-label={Liferay.Language.get('field')}
-				disabled={!(fields && fields.length)}
+				disabled={!(fields && !!fields.length)}
 				id={mappingSelectorFieldSelectId}
 				onChange={onValueSelect}
 				value={value}
 			>
-				{fields && fields.length && (
+				{fields && !!fields.length && (
 					<>
 						<ClaySelect.Option
 							label={UNMAPPED_OPTION.label}

@@ -137,7 +137,7 @@ export default function WorkflowInstanceTracker({workflowInstanceId}) {
 
 	return (
 		<div className="workflow-instance-tracker">
-			{layoutedElements.length && (
+			{!!layoutedElements.length && (
 				<ReactFlowProvider>
 					<ReactFlow
 						edgeTypes={edgeTypes}

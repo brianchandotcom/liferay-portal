@@ -58,7 +58,7 @@ function defineServerResponses(app) {
 						},
 					],
 					id: 'asd',
-					// eslint-disable-next-line @liferay/liferay/no-abbreviations
+					// eslint-disable-next-line @liferay/no-abbreviations
 					img: {
 						src: '//via.placeholder.com/250x250',
 					},
@@ -114,7 +114,7 @@ function defineServerResponses(app) {
 								},
 							],
 							id: '111',
-							// eslint-disable-next-line @liferay/liferay/no-abbreviations
+							// eslint-disable-next-line @liferay/no-abbreviations
 							img: {
 								src: '//via.placeholder.com/250x250',
 							},
@@ -165,7 +165,7 @@ function defineServerResponses(app) {
 								},
 							],
 							id: '112',
-							// eslint-disable-next-line @liferay/liferay/no-abbreviations
+							// eslint-disable-next-line @liferay/no-abbreviations
 							img: {
 								src: '//via.placeholder.com/250x250',
 							},
@@ -180,7 +180,7 @@ function defineServerResponses(app) {
 						},
 						{
 							id: '113',
-							// eslint-disable-next-line @liferay/liferay/no-abbreviations
+							// eslint-disable-next-line @liferay/no-abbreviations
 							img: {
 								src: '//via.placeholder.com/250x250',
 							},
@@ -195,7 +195,7 @@ function defineServerResponses(app) {
 						},
 						{
 							id: '114',
-							// eslint-disable-next-line @liferay/liferay/no-abbreviations
+							// eslint-disable-next-line @liferay/no-abbreviations
 							img: {
 								src: '//via.placeholder.com/250x250',
 							},
@@ -248,7 +248,7 @@ function defineServerResponses(app) {
 						},
 					],
 					id: 'sdf',
-					// eslint-disable-next-line @liferay/liferay/no-abbreviations
+					// eslint-disable-next-line @liferay/no-abbreviations
 					img: {
 						src: '//via.placeholder.com/500x500',
 					},

@@ -34,7 +34,7 @@
 		em: '_handleEm',
 		font: '_handleFont',
 		i: '_handleEm',
-		// eslint-disable-next-line @liferay/liferay/no-abbreviations
+		// eslint-disable-next-line @liferay/no-abbreviations
 		img: '_handleImage',
 		li: '_handleListItem',
 		ol: '_handleOrderedList',

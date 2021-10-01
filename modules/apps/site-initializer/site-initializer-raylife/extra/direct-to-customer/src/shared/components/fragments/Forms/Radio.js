@@ -35,6 +35,7 @@ export const Radio = ({
 			type="radio"
 			value={value}
 		/>
+
 		<div className="content">
 			<div className="content-header">
 				<label htmlFor={name}>
@@ -43,6 +44,7 @@ export const Radio = ({
 				</label>
 				{renderActions}
 			</div>
+
 			<p>{description}</p>
 		</div>
 	</div>

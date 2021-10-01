@@ -27,6 +27,7 @@ export const Steps = () => {
 			>
 				Basics
 			</StepItem>
+
 			<StepItem
 				onClick={() => setSection(AVAILABLE_STEPS.BUSINESS)}
 				percentage={
@@ -38,6 +39,7 @@ export const Steps = () => {
 			>
 				Business
 			</StepItem>
+
 			<StepItem
 				onClick={() => setSection(AVAILABLE_STEPS.EMPLOYEES)}
 				percentage={
@@ -49,6 +51,7 @@ export const Steps = () => {
 			>
 				Employees
 			</StepItem>
+
 			<StepItem
 				onClick={() => setSection(AVAILABLE_STEPS.PROPERTY)}
 				percentage={

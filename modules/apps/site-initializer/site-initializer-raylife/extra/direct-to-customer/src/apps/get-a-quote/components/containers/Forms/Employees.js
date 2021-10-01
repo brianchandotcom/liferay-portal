@@ -66,6 +66,7 @@ export const FormEmployees = ({form}) => {
 					name={setFormPath('hasFein')}
 					rules={{required: true}}
 				/>
+
 				<FEINControlledInput
 					control={control}
 					label="Federal Employer Identification Number (FEIN)"
@@ -87,18 +88,21 @@ export const FormEmployees = ({form}) => {
 						required: 'FEIN is required.',
 					}}
 				/>
+
 				<YearControlledInput
 					control={control}
 					label="What year did you start your business?"
 					name={setFormPath('startBusinessAtYear')}
 					rules={{required: 'This field is required'}}
 				/>
+
 				<ControlledSwitch
 					control={control}
 					label="Does your business operate year round?"
 					name={setFormPath('businessOperatesYearRound')}
 					rules={{required: true}}
 				/>
+
 				<NumberControlledInput
 					control={control}
 					label="How many full or part time employees do you have?"
@@ -123,18 +127,21 @@ export const FormEmployees = ({form}) => {
 						required: 'This field is required',
 					}}
 				/>
+
 				<CurrencyControlledInput
 					control={control}
 					label="What is your estimated annual gross revenue for the next 12 months?"
 					name={setFormPath('estimatedAnnualGrossRevenue')}
 					rules={{required: 'This field is required'}}
 				/>
+
 				<CurrencyControlledInput
 					control={control}
 					label="What do you anticipate your annual payroll will be for all owner(s) over the next 12 months?"
 					name={setFormPath('annualPayrollForOwner')}
 					rules={{required: 'This field is required'}}
 				/>
+
 				<CurrencyControlledInput
 					control={control}
 					label="What do you anticipate your annual payroll will be for all employees over the next 12 months?"
@@ -142,6 +149,7 @@ export const FormEmployees = ({form}) => {
 					rules={{required: 'This field is required'}}
 				/>
 			</div>
+
 			<CardFormActionsWithSave
 				isValid={isValid}
 				onNext={onNext}

@@ -37,12 +37,15 @@ const QuoteApp = () => {
 	return (
 		<div className="form-area">
 			<Steps />
+
 			<div>
 				<h2 className="title title-area">
 					<FormTitle />
 				</h2>
+
 				<Forms form={form} />
 			</div>
+
 			<div className="info-area"></div>
 		</div>
 	);
@@ -51,6 +54,7 @@ const QuoteApp = () => {
 const GetAQuote = () => (
 	<Providers>
 		<style>{Style}</style>
+
 		<QuoteApp />
 	</Providers>
 );

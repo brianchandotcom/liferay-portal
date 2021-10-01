@@ -222,7 +222,7 @@ export default function AddOrganizationModal({
 
 				{newAccountMode ? (
 					<ClayForm.Group
-						className={classNames(errors.length && 'has-error')}
+						className={classNames(!!errors.length && 'has-error')}
 					>
 						<label htmlFor="newAccountNameInput">
 							{Liferay.Language.get('name')}
@@ -240,7 +240,7 @@ export default function AddOrganizationModal({
 					</ClayForm.Group>
 				) : (
 					<ClayForm.Group
-						className={classNames(errors.length && 'has-error')}
+						className={classNames(!!errors.length && 'has-error')}
 					>
 						<label htmlFor="searchAccountInput">
 							{Liferay.Language.get('search-account')}

@@ -260,7 +260,7 @@ export default function Chart({
 
 	return (
 		<>
-			{timeSpanOptions.length && (
+			{!!timeSpanOptions.length && (
 				<div className="c-mb-3 c-mt-4">
 					<TimeSpanSelector
 						disabledNextTimeSpan={timeSpanOffset === 0}

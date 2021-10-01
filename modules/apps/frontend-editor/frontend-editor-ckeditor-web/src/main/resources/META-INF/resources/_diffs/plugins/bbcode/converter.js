@@ -42,7 +42,7 @@
 		email: '_handleEmail',
 		font: '_handleFont',
 		i: '_handleEm',
-		// eslint-disable-next-line @liferay/liferay/no-abbreviations
+		// eslint-disable-next-line @liferay/no-abbreviations
 		img: '_handleImage',
 		justify: '_handleTextAlign',
 		left: '_handleTextAlign',

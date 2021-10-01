@@ -134,7 +134,7 @@ class AddOrCreateBase extends Component {
 				</div>
 				{this.props.active &&
 					(this.props.inputSearchValue ||
-						(this.props.items && this.props.items.length)) && (
+						(this.props.items && !!this.props.items.length)) && (
 						<div className="card-body">
 							<ClayList>
 								{this.props.itemCreation &&
@@ -147,7 +147,7 @@ class AddOrCreateBase extends Component {
 												className={classNames(
 													'py-3',
 													this.props.items &&
-														this.props.items
+														!!this.props.items
 															.length &&
 														'border-bottom mb-3'
 												)}
@@ -189,7 +189,7 @@ class AddOrCreateBase extends Component {
 										</ClayList.Header>
 									)}
 							</ClayList>
-							{this.props.items && this.props.items.length ? (
+							{this.props.items && !!this.props.items.length ? (
 								<>
 									{this.props.itemCreation && (
 										<ClayList.Header className="px-0">

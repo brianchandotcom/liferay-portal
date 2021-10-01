@@ -99,7 +99,7 @@ export default ({currentSection, items, question, showSectionLabel}) => {
 						/>
 					</li>
 
-					{items && items.length && (
+					{items && !!items.length && (
 						<li>
 							<ClayDropDownWithItems
 								className="c-py-1"

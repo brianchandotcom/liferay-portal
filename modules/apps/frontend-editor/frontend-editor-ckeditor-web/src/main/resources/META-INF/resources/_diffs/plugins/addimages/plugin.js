@@ -163,7 +163,7 @@
 
 			const filter = new CKEDITOR.htmlParser.filter({
 				elements: {
-					// eslint-disable-next-line @liferay/liferay/no-abbreviations
+					// eslint-disable-next-line @liferay/no-abbreviations
 					img(element) {
 						if (image.src === instance._tempImage.src) {
 							element.attributes.src = image.src;
@@ -420,7 +420,7 @@
 
 							editor.fire('imageUploaded', {
 								editor,
-								// eslint-disable-next-line @liferay/liferay/no-abbreviations
+								// eslint-disable-next-line @liferay/no-abbreviations
 								el: image,
 								fileEntryId: data.file.fileEntryId,
 								uploadImageReturnType: '',

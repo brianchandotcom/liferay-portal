@@ -119,7 +119,10 @@ function MiniCompare(props) {
 	return (
 		<ClayIconSpriteContext.Provider value={props.spritemap}>
 			<div
-				className={classnames('mini-compare', items.length && 'active')}
+				className={classnames(
+					'mini-compare',
+					!!items.length && 'active'
+				)}
 			>
 				{Array(props.itemsLimit)
 					.fill(null)

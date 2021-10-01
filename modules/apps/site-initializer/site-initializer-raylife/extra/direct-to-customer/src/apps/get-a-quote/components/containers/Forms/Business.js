@@ -75,18 +75,21 @@ export const FormBusiness = ({form}) => {
 						required: 'This field is required',
 					}}
 				/>
+
 				<ControlledSwitch
 					control={control}
 					label="Do you store personally identifiable information about your customers?"
 					name={setFormPath('hasStoredCustomerInformation')}
 					rules={{required: true}}
 				/>
+
 				<ControlledSwitch
 					control={control}
 					label="Do you have a Raylife Auto policy?"
 					name={setFormPath('hasAutoPolicy')}
 					rules={{required: true}}
 				/>
+
 				<LegalEntityControlledSelect
 					control={control}
 					label="Legal Entity"
@@ -147,6 +150,7 @@ export const FormBusiness = ({form}) => {
 					/>
 				)}
 			</div>
+
 			<CardFormActionsWithSave
 				isValid={isValid}
 				onNext={onNext}

@@ -27,6 +27,7 @@ export const FormBasicProductQuote = ({form}) => {
 			<div className="card-content">
 				<div className="content-column">
 					<label>Select a product to quote.</label>
+
 					<fieldset className="content-column" id="productQuote">
 						<Controller
 							control={control}
@@ -73,6 +74,7 @@ export const FormBasicProductQuote = ({form}) => {
 					</fieldset>
 				</div>
 			</div>
+
 			<CardFormActionsWithSave
 				isValid={!!form.basics.productQuote}
 				onNext={onNext}

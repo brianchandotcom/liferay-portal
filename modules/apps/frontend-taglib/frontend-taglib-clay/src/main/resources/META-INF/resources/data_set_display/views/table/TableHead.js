@@ -51,7 +51,7 @@ function TableHead({
 						columnName="item-selector"
 						heading
 					>
-						{items.length && selectionType === 'multiple' ? (
+						{!!items.length && selectionType === 'multiple' ? (
 							<ClayCheckbox
 								checked={!!selectedItemsValue.length}
 								indeterminate={

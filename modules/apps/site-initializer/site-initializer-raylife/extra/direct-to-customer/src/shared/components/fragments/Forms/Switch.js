@@ -34,6 +34,7 @@ export const Switch = React.forwardRef(
 					>
 						Yes
 					</button>
+
 					<button
 						className={`btn switch ${
 							value === 'false' && 'selected'
@@ -44,6 +45,7 @@ export const Switch = React.forwardRef(
 						No
 					</button>
 				</div>
+
 				<input
 					{...props}
 					className="hidden"

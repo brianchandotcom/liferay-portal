@@ -41,7 +41,7 @@ const getColumn = ({objectFields}) => ({children, column, index}) => {
 				// Avoid using repeatable and searchable fields when object storage type is selected
 
 				if (
-					objectFields.length &&
+					!!objectFields.length &&
 					(fieldName === 'repeatable' || fieldName === 'indexType')
 				) {
 					return <React.Fragment key={index} />;

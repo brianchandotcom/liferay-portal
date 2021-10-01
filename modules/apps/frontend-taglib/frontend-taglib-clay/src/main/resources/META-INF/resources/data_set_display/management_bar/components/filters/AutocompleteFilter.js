@@ -284,7 +284,7 @@ function AutocompleteFilter({
 			<ClayDropDown.Divider />
 			<ClayDropDown.Caption>
 				<div className="form-group">
-					{items && items.length ? (
+					{items && !!items.length ? (
 						<ul
 							className="inline-scroller mb-n2 mx-n2 px-2"
 							ref={setScrollingArea}

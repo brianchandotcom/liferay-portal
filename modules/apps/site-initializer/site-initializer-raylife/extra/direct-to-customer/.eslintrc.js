@@ -16,16 +16,17 @@ let config = {};
 
 try {
 	config = require('@liferay/npm-scripts/src/config/eslint.config');
-} catch (error) {
+}
+catch (error) {
 	throw new Error(
-		'@liferay/npm-scripts is not installed; please run "ant setup-sdk"'
+		'@liferay/npm-scripts is not installed; please run "ant setup-sdk"',
 	);
 }
 
 module.exports = {
 	...config,
 	rules: {
-		'@liferay/liferay/group-imports': 'off',
+		'@liferay/group-imports': 'off',
 		'@liferay/portal/no-loader-import-specifier': 'off',
 		'@liferay/portal/no-react-dom-render': 'off',
 		'no-case-declarations': 'off',

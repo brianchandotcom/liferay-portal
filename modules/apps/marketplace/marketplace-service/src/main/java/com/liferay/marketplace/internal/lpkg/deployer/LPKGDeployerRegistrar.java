@@ -99,7 +99,7 @@ public class LPKGDeployerRegistrar {
 	}
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.marketplace.service)(release.schema.version=2.0.2))",
+		target = "(&(release.bundle.symbolic.name=com.liferay.marketplace.service)(release.schema.version=2.0.3))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {

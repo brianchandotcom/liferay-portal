@@ -2,7 +2,6 @@
 import React, {useEffect} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 import {Radio} from '~/shared/components/fragments/Forms/Radio';
-import {LiferayService} from '~/shared/services/liferay';
 
 export const BusinessTypeRadioGroup = ({
 	businessTypes = [],
@@ -11,24 +10,25 @@ export const BusinessTypeRadioGroup = ({
 }) => {
 	const {control, setValue} = useFormContext();
 
+	const selectedBusinessType = businessTypes.find(
+		({id}) => form?.basics?.businessCategoryId === id
+	);
+
+	// eslint-disable-next-line no-console
+	console.log({selectedBusinessType});
+
 	useEffect(() => {
 		if (form?.basics?.businessCategoryId) {
-			const businessType = businessTypes.find(
-				({id}) => form.basics.businessCategoryId === id
-			);
 			setCategoryProperties();
-			setValue('basics.product', businessType?.title);
+			setValue('basics.product', selectedBusinessType?.title);
 			setNewSelectedProduct(form.basics.businessCategoryId);
 		}
 	}, [form?.basics?.businessCategoryId]);
 
 	const setCategoryProperties = async () => {
 		try {
-			const categoryId = form.basics.businessCategoryId;
-
-			const categoryProperties = await LiferayService.getCategoryProperties(
-				categoryId
-			);
+			const categoryProperties =
+				selectedBusinessType.taxonomyCategoryProperties;
 
 			setValue(
 				'basics.properties.businessClassCode',

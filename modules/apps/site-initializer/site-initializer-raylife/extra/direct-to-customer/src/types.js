@@ -20,13 +20,6 @@
 
 /**
  * @typedef {{
- * key: string
- * value: string
- * }} CategoryPropertyResponse
- */
-
-/**
- * @typedef {{
  * id: string
  * title: string
  * description: string

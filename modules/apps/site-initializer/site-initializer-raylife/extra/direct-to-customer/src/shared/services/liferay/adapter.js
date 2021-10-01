@@ -9,9 +9,10 @@ const _formatCommerceProductPrice = (price) => parseInt(price, 10);
  * @returns {BusinessType[]} Array of business types
  */
 const adaptToBusinessType = (data) =>
-	data.map(({description, id, name}) => ({
+	data.map(({description, id, name, taxonomyCategoryProperties}) => ({
 		description,
 		id,
+		taxonomyCategoryProperties,
 		title: name,
 	}));
 

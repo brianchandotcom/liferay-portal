@@ -251,6 +251,10 @@ function FieldBase({
 				<div className="lfr-ddm-form-field-repeatable-toolbar">
 					{repeatable && repeatedIndex > 0 && (
 						<ClayButton
+							aria-label={Liferay.Util.sub(
+								Liferay.Language.get('remove-duplicate-field'),
+								label ? label : type
+							)}
 							className="ddm-form-field-repeatable-delete-button p-0"
 							disabled={readOnly}
 							onClick={() =>
@@ -268,6 +272,10 @@ function FieldBase({
 					)}
 
 					<ClayButton
+						aria-label={Liferay.Util.sub(
+							Liferay.Language.get('add-duplicate-field'),
+							label ? label : type
+						)}
 						className={classNames(
 							'ddm-form-field-repeatable-add-button p-0',
 							{

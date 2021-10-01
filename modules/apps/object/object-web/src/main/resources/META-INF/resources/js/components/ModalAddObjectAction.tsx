@@ -38,14 +38,16 @@ type TObjectActionExecutor = {
 	label: string;
 };
 
+type TObjectAction = {
+	key: string;
+	label: string;
+	description: string;
+};
+
 type TFormState = {
 	name: string;
-	objectActionExecutor: {
-		key: string;
-	};
-	objectActionTrigger: {
-		key: string;
-	};
+	objectActionExecutor: TObjectAction;
+	objectActionTrigger: TObjectAction;
 };
 
 const headers = new Headers({
@@ -61,8 +63,16 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 	const [formState, setFormState] = useState<TFormState>({
 		name: '',
-		objectActionExecutor: {key: ''},
-		objectActionTrigger: {key: ''},
+		objectActionExecutor: {
+			description: '',
+			key: '',
+			label: '',
+		},
+		objectActionTrigger: {
+			description: '',
+			key: '',
+			label: '',
+		},
 	});
 	const [error, setError] = useState<string>('');
 
@@ -152,7 +162,7 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 							}}
 							options={objectActionTriggers}
 							required
-							value={formState.objectActionTrigger.key}
+							value={formState.objectActionTrigger.label}
 						>
 							{({description, label}) => (
 								<>
@@ -176,7 +186,7 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 							}}
 							options={objectActionExecutors}
 							required
-							value={formState.objectActionExecutor.key}
+							value={formState.objectActionExecutor.label}
 						>
 							{({description, label}) => (
 								<>

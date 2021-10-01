@@ -577,11 +577,19 @@ definition {
 	test FilterByType {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test");
+			userLoginFullName = "Test Test");
 
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Person Account",
-			accountEntryType = "Person");
+		Accounts.setAddAccountEntryPermissions(
+			roleTitle = "Reg Role Name",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		Accounts.addPersonAccount(accountName = "Person Account");
 
 		Navigator.gotoPage(pageName = "2B Account Page");
 

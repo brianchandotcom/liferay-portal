@@ -1233,11 +1233,13 @@ definition {
 		Click(locator1 = "Button#PLUS");
 
 		CommerceEntry.addNewPriceListsEntry(
-			priceListCatalog = "Test Catalog",
+			priceListCatalog = "Master",
 			priceListCurrency = "USD",
 			priceListName = "Test Price List");
 
 		Button.click(button = "Submit");
+
+		Refresh();
 
 		CommerceNavigator.gotoEntry(entryName = "Test Price List");
 

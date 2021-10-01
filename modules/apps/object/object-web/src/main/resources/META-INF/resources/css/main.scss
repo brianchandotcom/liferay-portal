@@ -20,13 +20,16 @@
 	background-color: #f1f2f5;
 	display: flex;
 	flex-direction: column;
-	height: calc(100vh - 118px);
 	justify-content: space-between;
 	overflow: auto;
 
 	&__body,
 	&__footer {
 		padding: 1.5rem;
+	}
+
+	&--layout {
+		height: calc(100vh - 118px);
 	}
 }
 

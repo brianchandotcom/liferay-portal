@@ -247,7 +247,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				))}
 			</ClayTabs>
 
-			<SidePanelContent>
+			<SidePanelContent className="side-panel-content--layout">
 				<SidePanelContent.Body>
 					<ClayTabs.Content activeIndex={activeIndex} fade>
 						{TABS.map(({Component}, index) => (

@@ -12,6 +12,7 @@
  * details.
  */
 
+import classNames from 'classnames';
 import React from 'react';
 
 interface ISidePanelContentBody extends React.HTMLAttributes<HTMLElement> {}
@@ -20,8 +21,12 @@ interface ISidePanelContentFooter extends React.HTMLAttributes<HTMLElement> {}
 const SidePanelContent: React.FC<React.HTMLAttributes<HTMLElement>> & {
 	Body: React.FC<ISidePanelContentBody>;
 	Footer: React.FC<ISidePanelContentFooter>;
-} = ({children}) => {
-	return <div className="side-panel-content">{children}</div>;
+} = ({children, className}) => {
+	return (
+		<div className={classNames('side-panel-content', className)}>
+			{children}
+		</div>
+	);
 };
 
 const SidePanelContentBody: React.FC<ISidePanelContentBody> = ({children}) => {

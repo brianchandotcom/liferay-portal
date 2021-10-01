@@ -213,12 +213,80 @@ definition {
 
 	}
 
-	@description = "This is a test for LRQA-69570. Verify that a new page with the same name can't be created while the page is on Review. "
-	@ignore = "Test Stub"
+	@description = "This is a test for LRQA-69570. Verify that a new page with the same name can't be created while the page is on Review."
 	@priority = "3"
 	test CantCreatePageWithSameNameOnReview {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Wiki");
 
-		// TODO LRQA-69570 CantCreatePageWithSameNameOnReview pending implementation
+		AssertClick(
+			key_workflowInstanceName = "Main",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			value1 = "Main");
+
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputTitle(title = "Other Page Test");
+
+		SelectFrame.selectFrameNoLoading(
+			key_title = "Rich Text Editor",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "Test Content");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "TextArea#ANY_LABELED");
+
+		AssertClick(
+			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
+			value1 = "Submit for Publication");
+
+		Alert.viewSuccessMessage();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Other Page Test",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review");
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "Other Page Test",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Wiki");
+
+		AssertClick(
+			key_workflowInstanceName = "Main",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			value1 = "Main");
+
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputTitle(title = "Other Page Test");
+
+		SelectFrame.selectFrameNoLoading(
+			key_title = "Rich Text Editor",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "Test Content");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "TextArea#ANY_LABELED");
+
+		AssertClick(
+			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
+			value1 = "Submit for Publication");
+
+		AssertElementPresent(
+			key_errorMessage = "There is already a page with the specified title.",
+			locator1 = "WorkflowTransitionModal#TRANSITION_ERROR_MESSAGE");
 
 	}
 

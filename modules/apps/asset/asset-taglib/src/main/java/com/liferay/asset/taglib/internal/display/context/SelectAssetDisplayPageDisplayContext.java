@@ -220,10 +220,6 @@ public class SelectAssetDisplayPageDisplayContext {
 	}
 
 	public String getLayoutUuid() {
-		if (_classPK == 0) {
-			return null;
-		}
-
 		return BeanParamUtil.getString(
 			AssetEntryLocalServiceUtil.fetchEntry(_classNameId, _classPK),
 			_httpServletRequest, "layoutUuid", null);

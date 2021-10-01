@@ -54,8 +54,6 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 		}
 	}
 	catch (NoSuchFolderException nsfe) {
-		rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
 		rootFolderNotFound = true;
 	}
 }

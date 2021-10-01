@@ -24,6 +24,16 @@ public class ObjectFieldUtil {
 
 	public static ObjectField createObjectField(
 		boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+		String label, long listTypeDefinitionId, String name, boolean required,
+		String type) {
+
+		return createObjectField(
+			listTypeDefinitionId, null, indexed, indexedAsKeyword,
+			indexedLanguageId, label, name, required, type);
+	}
+
+	public static ObjectField createObjectField(
+		boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 		String label, String name, boolean required, String type) {
 
 		return createObjectField(

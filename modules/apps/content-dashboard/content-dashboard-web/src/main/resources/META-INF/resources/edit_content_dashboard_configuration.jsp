@@ -50,27 +50,20 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 						<liferay-ui:message key="select-vocabularies-description" />
 					</p>
 
-					<%
-					List<KeyValuePair> availableVocabularies = new ArrayList<KeyValuePair>();
-
-					availableVocabularies = contentDashboardAdminConfigurationDisplayContext.getAvailableVocabularyNames();
-
-					List<KeyValuePair> currentVocabularies = new ArrayList<KeyValuePair>();
-
-					currentVocabularies = contentDashboardAdminConfigurationDisplayContext.getCurrentVocabularyNames();
-
-					HashMap<String, Object> componentData = new HashMap<String, Object>();
-
-					componentData.put("leftBoxName", "availableAssetVocabularyNames");
-					componentData.put("leftList", JSONFactoryUtil.createJSONArray(availableVocabularies));
-					componentData.put("rightBoxName", "currentAssetVocabularyNames");
-					componentData.put("rightList", JSONFactoryUtil.createJSONArray(currentVocabularies));
-					%>
-
 					<div>
 						<react:component
 							module="js/VocabulariesSelectionBox"
-							props="<%= componentData %>"
+							props='<%=
+								HashMapBuilder.<String, Object>put(
+									"leftBoxName", "availableAssetVocabularyNames"
+								).put(
+									"leftList", JSONFactoryUtil.createJSONArray(contentDashboardAdminConfigurationDisplayContext.getAvailableVocabularyNames())
+								).put(
+									"rightBoxName", "currentAssetVocabularyNames"
+								).put(
+									"rightList", JSONFactoryUtil.createJSONArray(contentDashboardAdminConfigurationDisplayContext.getCurrentVocabularyNames())
+								).build()
+							%>'
 						/>
 					</div>
 				</aui:field-wrapper>

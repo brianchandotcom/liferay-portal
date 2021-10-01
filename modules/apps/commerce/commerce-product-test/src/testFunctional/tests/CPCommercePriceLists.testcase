@@ -1202,21 +1202,10 @@ definition {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "CPCommercePriceLists#AssertPriceListCanBeAssociatedWithAccountAndAccountGroup";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			panel = "Commerce",
-			portlet = "Catalogs");
 
-		Click(locator1 = "Button#PLUS");
 
-		CommerceEntry.addNewCatalogsEntry(
-			catalogCurrency = "US Dollar",
-			catalogLanguage = "English (United States)",
-			catalogName = "Test Catalog");
 
-		Button.click(button = "Submit");
 
-		Refresh();
 
 		CommerceEntry.createNewAccountGroup(
 			accountCriteriaType = "Guest",

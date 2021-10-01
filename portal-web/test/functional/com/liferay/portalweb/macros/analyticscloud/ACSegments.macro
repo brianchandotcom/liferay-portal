@@ -719,15 +719,19 @@ definition {
 			locator1 = "ACSegments#SEGMENT_CRITERIA_TYPE",
 			type = "Individual");
 
-		AssertTextEquals(
-			index = "${index}",
-			locator1 = "ACSegments#SEGMENT_CRITERIA_ATTRIBUTE_NAME",
-			value1 = "${attributeName}");
+		if (isSet(attributeName)) {
+			AssertTextEquals(
+				index = "${index}",
+				locator1 = "ACSegments#SEGMENT_CRITERIA_ATTRIBUTE_NAME",
+				value1 = "${attributeName}");
+		}
 
-		AssertTextEquals(
-			index = "${index}",
-			locator1 = "ACSegments#SEGMENT_CRITERIA_CONDITION",
-			value1 = "${condition}");
+		if (isSet(condition)) {
+			AssertTextEquals(
+				index = "${index}",
+				locator1 = "ACSegments#SEGMENT_CRITERIA_CONDITION",
+				value1 = "${condition}");
+		}
 
 		if (isSet(attributeValue)) {
 			AssertTextEquals(

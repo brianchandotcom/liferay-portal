@@ -23,7 +23,7 @@ definition {
 
 		Button.clickSave();
 
-		CommerceEntry.gotoNestedMenu(nestedMenu = "Users");
+		Navigator.gotoNavTab(navTab = "Users");
 
 		Click(locator1 = "Button#PLUS");
 
@@ -597,7 +597,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
-		CommerceEntry.gotoNestedMenu(nestedMenu = "Accounts");
+		Navigator.gotoNavTab(navTab = "Accounts");
 
 		Click(locator1 = "Button#PLUS");
 

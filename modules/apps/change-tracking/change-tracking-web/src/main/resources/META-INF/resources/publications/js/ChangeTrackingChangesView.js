@@ -279,8 +279,15 @@ export default function ChangeTrackingChangesView({
 					model.changeTypeLabel = Liferay.Language.get('deleted');
 				}
 
-				model.portraitURL = userInfo[model.userId].portraitURL;
-				model.userName = userInfo[model.userId].userName;
+				const user = userInfo[model.userId.toString()];
+
+				if (user) {
+					model.portraitURL = user.portraitURL;
+					model.userName = user.userName;
+				}
+				else {
+					model.userName = '';
+				}
 
 				if (model.siteName === GLOBAL_SITE_NAME) {
 					let key = Liferay.Language.get('x-modified-a-x-x-ago');
@@ -1686,26 +1693,29 @@ export default function ChangeTrackingChangesView({
 					onClick={() => navigate(node.nodeId)}
 				>
 					<ClayTable.Cell>
-						<ClaySticker
-							className={`sticker-user-icon ${
-								node.portraitURL
-									? ''
-									: 'user-icon-color-' + (node.userId % 10)
-							}`}
-							data-tooltip-align="top"
-							title={node.userName}
-						>
-							{node.portraitURL ? (
-								<div className="sticker-overlay">
-									<img
-										className="sticker-img"
-										src={node.portraitURL}
-									/>
-								</div>
-							) : (
-								<ClayIcon symbol="user" />
-							)}
-						</ClaySticker>
+						{node.userId && node.userId > 0 && (
+							<ClaySticker
+								className={`sticker-user-icon ${
+									node.portraitURL
+										? ''
+										: 'user-icon-color-' +
+										  (node.userId % 10)
+								}`}
+								data-tooltip-align="top"
+								title={node.userName}
+							>
+								{node.portraitURL ? (
+									<div className="sticker-overlay">
+										<img
+											className="sticker-img"
+											src={node.portraitURL}
+										/>
+									</div>
+								) : (
+									<ClayIcon symbol="user" />
+								)}
+							</ClaySticker>
+						)}
 					</ClayTable.Cell>
 
 					<ClayTable.Cell>{node.siteName}</ClayTable.Cell>

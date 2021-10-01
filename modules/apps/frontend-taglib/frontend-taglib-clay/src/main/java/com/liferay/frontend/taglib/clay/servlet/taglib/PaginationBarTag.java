@@ -31,6 +31,7 @@ import java.util.Set;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Julien Castelain
@@ -244,6 +245,10 @@ public class PaginationBarTag extends BaseContainerTag {
 
 		Integer to = _activePage * _activeDelta;
 
+		if (to > _totalItems) {
+			to = _totalItems;
+		}
+
 		jspWriter.write(to.toString());
 
 		jspWriter.write(StringPool.SPACE);
@@ -265,73 +270,74 @@ public class PaginationBarTag extends BaseContainerTag {
 
 		jspWriter.write("</li>");
 
-		int totalPages = (int)Math.ceil(_totalItems / _activeDelta);
+		int totalPages = (int)Math.ceil(
+			(double)_totalItems / (double)_activeDelta);
 
-		int ellipsisCount = _activePage + _ellipsisBuffer;
+		if (_ellipsisBuffer != 0) {
+			int activeIndex = _activePage - 1;
 
-		for (int i = 1; i < ellipsisCount; i++) {
-			jspWriter.write("<li class=\"page-item");
+			int[] pageNumberItems = new int[totalPages];
 
-			if (i == _activePage) {
-				jspWriter.write(" active");
+			for (int i = 0; i < totalPages; i++) {
+				pageNumberItems[i] = i + 1;
 			}
 
-			if ((_disabledPages != null) &&
-				_disabledPages.contains(Integer.valueOf(i))) {
+			int firstItem = pageNumberItems[0];
 
-				jspWriter.write(" disabled");
+			_processItem(pageContext, firstItem);
+
+			int leftIndex = activeIndex - _ellipsisBuffer;
+
+			int[] leftItems = Arrays.copyOfRange(
+				pageNumberItems, 1, Math.max(leftIndex, 1));
+
+			if (leftItems.length > 1) {
+				_processEllispis(pageContext);
+			}
+			else {
+				int leftItem = leftItems[0];
+
+				_processItem(pageContext, leftItem);
 			}
 
-			jspWriter.write("\">");
+			int lastIndex = pageNumberItems.length - 1;
 
-			buttonTag = new ButtonTag();
+			int[] centerItems = Arrays.copyOfRange(
+				pageNumberItems, Math.max(activeIndex - _ellipsisBuffer, 1),
+				Math.min(activeIndex + _ellipsisBuffer + 1, lastIndex));
 
-			buttonTag.setCssClass("page-link");
-			buttonTag.setDisplayType("unstyled");
-			buttonTag.setLabel(String.valueOf(i));
+			for (int centerItem : centerItems) {
+				_processItem(pageContext, centerItem);
+			}
 
-			buttonTag.doTag(pageContext);
+			int rightIndex = activeIndex + _ellipsisBuffer + 1;
 
-			jspWriter.write("</li>");
+			if (rightIndex > lastIndex) {
+				rightIndex = lastIndex;
+			}
+
+			int[] rightItems = Arrays.copyOfRange(
+				pageNumberItems, rightIndex, Math.max(lastIndex, rightIndex));
+
+			if (rightItems.length > 1) {
+				_processEllispis(pageContext);
+			}
+			else if (rightItems.length == 1) {
+				int rightItem = rightItems[0];
+
+				_processItem(pageContext, rightItem);
+			}
+
+			if (totalPages > 1) {
+				int lastItem = pageNumberItems[lastIndex];
+
+				_processItem(pageContext, lastItem);
+			}
 		}
-
-		jspWriter.write("<li class=\"dropdown page-item\">");
-
-		buttonTag = new ButtonTag();
-
-		buttonTag.setCssClass("dropdown-toggle page-link");
-		buttonTag.setDisplayType("unstyled");
-		buttonTag.setLabel("...");
-
-		buttonTag.doTag(pageContext);
-
-		jspWriter.write("</li>");
-
-		for (int i = ellipsisCount + 1; i < (totalPages + 1); i++) {
-			jspWriter.write("<li class=\"page-item");
-
-			if (i == _activePage) {
-				jspWriter.write(" active");
+		else {
+			for (int i = 1; i < (totalPages + 1); i++) {
+				_processItem(pageContext, i);
 			}
-
-			if ((_disabledPages != null) &&
-				_disabledPages.contains(Integer.valueOf(i))) {
-
-				jspWriter.write(" disabled");
-			}
-
-			jspWriter.write("\">");
-
-			buttonTag = new ButtonTag();
-
-			buttonTag.setCssClass("page-link");
-			buttonTag.setDisplayType("unstyled");
-
-			buttonTag.setLabel(String.valueOf(i));
-
-			buttonTag.doTag(pageContext);
-
-			jspWriter.write("</li>");
 		}
 
 		jspWriter.write("<li class=\"page-item\">");
@@ -347,6 +353,52 @@ public class PaginationBarTag extends BaseContainerTag {
 		jspWriter.write("</li></ul>");
 
 		return SKIP_BODY;
+	}
+
+	private void _processEllispis(PageContext pageContext) throws Exception {
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write("<li class=\"dropdown page-item\">");
+
+		ButtonTag buttonTag = new ButtonTag();
+
+		buttonTag.setCssClass("dropdown-toggle page-link");
+		buttonTag.setDisplayType("unstyled");
+		buttonTag.setLabel("...");
+
+		buttonTag.doTag(pageContext);
+
+		jspWriter.write("</li>");
+	}
+
+	private void _processItem(PageContext pageContext, int item)
+		throws Exception {
+
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write("<li class=\"page-item");
+
+		if (item == _activePage) {
+			jspWriter.write(" active");
+		}
+
+		if ((_disabledPages != null) &&
+			_disabledPages.contains(Integer.valueOf(item))) {
+
+			jspWriter.write(" disabled");
+		}
+
+		jspWriter.write("\">");
+
+		ButtonTag buttonTag = new ButtonTag();
+
+		buttonTag.setCssClass("page-link");
+		buttonTag.setDisplayType("unstyled");
+		buttonTag.setLabel(String.valueOf(item));
+
+		buttonTag.doTag(pageContext);
+
+		jspWriter.write("</li>");
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =

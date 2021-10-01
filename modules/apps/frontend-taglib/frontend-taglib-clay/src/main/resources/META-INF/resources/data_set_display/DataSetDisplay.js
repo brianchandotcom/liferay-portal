@@ -245,6 +245,14 @@ function DataSetDisplay({
 				if (isMounted()) {
 					updateDataSetItems(data);
 
+					const itemKeys = new Set(
+						data.items.map((item) => item[selectedItemsKey])
+					);
+
+					setSelectedItemsValue(
+						selectedItemsValue.filter((item) => itemKeys.has(item))
+					);
+
 					setDataLoading(false);
 
 					Liferay.fire(DATASET_DISPLAY_UPDATED, {id});

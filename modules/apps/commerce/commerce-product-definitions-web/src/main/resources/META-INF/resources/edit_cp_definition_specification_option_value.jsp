@@ -40,7 +40,12 @@ long cpOptionCategoryId = BeanParamUtil.getLong(cpDefinitionSpecificationOptionV
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="cpDefinitionSpecificationOptionValueId" type="hidden" value="<%= String.valueOf(cpDefinitionSpecificationOptionValue.getCPDefinitionSpecificationOptionValueId()) %>" />
 
-			<aui:input defaultLanguageId="<%= cpDefinitionSpecificationOptionValueDisplayContext.getCatalogDefaultLanguageId() %>" localized="<%= true %>" name="value" type="text" value="<%= cpDefinitionSpecificationOptionValue.getValue(cpDefinitionSpecificationOptionValueDisplayContext.getCatalogDefaultLanguageId()) %>" />
+			<aui:field-wrapper label='<%= LanguageUtil.get(resourceBundle, "value") %>' name="valueFieldWrapper">
+				<liferay-ui:input-localized
+					name="value"
+					xml="<%= (cpDefinitionSpecificationOptionValue == null) ? StringPool.BLANK : cpDefinitionSpecificationOptionValue.getValue() %>"
+				/>
+			</aui:field-wrapper>
 
 			<aui:select label="group" name="CPOptionCategoryId" showEmptyOption="<%= true %>">
 

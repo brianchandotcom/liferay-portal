@@ -441,8 +441,6 @@ definition {
 		AssertElementPresent(
 			key_status = "Approved",
 			locator1 = "CommerceEntry#WORKFLOW_STATUS");
-				
-
 	}
 
 	@description = "This is a test for LRQA-69567. Verify that the a rejected Child Page is not displayed on list. "

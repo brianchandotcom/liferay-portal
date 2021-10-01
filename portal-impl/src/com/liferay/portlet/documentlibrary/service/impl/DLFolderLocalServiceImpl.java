@@ -26,6 +26,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.persistence.DLFolderPersistence;
@@ -183,7 +184,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		_dlFileEntryLocalService.deleteFileEntries(
 			groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		dlFileEntryTypeLocalService.deleteFileEntryTypes(groupId);
+		_dlFileEntryTypeLocalService.deleteFileEntryTypes(groupId);
 
 		_dlFileShortcutLocalService.deleteFileShortcuts(
 			groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -829,7 +830,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 					restrictionType, serviceContext);
 
 				if (!ExportImportThreadLocal.isImportInProcess()) {
-					dlFileEntryTypeLocalService.cascadeFileEntryTypes(
+					_dlFileEntryTypeLocalService.cascadeFileEntryTypes(
 						serviceContext.getUserId(), dlFolder);
 				}
 			}
@@ -992,7 +993,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			// File entry types
 
 			if (fileEntryTypeIds != null) {
-				dlFileEntryTypeLocalService.updateFolderFileEntryTypes(
+				_dlFileEntryTypeLocalService.updateFolderFileEntryTypes(
 					dlFolder, fileEntryTypeIds, defaultFileEntryTypeId,
 					serviceContext);
 			}
@@ -1210,7 +1211,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		List<Long> fileEntryTypeIds = new ArrayList<>();
 
 		for (DLFileEntryType dlFileEntryType :
-				dlFileEntryTypeLocalService.getDLFolderDLFileEntryTypes(
+				_dlFileEntryTypeLocalService.getDLFolderDLFileEntryTypes(
 					dlFolder.getFolderId())) {
 
 			fileEntryTypeIds.add(dlFileEntryType.getFileEntryTypeId());
@@ -1221,7 +1222,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
 		}
 
-		dlFileEntryTypeLocalService.unsetFolderFileEntryTypes(
+		_dlFileEntryTypeLocalService.unsetFolderFileEntryTypes(
 			dlFolder.getFolderId());
 
 		// File shortcuts
@@ -1417,6 +1418,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	@BeanReference(type = DLFileEntryLocalService.class)
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@BeanReference(type = DLFileEntryTypeLocalService.class)
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@BeanReference(type = DLFileShortcutLocalService.class)
 	private DLFileShortcutLocalService _dlFileShortcutLocalService;

@@ -446,7 +446,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		folderId = _getFileEntryTypesPrimaryFolderId(folderId);
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
+			DLFolder dlFolder = _dlFolderPersistence.findByPrimaryKey(folderId);
 
 			return dlFolder.getDefaultFileEntryTypeId();
 		}
@@ -513,13 +513,13 @@ public class DLFileEntryTypeLocalServiceImpl
 		throws PortalException {
 
 		if (!inherited) {
-			return dlFolderPersistence.getDLFileEntryTypes(folderId);
+			return _dlFolderPersistence.getDLFileEntryTypes(folderId);
 		}
 
 		folderId = _getFileEntryTypesPrimaryFolderId(folderId);
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return dlFolderPersistence.getDLFileEntryTypes(folderId);
+			return _dlFolderPersistence.getDLFileEntryTypes(folderId);
 		}
 
 		List<DLFileEntryType> dlFileEntryTypes = new ArrayList<>(
@@ -556,10 +556,10 @@ public class DLFileEntryTypeLocalServiceImpl
 	@Override
 	public void unsetFolderFileEntryTypes(long folderId) {
 		List<DLFileEntryType> dlFileEntryTypes =
-			dlFolderPersistence.getDLFileEntryTypes(folderId);
+			_dlFolderPersistence.getDLFileEntryTypes(folderId);
 
 		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
-			dlFolderPersistence.removeDLFileEntryType(
+			_dlFolderPersistence.removeDLFileEntryType(
 				folderId, dlFileEntryType);
 		}
 	}
@@ -591,7 +591,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		long groupId = serviceContext.getScopeGroupId();
 		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-		DLFolder dlFolder = dlFolderPersistence.fetchByPrimaryKey(
+		DLFolder dlFolder = _dlFolderPersistence.fetchByPrimaryKey(
 			dlFileEntry.getFolderId());
 
 		if (dlFolder != null) {
@@ -702,7 +702,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		long defaultFileEntryTypeId, ServiceContext serviceContext) {
 
 		List<Long> originalFileEntryTypeIds = getFileEntryTypeIds(
-			dlFolderPersistence.getDLFileEntryTypes(dlFolder.getFolderId()));
+			_dlFolderPersistence.getDLFileEntryTypes(dlFolder.getFolderId()));
 
 		if (fileEntryTypeIds.equals(originalFileEntryTypeIds)) {
 			return;
@@ -730,14 +730,14 @@ public class DLFileEntryTypeLocalServiceImpl
 					continue;
 				}
 
-				dlFolderPersistence.addDLFileEntryType(
+				_dlFolderPersistence.addDLFileEntryType(
 					dlFolder.getFolderId(), fileEntryTypeId);
 			}
 		}
 
 		for (Long originalFileEntryTypeId : originalFileEntryTypeIds) {
 			if (!fileEntryTypeIds.contains(originalFileEntryTypeId)) {
-				dlFolderPersistence.removeDLFileEntryType(
+				_dlFolderPersistence.removeDLFileEntryType(
 					dlFolder.getFolderId(), originalFileEntryTypeId);
 
 				_workflowDefinitionLinkLocalService.
@@ -846,7 +846,7 @@ public class DLFileEntryTypeLocalServiceImpl
 				serviceContext.getAssetLinkEntryIds());
 		}
 
-		List<DLFolder> subfolders = dlFolderPersistence.findByG_M_P_H(
+		List<DLFolder> subfolders = _dlFolderPersistence.findByG_M_P_H(
 			groupId, false, folderId, false);
 
 		for (DLFolder subfolder : subfolders) {
@@ -974,7 +974,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		throws NoSuchFolderException {
 
 		while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
+			DLFolder dlFolder = _dlFolderPersistence.findByPrimaryKey(folderId);
 
 			if (dlFolder.getRestrictionType() ==
 					DLFolderConstants.
@@ -1126,6 +1126,9 @@ public class DLFileEntryTypeLocalServiceImpl
 
 	@BeanReference(type = DLFileVersionLocalService.class)
 	private DLFileVersionLocalService _dlFileVersionLocalService;
+
+	@BeanReference(type = DLFolderPersistence.class)
+	private DLFolderPersistence _dlFolderPersistence;
 
 	@BeanReference(type = ResourceLocalService.class)
 	private ResourceLocalService _resourceLocalService;

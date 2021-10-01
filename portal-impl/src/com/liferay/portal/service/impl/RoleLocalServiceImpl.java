@@ -78,6 +78,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
@@ -85,8 +86,11 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.service.persistence.TeamPersistence;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -158,7 +162,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		// Role
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userPersistence.findByPrimaryKey(userId);
 
 		className = GetterUtil.getString(className);
 
@@ -223,12 +227,12 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *
 	 * @param userId the primary key of the user
 	 * @param roleId the primary key of the role
-	 * @see   com.liferay.portal.kernel.service.persistence.UserPersistence#addRole(
+	 * @see   UserPersistence#addRole(
 	 *        long, long)
 	 */
 	@Override
 	public void addUserRole(long userId, long roleId) throws PortalException {
-		userPersistence.addRole(userId, roleId);
+		_userPersistence.addRole(userId, roleId);
 
 		reindex(userId);
 	}
@@ -238,12 +242,12 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *
 	 * @param userId the primary key of the user
 	 * @param role the role
-	 * @see   com.liferay.portal.kernel.service.persistence.UserPersistence#addRole(
+	 * @see   UserPersistence#addRole(
 	 *        long, Role)
 	 */
 	@Override
 	public void addUserRole(long userId, Role role) throws PortalException {
-		userPersistence.addRole(userId, role);
+		_userPersistence.addRole(userId, role);
 
 		reindex(userId);
 	}
@@ -254,14 +258,14 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *
 	 * @param userId the primary key of the user
 	 * @param roles the roles
-	 * @see   com.liferay.portal.kernel.service.persistence.UserPersistence#addRoles(
+	 * @see   UserPersistence#addRoles(
 	 *        long, List)
 	 */
 	@Override
 	public void addUserRoles(long userId, List<Role> roles)
 		throws PortalException {
 
-		userPersistence.addRoles(userId, roles);
+		_userPersistence.addRoles(userId, roles);
 
 		reindex(userId);
 	}
@@ -272,14 +276,14 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *
 	 * @param userId the primary key of the user
 	 * @param roleIds the primary keys of the roles
-	 * @see   com.liferay.portal.kernel.service.persistence.UserPersistence#addRoles(
+	 * @see   UserPersistence#addRoles(
 	 *        long, long[])
 	 */
 	@Override
 	public void addUserRoles(long userId, long[] roleIds)
 		throws PortalException {
 
-		userPersistence.addRoles(userId, roleIds);
+		_userPersistence.addRoles(userId, roleIds);
 
 		reindex(userId);
 	}
@@ -408,12 +412,12 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * are removed.
 	 *
 	 * @param userId the primary key of the user
-	 * @see   com.liferay.portal.kernel.service.persistence.UserPersistence#clearRoles(
+	 * @see   UserPersistence#clearRoles(
 	 *        long)
 	 */
 	@Override
 	public void clearUserRoles(long userId) throws PortalException {
-		userPersistence.clearRoles(userId);
+		_userPersistence.clearRoles(userId);
 
 		reindex(userId);
 	}
@@ -470,7 +474,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			(role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
 			(role.getType() == RoleConstants.TYPE_SITE)) {
 
-			List<Group> groups = groupPersistence.findByC_S(
+			List<Group> groups = _groupPersistence.findByC_S(
 				role.getCompanyId(), true);
 
 			for (Group group : groups) {
@@ -491,7 +495,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 						ListUtil.toString(
 							defaultSiteRoleIds, StringPool.BLANK));
 
-					groupLocalService.updateGroup(
+					_groupLocalService.updateGroup(
 						group.getGroupId(),
 						typeSettingsUnicodeProperties.toString());
 				}
@@ -521,14 +525,14 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *
 	 * @param userId the primary key of the user
 	 * @param roleId the primary key of the role
-	 * @see   com.liferay.portal.kernel.service.persistence.UserPersistence#removeRole(
+	 * @see   UserPersistence#removeRole(
 	 *        long, long)
 	 */
 	@Override
 	public void deleteUserRole(long userId, long roleId)
 		throws PortalException {
 
-		userPersistence.removeRole(userId, roleId);
+		_userPersistence.removeRole(userId, roleId);
 
 		reindex(userId);
 	}
@@ -539,12 +543,12 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *
 	 * @param userId the primary key of the user
 	 * @param role the role
-	 * @see   com.liferay.portal.kernel.service.persistence.UserPersistence#removeRole(
+	 * @see   UserPersistence#removeRole(
 	 *        long, Role)
 	 */
 	@Override
 	public void deleteUserRole(long userId, Role role) throws PortalException {
-		userPersistence.removeRole(userId, role);
+		_userPersistence.removeRole(userId, role);
 
 		reindex(userId);
 	}
@@ -555,14 +559,14 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *
 	 * @param userId the primary key of the user
 	 * @param roles the roles
-	 * @see   com.liferay.portal.kernel.service.persistence.UserPersistence#removeRoles(
+	 * @see   UserPersistence#removeRoles(
 	 *        long, List)
 	 */
 	@Override
 	public void deleteUserRoles(long userId, List<Role> roles)
 		throws PortalException {
 
-		userPersistence.removeRoles(userId, roles);
+		_userPersistence.removeRoles(userId, roles);
 
 		reindex(userId);
 	}
@@ -573,14 +577,14 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *
 	 * @param userId the primary key of the user
 	 * @param roleIds the primary keys of the roles
-	 * @see   com.liferay.portal.kernel.service.persistence.UserPersistence#removeRoles(
+	 * @see   UserPersistence#removeRoles(
 	 *        long, long[])
 	 */
 	@Override
 	public void deleteUserRoles(long userId, long[] roleIds)
 		throws PortalException {
 
-		userPersistence.removeRoles(userId, roleIds);
+		_userPersistence.removeRoles(userId, roleIds);
 
 		reindex(userId);
 	}
@@ -612,8 +616,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		int type = role.getType();
 
 		if (type == RoleConstants.TYPE_REGULAR) {
-			assigneesTotal += groupLocalService.getRoleGroupsCount(roleId);
-			assigneesTotal += userLocalService.getRoleUsersCount(
+			assigneesTotal += _groupLocalService.getRoleGroupsCount(roleId);
+			assigneesTotal += _userLocalService.getRoleUsersCount(
 				roleId, WorkflowConstants.STATUS_APPROVED);
 		}
 
@@ -680,7 +684,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public Role getDefaultGroupRole(long groupId) throws PortalException {
-		Group group = groupPersistence.findByPrimaryKey(groupId);
+		Group group = _groupPersistence.findByPrimaryKey(groupId);
 
 		if (group.isLayout()) {
 			Layout layout = _layoutLocalService.getLayout(group.getClassPK());
@@ -719,7 +723,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		List<Role> roles = new ArrayList<>();
 
-		Group group = groupLocalService.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
 		if (group.isStagingGroup()) {
 			group = group.getLiveGroup();
@@ -1361,7 +1365,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			throw new IllegalArgumentException(name + " is not a regular role");
 		}
 
-		long defaultUserId = userLocalService.getDefaultUserId(companyId);
+		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
 
 		if (userId == defaultUserId) {
 			if (name.equals(RoleConstants.GUEST)) {
@@ -1372,7 +1376,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		}
 
 		if (inherited) {
-			if (userPersistence.containsRole(userId, role.getRoleId())) {
+			if (_userPersistence.containsRole(userId, role.getRoleId())) {
 				return true;
 			}
 
@@ -1517,7 +1521,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			return value;
 		}
 
-		return userPersistence.containsRole(userId, role.getRoleId());
+		return _userPersistence.containsRole(userId, role.getRoleId());
 	}
 
 	/**
@@ -1821,7 +1825,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		roleIds = UsersAdminUtil.addRequiredRoles(userId, roleIds);
 
-		userPersistence.setRoles(userId, roleIds);
+		_userPersistence.setRoles(userId, roleIds);
 
 		reindex(userId);
 	}
@@ -1839,7 +1843,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		roleIds = UsersAdminUtil.removeRequiredRoles(userId, roleIds);
 
-		userPersistence.removeRoles(userId, roleIds);
+		_userPersistence.removeRoles(userId, roleIds);
 
 		reindex(userId);
 	}
@@ -1926,7 +1930,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				_log.debug(noSuchRoleException, noSuchRoleException);
 			}
 
-			User user = userLocalService.getDefaultUser(companyId);
+			User user = _userLocalService.getDefaultUser(companyId);
 
 			PermissionThreadLocal.setAddResource(false);
 
@@ -1966,7 +1970,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			long groupId, long[] excludedRoleIds)
 		throws PortalException {
 
-		Group group = groupPersistence.findByPrimaryKey(groupId);
+		Group group = _groupPersistence.findByPrimaryKey(groupId);
 
 		if (group.isLayout()) {
 			group = group.getParentGroup();
@@ -2063,7 +2067,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			User.class);
 
-		User user = userLocalService.fetchUser(userId);
+		User user = _userLocalService.fetchUser(userId);
 
 		indexer.reindex(user);
 	}
@@ -2126,6 +2130,12 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	@BeanReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;
 
+	@BeanReference(type = GroupLocalService.class)
+	private GroupLocalService _groupLocalService;
+
+	@BeanReference(type = GroupPersistence.class)
+	private GroupPersistence _groupPersistence;
+
 	@BeanReference(type = LayoutLocalService.class)
 	private LayoutLocalService _layoutLocalService;
 
@@ -2149,5 +2159,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 	@BeanReference(type = UserGroupRoleLocalService.class)
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@BeanReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

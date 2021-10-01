@@ -19,6 +19,8 @@ import com.liferay.asset.kernel.exception.AssetTagNameException;
 import com.liferay.asset.kernel.exception.DuplicateTagException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -241,7 +243,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		// Indexer
 
-		assetEntryLocalService.reindex(entries);
+		_assetEntryLocalService.reindex(entries);
 
 		Indexer<AssetTag> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			AssetTag.class);
@@ -282,7 +284,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<AssetTag> getEntryTags(long entryId) {
-		return assetEntryPersistence.getAssetTags(entryId);
+		return _assetEntryPersistence.getAssetTags(entryId);
 	}
 
 	/**
@@ -522,14 +524,14 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<AssetTag> getTags(long classNameId, long classPK) {
-		AssetEntry entry = assetEntryPersistence.fetchByC_C(
+		AssetEntry entry = _assetEntryPersistence.fetchByC_C(
 			classNameId, classPK);
 
 		if (entry == null) {
 			return Collections.emptyList();
 		}
 
-		return assetEntryPersistence.getAssetTags(entry.getEntryId());
+		return _assetEntryPersistence.getAssetTags(entry.getEntryId());
 	}
 
 	@Override
@@ -741,7 +743,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 			List<AssetEntry> entries = assetTagPersistence.getAssetEntries(
 				tag.getTagId());
 
-			assetEntryLocalService.reindex(entries);
+			_assetEntryLocalService.reindex(entries);
 		}
 
 		return tag;
@@ -891,6 +893,12 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetTagLocalServiceImpl.class);
+
+	@BeanReference(type = AssetEntryLocalService.class)
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@BeanReference(type = AssetEntryPersistence.class)
+	private AssetEntryPersistence _assetEntryPersistence;
 
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;

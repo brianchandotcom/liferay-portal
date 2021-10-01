@@ -24,6 +24,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.kernel.validator.AssetEntryValidator;
 import com.liferay.asset.kernel.validator.AssetEntryValidatorExclusionRule;
@@ -101,7 +102,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		for (AssetTag tag : tags) {
 			if (entry.isVisible()) {
-				assetTagLocalService.decrementAssetCount(
+				_assetTagLocalService.decrementAssetCount(
 					tag.getTagId(), entry.getClassNameId());
 			}
 		}
@@ -779,13 +780,13 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			Group siteGroup = _groupLocalService.getGroup(
 				PortalUtil.getSiteGroupId(groupId));
 
-			List<AssetTag> tags = assetTagLocalService.checkTags(
+			List<AssetTag> tags = _assetTagLocalService.checkTags(
 				userId, siteGroup, tagNames);
 
 			if (visible) {
 				if (entry == null) {
 					for (AssetTag tag : tags) {
-						assetTagLocalService.incrementAssetCount(
+						_assetTagLocalService.incrementAssetCount(
 							tag.getTagId(), classNameId);
 					}
 				}
@@ -795,14 +796,14 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 					for (AssetTag oldTag : oldTags) {
 						if (!tags.contains(oldTag)) {
-							assetTagLocalService.decrementAssetCount(
+							_assetTagLocalService.decrementAssetCount(
 								oldTag.getTagId(), classNameId);
 						}
 					}
 
 					for (AssetTag tag : tags) {
 						if (!oldTags.contains(tag)) {
-							assetTagLocalService.incrementAssetCount(
+							_assetTagLocalService.incrementAssetCount(
 								tag.getTagId(), classNameId);
 						}
 					}
@@ -813,7 +814,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 					entryId);
 
 				for (AssetTag oldTag : oldTags) {
-					assetTagLocalService.decrementAssetCount(
+					_assetTagLocalService.decrementAssetCount(
 						oldTag.getTagId(), classNameId);
 				}
 			}
@@ -961,7 +962,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		if (visible) {
 			for (AssetTag tag : tags) {
-				assetTagLocalService.incrementAssetCount(
+				_assetTagLocalService.incrementAssetCount(
 					tag.getTagId(), entry.getClassNameId());
 			}
 
@@ -970,7 +971,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		}
 		else {
 			for (AssetTag tag : tags) {
-				assetTagLocalService.decrementAssetCount(
+				_assetTagLocalService.decrementAssetCount(
 					tag.getTagId(), entry.getClassNameId());
 			}
 
@@ -1305,10 +1306,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	protected long[] getTagIds(long[] groupIds, String tagName) {
 		if (groupIds != null) {
-			return assetTagLocalService.getTagIds(groupIds, tagName);
+			return _assetTagLocalService.getTagIds(groupIds, tagName);
 		}
 
-		return assetTagLocalService.getTagIds(tagName);
+		return _assetTagLocalService.getTagIds(tagName);
 	}
 
 	protected void reindex(AssetEntry entry) throws PortalException {
@@ -1397,6 +1398,9 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@BeanReference(type = AssetLinkLocalService.class)
 	private AssetLinkLocalService _assetLinkLocalService;
+
+	@BeanReference(type = AssetTagLocalService.class)
+	private AssetTagLocalService _assetTagLocalService;
 
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;

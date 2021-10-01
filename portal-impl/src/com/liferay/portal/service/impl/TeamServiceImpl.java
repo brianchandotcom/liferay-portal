@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.TeamPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.base.TeamServiceBaseImpl;
 
@@ -118,7 +120,7 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 				ActionKeys.MANAGE_TEAMS, ActionKeys.UPDATE);
 		}
 
-		return userPersistence.containsTeam(userId, teamId);
+		return _userPersistence.containsTeam(userId, teamId);
 	}
 
 	@Override
@@ -149,5 +151,8 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 
 		return teamLocalService.updateTeam(teamId, name, description);
 	}
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

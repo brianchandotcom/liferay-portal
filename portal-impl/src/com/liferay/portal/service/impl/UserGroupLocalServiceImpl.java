@@ -52,9 +52,15 @@ import com.liferay.portal.kernel.search.reindexer.ReindexerBridge;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.exportimport.UserGroupImportTransactionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.persistence.GroupPersistence;
+import com.liferay.portal.kernel.service.persistence.TeamPersistence;
+import com.liferay.portal.kernel.service.persistence.UserFinder;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -195,7 +201,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		validate(0, companyId, name);
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userPersistence.findByPrimaryKey(userId);
 
 		long userGroupId = counterLocalService.increment();
 
@@ -220,7 +226,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		// Group
 
-		groupLocalService.addGroup(
+		_groupLocalService.addGroup(
 			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			UserGroup.class.getName(), userGroup.getUserGroupId(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID,
@@ -273,7 +279,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (!CompanyThreadLocal.isDeleteInProcess()) {
-			int count = userFinder.countByKeywords(
+			int count = _userFinder.countByKeywords(
 				userGroup.getCompanyId(), null,
 				WorkflowConstants.STATUS_APPROVED,
 				LinkedHashMapBuilder.<String, Object>put(
@@ -291,7 +297,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		// Group
 
-		groupLocalService.deleteGroup(userGroup.getGroup());
+		_groupLocalService.deleteGroup(userGroup.getGroup());
 
 		// User group roles
 
@@ -330,14 +336,14 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	public List<UserGroup> getGroupUserUserGroups(long groupId, long userId)
 		throws PortalException {
 
-		long[] groupUserGroupIds = groupPersistence.getUserGroupPrimaryKeys(
+		long[] groupUserGroupIds = _groupPersistence.getUserGroupPrimaryKeys(
 			groupId);
 
 		if (groupUserGroupIds.length == 0) {
 			return Collections.emptyList();
 		}
 
-		long[] userUserGroupIds = userPersistence.getUserGroupPrimaryKeys(
+		long[] userUserGroupIds = _userPersistence.getUserGroupPrimaryKeys(
 			userId);
 
 		if (userUserGroupIds.length == 0) {
@@ -810,12 +816,12 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	public void setUserUserGroups(long userId, long[] userGroupIds)
 		throws PortalException {
 
-		userPersistence.setUserGroups(userId, userGroupIds);
+		_userPersistence.setUserGroups(userId, userGroupIds);
 
 		Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			User.class);
 
-		User user = userLocalService.fetchUser(userId);
+		User user = _userLocalService.fetchUser(userId);
 
 		indexer.reindex(user);
 	}
@@ -828,16 +834,16 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public void unsetGroupUserGroups(long groupId, long[] userGroupIds) {
-		List<Team> teams = teamPersistence.findByGroupId(groupId);
+		List<Team> teams = _teamPersistence.findByGroupId(groupId);
 
 		for (Team team : teams) {
-			teamPersistence.removeUserGroups(team.getTeamId(), userGroupIds);
+			_teamPersistence.removeUserGroups(team.getTeamId(), userGroupIds);
 		}
 
 		_userGroupGroupRoleLocalService.deleteUserGroupGroupRoles(
 			userGroupIds, groupId);
 
-		groupPersistence.removeUserGroups(groupId, userGroupIds);
+		_groupPersistence.removeUserGroups(groupId, userGroupIds);
 
 		try {
 			reindexUsers(userGroupIds);
@@ -855,7 +861,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds) {
-		teamPersistence.removeUserGroups(teamId, userGroupIds);
+		_teamPersistence.removeUserGroups(teamId, userGroupIds);
 	}
 
 	/**
@@ -949,7 +955,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		UserGroup userGroup = userGroupPersistence.findByPrimaryKey(
 			userGroupId);
 
-		User user = userLocalService.getUser(
+		User user = _userLocalService.getUser(
 			GetterUtil.getLong(PrincipalThreadLocal.getName()));
 
 		Group group = userGroup.getGroup();
@@ -1057,7 +1063,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			File privateLayoutsFile, File publicLayoutsFile)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = _userPersistence.findByPrimaryKey(userId);
 
 		long groupId = user.getGroupId();
 
@@ -1239,10 +1245,28 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	@BeanReference(type = ExportImportLocalService.class)
 	private ExportImportLocalService _exportImportLocalService;
 
+	@BeanReference(type = GroupLocalService.class)
+	private GroupLocalService _groupLocalService;
+
+	@BeanReference(type = GroupPersistence.class)
+	private GroupPersistence _groupPersistence;
+
 	@BeanReference(type = ResourceLocalService.class)
 	private ResourceLocalService _resourceLocalService;
 
+	@BeanReference(type = TeamPersistence.class)
+	private TeamPersistence _teamPersistence;
+
+	@BeanReference(type = UserFinder.class)
+	private UserFinder _userFinder;
+
 	@BeanReference(type = UserGroupGroupRoleLocalService.class)
 	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
+
+	@BeanReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
+
+	@BeanReference(type = UserPersistence.class)
+	private UserPersistence _userPersistence;
 
 }

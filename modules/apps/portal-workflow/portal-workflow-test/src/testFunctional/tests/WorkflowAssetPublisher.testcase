@@ -113,6 +113,15 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This is a test for LRQA-70157. Verify that an approved web content is displayed on Asset Publisher."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ApprovedWebContentIsDisplayed {
+
+		// TODO LRQA-70157 ApprovedWebContentIsDisplayed pending implementation
+
+	}
+
 	@description = "This is a use case for LPS-72846."
 	@priority = "5"
 	test ApproveMessageBoardsThreadPG {
@@ -193,6 +202,33 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "This is a test for LRQA-69817. Verify that a Draft Blog Entry is not displayed on Asset Publisher."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test DraftBlogIsNotDisplayed {
+
+		// TODO LRQA-69817 DraftBlogIsNotDisplayed pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69816. Verify that when the user edits an approved blog, the blog returns to pending and is removed from Asset Publisher."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test EditedBlogReturnsToPendingAndIsNotDisplayed {
+
+		// TODO LRQA-69816 EditedBlogReturnsToPendingAndIsNotDisplayed pending implementation
+
+	}
+
+	@description = "This is a test for LRQA-69814. Verify that a Pending Web Content is not displayed on Asset Publisher."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test PendingWebContentIsNotDisplayed {
+
+		// TODO LRQA-69814 PendingWebContentIsNotDisplayed pending implementation
+
+	}
+
 	@priority = "4"
 	test RejectBlogsEntryPG {
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
@@ -230,6 +266,15 @@ definition {
 		BlogsEntry.viewWithWorkflowPGViaAP(
 			entryTitle = "Blogs Entry Title",
 			webContentTitle = "Blogs Entry Title");
+	}
+
+	@description = "This is a test for LRQA-69815. Verify that a rejected web content is not displayed on Asset Publisher."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test RejectedWebContentIsNotDisplayed {
+
+		// TODO LRQA-69815 RejectedWebContentIsNotDisplayed pending implementation
+
 	}
 
 }

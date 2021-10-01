@@ -1520,12 +1520,13 @@ public class ObjectEntryLocalServiceImpl
 
 			Stream<ListTypeEntry> stream = listTypeEntries.stream();
 
-			if (objectField.isRequired() &&
+			String value = _getValue(
+				String.valueOf(values.get(entry.getKey())));
+
+			if ((!value.isEmpty() || objectField.isRequired()) &&
 				!stream.anyMatch(
 					listTypeEntry -> Objects.equals(
-						listTypeEntry.getKey(),
-						_getValue(
-							String.valueOf(values.get(entry.getKey())))))) {
+						listTypeEntry.getKey(), value))) {
 
 				throw new ObjectEntryValuesException(
 					"Object field name " + entry.getKey() +

@@ -121,9 +121,9 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9221 | Test Summary: Create a Web Behavior criteria at least/at most times"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentCriteriaLeastMostTimes {
-		ACUtils.createWCAndAddToPage();
+		property portal.upstream = "afonso";
 
-		Navigator.openURL();
+		ACUtils.createWCAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -139,9 +139,13 @@ definition {
 			userLoginEmailAddress = "ac@liferay.com",
 			userLoginFullName = "ac ac");
 
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
+		for (var n : list "1,2,3,4") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
+		}
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -160,7 +164,7 @@ definition {
 		ACSegments.editWebBehaviorCriterion(
 			atLeastMost = "at least",
 			indexField = "1",
-			occurenceNumber = "4",
+			occurenceNumber = "7",
 			searchTerm = "Web Content AC Title");
 
 		ACSegments.saveSegment();
@@ -177,6 +181,8 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
 		}
 
 		ACUtils.closeAllSessionsAndWait();
@@ -189,11 +195,11 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		AssertElementPresent(
-			key_userName = "ac ac",
-			locator1 = "ACSegments#SEGMENT_MEMBERS");
+		ACUtils.viewNameList(nameList = "ac ac");
 
-		ACSegments.editSegment();
+		ACNavigation.goToSegments();
+
+		ACSegments.editSegment(searchTerm = "Dynamic Segment Test");
 
 		ACSegments.editWebBehaviorCriterion(
 			atLeastMost = "at most",
@@ -205,9 +211,7 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		AssertTextEquals(
-			locator1 = "ACSegments#NO_MEMBER_TITLE",
-			value1 = "There are no items found.");
+		ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
 	}
 
 	@description = "Create a segment with behavior of downloading a document"
@@ -557,9 +561,9 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9217 | Test Summary: Add segment using a web behavior 'before' some time"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentUsingBefore {
-		ACUtils.createWCAndAddToPage();
+		property portal.upstream = "afonso";
 
-		Navigator.openURL();
+		ACUtils.createWCAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -575,9 +579,13 @@ definition {
 			userLoginEmailAddress = "ac@liferay.com",
 			userLoginFullName = "ac ac");
 
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
+		for (var n : list "1,2,3") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
+		}
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -599,7 +607,7 @@ definition {
 			day = "${staticDay}",
 			indexField = "1",
 			month = "${staticMonth}",
-			occurenceNumber = "4",
+			occurenceNumber = "6",
 			searchTerm = "Web Content AC Title",
 			timeOption = "before",
 			year = "${staticYear}");
@@ -608,9 +616,7 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		AssertTextEquals(
-			locator1 = "ACSegments#NO_MEMBER_TITLE",
-			value1 = "There are no items found.");
+		ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
 
 		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 
@@ -618,6 +624,8 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
 		}
 
 		ACUtils.closeAllSessionsAndWait();
@@ -630,9 +638,7 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		AssertElementPresent(
-			key_userName = "ac ac",
-			locator1 = "ACSegments#SEGMENT_MEMBERS");
+		ACUtils.viewNameList(nameList = "ac ac");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9218 | Test Summary: Add segment using a web behavior 'between' some time"

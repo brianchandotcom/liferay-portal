@@ -80,7 +80,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -91,7 +91,7 @@ definition {
 
 		task ("Add a CSV Data Source") {
 			ACSettings.addCSVDataSource(
-				dataSourceName = "CSV Country",
+				dataSourceName = "CSV Country 1",
 				sourceFileName = "contacts_country.csv");
 		}
 
@@ -152,7 +152,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -163,7 +163,7 @@ definition {
 
 		task ("Add a CSV Data Source") {
 			ACSettings.addCSVDataSource(
-				dataSourceName = "CSV Country",
+				dataSourceName = "CSV Country 2",
 				sourceFileName = "contacts_country.csv");
 		}
 
@@ -210,7 +210,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -221,7 +221,7 @@ definition {
 
 		task ("Add a CSV Data Source") {
 			ACSettings.addCSVDataSource(
-				dataSourceName = "CSV Country",
+				dataSourceName = "CSV Country 3",
 				sourceFileName = "contacts_country.csv");
 		}
 
@@ -268,7 +268,7 @@ definition {
 		}
 
 		task ("Close sessions") {
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -279,7 +279,7 @@ definition {
 
 		task ("Add a CSV Data Source") {
 			ACSettings.addCSVDataSource(
-				dataSourceName = "CSV Country",
+				dataSourceName = "CSV Country 4",
 				sourceFileName = "contacts_country.csv");
 		}
 

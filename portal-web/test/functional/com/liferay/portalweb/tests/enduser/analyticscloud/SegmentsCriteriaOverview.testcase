@@ -31,72 +31,34 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8498 | Test Summary: Link to view all criteria allows the user to scroll down and see more"
 	@priority = "4"
 	test LinkToViewAllCriteriaAllowsUserScrollDownAndSeeMore {
-		task ("Create page, a user  and sync") {
-			var blogs = "Blogs AC Title,To See Blog";
+		var criteriasAcount = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20";
 
-			ACUtils.addSiteAndPage();
-
-			for (var blog : list "${blogs}") {
-				ACUtils.createBlogsAndAddToPage(entryTitle = "${blog}");
-			}
-
-			JSONUser.addUser(
-				userEmailAddress = "ac@liferay.com",
-				userFirstName = "ac",
-				userLastName = "ac",
-				userScreenName = "ac");
-
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		task ("Connect the DXP to Analytics Cloud") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 		}
 
-		task ("Log in and view site") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-
-			for (var blog : list "${blogs}") {
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-
-				BlogsNavigator.gotoPG(entryTitle = "${blog}");
-			}
-		}
-
-		task ("Close all sessions, go to AC") {
-			ACUtils.closeAllSessionsAndWait();
-
+		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
 		}
 
 		task ("Add a dynamic segment") {
-			ACProperties.switchProperty(propertyName = "${propertyName}");
-
 			ACNavigation.goToSegments();
 
 			ACSegments.createDynamicSegment();
 
-			ACSegments.nameSegment(segmentName = "AC Segment Test");
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
 		}
 
-		task ("Add View Blog field and add 15 copies") {
-			ACSegments.addSegmentField(segmentField = "Viewed Blog");
+		task ("Add View Blog field and add 21 copies") {
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
-			ACSegments.selectDocument(
-				documentTitle = "Blogs AC Title",
-				indexField = "1");
-
-			var criteriasAcount = "1,2,3,4,5,6,7,8,9,10,11,12,13";
+			ACSegments.addSegmentField(segmentField = "birthDate");
 
 			for (var cont : list "${criteriasAcount}") {
-				ACSegments.duplicateSegmentCriteria(criteriaName = "Viewed Blog");
+				ACSegments.duplicateSegmentCriteria(criteriaName = "birthDate");
 			}
-
-			ACSegments.addSegmentField(segmentField = "Viewed Blog");
-
-			ACSegments.editWebBehaviorCriterion(
-				indexField = "15",
-				searchTerm = "To See Blog");
 
 			ACSegments.saveSegment();
 		}
@@ -104,9 +66,11 @@ definition {
 		task ("Click View All Criteria, ascroll down and see the last criteria.") {
 			ACUtils.clickAnyButton(button = "View All Criteria");
 
-			ScrollWebElementIntoView(locator1 = "ACSegments#CRITERIA_GROUP_CARD");
-
-			ACSegments.assertCriteriaTable(criteriaName = "To See Blog");
+			for (var cont : list "${criteriasAcount}") {
+				ACSegments.viewSegmentCriteriaIndividualAttributes(
+					attributeName = "birthDate",
+					index = "${cont}");
+			}
 		}
 	}
 

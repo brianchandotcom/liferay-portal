@@ -238,9 +238,13 @@ definition {
 		}
 
 		task ("View the site page") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
+			for (var n : list "1,2,3,4") {
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+			}
 		}
 
 		task ("Close sessions") {
@@ -301,9 +305,13 @@ definition {
 		}
 
 		task ("View the site page") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
+			for (var n : list "1,2,3,4") {
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+			}
 		}
 
 		task ("Close sessions") {
@@ -379,9 +387,13 @@ definition {
 		}
 
 		for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
-			Navigator.gotoSitePage(
-				pageName = "${pageName}",
-				siteName = "Site Name");
+			for (var n : list "1,2,3") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+			}
 		}
 
 		ACUtils.closeAllSessionsAndWait();

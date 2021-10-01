@@ -1202,22 +1202,26 @@ definition {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "CPCommercePriceLists#AssertPriceListCanBeAssociatedWithAccountAndAccountGroup";
 
+		for (var entryNumber : list "1,2") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Test Account ${entryNumber}",
+				accountEntryType = "Business");
 
+			AccountGroups.openAccountGroupsAdmin();
 
+			AccountGroups.addCP(accountGroupName = "Test Account Group ${entryNumber}");
 
+			Navigator.gotoBack();
 
+			LexiconEntry.gotoEntry(rowEntry = "Test Account Group ${entryNumber}");
 
-		CommerceEntry.createNewAccountGroup(
-			accountCriteriaType = "Guest",
-			accountGroupsEntryName = "Test Account Group 1",
-			accountsEntryName = "Test Account 1",
-			user = "Test Test");
+			AccountGroups.viewDefault(tabName = "Accounts");
 
-		CommerceEntry.createNewAccountGroup(
-			accountCriteriaType = "Guest",
-			accountGroupsEntryName = "Test Account Group 2",
-			accountsEntryName = "Test Account 2",
-			user = "Test Test");
+			AccountGroups.addAssignee(
+				accountGroupName = "Test Account Group ${entryNumber}",
+				assigneeNames = "Test Account ${entryNumber}",
+				assigneeType = "Accounts");
+		}
 
 		Navigator.openURL();
 

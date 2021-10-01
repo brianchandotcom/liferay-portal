@@ -117,9 +117,11 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 			]
 		) {
 			Liferay.Util.openToast({
-				message: Liferay.Language.get('name-must-not-be-empty'),
+				message:
+					'<%= LanguageUtil.get(request, "name-must-not-be-empty") %>',
 				type: 'danger',
 			});
+
 			return;
 		}
 

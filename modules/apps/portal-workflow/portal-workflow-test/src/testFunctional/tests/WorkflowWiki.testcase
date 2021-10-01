@@ -17,25 +17,25 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Workflow");
+		// ProductMenu.gotoPortlet(
+		// 	category = "Configuration",
+		// 	panel = "Site Administration",
+		// 	portlet = "Workflow");
 
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Wiki Page");
+		// Workflow.configureWorkflow(
+		// 	workflowDefinition = "Single Approver",
+		// 	workflowResourceValue = "Wiki Page");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		// ProductMenu.gotoPortlet(
+		// 	category = "Site Builder",
+		// 	panel = "Site Administration",
+		// 	portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Wiki Page");
+		// SitePages.addPublicPage(pageName = "Wiki Page");
 
-		Navigator.gotoPage(pageName = "Wiki Page");
+		// Navigator.gotoPage(pageName = "Wiki Page");
 
-		Portlet.addPG(portletName = "Wiki");
+		// Portlet.addPG(portletName = "Wiki");
 	}
 
 	tearDown {
@@ -380,12 +380,104 @@ definition {
 
 	}
 
-	@description = "This is a test for LRQA-69567. Verify that the Child Page status are displayed correctly on reject. "
-	@ignore = "Test Stub"
+	@description = "This is a test for LRQA-69567. Verify that the a rejected Child Page is not displayed on list. "
 	@priority = "3"
 	test WikiChildPageStatusOnReject {
+		ApplicationsMenu.gotoPortlet(
+            category = "Workflow",
+            panel = "Applications",
+            portlet = "Process Builder");
 
-		// TODO LRQA-69474 WikiChildPageStatusOnReject pending implementation
+		Accounts.gotoAssigneeTab(assigneeTab = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Wiki Page");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Wiki",
+			site = "Liferay DXP");
+
+		AssertClick(
+			key_workflowInstanceName = "Main",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			value1 = "Main");
+
+		AssertTextEquals(
+			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
+			value1 = "Approved");
+
+		AssertClick(
+			key_workflowInstanceName = "FrontPage",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			value1 = "FrontPage");
+
+		WikiPage.viewFrontPageDefaultCP(wikiPageTitle = "FrontPage");
+
+		WikiPage.addFrontPageWithWorkflowPG(wikiPageContent = "Front Page Content");
+
+		Navigator.gotoBack();
+		
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Add Child Page");
+
+		PortletEntry.inputTitle(title = "Child Page Test");
+
+		SelectFrame.selectFrameNoLoading(
+			key_title = "Rich Text Editor",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "Test Content");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "TextArea#ANY_LABELED");
+
+		WikiPage.submitForPublication();
+
+		Refresh();
+		
+		AssertTextEquals(
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_STATUS",
+			value1 = "Pending");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "FrontPage",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Child Page Test",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review");
+
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "FrontPage",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review");
+		
+		Workflow.rejectTaskByActions(
+			workflowAssetTitle = "Child Page Test",
+			workflowAssetType = "Wiki Page",
+			workflowTask = "Review");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Wiki",
+			site = "Liferay DXP");
+
+		AssertClick(
+			key_workflowInstanceName = "Main",
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			value1 = "Main");
+
+		AssertElementNotPresent(
+			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
+			key_domainName = "Child Page Test");
 
 	}
 

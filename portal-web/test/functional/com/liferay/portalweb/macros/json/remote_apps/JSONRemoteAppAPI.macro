@@ -1,0 +1,39 @@
+definition {
+
+	macro _addIFrameRemoteAppEntry {
+		Variables.assertDefined(parameterList = "${iFrameURL},${name}");
+
+		var iFrameURLModified = StringUtil.replace("${iFrameURL}", ":", "%3A");
+
+		var nameModified = StringUtil.replace("${name}", " ", "%20");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/remoteapp.remoteappentry/add-i-frame-remote-app-entry \
+				  -u test@liferay.com:test \
+				  -d iFrameURL=${iFrameURLModified} \
+				  -d instanceable=true \
+				  -d nameMap='{\"en_US\":\"${nameModified}\"}' \
+				  -d portletCategoryName=RemoteApps \
+				  -d properties=
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	macro _deleteIFrameRemoteAppEntry {
+		Variables.assertDefined(parameterList = "${remoteAppEntryId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/remoteapp.remoteappentry/add-i-frame-remote-app-entry \
+				  -u test@liferay.com:test \
+				  -d remoteAppEntryId=${remoteAppEntryId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+}

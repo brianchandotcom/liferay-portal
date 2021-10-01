@@ -21,8 +21,6 @@ definition {
 		}
 		else {
 			RemoteApps.tearDown();
-
-			Page.tearDownCP();
 		}
 	}
 
@@ -45,21 +43,22 @@ definition {
 
 	@description = "Verify remote app can be deleted"
 	@priority = "5"
+	@refactordone
 	test CanBeDeleted {
 		property portal.acceptance = "true";
+
+		JSONRemoteApp.addIFrameRemoteAppEntry(
+			iFrameURL = "http://www.liferay.com/my_new_remote_app",
+			name = "My New Remote App");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Custom Apps",
 			panel = "Applications",
 			portlet = "Remote Apps");
 
-		RemoteApps.addApp(
-			entryName = "Test Remote App",
-			entryURL = "http://www.liferay.com");
+		RemoteApps.deleteRemoteApp(tableEntry = "My New Remote App");
 
-		RemoteApps.deleteRemoteApp(tableEntry = "Test Remote App");
-
-		RemoteApps.viewTableEntryNameNotPresent(entryName = "Test Remote App");
+		RemoteApps.viewTableEntryNameNotPresent(entryName = "My New Remote App");
 
 		RemoteApps.viewEmptyRemoteTable();
 	}

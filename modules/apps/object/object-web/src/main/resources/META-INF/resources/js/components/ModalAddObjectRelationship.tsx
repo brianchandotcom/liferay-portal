@@ -52,13 +52,6 @@ type TFormState = {
 const objectRelationshipTypes = [
 	{
 		description: Liferay.Language.get(
-			"one-object's-entry-interacts-only-with-one-other-object's-entry"
-		),
-		label: Liferay.Language.get('one-to-one'),
-		value: 'one_to_one',
-	},
-	{
-		description: Liferay.Language.get(
 			"one-object's-entry-interacts-with-many-others-object's-entries"
 		),
 		label: Liferay.Language.get('one-to-many'),

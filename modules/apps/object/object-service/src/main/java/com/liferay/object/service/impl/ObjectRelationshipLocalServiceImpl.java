@@ -375,9 +375,7 @@ public class ObjectRelationshipLocalServiceImpl
 		if (!Objects.equals(
 				type, ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
 			!Objects.equals(
-				type, ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
-			!Objects.equals(
-				type, ObjectRelationshipConstants.TYPE_ONE_TO_ONE)) {
+				type, ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 			throw new ObjectRelationshipTypeException("Invalid type " + type);
 		}

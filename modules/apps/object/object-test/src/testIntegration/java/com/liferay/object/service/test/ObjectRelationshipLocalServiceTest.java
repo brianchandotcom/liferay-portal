@@ -90,7 +90,6 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@Test
 	public void testAddObjectRelationship() throws Exception {
-		_testAddObjectRelationship(ObjectRelationshipConstants.TYPE_ONE_TO_ONE);
 		_testAddObjectRelationship(
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
@@ -133,7 +132,7 @@ public class ObjectRelationshipLocalServiceTest {
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition2.getObjectDefinitionId(),
 				LocalizedMapUtil.getLocalizedMap("Able"), StringUtil.randomId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_ONE);
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Able"),

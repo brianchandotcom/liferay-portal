@@ -1,7 +1,10 @@
 [
 	{
 		"allowedServiceSignatures": [
-			"com.liferay.headless.admin.taxonomy*"
+			"com.liferay.headless.admin.taxonomy*",
+			"com.liferay.headless.commerce*",
+			"com.liferay.headless.delivery*",
+			"com.liferay.object.rest*"
 		],
 		"defaultSAPEntry": "true",
 		"enabled": "true",

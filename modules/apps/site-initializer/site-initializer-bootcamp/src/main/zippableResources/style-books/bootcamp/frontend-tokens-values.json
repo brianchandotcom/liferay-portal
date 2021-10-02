@@ -21,15 +21,15 @@
 	},
 	"boxShadow": {
 		"cssVariableMapping": "box-shadow",
-		"value": "0 .5rem 1rem rgba(var(--dark), 0.1)"
+		"value": "0 .5rem 1rem rgba(0,0,0,0.15)"
 	},
 	"boxShadowLg": {
 		"cssVariableMapping": "box-shadow-lg",
-		"value": "0 1rem 2.5rem rgba(var(--dark), 0.15)"
+		"value": "0 1rem 2.25rem rgba(0,0,0,0.15)"
 	},
 	"boxShadowSm": {
 		"cssVariableMapping": "box-shadow-sm",
-		"value": "0 .125rem .25rem rgba(var(--dark), 0.075)"
+		"value": "0 .125rem .25rem rgba(0,0,0,0.15)"
 	},
 	"brandColor1": {
 		"cssVariableMapping": "brand-color-1",
@@ -149,7 +149,7 @@
 	},
 	"display1Size": {
 		"cssVariableMapping": "display1-size",
-		"value": "5rem"
+		"value": "6.5rem"
 	},
 	"display1Weight": {
 		"cssVariableMapping": "display1-weight",
@@ -157,7 +157,7 @@
 	},
 	"display2Size": {
 		"cssVariableMapping": "display2-size",
-		"value": "4.5rem"
+		"value": "5rem"
 	},
 	"display2Weight": {
 		"cssVariableMapping": "display2-weight",
@@ -165,7 +165,7 @@
 	},
 	"display3Size": {
 		"cssVariableMapping": "display3-size",
-		"value": "3.5rem"
+		"value": "4.5rem"
 	},
 	"display3Weight": {
 		"cssVariableMapping": "display3-weight",
@@ -173,7 +173,7 @@
 	},
 	"display4Size": {
 		"cssVariableMapping": "display4-size",
-		"value": "6rem"
+		"value": "4rem"
 	},
 	"display4Weight": {
 		"cssVariableMapping": "display4-weight",
@@ -221,11 +221,11 @@
 	},
 	"h1FontSize": {
 		"cssVariableMapping": "h1-font-size",
-		"value": "3rem"
+		"value": "3.25rem"
 	},
 	"h2FontSize": {
 		"cssVariableMapping": "h2-font-size",
-		"value": "2.5rem"
+		"value": "2.75rem"
 	},
 	"h3FontSize": {
 		"cssVariableMapping": "h3-font-size",
@@ -289,11 +289,15 @@
 	},
 	"spacer7": {
 		"cssVariableMapping": "spacer-7",
-		"value": "6rem"
+		"value": "5rem"
 	},
 	"spacer8": {
 		"cssVariableMapping": "spacer-8",
 		"value": "7.5rem"
+	},
+	"spacer9": {
+		"cssVariableMapping": "spacer-9",
+		"value": "8.5rem"
 	},
 	"successColor": {
 		"cssVariableMapping": "success",

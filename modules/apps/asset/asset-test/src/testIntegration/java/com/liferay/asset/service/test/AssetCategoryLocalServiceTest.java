@@ -17,10 +17,14 @@ package com.liferay.asset.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.exception.AssetCategoryNameException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
+import com.liferay.asset.kernel.exception.DuplicateCategoryExternalReferenceCodeException;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ListTypeConstants;
@@ -39,6 +43,8 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -77,6 +83,64 @@ public class AssetCategoryLocalServiceTest {
 		if (_organizationIndexer != null) {
 			IndexerRegistryUtil.register(_organizationIndexer);
 		}
+	}
+
+	@Test
+	public void testAddCategoryWithExternalReferenceCode() throws Exception {
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		Locale locale = PortalUtil.getSiteDefaultLocale(_group.getGroupId());
+
+		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.addCategory(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			HashMapBuilder.put(
+				locale, RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				locale, StringPool.BLANK
+			).build(),
+			assetVocabulary.getVocabularyId(), null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		Assert.assertEquals(
+			externalReferenceCode, assetCategory.getExternalReferenceCode());
+
+		assetCategory =
+			AssetCategoryLocalServiceUtil.
+				getAssetCategoryByExternalReferenceCode(
+					_group.getGroupId(), externalReferenceCode);
+
+		Assert.assertEquals(
+			externalReferenceCode, assetCategory.getExternalReferenceCode());
+	}
+
+	@Test
+	public void testAddCategoryWithoutExternalReferenceCode() throws Exception {
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		String externalReferenceCode = String.valueOf(
+			assetCategory.getCategoryId());
+
+		Assert.assertEquals(
+			externalReferenceCode, assetCategory.getExternalReferenceCode());
+
+		assetCategory =
+			AssetCategoryLocalServiceUtil.
+				getAssetCategoryByExternalReferenceCode(
+					_group.getGroupId(), externalReferenceCode);
+
+		Assert.assertEquals(
+			externalReferenceCode, assetCategory.getExternalReferenceCode());
 	}
 
 	@Test(expected = DuplicateCategoryException.class)
@@ -233,6 +297,44 @@ public class AssetCategoryLocalServiceTest {
 		IndexerRegistryUtil.register(testAssetIndexer);
 
 		_assetCategoryLocalService.deleteCategory(assetCategory, true);
+	}
+
+	@Test(expected = DuplicateCategoryExternalReferenceCodeException.class)
+	public void testDuplicateCategoryExternalReferenceCode() throws Exception {
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		Locale locale = PortalUtil.getSiteDefaultLocale(_group.getGroupId());
+
+		AssetCategoryLocalServiceUtil.addCategory(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			HashMapBuilder.put(
+				locale, RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				locale, StringPool.BLANK
+			).build(),
+			assetVocabulary.getVocabularyId(), null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		AssetCategoryLocalServiceUtil.addCategory(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			HashMapBuilder.put(
+				locale, RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				locale, StringPool.BLANK
+			).build(),
+			assetVocabulary.getVocabularyId(), null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Inject

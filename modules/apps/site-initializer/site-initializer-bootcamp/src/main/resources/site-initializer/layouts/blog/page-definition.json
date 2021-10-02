@@ -158,14 +158,11 @@
 																		"fragmentLink": {
 																			"value": {
 																				"href": {
-																					"defaultFragmentInlineValue": {
-																						"value": "http://localhost:8080/web/b5/w/15-tips-about-management-from-industry-experts"
-																					},
 																					"mapping": {
 																						"fieldKey": "displayPageURL",
 																						"itemReference": {
 																							"className": "com.liferay.journal.model.JournalArticle",
-																							"classPK": 46293
+																							"classPK": "[$BLOG-09$]"
 																						}
 																					}
 																				}
@@ -181,7 +178,7 @@
 																				"fieldKey": "Title",
 																				"itemReference": {
 																					"className": "com.liferay.journal.model.JournalArticle",
-																					"classPK": 46293
+																					"classPK": "[$BLOG-09$]"
 																				}
 																			}
 																		}
@@ -217,7 +214,7 @@
 																				"fieldKey": "Text32559244",
 																				"itemReference": {
 																					"className": "com.liferay.journal.model.JournalArticle",
-																					"classPK": 46293
+																					"classPK": "[$BLOG-09$]"
 																				}
 																			}
 																		}
@@ -246,14 +243,11 @@
 																		"fragmentLink": {
 																			"value": {
 																				"href": {
-																					"defaultFragmentInlineValue": {
-																						"value": "http://localhost:8080/web/b5/w/15-tips-about-management-from-industry-experts"
-																					},
 																					"mapping": {
 																						"fieldKey": "displayPageURL",
 																						"itemReference": {
 																							"className": "com.liferay.journal.model.JournalArticle",
-																							"classPK": 46293
+																							"classPK": "[$BLOG-09$]"
 																						}
 																					}
 																				}
@@ -321,7 +315,7 @@
 																			"fieldKey": "Image25779272",
 																			"itemReference": {
 																				"className": "com.liferay.journal.model.JournalArticle",
-																				"classPK": 46293
+																				"classPK": "[$BLOG-09$]"
 																			}
 																		}
 																	}
@@ -329,14 +323,11 @@
 																"fragmentLink": {
 																	"value": {
 																		"href": {
-																			"defaultFragmentInlineValue": {
-																				"value": "http://localhost:8080/web/b5/w/15-tips-about-management-from-industry-experts"
-																			},
 																			"mapping": {
 																				"fieldKey": "displayPageURL",
 																				"itemReference": {
 																					"className": "com.liferay.journal.model.JournalArticle",
-																					"classPK": 46293
+																					"classPK": "[$BLOG-09$]"
 																				}
 																			}
 																		}

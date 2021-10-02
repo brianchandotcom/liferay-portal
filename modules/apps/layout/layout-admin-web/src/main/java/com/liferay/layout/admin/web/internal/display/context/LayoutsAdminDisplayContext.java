@@ -1502,8 +1502,12 @@ public class LayoutsAdminDisplayContext {
 		return true;
 	}
 
-	public boolean isShowDraftActions(Layout layout) {
-		if (!layout.isTypeContent()) {
+	public boolean isShowDraftActions(Layout layout) throws PortalException {
+		if (!layout.isTypeContent() ||
+			!LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), layout,
+				ActionKeys.UPDATE)) {
+
 			return false;
 		}
 

@@ -29,7 +29,7 @@
 }
 
 .hero__title {
-	font-size: var(--display1-size);
+	font-size: var(--display2-size);
 	font-weight: var(--display-font-weight);
 	line-height: var(--display-line-height);
 	margin-bottom: var(--spacer-3);

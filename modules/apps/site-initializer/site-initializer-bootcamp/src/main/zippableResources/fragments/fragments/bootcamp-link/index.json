@@ -5,7 +5,7 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": "nm",
+					"defaultValue": "lg",
 					"label": "size",
 					"name": "linkSize",
 					"type": "select",
@@ -14,10 +14,6 @@
 							{
 								"label": "small",
 								"value": "sm"
-							},
-							{
-								"label": "normal",
-								"value": "nm"
 							},
 							{
 								"label": "large",

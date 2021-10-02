@@ -260,8 +260,8 @@ public class AssetCategoryStagedModelDataHandler
 			serviceContext.setUuid(category.getUuid());
 
 			importedCategory = _assetCategoryLocalService.addCategory(
-				null, userId, portletDataContext.getScopeGroupId(),
-				parentCategoryId,
+				category.getExternalReferenceCode(), userId,
+				portletDataContext.getScopeGroupId(), parentCategoryId,
 				getCategoryTitleMap(
 					portletDataContext.getScopeGroupId(), category, name),
 				category.getDescriptionMap(), vocabularyId, properties,

@@ -14,11 +14,13 @@
 
 package com.liferay.portal.upgrade.v7_4_x;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v7_4_x.util.AssetCategoryTable;
 
 /**
  * @author Vendel Toreki
+ * @author Luis Miguel Barcos
  */
 public class UpgradeAssetCategory extends UpgradeProcess {
 
@@ -40,6 +42,22 @@ public class UpgradeAssetCategory extends UpgradeProcess {
 				AssetCategoryTable.class,
 				new AlterColumnType("description", "TEXT null"));
 		}
+
+		if (!hasColumn(
+				AssetCategoryTable.TABLE_NAME, "externalReferenceCode")) {
+
+			alter(
+				AssetCategoryTable.class,
+				new AlterTableAddColumn(
+					"externalReferenceCode", "VARCHAR(75)"));
+		}
+
+		runSQL(
+			StringBundler.concat(
+				"update ", AssetCategoryTable.TABLE_NAME,
+				" set externalReferenceCode = CAST_TEXT(categoryId)",
+				" where externalReferenceCode is null or ",
+				"externalReferenceCode =''"));
 	}
 
 }

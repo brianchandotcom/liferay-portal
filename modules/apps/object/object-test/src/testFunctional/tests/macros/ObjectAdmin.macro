@@ -29,22 +29,6 @@ definition {
 			userPassword = "${userPassword}");
 	}
 
-	macro assertTypeFieldRequired {
-		AssertElementPresent(locator1 = "ObjectAdmin#TYPE_FIELD_REQUIRED");
-	}
-
-	macro assertLabelFieldRequired {
-		AssertElementPresent(locator1 = "ObjectAdmin#LABEL_FIELD_REQUIRED");
-	}
-
-	macro assertObjectLabelFieldRequired {
-		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LABEL_FIELD_REQUIRED");
-	}
-
-	macro assertObjectNameFieldRequired {
-		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_NAME_FIELD_REQUIRED");
-	}
-
 	macro addObjectFieldViaUI {
 		LexiconEntry.gotoAdd();
 
@@ -113,6 +97,10 @@ definition {
 			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
 	}
 
+	macro assertLabelFieldRequired {
+		AssertElementPresent(locator1 = "ObjectAdmin#LABEL_FIELD_REQUIRED");
+	}
+
 	macro assertObjectColumnsAreDisplayed {
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LABEL_COLUMN");
 
@@ -162,10 +150,22 @@ definition {
 		AssertElementNotPresent(locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
 	}
 
+	macro assertObjectLabelFieldRequired {
+		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LABEL_FIELD_REQUIRED");
+	}
+
+	macro assertObjectNameFieldRequired {
+		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_NAME_FIELD_REQUIRED");
+	}
+
 	macro assertObjectStatus {
 		AssertElementPresent(
 			key_status = "${status}",
 			locator1 = "ObjectAdmin#OBJECT_STATUS");
+	}
+
+	macro assertTypeFieldRequired {
+		AssertElementPresent(locator1 = "ObjectAdmin#TYPE_FIELD_REQUIRED");
 	}
 
 	macro clickFieldsSearchableSectionRadioOption {

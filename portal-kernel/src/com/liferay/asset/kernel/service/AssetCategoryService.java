@@ -71,6 +71,13 @@ public interface AssetCategoryService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public AssetCategory addCategory(
+			String externalReferenceCode, long groupId, long parentCategoryId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			long vocabularyId, String[] categoryProperties,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public void deleteCategories(long[] categoryIds) throws PortalException;
 
 	public void deleteCategory(long categoryId) throws PortalException;

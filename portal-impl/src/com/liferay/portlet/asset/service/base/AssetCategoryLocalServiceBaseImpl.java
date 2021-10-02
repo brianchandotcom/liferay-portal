@@ -265,18 +265,18 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the asset category with the matching external reference code and company.
+	 * Returns the asset category with the matching external reference code and group.
 	 *
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @param externalReferenceCode the asset category's external reference code
 	 * @return the matching asset category, or <code>null</code> if a matching asset category could not be found
 	 */
 	@Override
 	public AssetCategory fetchAssetCategoryByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		long groupId, String externalReferenceCode) {
 
-		return assetCategoryPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return assetCategoryPersistence.fetchByG_ERC(
+			groupId, externalReferenceCode);
 	}
 
 	/**
@@ -285,27 +285,27 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	@Deprecated
 	@Override
 	public AssetCategory fetchAssetCategoryByReferenceCode(
-		long companyId, String externalReferenceCode) {
+		long groupId, String externalReferenceCode) {
 
 		return fetchAssetCategoryByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			groupId, externalReferenceCode);
 	}
 
 	/**
-	 * Returns the asset category with the matching external reference code and company.
+	 * Returns the asset category with the matching external reference code and group.
 	 *
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @param externalReferenceCode the asset category's external reference code
 	 * @return the matching asset category
 	 * @throws PortalException if a matching asset category could not be found
 	 */
 	@Override
 	public AssetCategory getAssetCategoryByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			long groupId, String externalReferenceCode)
 		throws PortalException {
 
-		return assetCategoryPersistence.findByC_ERC(
-			companyId, externalReferenceCode);
+		return assetCategoryPersistence.findByG_ERC(
+			groupId, externalReferenceCode);
 	}
 
 	/**

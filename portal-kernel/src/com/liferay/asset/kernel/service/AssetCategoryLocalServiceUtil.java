@@ -60,6 +60,11 @@ public class AssetCategoryLocalServiceUtil {
 		return getService().addAssetCategory(assetCategory);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCategory(String, long, long, long, Map, Map, long, String[], ServiceContext)}
+	 */
+	@Deprecated
 	public static AssetCategory addCategory(
 			long userId, long groupId, long parentCategoryId,
 			Map<java.util.Locale, String> titleMap,
@@ -80,6 +85,19 @@ public class AssetCategoryLocalServiceUtil {
 
 		return getService().addCategory(
 			userId, groupId, title, vocabularyId, serviceContext);
+	}
+
+	public static AssetCategory addCategory(
+			String externalReferenceCode, long userId, long groupId,
+			long parentCategoryId, Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, long vocabularyId,
+			String[] categoryProperties,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addCategory(
+			externalReferenceCode, userId, groupId, parentCategoryId, titleMap,
+			descriptionMap, vocabularyId, categoryProperties, serviceContext);
 	}
 
 	public static void addCategoryResources(
@@ -290,17 +308,17 @@ public class AssetCategoryLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the asset category with the matching external reference code and company.
+	 * Returns the asset category with the matching external reference code and group.
 	 *
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @param externalReferenceCode the asset category's external reference code
 	 * @return the matching asset category, or <code>null</code> if a matching asset category could not be found
 	 */
 	public static AssetCategory fetchAssetCategoryByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		long groupId, String externalReferenceCode) {
 
 		return getService().fetchAssetCategoryByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			groupId, externalReferenceCode);
 	}
 
 	/**
@@ -308,10 +326,10 @@ public class AssetCategoryLocalServiceUtil {
 	 */
 	@Deprecated
 	public static AssetCategory fetchAssetCategoryByReferenceCode(
-		long companyId, String externalReferenceCode) {
+		long groupId, String externalReferenceCode) {
 
 		return getService().fetchAssetCategoryByReferenceCode(
-			companyId, externalReferenceCode);
+			groupId, externalReferenceCode);
 	}
 
 	/**
@@ -414,19 +432,19 @@ public class AssetCategoryLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the asset category with the matching external reference code and company.
+	 * Returns the asset category with the matching external reference code and group.
 	 *
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @param externalReferenceCode the asset category's external reference code
 	 * @return the matching asset category
 	 * @throws PortalException if a matching asset category could not be found
 	 */
 	public static AssetCategory getAssetCategoryByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			long groupId, String externalReferenceCode)
 		throws PortalException {
 
 		return getService().getAssetCategoryByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			groupId, externalReferenceCode);
 	}
 
 	/**

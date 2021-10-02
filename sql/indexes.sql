@@ -22,6 +22,7 @@ create unique index IX_4539A99C on AnnouncementsFlag (userId, entryId, value);
 create index IX_AE8DFA7 on AssetCategory (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_1757FA92 on AssetCategory (ctCollectionId);
 create index IX_62DC0D54 on AssetCategory (groupId, ctCollectionId);
+create index IX_A497FDE5 on AssetCategory (groupId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_3E49A228 on AssetCategory (groupId, name[$COLUMN_LENGTH:255$], vocabularyId, ctCollectionId);
 create index IX_5159C90B on AssetCategory (groupId, parentCategoryId, ctCollectionId);
 create index IX_852EA801 on AssetCategory (groupId, parentCategoryId, name[$COLUMN_LENGTH:255$], vocabularyId);

@@ -117,6 +117,37 @@ public class AssetCategoryServiceSoap {
 		}
 	}
 
+	public static com.liferay.asset.kernel.model.AssetCategorySoap addCategory(
+			String externalReferenceCode, long groupId, long parentCategoryId,
+			String[] titleMapLanguageIds, String[] titleMapValues,
+			String[] descriptionMapLanguageIds, String[] descriptionMapValues,
+			long vocabularyId, String[] categoryProperties,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+				titleMapLanguageIds, titleMapValues);
+			Map<Locale, String> descriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					descriptionMapLanguageIds, descriptionMapValues);
+
+			com.liferay.asset.kernel.model.AssetCategory returnValue =
+				AssetCategoryServiceUtil.addCategory(
+					externalReferenceCode, groupId, parentCategoryId, titleMap,
+					descriptionMap, vocabularyId, categoryProperties,
+					serviceContext);
+
+			return com.liferay.asset.kernel.model.AssetCategorySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static void deleteCategories(long[] categoryIds)
 		throws RemoteException {
 

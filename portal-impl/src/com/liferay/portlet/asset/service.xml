@@ -384,6 +384,7 @@
 		<exception>CategoryPropertyKey</exception>
 		<exception>CategoryPropertyValue</exception>
 		<exception>DuplicateCategory</exception>
+		<exception>DuplicateCategoryExternalReferenceCode</exception>
 		<exception>DuplicateCategoryProperty</exception>
 		<exception>DuplicateQueryRule</exception>
 		<exception>DuplicateTag</exception>

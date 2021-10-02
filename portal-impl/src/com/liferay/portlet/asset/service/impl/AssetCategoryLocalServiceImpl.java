@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.asset.kernel.exception.AssetCategoryNameException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
+import com.liferay.asset.kernel.exception.DuplicateCategoryExternalReferenceCodeException;
 import com.liferay.asset.kernel.exception.InvalidAssetCategoryException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
@@ -80,13 +81,45 @@ import java.util.Map;
 public class AssetCategoryLocalServiceImpl
 	extends AssetCategoryLocalServiceBaseImpl {
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AssetCategory addCategory(
 			long userId, long groupId, long parentCategoryId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			long vocabularyId, String[] categoryProperties,
 			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addCategory(
+			null, userId, groupId, parentCategoryId, titleMap, descriptionMap,
+			vocabularyId, categoryProperties, serviceContext);
+	}
+
+	@Override
+	public AssetCategory addCategory(
+			long userId, long groupId, String title, long vocabularyId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Locale locale = PortalUtil.getSiteDefaultLocale(groupId);
+
+		return assetCategoryLocalService.addCategory(
+			userId, groupId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			HashMapBuilder.put(
+				locale, title
+			).build(),
+			HashMapBuilder.put(
+				locale, StringPool.BLANK
+			).build(),
+			vocabularyId, null, serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public AssetCategory addCategory(
+			String externalReferenceCode, long userId, long groupId,
+			long parentCategoryId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, long vocabularyId,
+			String[] categoryProperties, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Category
@@ -117,9 +150,16 @@ public class AssetCategoryLocalServiceImpl
 
 		long categoryId = counterLocalService.increment();
 
+		if (Validator.isNull(externalReferenceCode)) {
+			externalReferenceCode = String.valueOf(categoryId);
+		}
+
+		_validateExternalReferenceCode(externalReferenceCode, groupId);
+
 		AssetCategory category = assetCategoryPersistence.create(categoryId);
 
 		category.setUuid(serviceContext.getUuid());
+		category.setExternalReferenceCode(externalReferenceCode);
 		category.setGroupId(groupId);
 		category.setCompanyId(user.getCompanyId());
 		category.setUserId(user.getUserId());
@@ -156,25 +196,6 @@ public class AssetCategoryLocalServiceImpl
 		}
 
 		return category;
-	}
-
-	@Override
-	public AssetCategory addCategory(
-			long userId, long groupId, String title, long vocabularyId,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		Locale locale = PortalUtil.getSiteDefaultLocale(groupId);
-
-		return assetCategoryLocalService.addCategory(
-			userId, groupId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			HashMapBuilder.put(
-				locale, title
-			).build(),
-			HashMapBuilder.put(
-				locale, StringPool.BLANK
-			).build(),
-			vocabularyId, null, serviceContext);
 	}
 
 	@Override
@@ -794,6 +815,21 @@ public class AssetCategoryLocalServiceImpl
 		}
 
 		category.setTreePath(newTreePath);
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		AssetCategory assetCategory = assetCategoryPersistence.fetchByG_ERC(
+			groupId, externalReferenceCode);
+
+		if (assetCategory != null) {
+			throw new DuplicateCategoryExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate category external reference code ",
+					externalReferenceCode, " in group", groupId));
+		}
 	}
 
 	@BeanReference(type = AssetVocabularyPersistence.class)

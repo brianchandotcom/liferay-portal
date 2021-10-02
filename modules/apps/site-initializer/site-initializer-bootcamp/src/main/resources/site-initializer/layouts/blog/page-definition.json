@@ -4,15 +4,509 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"marginBottom": "6",
-						"marginTop": "6"
+						"backgroundColor": "brandColor1",
+						"borderWidth": "0",
+						"marginBottom": "8",
+						"paddingBottom": "8",
+						"paddingTop": "5"
+					},
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 10,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 10,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 4,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"gutters": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {
+											}
+										}
+									],
+									"verticalAlignment": "middle"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 5
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"paddingRight": "3"
+													},
+													"layout": {
+														"borderWidth": 0,
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 1,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "bootcamp-text-block"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Category"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontFamily": "fontFamilySansSerif",
+																"fontSize": "fontSizeSm",
+																"marginBottom": "2"
+															}
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "bootcamp-heading"
+															},
+															"fragmentConfig": {
+																"displayLevel": "4",
+																"headingLevel": "h1"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value": {
+																				"href": {
+																					"defaultFragmentInlineValue": {
+																						"value": "http://localhost:8080/web/b5/w/15-tips-about-management-from-industry-experts"
+																					},
+																					"mapping": {
+																						"fieldKey": "displayPageURL",
+																						"itemReference": {
+																							"className": "com.liferay.journal.model.JournalArticle",
+																							"classPK": 46293
+																						}
+																					}
+																				}
+																			},
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"defaultFragmentInlineValue": {
+																				"value": "20 management tips from top industry experts"
+																			},
+																			"mapping": {
+																				"fieldKey": "Title",
+																				"itemReference": {
+																					"className": "com.liferay.journal.model.JournalArticle",
+																					"classPK": 46293
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"marginBottom": "3"
+															}
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "bootcamp-text-block"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"defaultFragmentInlineValue": {
+																				"value": "The subtitle summarizes the publication in a few short sentences aimed at motivating to continue reading."
+																			},
+																			"mapping": {
+																				"fieldKey": "Text32559244",
+																				"itemReference": {
+																					"className": "com.liferay.journal.model.JournalArticle",
+																					"classPK": 46293
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"marginBottom": "4"
+															}
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "bootcamp-button"
+															},
+															"fragmentConfig": {
+																"buttonSize": "nm",
+																"buttonType": "primary"
+															},
+															"fragmentFields": [
+																{
+																	"id": "link",
+																	"value": {
+																		"fragmentLink": {
+																			"value": {
+																				"href": {
+																					"defaultFragmentInlineValue": {
+																						"value": "http://localhost:8080/web/b5/w/15-tips-about-management-from-industry-experts"
+																					},
+																					"mapping": {
+																						"fieldKey": "displayPageURL",
+																						"itemReference": {
+																							"className": "com.liferay.journal.model.JournalArticle",
+																							"classPK": 46293
+																						}
+																					}
+																				}
+																			},
+																			"value_i18n": {
+																			}
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "READ MORE&nbsp; &nbsp; ⟶"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"marginBottom": "4"
+															}
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 7
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "bootcamp-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-100"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "Image25779272",
+																			"itemReference": {
+																				"className": "com.liferay.journal.model.JournalArticle",
+																				"classPK": 46293
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"defaultFragmentInlineValue": {
+																				"value": "http://localhost:8080/web/b5/w/15-tips-about-management-from-industry-experts"
+																			},
+																			"mapping": {
+																				"fieldKey": "displayPageURL",
+																				"itemReference": {
+																					"className": "com.liferay.journal.model.JournalArticle",
+																					"classPK": 46293
+																				}
+																			}
+																		}
+																	},
+																	"value_i18n": {
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "5",
+														"marginLeft": "4",
+														"marginRight": "4",
+														"marginTop": "4",
+														"shadow": "boxShadowLg"
+													}
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"marginBottom": "7"
+					},
+					"layout": {
+						"align": "Center",
+						"borderWidth": 0,
+						"contentDisplay": "FlexRow",
+						"justify": "SpaceBetween",
+						"marginBottom": 8,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "bootcamp-heading"
+							},
+							"fragmentConfig": {
+								"displayLevel": "0",
+								"headingLevel": "h4"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+											"value_i18n": {
+											}
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "All articles"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"fontFamily": "fontFamilySansSerif",
+								"fontWeight": "fontWeightBold"
+							}
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
+							"layout": {
+								"align": "Center",
+								"borderWidth": 0,
+								"contentDisplay": "FlexRow",
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "bootcamp-text-block"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+													"value_i18n": {
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Filter by:"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"fontFamily": "fontFamilySansSerif",
+										"fontSize": "fontSizeSm",
+										"fontWeight": "fontWeightBold",
+										"marginRight": "3"
+									}
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									]
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"marginBottom": "6"
 					},
 					"layout": {
 						"borderWidth": 0,
 						"marginBottom": 6,
 						"marginLeft": 0,
 						"marginRight": 0,
-						"marginTop": 6,
+						"marginTop": 0,
 						"paddingBottom": 0,
 						"paddingLeft": 0,
 						"paddingRight": 0,
@@ -32,9 +526,9 @@
 							},
 							"listItemStyle": "",
 							"listStyle": "",
-							"numberOfColumns": 1,
-							"numberOfItems": 5,
-							"numberOfItemsPerPage": 5,
+							"numberOfColumns": 3,
+							"numberOfItems": 9,
+							"numberOfItemsPerPage": 9,
 							"templateKey": ""
 						},
 						"pageElements": [
@@ -46,47 +540,174 @@
 								"pageElements": [
 									{
 										"definition": {
-											"fragment": {
-												"key": "bootcamp-heading"
+											"fragmentStyle": {
+												"borderWidth": "0",
+												"marginBottom": "7"
 											},
-											"fragmentConfig": {
-												"displayLevel": "0",
-												"headingLevel": "h3"
-											},
-											"fragmentFields": [
-												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
+											"layout": {
+												"borderWidth": 0,
+												"marginBottom": 8,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "bootcamp-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-100"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
 															"value": {
-																"href": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "Image25779272",
+																			"itemReference": {
+																				"contextSource": "CollectionItem"
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"fieldKey": "displayPageURL",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		}
+																	},
+																	"value_i18n": {
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "4"
+													}
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "bootcamp-text-block"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																	"value_i18n": {
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontFamily": "fontFamilySansSerif",
+														"fontSize": "fontSizeSm",
+														"marginBottom": "2",
+														"textColor": "secondaryColor"
+													}
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "bootcamp-heading"
+													},
+													"fragmentConfig": {
+														"displayLevel": "0",
+														"headingLevel": "h3"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"fieldKey": "displayPageURL",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		}
+																	},
+																	"value_i18n": {
+																	}
+																},
+																"text": {
 																	"mapping": {
-																		"fieldKey": "displayPageURL",
+																		"fieldKey": "Title",
 																		"itemReference": {
 																			"contextSource": "CollectionItem"
 																		}
 																	}
 																}
-															},
-															"value_i18n": {
 															}
-														},
-														"text": {
-															"mapping": {
-																"fieldKey": "title",
-																"itemReference": {
-																	"contextSource": "CollectionItem"
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "4"
+													}
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "bootcamp-link"
+													},
+													"fragmentConfig": {
+														"linkSize": "lg"
+													},
+													"fragmentFields": [
+														{
+															"id": "link",
+															"value": {
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"fieldKey": "displayPageURL",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		}
+																	},
+																	"value_i18n": {
+																	}
 																}
 															}
 														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"marginBottom": "3"
+													]
+												},
+												"type": "Fragment"
 											}
-										},
-										"type": "Fragment"
+										],
+										"type": "Section"
 									}
 								],
 								"type": "CollectionItem"

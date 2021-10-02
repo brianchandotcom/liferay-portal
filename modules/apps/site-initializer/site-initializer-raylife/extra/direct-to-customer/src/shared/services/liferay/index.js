@@ -106,7 +106,7 @@ const getLiferaySiteName = () => {
 };
 
 const _getProductsByCategoryId = async () => {
-	const URL = `/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=skus,catalog&page=1&pageSize=50`;
+	const URL = `o/headless-commerce-admin-catalog/v1.0/products?nestedFields=skus,catalog&page=1&pageSize=50`;
 
 	const {data} = await LiferayFetchAPI.get(URL);
 

@@ -63,6 +63,7 @@ import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -135,6 +136,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.net.URL;
 import java.net.URLConnection;
@@ -188,7 +190,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			layoutPageTemplateStructureLocalService,
 		LayoutSetLocalService layoutSetLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
-		Portal portal, RemoteAppEntryLocalService remoteAppEntryLocalService,
+		ObjectEntryLocalService obObjectEntryLocalService, Portal portal,
+		RemoteAppEntryLocalService remoteAppEntryLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService,
 		SAPEntryLocalService sapEntryLocalService,
@@ -234,6 +237,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			layoutPageTemplateStructureLocalService;
 		_layoutSetLocalService = layoutSetLocalService;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
+		_obObjectEntryLocalService = obObjectEntryLocalService;
 		_portal = portal;
 		_remoteAppEntryLocalService = remoteAppEntryLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
@@ -1235,6 +1239,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).build();
 
 		for (String resourcePath : resourcePaths) {
+			if (resourcePath.endsWith(".data.json")) {
+				continue;
+			}
+
 			String json = _read(resourcePath);
 
 			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(json);
@@ -1246,7 +1254,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			try {
+			Page<ObjectDefinition> objectDefinitionsPage =
+				objectDefinitionResource.getObjectDefinitionsPage(
+					objectDefinition.getName(), null);
+
+			ObjectDefinition existingObjectDefinition =
+				objectDefinitionsPage.fetchFirstItem();
+
+			if (existingObjectDefinition == null) {
 				objectDefinition =
 					objectDefinitionResource.postObjectDefinition(
 						objectDefinition);
@@ -1254,10 +1269,30 @@ public class BundleSiteInitializer implements SiteInitializer {
 				objectDefinitionResource.postObjectDefinitionPublish(
 					objectDefinition.getId());
 			}
-			catch (Exception exception) {
+			else {
+				objectDefinition =
+					objectDefinitionResource.patchObjectDefinition(
+						existingObjectDefinition.getId(), objectDefinition);
+			}
 
-				// TODO PUT
+			String jsonData = _read(
+				StringUtil.replaceLast(resourcePath, ".json", ".data.json"));
 
+			if (jsonData == null) {
+				continue;
+			}
+
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(jsonData);
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+				_obObjectEntryLocalService.addObjectEntry(
+					serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(), objectDefinition.getId(),
+					ObjectMapperUtil.readValue(
+						Serializable.class, jsonObject.toString()),
+					serviceContext);
 			}
 		}
 	}
@@ -1977,6 +2012,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final LayoutSetLocalService _layoutSetLocalService;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
+	private final ObjectEntryLocalService _obObjectEntryLocalService;
 	private final Portal _portal;
 	private final RemoteAppEntryLocalService _remoteAppEntryLocalService;
 	private final ResourcePermissionLocalService

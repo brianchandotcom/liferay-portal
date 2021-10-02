@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(service = ObjectActionExecutor.class)
+@Component(enabled = false, service = ObjectActionExecutor.class)
 public class AddObjectEntryObjectActionExecutorImpl
 	implements ObjectActionExecutor {
 

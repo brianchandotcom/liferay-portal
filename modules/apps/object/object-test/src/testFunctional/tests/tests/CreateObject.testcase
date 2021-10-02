@@ -400,7 +400,7 @@ definition {
 			fieldName = "customField",
 			fieldType = "String");
 
-		ObjectAdmin.viewFieldErrorMessage(message = "Label is null for locale English (United States)");
+		ObjectAdmin.assertLabelFieldRequired();
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Object Label field blank"
@@ -420,7 +420,7 @@ definition {
 
 		ObjectAdmin.saveCustomObject();
 
-		Alert.viewErrorMessage(errorMessage = "Label is null for locale English (United States)");
+		ObjectAdmin.assertObjectLabelFieldRequired();
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Object Name field blank"
@@ -435,7 +435,7 @@ definition {
 
 		ObjectAdmin.saveCustomObject();
 
-		ObjectAdmin.viewFieldErrorMessage(message = "Name is null");
+		ObjectAdmin.assertObjectNameFieldRequired();
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Type field blank"
@@ -458,7 +458,7 @@ definition {
 			fieldLabel = "Custom Field",
 			fieldType = "Choose an Option");
 
-		ObjectAdmin.viewFieldErrorMessage(message = "Invalid type null");
+		ObjectAdmin.assertTypeFieldRequired();
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with the first character of the Object Name in lower case"
@@ -1043,7 +1043,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel >> Users");
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Users");
 
 		CreateObject.saveObject();
 
@@ -1051,7 +1051,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
-		CreateObject.assertPanelCategoryKey(panelCategoryKey = "Control Panel >> Users");
+		CreateObject.assertPanelCategoryKey(panelCategoryKey = "Control Panel > Users");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object panel category key after it is published"
@@ -1070,7 +1070,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel >> Users");
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Users");
 
 		CreateObject.saveObject();
 
@@ -1078,7 +1078,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
-		CreateObject.assertPanelCategoryKey(panelCategoryKey = "Control Panel >> Users");
+		CreateObject.assertPanelCategoryKey(panelCategoryKey = "Control Panel > Users");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object plural label after it is published"

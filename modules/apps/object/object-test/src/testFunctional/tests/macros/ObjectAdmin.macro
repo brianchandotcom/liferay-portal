@@ -29,6 +29,22 @@ definition {
 			userPassword = "${userPassword}");
 	}
 
+	macro assertTypeFieldRequired {
+		AssertElementPresent(locator1 = "ObjectAdmin#TYPE_FIELD_REQUIRED");
+	}
+
+	macro assertLabelFieldRequired {
+		AssertElementPresent(locator1 = "ObjectAdmin#LABEL_FIELD_REQUIRED");
+	}
+
+	macro assertObjectLabelFieldRequired {
+		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LABEL_FIELD_REQUIRED");
+	}
+
+	macro assertObjectNameFieldRequired {
+		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_NAME_FIELD_REQUIRED");
+	}
+
 	macro addObjectFieldViaUI {
 		LexiconEntry.gotoAdd();
 

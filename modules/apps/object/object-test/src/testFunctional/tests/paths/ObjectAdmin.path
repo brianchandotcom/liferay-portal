@@ -112,7 +112,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_FIELDS_PICKLIST</td>
-		<td>//select[contains(@id,'objectFieldPicklist')]</td>
+		<td>//label[contains(text(),'Picklist')]/following-sibling::select</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -213,6 +213,26 @@
 	<tr>
 		<td>KEBAB_MENU_OPTION</td>
 		<td>//*[@class = 'dropdown-item' and contains(text(), '${key_kebabOption}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>TYPE_FIELD_REQUIRED</td>
+		<td>//select[@id='objectFieldType']/following-sibling::div//span[contains(text(),'Required')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>LABEL_FIELD_REQUIRED</td>
+		<td>//input[@id='objectFieldLabel']/following-sibling::div//span[contains(text(),'Required')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OBJECT_LABEL_FIELD_REQUIRED</td>
+		<td>//input[@id='objectDefinitionLabel']/following-sibling::div//span[contains(text(),'Required')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OBJECT_NAME_FIELD_REQUIRED</td>
+		<td>//input[@id='objectDefinitionName']/following-sibling::div//span[contains(text(),'Required')]</td>
 		<td></td>
 	</tr>
 </tbody>

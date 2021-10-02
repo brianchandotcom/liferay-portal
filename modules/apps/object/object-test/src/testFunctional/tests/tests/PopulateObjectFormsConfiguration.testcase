@@ -57,7 +57,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Custom Field");
 
-		PopulateObjectFormsConfiguration.viewRequiredFieldOptionDesabled();
+		PopulateObjectFormsConfiguration.viewRequiredFieldOptionDisabled();
 	}
 
 	@description = "LPS-133365 - Verify if it's not possible to map a Object field with a Form field of a different type"

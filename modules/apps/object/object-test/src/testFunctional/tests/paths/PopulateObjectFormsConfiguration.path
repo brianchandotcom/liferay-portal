@@ -126,7 +126,7 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>REQUIRED_FIELD_OPTION_DESABLED</td>
+		<td>REQUIRED_FIELD_OPTION_DISABLED</td>
 		<td>//label[@class = 'toggle-switch' and contains(text(),'Required Field')]//label[@class = 'toggle-switch simple-toggle-switch disabled']</td>
 		<td></td>
 	</tr>

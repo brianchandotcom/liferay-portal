@@ -67,10 +67,10 @@ definition {
 			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
 	}
 
-	macro viewRequiredFieldOptionDesabled {
+	macro viewRequiredFieldOptionDisabled {
 		Form.gotoBasicTab();
 
-		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#REQUIRED_FIELD_OPTION_DESABLED");
+		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#REQUIRED_FIELD_OPTION_DISABLED");
 	}
 
 	macro viewUnmappedFormField () {

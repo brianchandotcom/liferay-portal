@@ -108,7 +108,7 @@ public class AssetCategoryAdminPortletTest {
 
 		AssetCategory childAssetCategory1 =
 			_assetCategoryLocalService.addCategory(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				parentAssetCategory.getCategoryId(),
 				HashMapBuilder.put(
 					LocaleUtil.US, RandomTestUtil.randomString()
@@ -119,7 +119,7 @@ public class AssetCategoryAdminPortletTest {
 
 		AssetCategory childAssetCategory2 =
 			_assetCategoryLocalService.addCategory(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				parentAssetCategory.getCategoryId(),
 				HashMapBuilder.put(
 					LocaleUtil.US, RandomTestUtil.randomString()

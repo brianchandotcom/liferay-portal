@@ -112,7 +112,7 @@ public class AssetCategoryLocalServiceTest {
 				_assetVocabulary.getVocabularyId());
 
 		_assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			Collections.singletonMap(LocaleUtil.FRANCE, "Qualification"),
 			Collections.singletonMap(LocaleUtil.FRANCE, "La description"),
@@ -132,7 +132,7 @@ public class AssetCategoryLocalServiceTest {
 		).build();
 
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
 			HashMapBuilder.put(
 				LocaleUtil.FRANCE, "La description"

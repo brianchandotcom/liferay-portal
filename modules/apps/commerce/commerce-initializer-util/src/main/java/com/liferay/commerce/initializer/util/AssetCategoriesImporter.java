@@ -213,7 +213,8 @@ public class AssetCategoriesImporter {
 				LocaleUtil.getSiteDefault(), title);
 
 			assetCategory = _assetCategoryLocalService.addCategory(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				null, serviceContext.getUserId(),
+				serviceContext.getScopeGroupId(),
 				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
 				null, assetVocabularyId, new String[0], serviceContext);
 		}

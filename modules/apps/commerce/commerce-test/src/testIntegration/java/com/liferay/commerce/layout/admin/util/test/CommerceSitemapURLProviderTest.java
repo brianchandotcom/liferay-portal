@@ -170,7 +170,7 @@ public class CommerceSitemapURLProviderTest {
 				_group.getName(_themeDisplay.getLocale()), _serviceContext);
 
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			_serviceContext.getUserId(), assetVocabulary.getGroupId(),
+			null, _serviceContext.getUserId(), assetVocabulary.getGroupId(),
 			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap, null,
 			assetVocabulary.getVocabularyId(), new String[0], _serviceContext);
 

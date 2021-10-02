@@ -55,8 +55,9 @@ public class ERAssetCategoryLocalServiceImpl
 
 		if (assetCategory == null) {
 			assetCategory = _assetCategoryLocalService.addCategory(
-				userId, groupId, parentCategoryId, titleMap, descriptionMap,
-				vocabularyId, categoryProperties, serviceContext);
+				null, userId, groupId, parentCategoryId, titleMap,
+				descriptionMap, vocabularyId, categoryProperties,
+				serviceContext);
 
 			assetCategory.setExternalReferenceCode(externalReferenceCode);
 

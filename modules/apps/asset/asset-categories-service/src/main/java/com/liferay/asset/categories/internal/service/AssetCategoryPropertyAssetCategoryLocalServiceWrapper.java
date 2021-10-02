@@ -90,7 +90,7 @@ public class AssetCategoryPropertyAssetCategoryLocalServiceWrapper
 		}
 
 		AssetCategory assetCategory = super.addCategory(
-			userId, groupId, parentCategoryId, titleMap, descriptionMap,
+			null, userId, groupId, parentCategoryId, titleMap, descriptionMap,
 			vocabularyId, categoryProperties, serviceContext);
 
 		if (categoryProperties == null) {

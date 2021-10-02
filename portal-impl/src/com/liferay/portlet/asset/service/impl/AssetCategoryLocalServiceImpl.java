@@ -81,6 +81,11 @@ import java.util.Map;
 public class AssetCategoryLocalServiceImpl
 	extends AssetCategoryLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * #addCategory(String, long, long, long, Map, Map, long, String[], ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public AssetCategory addCategory(
 			long userId, long groupId, long parentCategoryId,
@@ -103,7 +108,8 @@ public class AssetCategoryLocalServiceImpl
 		Locale locale = PortalUtil.getSiteDefaultLocale(groupId);
 
 		return assetCategoryLocalService.addCategory(
-			userId, groupId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			null, userId, groupId,
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			HashMapBuilder.put(
 				locale, title
 			).build(),

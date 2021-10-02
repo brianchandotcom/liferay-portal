@@ -305,7 +305,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		throws Exception {
 
 		return _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			HashMapBuilder.put(
 				LocaleUtil.US, RandomTestUtil.randomString()

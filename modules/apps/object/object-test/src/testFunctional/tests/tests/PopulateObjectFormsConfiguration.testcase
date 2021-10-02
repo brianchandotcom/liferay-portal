@@ -395,15 +395,6 @@ definition {
 		PopulateObjectFormsConfiguration.viewDisplaySelectOption(label = "Custom Object");
 	}
 
-	@description = "LPS-136456 - Verify that a decimal number will use a comma instead of a dot when Portal language is set to pt_BR"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test DecimalNumberWillUseCommaForPortuguese {
-
-		// TODO LPS-139748 DecimalNumberWillUseCommaForPortuguese pending implementation
-
-	}
-
 	@description = "LPS-136456 - Verify that the Repeatable option is not available on a form when it is mapped to an object"
 	@priority = "4"
 	test RepeatableOptionNotAvailable {

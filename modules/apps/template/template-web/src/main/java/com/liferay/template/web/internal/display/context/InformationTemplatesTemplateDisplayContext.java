@@ -72,7 +72,8 @@ public class InformationTemplatesTemplateDisplayContext
 	public String getTemplateEntryEditURL(TemplateEntry templateEntry)
 		throws PortalException {
 
-		if (!TemplateEntryPermission.contains(
+		if (!isAddButtonEnabled() ||
+			!TemplateEntryPermission.contains(
 				themeDisplay.getPermissionChecker(), templateEntry,
 				ActionKeys.UPDATE)) {
 

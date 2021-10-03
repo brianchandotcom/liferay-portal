@@ -21,6 +21,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -54,13 +55,18 @@ public class DDMTemplateActionDropdownItemsProvider {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
+		Group scopeGroup = _themeDisplay.getScopeGroup();
+
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> DDMTemplatePermission.contains(
-							_themeDisplay.getPermissionChecker(), _ddmTemplate,
-							ActionKeys.UPDATE),
+						() ->
+							(!scopeGroup.hasLocalOrRemoteStagingGroup() ||
+							 scopeGroup.isStagingGroup()) &&
+							DDMTemplatePermission.contains(
+								_themeDisplay.getPermissionChecker(),
+								_ddmTemplate, ActionKeys.UPDATE),
 						_getEditDDMTemplateActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
@@ -84,9 +90,12 @@ public class DDMTemplateActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> DDMTemplatePermission.contains(
-							_themeDisplay.getPermissionChecker(), _ddmTemplate,
-							ActionKeys.PERMISSIONS),
+						() ->
+							(!scopeGroup.hasLocalOrRemoteStagingGroup() ||
+							 scopeGroup.isStagingGroup()) &&
+							DDMTemplatePermission.contains(
+								_themeDisplay.getPermissionChecker(),
+								_ddmTemplate, ActionKeys.PERMISSIONS),
 						_getPermissionsDDMTemplateActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);

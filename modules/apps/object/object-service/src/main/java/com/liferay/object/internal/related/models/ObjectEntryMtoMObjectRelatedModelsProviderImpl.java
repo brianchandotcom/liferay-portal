@@ -55,6 +55,12 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			_objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
 
+		if (objectRelationship.isReverse()) {
+			objectRelationship =
+				_objectRelationshipLocalService.fetchReverseObjectRelationship(
+					objectRelationship, false);
+		}
+
 		if (Objects.equals(
 				objectRelationship.getDeletionType(),
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE) ||
@@ -87,8 +93,21 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			int end)
 		throws PortalException {
 
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				objectRelationshipId);
+
+		boolean reverse = objectRelationship.isReverse();
+
+		if (objectRelationship.isReverse()) {
+			objectRelationship =
+				_objectRelationshipLocalService.fetchReverseObjectRelationship(
+					objectRelationship, false);
+		}
+
 		return _objectEntryLocalService.getManyToManyRelatedObjectEntries(
-			groupId, objectRelationshipId, primaryKey, start, end);
+			groupId, objectRelationship.getObjectRelationshipId(), primaryKey,
+			reverse, start, end);
 	}
 
 	@Override
@@ -96,8 +115,21 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			long groupId, long objectRelationshipId, long primaryKey)
 		throws PortalException {
 
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				objectRelationshipId);
+
+		boolean reverse = objectRelationship.isReverse();
+
+		if (objectRelationship.isReverse()) {
+			objectRelationship =
+				_objectRelationshipLocalService.fetchReverseObjectRelationship(
+					objectRelationship, false);
+		}
+
 		return _objectEntryLocalService.getManyToManyRelatedObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey);
+			groupId, objectRelationship.getObjectRelationshipId(), primaryKey,
+			reverse);
 	}
 
 	private final String _className;

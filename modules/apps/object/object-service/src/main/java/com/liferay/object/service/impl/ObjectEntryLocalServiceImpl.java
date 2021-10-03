@@ -315,12 +315,12 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public List<ObjectEntry> getManyToManyRelatedObjectEntries(
-			long groupId, long objectRelationshipId, long primaryKey, int start,
-			int end)
+			long groupId, long objectRelationshipId, long primaryKey,
+			boolean reverse, int start, int end)
 		throws PortalException {
 
 		DSLQuery dslQuery = _getManyToManyRelatedObjectEntriesGroupByStep(
-			groupId, objectRelationshipId, primaryKey,
+			groupId, objectRelationshipId, primaryKey, reverse,
 			DSLQueryFactoryUtil.selectDistinct(ObjectEntryTable.INSTANCE)
 		).limit(
 			start, end
@@ -335,11 +335,12 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public int getManyToManyRelatedObjectEntriesCount(
-			long groupId, long objectRelationshipId, long primaryKey)
+			long groupId, long objectRelationshipId, long primaryKey,
+			boolean reverse)
 		throws PortalException {
 
 		DSLQuery dslQuery = _getManyToManyRelatedObjectEntriesGroupByStep(
-			groupId, objectRelationshipId, primaryKey,
+			groupId, objectRelationshipId, primaryKey, reverse,
 			DSLQueryFactoryUtil.countDistinct(
 				ObjectEntryTable.INSTANCE.objectEntryId));
 
@@ -783,7 +784,7 @@ public class ObjectEntryLocalServiceImpl
 
 	private GroupByStep _getManyToManyRelatedObjectEntriesGroupByStep(
 			long groupId, long objectRelationshipId, long primaryKey,
-			FromStep fromStep)
+			boolean reverse, FromStep fromStep)
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =
@@ -842,7 +843,13 @@ public class ObjectEntryLocalServiceImpl
 				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
 					objectRelationship.getObjectDefinitionId2())
 			).and(
-				primaryKeyColumn1.eq(primaryKey)
+				() -> {
+					if (reverse) {
+						return primaryKeyColumn2.eq(primaryKey);
+					}
+
+					return primaryKeyColumn1.eq(primaryKey);
+				}
 			).and(
 				() -> {
 					if (PermissionThreadLocal.getPermissionChecker() == null) {

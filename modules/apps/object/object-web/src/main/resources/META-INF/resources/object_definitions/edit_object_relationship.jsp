@@ -32,9 +32,14 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 						<liferay-ui:message key="basic-info" />
 					</h2>
 
+					<clay:alert
+						displayType="warning"
+						message="it-is-not-possible-to-update-inherited-relationships"
+					/>
+
 					<aui:model-context bean="<%= objectRelationship %>" model="<%= ObjectRelationship.class %>" />
 
-					<aui:input name="label" required="<%= true %>" value="<%= objectRelationship.getLabel(themeDisplay.getLocale()) %>" />
+					<aui:input disabled="<%= objectRelationship.isReverse() %>" name="label" required="<%= true %>" value="<%= objectRelationship.getLabel(themeDisplay.getLocale()) %>" />
 
 					<aui:input disabled="<%= true %>" name="name" required="<%= true %>" value="<%= objectRelationship.getName() %>" />
 
@@ -48,7 +53,7 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 						<aui:option label="<%= objectDefinition.getShortName() %>" selected="<%= true %>" value="<%= objectDefinition.getObjectDefinitionId() %>" />
 					</aui:select>
 
-					<aui:select name="deleteType" required="<%= true %>">
+					<aui:select disabled="<%= objectRelationship.isReverse() %>" name="deleteType" required="<%= true %>">
 						<aui:option label="cascade" selected="<%= Objects.equals(objectRelationship.getDeletionType(), ObjectRelationshipConstants.DELETION_TYPE_CASCADE) %>" value="<%= ObjectRelationshipConstants.DELETION_TYPE_CASCADE %>" />
 						<aui:option label="disassociate" selected="<%= Objects.equals(objectRelationship.getDeletionType(), ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE) %>" value="<%= ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE %>" />
 						<aui:option label="prevent" selected="<%= Objects.equals(objectRelationship.getDeletionType(), ObjectRelationshipConstants.DELETION_TYPE_PREVENT) %>" value="<%= ObjectRelationshipConstants.DELETION_TYPE_PREVENT %>" />
@@ -59,7 +64,7 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 			<div class="side-panel-content__footer">
 				<aui:button cssClass="btn-cancel mr-1" name="cancel" value='<%= LanguageUtil.get(request, "cancel") %>' />
 
-				<aui:button name="save" type="submit" value='<%= LanguageUtil.get(request, "save") %>' />
+				<aui:button disabled="<%= objectRelationship.isReverse() %>" name="save" type="submit" value='<%= LanguageUtil.get(request, "save") %>' />
 			</div>
 		</div>
 	</form>

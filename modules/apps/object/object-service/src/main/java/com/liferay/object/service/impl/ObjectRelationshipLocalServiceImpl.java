@@ -197,6 +197,11 @@ public class ObjectRelationshipLocalServiceImpl
 
 		// TODO When should we allow an object relationship to be deleted?
 
+		if (objectRelationship.isReverse()) {
+			throw new ObjectRelationshipReverseException(
+				"Is not possible to delete an inherited relationship");
+		}
+
 		objectRelationship = objectRelationshipPersistence.remove(
 			objectRelationship);
 
@@ -274,6 +279,11 @@ public class ObjectRelationshipLocalServiceImpl
 		ObjectRelationship objectRelationship =
 			objectRelationshipPersistence.findByPrimaryKey(
 				objectRelationshipId);
+
+		if (objectRelationship.isReverse()) {
+			throw new ObjectRelationshipReverseException(
+				"Is not possible to update an inherited relationship");
+		}
 
 		objectRelationship.setDeletionType(deletionType);
 		objectRelationship.setLabelMap(labelMap);

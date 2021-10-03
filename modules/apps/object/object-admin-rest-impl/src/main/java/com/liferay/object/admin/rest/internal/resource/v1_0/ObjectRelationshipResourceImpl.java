@@ -118,7 +118,9 @@ public class ObjectRelationshipResourceImpl
 				actions = HashMapBuilder.put(
 					"delete",
 					() -> {
-						if (objectDefinition1.isApproved()) {
+						if (objectDefinition1.isApproved() ||
+							objectRelationship.isReverse()) {
+
 							return null;
 						}
 

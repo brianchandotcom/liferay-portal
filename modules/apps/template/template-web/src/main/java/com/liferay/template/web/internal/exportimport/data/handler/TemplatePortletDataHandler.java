@@ -281,8 +281,6 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 			new ArrayList<>();
 
 		portletDataHandlerControls.add(
-			new PortletDataHandlerBoolean(NAMESPACE, "template", true, true));
-		portletDataHandlerControls.add(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "information-templates", true, false, null,
 				TemplateEntry.class.getName()));

@@ -77,10 +77,12 @@ public class TemplateEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", templateEntryId=");
@@ -103,6 +105,8 @@ public class TemplateEntryCacheModel
 		sb.append(infoItemClassName);
 		sb.append(", infoItemFormVariationKey=");
 		sb.append(infoItemFormVariationKey);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -113,6 +117,7 @@ public class TemplateEntryCacheModel
 		TemplateEntryImpl templateEntryImpl = new TemplateEntryImpl();
 
 		templateEntryImpl.setMvccVersion(mvccVersion);
+		templateEntryImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			templateEntryImpl.setUuid("");
@@ -164,6 +169,13 @@ public class TemplateEntryCacheModel
 				infoItemFormVariationKey);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			templateEntryImpl.setLastPublishDate(null);
+		}
+		else {
+			templateEntryImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		templateEntryImpl.resetOriginalValues();
 
 		return templateEntryImpl;
@@ -172,6 +184,8 @@ public class TemplateEntryCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		templateEntryId = objectInput.readLong();
@@ -188,11 +202,14 @@ public class TemplateEntryCacheModel
 		ddmTemplateId = objectInput.readLong();
 		infoItemClassName = objectInput.readUTF();
 		infoItemFormVariationKey = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -234,9 +251,12 @@ public class TemplateEntryCacheModel
 		else {
 			objectOutput.writeUTF(infoItemFormVariationKey);
 		}
+
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long templateEntryId;
 	public long groupId;
@@ -248,5 +268,6 @@ public class TemplateEntryCacheModel
 	public long ddmTemplateId;
 	public String infoItemClassName;
 	public String infoItemFormVariationKey;
+	public long lastPublishDate;
 
 }

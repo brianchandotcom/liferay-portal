@@ -14,7 +14,10 @@
 
 package com.liferay.template.service;
 
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+import com.liferay.template.model.TemplateEntry;
 
 /**
  * Provides a wrapper for {@link TemplateEntryLocalService}.
@@ -34,14 +37,15 @@ public class TemplateEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.template.model.TemplateEntry addTemplateEntry(
+	public TemplateEntry addTemplateEntry(
 			long userId, long groupId, long ddmTemplateId,
-			String infoItemClassName, String infoItemFormVariationKey)
+			String infoItemClassName, String infoItemFormVariationKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _templateEntryLocalService.addTemplateEntry(
 			userId, groupId, ddmTemplateId, infoItemClassName,
-			infoItemFormVariationKey);
+			infoItemFormVariationKey, serviceContext);
 	}
 
 	/**
@@ -55,9 +59,7 @@ public class TemplateEntryLocalServiceWrapper
 	 * @return the template entry that was added
 	 */
 	@Override
-	public com.liferay.template.model.TemplateEntry addTemplateEntry(
-		com.liferay.template.model.TemplateEntry templateEntry) {
-
+	public TemplateEntry addTemplateEntry(TemplateEntry templateEntry) {
 		return _templateEntryLocalService.addTemplateEntry(templateEntry);
 	}
 
@@ -79,9 +81,7 @@ public class TemplateEntryLocalServiceWrapper
 	 * @return the new template entry
 	 */
 	@Override
-	public com.liferay.template.model.TemplateEntry createTemplateEntry(
-		long templateEntryId) {
-
+	public TemplateEntry createTemplateEntry(long templateEntryId) {
 		return _templateEntryLocalService.createTemplateEntry(templateEntryId);
 	}
 
@@ -108,8 +108,7 @@ public class TemplateEntryLocalServiceWrapper
 	 * @throws PortalException if a template entry with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.template.model.TemplateEntry deleteTemplateEntry(
-			long templateEntryId)
+	public TemplateEntry deleteTemplateEntry(long templateEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _templateEntryLocalService.deleteTemplateEntry(templateEntryId);
@@ -126,9 +125,7 @@ public class TemplateEntryLocalServiceWrapper
 	 * @return the template entry that was removed
 	 */
 	@Override
-	public com.liferay.template.model.TemplateEntry deleteTemplateEntry(
-		com.liferay.template.model.TemplateEntry templateEntry) {
-
+	public TemplateEntry deleteTemplateEntry(TemplateEntry templateEntry) {
 		return _templateEntryLocalService.deleteTemplateEntry(templateEntry);
 	}
 
@@ -236,16 +233,12 @@ public class TemplateEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.template.model.TemplateEntry fetchTemplateEntry(
-		long templateEntryId) {
-
+	public TemplateEntry fetchTemplateEntry(long templateEntryId) {
 		return _templateEntryLocalService.fetchTemplateEntry(templateEntryId);
 	}
 
 	@Override
-	public com.liferay.template.model.TemplateEntry
-		fetchTemplateEntryByDDMTemplateId(long ddmTemplateId) {
-
+	public TemplateEntry fetchTemplateEntryByDDMTemplateId(long ddmTemplateId) {
 		return _templateEntryLocalService.fetchTemplateEntryByDDMTemplateId(
 			ddmTemplateId);
 	}
@@ -258,8 +251,8 @@ public class TemplateEntryLocalServiceWrapper
 	 * @return the matching template entry, or <code>null</code> if a matching template entry could not be found
 	 */
 	@Override
-	public com.liferay.template.model.TemplateEntry
-		fetchTemplateEntryByUuidAndGroupId(String uuid, long groupId) {
+	public TemplateEntry fetchTemplateEntryByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return _templateEntryLocalService.fetchTemplateEntryByUuidAndGroupId(
 			uuid, groupId);
@@ -322,30 +315,28 @@ public class TemplateEntryLocalServiceWrapper
 	 * @return the range of template entries
 	 */
 	@Override
-	public java.util.List<com.liferay.template.model.TemplateEntry>
-		getTemplateEntries(int start, int end) {
+	public java.util.List<TemplateEntry> getTemplateEntries(
+		int start, int end) {
 
 		return _templateEntryLocalService.getTemplateEntries(start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.template.model.TemplateEntry>
-		getTemplateEntries(
-			long groupId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.template.model.TemplateEntry> orderByComparator) {
+	public java.util.List<TemplateEntry> getTemplateEntries(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TemplateEntry>
+			orderByComparator) {
 
 		return _templateEntryLocalService.getTemplateEntries(
 			groupId, start, end, orderByComparator);
 	}
 
 	@Override
-	public java.util.List<com.liferay.template.model.TemplateEntry>
-		getTemplateEntries(
-			long groupId, String infoItemClassName,
-			String infoItemFormVariationKey, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.template.model.TemplateEntry> orderByComparator) {
+	public java.util.List<TemplateEntry> getTemplateEntries(
+		long groupId, String infoItemClassName, String infoItemFormVariationKey,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TemplateEntry>
+			orderByComparator) {
 
 		return _templateEntryLocalService.getTemplateEntries(
 			groupId, infoItemClassName, infoItemFormVariationKey, start, end,
@@ -353,9 +344,7 @@ public class TemplateEntryLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.template.model.TemplateEntry>
-		getTemplateEntries(long[] groupIds) {
-
+	public java.util.List<TemplateEntry> getTemplateEntries(long[] groupIds) {
 		return _templateEntryLocalService.getTemplateEntries(groupIds);
 	}
 
@@ -367,8 +356,8 @@ public class TemplateEntryLocalServiceWrapper
 	 * @return the matching template entries, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.template.model.TemplateEntry>
-		getTemplateEntriesByUuidAndCompanyId(String uuid, long companyId) {
+	public java.util.List<TemplateEntry> getTemplateEntriesByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return _templateEntryLocalService.getTemplateEntriesByUuidAndCompanyId(
 			uuid, companyId);
@@ -385,11 +374,10 @@ public class TemplateEntryLocalServiceWrapper
 	 * @return the range of matching template entries, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.template.model.TemplateEntry>
-		getTemplateEntriesByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.template.model.TemplateEntry> orderByComparator) {
+	public java.util.List<TemplateEntry> getTemplateEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TemplateEntry>
+			orderByComparator) {
 
 		return _templateEntryLocalService.getTemplateEntriesByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -418,8 +406,7 @@ public class TemplateEntryLocalServiceWrapper
 	 * @throws PortalException if a template entry with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.template.model.TemplateEntry getTemplateEntry(
-			long templateEntryId)
+	public TemplateEntry getTemplateEntry(long templateEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _templateEntryLocalService.getTemplateEntry(templateEntryId);
@@ -434,8 +421,8 @@ public class TemplateEntryLocalServiceWrapper
 	 * @throws PortalException if a matching template entry could not be found
 	 */
 	@Override
-	public com.liferay.template.model.TemplateEntry
-			getTemplateEntryByUuidAndGroupId(String uuid, long groupId)
+	public TemplateEntry getTemplateEntryByUuidAndGroupId(
+			String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _templateEntryLocalService.getTemplateEntryByUuidAndGroupId(
@@ -443,8 +430,7 @@ public class TemplateEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.template.model.TemplateEntry updateTemplateEntry(
-			long templateEntryId)
+	public TemplateEntry updateTemplateEntry(long templateEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _templateEntryLocalService.updateTemplateEntry(templateEntryId);
@@ -461,10 +447,28 @@ public class TemplateEntryLocalServiceWrapper
 	 * @return the template entry that was updated
 	 */
 	@Override
-	public com.liferay.template.model.TemplateEntry updateTemplateEntry(
-		com.liferay.template.model.TemplateEntry templateEntry) {
-
+	public TemplateEntry updateTemplateEntry(TemplateEntry templateEntry) {
 		return _templateEntryLocalService.updateTemplateEntry(templateEntry);
+	}
+
+	@Override
+	public CTPersistence<TemplateEntry> getCTPersistence() {
+		return _templateEntryLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<TemplateEntry> getModelClass() {
+		return _templateEntryLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<TemplateEntry>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _templateEntryLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

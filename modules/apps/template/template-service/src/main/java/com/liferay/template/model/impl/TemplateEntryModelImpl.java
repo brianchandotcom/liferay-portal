@@ -72,13 +72,14 @@ public class TemplateEntryModelImpl
 	public static final String TABLE_NAME = "TemplateEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"templateEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"ddmTemplateId", Types.BIGINT},
-		{"infoItemClassName", Types.VARCHAR},
-		{"infoItemFormVariationKey", Types.VARCHAR}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"templateEntryId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"ddmTemplateId", Types.BIGINT}, {"infoItemClassName", Types.VARCHAR},
+		{"infoItemFormVariationKey", Types.VARCHAR},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -86,6 +87,7 @@ public class TemplateEntryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("templateEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -97,10 +99,11 @@ public class TemplateEntryModelImpl
 		TABLE_COLUMNS_MAP.put("ddmTemplateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("infoItemClassName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("infoItemFormVariationKey", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table TemplateEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,templateEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ddmTemplateId LONG,infoItemClassName VARCHAR(75) null,infoItemFormVariationKey VARCHAR(75) null)";
+		"create table TemplateEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,templateEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ddmTemplateId LONG,infoItemClassName VARCHAR(75) null,infoItemFormVariationKey VARCHAR(75) null,lastPublishDate DATE null,primary key (templateEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table TemplateEntry";
 
@@ -302,6 +305,11 @@ public class TemplateEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<TemplateEntry, Long>)TemplateEntry::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", TemplateEntry::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<TemplateEntry, Long>)TemplateEntry::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", TemplateEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<TemplateEntry, String>)TemplateEntry::setUuid);
@@ -354,6 +362,11 @@ public class TemplateEntryModelImpl
 			"infoItemFormVariationKey",
 			(BiConsumer<TemplateEntry, String>)
 				TemplateEntry::setInfoItemFormVariationKey);
+		attributeGetterFunctions.put(
+			"lastPublishDate", TemplateEntry::getLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"lastPublishDate",
+			(BiConsumer<TemplateEntry, Date>)TemplateEntry::setLastPublishDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -373,6 +386,20 @@ public class TemplateEntryModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -628,6 +655,20 @@ public class TemplateEntryModelImpl
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_lastPublishDate = lastPublishDate;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(TemplateEntry.class.getName()));
@@ -690,6 +731,7 @@ public class TemplateEntryModelImpl
 		TemplateEntryImpl templateEntryImpl = new TemplateEntryImpl();
 
 		templateEntryImpl.setMvccVersion(getMvccVersion());
+		templateEntryImpl.setCtCollectionId(getCtCollectionId());
 		templateEntryImpl.setUuid(getUuid());
 		templateEntryImpl.setTemplateEntryId(getTemplateEntryId());
 		templateEntryImpl.setGroupId(getGroupId());
@@ -702,6 +744,7 @@ public class TemplateEntryModelImpl
 		templateEntryImpl.setInfoItemClassName(getInfoItemClassName());
 		templateEntryImpl.setInfoItemFormVariationKey(
 			getInfoItemFormVariationKey());
+		templateEntryImpl.setLastPublishDate(getLastPublishDate());
 
 		templateEntryImpl.resetOriginalValues();
 
@@ -714,6 +757,8 @@ public class TemplateEntryModelImpl
 
 		templateEntryImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		templateEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		templateEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		templateEntryImpl.setTemplateEntryId(
 			this.<Long>getColumnOriginalValue("templateEntryId"));
@@ -735,6 +780,8 @@ public class TemplateEntryModelImpl
 			this.<String>getColumnOriginalValue("infoItemClassName"));
 		templateEntryImpl.setInfoItemFormVariationKey(
 			this.<String>getColumnOriginalValue("infoItemFormVariationKey"));
+		templateEntryImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
 
 		return templateEntryImpl;
 	}
@@ -815,6 +862,8 @@ public class TemplateEntryModelImpl
 
 		templateEntryCacheModel.mvccVersion = getMvccVersion();
 
+		templateEntryCacheModel.ctCollectionId = getCtCollectionId();
+
 		templateEntryCacheModel.uuid = getUuid();
 
 		String uuid = templateEntryCacheModel.uuid;
@@ -877,6 +926,15 @@ public class TemplateEntryModelImpl
 			(infoItemFormVariationKey.length() == 0)) {
 
 			templateEntryCacheModel.infoItemFormVariationKey = null;
+		}
+
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			templateEntryCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			templateEntryCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
 		return templateEntryCacheModel;
@@ -970,6 +1028,7 @@ public class TemplateEntryModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private long _templateEntryId;
 	private long _groupId;
@@ -982,6 +1041,7 @@ public class TemplateEntryModelImpl
 	private long _ddmTemplateId;
 	private String _infoItemClassName;
 	private String _infoItemFormVariationKey;
+	private Date _lastPublishDate;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1013,6 +1073,7 @@ public class TemplateEntryModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("templateEntryId", _templateEntryId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -1025,6 +1086,7 @@ public class TemplateEntryModelImpl
 		_columnOriginalValues.put("infoItemClassName", _infoItemClassName);
 		_columnOriginalValues.put(
 			"infoItemFormVariationKey", _infoItemFormVariationKey);
+		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1050,27 +1112,31 @@ public class TemplateEntryModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("uuid_", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("templateEntryId", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("templateEntryId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("ddmTemplateId", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("infoItemClassName", 1024L);
+		columnBitmasks.put("ddmTemplateId", 1024L);
 
-		columnBitmasks.put("infoItemFormVariationKey", 2048L);
+		columnBitmasks.put("infoItemClassName", 2048L);
+
+		columnBitmasks.put("infoItemFormVariationKey", 4096L);
+
+		columnBitmasks.put("lastPublishDate", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

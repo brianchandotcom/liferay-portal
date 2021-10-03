@@ -46,12 +46,13 @@ public class TemplateEntryLocalServiceUtil {
 	 */
 	public static TemplateEntry addTemplateEntry(
 			long userId, long groupId, long ddmTemplateId,
-			String infoItemClassName, String infoItemFormVariationKey)
+			String infoItemClassName, String infoItemFormVariationKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addTemplateEntry(
 			userId, groupId, ddmTemplateId, infoItemClassName,
-			infoItemFormVariationKey);
+			infoItemFormVariationKey, serviceContext);
 	}
 
 	/**

@@ -15,6 +15,7 @@
 package com.liferay.template.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.template.exception.NoSuchTemplateEntryException;
 import com.liferay.template.model.TemplateEntry;
 
@@ -33,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface TemplateEntryPersistence
-	extends BasePersistence<TemplateEntry> {
+	extends BasePersistence<TemplateEntry>, CTPersistence<TemplateEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.template.model.TemplateEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="templateEntryId" type="long" />
 		<field name="groupId" type="long" />
@@ -14,5 +15,6 @@
 		<field name="DDMTemplateId" type="long" />
 		<field name="infoItemClassName" type="String" />
 		<field name="infoItemFormVariationKey" type="String" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

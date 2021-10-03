@@ -34,6 +34,8 @@ public class TemplateEntryTable extends BaseTable<TemplateEntryTable> {
 
 	public final Column<TemplateEntryTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<TemplateEntryTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<TemplateEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<TemplateEntryTable, Long> templateEntryId =
@@ -60,6 +62,10 @@ public class TemplateEntryTable extends BaseTable<TemplateEntryTable> {
 	public final Column<TemplateEntryTable, String> infoItemFormVariationKey =
 		createColumn(
 			"infoItemFormVariationKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<TemplateEntryTable, Date> lastPublishDate =
+		createColumn(
+			"lastPublishDate", Date.class, Types.TIMESTAMP,
 			Column.FLAG_DEFAULT);
 
 	private TemplateEntryTable() {

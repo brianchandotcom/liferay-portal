@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -44,6 +46,7 @@ public class TemplateEntryWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
 		attributes.put("templateEntryId", getTemplateEntryId());
 		attributes.put("groupId", getGroupId());
@@ -56,6 +59,7 @@ public class TemplateEntryWrapper
 		attributes.put("infoItemClassName", getInfoItemClassName());
 		attributes.put(
 			"infoItemFormVariationKey", getInfoItemFormVariationKey());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -66,6 +70,12 @@ public class TemplateEntryWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		String uuid = (String)attributes.get("uuid");
@@ -134,6 +144,12 @@ public class TemplateEntryWrapper
 		if (infoItemFormVariationKey != null) {
 			setInfoItemFormVariationKey(infoItemFormVariationKey);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
 	}
 
 	@Override
@@ -159,6 +175,16 @@ public class TemplateEntryWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this template entry.
+	 *
+	 * @return the ct collection ID of this template entry
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -199,6 +225,16 @@ public class TemplateEntryWrapper
 	@Override
 	public String getInfoItemFormVariationKey() {
 		return model.getInfoItemFormVariationKey();
+	}
+
+	/**
+	 * Returns the last publish date of this template entry.
+	 *
+	 * @return the last publish date of this template entry
+	 */
+	@Override
+	public Date getLastPublishDate() {
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -307,6 +343,16 @@ public class TemplateEntryWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this template entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this template entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the ddm template ID of this template entry.
 	 *
 	 * @param ddmTemplateId the ddm template ID of this template entry
@@ -344,6 +390,16 @@ public class TemplateEntryWrapper
 	@Override
 	public void setInfoItemFormVariationKey(String infoItemFormVariationKey) {
 		model.setInfoItemFormVariationKey(infoItemFormVariationKey);
+	}
+
+	/**
+	 * Sets the last publish date of this template entry.
+	 *
+	 * @param lastPublishDate the last publish date of this template entry
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -424,6 +480,20 @@ public class TemplateEntryWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	@Override
+	public Map<String, Function<TemplateEntry, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<TemplateEntry, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

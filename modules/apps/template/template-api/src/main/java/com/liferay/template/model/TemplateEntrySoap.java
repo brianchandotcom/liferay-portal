@@ -34,6 +34,7 @@ public class TemplateEntrySoap implements Serializable {
 		TemplateEntrySoap soapModel = new TemplateEntrySoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setTemplateEntryId(model.getTemplateEntryId());
 		soapModel.setGroupId(model.getGroupId());
@@ -46,6 +47,7 @@ public class TemplateEntrySoap implements Serializable {
 		soapModel.setInfoItemClassName(model.getInfoItemClassName());
 		soapModel.setInfoItemFormVariationKey(
 			model.getInfoItemFormVariationKey());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -105,6 +107,14 @@ public class TemplateEntrySoap implements Serializable {
 
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	public String getUuid() {
@@ -195,7 +205,16 @@ public class TemplateEntrySoap implements Serializable {
 		_infoItemFormVariationKey = infoItemFormVariationKey;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private long _templateEntryId;
 	private long _groupId;
@@ -207,5 +226,6 @@ public class TemplateEntrySoap implements Serializable {
 	private long _ddmTemplateId;
 	private String _infoItemClassName;
 	private String _infoItemFormVariationKey;
+	private Date _lastPublishDate;
 
 }

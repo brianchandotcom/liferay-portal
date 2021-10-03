@@ -126,6 +126,8 @@ public class TemplateEntryPersistenceTest {
 
 		newTemplateEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newTemplateEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newTemplateEntry.setUuid(RandomTestUtil.randomString());
 
 		newTemplateEntry.setGroupId(RandomTestUtil.nextLong());
@@ -147,6 +149,8 @@ public class TemplateEntryPersistenceTest {
 		newTemplateEntry.setInfoItemFormVariationKey(
 			RandomTestUtil.randomString());
 
+		newTemplateEntry.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_templateEntries.add(_persistence.update(newTemplateEntry));
 
 		TemplateEntry existingTemplateEntry = _persistence.findByPrimaryKey(
@@ -155,6 +159,9 @@ public class TemplateEntryPersistenceTest {
 		Assert.assertEquals(
 			existingTemplateEntry.getMvccVersion(),
 			newTemplateEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingTemplateEntry.getCtCollectionId(),
+			newTemplateEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingTemplateEntry.getUuid(), newTemplateEntry.getUuid());
 		Assert.assertEquals(
@@ -185,6 +192,9 @@ public class TemplateEntryPersistenceTest {
 		Assert.assertEquals(
 			existingTemplateEntry.getInfoItemFormVariationKey(),
 			newTemplateEntry.getInfoItemFormVariationKey());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingTemplateEntry.getLastPublishDate()),
+			Time.getShortTimestamp(newTemplateEntry.getLastPublishDate()));
 	}
 
 	@Test
@@ -276,11 +286,11 @@ public class TemplateEntryPersistenceTest {
 
 	protected OrderByComparator<TemplateEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"TemplateEntry", "mvccVersion", true, "uuid", true,
-			"templateEntryId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
+			"TemplateEntry", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "templateEntryId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "ddmTemplateId", true, "infoItemClassName",
-			true, "infoItemFormVariationKey", true);
+			true, "infoItemFormVariationKey", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -572,6 +582,8 @@ public class TemplateEntryPersistenceTest {
 
 		templateEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		templateEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		templateEntry.setUuid(RandomTestUtil.randomString());
 
 		templateEntry.setGroupId(RandomTestUtil.nextLong());
@@ -592,6 +604,8 @@ public class TemplateEntryPersistenceTest {
 
 		templateEntry.setInfoItemFormVariationKey(
 			RandomTestUtil.randomString());
+
+		templateEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_templateEntries.add(_persistence.update(templateEntry));
 

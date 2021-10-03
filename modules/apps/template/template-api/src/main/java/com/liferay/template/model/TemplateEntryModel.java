@@ -16,10 +16,10 @@ package com.liferay.template.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -38,8 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface TemplateEntryModel
-	extends BaseModel<TemplateEntry>, GroupedModel, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends BaseModel<TemplateEntry>, CTModel<TemplateEntry>, MVCCModel,
+			ShardedModel, StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -52,6 +52,7 @@ public interface TemplateEntryModel
 	 *
 	 * @return the primary key of this template entry
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -59,6 +60,7 @@ public interface TemplateEntryModel
 	 *
 	 * @param primaryKey the primary key of this template entry
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -76,6 +78,22 @@ public interface TemplateEntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this template entry.
+	 *
+	 * @return the ct collection ID of this template entry
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this template entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this template entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this template entry.
@@ -264,6 +282,22 @@ public interface TemplateEntryModel
 	 * @param infoItemFormVariationKey the info item form variation key of this template entry
 	 */
 	public void setInfoItemFormVariationKey(String infoItemFormVariationKey);
+
+	/**
+	 * Returns the last publish date of this template entry.
+	 *
+	 * @return the last publish date of this template entry
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this template entry.
+	 *
+	 * @param lastPublishDate the last publish date of this template entry
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override
 	public TemplateEntry cloneWithOriginalValues();

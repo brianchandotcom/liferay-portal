@@ -4,6 +4,6 @@
 	}
 
 	&:not(:disabled):hover ~ .custom-control-label::before {
-		box-shadow: $custom-control-indicator-focus-box-shadow;
+		box-shadow: $custom-control-indicator-hover-box-shadow;
 	}
 }

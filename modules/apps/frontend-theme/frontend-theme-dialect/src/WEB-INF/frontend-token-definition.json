@@ -1225,6 +1225,25 @@
 					],
 					"label": "charts",
 					"name": "charts"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "var(--color-brand-primary-lighten-3)",
+							"editorType": "ColorPicker",
+							"label": "color-focus",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "color-focus"
+								}
+							],
+							"name": "colorFocus",
+							"type": "String"
+						}
+					],
+					"label": "global",
+					"name": "global"
 				}
 			],
 			"label": "dialect-colors",
@@ -2475,14 +2494,14 @@
 						{
 							"defaultValue": "var(--color-action-primary-active-lighten)",
 							"editorType": "ColorPicker",
-							"label": "custom-control-focus-color",
+							"label": "custom-control-hover-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "custom-control-focus-color"
+									"value": "custom-control-hover-color"
 								}
 							],
-							"name": "customControlFocusColor",
+							"name": "customControlHoverColor",
 							"type": "String"
 						}
 					],

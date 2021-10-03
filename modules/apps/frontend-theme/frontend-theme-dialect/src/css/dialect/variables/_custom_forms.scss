@@ -4,11 +4,11 @@ $custom-control-indicator-border-width: 0.0625rem !default; // 1px
 
 $custom-control-indicator-active-bg: var(--color-action-primary-inverted);
 $custom-control-indicator-active-border-color: $custom-control-indicator-border-color !default;
-$custom-control-indicator-active-box-shadow: 0 0 0 1rem
-	var(--custom-control-focus-color);
 
-$custom-control-indicator-focus-box-shadow: 0 0 0 1rem
-	var(--custom-control-focus-color);
+$custom-control-indicator-hover-box-shadow: 0 0 0 1rem
+	var(--custom-control-hover-color);
+
+$custom-control-indicator-focus-border-color: $form-input-focus-color;
 
 $custom-control-indicator-disabled-bg: var(--color-action-primary-inverted);
 $custom-control-indicator-disabled-border-color: var(

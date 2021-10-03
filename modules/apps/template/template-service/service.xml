@@ -26,6 +26,7 @@
 		<column method-name="DDMTemplateId" name="ddmTemplateId" type="long" />
 		<column name="infoItemClassName" type="String" />
 		<column name="infoItemFormVariationKey" type="String" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 

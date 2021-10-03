@@ -27,6 +27,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistry;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
@@ -66,14 +68,18 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	public StagedModelType[] getDeletionSystemEventStagedModelTypes() {
-		return _getStagedModelTypes();
+		return ArrayUtil.append(
+			_getStagedModelTypes(), new StagedModelType(TemplateEntry.class));
 	}
 
 	@Override
 	public long getExportModelCount(ManifestSummary manifestSummary) {
 		long totalModelCount = -1;
 
-		for (StagedModelType stagedModelType : _getStagedModelTypes()) {
+		StagedModelType[] stagedModelTypes = ArrayUtil.append(
+			_getStagedModelTypes(), new StagedModelType(TemplateEntry.class));
+
+		for (StagedModelType stagedModelType : stagedModelTypes) {
 			long modelCount = manifestSummary.getModelAdditionCount(
 				stagedModelType);
 
@@ -176,8 +182,12 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 		if (ExportImportDateUtil.isRangeFromLastPublishDate(
 				portletDataContext)) {
 
+			StagedModelType[] stagedModelTypes = ArrayUtil.append(
+				_getStagedModelTypes(),
+				new StagedModelType(TemplateEntry.class));
+
 			_staging.populateLastPublishDateCounts(
-				portletDataContext, _getStagedModelTypes());
+				portletDataContext, stagedModelTypes);
 
 			return;
 		}
@@ -191,6 +201,12 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 
 			actionableDynamicQuery.performCount();
 		}
+
+		ActionableDynamicQuery templateEntryExportActionableDynamicQuery =
+			_templateEntryStagedModelRepository.getExportActionableDynamicQuery(
+				portletDataContext);
+
+		templateEntryExportActionableDynamicQuery.performCount();
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -325,6 +341,12 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 
 	@Reference
 	private Staging _staging;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.template.model.TemplateEntry)"
+	)
+	private StagedModelRepository<TemplateEntry>
+		_templateEntryStagedModelRepository;
 
 	@Reference
 	private TemplateHandlerRegistry _templateHandlerRegistry;

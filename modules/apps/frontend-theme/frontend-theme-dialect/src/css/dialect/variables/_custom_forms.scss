@@ -1,9 +1,9 @@
 $custom-control-indicator-bg: var(--color-action-primary-inverted);
 $custom-control-indicator-border-color: var(--custom-control-border-color);
-$custom-control-indicator-border-width: 0.0625rem !default; // 1px
+$custom-control-indicator-border-width: 0.0625rem; // 1px
 
 $custom-control-indicator-active-bg: var(--color-action-primary-inverted);
-$custom-control-indicator-active-border-color: $custom-control-indicator-border-color !default;
+$custom-control-indicator-active-border-color: $custom-control-indicator-border-color;
 
 $custom-control-indicator-hover-box-shadow: 0 0 0 1rem
 	var(--custom-control-hover-color);

@@ -301,7 +301,9 @@ const APIGUI = () => {
 						tryItOutEnabled={true}
 						url={
 							endpoint ||
-							endpoints.find((url) => url.includes('delivery'))
+							endpoints.find((url) =>
+								url.includes('headless-delivery')
+							)
 						}
 					/>
 				)}

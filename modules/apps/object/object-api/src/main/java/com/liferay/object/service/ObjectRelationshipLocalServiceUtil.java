@@ -270,6 +270,13 @@ public class ObjectRelationshipLocalServiceUtil {
 			uuid, companyId);
 	}
 
+	public static ObjectRelationship fetchReverseObjectRelationship(
+		ObjectRelationship objectRelationship, boolean reverse) {
+
+		return getService().fetchReverseObjectRelationship(
+			objectRelationship, reverse);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

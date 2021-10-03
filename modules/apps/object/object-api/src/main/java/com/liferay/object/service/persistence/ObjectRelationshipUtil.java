@@ -1191,6 +1191,101 @@ public class ObjectRelationshipUtil {
 	}
 
 	/**
+	 * Returns the object relationship where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63; and reverse = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param name the name
+	 * @param type the type
+	 * @param reverse the reverse
+	 * @return the matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship findByODI1_ODI2_N_T_R(
+			long objectDefinitionId1, long objectDefinitionId2, String name,
+			String type, boolean reverse)
+		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
+
+		return getPersistence().findByODI1_ODI2_N_T_R(
+			objectDefinitionId1, objectDefinitionId2, name, type, reverse);
+	}
+
+	/**
+	 * Returns the object relationship where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63; and reverse = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param name the name
+	 * @param type the type
+	 * @param reverse the reverse
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship fetchByODI1_ODI2_N_T_R(
+		long objectDefinitionId1, long objectDefinitionId2, String name,
+		String type, boolean reverse) {
+
+		return getPersistence().fetchByODI1_ODI2_N_T_R(
+			objectDefinitionId1, objectDefinitionId2, name, type, reverse);
+	}
+
+	/**
+	 * Returns the object relationship where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63; and reverse = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param name the name
+	 * @param type the type
+	 * @param reverse the reverse
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	public static ObjectRelationship fetchByODI1_ODI2_N_T_R(
+		long objectDefinitionId1, long objectDefinitionId2, String name,
+		String type, boolean reverse, boolean useFinderCache) {
+
+		return getPersistence().fetchByODI1_ODI2_N_T_R(
+			objectDefinitionId1, objectDefinitionId2, name, type, reverse,
+			useFinderCache);
+	}
+
+	/**
+	 * Removes the object relationship where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63; and reverse = &#63; from the database.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param name the name
+	 * @param type the type
+	 * @param reverse the reverse
+	 * @return the object relationship that was removed
+	 */
+	public static ObjectRelationship removeByODI1_ODI2_N_T_R(
+			long objectDefinitionId1, long objectDefinitionId2, String name,
+			String type, boolean reverse)
+		throws com.liferay.object.exception.NoSuchObjectRelationshipException {
+
+		return getPersistence().removeByODI1_ODI2_N_T_R(
+			objectDefinitionId1, objectDefinitionId2, name, type, reverse);
+	}
+
+	/**
+	 * Returns the number of object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63; and reverse = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param name the name
+	 * @param type the type
+	 * @param reverse the reverse
+	 * @return the number of matching object relationships
+	 */
+	public static int countByODI1_ODI2_N_T_R(
+		long objectDefinitionId1, long objectDefinitionId2, String name,
+		String type, boolean reverse) {
+
+		return getPersistence().countByODI1_ODI2_N_T_R(
+			objectDefinitionId1, objectDefinitionId2, name, type, reverse);
+	}
+
+	/**
 	 * Caches the object relationship in the entity cache if it is enabled.
 	 *
 	 * @param objectRelationship the object relationship

@@ -298,6 +298,16 @@ public class ObjectRelationshipLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectRelationship
+		fetchReverseObjectRelationship(
+			com.liferay.object.model.ObjectRelationship objectRelationship,
+			boolean reverse) {
+
+		return _objectRelationshipLocalService.fetchReverseObjectRelationship(
+			objectRelationship, reverse);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

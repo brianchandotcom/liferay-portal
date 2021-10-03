@@ -79,6 +79,9 @@ public class ObjectRelationshipTable
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectRelationshipTable, String> type = createColumn(
 		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectRelationshipTable, Boolean> reverse =
+		createColumn(
+			"reverse", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 
 	private ObjectRelationshipTable() {
 		super("ObjectRelationship", ObjectRelationshipTable::new);

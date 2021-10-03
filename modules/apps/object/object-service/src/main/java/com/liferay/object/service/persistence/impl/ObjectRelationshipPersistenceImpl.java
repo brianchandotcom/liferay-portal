@@ -3462,6 +3462,383 @@ public class ObjectRelationshipPersistenceImpl
 	private static final String _FINDER_COLUMN_ODI1_ODI2_N_T_TYPE_3 =
 		"(objectRelationship.type IS NULL OR objectRelationship.type = '')";
 
+	private FinderPath _finderPathFetchByODI1_ODI2_N_T_R;
+	private FinderPath _finderPathCountByODI1_ODI2_N_T_R;
+
+	/**
+	 * Returns the object relationship where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63; and reverse = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param name the name
+	 * @param type the type
+	 * @param reverse the reverse
+	 * @return the matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	@Override
+	public ObjectRelationship findByODI1_ODI2_N_T_R(
+			long objectDefinitionId1, long objectDefinitionId2, String name,
+			String type, boolean reverse)
+		throws NoSuchObjectRelationshipException {
+
+		ObjectRelationship objectRelationship = fetchByODI1_ODI2_N_T_R(
+			objectDefinitionId1, objectDefinitionId2, name, type, reverse);
+
+		if (objectRelationship == null) {
+			StringBundler sb = new StringBundler(12);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("objectDefinitionId1=");
+			sb.append(objectDefinitionId1);
+
+			sb.append(", objectDefinitionId2=");
+			sb.append(objectDefinitionId2);
+
+			sb.append(", name=");
+			sb.append(name);
+
+			sb.append(", type=");
+			sb.append(type);
+
+			sb.append(", reverse=");
+			sb.append(reverse);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchObjectRelationshipException(sb.toString());
+		}
+
+		return objectRelationship;
+	}
+
+	/**
+	 * Returns the object relationship where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63; and reverse = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param name the name
+	 * @param type the type
+	 * @param reverse the reverse
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	@Override
+	public ObjectRelationship fetchByODI1_ODI2_N_T_R(
+		long objectDefinitionId1, long objectDefinitionId2, String name,
+		String type, boolean reverse) {
+
+		return fetchByODI1_ODI2_N_T_R(
+			objectDefinitionId1, objectDefinitionId2, name, type, reverse,
+			true);
+	}
+
+	/**
+	 * Returns the object relationship where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63; and reverse = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param name the name
+	 * @param type the type
+	 * @param reverse the reverse
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	@Override
+	public ObjectRelationship fetchByODI1_ODI2_N_T_R(
+		long objectDefinitionId1, long objectDefinitionId2, String name,
+		String type, boolean reverse, boolean useFinderCache) {
+
+		name = Objects.toString(name, "");
+		type = Objects.toString(type, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				objectDefinitionId1, objectDefinitionId2, name, type, reverse
+			};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByODI1_ODI2_N_T_R, finderArgs);
+		}
+
+		if (result instanceof ObjectRelationship) {
+			ObjectRelationship objectRelationship = (ObjectRelationship)result;
+
+			if ((objectDefinitionId1 !=
+					objectRelationship.getObjectDefinitionId1()) ||
+				(objectDefinitionId2 !=
+					objectRelationship.getObjectDefinitionId2()) ||
+				!Objects.equals(name, objectRelationship.getName()) ||
+				!Objects.equals(type, objectRelationship.getType()) ||
+				(reverse != objectRelationship.isReverse())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(7);
+
+			sb.append(_SQL_SELECT_OBJECTRELATIONSHIP_WHERE);
+
+			sb.append(_FINDER_COLUMN_ODI1_ODI2_N_T_R_OBJECTDEFINITIONID1_2);
+
+			sb.append(_FINDER_COLUMN_ODI1_ODI2_N_T_R_OBJECTDEFINITIONID2_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ODI1_ODI2_N_T_R_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_ODI1_ODI2_N_T_R_NAME_2);
+			}
+
+			boolean bindType = false;
+
+			if (type.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ODI1_ODI2_N_T_R_TYPE_3);
+			}
+			else {
+				bindType = true;
+
+				sb.append(_FINDER_COLUMN_ODI1_ODI2_N_T_R_TYPE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ODI1_ODI2_N_T_R_REVERSE_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(objectDefinitionId1);
+
+				queryPos.add(objectDefinitionId2);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				if (bindType) {
+					queryPos.add(type);
+				}
+
+				queryPos.add(reverse);
+
+				List<ObjectRelationship> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByODI1_ODI2_N_T_R, finderArgs,
+							list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									objectDefinitionId1, objectDefinitionId2,
+									name, type, reverse
+								};
+							}
+
+							_log.warn(
+								"ObjectRelationshipPersistenceImpl.fetchByODI1_ODI2_N_T_R(long, long, String, String, boolean, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					ObjectRelationship objectRelationship = list.get(0);
+
+					result = objectRelationship;
+
+					cacheResult(objectRelationship);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ObjectRelationship)result;
+		}
+	}
+
+	/**
+	 * Removes the object relationship where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63; and reverse = &#63; from the database.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param name the name
+	 * @param type the type
+	 * @param reverse the reverse
+	 * @return the object relationship that was removed
+	 */
+	@Override
+	public ObjectRelationship removeByODI1_ODI2_N_T_R(
+			long objectDefinitionId1, long objectDefinitionId2, String name,
+			String type, boolean reverse)
+		throws NoSuchObjectRelationshipException {
+
+		ObjectRelationship objectRelationship = findByODI1_ODI2_N_T_R(
+			objectDefinitionId1, objectDefinitionId2, name, type, reverse);
+
+		return remove(objectRelationship);
+	}
+
+	/**
+	 * Returns the number of object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63; and reverse = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param objectDefinitionId2 the object definition id2
+	 * @param name the name
+	 * @param type the type
+	 * @param reverse the reverse
+	 * @return the number of matching object relationships
+	 */
+	@Override
+	public int countByODI1_ODI2_N_T_R(
+		long objectDefinitionId1, long objectDefinitionId2, String name,
+		String type, boolean reverse) {
+
+		name = Objects.toString(name, "");
+		type = Objects.toString(type, "");
+
+		FinderPath finderPath = _finderPathCountByODI1_ODI2_N_T_R;
+
+		Object[] finderArgs = new Object[] {
+			objectDefinitionId1, objectDefinitionId2, name, type, reverse
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_SQL_COUNT_OBJECTRELATIONSHIP_WHERE);
+
+			sb.append(_FINDER_COLUMN_ODI1_ODI2_N_T_R_OBJECTDEFINITIONID1_2);
+
+			sb.append(_FINDER_COLUMN_ODI1_ODI2_N_T_R_OBJECTDEFINITIONID2_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ODI1_ODI2_N_T_R_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_ODI1_ODI2_N_T_R_NAME_2);
+			}
+
+			boolean bindType = false;
+
+			if (type.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ODI1_ODI2_N_T_R_TYPE_3);
+			}
+			else {
+				bindType = true;
+
+				sb.append(_FINDER_COLUMN_ODI1_ODI2_N_T_R_TYPE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ODI1_ODI2_N_T_R_REVERSE_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(objectDefinitionId1);
+
+				queryPos.add(objectDefinitionId2);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				if (bindType) {
+					queryPos.add(type);
+				}
+
+				queryPos.add(reverse);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_ODI1_ODI2_N_T_R_OBJECTDEFINITIONID1_2 =
+			"objectRelationship.objectDefinitionId1 = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_ODI1_ODI2_N_T_R_OBJECTDEFINITIONID2_2 =
+			"objectRelationship.objectDefinitionId2 = ? AND ";
+
+	private static final String _FINDER_COLUMN_ODI1_ODI2_N_T_R_NAME_2 =
+		"objectRelationship.name = ? AND ";
+
+	private static final String _FINDER_COLUMN_ODI1_ODI2_N_T_R_NAME_3 =
+		"(objectRelationship.name IS NULL OR objectRelationship.name = '') AND ";
+
+	private static final String _FINDER_COLUMN_ODI1_ODI2_N_T_R_TYPE_2 =
+		"objectRelationship.type = ? AND ";
+
+	private static final String _FINDER_COLUMN_ODI1_ODI2_N_T_R_TYPE_3 =
+		"(objectRelationship.type IS NULL OR objectRelationship.type = '') AND ";
+
+	private static final String _FINDER_COLUMN_ODI1_ODI2_N_T_R_REVERSE_2 =
+		"objectRelationship.reverse = ?";
+
 	public ObjectRelationshipPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -3499,6 +3876,16 @@ public class ObjectRelationshipPersistenceImpl
 			new Object[] {
 				objectRelationship.getObjectDefinitionId1(),
 				objectRelationship.getName()
+			},
+			objectRelationship);
+
+		finderCache.putResult(
+			_finderPathFetchByODI1_ODI2_N_T_R,
+			new Object[] {
+				objectRelationship.getObjectDefinitionId1(),
+				objectRelationship.getObjectDefinitionId2(),
+				objectRelationship.getName(), objectRelationship.getType(),
+				objectRelationship.isReverse()
 			},
 			objectRelationship);
 	}
@@ -3595,6 +3982,20 @@ public class ObjectRelationshipPersistenceImpl
 		finderCache.putResult(_finderPathCountByODI1_N, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByODI1_N, args, objectRelationshipModelImpl);
+
+		args = new Object[] {
+			objectRelationshipModelImpl.getObjectDefinitionId1(),
+			objectRelationshipModelImpl.getObjectDefinitionId2(),
+			objectRelationshipModelImpl.getName(),
+			objectRelationshipModelImpl.getType(),
+			objectRelationshipModelImpl.isReverse()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByODI1_ODI2_N_T_R, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByODI1_ODI2_N_T_R, args,
+			objectRelationshipModelImpl);
 	}
 
 	/**
@@ -4202,6 +4603,32 @@ public class ObjectRelationshipPersistenceImpl
 			},
 			new String[] {
 				"objectDefinitionId1", "objectDefinitionId2", "name", "type_"
+			},
+			false);
+
+		_finderPathFetchByODI1_ODI2_N_T_R = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByODI1_ODI2_N_T_R",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), String.class.getName(),
+				Boolean.class.getName()
+			},
+			new String[] {
+				"objectDefinitionId1", "objectDefinitionId2", "name", "type_",
+				"reverse"
+			},
+			true);
+
+		_finderPathCountByODI1_ODI2_N_T_R = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI1_ODI2_N_T_R",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), String.class.getName(),
+				Boolean.class.getName()
+			},
+			new String[] {
+				"objectDefinitionId1", "objectDefinitionId2", "name", "type_",
+				"reverse"
 			},
 			false);
 	}

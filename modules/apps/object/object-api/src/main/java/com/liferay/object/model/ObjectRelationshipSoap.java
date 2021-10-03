@@ -49,6 +49,7 @@ public class ObjectRelationshipSoap implements Serializable {
 		soapModel.setLabel(model.getLabel());
 		soapModel.setName(model.getName());
 		soapModel.setType(model.getType());
+		soapModel.setReverse(model.isReverse());
 
 		return soapModel;
 	}
@@ -239,6 +240,18 @@ public class ObjectRelationshipSoap implements Serializable {
 		_type = type;
 	}
 
+	public boolean getReverse() {
+		return _reverse;
+	}
+
+	public boolean isReverse() {
+		return _reverse;
+	}
+
+	public void setReverse(boolean reverse) {
+		_reverse = reverse;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _objectRelationshipId;
@@ -255,5 +268,6 @@ public class ObjectRelationshipSoap implements Serializable {
 	private String _label;
 	private String _name;
 	private String _type;
+	private boolean _reverse;
 
 }

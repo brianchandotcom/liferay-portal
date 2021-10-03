@@ -175,5 +175,6 @@
 		<field localized="true" name="label" type="String" />
 		<field name="name" type="String" />
 		<field name="type" type="String" />
+		<field name="reverse" type="boolean" />
 	</model>
 </model-hints>

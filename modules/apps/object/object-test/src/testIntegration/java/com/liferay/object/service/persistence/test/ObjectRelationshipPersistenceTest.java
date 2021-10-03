@@ -155,6 +155,8 @@ public class ObjectRelationshipPersistenceTest {
 
 		newObjectRelationship.setType(RandomTestUtil.randomString());
 
+		newObjectRelationship.setReverse(RandomTestUtil.randomBoolean());
+
 		_objectRelationships.add(_persistence.update(newObjectRelationship));
 
 		ObjectRelationship existingObjectRelationship =
@@ -210,6 +212,9 @@ public class ObjectRelationshipPersistenceTest {
 		Assert.assertEquals(
 			existingObjectRelationship.getType(),
 			newObjectRelationship.getType());
+		Assert.assertEquals(
+			existingObjectRelationship.isReverse(),
+			newObjectRelationship.isReverse());
 	}
 
 	@Test
@@ -271,6 +276,19 @@ public class ObjectRelationshipPersistenceTest {
 	}
 
 	@Test
+	public void testCountByODI1_ODI2_N_T_R() throws Exception {
+		_persistence.countByODI1_ODI2_N_T_R(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "", "",
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByODI1_ODI2_N_T_R(
+			0L, 0L, "null", "null", RandomTestUtil.randomBoolean());
+
+		_persistence.countByODI1_ODI2_N_T_R(
+			0L, 0L, (String)null, (String)null, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ObjectRelationship newObjectRelationship = addObjectRelationship();
 
@@ -301,7 +319,7 @@ public class ObjectRelationshipPersistenceTest {
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"objectDefinitionId1", true, "objectDefinitionId2", true,
 			"objectFieldId2", true, "deletionType", true, "dbTableName", true,
-			"label", true, "name", true, "type", true);
+			"label", true, "name", true, "type", true, "reverse", true);
 	}
 
 	@Test
@@ -596,6 +614,32 @@ public class ObjectRelationshipPersistenceTest {
 			ReflectionTestUtil.invoke(
 				objectRelationship, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "name"));
+
+		Assert.assertEquals(
+			Long.valueOf(objectRelationship.getObjectDefinitionId1()),
+			ReflectionTestUtil.<Long>invoke(
+				objectRelationship, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "objectDefinitionId1"));
+		Assert.assertEquals(
+			Long.valueOf(objectRelationship.getObjectDefinitionId2()),
+			ReflectionTestUtil.<Long>invoke(
+				objectRelationship, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "objectDefinitionId2"));
+		Assert.assertEquals(
+			objectRelationship.getName(),
+			ReflectionTestUtil.invoke(
+				objectRelationship, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
+		Assert.assertEquals(
+			objectRelationship.getType(),
+			ReflectionTestUtil.invoke(
+				objectRelationship, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "type_"));
+		Assert.assertEquals(
+			Boolean.valueOf(objectRelationship.getReverse()),
+			ReflectionTestUtil.<Boolean>invoke(
+				objectRelationship, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "reverse"));
 	}
 
 	protected ObjectRelationship addObjectRelationship() throws Exception {
@@ -632,6 +676,8 @@ public class ObjectRelationshipPersistenceTest {
 		objectRelationship.setName(RandomTestUtil.randomString());
 
 		objectRelationship.setType(RandomTestUtil.randomString());
+
+		objectRelationship.setReverse(RandomTestUtil.randomBoolean());
 
 		_objectRelationships.add(_persistence.update(objectRelationship));
 

@@ -284,20 +284,21 @@ public class ObjectEntryLocalServiceUtil {
 	}
 
 	public static List<ObjectEntry> getManyToManyRelatedObjectEntries(
-			long groupId, long objectRelationshipId, long primaryKey, int start,
-			int end)
+			long groupId, long objectRelationshipId, long primaryKey,
+			boolean reverse, int start, int end)
 		throws PortalException {
 
 		return getService().getManyToManyRelatedObjectEntries(
-			groupId, objectRelationshipId, primaryKey, start, end);
+			groupId, objectRelationshipId, primaryKey, reverse, start, end);
 	}
 
 	public static int getManyToManyRelatedObjectEntriesCount(
-			long groupId, long objectRelationshipId, long primaryKey)
+			long groupId, long objectRelationshipId, long primaryKey,
+			boolean reverse)
 		throws PortalException {
 
 		return getService().getManyToManyRelatedObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey);
+			groupId, objectRelationshipId, primaryKey, reverse);
 	}
 
 	/**

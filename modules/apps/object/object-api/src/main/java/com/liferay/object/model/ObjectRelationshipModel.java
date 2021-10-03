@@ -409,6 +409,27 @@ public interface ObjectRelationshipModel
 	 */
 	public void setType(String type);
 
+	/**
+	 * Returns the reverse of this object relationship.
+	 *
+	 * @return the reverse of this object relationship
+	 */
+	public boolean getReverse();
+
+	/**
+	 * Returns <code>true</code> if this object relationship is reverse.
+	 *
+	 * @return <code>true</code> if this object relationship is reverse; <code>false</code> otherwise
+	 */
+	public boolean isReverse();
+
+	/**
+	 * Sets whether this object relationship is reverse.
+	 *
+	 * @param reverse the reverse of this object relationship
+	 */
+	public void setReverse(boolean reverse);
+
 	@Override
 	public String[] getAvailableLanguageIds();
 

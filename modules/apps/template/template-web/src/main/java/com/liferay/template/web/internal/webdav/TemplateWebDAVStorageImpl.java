@@ -16,7 +16,6 @@ package com.liferay.template.web.internal.webdav;
 
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.webdav.DDMWebDAV;
-import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.webdav.BaseWebDAVStorageImpl;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.template.constants.TemplatePortletKeys;
+import com.liferay.template.model.TemplateEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,8 +102,7 @@ public class TemplateWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				_ddmTemplateLocalService.getTemplates(
 					webDAVRequest.getCompanyId(),
 					new long[] {webDAVRequest.getGroupId()}, null, null,
-					_portal.getClassNameId(InfoItemFormProvider.class), -1, -1,
-					null),
+					_portal.getClassNameId(TemplateEntry.class), -1, -1, null),
 				_ddmTemplateLocalService.getTemplates(
 					webDAVRequest.getCompanyId(),
 					new long[] {webDAVRequest.getGroupId()}, null, null,

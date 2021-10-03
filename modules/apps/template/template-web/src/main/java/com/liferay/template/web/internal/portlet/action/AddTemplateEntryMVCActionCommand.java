@@ -99,8 +99,8 @@ public class AddTemplateEntryMVCActionCommand
 		try {
 			DDMTemplate ddmTemplate = _ddmTemplateLocalService.addTemplate(
 				themeDisplay.getUserId(), serviceContext.getScopeGroupId(),
-				_portal.getClassNameId(InfoItemFormProvider.class), 0,
-				_portal.getClassNameId(InfoItemFormProvider.class), nameMap,
+				_portal.getClassNameId(TemplateEntry.class), 0,
+				_portal.getClassNameId(TemplateEntry.class), nameMap,
 				Collections.emptyMap(),
 				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, StringPool.BLANK,
 				TemplateConstants.LANG_TYPE_FTL, _getScript(), serviceContext);

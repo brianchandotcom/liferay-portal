@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"add.template.action.id=" + DDMActionKeys.ADD_TEMPLATE,
 		"default.model.resource.name=true",
-		"model.class.name=com.liferay.info.item.provider.InfoItemFormProvider"
+		"model.class.name=com.liferay.template.model.TemplateEntry"
 	},
 	service = DDMTemplatePermissionSupport.class
 )

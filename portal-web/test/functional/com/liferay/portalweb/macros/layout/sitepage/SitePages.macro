@@ -450,14 +450,18 @@ definition {
 		}
 	}
 
-	macro getFriendlyUrl {
+	macro getFriendlyURL {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			baseURL = PropsUtil.get("portal.url");
+		}
+
 		key_friendlyURL = "";
-		var friendlyURL = selenium.getElementValue(
-			locator1 = "SitePages#FRIENDLY_URL");
 
-		var URL = "http://localhost:8080/web/guest${friendlyURL}";
+		var friendlyURL = selenium.getElementValue(locator1 = "SitePages#FRIENDLY_URL");
 
-		return "${URL}";
+		return "${baseURL}/web/guest${friendlyURL}";
 	}
 
 	@summary = "Go to the page creation form through the empty-result-message taglib"

@@ -42,7 +42,11 @@ public class WorkspaceFactory {
 			throw new RuntimeException("Invalid JSONObject");
 		}
 
-		Workspace workspace;
+		Workspace workspace = _workspaces.get(primaryRepositoryDirName);
+
+		if (workspace != null) {
+			return workspace;
+		}
 
 		if (primaryRepositoryName.matches("liferay-portal(-ee)?")) {
 			workspace = new PortalWorkspace(workspaceJSONObject);
@@ -64,9 +68,21 @@ public class WorkspaceFactory {
 		String gitDirectoryName = JenkinsResultsParserUtil.getGitDirectoryName(
 			repositoryName, upstreamBranchName);
 
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
 		Workspace workspace = _workspaces.get(gitDirectoryName);
 
 		if (workspace != null) {
+			buildDatabase.putWorkspace(gitDirectoryName, workspace);
+
+			return workspace;
+		}
+
+		if (buildDatabase.hasWorkspace(gitDirectoryName)) {
+			workspace = buildDatabase.getWorkspace(gitDirectoryName);
+
+			_workspaces.put(gitDirectoryName, workspace);
+
 			return workspace;
 		}
 
@@ -79,6 +95,8 @@ public class WorkspaceFactory {
 		}
 
 		_workspaces.put(gitDirectoryName, workspace);
+
+		buildDatabase.putWorkspace(gitDirectoryName, workspace);
 
 		return (Workspace)Proxy.newProxyInstance(
 			Workspace.class.getClassLoader(), new Class<?>[] {Workspace.class},

@@ -43,7 +43,7 @@ public interface BuildDatabase {
 
 	public PullRequest getPullRequest(String key);
 
-	public Workspace getWorkspace();
+	public Workspace getWorkspace(String key);
 
 	public WorkspaceGitRepository getWorkspaceGitRepository(String key);
 
@@ -53,7 +53,7 @@ public interface BuildDatabase {
 
 	public boolean hasPullRequest(String key);
 
-	public boolean hasWorkspace();
+	public boolean hasWorkspace(String key);
 
 	public boolean hasWorkspaceGitRepository(String key);
 
@@ -65,7 +65,7 @@ public interface BuildDatabase {
 
 	public void putPullRequest(String key, PullRequest pullRequest);
 
-	public void putWorkspace(Workspace workspace);
+	public void putWorkspace(String key, Workspace workspace);
 
 	public void putWorkspaceGitRepository(
 		String key, WorkspaceGitRepository workspaceGitRepository);

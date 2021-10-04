@@ -1326,7 +1326,7 @@ definition {
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+		var dataSource = StringUtil.extractFirst("${propertyName}"," ");
 
 		JSONUser.addUser(
 			userEmailAddress = "${username}@liferay.com",
@@ -1340,11 +1340,13 @@ definition {
 			userLoginEmailAddress = "${username}@liferay.com",
 			userLoginFullName = "${username} ${username}");
 
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
+		for (var n : list "1,2,3") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 
-		Pause(locator1 = "3000");
+			Pause(locator1 = "5000");
+		}
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -1369,13 +1371,11 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		AssertTextEquals(
-			locator1 = "ACSegments#NO_MEMBER_TITLE",
-			value1 = "There are no items found.");
+		ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
 
 		ACUtils.launchDXP(userEmailAddress = "${username}@liferay.com");
 
-		for (var n : list "1,2,3,4") {
+		for (var n : list "1,2,3") {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");

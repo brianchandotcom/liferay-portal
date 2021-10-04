@@ -81,9 +81,19 @@ public class ObjectEntryModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		return permissionChecker.hasPermission(
-			objectEntry.getGroupId(), _modelName,
-			objectEntry.getObjectEntryId(), actionId);
+		if (permissionChecker.hasOwnerPermission(
+				permissionChecker.getCompanyId(), _modelName,
+				objectEntry.getObjectEntryId(), objectEntry.getUserId(),
+				actionId) ||
+			(permissionChecker.getUserId() == objectEntry.getUserId()) ||
+			permissionChecker.hasPermission(
+				objectEntry.getGroupId(), _modelName,
+				objectEntry.getObjectEntryId(), actionId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

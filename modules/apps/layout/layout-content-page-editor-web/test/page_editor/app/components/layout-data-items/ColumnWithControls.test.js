@@ -19,7 +19,7 @@ import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {ColumnWithControls} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items';
-import {updateNewLayoutDataContext} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items/ColumnWithControls';
+import {getNextLayoutData} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items/ColumnWithControls';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {
@@ -35,14 +35,14 @@ const LAYOUT_DATA = {
 			config: {
 				mobile: {},
 				size: 4,
-				tablet: {},
+				tablet: {size: 5},
 			},
 		},
 		'column-2': {
 			config: {
 				mobile: {},
 				size: 4,
-				tablet: {},
+				tablet: {size: 3},
 			},
 		},
 		'column-3': {
@@ -143,27 +143,10 @@ describe('ColumnWithControls', () => {
 		});
 
 		it('allows changing module width for a viewport', async () => {
-			const columnConfig = {
-				'column-1': {
-					config: {
-						mobile: {},
-						size: 4,
-						tablet: {},
-					},
-					size: 7,
-				},
-				'column-2': {
-					config: {
-						mobile: {},
-						size: 4,
-						tablet: {},
-					},
-					size: 1,
-				},
-			};
+			const nextSizes = {'column-1': 2, 'column-2': 6};
 
 			expect(
-				updateNewLayoutDataContext(LAYOUT_DATA, columnConfig, 'desktop')
+				getNextLayoutData(LAYOUT_DATA, nextSizes, 'desktop')
 			).toEqual({
 				...LAYOUT_DATA,
 				items: {
@@ -171,15 +154,15 @@ describe('ColumnWithControls', () => {
 					'column-1': {
 						config: {
 							mobile: {},
-							size: 7,
-							tablet: {},
+							size: 2,
+							tablet: {size: 5},
 						},
 					},
 					'column-2': {
 						config: {
 							mobile: {},
-							size: 1,
-							tablet: {},
+							size: 6,
+							tablet: {size: 3},
 						},
 					},
 				},
@@ -187,91 +170,57 @@ describe('ColumnWithControls', () => {
 		});
 
 		it('allows changing module without affecting previous viewports', async () => {
-			const columnConfig = {
-				'column-1': {
-					config: {
-						mobile: {},
-						size: 4,
-						tablet: {size: 8},
-					},
-					size: 6,
-				},
-				'column-2': {
-					config: {
-						mobile: {},
-						size: 4,
-						tablet: {size: 2},
-					},
-					size: 3,
-				},
-			};
+			const nextSizes = {'column-1': 2, 'column-2': 6};
 
-			expect(
-				updateNewLayoutDataContext(LAYOUT_DATA, columnConfig, 'mobile')
-			).toEqual({
-				...LAYOUT_DATA,
-				items: {
-					...LAYOUT_DATA.items,
-					'column-1': {
-						config: {
-							mobile: {size: 6},
-							size: 4,
-							tablet: {size: 8},
+			expect(getNextLayoutData(LAYOUT_DATA, nextSizes, 'mobile')).toEqual(
+				{
+					...LAYOUT_DATA,
+					items: {
+						...LAYOUT_DATA.items,
+						'column-1': {
+							config: {
+								mobile: {size: 2},
+								size: 4,
+								tablet: {size: 5},
+							},
+						},
+						'column-2': {
+							config: {
+								mobile: {size: 6},
+								size: 4,
+								tablet: {size: 3},
+							},
 						},
 					},
-					'column-2': {
-						config: {
-							mobile: {size: 3},
-							size: 4,
-							tablet: {size: 2},
-						},
-					},
-				},
-			});
+				}
+			);
 		});
 
 		it('allows changing previously modified module without affecting the rest of viewports', async () => {
-			const columnConfig = {
-				'column-1': {
-					config: {
-						mobile: {size: 3},
-						size: 4,
-						tablet: {size: 2},
-					},
-					size: 1,
-				},
-				'column-2': {
-					config: {
-						mobile: {size: 6},
-						size: 4,
-						tablet: {size: 8},
-					},
-					size: 2,
-				},
-			};
+			const nextSizes = {'column-1': 1, 'column-2': 7};
 
-			expect(
-				updateNewLayoutDataContext(LAYOUT_DATA, columnConfig, 'tablet')
-			).toEqual({
-				...LAYOUT_DATA,
-				items: {
-					...LAYOUT_DATA.items,
-					'column-1': {
-						config: {
-							mobile: {size: 3},
-							size: 4,
-							tablet: {size: 1},
+			expect(getNextLayoutData(LAYOUT_DATA, nextSizes, 'tablet')).toEqual(
+				{
+					...LAYOUT_DATA,
+					items: {
+						...LAYOUT_DATA.items,
+						'column-1': {
+							config: {
+								mobile: {},
+								size: 4,
+								tablet: {size: 1},
+							},
+						},
+						'column-2': {
+							config: {
+								mobile: {},
+								size: 4,
+								tablet: {size: 7},
+							},
 						},
 					},
-					'column-2': {
-						config: {
-							mobile: {size: 6},
-							size: 4,
-							tablet: {size: 2},
-						},
-					},
-				},
-			});
+				}
+			);
 		});
 	});
 });

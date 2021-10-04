@@ -67,29 +67,16 @@ public class SchedulerSampleMessageListener extends BaseMessageListener {
 		}
 	}
 
-	@Reference(
-		target = "(module.service.lifecycle=portal.initialized)", unbind = "-"
-	)
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setSchedulerEngineHelper(
-		SchedulerEngineHelper schedulerEngineHelper) {
-
-		_schedulerEngineHelper = schedulerEngineHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setTriggerFactory(TriggerFactory triggerFactory) {
-		_triggerFactory = triggerFactory;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerSampleMessageListener.class);
 
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
 	private TriggerFactory _triggerFactory;
 
 }

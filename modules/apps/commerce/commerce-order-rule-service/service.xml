@@ -26,6 +26,13 @@
 		<column name="priority" type="int" />
 		<column name="type" type="String" />
 		<column name="typeSettings" type="String" />
+		<column name="displayDate" type="Date" />
+		<column name="expirationDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
 
@@ -42,6 +49,14 @@
 		<finder name="C_LikeType" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column comparator="LIKE" name="type" />
+		</finder>
+		<finder name="LtD_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="LtE_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="expirationDate" />
+			<finder-column name="status" />
 		</finder>
 		<finder name="C_A_LikeType" return-type="Collection">
 			<finder-column name="companyId" />
@@ -90,4 +105,8 @@
 			<finder-column name="commerceOrderRuleEntryId" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>CommerceOrderRuleEntryDisplayDate</exception>
+		<exception>CommerceOrderRuleEntryExpirationDate</exception>
+	</exceptions>
 </service-builder>

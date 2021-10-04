@@ -14,6 +14,7 @@
 
 import meta from './meta';
 import openGraph from './opengraph';
+import resolution from './resolution';
 
-export {meta, openGraph};
-export default [meta, openGraph];
+export {meta, openGraph, resolution};
+export default [meta, openGraph, resolution];

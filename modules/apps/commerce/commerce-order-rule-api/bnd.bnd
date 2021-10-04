@@ -2,6 +2,7 @@ Bundle-Name: Liferay Commerce Order Rule API
 Bundle-SymbolicName: com.liferay.commerce.order.rule.api
 Bundle-Version: 1.1.0
 Export-Package:\
+	com.liferay.commerce.order.rule.configuration,\
 	com.liferay.commerce.order.rule.constants,\
 	com.liferay.commerce.order.rule.exception,\
 	com.liferay.commerce.order.rule.model,\

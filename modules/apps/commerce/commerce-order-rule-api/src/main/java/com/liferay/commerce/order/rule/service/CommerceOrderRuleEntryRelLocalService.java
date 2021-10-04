@@ -23,10 +23,12 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -76,6 +78,11 @@ public interface CommerceOrderRuleEntryRelLocalService
 	public CommerceOrderRuleEntryRel addCommerceOrderRuleEntryRel(
 		CommerceOrderRuleEntryRel commerceOrderRuleEntryRel);
 
+	public CommerceOrderRuleEntryRel addCommerceOrderRuleEntryRel(
+			long userId, String className, long classPK,
+			long commerceOrderRuleEntryId)
+		throws PortalException;
+
 	/**
 	 * Creates a new commerce order rule entry rel with the primary key. Does not add the commerce order rule entry rel to the database.
 	 *
@@ -101,10 +108,13 @@ public interface CommerceOrderRuleEntryRelLocalService
 	 *
 	 * @param commerceOrderRuleEntryRel the commerce order rule entry rel
 	 * @return the commerce order rule entry rel that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceOrderRuleEntryRel deleteCommerceOrderRuleEntryRel(
-		CommerceOrderRuleEntryRel commerceOrderRuleEntryRel);
+			CommerceOrderRuleEntryRel commerceOrderRuleEntryRel)
+		throws PortalException;
 
 	/**
 	 * Deletes the commerce order rule entry rel with the primary key from the database. Also notifies the appropriate model listeners.
@@ -120,6 +130,9 @@ public interface CommerceOrderRuleEntryRelLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceOrderRuleEntryRel deleteCommerceOrderRuleEntryRel(
 			long commerceOrderRuleEntryRelId)
+		throws PortalException;
+
+	public void deleteCommerceOrderRuleEntryRels(long commerceOrderRuleEntryId)
 		throws PortalException;
 
 	/**
@@ -206,7 +219,59 @@ public interface CommerceOrderRuleEntryRelLocalService
 		long commerceOrderRuleEntryRelId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrderRuleEntryRel fetchCommerceOrderRuleEntryRel(
+		String className, long classPK, long commerceOrderRuleEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntryRel>
+			getCommerceOrderRuleEntryAccountEntryRels(
+				long commerceOrderRuleEntryId, String keywords, int start,
+				int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrderRuleEntryAccountEntryRelsCount(
+			long commerceOrderRuleEntryId, String keywords)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntryRel>
+			getCommerceOrderRuleEntryAccountGroupRels(
+				long commerceOrderRuleEntryId, String keywords, int start,
+				int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrderRuleEntryAccountGroupRelsCount(
+			long commerceOrderRuleEntryId, String keywords)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntryRel>
+			getCommerceOrderRuleEntryCommerceChannelRels(
+				long commerceOrderRuleEntryId, String keywords, int start,
+				int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrderRuleEntryCommerceChannelRelsCount(
+			long commerceOrderRuleEntryId, String keywords)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntryRel>
+			getCommerceOrderRuleEntryCommerceOrderTypeRels(
+				long commerceOrderRuleEntryId, String keywords, int start,
+				int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrderRuleEntryCommerceOrderTypeRelsCount(
+			long commerceOrderRuleEntryId, String keywords)
+		throws PortalException;
 
 	/**
 	 * Returns the commerce order rule entry rel with the primary key.
@@ -235,6 +300,15 @@ public interface CommerceOrderRuleEntryRelLocalService
 	public List<CommerceOrderRuleEntryRel> getCommerceOrderRuleEntryRels(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntryRel> getCommerceOrderRuleEntryRels(
+		long commerceOrderRuleEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntryRel> getCommerceOrderRuleEntryRels(
+		long commerceOrderRuleEntryId, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntryRel> orderByComparator);
+
 	/**
 	 * Returns the number of commerce order rule entry rels.
 	 *
@@ -242,6 +316,10 @@ public interface CommerceOrderRuleEntryRelLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceOrderRuleEntryRelsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrderRuleEntryRelsCount(
+		long commerceOrderRuleEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

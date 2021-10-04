@@ -55,6 +55,18 @@ public class CommerceOrderRuleEntryRelLocalServiceWrapper
 			addCommerceOrderRuleEntryRel(commerceOrderRuleEntryRel);
 	}
 
+	@Override
+	public com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRel
+			addCommerceOrderRuleEntryRel(
+				long userId, String className, long classPK,
+				long commerceOrderRuleEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderRuleEntryRelLocalService.
+			addCommerceOrderRuleEntryRel(
+				userId, className, classPK, commerceOrderRuleEntryId);
+	}
+
 	/**
 	 * Creates a new commerce order rule entry rel with the primary key. Does not add the commerce order rule entry rel to the database.
 	 *
@@ -90,12 +102,14 @@ public class CommerceOrderRuleEntryRelLocalServiceWrapper
 	 *
 	 * @param commerceOrderRuleEntryRel the commerce order rule entry rel
 	 * @return the commerce order rule entry rel that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRel
-		deleteCommerceOrderRuleEntryRel(
-			com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRel
-				commerceOrderRuleEntryRel) {
+			deleteCommerceOrderRuleEntryRel(
+				com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRel
+					commerceOrderRuleEntryRel)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderRuleEntryRelLocalService.
 			deleteCommerceOrderRuleEntryRel(commerceOrderRuleEntryRel);
@@ -119,6 +133,14 @@ public class CommerceOrderRuleEntryRelLocalServiceWrapper
 
 		return _commerceOrderRuleEntryRelLocalService.
 			deleteCommerceOrderRuleEntryRel(commerceOrderRuleEntryRelId);
+	}
+
+	@Override
+	public void deleteCommerceOrderRuleEntryRels(long commerceOrderRuleEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_commerceOrderRuleEntryRelLocalService.deleteCommerceOrderRuleEntryRels(
+			commerceOrderRuleEntryId);
 	}
 
 	/**
@@ -247,11 +269,113 @@ public class CommerceOrderRuleEntryRelLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRel
+		fetchCommerceOrderRuleEntryRel(
+			String className, long classPK, long commerceOrderRuleEntryId) {
+
+		return _commerceOrderRuleEntryRelLocalService.
+			fetchCommerceOrderRuleEntryRel(
+				className, classPK, commerceOrderRuleEntryId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
 		return _commerceOrderRuleEntryRelLocalService.
 			getActionableDynamicQuery();
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRel>
+				getCommerceOrderRuleEntryAccountEntryRels(
+					long commerceOrderRuleEntryId, String keywords, int start,
+					int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderRuleEntryRelLocalService.
+			getCommerceOrderRuleEntryAccountEntryRels(
+				commerceOrderRuleEntryId, keywords, start, end);
+	}
+
+	@Override
+	public int getCommerceOrderRuleEntryAccountEntryRelsCount(
+			long commerceOrderRuleEntryId, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderRuleEntryRelLocalService.
+			getCommerceOrderRuleEntryAccountEntryRelsCount(
+				commerceOrderRuleEntryId, keywords);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRel>
+				getCommerceOrderRuleEntryAccountGroupRels(
+					long commerceOrderRuleEntryId, String keywords, int start,
+					int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderRuleEntryRelLocalService.
+			getCommerceOrderRuleEntryAccountGroupRels(
+				commerceOrderRuleEntryId, keywords, start, end);
+	}
+
+	@Override
+	public int getCommerceOrderRuleEntryAccountGroupRelsCount(
+			long commerceOrderRuleEntryId, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderRuleEntryRelLocalService.
+			getCommerceOrderRuleEntryAccountGroupRelsCount(
+				commerceOrderRuleEntryId, keywords);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRel>
+				getCommerceOrderRuleEntryCommerceChannelRels(
+					long commerceOrderRuleEntryId, String keywords, int start,
+					int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderRuleEntryRelLocalService.
+			getCommerceOrderRuleEntryCommerceChannelRels(
+				commerceOrderRuleEntryId, keywords, start, end);
+	}
+
+	@Override
+	public int getCommerceOrderRuleEntryCommerceChannelRelsCount(
+			long commerceOrderRuleEntryId, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderRuleEntryRelLocalService.
+			getCommerceOrderRuleEntryCommerceChannelRelsCount(
+				commerceOrderRuleEntryId, keywords);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRel>
+				getCommerceOrderRuleEntryCommerceOrderTypeRels(
+					long commerceOrderRuleEntryId, String keywords, int start,
+					int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderRuleEntryRelLocalService.
+			getCommerceOrderRuleEntryCommerceOrderTypeRels(
+				commerceOrderRuleEntryId, keywords, start, end);
+	}
+
+	@Override
+	public int getCommerceOrderRuleEntryCommerceOrderTypeRelsCount(
+			long commerceOrderRuleEntryId, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderRuleEntryRelLocalService.
+			getCommerceOrderRuleEntryCommerceOrderTypeRelsCount(
+				commerceOrderRuleEntryId, keywords);
 	}
 
 	/**
@@ -290,6 +414,29 @@ public class CommerceOrderRuleEntryRelLocalServiceWrapper
 			getCommerceOrderRuleEntryRels(start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRel>
+			getCommerceOrderRuleEntryRels(long commerceOrderRuleEntryId) {
+
+		return _commerceOrderRuleEntryRelLocalService.
+			getCommerceOrderRuleEntryRels(commerceOrderRuleEntryId);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRel>
+			getCommerceOrderRuleEntryRels(
+				long commerceOrderRuleEntryId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.commerce.order.rule.model.
+						CommerceOrderRuleEntryRel> orderByComparator) {
+
+		return _commerceOrderRuleEntryRelLocalService.
+			getCommerceOrderRuleEntryRels(
+				commerceOrderRuleEntryId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of commerce order rule entry rels.
 	 *
@@ -299,6 +446,14 @@ public class CommerceOrderRuleEntryRelLocalServiceWrapper
 	public int getCommerceOrderRuleEntryRelsCount() {
 		return _commerceOrderRuleEntryRelLocalService.
 			getCommerceOrderRuleEntryRelsCount();
+	}
+
+	@Override
+	public int getCommerceOrderRuleEntryRelsCount(
+		long commerceOrderRuleEntryId) {
+
+		return _commerceOrderRuleEntryRelLocalService.
+			getCommerceOrderRuleEntryRelsCount(commerceOrderRuleEntryId);
 	}
 
 	@Override

@@ -6,27 +6,26 @@ definition {
 	property testray.main.component.name = "Product Info Management";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+    		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
-	}
+    		User.firstLoginPG();
+    	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+    	tearDown {
+    		Navigator.openURL();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			Navigator.openURL();
+    		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+    			User.logoutPG();
+    		}
 
-			CommerceNavigator.gotoPortlet(
-				category = "Produt Management",
-				portlet = "Catalogs");
+    		User.firstLoginPG();
 
-			CommerceConfiguration.commerceTearDownExcludingMaster();
-		}
-	}
+    		CommerceNavigator.gotoPortlet(
+    			category = "Produt Management",
+    			portlet = "Catalogs");
+
+    		CommerceConfiguration.commerceTearDownExcludingMaster();
+    	}
 
 	@description = "This is a test for COMMERCE-6278. AddAnImageToCatalogAndRemove"
 	@priority = "3"

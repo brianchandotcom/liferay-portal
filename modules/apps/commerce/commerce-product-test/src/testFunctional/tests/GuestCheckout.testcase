@@ -6,42 +6,35 @@ definition {
 	property testray.main.component.name = "Shopping Experience";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+    		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+    		User.firstLoginPG();
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "User Authentication",
-			configurationName = "General",
-			configurationScope = "Virtual Instance Scope");
+    		PortalSettings.gotoConfiguration(
+    			configurationCategory = "User Authentication",
+    			configurationName = "General",
+    			configurationScope = "Virtual Instance Scope");
 
-		Uncheck(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX");
+    		Uncheck(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX");
 
-		PortletEntry.save();
-	}
+    		PortletEntry.save();
+    	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+    	tearDown {
+    		Navigator.openURL();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			Navigator.openURL();
+    		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+    			User.logoutPG();
+    		}
 
-			if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-				User.logoutPG();
-			}
+    		User.firstLoginPG();
 
-			User.firstLoginPG();
+    		CommerceConfiguration.commerceAdminTearDown(userScreenName = "buyer");
 
-			CommerceConfiguration.commerceAdminTearDown(userScreenName = "buyer");
+    		CommerceConfiguration.commerceInitializersTearDown();
 
-			CommerceConfiguration.commerceInitializersTearDown();
-
-			User.logoutPG();
-		}
-	}
+    		User.logoutPG();
+    	}
 
 	test AssertGuestCartIsTransferredToAccount {
 		property portal.acceptance = "true";

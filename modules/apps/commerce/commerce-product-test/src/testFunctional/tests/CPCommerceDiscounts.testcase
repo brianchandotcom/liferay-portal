@@ -6,25 +6,24 @@ definition {
 	property testray.main.component.name = "Order Management";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+    		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
-	}
+    		User.firstLoginPG();
+    	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+    	tearDown {
+    		Navigator.openURL();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			Navigator.openURL();
+    		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+    			User.logoutPG();
+    		}
 
-			CommerceConfiguration.commerceAdminTearDown();
+    		User.firstLoginPG();
 
-			CommerceConfiguration.commerceInitializersTearDown();
-		}
-	}
+    		CommerceConfiguration.commerceAdminTearDown();
+
+    		CommerceConfiguration.commerceInitializersTearDown();
+    	}
 
 	@description = "This is a test for COMMERCE-6231. Discount lifecycle"
 	@priority = "3"
@@ -242,7 +241,6 @@ definition {
 	test CreateNewDiscount {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "CPCommerceDiscounts#CreateNewDiscount";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",
@@ -294,7 +292,6 @@ definition {
 	@priority = "3"
 	test LimitCouponCodeUsability {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceDiscounts#LimitCouponCodeUsability";
 
 		// TODO Review
 
@@ -527,7 +524,6 @@ definition {
 	@priority = "3"
 	test ViewCouponCodeNotAppliedToNotQualifiedAccount {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceDiscounts#ViewCouponCodeNotAppliedToNotQualifiedAccount";
 
 		// TODO Review
 

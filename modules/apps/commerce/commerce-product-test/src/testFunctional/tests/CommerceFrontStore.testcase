@@ -6,25 +6,24 @@ definition {
 	property testray.main.component.name = "Shopping Experience";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+    		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+    		User.firstLoginPG();
 
-		CommerceConfiguration.commerceStoreFrontSetUp();
-	}
+    		CommerceConfiguration.commerceStoreFrontSetUp();
+    	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+    	tearDown {
+    		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+    			User.logoutPG();
+    		}
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			CommerceConfiguration.commerceAdminTearDown();
+    		User.firstLoginPG();
 
-			User.logoutPG();
-		}
-	}
+    		CommerceConfiguration.commerceAdminTearDown();
+
+    		User.logoutPG();
+    	}
 
 	test ViewStoreFrontSimpleProduct {
 		property portal.acceptance = "quarantine";

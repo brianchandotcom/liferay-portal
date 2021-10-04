@@ -6,23 +6,22 @@ definition {
 	property testray.main.component.name = "Product Info Management";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+    		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
-	}
+    		User.firstLoginPG();
+    	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+    	tearDown {
+    		Navigator.openURL();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			Navigator.openURL();
+    		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+    			User.logoutPG();
+    		}
 
-			CommerceConfiguration.commerceAdminTearDown();
-		}
-	}
+    		User.firstLoginPG();
+
+    		CommerceConfiguration.commerceAdminTearDown();
+    	}
 
 	test CreateNewAvailabilityEstimate {
 		property portal.acceptance = "true";

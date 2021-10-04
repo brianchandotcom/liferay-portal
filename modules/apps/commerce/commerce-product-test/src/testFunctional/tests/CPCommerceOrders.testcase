@@ -430,11 +430,13 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "Account#ACCOUNT_MANAGEMENT",
+			key_rowEntry = "Commerce Account 1",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
 			value1 = "Commerce Account 1");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "Account#ACCOUNT_MANAGEMENT",
+			key_rowEntry = "Commerce Account 2",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
 			value1 = "Commerce Account 2");
 
 		CommerceNavigator.gotoPortlet(

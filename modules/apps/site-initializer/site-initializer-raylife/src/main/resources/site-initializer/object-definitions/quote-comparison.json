@@ -1,0 +1,104 @@
+{
+	"label": {
+		"en_US": "Quote Comparison"
+	},
+	"name": "QuoteComparison",
+	"objectFields": [
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Most Popular"
+			},
+			"name": "mostPopular",
+			"required": true,
+			"type": "Boolean"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Category"
+			},
+			"name": "category",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Price"
+			},
+			"name": "price",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Promo"
+			},
+			"name": "promo",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Per Occurance Limit"
+			},
+			"name": "perOccuranceLimit",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Aggregate Limit"
+			},
+			"name": "aggregateLimit",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Business Personal Property"
+			},
+			"name": "businessPersonalProperty",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Product Recall or Replacement"
+			},
+			"name": "productRecallOrReplacement",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Money and Securities"
+			},
+			"name": "moneyAndSecurities",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"panelAppOrder": "100",
+	"panelCategoryKey": "site_administration.content",
+	"pluralLabel": {
+		"en_US": "Quote Comparisons"
+	},
+	"scope": "site"
+}

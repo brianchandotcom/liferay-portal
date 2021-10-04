@@ -49,6 +49,7 @@ import com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.QueryEntry;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SortConfiguration;
+import com.liferay.search.experiences.rest.dto.v1_0.enhancer.SXPBlueprintSearchRequestEnhancer;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 
 import java.io.InputStream;
@@ -293,38 +294,41 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 	private SXPBlueprintSearchRequestEnhancer
 		_createSXPBlueprintSearchRequestEnhancer() {
 
-		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
-			new SXPBlueprintSearchRequestEnhancer();
+		SXPBlueprintSearchRequestEnhancerImpl
+			sxpBlueprintSearchRequestEnhancerImpl =
+				new SXPBlueprintSearchRequestEnhancerImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			sxpBlueprintSearchRequestEnhancer, "_aggregations",
+			sxpBlueprintSearchRequestEnhancerImpl, "_aggregations",
 			new AggregationsImpl());
 		ReflectionTestUtil.setFieldValue(
-			sxpBlueprintSearchRequestEnhancer,
+			sxpBlueprintSearchRequestEnhancerImpl,
 			"_complexQueryPartBuilderFactory",
 			new ComplexQueryPartBuilderFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
-			sxpBlueprintSearchRequestEnhancer, "_fieldConfigBuilderFactory",
+			sxpBlueprintSearchRequestEnhancerImpl, "_fieldConfigBuilderFactory",
 			new FieldConfigBuilderFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
-			sxpBlueprintSearchRequestEnhancer, "_geoBuilders",
+			sxpBlueprintSearchRequestEnhancerImpl, "_geoBuilders",
 			new GeoBuildersImpl());
 		ReflectionTestUtil.setFieldValue(
-			sxpBlueprintSearchRequestEnhancer, "_highlightBuilderFactory",
+			sxpBlueprintSearchRequestEnhancerImpl, "_highlightBuilderFactory",
 			new HighlightBuilderFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
-			sxpBlueprintSearchRequestEnhancer, "_queries", new QueriesImpl());
+			sxpBlueprintSearchRequestEnhancerImpl, "_queries",
+			new QueriesImpl());
 		ReflectionTestUtil.setFieldValue(
-			sxpBlueprintSearchRequestEnhancer, "_scripts", new ScriptsImpl());
+			sxpBlueprintSearchRequestEnhancerImpl, "_scripts",
+			new ScriptsImpl());
 		ReflectionTestUtil.setFieldValue(
-			sxpBlueprintSearchRequestEnhancer, "_sorts", new SortsImpl());
+			sxpBlueprintSearchRequestEnhancerImpl, "_sorts", new SortsImpl());
 		ReflectionTestUtil.setFieldValue(
-			sxpBlueprintSearchRequestEnhancer, "_sxpParameterDataCreator",
+			sxpBlueprintSearchRequestEnhancerImpl, "_sxpParameterDataCreator",
 			new SXPParameterDataCreator());
 
-		sxpBlueprintSearchRequestEnhancer.activate();
+		sxpBlueprintSearchRequestEnhancerImpl.activate();
 
-		return sxpBlueprintSearchRequestEnhancer;
+		return sxpBlueprintSearchRequestEnhancerImpl;
 	}
 
 	private String _formatJSON(String string) throws Exception {

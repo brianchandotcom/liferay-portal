@@ -38,32 +38,26 @@ $input-placeholder-color: var(--form-input-placeholder-color);
 $input-placeholder-disabled-color: var(--form-input-placeholder-disabled-color);
 $input-placeholder-focus-color: var(--form-input-placeholder-focus-color);
 
-$input-danger-bg: var(--form-input-error-bg, var(--color-state-error-lighten));
+$input-danger-bg: var(--form-input-error-bg, #{danger-l2});
 $input-danger-border-color: var(
 	--form-input-error-border-color,
-	var(--color-state-error)
+	#{$dialect-danger}
 );
 $input-danger-focus-bg: #{$form-white-color};
 $input-danger-focus-border-color: #{$form-input-focus-color};
 $input-danger-checkbox-label-color: $input-label-color;
-$input-success-bg: var(
-	--form-input-success-bg,
-	var(--color-state-success-lighten)
-);
+$input-success-bg: var(--form-input-success-bg, #{success-l2});
 $input-success-border-color: var(
 	--form-input-success-border-color,
-	var(--color-state-success)
+	#{$dialect-success}
 );
 $input-success-focus-bg: #{$form-white-color};
 $input-success-focus-border-color: #{$form-input-focus-color};
 $input-success-checkbox-label-color: $input-label-color;
-$input-warning-bg: var(
-	--form-input-warning-bg,
-	var(--color-state-warning-lighten)
-);
+$input-warning-bg: var(--form-input-warning-bg, #{warning-l2});
 $input-warning-border-color: var(
 	--form-input-warning-border-color,
-	var(--color-state-warning)
+	#{$dialect-warning}
 );
 $input-warning-focus-bg: #{$form-white-color};
 $input-warning-focus-border-color: #{$form-input-focus-color};

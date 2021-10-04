@@ -6,17 +6,17 @@ $sticker-primary-color: var(--color-action-primary-default);
 $sticker-secondary-bg: var(--color-action-secondary-inverted);
 $sticker-secondary-color: var(--color-action-secondary-default);
 
-$sticker-info-bg: var(--color-action-neutral-inverted);
-$sticker-info-color: var(--color-state-info);
+$sticker-info-bg: $dialect-white;
+$sticker-info-color: $dialect-info;
 
-$sticker-success-bg: var(--color-action-neutral-inverted);
-$sticker-success-color: var(--color-state-success);
+$sticker-success-bg: $dialect-white;
+$sticker-success-color: $dialect-success;
 
-$sticker-warning-bg: var(--color-action-neutral-inverted);
-$sticker-warning-color: var(--color-state-warning);
+$sticker-warning-bg: $dialect-white;
+$sticker-warning-color: $dialect-warning;
 
-$sticker-danger-bg: var(--color-action-neutral-inverted);
-$sticker-danger-color: var(--color-state-error);
+$sticker-danger-bg: $dialect-white;
+$sticker-danger-color: $dialect-danger;
 
 $sticker-light-bg: var(--color-action-neutral-default);
 $sticker-light-color: var(--color-action-neutral-inverted);

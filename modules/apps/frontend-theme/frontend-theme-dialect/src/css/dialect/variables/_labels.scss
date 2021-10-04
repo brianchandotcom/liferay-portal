@@ -42,82 +42,90 @@ $label-secondary: (
 	),
 );
 
+$label-success-hover-color: $success-d1;
+
 $label-success: (
-	border-color: var(--color-state-success),
-	color: var(--color-state-success),
+	border-color: $dialect-success,
+	color: $dialect-success,
 	hover: (
-		border-color: var(--color-state-success),
-		color: var(--color-state-success),
+		border-color: $dialect-success,
+		color: $label-success-hover-color,
 	),
 	focus: (
-		color: var(--color-state-success),
+		color: $label-success-hover-color,
 	),
 	close: (
 		hover: (
-			color: var(--color-state-success),
+			color: $label-success-hover-color,
 		),
 		focus: (
-			color: var(--color-state-success),
+			color: $label-success-hover-color,
 		),
 	),
 );
+
+$label-info-hover-color: $info-d1;
 
 $label-info: (
-	border-color: var(--color-state-info),
-	color: var(--color-state-info),
+	border-color: $dialect-info,
+	color: $dialect-info,
 	hover: (
-		border-color: var(--color-state-info),
-		color: var(--color-state-info),
+		border-color: $dialect-info,
+		color: $label-info-hover-color,
 	),
 	focus: (
-		color: var(--color-state-info),
+		color: $label-info-hover-color,
 	),
 	close: (
 		hover: (
-			color: var(--color-state-info),
+			color: $label-info-hover-color,
 		),
 		focus: (
-			color: var(--color-state-info),
+			color: $label-info-hover-color,
 		),
 	),
 );
+
+$label-warning-hover-color: $warning-d1;
 
 $label-warning: (
-	border-color: var(--color-state-warning),
-	color: var(--color-state-warning),
+	border-color: $dialect-warning,
+	color: $dialect-warning,
 	hover: (
-		border-color: var(--color-state-warning),
-		color: var(--color-state-warning),
+		border-color: $dialect-warning,
+		color: $label-warning-hover-color,
 	),
 	focus: (
-		color: var(--color-state-warning),
+		color: $label-warning-hover-color,
 	),
 	close: (
 		hover: (
-			color: var(--color-state-warning),
+			color: $label-warning-hover-color,
 		),
 		focus: (
-			color: var(--color-state-warning),
+			color: $label-warning-hover-color,
 		),
 	),
 );
 
+$label-danger-hover-color: $danger-d1;
+
 $label-danger: (
-	border-color: var(--color-state-error),
-	color: var(--color-state-error),
+	border-color: $dialect-danger,
+	color: $dialect-danger,
 	hover: (
-		border-color: var(--color-state-error),
-		color: var(--color-state-error),
+		border-color: $dialect-danger,
+		color: $label-danger-hover-color,
 	),
 	focus: (
-		color: var(--color-state-error),
+		color: $label-danger-hover-color,
 	),
 	close: (
 		hover: (
-			color: var(--color-state-error),
+			color: $label-danger-hover-color,
 		),
 		focus: (
-			color: var(--color-state-error),
+			color: $label-danger-hover-color,
 		),
 	),
 );
@@ -211,85 +219,85 @@ $label-inverse-secondary: (
 );
 
 $label-inverse-success: (
-	background-color: var(--color-state-success),
-	border-color: var(--color-state-success),
-	color: var(--color-neutral-10),
+	background-color: $dialect-success,
+	border-color: $dialect-success,
+	color: $dialect-white,
 	hover: (
-		background-color: var(--color-state-success),
-		border-color: var(--color-state-success),
-		color: var(--color-neutral-10),
+		background-color: $dialect-success,
+		border-color: $dialect-success,
+		color: $dialect-white,
 	),
 	link: (
 		hover: (
-			color: var(--color-state-success-lighten),
+			color: $success-l2,
 		),
 	),
 	close: (
 		hover: (
-			color: var(--color-state-success-lighten),
+			color: $success-l2,
 		),
 	),
 );
 
 $label-inverse-info: (
-	background-color: var(--color-state-info),
-	border-color: var(--color-state-info),
-	color: var(--color-neutral-10),
+	background-color: $dialect-info,
+	border-color: $dialect-info,
+	color: $dialect-white,
 	hover: (
-		background-color: var(--color-state-info),
-		border-color: var(--color-state-info),
-		color: var(--color-neutral-10),
+		background-color: $dialect-info,
+		border-color: $dialect-info,
+		color: $dialect-white,
 	),
 	link: (
 		hover: (
-			color: var(--color-state-info-lighten),
+			color: $info-l2,
 		),
 	),
 	close: (
 		hover: (
-			color: var(--color-state-info-lighten),
+			color: $info-l2,
 		),
 	),
 );
 
 $label-inverse-warning: (
-	background-color: var(--color-state-warning),
-	border-color: var(--color-state-warning),
-	color: var(--color-neutral-10),
+	background-color: $dialect-warning,
+	border-color: $dialect-warning,
+	color: $dialect-white,
 	hover: (
-		background-color: var(--color-state-warning),
-		border-color: var(--color-state-warning),
-		color: var(--color-neutral-10),
+		background-color: $dialect-warning,
+		border-color: $dialect-warning,
+		color: $dialect-white,
 	),
 	link: (
 		hover: (
-			color: var(--color-state-warning-lighten),
+			color: $warning-l2,
 		),
 	),
 	close: (
 		hover: (
-			color: var(--color-state-warning-lighten),
+			color: $warning-l2,
 		),
 	),
 );
 
 $label-inverse-danger: (
-	background-color: var(--color-state-error),
-	border-color: var(--color-state-error),
-	color: var(--color-neutral-10),
+	background-color: $dialect-danger,
+	border-color: $dialect-danger,
+	color: $dialect-white,
 	hover: (
-		background-color: var(--color-state-error),
-		border-color: var(--color-state-error),
-		color: var(--color-neutral-10),
+		background-color: $dialect-danger,
+		border-color: $dialect-danger,
+		color: $dialect-white,
 	),
 	link: (
 		hover: (
-			color: var(--color-state-error-lighten),
+			color: $danger-l2,
 		),
 	),
 	close: (
 		hover: (
-			color: var(--color-state-error-lighten),
+			color: $danger-l2,
 		),
 	),
 );

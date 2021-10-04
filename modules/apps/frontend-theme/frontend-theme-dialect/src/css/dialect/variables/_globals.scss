@@ -19,3 +19,57 @@ $component-focus-box-shadow: 0 0 0 0.125rem $form-white-color#{','} 0 0 0 0.25re
 	$form-input-focus-color;
 $component-focus-inset-box-shadow: inset 0 0 0 0.125rem $form-input-focus-color#{','}
 	inset 0 0 0 0.25rem $form-white-color;
+
+// Colors
+
+$dialect-white: var(--color-neutral-10);
+
+$dialect-primary: var(--color-brand-primary);
+$primary-d1: var(--color-brand-primary-darken-1);
+$primary-d2: var(--color-brand-primary-darken-2);
+$primary-l1: var(--color-brand-primary-lighten-2);
+$primary-l2: var(--color-brand-primary-lighten-5);
+$primary-l3: var(--color-brand-primary-lighten-6);
+
+$dialect-secondary: var(--color-brand-secondary);
+$secondary-d1: var(--color-brand-secondary-darken-1);
+$secondary-d2: var(--color-brand-secondary-darken-2);
+$secondary-l1: var(--color-brand-secondary-lighten-2);
+$secondary-l2: var(--color-brand-secondary-lighten-5);
+$secondary-l3: var(--color-brand-secondary-lighten-6);
+
+$dialect-info: var(--color-state-info);
+$info-d1: var(--color-state-info-darken-1);
+$info-d2: var(--color-state-info-darken-2);
+$info-l1: var(--color-state-info-lighten-1);
+$info-l2: var(--color-state-info-lighten-2);
+
+$dialect-success: var(--color-state-success);
+$success-d1: var(--color-state-success-darken-1);
+$success-d2: var(--color-state-success-darken-2);
+$success-l1: var(--color-state-success-lighten-1);
+$success-l2: var(--color-state-success-lighten-2);
+
+$dialect-warning: var(--color-state-warning);
+$warning-d1: var(--color-state-warning-darken-1);
+$warning-d2: var(--color-state-warning-darken-2);
+$warning-l1: var(--color-state-warning-lighten-1);
+$warning-l2: var(--color-state-warning-lighten-2);
+
+$dialect-danger: var(--color-state-error);
+$danger-d1: var(--color-state-error-darken-1);
+$danger-d2: var(--color-state-error-darken-2);
+$danger-l1: var(--color-state-error-lighten-1);
+$danger-l2: var(--color-state-error-lighten-2);
+
+$dialect-light: var(--color-neutral-7);
+$light-d1: var(--color-neutral-6);
+$light-d2: var(--color-neutral-5);
+$light-l1: var(--color-neutral-8);
+$light-l2: var(--color-neutral-9);
+
+$dialect-dark: var(--color-neutral-3);
+$dark-d1: var(--color-neutral-5);
+$dark-d2: var(--color-neutral-4);
+$dark-l1: var(--color-neutral-2);
+$dark-l2: var(--color-neutral-1);

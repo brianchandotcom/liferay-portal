@@ -4,25 +4,25 @@ $badge-pill-border-radius: $rounded-pill;
 // Badge Variants
 
 $badge-primary-color: var(--color-action-primary-inverted);
-$badge-primary-bg: var(--color-brand-primary);
+$badge-primary-bg: $dialect-primary;
 
 $badge-secondary-color: var(--color-action-secondary-inverted);
-$badge-secondary-bg: var(--color-brand-secondary);
+$badge-secondary-bg: $dialect-secondary;
 
 $badge-success-color: var(--color-action-neutral-inverted);
-$badge-success-bg: var(--color-state-success);
+$badge-success-bg: $dialect-success;
 
 $badge-info-color: var(--color-action-neutral-inverted);
-$badge-info-bg: var(--color-state-info);
+$badge-info-bg: $dialect-info;
 
 $badge-warning-color: var(--color-action-neutral-inverted);
-$badge-warning-bg: var(--color-state-warning);
+$badge-warning-bg: $dialect-warning;
 
 $badge-danger-color: var(--color-action-neutral-inverted);
-$badge-danger-bg: var(--color-state-error);
+$badge-danger-bg: $dialect-danger;
 
 $badge-light-color: var(--color-neutral-9);
-$badge-light-bg: var(--color-neutral-1);
+$badge-light-bg: $dialect-light;
 
 $badge-dark-color: var(--color-action-neutral-inverted);
-$badge-dark-bg: var(--color-neutral-9);
+$badge-dark-bg: $dialect-dark;

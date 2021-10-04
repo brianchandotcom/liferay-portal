@@ -8,35 +8,35 @@ $header-close: (
 // Modal Success
 
 $modal-success: (
-	header-bg: var(--color-state-success-lighten),
-	header-border-color: var(--color-state-success),
-	header-color: var(--color-state-success),
+	header-bg: $success-l2,
+	header-border-color: $dialect-success,
+	header-color: $dialect-success,
 	header-close: $header-close,
 );
 
 // Modal Info
 
 $modal-info: (
-	header-bg: var(--color-state-info-lighten),
-	header-border-color: var(--color-state-info),
-	header-color: var(--color-state-info),
+	header-bg: $info-l2,
+	header-border-color: $dialect-info,
+	header-color: $dialect-info,
 	header-close: $header-close,
 );
 
 // Modal Warning
 
 $modal-warning: (
-	header-bg: var(--color-state-warning-lighten),
-	header-border-color: var(--color-state-warning),
-	header-color: var(--color-state-warning),
+	header-bg: $warning-l2,
+	header-border-color: $dialect-warning,
+	header-color: $dialect-warning,
 	header-close: $header-close,
 );
 
 // Modal Danger
 
 $modal-danger: (
-	header-bg: var(--color-state-error-lighten),
-	header-border-color: var(--color-state-error),
-	header-color: var(--color-state-error),
+	header-bg: $danger-l2,
+	header-border-color: $dialect-danger,
+	header-color: $dialect-danger,
 	header-close: $header-close,
 );

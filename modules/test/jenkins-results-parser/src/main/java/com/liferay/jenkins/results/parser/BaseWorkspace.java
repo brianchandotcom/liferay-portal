@@ -190,10 +190,6 @@ public abstract class BaseWorkspace implements Workspace {
 			GitRepositoryFactory.getWorkspaceGitRepository(
 				_jsonObject.getString("primary_repository_name"),
 				_jsonObject.getString("primary_upstream_branch_name"));
-
-		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
-
-		buildDatabase.putWorkspace(this);
 	}
 
 	protected BaseWorkspace(
@@ -229,10 +225,6 @@ public abstract class BaseWorkspace implements Workspace {
 		}
 
 		_validateKeys();
-
-		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
-
-		buildDatabase.putWorkspace(this);
 	}
 
 	protected WorkspaceGitRepository getWorkspaceGitRepository(

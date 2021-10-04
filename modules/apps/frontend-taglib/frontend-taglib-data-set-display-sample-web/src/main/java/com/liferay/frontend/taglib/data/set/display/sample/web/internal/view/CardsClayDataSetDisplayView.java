@@ -31,12 +31,12 @@ public class CardsClayDataSetDisplayView
 
 	@Override
 	public String getDescription() {
-		return "fox";
+		return "description";
 	}
 
 	@Override
 	public String getTitle() {
-		return "easy";
+		return "title";
 	}
 
 }

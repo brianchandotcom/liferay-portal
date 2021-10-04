@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier de Arcos
  */
 @Component(
-	property = "clay.data.set.display.name=dataSetDisplay",
+	enabled = true, property = "clay.data.set.display.name=dataSetDisplay",
 	service = ClayDataSetDisplayView.class
 )
 public class TableClayDataSetDisplayView
@@ -42,28 +42,12 @@ public class TableClayDataSetDisplayView
 
 		clayTableSchemaBuilder.addClayTableSchemaField("id", "id");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("able", "Able");
+		clayTableSchemaBuilder.addClayTableSchemaField("title", "Title");
 
-		ClayTableSchemaField bakerClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField("baker", "Baker");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"description", "Description");
 
-		bakerClayTableSchemaField.setContentRenderer("boolean");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("charlie", "Charlie");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("dog", "Dog");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("easy", "Easy");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("fox", "Fox");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("george", "George");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("how", "How");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("item", "Item");
-
-		clayTableSchemaBuilder.addClayTableSchemaField("jig", "Jig");
+		clayTableSchemaBuilder.addClayTableSchemaField("date", "Date");
 
 		ClayTableSchemaField statusClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("status", "status");

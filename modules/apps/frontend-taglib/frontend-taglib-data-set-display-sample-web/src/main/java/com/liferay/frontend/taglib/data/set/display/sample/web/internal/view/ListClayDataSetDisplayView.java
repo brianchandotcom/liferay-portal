@@ -30,12 +30,12 @@ public class ListClayDataSetDisplayView extends BaseListClayDataSetDisplayView {
 
 	@Override
 	public String getDescription() {
-		return "fox";
+		return "description";
 	}
 
 	@Override
 	public String getTitle() {
-		return "easy";
+		return "title";
 	}
 
 }

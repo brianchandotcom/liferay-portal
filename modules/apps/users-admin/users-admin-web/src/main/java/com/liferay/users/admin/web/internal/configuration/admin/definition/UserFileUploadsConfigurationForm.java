@@ -34,10 +34,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 					{
 						@DDMFormLayoutColumn(
 							size = 12,
-							value = {
-								"imageCheckToken", "imageDefaultUseInitials",
-								"imageMaxSize"
-							}
+							value = {"imageCheckToken", "imageMaxSize"}
 						)
 					}
 				),
@@ -60,13 +57,6 @@ public interface UserFileUploadsConfigurationForm {
 		tip = "%users-image-check-token-help"
 	)
 	public boolean imageCheckToken();
-
-	@DDMFormField(
-		label = "%use-initials-for-default-user-portrait",
-		properties = "showAsSwitcher=true",
-		tip = "%use-initials-for-default-user-portrait-help"
-	)
-	public boolean imageDefaultUseInitials();
 
 	@DDMFormField(
 		label = "%maximum-height", tip = "%users-image-maximum-height-help"

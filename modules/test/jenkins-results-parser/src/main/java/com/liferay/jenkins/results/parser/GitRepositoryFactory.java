@@ -76,16 +76,83 @@ public class GitRepositoryFactory {
 	}
 
 	public static WorkspaceGitRepository getWorkspaceGitRepository(
+		PullRequest pullRequest) {
+
+		String gitDirectoryName = JenkinsResultsParserUtil.getGitDirectoryName(
+			pullRequest.getGitRepositoryName(),
+			pullRequest.getUpstreamRemoteGitBranchName());
+
+		WorkspaceGitRepository workspaceGitRepository =
+			_workspaceGitRepositories.get(gitDirectoryName);
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		if (workspaceGitRepository != null) {
+			workspaceGitRepository.setGitHubURL(pullRequest.getHtmlURL());
+
+			buildDatabase.putWorkspaceGitRepository(
+				gitDirectoryName, workspaceGitRepository);
+
+			return workspaceGitRepository;
+		}
+
+		if (buildDatabase.hasWorkspaceGitRepository(gitDirectoryName)) {
+			workspaceGitRepository = buildDatabase.getWorkspaceGitRepository(
+				gitDirectoryName);
+
+			workspaceGitRepository.setGitHubURL(pullRequest.getHtmlURL());
+
+			_workspaceGitRepositories.put(
+				gitDirectoryName, workspaceGitRepository);
+
+			return workspaceGitRepository;
+		}
+
+		String gitRepositoryName =
+			JenkinsResultsParserUtil.getGitRepositoryName(gitDirectoryName);
+		String gitUpstreamBranchName =
+			JenkinsResultsParserUtil.getGitUpstreamBranchName(gitDirectoryName);
+
+		if ((gitRepositoryName == null) || (gitUpstreamBranchName == null)) {
+			throw new RuntimeException(
+				"Could not find git directory name " + gitDirectoryName);
+		}
+
+		if (gitRepositoryName.matches("liferay-plugins(-ee)?")) {
+			workspaceGitRepository = new PluginsWorkspaceGitRepository(
+				pullRequest, gitUpstreamBranchName);
+		}
+		else if (gitRepositoryName.matches("liferay-portal(-ee)?")) {
+			workspaceGitRepository = new PortalWorkspaceGitRepository(
+				pullRequest, gitUpstreamBranchName);
+		}
+		else {
+			workspaceGitRepository = new DefaultWorkspaceGitRepository(
+				pullRequest, gitUpstreamBranchName);
+		}
+
+		buildDatabase.putWorkspaceGitRepository(
+			gitDirectoryName, workspaceGitRepository);
+
+		_workspaceGitRepositories.put(gitDirectoryName, workspaceGitRepository);
+
+		return workspaceGitRepository;
+	}
+
+	public static WorkspaceGitRepository getWorkspaceGitRepository(
 		String gitDirectoryName) {
 
 		WorkspaceGitRepository workspaceGitRepository =
 			_workspaceGitRepositories.get(gitDirectoryName);
 
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
 		if (workspaceGitRepository != null) {
+			buildDatabase.putWorkspaceGitRepository(
+				gitDirectoryName, workspaceGitRepository);
+
 			return workspaceGitRepository;
 		}
-
-		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
 
 		if (buildDatabase.hasWorkspaceGitRepository(gitDirectoryName)) {
 			workspaceGitRepository = buildDatabase.getWorkspaceGitRepository(
@@ -124,6 +191,9 @@ public class GitRepositoryFactory {
 			workspaceGitRepository = new DefaultWorkspaceGitRepository(
 				remoteGitRef, gitUpstreamBranchName);
 		}
+
+		buildDatabase.putWorkspaceGitRepository(
+			gitDirectoryName, workspaceGitRepository);
 
 		_workspaceGitRepositories.put(gitDirectoryName, workspaceGitRepository);
 

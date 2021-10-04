@@ -5,10 +5,6 @@ apply plugin: "com.liferay.node"
 
 task buildExtra
 
-classes {
-	dependsOn buildExtra
-}
-
 node {
 	global = false
 	nodeVersion = "14.17.6"
@@ -68,7 +64,7 @@ private void _createExtraTasks() {
 				copy {
 					from new File(dir, "build/static")
 					include "js/*.js"
-					into new File(sourceSets.main.output.resourcesDir, "site-initializer/documents/extra/" + dir.name)
+					into new File(projectDir, "src/main/resources/site-initializer/documents/extra/" + dir.name)
 				}
 			}
 		}

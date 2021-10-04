@@ -67,7 +67,8 @@ definition {
 				ScrollWebElementIntoView(locator1 = "CommerceEntry#COMMERCE_SEARCH_RESULTS_TEMPLATE_MENU_ITEM");
 
 				Click(locator1 = "CommerceEntry#COMMERCE_SEARCH_RESULTS_TEMPLATE_MENU_ITEM");
-			} else {
+			}
+			else {
 				ScrollWebElementIntoView(
 					key_menuItem = "${adtType} Template",
 					locator1 = "MenuItem#ANY_MENU_ITEM");

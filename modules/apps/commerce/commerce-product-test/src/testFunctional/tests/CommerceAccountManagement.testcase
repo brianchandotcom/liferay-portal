@@ -30,7 +30,6 @@ definition {
 	@priority = "3"
 	test AddAddressToAccount {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceAccountManagement#AddAddressToAccount";
 
 		// TODO Review
 
@@ -84,7 +83,6 @@ definition {
 	@priority = "3"
 	test AddOrganizationToAccount {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceAccountManagement#AddOrganizationToAccount";
 
 		// TODO Review
 
@@ -129,7 +127,6 @@ definition {
 	@priority = "3"
 	test AssertOrganizationThatIsPartOfTheAccountCannotBeAddedAgain {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceAccountManagement#AssertOrganizationThatIsPartOfTheAccountCannotBeAddedAgain";
 
 		// TODO Review
 
@@ -198,7 +195,7 @@ definition {
 	@priority = "3"
 	test EditAccountDetails {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceAccountManagement#EditAccountDetails";
+
 
 		// TODO Review
 
@@ -309,7 +306,6 @@ definition {
 	@priority = "3"
 	test EditAddressInAccount {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceAccountManagement#EditAddressInAccount";
 
 		// TODO Review
 
@@ -366,7 +362,6 @@ definition {
 	@priority = "3"
 	test RemoveAddressFromAccount {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceAccountManagement#RemoveAddressFromAccount";
 
 		// TODO Review
 
@@ -412,7 +407,6 @@ definition {
 	@priority = "3"
 	test RemoveOrganizationFromAccount {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceAccountManagement#RemoveOrganizationFromAccount";
 
 		// TODO Review
 
@@ -465,7 +459,7 @@ definition {
 	@priority = "3"
 	test RemoveUserFromAccount {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceAccountManagement#RemoveUserFromAccount";
+
 
 		// TODO Review
 

@@ -25,15 +25,12 @@ definition {
     		CommerceConfiguration.commerceAdminTearDown();
 
     		CommerceConfiguration.commerceInitializersTearDown();
-
-    		User.logoutPG();
     	}
 
 	@description = "This is a test for COMMERCE-6094. UseConfiguration"
 	@priority = "3"
 	test UseConfiguration {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductConfigurations#UseConfiguration";
 
 		// TODO Review
 

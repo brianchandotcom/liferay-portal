@@ -23,8 +23,6 @@ definition {
     		CommerceConfiguration.commerceAdminTearDown();
 
     		CommerceConfiguration.commerceInitializersTearDown();
-
-    		User.logoutPG();
     	}
 
 	test CreateAnOption {
@@ -52,7 +50,6 @@ definition {
 	@priority = "3"
 	test RemoveAnOption {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceOptions#RemoveAnOption";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

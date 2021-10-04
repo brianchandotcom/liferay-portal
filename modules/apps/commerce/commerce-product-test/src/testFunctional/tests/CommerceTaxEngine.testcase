@@ -209,7 +209,7 @@ definition {
 	@priority = "3"
 	test AddTaxRateToByAddressTaxEngine {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceTaxEngine#AddTaxRateToByAddressTaxEngine";
+
 
 		// TODO Review
 
@@ -401,7 +401,7 @@ definition {
 	@priority = "3"
 	test AddTaxRateToFixedTaxEngine {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceTaxEngine#AddTaxRateToFixedTaxEngine";
+
 
 		// TODO Review
 
@@ -529,7 +529,7 @@ definition {
 	@priority = "3"
 	test AssertAddressRestrictiedTaxIsCorrectlyCalculated {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceTaxEngine#AssertAddressRestrictiedTaxIsCorrectlyCalculated";
+
 
 		// TODO Review
 

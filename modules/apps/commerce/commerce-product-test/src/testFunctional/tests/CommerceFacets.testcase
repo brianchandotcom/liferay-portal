@@ -29,7 +29,6 @@ definition {
 	@priority = "3"
 	test AssertProductsAreFilteredByCategoryFacet {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceFacets#AssertProductsAreFilteredByCategoryFacet";
 
 		// TODO Review
 
@@ -55,7 +54,7 @@ definition {
 	@priority = "3"
 	test AssertProductsAreFilteredByOptionFacet {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceFacets#AssertProductsAreFilteredByOptionFacet";
+
 
 		// TODO Review
 
@@ -82,7 +81,6 @@ definition {
 	@priority = "3"
 	test AssertProductsAreFilteredByPriceRangeFacet {
 		property portal.acceptance = "Intern Test";
-		property test.name.skip.portal.instance = "CommerceFacets#AssertProductsAreFilteredByPriceRangeFacet";
 
 		// TODO Review
 
@@ -135,7 +133,7 @@ definition {
 	@priority = "3"
 	test AssertProductsAreFilteredBySpecificationFacet {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceFacets#AssertProductsAreFilteredBySpecificationFacet";
+
 
 		// TODO
 

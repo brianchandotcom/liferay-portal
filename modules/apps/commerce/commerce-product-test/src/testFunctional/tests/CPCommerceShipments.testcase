@@ -28,7 +28,6 @@ definition {
 	@description = "This is a test for COMMERCE-6238. Add shipment items to a shipment"
 	@priority = "3"
 	test AddItemsToShipment {
-		property test.name.skip.portal.instance = "CPCommerceShipments#AddItemsToShipment";
 
 		// TODO Review
 
@@ -255,7 +254,6 @@ definition {
 	@priority = "3"
 	test AssertShipmentItemTakenFromActiveWarehouses {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceShipments#AssertShipmentItemTakenFromActiveWarehouses";
 
 		// TODO Review
 
@@ -369,7 +367,6 @@ definition {
 	@priority = "3"
 	test AssertShippedShipmentNotDeletable {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceShipments#AssertShippedShipmentNotDeletable";
 
 		// TODO Review
 
@@ -582,7 +579,6 @@ definition {
 	@priority = "3"
 	test CreateOrderShipment {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceShipments#CreateOrderShipment";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -683,7 +679,6 @@ definition {
 	@priority = "3"
 	test DeleteShipment {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceShipments#DeleteShipment";
 
 		// TODO Review
 
@@ -763,7 +758,6 @@ definition {
 	@description = "This is a test for COMMERCE-6241. Execute the shipment workflow"
 	@priority = "3"
 	test ExecuteShipmentWorkflow {
-		property test.name.skip.portal.instance = "CPCommerceShipments#ExecuteShipmentWorkflow";
 
 		// TODO Review
 
@@ -927,7 +921,6 @@ definition {
 	@description = "This is a test for COMMERCE-6240. Remove shipment items from a shipment"
 	@priority = "3"
 	test RemoveItemFromShipment {
-		property test.name.skip.portal.instance = "CPCommerceShipments#RemoveItemFromShipment";
 
 		// TODO Review
 
@@ -1070,7 +1063,7 @@ definition {
 	@priority = "3"
 	test SearchShipment {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceShipments#SearchShipment";
+
 
 		// TODO Review
 
@@ -1206,7 +1199,6 @@ definition {
 	@priority = "3"
 	test UpdateShipmentAddress {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceShipments#UpdateShipmentAddress";
 
 		// TODO Review
 
@@ -1359,7 +1351,7 @@ definition {
 	@description = "This is a test for COMMERCE-6239. Update shipment items to a shipment"
 	@priority = "3"
 	test UpdateShipmentItems {
-		property test.name.skip.portal.instance = "CPCommerceShipments#UpdateShipmentItems";
+
 
 		// TODO Review
 
@@ -1522,7 +1514,6 @@ definition {
 	@priority = "3"
 	test ValidateShipmentAddress {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceShipments#ValidateShipmentAddress";
 
 		// TODO Review
 
@@ -1646,7 +1637,7 @@ definition {
 	@priority = "3"
 	test ViewOrderShipmentAmountIsCorrect {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceShipments#ViewOrderShipmentAmountIsCorrect";
+
 
 		// TODO Review
 
@@ -1742,7 +1733,6 @@ definition {
 	@priority = "3"
 	test ViewOrderShipmentDiscountAmountIsCorrect {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceShipments#ViewOrderShipmentDiscountAmountIsCorrect";
 
 		// TODO Review
 

@@ -12,22 +12,17 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		Navigator.openURL();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			User.logoutPG();
 		}
-		else {
-			Navigator.openURL();
 
-			CommerceNavigator.gotoPortlet(
-				category = "Store Management",
-				portlet = "Channels");
+		User.firstLoginPG();
 
-			if (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
-				CommerceEntry.deleteCommerceEntry();
-			}
-		}
+		CommerceConfiguration.commerceAdminTearDown();
+
+		CommerceConfiguration.commerceInitializersTearDown();
 	}
 
 	@description = "This is a test for COMMERCE-6118. ActiveAllTaxCalculations"
@@ -35,7 +30,6 @@ definition {
 	test ActiveAllTaxCalculations {
 		property portal.acceptance = "false";
 		property portal.release = "false";
-		property test.name.skip.portal.instance = "CPCommerceChannels#ActiveAllTaxCalculations";
 
 		// TODO Review
 
@@ -732,7 +726,7 @@ definition {
 	@priority = "3"
 	test CreateProductDisplayPage {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceChannels#CreateProductDisplayPage";
+
 
 		// TODO Review
 
@@ -849,7 +843,6 @@ definition {
 	test EditAvalaraTaxCalculation {
 		property portal.acceptance = "false";
 		property portal.release = "false";
-		property test.name.skip.portal.instance = "CPCommerceChannels#EditAvalaraTaxCalculation";
 
 		// TODO Review
 
@@ -1123,7 +1116,7 @@ definition {
 	@priority = "3"
 	test EditNotificationTemplate {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceChannels#EditNotificationTemplate";
+
 
 		// TODO Review
 
@@ -1250,7 +1243,6 @@ definition {
 	@priority = "3"
 	test EditProductDisplayPage {
 		property portal.acceptance = "Intern Test";
-		property test.name.skip.portal.instance = "CPCommerceChannels#EditProductDisplayPage";
 
 		// TODO Review
 
@@ -1373,7 +1365,7 @@ definition {
 	@priority = "3"
 	test RemoveCategoryDisplayPage {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceChannels#RemoveCategoryDisplayPage";
+
 
 		// TODO Review
 
@@ -1434,7 +1426,6 @@ definition {
 	@priority = "3"
 	test RemoveNotificationQueue {
 		property portal.acceptance = "Intern Test";
-		property test.name.skip.portal.instance = "CPCommerceChannels#RemoveNotificationQueue";
 
 		// TODO Review
 
@@ -1541,7 +1532,7 @@ definition {
 	@priority = "3"
 	test RemoveNotificationTemplate {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceChannels#RemoveNotificationTemplate";
+
 
 		// TODO Review
 
@@ -1655,7 +1646,7 @@ definition {
 	@priority = "3"
 	test RemoveShippingOptionFlatRate {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceChannels#RemoveShippingOptionFlatRate";
+
 
 		// TODO Review
 
@@ -2079,7 +2070,6 @@ definition {
 	@priority = "3"
 	test VerifyNotificationQueue {
 		property portal.acceptance = "Intern Test";
-		property test.name.skip.portal.instance = "CPCommerceChannels#VerifyNotificationQueue";
 
 		// TODO Review
 

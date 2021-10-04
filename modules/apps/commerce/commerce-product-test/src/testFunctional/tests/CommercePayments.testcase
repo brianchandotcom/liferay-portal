@@ -29,7 +29,6 @@ definition {
 	@priority = "3"
 	test CancelPayment {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommercePayments#CancelPayment";
 
 		// TODO Review
 

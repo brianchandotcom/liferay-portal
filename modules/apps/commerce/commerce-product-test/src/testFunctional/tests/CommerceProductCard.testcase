@@ -90,7 +90,7 @@ definition {
 	@priority = "3"
 	test AssertDynamicPriceBundledProductCannotBeAddedToCartDirectly {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceProductCard#AssertDynamicPriceBundledProductCannotBeAddedToCartDirectly";
+
 
 		// TODO Review
 
@@ -327,7 +327,7 @@ definition {
 	@priority = "3"
 	test AssertOnlyMultipleValuesAreSelectableQuantities {
 		property portal.acceptance = "Intern Test";
-		property test.name.skip.portal.instance = "CommerceProductCard#AssertOnlyMultipleValuesAreSelectableQuantities";
+
 
 		// TODO Review
 
@@ -511,7 +511,7 @@ definition {
 	@priority = "3"
 	test AssertProductCardCurrencyAfterChannelCurrencyChanged {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceProductCard#AssertProductCardCurrencyAfterChannelCurrencyChanged";
+
 
 		// TODO Review
 
@@ -762,7 +762,7 @@ definition {
 	@priority = "3"
 	test AssertSelectableQuantitiesStartFromMinimumQuantitySet {
 		property portal.acceptance = "Intern Test";
-		property test.name.skip.portal.instance = "CommerceProductCard#AssertSelectableQuantitiesStartFromMinimumQuantitySet";
+
 
 		// TODO Review
 
@@ -812,7 +812,7 @@ definition {
 	@priority = "3"
 	test AssertStaticPriceBundledProductCannotBeAddedToCartDirectly {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CommerceProductCard#AssertStaticPriceBundledProductCannotBeAddedToCartDirectly";
+
 
 		// TODO Review
 

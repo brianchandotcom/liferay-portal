@@ -23,8 +23,6 @@ definition {
     		CommerceConfiguration.commerceAdminTearDown();
 
     		CommerceConfiguration.commerceInitializersTearDown();
-
-    		User.logoutPG();
     	}
 
 	@description = "This is a test for COMMERCE-7025. AddANewPin"

@@ -24,15 +24,12 @@ definition {
     		CommerceConfiguration.commerceAdminTearDown();
 
     		CommerceConfiguration.commerceInitializersTearDown();
-
-    		User.logoutPG();
     	}
 
 	@description = "This is a test for COMMERCE-6215. Maximum open order per account"
 	@priority = "3"
 	test AccountMaximumOpenOrderActive {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceOrders#AccountMaximumOpenOrderActive";
 
 		// TODO Review
 
@@ -112,7 +109,6 @@ definition {
 	@priority = "3"
 	test DeactivateCurrency {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceOrders#DeactivateCurrency";
 
 		// TODO Review
 
@@ -186,7 +182,6 @@ definition {
 		property portal.acceptance = "quarantine";
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "CPCommerceOrders#EditOrder";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -264,7 +259,6 @@ definition {
 
 	@description = "This is a workaround for an issue with Minium's sidebar on CI"
 	test EditOrderCheckingOutViaOrderDetails {
-		property test.name.skip.portal.instance = "CPCommerceOrders#EditOrderCheckingOutViaOrderDetails";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -366,7 +360,6 @@ definition {
 	@priority = "3"
 	test FilterOrderByAccount {
 		property portal.acceptance = "Intern Test";
-		property test.name.skip.portal.instance = "CPCommerceOrders#FilterOrderByAccount";
 
 		// TODO Review
 
@@ -615,7 +608,6 @@ definition {
 	@priority = "3"
 	test FulfillOrderWithBuyerOrderApprovalWorkflowActive {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceOrders#FulfillOrderWithBuyerOrderApprovalWorkflowActive";
 
 		// TODO Review
 
@@ -750,7 +742,6 @@ definition {
 	@priority = "3"
 	test FulfillOrderWithSellerOrderAcceptanceWorkflowActive {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceOrders#FulfillOrderWithSellerOrderAcceptanceWorkflowActive";
 
 		// TODO Review
 
@@ -901,7 +892,6 @@ definition {
 	@priority = "3"
 	test SearchOrder {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceOrders#SearchOrder";
 
 		// TODO Review
 
@@ -950,7 +940,6 @@ definition {
 	@priority = "3"
 	test SortOrdersByOrderDate {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceOrders#SortOrdersByOrderDate";
 
 		// TODO Review
 
@@ -1008,7 +997,6 @@ definition {
 	@priority = "3"
 	test ViewOrderSKU {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceOrders#ViewOrderSKU";
 
 		// TODO Review
 

@@ -25,15 +25,12 @@ definition {
     		CommerceConfiguration.commerceAdminTearDown();
 
     		CommerceConfiguration.commerceInitializersTearDown();
-
-    		User.logoutPG();
     	}
 
 	@description = "This is a test for COMMERCE-6283. EditSpecificationGroup"
 	@priority = "3"
 	test EditSpecificationGroup {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceSpecifications#EditSpecificationGroup";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -72,7 +69,6 @@ definition {
 	@priority = "3"
 	test EditSpecificationLabel {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceSpecifications#EditSpecificationLabel";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -109,7 +105,6 @@ definition {
 	@priority = "3"
 	test RemoveSpecificationGroup {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceSpecifications#RemoveSpecificationGroup";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -138,7 +133,6 @@ definition {
 	@priority = "3"
 	test RemoveSpecificationLabel {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceSpecifications#RemoveSpecificationLabel";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

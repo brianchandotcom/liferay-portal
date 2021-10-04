@@ -6,45 +6,24 @@ definition {
 	property testray.main.component.name = "Product Info Management";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+        		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
-	}
+        		User.firstLoginPG();
+        	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		Navigator.openURL();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			Navigator.openURL();
-
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
-
-			while (IsElementPresent(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS") && (maxIterations = "50")) {
-				CommerceEntry.deleteCommerceEntry();
-			}
-
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Specifications");
-
-			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
-				PortletEntry.deleteViaMenuItem(rowEntry = "");
-			}
-
-			CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specification Groups");
-
-			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
-				PortletEntry.deleteViaMenuItem(rowEntry = "");
-			}
-
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
 			User.logoutPG();
 		}
-	}
+
+		User.firstLoginPG();
+
+		CommerceConfiguration.commerceAdminTearDown();
+
+		CommerceConfiguration.commerceInitializersTearDown();
+		}
 
 	test CreateNewSpecificationOptions {
 		property environment.acceptance = "true";

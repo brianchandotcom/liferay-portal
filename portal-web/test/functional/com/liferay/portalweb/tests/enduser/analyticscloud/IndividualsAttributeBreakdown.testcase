@@ -181,8 +181,8 @@ definition {
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "user1@liferay.com",
-				userLoginFullName = "user1 user1");
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
 		}
 
 		task ("View the site page") {
@@ -203,8 +203,8 @@ definition {
 
 		task ("Add a CSV Data Source") {
 			ACSettings.addCSVDataSource(
-				dataSourceName = "CSV Country 3",
-				sourceFileName = "contacts_country.csv");
+				dataSourceName = "CSV Data Source",
+				sourceFileName = "jobTitle.csv");
 		}
 
 		task ("Exit Settings") {
@@ -216,17 +216,17 @@ definition {
 		}
 
 		task ("Add a new breakdown") {
-			ACIndividualsDashboard.addBreakdown(
-				attribute = "country",
-				breakdownName = "Breakdown by Country");
+			ACSegments.addBreakdownByAttribute(
+				attribute = "jobTitle",
+				breakdownName = "Breakdown to Delete");
 		}
 
 		task ("Remove the new breakdown") {
-			ACIndividualsDashboard.deleteBreakdown(breakdownName = "Breakdown by Country");
+			ACIndividualsDashboard.deleteBreakdown(breakdownName = "Breakdown to Delete");
 		}
 
 		task ("View the breakdown is deleted") {
-			ACIndividualsDashboard.viewBreakdownNotPresent(breakdownName = "Breakdown by Country");
+			ACIndividualsDashboard.viewBreakdownNotPresent(breakdownName = "Breakdown to Delete");
 		}
 	}
 

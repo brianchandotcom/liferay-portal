@@ -117,20 +117,10 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			DetailAST firstChildDetailAST =
 				nextSiblingDetailAST.getFirstChild();
 
-			if (firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) {
-				if (variableName.equals(getVariableName(firstChildDetailAST))) {
-					return;
-				}
+			if ((firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) &&
+				variableName.equals(getVariableName(firstChildDetailAST))) {
 
-				firstChildDetailAST = firstChildDetailAST.getFirstChild();
-
-				if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
-					log(
-						endLineNumber, _MSG_MISSING_EMPTY_LINE_LINE_NUMBER,
-						"after", endLineNumber);
-
-					return;
-				}
+				return;
 			}
 		}
 
@@ -361,20 +351,10 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			DetailAST firstChildDetailAST =
 				previousSiblingDetailAST.getFirstChild();
 
-			if (firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) {
-				if (variableName.equals(getVariableName(firstChildDetailAST))) {
-					return;
-				}
+			if ((firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) &&
+				variableName.equals(getVariableName(firstChildDetailAST))) {
 
-				firstChildDetailAST = firstChildDetailAST.getFirstChild();
-
-				if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
-					log(
-						startLineNumber, _MSG_MISSING_EMPTY_LINE_LINE_NUMBER,
-						"before", startLineNumber);
-
-					return;
-				}
+				return;
 			}
 		}
 

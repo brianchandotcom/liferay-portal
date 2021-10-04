@@ -15,7 +15,8 @@
 	},
 	"scripts": {
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix"
+		"format": "liferay-npm-scripts fix",
+		"types": "liferay-npm-scripts types"
 	},
 	"workspaces": {
 		"packages": [

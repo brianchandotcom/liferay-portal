@@ -688,7 +688,9 @@ public class PoshiValidation {
 			if (locator != null) {
 				Matcher matcher = _pattern.matcher(locator);
 
-				if (!locator.contains("#") || matcher.find()) {
+				if (locator.contains("css=") || !locator.contains("#") ||
+					matcher.find()) {
+
 					continue;
 				}
 

@@ -311,6 +311,55 @@ definition {
 			assigneeType = "Organizations");
 	}
 
+	@description = "This test checks that the size of the pagination list can be changed."
+	@priority = "4"
+	test CanChangePaginationInAccounts {
+		AssertElementNotPresent(locator1 = "Pagination#PAGINATION_BAR");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "test test");
+
+		for (var accountNum : list "1,2,3,4,5") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name ${accountNum}",
+				accountEntryType = "Business");
+		}
+
+		for (var accountNames : list "Account Name 1,Account Name 2,Account Name 3,Account Name 4,Account Name 5") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "${accountNames}");
+
+			Accounts.assignUsers(
+				accountName = "${accountNames}",
+				assigneeName = "userfn userln");
+		}
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		AssertElementPresent(locator1 = "Pagination#PAGINATION_BAR");
+
+		for (var listEntries : list "4,8,20,60") {
+			Pagination.changePagination(itemsPerPage = "${listEntries}");
+
+			if ("${listEntries}" == "4") {
+				Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
+
+				Click(locator1 = "Pagination#NEXT_LINK");
+
+				Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
+			}
+			else {
+				Pagination.viewResults(results = "Showing 1 to 6 of 6 entries.");
+			}
+		}
+	}
+
 	@description = "This test sets the Allowed Account Type to only Business and assert that only Business Accounts display in Account Management Widget."
 	@priority = "4"
 	test CanOnlyViewBusinessAccountsWhenAllowedAccountTypeIsBusiness {

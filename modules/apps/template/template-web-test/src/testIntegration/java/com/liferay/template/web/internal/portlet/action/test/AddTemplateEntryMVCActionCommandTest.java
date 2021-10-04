@@ -15,6 +15,8 @@
 package com.liferay.template.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.exception.TemplateNameException;
+import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.info.item.InfoItemClassDetails;
@@ -23,6 +25,9 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -168,6 +173,50 @@ public class AddTemplateEntryMVCActionCommandTest {
 			templateEntry.getDDMTemplateId());
 
 		Assert.assertNotNull(ddmTemplate);
+	}
+
+	@Test
+	public void testHandleTemplateNameException() throws Exception {
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_getErrorJSONObject",
+			new Class<?>[] {PortalException.class, ThemeDisplay.class},
+			new TemplateNameException(), _getThemeDisplay());
+
+		Assert.assertTrue(jsonObject.has("name"));
+	}
+
+	@Test
+	public void testHandleTemplateScriptException() throws Exception {
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_getErrorJSONObject",
+			new Class<?>[] {PortalException.class, ThemeDisplay.class},
+			new TemplateScriptException(), themeDisplay);
+
+		Assert.assertTrue(jsonObject.has("other"));
+
+		Assert.assertEquals(
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "please-enter-a-valid-script"),
+			jsonObject.get("other"));
+	}
+
+	@Test
+	public void testHandleUnexpectedException() throws Exception {
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_getErrorJSONObject",
+			new Class<?>[] {PortalException.class, ThemeDisplay.class},
+			new PortalException(), themeDisplay);
+
+		Assert.assertTrue(jsonObject.has("other"));
+
+		Assert.assertEquals(
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "an-unexpected-error-occurred"),
+			jsonObject.get("other"));
 	}
 
 	private MockLiferayPortletActionRequest

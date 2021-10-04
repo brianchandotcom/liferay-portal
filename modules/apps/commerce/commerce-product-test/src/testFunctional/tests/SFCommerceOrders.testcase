@@ -473,23 +473,31 @@ definition {
 	test UseADTInPlacedOrdersWidget {
 		property portal.acceptance = "false";
 
-		// TODO Review
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		ProductMenu.gotoPortlet(
+			category = "Design",
+			portlet = "Templates");
+
+		Navigator.gotoNavTab(navTab = "Widget Templates");
+
+		CommerceAcceleratorsInitializer.addADT(
+			adtType = "Placed Orders",
+			fieldNameList = "Commerce Orders*");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Test Account");
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
 			productQuantity = "1");
-
-		Pause(locator1 = "5000");
 
 		var orderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -512,61 +520,14 @@ definition {
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
 
-		MouseOver(locator1 = "CommerceEntry#PAGINATION_BAR");
+		ApplicationDisplayTemplates.selectPortletADT(
+			portletName = "Placed Orders",
+			templateName = "Placed Orders Test ADT");
 
-		Click.clickNoWaitForVisible(
-			key_text = "qfkd",
-			locator1 = "Icon#SVG_ELLIPSIS_BY_ID");
-
-		MenuItem.click(menuItem = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Click(
-			key_text = "Manage Templates",
-			locator1 = "Link#ANY");
-
-		SelectFrameTop();
-
-		SelectFrame(
-			key_title = "Widget Templates",
-			locator1 = "IFrame#MODAL_ANY");
-
-		Click(locator1 = "Button#PLUS");
-
-		Type(
-			key_fieldLabel = "Name",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Placed Orders Template");
-
-		Click(
-			key_fieldName = "Commerce Orders",
-			locator1 = "DDMEditTemplate#SCRIPT_FIELD");
-
-		Button.clickSave();
-
-		SelectFrameTop();
-
-		Click(
-			key_modalTitle = "Widget Templates",
-			locator1 = "Button#CLOSE_MODAL");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Select(
-			key_selectFieldLabel = "Display Template",
-			locator1 = "Select#ANY",
-			value1 = "Placed Orders Template");
-
-		Button.clickSave();
-
-		SelectFrameTop();
-
-		Click(locator1 = "CommerceEntry#MODAL_CLOSE");
-
-		AssertElementPresent(
-			key_portletName = "${orderId}",
-			locator1 = "Portlet#BODY");
+		AssertTextEquals.assertPartialText(
+			key_portletName = "Placed Orders",
+			locator1 = "Portlet#BODY",
+			value1 = "${orderId}");
 	}
 
 	@description = "COMMERCE-6382. As a buyer, I want to be able to see the list of shipments for an order item by clicking on 'Shipments'"

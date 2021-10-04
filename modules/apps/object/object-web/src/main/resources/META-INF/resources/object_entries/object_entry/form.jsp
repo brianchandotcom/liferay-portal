@@ -76,14 +76,33 @@ portletDisplay.setURLBack(backURL);
 
 				const fields = current.getFields();
 
-				const values = fields.reduce(
-					(obj, cur) => Object.assign(obj, {[cur.fieldName]: cur.value}),
-					{}
-				);
+				let shouldSubmitForm = true;
 
-				ddmFormValues.value = JSON.stringify(values);
+				fields.forEach((field) => {
+					if (field.type === 'text' && field.value.length > 75) {
+						shouldSubmitForm = false;
 
-				Liferay.Util.submitForm(form);
+						Liferay.Util.openToast({
+							message:
+								'<liferay-ui:message key="the-maximum-length-is-75-characters-for-text-fields" />',
+							type: 'warning',
+						});
+
+						return false;
+					}
+				});
+
+				if (shouldSubmitForm) {
+					const values = fields.reduce(
+						(obj, cur) =>
+							Object.assign(obj, {[cur.fieldName]: cur.value}),
+						{}
+					);
+
+					ddmFormValues.value = JSON.stringify(values);
+
+					Liferay.Util.submitForm(form);
+				}
 			}
 		});
 	}

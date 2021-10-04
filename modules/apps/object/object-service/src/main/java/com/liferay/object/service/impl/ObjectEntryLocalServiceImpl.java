@@ -791,19 +791,27 @@ public class ObjectEntryLocalServiceImpl
 			_objectRelationshipPersistence.findByPrimaryKey(
 				objectRelationshipId);
 
+		long objectDefinitionId1 = objectRelationship.getObjectDefinitionId1();
+		long objectDefinitionId2 = objectRelationship.getObjectDefinitionId2();
+
+		if(reverse) {
+			objectDefinitionId1 = objectRelationship.getObjectDefinitionId2();
+			objectDefinitionId2 = objectRelationship.getObjectDefinitionId1();
+		}
+
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			_getDynamicObjectDefinitionTable(
-				objectRelationship.getObjectDefinitionId2());
+				objectDefinitionId2);
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
 			_getExtensionDynamicObjectDefinitionTable(
-				objectRelationship.getObjectDefinitionId2());
+				objectDefinitionId2);
 
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionPersistence.fetchByPrimaryKey(
-				objectRelationship.getObjectDefinitionId1());
+				objectDefinitionId1);
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionPersistence.fetchByPrimaryKey(
-				objectRelationship.getObjectDefinitionId2());
+				objectDefinitionId2);
 
 		DynamicObjectRelationshipMappingTable
 			dynamicObjectRelationshipMappingTable =
@@ -841,15 +849,9 @@ public class ObjectEntryLocalServiceImpl
 					objectRelationship.getCompanyId())
 			).and(
 				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
-					objectRelationship.getObjectDefinitionId2())
+					objectDefinitionId2)
 			).and(
-				() -> {
-					if (reverse) {
-						return primaryKeyColumn2.eq(primaryKey);
-					}
-
-					return primaryKeyColumn1.eq(primaryKey);
-				}
+				primaryKeyColumn1.eq(primaryKey)
 			).and(
 				() -> {
 					if (PermissionThreadLocal.getPermissionChecker() == null) {

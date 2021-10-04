@@ -164,7 +164,7 @@ public class MockLiferayPortletActionResponse
 
 	@Override
 	public <T extends PortletURL & RenderURL> T createRenderURL() {
-		return null;
+		return (T)new MockLiferayPortletURL();
 	}
 
 	@Override

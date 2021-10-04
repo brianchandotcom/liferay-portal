@@ -1398,7 +1398,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		Refresh();
+		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
 		var orderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 

@@ -19,6 +19,7 @@ import com.liferay.search.experiences.rest.client.serdes.v1_0.DocumentSerDes;
 
 import java.io.Serializable;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -34,16 +35,16 @@ public class Document implements Cloneable, Serializable {
 		return DocumentSerDes.toDTO(json);
 	}
 
-	public DocumentField[] getDocumentFields() {
+	public Map<String, DocumentField> getDocumentFields() {
 		return documentFields;
 	}
 
-	public void setDocumentFields(DocumentField[] documentFields) {
+	public void setDocumentFields(Map<String, DocumentField> documentFields) {
 		this.documentFields = documentFields;
 	}
 
 	public void setDocumentFields(
-		UnsafeSupplier<DocumentField[], Exception>
+		UnsafeSupplier<Map<String, DocumentField>, Exception>
 			documentFieldsUnsafeSupplier) {
 
 		try {
@@ -54,7 +55,7 @@ public class Document implements Cloneable, Serializable {
 		}
 	}
 
-	protected DocumentField[] documentFields;
+	protected Map<String, DocumentField> documentFields;
 
 	public String getExplanation() {
 		return explanation;

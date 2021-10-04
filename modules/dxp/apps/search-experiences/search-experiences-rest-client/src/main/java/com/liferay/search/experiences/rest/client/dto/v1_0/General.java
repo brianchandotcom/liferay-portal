@@ -84,6 +84,70 @@ public class General implements Cloneable, Serializable {
 
 	protected String[] clauseContributorsIncludes;
 
+	public Boolean getEmptySearchEnabled() {
+		return emptySearchEnabled;
+	}
+
+	public void setEmptySearchEnabled(Boolean emptySearchEnabled) {
+		this.emptySearchEnabled = emptySearchEnabled;
+	}
+
+	public void setEmptySearchEnabled(
+		UnsafeSupplier<Boolean, Exception> emptySearchEnabledUnsafeSupplier) {
+
+		try {
+			emptySearchEnabled = emptySearchEnabledUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean emptySearchEnabled;
+
+	public Boolean getExplain() {
+		return explain;
+	}
+
+	public void setExplain(Boolean explain) {
+		this.explain = explain;
+	}
+
+	public void setExplain(
+		UnsafeSupplier<Boolean, Exception> explainUnsafeSupplier) {
+
+		try {
+			explain = explainUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean explain;
+
+	public Boolean getIncludeResponseString() {
+		return includeResponseString;
+	}
+
+	public void setIncludeResponseString(Boolean includeResponseString) {
+		this.includeResponseString = includeResponseString;
+	}
+
+	public void setIncludeResponseString(
+		UnsafeSupplier<Boolean, Exception>
+			includeResponseStringUnsafeSupplier) {
+
+		try {
+			includeResponseString = includeResponseStringUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean includeResponseString;
+
 	public String[] getSearchableAssetTypes() {
 		return searchableAssetTypes;
 	}

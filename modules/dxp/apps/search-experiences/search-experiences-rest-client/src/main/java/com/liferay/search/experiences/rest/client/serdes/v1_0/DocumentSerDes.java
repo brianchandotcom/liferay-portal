@@ -15,7 +15,6 @@
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
 import com.liferay.search.experiences.rest.client.dto.v1_0.Document;
-import com.liferay.search.experiences.rest.client.dto.v1_0.DocumentField;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -23,7 +22,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -62,17 +60,7 @@ public class DocumentSerDes {
 
 			sb.append("\"documentFields\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < document.getDocumentFields().length; i++) {
-				sb.append(String.valueOf(document.getDocumentFields()[i]));
-
-				if ((i + 1) < document.getDocumentFields().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(_toJSON(document.getDocumentFields()));
 		}
 
 		if (document.getExplanation() != null) {
@@ -162,13 +150,8 @@ public class DocumentSerDes {
 			if (Objects.equals(jsonParserFieldName, "documentFields")) {
 				if (jsonParserFieldValue != null) {
 					document.setDocumentFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> DocumentFieldSerDes.toDTO((String)object)
-						).toArray(
-							size -> new DocumentField[size]
-						));
+						(Map)DocumentSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "explanation")) {

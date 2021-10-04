@@ -35,6 +35,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -52,18 +54,21 @@ public class DocumentField implements Serializable {
 	}
 
 	@Schema
-	public String getName() {
-		return name;
+	@Valid
+	public Object[] getValues() {
+		return values;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setValues(Object[] values) {
+		this.values = values;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+	public void setValues(
+		UnsafeSupplier<Object[], Exception> valuesUnsafeSupplier) {
+
 		try {
-			name = nameUnsafeSupplier.get();
+			values = valuesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -75,35 +80,7 @@ public class DocumentField implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
-
-	@Schema
-	public String getValueString() {
-		return valueString;
-	}
-
-	public void setValueString(String valueString) {
-		this.valueString = valueString;
-	}
-
-	@JsonIgnore
-	public void setValueString(
-		UnsafeSupplier<String, Exception> valueStringUnsafeSupplier) {
-
-		try {
-			valueString = valueStringUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String valueString;
+	protected Object[] values;
 
 	@Override
 	public boolean equals(Object object) {
@@ -132,32 +109,28 @@ public class DocumentField implements Serializable {
 
 		sb.append("{");
 
-		if (name != null) {
+		if (values != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"values\": ");
 
-			sb.append("\"");
+			sb.append("[");
 
-			sb.append(_escape(name));
+			for (int i = 0; i < values.length; i++) {
+				sb.append("\"");
 
-			sb.append("\"");
-		}
+				sb.append(_escape(values[i]));
 
-		if (valueString != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+				sb.append("\"");
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
 			}
 
-			sb.append("\"valueString\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(valueString));
-
-			sb.append("\"");
+			sb.append("]");
 		}
 
 		sb.append("}");

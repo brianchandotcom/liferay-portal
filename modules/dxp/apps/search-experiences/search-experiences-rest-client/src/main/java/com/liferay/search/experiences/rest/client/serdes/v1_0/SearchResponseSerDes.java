@@ -107,6 +107,20 @@ public class SearchResponseSerDes {
 			sb.append(searchResponse.getPageSize());
 		}
 
+		if (searchResponse.getRequest() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"request\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(searchResponse.getRequest()));
+
+			sb.append("\"");
+		}
+
 		if (searchResponse.getRequestString() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -117,6 +131,20 @@ public class SearchResponseSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(searchResponse.getRequestString()));
+
+			sb.append("\"");
+		}
+
+		if (searchResponse.getResponse() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"response\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(searchResponse.getResponse()));
 
 			sb.append("\"");
 		}
@@ -202,6 +230,13 @@ public class SearchResponseSerDes {
 			map.put("pageSize", String.valueOf(searchResponse.getPageSize()));
 		}
 
+		if (searchResponse.getRequest() == null) {
+			map.put("request", null);
+		}
+		else {
+			map.put("request", String.valueOf(searchResponse.getRequest()));
+		}
+
 		if (searchResponse.getRequestString() == null) {
 			map.put("requestString", null);
 		}
@@ -209,6 +244,13 @@ public class SearchResponseSerDes {
 			map.put(
 				"requestString",
 				String.valueOf(searchResponse.getRequestString()));
+		}
+
+		if (searchResponse.getResponse() == null) {
+			map.put("response", null);
+		}
+		else {
+			map.put("response", String.valueOf(searchResponse.getResponse()));
 		}
 
 		if (searchResponse.getResponseString() == null) {
@@ -287,10 +329,20 @@ public class SearchResponseSerDes {
 						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "request")) {
+				if (jsonParserFieldValue != null) {
+					searchResponse.setRequest((Object)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "requestString")) {
 				if (jsonParserFieldValue != null) {
 					searchResponse.setRequestString(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "response")) {
+				if (jsonParserFieldValue != null) {
+					searchResponse.setResponse((Object)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "responseString")) {

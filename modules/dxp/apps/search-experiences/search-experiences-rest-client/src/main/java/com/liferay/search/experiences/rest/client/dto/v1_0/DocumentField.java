@@ -34,45 +34,26 @@ public class DocumentField implements Cloneable, Serializable {
 		return DocumentFieldSerDes.toDTO(json);
 	}
 
-	public String getName() {
-		return name;
+	public Object[] getValues() {
+		return values;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setValues(Object[] values) {
+		this.values = values;
 	}
 
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+	public void setValues(
+		UnsafeSupplier<Object[], Exception> valuesUnsafeSupplier) {
+
 		try {
-			name = nameUnsafeSupplier.get();
+			values = valuesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String name;
-
-	public String getValueString() {
-		return valueString;
-	}
-
-	public void setValueString(String valueString) {
-		this.valueString = valueString;
-	}
-
-	public void setValueString(
-		UnsafeSupplier<String, Exception> valueStringUnsafeSupplier) {
-
-		try {
-			valueString = valueStringUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String valueString;
+	protected Object[] values;
 
 	@Override
 	public DocumentField clone() throws CloneNotSupportedException {

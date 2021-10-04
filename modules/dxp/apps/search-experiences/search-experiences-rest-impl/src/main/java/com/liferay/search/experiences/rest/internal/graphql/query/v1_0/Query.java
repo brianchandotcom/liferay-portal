@@ -27,8 +27,10 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
+import com.liferay.search.experiences.rest.dto.v1_0.SearchResponse;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPElementResource;
+import com.liferay.search.experiences.rest.resource.v1_0.SearchResponseResource;
 
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -63,6 +65,14 @@ public class Query {
 
 		_sxpElementResourceComponentServiceObjects =
 			sxpElementResourceComponentServiceObjects;
+	}
+
+	public static void setSearchResponseResourceComponentServiceObjects(
+		ComponentServiceObjects<SearchResponseResource>
+			searchResponseResourceComponentServiceObjects) {
+
+		_searchResponseResourceComponentServiceObjects =
+			searchResponseResourceComponentServiceObjects;
 	}
 
 	/**
@@ -138,6 +148,25 @@ public class Query {
 				sxpElementId));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {search(delta: ___, q: ___, start: ___, sxpBlueprint: ___){documents, maxScore, page, pageSize, request, requestString, response, responseString, searchRequest, totalHits}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public SearchResponse search(
+			@GraphQLName("delta") Integer delta, @GraphQLName("q") String q,
+			@GraphQLName("start") Integer start,
+			@GraphQLName("sxpBlueprint") String sxpBlueprint)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_searchResponseResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			searchResponseResource -> searchResponseResource.getSearch(
+				delta, q, start, sxpBlueprint));
+	}
+
 	@GraphQLName("SXPBlueprintPage")
 	public class SXPBlueprintPage {
 
@@ -204,6 +233,39 @@ public class Query {
 
 	}
 
+	@GraphQLName("SearchResponsePage")
+	public class SearchResponsePage {
+
+		public SearchResponsePage(Page searchResponsePage) {
+			actions = searchResponsePage.getActions();
+
+			items = searchResponsePage.getItems();
+			lastPage = searchResponsePage.getLastPage();
+			page = searchResponsePage.getPage();
+			pageSize = searchResponsePage.getPageSize();
+			totalCount = searchResponsePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<SearchResponse> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -251,10 +313,28 @@ public class Query {
 		sxpElementResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			SearchResponseResource searchResponseResource)
+		throws Exception {
+
+		searchResponseResource.setContextAcceptLanguage(_acceptLanguage);
+		searchResponseResource.setContextCompany(_company);
+		searchResponseResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		searchResponseResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		searchResponseResource.setContextUriInfo(_uriInfo);
+		searchResponseResource.setContextUser(_user);
+		searchResponseResource.setGroupLocalService(_groupLocalService);
+		searchResponseResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<SXPBlueprintResource>
 		_sxpBlueprintResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SXPElementResource>
 		_sxpElementResourceComponentServiceObjects;
+	private static ComponentServiceObjects<SearchResponseResource>
+		_searchResponseResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

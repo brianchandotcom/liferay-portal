@@ -84,6 +84,8 @@ public class OpenAPIResourceImpl {
 
 			add(SXPElementResourceImpl.class);
 
+			add(SearchResponseResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

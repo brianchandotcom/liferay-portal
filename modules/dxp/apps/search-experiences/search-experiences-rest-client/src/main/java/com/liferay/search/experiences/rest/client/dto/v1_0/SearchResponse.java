@@ -116,6 +116,27 @@ public class SearchResponse implements Cloneable, Serializable {
 
 	protected Integer pageSize;
 
+	public Object getRequest() {
+		return request;
+	}
+
+	public void setRequest(Object request) {
+		this.request = request;
+	}
+
+	public void setRequest(
+		UnsafeSupplier<Object, Exception> requestUnsafeSupplier) {
+
+		try {
+			request = requestUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Object request;
+
 	public String getRequestString() {
 		return requestString;
 	}
@@ -136,6 +157,27 @@ public class SearchResponse implements Cloneable, Serializable {
 	}
 
 	protected String requestString;
+
+	public Object getResponse() {
+		return response;
+	}
+
+	public void setResponse(Object response) {
+		this.response = response;
+	}
+
+	public void setResponse(
+		UnsafeSupplier<Object, Exception> responseUnsafeSupplier) {
+
+		try {
+			response = responseUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Object response;
 
 	public String getResponseString() {
 		return responseString;

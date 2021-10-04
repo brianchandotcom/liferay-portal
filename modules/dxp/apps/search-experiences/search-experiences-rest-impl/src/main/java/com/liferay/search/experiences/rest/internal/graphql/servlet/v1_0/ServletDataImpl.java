@@ -19,6 +19,7 @@ import com.liferay.search.experiences.rest.internal.graphql.mutation.v1_0.Mutati
 import com.liferay.search.experiences.rest.internal.graphql.query.v1_0.Query;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPElementResource;
+import com.liferay.search.experiences.rest.resource.v1_0.SearchResponseResource;
 
 import javax.annotation.Generated;
 
@@ -48,6 +49,8 @@ public class ServletDataImpl implements ServletData {
 			_sxpBlueprintResourceComponentServiceObjects);
 		Query.setSXPElementResourceComponentServiceObjects(
 			_sxpElementResourceComponentServiceObjects);
+		Query.setSearchResponseResourceComponentServiceObjects(
+			_searchResponseResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -72,5 +75,9 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SXPElementResource>
 		_sxpElementResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SearchResponseResource>
+		_searchResponseResourceComponentServiceObjects;
 
 }

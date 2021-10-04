@@ -105,6 +105,36 @@ public class GeneralSerDes {
 			sb.append("]");
 		}
 
+		if (general.getEmptySearchEnabled() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"emptySearchEnabled\": ");
+
+			sb.append(general.getEmptySearchEnabled());
+		}
+
+		if (general.getExplain() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"explain\": ");
+
+			sb.append(general.getExplain());
+		}
+
+		if (general.getIncludeResponseString() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"includeResponseString\": ");
+
+			sb.append(general.getIncludeResponseString());
+		}
+
 		if (general.getSearchableAssetTypes() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -165,6 +195,31 @@ public class GeneralSerDes {
 				String.valueOf(general.getClauseContributorsIncludes()));
 		}
 
+		if (general.getEmptySearchEnabled() == null) {
+			map.put("emptySearchEnabled", null);
+		}
+		else {
+			map.put(
+				"emptySearchEnabled",
+				String.valueOf(general.getEmptySearchEnabled()));
+		}
+
+		if (general.getExplain() == null) {
+			map.put("explain", null);
+		}
+		else {
+			map.put("explain", String.valueOf(general.getExplain()));
+		}
+
+		if (general.getIncludeResponseString() == null) {
+			map.put("includeResponseString", null);
+		}
+		else {
+			map.put(
+				"includeResponseString",
+				String.valueOf(general.getIncludeResponseString()));
+		}
+
 		if (general.getSearchableAssetTypes() == null) {
 			map.put("searchableAssetTypes", null);
 		}
@@ -208,6 +263,27 @@ public class GeneralSerDes {
 				if (jsonParserFieldValue != null) {
 					general.setClauseContributorsIncludes(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "emptySearchEnabled")) {
+
+				if (jsonParserFieldValue != null) {
+					general.setEmptySearchEnabled(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "explain")) {
+				if (jsonParserFieldValue != null) {
+					general.setExplain((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "includeResponseString")) {
+
+				if (jsonParserFieldValue != null) {
+					general.setIncludeResponseString(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

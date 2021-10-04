@@ -55,17 +55,17 @@ public class Document implements Serializable {
 
 	@Schema
 	@Valid
-	public DocumentField[] getDocumentFields() {
+	public Map<String, DocumentField> getDocumentFields() {
 		return documentFields;
 	}
 
-	public void setDocumentFields(DocumentField[] documentFields) {
+	public void setDocumentFields(Map<String, DocumentField> documentFields) {
 		this.documentFields = documentFields;
 	}
 
 	@JsonIgnore
 	public void setDocumentFields(
-		UnsafeSupplier<DocumentField[], Exception>
+		UnsafeSupplier<Map<String, DocumentField>, Exception>
 			documentFieldsUnsafeSupplier) {
 
 		try {
@@ -81,7 +81,7 @@ public class Document implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected DocumentField[] documentFields;
+	protected Map<String, DocumentField> documentFields;
 
 	@Schema
 	public String getExplanation() {
@@ -173,17 +173,7 @@ public class Document implements Serializable {
 
 			sb.append("\"documentFields\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < documentFields.length; i++) {
-				sb.append(String.valueOf(documentFields[i]));
-
-				if ((i + 1) < documentFields.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(_toJSON(documentFields));
 		}
 
 		if (explanation != null) {

@@ -55,32 +55,28 @@ public class DocumentFieldSerDes {
 
 		sb.append("{");
 
-		if (documentField.getName() != null) {
+		if (documentField.getValues() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"values\": ");
 
-			sb.append("\"");
+			sb.append("[");
 
-			sb.append(_escape(documentField.getName()));
+			for (int i = 0; i < documentField.getValues().length; i++) {
+				sb.append("\"");
 
-			sb.append("\"");
-		}
+				sb.append(_escape(documentField.getValues()[i]));
 
-		if (documentField.getValueString() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+				sb.append("\"");
+
+				if ((i + 1) < documentField.getValues().length) {
+					sb.append(", ");
+				}
 			}
 
-			sb.append("\"valueString\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(documentField.getValueString()));
-
-			sb.append("\"");
+			sb.append("]");
 		}
 
 		sb.append("}");
@@ -102,19 +98,11 @@ public class DocumentFieldSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (documentField.getName() == null) {
-			map.put("name", null);
+		if (documentField.getValues() == null) {
+			map.put("values", null);
 		}
 		else {
-			map.put("name", String.valueOf(documentField.getName()));
-		}
-
-		if (documentField.getValueString() == null) {
-			map.put("valueString", null);
-		}
-		else {
-			map.put(
-				"valueString", String.valueOf(documentField.getValueString()));
+			map.put("values", String.valueOf(documentField.getValues()));
 		}
 
 		return map;
@@ -138,14 +126,9 @@ public class DocumentFieldSerDes {
 			DocumentField documentField, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "name")) {
+			if (Objects.equals(jsonParserFieldName, "values")) {
 				if (jsonParserFieldValue != null) {
-					documentField.setName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "valueString")) {
-				if (jsonParserFieldValue != null) {
-					documentField.setValueString((String)jsonParserFieldValue);
+					documentField.setValues((Object[])jsonParserFieldValue);
 				}
 			}
 		}

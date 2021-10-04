@@ -1,6 +1,14 @@
 definition {
 
 	macro addInitializerProductToCart {
+		CommerceNavigator.gotoMiniCart();
+
+		var currentItemCount = selenium.getAttribute("//div[contains(@class,'mini-cart')]/button[contains(@class,'mini-cart-opener') and @data-badge-count]@data-badge-count");
+
+		var newItemCount = ${currentItemCount} + 1;
+
+		Click(locator1 = "CommerceAccelerators#MINI_CART_CLOSE");
+
 		Type(
 			key_productName = "${productName}",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
@@ -9,6 +17,10 @@ definition {
 		Click(
 			key_productName = "${productName}",
 			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+
+		WaitForElementPresent(
+			key_itemCount = "${newItemCount}",
+			locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
 	}
 
 	macro selectAssociatedFSOptionsValue {

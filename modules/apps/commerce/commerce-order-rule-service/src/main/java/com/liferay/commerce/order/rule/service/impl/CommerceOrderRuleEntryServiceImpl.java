@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Luca Pellizzon
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false,
@@ -45,7 +47,12 @@ public class CommerceOrderRuleEntryServiceImpl
 	@Override
 	public CommerceOrderRuleEntry addCommerceOrderRuleEntry(
 			String externalReferenceCode, boolean active, String description,
-			String name, int priority, String type, String typeSettings)
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, String name, int priority, String type,
+			String typeSettings, ServiceContext serviceContext)
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =
@@ -57,8 +64,11 @@ public class CommerceOrderRuleEntryServiceImpl
 			CommerceOrderRuleEntryActionKeys.ADD_COMMERCE_ORDER_RULE);
 
 		return commerceOrderRuleEntryLocalService.addCommerceOrderRuleEntry(
-			externalReferenceCode, getUserId(), active, description, name,
-			priority, type, typeSettings);
+			externalReferenceCode, getUserId(), active, description,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, name, priority, type, typeSettings, serviceContext);
 	}
 
 	@Override
@@ -128,7 +138,12 @@ public class CommerceOrderRuleEntryServiceImpl
 	@Override
 	public CommerceOrderRuleEntry updateCommerceOrderRuleEntry(
 			long commerceOrderRuleEntryId, boolean active, String description,
-			String name, int priority, String typeSettings)
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, String name, int priority, String typeSettings,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_commerceOrderRuleEntryModelResourcePermission.check(
@@ -136,8 +151,11 @@ public class CommerceOrderRuleEntryServiceImpl
 			ActionKeys.UPDATE);
 
 		return commerceOrderRuleEntryLocalService.updateCommerceOrderRuleEntry(
-			commerceOrderRuleEntryId, active, description, name, priority,
-			typeSettings);
+			getUserId(), commerceOrderRuleEntryId, active, description,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, name, priority, typeSettings, serviceContext);
 	}
 
 	private static volatile ModelResourcePermission<CommerceOrderRuleEntry>

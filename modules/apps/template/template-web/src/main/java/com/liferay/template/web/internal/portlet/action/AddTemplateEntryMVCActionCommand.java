@@ -23,7 +23,6 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -144,32 +143,27 @@ public class AddTemplateEntryMVCActionCommand
 	private JSONObject _getErrorJSONObject(
 		PortalException portalException, ThemeDisplay themeDisplay) {
 
-		JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
-
 		if (portalException instanceof TemplateNameException) {
-			errorJSONObject.put(
+			return JSONUtil.put(
 				"name",
 				LanguageUtil.get(
 					themeDisplay.getLocale(), "please-enter-a-valid-name"));
 		}
 		else if (portalException instanceof TemplateScriptException) {
-			errorJSONObject.put(
+			return JSONUtil.put(
 				"other",
 				LanguageUtil.get(
 					themeDisplay.getLocale(), "please-enter-a-valid-script"));
 		}
-		else {
-			errorJSONObject.put(
-				"other",
-				LanguageUtil.get(
-					themeDisplay.getLocale(), "an-unexpected-error-occurred"));
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException.getMessage(), portalException);
-			}
+		if (_log.isDebugEnabled()) {
+			_log.debug(portalException.getMessage(), portalException);
 		}
 
-		return errorJSONObject;
+		return JSONUtil.put(
+			"other",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "an-unexpected-error-occurred"));
 	}
 
 	private String _getScript() {

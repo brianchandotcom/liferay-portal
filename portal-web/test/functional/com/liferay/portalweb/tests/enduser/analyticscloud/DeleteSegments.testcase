@@ -252,7 +252,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8592 | Test Summary: Deleting a custom field that is used by a segment should reset the data"
 	@priority = "4"
 	test DeleteCustomFieldUsedSegmentResetData {
-		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		// AC Refactor: This testcase fails due to a bug. Known User numbers do not appear.
 		// AC Refactor ticket: LRAC-9300

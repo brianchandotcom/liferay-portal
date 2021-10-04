@@ -14,9 +14,6 @@ export const BusinessTypeRadioGroup = ({
 		({id}) => form?.basics?.businessCategoryId === id
 	);
 
-	// eslint-disable-next-line no-console
-	console.log({selectedBusinessType});
-
 	useEffect(() => {
 		if (form?.basics?.businessCategoryId) {
 			setCategoryProperties();

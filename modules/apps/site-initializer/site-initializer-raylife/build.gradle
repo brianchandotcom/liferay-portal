@@ -4,6 +4,12 @@ import com.liferay.gradle.util.StringUtil
 apply plugin: "com.liferay.node"
 
 task buildExtra
+task forceDeploy
+
+forceDeploy {
+	dependsOn buildExtra
+	finalizedBy deploy
+}
 
 classes {
 	dependsOn buildExtra

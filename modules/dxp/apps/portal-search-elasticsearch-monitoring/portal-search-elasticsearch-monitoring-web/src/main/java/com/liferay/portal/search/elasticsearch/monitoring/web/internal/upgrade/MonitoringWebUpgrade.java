@@ -27,7 +27,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(
+	enabled = false, immediate = true, service = UpgradeStepRegistrator.class
+)
 public class MonitoringWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

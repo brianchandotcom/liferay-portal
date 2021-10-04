@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Miguel Angelo Caldas Gallindo
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-elasticsearch-monitoring",
 		"com.liferay.portlet.display-category=category.search",

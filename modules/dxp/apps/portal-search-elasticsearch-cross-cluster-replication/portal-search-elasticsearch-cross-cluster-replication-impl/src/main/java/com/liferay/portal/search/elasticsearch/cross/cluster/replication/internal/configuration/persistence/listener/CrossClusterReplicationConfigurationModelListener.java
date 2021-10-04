@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bryan Engler
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	property = "model.class.name=com.liferay.portal.search.elasticsearch.cross.cluster.replication.internal.configuration.CrossClusterReplicationConfiguration",
 	service = ConfigurationModelListener.class
 )

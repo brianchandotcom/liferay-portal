@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author André de Oliveira
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	property = {
 		"filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=/" + MonitoringWebConstants.SERVLET_PATH + "/*",
 		"osgi.http.whiteboard.filter.name=com.liferay.portal.search.elasticsearch.monitoring.web.internal.servlet.filter.MonitoringProxyAuthVerifierFilter",

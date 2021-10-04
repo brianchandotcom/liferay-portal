@@ -19,6 +19,7 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -39,6 +40,13 @@ public interface CommerceOrderValidatorRegistry {
 
 	public boolean isValid(Locale locale, CommerceOrder commerceOrder)
 		throws PortalException;
+
+	public default List<CommerceOrderValidatorResult> validate(
+			Locale locale, CommerceOrder commerceOrder)
+		throws PortalException {
+
+		return Collections.emptyList();
+	}
 
 	public List<CommerceOrderValidatorResult> validate(
 			Locale locale, CommerceOrder commerceOrder, CPInstance cpInstance,

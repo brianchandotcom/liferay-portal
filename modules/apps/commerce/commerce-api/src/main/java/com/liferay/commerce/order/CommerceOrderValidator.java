@@ -28,6 +28,13 @@ public interface CommerceOrderValidator {
 
 	public String getKey();
 
+	public default CommerceOrderValidatorResult validate(
+			Locale locale, CommerceOrder commerceOrder)
+		throws PortalException {
+
+		return new CommerceOrderValidatorResult(true);
+	}
+
 	public CommerceOrderValidatorResult validate(
 			Locale locale, CommerceOrder commerceOrder, CPInstance cpInstance,
 			int quantity)

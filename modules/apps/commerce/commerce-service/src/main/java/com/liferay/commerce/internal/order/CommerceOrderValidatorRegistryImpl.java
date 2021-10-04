@@ -156,6 +156,8 @@ public class CommerceOrderValidatorRegistryImpl
 		List<CommerceOrderValidatorResult> commerceOrderValidatorResults =
 			new ArrayList<>();
 
+		commerceOrderValidatorResults.addAll(validate(locale, commerceOrder));
+
 		List<CommerceOrderItem> commerceOrderItems =
 			commerceOrder.getCommerceOrderItems();
 
@@ -172,6 +174,31 @@ public class CommerceOrderValidatorRegistryImpl
 		}
 
 		return commerceOrderValidatorResults.isEmpty();
+	}
+
+	@Override
+	public List<CommerceOrderValidatorResult> validate(
+			Locale locale, CommerceOrder commerceOrder)
+		throws PortalException {
+
+		List<CommerceOrderValidatorResult> commerceOrderValidatorResults =
+			new ArrayList<>();
+
+		List<CommerceOrderValidator> commerceOrderValidators =
+			getCommerceOrderValidators();
+
+		for (CommerceOrderValidator commerceOrderValidator :
+				commerceOrderValidators) {
+
+			CommerceOrderValidatorResult commerceOrderValidatorResult =
+				commerceOrderValidator.validate(locale, commerceOrder);
+
+			if (!commerceOrderValidatorResult.isValid()) {
+				commerceOrderValidatorResults.add(commerceOrderValidatorResult);
+			}
+		}
+
+		return commerceOrderValidatorResults;
 	}
 
 	@Override

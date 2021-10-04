@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -81,8 +82,12 @@ public class CommerceOrderRuleEntryModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"active_", Types.BOOLEAN}, {"description", Types.VARCHAR},
+		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
 		{"name", Types.VARCHAR}, {"priority", Types.INTEGER},
-		{"type_", Types.VARCHAR}, {"typeSettings", Types.VARCHAR}
+		{"type_", Types.VARCHAR}, {"typeSettings", Types.VARCHAR},
+		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -98,14 +103,21 @@ public class CommerceOrderRuleEntryModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrderRuleEntry (externalReferenceCode VARCHAR(75) null,commerceOrderRuleEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,description VARCHAR(75) null,name VARCHAR(75) null,priority INTEGER,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null)";
+		"create table CommerceOrderRuleEntry (externalReferenceCode VARCHAR(75) null,commerceOrderRuleEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,description VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,name VARCHAR(75) null,priority INTEGER,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceOrderRuleEntry";
@@ -138,20 +150,38 @@ public class CommerceOrderRuleEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
+	public static final long DISPLAYDATE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TYPE_COLUMN_BITMASK = 8L;
+	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long STATUS_COLUMN_BITMASK = 32L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long TYPE_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PRIORITY_COLUMN_BITMASK = 16L;
+	public static final long PRIORITY_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -194,10 +224,17 @@ public class CommerceOrderRuleEntryModelImpl
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setActive(soapModel.isActive());
 		model.setDescription(soapModel.getDescription());
+		model.setDisplayDate(soapModel.getDisplayDate());
+		model.setExpirationDate(soapModel.getExpirationDate());
 		model.setName(soapModel.getName());
 		model.setPriority(soapModel.getPriority());
 		model.setType(soapModel.getType());
 		model.setTypeSettings(soapModel.getTypeSettings());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setStatus(soapModel.getStatus());
+		model.setStatusByUserId(soapModel.getStatusByUserId());
+		model.setStatusByUserName(soapModel.getStatusByUserName());
+		model.setStatusDate(soapModel.getStatusDate());
 
 		return model;
 	}
@@ -412,6 +449,18 @@ public class CommerceOrderRuleEntryModelImpl
 			"description",
 			(BiConsumer<CommerceOrderRuleEntry, String>)
 				CommerceOrderRuleEntry::setDescription);
+		attributeGetterFunctions.put(
+			"displayDate", CommerceOrderRuleEntry::getDisplayDate);
+		attributeSetterBiConsumers.put(
+			"displayDate",
+			(BiConsumer<CommerceOrderRuleEntry, Date>)
+				CommerceOrderRuleEntry::setDisplayDate);
+		attributeGetterFunctions.put(
+			"expirationDate", CommerceOrderRuleEntry::getExpirationDate);
+		attributeSetterBiConsumers.put(
+			"expirationDate",
+			(BiConsumer<CommerceOrderRuleEntry, Date>)
+				CommerceOrderRuleEntry::setExpirationDate);
 		attributeGetterFunctions.put("name", CommerceOrderRuleEntry::getName);
 		attributeSetterBiConsumers.put(
 			"name",
@@ -434,6 +483,36 @@ public class CommerceOrderRuleEntryModelImpl
 			"typeSettings",
 			(BiConsumer<CommerceOrderRuleEntry, String>)
 				CommerceOrderRuleEntry::setTypeSettings);
+		attributeGetterFunctions.put(
+			"lastPublishDate", CommerceOrderRuleEntry::getLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"lastPublishDate",
+			(BiConsumer<CommerceOrderRuleEntry, Date>)
+				CommerceOrderRuleEntry::setLastPublishDate);
+		attributeGetterFunctions.put(
+			"status", CommerceOrderRuleEntry::getStatus);
+		attributeSetterBiConsumers.put(
+			"status",
+			(BiConsumer<CommerceOrderRuleEntry, Integer>)
+				CommerceOrderRuleEntry::setStatus);
+		attributeGetterFunctions.put(
+			"statusByUserId", CommerceOrderRuleEntry::getStatusByUserId);
+		attributeSetterBiConsumers.put(
+			"statusByUserId",
+			(BiConsumer<CommerceOrderRuleEntry, Long>)
+				CommerceOrderRuleEntry::setStatusByUserId);
+		attributeGetterFunctions.put(
+			"statusByUserName", CommerceOrderRuleEntry::getStatusByUserName);
+		attributeSetterBiConsumers.put(
+			"statusByUserName",
+			(BiConsumer<CommerceOrderRuleEntry, String>)
+				CommerceOrderRuleEntry::setStatusByUserName);
+		attributeGetterFunctions.put(
+			"statusDate", CommerceOrderRuleEntry::getStatusDate);
+		attributeSetterBiConsumers.put(
+			"statusDate",
+			(BiConsumer<CommerceOrderRuleEntry, Date>)
+				CommerceOrderRuleEntry::setStatusDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -650,6 +729,54 @@ public class CommerceOrderRuleEntryModelImpl
 
 	@JSON
 	@Override
+	public Date getDisplayDate() {
+		return _displayDate;
+	}
+
+	@Override
+	public void setDisplayDate(Date displayDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_displayDate = displayDate;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public Date getOriginalDisplayDate() {
+		return getColumnOriginalValue("displayDate");
+	}
+
+	@JSON
+	@Override
+	public Date getExpirationDate() {
+		return _expirationDate;
+	}
+
+	@Override
+	public void setExpirationDate(Date expirationDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_expirationDate = expirationDate;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public Date getOriginalExpirationDate() {
+		return getColumnOriginalValue("expirationDate");
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -732,6 +859,192 @@ public class CommerceOrderRuleEntryModelImpl
 		_typeSettings = typeSettings;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_lastPublishDate = lastPublishDate;
+	}
+
+	@JSON
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_status = status;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public int getOriginalStatus() {
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
+	}
+
+	@JSON
+	@Override
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusByUserId = statusByUserId;
+	}
+
+	@Override
+	public String getStatusByUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getStatusByUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+	}
+
+	@JSON
+	@Override
+	public String getStatusByUserName() {
+		if (_statusByUserName == null) {
+			return "";
+		}
+		else {
+			return _statusByUserName;
+		}
+	}
+
+	@Override
+	public void setStatusByUserName(String statusByUserName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusByUserName = statusByUserName;
+	}
+
+	@JSON
+	@Override
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	@Override
+	public void setStatusDate(Date statusDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusDate = statusDate;
+	}
+
+	@Override
+	public boolean isApproved() {
+		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDenied() {
+		if (getStatus() == WorkflowConstants.STATUS_DENIED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDraft() {
+		if (getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isExpired() {
+		if (getStatus() == WorkflowConstants.STATUS_EXPIRED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isInactive() {
+		if (getStatus() == WorkflowConstants.STATUS_INACTIVE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isIncomplete() {
+		if (getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isPending() {
+		if (getStatus() == WorkflowConstants.STATUS_PENDING) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isScheduled() {
+		if (getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -801,10 +1114,17 @@ public class CommerceOrderRuleEntryModelImpl
 		commerceOrderRuleEntryImpl.setModifiedDate(getModifiedDate());
 		commerceOrderRuleEntryImpl.setActive(isActive());
 		commerceOrderRuleEntryImpl.setDescription(getDescription());
+		commerceOrderRuleEntryImpl.setDisplayDate(getDisplayDate());
+		commerceOrderRuleEntryImpl.setExpirationDate(getExpirationDate());
 		commerceOrderRuleEntryImpl.setName(getName());
 		commerceOrderRuleEntryImpl.setPriority(getPriority());
 		commerceOrderRuleEntryImpl.setType(getType());
 		commerceOrderRuleEntryImpl.setTypeSettings(getTypeSettings());
+		commerceOrderRuleEntryImpl.setLastPublishDate(getLastPublishDate());
+		commerceOrderRuleEntryImpl.setStatus(getStatus());
+		commerceOrderRuleEntryImpl.setStatusByUserId(getStatusByUserId());
+		commerceOrderRuleEntryImpl.setStatusByUserName(getStatusByUserName());
+		commerceOrderRuleEntryImpl.setStatusDate(getStatusDate());
 
 		commerceOrderRuleEntryImpl.resetOriginalValues();
 
@@ -834,6 +1154,10 @@ public class CommerceOrderRuleEntryModelImpl
 			this.<Boolean>getColumnOriginalValue("active_"));
 		commerceOrderRuleEntryImpl.setDescription(
 			this.<String>getColumnOriginalValue("description"));
+		commerceOrderRuleEntryImpl.setDisplayDate(
+			this.<Date>getColumnOriginalValue("displayDate"));
+		commerceOrderRuleEntryImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
 		commerceOrderRuleEntryImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
 		commerceOrderRuleEntryImpl.setPriority(
@@ -842,6 +1166,16 @@ public class CommerceOrderRuleEntryModelImpl
 			this.<String>getColumnOriginalValue("type_"));
 		commerceOrderRuleEntryImpl.setTypeSettings(
 			this.<String>getColumnOriginalValue("typeSettings"));
+		commerceOrderRuleEntryImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		commerceOrderRuleEntryImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		commerceOrderRuleEntryImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		commerceOrderRuleEntryImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		commerceOrderRuleEntryImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
 
 		return commerceOrderRuleEntryImpl;
 	}
@@ -985,6 +1319,26 @@ public class CommerceOrderRuleEntryModelImpl
 			commerceOrderRuleEntryCacheModel.description = null;
 		}
 
+		Date displayDate = getDisplayDate();
+
+		if (displayDate != null) {
+			commerceOrderRuleEntryCacheModel.displayDate =
+				displayDate.getTime();
+		}
+		else {
+			commerceOrderRuleEntryCacheModel.displayDate = Long.MIN_VALUE;
+		}
+
+		Date expirationDate = getExpirationDate();
+
+		if (expirationDate != null) {
+			commerceOrderRuleEntryCacheModel.expirationDate =
+				expirationDate.getTime();
+		}
+		else {
+			commerceOrderRuleEntryCacheModel.expirationDate = Long.MIN_VALUE;
+		}
+
 		commerceOrderRuleEntryCacheModel.name = getName();
 
 		String name = commerceOrderRuleEntryCacheModel.name;
@@ -1009,6 +1363,39 @@ public class CommerceOrderRuleEntryModelImpl
 
 		if ((typeSettings != null) && (typeSettings.length() == 0)) {
 			commerceOrderRuleEntryCacheModel.typeSettings = null;
+		}
+
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			commerceOrderRuleEntryCacheModel.lastPublishDate =
+				lastPublishDate.getTime();
+		}
+		else {
+			commerceOrderRuleEntryCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
+		commerceOrderRuleEntryCacheModel.status = getStatus();
+
+		commerceOrderRuleEntryCacheModel.statusByUserId = getStatusByUserId();
+
+		commerceOrderRuleEntryCacheModel.statusByUserName =
+			getStatusByUserName();
+
+		String statusByUserName =
+			commerceOrderRuleEntryCacheModel.statusByUserName;
+
+		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+			commerceOrderRuleEntryCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			commerceOrderRuleEntryCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			commerceOrderRuleEntryCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
 		return commerceOrderRuleEntryCacheModel;
@@ -1113,10 +1500,17 @@ public class CommerceOrderRuleEntryModelImpl
 	private boolean _setModifiedDate;
 	private boolean _active;
 	private String _description;
+	private Date _displayDate;
+	private Date _expirationDate;
 	private String _name;
 	private int _priority;
 	private String _type;
 	private String _typeSettings;
+	private Date _lastPublishDate;
+	private int _status;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1158,10 +1552,17 @@ public class CommerceOrderRuleEntryModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("active_", _active);
 		_columnOriginalValues.put("description", _description);
+		_columnOriginalValues.put("displayDate", _displayDate);
+		_columnOriginalValues.put("expirationDate", _expirationDate);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("priority", _priority);
 		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("typeSettings", _typeSettings);
+		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
+		_columnOriginalValues.put("status", _status);
+		_columnOriginalValues.put("statusByUserId", _statusByUserId);
+		_columnOriginalValues.put("statusByUserName", _statusByUserName);
+		_columnOriginalValues.put("statusDate", _statusDate);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1204,13 +1605,27 @@ public class CommerceOrderRuleEntryModelImpl
 
 		columnBitmasks.put("description", 256L);
 
-		columnBitmasks.put("name", 512L);
+		columnBitmasks.put("displayDate", 512L);
 
-		columnBitmasks.put("priority", 1024L);
+		columnBitmasks.put("expirationDate", 1024L);
 
-		columnBitmasks.put("type_", 2048L);
+		columnBitmasks.put("name", 2048L);
 
-		columnBitmasks.put("typeSettings", 4096L);
+		columnBitmasks.put("priority", 4096L);
+
+		columnBitmasks.put("type_", 8192L);
+
+		columnBitmasks.put("typeSettings", 16384L);
+
+		columnBitmasks.put("lastPublishDate", 32768L);
+
+		columnBitmasks.put("status", 65536L);
+
+		columnBitmasks.put("statusByUserId", 131072L);
+
+		columnBitmasks.put("statusByUserName", 262144L);
+
+		columnBitmasks.put("statusDate", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -11,10 +11,17 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="active" type="boolean" />
 		<field name="description" type="String" />
+		<field name="displayDate" type="Date" />
+		<field name="expirationDate" type="Date" />
 		<field name="name" type="String" />
 		<field name="priority" type="int" />
 		<field name="type" type="String" />
 		<field name="typeSettings" type="String" />
+		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRel">
 		<field name="commerceOrderRuleEntryRelId" type="long" />

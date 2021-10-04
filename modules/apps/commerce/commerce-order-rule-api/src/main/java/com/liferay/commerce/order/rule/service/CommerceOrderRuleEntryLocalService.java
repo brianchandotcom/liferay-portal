@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -81,9 +82,16 @@ public interface CommerceOrderRuleEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderRuleEntry addCommerceOrderRuleEntry(
 			String externalReferenceCode, long userId, boolean active,
-			String description, String name, int priority, String type,
-			String typeSettings)
+			String description, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire, String name,
+			int priority, String type, String typeSettings,
+			ServiceContext serviceContext)
 		throws PortalException;
+
+	public void checkCommerceOrderRuleEntries() throws PortalException;
 
 	/**
 	 * Creates a new commerce order rule entry with the primary key. Does not add the commerce order rule entry to the database.
@@ -110,10 +118,13 @@ public interface CommerceOrderRuleEntryLocalService
 	 *
 	 * @param commerceOrderRuleEntry the commerce order rule entry
 	 * @return the commerce order rule entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceOrderRuleEntry deleteCommerceOrderRuleEntry(
-		CommerceOrderRuleEntry commerceOrderRuleEntry);
+			CommerceOrderRuleEntry commerceOrderRuleEntry)
+		throws PortalException;
 
 	/**
 	 * Deletes the commerce order rule entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -127,7 +138,6 @@ public interface CommerceOrderRuleEntryLocalService
 	 * @throws PortalException if a commerce order rule entry with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceOrderRuleEntry deleteCommerceOrderRuleEntry(
 			long commerceOrderRuleEntryId)
 		throws PortalException;
@@ -236,7 +246,55 @@ public interface CommerceOrderRuleEntryLocalService
 		long companyId, String externalReferenceCode);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntry>
+		getAccountAndChannelAndOrderTypeCommerceRuleEntries(
+			long companyId, long accountEntryId, long commerceChannelId,
+			long commerceOrderTypeId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntry> getAccountAndChannelCommerceRuleEntries(
+		long companyId, long accountEntryId, long commerceChannelId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntry>
+		getAccountAndOrderTypeCommerceRuleEntries(
+			long companyId, long accountEntryId, long commerceOrderTypeId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntry> getAccountCommerceRuleEntries(
+		long companyId, long accountEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntry>
+		getAccountGroupsAndChannelAndOrderTypeCommerceRuleEntries(
+			long companyId, long[] accountGroupIds, long commerceChannelId,
+			long commerceOrderTypeId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntry>
+		getAccountGroupsAndChannelCommerceRuleEntries(
+			long companyId, long[] accountGroupIds, long commerceChannelId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntry>
+		getAccountGroupsAndOrderTypeCommerceRuleEntries(
+			long companyId, long[] accountGroupIds, long commerceOrderTypeId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntry> getAccountGroupsCommerceRuleEntries(
+		long companyId, long[] accountGroupIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntry>
+		getChannelAndOrderTypeCommerceRuleEntries(
+			long companyId, long commerceChannelId, long commerceOrderTypeId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntry> getChannelCommerceRuleEntries(
+		long companyId, long commerceChannelId);
 
 	/**
 	 * Returns a range of all the commerce order rule entries.
@@ -302,6 +360,10 @@ public interface CommerceOrderRuleEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntry> getOrderTypeCommerceRuleEntries(
+		long companyId, long commerceOrderTypeId);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -333,8 +395,19 @@ public interface CommerceOrderRuleEntryLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderRuleEntry updateCommerceOrderRuleEntry(
-			long commerceOrderRuleEntryId, boolean active, String description,
-			String name, int priority, String typeSettings)
+			long userId, long commerceOrderRuleEntryId, boolean active,
+			String description, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire, String name,
+			int priority, String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceOrderRuleEntry updateStatus(
+			long userId, long commerceOrderRuleEntryId, int status,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 }

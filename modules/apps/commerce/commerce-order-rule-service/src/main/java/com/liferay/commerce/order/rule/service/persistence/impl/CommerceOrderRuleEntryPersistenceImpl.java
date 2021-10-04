@@ -52,6 +52,8 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.sql.Timestamp;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -2081,6 +2083,2028 @@ public class CommerceOrderRuleEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_C_LIKETYPE_TYPE_3_SQL =
 		"(commerceOrderRuleEntry.type_ IS NULL OR commerceOrderRuleEntry.type_ LIKE '')";
 
+	private FinderPath _finderPathWithPaginationFindByLtD_S;
+	private FinderPath _finderPathWithPaginationCountByLtD_S;
+
+	/**
+	 * Returns all the commerce order rule entries where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @return the matching commerce order rule entries
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> findByLtD_S(
+		Date displayDate, int status) {
+
+		return findByLtD_S(
+			displayDate, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce order rule entries where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @return the range of matching commerce order rule entries
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> findByLtD_S(
+		Date displayDate, int status, int start, int end) {
+
+		return findByLtD_S(displayDate, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order rule entries where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order rule entries
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> findByLtD_S(
+		Date displayDate, int status, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		return findByLtD_S(
+			displayDate, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order rule entries where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce order rule entries
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> findByLtD_S(
+		Date displayDate, int status, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = _finderPathWithPaginationFindByLtD_S;
+		finderArgs = new Object[] {
+			_getTime(displayDate), status, start, end, orderByComparator
+		};
+
+		List<CommerceOrderRuleEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<CommerceOrderRuleEntry>)finderCache.getResult(
+				finderPath, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceOrderRuleEntry commerceOrderRuleEntry : list) {
+					if ((displayDate.getTime() <=
+							commerceOrderRuleEntry.getDisplayDate(
+							).getTime()) ||
+						(status != commerceOrderRuleEntry.getStatus())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_COMMERCEORDERRULEENTRY_WHERE);
+
+			boolean bindDisplayDate = false;
+
+			if (displayDate == null) {
+				sb.append(_FINDER_COLUMN_LTD_S_DISPLAYDATE_1);
+			}
+			else {
+				bindDisplayDate = true;
+
+				sb.append(_FINDER_COLUMN_LTD_S_DISPLAYDATE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_LTD_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindDisplayDate) {
+					queryPos.add(new Timestamp(displayDate.getTime()));
+				}
+
+				queryPos.add(status);
+
+				list = (List<CommerceOrderRuleEntry>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce order rule entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a matching commerce order rule entry could not be found
+	 */
+	@Override
+	public CommerceOrderRuleEntry findByLtD_S_First(
+			Date displayDate, int status,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws NoSuchOrderRuleEntryException {
+
+		CommerceOrderRuleEntry commerceOrderRuleEntry = fetchByLtD_S_First(
+			displayDate, status, orderByComparator);
+
+		if (commerceOrderRuleEntry != null) {
+			return commerceOrderRuleEntry;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("displayDate<");
+		sb.append(displayDate);
+
+		sb.append(", status=");
+		sb.append(status);
+
+		sb.append("}");
+
+		throw new NoSuchOrderRuleEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the first commerce order rule entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order rule entry, or <code>null</code> if a matching commerce order rule entry could not be found
+	 */
+	@Override
+	public CommerceOrderRuleEntry fetchByLtD_S_First(
+		Date displayDate, int status,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		List<CommerceOrderRuleEntry> list = findByLtD_S(
+			displayDate, status, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce order rule entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a matching commerce order rule entry could not be found
+	 */
+	@Override
+	public CommerceOrderRuleEntry findByLtD_S_Last(
+			Date displayDate, int status,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws NoSuchOrderRuleEntryException {
+
+		CommerceOrderRuleEntry commerceOrderRuleEntry = fetchByLtD_S_Last(
+			displayDate, status, orderByComparator);
+
+		if (commerceOrderRuleEntry != null) {
+			return commerceOrderRuleEntry;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("displayDate<");
+		sb.append(displayDate);
+
+		sb.append(", status=");
+		sb.append(status);
+
+		sb.append("}");
+
+		throw new NoSuchOrderRuleEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last commerce order rule entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order rule entry, or <code>null</code> if a matching commerce order rule entry could not be found
+	 */
+	@Override
+	public CommerceOrderRuleEntry fetchByLtD_S_Last(
+		Date displayDate, int status,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		int count = countByLtD_S(displayDate, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceOrderRuleEntry> list = findByLtD_S(
+			displayDate, status, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce order rule entries before and after the current commerce order rule entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param commerceOrderRuleEntryId the primary key of the current commerce order rule entry
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a commerce order rule entry with the primary key could not be found
+	 */
+	@Override
+	public CommerceOrderRuleEntry[] findByLtD_S_PrevAndNext(
+			long commerceOrderRuleEntryId, Date displayDate, int status,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws NoSuchOrderRuleEntryException {
+
+		CommerceOrderRuleEntry commerceOrderRuleEntry = findByPrimaryKey(
+			commerceOrderRuleEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceOrderRuleEntry[] array = new CommerceOrderRuleEntryImpl[3];
+
+			array[0] = getByLtD_S_PrevAndNext(
+				session, commerceOrderRuleEntry, displayDate, status,
+				orderByComparator, true);
+
+			array[1] = commerceOrderRuleEntry;
+
+			array[2] = getByLtD_S_PrevAndNext(
+				session, commerceOrderRuleEntry, displayDate, status,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceOrderRuleEntry getByLtD_S_PrevAndNext(
+		Session session, CommerceOrderRuleEntry commerceOrderRuleEntry,
+		Date displayDate, int status,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_COMMERCEORDERRULEENTRY_WHERE);
+
+		boolean bindDisplayDate = false;
+
+		if (displayDate == null) {
+			sb.append(_FINDER_COLUMN_LTD_S_DISPLAYDATE_1);
+		}
+		else {
+			bindDisplayDate = true;
+
+			sb.append(_FINDER_COLUMN_LTD_S_DISPLAYDATE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_LTD_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		if (bindDisplayDate) {
+			queryPos.add(new Timestamp(displayDate.getTime()));
+		}
+
+		queryPos.add(status);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						commerceOrderRuleEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CommerceOrderRuleEntry> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the commerce order rule entries that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @return the matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> filterFindByLtD_S(
+		Date displayDate, int status) {
+
+		return filterFindByLtD_S(
+			displayDate, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce order rule entries that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @return the range of matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> filterFindByLtD_S(
+		Date displayDate, int status, int start, int end) {
+
+		return filterFindByLtD_S(displayDate, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order rule entries that the user has permissions to view where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> filterFindByLtD_S(
+		Date displayDate, int status, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return findByLtD_S(
+				displayDate, status, start, end, orderByComparator);
+		}
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		boolean bindDisplayDate = false;
+
+		if (displayDate == null) {
+			sb.append(_FINDER_COLUMN_LTD_S_DISPLAYDATE_1);
+		}
+		else {
+			bindDisplayDate = true;
+
+			sb.append(_FINDER_COLUMN_LTD_S_DISPLAYDATE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_LTD_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommerceOrderRuleEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_ALIAS, CommerceOrderRuleEntryImpl.class);
+			}
+			else {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_TABLE, CommerceOrderRuleEntryImpl.class);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			if (bindDisplayDate) {
+				queryPos.add(new Timestamp(displayDate.getTime()));
+			}
+
+			queryPos.add(status);
+
+			return (List<CommerceOrderRuleEntry>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the commerce order rule entries before and after the current commerce order rule entry in the ordered set of commerce order rule entries that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param commerceOrderRuleEntryId the primary key of the current commerce order rule entry
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a commerce order rule entry with the primary key could not be found
+	 */
+	@Override
+	public CommerceOrderRuleEntry[] filterFindByLtD_S_PrevAndNext(
+			long commerceOrderRuleEntryId, Date displayDate, int status,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws NoSuchOrderRuleEntryException {
+
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return findByLtD_S_PrevAndNext(
+				commerceOrderRuleEntryId, displayDate, status,
+				orderByComparator);
+		}
+
+		CommerceOrderRuleEntry commerceOrderRuleEntry = findByPrimaryKey(
+			commerceOrderRuleEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceOrderRuleEntry[] array = new CommerceOrderRuleEntryImpl[3];
+
+			array[0] = filterGetByLtD_S_PrevAndNext(
+				session, commerceOrderRuleEntry, displayDate, status,
+				orderByComparator, true);
+
+			array[1] = commerceOrderRuleEntry;
+
+			array[2] = filterGetByLtD_S_PrevAndNext(
+				session, commerceOrderRuleEntry, displayDate, status,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceOrderRuleEntry filterGetByLtD_S_PrevAndNext(
+		Session session, CommerceOrderRuleEntry commerceOrderRuleEntry,
+		Date displayDate, int status,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		boolean bindDisplayDate = false;
+
+		if (displayDate == null) {
+			sb.append(_FINDER_COLUMN_LTD_S_DISPLAYDATE_1);
+		}
+		else {
+			bindDisplayDate = true;
+
+			sb.append(_FINDER_COLUMN_LTD_S_DISPLAYDATE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_LTD_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommerceOrderRuleEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+		sqlQuery.setFirstResult(0);
+		sqlQuery.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_ALIAS, CommerceOrderRuleEntryImpl.class);
+		}
+		else {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_TABLE, CommerceOrderRuleEntryImpl.class);
+		}
+
+		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+		if (bindDisplayDate) {
+			queryPos.add(new Timestamp(displayDate.getTime()));
+		}
+
+		queryPos.add(status);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						commerceOrderRuleEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CommerceOrderRuleEntry> list = sqlQuery.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce order rule entries where displayDate &lt; &#63; and status = &#63; from the database.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 */
+	@Override
+	public void removeByLtD_S(Date displayDate, int status) {
+		for (CommerceOrderRuleEntry commerceOrderRuleEntry :
+				findByLtD_S(
+					displayDate, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(commerceOrderRuleEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce order rule entries where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @return the number of matching commerce order rule entries
+	 */
+	@Override
+	public int countByLtD_S(Date displayDate, int status) {
+		FinderPath finderPath = _finderPathWithPaginationCountByLtD_S;
+
+		Object[] finderArgs = new Object[] {_getTime(displayDate), status};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCEORDERRULEENTRY_WHERE);
+
+			boolean bindDisplayDate = false;
+
+			if (displayDate == null) {
+				sb.append(_FINDER_COLUMN_LTD_S_DISPLAYDATE_1);
+			}
+			else {
+				bindDisplayDate = true;
+
+				sb.append(_FINDER_COLUMN_LTD_S_DISPLAYDATE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_LTD_S_STATUS_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindDisplayDate) {
+					queryPos.add(new Timestamp(displayDate.getTime()));
+				}
+
+				queryPos.add(status);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of commerce order rule entries that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @return the number of matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByLtD_S(Date displayDate, int status) {
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return countByLtD_S(displayDate, status);
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(_FILTER_SQL_COUNT_COMMERCEORDERRULEENTRY_WHERE);
+
+		boolean bindDisplayDate = false;
+
+		if (displayDate == null) {
+			sb.append(_FINDER_COLUMN_LTD_S_DISPLAYDATE_1);
+		}
+		else {
+			bindDisplayDate = true;
+
+			sb.append(_FINDER_COLUMN_LTD_S_DISPLAYDATE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_LTD_S_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommerceOrderRuleEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			if (bindDisplayDate) {
+				queryPos.add(new Timestamp(displayDate.getTime()));
+			}
+
+			queryPos.add(status);
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_LTD_S_DISPLAYDATE_1 =
+		"commerceOrderRuleEntry.displayDate IS NULL AND ";
+
+	private static final String _FINDER_COLUMN_LTD_S_DISPLAYDATE_2 =
+		"commerceOrderRuleEntry.displayDate < ? AND ";
+
+	private static final String _FINDER_COLUMN_LTD_S_STATUS_2 =
+		"commerceOrderRuleEntry.status = ?";
+
+	private FinderPath _finderPathWithPaginationFindByLtE_S;
+	private FinderPath _finderPathWithPaginationCountByLtE_S;
+
+	/**
+	 * Returns all the commerce order rule entries where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @return the matching commerce order rule entries
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> findByLtE_S(
+		Date expirationDate, int status) {
+
+		return findByLtE_S(
+			expirationDate, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce order rule entries where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @return the range of matching commerce order rule entries
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> findByLtE_S(
+		Date expirationDate, int status, int start, int end) {
+
+		return findByLtE_S(expirationDate, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order rule entries where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order rule entries
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> findByLtE_S(
+		Date expirationDate, int status, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		return findByLtE_S(
+			expirationDate, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order rule entries where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce order rule entries
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> findByLtE_S(
+		Date expirationDate, int status, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = _finderPathWithPaginationFindByLtE_S;
+		finderArgs = new Object[] {
+			_getTime(expirationDate), status, start, end, orderByComparator
+		};
+
+		List<CommerceOrderRuleEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<CommerceOrderRuleEntry>)finderCache.getResult(
+				finderPath, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceOrderRuleEntry commerceOrderRuleEntry : list) {
+					if ((expirationDate.getTime() <=
+							commerceOrderRuleEntry.getExpirationDate(
+							).getTime()) ||
+						(status != commerceOrderRuleEntry.getStatus())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_COMMERCEORDERRULEENTRY_WHERE);
+
+			boolean bindExpirationDate = false;
+
+			if (expirationDate == null) {
+				sb.append(_FINDER_COLUMN_LTE_S_EXPIRATIONDATE_1);
+			}
+			else {
+				bindExpirationDate = true;
+
+				sb.append(_FINDER_COLUMN_LTE_S_EXPIRATIONDATE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_LTE_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExpirationDate) {
+					queryPos.add(new Timestamp(expirationDate.getTime()));
+				}
+
+				queryPos.add(status);
+
+				list = (List<CommerceOrderRuleEntry>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce order rule entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a matching commerce order rule entry could not be found
+	 */
+	@Override
+	public CommerceOrderRuleEntry findByLtE_S_First(
+			Date expirationDate, int status,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws NoSuchOrderRuleEntryException {
+
+		CommerceOrderRuleEntry commerceOrderRuleEntry = fetchByLtE_S_First(
+			expirationDate, status, orderByComparator);
+
+		if (commerceOrderRuleEntry != null) {
+			return commerceOrderRuleEntry;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("expirationDate<");
+		sb.append(expirationDate);
+
+		sb.append(", status=");
+		sb.append(status);
+
+		sb.append("}");
+
+		throw new NoSuchOrderRuleEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the first commerce order rule entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order rule entry, or <code>null</code> if a matching commerce order rule entry could not be found
+	 */
+	@Override
+	public CommerceOrderRuleEntry fetchByLtE_S_First(
+		Date expirationDate, int status,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		List<CommerceOrderRuleEntry> list = findByLtE_S(
+			expirationDate, status, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce order rule entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a matching commerce order rule entry could not be found
+	 */
+	@Override
+	public CommerceOrderRuleEntry findByLtE_S_Last(
+			Date expirationDate, int status,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws NoSuchOrderRuleEntryException {
+
+		CommerceOrderRuleEntry commerceOrderRuleEntry = fetchByLtE_S_Last(
+			expirationDate, status, orderByComparator);
+
+		if (commerceOrderRuleEntry != null) {
+			return commerceOrderRuleEntry;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("expirationDate<");
+		sb.append(expirationDate);
+
+		sb.append(", status=");
+		sb.append(status);
+
+		sb.append("}");
+
+		throw new NoSuchOrderRuleEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last commerce order rule entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order rule entry, or <code>null</code> if a matching commerce order rule entry could not be found
+	 */
+	@Override
+	public CommerceOrderRuleEntry fetchByLtE_S_Last(
+		Date expirationDate, int status,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		int count = countByLtE_S(expirationDate, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceOrderRuleEntry> list = findByLtE_S(
+			expirationDate, status, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce order rule entries before and after the current commerce order rule entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param commerceOrderRuleEntryId the primary key of the current commerce order rule entry
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a commerce order rule entry with the primary key could not be found
+	 */
+	@Override
+	public CommerceOrderRuleEntry[] findByLtE_S_PrevAndNext(
+			long commerceOrderRuleEntryId, Date expirationDate, int status,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws NoSuchOrderRuleEntryException {
+
+		CommerceOrderRuleEntry commerceOrderRuleEntry = findByPrimaryKey(
+			commerceOrderRuleEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceOrderRuleEntry[] array = new CommerceOrderRuleEntryImpl[3];
+
+			array[0] = getByLtE_S_PrevAndNext(
+				session, commerceOrderRuleEntry, expirationDate, status,
+				orderByComparator, true);
+
+			array[1] = commerceOrderRuleEntry;
+
+			array[2] = getByLtE_S_PrevAndNext(
+				session, commerceOrderRuleEntry, expirationDate, status,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceOrderRuleEntry getByLtE_S_PrevAndNext(
+		Session session, CommerceOrderRuleEntry commerceOrderRuleEntry,
+		Date expirationDate, int status,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_COMMERCEORDERRULEENTRY_WHERE);
+
+		boolean bindExpirationDate = false;
+
+		if (expirationDate == null) {
+			sb.append(_FINDER_COLUMN_LTE_S_EXPIRATIONDATE_1);
+		}
+		else {
+			bindExpirationDate = true;
+
+			sb.append(_FINDER_COLUMN_LTE_S_EXPIRATIONDATE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_LTE_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		if (bindExpirationDate) {
+			queryPos.add(new Timestamp(expirationDate.getTime()));
+		}
+
+		queryPos.add(status);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						commerceOrderRuleEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CommerceOrderRuleEntry> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the commerce order rule entries that the user has permission to view where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @return the matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> filterFindByLtE_S(
+		Date expirationDate, int status) {
+
+		return filterFindByLtE_S(
+			expirationDate, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce order rule entries that the user has permission to view where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @return the range of matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> filterFindByLtE_S(
+		Date expirationDate, int status, int start, int end) {
+
+		return filterFindByLtE_S(expirationDate, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order rule entries that the user has permissions to view where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> filterFindByLtE_S(
+		Date expirationDate, int status, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return findByLtE_S(
+				expirationDate, status, start, end, orderByComparator);
+		}
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		boolean bindExpirationDate = false;
+
+		if (expirationDate == null) {
+			sb.append(_FINDER_COLUMN_LTE_S_EXPIRATIONDATE_1);
+		}
+		else {
+			bindExpirationDate = true;
+
+			sb.append(_FINDER_COLUMN_LTE_S_EXPIRATIONDATE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_LTE_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommerceOrderRuleEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_ALIAS, CommerceOrderRuleEntryImpl.class);
+			}
+			else {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_TABLE, CommerceOrderRuleEntryImpl.class);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			if (bindExpirationDate) {
+				queryPos.add(new Timestamp(expirationDate.getTime()));
+			}
+
+			queryPos.add(status);
+
+			return (List<CommerceOrderRuleEntry>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the commerce order rule entries before and after the current commerce order rule entry in the ordered set of commerce order rule entries that the user has permission to view where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param commerceOrderRuleEntryId the primary key of the current commerce order rule entry
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a commerce order rule entry with the primary key could not be found
+	 */
+	@Override
+	public CommerceOrderRuleEntry[] filterFindByLtE_S_PrevAndNext(
+			long commerceOrderRuleEntryId, Date expirationDate, int status,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws NoSuchOrderRuleEntryException {
+
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return findByLtE_S_PrevAndNext(
+				commerceOrderRuleEntryId, expirationDate, status,
+				orderByComparator);
+		}
+
+		CommerceOrderRuleEntry commerceOrderRuleEntry = findByPrimaryKey(
+			commerceOrderRuleEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceOrderRuleEntry[] array = new CommerceOrderRuleEntryImpl[3];
+
+			array[0] = filterGetByLtE_S_PrevAndNext(
+				session, commerceOrderRuleEntry, expirationDate, status,
+				orderByComparator, true);
+
+			array[1] = commerceOrderRuleEntry;
+
+			array[2] = filterGetByLtE_S_PrevAndNext(
+				session, commerceOrderRuleEntry, expirationDate, status,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceOrderRuleEntry filterGetByLtE_S_PrevAndNext(
+		Session session, CommerceOrderRuleEntry commerceOrderRuleEntry,
+		Date expirationDate, int status,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		boolean bindExpirationDate = false;
+
+		if (expirationDate == null) {
+			sb.append(_FINDER_COLUMN_LTE_S_EXPIRATIONDATE_1);
+		}
+		else {
+			bindExpirationDate = true;
+
+			sb.append(_FINDER_COLUMN_LTE_S_EXPIRATIONDATE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_LTE_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommerceOrderRuleEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+		sqlQuery.setFirstResult(0);
+		sqlQuery.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_ALIAS, CommerceOrderRuleEntryImpl.class);
+		}
+		else {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_TABLE, CommerceOrderRuleEntryImpl.class);
+		}
+
+		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+		if (bindExpirationDate) {
+			queryPos.add(new Timestamp(expirationDate.getTime()));
+		}
+
+		queryPos.add(status);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						commerceOrderRuleEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CommerceOrderRuleEntry> list = sqlQuery.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce order rule entries where expirationDate &lt; &#63; and status = &#63; from the database.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 */
+	@Override
+	public void removeByLtE_S(Date expirationDate, int status) {
+		for (CommerceOrderRuleEntry commerceOrderRuleEntry :
+				findByLtE_S(
+					expirationDate, status, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(commerceOrderRuleEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce order rule entries where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @return the number of matching commerce order rule entries
+	 */
+	@Override
+	public int countByLtE_S(Date expirationDate, int status) {
+		FinderPath finderPath = _finderPathWithPaginationCountByLtE_S;
+
+		Object[] finderArgs = new Object[] {_getTime(expirationDate), status};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCEORDERRULEENTRY_WHERE);
+
+			boolean bindExpirationDate = false;
+
+			if (expirationDate == null) {
+				sb.append(_FINDER_COLUMN_LTE_S_EXPIRATIONDATE_1);
+			}
+			else {
+				bindExpirationDate = true;
+
+				sb.append(_FINDER_COLUMN_LTE_S_EXPIRATIONDATE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_LTE_S_STATUS_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExpirationDate) {
+					queryPos.add(new Timestamp(expirationDate.getTime()));
+				}
+
+				queryPos.add(status);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of commerce order rule entries that the user has permission to view where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @return the number of matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByLtE_S(Date expirationDate, int status) {
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return countByLtE_S(expirationDate, status);
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(_FILTER_SQL_COUNT_COMMERCEORDERRULEENTRY_WHERE);
+
+		boolean bindExpirationDate = false;
+
+		if (expirationDate == null) {
+			sb.append(_FINDER_COLUMN_LTE_S_EXPIRATIONDATE_1);
+		}
+		else {
+			bindExpirationDate = true;
+
+			sb.append(_FINDER_COLUMN_LTE_S_EXPIRATIONDATE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_LTE_S_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommerceOrderRuleEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			if (bindExpirationDate) {
+				queryPos.add(new Timestamp(expirationDate.getTime()));
+			}
+
+			queryPos.add(status);
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_LTE_S_EXPIRATIONDATE_1 =
+		"commerceOrderRuleEntry.expirationDate IS NULL AND ";
+
+	private static final String _FINDER_COLUMN_LTE_S_EXPIRATIONDATE_2 =
+		"commerceOrderRuleEntry.expirationDate < ? AND ";
+
+	private static final String _FINDER_COLUMN_LTE_S_STATUS_2 =
+		"commerceOrderRuleEntry.status = ?";
+
 	private FinderPath _finderPathWithPaginationFindByC_A_LikeType;
 	private FinderPath _finderPathWithPaginationCountByC_A_LikeType;
 
@@ -4088,6 +6112,34 @@ public class CommerceOrderRuleEntryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "type_"}, false);
 
+		_finderPathWithPaginationFindByLtD_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",
+			new String[] {
+				Date.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"displayDate", "status"}, true);
+
+		_finderPathWithPaginationCountByLtD_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtD_S",
+			new String[] {Date.class.getName(), Integer.class.getName()},
+			new String[] {"displayDate", "status"}, false);
+
+		_finderPathWithPaginationFindByLtE_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtE_S",
+			new String[] {
+				Date.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"expirationDate", "status"}, true);
+
+		_finderPathWithPaginationCountByLtE_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtE_S",
+			new String[] {Date.class.getName(), Integer.class.getName()},
+			new String[] {"expirationDate", "status"}, false);
+
 		_finderPathWithPaginationFindByC_A_LikeType = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_LikeType",
 			new String[] {
@@ -4152,6 +6204,14 @@ public class CommerceOrderRuleEntryPersistenceImpl
 
 	@Reference
 	protected FinderCache finderCache;
+
+	private static Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
 
 	private static final String _SQL_SELECT_COMMERCEORDERRULEENTRY =
 		"SELECT commerceOrderRuleEntry FROM CommerceOrderRuleEntry commerceOrderRuleEntry";

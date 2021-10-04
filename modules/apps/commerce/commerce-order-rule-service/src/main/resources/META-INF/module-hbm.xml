@@ -16,10 +16,17 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="displayDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="expirationDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.commerce.order.rule.model.impl.CommerceOrderRuleEntryRelImpl" table="CommerceOrderRuleEntryRel">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceOrderRuleEntryRelId" type="long">

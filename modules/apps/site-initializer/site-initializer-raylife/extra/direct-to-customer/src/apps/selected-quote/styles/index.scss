@@ -1,0 +1,247 @@
+svg {
+	height: 0.8rem !important;
+	width: 0.8rem !important;
+}
+
+$font-family: var(
+	--font-family-sans-serif,
+	'Segoe UI',
+	Tahoma,
+	Geneva,
+	Verdana,
+	sans-serif
+);
+
+:root {
+	font-family: $font-family;
+}
+
+.selected-quote {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+
+	.selected-quote-right-page {
+		width: 100%;
+	}
+}
+
+.panel-container {
+	width: 100%;
+	padding: 34px 48px;
+	border-bottom: 1px solid #d3d3d4;
+
+	.panel-header {
+		display: flex;
+		justify-content: space-between;
+		cursor: pointer;
+
+		.panel-title {
+			color: #2f313d;
+			font-weight: 700;
+			font-size: 24px;
+		}
+
+		.panel-title-icon {
+			width: 32px;
+			height: 32px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: #d2d2d3;
+			border-radius: 50%;
+			fill: #fff;
+		}
+	}
+
+	.panel-content {
+		display: none;
+
+		&.show {
+			display: block;
+		}
+	}
+}
+
+.upload-container {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+
+	.upload-section {
+		padding: 48px 0px 16px 22px;
+
+		.header {
+			margin-bottom: 16px;
+
+			.title {
+				margin-bottom: 4px;
+				font-size: 18px;
+				font-weight: 700;
+
+				span.required {
+					color: red;
+				}
+
+				span.optional {
+					color: #606167;
+				}
+			}
+
+			.subtitle {
+				font-weight: 500;
+				font-size: 16px;
+				color: #606167;
+			}
+		}
+
+		.upload-content {
+			display: flex;
+			flex-direction: column;
+
+			.upload-file {
+				display: flex;
+				flex-direction: row;
+
+				.view-file {
+					display: flex;
+					flex-direction: row;
+					flex-wrap: wrap;
+
+					.view-file-content {
+						display: flex;
+						flex-direction: row;
+						margin-right: -16px;
+
+						.close-icon {
+							align-items: center;
+							background: #fff;
+							border-radius: 50%;
+							cursor: pointer;
+							display: flex;
+							height: 36px;
+							justify-content: center;
+							position: relative;
+							right: 38px;
+							top: 3px;
+							width: 36px;
+							fill: #7d7e85;
+						}
+
+						.div-image {
+							display: flex;
+							text-align: center;
+							flex-direction: column;
+
+							span {
+								color: #808185;
+								margin-top: 4px;
+								font-size: 13px;
+								white-space: nowrap;
+								overflow: hidden;
+								text-overflow: ellipsis;
+								width: 176px;
+							}
+
+							img {
+								border-radius: 16px;
+								width: 176px;
+								height: 176px;
+							}
+						}
+					}
+				}
+
+				.drop-area {
+					align-items: center;
+					background: #f0f5ff;
+					border: 1px dashed #a8c4ff;
+					border-radius: 16px;
+					border-width: 2px;
+					color: #606167;
+					display: flex;
+					flex-direction: row;
+					flex-wrap: wrap;
+					font-size: 16px;
+					font-weight: 500;
+					justify-content: center;
+					left: 0px;
+					position: static;
+					top: 64px;
+
+					&.hide {
+						display: none;
+					}
+
+					.upload-button {
+						align-items: center;
+						display: flex;
+						flex-wrap: wrap;
+						justify-content: center;
+
+						.link-button {
+							background: none;
+							color: #4c85ff;
+							font-size: 14px;
+							font-weight: 700;
+							cursor: pointer;
+							border: 1px solid #4c85ff;
+							width: 160px;
+							height: 40px;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							border-radius: 4px;
+						}
+
+						.input-file {
+							border-radius: 16px;
+							display: none;
+							position: relative;
+						}
+
+						svg {
+							fill: #4c85ff;
+							width: 16px !important;
+							height: 16px !important;
+							margin-right: 6px;
+						}
+					}
+				}
+			}
+		}
+
+		.upload-info {
+			margin-top: 16px;
+
+			.badge {
+				height: 56px;
+
+				svg {
+					width: 24px !important;
+					height: 24px !important;
+					flex-shrink: 0;
+				}
+			}
+
+			.info-content {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				width: 100%;
+
+				.info-description {
+					font-size: 16px;
+				}
+
+				.closeIcon {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					cursor: pointer;
+					fill: #295ccc;
+				}
+			}
+		}
+	}
+}

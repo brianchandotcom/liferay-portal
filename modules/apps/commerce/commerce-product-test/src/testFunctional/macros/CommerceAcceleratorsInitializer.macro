@@ -55,6 +55,72 @@ definition {
 			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADDRESS_TYPE");
 	}
 
+	macro addADT {
+		var key_adtType = "${adtType}";
+
+		LexiconEntry.gotoAdd();
+
+		if (IsElementPresent(key_text = "More", locator1 = "Button#ANY")) {
+			Button.clickMore();
+
+			if ("${adtType}" == "Search Results") {
+				ScrollWebElementIntoView(locator1 = "CommerceEntry#COMMERCE_SEARCH_RESULTS_TEMPLATE_MENU_ITEM");
+
+				Click(locator1 = "CommerceEntry#COMMERCE_SEARCH_RESULTS_TEMPLATE_MENU_ITEM");
+			} else {
+				ScrollWebElementIntoView(
+					key_menuItem = "${adtType} Template",
+					locator1 = "MenuItem#ANY_MENU_ITEM");
+
+				MenuItem.click(menuItem = "${adtType} Template");
+			}
+		}
+		else {
+			MenuItem.click(menuItem = "${adtType} Template");
+		}
+
+		SiteAdmin.viewPortletTitle(portletTitle = "Add ${adtType} Template");
+
+		PortletEntry.inputName(name = "${adtType} Test ADT");
+
+		if (isSet(templateScript)) {
+			Type.sendKeysAceEditor(
+				locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
+				value1 = "${templateScript}");
+		}
+
+		else if (isSet(fieldNameList)) {
+			for (var fieldName : list "${fieldNameList}") {
+				AssertClick(
+					key_panelTitle = "Fields",
+					key_variableName = "${fieldName}",
+					locator1 = "DDMEditTemplate#WEB_CONTENT_SCRIPT_VARIABLE",
+					value1 = "${fieldName}");
+			}
+		}
+
+		else {
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			var testBaseDirName = PropsUtil.get("test.base.dir.name");
+			var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
+			var filePath = "${testBaseDirName}tests/enduser/wem/applicationdisplaytemplate/${testDependenciesDirName}/${adtFile}";
+			var filePath = FileUtil.fixFilePath("${filePath}");
+
+			UploadFile(
+				inputFieldId = "importScript",
+				locator1 = "TextInput#INPUT_ID",
+				value1 = "${filePath}");
+		}
+
+		PortletEntry.save();
+
+		AssertTextEquals(
+			key_rowEntry = "${adtType} Test ADT",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			value1 = "${adtType} Test ADT");
+	}
+
 	macro addPortlet {
 		if ("${portletName}" == "Where are the Liferay members?") {
 			var portletName = "Map";

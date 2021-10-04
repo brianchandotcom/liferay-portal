@@ -23,6 +23,8 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
 		}
 	}
 

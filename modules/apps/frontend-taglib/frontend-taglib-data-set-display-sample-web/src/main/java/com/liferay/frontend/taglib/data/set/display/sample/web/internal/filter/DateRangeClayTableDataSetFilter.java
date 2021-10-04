@@ -29,17 +29,17 @@ import org.osgi.service.component.annotations.Component;
 	property = "clay.data.set.display.name=dataSetDisplay",
 	service = ClayDataSetFilter.class
 )
-public class CharlieDateRangeClayTableDataSetFilter
+public class DateRangeClayTableDataSetFilter
 	extends BaseDateRangeClayDataSetFilter {
 
 	@Override
 	public String getId() {
-		return "charlie";
+		return "date";
 	}
 
 	@Override
 	public String getLabel() {
-		return "Charlie Date Range";
+		return "Date Range";
 	}
 
 	public DateClayDataSetFilterItem getMaxDateClayDataSetFilterItem() {

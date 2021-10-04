@@ -39,7 +39,7 @@ public class DataSetDisplayContext {
 	}
 
 	public String getAPIURL() {
-		return "/o/c/sampleobjectdefinitions";
+		return "/o/c/datasetdisplaysamples";
 	}
 
 	public List<ClayDataSetActionDropdownItem>

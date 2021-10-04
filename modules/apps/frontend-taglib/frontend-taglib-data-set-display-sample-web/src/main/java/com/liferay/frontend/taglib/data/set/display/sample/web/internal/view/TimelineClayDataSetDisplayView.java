@@ -31,17 +31,17 @@ public class TimelineClayDataSetDisplayView
 
 	@Override
 	public String getDate() {
-		return "charlie";
+		return "date";
 	}
 
 	@Override
 	public String getDescription() {
-		return "fox";
+		return "description";
 	}
 
 	@Override
 	public String getTitle() {
-		return "easy";
+		return "title";
 	}
 
 }

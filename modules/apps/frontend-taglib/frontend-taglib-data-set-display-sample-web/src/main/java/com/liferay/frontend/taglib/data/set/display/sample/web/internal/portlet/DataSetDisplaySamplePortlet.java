@@ -15,11 +15,14 @@
 package com.liferay.frontend.taglib.data.set.display.sample.web.internal.portlet;
 
 import com.liferay.frontend.taglib.data.set.display.sample.web.constants.DataSetDisplaySamplePortletKeys;
+import com.liferay.frontend.taglib.data.set.display.sample.web.internal.DataSetDisplaySampleGenerator;
 import com.liferay.frontend.taglib.data.set.display.sample.web.internal.display.context.DataSetDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
+
+import java.util.concurrent.CompletableFuture;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -60,6 +63,10 @@ public class DataSetDisplaySamplePortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		CompletableFuture.runAsync(
+			() -> _dataSetDisplaySampleGenerator.generateDataSetDisplaySample(
+				_portal.getCompanyId(renderRequest)));
+
 		renderRequest.setAttribute(
 			DataSetDisplaySamplePortletKeys.DATASET_DISPLAY_CONTEXT,
 			new DataSetDisplayContext(
@@ -67,6 +74,9 @@ public class DataSetDisplaySamplePortlet extends MVCPortlet {
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
+
+	@Reference
+	private DataSetDisplaySampleGenerator _dataSetDisplaySampleGenerator;
 
 	@Reference
 	private Portal _portal;

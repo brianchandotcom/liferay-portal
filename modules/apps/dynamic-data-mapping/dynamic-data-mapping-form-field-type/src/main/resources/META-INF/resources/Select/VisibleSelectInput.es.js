@@ -12,6 +12,8 @@
  * details.
  */
 
+import './VisibleSelectInput.scss';
+
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import classNames from 'classnames';

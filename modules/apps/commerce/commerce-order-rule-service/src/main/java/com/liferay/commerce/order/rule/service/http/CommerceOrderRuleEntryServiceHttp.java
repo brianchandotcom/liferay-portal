@@ -14,13 +14,21 @@
 
 package com.liferay.commerce.order.rule.service.http;
 
+import com.liferay.commerce.order.rule.service.CommerceOrderRuleEntryServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 /**
  * Provides the HTTP utility for the
- * <code>com.liferay.commerce.order.rule.service.CommerceOrderRuleEntryServiceUtil</code> service
+ * <code>CommerceOrderRuleEntryServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * <code>com.liferay.portal.kernel.security.auth.HttpPrincipal</code> parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -42,4 +50,306 @@ package com.liferay.commerce.order.rule.service.http;
  * @generated
  */
 public class CommerceOrderRuleEntryServiceHttp {
+
+	public static com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry
+			addCommerceOrderRuleEntry(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				boolean active, String description, String name, int priority,
+				String type, String typeSettings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceOrderRuleEntryServiceUtil.class,
+				"addCommerceOrderRuleEntry",
+				_addCommerceOrderRuleEntryParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, active, description, name,
+				priority, type, typeSettings);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.order.rule.model.
+				CommerceOrderRuleEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry
+			deleteCommerceOrderRuleEntry(
+				HttpPrincipal httpPrincipal, long commerceOrderRuleEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceOrderRuleEntryServiceUtil.class,
+				"deleteCommerceOrderRuleEntry",
+				_deleteCommerceOrderRuleEntryParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commerceOrderRuleEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.order.rule.model.
+				CommerceOrderRuleEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry>
+				getCommerceOrderRuleEntries(
+					HttpPrincipal httpPrincipal, long companyId, boolean active,
+					int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceOrderRuleEntryServiceUtil.class,
+				"getCommerceOrderRuleEntries",
+				_getCommerceOrderRuleEntriesParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, active, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry>)
+					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry>
+				getCommerceOrderRuleEntries(
+					HttpPrincipal httpPrincipal, long companyId, boolean active,
+					String type, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceOrderRuleEntryServiceUtil.class,
+				"getCommerceOrderRuleEntries",
+				_getCommerceOrderRuleEntriesParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, active, type, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry>)
+					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry>
+				getCommerceOrderRuleEntries(
+					HttpPrincipal httpPrincipal, long companyId, String type,
+					int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceOrderRuleEntryServiceUtil.class,
+				"getCommerceOrderRuleEntries",
+				_getCommerceOrderRuleEntriesParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, type, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry>)
+					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry
+			updateCommerceOrderRuleEntry(
+				HttpPrincipal httpPrincipal, long commerceOrderRuleEntryId,
+				boolean active, String description, String name, int priority,
+				String typeSettings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceOrderRuleEntryServiceUtil.class,
+				"updateCommerceOrderRuleEntry",
+				_updateCommerceOrderRuleEntryParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commerceOrderRuleEntryId, active, description, name,
+				priority, typeSettings);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.order.rule.model.
+				CommerceOrderRuleEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		CommerceOrderRuleEntryServiceHttp.class);
+
+	private static final Class<?>[] _addCommerceOrderRuleEntryParameterTypes0 =
+		new Class[] {
+			String.class, boolean.class, String.class, String.class, int.class,
+			String.class, String.class
+		};
+	private static final Class<?>[]
+		_deleteCommerceOrderRuleEntryParameterTypes1 = new Class[] {long.class};
+	private static final Class<?>[]
+		_getCommerceOrderRuleEntriesParameterTypes2 = new Class[] {
+			long.class, boolean.class, int.class, int.class
+		};
+	private static final Class<?>[]
+		_getCommerceOrderRuleEntriesParameterTypes3 = new Class[] {
+			long.class, boolean.class, String.class, int.class, int.class
+		};
+	private static final Class<?>[]
+		_getCommerceOrderRuleEntriesParameterTypes4 = new Class[] {
+			long.class, String.class, int.class, int.class
+		};
+	private static final Class<?>[]
+		_updateCommerceOrderRuleEntryParameterTypes5 = new Class[] {
+			long.class, boolean.class, String.class, String.class, int.class,
+			String.class
+		};
+
 }

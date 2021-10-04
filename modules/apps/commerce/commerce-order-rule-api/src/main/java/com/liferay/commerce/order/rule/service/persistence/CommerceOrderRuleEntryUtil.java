@@ -297,6 +297,80 @@ public class CommerceOrderRuleEntryUtil {
 	}
 
 	/**
+	 * Returns all the commerce order rule entries that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @return the matching commerce order rule entries that the user has permission to view
+	 */
+	public static List<CommerceOrderRuleEntry> filterFindByC_A(
+		long companyId, boolean active) {
+
+		return getPersistence().filterFindByC_A(companyId, active);
+	}
+
+	/**
+	 * Returns a range of all the commerce order rule entries that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @return the range of matching commerce order rule entries that the user has permission to view
+	 */
+	public static List<CommerceOrderRuleEntry> filterFindByC_A(
+		long companyId, boolean active, int start, int end) {
+
+		return getPersistence().filterFindByC_A(companyId, active, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order rule entries that the user has permissions to view where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order rule entries that the user has permission to view
+	 */
+	public static List<CommerceOrderRuleEntry> filterFindByC_A(
+		long companyId, boolean active, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		return getPersistence().filterFindByC_A(
+			companyId, active, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce order rule entries before and after the current commerce order rule entry in the ordered set of commerce order rule entries that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * @param commerceOrderRuleEntryId the primary key of the current commerce order rule entry
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a commerce order rule entry with the primary key could not be found
+	 */
+	public static CommerceOrderRuleEntry[] filterFindByC_A_PrevAndNext(
+			long commerceOrderRuleEntryId, long companyId, boolean active,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws com.liferay.commerce.order.rule.exception.
+			NoSuchOrderRuleEntryException {
+
+		return getPersistence().filterFindByC_A_PrevAndNext(
+			commerceOrderRuleEntryId, companyId, active, orderByComparator);
+	}
+
+	/**
 	 * Removes all the commerce order rule entries where companyId = &#63; and active = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -315,6 +389,17 @@ public class CommerceOrderRuleEntryUtil {
 	 */
 	public static int countByC_A(long companyId, boolean active) {
 		return getPersistence().countByC_A(companyId, active);
+	}
+
+	/**
+	 * Returns the number of commerce order rule entries that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @return the number of matching commerce order rule entries that the user has permission to view
+	 */
+	public static int filterCountByC_A(long companyId, boolean active) {
+		return getPersistence().filterCountByC_A(companyId, active);
 	}
 
 	/**
@@ -486,6 +571,81 @@ public class CommerceOrderRuleEntryUtil {
 	}
 
 	/**
+	 * Returns all the commerce order rule entries that the user has permission to view where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the matching commerce order rule entries that the user has permission to view
+	 */
+	public static List<CommerceOrderRuleEntry> filterFindByC_LikeType(
+		long companyId, String type) {
+
+		return getPersistence().filterFindByC_LikeType(companyId, type);
+	}
+
+	/**
+	 * Returns a range of all the commerce order rule entries that the user has permission to view where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @return the range of matching commerce order rule entries that the user has permission to view
+	 */
+	public static List<CommerceOrderRuleEntry> filterFindByC_LikeType(
+		long companyId, String type, int start, int end) {
+
+		return getPersistence().filterFindByC_LikeType(
+			companyId, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order rule entries that the user has permissions to view where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order rule entries that the user has permission to view
+	 */
+	public static List<CommerceOrderRuleEntry> filterFindByC_LikeType(
+		long companyId, String type, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		return getPersistence().filterFindByC_LikeType(
+			companyId, type, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce order rule entries before and after the current commerce order rule entry in the ordered set of commerce order rule entries that the user has permission to view where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * @param commerceOrderRuleEntryId the primary key of the current commerce order rule entry
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a commerce order rule entry with the primary key could not be found
+	 */
+	public static CommerceOrderRuleEntry[] filterFindByC_LikeType_PrevAndNext(
+			long commerceOrderRuleEntryId, long companyId, String type,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws com.liferay.commerce.order.rule.exception.
+			NoSuchOrderRuleEntryException {
+
+		return getPersistence().filterFindByC_LikeType_PrevAndNext(
+			commerceOrderRuleEntryId, companyId, type, orderByComparator);
+	}
+
+	/**
 	 * Removes all the commerce order rule entries where companyId = &#63; and type LIKE &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -504,6 +664,17 @@ public class CommerceOrderRuleEntryUtil {
 	 */
 	public static int countByC_LikeType(long companyId, String type) {
 		return getPersistence().countByC_LikeType(companyId, type);
+	}
+
+	/**
+	 * Returns the number of commerce order rule entries that the user has permission to view where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the number of matching commerce order rule entries that the user has permission to view
+	 */
+	public static int filterCountByC_LikeType(long companyId, String type) {
+		return getPersistence().filterCountByC_LikeType(companyId, type);
 	}
 
 	/**
@@ -688,6 +859,88 @@ public class CommerceOrderRuleEntryUtil {
 	}
 
 	/**
+	 * Returns all the commerce order rule entries that the user has permission to view where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @return the matching commerce order rule entries that the user has permission to view
+	 */
+	public static List<CommerceOrderRuleEntry> filterFindByC_A_LikeType(
+		long companyId, boolean active, String type) {
+
+		return getPersistence().filterFindByC_A_LikeType(
+			companyId, active, type);
+	}
+
+	/**
+	 * Returns a range of all the commerce order rule entries that the user has permission to view where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @return the range of matching commerce order rule entries that the user has permission to view
+	 */
+	public static List<CommerceOrderRuleEntry> filterFindByC_A_LikeType(
+		long companyId, boolean active, String type, int start, int end) {
+
+		return getPersistence().filterFindByC_A_LikeType(
+			companyId, active, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order rule entries that the user has permissions to view where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order rule entries that the user has permission to view
+	 */
+	public static List<CommerceOrderRuleEntry> filterFindByC_A_LikeType(
+		long companyId, boolean active, String type, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		return getPersistence().filterFindByC_A_LikeType(
+			companyId, active, type, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce order rule entries before and after the current commerce order rule entry in the ordered set of commerce order rule entries that the user has permission to view where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * @param commerceOrderRuleEntryId the primary key of the current commerce order rule entry
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a commerce order rule entry with the primary key could not be found
+	 */
+	public static CommerceOrderRuleEntry[] filterFindByC_A_LikeType_PrevAndNext(
+			long commerceOrderRuleEntryId, long companyId, boolean active,
+			String type,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws com.liferay.commerce.order.rule.exception.
+			NoSuchOrderRuleEntryException {
+
+		return getPersistence().filterFindByC_A_LikeType_PrevAndNext(
+			commerceOrderRuleEntryId, companyId, active, type,
+			orderByComparator);
+	}
+
+	/**
 	 * Removes all the commerce order rule entries where companyId = &#63; and active = &#63; and type LIKE &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -712,6 +965,21 @@ public class CommerceOrderRuleEntryUtil {
 		long companyId, boolean active, String type) {
 
 		return getPersistence().countByC_A_LikeType(companyId, active, type);
+	}
+
+	/**
+	 * Returns the number of commerce order rule entries that the user has permission to view where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @return the number of matching commerce order rule entries that the user has permission to view
+	 */
+	public static int filterCountByC_A_LikeType(
+		long companyId, boolean active, String type) {
+
+		return getPersistence().filterCountByC_A_LikeType(
+			companyId, active, type);
 	}
 
 	/**

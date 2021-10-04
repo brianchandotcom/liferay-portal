@@ -23,10 +23,12 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -76,6 +78,13 @@ public interface CommerceOrderRuleEntryLocalService
 	public CommerceOrderRuleEntry addCommerceOrderRuleEntry(
 		CommerceOrderRuleEntry commerceOrderRuleEntry);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceOrderRuleEntry addCommerceOrderRuleEntry(
+			String externalReferenceCode, long userId, boolean active,
+			String description, String name, int priority, String type,
+			String typeSettings)
+		throws PortalException;
+
 	/**
 	 * Creates a new commerce order rule entry with the primary key. Does not add the commerce order rule entry to the database.
 	 *
@@ -118,6 +127,7 @@ public interface CommerceOrderRuleEntryLocalService
 	 * @throws PortalException if a commerce order rule entry with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceOrderRuleEntry deleteCommerceOrderRuleEntry(
 			long commerceOrderRuleEntryId)
 		throws PortalException;
@@ -243,6 +253,18 @@ public interface CommerceOrderRuleEntryLocalService
 	public List<CommerceOrderRuleEntry> getCommerceOrderRuleEntries(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntry> getCommerceOrderRuleEntries(
+		long companyId, boolean active, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntry> getCommerceOrderRuleEntries(
+		long companyId, boolean active, String type, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderRuleEntry> getCommerceOrderRuleEntries(
+		long companyId, String type, int start, int end);
+
 	/**
 	 * Returns the number of commerce order rule entries.
 	 *
@@ -308,5 +330,11 @@ public interface CommerceOrderRuleEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderRuleEntry updateCommerceOrderRuleEntry(
 		CommerceOrderRuleEntry commerceOrderRuleEntry);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceOrderRuleEntry updateCommerceOrderRuleEntry(
+			long commerceOrderRuleEntryId, boolean active, String description,
+			String name, int priority, String typeSettings)
+		throws PortalException;
 
 }

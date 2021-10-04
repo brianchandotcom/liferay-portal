@@ -843,8 +843,6 @@ definition {
 	test UseADTInSearchResultsWidget {
 		property portal.acceptance = "false";
 
-		// TODO Review
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -856,6 +854,18 @@ definition {
 		CommerceNavigator.gotoEntry(entryName = "U-Joint");
 
 		var productId = selenium.getText(locator1 = "CommerceEntry#HEADER_ID");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		ProductMenu.gotoPortlet(
+			category = "Design",
+			portlet = "Templates");
+
+		Navigator.gotoNavTab(navTab = "Widget Templates");
+
+		CommerceAcceleratorsInitializer.addADT(
+			adtType = "Search Results",
+			fieldNameList = "Commerce Product Catalog Entries*");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
@@ -884,47 +894,16 @@ definition {
 			key_radioOption = "Use Application Display Template",
 			locator1 = "CommerceEntry#RADIO_BUTTON");
 
-		if (IsElementNotPresent(key_text = "Manage Templates", locator1 = "Link#ANY")) {
+		if (IsElementNotPresent(key_text = "Display Template", locator1 = "Select#ANY")) {
 			Click(
 				key_text = "Display Template",
 				locator1 = "Link#ANY");
 		}
 
-		Click(
-			key_text = "Manage Templates",
-			locator1 = "Link#ANY");
-
-		SelectFrameTop();
-
-		SelectFrame(
-			key_title = "Widget Templates",
-			locator1 = "IFrame#MODAL_ANY");
-
-		Click(locator1 = "Button#PLUS");
-
-		Type(
-			key_fieldLabel = "Name",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Search Results Template");
-
-		Click(
-			key_fieldName = "Commerce Product Catalog Entries",
-			locator1 = "DDMEditTemplate#SCRIPT_FIELD");
-
-		Button.clickSave();
-
-		SelectFrameTop();
-
-		Click(
-			key_modalTitle = "Widget Templates",
-			locator1 = "Button#CLOSE_MODAL");
-
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
 		Select(
 			key_selectFieldLabel = "Display Template",
 			locator1 = "Select#ANY",
-			value1 = "Search Results Template");
+			value1 = "Search Results Test ADT");
 
 		Navigator.gotoNavTab(navTab = "Pagination");
 

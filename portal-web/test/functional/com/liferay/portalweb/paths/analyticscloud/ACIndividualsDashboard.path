@@ -43,18 +43,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DROPDOWN_MENU_ITEM</td>
-	<td>//ul[contains(@class,'dropdown-menu')][contains(@class,'show')]//button[.//span[normalize-space(text())='${menuItem}']]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ACTIVITIES_NUMBER</td>
 	<td>//div[@class='details']//b</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_BREAKDOWN_BUTTON</td>
-	<td>//div[contains(@class,'distribution-card')]//button[*[name()='svg'][contains(@class,'icon-plus')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -65,21 +55,6 @@
 <tr>
 	<td>BREAKDOWN_RECHARTS_CARTESIAN_Y_AXIS_TICK</td>
 	<td>xpath=(//div[contains(@class,'distribution')]//*[name()='g'][contains(@class,'recharts-yAxis')]//*[name()='g'][contains(@class,'recharts-layer')][contains(@class,'axis-tick')])[${index}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BREAKDOWN_NAME_FIELD</td>
-	<td>//*[text()='Breakdown Name']/ancestor::label/following-sibling::input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BREAKDOWN_SELECT_INPUT_FIELD</td>
-	<td>//label[normalize-space()='${fieldLabel}']//following-sibling::div//input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SAVE_BREAKDOWN_BUTTON</td>
-	<td>//div[@class='form-navigation']/button[text()='Save']</td>
 	<td></td>
 </tr>
 <tr>

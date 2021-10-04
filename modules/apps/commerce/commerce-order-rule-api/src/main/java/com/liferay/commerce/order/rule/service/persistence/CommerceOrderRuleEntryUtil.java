@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -675,6 +676,559 @@ public class CommerceOrderRuleEntryUtil {
 	 */
 	public static int filterCountByC_LikeType(long companyId, String type) {
 		return getPersistence().filterCountByC_LikeType(companyId, type);
+	}
+
+	/**
+	 * Returns all the commerce order rule entries where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @return the matching commerce order rule entries
+	 */
+	public static List<CommerceOrderRuleEntry> findByLtD_S(
+		Date displayDate, int status) {
+
+		return getPersistence().findByLtD_S(displayDate, status);
+	}
+
+	/**
+	 * Returns a range of all the commerce order rule entries where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @return the range of matching commerce order rule entries
+	 */
+	public static List<CommerceOrderRuleEntry> findByLtD_S(
+		Date displayDate, int status, int start, int end) {
+
+		return getPersistence().findByLtD_S(displayDate, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order rule entries where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order rule entries
+	 */
+	public static List<CommerceOrderRuleEntry> findByLtD_S(
+		Date displayDate, int status, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		return getPersistence().findByLtD_S(
+			displayDate, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order rule entries where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce order rule entries
+	 */
+	public static List<CommerceOrderRuleEntry> findByLtD_S(
+		Date displayDate, int status, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByLtD_S(
+			displayDate, status, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce order rule entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a matching commerce order rule entry could not be found
+	 */
+	public static CommerceOrderRuleEntry findByLtD_S_First(
+			Date displayDate, int status,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws com.liferay.commerce.order.rule.exception.
+			NoSuchOrderRuleEntryException {
+
+		return getPersistence().findByLtD_S_First(
+			displayDate, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce order rule entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order rule entry, or <code>null</code> if a matching commerce order rule entry could not be found
+	 */
+	public static CommerceOrderRuleEntry fetchByLtD_S_First(
+		Date displayDate, int status,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		return getPersistence().fetchByLtD_S_First(
+			displayDate, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce order rule entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a matching commerce order rule entry could not be found
+	 */
+	public static CommerceOrderRuleEntry findByLtD_S_Last(
+			Date displayDate, int status,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws com.liferay.commerce.order.rule.exception.
+			NoSuchOrderRuleEntryException {
+
+		return getPersistence().findByLtD_S_Last(
+			displayDate, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce order rule entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order rule entry, or <code>null</code> if a matching commerce order rule entry could not be found
+	 */
+	public static CommerceOrderRuleEntry fetchByLtD_S_Last(
+		Date displayDate, int status,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		return getPersistence().fetchByLtD_S_Last(
+			displayDate, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce order rule entries before and after the current commerce order rule entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param commerceOrderRuleEntryId the primary key of the current commerce order rule entry
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a commerce order rule entry with the primary key could not be found
+	 */
+	public static CommerceOrderRuleEntry[] findByLtD_S_PrevAndNext(
+			long commerceOrderRuleEntryId, Date displayDate, int status,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws com.liferay.commerce.order.rule.exception.
+			NoSuchOrderRuleEntryException {
+
+		return getPersistence().findByLtD_S_PrevAndNext(
+			commerceOrderRuleEntryId, displayDate, status, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce order rule entries that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @return the matching commerce order rule entries that the user has permission to view
+	 */
+	public static List<CommerceOrderRuleEntry> filterFindByLtD_S(
+		Date displayDate, int status) {
+
+		return getPersistence().filterFindByLtD_S(displayDate, status);
+	}
+
+	/**
+	 * Returns a range of all the commerce order rule entries that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @return the range of matching commerce order rule entries that the user has permission to view
+	 */
+	public static List<CommerceOrderRuleEntry> filterFindByLtD_S(
+		Date displayDate, int status, int start, int end) {
+
+		return getPersistence().filterFindByLtD_S(
+			displayDate, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order rule entries that the user has permissions to view where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order rule entries that the user has permission to view
+	 */
+	public static List<CommerceOrderRuleEntry> filterFindByLtD_S(
+		Date displayDate, int status, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		return getPersistence().filterFindByLtD_S(
+			displayDate, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce order rule entries before and after the current commerce order rule entry in the ordered set of commerce order rule entries that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param commerceOrderRuleEntryId the primary key of the current commerce order rule entry
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a commerce order rule entry with the primary key could not be found
+	 */
+	public static CommerceOrderRuleEntry[] filterFindByLtD_S_PrevAndNext(
+			long commerceOrderRuleEntryId, Date displayDate, int status,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws com.liferay.commerce.order.rule.exception.
+			NoSuchOrderRuleEntryException {
+
+		return getPersistence().filterFindByLtD_S_PrevAndNext(
+			commerceOrderRuleEntryId, displayDate, status, orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce order rule entries where displayDate &lt; &#63; and status = &#63; from the database.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 */
+	public static void removeByLtD_S(Date displayDate, int status) {
+		getPersistence().removeByLtD_S(displayDate, status);
+	}
+
+	/**
+	 * Returns the number of commerce order rule entries where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @return the number of matching commerce order rule entries
+	 */
+	public static int countByLtD_S(Date displayDate, int status) {
+		return getPersistence().countByLtD_S(displayDate, status);
+	}
+
+	/**
+	 * Returns the number of commerce order rule entries that the user has permission to view where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @return the number of matching commerce order rule entries that the user has permission to view
+	 */
+	public static int filterCountByLtD_S(Date displayDate, int status) {
+		return getPersistence().filterCountByLtD_S(displayDate, status);
+	}
+
+	/**
+	 * Returns all the commerce order rule entries where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @return the matching commerce order rule entries
+	 */
+	public static List<CommerceOrderRuleEntry> findByLtE_S(
+		Date expirationDate, int status) {
+
+		return getPersistence().findByLtE_S(expirationDate, status);
+	}
+
+	/**
+	 * Returns a range of all the commerce order rule entries where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @return the range of matching commerce order rule entries
+	 */
+	public static List<CommerceOrderRuleEntry> findByLtE_S(
+		Date expirationDate, int status, int start, int end) {
+
+		return getPersistence().findByLtE_S(expirationDate, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order rule entries where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order rule entries
+	 */
+	public static List<CommerceOrderRuleEntry> findByLtE_S(
+		Date expirationDate, int status, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		return getPersistence().findByLtE_S(
+			expirationDate, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order rule entries where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce order rule entries
+	 */
+	public static List<CommerceOrderRuleEntry> findByLtE_S(
+		Date expirationDate, int status, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByLtE_S(
+			expirationDate, status, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce order rule entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a matching commerce order rule entry could not be found
+	 */
+	public static CommerceOrderRuleEntry findByLtE_S_First(
+			Date expirationDate, int status,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws com.liferay.commerce.order.rule.exception.
+			NoSuchOrderRuleEntryException {
+
+		return getPersistence().findByLtE_S_First(
+			expirationDate, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce order rule entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order rule entry, or <code>null</code> if a matching commerce order rule entry could not be found
+	 */
+	public static CommerceOrderRuleEntry fetchByLtE_S_First(
+		Date expirationDate, int status,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		return getPersistence().fetchByLtE_S_First(
+			expirationDate, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce order rule entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a matching commerce order rule entry could not be found
+	 */
+	public static CommerceOrderRuleEntry findByLtE_S_Last(
+			Date expirationDate, int status,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws com.liferay.commerce.order.rule.exception.
+			NoSuchOrderRuleEntryException {
+
+		return getPersistence().findByLtE_S_Last(
+			expirationDate, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce order rule entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order rule entry, or <code>null</code> if a matching commerce order rule entry could not be found
+	 */
+	public static CommerceOrderRuleEntry fetchByLtE_S_Last(
+		Date expirationDate, int status,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		return getPersistence().fetchByLtE_S_Last(
+			expirationDate, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce order rule entries before and after the current commerce order rule entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param commerceOrderRuleEntryId the primary key of the current commerce order rule entry
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a commerce order rule entry with the primary key could not be found
+	 */
+	public static CommerceOrderRuleEntry[] findByLtE_S_PrevAndNext(
+			long commerceOrderRuleEntryId, Date expirationDate, int status,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws com.liferay.commerce.order.rule.exception.
+			NoSuchOrderRuleEntryException {
+
+		return getPersistence().findByLtE_S_PrevAndNext(
+			commerceOrderRuleEntryId, expirationDate, status,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce order rule entries that the user has permission to view where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @return the matching commerce order rule entries that the user has permission to view
+	 */
+	public static List<CommerceOrderRuleEntry> filterFindByLtE_S(
+		Date expirationDate, int status) {
+
+		return getPersistence().filterFindByLtE_S(expirationDate, status);
+	}
+
+	/**
+	 * Returns a range of all the commerce order rule entries that the user has permission to view where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @return the range of matching commerce order rule entries that the user has permission to view
+	 */
+	public static List<CommerceOrderRuleEntry> filterFindByLtE_S(
+		Date expirationDate, int status, int start, int end) {
+
+		return getPersistence().filterFindByLtE_S(
+			expirationDate, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order rule entries that the user has permissions to view where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order rule entries that the user has permission to view
+	 */
+	public static List<CommerceOrderRuleEntry> filterFindByLtE_S(
+		Date expirationDate, int status, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		return getPersistence().filterFindByLtE_S(
+			expirationDate, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce order rule entries before and after the current commerce order rule entry in the ordered set of commerce order rule entries that the user has permission to view where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param commerceOrderRuleEntryId the primary key of the current commerce order rule entry
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a commerce order rule entry with the primary key could not be found
+	 */
+	public static CommerceOrderRuleEntry[] filterFindByLtE_S_PrevAndNext(
+			long commerceOrderRuleEntryId, Date expirationDate, int status,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws com.liferay.commerce.order.rule.exception.
+			NoSuchOrderRuleEntryException {
+
+		return getPersistence().filterFindByLtE_S_PrevAndNext(
+			commerceOrderRuleEntryId, expirationDate, status,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce order rule entries where expirationDate &lt; &#63; and status = &#63; from the database.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 */
+	public static void removeByLtE_S(Date expirationDate, int status) {
+		getPersistence().removeByLtE_S(expirationDate, status);
+	}
+
+	/**
+	 * Returns the number of commerce order rule entries where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @return the number of matching commerce order rule entries
+	 */
+	public static int countByLtE_S(Date expirationDate, int status) {
+		return getPersistence().countByLtE_S(expirationDate, status);
+	}
+
+	/**
+	 * Returns the number of commerce order rule entries that the user has permission to view where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @return the number of matching commerce order rule entries that the user has permission to view
+	 */
+	public static int filterCountByLtE_S(Date expirationDate, int status) {
+		return getPersistence().filterCountByLtE_S(expirationDate, status);
 	}
 
 	/**

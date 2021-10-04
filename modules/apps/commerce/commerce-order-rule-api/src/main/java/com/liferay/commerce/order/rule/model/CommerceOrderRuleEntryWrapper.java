@@ -54,10 +54,17 @@ public class CommerceOrderRuleEntryWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("active", isActive());
 		attributes.put("description", getDescription());
+		attributes.put("displayDate", getDisplayDate());
+		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("name", getName());
 		attributes.put("priority", getPriority());
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
+		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("status", getStatus());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusByUserName", getStatusByUserName());
+		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
 	}
@@ -120,6 +127,18 @@ public class CommerceOrderRuleEntryWrapper
 			setDescription(description);
 		}
 
+		Date displayDate = (Date)attributes.get("displayDate");
+
+		if (displayDate != null) {
+			setDisplayDate(displayDate);
+		}
+
+		Date expirationDate = (Date)attributes.get("expirationDate");
+
+		if (expirationDate != null) {
+			setExpirationDate(expirationDate);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -142,6 +161,36 @@ public class CommerceOrderRuleEntryWrapper
 
 		if (typeSettings != null) {
 			setTypeSettings(typeSettings);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
+
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		String statusByUserName = (String)attributes.get("statusByUserName");
+
+		if (statusByUserName != null) {
+			setStatusByUserName(statusByUserName);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
 		}
 	}
 
@@ -201,6 +250,26 @@ public class CommerceOrderRuleEntryWrapper
 	}
 
 	/**
+	 * Returns the display date of this commerce order rule entry.
+	 *
+	 * @return the display date of this commerce order rule entry
+	 */
+	@Override
+	public Date getDisplayDate() {
+		return model.getDisplayDate();
+	}
+
+	/**
+	 * Returns the expiration date of this commerce order rule entry.
+	 *
+	 * @return the expiration date of this commerce order rule entry
+	 */
+	@Override
+	public Date getExpirationDate() {
+		return model.getExpirationDate();
+	}
+
+	/**
 	 * Returns the external reference code of this commerce order rule entry.
 	 *
 	 * @return the external reference code of this commerce order rule entry
@@ -208,6 +277,16 @@ public class CommerceOrderRuleEntryWrapper
 	@Override
 	public String getExternalReferenceCode() {
 		return model.getExternalReferenceCode();
+	}
+
+	/**
+	 * Returns the last publish date of this commerce order rule entry.
+	 *
+	 * @return the last publish date of this commerce order rule entry
+	 */
+	@Override
+	public Date getLastPublishDate() {
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -248,6 +327,56 @@ public class CommerceOrderRuleEntryWrapper
 	@Override
 	public int getPriority() {
 		return model.getPriority();
+	}
+
+	/**
+	 * Returns the status of this commerce order rule entry.
+	 *
+	 * @return the status of this commerce order rule entry
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
+	}
+
+	/**
+	 * Returns the status by user ID of this commerce order rule entry.
+	 *
+	 * @return the status by user ID of this commerce order rule entry
+	 */
+	@Override
+	public long getStatusByUserId() {
+		return model.getStatusByUserId();
+	}
+
+	/**
+	 * Returns the status by user name of this commerce order rule entry.
+	 *
+	 * @return the status by user name of this commerce order rule entry
+	 */
+	@Override
+	public String getStatusByUserName() {
+		return model.getStatusByUserName();
+	}
+
+	/**
+	 * Returns the status by user uuid of this commerce order rule entry.
+	 *
+	 * @return the status by user uuid of this commerce order rule entry
+	 */
+	@Override
+	public String getStatusByUserUuid() {
+		return model.getStatusByUserUuid();
+	}
+
+	/**
+	 * Returns the status date of this commerce order rule entry.
+	 *
+	 * @return the status date of this commerce order rule entry
+	 */
+	@Override
+	public Date getStatusDate() {
+		return model.getStatusDate();
 	}
 
 	/**
@@ -310,6 +439,86 @@ public class CommerceOrderRuleEntryWrapper
 		return model.isActive();
 	}
 
+	/**
+	 * Returns <code>true</code> if this commerce order rule entry is approved.
+	 *
+	 * @return <code>true</code> if this commerce order rule entry is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved() {
+		return model.isApproved();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce order rule entry is denied.
+	 *
+	 * @return <code>true</code> if this commerce order rule entry is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied() {
+		return model.isDenied();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce order rule entry is a draft.
+	 *
+	 * @return <code>true</code> if this commerce order rule entry is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft() {
+		return model.isDraft();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce order rule entry is expired.
+	 *
+	 * @return <code>true</code> if this commerce order rule entry is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired() {
+		return model.isExpired();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce order rule entry is inactive.
+	 *
+	 * @return <code>true</code> if this commerce order rule entry is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive() {
+		return model.isInactive();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce order rule entry is incomplete.
+	 *
+	 * @return <code>true</code> if this commerce order rule entry is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete() {
+		return model.isIncomplete();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce order rule entry is pending.
+	 *
+	 * @return <code>true</code> if this commerce order rule entry is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending() {
+		return model.isPending();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce order rule entry is scheduled.
+	 *
+	 * @return <code>true</code> if this commerce order rule entry is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled() {
+		return model.isScheduled();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -366,6 +575,26 @@ public class CommerceOrderRuleEntryWrapper
 	}
 
 	/**
+	 * Sets the display date of this commerce order rule entry.
+	 *
+	 * @param displayDate the display date of this commerce order rule entry
+	 */
+	@Override
+	public void setDisplayDate(Date displayDate) {
+		model.setDisplayDate(displayDate);
+	}
+
+	/**
+	 * Sets the expiration date of this commerce order rule entry.
+	 *
+	 * @param expirationDate the expiration date of this commerce order rule entry
+	 */
+	@Override
+	public void setExpirationDate(Date expirationDate) {
+		model.setExpirationDate(expirationDate);
+	}
+
+	/**
 	 * Sets the external reference code of this commerce order rule entry.
 	 *
 	 * @param externalReferenceCode the external reference code of this commerce order rule entry
@@ -373,6 +602,16 @@ public class CommerceOrderRuleEntryWrapper
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
 		model.setExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
+	 * Sets the last publish date of this commerce order rule entry.
+	 *
+	 * @param lastPublishDate the last publish date of this commerce order rule entry
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -416,6 +655,56 @@ public class CommerceOrderRuleEntryWrapper
 	}
 
 	/**
+	 * Sets the status of this commerce order rule entry.
+	 *
+	 * @param status the status of this commerce order rule entry
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
+	}
+
+	/**
+	 * Sets the status by user ID of this commerce order rule entry.
+	 *
+	 * @param statusByUserId the status by user ID of this commerce order rule entry
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		model.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	 * Sets the status by user name of this commerce order rule entry.
+	 *
+	 * @param statusByUserName the status by user name of this commerce order rule entry
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName) {
+		model.setStatusByUserName(statusByUserName);
+	}
+
+	/**
+	 * Sets the status by user uuid of this commerce order rule entry.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this commerce order rule entry
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+		model.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	 * Sets the status date of this commerce order rule entry.
+	 *
+	 * @param statusDate the status date of this commerce order rule entry
+	 */
+	@Override
+	public void setStatusDate(Date statusDate) {
+		model.setStatusDate(statusDate);
+	}
+
+	/**
 	 * Sets the type of this commerce order rule entry.
 	 *
 	 * @param type the type of this commerce order rule entry
@@ -433,6 +722,14 @@ public class CommerceOrderRuleEntryWrapper
 	@Override
 	public void setTypeSettings(String typeSettings) {
 		model.setTypeSettings(typeSettings);
+	}
+
+	@Override
+	public void setTypeSettingsUnicodeProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties
+			typeSettingsUnicodeProperties) {
+
+		model.setTypeSettingsUnicodeProperties(typeSettingsUnicodeProperties);
 	}
 
 	/**

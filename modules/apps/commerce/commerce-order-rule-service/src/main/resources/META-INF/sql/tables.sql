@@ -8,10 +8,17 @@ create table CommerceOrderRuleEntry (
 	modifiedDate DATE null,
 	active_ BOOLEAN,
 	description VARCHAR(75) null,
+	displayDate DATE null,
+	expirationDate DATE null,
 	name VARCHAR(75) null,
 	priority INTEGER,
 	type_ VARCHAR(75) null,
-	typeSettings VARCHAR(75) null
+	typeSettings VARCHAR(75) null,
+	lastPublishDate DATE null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );
 
 create table CommerceOrderRuleEntryRel (

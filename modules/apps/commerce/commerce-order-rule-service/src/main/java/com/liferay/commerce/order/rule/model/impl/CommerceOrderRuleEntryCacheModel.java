@@ -64,7 +64,7 @@ public class CommerceOrderRuleEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{externalReferenceCode=");
 		sb.append(externalReferenceCode);
@@ -84,6 +84,10 @@ public class CommerceOrderRuleEntryCacheModel
 		sb.append(active);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", displayDate=");
+		sb.append(displayDate);
+		sb.append(", expirationDate=");
+		sb.append(expirationDate);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", priority=");
@@ -92,6 +96,16 @@ public class CommerceOrderRuleEntryCacheModel
 		sb.append(type);
 		sb.append(", typeSettings=");
 		sb.append(typeSettings);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -145,6 +159,21 @@ public class CommerceOrderRuleEntryCacheModel
 			commerceOrderRuleEntryImpl.setDescription(description);
 		}
 
+		if (displayDate == Long.MIN_VALUE) {
+			commerceOrderRuleEntryImpl.setDisplayDate(null);
+		}
+		else {
+			commerceOrderRuleEntryImpl.setDisplayDate(new Date(displayDate));
+		}
+
+		if (expirationDate == Long.MIN_VALUE) {
+			commerceOrderRuleEntryImpl.setExpirationDate(null);
+		}
+		else {
+			commerceOrderRuleEntryImpl.setExpirationDate(
+				new Date(expirationDate));
+		}
+
 		if (name == null) {
 			commerceOrderRuleEntryImpl.setName("");
 		}
@@ -168,6 +197,31 @@ public class CommerceOrderRuleEntryCacheModel
 			commerceOrderRuleEntryImpl.setTypeSettings(typeSettings);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			commerceOrderRuleEntryImpl.setLastPublishDate(null);
+		}
+		else {
+			commerceOrderRuleEntryImpl.setLastPublishDate(
+				new Date(lastPublishDate));
+		}
+
+		commerceOrderRuleEntryImpl.setStatus(status);
+		commerceOrderRuleEntryImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			commerceOrderRuleEntryImpl.setStatusByUserName("");
+		}
+		else {
+			commerceOrderRuleEntryImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			commerceOrderRuleEntryImpl.setStatusDate(null);
+		}
+		else {
+			commerceOrderRuleEntryImpl.setStatusDate(new Date(statusDate));
+		}
+
 		commerceOrderRuleEntryImpl.resetOriginalValues();
 
 		return commerceOrderRuleEntryImpl;
@@ -188,11 +242,20 @@ public class CommerceOrderRuleEntryCacheModel
 
 		active = objectInput.readBoolean();
 		description = objectInput.readUTF();
+		displayDate = objectInput.readLong();
+		expirationDate = objectInput.readLong();
 		name = objectInput.readUTF();
 
 		priority = objectInput.readInt();
 		type = objectInput.readUTF();
 		typeSettings = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
+
+		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
@@ -229,6 +292,9 @@ public class CommerceOrderRuleEntryCacheModel
 			objectOutput.writeUTF(description);
 		}
 
+		objectOutput.writeLong(displayDate);
+		objectOutput.writeLong(expirationDate);
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -251,6 +317,21 @@ public class CommerceOrderRuleEntryCacheModel
 		else {
 			objectOutput.writeUTF(typeSettings);
 		}
+
+		objectOutput.writeLong(lastPublishDate);
+
+		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public String externalReferenceCode;
@@ -262,9 +343,16 @@ public class CommerceOrderRuleEntryCacheModel
 	public long modifiedDate;
 	public boolean active;
 	public String description;
+	public long displayDate;
+	public long expirationDate;
 	public String name;
 	public int priority;
 	public String type;
 	public String typeSettings;
+	public long lastPublishDate;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 
 }

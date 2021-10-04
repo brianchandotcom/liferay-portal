@@ -37,13 +37,21 @@ public class CommerceOrderRuleEntryServiceWrapper
 	public com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry
 			addCommerceOrderRuleEntry(
 				String externalReferenceCode, boolean active,
-				String description, String name, int priority, String type,
-				String typeSettings)
+				String description, int displayDateMonth, int displayDateDay,
+				int displayDateYear, int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire, String name,
+				int priority, String type, String typeSettings,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderRuleEntryService.addCommerceOrderRuleEntry(
-			externalReferenceCode, active, description, name, priority, type,
-			typeSettings);
+			externalReferenceCode, active, description, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, name,
+			priority, type, typeSettings, serviceContext);
 	}
 
 	@Override
@@ -103,13 +111,21 @@ public class CommerceOrderRuleEntryServiceWrapper
 	public com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry
 			updateCommerceOrderRuleEntry(
 				long commerceOrderRuleEntryId, boolean active,
-				String description, String name, int priority,
-				String typeSettings)
+				String description, int displayDateMonth, int displayDateDay,
+				int displayDateYear, int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire, String name,
+				int priority, String typeSettings,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderRuleEntryService.updateCommerceOrderRuleEntry(
-			commerceOrderRuleEntryId, active, description, name, priority,
-			typeSettings);
+			commerceOrderRuleEntryId, active, description, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, name,
+			priority, typeSettings, serviceContext);
 	}
 
 	@Override

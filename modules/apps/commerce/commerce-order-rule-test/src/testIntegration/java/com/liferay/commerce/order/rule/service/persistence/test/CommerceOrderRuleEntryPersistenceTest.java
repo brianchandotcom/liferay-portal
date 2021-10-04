@@ -146,6 +146,10 @@ public class CommerceOrderRuleEntryPersistenceTest {
 
 		newCommerceOrderRuleEntry.setDescription(RandomTestUtil.randomString());
 
+		newCommerceOrderRuleEntry.setDisplayDate(RandomTestUtil.nextDate());
+
+		newCommerceOrderRuleEntry.setExpirationDate(RandomTestUtil.nextDate());
+
 		newCommerceOrderRuleEntry.setName(RandomTestUtil.randomString());
 
 		newCommerceOrderRuleEntry.setPriority(RandomTestUtil.nextInt());
@@ -154,6 +158,17 @@ public class CommerceOrderRuleEntryPersistenceTest {
 
 		newCommerceOrderRuleEntry.setTypeSettings(
 			RandomTestUtil.randomString());
+
+		newCommerceOrderRuleEntry.setLastPublishDate(RandomTestUtil.nextDate());
+
+		newCommerceOrderRuleEntry.setStatus(RandomTestUtil.nextInt());
+
+		newCommerceOrderRuleEntry.setStatusByUserId(RandomTestUtil.nextLong());
+
+		newCommerceOrderRuleEntry.setStatusByUserName(
+			RandomTestUtil.randomString());
+
+		newCommerceOrderRuleEntry.setStatusDate(RandomTestUtil.nextDate());
 
 		_commerceOrderRuleEntries.add(
 			_persistence.update(newCommerceOrderRuleEntry));
@@ -193,6 +208,15 @@ public class CommerceOrderRuleEntryPersistenceTest {
 			existingCommerceOrderRuleEntry.getDescription(),
 			newCommerceOrderRuleEntry.getDescription());
 		Assert.assertEquals(
+			Time.getShortTimestamp(
+				existingCommerceOrderRuleEntry.getDisplayDate()),
+			Time.getShortTimestamp(newCommerceOrderRuleEntry.getDisplayDate()));
+		Assert.assertEquals(
+			Time.getShortTimestamp(
+				existingCommerceOrderRuleEntry.getExpirationDate()),
+			Time.getShortTimestamp(
+				newCommerceOrderRuleEntry.getExpirationDate()));
+		Assert.assertEquals(
 			existingCommerceOrderRuleEntry.getName(),
 			newCommerceOrderRuleEntry.getName());
 		Assert.assertEquals(
@@ -204,6 +228,24 @@ public class CommerceOrderRuleEntryPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceOrderRuleEntry.getTypeSettings(),
 			newCommerceOrderRuleEntry.getTypeSettings());
+		Assert.assertEquals(
+			Time.getShortTimestamp(
+				existingCommerceOrderRuleEntry.getLastPublishDate()),
+			Time.getShortTimestamp(
+				newCommerceOrderRuleEntry.getLastPublishDate()));
+		Assert.assertEquals(
+			existingCommerceOrderRuleEntry.getStatus(),
+			newCommerceOrderRuleEntry.getStatus());
+		Assert.assertEquals(
+			existingCommerceOrderRuleEntry.getStatusByUserId(),
+			newCommerceOrderRuleEntry.getStatusByUserId());
+		Assert.assertEquals(
+			existingCommerceOrderRuleEntry.getStatusByUserName(),
+			newCommerceOrderRuleEntry.getStatusByUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(
+				existingCommerceOrderRuleEntry.getStatusDate()),
+			Time.getShortTimestamp(newCommerceOrderRuleEntry.getStatusDate()));
 	}
 
 	@Test
@@ -221,6 +263,22 @@ public class CommerceOrderRuleEntryPersistenceTest {
 		_persistence.countByC_LikeType(0L, "null");
 
 		_persistence.countByC_LikeType(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByLtD_S() throws Exception {
+		_persistence.countByLtD_S(
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByLtD_S(RandomTestUtil.nextDate(), 0);
+	}
+
+	@Test
+	public void testCountByLtE_S() throws Exception {
+		_persistence.countByLtE_S(
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByLtE_S(RandomTestUtil.nextDate(), 0);
 	}
 
 	@Test
@@ -275,8 +333,11 @@ public class CommerceOrderRuleEntryPersistenceTest {
 			"CommerceOrderRuleEntry", "externalReferenceCode", true,
 			"commerceOrderRuleEntryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"active", true, "description", true, "name", true, "priority", true,
-			"type", true, "typeSettings", true);
+			"active", true, "description", true, "displayDate", true,
+			"expirationDate", true, "name", true, "priority", true, "type",
+			true, "typeSettings", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test
@@ -608,6 +669,10 @@ public class CommerceOrderRuleEntryPersistenceTest {
 
 		commerceOrderRuleEntry.setDescription(RandomTestUtil.randomString());
 
+		commerceOrderRuleEntry.setDisplayDate(RandomTestUtil.nextDate());
+
+		commerceOrderRuleEntry.setExpirationDate(RandomTestUtil.nextDate());
+
 		commerceOrderRuleEntry.setName(RandomTestUtil.randomString());
 
 		commerceOrderRuleEntry.setPriority(RandomTestUtil.nextInt());
@@ -615,6 +680,17 @@ public class CommerceOrderRuleEntryPersistenceTest {
 		commerceOrderRuleEntry.setType(RandomTestUtil.randomString());
 
 		commerceOrderRuleEntry.setTypeSettings(RandomTestUtil.randomString());
+
+		commerceOrderRuleEntry.setLastPublishDate(RandomTestUtil.nextDate());
+
+		commerceOrderRuleEntry.setStatus(RandomTestUtil.nextInt());
+
+		commerceOrderRuleEntry.setStatusByUserId(RandomTestUtil.nextLong());
+
+		commerceOrderRuleEntry.setStatusByUserName(
+			RandomTestUtil.randomString());
+
+		commerceOrderRuleEntry.setStatusDate(RandomTestUtil.nextDate());
 
 		_commerceOrderRuleEntries.add(
 			_persistence.update(commerceOrderRuleEntry));

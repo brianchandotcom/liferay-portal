@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 
 import java.util.Date;
 
@@ -36,7 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceOrderRuleEntryModel
-	extends AuditedModel, BaseModel<CommerceOrderRuleEntry>, ShardedModel {
+	extends AuditedModel, BaseModel<CommerceOrderRuleEntry>, ShardedModel,
+			WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -221,6 +223,34 @@ public interface CommerceOrderRuleEntryModel
 	public void setDescription(String description);
 
 	/**
+	 * Returns the display date of this commerce order rule entry.
+	 *
+	 * @return the display date of this commerce order rule entry
+	 */
+	public Date getDisplayDate();
+
+	/**
+	 * Sets the display date of this commerce order rule entry.
+	 *
+	 * @param displayDate the display date of this commerce order rule entry
+	 */
+	public void setDisplayDate(Date displayDate);
+
+	/**
+	 * Returns the expiration date of this commerce order rule entry.
+	 *
+	 * @return the expiration date of this commerce order rule entry
+	 */
+	public Date getExpirationDate();
+
+	/**
+	 * Sets the expiration date of this commerce order rule entry.
+	 *
+	 * @param expirationDate the expiration date of this commerce order rule entry
+	 */
+	public void setExpirationDate(Date expirationDate);
+
+	/**
 	 * Returns the name of this commerce order rule entry.
 	 *
 	 * @return the name of this commerce order rule entry
@@ -278,6 +308,165 @@ public interface CommerceOrderRuleEntryModel
 	 * @param typeSettings the type settings of this commerce order rule entry
 	 */
 	public void setTypeSettings(String typeSettings);
+
+	/**
+	 * Returns the last publish date of this commerce order rule entry.
+	 *
+	 * @return the last publish date of this commerce order rule entry
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this commerce order rule entry.
+	 *
+	 * @param lastPublishDate the last publish date of this commerce order rule entry
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
+	 * Returns the status of this commerce order rule entry.
+	 *
+	 * @return the status of this commerce order rule entry
+	 */
+	@Override
+	public int getStatus();
+
+	/**
+	 * Sets the status of this commerce order rule entry.
+	 *
+	 * @param status the status of this commerce order rule entry
+	 */
+	@Override
+	public void setStatus(int status);
+
+	/**
+	 * Returns the status by user ID of this commerce order rule entry.
+	 *
+	 * @return the status by user ID of this commerce order rule entry
+	 */
+	@Override
+	public long getStatusByUserId();
+
+	/**
+	 * Sets the status by user ID of this commerce order rule entry.
+	 *
+	 * @param statusByUserId the status by user ID of this commerce order rule entry
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this commerce order rule entry.
+	 *
+	 * @return the status by user uuid of this commerce order rule entry
+	 */
+	@Override
+	public String getStatusByUserUuid();
+
+	/**
+	 * Sets the status by user uuid of this commerce order rule entry.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this commerce order rule entry
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this commerce order rule entry.
+	 *
+	 * @return the status by user name of this commerce order rule entry
+	 */
+	@AutoEscape
+	@Override
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this commerce order rule entry.
+	 *
+	 * @param statusByUserName the status by user name of this commerce order rule entry
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName);
+
+	/**
+	 * Returns the status date of this commerce order rule entry.
+	 *
+	 * @return the status date of this commerce order rule entry
+	 */
+	@Override
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this commerce order rule entry.
+	 *
+	 * @param statusDate the status date of this commerce order rule entry
+	 */
+	@Override
+	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns <code>true</code> if this commerce order rule entry is approved.
+	 *
+	 * @return <code>true</code> if this commerce order rule entry is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved();
+
+	/**
+	 * Returns <code>true</code> if this commerce order rule entry is denied.
+	 *
+	 * @return <code>true</code> if this commerce order rule entry is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied();
+
+	/**
+	 * Returns <code>true</code> if this commerce order rule entry is a draft.
+	 *
+	 * @return <code>true</code> if this commerce order rule entry is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft();
+
+	/**
+	 * Returns <code>true</code> if this commerce order rule entry is expired.
+	 *
+	 * @return <code>true</code> if this commerce order rule entry is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired();
+
+	/**
+	 * Returns <code>true</code> if this commerce order rule entry is inactive.
+	 *
+	 * @return <code>true</code> if this commerce order rule entry is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive();
+
+	/**
+	 * Returns <code>true</code> if this commerce order rule entry is incomplete.
+	 *
+	 * @return <code>true</code> if this commerce order rule entry is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete();
+
+	/**
+	 * Returns <code>true</code> if this commerce order rule entry is pending.
+	 *
+	 * @return <code>true</code> if this commerce order rule entry is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending();
+
+	/**
+	 * Returns <code>true</code> if this commerce order rule entry is scheduled.
+	 *
+	 * @return <code>true</code> if this commerce order rule entry is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled();
 
 	@Override
 	public CommerceOrderRuleEntry cloneWithOriginalValues();

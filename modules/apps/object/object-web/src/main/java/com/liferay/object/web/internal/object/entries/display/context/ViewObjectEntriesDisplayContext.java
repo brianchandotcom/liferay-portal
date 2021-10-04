@@ -16,6 +16,7 @@ package com.liferay.object.web.internal.object.entries.display.context;
 
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Arrays;
@@ -46,10 +48,13 @@ public class ViewObjectEntriesDisplayContext {
 
 	public ViewObjectEntriesDisplayContext(
 		HttpServletRequest httpServletRequest,
-		ObjectScopeProvider objectScopeProvider, String restContextPath) {
+		ObjectScopeProvider objectScopeProvider,
+		PortletResourcePermission portletResourcePermission,
+		String restContextPath) {
 
 		_httpServletRequest = httpServletRequest;
 		_objectScopeProvider = objectScopeProvider;
+		_portletResourcePermission = portletResourcePermission;
 
 		_apiURL = "/o" + restContextPath;
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
@@ -110,7 +115,14 @@ public class ViewObjectEntriesDisplayContext {
 	public CreationMenu getCreationMenu() throws Exception {
 		CreationMenu creationMenu = new CreationMenu();
 
-		// TODO Check permissions
+		if (!_portletResourcePermission.contains(
+				_objectRequestHelper.getPermissionChecker(),
+				_objectScopeProvider.getGroupId(
+					_objectRequestHelper.getRequest()),
+				ObjectActionKeys.ADD_OBJECT_ENTRY)) {
+
+			return creationMenu;
+		}
 
 		ObjectDefinition objectDefinition = getObjectDefinition();
 
@@ -180,5 +192,6 @@ public class ViewObjectEntriesDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final ObjectRequestHelper _objectRequestHelper;
 	private final ObjectScopeProvider _objectScopeProvider;
+	private final PortletResourcePermission _portletResourcePermission;
 
 }

@@ -69,8 +69,8 @@ definition {
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "user1@liferay.com",
-				userLoginFullName = "user1 user1");
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
 		}
 
 		task ("View the site page") {
@@ -91,8 +91,8 @@ definition {
 
 		task ("Add a CSV Data Source") {
 			ACSettings.addCSVDataSource(
-				dataSourceName = "CSV Country 1",
-				sourceFileName = "contacts_country.csv");
+				dataSourceName = "CSV Data Source",
+				sourceFileName = "jobTitle.csv");
 		}
 
 		task ("Exit Settings") {
@@ -104,17 +104,15 @@ definition {
 		}
 
 		task ("Add a new breakdown") {
-			ACIndividualsDashboard.addBreakdown(
-				attribute = "country",
-				breakdownName = "Breakdown by Country");
+			ACSegments.addBreakdownByAttribute(
+				attribute = "jobTitle",
+				breakdownName = "Breakdown by Job Title");
 		}
 
 		task ("View the data in new breakdown") {
-			ACIndividualsDashboard.clickBreakdownTab(breakdownName = "Breakdown by Country");
-
 			ACIndividualsDashboard.viewBreakdownRecharts(
 				fillColor = "#4B9BFF",
-				tick = "china");
+				tick = "farmer");
 		}
 	}
 

@@ -15,9 +15,11 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
+import com.liferay.object.exception.ObjectDefinitionActiveException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
@@ -30,6 +32,7 @@ import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.impl.ObjectDefinitionImpl;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -45,6 +48,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.Clusterable;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -82,6 +86,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -821,6 +826,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		boolean originalActive = objectDefinition.isActive();
 
+		_validateActive(objectDefinition, active);
 		_validateObjectFieldId(objectDefinition, descriptionObjectFieldId);
 		_validateObjectFieldId(objectDefinition, titleObjectFieldId);
 		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
@@ -879,6 +885,47 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setScope(scope);
 
 		return objectDefinitionPersistence.update(objectDefinition);
+	}
+
+	private void _validateActive(
+			ObjectDefinition objectDefinition, boolean active)
+		throws PortalException {
+
+		if (active && !objectDefinition.isApproved()) {
+			throw new ObjectDefinitionActiveException(
+				"Object definitions must be published before being activated");
+		}
+
+		if (active || !objectDefinition.isActive()) {
+			return;
+		}
+
+		List<ObjectRelationship> objectRelationships =
+			_objectRelationshipLocalService.getObjectRelationships(
+				objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Stream<ObjectRelationship> stream = objectRelationships.stream();
+
+		if (stream.anyMatch(
+				objectRelationship -> {
+					ObjectDefinition objectDefinition2 =
+						objectDefinitionPersistence.fetchByPrimaryKey(
+							objectRelationship.getObjectDefinitionId2());
+
+					return (Objects.equals(
+						objectRelationship.getType(),
+						ObjectRelationshipConstants.TYPE_ONE_TO_MANY) ||
+							Objects.equals(
+								objectRelationship.getType(),
+								ObjectRelationshipConstants.TYPE_ONE_TO_ONE)) &&
+						   objectDefinition2.isActive();
+				})) {
+
+			throw new ObjectDefinitionActiveException(
+				"This object definition has relationships with active object " +
+					"definitions");
+		}
 	}
 
 	private void _validateLabel(

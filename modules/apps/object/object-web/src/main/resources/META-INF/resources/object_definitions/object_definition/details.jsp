@@ -42,6 +42,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= DuplicateObjectDefinitionException.class %>" />
+		<liferay-ui:error exception="<%= ObjectDefinitionActiveException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionLabelException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionNameException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionPluralLabelException.class %>" />

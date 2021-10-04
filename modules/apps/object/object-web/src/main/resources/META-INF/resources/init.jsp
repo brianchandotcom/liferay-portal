@@ -30,6 +30,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.list.type.model.ListTypeEntry" %><%@
 page import="com.liferay.object.constants.ObjectRelationshipConstants" %><%@
 page import="com.liferay.object.exception.DuplicateObjectDefinitionException" %><%@
+page import="com.liferay.object.exception.ObjectDefinitionActiveException" %><%@
 page import="com.liferay.object.exception.ObjectDefinitionLabelException" %><%@
 page import="com.liferay.object.exception.ObjectDefinitionNameException" %><%@
 page import="com.liferay.object.exception.ObjectDefinitionPluralLabelException" %><%@

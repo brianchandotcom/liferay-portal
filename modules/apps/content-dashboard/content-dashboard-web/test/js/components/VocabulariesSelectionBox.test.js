@@ -70,6 +70,12 @@ const mockPropsWithoutSelected = {
 			value: 'extension',
 		},
 		{
+			global: false,
+			label: 'Test vocabulary',
+			site: 1,
+			value: 'test',
+		},
+		{
 			global: true,
 			label: 'Stage (Global)',
 			site: 0,
@@ -134,7 +140,7 @@ describe('VocabulariesSelectionBox', () => {
 	});
 
 	it('moves a vocabulary from left to right dislabing vocabularies from other sites', () => {
-		const {container, getByText} = render(
+		const {container} = render(
 			<VocabulariesSelectionBox {...mockPropsWithoutSelected} />
 		);
 
@@ -145,16 +151,9 @@ describe('VocabulariesSelectionBox', () => {
 			'#_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_currentAssetVocabularyNames option'
 		);
 
-		expect(availableVocabularies.length).toBe(5);
+		expect(availableVocabularies.length).toBe(6);
 		expect(selectedVocabularies.length).toBe(0);
 
-		// fireEvent(
-		// 	getByText('Extension (My company)'),
-		// 	new MouseEvent('click', {
-		// 		bubbles: true,
-		// 		cancelable: true,
-		// 	})
-		// );
 		const availableSelect = container.querySelector(
 			'#availableAssetVocabularyNames'
 		);
@@ -168,10 +167,11 @@ describe('VocabulariesSelectionBox', () => {
 			'#_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_currentAssetVocabularyNames option'
 		);
 
-		expect(availableVocabulariesAfterLTR.length).toBe(4);
+		expect(availableVocabulariesAfterLTR.length).toBe(5);
 		expect(selectedVocabulariesAfterLTR.length).toBe(1);
 
 		// Region  vocabulary must be disabled now becasue is from another site
+
 		const disabledVocabularies = container.querySelectorAll(
 			"#availableAssetVocabularyNames option[value='region']:disabled"
 		);
@@ -179,9 +179,7 @@ describe('VocabulariesSelectionBox', () => {
 	});
 
 	it('moves a vocabulary from right to left enabling vocabularies from other sites', () => {
-		const {container, getByText} = render(
-			<VocabulariesSelectionBox {...mockProps} />
-		);
+		const {container} = render(<VocabulariesSelectionBox {...mockProps} />);
 
 		const selectedSelect = container.querySelector(
 			'#_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_currentAssetVocabularyNames'
@@ -201,6 +199,7 @@ describe('VocabulariesSelectionBox', () => {
 
 		// There must be no disbled vocabularies because we have only one vocabulary selected
 		// and it is from Global site
+
 		const disabledVocabularies = container.querySelectorAll(
 			'#availableAssetVocabularyNames option:disabled'
 		);

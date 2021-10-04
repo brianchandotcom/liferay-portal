@@ -63,4 +63,7 @@ public interface CommerceOrderRuleEntryRel
 
 			};
 
+	public CommerceOrderRuleEntry getCommerceOrderRuleEntry()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

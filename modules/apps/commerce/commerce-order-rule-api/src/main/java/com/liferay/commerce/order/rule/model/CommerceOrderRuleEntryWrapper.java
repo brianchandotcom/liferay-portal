@@ -250,6 +250,18 @@ public class CommerceOrderRuleEntryWrapper
 		return model.getPriority();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getSettingsProperties() {
+
+		return model.getSettingsProperties();
+	}
+
+	@Override
+	public String getSettingsProperty(String key) {
+		return model.getSettingsProperty(key);
+	}
+
 	/**
 	 * Returns the type of this commerce order rule entry.
 	 *
@@ -413,6 +425,13 @@ public class CommerceOrderRuleEntryWrapper
 	@Override
 	public void setPriority(int priority) {
 		model.setPriority(priority);
+	}
+
+	@Override
+	public void setSettingsProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties unicodeProperties) {
+
+		model.setSettingsProperties(unicodeProperties);
 	}
 
 	/**

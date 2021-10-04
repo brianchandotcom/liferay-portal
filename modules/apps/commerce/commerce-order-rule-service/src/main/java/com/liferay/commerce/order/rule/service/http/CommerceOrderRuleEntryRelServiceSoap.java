@@ -14,9 +14,15 @@
 
 package com.liferay.commerce.order.rule.service.http;
 
+import com.liferay.commerce.order.rule.service.CommerceOrderRuleEntryRelServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.commerce.order.rule.service.CommerceOrderRuleEntryRelServiceUtil</code> service
+ * <code>CommerceOrderRuleEntryRelServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,356 @@ package com.liferay.commerce.order.rule.service.http;
  */
 @Deprecated
 public class CommerceOrderRuleEntryRelServiceSoap {
+
+	public static
+		com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRelSoap
+				addCommerceOrderRuleEntryRel(
+					String className, long classPK,
+					long commerceOrderRuleEntryId)
+			throws RemoteException {
+
+		try {
+			com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRel
+				returnValue =
+					CommerceOrderRuleEntryRelServiceUtil.
+						addCommerceOrderRuleEntryRel(
+							className, classPK, commerceOrderRuleEntryId);
+
+			return com.liferay.commerce.order.rule.model.
+				CommerceOrderRuleEntryRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void deleteCommerceOrderRuleEntryRel(
+			long commerceOrderRuleEntryRelId)
+		throws RemoteException {
+
+		try {
+			CommerceOrderRuleEntryRelServiceUtil.
+				deleteCommerceOrderRuleEntryRel(commerceOrderRuleEntryRelId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void
+			deleteCommerceOrderRuleEntryRelsByCommerceOrderRuleEntryId(
+				long commerceOrderRuleEntryId)
+		throws RemoteException {
+
+		try {
+			CommerceOrderRuleEntryRelServiceUtil.
+				deleteCommerceOrderRuleEntryRelsByCommerceOrderRuleEntryId(
+					commerceOrderRuleEntryId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRelSoap
+				fetchCommerceOrderRuleEntryRel(
+					String className, long classPK,
+					long commerceOrderRuleEntryId)
+			throws RemoteException {
+
+		try {
+			com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRel
+				returnValue =
+					CommerceOrderRuleEntryRelServiceUtil.
+						fetchCommerceOrderRuleEntryRel(
+							className, classPK, commerceOrderRuleEntryId);
+
+			return com.liferay.commerce.order.rule.model.
+				CommerceOrderRuleEntryRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRelSoap[]
+				getCommerceOrderRuleEntryAccountEntryRels(
+					long commerceOrderRuleEntryId, String keywords, int start,
+					int end)
+			throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.commerce.order.rule.model.
+					CommerceOrderRuleEntryRel> returnValue =
+						CommerceOrderRuleEntryRelServiceUtil.
+							getCommerceOrderRuleEntryAccountEntryRels(
+								commerceOrderRuleEntryId, keywords, start, end);
+
+			return com.liferay.commerce.order.rule.model.
+				CommerceOrderRuleEntryRelSoap.toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getCommerceOrderRuleEntryAccountEntryRelsCount(
+			long commerceOrderRuleEntryId, String keywords)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CommerceOrderRuleEntryRelServiceUtil.
+					getCommerceOrderRuleEntryAccountEntryRelsCount(
+						commerceOrderRuleEntryId, keywords);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRelSoap[]
+				getCommerceOrderRuleEntryAccountGroupRels(
+					long commerceOrderRuleEntryId, String keywords, int start,
+					int end)
+			throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.commerce.order.rule.model.
+					CommerceOrderRuleEntryRel> returnValue =
+						CommerceOrderRuleEntryRelServiceUtil.
+							getCommerceOrderRuleEntryAccountGroupRels(
+								commerceOrderRuleEntryId, keywords, start, end);
+
+			return com.liferay.commerce.order.rule.model.
+				CommerceOrderRuleEntryRelSoap.toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getCommerceOrderRuleEntryAccountGroupRelsCount(
+			long commerceOrderRuleEntryId, String keywords)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CommerceOrderRuleEntryRelServiceUtil.
+					getCommerceOrderRuleEntryAccountGroupRelsCount(
+						commerceOrderRuleEntryId, keywords);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRelSoap[]
+				getCommerceOrderRuleEntryCommerceChannelRels(
+					long commerceOrderRuleEntryId, String keywords, int start,
+					int end)
+			throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.commerce.order.rule.model.
+					CommerceOrderRuleEntryRel> returnValue =
+						CommerceOrderRuleEntryRelServiceUtil.
+							getCommerceOrderRuleEntryCommerceChannelRels(
+								commerceOrderRuleEntryId, keywords, start, end);
+
+			return com.liferay.commerce.order.rule.model.
+				CommerceOrderRuleEntryRelSoap.toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getCommerceOrderRuleEntryCommerceChannelRelsCount(
+			long commerceOrderRuleEntryId, String keywords)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CommerceOrderRuleEntryRelServiceUtil.
+					getCommerceOrderRuleEntryCommerceChannelRelsCount(
+						commerceOrderRuleEntryId, keywords);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRelSoap[]
+				getCommerceOrderRuleEntryCommerceOrderTypeRels(
+					long commerceOrderRuleEntryId, String keywords, int start,
+					int end)
+			throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.commerce.order.rule.model.
+					CommerceOrderRuleEntryRel> returnValue =
+						CommerceOrderRuleEntryRelServiceUtil.
+							getCommerceOrderRuleEntryCommerceOrderTypeRels(
+								commerceOrderRuleEntryId, keywords, start, end);
+
+			return com.liferay.commerce.order.rule.model.
+				CommerceOrderRuleEntryRelSoap.toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getCommerceOrderRuleEntryCommerceOrderTypeRelsCount(
+			long commerceOrderRuleEntryId, String keywords)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CommerceOrderRuleEntryRelServiceUtil.
+					getCommerceOrderRuleEntryCommerceOrderTypeRelsCount(
+						commerceOrderRuleEntryId, keywords);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRelSoap
+				getCommerceOrderRuleEntryRel(long commerceOrderRuleEntryRelId)
+			throws RemoteException {
+
+		try {
+			com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRel
+				returnValue =
+					CommerceOrderRuleEntryRelServiceUtil.
+						getCommerceOrderRuleEntryRel(
+							commerceOrderRuleEntryRelId);
+
+			return com.liferay.commerce.order.rule.model.
+				CommerceOrderRuleEntryRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRelSoap[]
+				getCommerceOrderRuleEntryRels(long commerceOrderRuleEntryId)
+			throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.commerce.order.rule.model.
+					CommerceOrderRuleEntryRel> returnValue =
+						CommerceOrderRuleEntryRelServiceUtil.
+							getCommerceOrderRuleEntryRels(
+								commerceOrderRuleEntryId);
+
+			return com.liferay.commerce.order.rule.model.
+				CommerceOrderRuleEntryRelSoap.toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.order.rule.model.CommerceOrderRuleEntryRelSoap[]
+				getCommerceOrderRuleEntryRels(
+					long commerceOrderRuleEntryId, int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.commerce.order.rule.model.
+							CommerceOrderRuleEntryRel> orderByComparator)
+			throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.commerce.order.rule.model.
+					CommerceOrderRuleEntryRel> returnValue =
+						CommerceOrderRuleEntryRelServiceUtil.
+							getCommerceOrderRuleEntryRels(
+								commerceOrderRuleEntryId, start, end,
+								orderByComparator);
+
+			return com.liferay.commerce.order.rule.model.
+				CommerceOrderRuleEntryRelSoap.toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getCommerceOrderRuleEntryRelsCount(
+			long commerceOrderRuleEntryId)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CommerceOrderRuleEntryRelServiceUtil.
+					getCommerceOrderRuleEntryRelsCount(
+						commerceOrderRuleEntryId);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		CommerceOrderRuleEntryRelServiceSoap.class);
+
 }

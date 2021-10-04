@@ -154,6 +154,13 @@ public class CommerceOrderRuleEntryRelWrapper
 		return model.getClassPK();
 	}
 
+	@Override
+	public CommerceOrderRuleEntry getCommerceOrderRuleEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getCommerceOrderRuleEntry();
+	}
+
 	/**
 	 * Returns the commerce order rule entry ID of this commerce order rule entry rel.
 	 *

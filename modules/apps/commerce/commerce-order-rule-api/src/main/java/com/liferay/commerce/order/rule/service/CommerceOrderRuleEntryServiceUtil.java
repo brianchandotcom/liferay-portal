@@ -14,6 +14,11 @@
 
 package com.liferay.commerce.order.rule.service;
 
+import com.liferay.commerce.order.rule.model.CommerceOrderRuleEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+
 /**
  * Provides the remote service utility for CommerceOrderRuleEntry. This utility wraps
  * <code>com.liferay.commerce.order.rule.service.impl.CommerceOrderRuleEntryServiceImpl</code> and is an
@@ -33,14 +38,65 @@ public class CommerceOrderRuleEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.order.rule.service.impl.CommerceOrderRuleEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static CommerceOrderRuleEntry addCommerceOrderRuleEntry(
+			String externalReferenceCode, boolean active, String description,
+			String name, int priority, String type, String typeSettings)
+		throws PortalException {
+
+		return getService().addCommerceOrderRuleEntry(
+			externalReferenceCode, active, description, name, priority, type,
+			typeSettings);
+	}
+
+	public static CommerceOrderRuleEntry deleteCommerceOrderRuleEntry(
+			long commerceOrderRuleEntryId)
+		throws PortalException {
+
+		return getService().deleteCommerceOrderRuleEntry(
+			commerceOrderRuleEntryId);
+	}
+
+	public static List<CommerceOrderRuleEntry> getCommerceOrderRuleEntries(
+			long companyId, boolean active, int start, int end)
+		throws PortalException {
+
+		return getService().getCommerceOrderRuleEntries(
+			companyId, active, start, end);
+	}
+
+	public static List<CommerceOrderRuleEntry> getCommerceOrderRuleEntries(
+			long companyId, boolean active, String type, int start, int end)
+		throws PortalException {
+
+		return getService().getCommerceOrderRuleEntries(
+			companyId, active, type, start, end);
+	}
+
+	public static List<CommerceOrderRuleEntry> getCommerceOrderRuleEntries(
+			long companyId, String type, int start, int end)
+		throws PortalException {
+
+		return getService().getCommerceOrderRuleEntries(
+			companyId, type, start, end);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static CommerceOrderRuleEntry updateCommerceOrderRuleEntry(
+			long commerceOrderRuleEntryId, boolean active, String description,
+			String name, int priority, String typeSettings)
+		throws PortalException {
+
+		return getService().updateCommerceOrderRuleEntry(
+			commerceOrderRuleEntryId, active, description, name, priority,
+			typeSettings);
 	}
 
 	public static CommerceOrderRuleEntryService getService() {

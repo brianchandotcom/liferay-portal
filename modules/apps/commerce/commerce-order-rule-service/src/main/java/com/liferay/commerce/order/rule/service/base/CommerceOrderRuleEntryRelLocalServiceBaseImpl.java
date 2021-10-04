@@ -143,11 +143,13 @@ public abstract class CommerceOrderRuleEntryRelLocalServiceBaseImpl
 	 *
 	 * @param commerceOrderRuleEntryRel the commerce order rule entry rel
 	 * @return the commerce order rule entry rel that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceOrderRuleEntryRel deleteCommerceOrderRuleEntryRel(
-		CommerceOrderRuleEntryRel commerceOrderRuleEntryRel) {
+			CommerceOrderRuleEntryRel commerceOrderRuleEntryRel)
+		throws PortalException {
 
 		return commerceOrderRuleEntryRelPersistence.remove(
 			commerceOrderRuleEntryRel);

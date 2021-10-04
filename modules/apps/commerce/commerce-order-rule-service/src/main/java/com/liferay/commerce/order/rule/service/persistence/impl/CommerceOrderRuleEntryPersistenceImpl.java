@@ -29,11 +29,13 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -567,6 +569,358 @@ public class CommerceOrderRuleEntryPersistenceImpl
 	}
 
 	/**
+	 * Returns all the commerce order rule entries that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @return the matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> filterFindByC_A(
+		long companyId, boolean active) {
+
+		return filterFindByC_A(
+			companyId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce order rule entries that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @return the range of matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> filterFindByC_A(
+		long companyId, boolean active, int start, int end) {
+
+		return filterFindByC_A(companyId, active, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order rule entries that the user has permissions to view where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> filterFindByC_A(
+		long companyId, boolean active, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_A(companyId, active, start, end, orderByComparator);
+		}
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_C_A_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_A_ACTIVE_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommerceOrderRuleEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_ALIAS, CommerceOrderRuleEntryImpl.class);
+			}
+			else {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_TABLE, CommerceOrderRuleEntryImpl.class);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			queryPos.add(active);
+
+			return (List<CommerceOrderRuleEntry>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the commerce order rule entries before and after the current commerce order rule entry in the ordered set of commerce order rule entries that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * @param commerceOrderRuleEntryId the primary key of the current commerce order rule entry
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a commerce order rule entry with the primary key could not be found
+	 */
+	@Override
+	public CommerceOrderRuleEntry[] filterFindByC_A_PrevAndNext(
+			long commerceOrderRuleEntryId, long companyId, boolean active,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws NoSuchOrderRuleEntryException {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_A_PrevAndNext(
+				commerceOrderRuleEntryId, companyId, active, orderByComparator);
+		}
+
+		CommerceOrderRuleEntry commerceOrderRuleEntry = findByPrimaryKey(
+			commerceOrderRuleEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceOrderRuleEntry[] array = new CommerceOrderRuleEntryImpl[3];
+
+			array[0] = filterGetByC_A_PrevAndNext(
+				session, commerceOrderRuleEntry, companyId, active,
+				orderByComparator, true);
+
+			array[1] = commerceOrderRuleEntry;
+
+			array[2] = filterGetByC_A_PrevAndNext(
+				session, commerceOrderRuleEntry, companyId, active,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceOrderRuleEntry filterGetByC_A_PrevAndNext(
+		Session session, CommerceOrderRuleEntry commerceOrderRuleEntry,
+		long companyId, boolean active,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_C_A_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_A_ACTIVE_2_SQL);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommerceOrderRuleEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+		sqlQuery.setFirstResult(0);
+		sqlQuery.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_ALIAS, CommerceOrderRuleEntryImpl.class);
+		}
+		else {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_TABLE, CommerceOrderRuleEntryImpl.class);
+		}
+
+		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+		queryPos.add(companyId);
+
+		queryPos.add(active);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						commerceOrderRuleEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CommerceOrderRuleEntry> list = sqlQuery.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Removes all the commerce order rule entries where companyId = &#63; and active = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -637,11 +991,67 @@ public class CommerceOrderRuleEntryPersistenceImpl
 		return count.intValue();
 	}
 
+	/**
+	 * Returns the number of commerce order rule entries that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @return the number of matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByC_A(long companyId, boolean active) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return countByC_A(companyId, active);
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(_FILTER_SQL_COUNT_COMMERCEORDERRULEENTRY_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_A_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_A_ACTIVE_2_SQL);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommerceOrderRuleEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			queryPos.add(active);
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	private static final String _FINDER_COLUMN_C_A_COMPANYID_2 =
 		"commerceOrderRuleEntry.companyId = ? AND ";
 
 	private static final String _FINDER_COLUMN_C_A_ACTIVE_2 =
 		"commerceOrderRuleEntry.active = ?";
+
+	private static final String _FINDER_COLUMN_C_A_ACTIVE_2_SQL =
+		"commerceOrderRuleEntry.active_ = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_LikeType;
 	private FinderPath _finderPathWithPaginationCountByC_LikeType;
@@ -1128,6 +1538,385 @@ public class CommerceOrderRuleEntryPersistenceImpl
 	}
 
 	/**
+	 * Returns all the commerce order rule entries that the user has permission to view where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> filterFindByC_LikeType(
+		long companyId, String type) {
+
+		return filterFindByC_LikeType(
+			companyId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce order rule entries that the user has permission to view where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @return the range of matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> filterFindByC_LikeType(
+		long companyId, String type, int start, int end) {
+
+		return filterFindByC_LikeType(companyId, type, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order rule entries that the user has permissions to view where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> filterFindByC_LikeType(
+		long companyId, String type, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_LikeType(
+				companyId, type, start, end, orderByComparator);
+		}
+
+		type = Objects.toString(type, "");
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_C_LIKETYPE_COMPANYID_2);
+
+		boolean bindType = false;
+
+		if (type.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_LIKETYPE_TYPE_3_SQL);
+		}
+		else {
+			bindType = true;
+
+			sb.append(_FINDER_COLUMN_C_LIKETYPE_TYPE_2_SQL);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommerceOrderRuleEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_ALIAS, CommerceOrderRuleEntryImpl.class);
+			}
+			else {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_TABLE, CommerceOrderRuleEntryImpl.class);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			if (bindType) {
+				queryPos.add(type);
+			}
+
+			return (List<CommerceOrderRuleEntry>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the commerce order rule entries before and after the current commerce order rule entry in the ordered set of commerce order rule entries that the user has permission to view where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * @param commerceOrderRuleEntryId the primary key of the current commerce order rule entry
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a commerce order rule entry with the primary key could not be found
+	 */
+	@Override
+	public CommerceOrderRuleEntry[] filterFindByC_LikeType_PrevAndNext(
+			long commerceOrderRuleEntryId, long companyId, String type,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws NoSuchOrderRuleEntryException {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_LikeType_PrevAndNext(
+				commerceOrderRuleEntryId, companyId, type, orderByComparator);
+		}
+
+		type = Objects.toString(type, "");
+
+		CommerceOrderRuleEntry commerceOrderRuleEntry = findByPrimaryKey(
+			commerceOrderRuleEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceOrderRuleEntry[] array = new CommerceOrderRuleEntryImpl[3];
+
+			array[0] = filterGetByC_LikeType_PrevAndNext(
+				session, commerceOrderRuleEntry, companyId, type,
+				orderByComparator, true);
+
+			array[1] = commerceOrderRuleEntry;
+
+			array[2] = filterGetByC_LikeType_PrevAndNext(
+				session, commerceOrderRuleEntry, companyId, type,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceOrderRuleEntry filterGetByC_LikeType_PrevAndNext(
+		Session session, CommerceOrderRuleEntry commerceOrderRuleEntry,
+		long companyId, String type,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_C_LIKETYPE_COMPANYID_2);
+
+		boolean bindType = false;
+
+		if (type.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_LIKETYPE_TYPE_3_SQL);
+		}
+		else {
+			bindType = true;
+
+			sb.append(_FINDER_COLUMN_C_LIKETYPE_TYPE_2_SQL);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommerceOrderRuleEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+		sqlQuery.setFirstResult(0);
+		sqlQuery.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_ALIAS, CommerceOrderRuleEntryImpl.class);
+		}
+		else {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_TABLE, CommerceOrderRuleEntryImpl.class);
+		}
+
+		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+		queryPos.add(companyId);
+
+		if (bindType) {
+			queryPos.add(type);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						commerceOrderRuleEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CommerceOrderRuleEntry> list = sqlQuery.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Removes all the commerce order rule entries where companyId = &#63; and type LIKE &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1211,6 +2000,72 @@ public class CommerceOrderRuleEntryPersistenceImpl
 		return count.intValue();
 	}
 
+	/**
+	 * Returns the number of commerce order rule entries that the user has permission to view where companyId = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the number of matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByC_LikeType(long companyId, String type) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return countByC_LikeType(companyId, type);
+		}
+
+		type = Objects.toString(type, "");
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(_FILTER_SQL_COUNT_COMMERCEORDERRULEENTRY_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_LIKETYPE_COMPANYID_2);
+
+		boolean bindType = false;
+
+		if (type.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_LIKETYPE_TYPE_3_SQL);
+		}
+		else {
+			bindType = true;
+
+			sb.append(_FINDER_COLUMN_C_LIKETYPE_TYPE_2_SQL);
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommerceOrderRuleEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			if (bindType) {
+				queryPos.add(type);
+			}
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	private static final String _FINDER_COLUMN_C_LIKETYPE_COMPANYID_2 =
 		"commerceOrderRuleEntry.companyId = ? AND ";
 
@@ -1219,6 +2074,12 @@ public class CommerceOrderRuleEntryPersistenceImpl
 
 	private static final String _FINDER_COLUMN_C_LIKETYPE_TYPE_3 =
 		"(commerceOrderRuleEntry.type IS NULL OR commerceOrderRuleEntry.type LIKE '')";
+
+	private static final String _FINDER_COLUMN_C_LIKETYPE_TYPE_2_SQL =
+		"commerceOrderRuleEntry.type_ LIKE ?";
+
+	private static final String _FINDER_COLUMN_C_LIKETYPE_TYPE_3_SQL =
+		"(commerceOrderRuleEntry.type_ IS NULL OR commerceOrderRuleEntry.type_ LIKE '')";
 
 	private FinderPath _finderPathWithPaginationFindByC_A_LikeType;
 	private FinderPath _finderPathWithPaginationCountByC_A_LikeType;
@@ -1733,6 +2594,401 @@ public class CommerceOrderRuleEntryPersistenceImpl
 	}
 
 	/**
+	 * Returns all the commerce order rule entries that the user has permission to view where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @return the matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> filterFindByC_A_LikeType(
+		long companyId, boolean active, String type) {
+
+		return filterFindByC_A_LikeType(
+			companyId, active, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the commerce order rule entries that the user has permission to view where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @return the range of matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> filterFindByC_A_LikeType(
+		long companyId, boolean active, String type, int start, int end) {
+
+		return filterFindByC_A_LikeType(
+			companyId, active, type, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order rule entries that the user has permissions to view where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderRuleEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce order rule entries
+	 * @param end the upper bound of the range of commerce order rule entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public List<CommerceOrderRuleEntry> filterFindByC_A_LikeType(
+		long companyId, boolean active, String type, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_A_LikeType(
+				companyId, active, type, start, end, orderByComparator);
+		}
+
+		type = Objects.toString(type, "");
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			sb = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_C_A_LIKETYPE_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_A_LIKETYPE_ACTIVE_2_SQL);
+
+		boolean bindType = false;
+
+		if (type.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_A_LIKETYPE_TYPE_3_SQL);
+		}
+		else {
+			bindType = true;
+
+			sb.append(_FINDER_COLUMN_C_A_LIKETYPE_TYPE_2_SQL);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommerceOrderRuleEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_ALIAS, CommerceOrderRuleEntryImpl.class);
+			}
+			else {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_TABLE, CommerceOrderRuleEntryImpl.class);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			queryPos.add(active);
+
+			if (bindType) {
+				queryPos.add(type);
+			}
+
+			return (List<CommerceOrderRuleEntry>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the commerce order rule entries before and after the current commerce order rule entry in the ordered set of commerce order rule entries that the user has permission to view where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * @param commerceOrderRuleEntryId the primary key of the current commerce order rule entry
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order rule entry
+	 * @throws NoSuchOrderRuleEntryException if a commerce order rule entry with the primary key could not be found
+	 */
+	@Override
+	public CommerceOrderRuleEntry[] filterFindByC_A_LikeType_PrevAndNext(
+			long commerceOrderRuleEntryId, long companyId, boolean active,
+			String type,
+			OrderByComparator<CommerceOrderRuleEntry> orderByComparator)
+		throws NoSuchOrderRuleEntryException {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_A_LikeType_PrevAndNext(
+				commerceOrderRuleEntryId, companyId, active, type,
+				orderByComparator);
+		}
+
+		type = Objects.toString(type, "");
+
+		CommerceOrderRuleEntry commerceOrderRuleEntry = findByPrimaryKey(
+			commerceOrderRuleEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceOrderRuleEntry[] array = new CommerceOrderRuleEntryImpl[3];
+
+			array[0] = filterGetByC_A_LikeType_PrevAndNext(
+				session, commerceOrderRuleEntry, companyId, active, type,
+				orderByComparator, true);
+
+			array[1] = commerceOrderRuleEntry;
+
+			array[2] = filterGetByC_A_LikeType_PrevAndNext(
+				session, commerceOrderRuleEntry, companyId, active, type,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceOrderRuleEntry filterGetByC_A_LikeType_PrevAndNext(
+		Session session, CommerceOrderRuleEntry commerceOrderRuleEntry,
+		long companyId, boolean active, String type,
+		OrderByComparator<CommerceOrderRuleEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_C_A_LIKETYPE_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_A_LIKETYPE_ACTIVE_2_SQL);
+
+		boolean bindType = false;
+
+		if (type.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_A_LIKETYPE_TYPE_3_SQL);
+		}
+		else {
+			bindType = true;
+
+			sb.append(_FINDER_COLUMN_C_A_LIKETYPE_TYPE_2_SQL);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(CommerceOrderRuleEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommerceOrderRuleEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+		sqlQuery.setFirstResult(0);
+		sqlQuery.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_ALIAS, CommerceOrderRuleEntryImpl.class);
+		}
+		else {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_TABLE, CommerceOrderRuleEntryImpl.class);
+		}
+
+		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+		queryPos.add(companyId);
+
+		queryPos.add(active);
+
+		if (bindType) {
+			queryPos.add(type);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						commerceOrderRuleEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CommerceOrderRuleEntry> list = sqlQuery.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Removes all the commerce order rule entries where companyId = &#63; and active = &#63; and type LIKE &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1826,17 +3082,99 @@ public class CommerceOrderRuleEntryPersistenceImpl
 		return count.intValue();
 	}
 
+	/**
+	 * Returns the number of commerce order rule entries that the user has permission to view where companyId = &#63; and active = &#63; and type LIKE &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param type the type
+	 * @return the number of matching commerce order rule entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByC_A_LikeType(
+		long companyId, boolean active, String type) {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return countByC_A_LikeType(companyId, active, type);
+		}
+
+		type = Objects.toString(type, "");
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_FILTER_SQL_COUNT_COMMERCEORDERRULEENTRY_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_A_LIKETYPE_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_A_LIKETYPE_ACTIVE_2_SQL);
+
+		boolean bindType = false;
+
+		if (type.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_A_LIKETYPE_TYPE_3_SQL);
+		}
+		else {
+			bindType = true;
+
+			sb.append(_FINDER_COLUMN_C_A_LIKETYPE_TYPE_2_SQL);
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), CommerceOrderRuleEntry.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			queryPos.add(active);
+
+			if (bindType) {
+				queryPos.add(type);
+			}
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	private static final String _FINDER_COLUMN_C_A_LIKETYPE_COMPANYID_2 =
 		"commerceOrderRuleEntry.companyId = ? AND ";
 
 	private static final String _FINDER_COLUMN_C_A_LIKETYPE_ACTIVE_2 =
 		"commerceOrderRuleEntry.active = ? AND ";
 
+	private static final String _FINDER_COLUMN_C_A_LIKETYPE_ACTIVE_2_SQL =
+		"commerceOrderRuleEntry.active_ = ? AND ";
+
 	private static final String _FINDER_COLUMN_C_A_LIKETYPE_TYPE_2 =
 		"commerceOrderRuleEntry.type LIKE ?";
 
 	private static final String _FINDER_COLUMN_C_A_LIKETYPE_TYPE_3 =
 		"(commerceOrderRuleEntry.type IS NULL OR commerceOrderRuleEntry.type LIKE '')";
+
+	private static final String _FINDER_COLUMN_C_A_LIKETYPE_TYPE_2_SQL =
+		"commerceOrderRuleEntry.type_ LIKE ?";
+
+	private static final String _FINDER_COLUMN_C_A_LIKETYPE_TYPE_3_SQL =
+		"(commerceOrderRuleEntry.type_ IS NULL OR commerceOrderRuleEntry.type_ LIKE '')";
 
 	private FinderPath _finderPathFetchByC_ERC;
 	private FinderPath _finderPathCountByC_ERC;
@@ -2827,8 +4165,33 @@ public class CommerceOrderRuleEntryPersistenceImpl
 	private static final String _SQL_COUNT_COMMERCEORDERRULEENTRY_WHERE =
 		"SELECT COUNT(commerceOrderRuleEntry) FROM CommerceOrderRuleEntry commerceOrderRuleEntry WHERE ";
 
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
+		"commerceOrderRuleEntry.commerceOrderRuleEntryId";
+
+	private static final String
+		_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_WHERE =
+			"SELECT DISTINCT {commerceOrderRuleEntry.*} FROM CommerceOrderRuleEntry commerceOrderRuleEntry WHERE ";
+
+	private static final String
+		_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_1 =
+			"SELECT {CommerceOrderRuleEntry.*} FROM (SELECT DISTINCT commerceOrderRuleEntry.commerceOrderRuleEntryId FROM CommerceOrderRuleEntry commerceOrderRuleEntry WHERE ";
+
+	private static final String
+		_FILTER_SQL_SELECT_COMMERCEORDERRULEENTRY_NO_INLINE_DISTINCT_WHERE_2 =
+			") TEMP_TABLE INNER JOIN CommerceOrderRuleEntry ON TEMP_TABLE.commerceOrderRuleEntryId = CommerceOrderRuleEntry.commerceOrderRuleEntryId";
+
+	private static final String _FILTER_SQL_COUNT_COMMERCEORDERRULEENTRY_WHERE =
+		"SELECT COUNT(DISTINCT commerceOrderRuleEntry.commerceOrderRuleEntryId) AS COUNT_VALUE FROM CommerceOrderRuleEntry commerceOrderRuleEntry WHERE ";
+
+	private static final String _FILTER_ENTITY_ALIAS = "commerceOrderRuleEntry";
+
+	private static final String _FILTER_ENTITY_TABLE = "CommerceOrderRuleEntry";
+
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceOrderRuleEntry.";
+
+	private static final String _ORDER_BY_ENTITY_TABLE =
+		"CommerceOrderRuleEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No CommerceOrderRuleEntry exists with the primary key ";

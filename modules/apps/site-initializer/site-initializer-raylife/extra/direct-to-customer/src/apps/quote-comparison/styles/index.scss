@@ -20,7 +20,7 @@ $font-family: var(
 	display: flex;
 	flex-wrap: wrap;
 	font-family: $font-family !important;
-	padding: 20px;
+	padding-top: 20px;
 
 	#quote-comparison {
 		background-color: #fff;
@@ -28,7 +28,7 @@ $font-family: var(
 		border-radius: 8px;
 		box-shadow: 0px 10px 30px rgba(77, 133, 255, 0.09);
 		height: 576px;
-		margin-left: 20px;
+		margin-left: 15px;
 		width: 292px;
 
 		&.no-most-popular {

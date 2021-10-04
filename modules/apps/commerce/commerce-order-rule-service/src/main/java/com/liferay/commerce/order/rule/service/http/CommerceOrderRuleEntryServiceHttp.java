@@ -55,7 +55,13 @@ public class CommerceOrderRuleEntryServiceHttp {
 			addCommerceOrderRuleEntry(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				boolean active, String description, String name, int priority,
-				String type, String typeSettings)
+				String type, String typeSettings, int displayDateMonth,
+				int displayDateDay, int displayDateYear, int displayDateHour,
+				int displayDateMinute, int expirationDateMonth,
+				int expirationDateDay, int expirationDateYear,
+				int expirationDateHour, int expirationDateMinute,
+				boolean neverExpire,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -66,7 +72,11 @@ public class CommerceOrderRuleEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, active, description, name,
-				priority, type, typeSettings);
+				priority, type, typeSettings, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -282,7 +292,12 @@ public class CommerceOrderRuleEntryServiceHttp {
 			updateCommerceOrderRuleEntry(
 				HttpPrincipal httpPrincipal, long commerceOrderRuleEntryId,
 				boolean active, String description, String name, int priority,
-				String typeSettings)
+				String typeSettings, int displayDateMonth, int displayDateDay,
+				int displayDateYear, int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -293,7 +308,11 @@ public class CommerceOrderRuleEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceOrderRuleEntryId, active, description, name,
-				priority, typeSettings);
+				priority, typeSettings, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -330,7 +349,10 @@ public class CommerceOrderRuleEntryServiceHttp {
 	private static final Class<?>[] _addCommerceOrderRuleEntryParameterTypes0 =
 		new Class[] {
 			String.class, boolean.class, String.class, String.class, int.class,
-			String.class, String.class
+			String.class, String.class, int.class, int.class, int.class,
+			int.class, int.class, int.class, int.class, int.class, int.class,
+			int.class, boolean.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
 		_deleteCommerceOrderRuleEntryParameterTypes1 = new Class[] {long.class};
@@ -349,7 +371,10 @@ public class CommerceOrderRuleEntryServiceHttp {
 	private static final Class<?>[]
 		_updateCommerceOrderRuleEntryParameterTypes5 = new Class[] {
 			long.class, boolean.class, String.class, String.class, int.class,
-			String.class
+			String.class, int.class, int.class, int.class, int.class, int.class,
+			int.class, int.class, int.class, int.class, int.class,
+			boolean.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 
 }

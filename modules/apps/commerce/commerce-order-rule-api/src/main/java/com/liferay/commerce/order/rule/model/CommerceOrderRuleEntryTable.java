@@ -72,6 +72,29 @@ public class CommerceOrderRuleEntryTable
 	public final Column<CommerceOrderRuleEntryTable, String> typeSettings =
 		createColumn(
 			"typeSettings", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderRuleEntryTable, Date> displayDate =
+		createColumn(
+			"displayDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderRuleEntryTable, Date> expirationDate =
+		createColumn(
+			"expirationDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderRuleEntryTable, Date> lastPublishDate =
+		createColumn(
+			"lastPublishDate", Date.class, Types.TIMESTAMP,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderRuleEntryTable, Integer> status =
+		createColumn(
+			"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderRuleEntryTable, Long> statusByUserId =
+		createColumn(
+			"statusByUserId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderRuleEntryTable, String> statusByUserName =
+		createColumn(
+			"statusByUserName", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderRuleEntryTable, Date> statusDate =
+		createColumn(
+			"statusDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 
 	private CommerceOrderRuleEntryTable() {
 		super("CommerceOrderRuleEntry", CommerceOrderRuleEntryTable::new);

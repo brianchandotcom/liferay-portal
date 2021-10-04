@@ -49,6 +49,13 @@ public class CommerceOrderRuleEntrySoap implements Serializable {
 		soapModel.setPriority(model.getPriority());
 		soapModel.setType(model.getType());
 		soapModel.setTypeSettings(model.getTypeSettings());
+		soapModel.setDisplayDate(model.getDisplayDate());
+		soapModel.setExpirationDate(model.getExpirationDate());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setStatus(model.getStatus());
+		soapModel.setStatusByUserId(model.getStatusByUserId());
+		soapModel.setStatusByUserName(model.getStatusByUserName());
+		soapModel.setStatusDate(model.getStatusDate());
 
 		return soapModel;
 	}
@@ -219,6 +226,62 @@ public class CommerceOrderRuleEntrySoap implements Serializable {
 		_typeSettings = typeSettings;
 	}
 
+	public Date getDisplayDate() {
+		return _displayDate;
+	}
+
+	public void setDisplayDate(Date displayDate) {
+		_displayDate = displayDate;
+	}
+
+	public Date getExpirationDate() {
+		return _expirationDate;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		_expirationDate = expirationDate;
+	}
+
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	public int getStatus() {
+		return _status;
+	}
+
+	public void setStatus(int status) {
+		_status = status;
+	}
+
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	public String getStatusByUserName() {
+		return _statusByUserName;
+	}
+
+	public void setStatusByUserName(String statusByUserName) {
+		_statusByUserName = statusByUserName;
+	}
+
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
+	}
+
 	private String _externalReferenceCode;
 	private long _commerceOrderRuleEntryId;
 	private long _companyId;
@@ -232,5 +295,12 @@ public class CommerceOrderRuleEntrySoap implements Serializable {
 	private int _priority;
 	private String _type;
 	private String _typeSettings;
+	private Date _displayDate;
+	private Date _expirationDate;
+	private Date _lastPublishDate;
+	private int _status;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 
 }

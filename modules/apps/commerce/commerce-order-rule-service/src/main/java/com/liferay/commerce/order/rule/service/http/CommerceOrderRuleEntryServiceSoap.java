@@ -68,7 +68,14 @@ public class CommerceOrderRuleEntryServiceSoap {
 				addCommerceOrderRuleEntry(
 					String externalReferenceCode, boolean active,
 					String description, String name, int priority, String type,
-					String typeSettings)
+					String typeSettings, int displayDateMonth,
+					int displayDateDay, int displayDateYear,
+					int displayDateHour, int displayDateMinute,
+					int expirationDateMonth, int expirationDateDay,
+					int expirationDateYear, int expirationDateHour,
+					int expirationDateMinute, boolean neverExpire,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
 			throws RemoteException {
 
 		try {
@@ -76,7 +83,12 @@ public class CommerceOrderRuleEntryServiceSoap {
 				returnValue =
 					CommerceOrderRuleEntryServiceUtil.addCommerceOrderRuleEntry(
 						externalReferenceCode, active, description, name,
-						priority, type, typeSettings);
+						priority, type, typeSettings, displayDateMonth,
+						displayDateDay, displayDateYear, displayDateHour,
+						displayDateMinute, expirationDateMonth,
+						expirationDateDay, expirationDateYear,
+						expirationDateHour, expirationDateMinute, neverExpire,
+						serviceContext);
 
 			return com.liferay.commerce.order.rule.model.
 				CommerceOrderRuleEntrySoap.toSoapModel(returnValue);
@@ -187,7 +199,14 @@ public class CommerceOrderRuleEntryServiceSoap {
 				updateCommerceOrderRuleEntry(
 					long commerceOrderRuleEntryId, boolean active,
 					String description, String name, int priority,
-					String typeSettings)
+					String typeSettings, int displayDateMonth,
+					int displayDateDay, int displayDateYear,
+					int displayDateHour, int displayDateMinute,
+					int expirationDateMonth, int expirationDateDay,
+					int expirationDateYear, int expirationDateHour,
+					int expirationDateMinute, boolean neverExpire,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
 			throws RemoteException {
 
 		try {
@@ -196,7 +215,12 @@ public class CommerceOrderRuleEntryServiceSoap {
 					CommerceOrderRuleEntryServiceUtil.
 						updateCommerceOrderRuleEntry(
 							commerceOrderRuleEntryId, active, description, name,
-							priority, typeSettings);
+							priority, typeSettings, displayDateMonth,
+							displayDateDay, displayDateYear, displayDateHour,
+							displayDateMinute, expirationDateMonth,
+							expirationDateDay, expirationDateYear,
+							expirationDateHour, expirationDateMinute,
+							neverExpire, serviceContext);
 
 			return com.liferay.commerce.order.rule.model.
 				CommerceOrderRuleEntrySoap.toSoapModel(returnValue);

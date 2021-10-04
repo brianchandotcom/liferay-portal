@@ -40,12 +40,21 @@ public class CommerceOrderRuleEntryServiceUtil {
 	 */
 	public static CommerceOrderRuleEntry addCommerceOrderRuleEntry(
 			String externalReferenceCode, boolean active, String description,
-			String name, int priority, String type, String typeSettings)
+			String name, int priority, String type, String typeSettings,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceOrderRuleEntry(
 			externalReferenceCode, active, description, name, priority, type,
-			typeSettings);
+			typeSettings, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	public static CommerceOrderRuleEntry deleteCommerceOrderRuleEntry(
@@ -91,12 +100,21 @@ public class CommerceOrderRuleEntryServiceUtil {
 
 	public static CommerceOrderRuleEntry updateCommerceOrderRuleEntry(
 			long commerceOrderRuleEntryId, boolean active, String description,
-			String name, int priority, String typeSettings)
+			String name, int priority, String typeSettings,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCommerceOrderRuleEntry(
 			commerceOrderRuleEntryId, active, description, name, priority,
-			typeSettings);
+			typeSettings, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	public static CommerceOrderRuleEntryService getService() {

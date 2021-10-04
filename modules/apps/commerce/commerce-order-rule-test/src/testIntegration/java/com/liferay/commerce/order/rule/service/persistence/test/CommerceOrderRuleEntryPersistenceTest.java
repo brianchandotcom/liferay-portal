@@ -155,6 +155,21 @@ public class CommerceOrderRuleEntryPersistenceTest {
 		newCommerceOrderRuleEntry.setTypeSettings(
 			RandomTestUtil.randomString());
 
+		newCommerceOrderRuleEntry.setDisplayDate(RandomTestUtil.nextDate());
+
+		newCommerceOrderRuleEntry.setExpirationDate(RandomTestUtil.nextDate());
+
+		newCommerceOrderRuleEntry.setLastPublishDate(RandomTestUtil.nextDate());
+
+		newCommerceOrderRuleEntry.setStatus(RandomTestUtil.nextInt());
+
+		newCommerceOrderRuleEntry.setStatusByUserId(RandomTestUtil.nextLong());
+
+		newCommerceOrderRuleEntry.setStatusByUserName(
+			RandomTestUtil.randomString());
+
+		newCommerceOrderRuleEntry.setStatusDate(RandomTestUtil.nextDate());
+
 		_commerceOrderRuleEntries.add(
 			_persistence.update(newCommerceOrderRuleEntry));
 
@@ -204,6 +219,33 @@ public class CommerceOrderRuleEntryPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceOrderRuleEntry.getTypeSettings(),
 			newCommerceOrderRuleEntry.getTypeSettings());
+		Assert.assertEquals(
+			Time.getShortTimestamp(
+				existingCommerceOrderRuleEntry.getDisplayDate()),
+			Time.getShortTimestamp(newCommerceOrderRuleEntry.getDisplayDate()));
+		Assert.assertEquals(
+			Time.getShortTimestamp(
+				existingCommerceOrderRuleEntry.getExpirationDate()),
+			Time.getShortTimestamp(
+				newCommerceOrderRuleEntry.getExpirationDate()));
+		Assert.assertEquals(
+			Time.getShortTimestamp(
+				existingCommerceOrderRuleEntry.getLastPublishDate()),
+			Time.getShortTimestamp(
+				newCommerceOrderRuleEntry.getLastPublishDate()));
+		Assert.assertEquals(
+			existingCommerceOrderRuleEntry.getStatus(),
+			newCommerceOrderRuleEntry.getStatus());
+		Assert.assertEquals(
+			existingCommerceOrderRuleEntry.getStatusByUserId(),
+			newCommerceOrderRuleEntry.getStatusByUserId());
+		Assert.assertEquals(
+			existingCommerceOrderRuleEntry.getStatusByUserName(),
+			newCommerceOrderRuleEntry.getStatusByUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(
+				existingCommerceOrderRuleEntry.getStatusDate()),
+			Time.getShortTimestamp(newCommerceOrderRuleEntry.getStatusDate()));
 	}
 
 	@Test
@@ -221,6 +263,22 @@ public class CommerceOrderRuleEntryPersistenceTest {
 		_persistence.countByC_LikeType(0L, "null");
 
 		_persistence.countByC_LikeType(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByLtD_S() throws Exception {
+		_persistence.countByLtD_S(
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByLtD_S(RandomTestUtil.nextDate(), 0);
+	}
+
+	@Test
+	public void testCountByLtE_S() throws Exception {
+		_persistence.countByLtE_S(
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByLtE_S(RandomTestUtil.nextDate(), 0);
 	}
 
 	@Test
@@ -276,7 +334,10 @@ public class CommerceOrderRuleEntryPersistenceTest {
 			"commerceOrderRuleEntryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"active", true, "description", true, "name", true, "priority", true,
-			"type", true, "typeSettings", true);
+			"type", true, "typeSettings", true, "displayDate", true,
+			"expirationDate", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test
@@ -615,6 +676,21 @@ public class CommerceOrderRuleEntryPersistenceTest {
 		commerceOrderRuleEntry.setType(RandomTestUtil.randomString());
 
 		commerceOrderRuleEntry.setTypeSettings(RandomTestUtil.randomString());
+
+		commerceOrderRuleEntry.setDisplayDate(RandomTestUtil.nextDate());
+
+		commerceOrderRuleEntry.setExpirationDate(RandomTestUtil.nextDate());
+
+		commerceOrderRuleEntry.setLastPublishDate(RandomTestUtil.nextDate());
+
+		commerceOrderRuleEntry.setStatus(RandomTestUtil.nextInt());
+
+		commerceOrderRuleEntry.setStatusByUserId(RandomTestUtil.nextLong());
+
+		commerceOrderRuleEntry.setStatusByUserName(
+			RandomTestUtil.randomString());
+
+		commerceOrderRuleEntry.setStatusDate(RandomTestUtil.nextDate());
 
 		_commerceOrderRuleEntries.add(
 			_persistence.update(commerceOrderRuleEntry));

@@ -158,7 +158,8 @@ public abstract class BaseWorkspaceGitRepository
 	@Override
 	public void setGitHubURL(String gitHubURL) {
 		if (PullRequest.isValidGitHubPullRequestURL(gitHubURL)) {
-			PullRequest pullRequest = new PullRequest(gitHubURL);
+			PullRequest pullRequest = PullRequestFactory.newPullRequest(
+				gitHubURL);
 
 			_setGitHubURL(pullRequest.getHtmlURL());
 			_setReceiverUsername(pullRequest.getReceiverUsername());
@@ -341,6 +342,7 @@ public abstract class BaseWorkspaceGitRepository
 		_setSenderBranchName(pullRequest.getSenderBranchName());
 		_setSenderUsername(pullRequest.getSenderUsername());
 		_setSenderBranchSHA(pullRequest.getSenderSHA());
+
 		_setUpstreamBranchSHA(pullRequest.getUpstreamBranchSHA());
 
 		validateKeys(_REQUIRED_KEYS);

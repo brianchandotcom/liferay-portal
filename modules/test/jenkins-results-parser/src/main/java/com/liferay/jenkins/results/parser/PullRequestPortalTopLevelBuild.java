@@ -65,7 +65,7 @@ public class PullRequestPortalTopLevelBuild
 		sb.append("/pull/");
 		sb.append(getParameterValue("GITHUB_PULL_REQUEST_NUMBER"));
 
-		_pullRequest = new PullRequest(sb.toString());
+		_pullRequest = PullRequestFactory.newPullRequest(sb.toString());
 	}
 
 	@Override

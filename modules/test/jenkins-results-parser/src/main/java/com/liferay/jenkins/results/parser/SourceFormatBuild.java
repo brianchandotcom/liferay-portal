@@ -214,7 +214,8 @@ public class SourceFormatBuild
 	protected SourceFormatBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
 
-		_pullRequest = new PullRequest(getParameterValue("PULL_REQUEST_URL"));
+		_pullRequest = PullRequestFactory.newPullRequest(
+			getParameterValue("PULL_REQUEST_URL"));
 	}
 
 	@Override

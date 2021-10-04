@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser.github.webhook;
 
 import com.liferay.jenkins.results.parser.PullRequest;
+import com.liferay.jenkins.results.parser.PullRequestFactory;
 
 import org.json.JSONObject;
 
@@ -36,7 +37,8 @@ public class PullRequestCommentPayload extends PullRequestPayload {
 	@Override
 	public PullRequest getPullRequest() {
 		if (pullRequest == null) {
-			pullRequest = new PullRequest(get("issue/pull_request/html_url"));
+			pullRequest = PullRequestFactory.newPullRequest(
+				get("issue/pull_request/html_url"));
 		}
 
 		return pullRequest;

@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser.github.webhook;
 
 import com.liferay.jenkins.results.parser.PullRequest;
+import com.liferay.jenkins.results.parser.PullRequestFactory;
 
 import org.json.JSONObject;
 
@@ -29,7 +30,8 @@ public class PullRequestPayload extends Payload {
 
 	public PullRequest getPullRequest() {
 		if (pullRequest == null) {
-			pullRequest = new PullRequest(get("pull_request/_links/html/href"));
+			pullRequest = PullRequestFactory.newPullRequest(
+				get("pull_request/_links/html/href"));
 		}
 
 		return pullRequest;

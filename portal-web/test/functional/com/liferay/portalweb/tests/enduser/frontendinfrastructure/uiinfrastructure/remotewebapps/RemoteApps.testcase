@@ -29,16 +29,15 @@ definition {
 	test CanBeCreated {
 		property portal.acceptance = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Custom Apps",
-			panel = "Applications",
-			portlet = "Remote Apps");
+		var remoteAppName = "Test Remote App";
+
+		RemoteApps.goToRemoteAppsPortlet();
 
 		RemoteApps.addApp(
-			entryName = "Test Remote App",
+			entryName = "${remoteAppName}",
 			entryURL = "http://www.liferay.com");
 
-		RemoteApps.viewTableEntryName(entryName = "Test Remote App");
+		RemoteApps.viewTableEntryName(entryName = "${remoteAppName}");
 	}
 
 	@description = "Verify remote app can be deleted"
@@ -47,20 +46,17 @@ definition {
 	test CanBeDeleted {
 		property portal.acceptance = "true";
 
+		var remoteAppName = "My New Remote App To Delete";
+
 		JSONRemoteApp.addIFrameRemoteAppEntry(
 			iFrameURL = "http://www.liferay.com/my_new_remote_app",
-			name = "My New Remote App");
+			name = "${remoteAppName}");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Custom Apps",
-			panel = "Applications",
-			portlet = "Remote Apps");
+		RemoteApps.goToRemoteAppsPortlet();
 
-		RemoteApps.deleteRemoteApp(tableEntry = "My New Remote App");
+		RemoteApps.deleteRemoteApp(tableEntry = "${remoteAppName}");
 
-		RemoteApps.viewTableEntryNameNotPresent(entryName = "My New Remote App");
-
-		RemoteApps.viewEmptyRemoteTable();
+		RemoteApps.viewTableEntryNameNotPresent(entryName = "${remoteAppName}");
 	}
 
 }

@@ -1,5 +1,15 @@
 definition {
 
+	macro _deleteRemoteAppAPI {
+		var currentURL = Navigator.getCurrentURL();
+
+		var findWhereIdBegins = StringUtil.extractLast("${currentURL}", "remoteAppEntryId=");
+
+		var remoteAppEntryIdValue = StringUtil.extractFirst("${findWhereIdBegins}", "&_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_redirect");
+
+		JSONRemoteApp.deleteIFrameRemoteAppEntry(remoteAppEntryId = "${remoteAppEntryIdValue}");
+	}
+
 	macro addApp {
 		LexiconEntry.gotoAdd();
 
@@ -16,19 +26,35 @@ definition {
 		Click(locator1 = "RemoteApps#REMOTE_TABLE_DELETE");
 	}
 
-	macro tearDown {
-		ApplicationsMenu.gotoPortlet(
-			category = "Custom Apps",
-			panel = "Applications",
-			portlet = "Remote Apps");
+	macro deleteRemoteAppAPI {
+		Click(locator1 = "xPath=(//div[@class='table-list-title']//a)");
+		var remoteAppNameToBeRemoved = RemoteApps.getRemoteAppEntryName();
+		RemoteApps._deleteRemoteAppAPI();
+		RemoteApps.goToRemoteAppsPortlet();
+		RemoteApps.viewTableEntryNameNotPresent(entryName = "${remoteAppNameToBeRemoved}");
+	}
 
-		Search.searchCP(searchTerm = "App");
+	macro getRemoteAppEntryName {
+		var remoteAppEntryValue = selenium.getAttribute("//input[contains(@id , '_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_name')]@value");
+		return "${remoteAppEntryValue}";
+	}
 
-		while (IsElementPresent.pauseIsElementPresent(locator1 = "Icon#SVG_ELLIPSIS")) {
-			Click(locator1 = "Icon#SVG_ELLIPSIS");
-
-			MenuItem.clickNoError(menuItem = "Delete");
+	macro goToRemoteAppsPortlet {
+		if (IsElementNotPresent(locator1="RemoteApps#REMOTE_APPS_HEADER")) {
+			ApplicationsMenu.gotoPortlet(
+				category = "Custom Apps",
+				panel = "Applications",
+				portlet = "Remote Apps");
 		}
+	}
+
+	macro tearDown {
+		RemoteApps.goToRemoteAppsPortlet();
+
+		while (IsElementNotPresent(locator1="RemoteApps#EMPTY_REMOTE_TABLE_MESSAGE")) {
+			RemoteApps.deleteRemoteAppAPI();
+		}
+		RemoteApps.viewEmptyRemoteTable();
 	}
 
 	macro viewEmptyRemoteTable {

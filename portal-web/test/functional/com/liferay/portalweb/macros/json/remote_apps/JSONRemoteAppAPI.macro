@@ -19,7 +19,8 @@ definition {
 				  -d properties=
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		var remoteAppEntryID = JSONCurlUtil.post("${curl}","$.['remoteAppEntryId']");
+		return "${remoteAppEntryID}";
 	}
 
 	macro _deleteIFrameRemoteAppEntry {
@@ -28,7 +29,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/remoteapp.remoteappentry/add-i-frame-remote-app-entry \
+			${portalURL}/api/jsonws/remoteapp.remoteappentry/delete-remote-app-entry \
 				  -u test@liferay.com:test \
 				  -d remoteAppEntryId=${remoteAppEntryId}
 		''';

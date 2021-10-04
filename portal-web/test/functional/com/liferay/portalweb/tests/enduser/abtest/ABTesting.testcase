@@ -255,6 +255,8 @@ definition {
 	@description = "LPS-96781: Validate if, when the A/B Testing changes in the Liferay DXP, information about the Liferay DXP context, the changes are reflected in the test in Analytics Cloud"
 	@priority = "4"
 	test CheckTestChangesInAC {
+	property test.name.skip.portal.instance = "ABTesting#CheckTestChangesInAC";
+
 		task ("Create AB test, create variant and run the test") {
 			ABTest.createABTest(
 				goal = "Bounce Rate",
@@ -269,9 +271,6 @@ definition {
 			ABTest.openABTestInAC();
 
 			ABTest.statusABTestInAC(status = "Test Is Running");
-
-			// Div[contains(@class, 'card-header d-flex justify-content-between')]//h3[contains(text(), '${status}')]
-
 		}
 
 		task ("Go back to DXP") {
@@ -314,6 +313,8 @@ definition {
 	@description = "LPS-97195: Validate if the variant for A/B Test that was deleted on Liferay portal is visible in the Analytics Cloud"
 	@priority = "4"
 	test CheckVariantDeletedInAC {
+	property test.name.skip.portal.instance = "ABTesting#CheckVariantDeletedInAC";
+
 		task ("Create AB test and create 2 variants") {
 			ABTest.createABTest(
 				goal = "Bounce Rate",

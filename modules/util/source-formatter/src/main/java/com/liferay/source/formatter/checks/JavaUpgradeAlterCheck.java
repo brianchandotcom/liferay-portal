@@ -22,7 +22,6 @@ import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.JavaTerm;
-import com.liferay.source.formatter.parser.JavaVariable;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
@@ -52,8 +51,8 @@ public class JavaUpgradeAlterCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!(absolutePath.contains("/upgrade/") &&
-			  content.contains("alter("))) {
+		if (!absolutePath.contains("/upgrade/") ||
+			!content.contains("alter(")) {
 
 			return content;
 		}
@@ -211,26 +210,23 @@ public class JavaUpgradeAlterCheck extends BaseFileCheck {
 			fileName, fileContent);
 
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-			if (!javaTerm.isJavaVariable()) {
+			if (!javaTerm.isJavaVariable() ||
+				!Objects.equals(javaTerm.getName(), "TABLE_COLUMNS")) {
+
 				continue;
 			}
 
-			JavaVariable javaVariable = (JavaVariable)javaTerm;
+			Set<String> columnNames = new HashSet<>();
 
-			if (Objects.equals(javaVariable.getName(), "TABLE_COLUMNS")) {
-				Set<String> columnNames = new HashSet<>();
+			Matcher matcher = _stringPattern.matcher(javaTerm.getContent());
 
-				Matcher matcher = _stringPattern.matcher(
-					javaVariable.getContent());
-
-				while (matcher.find()) {
-					columnNames.add(matcher.group(1));
-				}
-
-				_columnNamesByTables.put(tableName, columnNames);
-
-				break;
+			while (matcher.find()) {
+				columnNames.add(matcher.group(1));
 			}
+
+			_columnNamesByTables.put(tableName, columnNames);
+
+			break;
 		}
 	}
 

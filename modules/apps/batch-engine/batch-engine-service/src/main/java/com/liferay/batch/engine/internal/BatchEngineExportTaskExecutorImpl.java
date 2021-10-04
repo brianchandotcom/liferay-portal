@@ -155,6 +155,11 @@ public class BatchEngineExportTaskExecutorImpl
 				page = batchEngineTaskItemDelegateExecutor.getItems(
 					pageIndex++, _batchSize);
 
+				if (pageIndex == 2) {
+					batchEngineExportTask.setTotalItemsCount(
+						Math.toIntExact(page.getTotalCount()));
+				}
+
 				Collection<?> items = page.getItems();
 
 				if (items.isEmpty()) {
@@ -162,6 +167,10 @@ public class BatchEngineExportTaskExecutorImpl
 				}
 
 				batchEngineExportTaskItemWriter.write(items);
+
+				batchEngineExportTask.setProcessedItemsCount(
+					batchEngineExportTask.getProcessedItemsCount() +
+						items.size());
 
 				_batchEngineExportTaskLocalService.updateBatchEngineExportTask(
 					batchEngineExportTask);

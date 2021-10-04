@@ -62,6 +62,9 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -959,16 +962,6 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String getBuildDirPath() {
-		String buildNumber = System.getenv("BUILD_NUMBER");
-		String jobName = System.getenv("JOB_NAME");
-		String masterHostname = System.getenv("MASTER_HOSTNAME");
-
-		if (isNullOrEmpty(buildNumber) || isNullOrEmpty(jobName) ||
-			isNullOrEmpty(masterHostname)) {
-
-			return null;
-		}
-
 		StringBuilder sb = new StringBuilder();
 
 		if (isWindows()) {
@@ -976,6 +969,22 @@ public class JenkinsResultsParserUtil {
 		}
 
 		sb.append("/tmp/jenkins/");
+
+		String buildNumber = System.getenv("BUILD_NUMBER");
+		String jobName = System.getenv("JOB_NAME");
+		String masterHostname = System.getenv("MASTER_HOSTNAME");
+
+		if (!isCINode() || isNullOrEmpty(buildNumber) ||
+			isNullOrEmpty(jobName) || isNullOrEmpty(masterHostname)) {
+
+			LocalDate localDate = LocalDate.now();
+
+			sb.append(
+				localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+			return sb.toString();
+		}
+
 		sb.append(masterHostname);
 		sb.append("/");
 		sb.append(

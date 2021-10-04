@@ -55,6 +55,8 @@ public interface Build {
 
 	public String getBuildDescription();
 
+	public String getBuildDirPath();
+
 	public JSONObject getBuildJSONObject();
 
 	public int getBuildNumber();

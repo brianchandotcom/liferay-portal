@@ -65,21 +65,6 @@ public class PullRequest {
 		return false;
 	}
 
-	public PullRequest(String gitHubURL) {
-		Matcher matcher = _gitHubPullRequestURLPattern.matcher(gitHubURL);
-
-		if (!matcher.find()) {
-			throw new RuntimeException("Invalid GitHub URL " + gitHubURL);
-		}
-
-		_gitHubRemoteGitRepositoryName = matcher.group(
-			"gitHubRemoteGitRepositoryName");
-		_number = Integer.parseInt(matcher.group("number"));
-		_ownerUsername = matcher.group("owner");
-
-		refresh();
-	}
-
 	public Comment addComment(String body) {
 		body = body.replaceAll("(\\>)\\s+(\\<)", "$1$2");
 		body = body.replace("&quot;", "\\&quot;");
@@ -837,6 +822,21 @@ public class PullRequest {
 
 		private final String _color;
 
+	}
+
+	protected PullRequest(String gitHubURL) {
+		Matcher matcher = _gitHubPullRequestURLPattern.matcher(gitHubURL);
+
+		if (!matcher.find()) {
+			throw new RuntimeException("Invalid GitHub URL " + gitHubURL);
+		}
+
+		_gitHubRemoteGitRepositoryName = matcher.group(
+			"gitHubRemoteGitRepositoryName");
+		_number = Integer.parseInt(matcher.group("number"));
+		_ownerUsername = matcher.group("owner");
+
+		refresh();
 	}
 
 	protected String getIssueURL() {

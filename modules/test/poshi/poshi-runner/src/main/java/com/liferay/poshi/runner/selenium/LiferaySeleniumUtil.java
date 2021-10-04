@@ -351,7 +351,7 @@ public class LiferaySeleniumUtil {
 			locator = locator.substring(4);
 
 			if (locator.contains(">>>")) {
-				return LiferayByUtil.shadowDom(locator);
+				return LiferayByUtil.cssSelectorWithShadowRoot(locator);
 			}
 
 			return By.cssSelector(locator);

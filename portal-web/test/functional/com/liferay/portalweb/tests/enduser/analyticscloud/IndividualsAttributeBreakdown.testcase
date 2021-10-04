@@ -123,30 +123,16 @@ definition {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
-		task ("View the site page as Test Test") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Wait for sending requests") {
-			Pause(locator1 = "5000");
-		}
-
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "user1@liferay.com",
-				userLoginFullName = "user1 user1");
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
 		}
 
 		task ("View the site page") {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
-		}
-
-		task ("Wait for sending requests") {
-			Pause(locator1 = "5000");
 		}
 
 		task ("Close sessions") {
@@ -161,8 +147,8 @@ definition {
 
 		task ("Add a CSV Data Source") {
 			ACSettings.addCSVDataSource(
-				dataSourceName = "CSV Country 2",
-				sourceFileName = "contacts_country.csv");
+				dataSourceName = "CSV Data Source",
+				sourceFileName = "jobTitle.csv");
 		}
 
 		task ("Exit Settings") {
@@ -176,15 +162,13 @@ definition {
 		}
 
 		task ("Select the country in Breakdown by field") {
-			ACIndividualsDashboard.selectAttribute(
-				attribute = "country",
-				fieldLabel = "Breakdown By");
+			ACSegments.selectDistributionByAttribute(attribute = "jobTitle");
 		}
 
 		task ("View the individual in chart") {
 			ACIndividualsDashboard.viewBreakdownRecharts(
 				fillColor = "#4B9BFF",
-				tick = "china - 50.0%");
+				tick = "farmer - 100.0%");
 		}
 	}
 

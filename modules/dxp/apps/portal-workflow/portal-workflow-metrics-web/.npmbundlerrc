@@ -2,7 +2,7 @@
 	"config": {
 		"imports": {
 			"@liferay/portal-workflow-instance-tracker-web": {
-				"/": "1.0.0"
+				"/": "*"
 			}
 		}
 	}

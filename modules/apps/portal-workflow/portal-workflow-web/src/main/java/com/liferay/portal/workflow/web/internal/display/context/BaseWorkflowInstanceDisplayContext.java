@@ -14,17 +14,25 @@
 
 package com.liferay.portal.workflow.web.internal.display.context;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.workflow.web.internal.display.context.util.WorkflowInstanceRequestHelper;
 
 import java.text.Format;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -55,6 +63,21 @@ public abstract class BaseWorkflowInstanceDisplayContext {
 
 		workflowInstanceRequestHelper = new WorkflowInstanceRequestHelper(
 			httpServletRequest);
+	}
+
+	public String getStatus(WorkflowInstance workflowInstance) {
+		return Stream.of(
+			workflowInstance.getCurrentNodeNames()
+		).flatMap(
+			List::stream
+		).map(
+			currentNodeName -> HtmlUtil.escape(
+				LanguageUtil.get(
+					workflowInstanceRequestHelper.getRequest(),
+					currentNodeName))
+		).collect(
+			Collectors.joining(StringPool.COMMA_AND_SPACE)
+		);
 	}
 
 	protected final Format dateFormatDateTime;

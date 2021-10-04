@@ -28,11 +28,7 @@ interface ICheckboxProps {
 	disabled?: boolean;
 	label?: string;
 	name: string;
-	onChange: (event: {
-		target: {
-			value: boolean;
-		};
-	}) => void;
+	onChange: FieldChangeEventHandler<boolean>;
 	required?: boolean;
 	showLabel?: boolean;
 }

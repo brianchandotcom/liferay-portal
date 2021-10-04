@@ -25,6 +25,10 @@ declare global {
 
 	type Direction = 'ltr' | 'rtl';
 
+	type FieldChangeEventHandler<T = any> = (event: {
+		target: {value: T};
+	}) => void;
+
 	type Locale =
 		| 'ar_SA'
 		| 'ca_ES'

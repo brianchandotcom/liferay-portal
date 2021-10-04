@@ -49,7 +49,7 @@ interface IProps {
 	value: INumericInputMaskValue;
 	visible: boolean;
 	onBlur: FocusEventHandler<HTMLInputElement>;
-	onChange: (event: {target: {value: any}}) => void;
+	onChange: FieldChangeEventHandler;
 	onFocus: FocusEventHandler<HTMLInputElement>;
 }
 

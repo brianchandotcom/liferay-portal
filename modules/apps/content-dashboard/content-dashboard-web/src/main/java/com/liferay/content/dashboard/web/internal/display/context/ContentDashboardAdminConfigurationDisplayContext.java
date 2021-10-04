@@ -174,7 +174,12 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 	}
 
 	private JSONObject _toJSONObject(AssetVocabulary assetVocabulary) {
+		Group group = _groupLocalService.fetchGroup(
+			assetVocabulary.getGroupId());
+
 		return JSONUtil.put(
+			"global", group.isCompany()
+		).put(
 			"label", HtmlUtil.escape(_getAssetVocabularyLabel(assetVocabulary))
 		).put(
 			"site", assetVocabulary.getGroupId()

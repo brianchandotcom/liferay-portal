@@ -62,6 +62,15 @@ public class CommerceOrderRuleEntryRelLocalServiceUtil {
 			commerceOrderRuleEntryRel);
 	}
 
+	public static CommerceOrderRuleEntryRel addCommerceOrderRuleEntryRel(
+			long userId, String className, long classPK,
+			long commerceOrderRuleEntryId)
+		throws PortalException {
+
+		return getService().addCommerceOrderRuleEntryRel(
+			userId, className, classPK, commerceOrderRuleEntryId);
+	}
+
 	/**
 	 * Creates a new commerce order rule entry rel with the primary key. Does not add the commerce order rule entry rel to the database.
 	 *
@@ -94,9 +103,11 @@ public class CommerceOrderRuleEntryRelLocalServiceUtil {
 	 *
 	 * @param commerceOrderRuleEntryRel the commerce order rule entry rel
 	 * @return the commerce order rule entry rel that was removed
+	 * @throws PortalException
 	 */
 	public static CommerceOrderRuleEntryRel deleteCommerceOrderRuleEntryRel(
-		CommerceOrderRuleEntryRel commerceOrderRuleEntryRel) {
+			CommerceOrderRuleEntryRel commerceOrderRuleEntryRel)
+		throws PortalException {
 
 		return getService().deleteCommerceOrderRuleEntryRel(
 			commerceOrderRuleEntryRel);
@@ -119,6 +130,13 @@ public class CommerceOrderRuleEntryRelLocalServiceUtil {
 
 		return getService().deleteCommerceOrderRuleEntryRel(
 			commerceOrderRuleEntryRelId);
+	}
+
+	public static void deleteCommerceOrderRuleEntryRels(
+			long commerceOrderRuleEntryId)
+		throws PortalException {
+
+		getService().deleteCommerceOrderRuleEntryRels(commerceOrderRuleEntryId);
 	}
 
 	/**
@@ -223,10 +241,65 @@ public class CommerceOrderRuleEntryRelLocalServiceUtil {
 			commerceOrderRuleEntryRelId);
 	}
 
+	public static CommerceOrderRuleEntryRel fetchCommerceOrderRuleEntryRel(
+		String className, long classPK, long commerceOrderRuleEntryId) {
+
+		return getService().fetchCommerceOrderRuleEntryRel(
+			className, classPK, commerceOrderRuleEntryId);
+	}
+
+	public static List<CommerceOrderRuleEntryRel>
+		getAccountEntryCommerceOrderRuleEntryRels(
+			long commerceOrderRuleEntryId, String keywords, int start,
+			int end) {
+
+		return getService().getAccountEntryCommerceOrderRuleEntryRels(
+			commerceOrderRuleEntryId, keywords, start, end);
+	}
+
+	public static int getAccountEntryCommerceOrderRuleEntryRelsCount(
+		long commerceOrderRuleEntryId, String keywords) {
+
+		return getService().getAccountEntryCommerceOrderRuleEntryRelsCount(
+			commerceOrderRuleEntryId, keywords);
+	}
+
+	public static List<CommerceOrderRuleEntryRel>
+		getAccountGroupCommerceOrderRuleEntryRels(
+			long commerceOrderRuleEntryId, String keywords, int start,
+			int end) {
+
+		return getService().getAccountGroupCommerceOrderRuleEntryRels(
+			commerceOrderRuleEntryId, keywords, start, end);
+	}
+
+	public static int getAccountGroupCommerceOrderRuleEntryRelsCount(
+		long commerceOrderRuleEntryId, String keywords) {
+
+		return getService().getAccountGroupCommerceOrderRuleEntryRelsCount(
+			commerceOrderRuleEntryId, keywords);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static List<CommerceOrderRuleEntryRel>
+		getCommerceChannelCommerceOrderRuleEntryRels(
+			long commerceOrderRuleEntryId, String keywords, int start,
+			int end) {
+
+		return getService().getCommerceChannelCommerceOrderRuleEntryRels(
+			commerceOrderRuleEntryId, keywords, start, end);
+	}
+
+	public static int getCommerceChannelCommerceOrderRuleEntryRelsCount(
+		long commerceOrderRuleEntryId, String keywords) {
+
+		return getService().getCommerceChannelCommerceOrderRuleEntryRelsCount(
+			commerceOrderRuleEntryId, keywords);
 	}
 
 	/**
@@ -261,6 +334,21 @@ public class CommerceOrderRuleEntryRelLocalServiceUtil {
 		return getService().getCommerceOrderRuleEntryRels(start, end);
 	}
 
+	public static List<CommerceOrderRuleEntryRel> getCommerceOrderRuleEntryRels(
+		long commerceOrderRuleEntryId) {
+
+		return getService().getCommerceOrderRuleEntryRels(
+			commerceOrderRuleEntryId);
+	}
+
+	public static List<CommerceOrderRuleEntryRel> getCommerceOrderRuleEntryRels(
+		long commerceOrderRuleEntryId, int start, int end,
+		OrderByComparator<CommerceOrderRuleEntryRel> orderByComparator) {
+
+		return getService().getCommerceOrderRuleEntryRels(
+			commerceOrderRuleEntryId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of commerce order rule entry rels.
 	 *
@@ -268,6 +356,29 @@ public class CommerceOrderRuleEntryRelLocalServiceUtil {
 	 */
 	public static int getCommerceOrderRuleEntryRelsCount() {
 		return getService().getCommerceOrderRuleEntryRelsCount();
+	}
+
+	public static int getCommerceOrderRuleEntryRelsCount(
+		long commerceOrderRuleEntryId) {
+
+		return getService().getCommerceOrderRuleEntryRelsCount(
+			commerceOrderRuleEntryId);
+	}
+
+	public static List<CommerceOrderRuleEntryRel>
+		getCommerceOrderTypeCommerceOrderRuleEntryRels(
+			long commerceOrderRuleEntryId, String keywords, int start,
+			int end) {
+
+		return getService().getCommerceOrderTypeCommerceOrderRuleEntryRels(
+			commerceOrderRuleEntryId, keywords, start, end);
+	}
+
+	public static int getCommerceOrderTypeCommerceOrderRuleEntryRelsCount(
+		long commerceOrderRuleEntryId, String keywords) {
+
+		return getService().getCommerceOrderTypeCommerceOrderRuleEntryRelsCount(
+			commerceOrderRuleEntryId, keywords);
 	}
 
 	public static

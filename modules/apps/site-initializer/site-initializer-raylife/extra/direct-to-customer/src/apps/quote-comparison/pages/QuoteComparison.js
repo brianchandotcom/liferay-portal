@@ -7,8 +7,8 @@ const QuoteComparison = () => {
 	const [quotes, setQuotes] = useState([]);
 
 	useEffect(() => {
-		LiferayService.LiferayFetchAPI.get('/o/c/quotecomparisons')
-			.then((response) => setQuotes(response.data.items))
+		LiferayService.getQuoteComparison()
+			.then((data) => setQuotes(data.items))
 			.catch((error) => console.error(error.message));
 	}, []);
 

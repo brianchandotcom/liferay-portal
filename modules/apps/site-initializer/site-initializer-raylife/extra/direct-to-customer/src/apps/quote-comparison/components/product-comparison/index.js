@@ -1,13 +1,23 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
+const currentFormatter = Intl.NumberFormat('en-US');
+
 const getClassName = (value) =>
 	classNames({
 		checkIcon: !!value,
 		timesIcon: !value,
 	});
 
-const getCurrency = (price) => price.toLocaleString();
+const getCurrency = (price) => currentFormatter.format(price);
+
+const parseValue = (value) => {
+	if (value === 'true' || value === 'false' || typeof value === 'boolean') {
+		return null;
+	}
+
+	return `$${getCurrency(value)}`;
+};
 
 const ListItems = ({
 	aggregateLimit,
@@ -52,7 +62,7 @@ const ListItems = ({
 						</div>
 						{title}
 					</div>
-					{typeof value === 'number' && `$${getCurrency(value)}`}
+					{parseValue(value)}
 				</li>
 			))}
 		</ul>

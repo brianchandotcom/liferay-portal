@@ -4,7 +4,8 @@ import {LiferayAdapt} from './adapter';
 import LiferayFetchAPI, {getLiferayAuthenticationToken} from './api';
 import {STORAGE_KEYS, Storage} from './storage';
 
-const LiferayObjectAPI = 'o/c/raylifeapplications';
+const RaylifeApplicationAPI = 'o/c/raylifeapplications';
+const quoteComparisonAPI = 'o/c/quotecomparisons';
 
 /**
  * @param {DataForm}  data Basics form object
@@ -88,6 +89,14 @@ const getScopeGroupId = () => {
 	}
 };
 
+const getQuoteComparison = async () => {
+	const response = await LiferayFetchAPI.get(
+		`${quoteComparisonAPI}/scopes/${getScopeGroupId()}`
+	);
+
+	return response.data;
+};
+
 /**
  * @returns {string} Liferay Authentication Token
  */
@@ -131,24 +140,28 @@ const _getAssetCategoriesByParentId = async (id, normalizedFilter) => {
  * @returns {Promise<any>}  Fetch Response
  */
 const _postBasicsFormApplication = (body) =>
-	LiferayFetchAPI.post(`${LiferayObjectAPI}/scopes/${getScopeGroupId()}`, {
-		body,
-	});
+	LiferayFetchAPI.post(
+		`${RaylifeApplicationAPI}/scopes/${getScopeGroupId()}`,
+		{
+			body,
+		}
+	);
 
 /**
  * @param {BasicsFormApplicationRequest} payload - Payload used to update existing application
  * @returns {Promise<any>}  Fetch Response
  */
 const _patchBasicsFormApplication = (body, id) => {
-	return LiferayFetchAPI.patch(`${LiferayObjectAPI}/${id}`, {body});
+	return LiferayFetchAPI.patch(`${RaylifeApplicationAPI}/${id}`, {body});
 };
 
 export const LiferayService = {
-	LiferayFetchAPI,
 	createOrUpdateRaylifeApplication,
+	fetch: LiferayFetchAPI,
 	getBusinessTypes,
 	getLiferayAuthenticationToken,
 	getLiferayGroupId,
 	getLiferaySiteName,
 	getProductQuotes,
+	getQuoteComparison,
 };

@@ -31,8 +31,6 @@ public interface BuildDatabase {
 
 	public static final String FILE_NAME_BUILD_DATABASE = "build-database.json";
 
-	public File getBuildDatabaseJSFile();
-
 	public JSONObject getBuildDataJSONObject(String key);
 
 	public JSONObject getBuildDataJSONObject(URL buildURL);

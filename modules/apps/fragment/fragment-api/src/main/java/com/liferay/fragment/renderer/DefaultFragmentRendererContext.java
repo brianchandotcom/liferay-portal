@@ -166,7 +166,7 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 		_useCachedContent = useCachedContent;
 	}
 
-	private int _collectionElementIndex;
+	private int _collectionElementIndex = -1;
 	private List<String> _collectionStyledLayoutStructureItemIds;
 	private Object _displayObject;
 	private Map<String, Object> _fieldValues;

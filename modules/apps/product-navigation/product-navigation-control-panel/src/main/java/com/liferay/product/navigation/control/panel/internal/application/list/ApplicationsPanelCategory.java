@@ -17,7 +17,12 @@ package com.liferay.product.navigation.control.panel.internal.application.list;
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 
 import java.util.Locale;
 
@@ -45,6 +50,19 @@ public class ApplicationsPanelCategory extends BasePanelCategory {
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(
 			locale, "category.applications_menu.applications");
+	}
+
+	@Override
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		if (PortalPermissionUtil.contains(
+				permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

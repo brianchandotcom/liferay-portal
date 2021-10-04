@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -150,6 +151,28 @@ public class SpecificationResourceImpl
 			}
 		}
 
+		String specificationKey = specification.getKey();
+
+		if (specificationKey != null) {
+			try {
+				CPSpecificationOption cpSpecificationOption =
+					_updateSpecification(specificationKey, specification);
+
+				return _toSpecification(
+					cpSpecificationOption.getCPSpecificationOptionId());
+			}
+			catch (NoSuchCPSpecificationOptionException
+						noSuchCPSpecificationOptionException) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to find specification with key: " +
+							specificationKey,
+						noSuchCPSpecificationOptionException);
+				}
+			}
+		}
+
 		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionService.addCPSpecificationOption(
 				_getCPOptionCategoryId(specification),
@@ -205,6 +228,25 @@ public class SpecificationResourceImpl
 			LanguageUtils.getLocalizedMap(specification.getDescription()),
 			_isFacetable(specification), specification.getKey(),
 			_serviceContextHelper.getServiceContext());
+	}
+
+	private CPSpecificationOption _updateSpecification(
+			String key, Specification specification)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			_serviceContextHelper.getServiceContext();
+
+		CPSpecificationOption cpSpecificationOption =
+			_cpSpecificationOptionService.getCPSpecificationOption(
+				serviceContext.getCompanyId(), key);
+
+		return _cpSpecificationOptionService.updateCPSpecificationOption(
+			cpSpecificationOption.getCPSpecificationOptionId(),
+			_getCPOptionCategoryId(specification),
+			LanguageUtils.getLocalizedMap(specification.getTitle()),
+			LanguageUtils.getLocalizedMap(specification.getDescription()),
+			_isFacetable(specification), key, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

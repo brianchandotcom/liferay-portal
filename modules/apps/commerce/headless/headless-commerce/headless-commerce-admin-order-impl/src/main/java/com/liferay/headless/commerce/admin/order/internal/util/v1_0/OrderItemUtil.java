@@ -40,7 +40,7 @@ import java.util.Date;
  */
 public class OrderItemUtil {
 
-	public static CommerceOrderItem addOrUpdateCommerceOrderItem(
+	public static CommerceOrderItem addCommerceOrderItem(
 			CPInstanceService cpInstanceService,
 			CommerceOrderItemService commerceOrderItemService,
 			ModelResourcePermission<CommerceOrder>
@@ -68,7 +68,7 @@ public class OrderItemUtil {
 		}
 
 		CommerceOrderItem commerceOrderItem =
-			commerceOrderItemService.addOrUpdateCommerceOrderItem(
+			commerceOrderItemService.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
 				cpInstance.getCPInstanceId(), null,
 				GetterUtil.get(orderItem.getQuantity(), 0),

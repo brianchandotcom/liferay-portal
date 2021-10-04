@@ -225,23 +225,23 @@ public class OrderItemResourceImpl
 					externalReferenceCode);
 		}
 
-		return _addOrUpdateOrderItem(commerceOrder, orderItem);
+		return _addOrderItem(commerceOrder, orderItem);
 	}
 
 	@Override
 	public OrderItem postOrderIdOrderItem(Long id, OrderItem orderItem)
 		throws Exception {
 
-		return _addOrUpdateOrderItem(
+		return _addOrderItem(
 			_commerceOrderService.getCommerceOrder(id), orderItem);
 	}
 
-	private OrderItem _addOrUpdateOrderItem(
+	private OrderItem _addOrderItem(
 			CommerceOrder commerceOrder, OrderItem orderItem)
 		throws Exception {
 
 		CommerceOrderItem commerceOrderItem =
-			OrderItemUtil.addOrUpdateCommerceOrderItem(
+			OrderItemUtil.addCommerceOrderItem(
 				_cpInstanceService, _commerceOrderItemService,
 				_commerceOrderModelResourcePermission, orderItem, commerceOrder,
 				_commerceContextFactory.create(

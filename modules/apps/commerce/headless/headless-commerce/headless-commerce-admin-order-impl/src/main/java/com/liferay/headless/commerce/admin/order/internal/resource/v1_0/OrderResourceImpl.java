@@ -510,7 +510,7 @@ public class OrderResourceImpl
 				commerceOrder.getCommerceOrderId());
 
 			for (OrderItem orderItem : orderItems) {
-				OrderItemUtil.addOrUpdateCommerceOrderItem(
+				OrderItemUtil.addCommerceOrderItem(
 					_cpInstanceService, _commerceOrderItemService,
 					_commerceOrderModelResourcePermission, orderItem,
 					commerceOrder,

@@ -350,6 +350,10 @@ public class LiferaySeleniumUtil {
 		else if (locator.startsWith("css=")) {
 			locator = locator.substring(4);
 
+			if (locator.contains(">>>")) {
+				return LiferayByUtil.shadowDom(locator);
+			}
+
 			return By.cssSelector(locator);
 		}
 		else if (locator.startsWith("link=")) {

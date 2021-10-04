@@ -128,7 +128,6 @@ public class BaseAuthFilterTest {
 		}
 		finally {
 			_portalUtil.setPortal(_testPortalImpl);
-
 			_setPortalProperty("PORTAL_PROXY_PATH", portalProxyPath);
 		}
 
@@ -157,7 +156,6 @@ public class BaseAuthFilterTest {
 		}
 		finally {
 			_portalUtil.setPortal(_testPortalImpl);
-
 			_setPortalProperty("PORTAL_PROXY_PATH", portalProxyPath);
 		}
 

@@ -118,7 +118,6 @@ public class AuthVerifierFilterTest {
 		}
 		finally {
 			_portalUtil.setPortal(_portalImpl);
-
 			_setPortalProperty("PORTAL_PROXY_PATH", portalProxyPath);
 		}
 
@@ -147,7 +146,6 @@ public class AuthVerifierFilterTest {
 		}
 		finally {
 			_portalUtil.setPortal(_portalImpl);
-
 			_setPortalProperty("PORTAL_PROXY_PATH", portalProxyPath);
 		}
 

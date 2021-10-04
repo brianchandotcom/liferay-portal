@@ -681,7 +681,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			}
 
 			_installationFailures.remove(file);
-
 			_setArtifact(file, artifact);
 		}
 		catch (Exception exception) {

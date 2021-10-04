@@ -131,7 +131,6 @@ public class FragmentEntryLocalServiceImpl
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
 			_fragmentEntryValidator.validateConfiguration(configuration);
-
 			validateContent(html, configuration);
 		}
 
@@ -545,7 +544,6 @@ public class FragmentEntryLocalServiceImpl
 
 		_fragmentEntryValidator.validateConfiguration(
 			draftFragmentEntry.getConfiguration());
-
 		validateContent(
 			draftFragmentEntry.getHtml(),
 			draftFragmentEntry.getConfiguration());
@@ -626,7 +624,6 @@ public class FragmentEntryLocalServiceImpl
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
 			_fragmentEntryValidator.validateConfiguration(configuration);
-
 			validateContent(html, configuration);
 		}
 

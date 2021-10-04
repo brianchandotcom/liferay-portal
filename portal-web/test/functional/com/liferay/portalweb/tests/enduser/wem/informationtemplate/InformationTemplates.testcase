@@ -200,23 +200,39 @@ definition {
 	@priority = "4"
 	@uitest
 	test DefinePermissionsOfInformationTemplate {
+		task ("Add a custom object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Additional Order",
+				objectName = "AdditionalOrder",
+				pluralLabelName = "Additional Orders");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldLabelName = "Order Number",
+				fieldName = "orderNumber",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "AdditionalOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "AdditionalOrder");
+		}
+
 		task ("Add an information template for Object and User") {
 			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
 
 			InformationTemplates.addCP(
 				informationTemplateName = "Test Information Template",
-				itemSubtype = "User",
+				itemSubtype = "Additional Order",
 				itemType = "Object");
 		}
 
-		task ("Add the User Name and Email Address field") {
+		task ("Add the User Name and Order Number fields") {
 			InformationTemplates.addField(
 				fieldName = "User Name",
 				panelTitle = "Basic Information");
 
 			InformationTemplates.addField(
-				fieldName = "Email Address",
-				panelTitle = "User");
+				fieldName = "Order Number",
+				panelTitle = "Additional Order");
 		}
 
 		task ("Save the information template") {
@@ -226,7 +242,7 @@ definition {
 		task ("View the information template entry") {
 			InformationTemplates.viewTemplate(
 				informationTemplateName = "Test Information Template",
-				itemSubtype = "User",
+				itemSubtype = "Additional Order",
 				itemType = "Object");
 		}
 

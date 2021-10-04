@@ -374,6 +374,11 @@
 </tr>
 <!--MINICART-->
 <tr>
+	<td>MINI_CART_BUTTON_DATA_BADGE_COUNT</td>
+	<td>//div[contains(@class,'mini-cart')]/button[@data-badge-count="${key_itemCount}"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINI_CART_EMPTY</td>
 	<td>//div[@class='empty-cart']</td>
 	<td></td>

@@ -110,6 +110,7 @@ public class ConfigurationFileInstaller implements FileInstaller {
 
 		if (old != null) {
 			oldFileName = (String)old.remove(DirectoryWatcher.FILENAME);
+
 			old.remove(Constants.SERVICE_PID);
 			old.remove(ConfigurationAdmin.SERVICE_FACTORYPID);
 

@@ -408,6 +408,7 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new ObjectDefinitionStatusException();
 		}
 
+		objectDefinition.setActive(true);
 		objectDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
@@ -619,7 +620,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setCompanyId(user.getCompanyId());
 		objectDefinition.setUserId(user.getUserId());
 		objectDefinition.setUserName(user.getFullName());
-		objectDefinition.setActive(true);
+		objectDefinition.setActive(false);
 		objectDefinition.setDBTableName(dbTableName);
 		objectDefinition.setClassName(
 			_getClassName(

@@ -78,7 +78,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 				</clay:row>
 
 				<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-					<aui:input disabled="<%= objectDefinition.isSystem() %>" label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= objectDefinition.isActive() %>" />
+					<aui:input disabled="<%= objectDefinition.isSystem() || !objectDefinition.isApproved() %>" label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= objectDefinition.isActive() %>" />
 				</aui:field-wrapper>
 			</clay:sheet-section>
 

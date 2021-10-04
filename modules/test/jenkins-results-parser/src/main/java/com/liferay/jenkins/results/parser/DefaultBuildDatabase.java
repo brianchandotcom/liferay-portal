@@ -21,7 +21,7 @@ import java.io.File;
  */
 public class DefaultBuildDatabase extends BaseBuildDatabase {
 
-	public DefaultBuildDatabase(File basedir) {
+	protected DefaultBuildDatabase(File basedir) {
 		super(basedir);
 	}
 

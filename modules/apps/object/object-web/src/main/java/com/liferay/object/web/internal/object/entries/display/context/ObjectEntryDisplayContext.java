@@ -139,6 +139,20 @@ public class ObjectEntryDisplayContext {
 		for (ObjectLayoutTab objectLayoutTab :
 				objectLayout.getObjectLayoutTabs()) {
 
+			if (objectLayoutTab.getObjectRelationshipId() > 0) {
+				ObjectRelationship objectRelationship =
+					_objectRelationshipLocalService.getObjectRelationship(
+						objectLayoutTab.getObjectRelationshipId());
+
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectRelationship.getObjectDefinitionId2());
+
+				if (!objectDefinition.isActive()) {
+					continue;
+				}
+			}
+
 			navigationItemList.add(
 				NavigationItemBuilder.setActive(
 					objectLayoutTab.getObjectLayoutTabId() ==

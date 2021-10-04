@@ -133,37 +133,43 @@ public class AddTemplateEntryMVCActionCommand
 					).buildString()));
 		}
 		catch (PortalException portalException) {
-			JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
-
-			if (portalException instanceof TemplateNameException) {
-				errorJSONObject.put(
-					"name",
-					LanguageUtil.get(
-						themeDisplay.getLocale(), "please-enter-a-valid-name"));
-			}
-			else if (portalException instanceof TemplateScriptException) {
-				errorJSONObject.put(
-					"other",
-					LanguageUtil.get(
-						themeDisplay.getLocale(),
-						"please-enter-a-valid-script"));
-			}
-			else {
-				errorJSONObject.put(
-					"other",
-					LanguageUtil.get(
-						themeDisplay.getLocale(),
-						"an-unexpected-error-occurred"));
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException.getMessage(), portalException);
-				}
-			}
-
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,
-				JSONUtil.put("error", errorJSONObject));
+				JSONUtil.put(
+					"error",
+					_getErrorJSONObject(portalException, themeDisplay)));
 		}
+	}
+
+	private JSONObject _getErrorJSONObject(
+		PortalException portalException, ThemeDisplay themeDisplay) {
+
+		JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
+
+		if (portalException instanceof TemplateNameException) {
+			errorJSONObject.put(
+				"name",
+				LanguageUtil.get(
+					themeDisplay.getLocale(), "please-enter-a-valid-name"));
+		}
+		else if (portalException instanceof TemplateScriptException) {
+			errorJSONObject.put(
+				"other",
+				LanguageUtil.get(
+					themeDisplay.getLocale(), "please-enter-a-valid-script"));
+		}
+		else {
+			errorJSONObject.put(
+				"other",
+				LanguageUtil.get(
+					themeDisplay.getLocale(), "an-unexpected-error-occurred"));
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException.getMessage(), portalException);
+			}
+		}
+
+		return errorJSONObject;
 	}
 
 	private String _getScript() {

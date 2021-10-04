@@ -81,32 +81,41 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 					<aui:validator name="customElementName" />
 				</aui:input>
 
-				<%
-				for (String customElementURL : editRemoteAppEntryDisplayContext.getCustomElementURLs()) {
-				%>
+				<div id="<%= liferayPortletResponse.getNamespace() + "_type_customElementURLs" %>">
 
-					<div class="repeatable">
-						<aui:input ignoreRequestValue="<%= true %>" label="url" name="customElementURLs" type="text" value="<%= customElementURL %>">
-							<%--<aui:validator name="url" />--%>
-						</aui:input>
-					</div>
+					<%
+					for (String customElementURL : editRemoteAppEntryDisplayContext.getCustomElementURLs()) {
+					%>
 
-				<%
-				}
+						<div class="lfr-form-row">
+							<aui:input ignoreRequestValue="<%= true %>" label="url" name="customElementURLs" type="text" value="<%= customElementURL %>">
+								<%--<aui:validator name="url" />--%>
+							</aui:input>
+						</div>
 
-				for (String customElementCSSURL : editRemoteAppEntryDisplayContext.getCustomElementCSSURLs()) {
-				%>
+					<%
+					}
+					%>
 
-					<div class="repeatable">
-						<aui:input ignoreRequestValue="<%= true %>" label="css-url" name="customElementCSSURLs" type="text" value="<%= customElementCSSURL %>">
-							<%--<aui:validator name="url" />--%>
-						</aui:input>
-					</div>
+				</div>
 
-				<%
-				}
-				%>
+				<div id="<%= liferayPortletResponse.getNamespace() + "_type_customElementCSSURLs" %>">
 
+					<%
+					for (String customElementCSSURL : editRemoteAppEntryDisplayContext.getCustomElementCSSURLs()) {
+					%>
+
+						<div class="lfr-form-row">
+							<aui:input ignoreRequestValue="<%= true %>" label="css-url" name="customElementCSSURLs" type="text" value="<%= customElementCSSURL %>">
+								<%--<aui:validator name="url" />--%>
+							</aui:input>
+						</div>
+
+					<%
+					}
+					%>
+
+				</div>
 			</liferay-frontend:fieldset>
 
 			<aui:input disabled="<%= editRemoteAppEntryDisplayContext.isInstanceableDisabled() %>" label="instanceable" name="instanceable" type="checkbox" value="<%= editRemoteAppEntryDisplayContext.isInstanceable() %>" />
@@ -140,8 +149,14 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 
 <aui:script use="liferay-auto-fields">
 	new Liferay.AutoFields({
-		baseRows: '.repeatable',
-		contentBox: '#<portlet:namespace />_type_customElement',
+		contentBox: '#<portlet:namespace />_type_customElementURLs',
+		minimumRows: 1,
+		namespace: '<portlet:namespace />',
+	}).render();
+
+	new Liferay.AutoFields({
+		contentBox: '#<portlet:namespace />_type_customElementCSSURLs',
+		minimumRows: 1,
 		namespace: '<portlet:namespace />',
 	}).render();
 </aui:script>

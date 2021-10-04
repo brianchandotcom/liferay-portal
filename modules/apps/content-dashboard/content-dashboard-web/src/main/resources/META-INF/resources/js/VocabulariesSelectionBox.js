@@ -29,7 +29,7 @@ const VocabulariesSelectionBox = ({
 
 	useEffect(() => {
 		const selectedVocabulaboriesFromNonGlobalSite = rightElements.filter(
-			(elem) => elem.site !== 0
+			(elem) => !elem.global
 		);
 
 		// Enable all available options
@@ -43,7 +43,7 @@ const VocabulariesSelectionBox = ({
 		if (selectedVocabulaboriesFromNonGlobalSite.length) {
 			leftElements.forEach((elem) => {
 				if (
-					elem.site !== 0 &&
+					!elem.global &&
 					elem.site !==
 						selectedVocabulaboriesFromNonGlobalSite[0].site
 				) {

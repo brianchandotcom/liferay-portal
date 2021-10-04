@@ -22,27 +22,77 @@ import VocabulariesSelectionBox from '../../../src/main/resources/META-INF/resou
 const mockProps = {
 	leftBoxName: 'availableAssetVocabularyNames',
 	leftList: [
-		{key: 'extension', value: 'Extension (My company)', site: 1},
-		{key: 'stage', value: 'Stage (Global)', site: 0},
-		{key: 'topic', value: 'Topic (Global)', site: 0},
+		{
+			global: false,
+			label: 'Extension (My company)',
+			site: 1,
+			value: 'extension',
+		},
+		{
+			global: true,
+			label: 'Stage (Global)',
+			site: 0,
+			value: 'stage',
+		},
+		{
+			global: true,
+			label: 'Topic (Global)',
+			site: 0,
+			value: 'topic',
+		},
 	],
 	portletNamespace:
 		'_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_',
 	rightBoxName: 'currentAssetVocabularyNames',
 	rightList: [
-		{key: 'audience', value: 'Audience (Global)', site: 0},
-		{key: 'region', value: 'Region (Liferay)', site: 2},
+		{
+			global: true,
+			label: 'Audience (Global)',
+			site: 0,
+			value: 'audience',
+		},
+		{
+			global: false,
+			label: 'Region (Liferay)',
+			site: 2,
+			value: 'region',
+		},
 	],
 };
 
 const mockPropsWithoutSelected = {
 	leftBoxName: 'availableAssetVocabularyNames',
 	leftList: [
-		{key: 'extension', value: 'Extension (My company)', site: 1},
-		{key: 'stage', value: 'Stage (Global)', site: 0},
-		{key: 'topic', value: 'Topic (Global)', site: 0},
-		{key: 'audience', value: 'Audience (Global)', site: 0},
-		{key: 'region', value: 'Region (Liferay)', site: 2},
+		{
+			global: false,
+			label: 'Extension (My company)',
+			site: 1,
+			value: 'extension',
+		},
+		{
+			global: true,
+			label: 'Stage (Global)',
+			site: 0,
+			value: 'stage',
+		},
+		{
+			global: true,
+			label: 'Topic (Global)',
+			site: 0,
+			value: 'topic',
+		},
+		{
+			global: true,
+			label: 'Audience (Global)',
+			site: 0,
+			value: 'audience',
+		},
+		{
+			global: false,
+			label: 'Region (Liferay)',
+			site: 2,
+			value: 'region',
+		},
 	],
 	portletNamespace:
 		'_com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet_',
@@ -98,13 +148,13 @@ describe('VocabulariesSelectionBox', () => {
 		expect(availableVocabularies.length).toBe(5);
 		expect(selectedVocabularies.length).toBe(0);
 
-		fireEvent(
-			getByText('Extension (My company)'),
-			new MouseEvent('click', {
-				bubbles: true,
-				cancelable: true,
-			})
-		);
+		// fireEvent(
+		// 	getByText('Extension (My company)'),
+		// 	new MouseEvent('click', {
+		// 		bubbles: true,
+		// 		cancelable: true,
+		// 	})
+		// );
 		const availableSelect = container.querySelector(
 			'#availableAssetVocabularyNames'
 		);
@@ -122,9 +172,8 @@ describe('VocabulariesSelectionBox', () => {
 		expect(selectedVocabulariesAfterLTR.length).toBe(1);
 
 		// Region  vocabulary must be disabled now becasue is from another site
-
 		const disabledVocabularies = container.querySelectorAll(
-			"#availableAssetVocabularyNames option[value='extension']:disabled"
+			"#availableAssetVocabularyNames option[value='region']:disabled"
 		);
 		expect(disabledVocabularies.length).toBe(1);
 	});
@@ -152,9 +201,8 @@ describe('VocabulariesSelectionBox', () => {
 
 		// There must be no disbled vocabularies because we have only one vocabulary selected
 		// and it is from Global site
-
 		const disabledVocabularies = container.querySelectorAll(
-			"#availableAssetVocabularyNames option[value='extension']:disabled"
+			'#availableAssetVocabularyNames option:disabled'
 		);
 		expect(disabledVocabularies.length).toBe(0);
 	});

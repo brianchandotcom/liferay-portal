@@ -12,11 +12,21 @@ const getClassName = (value) =>
 const getCurrency = (price) => currentFormatter.format(price);
 
 const parseValue = (value) => {
-	if (value === 'true' || value === 'false' || typeof value === 'boolean') {
-		return null;
-	}
+	try {
+		if (
+			value === 'true' ||
+			value === 'false' ||
+			typeof value === 'boolean'
+		) {
+			return JSON.parse(value);
+		}
 
-	return `$${getCurrency(value)}`;
+		return `$${getCurrency(value)}`;
+	} catch (error) {
+		console.error(error.message);
+
+		return '';
+	}
 };
 
 const ListItems = ({
@@ -45,26 +55,30 @@ const ListItems = ({
 		},
 		{
 			title: 'Money & Securities',
-			value: moneyAndSecurities,
+			value: moneyAndSecurities || false,
 		},
 	];
 
 	return (
 		<ul>
-			{values.map(({title, value}, index) => (
-				<li key={index}>
-					<div className={getClassName(value)}>
-						<div>
-							<ClayIcon
-								symbol={value ? 'check' : 'times'}
-								width={50}
-							/>
+			{values.map(({title, value}, index) => {
+				const formattedValue = parseValue(value);
+
+				return (
+					<li key={index}>
+						<div className={getClassName(formattedValue)}>
+							<div>
+								<ClayIcon
+									symbol={formattedValue ? 'check' : 'times'}
+									width={50}
+								/>
+							</div>
+							{title}
 						</div>
-						{title}
-					</div>
-					{parseValue(value)}
-				</li>
-			))}
+						{formattedValue}
+					</li>
+				);
+			})}
 		</ul>
 	);
 };

@@ -1,3 +1,6 @@
+[#assign clayIconSVG = themeDisplay.getCDNBaseURL() +
+"/o/admin-theme/images/clay/icons.svg" /]
+
 <div class="business-home-cover">
 	<div class="container position-relative">
 		<div class="business-home-cover-box mb-0 py-6 px-5">
@@ -24,11 +27,11 @@
 						<input class="rounded px-3" id="email" name="email" type="text" />
 						</div>
 
-						<button button class="btn btn-sm btn-primary ml-4" type="submit">
-						<span class="action-button-text font-weight-bold d-flex align-items-center" data-lfr-editable-id="business-home-cover-continue-quote-button" data-lfr-editable-type="text" id="continue-quote">
+					<button button class="btn btn-sm btn-primary ml-4" type="submit">
+						<span class="action-button-text font-weight-bold d-flex align-items-center" id="continue-quote">
 								CONTINUE QUOTE
 							<svg class="lexicon-icon lexicon-icon-angle-right ml-2 arrow-icon" focusable="false" role="presentation">
-								<use xlink:href="http://localhost:8080/o/admin-theme/images/clay/icons.svg#angle-right" />
+								<use xlink:href="${clayIconSVG}#angle-right" />
 								</svg>
 							</span>
 						</button>
@@ -60,7 +63,7 @@
 						<label for="product" class="position-absolute bg-white px-1">Product</label>
 
 						<svg class="lexicon-icon lexicon-icon-caret-bottom position-absolute select-icon" focusable="false" role="presentation">
-							<use xlink:href="http://localhost:8080/o/admin-theme/images/clay/icons.svg#caret-bottom" />
+								<use xlink:href="${clayIconSVG}#caret-bottom" />
 							</svg>
 
 						<select class="rounded px-3 bg-white" id="product" name="product" />
@@ -70,11 +73,11 @@
 							</div>
 						</div>
 
-						<button button class="btn btn-sm btn-primary ml-4" type="submit">
-						<span class="action-button-text" data-lfr-editable-id="business-home-cover-get-a-quote-button" data-lfr-editable-type="text">
+					<button button class="btn btn-sm btn-primary ml-4" type="submit">
+							<span class="action-button-text">
 								GET A QUOTE
 							<svg class="lexicon-icon lexicon-icon-angle-right ml-2 arrow-icon" focusable="false" role="presentation">
-								<use xlink:href="http://localhost:8080/o/admin-theme/images/clay/icons.svg#angle-right" />
+								<use xlink:href="${clayIconSVG}#angle-right" />
 								</svg>
 							</span>
 						</button>

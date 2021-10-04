@@ -3,19 +3,23 @@
 		"name": "Public Menu",
 		"pages": [
 			{
-				"friendlyURL": "/product",
+				"friendlyURL": "/business-insurance",
 				"privateLayout": false
 			},
 			{
-				"friendlyURL": "/news",
+				"friendlyURL": "/claims",
+				"privateLayout": false
+			},
+			{
+				"friendlyURL": "/risk-control",
+				"privateLayout": false
+			},
+			{
+				"friendlyURL": "/about-us",
 				"privateLayout": false
 			},
 			{
 				"friendlyURL": "/contact",
-				"privateLayout": false
-			},
-			{
-				"friendlyURL": "/get-a-quote",
 				"privateLayout": false
 			}
 		]

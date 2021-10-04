@@ -13,7 +13,7 @@
 		"portletCategoryName": "category.remote-apps",
 		"properties": {
 			"APPLICATION": "get-a-quote",
-			"GOOGLE_PLACES_KEY": "XXX"
+			"GOOGLE_PLACES_KEY": ""
 		},
 		"remoteAppEntryKey": "RAYLIFE-GET-A-QUOTE",
 		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:RAYLIFE-GET-A-QUOTE$]"

@@ -155,7 +155,8 @@ const Main = ({
 	useEffect(() => {
 		window.gm_authFailure = function () {
 			Liferay.Util.openToast({
-				message: 'Google API - Auth Error, contact the support',
+				message:
+					Liferay.Language.get('api-provider-error-message'),
 				title: Liferay.Language.get('error'),
 				type: 'danger',
 			});

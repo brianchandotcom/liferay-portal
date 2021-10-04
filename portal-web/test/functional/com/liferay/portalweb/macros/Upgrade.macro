@@ -37,6 +37,21 @@ definition {
 		PortletEntry.publish();
 	}
 
+	macro addAndViewAccountGroup {
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Groups");
+
+		AccountGroups.addCP(
+			accountGroupDescription = "${accountGroupDescription}",
+			accountGroupName = "${accountGroupName}");
+
+		AccountGroups.openAccountGroupsAdmin();
+
+		LexiconEntry.viewEntryName(rowEntry = "${accountGroupName}");
+	}
+
 	macro addAndViewBusinessAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
@@ -642,6 +657,24 @@ definition {
 		Organization.viewCP(
 			orgName = "Organization1 Edit",
 			orgType = "Organization");
+	}
+
+	macro addUserToBusinessAccount {
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Users");
+
+		AccountUsers.addUser(
+			accountName = "${accountName}",
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}");
+
+		AccountUsers.openAccountUsersAdmin();
+
+		LexiconEntry.viewEntryName(rowEntry = "${userFirstName} ${userLastName}");
 	}
 
 	macro addWCStructureAndTemplate {

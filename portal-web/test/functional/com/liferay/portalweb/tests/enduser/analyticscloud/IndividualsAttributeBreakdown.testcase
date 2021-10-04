@@ -26,15 +26,15 @@ definition {
 
 		task ("Add a new user") {
 			JSONUser.addUser(
-				userEmailAddress = "user1@liferay.com",
-				userFirstName = "user1",
-				userLastName = "user1",
-				userScreenName = "user1");
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
-				userEmailAddress = "user1@liferay.com");
+				userEmailAddress = "ac@liferay.com");
 		}
 
 		task ("Connect the DXP to AC") {

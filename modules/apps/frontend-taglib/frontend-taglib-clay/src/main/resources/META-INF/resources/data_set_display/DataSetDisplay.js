@@ -94,16 +94,16 @@ function DataSetDisplay({
 		showPagination &&
 			(pagination.initialDelta || pagination.deltas[0].label)
 	);
-	const [filters, updateFilters] = useState(filtersProp);
+	const [filters, setFilters] = useState(filtersProp);
 	const [highlightedItemsValue, setHighlightedItemsValue] = useState([]);
-	const [items, updateItems] = useState(itemsProp);
-	const [itemsChanges, updateItemsChanges] = useState({});
+	const [items, setItems] = useState(itemsProp);
+	const [itemsChanges, setItemsChanges] = useState({});
 	const [pageNumber, setPageNumber] = useState(1);
-	const [searchParam, updateSearchParam] = useState('');
+	const [searchParam, setSearchParam] = useState('');
 	const [selectedItemsValue, setSelectedItemsValue] = useState(
 		selectedItems || []
 	);
-	const [sorting, updateSorting] = useState(sortingProp);
+	const [sorting, setSorting] = useState(sortingProp);
 	const [total, setTotal] = useState(0);
 	const [{activeView}, dispatch] = useContext(ViewsContext);
 
@@ -174,7 +174,7 @@ function DataSetDisplay({
 
 	function updateDataSetItems(dataSetData) {
 		setTotal(dataSetData.totalCount);
-		updateItems(dataSetData.items);
+		setItems(dataSetData.items);
 	}
 
 	useEffect(() => {
@@ -335,7 +335,7 @@ function DataSetDisplay({
 				creationMenu={creationMenu}
 				filters={filters}
 				fluid={style === 'fluid'}
-				onFiltersChange={updateFilters}
+				onFiltersChange={setFilters}
 				selectAllItems={() =>
 					selectItems(items.map((item) => item[selectedItemsKey]))
 				}
@@ -449,14 +449,14 @@ function DataSetDisplay({
 			valuePath
 		);
 
-		updateItemsChanges({
+		setItemsChanges({
 			...itemsChanges,
 			[itemKey]: itemChanges,
 		});
 	}
 
 	function toggleItemInlineEdit(itemKey) {
-		updateItemsChanges(({[itemKey]: foundItem, ...itemsChanges}) => {
+		setItemsChanges(({[itemKey]: foundItem, ...itemsChanges}) => {
 			return foundItem
 				? itemsChanges
 				: {
@@ -495,7 +495,7 @@ function DataSetDisplay({
 						);
 				}
 
-				updateItemsChanges((itemsChanges) => ({
+				setItemsChanges((itemsChanges) => ({
 					...itemsChanges,
 					[0]: {},
 				}));
@@ -604,8 +604,8 @@ function DataSetDisplay({
 				toggleItemInlineEdit,
 				updateDataSetItems,
 				updateItem,
-				updateSearchParam,
-				updateSorting,
+				updateSearchParam: setSearchParam,
+				updateSorting: setSorting,
 			}}
 		>
 			<Modal id={dataSetDisplaySupportModalId} onClose={refreshData} />

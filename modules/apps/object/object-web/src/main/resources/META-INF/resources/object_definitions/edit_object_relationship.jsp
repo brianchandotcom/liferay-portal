@@ -32,10 +32,12 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 						<liferay-ui:message key="basic-info" />
 					</h2>
 
-					<clay:alert
-						displayType="warning"
-						message="reverse-object-relationships-cannot-be-updated"
-					/>
+					<c:if test="<%= objectRelationship.isReverse() %>">
+						<clay:alert
+							displayType="warning"
+							message="reverse-object-relationships-cannot-be-updated"
+						/>
+					</c:if>
 
 					<aui:model-context bean="<%= objectRelationship %>" model="<%= ObjectRelationship.class %>" />
 

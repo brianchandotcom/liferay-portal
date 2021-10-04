@@ -20,6 +20,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.object.entries.display.context.ViewObjectEntriesDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -39,13 +40,13 @@ public class ObjectEntriesPortlet extends MVCPortlet {
 		long objectDefinitionId,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry, Portal portal,
-		String restContextPath) {
+		PortletResourcePermission portletResourcePermission) {
 
 		_objectDefinitionId = objectDefinitionId;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_portal = portal;
-		_restContextPath = restContextPath;
+		_portletResourcePermission = portletResourcePermission;
 	}
 
 	@Override
@@ -66,6 +67,7 @@ public class ObjectEntriesPortlet extends MVCPortlet {
 				_portal.getHttpServletRequest(renderRequest),
 				_objectScopeProviderRegistry.getObjectScopeProvider(
 					objectDefinition.getScope()),
+				_portletResourcePermission,
 				objectDefinition.getRESTContextPath()));
 
 		super.render(renderRequest, renderResponse);
@@ -75,6 +77,6 @@ public class ObjectEntriesPortlet extends MVCPortlet {
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 	private final Portal _portal;
-	private final String _restContextPath;
+	private final PortletResourcePermission _portletResourcePermission;
 
 }

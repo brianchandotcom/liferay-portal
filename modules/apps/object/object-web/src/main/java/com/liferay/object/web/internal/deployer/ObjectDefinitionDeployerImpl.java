@@ -27,6 +27,7 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.security.permission.resource.PortletResourcePermissionRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
@@ -108,7 +109,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectEntriesPortlet(
 					objectDefinition.getObjectDefinitionId(),
 					_objectDefinitionLocalService, _objectScopeProviderRegistry,
-					_portal, objectDefinition.getRESTContextPath()),
+					_portal,
+					_portletResourcePermissionRegistry.
+						getPortletResourcePermission(
+							objectDefinition.getResourceName())),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"com.liferay.portlet.display-category", "category.hidden"
 				).put(
@@ -201,5 +205,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletResourcePermissionRegistry
+		_portletResourcePermissionRegistry;
 
 }

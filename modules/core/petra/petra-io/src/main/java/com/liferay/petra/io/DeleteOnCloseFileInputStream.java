@@ -14,8 +14,6 @@
 
 package com.liferay.petra.io;
 
-import com.liferay.portal.kernel.util.FileUtil;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -38,7 +36,7 @@ public class DeleteOnCloseFileInputStream extends FileInputStream {
 	public void close() throws IOException {
 		super.close();
 
-		FileUtil.delete(_file);
+		_file.delete();
 	}
 
 	private final File _file;

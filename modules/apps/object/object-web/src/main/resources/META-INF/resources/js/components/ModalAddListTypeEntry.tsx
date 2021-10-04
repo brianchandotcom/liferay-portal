@@ -121,9 +121,15 @@ const ModalAddListTypeEntry: React.FC<IProps> = ({apiURL}) => {
 							<ClayAlert displayType="danger">{error}</ClayAlert>
 						)}
 
+						<label htmlFor="locale">
+							{Liferay.Language.get('name')}
+
+							<RequiredMask />
+						</label>
+
 						<ClayLocalizedInput
 							id="locale"
-							label={Liferay.Language.get('name')}
+							label=""
 							locales={availableLocales}
 							onSelectedLocaleChange={setSelectedLocale}
 							onTranslationsChange={(value) => {

@@ -36,7 +36,7 @@ ListTypeEntry listTypeEntry = (ListTypeEntry)request.getAttribute(ObjectWebKeys.
 	<div class="modal-body">
 		<aui:model-context bean="<%= listTypeEntry %>" model="<%= ListTypeEntry.class %>" />
 
-		<aui:input name="name" value="<%= listTypeEntry.getName(themeDisplay.getLocale()) %>" />
+		<aui:input name="name" required="<%= true %>" value="<%= listTypeEntry.getName(themeDisplay.getLocale()) %>" />
 
 		<aui:input disabled="<%= true %>" name="key" required="<%= true %>" value="<%= listTypeEntry.getKey() %>" />
 	</div>
@@ -70,6 +70,10 @@ ListTypeEntry listTypeEntry = (ListTypeEntry)request.getAttribute(ObjectWebKeys.
 		});
 	});
 
+	function normalizeLanguageId(languageId) {
+		return languageId.replace('_', '-');
+	}
+
 	function <portlet:namespace />editListTypeEntry() {
 		const localizedInputs = document.querySelectorAll(
 			"input[id^='<portlet:namespace />'][type='hidden']"
@@ -82,13 +86,26 @@ ListTypeEntry listTypeEntry = (ListTypeEntry)request.getAttribute(ObjectWebKeys.
 						'<portlet:namespace />name_',
 						''
 					);
-					const formattedLanguage = language.replace('_', '-');
-					prev[formattedLanguage] = cur.value;
+					prev[normalizeLanguageId(language)] = cur.value;
 				}
 				return prev;
 			},
 			{}
 		);
+
+		if (
+			!localizedNames[
+				normalizeLanguageId(themeDisplay.getDefaultLanguageId())
+			]
+		) {
+			Liferay.Util.openToast({
+				message:
+					'<%= LanguageUtil.get(request, "name-must-not-be-empty") %>',
+				type: 'danger',
+			});
+
+			return;
+		}
 
 		Liferay.Util.fetch(
 			'/o/headless-admin-list-type/v1.0/list-type-entries/<%= listTypeEntry.getListTypeEntryId() %>',

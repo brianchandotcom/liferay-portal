@@ -24,6 +24,26 @@ import org.json.JSONObject;
  */
 public class PullRequestFactory {
 
+	public static PullRequest newPullRequest(JSONObject jsonObject) {
+		String gitHubURL = jsonObject.optString("html_url");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(gitHubURL)) {
+			throw new RuntimeException("Invalid Pull Request JSONObject");
+		}
+
+		PullRequest pullRequest = _pullRequests.get(gitHubURL);
+
+		if (pullRequest != null) {
+			return pullRequest;
+		}
+
+		pullRequest = new PullRequest(jsonObject);
+
+		_pullRequests.put(gitHubURL, pullRequest);
+
+		return pullRequest;
+	}
+
 	public static PullRequest newPullRequest(String gitHubURL) {
 		PullRequest pullRequest = _pullRequests.get(gitHubURL);
 
@@ -31,9 +51,21 @@ public class PullRequestFactory {
 			return pullRequest;
 		}
 
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		if (buildDatabase.hasPullRequest(gitHubURL)) {
+			pullRequest = buildDatabase.getPullRequest(gitHubURL);
+
+			_pullRequests.put(gitHubURL, pullRequest);
+
+			return pullRequest;
+		}
+
 		pullRequest = new PullRequest(gitHubURL);
 
 		_pullRequests.put(gitHubURL, pullRequest);
+
+		buildDatabase.putPullRequest(gitHubURL, pullRequest);
 
 		return pullRequest;
 	}

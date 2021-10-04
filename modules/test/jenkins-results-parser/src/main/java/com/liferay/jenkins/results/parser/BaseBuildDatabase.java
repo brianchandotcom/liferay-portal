@@ -124,6 +124,22 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	}
 
 	@Override
+	public PullRequest getPullRequest(String key) {
+		if (!hasPullRequest(key)) {
+			throw new RuntimeException(
+				"Unable to find pull request for " + key);
+		}
+
+		JSONObject pullRequestsJSONObject = _jsonObject.getJSONObject(
+			"pull_requests");
+
+		JSONObject pullRequestJSONObject = pullRequestsJSONObject.getJSONObject(
+			key);
+
+		return PullRequestFactory.newPullRequest(pullRequestJSONObject);
+	}
+
+	@Override
 	public Workspace getWorkspace() {
 		if (!hasWorkspace()) {
 			throw new RuntimeException("Unable to find workspace");
@@ -162,6 +178,14 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 		JSONObject buildsJSONObject = _jsonObject.getJSONObject("properties");
 
 		return buildsJSONObject.has(key);
+	}
+
+	@Override
+	public boolean hasPullRequest(String key) {
+		JSONObject pullRequestsJSONObject = _jsonObject.getJSONObject(
+			"pull_requests");
+
+		return pullRequestsJSONObject.has(key);
 	}
 
 	@Override
@@ -205,6 +229,20 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 			propertiesJSONObject.put(key, _toJSONArray(properties));
 
 			_jsonObject.put("properties", propertiesJSONObject);
+
+			_writeJSONObjectFile();
+		}
+	}
+
+	@Override
+	public void putPullRequest(String key, PullRequest pullRequest) {
+		synchronized (_jsonObject) {
+			JSONObject pullRequestsJSONObject = _jsonObject.getJSONObject(
+				"pull_requests");
+
+			pullRequestsJSONObject.put(key, pullRequest.getJSONObject());
+
+			_jsonObject.put("pull_requests", pullRequestsJSONObject);
 
 			_writeJSONObjectFile();
 		}
@@ -303,6 +341,10 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 		if (!_jsonObject.has("properties")) {
 			_jsonObject.put("properties", new JSONObject());
+		}
+
+		if (!_jsonObject.has("pull_requests")) {
+			_jsonObject.put("pull_requests", new JSONObject());
 		}
 
 		if (!_jsonObject.has("workspace_git_repositories")) {

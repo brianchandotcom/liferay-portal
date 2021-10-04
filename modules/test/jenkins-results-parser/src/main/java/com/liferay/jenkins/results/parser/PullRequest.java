@@ -824,6 +824,22 @@ public class PullRequest {
 
 	}
 
+	protected PullRequest(JSONObject jsonObject) {
+		JSONObject baseJSONObject = jsonObject.getJSONObject("base");
+
+		JSONObject repoJSONObject = baseJSONObject.getJSONObject("repo");
+
+		_gitHubRemoteGitRepositoryName = repoJSONObject.getString("name");
+
+		_number = jsonObject.getInt("number");
+
+		JSONObject ownerJSONObject = repoJSONObject.getJSONObject("owner");
+
+		_ownerUsername = ownerJSONObject.getString("login");
+
+		_jsonObject = jsonObject;
+	}
+
 	protected PullRequest(String gitHubURL) {
 		Matcher matcher = _gitHubPullRequestURLPattern.matcher(gitHubURL);
 

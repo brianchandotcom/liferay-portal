@@ -41,6 +41,8 @@ public interface BuildDatabase {
 
 	public Properties getProperties(String key, Pattern pattern);
 
+	public PullRequest getPullRequest(String key);
+
 	public Workspace getWorkspace();
 
 	public WorkspaceGitRepository getWorkspaceGitRepository(String key);
@@ -48,6 +50,8 @@ public interface BuildDatabase {
 	public boolean hasBuildData(String key);
 
 	public boolean hasProperties(String key);
+
+	public boolean hasPullRequest(String key);
 
 	public boolean hasWorkspace();
 
@@ -58,6 +62,8 @@ public interface BuildDatabase {
 	public void putProperties(String key, File propertiesFile);
 
 	public void putProperties(String key, Properties properties);
+
+	public void putPullRequest(String key, PullRequest pullRequest);
 
 	public void putWorkspace(Workspace workspace);
 

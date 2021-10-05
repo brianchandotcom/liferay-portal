@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.template.web.internal.exportimport.data.handler;
+package com.liferay.template.internal.exportimport.data.handler;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;

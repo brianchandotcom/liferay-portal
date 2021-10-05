@@ -15,10 +15,12 @@ const Panel = ({children, title = ''}) => {
 					onClick={() => setShowContentPanel(!showContentPanel)}
 				>
 					<div className="panel-title">{title}</div>
+
 					<div className="panel-title-icon">
 						<ClayIcon symbol="check" />
 					</div>
 				</div>
+
 				<div
 					className={classNames('panel-content', {
 						show: showContentPanel,

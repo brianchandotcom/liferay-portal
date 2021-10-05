@@ -93,17 +93,21 @@ const ProductComparison = ({
 			<div className="quote-content">
 				<div className="quote-header">
 					<div className="title">{category}</div>
+
 					<div className="value">
 						&#36;{price}
 						<div>/yr</div>
 					</div>
+
 					<div className="subtitle">
 						Get covered for <span>&#36;{promo} today</span>
 					</div>
 				</div>
+
 				<div className="quote-body">
 					<ListItems {...productDetails} />
 				</div>
+
 				<div className="quote-footer">
 					{purchasable && (
 						<div className="d-flex justify-content-center">
@@ -113,7 +117,7 @@ const ProductComparison = ({
 									'no-most-popular': !mostPopular,
 								})}
 								id="purchase"
-								onClick={() => onClickPurchase()}
+								onClick={() => onClickPurchase(product)}
 								type="button"
 							>
 								PURCHASE THIS POLICY

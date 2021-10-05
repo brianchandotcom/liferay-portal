@@ -55,4 +55,5 @@ export const STORAGE_KEYS = {
 	BASIC_STEP_CLICKED: 'basic-step-clicked',
 	CONTEXTUAL_MESSAGE: 'raylife-contextual-message',
 	PRODUCT: 'raylife-product',
+	PRODUCT_ID: 'raylife-product-id',
 };

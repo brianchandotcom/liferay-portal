@@ -97,6 +97,12 @@ const getQuoteComparison = async () => {
 	return response.data;
 };
 
+const getQuoteComparisonById = async (id) => {
+	const response = await LiferayFetchAPI.get(`${quoteComparisonAPI}/${id}`);
+
+	return response.data;
+};
+
 /**
  * @returns {string} Liferay Authentication Token
  */
@@ -164,4 +170,5 @@ export const LiferayService = {
 	getLiferaySiteName,
 	getProductQuotes,
 	getQuoteComparison,
+	getQuoteComparisonById,
 };

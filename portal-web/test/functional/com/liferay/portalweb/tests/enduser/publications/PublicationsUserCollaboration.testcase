@@ -258,7 +258,7 @@ definition {
 			key_publicationName = "Publication Name",
 			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 
-		Publications.assertViewerPermissions();
+		Publications.assertViewerPermissions(publicationName = "Publication Name");
 	}
 
 }

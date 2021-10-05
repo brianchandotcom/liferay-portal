@@ -24,7 +24,7 @@ definition {
 
 	macro assertEditorPermissions {
 		Click(
-			key_publicationName = "Publication Name",
+			key_publicationName = "${publicationName}",
 			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 
 		AssertElementNotPresent(
@@ -41,17 +41,17 @@ definition {
 
 		Type(
 			locator1 = "Publications#PUBLICATION_NAME",
-			value1 = "New Publication Name");
+			value1 = "New ${publicationName}");
 
 		Button.click(button = "Save");
 
 		AssertElementPresent(
-			key_publicationName = "New Publication Name",
+			key_publicationName = "New ${publicationName}",
 			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 
 		Publications.gotoReviewChanges(
 			gotoManagePublications = "true",
-			publicationName = "New Publication Name");
+			publicationName = "New ${publicationName}");
 
 		PublicationsChanges.openCommentsSidebar();
 
@@ -123,7 +123,7 @@ definition {
 
 	macro assertViewerPermissions {
 		Click(
-			key_publicationName = "Publication Name",
+			key_publicationName = "${publicationName}",
 			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 
 		AssertElementNotPresent(
@@ -140,7 +140,7 @@ definition {
 
 		Publications.gotoReviewChanges(
 			gotoManagePublications = "true",
-			publicationName = "Publication Name");
+			publicationName = "${publicationName}");
 
 		PublicationsChanges.openCommentsSidebar();
 

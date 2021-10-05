@@ -33,6 +33,8 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 		<aui:input name="deleteFormInstanceIds" type="hidden" />
 
+		<%@ include file="/admin/error_model_listener_exception.jspf" %>
+
 		<c:choose>
 			<c:when test="<%= ddmFormAdminDisplayContext.hasResults() %>">
 				<liferay-ui:search-container

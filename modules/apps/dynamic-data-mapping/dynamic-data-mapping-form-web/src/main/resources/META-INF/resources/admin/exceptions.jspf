@@ -16,6 +16,8 @@
 
 <clay:container-fluid>
 	<div class="ddm-form-web__exception-container ddm-form-web__exception-container--sidebar-open">
+		<%@ include file="/admin/error_model_listener_exception.jspf" %>
+
 		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />
 
 		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.MustNotDuplicateFieldName.class %>">

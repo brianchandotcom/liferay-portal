@@ -40,6 +40,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -118,6 +119,17 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 		hideDefaultErrorMessage(renderRequest);
 
 		super.render(renderRequest, renderResponse);
+	}
+
+	@Override
+	protected boolean isSessionErrorException(Throwable throwable) {
+		if ((throwable instanceof SystemException) ||
+			super.isSessionErrorException(throwable)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference(

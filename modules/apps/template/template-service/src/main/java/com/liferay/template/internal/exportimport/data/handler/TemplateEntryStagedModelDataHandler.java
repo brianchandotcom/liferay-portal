@@ -21,11 +21,8 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.template.model.TemplateEntry;
@@ -51,30 +48,22 @@ public class TemplateEntryStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		TemplateEntry templateEntry = fetchStagedModelByUuidAndGroupId(
-			uuid, groupId);
-
-		if (templateEntry != null) {
-			deleteStagedModel(templateEntry);
-		}
+		_stagedModelRepository.deleteStagedModel(
+			uuid, groupId, className, extraData);
 	}
 
 	@Override
 	public void deleteStagedModel(TemplateEntry templateEntry)
 		throws PortalException {
 
-		_ddmTemplateLocalService.deleteDDMTemplate(
-			templateEntry.getDDMTemplateId());
-
-		_templateEntryLocalService.deleteTemplateEntry(
-			templateEntry.getTemplateEntryId());
+		_stagedModelRepository.deleteStagedModel(templateEntry);
 	}
 
 	@Override
 	public TemplateEntry fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return _templateEntryLocalService.fetchTemplateEntryByUuidAndGroupId(
+		return _stagedModelRepository.fetchStagedModelByUuidAndGroupId(
 			uuid, groupId);
 	}
 
@@ -82,9 +71,8 @@ public class TemplateEntryStagedModelDataHandler
 	public List<TemplateEntry> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return _templateEntryLocalService.getTemplateEntriesByUuidAndCompanyId(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new StagedModelModifiedDateComparator<>());
+		return _stagedModelRepository.fetchStagedModelsByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	@Override
@@ -100,36 +88,17 @@ public class TemplateEntryStagedModelDataHandler
 		return ddmTemplate.getNameCurrentValue();
 	}
 
-	protected ServiceContext createServiceContext(
-		PortletDataContext portletDataContext, DDMTemplate ddmTemplate) {
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setCreateDate(ddmTemplate.getCreateDate());
-		serviceContext.setModifiedDate(ddmTemplate.getModifiedDate());
-		serviceContext.setScopeGroupId(portletDataContext.getScopeGroupId());
-
-		return serviceContext;
-	}
-
-	protected ServiceContext createServiceContext(
-		PortletDataContext portletDataContext, TemplateEntry templateEntry) {
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCreateDate(templateEntry.getCreateDate());
-		serviceContext.setModifiedDate(templateEntry.getModifiedDate());
-		serviceContext.setScopeGroupId(portletDataContext.getScopeGroupId());
-
-		return serviceContext;
-	}
-
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, TemplateEntry templateEntry)
 		throws Exception {
+
+		Element entryElement = portletDataContext.getExportDataElement(
+			templateEntry);
+
+		portletDataContext.addClassedModel(
+			entryElement, ExportImportPathUtil.getModelPath(templateEntry),
+			templateEntry);
 
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchDDMTemplate(
 			templateEntry.getDDMTemplateId());
@@ -137,22 +106,6 @@ public class TemplateEntryStagedModelDataHandler
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, templateEntry, ddmTemplate,
 			PortletDataContext.REFERENCE_TYPE_PARENT);
-
-		Element templateEntryElement = portletDataContext.getExportDataElement(
-			templateEntry);
-
-		templateEntry.setUserUuid(templateEntry.getUserUuid());
-
-		String templateEntryPath = ExportImportPathUtil.getModelPath(
-			templateEntry);
-
-		templateEntryElement.addAttribute("path", templateEntryPath);
-
-		portletDataContext.addReferenceElement(
-			templateEntry, templateEntryElement, templateEntry,
-			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
-
-		portletDataContext.addZipEntry(templateEntryPath, templateEntry);
 	}
 
 	@Override
@@ -181,52 +134,33 @@ public class TemplateEntryStagedModelDataHandler
 			PortletDataContext portletDataContext, TemplateEntry templateEntry)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(templateEntry.getUserUuid());
+		TemplateEntry importedTemplateEntry =
+			(TemplateEntry)templateEntry.clone();
 
-		Map<Long, Long> templateEntryIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				TemplateEntry.class);
+		importedTemplateEntry.setGroupId(portletDataContext.getScopeGroupId());
 
-		ServiceContext serviceContext = createServiceContext(
-			portletDataContext, templateEntry);
+		TemplateEntry existingTemplateEntry =
+			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
+				templateEntry.getUuid(), portletDataContext.getScopeGroupId());
 
-		TemplateEntry importedTemplateEntry = null;
+		if ((existingTemplateEntry == null) ||
+			!portletDataContext.isDataStrategyMirror()) {
 
-		TemplateEntry existingTemplateEntry = fetchStagedModelByUuidAndGroupId(
-			templateEntry.getUuid(), portletDataContext.getScopeGroupId());
-
-		if (existingTemplateEntry == null) {
-			Map<Long, Long> ddmTemplateIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					DDMTemplate.class + ".templateId");
-
-			long ddmTemplateId = MapUtil.getLong(
-				ddmTemplateIds, templateEntry.getDDMTemplateId(),
-				templateEntry.getDDMTemplateId());
-
-			serviceContext.setUuid(templateEntry.getUuid());
-
-			importedTemplateEntry = _templateEntryLocalService.addTemplateEntry(
-				userId, portletDataContext.getScopeGroupId(), ddmTemplateId,
-				templateEntry.getInfoItemClassName(),
-				templateEntry.getInfoItemFormVariationKey());
+			importedTemplateEntry = _stagedModelRepository.addStagedModel(
+				portletDataContext, importedTemplateEntry);
 		}
 		else {
-			importedTemplateEntry =
-				_templateEntryLocalService.updateTemplateEntry(
-					existingTemplateEntry.getTemplateEntryId());
+			importedTemplateEntry.setMvccVersion(
+				existingTemplateEntry.getMvccVersion());
+			importedTemplateEntry.setTemplateEntryId(
+				existingTemplateEntry.getTemplateEntryId());
+
+			importedTemplateEntry = _stagedModelRepository.updateStagedModel(
+				portletDataContext, importedTemplateEntry);
 		}
 
-		templateEntryIds.put(
-			templateEntry.getTemplateEntryId(),
-			importedTemplateEntry.getTemplateEntryId());
-
-		Map<String, String> templateEntryUuids =
-			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-				TemplateEntry.class + ".uuid");
-
-		templateEntryUuids.put(
-			templateEntry.getUuid(), importedTemplateEntry.getUuid());
+		portletDataContext.importClassedModel(
+			templateEntry, importedTemplateEntry);
 	}
 
 	@Reference
@@ -234,6 +168,11 @@ public class TemplateEntryStagedModelDataHandler
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.template.model.TemplateEntry)"
+	)
+	private StagedModelRepository<TemplateEntry> _stagedModelRepository;
 
 	@Reference
 	private TemplateEntryLocalService _templateEntryLocalService;

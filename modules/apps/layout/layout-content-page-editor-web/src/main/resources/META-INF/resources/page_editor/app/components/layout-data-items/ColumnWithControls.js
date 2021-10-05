@@ -324,17 +324,27 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 				}
 
 				// Calculate new column sizes. For the right column, if we
-				// enlarge it enough, it will go down to the row below and will
-				// occupy it completely
+				// enlarge it enough, it will go down to the row below, will
+				// occupy it completely and we will end the resize
+
+				const nextRightColumnSize =
+					columnDiff === rightColumn.initialSize
+						? ROW_SIZE
+						: rightColumn.initialSize - columnDiff;
 
 				nextSizes = {
 					[leftColumn.item.itemId]:
 						leftColumn.initialSize + columnDiff,
-					[rightColumn.item.itemId]:
-						columnDiff === rightColumn.initialSize
-							? ROW_SIZE
-							: rightColumn.initialSize - columnDiff,
+					[rightColumn.item.itemId]: nextRightColumnSize,
 				};
+
+				if (nextRightColumnSize === ROW_SIZE) {
+					endResize(nextSizes);
+
+					return;
+				}
+
+				// Save new column sizes in the context and continue the resize
 
 				setNextColumnSizes(nextSizes);
 			},

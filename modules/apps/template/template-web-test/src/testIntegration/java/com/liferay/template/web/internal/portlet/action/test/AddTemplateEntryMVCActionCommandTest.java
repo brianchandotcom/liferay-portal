@@ -104,50 +104,23 @@ public class AddTemplateEntryMVCActionCommandTest {
 
 		String name = RandomTestUtil.randomString();
 
-		String infoItemClassName = null;
+		InfoItemClassDetails infoItemClassDetails =
+			TemplateTestUtil.getFirstTemplateInfoItemClassDetails(
+				_infoItemServiceTracker, _group.getGroupId());
 
-		String infoItemFormVariationKey = null;
+		String infoItemFormVariationKey = StringPool.BLANK;
 
-		for (InfoItemClassDetails infoItemClassDetails :
-				_infoItemServiceTracker.getInfoItemClassDetails(
-					TemplateInfoItemCapability.KEY)) {
+		InfoItemFormVariation infoItemFormVariation =
+			TemplateTestUtil.getFirstInfoItemFormVariation(
+				infoItemClassDetails, _infoItemServiceTracker,
+				_group.getGroupId());
 
-			InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemFormVariationsProvider.class,
-					infoItemClassDetails.getClassName());
-
-			if (infoItemFormVariationsProvider != null) {
-				Collection<InfoItemFormVariation> infoItemFormVariations =
-					infoItemFormVariationsProvider.getInfoItemFormVariations(
-						_group.getGroupId());
-
-				Stream<InfoItemFormVariation> infoItemFormVariationsStream =
-					infoItemFormVariations.stream();
-
-				InfoItemFormVariation infoItemFormVariation =
-					infoItemFormVariationsStream.findFirst(
-					).orElse(
-						null
-					);
-
-				if (infoItemFormVariation == null) {
-					continue;
-				}
-
-				infoItemClassName = infoItemClassDetails.getClassName();
-				infoItemFormVariationKey = infoItemFormVariation.getKey();
-			}
-			else {
-				infoItemClassName = infoItemClassDetails.getClassName();
-				infoItemFormVariationKey = StringPool.BLANK;
-			}
-
-			break;
+		if (infoItemFormVariation != null) {
+			infoItemFormVariationKey = infoItemFormVariation.getKey();
 		}
 
 		mockLiferayPortletActionRequest.addParameter(
-			"infoItemClassName", infoItemClassName);
+			"infoItemClassName", infoItemClassDetails.getClassName());
 		mockLiferayPortletActionRequest.addParameter(
 			"infoItemFormVariationKey", infoItemFormVariationKey);
 		mockLiferayPortletActionRequest.addParameter("name", name);
@@ -160,7 +133,7 @@ public class AddTemplateEntryMVCActionCommandTest {
 
 		List<TemplateEntry> templateEntries =
 			_templateEntryLocalService.getTemplateEntries(
-				_group.getGroupId(), infoItemClassName,
+				_group.getGroupId(), infoItemClassDetails.getClassName(),
 				infoItemFormVariationKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null);
 

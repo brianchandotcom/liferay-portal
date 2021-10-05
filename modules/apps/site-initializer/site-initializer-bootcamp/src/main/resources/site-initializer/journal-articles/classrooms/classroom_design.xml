@@ -15,7 +15,7 @@
 			<dynamic-content language-id="en_US"><![CDATA[Product Design Fundamentals]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="U6CTDaeL" name="Module1Description" type="text">
-			<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.]]></dynamic-content>
+			<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="0hAxBORo" name="Module1VideoURL" type="text">
 			<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_URL:/site-initializer/documents/video_design.mp4$]]]></dynamic-content>
@@ -27,7 +27,7 @@
 			<dynamic-content language-id="en_US"><![CDATA[Research and Strategy]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="vLB1NckH" name="Module2Description" type="text">
-			<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.]]></dynamic-content>
+			<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="rortlNxV" name="Module2VideoURL" type="text">
 			<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_URL:/site-initializer/documents/video_design.mp4$]]]></dynamic-content>
@@ -39,7 +39,7 @@
 			<dynamic-content language-id="en_US"><![CDATA[User Interface Design]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="VtcTUzve" name="Module3Description" type="text">
-			<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.]]></dynamic-content>
+			<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="tbnC2EPp" name="Module3VideoURL" type="text">
 			<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_URL:/site-initializer/documents/video_design.mp4$]]]></dynamic-content>

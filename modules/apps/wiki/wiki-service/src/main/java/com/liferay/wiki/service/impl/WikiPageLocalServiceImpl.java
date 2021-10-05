@@ -3334,14 +3334,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		page.setVersion(newVersion);
 		page.setMinorEdit(minorEdit);
 		page.setContent(content);
-
-		if (oldPage.isPending()) {
-			page.setStatus(oldPage.getStatus());
-		}
-		else {
-			page.setStatus(WorkflowConstants.STATUS_DRAFT);
-		}
-
 		page.setSummary(summary);
 		page.setFormat(format);
 
@@ -3352,6 +3344,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		if (Validator.isNotNull(redirectTitle)) {
 			page.setRedirectTitle(redirectTitle);
 		}
+
+		if (oldPage.isPending()) {
+			page.setStatus(oldPage.getStatus());
+		}
+		else {
+			page.setStatus(WorkflowConstants.STATUS_DRAFT);
+		}
+
+		page.setStatusByUserId(user.getUserId());
+		page.setStatusByUserName(user.getFullName());
+		page.setStatusDate(serviceContext.getModifiedDate(date));
 
 		ExpandoBridgeUtil.setExpandoBridgeAttributes(
 			oldPage.getExpandoBridge(), page.getExpandoBridge(),

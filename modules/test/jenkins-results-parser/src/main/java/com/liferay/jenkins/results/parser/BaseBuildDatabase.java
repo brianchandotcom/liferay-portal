@@ -229,6 +229,10 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 	@Override
 	public void putPullRequest(String key, PullRequest pullRequest) {
+		if (!JenkinsResultsParserUtil.isCINode()) {
+			return;
+		}
+
 		synchronized (_jsonObject) {
 			JSONObject pullRequestsJSONObject = _jsonObject.getJSONObject(
 				"pull_requests");

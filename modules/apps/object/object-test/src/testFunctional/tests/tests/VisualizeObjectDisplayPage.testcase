@@ -400,7 +400,7 @@ definition {
 		PageEditor.clickPublish();
 
 		SitePages.gotoPageMenuItem(
-			menuItem = "Edit",
+			menuItem = "View",
 			pageName = "Test Content Page Name");
 
 		PageEditor.viewFragmentEditableImage(

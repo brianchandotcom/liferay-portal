@@ -69,6 +69,10 @@ public class PersistenceCallCheck extends BaseCheck {
 
 		String content = (String)fileText.getFullText();
 
+		if (!content.contains(".service.persistence.")) {
+			return;
+		}
+
 		JavaClass javaClass = null;
 
 		try {

@@ -6,10 +6,10 @@ definition {
 	property testray.main.component.name = "Product Info Management";
 
 	setUp {
-        		TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance();
 
-        		User.firstLoginPG();
-        	}
+		User.firstLoginPG();
+	}
 
 	tearDown {
 		Navigator.openURL();
@@ -23,7 +23,7 @@ definition {
 		CommerceConfiguration.commerceAdminTearDown();
 
 		CommerceConfiguration.commerceInitializersTearDown();
-		}
+	}
 
 	test CreateNewSpecificationOptions {
 		property environment.acceptance = "true";

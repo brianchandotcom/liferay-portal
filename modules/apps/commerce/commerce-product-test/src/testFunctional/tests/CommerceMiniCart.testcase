@@ -6,24 +6,24 @@ definition {
 	property testray.main.component.name = "Shopping Experience";
 
 	setUp {
-    		TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance();
 
-    		User.firstLoginPG();
-    	}
+		User.firstLoginPG();
+	}
 
-    	tearDown {
-    		Navigator.openURL();
+	tearDown {
+		Navigator.openURL();
 
-    		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-    			User.logoutPG();
-    		}
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			User.logoutPG();
+		}
 
-    		User.firstLoginPG();
+		User.firstLoginPG();
 
-    		CommerceConfiguration.commerceAdminTearDown();
+		CommerceConfiguration.commerceAdminTearDown();
 
-    		CommerceConfiguration.commerceInitializersTearDown();
-    	}
+		CommerceConfiguration.commerceInitializersTearDown();
+	}
 
 	@description = "COMMERCE-6343. As a buyer, I want to be able to select only the allowed quantities of a cart item, if set"
 	@priority = "3"
@@ -550,6 +550,7 @@ definition {
 	@priority = "3"
 	test RemoveSingleCartItemFromMiniCart {
 		property portal.acceptance = "false";
+
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -586,6 +587,7 @@ definition {
 	@priority = "3"
 	test ViewFirstSelectableQuantityInMiniCartItemWhenMinimumOrderQuantityIsHigherThanMultipleOrderQuantity {
 		property portal.acceptance = "false";
+
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -645,6 +647,7 @@ definition {
 	@priority = "3"
 	test ViewFirstSelectableQuantityInMiniCartItemWhenMinimumOrderQuantityIsLowerThanMultipleOrderQuantity {
 		property portal.acceptance = "false";
+
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -704,6 +707,7 @@ definition {
 	@priority = "3"
 	test ViewMiniCartBundledProductDetails {
 		property portal.acceptance = "false";
+
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1040,6 +1044,7 @@ definition {
 	@priority = "3"
 	test ViewMiniCartItemWithDiscount {
 		property portal.acceptance = "false";
+
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1186,6 +1191,7 @@ definition {
 	@priority = "3"
 	test ViewMiniCartItemWithDiscountToSubtotal {
 		property portal.acceptance = "false";
+
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1247,6 +1253,7 @@ definition {
 	@priority = "3"
 	test ViewMiniCartItemWithDiscountToTotal {
 		property portal.acceptance = "false";
+
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1342,6 +1349,7 @@ definition {
 	@priority = "3"
 	test ViewMiniCartItemWithTierPrice {
 		property portal.acceptance = "false";
+
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

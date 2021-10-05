@@ -6,24 +6,24 @@ definition {
 	property testray.main.component.name = "Order Management";
 
 	setUp {
-    		TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance();
 
-    		User.firstLoginPG();
-    	}
+		User.firstLoginPG();
+	}
 
-		tearDown {
-			Navigator.openURL();
+	tearDown {
+		Navigator.openURL();
 
-			if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-				User.logoutPG();
-			}
-
-			User.firstLoginPG();
-
-			CommerceConfiguration.commerceAdminTearDown();
-
-			CommerceConfiguration.commerceInitializersTearDown();
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			User.logoutPG();
 		}
+
+		User.firstLoginPG();
+
+		CommerceConfiguration.commerceAdminTearDown();
+
+		CommerceConfiguration.commerceInitializersTearDown();
+	}
 
 	@description = "This is a test for COMMERCE-5839. As a system admin i want to be able to create / update and delete a new currency"
 	@priority = "3"

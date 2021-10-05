@@ -727,7 +727,6 @@ definition {
 	test CreateProductDisplayPage {
 		property portal.acceptance = "false";
 
-
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1117,7 +1116,6 @@ definition {
 	test EditNotificationTemplate {
 		property portal.acceptance = "false";
 
-
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1366,7 +1364,6 @@ definition {
 	test RemoveCategoryDisplayPage {
 		property portal.acceptance = "false";
 
-
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1533,7 +1530,6 @@ definition {
 	test RemoveNotificationTemplate {
 		property portal.acceptance = "false";
 
-
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1646,7 +1642,6 @@ definition {
 	@priority = "3"
 	test RemoveShippingOptionFlatRate {
 		property portal.acceptance = "false";
-
 
 		// TODO Review
 

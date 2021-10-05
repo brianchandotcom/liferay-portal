@@ -6,30 +6,29 @@ definition {
 	property testray.main.component.name = "Shopping Experience";
 
 	setUp {
-    		TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance();
 
-    		User.firstLoginPG();
-    	}
+		User.firstLoginPG();
+	}
 
-    	tearDown {
-    		Navigator.openURL();
+	tearDown {
+		Navigator.openURL();
 
-    		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-    			User.logoutPG();
-    		}
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			User.logoutPG();
+		}
 
-    		User.firstLoginPG();
+		User.firstLoginPG();
 
-    		CommerceConfiguration.commerceAdminTearDown();
+		CommerceConfiguration.commerceAdminTearDown();
 
-    		CommerceConfiguration.commerceInitializersTearDown();
-    	}
+		CommerceConfiguration.commerceInitializersTearDown();
+	}
 
 	@description = "COMMERCE-6356. As a buyer, I want to be able to select the quantity of a product and add it to cart from Product details"
 	@priority = "3"
 	test AddProductToCartFromProductDetails {
 		property portal.acceptance = "false";
-
 
 		// TODO Review
 
@@ -60,7 +59,6 @@ definition {
 	test AddProductToWishListFromProductDetails {
 		property portal.acceptance = "false";
 
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -88,7 +86,6 @@ definition {
 	@priority = "3"
 	test AssertOnlyAllowedQuantitiesAreSelectableInProductDetails {
 		property portal.acceptance = "false";
-
 
 		// TODO Review
 
@@ -137,7 +134,6 @@ definition {
 	@priority = "3"
 	test AssertOnlyMultipleValuesAreSelectableQuantitiesInProductDetails {
 		property portal.acceptance = "false";
-
 
 		// TODO Review
 
@@ -199,7 +195,6 @@ definition {
 	@priority = "3"
 	test AssertProductCanBeAddedToCartFromProductDetailsIfBackOrderIsEnabled {
 		property portal.acceptance = "false";
-
 
 		// TODO Review
 
@@ -272,7 +267,6 @@ definition {
 	test AssertProductCannotBeAddedToCartFromProductDetailsIfProductIsNotPurchasable {
 		property portal.acceptance = "false";
 
-
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -319,7 +313,6 @@ definition {
 	test AssertQuantityInProductDetailsCanBeSelectedUpToAMaximumQuantitySet {
 		property portal.acceptance = "false";
 
-
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -362,7 +355,6 @@ definition {
 	@priority = "3"
 	test AssertSelectableQuantitiesInProductDetailsStartFromMinimumQuantitySet {
 		property portal.acceptance = "false";
-
 
 		// TODO Review
 
@@ -425,7 +417,6 @@ definition {
 	test RemoveProductFromWishListFromProductDetails {
 		property portal.acceptance = "Intern Test";
 
-
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -476,7 +467,6 @@ definition {
 	test SelectOptionValueAndAddProductToCart {
 		property portal.acceptance = "false";
 
-
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -514,7 +504,6 @@ definition {
 	@priority = "3"
 	test SelectOptionValueAndAssertBundledProductDetailsAreUpdated {
 		property portal.acceptance = "false";
-
 
 		// TODO Review
 
@@ -772,7 +761,6 @@ definition {
 	test SelectOptionValueAndAssertProductPriceIsUpdated {
 		property portal.acceptance = "false";
 
-
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -903,7 +891,6 @@ definition {
 	test ViewFirstSelectableQuantityInProductDetailsWhenMinimumOrderQuantityIsHigherThanMultipleOrderQuantity {
 		property portal.acceptance = "false";
 
-
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -961,7 +948,6 @@ definition {
 	@priority = "3"
 	test ViewFirstSelectableQuantityInProductDetailsWhenMinimumOrderQuantityIsLowerThanMultipleOrderQuantity {
 		property portal.acceptance = "false";
-
 
 		// TODO Review
 
@@ -1021,7 +1007,6 @@ definition {
 	test ViewProductDetailsPriceWithPromotion {
 		property portal.acceptance = "false";
 
-
 		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1051,7 +1036,6 @@ definition {
 	@priority = "3"
 	test ViewProductDetailsWidget {
 		property portal.acceptance = "false";
-
 
 		// TODO Review
 

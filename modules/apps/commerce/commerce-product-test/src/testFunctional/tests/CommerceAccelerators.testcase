@@ -6,35 +6,35 @@ definition {
 	property testray.main.component.name = "Shopping Experience";
 
 	setUp {
-    		TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance();
 
-    		User.firstLoginPG();
+		User.firstLoginPG();
 
-    		PortalSettings.gotoConfiguration(
-    			configurationCategory = "User Authentication",
-    			configurationName = "General",
-    			configurationScope = "Virtual Instance Scope");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
 
-    		Uncheck(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX");
+		Uncheck(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX");
 
-    		PortletEntry.save();
-    	}
+		PortletEntry.save();
+	}
 
-    	tearDown {
-    		Navigator.openURL();
+	tearDown {
+		Navigator.openURL();
 
-    		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-    			User.logoutPG();
-    		}
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			User.logoutPG();
+		}
 
-    		User.firstLoginPG();
+		User.firstLoginPG();
 
-    		CommerceConfiguration.commerceAdminTearDown(userScreenName = "buyer");
+		CommerceConfiguration.commerceAdminTearDown(userScreenName = "buyer");
 
-    		CommerceConfiguration.commerceInitializersTearDown();
+		CommerceConfiguration.commerceInitializersTearDown();
 
-    		User.logoutPG();
-    	}
+		User.logoutPG();
+	}
 
 	@description = "COMMERCE-5725. New functional test for COMMERCE-5485"
 	@priority = "3"
@@ -237,7 +237,6 @@ definition {
 		property portal.acceptance = "quarantine";
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
-
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -511,7 +510,6 @@ definition {
 		property portal.acceptance = "quarantine";
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
-
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

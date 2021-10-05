@@ -60,6 +60,49 @@ definition {
 		JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "Creates a new Portal Instance with domain = mailDomain, virtualHost = virtualHost, portalInstanceId = webId, and siteInitializerKey = virtualInstanceInitializer"
+	macro addPortalInstanceWithVirtualInstanceInitializer {
+		Variables.assertDefined(parameterList = "${domain},${virtualHost},${portalInstanceId},${siteInitializerKey}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var parameters = JSONUtil2._addJSONObject(
+			JSON = "{}",
+			key = "domain",
+			value = ""${domain}"");
+
+		var parameters = JSONUtil2._addJSONObject(
+			JSON = "${parameters}",
+			key = "virtualHost",
+			value = ""${virtualHost}"");
+
+		var parameters = JSONUtil2._addJSONObject(
+			JSON = "${parameters}",
+			key = "portalInstanceId",
+			value = ""${portalInstanceId}"");
+
+		var parameters = JSONUtil2._addJSONObject(
+			JSON = "${parameters}",
+			key = "siteInitializerKey",
+			value = ""${siteInitializerKey}"");
+
+		if ("${authenticationMethod}" == "By Screen Name") {
+			var userName = "test";
+		}
+		else {
+			var userName = "test@liferay.com";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-portal-instances/v1.0/portal-instances \
+			-u ${userName}:test \
+			-d ${parameters} \
+			-H Content-Type: application/json
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "Clean up all Portal Instances that are not the default using Headless"
 	macro cleanAllPortalInstances {
 		var portalInstanceJSON = HeadlessPortalInstanceAPI._getPortalInstances(authenticationMethod = "${authenticationMethod}");

@@ -11,8 +11,21 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+		
+		task ("Add the raylife virtual instance") {
+			Navigator.openURL();
 
-		Navigator.openURL();
+			HeadlessPortalInstanceAPI.addPortalInstanceWithVirtualInstanceInitializer(
+				domain = "raylife.com",
+				portalInstanceId = "www.raylife.com",
+				virtualHost = "www.raylife.com");
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.raylife.com:8080",
+				userEmailAddress = "test@raylife.com");
+		}
+
 	}
 
 	tearDown {
@@ -39,6 +52,6 @@ definition {
 
 		// TODO Create the automation about the bug LPS-139960
 
-	}	
+	}
 
 }

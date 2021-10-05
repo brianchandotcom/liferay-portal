@@ -41,6 +41,27 @@ import isItemEmpty from '../../utils/isItemEmpty';
 import TopperEmpty from '../TopperEmpty';
 import Column from './Column';
 
+/**
+ * @typedef ResizeInfo
+ * @property {number} columnWidth: width of any column in px
+ * @property {number} initialX: initial mouse X position in px
+ * @property {boolean} initiallyWasFirstColumn: indicates whether the right
+ * column was the first of the row when starting the resize
+ * @property {object} leftColumn: contains the info about resizer's left column
+ * @property {number} maxColumnDiff: number of columns the resizer can be moved
+ * to the right. If right column is the last of the row, it's incremented in 1
+ * because the column can go down to the next row
+ * @property {number} minColumnDiff: number of columns the resizer can be moved
+ * to the left
+ * @property {object} nextColumn: contains info about the column that is next to
+ * the right one. We will resize it when the right column is going up to the
+ * previous row
+ * @property {object} previousResizableColumn: contains info about the previous
+ * column thatis rezisable. We will resize it sometimes when the right column is
+ * going up to the previous row
+ * @property {object} rightColumn: contains info about resizer's right column
+ */
+
 const ROW_SIZE = 12;
 
 const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
@@ -65,6 +86,9 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 	const setNextColumnSizes = useSetNextColumnSizes();
 	const nextColumnSizes = useNextColumnSizes();
 
+	/**
+	 * @type {{current: ResizeInfo}}
+	 */
 	const resizeInfo = useRef();
 
 	const columnIndex = parentItem.children.indexOf(item.itemId);

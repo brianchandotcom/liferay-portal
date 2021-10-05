@@ -2028,6 +2028,10 @@ definition {
 				Click(
 					key_nodeName = "${assetTitle}",
 					locator1 = "Treeview#NODE_UNSELECTED");
+
+				AssertElementPresent(
+					key_contentName = "${assetTitle}",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
 			}
 
 			if (isSet(webcontent)) {
@@ -2050,43 +2054,31 @@ definition {
 
 					Click(locator1 = "ItemSelector#SELECT_FILE_WEB_CONTENT");
 				}
-
 				else {
 					LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 					LexiconCard.clickCard(card = "${webContentTitle}");
 				}
 
-				if (isSet(customWebcontenttemplate)) {
-					Select(
-						locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT",
-						value1 = "${customWebcontenttemplate}");
+				AssertElementPresent(
+					key_contentName = "${webContentTitle}",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			}
 
-					AssertElementPresent(
-						key_contentName = "${webContentTitle}",
-						locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			if (isSet(customTemplate)) {
+				Select(
+					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT",
+					value1 = "${customTemplate}");
 
-					AssertElementPresent(
-						key_contentName = "${customWebcontenttemplate}",
-						locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT");
+				AssertElementPresent(
+					key_contentName = "${customTemplate}",
+					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT");
+			}
 
-					if (isSet(webContentContent)) {
-						AssertTextEquals(
-							locator1 = "Fragment#FRAGMENT_BODY",
-							value1 = "${webContentContent}");
-					}
-				}
-				else {
-					AssertElementPresent(
-						key_contentName = "${webContentTitle}",
-						locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
-
-					if (isSet(webContentContent)) {
-						AssertTextEquals(
-							locator1 = "Fragment#FRAGMENT_BODY",
-							value1 = "${webContentContent}");
-					}
-				}
+			if (isSet(webContentContent)) {
+				AssertTextEquals(
+					locator1 = "Fragment#FRAGMENT_BODY",
+					value1 = "${webContentContent}");
 			}
 		}
 	}

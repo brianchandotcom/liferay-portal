@@ -171,10 +171,11 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 			item,
 		};
 
-		// For some special cases, we also need previous and next columns
+		// For some special cases, we also need the previous resizable column on
+		// the left and the next one on the right
 
 		let nextColumn = null;
-		let previousColumn = null;
+		let previousResizableColumn = null;
 
 		if (isFirstColumnOfRow && rightColumn.initialSize < ROW_SIZE) {
 			const nextColumnItem =
@@ -190,15 +191,25 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 		}
 
 		if (isFirstColumnOfRow && leftColumn.initialSize === 1) {
-			const previousColumnItem =
-				layoutData.items[parentItem.children[columnIndex - 2]];
+			const previousResizableColumnId = parentItem.children
+				.filter(
+					(child, index) =>
+						getResponsiveColumnSize(
+							layoutData.items[child].config,
+							selectedViewportSize
+						) > 1 && index < columnIndex
+				)
+				.pop();
 
-			previousColumn = {
+			const previousResizableColumnItem =
+				layoutData.items[previousResizableColumnId];
+
+			previousResizableColumn = {
 				initialSize: getResponsiveColumnSize(
-					previousColumnItem.config,
+					previousResizableColumnItem.config,
 					selectedViewportSize
 				),
-				item: previousColumnItem,
+				item: previousResizableColumnItem,
 			};
 		}
 
@@ -214,7 +225,7 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 				: rightColumn.initialSize - 1,
 			minColumnDiff: -leftColumn.initialSize + 1,
 			nextColumn,
-			previousColumn,
+			previousResizableColumn,
 			rightColumn,
 		};
 	};
@@ -235,7 +246,7 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 					maxColumnDiff,
 					minColumnDiff,
 					nextColumn,
-					previousColumn,
+					previousResizableColumn,
 					rightColumn,
 				} = resizeInfo.current;
 
@@ -303,14 +314,14 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 					}
 
 					// If the column is coming back to the previous row and
-					// the last column of that row has size 1, the previous column
-					// will also be reized
+					// the last column of that row has size 1, the previous
+					// resizable column will also be resized
 
-					if (previousColumn) {
+					if (previousResizableColumn) {
 						nextSizes = {
 							...nextSizes,
-							[previousColumn.item.itemId]:
-								previousColumn.initialSize - 1,
+							[previousResizableColumn.item.itemId]:
+								previousResizableColumn.initialSize - 1,
 						};
 					}
 

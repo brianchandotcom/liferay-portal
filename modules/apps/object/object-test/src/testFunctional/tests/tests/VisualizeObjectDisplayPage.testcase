@@ -348,8 +348,6 @@ definition {
 	@description = "LPS-133867|LPS-135004 - Verify if it's possible map and view the image of user Profile in a Fragment of Display Page"
 	@priority = "4"
 	test ViewImageUserProfileFromSpecificEntry {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -365,9 +363,9 @@ definition {
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "customObjectField",
-				objectName = "CustomObject",
-				value = "Test text");
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Test text");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
@@ -382,8 +380,8 @@ definition {
 		Navigator.gotoNavTab(navTab = "Page Elements");
 
 		PageEditorMapping.gotoEditableFieldMapping(
-			id = "image-square",
-			fragmentName = "Image");
+			fragmentName = "Image",
+			id = "image-square");
 
 		Select(
 			key_fieldLabel = "Source Selection",
@@ -402,8 +400,8 @@ definition {
 		PageEditor.clickPublish();
 
 		SitePages.gotoPageMenuItem(
-			pageName = "Test Content Page Name",
-			menuItem = "Edit");
+			menuItem = "Edit",
+			pageName = "Test Content Page Name");
 
 		PageEditor.viewFragmentEditableImage(
 			id = "image-square",

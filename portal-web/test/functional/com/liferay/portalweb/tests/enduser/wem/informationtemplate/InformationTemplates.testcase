@@ -588,4 +588,154 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-137569. The page creator could use information template in Collection Display."
+	@priority = "5"
+	test MapToEditableFieldInCollectionDisplay {
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a blogs entry with description") {
+			JSONBlog.addEntry(
+				entryAbstractDescription = "Blogs Entry Description",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Navigate to the Information Templates admin") {
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Add an information template for Web Content Article and Basic Web Content") {
+			InformationTemplates.addCP(
+				informationTemplateName = "Web Content Information Template",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+		}
+
+		task ("Add the Title and Content fields") {
+			InformationTemplates.addField(
+				fieldName = "Title",
+				panelTitle = "Basic Information");
+
+			InformationTemplates.addField(
+				fieldName = "Content",
+				panelTitle = "Content");
+
+			PortletEntry.save();
+		}
+
+		task ("Add an information template for Blogs Entry") {
+			InformationTemplates.addCP(
+				informationTemplateName = "Blogs Entry Information Template",
+				itemType = "Blogs Entry");
+		}
+
+		task ("Add the Title and Description fields") {
+			InformationTemplates.addField(
+				fieldName = "Title",
+				panelTitle = "Basic Information");
+
+			InformationTemplates.addField(
+				fieldName = "Description",
+				panelTitle = "Configuration");
+
+			PortletEntry.save();
+		}
+
+		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article",
+				title = "Dynamic Asset List");
+		}
+
+		task ("Add a manual collection with blogs entry") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "Blogs Entry",
+				title = "Manual Asset List");
+		}
+
+		task ("Select the blogs entry under Manual Asset List") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.selectAsset(
+				assetListName = "Manual Asset List",
+				assetName = "Blogs Entry Title",
+				assetType = "Blogs Entry");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a Collection Display fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the Dynamic Asset List in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Asset List",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Add a Button fragment into Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Web Content Title",
+				fragmentName = "Button");
+		}
+
+		task ("Map the Button fragment to custom template editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Web Content Information Template",
+				fragmentName = "Button",
+				id = "link");
+		}
+
+		task ("View the title and content of web content are shown") {
+			for (var content : list "Title,Content") {
+				AssertTextEquals.assertPartialText(
+					key_fragmentName = "button",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+					value1 = "Web Content ${content}");
+			}
+		}
+
+		task ("Select the Manual Asset List in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Manual Asset List",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Map the Button fragment to custom template editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Blogs Entry Information Template",
+				fragmentName = "Button",
+				id = "link");
+		}
+
+		task ("View the title and description of blogs entry are shown") {
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Blogs Entry Title Blogs Entry Description");
+		}
+	}
+
 }

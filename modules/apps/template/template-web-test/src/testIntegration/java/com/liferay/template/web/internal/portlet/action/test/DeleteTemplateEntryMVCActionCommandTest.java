@@ -95,21 +95,8 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 				String.valueOf(templateEntry.getTemplateEntryId())
 			});
 
-		Assert.assertNotNull(
-			_templateEntryLocalService.fetchTemplateEntry(
-				_templateEntry.getTemplateEntryId()));
-
-		Assert.assertNotNull(
-			_ddmTemplateLocalService.fetchDDMTemplate(
-				_templateEntry.getDDMTemplateId()));
-
-		Assert.assertNotNull(
-			_templateEntryLocalService.fetchTemplateEntry(
-				templateEntry.getTemplateEntryId()));
-
-		Assert.assertNotNull(
-			_ddmTemplateLocalService.fetchDDMTemplate(
-				templateEntry.getDDMTemplateId()));
+		_assertTemplateExists(_templateEntry);
+		_assertTemplateExists(templateEntry);
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doTransactionalCommand",
@@ -117,21 +104,8 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
 
-		Assert.assertNull(
-			_templateEntryLocalService.fetchTemplateEntry(
-				_templateEntry.getTemplateEntryId()));
-
-		Assert.assertNull(
-			_ddmTemplateLocalService.fetchDDMTemplate(
-				_templateEntry.getDDMTemplateId()));
-
-		Assert.assertNull(
-			_templateEntryLocalService.fetchTemplateEntry(
-				templateEntry.getTemplateEntryId()));
-
-		Assert.assertNull(
-			_ddmTemplateLocalService.fetchDDMTemplate(
-				templateEntry.getDDMTemplateId()));
+		_assertTemplateNotExists(_templateEntry);
+		_assertTemplateNotExists(templateEntry);
 	}
 
 	@Test
@@ -143,13 +117,7 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 			"templateEntryId",
 			String.valueOf(_templateEntry.getTemplateEntryId()));
 
-		Assert.assertNotNull(
-			_templateEntryLocalService.fetchTemplateEntry(
-				_templateEntry.getTemplateEntryId()));
-
-		Assert.assertNotNull(
-			_ddmTemplateLocalService.fetchDDMTemplate(
-				_templateEntry.getDDMTemplateId()));
+		_assertTemplateExists(_templateEntry);
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doTransactionalCommand",
@@ -157,13 +125,27 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
 
+		_assertTemplateNotExists(_templateEntry);
+	}
+
+	private void _assertTemplateExists(TemplateEntry templateEntry) {
+		Assert.assertNotNull(
+			_templateEntryLocalService.fetchTemplateEntry(
+				templateEntry.getTemplateEntryId()));
+
+		Assert.assertNotNull(
+			_ddmTemplateLocalService.fetchDDMTemplate(
+				templateEntry.getDDMTemplateId()));
+	}
+
+	private void _assertTemplateNotExists(TemplateEntry templateEntry) {
 		Assert.assertNull(
 			_templateEntryLocalService.fetchTemplateEntry(
-				_templateEntry.getTemplateEntryId()));
+				templateEntry.getTemplateEntryId()));
 
 		Assert.assertNull(
 			_ddmTemplateLocalService.fetchDDMTemplate(
-				_templateEntry.getDDMTemplateId()));
+				templateEntry.getDDMTemplateId()));
 	}
 
 	private Company _company;

@@ -153,16 +153,6 @@ public class PortalWorkspace extends BaseWorkspace {
 	private void _updateWorkspaceGitRepository(
 		String gitCommitFilePath, String gitRepositoryName) {
 
-		WorkspaceGitRepository primaryWorkspaceGitRepository =
-			getPrimaryWorkspaceGitRepository();
-
-		String gitCommit = primaryWorkspaceGitRepository.getFileContent(
-			gitCommitFilePath);
-
-		if (!JenkinsResultsParserUtil.isSHA(gitCommit)) {
-			return;
-		}
-
 		WorkspaceGitRepository workspaceGitRepository =
 			getWorkspaceGitRepository(gitRepositoryName);
 
@@ -170,7 +160,23 @@ public class PortalWorkspace extends BaseWorkspace {
 			return;
 		}
 
-		workspaceGitRepository.setBranchSHA(gitCommit);
+		WorkspaceGitRepository primaryWorkspaceGitRepository =
+			getPrimaryWorkspaceGitRepository();
+
+		String gitCommit = primaryWorkspaceGitRepository.getFileContent(
+			gitCommitFilePath);
+
+		if (JenkinsResultsParserUtil.isSHA(gitCommit)) {
+			workspaceGitRepository.setSenderBranchSHA(gitCommit);
+
+			return;
+		}
+
+		if (GitUtil.isValidGitHubRefURL(gitCommit) ||
+			PullRequest.isValidGitHubPullRequestURL(gitCommit)) {
+
+			workspaceGitRepository.setGitHubURL(gitCommit);
+		}
 	}
 
 }

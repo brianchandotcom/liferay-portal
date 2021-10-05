@@ -104,12 +104,9 @@ public class AssetListEntryStagedModelDataHandler
 			assetListEntry);
 
 		_exportAssetListEntryAssetEntryRels(portletDataContext, assetListEntry);
-
 		_exportAssetListEntrySegmentsEntryRels(
 			portletDataContext, assetListEntry);
-
 		_exportAssetObjects(portletDataContext, assetListEntry);
-
 		_exportReferenceStagedModel(assetListEntry, portletDataContext);
 	}
 

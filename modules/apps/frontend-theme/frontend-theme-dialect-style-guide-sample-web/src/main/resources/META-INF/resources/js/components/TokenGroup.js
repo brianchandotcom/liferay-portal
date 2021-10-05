@@ -15,32 +15,17 @@
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-import '../css/main.scss';
-
-import '../css/tokens.scss';
-import ButtonGuide from './guides/ButtonGuide';
-import ColorGuide from './guides/ColorGuide';
-import GeneralGuide from './guides/GeneralGuide';
-import TypographyGuide from './guides/TypographyGuide';
-
-export default function App() {
+const TokenGroup = ({children, group, medium, title}) => {
 	return (
-		<div className="ccp">
-			<ClayLayout.ContainerFluid>
-				<ClayLayout.Row>
-					<ClayLayout.Col>
-						<h1>{Liferay.Language.get('style-guide-sample')}</h1>
-					</ClayLayout.Col>
-
-					<ColorGuide />
-
-					<GeneralGuide />
-
-					<TypographyGuide />
-
-					<ButtonGuide />
-				</ClayLayout.Row>
-			</ClayLayout.ContainerFluid>
-		</div>
+		<ClayLayout.Col
+			className={'token-group token-group-' + group}
+			md={medium}
+			size={!medium && '12'}
+		>
+			{title && <h2>{title}</h2>}
+			{children && <div className="token-items">{children}</div>}
+		</ClayLayout.Col>
 	);
-}
+};
+
+export default TokenGroup;

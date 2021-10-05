@@ -11,7 +11,7 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-		
+
 		task ("Add the raylife virtual instance") {
 			Navigator.openURL();
 
@@ -25,7 +25,6 @@ definition {
 				specificURL = "http://www.raylife.com:8080",
 				userEmailAddress = "test@raylife.com");
 		}
-
 	}
 
 	tearDown {

@@ -3,15 +3,16 @@ buildscript {
 		classpath group: "com.github.jengelman.gradle.plugins", name: "shadow", version: "5.2.0"
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "latest.release"
 	}
+
 	repositories {
 		jcenter()
 		mavenCentral()
 	}
 }
 
+apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: "com.liferay.source.formatter"
 apply plugin: "java"
-apply plugin: 'com.github.johnrengelman.shadow'
 
 compileJava {
 	sourceCompatibility = "1.8"

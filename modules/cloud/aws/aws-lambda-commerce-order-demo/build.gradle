@@ -2,6 +2,7 @@ buildscript {
 	dependencies {
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "latest.release"
 	}
+
 	repositories {
 		mavenCentral()
 	}
@@ -21,7 +22,7 @@ dependencies {
 }
 
 jar {
-	into('lib') {
+	into("lib") {
 		from configurations.compile
 	}
 }

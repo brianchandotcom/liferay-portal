@@ -522,6 +522,11 @@
 </tr>
 <!-- Segment Membership -->
 <tr>
+	<td>SEGMENT_MEMBERS_TABLE</td>
+	<td>//table[contains(@class,'table table-autofit')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KNOWN_SEGMENT_MEMBERS_FILTER_BY_NAME</td>
 	<td>//button[contains(@class,'btn')]/span[@class='text-truncate' and text()='Name']</td>
 	<td></td>

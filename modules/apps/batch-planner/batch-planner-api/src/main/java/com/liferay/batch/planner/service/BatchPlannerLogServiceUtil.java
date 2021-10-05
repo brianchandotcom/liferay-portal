@@ -16,6 +16,7 @@ package com.liferay.batch.planner.service;
 
 import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -73,6 +74,21 @@ public class BatchPlannerLogServiceUtil {
 		throws PortalException {
 
 		return getService().getBatchPlannerLogsCount(batchPlannerPlanId);
+	}
+
+	public static List<BatchPlannerLog> getCompanyBatchPlannerLogs(
+			long companyId, int start, int end,
+			OrderByComparator<BatchPlannerLog> orderByComparator)
+		throws PortalException {
+
+		return getService().getCompanyBatchPlannerLogs(
+			companyId, start, end, orderByComparator);
+	}
+
+	public static int getCompanyBatchPlannerLogsCount(long companyId)
+		throws PortalException {
+
+		return getService().getCompanyBatchPlannerLogsCount(companyId);
 	}
 
 	/**

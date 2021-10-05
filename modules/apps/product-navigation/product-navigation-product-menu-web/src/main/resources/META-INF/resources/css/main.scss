@@ -132,6 +132,8 @@ html#{$cadmin-selector} {
 			}
 
 			.tree-view {
+				min-height: 300px;
+
 				.lfr-root-node.tree-node-content {
 					align-items: center;
 					display: flex;

@@ -17,13 +17,18 @@ package com.liferay.object.web.internal.object.entries.portlet.action;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
@@ -47,11 +52,16 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryService objectEntryService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
+		ObjectRelatedModelsProviderRegistry objectRelatedModelsProviderRegistry,
+		ObjectRelationshipLocalService objectRelationshipLocalService,
 		Portal portal) {
 
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryService = objectEntryService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
+		_objectRelatedModelsProviderRegistry =
+			objectRelatedModelsProviderRegistry;
+		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_portal = portal;
 	}
 
@@ -64,6 +74,34 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 			_addOrUpdateObjectEntry(actionRequest, actionResponse);
+		}
+		else if (cmd.equals("DELETE_RELATION")) {
+			long relatedModelId = ParamUtil.getLong(
+				actionRequest, "relatedModelId");
+
+			long objectEntryId = ParamUtil.getLong(
+				actionRequest, "objectEntryId");
+
+			long objectRelationshipId = ParamUtil.getLong(
+				actionRequest, "objectRelationshipId");
+
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.getObjectRelationship(
+					objectRelationshipId);
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId1());
+
+			ObjectRelatedModelsProvider objectRelatedModelsProvider =
+				_objectRelatedModelsProviderRegistry.
+					getObjectRelatedModelsProvider(
+						objectDefinition.getClassName(),
+						objectRelationship.getType());
+
+			objectRelatedModelsProvider.disassociateRelatedModels(
+				PrincipalThreadLocal.getUserId(), objectRelationshipId,
+				objectEntryId, relatedModelId);
 		}
 	}
 
@@ -161,6 +199,10 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryService _objectEntryService;
+	private final ObjectRelatedModelsProviderRegistry
+		_objectRelatedModelsProviderRegistry;
+	private final ObjectRelationshipLocalService
+		_objectRelationshipLocalService;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 	private final Portal _portal;
 

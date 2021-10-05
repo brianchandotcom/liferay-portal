@@ -1,46 +1,56 @@
-.liferay-modal .modal-dialog {
-	position: relative;
+@import 'cadmin-variables';
 
-	@media (max-width: 768px) {
-		width: 100%;
-	}
+.liferay-modal {
+	.modal-dialog {
+		position: relative;
 
-	&.modal-full-screen {
-		position: absolute;
+		@media (max-width: 768px) {
+			width: 100%;
+		}
 
-		.liferay-modal-body {
-			height: 100%;
+		&.modal-full-screen {
+			position: absolute;
 
-			.lfr-fullscreen-source-editor-content {
-				bottom: 0;
-				height: auto;
-				left: 24px;
-				position: absolute;
-				right: 24px;
-				top: 80px;
+			.liferay-modal-body {
+				height: 100%;
 
-				.source-panel {
-					float: left;
+				.lfr-fullscreen-source-editor-content {
+					bottom: 0;
+					height: auto;
+					left: 24px;
+					position: absolute;
+					right: 24px;
+					top: 80px;
 
-					.lfr-source-editor {
-						border-bottom-width: 0;
+					.source-panel {
+						float: left;
+
+						.lfr-source-editor {
+							border-bottom-width: 0;
+						}
 					}
-				}
 
-				.preview-panel {
-					float: right;
+					.preview-panel {
+						float: right;
+					}
 				}
 			}
 		}
-	}
 
-	.modal-body .loading-animation {
-		left: 0;
-		margin-bottom: 0;
-		margin-top: 0;
-		position: absolute;
-		right: 0;
-		top: 50%;
-		transform: translateY(-50%);
+		.modal-body .loading-animation {
+			left: 0;
+			margin-bottom: 0;
+			margin-top: 0;
+			position: absolute;
+			right: 0;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	}
+}
+
+html#{$cadmin-selector} {
+	.cadmin {
+		@extend .liferay-modal;
 	}
 }

@@ -32,15 +32,16 @@ public class MasterPageValidator {
 		}
 
 		try {
-			JSONValidator.validate(
-				masterPageJSON,
-				MasterPageValidator.class.getResourceAsStream(
-					"dependencies/master_page_json_schema.json"));
+			_jsonValidator.validate(masterPageJSON);
 		}
 		catch (JSONValidatorException jsonValidatorException) {
 			throw new MasterPageValidatorException(
 				jsonValidatorException.getMessage(), jsonValidatorException);
 		}
 	}
+
+	private static final JSONValidator _jsonValidator = new JSONValidator(
+		MasterPageValidator.class.getResourceAsStream(
+			"dependencies/master_page_json_schema.json"));
 
 }

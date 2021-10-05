@@ -32,15 +32,16 @@ public class PageDefinitionValidator {
 		}
 
 		try {
-			JSONValidator.validate(
-				pageDefinitionJSON,
-				PageDefinitionValidator.class.getResourceAsStream(
-					"dependencies/page_definition_json_schema.json"));
+			_jsonValidator.validate(pageDefinitionJSON);
 		}
 		catch (JSONValidatorException jsonValidatorException) {
 			throw new PageDefinitionValidatorException(
 				jsonValidatorException.getMessage(), jsonValidatorException);
 		}
 	}
+
+	private static final JSONValidator _jsonValidator = new JSONValidator(
+		PageDefinitionValidator.class.getResourceAsStream(
+			"dependencies/page_definition_json_schema.json"));
 
 }

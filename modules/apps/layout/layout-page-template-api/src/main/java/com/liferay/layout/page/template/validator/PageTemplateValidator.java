@@ -32,15 +32,16 @@ public class PageTemplateValidator {
 		}
 
 		try {
-			JSONValidator.validate(
-				pageTemplateJSON,
-				PageTemplateValidator.class.getResourceAsStream(
-					"dependencies/page_template_json_schema.json"));
+			_jsonValidator.validate(pageTemplateJSON);
 		}
 		catch (JSONValidatorException jsonValidatorException) {
 			throw new PageTemplateValidatorException(
 				jsonValidatorException.getMessage(), jsonValidatorException);
 		}
 	}
+
+	private static final JSONValidator _jsonValidator = new JSONValidator(
+		PageTemplateValidator.class.getResourceAsStream(
+			"dependencies/page_template_json_schema.json"));
 
 }

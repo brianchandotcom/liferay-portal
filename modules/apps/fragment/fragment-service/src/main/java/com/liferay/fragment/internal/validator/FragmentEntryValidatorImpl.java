@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.InputStream;
-
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -59,13 +57,8 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 			return;
 		}
 
-		InputStream configurationJSONSchemaInputStream =
-			FragmentEntryValidatorImpl.class.getResourceAsStream(
-				"dependencies/configuration-json-schema.json");
-
 		try {
-			JSONValidator.validate(
-				configuration, configurationJSONSchemaInputStream);
+			_jsonValidator.validate(configuration);
 
 			JSONObject configurationJSONObject =
 				JSONFactoryUtil.createJSONObject(configuration);
@@ -202,5 +195,9 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 				resourceBundle, "fragment-configuration-is-invalid"),
 			System.lineSeparator(), message);
 	}
+
+	private static final JSONValidator _jsonValidator = new JSONValidator(
+		FragmentEntryValidatorImpl.class.getResourceAsStream(
+			"dependencies/configuration-json-schema.json"));
 
 }

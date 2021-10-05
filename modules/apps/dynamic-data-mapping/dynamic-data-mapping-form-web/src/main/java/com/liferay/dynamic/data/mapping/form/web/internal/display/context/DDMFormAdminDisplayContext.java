@@ -1696,6 +1696,7 @@ public class DDMFormAdminDisplayContext {
 		List<DDMFormFieldType> ddmFormFieldTypes) {
 
 		List<String> ddmFormFieldTypesOutOfScope = Arrays.asList(
+			DDMFormFieldTypeConstants.DDM_IMAGE,
 			DDMFormFieldTypeConstants.GEOLOCATION,
 			JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE,
 			LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT);

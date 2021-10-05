@@ -26,6 +26,11 @@ AUI.add(
 
 		var Lang = A.Lang;
 
+		var booleanOptions = {
+			false: Liferay.Language.get('no'),
+			true: Liferay.Language.get('yes'),
+		};
+
 		var booleanParse = A.DataType.Boolean.parse;
 		var camelize = Lang.String.camelize;
 
@@ -1042,11 +1047,6 @@ AUI.add(
 
 			var type = instance.get('type');
 
-			var booleanOptions = {
-				false: Liferay.Language.get('no'),
-				true: Liferay.Language.get('yes'),
-			};
-
 			var indexTypeOptions = {
 				'': Liferay.Language.get('no'),
 				keyword: Liferay.Language.get('yes'),
@@ -1067,8 +1067,10 @@ AUI.add(
 				};
 			}
 
+			const newModel = [];
+
 			model.forEach((item) => {
-				if (item.attributeName == 'name') {
+				if (item.attributeName === 'name') {
 					item.editor = new A.TextCellEditor({
 						validator: {
 							rules: {
@@ -1086,9 +1088,21 @@ AUI.add(
 				if (item.editor) {
 					item.editor.set('strings', editorLocalizedStrings);
 				}
+
+				newModel.push(item);
+
+				if (item.attributeName === 'required') {
+					item.id = 'required';
+
+					if (type === 'ddm-image') {
+						newModel.push(
+							instance.getRequiredDescriptionPropertyModel()
+						);
+					}
+				}
 			});
 
-			return model.concat([
+			return newModel.concat([
 				{
 					attributeName: 'indexType',
 					editor: new A.RadioCellEditor({
@@ -1440,6 +1454,11 @@ AUI.add(
 						return structureFieldIndexEnable() ? 'text' : '';
 					},
 				},
+
+				requiredDescription: {
+					setter: booleanParse,
+					value: true,
+				},
 			},
 
 			EXTENDS: A.FormBuilderField,
@@ -1449,6 +1468,21 @@ AUI.add(
 			prototype: {
 				getHTML() {
 					return TPL_WCM_IMAGE;
+				},
+
+				getRequiredDescriptionPropertyModel() {
+					return {
+						attributeName: 'requiredDescription',
+						editor: new A.RadioCellEditor({
+							options: booleanOptions,
+							strings: editorLocalizedStrings,
+						}),
+						formatter(val) {
+							return booleanOptions[val.data.value];
+						},
+						id: 'requiredDescription',
+						name: Liferay.Language.get('required-description'),
+					};
 				},
 			},
 		});

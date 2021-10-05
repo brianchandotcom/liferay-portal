@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.image;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.trash.TrashHelper;
 
@@ -91,7 +93,11 @@ public class ImageDDMFormFieldValueAccessor
 	public boolean isEmpty(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 		JSONObject jsonObject = getValue(ddmFormFieldValue, locale);
 
-		if (Validator.isNull(jsonObject.getString("description")) ||
+		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+
+		if ((Validator.isNull(jsonObject.getString("description")) &&
+			 GetterUtil.getBoolean(
+				 ddmFormField.getProperty("requiredDescription"))) ||
 			Validator.isNull(jsonObject.getString("url"))) {
 
 			return true;

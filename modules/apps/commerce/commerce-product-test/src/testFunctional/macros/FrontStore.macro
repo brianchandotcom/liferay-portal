@@ -5,7 +5,11 @@ definition {
 
 		var currentItemCount = selenium.getAttribute("//div[contains(@class,'mini-cart')]/button[contains(@class,'mini-cart-opener') and @data-badge-count]@data-badge-count");
 
-		var newItemCount = ${currentItemCount} + 1;
+		if (IsElementPresent(locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME", key_cartItemName = "${productName}")) {
+			var newItemCount = "${currentItemCount}";
+		} else {
+			var newItemCount = ${currentItemCount} + 1;
+		}
 
 		Click(locator1 = "CommerceAccelerators#MINI_CART_CLOSE");
 

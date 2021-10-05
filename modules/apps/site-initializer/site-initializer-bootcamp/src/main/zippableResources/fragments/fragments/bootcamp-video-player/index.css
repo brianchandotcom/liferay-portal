@@ -1,6 +1,7 @@
 .col-to-hide {
 	background-color: var(--brand-color-1);
 	border-bottom: 8px solid var(--white);
+	transform: translateX(-12px)
 }
 
 .courses {
@@ -29,8 +30,8 @@
 .courses .fullscreen {
 	opacity: 0;
 	position: absolute;
-	right: 6px;
-	top: var(--spacer);
+	right: 8px;
+	top: 20px;
 	z-index: 9;
 }
 

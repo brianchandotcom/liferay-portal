@@ -6,8 +6,8 @@
 	height: 100%;
 	justify-content: space-between;
 	max-width: 100%;
-	padding: var(--spacer-6) var(--spacer-7) var(--spacer-6) var(--spacer-10);
-	width: 40%;
+	padding: var(--spacer-6) var(--spacer-9) var(--spacer-6) var(--spacer-10);
+	width: 45%;
 }
 
 .sign-in {

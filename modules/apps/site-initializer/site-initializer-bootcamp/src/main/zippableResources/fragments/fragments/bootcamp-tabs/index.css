@@ -1,6 +1,7 @@
 .component-tabs .navigation-bar-light {
 	background-color: transparent;
-	border-color: var(--gray-300);
+	border-bottom: 1px solid var(--gray-300);
+	padding-bottom: 4px;
 }
 
 .component-tabs .navigation-bar-light .icon-caret-bottom {
@@ -19,9 +20,13 @@
 	border: none;
 	color: var(--secondary);
 	font-family: var(--font-family-sans-serif);
+	margin-right: var(--spacer-3);
+	padding-left: 0;
+	padding-right: 0;
 }
 
 .component-tabs .navigation-bar-light .nav-link.active {
+	box-shadow: 0 4px var(--gray-900);
 	color: var(--gray-900);
 }
 

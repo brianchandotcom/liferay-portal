@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
+import com.liferay.journal.web.internal.configuration.FFTranslationManagerAdminMode;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -55,6 +56,10 @@ public class JournalEditDDMStructuresDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+
+		_ffTranslationManagerAdminMode =
+			(FFTranslationManagerAdminMode)httpServletRequest.getAttribute(
+				FFTranslationManagerAdminMode.class.getName());
 
 		_journalWebConfiguration =
 			(JournalWebConfiguration)httpServletRequest.getAttribute(
@@ -201,6 +206,10 @@ public class JournalEditDDMStructuresDisplayContext {
 		return storageType;
 	}
 
+	public boolean isFFTranslationManagerAdminModeEnabled() {
+		return _ffTranslationManagerAdminMode.enabled();
+	}
+
 	public boolean isStructureFieldIndexableEnable() {
 		return _journalWebConfiguration.structureFieldIndexableEnable();
 	}
@@ -210,6 +219,7 @@ public class JournalEditDDMStructuresDisplayContext {
 
 	private DDMStructure _ddmStructure;
 	private Long _ddmStructureId;
+	private final FFTranslationManagerAdminMode _ffTranslationManagerAdminMode;
 	private final HttpServletRequest _httpServletRequest;
 	private final JournalWebConfiguration _journalWebConfiguration;
 	private final LiferayPortletResponse _liferayPortletResponse;

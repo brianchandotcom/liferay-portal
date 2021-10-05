@@ -1,0 +1,92 @@
+.token-group {
+	margin-top: 3rem;
+}
+
+.token-item {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 0.5rem;
+}
+
+.token-sample {
+	border: 1px solid;
+	margin-right: 0.725rem;
+}
+
+.token-label {
+	font-family: monospace;
+}
+
+.token-group-colors {
+	.token-item {
+		align-items: flex-start;
+		display: inline-flex;
+		flex-direction: column;
+		min-width: 5rem;
+	}
+
+	.token-sample {
+		height: 3rem;
+		margin-right: 0;
+		width: 3rem;
+	}
+}
+
+.token-group-borders .token-sample {
+	height: 3rem;
+	width: 6rem;
+}
+
+.token-group-shadows .token-sample {
+	border: none;
+	height: 3rem;
+	width: 3rem;
+}
+
+.token-group-texts {
+	.token-item {
+		align-items: flex-start;
+		flex-direction: column-reverse;
+	}
+
+	.token-sample {
+		margin-right: 0;
+		padding: 0.5rem;
+		width: 100%;
+	}
+}
+
+.token-group-ratios .token-sample {
+	width: 6rem;
+}
+
+.token-group-transitions {
+	.token-sample {
+		border: none;
+		height: 3rem;
+		width: 3rem;
+	}
+
+	.fade,
+	.collapsing {
+		border: 1px solid;
+		display: block;
+		height: 100%;
+		width: 100%;
+	}
+
+	.collapsing:not(.show) {
+		height: 0%;
+	}
+
+	.token-label {
+		font-size: 1rem;
+		font-weight: 400;
+		margin-right: 0.5rem;
+	}
+}
+
+.token-group-buttons .token-sample {
+	border: none;
+}

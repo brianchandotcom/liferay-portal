@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.upload.UploadPortletRequestImpl;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
@@ -64,7 +66,7 @@ public class UpdateTemplateEntryMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
-			_portal.getUploadPortletRequest(actionRequest);
+			_getUploadPortletRequest(actionRequest);
 
 		long ddmTemplateId = ParamUtil.getLong(
 			uploadPortletRequest, "ddmTemplateId");
@@ -133,6 +135,20 @@ public class UpdateTemplateEntryMVCActionCommand extends BaseMVCActionCommand {
 					"templateEntryId", templateEntry.getTemplateEntryId()
 				).buildString());
 		}
+	}
+
+	private UploadPortletRequest _getUploadPortletRequest(
+		ActionRequest actionRequest) {
+
+		LiferayPortletRequest liferayPortletRequest =
+			_portal.getLiferayPortletRequest(actionRequest);
+
+		return new UploadPortletRequestImpl(
+			_portal.getUploadServletRequest(
+				liferayPortletRequest.getHttpServletRequest()),
+			liferayPortletRequest,
+			_portal.getPortletNamespace(
+				liferayPortletRequest.getPortletName()));
 	}
 
 	@Reference

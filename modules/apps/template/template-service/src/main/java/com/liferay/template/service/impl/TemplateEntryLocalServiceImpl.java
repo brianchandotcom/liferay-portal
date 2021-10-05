@@ -17,6 +17,7 @@ package com.liferay.template.service.impl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.template.model.TemplateEntry;
@@ -40,12 +41,14 @@ public class TemplateEntryLocalServiceImpl
 	@Override
 	public TemplateEntry addTemplateEntry(
 			long userId, long groupId, long ddmTemplateId,
-			String infoItemClassName, String infoItemFormVariationKey)
+			String infoItemClassName, String infoItemFormVariationKey,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		TemplateEntry templateEntry = templateEntryPersistence.create(
 			counterLocalService.increment());
 
+		templateEntry.setUuid(serviceContext.getUuid());
 		templateEntry.setGroupId(groupId);
 
 		User user = _userLocalService.getUser(userId);

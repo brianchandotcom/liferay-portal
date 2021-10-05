@@ -27,7 +27,7 @@
 		<liferay-ui:search-container-column-text
 			colspan="<%= 2 %>"
 		>
-			<h5>
+			<div>
 				<a href="<%= searchResultSummaryDisplayContext.getViewURL() %>">
 					<strong><%= searchResultSummaryDisplayContext.getHighlightedTitle() %></strong>
 				</a>
@@ -37,9 +37,9 @@
 						<liferay-ui:message arguments="<%= HtmlUtil.escape(searchResultSummaryDisplayContext.getTitle()) %>" key="download-x" />
 					</aui:a>
 				</c:if>
-			</h5>
+			</div>
 
-			<h6 class="text-default">
+			<span class="text-default">
 				<%= searchResultSummaryDisplayContext.getModelResource() %>
 
 				<c:if test="<%= searchResultSummaryDisplayContext.isLocaleReminderVisible() %>">
@@ -48,16 +48,16 @@
 						message="<%= searchResultSummaryDisplayContext.getLocaleReminder() %>"
 					/>
 				</c:if>
-			</h6>
+			</span>
 
 			<c:if test="<%= searchResultSummaryDisplayContext.isContentVisible() %>">
-				<h6 class="text-default">
+				<span class="text-default">
 					<%= searchResultSummaryDisplayContext.getContent() %>
-				</h6>
+				</span>
 			</c:if>
 
 			<c:if test="<%= searchResultSummaryDisplayContext.isAssetCategoriesOrTagsVisible() %>">
-				<h6 class="text-default">
+				<div class="text-default">
 					<liferay-asset:asset-tags-summary
 						className="<%= searchResultSummaryDisplayContext.getClassName() %>"
 						classPK="<%= searchResultSummaryDisplayContext.getClassPK() %>"
@@ -71,11 +71,11 @@
 						paramName="<%= searchResultSummaryDisplayContext.getFieldAssetCategoryIds() %>"
 						portletURL="<%= searchResultSummaryDisplayContext.getPortletURL() %>"
 					/>
-				</h6>
+				</div>
 			</c:if>
 
 			<c:if test="<%= searchResultSummaryDisplayContext.isDocumentFormVisible() %>">
-				<h6 class="expand-details text-default"><a href="javascript:;"><liferay-ui:message key="details" />...</a></h6>
+				<div class="expand-details text-default"><a href="javascript:;"><liferay-ui:message key="details" />...</a></div>
 
 				<div class="hide table-details table-responsive">
 					<table class="table">

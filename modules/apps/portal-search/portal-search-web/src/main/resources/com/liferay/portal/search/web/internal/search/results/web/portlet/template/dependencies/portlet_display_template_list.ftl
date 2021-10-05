@@ -97,7 +97,7 @@
 									</#if>
 
 									<#if entry.isAssetCategoriesOrTagsVisible()>
-										<h6 class="search-document-tags text-default">
+										<div class="h6 search-document-tags text-default">
 											<@liferay_asset["asset-tags-summary"]
 												className=entry.getClassName()
 												classPK=entry.getClassPK()
@@ -111,17 +111,17 @@
 												paramName=entry.getFieldAssetCategoryIds()
 												portletURL=entry.getPortletURL()
 											/>
-										</h6>
+										</div>
 									</#if>
 
 									<#if entry.isDocumentFormVisible()>
-										<h6 class="expand-details text-default">
+										<div class="expand-details h6 text-default">
 											<span class="list-group-text" style="">
 												<a href="javascript:;">
 													<@liferay.language key="details" />...
 												</a>
 											</span>
-										</h6>
+										</div>
 
 										<div class="hide search-results-list table-details table-responsive">
 											<table class="table">

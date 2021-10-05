@@ -19,11 +19,13 @@ import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.exception.ObjectLayoutColumnSizeException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldModel;
 import com.liferay.object.model.ObjectLayout;
 import com.liferay.object.model.ObjectLayoutBox;
 import com.liferay.object.model.ObjectLayoutColumn;
 import com.liferay.object.model.ObjectLayoutRow;
 import com.liferay.object.model.ObjectLayoutTab;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.base.ObjectLayoutLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
@@ -45,6 +47,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -78,7 +82,10 @@ public class ObjectLayoutLocalServiceImpl
 				"Object layouts require a custom object definition");
 		}
 
-		_validate(0, objectDefinitionId, defaultObjectLayout);
+		_validateRequiredFields(
+			objectDefinitionId, objectLayoutTabs, defaultObjectLayout);
+		_validateSingleDefaultObjectLayout(
+			0, objectDefinitionId, defaultObjectLayout);
 
 		ObjectLayout objectLayout = objectLayoutPersistence.create(
 			counterLocalService.increment());
@@ -176,7 +183,10 @@ public class ObjectLayoutLocalServiceImpl
 		ObjectLayout objectLayout = objectLayoutPersistence.findByPrimaryKey(
 			objectLayoutId);
 
-		_validate(
+		_validateRequiredFields(
+			objectLayout.getObjectDefinitionId(), objectLayoutTabs,
+			defaultObjectLayout);
+		_validateSingleDefaultObjectLayout(
 			objectLayoutId, objectLayout.getObjectDefinitionId(),
 			defaultObjectLayout);
 
@@ -459,7 +469,54 @@ public class ObjectLayoutLocalServiceImpl
 		return objectLayoutTabs;
 	}
 
-	private void _validate(
+	private void _validateRequiredFields(
+			long objectDefinitionId, List<ObjectLayoutTab> objectLayoutTabs,
+			boolean defaultObjectLayout)
+		throws PortalException {
+
+		if (!defaultObjectLayout) {
+			return;
+		}
+
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(objectDefinitionId);
+
+		ObjectLayoutTab objectLayoutTab = objectLayoutTabs.get(0);
+
+		List<ObjectLayoutBox> objectLayoutBoxes =
+			objectLayoutTab.getObjectLayoutBoxes();
+
+		Stream<ObjectField> objectFieldsStream = objectFields.stream();
+
+		boolean containsAllRequiredFields = objectFieldsStream.filter(
+			ObjectFieldModel::isRequired
+		).allMatch(
+			objectField -> {
+				Stream<ObjectLayoutBox> objectLayoutBoxesStream =
+					objectLayoutBoxes.stream();
+
+				return objectLayoutBoxesStream.flatMap(
+					objectLayoutBox -> objectLayoutBox.getObjectLayoutRows(
+					).stream()
+				).flatMap(
+					objectLayoutRow -> objectLayoutRow.getObjectLayoutColumns(
+					).stream()
+				).anyMatch(
+					objectLayoutColumn -> Objects.equals(
+						objectLayoutColumn.getObjectFieldId(),
+						objectField.getObjectFieldId())
+				);
+			}
+		);
+
+		if (!containsAllRequiredFields) {
+			throw new DefaultObjectLayoutException(
+				"All mandatory fields must be mapped to the first" +
+					" tab of a default object layout");
+		}
+	}
+
+	private void _validateSingleDefaultObjectLayout(
 			long objectLayoutId, long objectDefinitionId,
 			boolean defaultObjectLayout)
 		throws PortalException {
@@ -484,6 +541,9 @@ public class ObjectLayoutLocalServiceImpl
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private ObjectFieldPersistence _objectFieldPersistence;

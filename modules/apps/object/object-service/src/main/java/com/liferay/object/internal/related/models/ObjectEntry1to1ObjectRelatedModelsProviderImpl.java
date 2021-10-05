@@ -111,6 +111,31 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 	}
 
 	@Override
+	public void disassociateRelatedModels(
+			long userId, long objectRelationshipId, long primaryKey1,
+			long primaryKey2)
+		throws PortalException {
+
+		_objectEntryLocalService.updateObjectEntry(
+			userId, primaryKey1,
+			HashMapBuilder.<String, Serializable>put(
+				() -> {
+					ObjectRelationship objectRelationship =
+						_objectRelationshipLocalService.getObjectRelationship(
+							objectRelationshipId);
+
+					ObjectField objectField =
+						_objectFieldLocalService.getObjectField(
+							objectRelationship.getObjectFieldId2());
+
+					return objectField.getName();
+				},
+				0
+			).build(),
+			new ServiceContext());
+	}
+
+	@Override
 	public String getClassName() {
 		return _className;
 	}

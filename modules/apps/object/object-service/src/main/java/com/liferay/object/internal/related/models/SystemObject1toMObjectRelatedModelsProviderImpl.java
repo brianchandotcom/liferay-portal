@@ -134,6 +134,31 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 	}
 
 	@Override
+	public void disassociateRelatedModels(
+			long userId, long objectRelationshipId, long primaryKey1,
+			long primaryKey2)
+		throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				objectRelationshipId);
+
+		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
+			objectRelationship.getObjectDefinitionId2(),
+			GetterUtil.getLong(primaryKey1),
+			HashMapBuilder.<String, Serializable>put(
+				() -> {
+					ObjectField objectField =
+						_objectFieldLocalService.getObjectField(
+							objectRelationship.getObjectFieldId2());
+
+					return objectField.getName();
+				},
+				0
+			).build());
+	}
+
+	@Override
 	public String getClassName() {
 		return _systemObjectDefinitionMetadata.getClassName();
 	}

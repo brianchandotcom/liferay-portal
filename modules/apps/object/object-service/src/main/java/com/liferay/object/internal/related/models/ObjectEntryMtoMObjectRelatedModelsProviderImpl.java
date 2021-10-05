@@ -92,6 +92,17 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 		}
 	}
 
+	@Override
+	public void disassociateRelatedModels(
+			long userId, long objectRelationshipId, long primaryKey1,
+			long primaryKey2)
+		throws PortalException {
+
+		_objectRelationshipLocalService.
+			deleteObjectRelationshipMappingTableValue(
+				objectRelationshipId, primaryKey1, primaryKey2);
+	}
+
 	public String getClassName() {
 		return _className;
 	}

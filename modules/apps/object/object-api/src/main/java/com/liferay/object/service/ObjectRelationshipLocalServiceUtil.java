@@ -140,6 +140,14 @@ public class ObjectRelationshipLocalServiceUtil {
 		return getService().deleteObjectRelationship(objectRelationship);
 	}
 
+	public static void deleteObjectRelationshipMappingTableValue(
+			long objectRelationshipId, long primaryKey1, long primaryKey2)
+		throws PortalException {
+
+		getService().deleteObjectRelationshipMappingTableValue(
+			objectRelationshipId, primaryKey1, primaryKey2);
+	}
+
 	public static void deleteObjectRelationshipMappingTableValues(
 			long objectRelationshipId, long primaryKey1)
 		throws PortalException {

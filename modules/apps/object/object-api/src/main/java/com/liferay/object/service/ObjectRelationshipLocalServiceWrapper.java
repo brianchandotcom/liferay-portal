@@ -142,6 +142,16 @@ public class ObjectRelationshipLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteObjectRelationshipMappingTableValue(
+			long objectRelationshipId, long primaryKey1, long primaryKey2)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectRelationshipLocalService.
+			deleteObjectRelationshipMappingTableValue(
+				objectRelationshipId, primaryKey1, primaryKey2);
+	}
+
+	@Override
 	public void deleteObjectRelationshipMappingTableValues(
 			long objectRelationshipId, long primaryKey1)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -42,10 +42,13 @@
 					"fragment": {
 						"key": "quote-footer"
 					},
-					"fragmentConfig": {},
-					"fragmentFields": [],
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
 					"fragmentStyle": {
-						"backgroundFragmentImage": {},
+						"backgroundFragmentImage": {
+						},
 						"borderRadius": "",
 						"borderWidth": "0",
 						"fontFamily": "",

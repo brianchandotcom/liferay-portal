@@ -27,30 +27,30 @@ $font-family: var(
 }
 
 .panel-container {
-	width: 100%;
-	padding: 34px 48px;
 	border-bottom: 1px solid #d3d3d4;
+	padding: 34px 48px;
+	width: 100%;
 
 	.panel-header {
+		cursor: pointer;
 		display: flex;
 		justify-content: space-between;
-		cursor: pointer;
 
 		.panel-title {
 			color: #2f313d;
-			font-weight: 700;
 			font-size: 24px;
+			font-weight: 700;
 		}
 
 		.panel-title-icon {
-			width: 32px;
-			height: 32px;
-			display: flex;
 			align-items: center;
-			justify-content: center;
 			background-color: #d2d2d3;
 			border-radius: 50%;
+			display: flex;
 			fill: #fff;
+			height: 32px;
+			justify-content: center;
+			width: 32px;
 		}
 	}
 
@@ -75,9 +75,9 @@ $font-family: var(
 			margin-bottom: 16px;
 
 			.title {
-				margin-bottom: 4px;
 				font-size: 18px;
 				font-weight: 700;
+				margin-bottom: 4px;
 
 				span.required {
 					color: red;
@@ -89,9 +89,9 @@ $font-family: var(
 			}
 
 			.subtitle {
-				font-weight: 500;
-				font-size: 16px;
 				color: #606167;
+				font-size: 16px;
+				font-weight: 500;
 			}
 		}
 
@@ -119,34 +119,34 @@ $font-family: var(
 							border-radius: 50%;
 							cursor: pointer;
 							display: flex;
+							fill: #7d7e85;
 							height: 36px;
 							justify-content: center;
 							position: relative;
 							right: 38px;
 							top: 3px;
 							width: 36px;
-							fill: #7d7e85;
 						}
 
 						.div-image {
 							display: flex;
-							text-align: center;
 							flex-direction: column;
+							text-align: center;
 
 							span {
 								color: #808185;
-								margin-top: 4px;
 								font-size: 13px;
-								white-space: nowrap;
+								margin-top: 4px;
 								overflow: hidden;
 								text-overflow: ellipsis;
+								white-space: nowrap;
 								width: 176px;
 							}
 
 							img {
 								border-radius: 16px;
-								width: 176px;
 								height: 176px;
+								width: 176px;
 							}
 						}
 					}
@@ -180,18 +180,18 @@ $font-family: var(
 						justify-content: center;
 
 						.link-button {
+							align-items: center;
 							background: none;
+							border: 1px solid #4c85ff;
+							border-radius: 4px;
 							color: #4c85ff;
+							cursor: pointer;
+							display: flex;
 							font-size: 14px;
 							font-weight: 700;
-							cursor: pointer;
-							border: 1px solid #4c85ff;
-							width: 160px;
 							height: 40px;
-							display: flex;
-							align-items: center;
 							justify-content: center;
-							border-radius: 4px;
+							width: 160px;
 						}
 
 						.input-file {
@@ -202,9 +202,9 @@ $font-family: var(
 
 						svg {
 							fill: #4c85ff;
-							width: 16px !important;
 							height: 16px !important;
 							margin-right: 6px;
+							width: 16px !important;
 						}
 					}
 				}
@@ -218,16 +218,16 @@ $font-family: var(
 				height: 56px;
 
 				svg {
-					width: 24px !important;
-					height: 24px !important;
 					flex-shrink: 0;
+					height: 24px !important;
+					width: 24px !important;
 				}
 			}
 
 			.info-content {
+				align-items: center;
 				display: flex;
 				justify-content: space-between;
-				align-items: center;
 				width: 100%;
 
 				.info-description {
@@ -235,11 +235,11 @@ $font-family: var(
 				}
 
 				.closeIcon {
-					display: flex;
 					align-items: center;
-					justify-content: center;
 					cursor: pointer;
+					display: flex;
 					fill: #295ccc;
+					justify-content: center;
 				}
 			}
 		}

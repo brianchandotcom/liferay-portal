@@ -3,7 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentStyle": {"borderWidth": "0"},
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
 					"layout": {
 						"borderWidth": 0,
 						"marginBottom": 0,
@@ -27,13 +29,19 @@
 							"rowViewports": [
 								{
 									"id": "landscapeMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
-								{"id": "tablet", "rowViewportDefinition": {}}
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
 							],
 							"verticalAlignment": "top"
 						},
@@ -42,15 +50,18 @@
 								"definition": {
 									"columnViewports": [
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -81,8 +92,10 @@
 													"fragment": {
 														"key": "quote-comparison-header"
 													},
-													"fragmentConfig": {},
-													"fragmentFields": [],
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"borderWidth": "0",
 														"marginRight": "5",
@@ -102,15 +115,18 @@
 								"definition": {
 									"columnViewports": [
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -130,13 +146,19 @@
 							"rowViewports": [
 								{
 									"id": "landscapeMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
-								{"id": "tablet", "rowViewportDefinition": {}}
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
 							],
 							"verticalAlignment": "top"
 						},
@@ -145,15 +167,18 @@
 								"definition": {
 									"columnViewports": [
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -163,7 +188,8 @@
 									{
 										"definition": {
 											"widgetInstance": {
-												"widgetConfig": {},
+												"widgetConfig": {
+												},
 												"widgetName": "[$REMOTE_APP_ENTRY_ID:RAYLIFE-QUOTE-COMPARISON$]"
 											}
 										},
@@ -176,15 +202,18 @@
 								"definition": {
 									"columnViewports": [
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -193,7 +222,9 @@
 								"pageElements": [
 									{
 										"definition": {
-											"fragmentStyle": {"marginTop": "2"},
+											"fragmentStyle": {
+												"marginTop": "2"
+											},
 											"layout": {
 												"borderWidth": 0,
 												"marginBottom": 0,
@@ -212,13 +243,13 @@
 												"definition": {
 													"widgetInstance": {
 														"widgetConfig": {
-															"ddmTemplateKey": "",
-															"assetEntryId": "42726",
-															"userToolAssetAddonEntryKeys": "false",
-															"groupId": "",
-															"enableViewCountIncrement": "false",
 															"articleId": "QUOTE-COMPARISON-PROFILE-TEMPLATE",
-															"contentMetadataAssetAddonEntryKeys": "false"
+															"assetEntryId": "42726",
+															"contentMetadataAssetAddonEntryKeys": "false",
+															"ddmTemplateKey": "",
+															"enableViewCountIncrement": "false",
+															"groupId": "",
+															"userToolAssetAddonEntryKeys": "false"
 														},
 														"widgetName": "com_liferay_journal_content_web_portlet_JournalContentPortlet"
 													}
@@ -242,10 +273,13 @@
 					"fragment": {
 						"key": "quote-footer"
 					},
-					"fragmentConfig": {},
-					"fragmentFields": [],
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
 					"fragmentStyle": {
-						"backgroundFragmentImage": {},
+						"backgroundFragmentImage": {
+						},
 						"borderRadius": "",
 						"borderWidth": "0",
 						"fontFamily": "",

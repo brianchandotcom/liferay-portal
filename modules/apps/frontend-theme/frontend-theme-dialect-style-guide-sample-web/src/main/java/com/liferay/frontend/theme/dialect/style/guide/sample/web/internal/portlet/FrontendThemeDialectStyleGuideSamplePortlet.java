@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.theme.classic.style.guide.sample.web.internal.portlet;
+package com.liferay.frontend.theme.dialect.style.guide.sample.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
@@ -21,13 +21,13 @@ import javax.portlet.Portlet;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eduardo Allegrini
+ * @author Evan Thibodeau
  */
 @Component(
 	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.sample",
-		"javax.portlet.display-name=Classic Theme Style Guide Sample",
+		"javax.portlet.display-name=Dialect Theme Style Guide Sample",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.resource-bundle=content.Language",
@@ -35,5 +35,5 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = Portlet.class
 )
-public class FrontendThemeClassicStyleGuideSamplePortlet extends MVCPortlet {
+public class FrontendThemeDialectStyleGuideSamplePortlet extends MVCPortlet {
 }

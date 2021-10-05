@@ -5,7 +5,7 @@
 		"react": "16.12.0",
 		"react-dom": "16.12.0"
 	},
-	"name": "frontend-theme-classic-style-guide-sample-web",
+	"name": "frontend-theme-dialect-style-guide-sample-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",

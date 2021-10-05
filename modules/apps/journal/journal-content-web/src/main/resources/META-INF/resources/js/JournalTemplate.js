@@ -87,7 +87,7 @@ export default function ({
 					});
 
 				openToast({
-					container: form,
+					container: form.parentElement.previousElementSibling,
 					message: Liferay.Language.get(
 						'changing-the-template-will-not-affect-the-original-web-content-default-template.-the-change-only-applies-to-this-web-content-display'
 					),

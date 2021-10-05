@@ -161,6 +161,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLICATION_ROLE_BUTTON</td>
+	<td>//button[strong[contains(.,'${key_publicationRole}')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[contains(.,'Publish')]</td>
 	<td></td>

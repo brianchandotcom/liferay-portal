@@ -65,20 +65,6 @@ definition {
 		PublicationsChanges.deleteComment(commentValue = "It is not ready to Publish");
 	}
 
-	macro assertScheduledPublicationPublished {
-		Click(
-			key_navBarTitle = "History",
-			locator1 = "Publications#MANGE_PUBLICATIONS_NAVBAR_TITLE");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		var key_publicationName = "${publicationName}";
-
-		AssertTextEquals(
-			locator1 = "Publications#LIST_PUBLISHED_STATUS",
-			value1 = "Published");
-	}
-
 	macro assertInviterPermissions {
 		Click(
 			key_publicationName = "${publicationName}",
@@ -119,6 +105,18 @@ definition {
 
 	}
 
+	macro assertScheduledPublicationPublished {
+		Click(
+			key_navBarTitle = "History",
+			locator1 = "Publications#MANGE_PUBLICATIONS_NAVBAR_TITLE");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		var key_publicationName = "${publicationName}";
+
+		AssertTextEquals(
+			locator1 = "Publications#LIST_PUBLISHED_STATUS",
+			value1 = "Published");
 	}
 
 	macro assertViewerPermissions {

@@ -33,6 +33,11 @@ import org.json.JSONObject;
 public abstract class BaseBuildDatabase implements BuildDatabase {
 
 	@Override
+	public File getBuildDatabaseFile() {
+		return _buildDatabaseFile;
+	}
+
+	@Override
 	public JSONObject getBuildDataJSONObject(String key) {
 		JSONObject buildsJSONObject = _jsonObject.getJSONObject("builds");
 
@@ -321,7 +326,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	}
 
 	protected BaseBuildDatabase(File baseDir) {
-		_jsonObjectFile = new File(
+		_buildDatabaseFile = new File(
 			baseDir, BuildDatabase.FILE_NAME_BUILD_DATABASE);
 
 		_jsonObject = _getJSONObject();
@@ -350,10 +355,10 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	}
 
 	private JSONObject _getJSONObject() {
-		if (_jsonObjectFile.exists()) {
+		if (_buildDatabaseFile.exists()) {
 			try {
 				return new JSONObject(
-					JenkinsResultsParserUtil.read(_jsonObjectFile));
+					JenkinsResultsParserUtil.read(_buildDatabaseFile));
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(ioException);
@@ -385,14 +390,14 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	private synchronized void _writeJSONObjectFile() {
 		try {
 			JenkinsResultsParserUtil.write(
-				_jsonObjectFile, _jsonObject.toString());
+				_buildDatabaseFile, _jsonObject.toString());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
 	}
 
+	private final File _buildDatabaseFile;
 	private final JSONObject _jsonObject;
-	private final File _jsonObjectFile;
 
 }

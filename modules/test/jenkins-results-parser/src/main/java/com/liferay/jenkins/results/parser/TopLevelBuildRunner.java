@@ -52,6 +52,8 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 		invokeDownstreamBuilds();
 
+		propagateBuildDatabaseToUserContent();
+
 		waitForDownstreamBuildsToComplete();
 
 		publishJenkinsReport();
@@ -137,12 +139,15 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 		TopLevelBuildData topLevelBuildData = getBuildData();
 
-		File workspaceDir = topLevelBuildData.getWorkspaceDir();
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		File buildDatabaseFile = buildDatabase.getBuildDatabaseFile();
 
 		FilePropagator filePropagator = new FilePropagator(
-			new String[] {BuildDatabase.FILE_NAME_BUILD_DATABASE},
+			new String[] {buildDatabaseFile.getName()},
 			JenkinsResultsParserUtil.combine(
-				topLevelBuildData.getHostname(), ":", workspaceDir.toString()),
+				topLevelBuildData.getHostname(), ":",
+				buildDatabaseFile.getParent()),
 			topLevelBuildData.getDistPath(), topLevelBuildData.getDistNodes());
 
 		filePropagator.setCleanUpCommand(_COMMAND_FILE_PROPAGATOR_CLEAN_UP);
@@ -155,6 +160,16 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		distNodes.removeAll(filePropagator.getErrorSlaves());
 
 		topLevelBuildData.setDistNodes(distNodes);
+	}
+
+	protected void propagateBuildDatabaseToUserContent() {
+		if (!JenkinsResultsParserUtil.isCINode()) {
+			return;
+		}
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		publishToUserContentDir(buildDatabase.getBuildDatabaseFile());
 	}
 
 	protected void publishJenkinsReport() {

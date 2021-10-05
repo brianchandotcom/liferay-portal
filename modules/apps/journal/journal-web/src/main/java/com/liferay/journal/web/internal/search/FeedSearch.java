@@ -14,18 +14,22 @@
 
 package com.liferay.journal.web.internal.search;
 
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.util.comparator.FeedIDComparator;
 import com.liferay.journal.util.comparator.FeedNameComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Raymond Augé
@@ -58,10 +62,16 @@ public class FeedSearch extends SearchContainer<JournalFeed> {
 			FeedDisplayTerms.GROUP_ID,
 			String.valueOf(displayTerms.getGroupId()));
 
-		String orderByCol = ParamUtil.getString(
-			portletRequest, "orderByCol", "name");
-		String orderByType = ParamUtil.getString(
-			portletRequest, "orderByType", "asc");
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			httpServletRequest, JournalPortletKeys.JOURNAL,
+			"feed-search-order-by-col", "name");
+
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			httpServletRequest, JournalPortletKeys.JOURNAL,
+			"feed-search-order-by-type", "asc");
 
 		OrderByComparator<JournalFeed> orderByComparator =
 			getOrganizationOrderByComparator(orderByCol, orderByType);

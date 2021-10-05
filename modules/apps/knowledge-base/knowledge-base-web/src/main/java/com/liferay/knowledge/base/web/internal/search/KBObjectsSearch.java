@@ -18,15 +18,13 @@ import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.util.Objects;
-
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Peter Shin
@@ -44,40 +42,16 @@ public class KBObjectsSearch extends SearchContainer<Object> {
 			iteratorURL, null, EMPTY_RESULTS_MESSAGE);
 
 		try {
-			PortalPreferences preferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					portletRequest);
+			HttpServletRequest httpServletRequest =
+				PortalUtil.getHttpServletRequest(portletRequest);
 
-			PortletPreferences portletPreferences =
-				PortletPreferencesFactoryUtil.getPortletSetup(portletRequest);
+			String orderByCol = SearchOrderByUtil.getOrderByCol(
+				httpServletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+				"kb-articles-order-by-col", "priority");
 
-			String portletOrderByCol = portletPreferences.getValue(
-				"kbArticlesOrderByCol", "priority");
-			String portletOrderByType = portletPreferences.getValue(
-				"kbArticlesOrderByType", "asc");
-
-			String oldOrderByCol = preferences.getValue(
-				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "kb-articles-order-by-col",
-				portletOrderByCol);
-			String oldOrderByType = preferences.getValue(
-				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "kb-articles-order-by-type",
-				portletOrderByType);
-
-			String orderByCol = ParamUtil.getString(
-				portletRequest, "orderByCol", oldOrderByCol);
-			String orderByType = ParamUtil.getString(
-				portletRequest, "orderByType", oldOrderByType);
-
-			if (!Objects.equals(orderByCol, oldOrderByCol) ||
-				!Objects.equals(orderByType, oldOrderByType)) {
-
-				preferences.setValue(
-					KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-					"kb-articles-order-by-col", orderByCol);
-				preferences.setValue(
-					KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-					"kb-articles-order-by-type", orderByType);
-			}
+			String orderByType = SearchOrderByUtil.getOrderByType(
+				httpServletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+				"kb-articles-order-by-type", "asc");
 
 			setOrderByCol(orderByCol);
 			setOrderByType(orderByType);

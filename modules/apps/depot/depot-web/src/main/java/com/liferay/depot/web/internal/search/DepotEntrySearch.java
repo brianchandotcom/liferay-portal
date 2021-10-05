@@ -18,13 +18,11 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +31,8 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alejandro Tardín
@@ -46,29 +46,19 @@ public class DepotEntrySearch extends SearchContainer<DepotEntry> {
 		super(
 			portletRequest, iteratorURL, _headerNames, _EMPTY_RESULTS_MESSAGE);
 
-		PortalPreferences preferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(portletRequest);
-
 		String portletId = PortletProviderUtil.getPortletId(
 			User.class.getName(), PortletProvider.Action.VIEW);
 
-		String orderByCol = ParamUtil.getString(portletRequest, "orderByCol");
-		String orderByType = ParamUtil.getString(portletRequest, "orderByType");
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		if (Validator.isNotNull(orderByCol) &&
-			Validator.isNotNull(orderByType)) {
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			httpServletRequest, portletId, "depot-entries-order-by-col",
+			"name");
 
-			preferences.setValue(
-				portletId, "depot-entries-order-by-col", orderByCol);
-			preferences.setValue(
-				portletId, "depot-entries-order-by-type", orderByType);
-		}
-		else {
-			orderByCol = preferences.getValue(
-				portletId, "depot-entries-order-by-col", "name");
-			orderByType = preferences.getValue(
-				portletId, "depot-entries-order-by-type", "asc");
-		}
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			httpServletRequest, portletId, "depot-entries-order-by-type",
+			"asc");
 
 		setId(searchContainerId);
 		setOrderableHeaders(_orderableHeaders);

@@ -19,14 +19,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
@@ -35,6 +33,8 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -99,32 +99,19 @@ public class OrganizationSearch extends SearchContainer<Organization> {
 			OrganizationDisplayTerms.ZIP, displayTerms.getZip());
 
 		try {
-			PortalPreferences preferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					portletRequest);
-
 			String portletId = PortletProviderUtil.getPortletId(
 				User.class.getName(), PortletProvider.Action.VIEW);
 
-			String orderByCol = ParamUtil.getString(
-				portletRequest, "orderByCol");
-			String orderByType = ParamUtil.getString(
-				portletRequest, "orderByType");
+			HttpServletRequest httpServletRequest =
+				PortalUtil.getHttpServletRequest(portletRequest);
 
-			if (Validator.isNotNull(orderByCol) &&
-				Validator.isNotNull(orderByType)) {
+			String orderByCol = SearchOrderByUtil.getOrderByCol(
+				httpServletRequest, portletId, "organizations-order-by-col",
+				"name");
 
-				preferences.setValue(
-					portletId, "organizations-order-by-col", orderByCol);
-				preferences.setValue(
-					portletId, "organizations-order-by-type", orderByType);
-			}
-			else {
-				orderByCol = preferences.getValue(
-					portletId, "organizations-order-by-col", "name");
-				orderByType = preferences.getValue(
-					portletId, "organizations-order-by-type", "asc");
-			}
+			String orderByType = SearchOrderByUtil.getOrderByType(
+				httpServletRequest, portletId, "organizations-order-by-type",
+				"asc");
 
 			OrderByComparator<Organization> orderByComparator =
 				UsersAdminUtil.getOrganizationOrderByComparator(

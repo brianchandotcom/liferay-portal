@@ -20,15 +20,14 @@ import com.liferay.knowledge.base.web.internal.KBUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
-
-import java.util.Objects;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Peter Shin
@@ -47,32 +46,16 @@ public class KBTemplateSearch extends SearchContainer<KBTemplate> {
 			iteratorURL, null, EMPTY_RESULTS_MESSAGE);
 
 		try {
-			PortalPreferences preferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					portletRequest);
+			HttpServletRequest httpServletRequest =
+				PortalUtil.getHttpServletRequest(portletRequest);
 
-			String oldOrderByCol = preferences.getValue(
-				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "kb-templates-order-by-col",
-				"modified-date");
-			String oldOrderByType = preferences.getValue(
-				KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+			String orderByCol = SearchOrderByUtil.getOrderByCol(
+				httpServletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+				"kb-templates-order-by-col", "modified-date");
+
+			String orderByType = SearchOrderByUtil.getOrderByType(
+				httpServletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 				"kb-templates-order-by-type", "desc");
-
-			String orderByCol = ParamUtil.getString(
-				portletRequest, "orderByCol", oldOrderByCol);
-			String orderByType = ParamUtil.getString(
-				portletRequest, "orderByType", oldOrderByType);
-
-			if (!Objects.equals(orderByCol, oldOrderByCol) ||
-				!Objects.equals(orderByType, oldOrderByType)) {
-
-				preferences.setValue(
-					KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-					"kb-templates-order-by-col", orderByCol);
-				preferences.setValue(
-					KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-					"kb-templates-order-by-type", orderByType);
-			}
 
 			OrderByComparator<KBTemplate> orderByComparator =
 				KBUtil.getKBTemplateOrderByComparator(orderByCol, orderByType);

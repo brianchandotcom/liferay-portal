@@ -16,6 +16,7 @@ package com.liferay.account.admin.web.internal.dao.search;
 
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
 import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.retriever.AccountOrganizationRetriever;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -25,12 +26,15 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Objects;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,8 +69,12 @@ public class AccountOrganizationSearchContainerFactory {
 
 		searchContainer.setId("accountOrganizations");
 
-		String orderByCol = ParamUtil.getString(
-			liferayPortletRequest, "orderByCol", "name");
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(liferayPortletRequest);
+
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			httpServletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+			"organization-order-by-col", "name");
 
 		if (orderByCol.equals("id")) {
 			orderByCol = "organizationId";
@@ -74,8 +82,9 @@ public class AccountOrganizationSearchContainerFactory {
 
 		searchContainer.setOrderByCol(orderByCol);
 
-		String orderByType = ParamUtil.getString(
-			liferayPortletRequest, "orderByType", "asc");
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			httpServletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+			"organization-order-by-type", "asc");
 
 		searchContainer.setOrderByType(orderByType);
 

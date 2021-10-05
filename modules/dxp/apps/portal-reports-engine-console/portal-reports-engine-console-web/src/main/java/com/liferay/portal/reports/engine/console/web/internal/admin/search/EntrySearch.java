@@ -15,11 +15,9 @@
 package com.liferay.portal.reports.engine.console.web.internal.admin.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
 import com.liferay.portal.reports.engine.console.model.Entry;
 import com.liferay.portal.reports.engine.console.util.comparator.EntryCreateDateComparator;
@@ -29,6 +27,8 @@ import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Rafael Praxedes
@@ -78,34 +78,16 @@ public class EntrySearch extends SearchContainer<Entry> {
 		iteratorURL.setParameter(
 			EntryDisplayTerms.USER_NAME, entryDisplayTerms.getUserName());
 
-		PortalPreferences preferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		String orderByCol = ParamUtil.getString(portletRequest, "orderByCol");
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			httpServletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
+			"create-date");
 
-		if (Validator.isNotNull(orderByCol)) {
-			preferences.setValue(
-				ReportsEngineConsolePortletKeys.REPORTS_ADMIN, "order-by-col",
-				orderByCol);
-		}
-		else {
-			orderByCol = preferences.getValue(
-				ReportsEngineConsolePortletKeys.REPORTS_ADMIN, "order-by-col",
-				"create-date");
-		}
-
-		String orderByType = ParamUtil.getString(portletRequest, "orderByType");
-
-		if (Validator.isNotNull(orderByType)) {
-			preferences.setValue(
-				ReportsEngineConsolePortletKeys.REPORTS_ADMIN, "order-by-type",
-				orderByType);
-		}
-		else {
-			orderByType = preferences.getValue(
-				ReportsEngineConsolePortletKeys.REPORTS_ADMIN, "order-by-type",
-				"asc");
-		}
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			httpServletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
+			"asc");
 
 		setOrderByCol(orderByCol);
 

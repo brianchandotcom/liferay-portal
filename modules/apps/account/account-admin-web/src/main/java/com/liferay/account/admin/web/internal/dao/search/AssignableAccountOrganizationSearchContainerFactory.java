@@ -14,6 +14,7 @@
 
 package com.liferay.account.admin.web.internal.dao.search;
 
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
@@ -21,13 +22,17 @@ import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Pei-Jung Lan
@@ -47,13 +52,18 @@ public class AssignableAccountOrganizationSearchContainerFactory {
 
 		searchContainer.setId("organizations");
 
-		String orderByCol = ParamUtil.getString(
-			liferayPortletRequest, "orderByCol", "name");
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(liferayPortletRequest);
+
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			httpServletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+			"assignable-account-organization-order-by-col", "name");
 
 		searchContainer.setOrderByCol(orderByCol);
 
-		String orderByType = ParamUtil.getString(
-			liferayPortletRequest, "orderByType", "asc");
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			httpServletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+			"assignable-account-organization-order-by-type", "asc");
 
 		searchContainer.setOrderByType(orderByType);
 

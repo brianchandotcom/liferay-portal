@@ -20,15 +20,15 @@ import com.liferay.oauth.model.impl.OAuthApplicationModelImpl;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Igor Beslic
@@ -56,33 +56,16 @@ public class OAuthApplicationSearch extends SearchContainer<OAuthApplication> {
 			String.valueOf(displayTerms.getOAuthApplicationId()));
 
 		try {
-			PortalPreferences preferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					portletRequest);
+			HttpServletRequest httpServletRequest =
+				PortalUtil.getHttpServletRequest(portletRequest);
 
-			String orderByCol = ParamUtil.getString(
-				portletRequest, "orderByCol");
-			String orderByType = ParamUtil.getString(
-				portletRequest, "orderByType");
+			String orderByCol = SearchOrderByUtil.getOrderByCol(
+				httpServletRequest, OAuthPortletKeys.OAUTH_ADMIN,
+				"oauth-applications-order-by-col", "id");
 
-			if (Validator.isNotNull(orderByCol) &&
-				Validator.isNotNull(orderByType)) {
-
-				preferences.setValue(
-					OAuthPortletKeys.OAUTH_ADMIN,
-					"oauth-applications-order-by-col", orderByCol);
-				preferences.setValue(
-					OAuthPortletKeys.OAUTH_ADMIN,
-					"oauth-applications-order-by-type", orderByType);
-			}
-			else {
-				orderByCol = preferences.getValue(
-					OAuthPortletKeys.OAUTH_ADMIN,
-					"oauth-applications-order-by-col", "id");
-				orderByType = preferences.getValue(
-					OAuthPortletKeys.OAUTH_ADMIN,
-					"oauth-applications-order-by-type", "desc");
-			}
+			String orderByType = SearchOrderByUtil.getOrderByType(
+				httpServletRequest, OAuthPortletKeys.OAUTH_ADMIN,
+				"oauth-applications-order-by-type", "desc");
 
 			OrderByComparator<OAuthApplication> orderByComparator = null;
 

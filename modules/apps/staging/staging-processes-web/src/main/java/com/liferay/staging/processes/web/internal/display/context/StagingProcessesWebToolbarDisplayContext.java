@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -197,8 +198,28 @@ public class StagingProcessesWebToolbarDisplayContext {
 		).build();
 	}
 
+	public String getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, StagingProcessesPortletKeys.STAGING_PROCESSES,
+			null);
+
+		return _orderByCol;
+	}
+
 	public String getSortingOrder() {
-		return ParamUtil.getString(_httpServletRequest, "orderByType", "asc");
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, StagingProcessesPortletKeys.STAGING_PROCESSES,
+			"asc");
+
+		return _orderByType;
 	}
 
 	public String getSortingURL() {
@@ -295,10 +316,9 @@ public class StagingProcessesWebToolbarDisplayContext {
 		).setParameter(
 			"groupId", ParamUtil.getLong(_httpServletRequest, "groupId")
 		).setParameter(
-			"orderByCol", ParamUtil.getString(_httpServletRequest, "orderByCol")
+			"orderByCol", getOrderByCol()
 		).setParameter(
-			"orderByType",
-			ParamUtil.getString(_httpServletRequest, "orderByType", "asc")
+			"orderByType", getSortingOrder()
 		).setParameter(
 			"privateLayout",
 			ParamUtil.getBoolean(_httpServletRequest, "privateLayout")
@@ -310,6 +330,8 @@ public class StagingProcessesWebToolbarDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private String _orderByCol;
+	private String _orderByType;
 	private final PageContext _pageContext;
 	private final String _portletNamespace;
 

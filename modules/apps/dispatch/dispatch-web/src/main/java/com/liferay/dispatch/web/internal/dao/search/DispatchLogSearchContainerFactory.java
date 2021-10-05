@@ -14,6 +14,7 @@
 
 package com.liferay.dispatch.web.internal.dao.search;
 
+import com.liferay.dispatch.constants.DispatchPortletKeys;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.service.DispatchLogServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -23,12 +24,16 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Objects;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Igor Beslic
@@ -49,14 +54,18 @@ public class DispatchLogSearchContainerFactory {
 
 		dispatchLogSearchContainer.setId("dispatchLogs");
 
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(liferayPortletRequest);
+
 		String orderByCol = _getColumnName(
-			ParamUtil.getString(
-				liferayPortletRequest, "orderByCol", "modified-date"));
+			SearchOrderByUtil.getOrderByCol(
+				httpServletRequest, DispatchPortletKeys.DISPATCH,
+				"modified-date"));
 
 		dispatchLogSearchContainer.setOrderByCol(orderByCol);
 
-		String orderByType = ParamUtil.getString(
-			liferayPortletRequest, "orderByType", "asc");
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			httpServletRequest, DispatchPortletKeys.DISPATCH, "asc");
 
 		dispatchLogSearchContainer.setOrderByType(orderByType);
 

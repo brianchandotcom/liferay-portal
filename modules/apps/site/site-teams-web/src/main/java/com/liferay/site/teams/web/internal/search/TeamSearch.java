@@ -16,15 +16,19 @@ package com.liferay.site.teams.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.comparator.TeamNameComparator;
+import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -52,10 +56,14 @@ public class TeamSearch extends SearchContainer<Team> {
 			TeamDisplayTerms.DESCRIPTION, displayTerms.getDescription());
 		iteratorURL.setParameter(TeamDisplayTerms.NAME, displayTerms.getName());
 
-		String orderByCol = ParamUtil.getString(
-			portletRequest, "orderByCol", "name");
-		String orderByType = ParamUtil.getString(
-			portletRequest, "orderByType", "asc");
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			httpServletRequest, SiteTeamsPortletKeys.SITE_TEAMS, "name");
+
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			httpServletRequest, SiteTeamsPortletKeys.SITE_TEAMS, "asc");
 
 		OrderByComparator<Team> orderByComparator = getOrderByComparator(
 			orderByCol, orderByType);

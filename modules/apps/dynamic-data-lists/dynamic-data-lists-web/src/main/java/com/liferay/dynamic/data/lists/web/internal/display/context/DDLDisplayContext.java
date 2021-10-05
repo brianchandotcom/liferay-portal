@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -106,8 +107,9 @@ public class DDLDisplayContext {
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_storageEngine = storageEngine;
 
-		_ddlRequestHelper = new DDLRequestHelper(
-			PortalUtil.getHttpServletRequest(_renderRequest));
+		_httpServletRequest = PortalUtil.getHttpServletRequest(_renderRequest);
+
+		_ddlRequestHelper = new DDLRequestHelper(_httpServletRequest);
 
 		if (Validator.isNotNull(getPortletResource())) {
 			return;
@@ -331,14 +333,26 @@ public class DDLDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		return ParamUtil.getString(
-			_ddlRequestHelper.getRenderRequest(), "orderByCol",
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, DDLPortletKeys.DYNAMIC_DATA_LISTS,
 			"modified-date");
+
+		return _orderByCol;
 	}
 
 	public String getOrderByType() {
-		return ParamUtil.getString(
-			_ddlRequestHelper.getRenderRequest(), "orderByType", "asc");
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, DDLPortletKeys.DYNAMIC_DATA_LISTS, "asc");
+
+		return _orderByType;
 	}
 
 	public PortletURL getPortletURL() {
@@ -933,6 +947,9 @@ public class DDLDisplayContext {
 	private Boolean _hasEditFormDDMTemplatePermission;
 	private Boolean _hasShowIconsActionPermission;
 	private Boolean _hasViewPermission;
+	private final HttpServletRequest _httpServletRequest;
+	private String _orderByCol;
+	private String _orderByType;
 	private DDLRecordSet _recordSet;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

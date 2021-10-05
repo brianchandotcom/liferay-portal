@@ -14,17 +14,21 @@
 
 package com.liferay.mobile.device.rules.web.internal.search;
 
+import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.util.comparator.RuleGroupCreateDateComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Edward Han
@@ -58,10 +62,16 @@ public class RuleGroupSearch extends SearchContainer<MDRRuleGroup> {
 		iteratorURL.setParameter(
 			RuleGroupDisplayTerms.NAME, displayTerms.getName());
 
-		String orderByCol = ParamUtil.getString(
-			portletRequest, "orderByCol", "create-date");
-		String orderByType = ParamUtil.getString(
-			portletRequest, "orderByType", "asc");
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			httpServletRequest, MDRPortletKeys.MOBILE_DEVICE_RULES,
+			"rule-group-search-order-by-col", "create-date");
+
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			httpServletRequest, MDRPortletKeys.MOBILE_DEVICE_RULES,
+			"rule-group-search-order-by-type", "asc");
 
 		OrderByComparator<MDRRuleGroup> orderByComparator =
 			getOrganizationOrderByComparator(orderByCol, orderByType);

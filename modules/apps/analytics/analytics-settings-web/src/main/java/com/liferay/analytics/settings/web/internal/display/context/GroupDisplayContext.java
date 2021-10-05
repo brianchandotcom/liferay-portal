@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -54,6 +55,8 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -72,6 +75,8 @@ public class GroupDisplayContext {
 		_mvcRenderCommandName = mvcRenderCommandName;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
 		_analyticsConfiguration =
 			(AnalyticsConfiguration)renderRequest.getAttribute(
@@ -130,8 +135,10 @@ public class GroupDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_renderRequest, "orderByType", "asc");
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest,
+			AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION,
+			"group-order-by-type", "asc");
 
 		return _orderByType;
 	}
@@ -262,8 +269,10 @@ public class GroupDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(
-			_renderRequest, "orderByCol", "site-name");
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest,
+			AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION,
+			"group-order-by-col", "site-name");
 
 		return _orderByCol;
 	}
@@ -282,6 +291,7 @@ public class GroupDisplayContext {
 	private final AnalyticsConfiguration _analyticsConfiguration;
 	private Map<String, String> _channelNames;
 	private long[] _classNameIds;
+	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private final String _mvcRenderCommandName;
 	private String _orderByCol;

@@ -16,13 +16,11 @@ package com.liferay.portal.workflow.task.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.workflow.task.web.internal.util.WorkflowTaskPortletUtil;
 
@@ -32,6 +30,8 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marcellus Tavares
@@ -68,31 +68,15 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 			new DisplayTerms(portletRequest), curParam, DEFAULT_DELTA,
 			iteratorURL, headerNames, null);
 
-		PortalPreferences preferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(portletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		String orderByCol = ParamUtil.getString(portletRequest, "orderByCol");
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			httpServletRequest, PortletKeys.MY_WORKFLOW_TASK,
+			"last-activity-date");
 
-		if (Validator.isNotNull(orderByCol)) {
-			preferences.setValue(
-				PortletKeys.MY_WORKFLOW_TASK, "order-by-col", orderByCol);
-		}
-		else {
-			orderByCol = preferences.getValue(
-				PortletKeys.MY_WORKFLOW_TASK, "order-by-col",
-				"last-activity-date");
-		}
-
-		String orderByType = ParamUtil.getString(portletRequest, "orderByType");
-
-		if (Validator.isNotNull(orderByType)) {
-			preferences.setValue(
-				PortletKeys.MY_WORKFLOW_TASK, "order-by-type", orderByType);
-		}
-		else {
-			orderByType = preferences.getValue(
-				PortletKeys.MY_WORKFLOW_TASK, "order-by-type", "asc");
-		}
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			httpServletRequest, PortletKeys.MY_WORKFLOW_TASK, "asc");
 
 		OrderByComparator<WorkflowTask> orderByComparator =
 			WorkflowTaskPortletUtil.getWorkflowTaskOrderByComparator(

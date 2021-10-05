@@ -21,10 +21,12 @@ import com.liferay.analytics.settings.web.internal.search.OrganizationSearch;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -38,6 +40,8 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author André Miranda
  */
@@ -49,6 +53,8 @@ public class OrganizationDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+
 		_analyticsConfiguration =
 			(AnalyticsConfiguration)renderRequest.getAttribute(
 				AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
@@ -59,8 +65,10 @@ public class OrganizationDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_renderRequest, "orderByType", "asc");
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest,
+			AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION,
+			"organization-order-by-type", "asc");
 
 		return _orderByType;
 	}
@@ -125,8 +133,10 @@ public class OrganizationDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(
-			_renderRequest, "orderByCol", "organization-name");
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest,
+			AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION,
+			"organization-order-by-col", "organization-name");
 
 		return _orderByCol;
 	}
@@ -146,6 +156,7 @@ public class OrganizationDisplayContext {
 	}
 
 	private final AnalyticsConfiguration _analyticsConfiguration;
+	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;

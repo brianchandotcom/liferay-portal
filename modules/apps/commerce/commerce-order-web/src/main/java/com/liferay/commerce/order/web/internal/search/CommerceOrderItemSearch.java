@@ -19,11 +19,9 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +29,8 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Andrea Di Giorgi
@@ -57,33 +57,16 @@ public class CommerceOrderItemSearch
 			commerceOrderItemDisplayTerms.getName());
 
 		try {
-			PortalPreferences preferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					portletRequest);
+			HttpServletRequest httpServletRequest =
+				PortalUtil.getHttpServletRequest(portletRequest);
 
-			String orderByCol = ParamUtil.getString(
-				portletRequest, "orderByCol");
-			String orderByType = ParamUtil.getString(
-				portletRequest, "orderByType");
+			String orderByCol = SearchOrderByUtil.getOrderByCol(
+				httpServletRequest, CommercePortletKeys.COMMERCE_ORDER,
+				"commerce-order-items-order-by-col", "sku");
 
-			if (Validator.isNotNull(orderByCol) &&
-				Validator.isNotNull(orderByType)) {
-
-				preferences.setValue(
-					CommercePortletKeys.COMMERCE_ORDER,
-					"commerce-order-items-order-by-col", orderByCol);
-				preferences.setValue(
-					CommercePortletKeys.COMMERCE_ORDER,
-					"commerce-order-items-order-by-type", orderByType);
-			}
-			else {
-				orderByCol = preferences.getValue(
-					CommercePortletKeys.COMMERCE_ORDER,
-					"commerce-order-items-order-by-col", "sku");
-				orderByType = preferences.getValue(
-					CommercePortletKeys.COMMERCE_ORDER,
-					"commerce-order-items-order-by-type", "asc");
-			}
+			String orderByType = SearchOrderByUtil.getOrderByType(
+				httpServletRequest, CommercePortletKeys.COMMERCE_ORDER,
+				"commerce-order-items-order-by-type", "asc");
 
 			setOrderableHeaders(_orderableHeaders);
 			setOrderByCol(orderByCol);

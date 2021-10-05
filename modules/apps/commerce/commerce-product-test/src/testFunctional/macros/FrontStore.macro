@@ -7,7 +7,8 @@ definition {
 
 		if (IsElementPresent(locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME", key_cartItemName = "${productName}")) {
 			var newItemCount = "${currentItemCount}";
-		} else {
+		}
+		else {
 			var newItemCount = ${currentItemCount} + 1;
 		}
 

@@ -77,10 +77,13 @@ public class CopyTemplateEntryMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		serviceContext = ServiceContextFactory.getInstance(
+			TemplateEntry.class.getName(), actionRequest);
+
 		_templateEntryLocalService.addTemplateEntry(
 			themeDisplay.getUserId(), templateEntry.getGroupId(),
 			ddmTemplate.getTemplateId(), templateEntry.getInfoItemClassName(),
-			templateEntry.getInfoItemFormVariationKey());
+			templateEntry.getInfoItemFormVariationKey(), serviceContext);
 	}
 
 	@Reference

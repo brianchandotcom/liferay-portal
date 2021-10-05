@@ -112,7 +112,7 @@ public class AddTemplateEntryMVCActionCommand
 				_templateEntryLocalService.addTemplateEntry(
 					themeDisplay.getUserId(), serviceContext.getScopeGroupId(),
 					ddmTemplate.getTemplateId(), infoItemClassName,
-					infoItemFormVariationKey);
+					infoItemFormVariationKey, serviceContext);
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,

@@ -155,10 +155,10 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 				</li>
 
 				<aui:script>
-					var closeCustomizationOptions = document.getElementById(
+					const closeCustomizationOptions = document.getElementById(
 						'<%= portletNamespace %>closeCustomizationOptions'
 					);
-					var controlMenu = document.querySelector(
+					const controlMenu = document.querySelector(
 						'#<%= portletNamespace %>customizationBar .control-menu-level-2'
 					);
 
@@ -168,7 +168,7 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 						});
 					}
 
-					var customizationButton = document.getElementById(
+					const customizationButton = document.getElementById(
 						'<%= portletNamespace %>customizationButton'
 					);
 

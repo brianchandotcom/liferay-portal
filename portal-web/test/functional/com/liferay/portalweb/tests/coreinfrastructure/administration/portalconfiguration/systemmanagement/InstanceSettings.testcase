@@ -393,7 +393,7 @@ definition {
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
-			configurationName = "OpenID Connect Provider",
+			configurationName = "OpenID Connect Provider Connection",
 			configurationScope = "Virtual Instance Scope");
 
 		OpenIDConnect.addProvider(
@@ -852,7 +852,7 @@ definition {
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
-			configurationName = "OpenID Connect Provider",
+			configurationName = "OpenID Connect Provider Connection",
 			configurationScope = "Virtual Instance Scope");
 
 		OpenIDConnect.addProvider(
@@ -892,7 +892,7 @@ definition {
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
-			configurationName = "OpenID Connect Provider",
+			configurationName = "OpenID Connect Provider Connection",
 			configurationScope = "Virtual Instance Scope");
 
 		LexiconEntry.viewEntryName(rowEntry = "Google");
@@ -904,7 +904,7 @@ definition {
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "SSO",
-			configurationName = "OpenID Connect Provider",
+			configurationName = "OpenID Connect Provider Connection",
 			configurationScope = "Virtual Instance Scope");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Google");
@@ -921,7 +921,7 @@ definition {
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
-			configurationName = "OpenID Connect Provider",
+			configurationName = "OpenID Connect Provider Connection",
 			configurationScope = "Virtual Instance Scope");
 
 		OpenIDConnect.addProvider(
@@ -949,7 +949,7 @@ definition {
 		PortalSettings.gotoConfiguration(
 			baseURL = "http://www.able.com:8080",
 			configurationCategory = "SSO",
-			configurationName = "OpenID Connect Provider",
+			configurationName = "OpenID Connect Provider Connection",
 			configurationScope = "Virtual Instance Scope");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Google");
@@ -964,7 +964,7 @@ definition {
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
-			configurationName = "OpenID Connect Provider",
+			configurationName = "OpenID Connect Provider Connection",
 			configurationScope = "Virtual Instance Scope");
 
 		OpenIDConnect.addProvider(
@@ -986,7 +986,7 @@ definition {
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
-			configurationName = "OpenID Connect Provider",
+			configurationName = "OpenID Connect Provider Connection",
 			configurationScope = "Virtual Instance Scope");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Google");
@@ -1001,7 +1001,7 @@ definition {
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
-			configurationName = "OpenID Connect Provider",
+			configurationName = "OpenID Connect Provider Connection",
 			configurationScope = "Virtual Instance Scope");
 
 		OpenIDConnect.addProvider(
@@ -1085,7 +1085,7 @@ definition {
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
-			configurationName = "OpenID Connect Provider",
+			configurationName = "OpenID Connect Provider Connection",
 			configurationScope = "Virtual Instance Scope");
 
 		OpenIDConnect.addProvider(

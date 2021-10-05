@@ -347,6 +347,16 @@ definition {
 			key_menuItem = "Invite Users",
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 
+		if (isSet(publicationRole)) {
+			Click(
+				key_title = "Viewers can view. Viewers cannot edit, publish, or invite other users.",
+				locator1 = "Button#ANY_TITLE");
+
+			Click(
+				key_publicationRole = "${publicationRole}",
+				locator1 = "Publications#PUBLICATION_ROLE_BUTTON");
+		}
+
 		for (var keyword : list "${userInvite}") {
 			Type(
 				locator1 = "Publications#KEYWORD_TEXTFIELD",
@@ -359,7 +369,9 @@ definition {
 
 		Button.clickNoError(button = "Send");
 
-		AssertConfirm(value1 = "You are inviting user ${userInvite} who does not have access to Publications. This user will be assigned the Publications User role to gain access to Publications.");
+		if ("${userMissingPublicationsRole}" == "true") {
+			AssertConfirm(value1 = "You are inviting user ${userInvite} who does not have access to Publications. This user will be assigned the Publications User role to gain access to Publications.");
+		}
 
 		Alert.viewSuccessMessage();
 	}

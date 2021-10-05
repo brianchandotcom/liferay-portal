@@ -75,7 +75,8 @@ definition {
 
 		Publications.inviteUsers(
 			publicationName = "Publication Name",
-			userInvite = "userea@liferay.com");
+			userInvite = "userea@liferay.com",
+			userMissingPublicationsRole = "true");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",

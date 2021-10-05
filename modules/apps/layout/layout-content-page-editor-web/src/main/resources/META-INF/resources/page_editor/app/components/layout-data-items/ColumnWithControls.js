@@ -250,31 +250,11 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 					rightColumn,
 				} = resizeInfo.current;
 
-				// Calculate displacement in px and columns
+				// Calculate displacement in px
 
 				const clientXDiff = event.clientX - initialX;
-				const columnDiff = Math.round(clientXDiff / columnWidth);
 
-				// Stop resizing if we are out of allowed displacement
-
-				if (columnDiff < minColumnDiff || columnDiff > maxColumnDiff) {
-					return;
-				}
-
-				// Calculate new column sizes. For the right column, if we
-				// enlarge it enough, it will go down to the row below and will
-				// occupy it completely
-
-				let nextSizes = {
-					[leftColumn.item.itemId]:
-						leftColumn.initialSize + columnDiff,
-					[rightColumn.item.itemId]:
-						columnDiff === rightColumn.initialSize
-							? ROW_SIZE
-							: rightColumn.initialSize - columnDiff,
-				};
-
-				setNextColumnSizes(nextSizes);
+				let nextSizes = null;
 
 				// Special case of resizing the first column of a row (only for
 				// columns on the second row or below)
@@ -331,6 +311,32 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 
 					return;
 				}
+
+				// Standard resizing of a column that is not the first
+
+				// Calculate displacement in columns and stop resizing if we
+				// are out of allowed displacement
+
+				const columnDiff = Math.round(clientXDiff / columnWidth);
+
+				if (columnDiff < minColumnDiff || columnDiff > maxColumnDiff) {
+					return;
+				}
+
+				// Calculate new column sizes. For the right column, if we
+				// enlarge it enough, it will go down to the row below and will
+				// occupy it completely
+
+				nextSizes = {
+					[leftColumn.item.itemId]:
+						leftColumn.initialSize + columnDiff,
+					[rightColumn.item.itemId]:
+						columnDiff === rightColumn.initialSize
+							? ROW_SIZE
+							: rightColumn.initialSize - columnDiff,
+				};
+
+				setNextColumnSizes(nextSizes);
 			},
 			[endResize, resizing, setNextColumnSizes, nextColumnSizes]
 		),

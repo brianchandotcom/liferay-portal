@@ -79,15 +79,9 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 						</div>
 					</li>
 
-					<aui:script use="liferay-layout-customization-settings">
-						var layoutCustomizationSettings = new Liferay.LayoutCustomizationSettings({
-							namespace: '<%= portletNamespace %>',
-						});
-
-						Liferay.once('screenLoad', () => {
-							layoutCustomizationSettings.destroy();
-						});
-					</aui:script>
+					<liferay-frontend:component
+						module="js/LayoutCustomizationSettings"
+					/>
 				</c:if>
 
 				<%

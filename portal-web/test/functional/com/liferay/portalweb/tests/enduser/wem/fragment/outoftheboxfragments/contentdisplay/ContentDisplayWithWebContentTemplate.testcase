@@ -64,7 +64,7 @@ definition {
 
 		task ("Select the web content and custom template in Content Display") {
 			PageEditor.editContentDisplay(
-				customWebcontenttemplate = "WC Template Name",
+				customTemplate = "WC Template Name",
 				fragmentName = "Content Display",
 				webcontent = "true",
 				webContentTitle = "Web Content Title");
@@ -114,7 +114,7 @@ definition {
 			fragmentName = "Content Display");
 
 		PageEditor.editContentDisplay(
-			customWebcontenttemplate = "WC Template Name",
+			customTemplate = "WC Template Name",
 			fragmentName = "Content Display",
 			webcontent = "true",
 			webContentContent = "${siteID}",
@@ -170,7 +170,7 @@ definition {
 
 		task ("Select the web content and custom template in Content Display") {
 			PageEditor.editContentDisplay(
-				customWebcontenttemplate = "WC Template Name",
+				customTemplate = "WC Template Name",
 				fragmentName = "Content Display",
 				webcontent = "true",
 				webContentTitle = "Web Content Title");
@@ -247,7 +247,7 @@ definition {
 
 		task ("Select the web content and custom template in Content Display") {
 			PageEditor.editContentDisplay(
-				customWebcontenttemplate = "WC Template Name",
+				customTemplate = "WC Template Name",
 				fragmentName = "Content Display",
 				webcontent = "true",
 				webContentTitle = "Web Content Title");
@@ -449,7 +449,7 @@ definition {
 
 		task ("Select the web content and custom template in Content Display") {
 			PageEditor.editContentDisplay(
-				customWebcontenttemplate = "WC Template Name",
+				customTemplate = "WC Template Name",
 				fragmentName = "Content Display",
 				webcontent = "true",
 				webContentTitle = "Web Content Title");

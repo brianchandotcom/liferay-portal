@@ -445,7 +445,7 @@ User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
 
 			<c:if test="<%= attachmentsFileEntriesCount > 0 %>">
 				<div class="card-body message-attachments">
-					<h3><liferay-ui:message key="attachments" />:</h3>
+					<p class="h3"><liferay-ui:message key="attachments" />:</p>
 
 					<ul>
 

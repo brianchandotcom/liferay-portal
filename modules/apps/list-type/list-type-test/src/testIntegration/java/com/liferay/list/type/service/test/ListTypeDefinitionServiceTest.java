@@ -92,7 +92,7 @@ public class ListTypeDefinitionServiceTest {
 	@Test
 	public void testDeleteListTypeDefinition() throws Exception {
 		try {
-			_testDeleteListTypeDefinition(_defaultUser);
+			_testDeleteListTypeDefinition(_user, _defaultUser);
 
 			Assert.fail();
 		}
@@ -105,13 +105,16 @@ public class ListTypeDefinitionServiceTest {
 						" must have DELETE permission for"));
 		}
 
-		_testDeleteListTypeDefinition(_user);
+		_testDeleteListTypeDefinition(_defaultUser, _defaultUser);
+		_testDeleteListTypeDefinition(_user, _user);
 	}
 
 	@Test
 	public void testGetListTypeDefinition() throws Exception {
 		try {
-			_testGetListTypeDefinition(_defaultUser);
+			_testGetListTypeDefinition(_user, _defaultUser);
+
+			Assert.fail();
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
 			String message = principalException.getMessage();
@@ -122,13 +125,14 @@ public class ListTypeDefinitionServiceTest {
 						" must have VIEW permission for"));
 		}
 
-		_testGetListTypeDefinition(_user);
+		_testGetListTypeDefinition(_defaultUser, _defaultUser);
+		_testGetListTypeDefinition(_user, _user);
 	}
 
 	@Test
 	public void testUpdateListTypeDefinition() throws Exception {
 		try {
-			_testUpdateListTypeDefinition(_defaultUser);
+			_testUpdateListTypeDefinition(_user, _defaultUser);
 
 			Assert.fail();
 		}
@@ -141,7 +145,8 @@ public class ListTypeDefinitionServiceTest {
 						" must have UPDATE permission for"));
 		}
 
-		_testUpdateListTypeDefinition(_user);
+		_testUpdateListTypeDefinition(_defaultUser, _defaultUser);
+		_testUpdateListTypeDefinition(_user, _user);
 	}
 
 	private ListTypeDefinition _addListTypeDefinition(User user)
@@ -180,14 +185,16 @@ public class ListTypeDefinitionServiceTest {
 		}
 	}
 
-	private void _testDeleteListTypeDefinition(User user) throws Exception {
+	private void _testDeleteListTypeDefinition(User ownerUser, User user)
+		throws Exception {
+
 		ListTypeDefinition deleteListTypeDefinition = null;
 		ListTypeDefinition listTypeDefinition = null;
 
 		try {
 			_setUser(user);
 
-			listTypeDefinition = _addListTypeDefinition(user);
+			listTypeDefinition = _addListTypeDefinition(ownerUser);
 
 			deleteListTypeDefinition =
 				_listTypeDefinitionService.deleteListTypeDefinition(
@@ -201,13 +208,15 @@ public class ListTypeDefinitionServiceTest {
 		}
 	}
 
-	private void _testGetListTypeDefinition(User user) throws Exception {
+	private void _testGetListTypeDefinition(User ownerUser, User user)
+		throws Exception {
+
 		ListTypeDefinition listTypeDefinition = null;
 
 		try {
 			_setUser(user);
 
-			listTypeDefinition = _addListTypeDefinition(user);
+			listTypeDefinition = _addListTypeDefinition(ownerUser);
 
 			_listTypeDefinitionService.getListTypeDefinition(
 				listTypeDefinition.getListTypeDefinitionId());
@@ -220,13 +229,15 @@ public class ListTypeDefinitionServiceTest {
 		}
 	}
 
-	private void _testUpdateListTypeDefinition(User user) throws Exception {
+	private void _testUpdateListTypeDefinition(User ownerUser, User user)
+		throws Exception {
+
 		ListTypeDefinition listTypeDefinition = null;
 
 		try {
 			_setUser(user);
 
-			listTypeDefinition = _addListTypeDefinition(user);
+			listTypeDefinition = _addListTypeDefinition(ownerUser);
 
 			listTypeDefinition =
 				_listTypeDefinitionService.updateListTypeDefinition(

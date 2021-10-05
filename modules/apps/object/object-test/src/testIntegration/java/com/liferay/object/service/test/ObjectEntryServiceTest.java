@@ -69,7 +69,6 @@ public class ObjectEntryServiceTest {
 	public void setUp() throws Exception {
 		_defaultUser = _userLocalService.getDefaultUser(
 			TestPropsValues.getCompanyId());
-		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 		_user = TestPropsValues.getUser();
@@ -122,7 +121,7 @@ public class ObjectEntryServiceTest {
 	@Test
 	public void testDeleteObjectEntry() throws Exception {
 		try {
-			_testDeleteObjectEntry(_defaultUser);
+			_testDeleteObjectEntry(_user, _defaultUser);
 
 			Assert.fail();
 		}
@@ -135,13 +134,16 @@ public class ObjectEntryServiceTest {
 						" must have DELETE permission for"));
 		}
 
-		_testDeleteObjectEntry(_user);
+		_testDeleteObjectEntry(_defaultUser, _defaultUser);
+		_testDeleteObjectEntry(_user, _user);
 	}
 
 	@Test
 	public void testGetObjectEntry() throws Exception {
 		try {
-			_testGetObjectEntry(_defaultUser);
+			_testGetObjectEntry(_user, _defaultUser);
+
+			Assert.fail();
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
 			String message = principalException.getMessage();
@@ -152,7 +154,8 @@ public class ObjectEntryServiceTest {
 						" must have VIEW permission for"));
 		}
 
-		_testGetObjectEntry(_user);
+		_testGetObjectEntry(_defaultUser, _defaultUser);
+		_testGetObjectEntry(_user, _user);
 	}
 
 	@Test
@@ -221,14 +224,16 @@ public class ObjectEntryServiceTest {
 		}
 	}
 
-	private void _testDeleteObjectEntry(User user) throws Exception {
+	private void _testDeleteObjectEntry(User ownerUser, User user)
+		throws Exception {
+
 		ObjectEntry deleteObjectEntry = null;
 		ObjectEntry objectEntry = null;
 
 		try {
 			_setUser(user);
 
-			objectEntry = _addObjectEntry(user);
+			objectEntry = _addObjectEntry(ownerUser);
 
 			deleteObjectEntry = _objectEntryService.deleteObjectEntry(
 				objectEntry.getObjectEntryId());
@@ -240,13 +245,15 @@ public class ObjectEntryServiceTest {
 		}
 	}
 
-	private void _testGetObjectEntry(User user) throws Exception {
+	private void _testGetObjectEntry(User ownerUser, User user)
+		throws Exception {
+
 		ObjectEntry objectEntry = null;
 
 		try {
 			_setUser(user);
 
-			objectEntry = _addObjectEntry(user);
+			objectEntry = _addObjectEntry(ownerUser);
 
 			_objectEntryService.getObjectEntry(objectEntry.getObjectEntryId());
 		}
@@ -271,7 +278,6 @@ public class ObjectEntryServiceTest {
 	@Inject
 	private ObjectEntryService _objectEntryService;
 
-	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
 	private User _user;
 

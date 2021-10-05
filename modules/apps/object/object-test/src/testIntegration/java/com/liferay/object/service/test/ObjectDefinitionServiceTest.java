@@ -93,7 +93,7 @@ public class ObjectDefinitionServiceTest {
 	@Test
 	public void testDeleteObjectDefinition() throws Exception {
 		try {
-			_testDeleteObjectDefinition(_defaultUser);
+			_testDeleteObjectDefinition(_user, _defaultUser);
 
 			Assert.fail();
 		}
@@ -106,13 +106,16 @@ public class ObjectDefinitionServiceTest {
 						" must have DELETE permission for"));
 		}
 
-		_testDeleteObjectDefinition(_user);
+		_testDeleteObjectDefinition(_defaultUser, _defaultUser);
+		_testDeleteObjectDefinition(_user, _user);
 	}
 
 	@Test
 	public void testGetObjectDefinition() throws Exception {
 		try {
-			_testGetObjectDefinition(_defaultUser);
+			_testGetObjectDefinition(_user, _defaultUser);
+
+			Assert.fail();
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
 			String message = principalException.getMessage();
@@ -123,7 +126,8 @@ public class ObjectDefinitionServiceTest {
 						" must have VIEW permission for"));
 		}
 
-		_testGetObjectDefinition(_user);
+		_testGetObjectDefinition(_defaultUser, _defaultUser);
+		_testGetObjectDefinition(_user, _user);
 	}
 
 	@Test
@@ -148,7 +152,7 @@ public class ObjectDefinitionServiceTest {
 	@Test
 	public void testUpdateCustomObjectDefinition() throws Exception {
 		try {
-			_testUpdateCustomObjectDefinition(_defaultUser);
+			_testUpdateCustomObjectDefinition(_user, _defaultUser);
 
 			Assert.fail();
 		}
@@ -161,7 +165,8 @@ public class ObjectDefinitionServiceTest {
 						" must have UPDATE permission for"));
 		}
 
-		_testUpdateCustomObjectDefinition(_user);
+		_testUpdateCustomObjectDefinition(_defaultUser, _defaultUser);
+		_testUpdateCustomObjectDefinition(_user, _user);
 	}
 
 	private ObjectDefinition _addCustomObjectDefinition(User user)
@@ -219,14 +224,16 @@ public class ObjectDefinitionServiceTest {
 		}
 	}
 
-	private void _testDeleteObjectDefinition(User user) throws Exception {
+	private void _testDeleteObjectDefinition(User ownerUser, User user)
+		throws Exception {
+
 		ObjectDefinition deleteObjectDefinition = null;
 		ObjectDefinition objectDefinition = null;
 
 		try {
 			_setUser(user);
 
-			objectDefinition = _addCustomObjectDefinition(user);
+			objectDefinition = _addCustomObjectDefinition(ownerUser);
 
 			deleteObjectDefinition =
 				_objectDefinitionService.deleteObjectDefinition(
@@ -240,13 +247,15 @@ public class ObjectDefinitionServiceTest {
 		}
 	}
 
-	private void _testGetObjectDefinition(User user) throws Exception {
+	private void _testGetObjectDefinition(User ownerUser, User user)
+		throws Exception {
+
 		ObjectDefinition objectDefinition = null;
 
 		try {
 			_setUser(user);
 
-			objectDefinition = _addCustomObjectDefinition(user);
+			objectDefinition = _addCustomObjectDefinition(ownerUser);
 
 			_objectDefinitionService.getObjectDefinition(
 				objectDefinition.getObjectDefinitionId());
@@ -289,7 +298,9 @@ public class ObjectDefinitionServiceTest {
 		}
 	}
 
-	private void _testUpdateCustomObjectDefinition(User user) throws Exception {
+	private void _testUpdateCustomObjectDefinition(User ownerUser, User user)
+		throws Exception {
+
 		ObjectDefinition objectDefinition = null;
 
 		try {
@@ -297,7 +308,7 @@ public class ObjectDefinitionServiceTest {
 
 			objectDefinition =
 				_objectDefinitionLocalService.addCustomObjectDefinition(
-					user.getUserId(),
+					ownerUser.getUserId(),
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					"A" + RandomTestUtil.randomString(), null, null,

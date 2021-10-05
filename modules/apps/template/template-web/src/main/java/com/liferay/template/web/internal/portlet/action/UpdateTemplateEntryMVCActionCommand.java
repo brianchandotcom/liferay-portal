@@ -65,8 +65,8 @@ public class UpdateTemplateEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		UploadPortletRequest uploadPortletRequest =
-			_getUploadPortletRequest(actionRequest);
+		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
+			actionRequest);
 
 		long ddmTemplateId = ParamUtil.getLong(
 			uploadPortletRequest, "ddmTemplateId");
@@ -99,7 +99,7 @@ public class UpdateTemplateEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDMTemplate.class.getName(), uploadPortletRequest);
+			DDMTemplate.class.getName(), actionRequest);
 
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.updateTemplate(
 			serviceContext.getUserId(), ddmTemplateId, classPK, nameMap,

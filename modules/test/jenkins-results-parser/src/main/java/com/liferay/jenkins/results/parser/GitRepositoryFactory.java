@@ -115,7 +115,7 @@ public class GitRepositoryFactory {
 
 		if ((gitRepositoryName == null) || (gitUpstreamBranchName == null)) {
 			throw new RuntimeException(
-				"Could not find git directory name " + gitDirectoryName);
+				"Unable to find git directory name " + gitDirectoryName);
 		}
 
 		if (gitRepositoryName.matches("liferay-plugins(-ee)?")) {
@@ -171,7 +171,7 @@ public class GitRepositoryFactory {
 
 		if ((gitRepositoryName == null) || (gitUpstreamBranchName == null)) {
 			throw new RuntimeException(
-				"Could not find git directory name " + gitDirectoryName);
+				"Unable to find git directory name " + gitDirectoryName);
 		}
 
 		RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(

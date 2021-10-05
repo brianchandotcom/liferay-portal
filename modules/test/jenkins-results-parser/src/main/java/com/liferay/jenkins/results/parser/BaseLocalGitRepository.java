@@ -155,7 +155,7 @@ public abstract class BaseLocalGitRepository
 			getDirectoryName());
 
 		if (!directory.exists()) {
-			throw new IllegalArgumentException("Could not find " + directory);
+			throw new IllegalArgumentException("Unable to find " + directory);
 		}
 
 		_setDirectory(directory);

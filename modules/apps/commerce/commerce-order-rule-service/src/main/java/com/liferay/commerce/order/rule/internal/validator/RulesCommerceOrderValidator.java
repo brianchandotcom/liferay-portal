@@ -36,7 +36,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import com.liferay.portal.kernel.util.Validator;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

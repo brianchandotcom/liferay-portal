@@ -4051,8 +4051,6 @@ definition {
 	}
 
 	macro waitForAutoSave {
-		Pause(locator1 = "1000");
-
 		WaitForVisible(locator1 = "PageEditor#AUTOSAVE_MESSAGE");
 	}
 

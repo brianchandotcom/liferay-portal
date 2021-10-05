@@ -20,7 +20,7 @@ import com.liferay.batch.engine.service.BatchEngineExportTaskLocalServiceUtil;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalServiceUtil;
 import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
-import com.liferay.batch.planner.service.BatchPlannerLogLocalServiceUtil;
+import com.liferay.batch.planner.service.BatchPlannerLogServiceUtil;
 import com.liferay.batch.planner.service.BatchPlannerPlanServiceUtil;
 import com.liferay.batch.planner.web.internal.display.BatchPlannerLogDisplay;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -57,7 +57,9 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 		).buildPortletURL();
 	}
 
-	public SearchContainer<BatchPlannerLogDisplay> getSearchContainer() {
+	public SearchContainer<BatchPlannerLogDisplay> getSearchContainer()
+		throws PortalException {
+
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -80,7 +82,7 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 
 		_searchContainer.setResults(
 			TransformUtil.transform(
-				BatchPlannerLogLocalServiceUtil.getBatchPlannerLogs(
+				BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogs(
 					companyId, _searchContainer.getStart(),
 					_searchContainer.getEnd(),
 					OrderByComparatorFactoryUtil.create(
@@ -88,7 +90,7 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 						orderByType.equals("asc"))),
 				this::_toBatchPlannerLogDisplay));
 		_searchContainer.setTotal(
-			BatchPlannerLogLocalServiceUtil.getBatchPlannerLogsCount(
+			BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogsCount(
 				companyId));
 
 		return _searchContainer;

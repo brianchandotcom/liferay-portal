@@ -1260,6 +1260,11 @@ public abstract class BaseUserAccountResourceImpl
 			existingUserAccount.setKeywords(userAccount.getKeywords());
 		}
 
+		if (userAccount.getLastLoginDate() != null) {
+			existingUserAccount.setLastLoginDate(
+				userAccount.getLastLoginDate());
+		}
+
 		if (userAccount.getName() != null) {
 			existingUserAccount.setName(userAccount.getName());
 		}

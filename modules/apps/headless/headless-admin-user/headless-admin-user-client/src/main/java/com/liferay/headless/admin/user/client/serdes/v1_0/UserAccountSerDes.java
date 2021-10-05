@@ -350,6 +350,21 @@ public class UserAccountSerDes {
 			sb.append("]");
 		}
 
+		if (userAccount.getLastLoginDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"lastLoginDate\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(userAccount.getLastLoginDate()));
+
+			sb.append("\"");
+		}
+
 		if (userAccount.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -628,6 +643,15 @@ public class UserAccountSerDes {
 			map.put("keywords", String.valueOf(userAccount.getKeywords()));
 		}
 
+		if (userAccount.getLastLoginDate() == null) {
+			map.put("lastLoginDate", null);
+		}
+		else {
+			map.put(
+				"lastLoginDate",
+				liferayToJSONDateFormat.format(userAccount.getLastLoginDate()));
+		}
+
 		if (userAccount.getName() == null) {
 			map.put("name", null);
 		}
@@ -814,6 +838,12 @@ public class UserAccountSerDes {
 				if (jsonParserFieldValue != null) {
 					userAccount.setKeywords(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "lastLoginDate")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setLastLoginDate(
+						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

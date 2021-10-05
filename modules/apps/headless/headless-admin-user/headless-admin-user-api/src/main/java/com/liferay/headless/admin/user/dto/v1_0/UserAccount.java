@@ -605,6 +605,34 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] keywords;
 
+	@Schema(description = "The last time the user logged in.")
+	public Date getLastLoginDate() {
+		return lastLoginDate;
+	}
+
+	public void setLastLoginDate(Date lastLoginDate) {
+		this.lastLoginDate = lastLoginDate;
+	}
+
+	@JsonIgnore
+	public void setLastLoginDate(
+		UnsafeSupplier<Date, Exception> lastLoginDateUnsafeSupplier) {
+
+		try {
+			lastLoginDate = lastLoginDateUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The last time the user logged in.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Date lastLoginDate;
+
 	@Schema(description = "The user's full name.")
 	public String getName() {
 		return name;
@@ -1088,6 +1116,20 @@ public class UserAccount implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (lastLoginDate != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"lastLoginDate\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(lastLoginDate));
+
+			sb.append("\"");
 		}
 
 		if (name != null) {

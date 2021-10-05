@@ -121,8 +121,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9221 | Test Summary: Create a Web Behavior criteria at least/at most times"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentCriteriaLeastMostTimes {
-		property portal.upstream = "afonso";
-
 		ACUtils.createWCAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -139,7 +137,7 @@ definition {
 			userLoginEmailAddress = "ac@liferay.com",
 			userLoginFullName = "ac ac");
 
-		for (var n : list "1,2,3,4") {
+		for (var n : list "1,2,3") {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
@@ -164,7 +162,7 @@ definition {
 		ACSegments.editWebBehaviorCriterion(
 			atLeastMost = "at least",
 			indexField = "1",
-			occurenceNumber = "7",
+			occurenceNumber = "6",
 			searchTerm = "Web Content AC Title");
 
 		ACSegments.saveSegment();
@@ -561,8 +559,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9217 | Test Summary: Add segment using a web behavior 'before' some time"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentUsingBefore {
-		property portal.upstream = "afonso";
-
 		ACUtils.createWCAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

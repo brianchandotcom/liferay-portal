@@ -586,6 +586,12 @@ definition {
 		for (var name : list "${nameList}") {
 			var key_nameList = "${name}";
 
+			while (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST", value1 = "${name}") && (maxIterations = "50")) {
+				Refresh();
+
+				Pause(locator1 = "3000");
+			}
+
 			AssertTextEquals(
 				locator1 = "ACUtils#NAME_LIST",
 				value1 = "${name}");

@@ -61,15 +61,17 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 		[props.fetchDataDebounce]
 	);
 
-	const currentValue = selectedItem
-		? getValueFromItem(selectedItem, props.itemsKey)
-		: null;
+	const currentValue = useMemo(() => {
+		return selectedItem
+			? getValueFromItem(selectedItem, props.itemsKey)
+			: null;
+	}, [selectedItem, props.itemsKey]);
 
-	const currentLabel = selectedItem
-		? getValueFromItem(selectedItem, props.itemsLabel)
-		: null;
-
-	const CustomView = props.customView || FetchedCustomView;
+	const currentLabel = useMemo(() => {
+		return selectedItem
+			? getValueFromItem(selectedItem, props.itemsLabel)
+			: null;
+	}, [selectedItem, props.itemsLabel]);
 
 	useEffect(() => {
 		if (items && items.length === 1 && props.autofill) {
@@ -79,25 +81,49 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 	}, [items, props.autofill, props.itemsKey, props.itemsLabel]);
 
 	useEffect(() => {
-		const value =
-			selectedItem && getValueFromItem(selectedItem, props.itemsKey);
+		updateSelectedItem(
+			formatAutocompleteItem(
+				props.initialValue,
+				props.itemsKey,
+				props.initialLabel,
+				props.itemsLabel
+			)
+		);
+	}, [
+		props.initialLabel,
+		props.initialValue,
+		props.itemsKey,
+		props.itemsLabel,
+	]);
+
+	useEffect(() => {
+		if (!initialised) {
+			return;
+		}
 
 		if (props.id) {
 			Liferay.fire(AUTOCOMPLETE_VALUE_UPDATED, {
+				currentValue,
 				id: props.id,
 				itemData: selectedItem,
-				value,
 			});
 		}
 
 		if (onValueUpdated) {
-			onValueUpdated(value, selectedItem);
+			onValueUpdated(currentValue, selectedItem);
 		}
 
 		if (onChange) {
-			onChange({target: {value}});
+			onChange({target: {value: currentValue}});
 		}
-	}, [selectedItem, props.id, props.itemsKey, onValueUpdated, onChange]);
+	}, [
+		initialised,
+		selectedItem,
+		props.id,
+		onValueUpdated,
+		onChange,
+		currentValue,
+	]);
 
 	useEffect(() => {
 		if (query) {
@@ -197,48 +223,41 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 		};
 	}, [active]);
 
-	let results;
+	const CustomView = props.customView || FetchedCustomView;
 
-	if (CustomView) {
-		results = (
-			<CustomView
-				items={items}
-				lastPage={lastPage}
-				loading={loading}
-				page={page}
-				pageSize={pageSize}
-				totalCount={totalCount}
-				updatePage={updatePage}
-				updatePageSize={updatePageSize}
-				updateSelectedItem={updateSelectedItem}
-			/>
-		);
-	}
-	else {
-		results = (
-			<ClayDropDown.ItemList className="mb-0">
-				{items && items.length === 0 && (
-					<ClayDropDown.Item className="disabled">
-						{Liferay.Language.get('no-items-were-found')}
-					</ClayDropDown.Item>
-				)}
-				{items &&
-					items.length > 0 &&
-					items.map((item) => (
-						<ClayAutocomplete.Item
-							key={item.id || String(item[props.itemsKey])}
-							onClick={() => {
-								updateSelectedItem(item);
-								setActive(false);
-							}}
-							value={String(
-								getValueFromItem(item, props.itemsLabel)
-							)}
-						/>
-					))}
-			</ClayDropDown.ItemList>
-		);
-	}
+	const results = CustomView ? (
+		<CustomView
+			items={items}
+			lastPage={lastPage}
+			loading={loading}
+			page={page}
+			pageSize={pageSize}
+			totalCount={totalCount}
+			updatePage={updatePage}
+			updatePageSize={updatePageSize}
+			updateSelectedItem={updateSelectedItem}
+		/>
+	) : (
+		<ClayDropDown.ItemList className="mb-0">
+			{items && items.length === 0 && (
+				<ClayDropDown.Item className="disabled">
+					{Liferay.Language.get('no-items-were-found')}
+				</ClayDropDown.Item>
+			)}
+			{items &&
+				items.length > 0 &&
+				items.map((item) => (
+					<ClayAutocomplete.Item
+						key={item.id || String(item[props.itemsKey])}
+						onClick={() => {
+							updateSelectedItem(item);
+							setActive(false);
+						}}
+						value={String(getValueFromItem(item, props.itemsLabel))}
+					/>
+				))}
+		</ClayDropDown.ItemList>
+	);
 
 	const wrappedResults =
 		props.infiniteScrollMode && CustomView ? (

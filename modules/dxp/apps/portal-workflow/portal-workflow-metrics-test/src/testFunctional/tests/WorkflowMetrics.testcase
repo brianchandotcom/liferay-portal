@@ -2924,6 +2924,7 @@ definition {
 	@priority = "5"
 	test ViewReports {
 		property environment.acceptance = "true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewReports";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

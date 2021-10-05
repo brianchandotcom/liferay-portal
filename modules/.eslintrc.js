@@ -42,7 +42,6 @@ config = {
 		'@liferay/aui/no-get-body': 'off',
 		'@liferay/aui/no-io': 'off',
 		'@liferay/aui/no-merge': 'off',
-		'@liferay/aui/no-modal': 'off',
 		'@liferay/aui/no-node': 'off',
 		'@liferay/aui/no-object': 'off',
 		'@liferay/aui/no-one': 'off',

@@ -45,6 +45,10 @@ definition {
 			var entrySubtitle = "";
 		}
 
+		if (!(isSet(entryAbstractDescription))) {
+			var entryAbstractDescription = "";
+		}
+
 		if (!(isSet(guestPermissions))) {
 			var guestPermissions = "true";
 		}
@@ -102,7 +106,7 @@ definition {
 			-d title=${entryTitle} \
 			-d subtitle=${entrySubtitle} \
 			-d urlTitle=${friendlyURL} \
-			-d description= \
+			-d description=${entryAbstractDescription} \
 			-d content=${contentXML} \
 			-d displayDateMonth=${displayDateMonth} \
 			-d displayDateDay=${displayDateDay} \

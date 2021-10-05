@@ -719,6 +719,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 		if (json != null) {
 			documentFolder = DocumentFolder.toDTO(json);
 		}
+		else if (resourcePath.contains("/site-initializer/documents/extra")) {
+			documentFolder = DocumentFolder.toDTO(
+				JSONUtil.put(
+					"name", FileUtil.getShortFileName(resourcePath)
+				).put(
+					"viewableBy", "Anyone"
+				).toString());
+		}
 		else {
 			documentFolder = DocumentFolder.toDTO(
 				JSONUtil.put(
@@ -787,6 +795,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			if (json != null) {
 				values = Collections.singletonMap("document", json);
+			}
+			else if (resourcePath.contains(
+						"/site-initializer/documents/extra")) {
+
+				values = Collections.singletonMap(
+					"document",
+					JSONUtil.put(
+						"viewableBy", "Anyone"
+					).toString());
 			}
 
 			Document document = null;

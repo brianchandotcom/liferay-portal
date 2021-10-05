@@ -36,22 +36,20 @@ import org.json.JSONTokener;
  */
 public class JSONValidator {
 
-	public static void validate(String json, InputStream inputStream)
-		throws JSONValidatorException {
+	public JSONValidator(InputStream inputStream) {
+		JSONObject jsonSchemaJSONObject = new JSONObject(
+			new JSONTokener(inputStream));
 
+		_schema = SchemaLoader.load(jsonSchemaJSONObject);
+	}
+
+	public void validate(String json) throws JSONValidatorException {
 		if (Validator.isNull(json)) {
 			return;
 		}
 
 		try {
-			JSONObject jsonSchemaJSONObject = new JSONObject(
-				new JSONTokener(inputStream));
-
-			Schema schema = SchemaLoader.load(jsonSchemaJSONObject);
-
-			JSONObject jsonObject = new JSONObject(json);
-
-			schema.validate(jsonObject);
+			_validator.performValidation(_schema, new JSONObject(json));
 		}
 		catch (Exception exception) {
 			if (exception instanceof JSONException) {
@@ -93,5 +91,11 @@ public class JSONValidator {
 			throw new JSONValidatorException(exception);
 		}
 	}
+
+	private static final org.everit.json.schema.Validator _validator =
+		org.everit.json.schema.Validator.builder(
+		).build();
+
+	private final Schema _schema;
 
 }

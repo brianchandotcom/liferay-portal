@@ -41,9 +41,10 @@ public class JSONValidatorTest {
 		expectedException.expectMessage(
 			new StringStartsWith("extraneous key [extra] is not permitted"));
 
-		JSONValidator.validate(
-			_read("example_invalid_extra_properties.json"),
+		JSONValidator jsonValidator = new JSONValidator(
 			_readJSONSchemaAsStream());
+
+		jsonValidator.validate(_read("example_invalid_extra_properties.json"));
 	}
 
 	@Test
@@ -54,15 +55,19 @@ public class JSONValidatorTest {
 		expectedException.expectMessage(
 			new StringStartsWith("required key [example] not found"));
 
-		JSONValidator.validate(
-			_read("example_invalid_required_property_missing.json"),
+		JSONValidator jsonValidator = new JSONValidator(
 			_readJSONSchemaAsStream());
+
+		jsonValidator.validate(
+			_read("example_invalid_required_property_missing.json"));
 	}
 
 	@Test
 	public void testValidateExampleValidRequired() throws Exception {
-		JSONValidator.validate(
-			_read("example_valid_required.json"), _readJSONSchemaAsStream());
+		JSONValidator jsonValidator = new JSONValidator(
+			_readJSONSchemaAsStream());
+
+		jsonValidator.validate(_read("example_valid_required.json"));
 	}
 
 	@Rule

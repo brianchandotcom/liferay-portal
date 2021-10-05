@@ -523,12 +523,12 @@ definition {
 
 		AssertElementPresent(
 			key_cartItemSKU = "MIN55861",
-			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
 			value1 = "U-Joint");
 
 		AssertElementPresent(
 			key_cartItemSKU = "MIN55859",
-			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
 			value1 = "Torque Converters");
 
 		Button.click(button = "Remove All Items");
@@ -537,12 +537,12 @@ definition {
 
 		AssertElementNotPresent(
 			key_cartItemSKU = "MIN55861",
-			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
 			value1 = "U-Joint");
 
 		AssertElementNotPresent(
 			key_cartItemSKU = "MIN55859",
-			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
 			value1 = "Torque Converters");
 	}
 
@@ -579,7 +579,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_cartItemSKU = "MIN55859",
-			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
 			value1 = "Torque Converters");
 	}
 

@@ -389,7 +389,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MINI_CART_ITEM_NAME</td>
+	<td>MINI_CART_ITEM_NAME_USING_SKU</td>
 	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSKU}')]/../h5</td>
 	<td></td>
 </tr>

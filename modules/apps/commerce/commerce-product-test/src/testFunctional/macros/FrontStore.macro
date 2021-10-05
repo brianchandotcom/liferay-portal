@@ -70,7 +70,7 @@ definition {
 	macro viewMiniCartItem {
 		AssertTextEquals(
 			key_cartItemSKU = "${cartItemSKU}",
-			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
 			value1 = "${cartItemName}");
 
 		AssertTextEquals(

@@ -1,52 +1,57 @@
 diff --git a/org/apache/felix/scr/impl/ComponentRegistry.java b/org/apache/felix/scr/impl/ComponentRegistry.java
-index e11e0b2..dc979c9 100644
+index 7169f87..c9f9c0c 100644
 --- a/org/apache/felix/scr/impl/ComponentRegistry.java
 +++ b/org/apache/felix/scr/impl/ComponentRegistry.java
-@@ -713,48 +713,6 @@ public class ComponentRegistry
+@@ -725,53 +725,6 @@ public class ComponentRegistry
  
      public void updateChangeCount()
      {
 -        if ( registration != null )
 -        {
--            synchronized ( changeCountLock )
--            {
--                this.changeCount++;
--                final long count = this.changeCount;
--                if ( this.timer == null )
--                {
--                    this.timer = new Timer();
--                }
--                try
--                {
--                    timer.schedule(new TimerTask()
--                        {
+-            final long count = this.changeCount.incrementAndGet();
 -
--                            @Override
--                            public void run() {
--                                synchronized ( changeCountLock )
+-            final Timer timer;
+-            synchronized ( this.changeCountTimerLock ) {
+-                if ( this.changeCountTimer == null ) {
+-                    this.changeCountTimer = new Timer();
+-                }
+-                timer = this.changeCountTimer;
+-            }
+-            try
+-            {
+-                timer.schedule(new TimerTask()
+-                    {
+-
+-                        @Override
+-                        public void run()
+-                        {
+-                            if ( changeCount.get() == count )
+-                            {
+-                                try
 -                                {
--                                    if ( changeCount == count )
+-                                    registration.setProperties(getServiceRegistrationProperties());
+-                                }
+-                                catch ( final IllegalStateException ise)
+-                                {
+-                                    // we ignore this as this might happen on shutdown
+-                                }
+-                                synchronized ( changeCountTimerLock )
+-                                {
+-                                    if ( changeCount.get() == count )
 -                                    {
--                                        try
--                                        {
--                                            registration.setProperties(getServiceRegistrationProperties());
--                                        }
--                                        catch ( final IllegalStateException ise)
--                                        {
--                                            // we ignore this as this might happen on shutdown
--                                        }
--                                        timer.cancel();
--                                        timer = null;
+-                                        changeCountTimer.cancel();
+-                                        changeCountTimer = null;
 -                                    }
 -                                }
+-
 -                            }
--                        }, m_configuration.serviceChangecountTimeout());
--                }
--                catch (Exception e) {
--                    m_logger.log(LogService.LOG_WARNING,
--                        "Service changecount Timer for {0} had a problem", e,
--                        registration.getReference());
--                }
+-                        }
+-                    }, m_configuration.serviceChangecountTimeout());
+-            }
+-            catch (Exception e) {
+-                m_logger.log(Level.WARN,
+-                    "Service changecount Timer for {0} had a problem", e,
+-                    registration.getReference());
 -            }
 -        }
      }

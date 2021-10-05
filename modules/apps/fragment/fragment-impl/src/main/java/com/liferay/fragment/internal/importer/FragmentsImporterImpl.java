@@ -300,10 +300,12 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					fragmentEntry.getPreviewFileEntryId(), status);
 			}
 
-			fragmentEntry.setReadOnly(readOnly);
+			if (fragmentEntry.isReadOnly() != readOnly) {
+				fragmentEntry.setReadOnly(readOnly);
 
-			fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
-				fragmentEntry);
+				fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
+					fragmentEntry);
+			}
 
 			FragmentsImporterResultEntry.Status
 				fragmentsImporterResultEntryStatus =
@@ -313,9 +315,6 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				fragmentsImporterResultEntryStatus =
 					FragmentsImporterResultEntry.Status.IMPORTED_DRAFT;
 			}
-
-			fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
-				fragmentEntry);
 
 			_fragmentsImporterResultEntries.add(
 				new FragmentsImporterResultEntry(

@@ -23,6 +23,7 @@ import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -128,6 +129,12 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 						accountEntryUserRel.getAccountUserId());
 				}
 			}
+
+			User user = accountEntryUserRel.getUser();
+
+			user.setJobTitle(ParamUtil.getString(actionRequest, "jobTitle"));
+
+			_userLocalService.updateUser(user);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 

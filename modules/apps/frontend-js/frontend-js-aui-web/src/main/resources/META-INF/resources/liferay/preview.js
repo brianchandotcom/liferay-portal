@@ -73,7 +73,6 @@ AUI.add(
 		var Preview = A.Component.create({
 			ATTRS: {
 				actionContent: {
-					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 				},
 				activeThumb: {
@@ -87,11 +86,9 @@ AUI.add(
 					value: 0,
 				},
 				currentPreviewImage: {
-					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 				},
 				imageListContent: {
-					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 				},
 				maxIndex: {
@@ -99,11 +96,9 @@ AUI.add(
 					value: 0,
 				},
 				previewFileIndexNode: {
-					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 				},
 				toolbar: {
-					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 				},
 			},
@@ -127,7 +122,6 @@ AUI.add(
 					var loadingCountNode = instance._loadingCountNode;
 
 					if (!loadingCountNode) {
-						// eslint-disable-next-line @liferay/aui/no-node
 						loadingCountNode = A.Node.create(TPL_LOADING_COUNT);
 
 						instance._loadingCountNode = loadingCountNode;
@@ -142,7 +136,6 @@ AUI.add(
 					var loadingIndicator = instance._loadingIndicator;
 
 					if (!loadingIndicator) {
-						// eslint-disable-next-line @liferay/aui/no-node
 						loadingIndicator = A.Node.create(
 							A.Lang.sub(TPL_LOADING_INDICATOR, [
 								Liferay.Language.get('loading'),
@@ -223,12 +216,9 @@ AUI.add(
 					var maxPreviewControls = instance._maxPreviewControls;
 
 					if (!maxPreviewControls) {
-						// eslint-disable-next-line @liferay/aui/no-node
 						var arrowLeft = A.Node.create(TPL_MAX_ARROW_LEFT);
-						// eslint-disable-next-line @liferay/aui/no-node
 						var arrowRight = A.Node.create(TPL_MAX_ARROW_RIGHT);
 
-						// eslint-disable-next-line @liferay/aui/no-node
 						maxPreviewControls = A.Node.create(TPL_MAX_CONTROLS);
 
 						maxPreviewControls.append(arrowLeft);

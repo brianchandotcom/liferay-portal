@@ -121,9 +121,11 @@ definition {
 
 		SelectWindow(locator1 = "name=undefined");
 
-		AnalyticsCloud.loginAnalyticsCloud(
-			emailAddress = "test@liferay.com",
-			password = "test");
+		if (IsElementPresent(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_USER_LOGIN_FIELD")) {
+			AnalyticsCloud.loginAnalyticsCloud(
+				emailAddress = "test@liferay.com",
+				password = "test");
+		}
 	}
 
 	macro runTest {

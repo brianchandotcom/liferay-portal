@@ -389,4 +389,203 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-137569. The page creator could use information template in Content Display."
+	@priority = "5"
+	test MapToContentDisplay {
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a blogs entry with description") {
+			JSONBlog.addEntry(
+				entryAbstractDescription = "Blogs Entry Description",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document entry") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category in vocabulary") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Navigate to the Information Templates admin") {
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Add an information template for Web Content Article and Basic Web Content") {
+			InformationTemplates.addCP(
+				informationTemplateName = "Web Content Information Template",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+		}
+
+		task ("Add the Title and Content fields") {
+			InformationTemplates.addField(
+				fieldName = "Title",
+				panelTitle = "Basic Information");
+
+			InformationTemplates.addField(
+				fieldName = "Content",
+				panelTitle = "Content");
+
+			PortletEntry.save();
+		}
+
+		task ("Add an information template for Blogs Entry") {
+			InformationTemplates.addCP(
+				informationTemplateName = "Blogs Entry Information Template",
+				itemType = "Blogs Entry");
+		}
+
+		task ("Add the Title and Description fields") {
+			InformationTemplates.addField(
+				fieldName = "Title",
+				panelTitle = "Basic Information");
+
+			InformationTemplates.addField(
+				fieldName = "Description",
+				panelTitle = "Configuration");
+
+			PortletEntry.save();
+		}
+
+		task ("Add an information template for Document and Basic Document") {
+			InformationTemplates.addCP(
+				informationTemplateName = "Document Information Template",
+				itemSubtype = "Basic Document",
+				itemType = "Document");
+		}
+
+		task ("Add the Title and Author fields") {
+			for (var fieldName : list "Title,Author Name") {
+				InformationTemplates.addField(
+					fieldName = "${fieldName}",
+					panelTitle = "Basic Information");
+			}
+
+			PortletEntry.save();
+		}
+
+		task ("Add an information template for Category") {
+			InformationTemplates.addCP(
+				informationTemplateName = "Category Information Template",
+				itemType = "Category");
+		}
+
+		task ("Add the Name and Vocabulary fields") {
+			for (var fieldName : list "Name,Vocabulary") {
+				InformationTemplates.addField(
+					fieldName = "${fieldName}",
+					panelTitle = "Basic Information");
+			}
+
+			PortletEntry.save();
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a Content Display fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and custom template in Content Display") {
+			PageEditor.editContentDisplay(
+				customTemplate = "Web Content Information Template",
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View the title and content of web content are shown") {
+			for (var content : list "Title,Content") {
+				AssertTextEquals.assertPartialText(
+					key_content = "Web Content ${content}",
+					key_fragmentClass = "content",
+					locator1 = "Fragment#FRAGMENT",
+					value1 = "Web Content ${content}");
+			}
+		}
+
+		task ("Select the blogs entry and custom template in Content Display") {
+			PageEditor.editContentDisplay(
+				blogs = "true",
+				customTemplate = "Blogs Entry Information Template",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				fragmentName = "Content Display");
+		}
+
+		task ("View the title and description of blogs are shown") {
+			AssertTextEquals.assertPartialText(
+				key_content = "Blogs Entry Title Blogs Entry Description",
+				key_fragmentClass = "content",
+				locator1 = "Fragment#FRAGMENT",
+				value1 = "Blogs Entry Title Blogs Entry Description");
+		}
+
+		task ("Select the documents and custom template in Content Display") {
+			PageEditor.editContentDisplay(
+				customTemplate = "Document Information Template",
+				documentandmedia = "true",
+				fragmentName = "Content Display",
+				imageFileName = "Document Title",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("View the title and author of documents are shown") {
+			AssertTextEquals.assertPartialText(
+				key_content = "Document Title Test Test",
+				key_fragmentClass = "content",
+				locator1 = "Fragment#FRAGMENT",
+				value1 = "Document Title Test Test");
+		}
+
+		task ("Select the category and custom template in Content Display") {
+			PageEditor.editContentDisplay(
+				assetTitle = "Category Name",
+				categories = "true",
+				customTemplate = "Category Information Template",
+				fragmentName = "Content Display");
+		}
+
+		task ("View the category and vocabulary names are shown") {
+			AssertTextEquals.assertPartialText(
+				key_content = "Category Name Vocabulary Name",
+				key_fragmentClass = "content",
+				locator1 = "Fragment#FRAGMENT",
+				value1 = "Category Name Vocabulary Name");
+		}
+	}
+
 }

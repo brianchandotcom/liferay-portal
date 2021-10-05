@@ -346,12 +346,69 @@ definition {
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify if it's possible map and view the image of user Profile in a Fragment of Display Page"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ViewImageUserProfileFromSpecificEntry {
 
-		// TODO LPS-139031 ViewImageUserProfileFromSpecificEntry pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject",
+				value = "Test text");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Image");
+
+		DoubleClick(
+			key_fragmentName = "Image",
+			locator1 = "Fragment#FRAGMENT_BODY");
+
+		Navigator.gotoNavTab(navTab = "Page Elements");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			id = "image-square",
+			fragmentName = "Image");
+
+		Select(
+			key_fieldLabel = "Source Selection",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Mapping");
+
+		VisualizeObjectDisplayPage.addItem(
+			frameTitle = "Select",
+			pluralLabelName = "Custom Objects");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "User Profile Image");
+
+		PageEditor.clickPublish();
+
+		SitePages.gotoPageMenuItem(
+			pageName = "Test Content Page Name",
+			menuItem = "Edit");
+
+		PageEditor.viewFragmentEditableImage(
+			id = "image-square",
+			imageDescription = "",
+			imageFileName = "");
 	}
 
 }

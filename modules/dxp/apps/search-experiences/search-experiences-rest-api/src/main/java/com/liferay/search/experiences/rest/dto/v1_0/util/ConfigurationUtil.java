@@ -30,8 +30,10 @@ import java.util.Map;
 public class ConfigurationUtil {
 
 	public static Configuration toConfiguration(String json) {
-		Configuration configuration = Configuration.unsafeToDTO(json);
+		return unpack(Configuration.unsafeToDTO(json));
+	}
 
+	public static Configuration unpack(Configuration configuration) {
 		AggregationConfiguration aggregationConfiguration =
 			configuration.getAggregationConfiguration();
 

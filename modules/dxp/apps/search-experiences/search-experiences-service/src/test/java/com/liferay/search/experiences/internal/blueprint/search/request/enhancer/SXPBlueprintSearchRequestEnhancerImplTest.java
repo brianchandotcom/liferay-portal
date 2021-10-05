@@ -28,14 +28,13 @@ import com.liferay.portal.search.internal.filter.ComplexQueryPartBuilderFactoryI
 import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
 import com.liferay.portal.search.internal.highlight.FieldConfigBuilderFactoryImpl;
 import com.liferay.portal.search.internal.highlight.HighlightBuilderFactoryImpl;
-import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderImpl;
 import com.liferay.portal.search.internal.query.QueriesImpl;
 import com.liferay.portal.search.internal.script.ScriptsImpl;
 import com.liferay.portal.search.internal.searcher.SearchRequestBuilderFactoryImpl;
 import com.liferay.portal.search.internal.sort.SortsImpl;
 import com.liferay.portal.search.query.WrapperQuery;
 import com.liferay.portal.search.searcher.SearchRequest;
-import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
@@ -49,7 +48,7 @@ import com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.QueryEntry;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SortConfiguration;
-import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
+import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
 
 import java.io.InputStream;
 
@@ -87,9 +86,7 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 				}
 			});
 
-		_enhance(_searchRequestBuilder, sxpBlueprint);
-
-		SearchRequest searchRequest = _searchRequestBuilder.build();
+		SearchRequest searchRequest = _toSearchRequest(sxpBlueprint);
 
 		Map<String, Aggregation> aggregationsMap =
 			searchRequest.getAggregationsMap();
@@ -97,7 +94,7 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 		Assert.assertEquals(
 			aggregationsMap.toString(), 10, aggregationsMap.size());
 
-		_assert(configuration);
+		_assert(sxpBlueprint);
 	}
 
 	@Test
@@ -126,9 +123,7 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 				}
 			});
 
-		_enhance(_searchRequestBuilder, sxpBlueprint);
-
-		SearchRequest searchRequest = _searchRequestBuilder.build();
+		SearchRequest searchRequest = _toSearchRequest(sxpBlueprint);
 
 		com.liferay.portal.search.highlight.Highlight highlight =
 			searchRequest.getHighlight();
@@ -143,7 +138,7 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 		Assert.assertArrayEquals(postTags, highlight.getPostTags());
 		Assert.assertArrayEquals(preTags, highlight.getPreTags());
 
-		_assert(configuration);
+		_assert(sxpBlueprint);
 	}
 
 	@Test
@@ -165,13 +160,11 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 				}
 			).build());
 
-		_enhance(_searchRequestBuilder, sxpBlueprint);
-
-		SearchRequest searchRequest = _searchRequestBuilder.build();
+		SearchRequest searchRequest = _toSearchRequest(sxpBlueprint);
 
 		Assert.assertNull(searchRequest.getQueryString());
 
-		_assert(configuration);
+		_assert(sxpBlueprint);
 	}
 
 	@Test
@@ -203,9 +196,7 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 				}
 			});
 
-		_enhance(_searchRequestBuilder, sxpBlueprint);
-
-		SearchRequest searchRequest = _searchRequestBuilder.build();
+		SearchRequest searchRequest = _toSearchRequest(sxpBlueprint);
 
 		List<ComplexQueryPart> complexQueryParts =
 			searchRequest.getComplexQueryParts();
@@ -217,13 +208,10 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 		WrapperQuery wrapperQuery = (WrapperQuery)complexQueryPart.getQuery();
 
 		Assert.assertEquals(
-			_formatJSON(
-				JSONUtil.put(
-					"term", JSONUtil.put("status", 0)
-				).toString()),
+			_formatJSON(JSONUtil.put("term", JSONUtil.put("status", 0))),
 			_formatJSON(new String(wrapperQuery.getSource())));
 
-		_assert(configuration);
+		_assert(sxpBlueprint);
 	}
 
 	@Test
@@ -242,24 +230,20 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 				}
 			});
 
-		_enhance(_searchRequestBuilder, sxpBlueprint);
-
-		SearchRequest searchRequest = _searchRequestBuilder.build();
+		SearchRequest searchRequest = _toSearchRequest(sxpBlueprint);
 
 		List<Sort> sorts = searchRequest.getSorts();
 
 		Assert.assertEquals(sorts.toString(), 9, sorts.size());
 
-		_assert(configuration);
+		_assert(sxpBlueprint);
 	}
 
-	private void _assert(Configuration configuration1) throws Exception {
-		Configuration configuration2 = ConfigurationUtil.toConfiguration(
-			configuration1.toString());
-
+	private void _assert(SXPBlueprint sxpBlueprint) throws Exception {
 		Assert.assertEquals(
-			_formatJSON(configuration1.toString()),
-			_formatJSON(configuration2.toString()));
+			_formatJSON(sxpBlueprint),
+			_formatJSON(
+				SXPBlueprintUtil.toSXPBlueprint(String.valueOf(sxpBlueprint))));
 	}
 
 	private SXPBlueprint _createSXPBlueprint() {
@@ -270,8 +254,28 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 		};
 	}
 
-	private void _enhance(
-		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint) {
+	private String _formatJSON(Object object) throws Exception {
+		return JSONUtil.toString(
+			JSONFactoryUtil.createJSONObject(String.valueOf(object)));
+	}
+
+	private String _read(String resourceName) {
+		Class<?> clazz = getClass();
+
+		try (InputStream inputStream = clazz.getResourceAsStream(
+				resourceName)) {
+
+			return StringUtil.read(inputStream);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(
+				"Unable to load resource: " + resourceName, exception);
+		}
+	}
+
+	private SearchRequest _toSearchRequest(SXPBlueprint sxpBlueprint) {
+		SearchRequestBuilderFactory searchRequestBuilderFactory =
+			new SearchRequestBuilderFactoryImpl();
 
 		SXPBlueprintSearchRequestEnhancerImpl
 			sxpBlueprintSearchRequestEnhancerImpl =
@@ -307,33 +311,12 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 		sxpBlueprintSearchRequestEnhancerImpl.activate();
 
-		// TODO Test the public method that takes in string
-
-		//sxpBlueprintSearchRequestEnhancerImpl.enhance(
-		//	searchRequestBuilder, sxpBlueprint.toString());
-		sxpBlueprintSearchRequestEnhancerImpl.enhance(
-			searchRequestBuilder, sxpBlueprint);
+		return searchRequestBuilderFactory.builder(
+		).withSearchRequestBuilder(
+			searchRequestBuilder ->
+				sxpBlueprintSearchRequestEnhancerImpl.enhance(
+					searchRequestBuilder, sxpBlueprint.toString())
+		).build();
 	}
-
-	private String _formatJSON(String string) throws Exception {
-		return JSONUtil.toString(JSONFactoryUtil.createJSONObject(string));
-	}
-
-	private String _read(String resourceName) {
-		Class<?> clazz = getClass();
-
-		try (InputStream inputStream = clazz.getResourceAsStream(
-				resourceName)) {
-
-			return StringUtil.read(inputStream);
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(
-				"Unable to load resource: " + resourceName, exception);
-		}
-	}
-
-	private final SearchRequestBuilder _searchRequestBuilder =
-		new SearchRequestBuilderImpl(new SearchRequestBuilderFactoryImpl());
 
 }

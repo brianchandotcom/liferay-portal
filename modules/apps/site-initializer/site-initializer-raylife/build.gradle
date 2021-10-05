@@ -1,13 +1,31 @@
+import aQute.bnd.version.Version
+
 import com.liferay.gradle.util.OSDetector
 import com.liferay.gradle.util.StringUtil
 
+import org.gradle.util.GUtil
+
 apply plugin: "com.liferay.node"
+
+configurations {
+	extra
+}
 
 task buildExtra
 task forceDeploy
+task zipExtra(type: Zip)
+
+Version extraZipVersion = Version.parseVersion("0.0.0")
+
+artifacts {
+	extra zipExtra
+}
+
+dependencies {
+	extra ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.extra", version: extraZipVersion
+}
 
 forceDeploy {
-	dependsOn buildExtra
 	finalizedBy deploy
 }
 
@@ -19,6 +37,41 @@ node {
 	global = false
 	nodeVersion = "14.17.6"
 	useNpm = false
+}
+
+processResources {
+	if (gradle.startParameter.taskNames.contains("forceDeploy") || (extraZipVersion.major < 1)) {
+		dependsOn buildExtra
+
+		into("site-initializer/documents/extra") {
+			from new File(buildDir, "extra")
+		}
+	}
+	else {
+		into("site-initializer/documents/extra") {
+			from zipTree(configurations.extra.singleFile)
+		}
+	}
+}
+
+uploadExtra {
+	repositories {
+		mavenDeployer {
+			pom {
+				artifactId = GUtil.loadProperties(file("bnd.bnd"))["Bundle-SymbolicName"] + ".extra"
+				groupId = "com.liferay"
+				version = extraZipVersion
+			}
+		}
+	}
+}
+
+zipExtra {
+	dependsOn buildExtra
+
+	archiveName "extra.zip"
+	destinationDir new File(buildDir, "dist")
+	from new File(buildDir, "extra")
 }
 
 _createExtraTasks()
@@ -74,7 +127,7 @@ private void _createExtraTasks() {
 				copy {
 					from new File(dir, "build/static")
 					include "js/*.js"
-					into new File(sourceSets.main.output.resourcesDir, "site-initializer/documents/extra/" + dir.name)
+					into new File(buildDir, "extra/" + dir.name)
 				}
 			}
 		}

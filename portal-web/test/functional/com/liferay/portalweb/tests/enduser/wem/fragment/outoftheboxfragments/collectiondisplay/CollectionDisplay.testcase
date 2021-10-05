@@ -663,7 +663,7 @@ definition {
 	@description = "This is a use case for LPS-123825. The user could navigate through pages in Collection Display with the Numeric pagination."
 	@priority = "5"
 	test NavigateToPagesInCollectionDisplayWithNumericPagination {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		task ("Add 5 web contents") {
 			for (var i : list "1,2,3,4,5") {

@@ -392,11 +392,11 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	public User importUserByUuid(long ldapServerId, long companyId, String uuid)
 		throws Exception {
 
-		Properties userExpandoMappings = _ldapSettings.getUserExpandoMappings(
+		Properties userMappings = _ldapSettings.getUserMappings(
 			ldapServerId, companyId);
 
 		String attributeName = GetterUtil.getString(
-			userExpandoMappings.getProperty("uuid"));
+			userMappings.getProperty("uuid"));
 
 		if (Validator.isBlank(attributeName)) {
 			if (_log.isDebugEnabled()) {

@@ -72,10 +72,12 @@ import com.liferay.sites.kernel.util.Sites;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -301,22 +303,33 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					fragmentEntryLink);
 
 			for (String portletId : portletIds) {
-				Group targetGroup = targetLayout.getGroup();
 				String resourceName = PortletIdCodec.decodePortletName(
 					portletId);
 				String sourceResourcePrimKey =
 					PortletPermissionUtil.getPrimaryKey(
 						sourceLayout.getPlid(), portletId);
-				String targetResourcePrimKey =
-					PortletPermissionUtil.getPrimaryKey(
-						targetLayout.getPlid(), portletId);
 				List<String> actionIds =
 					ResourceActionsUtil.getPortletResourceActions(resourceName);
 
-				List<Role> roles = _roleLocalService.getGroupRelatedRoles(
-					targetLayout.getGroupId());
+				Map<Long, Set<String>> sourceRoleIdsToActionIds =
+					_resourcePermissionLocalService.
+						getAvailableResourcePermissionActionIds(
+							targetLayout.getCompanyId(), resourceName,
+							ResourceConstants.SCOPE_INDIVIDUAL,
+							sourceResourcePrimKey, actionIds);
 
-				for (Role role : roles) {
+				if (sourceRoleIdsToActionIds.isEmpty()) {
+					continue;
+				}
+
+				Group targetGroup = targetLayout.getGroup();
+
+				Set<Long> roleIds = new HashSet<>();
+
+				for (Role role :
+						_roleLocalService.getGroupRelatedRoles(
+							targetLayout.getGroupId())) {
+
 					String roleName = role.getName();
 
 					if (roleName.equals(RoleConstants.ADMINISTRATOR) ||
@@ -327,20 +340,32 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 						continue;
 					}
 
-					List<String> actions =
-						_resourcePermissionLocalService.
-							getAvailableResourcePermissionActionIds(
-								targetLayout.getCompanyId(), resourceName,
-								ResourceConstants.SCOPE_INDIVIDUAL,
-								sourceResourcePrimKey, role.getRoleId(),
-								actionIds);
-
-					_resourcePermissionLocalService.setResourcePermissions(
-						targetLayout.getCompanyId(), resourceName,
-						ResourceConstants.SCOPE_INDIVIDUAL,
-						targetResourcePrimKey, role.getRoleId(),
-						actions.toArray(new String[0]));
+					roleIds.add(role.getRoleId());
 				}
+
+				Map<Long, String[]> targetRoleIdsToActionIds = new HashMap<>();
+
+				for (Map.Entry<Long, Set<String>> entry :
+						sourceRoleIdsToActionIds.entrySet()) {
+
+					Long roleId = entry.getKey();
+
+					if (roleIds.contains(roleId)) {
+						Set<String> sourceActionIds = entry.getValue();
+
+						targetRoleIdsToActionIds.put(
+							roleId, sourceActionIds.toArray(new String[0]));
+					}
+				}
+
+				String targetResourcePrimKey =
+					PortletPermissionUtil.getPrimaryKey(
+						targetLayout.getPlid(), portletId);
+
+				_resourcePermissionLocalService.setResourcePermissions(
+					targetLayout.getCompanyId(), resourceName,
+					ResourceConstants.SCOPE_INDIVIDUAL, targetResourcePrimKey,
+					targetRoleIdsToActionIds);
 			}
 		}
 	}

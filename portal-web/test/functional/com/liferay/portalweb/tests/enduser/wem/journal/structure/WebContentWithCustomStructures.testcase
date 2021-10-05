@@ -585,6 +585,7 @@ definition {
 	@priority = "4"
 	test AddWebContentWithRepeatableRichTextField {
 		property environment.acceptance = "true";
+		property portal.acceptance = "true";
 
 		task ("Add a web content structure with a repeatable Rich Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

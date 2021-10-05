@@ -417,6 +417,7 @@ definition {
 	@refactorneeded
 	test CanViewSourceCodeFormattedInTextView {
 		property environment.acceptance = "true";
+		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",

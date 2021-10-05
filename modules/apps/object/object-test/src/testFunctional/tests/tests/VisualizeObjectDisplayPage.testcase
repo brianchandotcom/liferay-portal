@@ -95,6 +95,16 @@ definition {
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "BigDecimal");
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "123.123456");
+
+		PageEditor.clickPublish();
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "${siteName}");
+
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "123.123456");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Boolean type for a specific Object"
@@ -132,6 +142,16 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Boolean");
+
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "true");
+
+		PageEditor.clickPublish();
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "${siteName}");
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "true");
 	}
@@ -182,6 +202,16 @@ definition {
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Double");
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "1.54");
+
+		PageEditor.clickPublish();
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "${siteName}");
+
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "1.54");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Integer type for a specific Object"
@@ -221,6 +251,16 @@ definition {
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Integer");
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "123456789");
+
+		PageEditor.clickPublish();
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "${siteName}");
+
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "123456789");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Long type for a specific Object"
@@ -258,6 +298,16 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Long");
+
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "123456789123456789");
+
+		PageEditor.clickPublish();
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "${siteName}");
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "123456789123456789");
 	}
@@ -301,6 +351,16 @@ definition {
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "String");
 
 		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "Test text");
+
+		PageEditor.clickPublish();
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "${siteName}");
+
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "Test text");
 	}
 
 	@description = "LPS-137104 - Verify if Objects and its data are displayed as a Content Type and Subtype for a Page Template"
@@ -316,13 +376,10 @@ definition {
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
 		VisualizeObjectDisplayPage.createObjectPageTemplate(
-			contentType = "Object",
-			pageTemplateName = "Object Display Page Template",
-			subtype = "Custom Object");
+			contentType = "Custom Object",
+			pageTemplateName = "Object Display Page Template");
 
-		VisualizeObjectDisplayPage.validateObjectContentType(contentType = "Object");
-
-		VisualizeObjectDisplayPage.validateObjectSubtype(subtype = "Custom Object");
+		VisualizeObjectDisplayPage.validateObjectContentType(contentType = "Custom Object");
 	}
 
 	@description = "LPS-137105 - Verify if the Object entries are rendered when previewing it"

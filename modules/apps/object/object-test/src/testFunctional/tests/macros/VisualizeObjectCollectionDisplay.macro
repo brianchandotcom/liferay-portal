@@ -1,25 +1,5 @@
 definition {
 
-	macro addDisplayPageTemplate {
-		VisualizeObjectDisplayPage.openPageTemplate();
-
-		Click(locator1 = "VisualizeObjectCollectionDisplay#ADD_BLANK_PAGE");
-
-		Type(
-			locator1 = "VisualizeObjectCollectionDisplay#NAME_DISPLAY_PAGE",
-			value1 = "${displayPageName}");
-
-		Select(
-			locator1 = "VisualizeObjectCollectionDisplay#SELECT_CONTENT_TYPE",
-			value1 = "${contentType}");
-
-		Select(
-			locator1 = "VisualizeObjectCollectionDisplay#SELECT_SUBTYPE",
-			value1 = "${subtype}");
-
-		Click(locator1 = "VisualizeObjectCollectionDisplay#SAVE_BUTTON");
-	}
-
 	macro addFieldForCollectionDisplay {
 		DragAndDrop.javaScriptDragAndDropToUp(
 			key_fragment = "${fragmentName}",
@@ -46,6 +26,8 @@ definition {
 
 	macro openHeading {
 		DoubleClick(locator1 = "VisualizeObjectCollectionDisplay#HEADING_COLLECTION_DISPLAY");
+
+		WaitForPageLoad();
 	}
 
 	macro openObjectCollectionProvider {

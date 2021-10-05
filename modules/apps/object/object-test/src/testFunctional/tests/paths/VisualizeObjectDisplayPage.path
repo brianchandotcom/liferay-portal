@@ -15,17 +15,17 @@
 		<td>//button[@title='Select Item']</td>
 		<td></td>
 	</tr>
-		<tr>
+	<tr>
 		<td>SELECT_OBJECT</td>
 		<td>//a[contains(text(),'${key_pluralLabelName}')]</td>
 		<td></td>
 	</tr>
-		<tr>
+	<tr>
 		<td>SELECT_ENTRY</td>
 		<td>//li[@data-qa-id='row']</td>
 		<td></td>
 	</tr>
-		<tr>
+	<tr>
 		<td>DISPLAY_ENTRY</td>
 		<td>//h1[(@data-lfr-editable-id='element-text') and contains(.,'${key_entry}')]</td>
 		<td></td>
@@ -40,19 +40,14 @@
 		<td>//div[@class='card-item-first aspect-ratio']</td>
 		<td></td>
 	</tr>
-		<tr>
+	<tr>
 		<td>NAME_OBJECT_DISPLAY_PAGE_TEMPLATE</td>
 		<td>//label[@for='_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_name']/../input</td>
 		<td></td>
 	</tr>
-			<tr>
+	<tr>
 		<td>OBJECT_CONTENT_TYPE</td>
 		<td>//select[@name='_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_classNameId']</td>
-		<td></td>
-	</tr>
-				<tr>
-		<td>OBJECT_SUBTYPE</td>
-		<td>//select[@name='_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_classTypeId']</td>
 		<td></td>
 	</tr>
 	<tr>

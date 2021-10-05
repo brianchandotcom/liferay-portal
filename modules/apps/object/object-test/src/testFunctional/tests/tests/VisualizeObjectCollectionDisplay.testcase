@@ -51,10 +51,9 @@ definition {
 			objectName = "CustomObject",
 			value = "Test Text 2");
 
-		VisualizeObjectCollectionDisplay.addDisplayPageTemplate(
-			contentType = "Object",
-			displayPageName = "Blank Display Page",
-			subtype = "Custom Object");
+		VisualizeObjectDisplayPage.createObjectPageTemplate(
+			contentType = "Custom Object",
+			displayPageName = "Blank Display Page");
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
@@ -108,10 +107,9 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
-		VisualizeObjectCollectionDisplay.addDisplayPageTemplate(
-			contentType = "Object",
-			displayPageName = "Blank Display Page",
-			subtype = "Custom Object");
+		VisualizeObjectDisplayPage.createObjectPageTemplate(
+			contentType = "Custom Object",
+			displayPageName = "Blank Display Page");
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
@@ -176,10 +174,9 @@ definition {
 			objectName = "CustomObject",
 			value = "Test Text 2");
 
-		VisualizeObjectCollectionDisplay.addDisplayPageTemplate(
-			contentType = "Object",
-			displayPageName = "Blank Display Page",
-			subtype = "Custom Object");
+		VisualizeObjectDisplayPage.createObjectPageTemplate(
+			contentType = "Custom Object",
+			displayPageName = "Blank Display Page");
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
@@ -201,7 +198,12 @@ definition {
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Text");
 
+		PageEditor.clickPublish();
+
+		VisualizeObjectDisplayPage.openDisplayPage(displayPageName = "Blank Display Page");
+
 		VisualizeObjectCollectionDisplay.viewEntriesFragment(entries = "Test Text 1");
+
 		VisualizeObjectCollectionDisplay.viewEntriesFragment(entries = "Test Text 2");
 	}
 

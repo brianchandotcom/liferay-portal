@@ -36,6 +36,48 @@ definition {
 			value1 = "Published");
 	}
 
+	macro assertInviterPermissions {
+		Click(
+			key_publicationName = "${publicationName}",
+			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
+
+		AssertElementPresent(
+			key_menuItem = "Publish",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+
+		AssertElementPresent(
+			key_menuItem = "Edit",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+
+		Publications.inviteUsers(
+			publicationName = "${publicationName}",
+			userInvite = "userea2@liferay.com");
+
+		Publications.gotoReviewChanges(
+			gotoManagePublications = "true",
+			publicationName = "${publicationName}");
+
+		PublicationsChanges.openCommentsSidebar();
+
+		PublicationsChanges.addComment(commentValue = "Good to Publish");
+
+		PublicationsChanges.editComment(
+			commentValue = "Good to Publish",
+			commentValueEdit = "It is not ready to Publish",
+			userName = "Test Test");
+
+		PublicationsChanges.deleteComment(commentValue = "It is not ready to Publish");
+
+		Publications.selectPublication(publicationName = "${publicationName}");
+
+		// Workaround LPS-140292
+
+		//Publications.publishPublication(publicationName = "${publicationName}");
+
+	}
+
+	}
+
 	macro assertViewerPermissions {
 		Click(
 			key_publicationName = "Publication Name",

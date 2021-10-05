@@ -14,17 +14,22 @@
 
 package com.liferay.template.internal.exportimport.staged.model.repository;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,7 +50,27 @@ public class TemplateEntryStagedModelRepository
 			PortletDataContext portletDataContext, TemplateEntry templateEntry)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		long userId = portletDataContext.getUserId(templateEntry.getUserUuid());
+
+		Map<Long, Long> ddmTemplateIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DDMTemplate.class + ".templateId");
+
+		long ddmTemplateId = MapUtil.getLong(
+			ddmTemplateIds, templateEntry.getDDMTemplateId(),
+			templateEntry.getDDMTemplateId());
+
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			templateEntry);
+
+		if (portletDataContext.isDataStrategyMirror()) {
+			serviceContext.setUuid(templateEntry.getUuid());
+		}
+
+		return _templateEntryLocalService.addTemplateEntry(
+			userId, templateEntry.getGroupId(), ddmTemplateId,
+			templateEntry.getInfoItemClassName(),
+			templateEntry.getInfoItemFormVariationKey(), serviceContext);
 	}
 
 	@Override
@@ -65,19 +90,22 @@ public class TemplateEntryStagedModelRepository
 	public void deleteStagedModel(TemplateEntry templateEntry)
 		throws PortalException {
 
+		_ddmTemplateLocalService.deleteDDMTemplate(
+			templateEntry.getDDMTemplateId());
+
 		_templateEntryLocalService.deleteTemplateEntry(templateEntry);
 	}
 
 	@Override
 	public void deleteStagedModels(PortletDataContext portletDataContext)
 		throws PortalException {
-
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public TemplateEntry fetchMissingReference(String uuid, long groupId) {
-		throw new UnsupportedOperationException();
+		return (TemplateEntry)
+			_stagedModelRepositoryHelper.fetchMissingReference(
+				uuid, groupId, this);
 	}
 
 	@Override
@@ -113,14 +141,6 @@ public class TemplateEntryStagedModelRepository
 	}
 
 	@Override
-	public void restoreStagedModel(
-			PortletDataContext portletDataContext, TemplateEntry templateEntry)
-		throws PortletDataException {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public TemplateEntry saveStagedModel(TemplateEntry templateEntry)
 		throws PortalException {
 
@@ -132,8 +152,15 @@ public class TemplateEntryStagedModelRepository
 			PortletDataContext portletDataContext, TemplateEntry templateEntry)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		return _templateEntryLocalService.updateTemplateEntry(
+			templateEntry.getTemplateEntryId());
 	}
+
+	@Reference
+	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
+	private StagedModelRepositoryHelper _stagedModelRepositoryHelper;
 
 	@Reference
 	private TemplateEntryLocalService _templateEntryLocalService;

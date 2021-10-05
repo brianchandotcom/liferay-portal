@@ -1,0 +1,19 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "bootcamp-sign-in"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					]
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	}
+}

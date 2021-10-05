@@ -1,7 +1,7 @@
 {
-	"hidden": false,
+	"hidden": true,
 	"name_i18n": {
-		"en_US": "Contact"
+		"en_US": "404"
 	},
 	"private": false,
 	"system": false,

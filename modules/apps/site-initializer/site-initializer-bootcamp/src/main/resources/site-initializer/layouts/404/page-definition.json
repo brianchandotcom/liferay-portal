@@ -1,0 +1,162 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"marginBottom": "7",
+						"paddingTop": "10",
+						"textAlign": "center"
+					},
+					"layout": {
+						"align": "Center",
+						"borderWidth": 0,
+						"contentDisplay": "FlexColumn",
+						"marginBottom": 8,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "bootcamp-heading"
+							},
+							"fragmentConfig": {
+								"displayLevel": "1",
+								"headingLevel": "h1"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+											"value_i18n": {
+											}
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "404"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"fontFamily": "fontFamilySansSerif",
+								"marginBottom": "3",
+								"marginTop": "5"
+							}
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "bootcamp-heading"
+							},
+							"fragmentConfig": {
+								"displayLevel": "0",
+								"headingLevel": "h1"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+											"value_i18n": {
+											}
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Page not Found"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"fontFamily": "fontFamilySansSerif",
+								"marginBottom": "3"
+							}
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "bootcamp-text-block"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+											"value_i18n": {
+											}
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis semper convallis euismod vestibulum in pharetra."
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginBottom": "4",
+								"width": "600px"
+							}
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "bootcamp-button"
+							},
+							"fragmentConfig": {
+								"buttonSize": "nm",
+								"buttonType": "primary"
+							},
+							"fragmentFields": [
+								{
+									"id": "link",
+									"value": {
+										"fragmentLink": {
+											"value_i18n": {
+											}
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Go to Home&nbsp; &nbsp;⟶"
+											}
+										}
+									}
+								}
+							]
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-2"
+		}
+	}
+}

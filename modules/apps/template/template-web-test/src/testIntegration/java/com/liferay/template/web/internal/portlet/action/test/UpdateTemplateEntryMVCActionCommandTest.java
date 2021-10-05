@@ -117,7 +117,7 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 			String.valueOf(_templateEntry.getTemplateEntryId()));
 
 		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "doProcessAction",
+			_mvcActionCommand, "doTransactionalCommand",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());

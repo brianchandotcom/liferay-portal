@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Frontend Taglib Data Set Display Sample Web
+Bundle-SymbolicName: com.liferay.frontend.taglib.data.set.display.sample.web
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.frontend.taglib.data.set.display.sample.web.constants
+Web-ContextPath: /frontend-taglib-data-set-display-sample-web

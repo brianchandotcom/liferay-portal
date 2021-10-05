@@ -3033,7 +3033,8 @@ definition {
 	macro gotoEllipsisMenuItemInItemSelector {
 		Click(
 			key_fieldLabel = "${fieldLabel}",
-			locator1 = "PageEditor#ITEM_SELECTOR_DROPDOWN_TOGGLE");
+			key_text = "ellipsis-v",
+			locator1 = "Icon#ANY_ITEM_SELECTOR");
 
 		MenuItem.click(menuItem = "${menuItem}");
 	}

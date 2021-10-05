@@ -1,0 +1,44 @@
+@component-name = "portal-lol"
+definition {
+
+	property database.types = "mysql";
+	property liferay.online.properties = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "LOL";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Verify if a virtual instance is created using the initializer, showing a different site comparing with the default Liferay bundle"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CreateVirtualInstanceUsingInitializerWithSuccess {
+
+		// TODO Create the automation about the bug LPS-139959
+
+	}
+
+	@description = "Verify if a friendly error appears when the user is not able to create the virtual host"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test FriendlyErrorAppearsWhenTheUserCantCreateVirtualHost {
+
+		// TODO Create the automation about the bug LPS-139960
+
+	}	
+
+}

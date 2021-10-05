@@ -19,9 +19,13 @@ import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.base.BatchPlannerLogServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -99,6 +103,41 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 
 		return batchPlannerLogPersistence.countByBatchPlannerPlanId(
 			batchPlannerPlanId);
+	}
+
+	@Override
+	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
+			long companyId, int start, int end,
+			OrderByComparator<BatchPlannerLog> orderByComparator)
+		throws PortalException {
+
+		checkPermission(companyId, ActionKeys.VIEW);
+
+		return batchPlannerLogPersistence.findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCompanyBatchPlannerLogsCount(long companyId)
+		throws PortalException {
+
+		checkPermission(companyId, ActionKeys.VIEW);
+
+		return batchPlannerLogPersistence.countByCompanyId(companyId);
+	}
+
+	protected void checkPermission(long companyId, String actionKey)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.hasPermission(
+				GroupConstants.DEFAULT_LIVE_GROUP_ID,
+				BatchPlannerPlan.class.getName(), companyId, actionKey)) {
+
+			throw new PrincipalException.MustHavePermission(
+				getUserId(), actionKey);
+		}
 	}
 
 	private static volatile ModelResourcePermission<BatchPlannerPlan>

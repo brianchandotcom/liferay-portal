@@ -52,11 +52,6 @@ const QuoteApp = () => {
 
 const GetAQuote = () => (
 	<Providers>
-<<<<<<< HEAD
-		<style>{Style}</style>
-
-=======
->>>>>>> aa648eaff470 (LPS-140107 Use Shared Style)
 		<QuoteApp />
 	</Providers>
 );

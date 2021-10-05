@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 import ProductComparison from '~/shared/components/product-comparison';
 import {LiferayService} from '~/shared/services/liferay';
+import {STORAGE_KEYS, Storage} from '~/shared/services/liferay/storage';
 
 const QuoteComparison = () => {
 	const [quotes, setQuotes] = useState([]);
@@ -12,7 +13,13 @@ const QuoteComparison = () => {
 			.catch((error) => console.error(error.message));
 	}, []);
 
-	const onClickPurchase = () => {};
+	const onClickPurchase = ({id}) => {
+		Storage.setItem(STORAGE_KEYS.PRODUCT_ID, id);
+
+		const siteName = LiferayService.getLiferaySiteName();
+
+		window.location.href = `${siteName}/selected-quote`;
+	};
 
 	const onClickPolicyDetails = () => {};
 

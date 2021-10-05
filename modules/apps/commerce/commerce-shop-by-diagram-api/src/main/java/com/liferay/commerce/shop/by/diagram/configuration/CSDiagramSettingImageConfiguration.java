@@ -46,7 +46,7 @@ public interface CSDiagramSettingImageConfiguration {
 	@Meta.AD(deflt = "5242880", name = "image-max-size", required = false)
 	public long imageMaxSize();
 
-	@Meta.AD(deflt = "1", name = "radius")
+	@Meta.AD(deflt = "1", name = "radius", required = false)
 	public double radius();
 
 }

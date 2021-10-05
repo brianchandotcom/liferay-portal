@@ -16,6 +16,7 @@ package com.liferay.object.internal.security.permission.resource;
 
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -68,9 +69,11 @@ public class ObjectDefinitionModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		return permissionChecker.hasPermission(
-			null, ObjectDefinition.class.getName(), objectDefinitionId,
-			actionId);
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinitionId);
+
+		return contains(permissionChecker, objectDefinition, actionId);
 	}
 
 	@Override
@@ -79,9 +82,20 @@ public class ObjectDefinitionModelResourcePermission
 			ObjectDefinition objectDefinition, String actionId)
 		throws PortalException {
 
-		return permissionChecker.hasPermission(
-			null, ObjectDefinition.class.getName(),
-			objectDefinition.getPrimaryKey(), actionId);
+		if (permissionChecker.hasOwnerPermission(
+				permissionChecker.getCompanyId(),
+				ObjectDefinition.class.getName(),
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getUserId(), actionId) ||
+			(permissionChecker.getUserId() == objectDefinition.getUserId()) ||
+			permissionChecker.hasPermission(
+				null, ObjectDefinition.class.getName(),
+				objectDefinition.getPrimaryKey(), actionId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -93,6 +107,9 @@ public class ObjectDefinitionModelResourcePermission
 	public PortletResourcePermission getPortletResourcePermission() {
 		return _portletResourcePermission;
 	}
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference(target = "(resource.name=" + ObjectConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;

@@ -16,6 +16,7 @@ package com.liferay.list.type.internal.security.permission.resource;
 
 import com.liferay.list.type.constants.ListTypeConstants;
 import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -68,9 +69,20 @@ public class ListTypeDefinitionModelResourcePermission
 			ListTypeDefinition listTypeDefinition, String actionId)
 		throws PortalException {
 
-		return permissionChecker.hasPermission(
-			null, ListTypeDefinition.class.getName(),
-			listTypeDefinition.getPrimaryKey(), actionId);
+		if (permissionChecker.hasOwnerPermission(
+				permissionChecker.getCompanyId(),
+				ListTypeDefinition.class.getName(),
+				listTypeDefinition.getListTypeDefinitionId(),
+				listTypeDefinition.getUserId(), actionId) ||
+			(permissionChecker.getUserId() == listTypeDefinition.getUserId()) ||
+			permissionChecker.hasPermission(
+				null, ListTypeDefinition.class.getName(),
+				listTypeDefinition.getPrimaryKey(), actionId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -79,9 +91,11 @@ public class ListTypeDefinitionModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		return permissionChecker.hasPermission(
-			null, ListTypeDefinition.class.getName(), listTypeDefinitionId,
-			actionId);
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.getListTypeDefinition(
+				listTypeDefinitionId);
+
+		return contains(permissionChecker, listTypeDefinition, actionId);
 	}
 
 	@Override
@@ -93,6 +107,9 @@ public class ListTypeDefinitionModelResourcePermission
 	public PortletResourcePermission getPortletResourcePermission() {
 		return _portletResourcePermission;
 	}
+
+	@Reference
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	@Reference(
 		target = "(resource.name=" + ListTypeConstants.RESOURCE_NAME + ")"

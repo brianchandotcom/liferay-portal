@@ -81,6 +81,60 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 	}
 
 	@Test
+	public void testBulkDeleteTemplateEntry() throws Exception {
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		TemplateEntry templateEntry = TemplateTestUtil.addAnyTemplateEntry(
+			_infoItemServiceTracker, _serviceContext);
+
+		mockLiferayPortletActionRequest.addParameter(
+			"rowIds",
+			new String[] {
+				String.valueOf(_templateEntry.getTemplateEntryId()),
+				String.valueOf(templateEntry.getTemplateEntryId())
+			});
+
+		Assert.assertNotNull(
+			_templateEntryLocalService.fetchTemplateEntry(
+				_templateEntry.getTemplateEntryId()));
+
+		Assert.assertNotNull(
+			_ddmTemplateLocalService.fetchDDMTemplate(
+				_templateEntry.getDDMTemplateId()));
+
+		Assert.assertNotNull(
+			_templateEntryLocalService.fetchTemplateEntry(
+				templateEntry.getTemplateEntryId()));
+
+		Assert.assertNotNull(
+			_ddmTemplateLocalService.fetchDDMTemplate(
+				templateEntry.getDDMTemplateId()));
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "doTransactionalCommand",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		Assert.assertNull(
+			_templateEntryLocalService.fetchTemplateEntry(
+				_templateEntry.getTemplateEntryId()));
+
+		Assert.assertNull(
+			_ddmTemplateLocalService.fetchDDMTemplate(
+				_templateEntry.getDDMTemplateId()));
+
+		Assert.assertNull(
+			_templateEntryLocalService.fetchTemplateEntry(
+				templateEntry.getTemplateEntryId()));
+
+		Assert.assertNull(
+			_ddmTemplateLocalService.fetchDDMTemplate(
+				templateEntry.getDDMTemplateId()));
+	}
+
+	@Test
 	public void testDeleteTemplateEntry() throws Exception {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();

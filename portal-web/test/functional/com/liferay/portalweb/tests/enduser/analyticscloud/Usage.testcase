@@ -411,9 +411,13 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8150 | Test Summary: Page views update in real time"
 	@priority = "5"
 	test PageViewsUpdateInRealTime {
-		task ("Go to Usage, save the value of Page Views, remove the comma and add 3(correspond to the value of interaction with DXP)") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		task ("Add a new site and page, connect ac to dxp") {
+			ACUtils.addSiteAndPage();
 
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Go to Usage, save the value of Page Views") {
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = "${propertyName}");
@@ -424,9 +428,17 @@ definition {
 
 			var currentPageViews = ACSettings.getCurrentNumber(metricName = "Page Views");
 
-			var sumPageViews = MathUtil.sum("${currentIndividuals}", "3");
+			var pageViewsNumber = StringUtil.replace("${currentPageViews}",",","");
 
+			var sumPageViews = ${pageViewsNumber} + 1;
+		}
+
+		task ("Visit the site page and close sessions") {
 			ACUtils.launchDXP();
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 
 			ACUtils.closeAllSessionsAndWait();
 		}
@@ -439,12 +451,14 @@ definition {
 			ACSettings.goToUsage();
 
 			var currentPageViews = ACSettings.getCurrentNumber(metricName = "Page Views");
+
+			var newPageViewsNumber = StringUtil.replace("${currentPageViews}",",","");
 		}
 
 		task ("Compare the values") {
 			TestUtils.assertEquals(
 				actual = "${sumPageViews}",
-				expected = "${currentPageViews}");
+				expected = "${newPageViewsNumber}");
 		}
 	}
 

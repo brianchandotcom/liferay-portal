@@ -121,6 +121,7 @@ public class UserAccountResourceDTOConverter
 					_assetTagLocalService.getTags(
 						User.class.getName(), user.getUserId()),
 					AssetTag.NAME_ACCESSOR);
+				lastLoginDate = user.getLastLoginDate();
 				name = user.getFullName();
 				organizationBriefs = TransformUtil.transformToArray(
 					user.getOrganizations(),

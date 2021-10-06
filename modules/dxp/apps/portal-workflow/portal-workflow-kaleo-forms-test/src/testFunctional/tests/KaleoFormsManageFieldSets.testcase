@@ -1,0 +1,158 @@
+@component-name = "portal-workflow-ee"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Kaleo Forms Admin";
+
+	var kfFieldSetName = "New Kaleo Field Set";
+	var workflowAssetType = "Process";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Kaleo Forms Admin");
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "Contacts",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseWorkflow(
+			kfProcessName = "Kaleo Forms Process",
+			workflowDefinitionTitle = "Single Approver");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.assignForm(
+			kfProcessName = "Kaleo Forms Process",
+			workflowTask = "create");
+
+		KaleoFormsAdmin.addForm(kfFormName = "Created Task Form");
+
+		KaleoFormsAdmin.saveForm();
+
+		KaleoFormsAdmin.chooseForm(kfFormName = "Created Task Form");
+
+		KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsNavigator.gotoManageFieldSets();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			KaleoFormsAdmin.tearDownProcess();
+
+			DDLTemplate.tearDownTemplateCP();
+
+			DDLTemplate.tearDownTemplateCP(ddlDataDefinitionName = "To Do");
+
+			Workflow.tearDownSpecificWorkflowDefinition(workflowDefinitionTitle = "Edited Workflow Definition");
+
+			Workflow.tearDownWorkflowDefinitions();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that the user can create a new field set on Manage FIeld Sets Area."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanCreateANewFieldSet {
+
+		// TODO LRQA-70705 CanCreateANewFieldSet pending implementation
+
+	}
+
+	@description = "Verify that the user can delete a field set."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanDeleteAFieldSet {
+
+		// TODO LRQA-70707 CanDeleteAFieldSet pending implementation
+
+	}
+
+	@description = "Verify that user can filter by modified date and ID."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanFilterByModifiedDate {
+
+		// TODO LRQA-70711 CanFilterByModifiedDate pending implementation
+
+	}
+
+	@description = "Verify that the user can not delete a field set that is required by one or more templates."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanNoteDeleteFieldSets {
+
+		// TODO LRQA-70709 CanNoteDeleteFieldSets pending implementation
+
+	}
+
+	@description = "Verify that user can Reverse sort Direction and if the elements reverse position."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanReverseSortDirectionTheElement {
+
+		// TODO LRQA-70710 CanReverseSortDirectionTheElement pending implementation
+
+	}
+
+	@description = "Verify that the user can search for a field set on manage field set page."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchFieldSet {
+
+		// TODO LRQA-70706 CanSearchFieldSet pending implementation
+
+	}
+
+	@description = "Verify that user can view of values on columns -ID-, -Name-,  -Description-, -Scope-, -Modified Date-."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewValuesOnColumns {
+
+		// TODO LRQA-70712 CanViewValuesOnColumns pending implementation
+
+	}
+
+	@description = "Verify that the user can navigate to the next page."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test NavigateToTheNextPage {
+
+		// TODO LRQA-70713 NavigateToTheNextPage pending implementation
+
+	}
+
+	@description = "Verify that when there are no results for the search, it displays the message -No Field Sets were found-."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test NotViewResultTheSearch {
+
+		// TODO LRQA-70708 NotViewResultTheSearch pending implementation
+
+	}
+
+}

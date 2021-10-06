@@ -1,0 +1,138 @@
+@component-name = "portal-workflow-ee"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Kaleo Forms Admin";
+
+	var kfFieldSetName = "New Kaleo Field Set";
+	var workflowAssetType = "Process";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Kaleo Forms Admin");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			KaleoFormsAdmin.tearDownProcess();
+
+			DDLTemplate.tearDownTemplateCP();
+
+			DDLTemplate.tearDownTemplateCP(ddlDataDefinitionName = "To Do");
+
+			Workflow.tearDownSpecificWorkflowDefinition(workflowDefinitionTitle = "Edited Workflow Definition");
+
+			Workflow.tearDownWorkflowDefinitions();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that the user can not unpublish a workflow that is in use in a process and displays a error message."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanNotUnpublishAWorkflowThatIsInUse {
+
+		// TODO LRQA-70685 CanNotUnpublishAWorkflowThatIsInUse pending implementation
+
+	}
+
+	@description = "Verify that the user can only choose one Field Set."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanOnlyChooseOneFieldSet {
+
+		// TODO LRQA-70678 CanOnlyChooseOneFIeldSet pending implementation
+
+	}
+
+	@description = "Verify that the user can only choose one Workflow."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanOnlyChooseOneWorkflow {
+
+		// TODO LRQA-70679 CanOnlyChooseOneWorkflow pending implementation
+
+	}
+
+	@description = "Verify that the name field is required."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test FieldNameIsRequired {
+
+		// TODO LRQA-70682 FieldNameIsRequired pending implementation
+
+	}
+
+	@description = "Verify that the field set is required."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test FieldSetIsRequired {
+
+		// TODO LRQA-70683 FieldSetIsRequired pending implementation
+
+	}
+
+	@description = "Verify that assign a form to the created task is required."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test FormAssignedToCreatedTaskIsRequired {
+
+		// TODO LRQA-70686 FormAssignedToCreatedTaskIsRequired pending implementation
+
+	}
+
+	@description = "Verify that the translation icon next to the -Name- and -Description- field is in English by default."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test IconTranslationEnglishByDefault {
+
+		// TODO LRQA-70680 IconTranslationEnglishByDefault pending implementation
+
+	}
+
+	@description = "Verify that the progress bar is shown correctly."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ProgressBarIsShownCorrectly {
+
+		// TODO LRQA-70681 ProgressBarIsShownCorrectly pending implementation
+
+	}
+	
+	@description = "Verify that a workflow added on the creation of a new process appears on Process Builder tab."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test NewProcessAppearsOnProcessBuilder {
+
+		// TODO LRQA-70677 NewProcessAppearsOnProcessBuilder pending implementation
+
+	}
+
+
+
+
+	@description = "Verify that the workflow is required."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test WorkflowIsRequired {
+
+		// TODO LRQA-70684 WorkflowIsRequired pending implementation
+
+	}
+
+
+
+}

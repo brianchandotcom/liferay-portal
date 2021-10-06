@@ -1,0 +1,174 @@
+@component-name = "portal-workflow-ee"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Kaleo Forms Admin";
+
+	var kfFieldSetName = "New Kaleo Field Set";
+	var workflowAssetType = "Process";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Kaleo Forms Admin");
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "${kfFieldSetName}",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseWorkflow(
+			kfProcessName = "Kaleo Forms Process",
+			workflowDefinitionTitle = "Single Approver");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.assignForm(
+			kfProcessName = "Kaleo Forms Process",
+			workflowTask = "create");
+
+		KaleoFormsAdmin.addForm(kfFormName = "Created Task Form");
+
+		KaleoFormsAdmin.saveForm();
+
+		KaleoFormsAdmin.chooseForm(kfFormName = "Created Task Form");
+
+		KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			KaleoFormsAdmin.tearDownProcess();
+
+			DDLTemplate.tearDownTemplateCP();
+
+			DDLTemplate.tearDownTemplateCP(ddlDataDefinitionName = "To Do");
+
+			Workflow.tearDownSpecificWorkflowDefinition(workflowDefinitionTitle = "Edited Workflow Definition");
+
+			Workflow.tearDownWorkflowDefinitions();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that the user can clear the result bar after the user use  the search bar ."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanClearSearchBar {
+
+		// TODO LRQA-70694 CanClearSearchBar pending implementation
+
+	}
+
+	@description = "Verify that the user can create a new submission without filling in the fields."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCreateANewSubmissionWithFieldsEmpty {
+
+		// TODO LRQA-70688 CanCreateANewSubmissionWithFieldsEmpty pending implementation
+
+	}
+
+	@description = "Verify that user can delete all submissions in the page."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteAllSubmissions {
+
+		// TODO LRQA-70698 CanDeleteAllSubmissions pending implementation
+
+	}
+
+	@description = "Verify that the user can filter by Create Date."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanFilterByCreateDate {
+
+		// TODO LRQA-70692 CanFilterByCreateDate pending implementation
+
+	}
+
+	@description = "Verify that the user can filter by Modified Date ."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanFilterByModifiedDate {
+
+		// TODO LRQA-70691 CanFilterByModifiedDate pending implementation
+
+	}
+
+	@description = "Verify that the user can modify the quantity of items view per page."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanModifyQuantityOfItemsPerPage {
+
+		// TODO LRQA-70695 CanModifyQuantityOfItemsPerPage pending implementation
+
+	}
+
+	@description = "Verify that user can nagivate through pages."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanNavigateThroughPages {
+
+		// TODO LRQA-70697 CanNavigateThroughPages pending implementation
+
+	}
+
+	@description = "Verify that the user can reverse the order of submissions."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanOrderSubmissions {
+
+		// TODO LRQA-70690 CanOrderSubmissions pending implementation
+
+	}
+
+	@description = "Verify that the user can Reject a submission."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanRejectASubmission {
+
+		// TODO LRQA-70689 CanRejectASubmission pending implementation
+
+	}
+
+	@description = "Verify that user can search by Column Value and view the search result."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSearchByColunmValue {
+
+		// TODO LRQA-70696 CanSearchByColunmValue pending implementation
+
+	}
+
+	@description = "Verify that the user can view the column values on the page after submit the process."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewValuesAfterSubmitAProcess {
+
+		// TODO LRQA-70693 CanViewValuesAfterSubmitAProcess pending implementation
+
+	}
+
+}

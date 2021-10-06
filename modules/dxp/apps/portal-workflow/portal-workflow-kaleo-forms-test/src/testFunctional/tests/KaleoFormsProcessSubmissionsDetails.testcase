@@ -1,0 +1,120 @@
+@component-name = "portal-workflow-ee"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Kaleo Forms Admin";
+
+	var kfFieldSetName = "New Kaleo Field Set";
+	var workflowAssetType = "Process";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Kaleo Forms Admin");
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "${kfFieldSetName}",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseWorkflow(
+			kfProcessName = "Kaleo Forms Process",
+			workflowDefinitionTitle = "Single Approver");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.assignForm(
+			kfProcessName = "Kaleo Forms Process",
+			workflowTask = "create");
+
+		KaleoFormsAdmin.addForm(kfFormName = "Created Task Form");
+
+		KaleoFormsAdmin.saveForm();
+
+		KaleoFormsAdmin.chooseForm(kfFormName = "Created Task Form");
+
+		KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			KaleoFormsAdmin.tearDownProcess();
+
+			DDLTemplate.tearDownTemplateCP();
+
+			DDLTemplate.tearDownTemplateCP(ddlDataDefinitionName = "To Do");
+
+			Workflow.tearDownSpecificWorkflowDefinition(workflowDefinitionTitle = "Edited Workflow Definition");
+
+			Workflow.tearDownWorkflowDefinitions();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that user can insert especial caracter in the submission."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanInsertEspecialCaracter {
+
+		// TODO LRQA-70702 CanInsertEspecialCaracter pending implementation
+
+	}
+
+    @description = "Verify that the details page shows the process Status is Approved after the user approve."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewProcessStatusApproved {
+
+		// TODO LRQA-70704 CanViewProcessStatusApproved pending implementation
+
+	}
+
+	@description = "Verify that the details page shows the process Status is Pending before the user approve."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewProcessStatusPending {
+
+		// TODO LRQA-70703 CanViewProcessStatusPending pending implementation
+
+	}
+
+	@description = "Verify that the fields filled on submissions appears on the details page."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test FieldsAppearsOnTheDetailsPage {
+
+		// TODO LRQA-70700 FieldsAppearsOnTheDetailsPage pending implementation
+
+	}
+
+	@description = "Verify that the details page shows the version."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test VersionOnDatailsPage {
+
+		// TODO LRQA-70701 VersionOnDatailsPage pending implementation
+
+	}
+
+}

@@ -1,0 +1,178 @@
+@component-name = "portal-workflow-ee"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Kaleo Forms Admin";
+
+	var kfFieldSetName = "New Kaleo Field Set";
+	var workflowAssetType = "Process";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Kaleo Forms Admin");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			KaleoFormsAdmin.tearDownProcess();
+
+			DDLTemplate.tearDownTemplateCP();
+
+			DDLTemplate.tearDownTemplateCP(ddlDataDefinitionName = "To Do");
+
+			Workflow.tearDownSpecificWorkflowDefinition(workflowDefinitionTitle = "Edited Workflow Definition");
+
+			Workflow.tearDownWorkflowDefinitions();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that the user can clear the result bar after the user use  the search bar."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanClearSearchBar {
+
+		// TODO LRQA-70665 CanClearSearchBar pending implementation
+
+	}
+
+	@description = "Verify that the user can delete multiple process."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanDeleteMutipleProcesses {
+
+		// TODO LRQA-70675 CanDeleteMutipleProcesses pending implementation
+
+	}
+
+	@description = "Verify that the user can export a process."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanExportProcess {
+
+		// TODO LRQA-70671 CanExportProcess pending implementation
+
+	}
+
+	@description = "Verify that the user is able to order by Create Date."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanOrderByCreateDate {
+
+		// TODO LRQA-70669 CanOrderByCreateDate pending implementation
+
+	}
+
+	@description = "Verify that the user is able to order by Last Modified."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanOrderByLastModified {
+
+		// TODO LRQA-70668 CanOrderByLastModified pending implementation
+
+	}
+
+	@description = "Verify that the user can search a process by description."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSearchByDescription {
+
+		// TODO LRQA-706637 CanSearchByDescription pending implementation
+
+	}
+
+	@description = "Verify that the user can search by process name."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchByProcessName {
+
+		// TODO LRQA-70666 CanSearchByProcessName pending implementation
+
+	}
+
+	@description = "Verify that the user can search for process name field with alphanumeric/special character."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSearchForFieldNameWithAlphanumericOrSpecialCharacter {
+
+		// TODO LRQA-70663 CanSearchForFieldNameWithAlphanumericOrSpecialCharacter pending implementation
+
+	}
+
+	@description = "Verify that the user can select edit option."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSelectEditOption {
+
+		// TODO LRQA-70670 CanSelectEditOption pending implementation
+
+	}
+
+	@description = "Verify that the user can select permissions option."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSelectPermissionsOption {
+
+		// TODO LRQA-70672 CanSelectPermissionsOption pending implementation
+
+	}
+
+	@description = "Verify that the user can select view option."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanSelectViewOption {
+
+		// TODO LRQA-70673 CanSelectViewOption pending implementation
+
+	}
+
+	@description = "Verify that the user can view the process after it has been created."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewProcessAfterCreated {
+
+		// TODO LRQA-70662 CanViewProcessAfterCreated pending implementation
+
+	}
+
+	@description = "Verify that the page displays columns Id, Name, Description and Modified Date."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test DisplaysColumnsNameDescriptionModifiedDate {
+
+		// TODO LRQA-70674 DisplaysColumnsNameDescriptionModifiedDate pending implementation
+
+	}
+
+	@description = "Verify that the page displays the pagination button."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DisplaysThePaginationButton {
+
+		// TODO LRQA-70664 DisplaysThePaginationButton pending implementation
+
+	}
+
+	@description = "Verify that when there are no results for the search, it displays the message -No process were found-."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test NoResultMessageInSearch {
+
+		// TODO LRQA-70676 NoResultMessageInSearch pending implementation
+
+	}
+
+}

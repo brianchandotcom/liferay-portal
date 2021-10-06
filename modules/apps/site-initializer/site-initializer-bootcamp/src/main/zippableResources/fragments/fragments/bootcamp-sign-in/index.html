@@ -1,6 +1,18 @@
+[#assign
+	navUserClass = ""
+	privateUserFriendlyURL = themeDisplay.getPathFriendlyURLPrivateUser() + "/" + themeDisplay.getUser().getFirstName()
+	publicFriendlyURL = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getSiteGroup().getFriendlyURL()
+	publicSiteNavbarClass =""
+	userName = themeDisplay.getUser().getFirstName()
+/]
+
+[#if !themeDisplay.isSignedIn()]
+	[#assign publicSiteNavbarClass = "logged-in" /]
+[/#if]
+
 <div class="sign-in vh-100">
 	<div class="form-box">
-		<a href="http://localhost:8080/web/bootcamp">
+		<a href="${publicFriendlyURL}">
 			<img alt="" class="sign-in-logo" src="[resources:bootcamp_logo.svg]" />
 		</a>
 

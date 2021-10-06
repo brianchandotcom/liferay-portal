@@ -18,6 +18,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
@@ -55,6 +60,7 @@ import com.liferay.template.test.util.TemplateTestUtil;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -195,6 +201,66 @@ public class TemplateInfoItemFieldSetProviderTest {
 				_journalArticle.getDDMStructureKey(), _journalArticle);
 
 		Assert.assertTrue(infoFieldValues.isEmpty());
+	}
+
+	@Test
+	public void testGetInfoFieldValuesByClassNameAndVariationKeyWhenTemplateEntryExists()
+		throws PortalException {
+
+		DDMStructure ddmStructure = _journalArticle.getDDMStructure();
+
+		DDMFormValues ddmFormValues = DDMFieldLocalServiceUtil.getDDMFormValues(
+			ddmStructure.getDDMForm(), _journalArticle.getId());
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap(false);
+
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			"name");
+
+		Value nameValue = null;
+
+		if ((ddmFormFieldValues != null) && !ddmFormFieldValues.isEmpty()) {
+			DDMFormFieldValue nameDDMFormFieldValue = ddmFormFieldValues.get(0);
+
+			nameValue = nameDDMFormFieldValue.getValue();
+		}
+
+		Assert.assertNotNull(nameValue);
+
+		TemplateEntry articleTemplateEntry = TemplateTestUtil.addTemplateEntry(
+			JournalArticle.class.getName(),
+			_journalArticle.getDDMStructureKey(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			JournalTestUtil.getSampleTemplateFTL(), _serviceContext);
+
+		TemplateTestUtil.addTemplateEntry(
+			AssetCategory.class.getName(), StringPool.BLANK, _serviceContext);
+
+		List<InfoFieldValue<Object>> infoFieldValues =
+			_templateInfoItemFieldSetProvider.getInfoFieldValues(
+				JournalArticle.class.getName(),
+				_journalArticle.getDDMStructureKey(), _journalArticle);
+
+		Assert.assertEquals(
+			infoFieldValues.toString(), 1, infoFieldValues.size());
+
+		InfoFieldValue<Object> infoFieldValue = infoFieldValues.get(0);
+
+		InfoField infoField = infoFieldValue.getInfoField();
+
+		Assert.assertEquals(
+			infoField.toString(),
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				articleTemplateEntry.getTemplateEntryId(),
+			infoField.getName());
+
+		Locale defaultLocale = _portal.getSiteDefaultLocale(
+			_group.getGroupId());
+
+		Assert.assertEquals(
+			infoFieldValue.toString(), nameValue.getString(defaultLocale),
+			infoFieldValue.getValue());
 	}
 
 	@Test

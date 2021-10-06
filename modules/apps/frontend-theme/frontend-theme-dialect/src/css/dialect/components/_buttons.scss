@@ -424,3 +424,11 @@
 .btn-tertiary {
 	@extend .btn-borderless, .btn-variant-neutral, :not(.btn-inverted);
 }
+
+.btn-outline-primary {
+	@extend .btn-ghost, .btn-variant-primary, :not(.btn-inverted);
+}
+
+.btn-outline-secondary {
+	@extend .btn-ghost, .btn-variant-secondary, :not(.btn-inverted);
+}

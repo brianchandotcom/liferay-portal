@@ -24,7 +24,9 @@ import com.liferay.object.rest.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -35,14 +37,18 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+
+import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -82,9 +88,7 @@ public class ObjectEntryDTOConverter
 				externalReferenceCode = objectEntry.getExternalReferenceCode();
 				id = objectEntry.getObjectEntryId();
 				properties = _toProperties(
-					dtoConverterContext.isAcceptAllLanguages(),
-					dtoConverterContext.getLocale(), objectDefinition,
-					objectEntry);
+					dtoConverterContext, objectDefinition, objectEntry);
 				scopeKey = _getScopeKey(objectDefinition, objectEntry);
 				status = new Status() {
 					{
@@ -100,6 +104,22 @@ public class ObjectEntryDTOConverter
 				};
 			}
 		};
+	}
+
+	private DTOConverterContext _getDTOConverter(
+		DTOConverterContext dtoConverterContext, long objectEntryId) {
+
+		Optional<UriInfo> uriInfoOptional =
+			dtoConverterContext.getUriInfoOptional();
+
+		UriInfo uriInfo = uriInfoOptional.orElse(null);
+
+		return new DefaultDTOConverterContext(
+			dtoConverterContext.isAcceptAllLanguages(), null,
+			dtoConverterContext.getDTOConverterRegistry(),
+			dtoConverterContext.getHttpServletRequest(), objectEntryId,
+			dtoConverterContext.getLocale(), uriInfo,
+			dtoConverterContext.getUser());
 	}
 
 	private ObjectDefinition _getObjectDefinition(
@@ -143,9 +163,10 @@ public class ObjectEntryDTOConverter
 	}
 
 	private Map<String, Object> _toProperties(
-		boolean acceptAllLanguages, Locale locale,
-		ObjectDefinition objectDefinition,
-		com.liferay.object.model.ObjectEntry objectEntry) {
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry objectEntry)
+		throws Exception {
 
 		Map<String, Object> map = new HashMap<>();
 
@@ -158,7 +179,9 @@ public class ObjectEntryDTOConverter
 		for (ObjectField objectField : objectFields) {
 			long listTypeDefinitionId = objectField.getListTypeDefinitionId();
 
-			Serializable serializable = values.get(objectField.getName());
+			String objectFieldName = objectField.getName();
+
+			Serializable serializable = values.get(objectFieldName);
 
 			if (listTypeDefinitionId != 0) {
 				ListTypeEntry listTypeEntry =
@@ -170,19 +193,58 @@ public class ObjectEntryDTOConverter
 				}
 
 				map.put(
-					objectField.getName(),
+					objectFieldName,
 					HashMapBuilder.<String, Object>put(
 						"key", listTypeEntry.getKey()
 					).put(
-						"name", listTypeEntry.getName(locale)
+						"name",
+						listTypeEntry.getName(dtoConverterContext.getLocale())
 					).put(
 						"name_i18n",
 						LocalizedMapUtil.getI18nMap(
-							acceptAllLanguages, listTypeEntry.getNameMap())
+							dtoConverterContext.isAcceptAllLanguages(),
+							listTypeEntry.getNameMap())
 					).build());
 			}
+			else if (Objects.equals(
+						objectField.getRelationshipType(), "oneToMany")) {
+
+				String[] objectFieldNameParts = objectFieldName.split(
+					StringPool.UNDERLINE);
+
+				String relationshipName = objectFieldNameParts[1];
+				String relationshipIdName = objectFieldNameParts[3];
+
+				Optional<UriInfo> uriInfoOptional =
+					dtoConverterContext.getUriInfoOptional();
+
+				long objectEntryId = (long)serializable;
+
+				if ((objectEntryId != 0) &&
+					uriInfoOptional.map(
+						UriInfo::getQueryParameters
+					).map(
+						queryParameters -> queryParameters.getFirst(
+							"nestedFields")
+					).map(
+						nestedFields -> nestedFields.contains(relationshipName)
+					).orElse(
+						false
+					)) {
+
+					map.put(
+						relationshipName,
+						toDTO(
+							_getDTOConverter(
+								dtoConverterContext, objectEntryId),
+							_objectEntryLocalService.getObjectEntry(
+								objectEntryId)));
+				}
+
+				map.put(relationshipIdName, objectEntryId);
+			}
 			else {
-				map.put(objectField.getName(), serializable);
+				map.put(objectFieldName, serializable);
 			}
 		}
 
@@ -199,6 +261,9 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

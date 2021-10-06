@@ -12,7 +12,7 @@
  * details.
  */
 
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {cleanup, fireEvent, render, waitForElement} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -20,7 +20,7 @@ import '@testing-library/jest-dom/extend-expect';
 import DownloadSpreadsheetButton from '../../../src/main/resources/META-INF/resources/js/components/DownloadSpreadsheetButton';
 
 const getComponent = () => {
-	return <DownloadSpreadsheetButton />;
+	return <DownloadSpreadsheetButton {...{fileURL: 'demo-file-url', total: 12}}/>;
 };
 
 describe('DownloadSpreadsheetButton', () => {
@@ -31,18 +31,18 @@ describe('DownloadSpreadsheetButton', () => {
 	it('renders a DownloadSpreadsheetButton component...', () => {
 		const {getByText} = render(getComponent());
 
-		expect(getByText('csv')).toBeInTheDocument();
+		expect(getByText('export-xls')).toBeInTheDocument();
 	});
 
-	it('...with the proper initial UI state', async () => {
+	it('...with the proper initial UI state', () => {
 		const {container, getByTitle} = render(getComponent());
 
 		const {className: btnClassName} = getByTitle(
-			'download-your-data-in-a-csv-file'
+			'download-your-data-in-a-xls-file'
 		);
 
 		expect(
-			getByTitle('download-your-data-in-a-csv-file')
+			getByTitle('download-your-data-in-a-xls-file')
 		).toBeInTheDocument();
 		expect(btnClassName).toContain(
 			'btn-outline-borderless btn-outline-secondary'
@@ -55,17 +55,18 @@ describe('DownloadSpreadsheetButton', () => {
 
 	it('...with the proper loading UI state', async () => {
 		const {container, getByText} = render(getComponent());
-		const csvButton = getByText('csv');
+		const exportButton = getByText('export-xls');
 
 		fireEvent(
-			csvButton,
+			exportButton,
 			new MouseEvent('click', {
 				bubbles: true,
 				cancelable: true,
 			})
 		);
 
-		expect(getByText('generating-csv')).toBeInTheDocument();
+		await waitForElement(() => getByText('generating-xls'));
+		expect(getByText('generating-xls')).toBeInTheDocument();
 
 		expect(
 			container.getElementsByClassName('loading-animation').length
@@ -74,17 +75,17 @@ describe('DownloadSpreadsheetButton', () => {
 
 	it('...with the proper restored UI state after cancel', async () => {
 		const {container, getByText, getByTitle} = render(getComponent());
-		const csvButton = getByText('csv');
+		const exportButton = getByText('export-xls');
 
 		fireEvent(
-			csvButton,
+			exportButton,
 			new MouseEvent('click', {
 				bubbles: true,
 				cancelable: true,
 			})
 		);
 
-		const cancelButton = getByTitle('cancel-csv');
+		const cancelButton = getByTitle('cancel-export');
 
 		expect(cancelButton).toBeInTheDocument();
 		expect(
@@ -99,7 +100,9 @@ describe('DownloadSpreadsheetButton', () => {
 			})
 		);
 
-		expect(getByText('csv')).toBeInTheDocument();
+		await waitForElement(() => getByText('export-xls'));
+		expect(getByText('export-xls')).toBeInTheDocument();
+
 		expect(
 			container.getElementsByClassName('loading-animation').length
 		).toBe(0);

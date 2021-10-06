@@ -526,6 +526,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+
 		CommerceOrder commerceOrder = _commerceOrderThreadLocal.get();
 
 		if (commerceOrder != null) {
@@ -533,20 +535,24 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				_commerceOrderLocalService.fetchCommerceOrder(
 					commerceOrder.getCommerceOrderId());
 
-			if (persistenceCommerceOrder == null) {
-				return commerceOrder;
+			if (persistenceCommerceOrder != null) {
+				commerceOrder = persistenceCommerceOrder;
+
+				_commerceOrderThreadLocal.set(persistenceCommerceOrder);
 			}
 
-			_commerceOrderThreadLocal.set(persistenceCommerceOrder);
+			if ((commerceAccount.getCommerceAccountId() ==
+					CommerceAccountConstants.ACCOUNT_ID_GUEST) ||
+				(commerceAccount.getCommerceAccountId() ==
+					commerceOrder.getCommerceAccountId())) {
 
-			return persistenceCommerceOrder;
+				return commerceOrder;
+			}
 		}
 
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.fetchCommerceChannel(
 				commerceContext.getCommerceChannelId());
-
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
 
 		if ((commerceChannel == null) || (commerceAccount == null)) {
 			return null;
@@ -573,7 +579,10 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				_commerceOrderLocalService.fetchCommerceOrderByUuidAndGroupId(
 					commerceOrderUuid, commerceChannel.getGroupId());
 
-			if (commerceOrder == null) {
+			if ((commerceOrder == null) ||
+				(commerceAccount.getCommerceAccountId() !=
+					commerceOrder.getCommerceAccountId())) {
+
 				commerceOrder = _commerceOrderService.fetchCommerceOrder(
 					commerceAccount.getCommerceAccountId(),
 					commerceChannel.getGroupId(),

@@ -203,11 +203,31 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69817. Verify that a Draft Blog Entry is not displayed on Asset Publisher."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test DraftBlogIsNotDisplayed {
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Asset Publisher Page",
+			siteURLKey = "guest");
+		
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 
-		// TODO LRQA-69817 DraftBlogIsNotDisplayed pending implementation
+		BlogsEntry.saveAsDraft();
+
+		Navigator.gotoPage(pageName = "Asset Publisher Page");
+
+		AssetPublisherPortlet.viewManualNoAssetsMessagePG();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		AssertElementPresent(
+			key_resultBarMessage = "Draft",
+			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+		
 
 	}
 

@@ -546,7 +546,7 @@ definition {
 		}
 
 		task ("View the title and description of blogs are shown") {
-			AssertTextEquals.assertPartialText(
+			AssertTextEquals(
 				key_content = "Blogs Entry Title Blogs Entry Description",
 				key_fragmentClass = "content",
 				locator1 = "Fragment#FRAGMENT",
@@ -562,7 +562,7 @@ definition {
 		}
 
 		task ("View the title and author of documents are shown") {
-			AssertTextEquals.assertPartialText(
+			AssertTextEquals(
 				key_content = "Document Title Test Test",
 				key_fragmentClass = "content",
 				locator1 = "Fragment#FRAGMENT",
@@ -578,7 +578,7 @@ definition {
 		}
 
 		task ("View the category and vocabulary names are shown") {
-			AssertTextEquals.assertPartialText(
+			AssertTextEquals(
 				key_content = "Category Name Vocabulary Name",
 				key_fragmentClass = "content",
 				locator1 = "Fragment#FRAGMENT",
@@ -729,7 +729,7 @@ definition {
 		}
 
 		task ("View the title and description of blogs entry are shown") {
-			AssertTextEquals.assertPartialText(
+			AssertTextEquals(
 				key_fragmentName = "button",
 				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
 				value1 = "Blogs Entry Title Blogs Entry Description");

@@ -2004,10 +2004,12 @@ definition {
 					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
 					value1 = "${imageFileName}");
 
-				AssertElementPresent(
-					key_fragmentName = "${fragmentName}",
-					key_imageName = "${sourceFileName}",
-					locator1 = "Fragment#FRAGMENT_CONTENT_BACKGROUND_IMAGE");
+				if (isSet(sourceFileName)) {
+					AssertElementPresent(
+						key_fragmentName = "${fragmentName}",
+						key_imageName = "${sourceFileName}",
+						locator1 = "Fragment#FRAGMENT_CONTENT_BACKGROUND_IMAGE");
+				}
 			}
 
 			if (isSet(blogs)) {
@@ -2020,9 +2022,11 @@ definition {
 					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
 					value1 = "${entryTitle}");
 
-				AssertTextEquals(
-					locator1 = "Fragment#FRAGMENT_BODY",
-					value1 = "${entryContent}");
+				if (isSet(entryContent)) {
+					AssertTextEquals(
+						locator1 = "Fragment#FRAGMENT_BODY",
+						value1 = "${entryContent}");
+				}
 			}
 
 			if (isSet(categories)) {
@@ -2074,6 +2078,12 @@ definition {
 					key_fieldLabel = "Item",
 					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
 					value1 = "${webContentTitle}");
+
+				if (isSet(webContentContent)) {
+					AssertTextEquals(
+						locator1 = "Fragment#FRAGMENT_BODY",
+						value1 = "${webContentContent}");
+				}
 			}
 
 			if (isSet(template)) {
@@ -2088,12 +2098,6 @@ definition {
 					key_fieldLabel = "Template",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${template}");
-			}
-
-			if (isSet(webContentContent)) {
-				AssertTextEquals(
-					locator1 = "Fragment#FRAGMENT_BODY",
-					value1 = "${webContentContent}");
 			}
 		}
 	}

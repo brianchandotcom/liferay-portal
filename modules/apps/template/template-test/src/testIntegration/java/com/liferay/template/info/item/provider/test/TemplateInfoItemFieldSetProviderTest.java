@@ -21,9 +21,12 @@ import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -36,7 +39,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
+import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.test.util.TemplateTestUtil;
 
 import java.util.List;
 
@@ -94,6 +100,35 @@ public class TemplateInfoItemFieldSetProviderTest {
 	}
 
 	@Test
+	public void testGetInfoFieldSetByClassNameAndVariationKeyWhenTemplateEntryExists()
+		throws PortalException {
+
+		TemplateEntry articleTemplateEntry = TemplateTestUtil.addTemplateEntry(
+			JournalArticle.class.getName(),
+			_journalArticle.getDDMStructureKey(), _serviceContext);
+
+		TemplateTestUtil.addTemplateEntry(
+			AssetCategory.class.getName(), StringPool.BLANK, _serviceContext);
+
+		InfoFieldSet infoFieldSet =
+			_templateInfoItemFieldSetProvider.getInfoFieldSet(
+				JournalArticle.class.getName(),
+				_journalArticle.getDDMStructureKey());
+
+		List<InfoField> infoFields = infoFieldSet.getAllInfoFields();
+
+		Assert.assertEquals(infoFields.toString(), 1, infoFields.size());
+
+		InfoField infoField = infoFields.get(0);
+
+		Assert.assertEquals(
+			infoFields.toString(),
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				articleTemplateEntry.getTemplateEntryId(),
+			infoField.getName());
+	}
+
+	@Test
 	public void testGetInfoFieldSetByClassNameWhenNoTemplateEntryExists() {
 		InfoFieldSet infoFieldSet =
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(
@@ -102,6 +137,34 @@ public class TemplateInfoItemFieldSetProviderTest {
 		List<InfoField> infoFields = infoFieldSet.getAllInfoFields();
 
 		Assert.assertTrue(infoFields.isEmpty());
+	}
+
+	@Test
+	public void testGetInfoFieldSetByClassNameWhenTemplateEntryExists()
+		throws PortalException {
+
+		TemplateEntry articleTemplateEntry = TemplateTestUtil.addTemplateEntry(
+			JournalArticle.class.getName(),
+			_journalArticle.getDDMStructureKey(), _serviceContext);
+
+		TemplateEntry categoryTemplateEntry = TemplateTestUtil.addTemplateEntry(
+			AssetCategory.class.getName(), StringPool.BLANK, _serviceContext);
+
+		InfoFieldSet infoFieldSet =
+			_templateInfoItemFieldSetProvider.getInfoFieldSet(
+				AssetCategory.class.getName());
+
+		List<InfoField> infoFields = infoFieldSet.getAllInfoFields();
+
+		Assert.assertEquals(infoFields.toString(), 1, infoFields.size());
+
+		InfoField infoField = infoFields.get(0);
+
+		Assert.assertEquals(
+			infoFields.toString(),
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				categoryTemplateEntry.getTemplateEntryId(),
+			infoField.getName());
 	}
 
 	@Test
@@ -132,6 +195,9 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	private JournalArticle _journalArticle;
 

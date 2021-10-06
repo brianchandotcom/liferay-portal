@@ -66,6 +66,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MOCKMOCK_HTML_BODY_FORMATTED_FIELD</td>
+	<td>//div[@name='bodyHTML_Formatted']//div[contains(@class,'well')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MOCKMOCK_HTML_BODY_LINK</td>
 	<td>//div[@name='bodyHTML_Formatted']//a[contains(.,'${key_bodyLink}')]</td>
 	<td></td>

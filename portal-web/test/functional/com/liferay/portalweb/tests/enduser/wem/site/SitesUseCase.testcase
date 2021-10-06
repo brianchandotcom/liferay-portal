@@ -476,10 +476,6 @@ definition {
 		PortalSettings.editConfigurationAuthenticationGeneral(enableRequireStrangers = "true");
 
 		PortalSettings.editConfigurationUsersEmailNotificationsCP(
-			configurationName = "Account Created Notification",
-			notificationsBody = "[$USER_PASSWORD$]");
-
-		PortalSettings.editConfigurationUsersEmailNotificationsCP(
 			configurationName = "Email Verification Notification",
 			notificationsBody = "[$EMAIL_VERIFICATION_CODE$]");
 

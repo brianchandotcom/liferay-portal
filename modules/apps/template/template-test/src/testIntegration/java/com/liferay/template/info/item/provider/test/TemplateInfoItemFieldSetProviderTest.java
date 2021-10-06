@@ -25,10 +25,14 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -38,7 +42,9 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -48,6 +54,7 @@ import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.test.util.TemplateTestUtil;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -55,6 +62,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Lourdes Fernández Besada
@@ -75,10 +85,15 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
 
+		_layout = LayoutTestUtil.addLayout(_group);
+
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
 
 		_serviceContext.setCompanyId(TestPropsValues.getCompanyId());
+
+		_serviceContext.setRequest(
+			_getMockHttpServletRequest(_getThemeDisplay()));
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
@@ -229,6 +244,43 @@ public class TemplateInfoItemFieldSetProviderTest {
 			infoFieldValue.getValue(defaultLocale));
 	}
 
+	private MockHttpServletRequest _getMockHttpServletRequest(
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return mockHttpServletRequest;
+	}
+
+	private ThemeDisplay _getThemeDisplay() throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(_company);
+		themeDisplay.setLayout(_layout);
+
+		LayoutSet layoutSet = _group.getPublicLayoutSet();
+
+		themeDisplay.setLayoutSet(layoutSet);
+		themeDisplay.setLookAndFeel(
+			layoutSet.getTheme(), layoutSet.getColorScheme());
+
+		themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setRealUser(TestPropsValues.getUser());
+		themeDisplay.setRequest(_getMockHttpServletRequest(themeDisplay));
+		themeDisplay.setResponse(new MockHttpServletResponse());
+		themeDisplay.setUser(TestPropsValues.getUser());
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+
+		return themeDisplay;
+	}
+
 	private AssetCategory _assetCategory;
 	private AssetVocabulary _assetVocabulary;
 	private Company _company;
@@ -243,6 +295,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	private JournalArticle _journalArticle;
+	private Layout _layout;
 
 	@Inject
 	private Portal _portal;

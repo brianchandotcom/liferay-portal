@@ -635,7 +635,8 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		// Messaging
 
 		sendSubscriptionStatusMessage(
-			commerceSubscriptionEntryId, subscriptionStatus);
+			commerceSubscriptionEntryId, subscriptionStatus,
+			commerceSubscriptionEntry.getUserId());
 
 		return commerceSubscriptionEntryPersistence.update(
 			commerceSubscriptionEntry);
@@ -660,7 +661,8 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		// Messaging
 
 		sendSubscriptionStatusMessage(
-			commerceSubscriptionEntryId, subscriptionStatus);
+			commerceSubscriptionEntryId, subscriptionStatus,
+			commerceSubscriptionEntry.getUserId());
 
 		return commerceSubscriptionEntryPersistence.update(
 			commerceSubscriptionEntry);
@@ -779,7 +781,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 	}
 
 	protected void sendSubscriptionStatusMessage(
-		long commerceSubscriptionEntryId, int subscriptionStatus) {
+		long commerceSubscriptionEntryId, int subscriptionStatus, long userId) {
 
 		TransactionCommitCallbackUtil.registerCallback(
 			new Callable<Void>() {
@@ -787,6 +789,8 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 				@Override
 				public Void call() throws Exception {
 					Message message = new Message();
+
+					message.put("userId", userId);
 
 					message.setPayload(
 						JSONUtil.put(

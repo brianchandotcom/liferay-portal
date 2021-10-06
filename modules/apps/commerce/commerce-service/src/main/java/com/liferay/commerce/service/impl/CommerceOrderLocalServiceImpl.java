@@ -1558,7 +1558,8 @@ public class CommerceOrderLocalServiceImpl
 
 		sendPaymentStatusMessage(
 			commerceOrder.getCommerceOrderId(),
-			commerceOrder.getPaymentStatus(), previousPaymentStatus);
+			commerceOrder.getPaymentStatus(), previousPaymentStatus,
+			commerceOrder.getUserId());
 
 		return commerceOrder;
 	}
@@ -1584,7 +1585,8 @@ public class CommerceOrderLocalServiceImpl
 
 		sendPaymentStatusMessage(
 			commerceOrder.getCommerceOrderId(),
-			commerceOrder.getPaymentStatus(), previousPaymentStatus);
+			commerceOrder.getPaymentStatus(), previousPaymentStatus,
+			commerceOrder.getUserId());
 
 		return commerceOrder;
 	}
@@ -1899,7 +1901,8 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	protected void sendPaymentStatusMessage(
-		long commerceOrderId, int paymentStatus, int previousPaymentStatus) {
+		long commerceOrderId, int paymentStatus, int previousPaymentStatus,
+		long userId) {
 
 		TransactionCommitCallbackUtil.registerCallback(
 			new Callable<Void>() {
@@ -1907,6 +1910,8 @@ public class CommerceOrderLocalServiceImpl
 				@Override
 				public Void call() throws Exception {
 					Message message = new Message();
+
+					message.put("userId", userId);
 
 					message.setPayload(
 						JSONUtil.put(

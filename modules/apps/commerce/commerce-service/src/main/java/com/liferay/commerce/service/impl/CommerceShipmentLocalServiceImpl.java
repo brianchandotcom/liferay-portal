@@ -354,7 +354,8 @@ public class CommerceShipmentLocalServiceImpl
 				messageShipmentStatuses,
 				CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING)) {
 
-			sendShipmentStatusMessage(commerceShipmentId);
+			sendShipmentStatusMessage(
+				commerceShipmentId, commerceShipment.getUserId());
 		}
 
 		return commerceShipmentPersistence.update(commerceShipment);
@@ -621,7 +622,8 @@ public class CommerceShipmentLocalServiceImpl
 		commerceShipment.setStatus(status);
 
 		if (ArrayUtil.contains(messageShipmentStatuses, status)) {
-			sendShipmentStatusMessage(commerceShipmentId);
+			sendShipmentStatusMessage(
+				commerceShipmentId, commerceShipment.getUserId());
 		}
 
 		return commerceShipmentPersistence.update(commerceShipment);
@@ -696,13 +698,17 @@ public class CommerceShipmentLocalServiceImpl
 	@Transactional(
 		propagation = Propagation.REQUIRED, rollbackFor = Exception.class
 	)
-	protected void sendShipmentStatusMessage(long commerceShipmentId) {
+	protected void sendShipmentStatusMessage(
+		long commerceShipmentId, long userId) {
+
 		TransactionCommitCallbackUtil.registerCallback(
 			new Callable<Void>() {
 
 				@Override
 				public Void call() throws Exception {
 					Message message = new Message();
+
+					message.put("userId", userId);
 
 					message.setPayload(
 						JSONUtil.put("commerceShipmentId", commerceShipmentId));

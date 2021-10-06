@@ -457,6 +457,8 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 					Message message = new Message();
 
+					message.put("userId", commerceOrder.getUserId());
+
 					message.setPayload(
 						JSONUtil.put(
 							"commerceOrderId",

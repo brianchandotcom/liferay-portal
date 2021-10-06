@@ -221,7 +221,7 @@ definition {
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
-		
+
 		Button.clickSubmitForPublication();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
@@ -258,9 +258,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
-		AssetPublisherPortlet.viewManualNoAssetsMessagePG();	
-
-
+		AssetPublisherPortlet.viewManualNoAssetsMessagePG();
 	}
 
 	@description = "This is a test for LRQA-69814. Verify that a Pending Web Content is not displayed on Asset Publisher."

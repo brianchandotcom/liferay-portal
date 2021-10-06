@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Portal;
@@ -147,7 +148,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 	public void testGetInfoFieldSetByClassNameWhenTemplateEntryExists()
 		throws PortalException {
 
-		TemplateEntry articleTemplateEntry = TemplateTestUtil.addTemplateEntry(
+		TemplateTestUtil.addTemplateEntry(
 			JournalArticle.class.getName(),
 			_journalArticle.getDDMStructureKey(), _serviceContext);
 
@@ -188,6 +189,44 @@ public class TemplateInfoItemFieldSetProviderTest {
 				AssetCategory.class.getName(), _assetCategory);
 
 		Assert.assertTrue(infoFieldValues.isEmpty());
+	}
+
+	@Test
+	public void testGetInfoFieldValuesByClassNameWhenTemplateEntryExists()
+		throws PortalException {
+
+		TemplateTestUtil.addTemplateEntry(
+			JournalArticle.class.getName(),
+			_journalArticle.getDDMStructureKey(), _serviceContext);
+
+		TemplateEntry categoryTemplateEntry = TemplateTestUtil.addTemplateEntry(
+			AssetCategory.class.getName(), StringPool.BLANK,
+			_assetCategory.getName(), RandomTestUtil.randomString(),
+			JournalTestUtil.getSampleTemplateFTL(), _serviceContext);
+
+		List<InfoFieldValue<Object>> infoFieldValues =
+			_templateInfoItemFieldSetProvider.getInfoFieldValues(
+				AssetCategory.class.getName(), _assetCategory);
+
+		Assert.assertEquals(
+			infoFieldValues.toString(), 1, infoFieldValues.size());
+
+		InfoFieldValue<Object> infoFieldValue = infoFieldValues.get(0);
+
+		InfoField infoField = infoFieldValue.getInfoField();
+
+		Assert.assertEquals(
+			infoField.toString(),
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				categoryTemplateEntry.getTemplateEntryId(),
+			infoField.getName());
+
+		Locale defaultLocale = _portal.getSiteDefaultLocale(
+			_group.getGroupId());
+
+		Assert.assertEquals(
+			infoFieldValue.toString(), _assetCategory.getName(),
+			infoFieldValue.getValue(defaultLocale));
 	}
 
 	private AssetCategory _assetCategory;

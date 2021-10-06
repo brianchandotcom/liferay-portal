@@ -13,24 +13,29 @@
  */
 
 import {ClassicEditor} from 'frontend-editor-ckeditor-web';
-import {debounce} from 'frontend-js-web';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 
 const RichText = ({
+	editable,
 	editingLanguageId,
 	editorConfig,
 	id,
 	name,
 	onChange,
-	predefinedValue,
+	predefinedValue = '',
 	readOnly,
 	value,
 	visible,
 	...otherProps
 }) => {
 	const editorRef = useRef();
+
+	const contents = useMemo(
+		() => (editable ? predefinedValue : value ?? predefinedValue),
+		[editable, predefinedValue, value]
+	);
 
 	useEffect(() => {
 		const editor = editorRef.current?.editor;
@@ -43,11 +48,7 @@ const RichText = ({
 
 			editor.setData(editor.getData());
 		}
-	}, [editingLanguageId, editorRef]);
-
-	const currentValue = value ?? predefinedValue;
-
-	const onChangeDebounced = debounce(onChange, 600);
+	}, [editingLanguageId]);
 
 	return (
 		<FieldBase
@@ -59,12 +60,12 @@ const RichText = ({
 			visible={visible}
 		>
 			<ClassicEditor
-				contents={currentValue}
+				contents={contents}
 				editorConfig={editorConfig}
 				name={name}
 				onChange={(content) => {
-					if (currentValue !== content) {
-						onChangeDebounced({target: {value: content}});
+					if (contents !== content) {
+						onChange({target: {value: content}});
 					}
 				}}
 				onSetData={({data: {dataValue: value}, editor: {mode}}) => {
@@ -76,7 +77,7 @@ const RichText = ({
 				ref={editorRef}
 			/>
 
-			<input name={name} type="hidden" value={currentValue} />
+			<input name={name} type="hidden" value={contents} />
 		</FieldBase>
 	);
 };

@@ -24,18 +24,16 @@ const QuoteComparison = () => {
 	const onClickPolicyDetails = () => {};
 
 	return (
-		<>
-			<div className="quote-comparison">
-				{quotes.map((quote, index) => (
-					<ProductComparison
-						key={index}
-						onClickPolicyDetails={onClickPolicyDetails}
-						onClickPurchase={onClickPurchase}
-						product={quote}
-					/>
-				))}
-			</div>
-		</>
+		<div className="quote-comparison">
+			{quotes.map((quote, index) => (
+				<ProductComparison
+					key={index}
+					onClickPolicyDetails={onClickPolicyDetails}
+					onClickPurchase={onClickPurchase}
+					product={quote}
+				/>
+			))}
+		</div>
 	);
 };
 

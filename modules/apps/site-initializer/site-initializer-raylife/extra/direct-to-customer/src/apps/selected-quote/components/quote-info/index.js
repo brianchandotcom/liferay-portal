@@ -21,16 +21,14 @@ const QuoteInfo = () => {
 
 	return (
 		<div className="quote-info">
-			<h1>Awesome Choice!</h1>
-
-			<h3>You&apos;re almost finished.</h3>
-
-			<ProductComparison
-				highlightMostPopularText="Great Coverage"
-				onClickPolicyDetails={onClickPolicyDetails}
-				product={product}
-				purchasable={false}
-			/>
+			{product.id && (
+				<ProductComparison
+					highlightMostPopularText="Great Coverage"
+					onClickPolicyDetails={onClickPolicyDetails}
+					product={product}
+					purchasable={false}
+				/>
+			)}
 
 			<div className="application-id">
 				Application {`#${applicationId}`}

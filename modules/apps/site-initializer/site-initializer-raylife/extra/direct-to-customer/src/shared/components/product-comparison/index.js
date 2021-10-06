@@ -1,13 +1,23 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
+var currencyIntl = new Intl.NumberFormat('en-US', {
+	currency: 'USD',
+});
+
+const formatValue = (value) => {
+	if (value === 'true' || value === 'false' || typeof value === 'boolean') {
+		return JSON.parse(value);
+	}
+
+	return currencyIntl.format(value);
+};
+
 const getClassName = (value) =>
 	classNames({
 		checkIcon: !!value,
 		timesIcon: !value,
 	});
-
-const getCurrency = (price) => price.toLocaleString();
 
 const ListItems = ({
 	aggregateLimit,
@@ -35,44 +45,42 @@ const ListItems = ({
 		},
 		{
 			title: 'Money & Securities',
-			value: moneyAndSecurities,
+			value: moneyAndSecurities || false,
 		},
 	];
 
 	return (
 		<ul>
-			{values.map(({title, value}, index) => (
-				<li key={index}>
-					<div className={getClassName(value)}>
-						<div>
-							<ClayIcon
-								symbol={value ? 'check' : 'times'}
-								width={50}
-							/>
+			{values.map(({title, value}, index) => {
+				const formattedValue = formatValue(value);
+
+				return (
+					<li key={index}>
+						<div className={getClassName(formattedValue)}>
+							<div>
+								<ClayIcon
+									symbol={formattedValue ? 'check' : 'times'}
+									width={50}
+								/>
+							</div>
+							{title}
 						</div>
-						{title}
-					</div>
-					{typeof value === 'number' && `$${getCurrency(value)}`}
-				</li>
-			))}
+						{formattedValue}
+					</li>
+				);
+			})}
 		</ul>
 	);
 };
 
 const ProductComparison = ({
+	highlightMostPopularText = 'Most Popular',
 	onClickPolicyDetails,
 	onClickPurchase,
 	product,
 	purchasable = true,
 }) => {
-	const {
-		category,
-		highlightMostPopularText = 'Most Popular',
-		mostPopular,
-		price,
-		promo,
-		...productDetails
-	} = product;
+	const {category, mostPopular, price, promo, ...productDetails} = product;
 
 	return (
 		<div

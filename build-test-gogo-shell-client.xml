@@ -19,10 +19,10 @@
 		<if>
 			<contains string="${gogo.shell.content.out}" substring="Connected to 127.0.0.1." />
 			<then>
-				<echo message="PASSED. 'Connected to 127.0.0.1.' is present." />
+				<echo message="'Connected to 127.0.0.1.' is present." />
 			</then>
 			<else>
-				<fail message="FAILED. 'Connected to 127.0.0.1.' is not present." />
+				<fail message="'Connected to 127.0.0.1.' is not present." />
 			</else>
 		</if>
 	</target>
@@ -41,10 +41,10 @@
 		<if>
 			<contains string="${gogo.shell.content.out}" substring="telnet: connect to address 127.0.0.1: Connection refused" />
 			<then>
-				<echo message="PASSED. 'telnet: connect to address 127.0.0.1: Connection refused' is present." />
+				<echo message="'telnet: connect to address 127.0.0.1: Connection refused' is present." />
 			</then>
 			<else>
-				<fail message="FAILED. 'telnet: connect to address 127.0.0.1: Connection refused' is not present." />
+				<fail message="'telnet: connect to address 127.0.0.1: Connection refused' is not present." />
 			</else>
 		</if>
 	</target>

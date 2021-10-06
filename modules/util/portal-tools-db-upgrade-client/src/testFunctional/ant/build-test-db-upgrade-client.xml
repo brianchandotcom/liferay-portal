@@ -368,10 +368,10 @@
 				<if>
 					<contains string="${upgrade.process.output}" substring="Database upgrade client is already running" />
 					<then>
-						<echo message="PASSED. Second Upgrade process is denied from starting." />
+						<echo message="Second Upgrade process is denied from starting." />
 					</then>
 					<else>
-						<fail message="FAILED. Upgrade Client is attempting to start a second upgrade process." />
+						<fail message="Upgrade Client is attempting to start a second upgrade process." />
 					</else>
 				</if>
 			</sequential>

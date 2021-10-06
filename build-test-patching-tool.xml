@@ -21,10 +21,10 @@
 			<if>
 				<contains string="${patching.tool.content.out}" substring="The command has failed." />
 				<then>
-					<fail message="FAILED. patching-tool @{patching.tool.command.args} validate failed." />
+					<fail message="Patching Tool failed with the arguments: @{patching.tool.command.args}." />
 				</then>
 				<else>
-					<echo message="PASSED. patching-tool @{patching.tool.command.args} validate passed." />
+					<echo message="Patching Tool succeeded with the arguments: @{patching.tool.command.args}." />
 				</else>
 			</if>
 		</sequential>

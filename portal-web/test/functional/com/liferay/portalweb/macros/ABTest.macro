@@ -1,5 +1,11 @@
 definition {
 
+	macro changeExperienceABTest {
+		Select(
+			locator1 = "ABTest#CHANGE_EXPERIENCE",
+			value1 = "${experience}");
+	}
+
 	macro checkAnalyticsCloudInfo {
 		if (IsElementPresent(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON")) {
 			ABTest.runTest();
@@ -50,12 +56,6 @@ definition {
 		}
 
 		Close(locator1 = "title=Tests - Analytics Cloud");
-	}
-
-	macro changeExperienceABTest {
-		Select(
-			locator1 = "ABTest#CHANGE_EXPERIENCE",
-			value1 = "${experience}");
 	}
 
 	macro createABTest {

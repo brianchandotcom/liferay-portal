@@ -35,6 +35,21 @@
 		<td>//button[(@class='dropdown-item') and contains(.,'${key_picklistOption}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>UPDATE_PICKLIST_NAME</td>
+		<td>//input[@aria-describedby]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>CANCEL_UPDATE_PICKLIST</td>
+		<td>//button[@id='_com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet_cancel']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>IFRAME_PICKLIST_MODAL</td>
+		<td>//iframe[contains(@src,'ListTypeDefinitions')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

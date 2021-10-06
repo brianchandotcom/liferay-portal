@@ -1,5 +1,18 @@
 definition {
 
+	macro updatePicklistName {
+
+	SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
+
+		Type(
+			locator1 = "Picklist#UPDATE_PICKLIST_NAME",
+			value1 = "${picklistName}");
+	}
+
+	macro cancelUpdatePicklist {
+		Click.javaScriptClick(locator1 = "Picklist#CANCEL_UPDATE_PICKLIST");
+	}
+
 	macro addPicklistItemViaAPI {
 		JSONObject.addPicklistItem(
 			itemKey = "${itemKey}",

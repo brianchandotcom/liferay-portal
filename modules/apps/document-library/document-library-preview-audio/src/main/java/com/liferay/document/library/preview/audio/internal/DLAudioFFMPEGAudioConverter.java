@@ -16,6 +16,7 @@ package com.liferay.document.library.preview.audio.internal;
 
 import com.liferay.document.library.kernel.util.AudioConverter;
 import com.liferay.document.library.preview.audio.internal.configuration.DLAudioFFMPEGAudioConverterConfiguration;
+import com.liferay.petra.io.AutoDeleteFileInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -29,8 +30,6 @@ import com.liferay.portal.util.PropsUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -79,7 +78,7 @@ public class DLAudioFFMPEGAudioConverter implements AudioConverter {
 						format, _AUDIO_SAMPLE_RATE_DEFAULT)),
 				destinationFile.getAbsolutePath()));
 
-		return new DeleteOnCloseFileInputStream(destinationFile);
+		return new AutoDeleteFileInputStream(destinationFile);
 	}
 
 	@Override
@@ -164,27 +163,5 @@ public class DLAudioFFMPEGAudioConverter implements AudioConverter {
 
 	private volatile DLAudioFFMPEGAudioConverterConfiguration
 		_dlAudioFFMPEGAudioConverterConfiguration;
-
-	private static final class DeleteOnCloseFileInputStream
-		extends FileInputStream {
-
-		public DeleteOnCloseFileInputStream(File file)
-			throws FileNotFoundException {
-
-			super(file);
-
-			_file = file;
-		}
-
-		@Override
-		public void close() throws IOException {
-			super.close();
-
-			FileUtil.delete(_file);
-		}
-
-		private final File _file;
-
-	}
 
 }

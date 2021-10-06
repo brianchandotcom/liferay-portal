@@ -21,9 +21,14 @@ import classnames from 'classnames';
 import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+let controller = null;
+
 const fetchFile = async (url) => {
+	controller = new AbortController();
+
 	const response = await fetch(url, {
 		method: 'GET',
+		signal: controller.signal,
 	});
 
 	const blob = await response.blob();
@@ -41,7 +46,6 @@ const downloadFileFromBlob = (blob) => {
 	const filename = `content-dashboard-report-${today.toLocaleDateString(
 		'en-US'
 	)}`;
-
 	fileLink.download = filename;
 
 	fileLink.click();
@@ -78,19 +82,29 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 		}));
 	};
 
-	const handleError = (error) => {
+	const handleError = ({abortedRequest, error}) => {
+		const type = abortedRequest ? 'warning' : 'danger';
+
+		const toastContent = abortedRequest
+			? Liferay.Language.get('xls-generation-has-been-cancelled')
+			: `${Liferay.Language.get(
+					'xls-generation-has-failed-try-again'
+			  )}. ${error}`;
+
+		const feedbackContent = abortedRequest
+			? Liferay.Language.get('xls-generation-cancelled')
+			: Liferay.Language.get('an-error-occurred');
+
 		setToastMessage((current) => ({
 			...current,
-			content: `${Liferay.Language.get(
-				'xls-generation-has-failed-try-again'
-			)}. ${error}`,
-			type: 'danger',
+			content: toastContent,
+			type,
 		}));
 
 		setFeedbackStatus((current) => ({
 			...current,
-			content: Liferay.Language.get('an-error-occurred'),
-			type: 'danger',
+			content: feedbackContent,
+			type,
 		}));
 	};
 
@@ -125,6 +139,8 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 			? 'check-circle'
 			: feedbackStatus.type === 'danger'
 			? 'exclamation-circle'
+			: feedbackStatus.type === 'warning'
+			? 'warning'
 			: 'download';
 
 	const disabledGenerateButton =
@@ -141,7 +157,9 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 			handleSuccess();
 		}
 		catch (error) {
-			handleError(error);
+			const abortedRequest = error.name === 'AbortError' ? true : false;
+
+			handleError({error, abortedRequest});
 		}
 		finally {
 			handleUIState();
@@ -149,7 +167,7 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 	};
 
 	const handleCancelRequest = () => {
-		setLoading(false);
+		controller.abort();
 	};
 
 	const handleToastClose = () => {
@@ -166,6 +184,9 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 						'text-danger':
 							feedbackStatus.show &&
 							feedbackStatus.type === 'danger',
+						'text-warning':
+							feedbackStatus.show &&
+							feedbackStatus.type === 'warning',
 						'text-success':
 							feedbackStatus.show &&
 							feedbackStatus.type === 'success',
@@ -198,7 +219,7 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 						displayType="secondary"
 						onClick={handleCancelRequest}
 						symbol="times-circle"
-						title={Liferay.Language.get('cancel-xls')}
+						title={Liferay.Language.get('cancel-export')}
 					/>
 				</ClayTooltipProvider>
 			)}

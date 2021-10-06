@@ -1630,7 +1630,7 @@ definition {
 			}
 		}
 		else {
-			if (IsTextEqual(key_fieldLabel = "Collection", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT_WITH_LABEL", value1 = "")) {
+			if (IsTextEqual(key_fieldLabel = "Collection", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
 				Click(
 					key_fieldLabel = "Collection",
 					key_text = "plus",
@@ -1829,7 +1829,7 @@ definition {
 		}
 
 		else if (isSet(vocabularyName)) {
-			if (IsTextEqual(key_fieldLabel = "Source", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT_WITH_LABEL", value1 = "")) {
+			if (IsTextEqual(key_fieldLabel = "Source", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
 				Click(
 					key_fieldLabel = "Source",
 					key_text = "plus",
@@ -1975,7 +1975,7 @@ definition {
 				value1 = "${templateOption}");
 		}
 		else {
-			if (IsTextEqual(key_fieldLabel = "Item", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT_WITH_LABEL", value1 = "")) {
+			if (IsTextEqual(key_fieldLabel = "Item", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
 				Click(
 					key_fieldLabel = "Item",
 					key_text = "plus",
@@ -2215,7 +2215,7 @@ definition {
 				value1 = "Direct");
 		}
 
-		if (IsTextEqual(key_fieldLabel = "Image", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT_WITH_LABEL", value1 = "")) {
+		if (IsTextEqual(key_fieldLabel = "Image", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
 			Click(
 				key_fieldLabel = "Image",
 				key_text = "plus",
@@ -2414,7 +2414,7 @@ definition {
 				}
 
 				if ("${backgroundImage}" == "Direct") {
-					if (IsTextEqual(key_fieldLabel = "Background Image", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT_WITH_LABEL", value1 = "")) {
+					if (IsTextEqual(key_fieldLabel = "Background Image", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
 						Click(
 							key_fieldLabel = "Background Image",
 							key_text = "plus",
@@ -3074,7 +3074,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "General");
 
-		if (IsTextEqual(key_fieldLabel = "Item", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT_WITH_LABEL", value1 = "")) {
+		if (IsTextEqual(key_fieldLabel = "Item", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
 			Click(
 				key_fieldLabel = "Item",
 				key_text = "plus",

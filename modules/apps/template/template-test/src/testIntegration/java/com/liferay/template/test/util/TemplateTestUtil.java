@@ -64,22 +64,33 @@ public class TemplateTestUtil {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return addDDMTemplate(
+			classNameId, classPK, resourceClassNameId,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
+	}
+
+	public static DDMTemplate addDDMTemplate(
+			long classNameId, long classPK, long resourceClassNameId,
+			String name, String description, String script,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		return DDMTemplateServiceUtil.addTemplate(
 			serviceContext.getScopeGroupId(), classNameId, classPK,
 			resourceClassNameId,
 			HashMapBuilder.put(
 				PortalUtil.getSiteDefaultLocale(
 					serviceContext.getScopeGroupId()),
-				RandomTestUtil.randomString()
+				name
 			).build(),
 			HashMapBuilder.put(
 				PortalUtil.getSiteDefaultLocale(
 					serviceContext.getScopeGroupId()),
-				RandomTestUtil.randomString()
+				description
 			).build(),
 			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, StringPool.BLANK,
-			TemplateConstants.LANG_TYPE_FTL, RandomTestUtil.randomString(),
-			serviceContext);
+			TemplateConstants.LANG_TYPE_FTL, script, serviceContext);
 	}
 
 	public static TemplateEntry addTemplateEntry(
@@ -90,6 +101,23 @@ public class TemplateTestUtil {
 		DDMTemplate ddmTemplate = addDDMTemplate(
 			PortalUtil.getClassNameId(TemplateEntry.class), 0,
 			PortalUtil.getClassNameId(TemplateEntry.class), serviceContext);
+
+		return TemplateEntryLocalServiceUtil.addTemplateEntry(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			ddmTemplate.getTemplateId(), infoItemClassName,
+			infoItemFormVariationKey, serviceContext);
+	}
+
+	public static TemplateEntry addTemplateEntry(
+			String infoItemClassName, String infoItemFormVariationKey,
+			String name, String description, String script,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMTemplate ddmTemplate = addDDMTemplate(
+			PortalUtil.getClassNameId(TemplateEntry.class), 0,
+			PortalUtil.getClassNameId(TemplateEntry.class), name, description,
+			script, serviceContext);
 
 		return TemplateEntryLocalServiceUtil.addTemplateEntry(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),

@@ -29,12 +29,16 @@ AUI.add(
 		];
 
 		var TPL_ADD_BUTTON =
-			'<button class="add-row btn btn-icon-only btn-monospaced btn-secondary toolbar-first toolbar-item" title="" type="button">' +
+			'<button class="add-row btn btn-icon-only btn-monospaced btn-secondary toolbar-first toolbar-item" title="' +
+			Liferay.Language.get('add') +
+			'" type="button">' +
 			Liferay.Util.getLexiconIconTpl('plus') +
 			'</button>';
 
 		var TPL_DELETE_BUTTON =
-			'<button class="btn btn-icon-only btn-monospaced btn-secondary delete-row toolbar-item toolbar-last" title="" type="button">' +
+			'<button class="btn btn-icon-only btn-monospaced btn-secondary delete-row toolbar-item toolbar-last" title="' +
+			Liferay.Language.get('remove') +
+			'" type="button">' +
 			Liferay.Util.getLexiconIconTpl('hr') +
 			'</button>';
 

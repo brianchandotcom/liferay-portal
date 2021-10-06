@@ -146,6 +146,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GO_TO_FORM_FIELD</td>
+	<td>//label[contains(.,'${key_formFieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VALIDATION_VALUE_FIELD</td>
 	<td>//div[contains(@data-field-name,'validation')]//label[contains(text(),'${key_fieldLabel}')]</td>
 	<td></td>
@@ -213,6 +218,22 @@
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<!--BOOLEAN-->
+<tr>
+	<td>BOOLEAN_NAME</td>
+	<td>//span[text()='${fieldValue}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOLEAN_PREDEFINED_VALUE</td>
+	<td>//div[contains(@class,'form-builder-select-field input-group-container')]//div[contains(@class,'form-control results-chosen select-field-trigger')]//div[contains(@class,'option-selected')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECK_BOOLEAN_FIELD</td>
+	<td>//div[contains(@class,'custom-control custom-checkbox')]//span[text()='${fieldName}']</td>
 	<td></td>
 </tr>
 <!--CHECKBOX-->

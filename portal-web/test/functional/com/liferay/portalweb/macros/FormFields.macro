@@ -180,6 +180,14 @@ definition {
 			value1 = "\RETURN");
 	}
 
+	macro editBooleanPredefinedValue {
+		var key_predefinedValue = "${predefinedValue}";
+
+		Click(locator1 = "FormFields#BOOLEAN_PREDEFINED_VALUE");
+
+		DropdownMenuItem.click(menuItem = "${key_predefinedValue}");
+	}
+
 	macro editCaptchaTextVerification {
 		Type(
 			locator1 = "FormFields#CAPTCHA_TEXT_VERIFICATION",
@@ -669,6 +677,12 @@ definition {
 		return "${fieldName}";
 	}
 
+	macro gotoFormField () {
+		Click(
+			key_formFieldName = "${formFieldName}",
+			locator1 = "FormFields#GO_TO_FORM_FIELD");
+	}
+
 	macro moveFieldToPosition {
 		if (isSet(formPageNumber)) {
 			key_formPageNumber = "${formPageNumber}";
@@ -1087,6 +1101,12 @@ definition {
 		var key_autocompleteOption = "${autocompleteOption}";
 
 		AssertElementPresent(locator1 = "FormFields#AUTOCOMPLETE_OPTION");
+	}
+
+	macro viewBooleanField {
+		AssertTextEquals(
+			locator1 = "FormFields#BOOLEAN_NAME",
+			value1 = "${fieldValue}");
 	}
 
 	macro viewCaptchaField {

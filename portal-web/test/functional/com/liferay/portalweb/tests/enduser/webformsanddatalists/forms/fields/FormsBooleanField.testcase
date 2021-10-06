@@ -1,0 +1,414 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property custom.properties = "minifier.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that a form with the boolean field can be created"
+	@priority = "5"
+	test CanBeCreated {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Boolean");
+
+		FormFields.viewField(fieldName = "Boolean");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormFields.viewField(fieldName = "Boolean");
+	}
+
+	@description = "Verify that a form with the boolean field can be deleted"
+	@priority = "5"
+	test CanBeDeleted {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Boolean");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoDeleteField(fieldName = "Boolean");
+
+		FormFields.viewDeletedFieldLabel(fieldName = "Boolean");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormFields.viewDeletedFieldLabel(fieldName = "Boolean");
+	}
+
+	@description = "Verify that a form with the boolean field can be duplicated"
+	@priority = "5"
+	test CanBeDuplicated {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		FormFields.editHelpTextField(fieldHelpText = "Test Help Text");
+
+		FormFields.duplicateField();
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Copy of Boolean");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Boolean",
+			fieldValue = "Test Help Text");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Copy of Boolean",
+			fieldValue = "Test Help Text");
+	}
+
+	@description = "Verify that a form with the boolean field can be required"
+	@priority = "5"
+	test CanBeRequired {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		FormFields.enableSwitch(fieldName = "required");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewRequiredAsterisk();
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "This field is required.");
+
+		Check.checkToggleSwitch(
+			fieldName = "Boolean",
+			locator1 = "FormFields#CHECK_BOOLEAN_FIELD");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Boolean",
+			fieldValue = "True");
+	}
+
+	@description = "Verify that a form with the boolean field can be set to show as a switch"
+	@priority = "5"
+	test CanBeSetToShowAsASwitch {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		FormFields.enableSwitch(fieldName = "Show as a Switch");
+
+		FormFields.viewSwitch(fieldName = "Boolean");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewSwitch(fieldName = "Boolean");
+
+		FormFields.enableSwitch(fieldName = "Boolean");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Boolean",
+			fieldValue = "True");
+	}
+
+	@description = "Verify that a form with more than one boolean field can be submitted and if the entries are stored correctly"
+	@priority = "5"
+	test CanBeSubmittedAndCheckEntries {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Boolean");
+
+		FormFields.editText(
+			fieldName = "label",
+			fieldValue = "Boolean 1");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Boolean");
+
+		FormFields.editText(
+			fieldName = "label",
+			fieldValue = "Boolean 2");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean 1");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean 2");
+
+		FormFields.gotoFormField(formFieldName = "Boolean 1");
+
+		FormFields.enableSwitch(fieldName = "Show as a Switch");
+
+		FormFields.viewSwitch(fieldName = "Boolean 1");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewSwitch(fieldName = "Boolean 1");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "Boolean 2");
+
+		FormFields.enableCheckbox(fieldName = "Boolean 2");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Boolean 1",
+			fieldValue = "False");
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Boolean 2",
+			fieldValue = "True");
+	}
+
+	@description = "Verify that a form with the boolean field having a help text can be added"
+	@priority = "5"
+	test HelpTextCanBeAdded {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		FormFields.editHelpTextField(fieldHelpText = "Test Help Text");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Test Help Text",
+			fieldName = "Boolean");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Boolean",
+			fieldValue = "Test Help Text");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Boolean",
+			fieldValue = "Test Help Text");
+	}
+
+	@description = "Verify that the boolean field can have its label edited"
+	@priority = "5"
+	test LabelCanBeEdited {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		FormFields.editText(
+			fieldName = "label",
+			fieldValue = "Test Boolean Field");
+
+		FormFields.viewBooleanField(fieldValue = "Test Boolean Field");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewBooleanField(fieldValue = "Test Boolean Field");
+	}
+
+	@description = "Verify that a form with the boolean field having a predefined value can be added"
+	@priority = "5"
+	test PredefinedValueCanBeAdded {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.editBooleanPredefinedValue(predefinedValue = "True");
+
+		AssertTextEquals(
+			locator1 = "FormFields#BOOLEAN_PREDEFINED_VALUE",
+			value1 = "True");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewCheckboxChecked(fieldName = "Boolean");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Boolean",
+			fieldValue = "True");
+
+		FormsAdminNavigator.gotoView();
+
+		FormFields.viewCheckboxChecked(fieldName = "Boolean");
+	}
+
+	@description = "Verify that the boolean field reference can be edited"
+	@priority = "5"
+	test ReferenceCanBeEdited {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Boolean");
+
+		FormFields.viewBooleanField(fieldValue = "Boolean");
+
+		Form.gotoAdvancedTab();
+
+		Form.editFieldReferenceMetal(fieldValue = "BooleanField1234");
+
+		FormFields.viewFieldReference(
+			fieldName = "Boolean",
+			key_fieldReferenceValue = "BooleanField1234");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormFields.viewFieldReference(
+			fieldName = "Boolean",
+			key_fieldReferenceValue = "BooleanField1234");
+	}
+
+}

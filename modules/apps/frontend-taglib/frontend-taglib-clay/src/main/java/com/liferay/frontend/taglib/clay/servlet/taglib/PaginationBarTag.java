@@ -294,7 +294,7 @@ public class PaginationBarTag extends BaseContainerTag {
 			if (leftItems.length > 1) {
 				_processEllipsis(pageContext);
 			}
-			else {
+			else if (leftItems.length == 1) {
 				int leftItem = leftItems[0];
 
 				_processItem(pageContext, leftItem);

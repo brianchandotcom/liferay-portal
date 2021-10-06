@@ -258,6 +258,11 @@ public class WebDriverUtil extends PropsValues {
 
 			mutableCapabilities.setCapability(entry.getKey(), entry.getValue());
 		}
+
+		if (PropsValues.PROXY_SERVER_ENABLED) {
+			mutableCapabilities.setCapability(
+				CapabilityType.PROXY, ProxyUtil.getSeleniumProxy());
+		}
 	}
 
 	private void _startWebDriver() {
@@ -332,7 +337,6 @@ public class WebDriverUtil extends PropsValues {
 				if (PropsValues.PROXY_SERVER_ENABLED) {
 					put(CapabilityType.ACCEPT_INSECURE_CERTS, true);
 					put(CapabilityType.ACCEPT_SSL_CERTS, true);
-					put(CapabilityType.PROXY, ProxyUtil.getSeleniumProxy());
 				}
 
 				put(

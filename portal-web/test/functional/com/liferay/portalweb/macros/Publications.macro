@@ -74,9 +74,19 @@ definition {
 			key_menuItem = "Publish",
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 
-		AssertElementPresent(
+		ClickNoError(
 			key_menuItem = "Edit",
 			locator1 = "MenuItem#ANY_MENU_ITEM");
+
+		Type(
+			locator1 = "Publications#PUBLICATION_NAME",
+			value1 = "New ${publicationName}");
+
+		Button.click(button = "Save");
+
+		AssertElementPresent(
+			key_publicationName = "New ${publicationName}",
+			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 
 		Publications.inviteUsers(
 			publicationName = "${publicationName}",
@@ -101,7 +111,11 @@ definition {
 
 		// Workaround LPS-140292
 
-		//Publications.publishPublication(publicationName = "${publicationName}");
+		/*Publications.publishPublication(publicationName = "${publicationName}");
+
+		Publications.viewPublicationPublished(publicationName = "${publicationName}");*/
+	}
+
 	macro assertPublisherPermissions {
 		Click(
 			key_publicationName = "${publicationName}",

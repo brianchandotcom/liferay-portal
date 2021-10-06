@@ -1961,6 +1961,10 @@ definition {
 
 		User.answerPasswordReminder();
 
+		if (IsElementPresent(locator1 = "Button#DONE")) {
+			SignIn.agreeToCommerceTermsOfUse();
+		}
+
 		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
 			takeScreenshot();
 
@@ -2036,6 +2040,10 @@ definition {
 
 		else if (IsElementPresent(locator1 = "Select#QUESTION")) {
 			SignIn.setPasswordReminder();
+		}
+
+		if (IsElementPresent(locator1 = "Button#DONE")) {
+			SignIn.agreeToCommerceTermsOfUse();
 		}
 
 		WaitForLiferayEvent.initializeLiferayEventLog();

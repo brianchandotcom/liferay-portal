@@ -31,6 +31,10 @@ definition {
 	}
 
 	macro signOut {
+		if (IsElementPresent(locator1 = "Button#DONE")) {
+			SignIn.agreeToCommerceTermsOfUse();
+		}
+
 		if (IsElementNotPresent(locator1 = "UserBar#USER_SIGN_IN")) {
 			UserBar.gotoDropdown();
 

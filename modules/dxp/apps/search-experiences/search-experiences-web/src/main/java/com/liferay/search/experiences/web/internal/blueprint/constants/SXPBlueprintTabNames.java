@@ -12,23 +12,15 @@
  *
  */
 
-package com.liferay.search.experiences.constants;
+package com.liferay.search.experiences.web.internal.blueprint.constants;
 
 /**
  * @author Petteri Karttunen
  */
-public class SXPPortletKeys {
+public class SXPBlueprintTabNames {
 
-	public static final String SXP_BLUEPRINT =
-		"com_liferay_search_experiences_web_internal_" +
-			"_portlet_SXPBlueprintPortlet";
+	public static final String SXP_BLUEPRINTS = "sxpBlueprints";
 
-	public static final String SXP_BLUEPRINT_OPTIONS =
-		"com_liferay_search_experiences_web_internal_" +
-			"options_portlet_SXPBlueprintOptionsPortlet";
-
-	public static final String SXP_RESULT =
-		"com_liferay_search_experiences_web_internal_" +
-			"result_portlet_SXPResultPortlet";
+	public static final String SXP_ELEMENTS = "sxpElements";
 
 }

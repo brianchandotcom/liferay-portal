@@ -12,23 +12,18 @@
  *
  */
 
-package com.liferay.search.experiences.constants;
+package com.liferay.search.experiences.index;
+
+import java.util.List;
 
 /**
  * @author Petteri Karttunen
  */
-public class SXPPortletKeys {
+public interface IndexFieldInfoProvider {
 
-	public static final String SXP_BLUEPRINT =
-		"com_liferay_search_experiences_web_internal_" +
-			"_portlet_SXPBlueprintPortlet";
+	public List<IndexFieldInfo> getIndexFieldInfos(long companyId);
 
-	public static final String SXP_BLUEPRINT_OPTIONS =
-		"com_liferay_search_experiences_web_internal_" +
-			"options_portlet_SXPBlueprintOptionsPortlet";
-
-	public static final String SXP_RESULT =
-		"com_liferay_search_experiences_web_internal_" +
-			"result_portlet_SXPResultPortlet";
+	public List<IndexFieldInfo> getIndexFieldInfosWithoutLanguage(
+		long companyId);
 
 }

@@ -990,7 +990,7 @@ definition {
 			PageEditor.editContentDisplay(
 				fragmentName = "Content Display",
 				inCollectionDisplay = "true",
-				templateOption = "Abstract");
+				template = "Abstract");
 
 			var n = "1";
 
@@ -1521,7 +1521,7 @@ definition {
 			PageEditor.editContentDisplay(
 				fragmentName = "Content Display",
 				inCollectionDisplay = "true",
-				templateOption = "Full Content");
+				template = "Full Content");
 
 			AssertVisible(
 				key_colPosition = "1",

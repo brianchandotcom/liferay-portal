@@ -521,8 +521,8 @@ definition {
 
 		task ("Select the web content and custom template in Content Display") {
 			PageEditor.editContentDisplay(
-				customTemplate = "Web Content Information Template",
 				fragmentName = "Content Display",
+				template = "Web Content Information Template",
 				webcontent = "true",
 				webContentTitle = "Web Content Title");
 		}
@@ -540,10 +540,10 @@ definition {
 		task ("Select the blogs entry and custom template in Content Display") {
 			PageEditor.editContentDisplay(
 				blogs = "true",
-				customTemplate = "Blogs Entry Information Template",
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
-				fragmentName = "Content Display");
+				fragmentName = "Content Display",
+				template = "Blogs Entry Information Template");
 		}
 
 		task ("View the title and description of blogs are shown") {
@@ -556,11 +556,11 @@ definition {
 
 		task ("Select the documents and custom template in Content Display") {
 			PageEditor.editContentDisplay(
-				customTemplate = "Document Information Template",
 				documentandmedia = "true",
 				fragmentName = "Content Display",
 				imageFileName = "Document Title",
-				sourceFileName = "Document_1.jpg");
+				sourceFileName = "Document_1.jpg",
+				template = "Document Information Template");
 		}
 
 		task ("View the title and author of documents are shown") {
@@ -575,8 +575,8 @@ definition {
 			PageEditor.editContentDisplay(
 				assetTitle = "Category Name",
 				categories = "true",
-				customTemplate = "Category Information Template",
-				fragmentName = "Content Display");
+				fragmentName = "Content Display",
+				template = "Category Information Template");
 		}
 
 		task ("View the category and vocabulary names are shown") {

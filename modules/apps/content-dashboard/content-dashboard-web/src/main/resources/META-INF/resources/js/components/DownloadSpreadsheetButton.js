@@ -19,9 +19,11 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classnames from 'classnames';
 import {fetch} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 let controller = null;
+let defaultDelayTimeout = null
+let feedbackDelayTimeout = null
 
 const fetchFile = async (url) => {
 	controller = new AbortController();
@@ -109,7 +111,7 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 	};
 
 	const handleUIState = () => {
-		setTimeout(() => {
+		defaultDelayTimeout = setTimeout(() => {
 			setLoading(false);
 
 			setFeedbackStatus((current) => ({
@@ -123,7 +125,7 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 			}));
 		}, 500);
 
-		setTimeout(() => {
+		feedbackDelayTimeout = setTimeout(() => {
 			setFeedbackStatus(initialFeedbackState);
 		}, 2500);
 	};
@@ -159,7 +161,7 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 		catch (error) {
 			const abortedRequest = error.name === 'AbortError' ? true : false;
 
-			handleError({error, abortedRequest});
+			handleError({abortedRequest, error});
 		}
 		finally {
 			handleUIState();
@@ -174,6 +176,13 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 		setToastMessage(initialToastState);
 	};
 
+	useEffect(() => {
+		return () => {
+			clearTimeout(defaultDelayTimeout);
+			clearTimeout(feedbackDelayTimeout);
+		};
+	}, []);
+
 	return (
 		<>
 			<ClayTooltipProvider>
@@ -184,12 +193,12 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 						'text-danger':
 							feedbackStatus.show &&
 							feedbackStatus.type === 'danger',
-						'text-warning':
-							feedbackStatus.show &&
-							feedbackStatus.type === 'warning',
 						'text-success':
 							feedbackStatus.show &&
 							feedbackStatus.type === 'success',
+						'text-warning':
+							feedbackStatus.show &&
+							feedbackStatus.type === 'warning',
 					})}
 					data-tooltip-align="top"
 					disabled={disabledGenerateButton}

@@ -528,12 +528,11 @@ definition {
 		}
 
 		task ("View the title and content of web content are shown") {
-			for (var content : list "Title,Content") {
+			for (var text : list "Title,Content") {
 				AssertTextEquals.assertPartialText(
-					key_content = "Web Content ${content}",
-					key_fragmentClass = "content",
-					locator1 = "Fragment#FRAGMENT",
-					value1 = "Web Content ${content}");
+					key_fragmentName = "Content Display",
+					locator1 = "Fragment#FRAGMENT_BODY",
+					value1 = "Web Content ${text}");
 			}
 		}
 
@@ -547,9 +546,8 @@ definition {
 
 		task ("View the title and description of blogs are shown") {
 			AssertTextEquals(
-				key_content = "Blogs Entry Title Blogs Entry Description",
-				key_fragmentClass = "content",
-				locator1 = "Fragment#FRAGMENT",
+				key_fragmentName = "Content Display",
+				locator1 = "Fragment#FRAGMENT_BODY",
 				value1 = "Blogs Entry Title Blogs Entry Description");
 		}
 
@@ -563,9 +561,8 @@ definition {
 
 		task ("View the title and author of documents are shown") {
 			AssertTextEquals(
-				key_content = "Document Title Test Test",
-				key_fragmentClass = "content",
-				locator1 = "Fragment#FRAGMENT",
+				key_fragmentName = "Content Display",
+				locator1 = "Fragment#FRAGMENT_BODY",
 				value1 = "Document Title Test Test");
 		}
 
@@ -579,9 +576,8 @@ definition {
 
 		task ("View the category and vocabulary names are shown") {
 			AssertTextEquals(
-				key_content = "Category Name Vocabulary Name",
-				key_fragmentClass = "content",
-				locator1 = "Fragment#FRAGMENT",
+				key_fragmentName = "Content Display",
+				locator1 = "Fragment#FRAGMENT_BODY",
 				value1 = "Category Name Vocabulary Name");
 		}
 	}

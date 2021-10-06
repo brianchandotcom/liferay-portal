@@ -646,21 +646,21 @@ definition {
 				groupName = "Test Site Name",
 				itemSubtype = "Basic Web Content",
 				itemType = "Web Content Article",
-				title = "Dynamic Asset List");
+				title = "Dynamic Collection");
 		}
 
 		task ("Add a manual collection for blogs entry") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
 				groupName = "Test Site Name",
 				itemType = "Blogs Entry",
-				title = "Manual Asset List");
+				title = "Manual Collection");
 		}
 
 		task ("Select the blogs entry under manual collection") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.selectAsset(
-				assetListName = "Manual Asset List",
+				assetListName = "Manual Collection",
 				assetName = "Blogs Entry Title",
 				assetType = "Blogs Entry");
 		}
@@ -684,7 +684,7 @@ definition {
 
 		task ("Select the dynamic collection in Collection Display") {
 			PageEditor.editCollectionDisplay(
-				assetListName = "Dynamic Asset List",
+				assetListName = "Dynamic Collection",
 				fragmentName = "Collection Display");
 		}
 
@@ -713,7 +713,7 @@ definition {
 
 		task ("Select the manual collection in Collection Display") {
 			PageEditor.editCollectionDisplay(
-				assetListName = "Manual Asset List",
+				assetListName = "Manual Collection",
 				fragmentName = "Collection Display");
 		}
 

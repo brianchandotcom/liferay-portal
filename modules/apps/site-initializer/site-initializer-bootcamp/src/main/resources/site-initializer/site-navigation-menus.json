@@ -7,11 +7,11 @@
 				"privateLayout": false
 			},
 			{
-				"friendlyURL": "/contact",
+				"friendlyURL": "/blog",
 				"privateLayout": false
 			},
 			{
-				"friendlyURL": "/blog",
+				"friendlyURL": "/apply",
 				"privateLayout": false
 			}
 		]

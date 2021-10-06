@@ -585,7 +585,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 
 			String currentFriendlyURL = entry.getValue();
 
-			if (!originalFriendlyURL.equals(StringPool.BLANK) &&
+			if (Validator.isNotNull(originalFriendlyURL) &&
 				!currentFriendlyURL.equals(normalizedOriginalFriendlyURL)) {
 
 				messages.add(

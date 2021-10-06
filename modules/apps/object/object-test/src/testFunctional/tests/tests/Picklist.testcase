@@ -74,13 +74,19 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify it is possible to create an item for a Picklist"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanCreatePicklistItem {
 		property portal.acceptance = "true";
 
-		// TODO LPS-139762 CanCreatePicklistItem pending implementation
+		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
+		Picklist.gotoPicklists();
+
+		Picklist.gotoPicklistView(picklistName = "Picklist Test");
+
+		Picklist.addPicklistItemViaUI(picklistItemName = "Picklist Item Name Test", picklistItemKey = "PicklistItemKeyTest");
+
+		Picklist.assertPicklistItem(picklistItemName = "Picklist Item Name Test", picklistItemKey = "PicklistItemKeyTest");
 	}
 
 	@description = "LPS-136595 - Verify it is possible to delete a Picklist"

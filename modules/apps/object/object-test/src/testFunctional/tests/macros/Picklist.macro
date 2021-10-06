@@ -1,5 +1,28 @@
 definition {
 
+	macro gotoPicklistView {
+		Click.javaScriptClick(locator1 = "Picklist#SELECT_PICKLIST_VIEW", key_picklistName = "${picklistName}");
+
+		Click.javaScriptClick(locator1 = "Picklist#GOTO_PICKLIST_VIEW");
+	}
+
+	macro addPicklistItemViaUI {
+
+		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
+
+		Click.javaScriptClick(locator1 = "Picklist#ADD_ITEM_BUTTON");
+
+		Type(
+			locator1 = "Picklist#ADD_PICKLIST_ITEM_NAME",
+			value1 = "${picklistItemName}");
+
+		Type(
+			locator1 = "Picklist#ADD_PICKLIST_ITEM_KEY",
+			value1 = "${picklistItemKey}");
+
+		Click.javaScriptClick(locator1 = "Picklist#SAVE_BUTTON");
+	}
+
 	macro updatePicklistName {
 
 	SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
@@ -37,6 +60,14 @@ definition {
 			value1 = "${picklistName}");
 
 		Button.clickSave();
+	}
+
+	macro assertPicklistItem {
+		var key_picklistItemName = "${picklistItemName}";
+
+		var key_picklistItemKey = "${picklistItemKey}";
+
+		AssertElementPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM");
 	}
 
 	macro assertPicklist {

@@ -565,7 +565,6 @@ definition {
 
 	@priority = "4"
 	test ViewEmailNotificationDelivery {
-		property portal.upstream = "quarantine";
 		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "CPReportsadmin#ViewEmailNotificationDelivery";
 
@@ -644,7 +643,6 @@ definition {
 
 	@priority = "4"
 	test ViewEmailRecipientDelivery {
-		property portal.upstream = "quarantine";
 		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "CPReportsadmin#ViewEmailRecipientDelivery";
 

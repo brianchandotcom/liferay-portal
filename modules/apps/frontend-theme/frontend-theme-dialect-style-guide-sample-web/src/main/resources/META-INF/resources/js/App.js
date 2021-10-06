@@ -13,7 +13,8 @@
  */
 
 import ClayLayout from '@clayui/layout';
-import React from 'react';
+import ClayTabs from '@clayui/tabs';
+import React, {useState} from 'react';
 
 import '../css/main.scss';
 import ButtonGuide from './guides/ButtonGuide';
@@ -21,7 +22,28 @@ import ColorGuide from './guides/ColorGuide';
 import GeneralGuide from './guides/GeneralGuide';
 import TypographyGuide from './guides/TypographyGuide';
 
+const TABS = [
+	{
+		content: <ColorGuide />,
+		label: Liferay.Language.get('colors'),
+	},
+	{
+		content: <TypographyGuide />,
+		label: Liferay.Language.get('typography'),
+	},
+	{
+		content: <GeneralGuide />,
+		label: Liferay.Language.get('general'),
+	},
+	{
+		content: <ButtonGuide />,
+		label: Liferay.Language.get('buttons'),
+	},
+];
+
 export default function App() {
+	const [activeTabKeyValue, setActiveTabKeyValue] = useState(0);
+
 	return (
 		<div className="dialect-style-guide">
 			<ClayLayout.ContainerFluid>
@@ -33,13 +55,33 @@ export default function App() {
 					</ClayLayout.Col>
 				</ClayLayout.Row>
 
-				<ColorGuide />
+				<ClayTabs modern>
+					{TABS.map((tab, i) => (
+						<ClayTabs.Item
+							active={activeTabKeyValue === i}
+							id={`tab-${i}`}
+							innerProps={{
+								'aria-controls': `tabpanel-${i}`,
+							}}
+							key={tab.label}
+							onClick={() => setActiveTabKeyValue(i)}
+						>
+							{tab.label}
+						</ClayTabs.Item>
+					))}
+				</ClayTabs>
 
-				<TypographyGuide />
-
-				<GeneralGuide />
-
-				<ButtonGuide />
+				<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
+					{TABS.map((tab, i) => (
+						<ClayTabs.TabPane
+							aria-labelledby={`tab-${i}`}
+							id={`tabpanel-${i}`}
+							key={tab.label}
+						>
+							{tab.content}
+						</ClayTabs.TabPane>
+					))}
+				</ClayTabs.Content>
 			</ClayLayout.ContainerFluid>
 		</div>
 	);

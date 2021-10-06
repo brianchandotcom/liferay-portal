@@ -86,7 +86,7 @@ definition {
 	macro deleteMail {
 		var key_columnEntry = "${asset}";
 
-		MockMock._gotoMail();
+		MockMock._gotoMail(newTab = "${newTab}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MockMock#MOCKMOCK_SUBJECT_FIELD_LINK",

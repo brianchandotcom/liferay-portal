@@ -21,6 +21,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.petra.io.DummyWriter;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -221,7 +222,7 @@ public class FreeMarkerFragmentEntryProcessor
 
 				template.prepare(httpServletRequest);
 
-				template.processTemplate(new UnsyncStringWriter());
+				template.processTemplate(new DummyWriter());
 			}
 		}
 		catch (TemplateException templateException) {

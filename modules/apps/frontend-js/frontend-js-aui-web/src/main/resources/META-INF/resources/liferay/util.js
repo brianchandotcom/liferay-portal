@@ -651,7 +651,7 @@
 
 			var currentTarget = Util.getElement(event.currentTarget);
 
-			config = A.mix({...currentTarget.dataset}, config);
+			config = {...currentTarget.dataset, ...config};
 
 			if (!config.uri) {
 				config.uri =

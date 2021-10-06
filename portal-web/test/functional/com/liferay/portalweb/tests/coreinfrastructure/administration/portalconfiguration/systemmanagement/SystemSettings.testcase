@@ -180,7 +180,7 @@ definition {
 
 		var fileContent = SystemSettings.getConfigFileContent(configFileName = "com.liferay.journal.configuration.JournalServiceConfiguration.config");
 
-		var expectedText = "articleCommentsEnabled = B&quot;true&quot;";
+		var expectedText = "articleCommentsEnabled=B&quot;true&quot;";
 
 		if (contains("${fileContent}", "${expectedText}")) {
 			echo("Config file shows updated value: ${expectedText}");

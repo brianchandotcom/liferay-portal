@@ -5,7 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.search.experiences</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_search_experiences_web_internal_portlet_SXPBlueprintPortlet</portlet-name>
+			<portlet-name>com_liferay_search_experiences_web_internal_blueprint_portlet_SXPBlueprintPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -27,7 +27,7 @@
 	<model-resource>
 		<model-name>com.liferay.search.experiences.model.SXPBlueprint</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_search_experiences_web_internal_portlet_SXPBlueprintPortlet</portlet-name>
+			<portlet-name>com_liferay_search_experiences_web_internal_blueprint_portlet_SXPBlueprintPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -53,7 +53,7 @@
 	<model-resource>
 		<model-name>com.liferay.search.experiences.model.SXPElement</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_search_experiences_web_internal_portlet_SXPBlueprintPortlet</portlet-name>
+			<portlet-name>com_liferay_search_experiences_web_internal_blueprint_portlet_SXPBlueprintPortlet</portlet-name>
 		</portlet-ref>
 		<weight>3</weight>
 		<permissions>

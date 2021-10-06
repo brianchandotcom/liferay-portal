@@ -337,6 +337,24 @@ definition {
 				accountName = "${accountNames}",
 				assigneeName = "userfn userln");
 		}
+	}
+
+	@description = "This test asserts that an Account Admin cannot view accounts not assigned to him."
+	@priority = "5"
+	test CannotViewOtherAccounts {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account Name 2",
+			accountEntryType = "Business");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		LexiconEntry.viewEntryName(rowEntry = "Account Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "Account Name 2");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -380,6 +398,10 @@ definition {
 				}
 			}
 		}
+
+		LexiconEntry.viewEntryName(rowEntry = "Account Name");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Account Name 2");
 	}
 
 	@description = "This test sets the Allowed Account Type to only Business and assert that only Business Accounts display in Account Management Widget."

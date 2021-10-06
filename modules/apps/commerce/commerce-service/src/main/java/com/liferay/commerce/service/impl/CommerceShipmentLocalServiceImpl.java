@@ -28,6 +28,7 @@ import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.service.base.CommerceShipmentLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -53,8 +54,13 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -354,7 +360,7 @@ public class CommerceShipmentLocalServiceImpl
 				messageShipmentStatuses,
 				CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING)) {
 
-			sendShipmentStatusMessage(commerceShipmentId);
+			sendShipmentStatusMessage(commerceShipment);
 		}
 
 		return commerceShipmentPersistence.update(commerceShipment);
@@ -621,7 +627,7 @@ public class CommerceShipmentLocalServiceImpl
 		commerceShipment.setStatus(status);
 
 		if (ArrayUtil.contains(messageShipmentStatuses, status)) {
-			sendShipmentStatusMessage(commerceShipmentId);
+			sendShipmentStatusMessage(commerceShipment);
 		}
 
 		return commerceShipmentPersistence.update(commerceShipment);
@@ -696,16 +702,34 @@ public class CommerceShipmentLocalServiceImpl
 	@Transactional(
 		propagation = Propagation.REQUIRED, rollbackFor = Exception.class
 	)
-	protected void sendShipmentStatusMessage(long commerceShipmentId) {
+	protected void sendShipmentStatusMessage(
+		CommerceShipment commerceShipment) {
+
 		TransactionCommitCallbackUtil.registerCallback(
 			new Callable<Void>() {
 
 				@Override
 				public Void call() throws Exception {
+					DTOConverter<?, ?> dtoConverter =
+						_dtoConverterRegistry.getDTOConverter(
+							CommerceShipment.class.getName());
+
+					Object object = dtoConverter.toDTO(
+						new DefaultDTOConverterContext(
+							_dtoConverterRegistry,
+							commerceShipment.getCommerceShipmentId(),
+							LocaleUtil.getSiteDefault(), null, null));
+
 					Message message = new Message();
 
 					message.setPayload(
-						JSONUtil.put("commerceShipmentId", commerceShipmentId));
+						JSONUtil.put(
+							"commerceShipment",
+							JSONFactoryUtil.createJSONObject(object.toString())
+						).put(
+							"commerceShipmentId",
+							commerceShipment.getCommerceShipmentId()
+						));
 
 					MessageBusUtil.sendMessage(
 						DestinationNames.COMMERCE_SHIPMENT_STATUS, message);
@@ -763,5 +787,8 @@ public class CommerceShipmentLocalServiceImpl
 		CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED,
 		CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED
 	};
+
+	@ServiceReference(type = DTOConverterRegistry.class)
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 }

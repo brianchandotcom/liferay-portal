@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -52,7 +53,7 @@ public abstract class BaseSearchContainerManagementToolbarDisplayContext
 					).setMVCRenderCommandName(
 						"/batch_planner/edit_export_batch_planner_plan"
 					).setBackURL(
-						String.valueOf(liferayPortletResponse.createRenderURL())
+						PortalUtil.getCurrentURL(httpServletRequest)
 					).setNavigation(
 						"export"
 					).buildPortletURL());
@@ -67,7 +68,7 @@ public abstract class BaseSearchContainerManagementToolbarDisplayContext
 					).setMVCRenderCommandName(
 						"/batch_planner/edit_import_batch_planner_plan"
 					).setBackURL(
-						String.valueOf(liferayPortletResponse.createRenderURL())
+						PortalUtil.getCurrentURL(httpServletRequest)
 					).setNavigation(
 						"import"
 					).buildPortletURL());

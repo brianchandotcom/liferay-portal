@@ -2076,14 +2076,16 @@ definition {
 					value1 = "${webContentTitle}");
 			}
 
-			if (isSet(customTemplate)) {
+			if (isSet(template)) {
 				Select(
-					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT",
-					value1 = "${customTemplate}");
+					key_fieldLabel = "Template",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${template}");
 
-				AssertElementPresent(
-					key_contentName = "${customTemplate}",
-					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT");
+				AssertSelectedLabel(
+					key_fieldLabel = "Template",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${template}");
 			}
 
 			if (isSet(webContentContent)) {

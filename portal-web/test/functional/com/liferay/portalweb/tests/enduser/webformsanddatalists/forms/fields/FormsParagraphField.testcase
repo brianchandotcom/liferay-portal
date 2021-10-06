@@ -693,11 +693,7 @@ definition {
 			locator1 = "FormFields#PARAGRAPH_TEXT_VALUE_STYLE",
 			value = "Test");
 
-		Click(
-			key_fieldName = "Paragraph",
-			locator1 = "FormFields#PARAGRAPH_BODY_TEXT_CONTENT");
-
-		FormFields.editParagraphBody(content = "Test");
+		FormsAdminNavigator.gotoEditField(fieldName = "Paragraph");
 
 		Click(
 			key_titleName = "Formatting Styles",
@@ -710,7 +706,9 @@ definition {
 			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON",
 			value1 = "Preformatted Text");
 
-		SelectFrame.selectSecondFrame();
+		SelectFrameTop();
+
+		FormPortlet.waitFormRenderer(text = "Save");
 
 		Form.save();
 
@@ -1163,17 +1161,15 @@ definition {
 			fieldPositionNumber = "0",
 			fieldType = "Paragraph");
 
-		Form.editFieldLabelMetal(fieldValue = "Paragraph");
-
 		FormFields.editTextBodyToolBar(content = "Test");
 
 		FormFields.toggleCKEditorContentStyle(optionTool = "Bold");
 
-		Form.save();
-
-		AssertElementPresent(
+		WaitForElementPresent(
 			key_textName = "Test",
 			locator1 = "FormFields#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_BOLD");
+
+		Form.save();
 
 		Click(
 			key_textName = "Test",
@@ -1183,11 +1179,11 @@ definition {
 
 		FormFields.toggleCKEditorContentStyle(optionTool = "Italic");
 
-		Form.save();
-
-		AssertElementPresent(
+		WaitForElementPresent(
 			key_textName = "Test",
 			locator1 = "FormFields#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_ITALIC");
+
+		Form.save();
 
 		Click(
 			key_textName = "Test",
@@ -1197,11 +1193,11 @@ definition {
 
 		FormFields.toggleCKEditorContentStyle(optionTool = "Underline");
 
-		Form.save();
-
-		AssertElementPresent(
+		WaitForElementPresent(
 			key_textName = "Test",
 			locator1 = "FormFields#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_UNDERLINE");
+
+		Form.save();
 	}
 
 	@description = "Verify that the Field Title can be edited"

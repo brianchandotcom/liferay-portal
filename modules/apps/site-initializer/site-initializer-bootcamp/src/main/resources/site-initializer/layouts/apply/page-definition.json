@@ -247,7 +247,7 @@
 																		"classPKReferences": {
 																			"en_US": {
 																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": 50281
+																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/smile_y.svg$]"
 																			}
 																		},
 																		"fragmentImageConfiguration": {
@@ -350,7 +350,7 @@
 																		"classPKReferences": {
 																			"en_US": {
 																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": 50291
+																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/dollar_y.svg$]"
 																			}
 																		},
 																		"fragmentImageConfiguration": {
@@ -452,7 +452,7 @@
 																		"classPKReferences": {
 																			"en_US": {
 																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": 50301
+																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/calendar_y.svg$]"
 																			}
 																		},
 																		"fragmentImageConfiguration": {

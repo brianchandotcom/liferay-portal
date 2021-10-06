@@ -2148,7 +2148,7 @@
 																"itemReference": {
 																	"className": "com.liferay.portal.kernel.model.Layout",
 																	"fieldName": "plid",
-																	"fieldValue": "68"
+																	"fieldValue": "http://localhost:8080/en/web/bootcamp/blog"
 																}
 															}
 														}

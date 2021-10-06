@@ -103,15 +103,6 @@ definition {
 
 	}
 
-	@description = "Verify that the progress bar is shown correctly."
-	@ignore = "Test Stub"
-	@priority = "4"
-	test ProgressBarIsShownCorrectly {
-
-		// TODO LRQA-70681 ProgressBarIsShownCorrectly pending implementation
-
-	}
-	
 	@description = "Verify that a workflow added on the creation of a new process appears on Process Builder tab."
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -121,8 +112,14 @@ definition {
 
 	}
 
+	@description = "Verify that the progress bar is shown correctly."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ProgressBarIsShownCorrectly {
 
+		// TODO LRQA-70681 ProgressBarIsShownCorrectly pending implementation
 
+	}
 
 	@description = "Verify that the workflow is required."
 	@ignore = "Test Stub"
@@ -132,7 +129,5 @@ definition {
 		// TODO LRQA-70684 WorkflowIsRequired pending implementation
 
 	}
-
-
 
 }

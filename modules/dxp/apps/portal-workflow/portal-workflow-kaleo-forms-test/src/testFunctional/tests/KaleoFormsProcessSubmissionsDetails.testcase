@@ -81,7 +81,7 @@ definition {
 
 	}
 
-    @description = "Verify that the details page shows the process Status is Approved after the user approve."
+	@description = "Verify that the details page shows the process Status is Approved after the user approve."
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewProcessStatusApproved {

@@ -1967,7 +1967,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${template}");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 
 			AssertSelectedLabel(
 				key_fieldLabel = "Template",
@@ -2081,6 +2081,8 @@ definition {
 					key_fieldLabel = "Template",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${template}");
+
+				PageEditor.waitForAutoSave();
 
 				AssertSelectedLabel(
 					key_fieldLabel = "Template",

@@ -1583,9 +1583,10 @@ definition {
 		Navigator.gotoNavTab(navTab = "General");
 
 		if (isSet(selectedName)) {
-			AssertElementPresent(
-				key_contentName = "${selectedName}",
-				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			AssertTextEquals(
+				key_fieldLabel = "Collection",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+				value1 = "${selectedName}");
 
 			if (isSet(filterCollection)) {
 				PageEditor.gotoEllipsisMenuItemInItemSelector(
@@ -1649,27 +1650,30 @@ definition {
 
 				LexiconCard.clickCard(card = "${assetListName}");
 
-				AssertElementPresent(
-					key_contentName = "${assetListName}",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+				AssertTextEquals(
+					key_fieldLabel = "Collection",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+					value1 = "${assetListName}");
 			}
 			else if (isSet(infoListProviderName)) {
 				NavItem.click(navItem = "Collection Providers");
 
 				LexiconCard.clickCard(card = "${infoListProviderName}");
 
-				AssertElementPresent(
-					key_contentName = "${infoListProviderName}",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+				AssertTextEquals(
+					key_fieldLabel = "Collection",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+					value1 = "${infoListProviderName}");
 			}
 			else if (isSet(infoItemRelatedListProviderName)) {
 				NavItem.click(navItem = "Related Items Collection Providers");
 
 				LexiconCard.clickCard(card = "${infoItemRelatedListProviderName}");
 
-				AssertElementPresent(
-					key_contentName = "${infoItemRelatedListProviderName}",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+				AssertTextEquals(
+					key_fieldLabel = "Collection",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+					value1 = "${infoItemRelatedListProviderName}");
 			}
 		}
 
@@ -1818,9 +1822,10 @@ definition {
 		}
 
 		if (isSet(selectedName)) {
-			AssertElementPresent(
-				key_contentName = "${selectedName}",
-				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			AssertTextEquals(
+				key_fieldLabel = "Source",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+				value1 = "${selectedName}");
 		}
 
 		else if (isSet(vocabularyName)) {
@@ -1866,18 +1871,20 @@ definition {
 
 				Pause(locator1 = "3000");
 
-				AssertElementPresent(
-					key_contentName = "${categoryName}",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+				AssertTextEquals(
+					key_fieldLabel = "Source",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+					value1 = "${categoryName}");
 			}
 			else {
 				Button.click(button = "Select This Level");
 
 				Pause(locator1 = "3000");
 
-				AssertElementPresent(
-					key_contentName = "${vocabularyName}",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+				AssertTextEquals(
+					key_fieldLabel = "Source",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+					value1 = "${vocabularyName}");
 			}
 		}
 
@@ -1992,9 +1999,10 @@ definition {
 
 				LexiconCard.clickCard(card = "${imageFileName}");
 
-				AssertElementPresent(
-					key_contentName = "${imageFileName}",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+				AssertTextEquals(
+					key_fieldLabel = "Item",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+					value1 = "${imageFileName}");
 
 				AssertElementPresent(
 					key_fragmentName = "${fragmentName}",
@@ -2007,9 +2015,10 @@ definition {
 
 				LexiconCard.clickCard(card = "${entryTitle}");
 
-				AssertElementPresent(
-					key_contentName = "${entryTitle}",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+				AssertTextEquals(
+					key_fieldLabel = "Item",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+					value1 = "${entryTitle}");
 
 				AssertTextEquals(
 					locator1 = "Fragment#FRAGMENT_BODY",
@@ -2029,9 +2038,10 @@ definition {
 					key_nodeName = "${assetTitle}",
 					locator1 = "Treeview#NODE_UNSELECTED");
 
-				AssertElementPresent(
-					key_contentName = "${assetTitle}",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+				AssertTextEquals(
+					key_fieldLabel = "Item",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+					value1 = "${assetTitle}");
 			}
 
 			if (isSet(webcontent)) {
@@ -2060,9 +2070,10 @@ definition {
 					LexiconCard.clickCard(card = "${webContentTitle}");
 				}
 
-				AssertElementPresent(
-					key_contentName = "${webContentTitle}",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+				AssertTextEquals(
+					key_fieldLabel = "Item",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+					value1 = "${webContentTitle}");
 			}
 
 			if (isSet(customTemplate)) {
@@ -2827,9 +2838,10 @@ definition {
 
 				Pause(locator1 = "3000");
 
-				AssertElementPresent(
-					key_contentName = "${siteMenus}",
-					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+				AssertTextEquals(
+					key_fieldLabel = "Source",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+					value1 = "${siteMenus}");
 			}
 
 			if (isSet(displayStyle)) {

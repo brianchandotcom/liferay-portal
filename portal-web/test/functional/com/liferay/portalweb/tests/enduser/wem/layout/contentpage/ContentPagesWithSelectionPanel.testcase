@@ -503,9 +503,10 @@ definition {
 		task ("View the edited title shown in Item field") {
 			PageEditor.gotoConfiguration(fragmentName = "Content Display");
 
-			AssertVisible(
-				key_contentName = "Web Content Title Edit",
-				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			AssertTextEquals(
+				key_fieldLabel = "Item",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+				value1 = "Web Content Title Edit");
 		}
 
 		task ("Define the permissions of web content via General panel") {
@@ -572,7 +573,7 @@ definition {
 
 			AssertAttributeValue(
 				attribute1 = "placeholder",
-				key_contentName = "",
+				key_fieldLabel = "Item",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
 				value1 = "Select Item");
 		}
@@ -793,7 +794,7 @@ definition {
 
 			AssertAttributeValue(
 				attribute1 = "placeholder",
-				key_contentName = "",
+				key_fieldLabel = "Collection",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
 				value1 = "Select Collection");
 		}
@@ -880,9 +881,10 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			AssertVisible(
-				key_contentName = "Web Content Title Edit",
-				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			AssertTextEquals(
+				key_fieldLabel = "Item",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+				value1 = "Web Content Title Edit");
 		}
 
 		task ("Define the permissions of web content via Mapping panel") {
@@ -949,7 +951,7 @@ definition {
 
 			AssertAttributeValue(
 				attribute1 = "placeholder",
-				key_contentName = "",
+				key_fieldLabel = "Item",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
 				value1 = "Select Item");
 		}

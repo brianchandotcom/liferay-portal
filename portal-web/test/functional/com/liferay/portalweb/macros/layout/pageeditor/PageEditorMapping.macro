@@ -101,9 +101,10 @@ definition {
 				locator1 = "Card#CARD_TITLE");
 		}
 
-		AssertElementPresent(
-			key_contentName = "${entryTitle}",
-			locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+		AssertTextEquals(
+			key_fieldLabel = "Item",
+			locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+			value1 = "${entryTitle}");
 
 		Pause(locator1 = "3000");
 	}

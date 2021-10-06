@@ -596,9 +596,10 @@ definition {
 		task ("Assert the Public Pages Hierarchy is shown in Source field") {
 			PageEditor.clickConfigurableField(fragmentName = "Menu Display");
 
-			AssertElementPresent(
-				key_contentName = "Public Pages Hierarchy",
-				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			AssertTextEquals(
+				key_fieldLabel = "Source",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+				value1 = "Public Pages Hierarchy");
 		}
 
 		task ("Select Private Pages Hierarchy in Menu Display") {

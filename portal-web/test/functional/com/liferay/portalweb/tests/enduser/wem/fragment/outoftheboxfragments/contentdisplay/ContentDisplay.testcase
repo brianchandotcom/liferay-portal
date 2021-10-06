@@ -730,9 +730,10 @@ definition {
 		}
 
 		task ("View category name shown in Content Display") {
-			AssertVisible(
-				key_contentName = "Category Name",
-				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			AssertTextEquals(
+				key_fieldLabel = "Item",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+				value1 = "Category Name");
 		}
 
 		task ("Open the Preview modal") {

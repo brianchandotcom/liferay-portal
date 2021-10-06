@@ -373,9 +373,10 @@ definition {
 				imageDescription = "",
 				imageFileName = "Document_1.png");
 
-			AssertVisible(
-				key_contentName = "Document_1.png",
-				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			AssertTextEquals(
+				key_fieldLabel = "Image",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+				value1 = "Document_1.png");
 
 			PageEditor.clickPublish();
 		}
@@ -420,9 +421,10 @@ definition {
 		}
 
 		task ("Assert the URL is shown in selector input") {
-			AssertVisible(
-				key_contentName = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg",
-				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			AssertTextEquals(
+				key_fieldLabel = "Image",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+				value1 = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg");
 
 			PageEditor.clickPublish();
 		}

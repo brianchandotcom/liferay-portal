@@ -18,7 +18,34 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classnames from 'classnames';
+import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
+
+const fetchFile = async (url) => {
+	const response = await fetch(url, {
+		method: 'GET',
+	});
+
+	const blob = await response.blob();
+
+	return blob;
+};
+
+const downloadFileFromBlob = (blob) => {
+	const file = URL.createObjectURL(blob);
+
+	var fileLink = document.createElement('a');
+	fileLink.href = file;
+
+	const today = new Date();
+	const filename = `content-dashboard-report-${today.toLocaleDateString(
+		'en-US'
+	)}`;
+
+	fileLink.download = filename;
+
+	fileLink.click();
+};
 
 const initialToastState = {
 	content: null,
@@ -38,44 +65,53 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 	const [feedbackStatus, setFeedbackStatus] = useState(initialFeedbackState);
 
 	const handleSuccess = () => {
-		setToastMessage({
+		setToastMessage((current) => ({
+			...current,
 			content: Liferay.Language.get('xls-was-successfully-generated'),
-			show: true,
 			type: 'success',
-		});
-
-		setFeedbackStatus({
-			content: Liferay.Language.get('xls-generated'),
-			show: false,
-			type: 'success',
-		});
-	};
-
-	const handleError = () => {
-		setToastMessage({
-			content: Liferay.Language.get(
-				'xls-generation-has-failed-try-again'
-			),
-			show: false,
-			type: 'danger',
-		});
-
-		setFeedbackStatus({
-			content: Liferay.Language.get('an-error-occurred'),
-			show: false,
-			type: 'danger',
-		});
-	};
-
-	const handleUIState = () => {
-		setLoading(false);
+		}));
 
 		setFeedbackStatus((current) => ({
 			...current,
-			show: true,
+			content: Liferay.Language.get('xls-generated'),
+			type: 'success',
+		}));
+	};
+
+	const handleError = (error) => {
+		setToastMessage((current) => ({
+			...current,
+			content: `${Liferay.Language.get(
+				'xls-generation-has-failed-try-again'
+			)}. ${error}`,
+			type: 'danger',
 		}));
 
-		setTimeout(() => setFeedbackStatus(initialFeedbackState), 2000);
+		setFeedbackStatus((current) => ({
+			...current,
+			content: Liferay.Language.get('an-error-occurred'),
+			type: 'danger',
+		}));
+	};
+
+	const handleUIState = () => {
+		setTimeout(() => {
+			setLoading(false);
+
+			setFeedbackStatus((current) => ({
+				...current,
+				show: true,
+			}));
+
+			setToastMessage((current) => ({
+				...current,
+				show: true,
+			}));
+		}, 500);
+
+		setTimeout(() => {
+			setFeedbackStatus(initialFeedbackState);
+		}, 2500);
 	};
 
 	const buttonTextKey = loading
@@ -94,14 +130,18 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 	const disabledGenerateButton =
 		loading || feedbackStatus.show || !parseInt(total, 10);
 
-	const handleClick = () => {
+	const handleClick = async () => {
 		setLoading(true);
 
 		try {
+			const blob = await fetchFile(fileURL);
+
+			downloadFileFromBlob(blob);
+
 			handleSuccess();
 		}
-		catch {
-			handleError();
+		catch (error) {
+			handleError(error);
 		}
 		finally {
 			handleUIState();
@@ -123,9 +163,9 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 					borderless
 					className={classnames('download-xls-button', {
 						'download-xls-button--loading': loading,
-						'text-error':
+						'text-danger':
 							feedbackStatus.show &&
-							feedbackStatus.type === 'error',
+							feedbackStatus.type === 'danger',
 						'text-success':
 							feedbackStatus.show &&
 							feedbackStatus.type === 'success',

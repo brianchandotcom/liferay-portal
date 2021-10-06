@@ -177,7 +177,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			).build();
 		}
 		catch (Exception exception) {
-			throw new StorageException(exception);
+			throw new StorageException(exception.getMessage());
 		}
 	}
 
